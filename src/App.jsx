@@ -1,10 +1,19 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import { Routes, Router, Route } from "react-router";
+import Home from "./pages/home";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello Tailwind!</h1>;
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/test" element={<Home />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
