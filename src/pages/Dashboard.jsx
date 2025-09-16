@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import PoliticianGrid from "../components/PoliticianGrid";
 import { fetchPoliticians } from "../lib/api";
-import LocationCard from "../components/LocationCard";
 import {
   classifyCategory,
   STATE_ORDER,
@@ -11,22 +11,44 @@ import {
 } from "../lib/classify";
 
 function Dashboard() {
-  const [selectedTab, setSelectedTab] = useState("All");
-  const [data, setData] = useState([]);
-  const [zip, setZip] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const zipFromUrl = searchParams.get("zip") || "";
 
-  async function handleSearch() {
+  const [zip, setZip] = useState(zipFromUrl);
+  const [data, setData] = useState([]);
+
+  const handleSearch = useCallback(async (zipcode) => {
+    if (!zipcode || !/^\d{5}$/.test(zipcode)) return;
     try {
-      const result = await fetchPoliticians(zip);
+      const result = await fetchPoliticians(zipcode);
       setData(result);
+      localStorage.setItem("lastZip", zipcode);
     } catch (err) {
       console.error(err);
     }
-  }
+  }, []);
 
   useEffect(() => {
-    handleSearch(zip);
+    const initial = zipFromUrl || localStorage.getItem("lastZip") || "";
+    if (initial) {
+      setZip(initial);
+      if (!zipFromUrl) setSearchParams({ zip: initial }, { replace: true });
+      handleSearch(initial);
+    }
   }, []);
+
+  useEffect(() => {
+    if (zipFromUrl && zipFromUrl !== zip) {
+      setZip(zipFromUrl);
+      handleSearch(zipFromUrl);
+    }
+  }, [zipFromUrl, zip, handleSearch]);
+
+  const onSearchClick = () => {
+    const normalized = zip.trim();
+    setSearchParams({ zip: normalized });
+    handleSearch(normalized);
+  };
 
   const filteredPols = useMemo(
     () => data.filter((p) => p?.first_name !== "VACANT"),
@@ -37,20 +59,19 @@ function Dashboard() {
     () => filteredPols.filter((p) => p?.district_type.includes("STATE")),
     [filteredPols]
   );
-
   const federalPols = useMemo(
     () => filteredPols.filter((p) => p?.district_type.includes("NATIONAL")),
     [filteredPols]
   );
-
   const localPols = useMemo(
     () => filteredPols.filter((p) => p?.district_type.includes("LOCAL")),
     [filteredPols]
   );
 
-  const classified = useMemo(() => {
-    return filteredPols.map((p) => ({ pol: p, cat: classifyCategory(p) }));
-  }, [filteredPols]);
+  const classified = useMemo(
+    () => filteredPols.map((p) => ({ pol: p, cat: classifyCategory(p) })),
+    [filteredPols]
+  );
 
   const byTier = useMemo(() => {
     const map = { Federal: {}, State: {}, Local: {}, Unknown: {} };
@@ -62,20 +83,24 @@ function Dashboard() {
     return map;
   }, [classified]);
 
+  const [selectedTab, setSelectedTab] = useState("All");
+
   return (
     <div className="min-h-screen bg-zinc-50">
-      {/* <div className="m-6 flex flex-row">
-        <LocationCard zip={zip} />
-      </div> */}
       <div className="flex flex-row gap-4 justify-center">
         <input
           value={zip}
           onChange={(e) => setZip(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") onSearchClick();
+          }}
           placeholder="Enter ZIP code"
           className="border p-2 mr-2"
+          inputMode="numeric"
+          maxLength={5}
         />
         <button
-          onClick={handleSearch}
+          onClick={onSearchClick}
           className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 cursor-pointer"
         >
           Search
