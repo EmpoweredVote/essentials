@@ -1,7 +1,7 @@
 // src/lib/compass.js
 // All topics (full topic objects: { id, short_title, stances, ... })
 export async function fetchTopics() {
-  const res = await fetch(`http://localhost:5050/compass/topics`, {
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/compass/topics`, {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`fetchTopics failed: ${res.status}`);
@@ -10,7 +10,9 @@ export async function fetchTopics() {
 // Politician answers: [{ topic_id, value }, ...]
 export async function fetchPoliticianAnswers(politicianId) {
   const res = await fetch(
-    `http://localhost:5050/compass/politicians/${politicianId}/answers`,
+    `${
+      import.meta.env.VITE_API_URL
+    }/compass/politicians/${politicianId}/answers`,
     { credentials: "include" }
   );
   if (!res.ok) throw new Error(`fetchPoliticianAnswers failed: ${res.status}`);

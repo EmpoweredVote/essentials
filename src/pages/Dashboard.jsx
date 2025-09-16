@@ -13,7 +13,7 @@ import {
 function Dashboard() {
   const [selectedTab, setSelectedTab] = useState("All");
   const [data, setData] = useState([]);
-  const [zip, setZip] = useState("98110");
+  const [zip, setZip] = useState("");
 
   async function handleSearch() {
     try {
