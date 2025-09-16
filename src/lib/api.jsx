@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_BASE_URL;
+const API = import.meta.env.VITE_API_URL;
 
 export async function fetchPoliticians(zip) {
   const res = await fetch(`${API}/essentials/politicians/${zip}`);
