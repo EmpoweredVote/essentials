@@ -6,14 +6,14 @@ import Profile from "./pages/Profile";
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.VITE_BASENAME || "/"}>
+    <>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/politician/:id" element={<Profile />} />
         <Route path="/test" element={<Home />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
