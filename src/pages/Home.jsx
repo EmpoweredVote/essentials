@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { fetchPoliticians } from "../lib/api";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [zip, setZip] = useState("");

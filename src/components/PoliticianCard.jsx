@@ -1,7 +1,13 @@
-function PoliticianCard({ image, name, title, level }) {
+import { useNavigate } from "react-router-dom";
+
+function PoliticianCard({ image, name, title, level, id }) {
+  const navigate = useNavigate();
   return (
     <div className="h-full mt-4">
-      <div className="flex h-full w-full flex-col gap-2 rounded-lg bg-white p-4 text-center shadow-lg">
+      <div
+        className="flex h-full w-full flex-col gap-2 rounded-lg bg-white p-4 text-center shadow-lg"
+        onClick={() => navigate(`/politician/${id}`)}
+      >
         <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg bg-zinc-100">
           <img
             src={image}

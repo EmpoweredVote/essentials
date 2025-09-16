@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import PoliticianGrid from "../components/PoliticianGrid";
 import { fetchPoliticians } from "../lib/api";
+import LocationCard from "../components/LocationCard";
 import {
   classifyCategory,
   STATE_ORDER,
@@ -12,7 +13,7 @@ import {
 function Dashboard() {
   const [selectedTab, setSelectedTab] = useState("All");
   const [data, setData] = useState([]);
-  const [zip, setZip] = useState("");
+  const [zip, setZip] = useState("98110");
 
   async function handleSearch() {
     try {
@@ -63,6 +64,9 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-zinc-50">
+      {/* <div className="m-6 flex flex-row">
+        <LocationCard zip={zip} />
+      </div> */}
       <div className="flex flex-row gap-4 justify-center">
         <input
           value={zip}

@@ -1,18 +1,19 @@
-import { useState } from "react";
 import "./App.css";
-import { Routes, Router, Route } from "react-router";
-import Home from "./pages/home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
-    <>
+    <BrowserRouter basename={import.meta.env.VITE_BASENAME || "/"}>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/politician/:id" element={<Profile />} />
         <Route path="/test" element={<Home />} />
       </Routes>
-    </>
+    </BrowserRouter>
   );
 }
 
