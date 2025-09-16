@@ -2,7 +2,6 @@ const API = import.meta.env.VITE_API_URL;
 
 export async function fetchPoliticians(zip) {
   const res = await fetch(`${API}/essentials/politicians/${zip}`);
-  a;
   if (!res.ok) throw new Error("Failed to fetch politicians");
   return res.json();
 }
