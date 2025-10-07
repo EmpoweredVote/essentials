@@ -29,7 +29,6 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    // const initial = zipFromUrl || localStorage.getItem("lastZip") || "";
     const initial = zipFromUrl || "";
     if (initial) {
       setZip(initial);
