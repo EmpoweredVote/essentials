@@ -14,7 +14,7 @@ function Dashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
   const zipFromUrl = searchParams.get("zip") || "";
 
-  const [zip, setZip] = useState(zipFromUrl);
+  const [zip, setZip] = useState("");
   const [data, setData] = useState([]);
 
   const handleSearch = useCallback(async (zipcode) => {
@@ -38,12 +38,12 @@ function Dashboard() {
     }
   }, []);
 
-  useEffect(() => {
-    if (zipFromUrl && zipFromUrl !== zip) {
-      setZip(zipFromUrl);
-      handleSearch(zipFromUrl);
-    }
-  }, [zipFromUrl, zip, handleSearch]);
+  // useEffect(() => {
+  //   if (zipFromUrl && zipFromUrl !== zip) {
+  //     setZip(zipFromUrl);
+  //     handleSearch(zipFromUrl);
+  //   }
+  // }, [zipFromUrl, zip, handleSearch]);
 
   const onSearchClick = () => {
     const normalized = zip.trim();
