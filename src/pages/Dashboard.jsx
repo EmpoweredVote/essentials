@@ -22,14 +22,15 @@ function Dashboard() {
     try {
       const result = await fetchPoliticians(zipcode);
       setData(result);
-      localStorage.setItem("lastZip", zipcode);
+      // localStorage.setItem("lastZip", zipcode);
     } catch (err) {
       console.error(err);
     }
   }, []);
 
   useEffect(() => {
-    const initial = zipFromUrl || localStorage.getItem("lastZip") || "";
+    // const initial = zipFromUrl || localStorage.getItem("lastZip") || "";
+    const initial = zipFromUrl || "";
     if (initial) {
       setZip(initial);
       if (!zipFromUrl) setSearchParams({ zip: initial }, { replace: true });
