@@ -14,8 +14,8 @@ export async function fetchPoliticiansOnce(zip, attempt = 0) {
     res.headers.get("X-Data-Status") || res.headers.get("x-data-status") || "";
 
   if (res.status === 202) {
-    const ra = parseInt(res.headers.get("Retry-After") || "3", 10);
-    return { status: "warming", retryAfter: isNaN(ra) ? 3 : ra, data: [] };
+    const ra = parseInt(res.headers.get("Retry-After") || "2", 10);
+    return { status: "warming", retryAfter: isNaN(ra) ? 2 : ra, data: [] };
   }
 
   const data = await res.json();
@@ -31,7 +31,7 @@ export async function fetchPoliticiansProgressive(
     const once = await fetchPoliticiansOnce(zip, attempt);
 
     if (once.status === "warming") {
-      await sleep((once.retryAfter ?? 3) * 1000);
+      await sleep((once.retryAfter ?? 2) * 1000);
       continue;
     }
 
