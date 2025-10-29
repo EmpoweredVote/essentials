@@ -10,21 +10,45 @@ import {
   orderedEntries,
 } from "../lib/classify";
 
+function Spinner() {
+  return (
+    <div className="flex items-center justify-center gap-2 text-zinc-600 mt-4">
+      <div className="h-4 w-4 border-2 border-zinc-400 border-t-transparent rounded-full animate-spin"></div>
+      <span>Loading results…</span>
+    </div>
+  );
+}
+
 function Dashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
   const zipFromUrl = searchParams.get("zip") || "";
 
   const [zip, setZip] = useState("");
-  const [data, setData] = useState([]);
+  const [list, setList] = useState([]);
+  const [phase, setPhase] = useState("idle"); // "idle" | "loading" | "partial" | "fresh"
+  const [statusHdr, setStatusHdr] = useState(""); // for debugging UI
 
   const handleSearch = useCallback(async (zipcode) => {
     if (!zipcode || !/^\d{5}$/.test(zipcode)) return;
     try {
-      const result = await fetchPoliticians(zipcode);
-      setData(result);
-      // localStorage.setItem("lastZip", zipcode);
+      setPhase("loading");
+      const { status, data } = await fetchPoliticians(zipcode);
+      setList(Array.isArray(data) ? data : []);
+      setStatusHdr(status);
+
+      const s = (status || "").toLowerCase();
+      if (s === "fresh") {
+        setPhase("fresh");
+      } else if (s === "stale" || s === "warmed") {
+        // Partial or stale-but-present data—render immediately
+        setPhase("partial");
+      } else {
+        // unknown header → treat as loaded
+        setPhase("fresh");
+      }
     } catch (err) {
       console.error(err);
+      setPhase("idle");
     }
   }, []);
 
@@ -37,34 +61,29 @@ function Dashboard() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (zipFromUrl && zipFromUrl !== zip) {
-  //     setZip(zipFromUrl);
-  //     handleSearch(zipFromUrl);
-  //   }
-  // }, [zipFromUrl, zip, handleSearch]);
-
   const onSearchClick = () => {
-    const normalized = zip.trim();
+    const normalized = (zip || "").trim();
+    if (!/^\d{5}$/.test(normalized)) return;
     setSearchParams({ zip: normalized });
     handleSearch(normalized);
   };
 
+  // Filter + classify the current list (which may be partial)
   const filteredPols = useMemo(
-    () => data.filter((p) => p?.first_name !== "VACANT"),
-    [data]
+    () => list.filter((p) => p?.first_name !== "VACANT"),
+    [list]
   );
 
   const statePols = useMemo(
-    () => filteredPols.filter((p) => p?.district_type.includes("STATE")),
+    () => filteredPols.filter((p) => p?.district_type?.includes("STATE")),
     [filteredPols]
   );
   const federalPols = useMemo(
-    () => filteredPols.filter((p) => p?.district_type.includes("NATIONAL")),
+    () => filteredPols.filter((p) => p?.district_type?.includes("NATIONAL")),
     [filteredPols]
   );
   const localPols = useMemo(
-    () => filteredPols.filter((p) => p?.district_type.includes("LOCAL")),
+    () => filteredPols.filter((p) => p?.district_type?.includes("LOCAL")),
     [filteredPols]
   );
 
@@ -107,14 +126,19 @@ function Dashboard() {
         </button>
       </div>
 
+      {/* Optional tiny debug hint for you */}
+      {statusHdr && (
+        <div className="text-center text-sm text-zinc-500 mt-2">
+          X-Data-Status: {statusHdr} — Phase: {phase}
+        </div>
+      )}
+
       <div className="flex flex-row justify-center mt-6">
         <button
           className={`${
             selectedTab == "All" ? "bg-sky-950 text-white" : ""
           }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
-          onClick={() => {
-            setSelectedTab("All");
-          }}
+          onClick={() => setSelectedTab("All")}
         >
           All ({filteredPols.length})
         </button>
@@ -122,9 +146,7 @@ function Dashboard() {
           className={`${
             selectedTab == "Federal" ? "bg-sky-950 text-white" : ""
           }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
-          onClick={() => {
-            setSelectedTab("Federal");
-          }}
+          onClick={() => setSelectedTab("Federal")}
         >
           Federal ({federalPols.length})
         </button>
@@ -132,9 +154,7 @@ function Dashboard() {
           className={`${
             selectedTab == "State" ? "bg-sky-950 text-white" : ""
           }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
-          onClick={() => {
-            setSelectedTab("State");
-          }}
+          onClick={() => setSelectedTab("State")}
         >
           State ({statePols.length})
         </button>
@@ -142,13 +162,14 @@ function Dashboard() {
           className={`${
             selectedTab == "Local" ? "bg-sky-950 text-white" : ""
           }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
-          onClick={() => {
-            setSelectedTab("Local");
-          }}
+          onClick={() => setSelectedTab("Local")}
         >
           Local ({localPols.length})
         </button>
       </div>
+
+      {/* Spinner while loading or (optionally) while partial */}
+      {(phase === "loading" || phase === "partial") && <Spinner />}
 
       <div className="mt-8 px-[10%]">
         {selectedTab == "All" && (
@@ -166,7 +187,7 @@ function Dashboard() {
                 gridTitle={"Local Politicians"}
                 polList={localPols}
               />
-              {localPols.length == 0 && (
+              {localPols.length == 0 && phase !== "loading" && (
                 <p className="mt-4">
                   Sorry, we don't have data on local politicians for{" "}
                   {zip.length == 5 ? zip : "your zip code"}.
@@ -206,7 +227,7 @@ function Dashboard() {
 
         {selectedTab == "Local" && (
           <div>
-            {localPols.length == 0 && (
+            {localPols.length == 0 && phase !== "loading" && (
               <p className="mt-4">
                 Sorry, we don't have data on local politicians for{" "}
                 {zip.length == 5 ? zip : "your zip code"}.
