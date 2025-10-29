@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import PoliticianGrid from "../components/PoliticianGrid";
-import { fetchPoliticians } from "../lib/api";
+import { fetchPoliticiansProgressive } from "../lib/api";
 import {
   classifyCategory,
   STATE_ORDER,
@@ -30,26 +30,23 @@ function Dashboard() {
 
   const handleSearch = useCallback(async (zipcode) => {
     if (!zipcode || !/^\d{5}$/.test(zipcode)) return;
-    try {
-      setPhase("loading");
-      const { status, data } = await fetchPoliticians(zipcode);
-      setList(Array.isArray(data) ? data : []);
-      setStatusHdr(status);
 
-      const s = (status || "").toLowerCase();
-      if (s === "fresh") {
-        setPhase("fresh");
-      } else if (s === "stale" || s === "warmed") {
-        // Partial or stale-but-present data—render immediately
-        setPhase("partial");
-      } else {
-        // unknown header → treat as loaded
-        setPhase("fresh");
-      }
-    } catch (err) {
-      console.error(err);
-      setPhase("idle");
-    }
+    setPhase("loading");
+    setList([]);
+    setStatusHdr("");
+
+    await fetchPoliticiansProgressive(
+      zipcode,
+      // onUpdate: render partials as we go
+      ({ status, data }) => {
+        setList(Array.isArray(data) ? data : []);
+        setStatusHdr(status || "");
+        const s = (status || "").toLowerCase();
+        if (s === "fresh") setPhase("fresh");
+        else setPhase("partial"); // warmed/stale -> keep spinner, but show what we have
+      },
+      { maxAttempts: 8, intervalMs: 1500 }
+    );
   }, []);
 
   useEffect(() => {
@@ -126,10 +123,11 @@ function Dashboard() {
         </button>
       </div>
 
-      {/* Optional tiny debug hint for you */}
+      {/* debug hint  */}
       {statusHdr && (
         <div className="text-center text-sm text-zinc-500 mt-2">
-          X-Data-Status: {statusHdr} — Phase: {phase}
+          X-Data-Status: {statusHdr} — Phase: {phase} — Showing {list.length}{" "}
+          officials
         </div>
       )}
 
