@@ -22,11 +22,6 @@ export async function fetchPoliticiansOnce(zip, attempt = 0) {
   return { status, data };
 }
 
-/**
- * Progressive fetch: immediately returns partials to onUpdate,
- * keeps polling until "fresh" or timeout.
- */
-
 export async function fetchPoliticiansProgressive(
   zip,
   onUpdate,
@@ -43,7 +38,7 @@ export async function fetchPoliticiansProgressive(
     if (typeof onUpdate === "function") onUpdate(once);
 
     if ((once.status || "").toLowerCase() === "fresh") {
-      return once;
+      return once; // done
     }
 
     await sleep(intervalMs);
