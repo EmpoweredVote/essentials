@@ -124,12 +124,12 @@ function Dashboard() {
       </div>
 
       {/* debug hint  */}
-      {statusHdr && (
+      {/* {statusHdr && (
         <div className="text-center text-sm text-zinc-500 mt-2">
           X-Data-Status: {statusHdr} — Phase: {phase} — Showing {list.length}{" "}
           officials
         </div>
-      )}
+      )} */}
 
       <div className="flex flex-row justify-center mt-6">
         <button
