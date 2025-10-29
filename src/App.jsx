@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 
@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/politician/:id" element={<Profile />} />
-        <Route path="/test" element={<Home />} />
+        {/* <Route path="/test" element={<Home />} /> */}
       </Routes>
     </>
   );
