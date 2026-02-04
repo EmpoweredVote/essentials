@@ -100,9 +100,24 @@ export const chainComparators =
     return 0;
   };
 
+// Elected-first key: elected positions (is_elected=true) come before appointed
+export const electedFirstKey = (pol) => (pol.is_elected ? 0 : 1);
+
 // utils/sorters.js (continued)
 export const GROUP_SORT_OPTIONS = {
-  "President / VP / Cabinet": [
+  "President / VP": [
+    {
+      id: "role_rank",
+      label: "Role",
+      cmp: (dir) => makeComparator(cabinetRankKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  Cabinet: [
     {
       id: "role_rank",
       label: "Role",
@@ -276,6 +291,100 @@ export const GROUP_SORT_OPTIONS = {
     },
   ],
   "Local (Other)": [
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "Independent Agencies & Commissions": [
+    {
+      id: "agency",
+      label: "Agency",
+      cmp: (dir) => makeComparator(agencyKey, dir),
+    },
+    {
+      id: "role",
+      label: "Role/Title",
+      cmp: (dir) => makeComparator(roleKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "County Executives": [
+    {
+      id: "jurisdiction",
+      label: "County",
+      cmp: (dir) => makeComparator((p) => lower(p.government_name), dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "County Legislators": [
+    {
+      id: "jurisdiction",
+      label: "County",
+      cmp: (dir) => makeComparator((p) => lower(p.government_name), dir),
+    },
+    {
+      id: "district",
+      label: "District",
+      cmp: (dir) => makeComparator(districtNumberKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "County Officials": [
+    {
+      id: "role",
+      label: "Office",
+      cmp: (dir) => makeComparator(roleKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "School Board": [
+    {
+      id: "jurisdiction",
+      label: "School District",
+      cmp: (dir) => makeComparator((p) => lower(p.government_name), dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "State Judiciary": [
+    {
+      id: "court",
+      label: "Court",
+      cmp: (dir) => makeComparator(agencyKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "Local Judiciary": [
+    {
+      id: "court",
+      label: "Court",
+      cmp: (dir) => makeComparator(agencyKey, dir),
+    },
     {
       id: "name",
       label: "Name",

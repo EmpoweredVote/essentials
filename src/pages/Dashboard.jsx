@@ -27,6 +27,7 @@ function Dashboard() {
   const [list, setList] = useState([]);
   const [phase, setPhase] = useState("idle"); // "idle" | "loading" | "partial" | "fresh"
   const [statusHdr, setStatusHdr] = useState(""); // for debugging UI
+  const [error, setError] = useState(null);
 
   const handleSearch = useCallback(async (zipcode) => {
     if (!zipcode || !/^\d{5}$/.test(zipcode)) return;
@@ -34,19 +35,38 @@ function Dashboard() {
     setPhase("loading");
     setList([]);
     setStatusHdr("");
+    setError(null);
 
-    await fetchPoliticiansProgressive(
-      zipcode,
-      // onUpdate: render partials as we go
-      ({ status, data }) => {
-        setList(Array.isArray(data) ? data : []);
-        setStatusHdr(status || "");
-        const s = (status || "").toLowerCase();
-        if (s === "fresh") setPhase("fresh");
-        else setPhase("partial"); // warmed/stale -> keep spinner, but show what we have
-      },
-      { maxAttempts: 8, intervalMs: 1500 }
-    );
+    try {
+      await fetchPoliticiansProgressive(
+        zipcode,
+        // onUpdate: render partials as we go
+        ({ status, data, error: apiError }) => {
+          if (apiError) {
+            setError(`Failed to fetch data: ${apiError}`);
+            setPhase("idle");
+            return;
+          }
+          setList(Array.isArray(data) ? data : []);
+          setStatusHdr(status || "");
+          const s = (status || "").toLowerCase();
+          if (s === "fresh") {
+            setPhase("fresh");
+          } else if (s === "timeout") {
+            setPhase("idle");
+          } else if (s === "warming") {
+            setPhase("loading"); // Keep showing spinner while warming
+          } else {
+            setPhase("partial"); // warmed/stale -> keep spinner, but show what we have
+          }
+        },
+        { maxAttempts: 8, intervalMs: 1500 }
+      );
+    } catch (err) {
+      console.error("Search error:", err);
+      setError(`Unable to connect to the server. Please make sure the backend is running on http://localhost:5050`);
+      setPhase("idle");
+    }
   }, []);
 
   useEffect(() => {
@@ -71,16 +91,33 @@ function Dashboard() {
     [list]
   );
 
+  // Helper to check district type tier
+  const isLocalType = (dt) => {
+    if (!dt) return false;
+    return dt.includes("LOCAL") || dt === "COUNTY" || dt === "SCHOOL" || dt === "JUDICIAL";
+  };
+
+  const isStateType = (dt) => {
+    if (!dt) return false;
+    // JUDICIAL can be state-level for supreme/appellate courts
+    return dt.includes("STATE");
+  };
+
+  const isFederalType = (dt) => {
+    if (!dt) return false;
+    return dt.includes("NATIONAL");
+  };
+
   const statePols = useMemo(
-    () => filteredPols.filter((p) => p?.district_type?.includes("STATE")),
+    () => filteredPols.filter((p) => isStateType(p?.district_type)),
     [filteredPols]
   );
   const federalPols = useMemo(
-    () => filteredPols.filter((p) => p?.district_type?.includes("NATIONAL")),
+    () => filteredPols.filter((p) => isFederalType(p?.district_type)),
     [filteredPols]
   );
   const localPols = useMemo(
-    () => filteredPols.filter((p) => p?.district_type?.includes("LOCAL")),
+    () => filteredPols.filter((p) => isLocalType(p?.district_type)),
     [filteredPols]
   );
 
@@ -122,6 +159,13 @@ function Dashboard() {
           Search
         </button>
       </div>
+
+      {/* Error message */}
+      {error && (
+        <div className="text-center text-red-600 bg-red-50 border border-red-200 rounded p-4 mt-4 mx-auto max-w-2xl">
+          {error}
+        </div>
+      )}
 
       {/* debug hint  */}
       {/* {statusHdr && (

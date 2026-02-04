@@ -1,25 +1,41 @@
 const API = import.meta.env.VITE_API_URL;
 
+// Debug: log the API URL on first load
+if (!window.__API_LOGGED__) {
+  console.log("API URL:", API);
+  window.__API_LOGGED__ = true;
+}
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export async function fetchPoliticiansOnce(zip, attempt = 0) {
-  const url = `${API}/essentials/politicians/${zip}?a=${attempt}&t=${Date.now()}`;
-  const res = await fetch(url, {
-    method: "GET",
-    credentials: "include",
-    cache: "no-store",
-  });
+  try {
+    const url = `${API}/essentials/politicians/${zip}?a=${attempt}&t=${Date.now()}`;
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+      cache: "no-store",
+    });
 
-  const status =
-    res.headers.get("X-Data-Status") || res.headers.get("x-data-status") || "";
+    const status =
+      res.headers.get("X-Data-Status") || res.headers.get("x-data-status") || "";
 
-  if (res.status === 202) {
-    const ra = parseInt(res.headers.get("Retry-After") || "3", 10);
-    return { status: "warming", retryAfter: isNaN(ra) ? 3 : ra, data: [] };
+    if (res.status === 202) {
+      const ra = parseInt(res.headers.get("Retry-After") || "3", 10);
+      return { status: "warming", retryAfter: isNaN(ra) ? 3 : ra, data: [] };
+    }
+
+    if (!res.ok) {
+      console.error(`API error: ${res.status} ${res.statusText}`);
+      return { status: "error", data: [], error: `${res.status} ${res.statusText}` };
+    }
+
+    const data = await res.json();
+    return { status, data };
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return { status: "error", data: [], error: error.message };
   }
-
-  const data = await res.json();
-  return { status, data };
 }
 
 export async function fetchPoliticiansProgressive(
@@ -31,6 +47,8 @@ export async function fetchPoliticiansProgressive(
     const once = await fetchPoliticiansOnce(zip, attempt);
 
     if (once.status === "warming") {
+      // Still call onUpdate so UI knows we're warming
+      if (typeof onUpdate === "function") onUpdate(once);
       await sleep((once.retryAfter ?? 3) * 1000);
       continue;
     }
@@ -43,11 +61,26 @@ export async function fetchPoliticiansProgressive(
 
     await sleep(intervalMs);
   }
-  return { status: "timeout", data: [] };
+
+  // Timeout - notify UI
+  const timeoutResult = {
+    status: "timeout",
+    data: [],
+    error: "Request timed out. The server may be fetching data - please try again in a moment."
+  };
+  if (typeof onUpdate === "function") onUpdate(timeoutResult);
+  return timeoutResult;
 }
 
 export async function fetchPolitician(id) {
-  const res = await fetch(`${API}/essentials/politician/${id}`);
-  if (!res.ok) throw new Error("Failed to fetch politician");
-  return res.json();
+  try {
+    const res = await fetch(`${API}/essentials/politician/${id}`, {
+      credentials: "include",
+    });
+    if (!res.ok) throw new Error("Failed to fetch politician");
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching politician:", error);
+    throw error;
+  }
 }

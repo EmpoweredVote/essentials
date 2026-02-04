@@ -1,6 +1,17 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+:root {
+  --ev-bg-light: #f0f8fa;
+  --ev-teal: #00657c;
+  --ev-teal-dark: #004d5c;
+  --ev-coral: #ff5740;
+  --ev-light-blue: #59b0c4;
+  --ev-yellow: #fed12e;
+}
 
 html,
 body {
-  @apply bg-zinc-50;
+  @apply bg-[var(--ev-bg-light)];
+  font-family: 'Manrope', sans-serif;
 }

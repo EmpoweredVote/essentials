@@ -1,45 +1,62 @@
-// src/pages/Profile.jsx
-import { useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { fetchPolitician } from "../lib/api";
-import { RadarChartCore } from "@EmpoweredVote/ev-ui";
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { fetchPolitician } from '../lib/api';
+import {
+  Header,
+  RadarChartCore,
+  SocialLinks,
+  CommitteeTable,
+  IssueTags,
+} from '@chrisandrewsedu/ev-ui';
 import {
   fetchTopics,
   fetchPoliticianAnswers,
   buildAnswerMapByShortTitle,
-} from "../lib/compass";
+} from '../lib/compass';
 
 const DEFAULT_SHORT_TITLES = [
-  "Abortion",
-  "Gun Control",
-  "Education",
-  "Climate Change",
-  "Healthcare",
-  "Policing",
+  'Abortion',
+  'Gun Control',
+  'Education',
+  'Climate Change',
+  'Healthcare',
+  'Policing',
 ];
 
 function Profile() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  // existing state
   const [pol, setPol] = useState({});
-
-  // NEW: chart state
-  const [topics, setTopics] = useState([]); // filtered topics (only the 6 defaults)
-  const [answersByShort, setAnswersByShort] = useState({}); // { short_title: value }
+  const [topics, setTopics] = useState([]);
+  const [answersByShort, setAnswersByShort] = useState({});
   const [loadingCompass, setLoadingCompass] = useState(true);
   const [invertedSpokes, setInvertedSpokes] = useState({});
-  const inversionKey = `invertedSpokes:pol:${id}`; // per-politician key
+  const [showUserComparison, setShowUserComparison] = useState(false);
+  const [userAnswers, setUserAnswers] = useState({});
 
-  // existing clamp state
-  const [expanded, setExpanded] = useState(false);
-  const [bioMax, setBioMax] = useState(null);
-  const [isClamped, setIsClamped] = useState(false);
+  const inversionKey = `invertedSpokes:pol:${id}`;
 
-  // Refs for layout
-  const imgWrapRef = useRef(null);
-  const headerRef = useRef(null);
-  const bioRef = useRef(null);
+  // Navigation config
+  const navItems = [
+    { label: 'About Us', href: '/about' },
+    {
+      label: 'Features',
+      href: '/features',
+      dropdown: [
+        { label: 'Political Compass', href: '/compass' },
+        { label: 'Find Representatives', href: '/' },
+        { label: 'Treasury Tracker', href: '/treasury' },
+      ],
+    },
+    { label: 'Volunteer', href: '/volunteer' },
+    { label: 'FAQ', href: '/faq' },
+  ];
+
+  const ctaButton = {
+    label: 'Donate',
+    href: '/donate',
+  };
 
   // Fetch politician
   useEffect(() => {
@@ -54,7 +71,7 @@ function Profile() {
     })();
   }, [id]);
 
-  // Load inversion for THIS politician
+  // Load inversion for this politician
   useEffect(() => {
     try {
       const saved = localStorage.getItem(inversionKey);
@@ -69,7 +86,19 @@ function Profile() {
     } catch {}
   }, [invertedSpokes, inversionKey]);
 
-  // Fetch topics + answers for this politician and build chart data
+  // Load user compass data if available
+  useEffect(() => {
+    try {
+      // Check for user compass data in localStorage (from CompassV2)
+      const compassAnswers = localStorage.getItem('compassAnswers');
+      if (compassAnswers) {
+        const parsed = JSON.parse(compassAnswers);
+        setUserAnswers(parsed);
+      }
+    } catch {}
+  }, []);
+
+  // Fetch topics + answers for this politician
   useEffect(() => {
     if (!id) return;
     let cancelled = false;
@@ -91,7 +120,7 @@ function Profile() {
         setTopics(topicsFiltered);
         setAnswersByShort(answersByShort);
       } catch (err) {
-        console.error("[Profile] compass load failed", err);
+        console.error('[Profile] compass load failed', err);
         setTopics([]);
         setAnswersByShort({});
       } finally {
@@ -104,177 +133,200 @@ function Profile() {
     };
   }, [id]);
 
-  // ---- Normalize notes (yours) ----
+  // Normalize notes
   const normalizeNotes = (s) =>
-    String(s ?? "")
-      .replace(/\\r\\n/g, " ")
-      .replace(/\r\n/g, " ")
-      .replace(/\\n/g, " ")
-      .replace(/\\t/g, " ");
+    String(s ?? '')
+      .replace(/\\r\\n/g, ' ')
+      .replace(/\r\n/g, ' ')
+      .replace(/\\n/g, ' ')
+      .replace(/\\t/g, ' ');
 
   const notes = normalizeNotes(
-    pol.notes ??
-      `No bio for ${pol.first_name ?? ""} ${pol.last_name ?? ""} yet.`
+    pol.notes ?? `No bio for ${pol.first_name ?? ''} ${pol.last_name ?? ''} yet.`
   );
 
-  const notesClean = String(notes).replace(/\s?\b\d{4}-\d{2}-\d{2}\b\s*$/, "");
-
-  // ---- Helpers: measure & clamp (yours) ----
-  const measure = () => {
-    const imgEl = imgWrapRef.current;
-    const headerEl = headerRef.current;
-    const bioEl = bioRef.current;
-    if (!imgEl || !headerEl || !bioEl) return { ok: false };
-
-    const imageHeight = imgEl.clientHeight;
-    const headerHeight = headerEl.offsetHeight;
-    const verticalGaps = 8;
-    const available = Math.max(0, imageHeight - headerHeight - verticalGaps);
-    return { ok: true, available };
-  };
-
-  const applyClamp = () => {
-    const { ok, available } = measure();
-    if (!ok) return;
-    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
-
-    if (!isDesktop) {
-      setIsClamped(false);
-      setBioMax(null);
-      return;
-    }
-
-    setBioMax(available);
-
-    if (bioRef.current) {
-      const prev = bioRef.current.style.maxHeight;
-      bioRef.current.style.maxHeight = "none";
-      const natural = bioRef.current.scrollHeight;
-      bioRef.current.style.maxHeight = prev;
-
-      const shouldClamp = natural > available;
-      setIsClamped(shouldClamp && !expanded);
-    }
-  };
-
-  useEffect(() => {
-    applyClamp();
-    let rAF = 0;
-    const onResize = () => {
-      cancelAnimationFrame(rAF);
-      rAF = requestAnimationFrame(applyClamp);
-    };
-    window.addEventListener("resize", onResize, { passive: true });
-    return () => {
-      cancelAnimationFrame(rAF);
-      window.removeEventListener("resize", onResize);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [notesClean, expanded]);
-
-  const handleImageLoad = () => applyClamp();
-
-  useEffect(() => {
-    if (!bioRef.current) return;
-    if (expanded) {
-      bioRef.current.style.maxHeight = "none";
-      setIsClamped(false);
-    } else if (bioMax != null) {
-      bioRef.current.style.maxHeight = `${bioMax}px`;
-    }
-  }, [expanded, bioMax]);
+  const notesClean = String(notes).replace(/\s?\b\d{4}-\d{2}-\d{2}\b\s*$/, '');
 
   // Toggle inversion by short_title
   const toggleInversion = (shortTitle) =>
     setInvertedSpokes((prev) => ({ ...prev, [shortTitle]: !prev[shortTitle] }));
 
+  // Extract social handles from identifiers
+  const getSocialHandle = (type) => {
+    const identifier = pol.identifiers?.find(
+      (i) => i.identifier_type?.toUpperCase() === type.toUpperCase()
+    );
+    return identifier?.identifier_value;
+  };
+
+  // Format committees for CommitteeTable
+  const committees = (pol.committees || []).map((c) => ({
+    name: c.name,
+    position: c.position,
+    url: c.urls?.[0],
+  }));
+
+  // Format topics as tags
+  const issueTags = topics.map((t) => ({
+    label: t.short_title,
+    value: t.short_title,
+  }));
+
+  const hasUserData = Object.keys(userAnswers).length > 0;
+
   return (
-    <div>
-      {/* top section (yours) */}
-      <div className="flex flex-col md:flex-row gap-6 items-start">
-        <div ref={imgWrapRef} className="w-32 md:w-64 flex-shrink-0">
-          <div className="aspect-[3/4] w-full">
-            <img
-              src={pol.photo_origin_url}
-              alt={`${pol.first_name ?? ""} ${pol.last_name ?? ""} portrait`}
-              className="w-full h-full rounded-lg object-cover"
-              onLoad={handleImageLoad}
+    <div className="min-h-screen bg-[var(--ev-bg-light)]">
+      <Header
+        logoSrc="/EVLogo.svg"
+        logoAlt="Empowered Vote"
+        navItems={navItems}
+        ctaButton={ctaButton}
+        onNavigate={(href) => navigate(href)}
+      />
+
+      <main className="container mx-auto px-6 py-8 max-w-6xl">
+        {/* Back Link */}
+        <Link
+          to="/results"
+          className="inline-flex items-center gap-2 text-[var(--ev-teal)] font-medium mb-6 hover:underline"
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
             />
+          </svg>
+          {pol.first_name} {pol.last_name}
+        </Link>
+
+        {/* Top Section */}
+        <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Photo */}
+            <div className="w-48 flex-shrink-0">
+              <img
+                src={pol.photo_origin_url}
+                alt={`${pol.first_name ?? ''} ${pol.last_name ?? ''} portrait`}
+                className="w-full aspect-[3/4] rounded-lg object-cover"
+              />
+            </div>
+
+            {/* Info */}
+            <div className="flex-1">
+              <h1 className="text-4xl font-bold text-[var(--ev-teal)] mb-2">
+                {pol.first_name} {pol.last_name}
+              </h1>
+              <h2 className="text-xl text-gray-700 mb-4">{pol.office_title}</h2>
+
+              {/* Description */}
+              <p className="text-gray-700 mb-6 leading-relaxed">{notesClean}</p>
+
+              {/* Committee Memberships */}
+              {committees.length > 0 && (
+                <div className="mb-6">
+                  <CommitteeTable committees={committees} />
+                </div>
+              )}
+
+              {/* Social Links */}
+              <div className="mb-4">
+                <SocialLinks
+                  email={pol.email_addresses?.[0]}
+                  website={pol.urls?.[0]}
+                  twitter={getSocialHandle('TWITTER')}
+                  facebook={getSocialHandle('FACEBOOK')}
+                  instagram={getSocialHandle('INSTAGRAM')}
+                  contactFormUrl={pol.web_form_url}
+                  size="md"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col text-left flex-1">
-          <div ref={headerRef} className="flex flex-col gap-2">
-            <h1 className="text-sky-950 font-bold text-2xl">
-              {pol.first_name} {pol.last_name}
-            </h1>
-            {pol.party && (
-              <h2 className="text-sky-900 font-semibold text-lg">
-                {pol.party} Party
-              </h2>
-            )}
-          </div>
+        {/* Issues and Prioritization Section */}
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <h3 className="text-2xl font-bold text-[var(--ev-teal)] mb-6">
+            Issues and Prioritization
+          </h3>
 
-          <div style={{ height: 8 }} />
-
-          <div
-            ref={bioRef}
-            className={[
-              "relative isolate text-sky-900 whitespace-pre-line",
-              "transition-[max-height] duration-300 ease-out",
-              isClamped && !expanded
-                ? "overflow-hidden after:content-[''] after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-10 after:bg-gradient-to-t after:from-white after:to-transparent after:z-0"
-                : "",
-            ].join(" ")}
-            style={{
-              maxHeight: !expanded && bioMax != null ? `${bioMax}px` : "none",
-            }}
-          >
-            {notesClean}
-          </div>
-
-          {bioMax != null && (isClamped || expanded) && (
-            <div className="mt-2 mr-4 flex justify-end">
+          {/* Toggle Tabs */}
+          {hasUserData && (
+            <div className="flex gap-2 mb-6">
               <button
-                onClick={() => setExpanded((v) => !v)}
-                aria-expanded={expanded}
-                className="rounded bg-white px-2 py-1 text-sm font-semibold text-sky-700 hover:underline shadow"
+                onClick={() => setShowUserComparison(false)}
+                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                  !showUserComparison
+                    ? 'bg-[var(--ev-teal)] text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
               >
-                {expanded ? "See less" : "See more"}
+                {pol.first_name} {pol.last_name}
+              </button>
+              <button
+                onClick={() => setShowUserComparison(true)}
+                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                  showUserComparison
+                    ? 'bg-[var(--ev-teal)] text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                User
               </button>
             </div>
           )}
+
+          {/* Compass */}
+          {loadingCompass ? (
+            <p className="text-gray-600">Loading compass…</p>
+          ) : topics.length === 0 ? (
+            <p className="text-gray-600">No topics available for the default set.</p>
+          ) : (
+            <div className="flex flex-col lg:flex-row gap-8 items-start">
+              {/* Radar Chart */}
+              <div className="flex-shrink-0">
+                <RadarChartCore
+                  topics={topics}
+                  data={answersByShort}
+                  compareData={showUserComparison && hasUserData ? userAnswers : {}}
+                  invertedSpokes={invertedSpokes}
+                  onToggleInversion={toggleInversion}
+                  onReplaceTopic={() => {}}
+                  size={420}
+                />
+              </div>
+
+              {/* Issue Tags and Policy Positions */}
+              <div className="flex-1">
+                <h4 className="text-lg font-semibold text-gray-800 mb-3">
+                  Issue Tags
+                </h4>
+                <IssueTags tags={issueTags} variant="default" />
+
+                {/* Policy positions could go here if we have them */}
+                {pol.notes && (
+                  <div className="mt-6">
+                    <h4 className="text-lg font-semibold text-gray-800 mb-3">
+                      Policy Positions
+                    </h4>
+                    <ul className="list-disc list-inside text-gray-700 space-y-2">
+                      {/* Parse notes for bullet points or display generic info */}
+                      <li>View full policy details on their official website</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-
-      <div className="flex-grow h-px bg-gray-300 mt-6" />
-
-      {/* Compass section */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold mb-3">
-          {pol.first_name} {pol.last_name}&rsquo;s Compass
-        </h3>
-
-        {loadingCompass ? (
-          <p className="text-gray-600">Loading compass…</p>
-        ) : topics.length === 0 ? (
-          <p className="text-gray-600">
-            No topics available for the default set.
-          </p>
-        ) : (
-          <div className="max-w-xl mx-auto">
-            <RadarChartCore
-              topics={topics}
-              data={answersByShort}
-              compareData={{}} // no comparison on profile page (for now)
-              invertedSpokes={invertedSpokes}
-              onToggleInversion={toggleInversion}
-              onReplaceTopic={() => {}} // not used on profile page
-              size={420}
-            />
-          </div>
-        )}
-      </div>
+      </main>
     </div>
   );
 }

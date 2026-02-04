@@ -6,9 +6,10 @@ const hasAny = (s, list) => {
 };
 
 export const FEDERAL_ORDER = [
-  "President / VP / Cabinet",
+  "President / VP",
   "U.S. Senate",
   "U.S. House",
+  "Cabinet",
   "Independent Agencies & Commissions",
   "Executive (Other)",
 ];
@@ -18,6 +19,7 @@ export const STATE_ORDER = [
   "Statewide Constitutional Officers",
   "State Senate",
   "State House/Assembly",
+  "State Judiciary",
   "Departments, Boards & Commissions",
   "Executive (Other)",
 ];
@@ -25,9 +27,16 @@ export const STATE_ORDER = [
 export const LOCAL_ORDER = [
   "Local Executives",
   "Local Legislators",
+  "County Executives",
+  "County Legislators",
+  "County Officials",
+  "School Board",
+  "Local Judiciary",
   "Local Departments & Special Districts",
   "Local (Other)",
 ];
+
+export const STATE_JUDICIARY_ORDER = ["State Judiciary"];
 
 const BODY_LEGIS_UPPER = ["senate"];
 const BODY_LEGIS_LOWER = ["house", "assembly"];
@@ -101,13 +110,23 @@ export function classifyCategory(pol) {
     return { tier: "State", group: "State House/Assembly" };
 
   if (dt === "NATIONAL_EXEC") {
+    // Elected federal executives: President and VP
+    if (hasAny(title, ["president", "vice president"])) {
+      return { tier: "Federal", group: "President / VP" };
+    }
+    // Cabinet secretaries (appointed but high-level)
+    if (hasAny(title, ["secretary of"])) {
+      return { tier: "Federal", group: "Cabinet" };
+    }
+    // Independent agencies and commissions
     if (
       hasAny(chamber, BODY_AGENCY) ||
       hasAny(title, ["commissioner", "director", "administrator", "chair"])
     ) {
       return { tier: "Federal", group: "Independent Agencies & Commissions" };
     }
-    return { tier: "Federal", group: "President / VP / Cabinet" };
+    // Other executive positions (ambassadors, chiefs of staff, etc.)
+    return { tier: "Federal", group: "Executive (Other)" };
   }
 
   if (dt === "STATE_EXEC") {
@@ -163,6 +182,33 @@ export function classifyCategory(pol) {
     return { tier: "Local", group: "Local (Other)" };
   }
 
+  // County officials - treat as Local
+  if (dt === "COUNTY") {
+    if (hasAny(title, ["commissioner", "supervisor", "council"])) {
+      return { tier: "Local", group: "County Legislators" };
+    }
+    if (hasAny(title, ROLE_LOCAL_EXEC)) {
+      return { tier: "Local", group: "County Executives" };
+    }
+    if (hasAny(title, ["sheriff", "clerk", "treasurer", "assessor", "auditor", "recorder", "coroner", "surveyor"])) {
+      return { tier: "Local", group: "County Officials" };
+    }
+    return { tier: "Local", group: "County Officials" };
+  }
+
+  // School district officials - treat as Local
+  if (dt === "SCHOOL") {
+    return { tier: "Local", group: "School Board" };
+  }
+
+  // Judicial officials - treat as Local/State depending on context
+  if (dt === "JUDICIAL") {
+    if (hasAny(chamber, ["supreme", "appellate", "appeals"])) {
+      return { tier: "State", group: "State Judiciary" };
+    }
+    return { tier: "Local", group: "Local Judiciary" };
+  }
+
   if (hasAny(chamber, BODY_LEGIS_UPPER))
     return { tier: "Unknown", group: "Legislature (Upper)" };
   if (hasAny(chamber, BODY_LEGIS_LOWER))
@@ -179,4 +225,41 @@ export function orderedEntries(obj, order) {
       (order.indexOf(b) === -1 ? 999 : order.indexOf(b))
   );
   return ranked.map((k) => [k, obj[k]]);
+}
+
+// Display name mappings for Figma design
+export const CATEGORY_DISPLAY_NAMES = {
+  // Federal
+  "President / VP": "President & VP",
+  "U.S. Senate": "Senate",
+  "U.S. House": "House",
+  "Cabinet": "Cabinet",
+  "Independent Agencies & Commissions": "Agencies",
+  "Executive (Other)": "Other Executive",
+
+  // State
+  "Governor & Lt. Governor": "Governor",
+  "Statewide Constitutional Officers": "Constitutional Officers",
+  "State Senate": "State Senate",
+  "State House/Assembly": "State House",
+  "State Judiciary": "State Courts",
+  "Departments, Boards & Commissions": "Boards & Commissions",
+
+  // Local
+  "Local Executives": "Mayor",
+  "Local Legislators": "Council",
+  "County Executives": "County Executive",
+  "County Legislators": "County Board",
+  "County Officials": "County Officials",
+  "School Board": "School Board",
+  "Local Judiciary": "Local Courts",
+  "Local Departments & Special Districts": "Special Districts",
+  "Local (Other)": "Other",
+};
+
+/**
+ * Get display-friendly category name
+ */
+export function getDisplayName(categoryName) {
+  return CATEGORY_DISPLAY_NAMES[categoryName] || categoryName;
 }
