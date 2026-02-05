@@ -43,7 +43,6 @@ export default function ResultsHeader({ resultsCount, onSearch, onSortChange }) 
         >
           <option value="name">Name</option>
           <option value="role">Role</option>
-          <option value="party">Party</option>
         </select>
       </div>
     </div>

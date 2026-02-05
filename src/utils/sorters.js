@@ -145,15 +145,6 @@ export const GROUP_SORT_OPTIONS = {
       label: "State",
       cmp: (dir) => makeComparator(stateKey, dir),
     },
-    {
-      id: "party",
-      label: "Party",
-      cmp: (dir) =>
-        chainComparators(
-          makeComparator(partyKey, dir),
-          makeComparator(lastNameKey, "asc")
-        ),
-    },
   ],
   "U.S. House": [
     {
@@ -165,15 +156,6 @@ export const GROUP_SORT_OPTIONS = {
       id: "name",
       label: "Name",
       cmp: (dir) => makeComparator(lastNameKey, dir),
-    },
-    {
-      id: "party",
-      label: "Party",
-      cmp: (dir) =>
-        chainComparators(
-          makeComparator(partyKey, dir),
-          makeComparator(lastNameKey, "asc")
-        ),
     },
   ],
   "State Senate": [
@@ -187,15 +169,6 @@ export const GROUP_SORT_OPTIONS = {
       label: "Name",
       cmp: (dir) => makeComparator(lastNameKey, dir),
     },
-    {
-      id: "party",
-      label: "Party",
-      cmp: (dir) =>
-        chainComparators(
-          makeComparator(partyKey, dir),
-          makeComparator(lastNameKey, "asc")
-        ),
-    },
   ],
   "State House/Assembly": [
     {
@@ -207,15 +180,6 @@ export const GROUP_SORT_OPTIONS = {
       id: "name",
       label: "Name",
       cmp: (dir) => makeComparator(lastNameKey, dir),
-    },
-    {
-      id: "party",
-      label: "Party",
-      cmp: (dir) =>
-        chainComparators(
-          makeComparator(partyKey, dir),
-          makeComparator(lastNameKey, "asc")
-        ),
     },
   ],
   "Departments, Boards & Commissions": [

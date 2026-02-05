@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Header, FilterSidebar, CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
+import { SiteHeader, FilterSidebar, CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
 import ResultsHeader from '../components/ResultsHeader';
 import { fetchPoliticiansProgressive } from '../lib/api';
 import {
@@ -32,27 +32,6 @@ export default function Results() {
   const [error, setError] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-
-  // Navigation config
-  const navItems = [
-    { label: 'About Us', href: '/about' },
-    {
-      label: 'Features',
-      href: '/features',
-      dropdown: [
-        { label: 'Political Compass', href: '/compass' },
-        { label: 'Find Representatives', href: '/' },
-        { label: 'Treasury Tracker', href: '/treasury' },
-      ],
-    },
-    { label: 'Volunteer', href: '/volunteer' },
-    { label: 'FAQ', href: '/faq' },
-  ];
-
-  const ctaButton = {
-    label: 'Donate',
-    href: '/donate',
-  };
 
   // Building images mapping
   const buildingImages = {
@@ -128,13 +107,42 @@ export default function Results() {
     [list]
   );
 
+  // Determine user's state from state or local politicians
+  const userState = useMemo(() => {
+    for (const p of filteredPols) {
+      const dt = p?.district_type || '';
+      if (dt.includes('STATE') || dt.includes('LOCAL') || dt === 'COUNTY' || dt === 'SCHOOL') {
+        if (p.representing_state) return p.representing_state.toUpperCase();
+      }
+    }
+    return null;
+  }, [filteredPols]);
+
+  // Filter federal politicians: only show senators/reps from user's state
+  const federalFiltered = useMemo(() => {
+    if (!userState) return filteredPols;
+    return filteredPols.filter((p) => {
+      const dt = p?.district_type;
+      // Non-federal politicians pass through
+      if (!dt?.includes('NATIONAL')) return true;
+      // NATIONAL_EXEC (President, VP, Cabinet) - show all
+      if (dt === 'NATIONAL_EXEC') return true;
+      // NATIONAL_UPPER (Senate) and NATIONAL_LOWER (House) - only user's state
+      if (dt === 'NATIONAL_UPPER' || dt === 'NATIONAL_LOWER') {
+        return p.representing_state?.toUpperCase() === userState;
+      }
+      // Other federal (if any) - show all
+      return true;
+    });
+  }, [filteredPols, userState]);
+
   const classified = useMemo(
-    () => filteredPols.map((p) => ({ pol: p, cat: classifyCategory(p) })),
-    [filteredPols]
+    () => federalFiltered.map((p) => ({ pol: p, cat: classifyCategory(p) })),
+    [federalFiltered]
   );
 
   const byTier = useMemo(() => {
-    const map = { Federal: {}, State: {}, Local: {}, Unknown: {} };
+    const map = { Local: {}, State: {}, Federal: {}, Unknown: {} };
     for (const { pol, cat } of classified) {
       const tier = map[cat.tier] ? cat.tier : 'Unknown';
       if (!map[tier][cat.group]) map[tier][cat.group] = [];
@@ -197,13 +205,7 @@ export default function Results() {
 
   return (
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
-      <Header
-        logoSrc="/EVLogo.svg"
-        logoAlt="Empowered Vote"
-        navItems={navItems}
-        ctaButton={ctaButton}
-        onNavigate={(href) => navigate(href)}
-      />
+      <SiteHeader logoSrc="/EVLogo.svg" />
 
       <div className="flex">
         {/* Filter Sidebar */}
@@ -220,17 +222,9 @@ export default function Results() {
 
         {/* Main Content */}
         <main className="flex-1">
-          {zip && (
-            <div className="py-4 px-8 border-b border-gray-200">
-              <p className="text-lg">
-                Showing results for <span className="font-semibold">"{zip} — {locationLabel || 'Loading...'}"</span>
-              </p>
-            </div>
-          )}
-
           {/* Results Header */}
           <ResultsHeader
-            resultsCount={filteredPols.length}
+            resultsCount={federalFiltered.length}
             onSearch={setSearchQuery}
           />
 
@@ -249,61 +243,88 @@ export default function Results() {
             {Object.entries(searchFilteredPoliticians).map(([tier, groups]) =>
               Object.keys(groups).length > 0 ? (
                 <div key={tier}>
-                  {tier === 'Federal' &&
-                    orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
-                      <CategorySection key={category} title={getDisplayName(category)}>
-                        {polList.map((pol) => (
-                          <PoliticianCard
-                            key={pol.id}
-                            id={pol.id}
-                            imageSrc={pol.photo_origin_url}
-                            name={`${pol.first_name} ${pol.last_name}`}
-                            title={pol.office_title}
-                            onClick={() => handlePoliticianClick(pol.id)}
-                            variant="horizontal"
-                          />
-                        ))}
-                      </CategorySection>
-                    ))}
+                  {tier === 'Local' && (
+                    <>
+                      {selectedFilter === 'All' && (
+                        <div className="flex items-center gap-4 mb-4">
+                          <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Local</span>
+                          <hr className="flex-1 border-gray-200" />
+                        </div>
+                      )}
+                      {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
+                        <CategorySection key={category} title={getDisplayName(category)}>
+                          {polList.map((pol) => (
+                            <PoliticianCard
+                              key={pol.id}
+                              id={pol.id}
+                              imageSrc={pol.photo_origin_url}
+                              name={`${pol.first_name} ${pol.last_name}`}
+                              title={pol.office_title}
+                              onClick={() => handlePoliticianClick(pol.id)}
+                              variant="horizontal"
+                            />
+                          ))}
+                        </CategorySection>
+                      ))}
+                    </>
+                  )}
 
-                  {tier === 'State' &&
-                    orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
-                      <CategorySection key={category} title={getDisplayName(category)}>
-                        {polList.map((pol) => (
-                          <PoliticianCard
-                            key={pol.id}
-                            id={pol.id}
-                            imageSrc={pol.photo_origin_url}
-                            name={`${pol.first_name} ${pol.last_name}`}
-                            title={pol.office_title}
-                            onClick={() => handlePoliticianClick(pol.id)}
-                            variant="horizontal"
-                          />
-                        ))}
-                      </CategorySection>
-                    ))}
+                  {tier === 'State' && (
+                    <>
+                      {selectedFilter === 'All' && (
+                        <div className="flex items-center gap-4 mt-10 mb-4">
+                          <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">State</span>
+                          <hr className="flex-1 border-gray-200" />
+                        </div>
+                      )}
+                      {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
+                        <CategorySection key={category} title={getDisplayName(category)}>
+                          {polList.map((pol) => (
+                            <PoliticianCard
+                              key={pol.id}
+                              id={pol.id}
+                              imageSrc={pol.photo_origin_url}
+                              name={`${pol.first_name} ${pol.last_name}`}
+                              title={pol.office_title}
+                              onClick={() => handlePoliticianClick(pol.id)}
+                              variant="horizontal"
+                            />
+                          ))}
+                        </CategorySection>
+                      ))}
+                    </>
+                  )}
 
-                  {tier === 'Local' &&
-                    orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
-                      <CategorySection key={category} title={getDisplayName(category)}>
-                        {polList.map((pol) => (
-                          <PoliticianCard
-                            key={pol.id}
-                            id={pol.id}
-                            imageSrc={pol.photo_origin_url}
-                            name={`${pol.first_name} ${pol.last_name}`}
-                            title={pol.office_title}
-                            onClick={() => handlePoliticianClick(pol.id)}
-                            variant="horizontal"
-                          />
-                        ))}
-                      </CategorySection>
-                    ))}
+                  {tier === 'Federal' && (
+                    <>
+                      {selectedFilter === 'All' && (
+                        <div className="flex items-center gap-4 mt-10 mb-4">
+                          <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Federal</span>
+                          <hr className="flex-1 border-gray-200" />
+                        </div>
+                      )}
+                      {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
+                        <CategorySection key={category} title={getDisplayName(category)}>
+                          {polList.map((pol) => (
+                            <PoliticianCard
+                              key={pol.id}
+                              id={pol.id}
+                              imageSrc={pol.photo_origin_url}
+                              name={`${pol.first_name} ${pol.last_name}`}
+                              title={pol.office_title}
+                              onClick={() => handlePoliticianClick(pol.id)}
+                              variant="horizontal"
+                            />
+                          ))}
+                        </CategorySection>
+                      ))}
+                    </>
+                  )}
                 </div>
               ) : null
             )}
 
-            {filteredPols.length === 0 && phase !== 'loading' && zip && (
+            {federalFiltered.length === 0 && phase !== 'loading' && zip && (
               <p className="text-center text-gray-600 mt-8">
                 No results found for ZIP code {zip}.
               </p>

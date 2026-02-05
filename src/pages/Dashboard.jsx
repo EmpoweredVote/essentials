@@ -112,14 +112,41 @@ function Dashboard() {
     () => filteredPols.filter((p) => isStateType(p?.district_type)),
     [filteredPols]
   );
-  const federalPols = useMemo(
-    () => filteredPols.filter((p) => isFederalType(p?.district_type)),
-    [filteredPols]
-  );
   const localPols = useMemo(
     () => filteredPols.filter((p) => isLocalType(p?.district_type)),
     [filteredPols]
   );
+
+  // Determine user's state from state-level or local politicians
+  const userState = useMemo(() => {
+    // Try state politicians first
+    for (const p of statePols) {
+      if (p.representing_state) return p.representing_state.toUpperCase();
+    }
+    // Fall back to local politicians
+    for (const p of localPols) {
+      if (p.representing_state) return p.representing_state.toUpperCase();
+    }
+    return null;
+  }, [statePols, localPols]);
+
+  // Filter federal politicians: only show senators/reps from user's state
+  const federalPols = useMemo(() => {
+    const allFederal = filteredPols.filter((p) => isFederalType(p?.district_type));
+    if (!userState) return allFederal;
+
+    return allFederal.filter((p) => {
+      const dt = p?.district_type;
+      // NATIONAL_EXEC (President, VP, Cabinet) - show all
+      if (dt === "NATIONAL_EXEC") return true;
+      // NATIONAL_UPPER (Senate) and NATIONAL_LOWER (House) - only user's state
+      if (dt === "NATIONAL_UPPER" || dt === "NATIONAL_LOWER") {
+        return p.representing_state?.toUpperCase() === userState;
+      }
+      // Other federal (if any) - show all
+      return true;
+    });
+  }, [filteredPols, userState]);
 
   const classified = useMemo(
     () => filteredPols.map((p) => ({ pol: p, cat: classifyCategory(p) })),
@@ -216,14 +243,10 @@ function Dashboard() {
       <div className="mt-8 px-[10%]">
         {selectedTab == "All" && (
           <div>
-            <PoliticianGrid
-              gridTitle={"Federal Politicians"}
-              polList={federalPols}
-            />
-            <PoliticianGrid
-              gridTitle={"State Politicians"}
-              polList={statePols}
-            />
+            <div className="flex items-center gap-4 mb-4">
+              <span className="text-sm font-medium text-zinc-500 uppercase tracking-wide">Local</span>
+              <hr className="flex-1 border-zinc-200" />
+            </div>
             <div>
               <PoliticianGrid
                 gridTitle={"Local Politicians"}
@@ -236,6 +259,22 @@ function Dashboard() {
                 </p>
               )}
             </div>
+            <div className="flex items-center gap-4 mt-10 mb-4">
+              <span className="text-sm font-medium text-zinc-500 uppercase tracking-wide">State</span>
+              <hr className="flex-1 border-zinc-200" />
+            </div>
+            <PoliticianGrid
+              gridTitle={"State Politicians"}
+              polList={statePols}
+            />
+            <div className="flex items-center gap-4 mt-10 mb-4">
+              <span className="text-sm font-medium text-zinc-500 uppercase tracking-wide">Federal</span>
+              <hr className="flex-1 border-zinc-200" />
+            </div>
+            <PoliticianGrid
+              gridTitle={"Federal Politicians"}
+              polList={federalPols}
+            />
           </div>
         )}
 

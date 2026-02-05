@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Header } from '@chrisandrewsedu/ev-ui';
+import { SiteHeader } from '@chrisandrewsedu/ev-ui';
 
 export default function Landing() {
   const [zip, setZip] = useState('');
@@ -19,35 +19,9 @@ export default function Landing() {
     }
   };
 
-  const navItems = [
-    { label: 'About Us', href: '/about' },
-    {
-      label: 'Features',
-      href: '/features',
-      dropdown: [
-        { label: 'Political Compass', href: '/compass' },
-        { label: 'Find Representatives', href: '/' },
-        { label: 'Treasury Tracker', href: '/treasury' },
-      ],
-    },
-    { label: 'Volunteer', href: '/volunteer' },
-    { label: 'FAQ', href: '/faq' },
-  ];
-
-  const ctaButton = {
-    label: 'Donate',
-    href: '/donate',
-  };
-
   return (
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
-      <Header
-        logoSrc="/EVLogo.svg"
-        logoAlt="Empowered Vote"
-        navItems={navItems}
-        ctaButton={ctaButton}
-        onNavigate={(href) => navigate(href)}
-      />
+      <SiteHeader logoSrc="/EVLogo.svg" />
 
       <main className="container mx-auto px-6 py-16">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
