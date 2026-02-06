@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
+@theme {
+  /* Empowered Vote - Inform Pillar Color */
+  --color-ev-yellow: #fed12e;
+  --color-ev-yellow-light: #fef3c7;
+  --color-ev-yellow-dark: #eab308;
+}
+
 :root {
   --ev-bg-light: #f0f8fa;
   --ev-teal: #00657c;

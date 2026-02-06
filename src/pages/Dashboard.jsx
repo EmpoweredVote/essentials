@@ -202,7 +202,7 @@ function Dashboard() {
         </div>
       )} */}
 
-      <div className="flex flex-row justify-center mt-6">
+      <div className="flex flex-row justify-center mt-6 border-b-4 border-ev-yellow">
         <button
           className={`${
             selectedTab == "All" ? "bg-sky-950 text-white" : ""
