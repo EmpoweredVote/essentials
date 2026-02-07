@@ -1,5 +1,9 @@
 [build]
-  command = "npm run build"
+  command = '''
+    git clone https://github.com/chrisandrewsedu/ev-ui.git ../ev-ui
+    cd ../ev-ui && npm install && npm run build
+    cd /opt/build/repo && npm run build
+  '''
   publish = "dist"
 
 [[redirects]]
