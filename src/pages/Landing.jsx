@@ -8,8 +8,11 @@ export default function Landing() {
 
   const handleSearch = () => {
     const normalized = zip.trim();
+    if (!normalized) return;
     if (/^\d{5}$/.test(normalized)) {
       navigate(`/results?zip=${normalized}`);
+    } else {
+      navigate(`/results?q=${encodeURIComponent(normalized)}`);
     }
   };
 
@@ -31,24 +34,22 @@ export default function Landing() {
               Find Your Representatives
             </h1>
             <p className="text-xl text-gray-700 mb-8">
-              Enter your ZIP code to see who represents you
+              Enter your ZIP code or address to see who represents you
             </p>
 
-            {/* ZIP Input + Search Button */}
+            {/* Search Input + Button */}
             <div className="flex gap-3">
               <input
                 type="text"
-                inputMode="numeric"
-                maxLength={5}
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Enter ZIP Code"
+                placeholder="Enter ZIP code or address"
                 className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
               />
               <button
                 onClick={handleSearch}
-                disabled={!/^\d{5}$/.test(zip.trim())}
+                disabled={!zip.trim()}
                 className="px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Search

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { SiteHeader, FilterSidebar, CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
 import ResultsHeader from '../components/ResultsHeader';
-import { fetchPoliticiansProgressive } from '../lib/api';
+import { fetchPoliticiansProgressive, searchPoliticians } from '../lib/api';
 import {
   classifyCategory,
   STATE_ORDER,
@@ -11,6 +11,14 @@ import {
   orderedEntries,
   getDisplayName,
 } from '../lib/classify';
+
+function getImageUrl(pol) {
+  if (pol.images && pol.images.length > 0) {
+    const defaultImg = pol.images.find((img) => img.type === 'default');
+    return defaultImg ? defaultImg.url : pol.images[0].url;
+  }
+  return pol.photo_origin_url;
+}
 
 function Spinner() {
   return (
@@ -25,8 +33,9 @@ export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const zipFromUrl = searchParams.get('zip') || '';
+  const queryFromUrl = searchParams.get('q') || '';
 
-  const [zip, setZip] = useState(zipFromUrl);
+  const [zip, setZip] = useState(zipFromUrl || queryFromUrl);
   const [list, setList] = useState([]);
   const [phase, setPhase] = useState('idle'); // "idle" | "loading" | "partial" | "fresh"
   const [error, setError] = useState(null);
@@ -41,36 +50,50 @@ export default function Results() {
     Local: '/images/city-hall.jpg',
   };
 
-  const handleSearch = useCallback(async (zipcode) => {
-    if (!zipcode || !/^\d{5}$/.test(zipcode)) return;
+  const handleSearch = useCallback(async (query) => {
+    if (!query) return;
 
+    const isZip = /^\d{5}$/.test(query);
+
+    sessionStorage.removeItem('ev:results');
     setPhase('loading');
     setList([]);
     setError(null);
 
     try {
-      await fetchPoliticiansProgressive(
-        zipcode,
-        ({ status, data, error: apiError }) => {
-          if (apiError) {
-            setError(`Failed to fetch data: ${apiError}`);
-            setPhase('idle');
-            return;
-          }
-          setList(Array.isArray(data) ? data : []);
-          const s = (status || '').toLowerCase();
-          if (s === 'fresh') {
-            setPhase('fresh');
-          } else if (s === 'timeout') {
-            setPhase('idle');
-          } else if (s === 'warming') {
-            setPhase('loading');
-          } else {
-            setPhase('partial');
-          }
-        },
-        { maxAttempts: 8, intervalMs: 1500 }
-      );
+      if (isZip) {
+        await fetchPoliticiansProgressive(
+          query,
+          ({ status, data, error: apiError }) => {
+            if (apiError) {
+              setError(`Failed to fetch data: ${apiError}`);
+              setPhase('idle');
+              return;
+            }
+            setList(Array.isArray(data) ? data : []);
+            const s = (status || '').toLowerCase();
+            if (s === 'fresh') {
+              setPhase('fresh');
+            } else if (s === 'timeout') {
+              setPhase('idle');
+            } else if (s === 'warming') {
+              setPhase('loading');
+            } else {
+              setPhase('partial');
+            }
+          },
+          { maxAttempts: 8, intervalMs: 1500 }
+        );
+      } else {
+        const result = await searchPoliticians(query);
+        if (result.error) {
+          setError(`Failed to fetch data: ${result.error}`);
+          setPhase('idle');
+          return;
+        }
+        setList(Array.isArray(result.data) ? result.data : []);
+        setPhase('fresh');
+      }
     } catch (err) {
       console.error('Search error:', err);
       setError('Unable to connect to the server.');
@@ -78,12 +101,43 @@ export default function Results() {
     }
   }, []);
 
+  // Save results to sessionStorage for back-navigation restoration
   useEffect(() => {
-    if (zipFromUrl) {
-      setZip(zipFromUrl);
-      handleSearch(zipFromUrl);
+    if (list.length > 0 && (phase === 'fresh' || phase === 'partial')) {
+      const query = zipFromUrl || queryFromUrl;
+      if (query) {
+        sessionStorage.setItem('ev:results', JSON.stringify({
+          query,
+          list,
+          filter: selectedFilter,
+          timestamp: Date.now(),
+        }));
+      }
     }
-  }, [zipFromUrl, handleSearch]);
+  }, [list, phase, selectedFilter, zipFromUrl, queryFromUrl]);
+
+  useEffect(() => {
+    const initial = zipFromUrl || queryFromUrl;
+    if (!initial) return;
+
+    setZip(initial);
+
+    // Try restoring from sessionStorage (e.g. back-navigation)
+    try {
+      const cached = sessionStorage.getItem('ev:results');
+      if (cached) {
+        const { query: cachedQuery, list: cachedList, filter, timestamp } = JSON.parse(cached);
+        if (cachedQuery === initial && Date.now() - timestamp < 600000) {
+          setList(cachedList);
+          setSelectedFilter(filter || 'All');
+          setPhase('fresh');
+          return;
+        }
+      }
+    } catch { /* ignore parse errors */ }
+
+    handleSearch(initial);
+  }, [zipFromUrl, queryFromUrl, handleSearch]);
 
   const handleZipChange = (newZip) => {
     setZip(newZip);
@@ -95,10 +149,13 @@ export default function Results() {
 
   const handleZipSubmit = () => {
     const normalized = zip.trim();
+    if (!normalized) return;
     if (/^\d{5}$/.test(normalized)) {
       setSearchParams({ zip: normalized });
-      handleSearch(normalized);
+    } else {
+      setSearchParams({ q: normalized });
     }
+    handleSearch(normalized);
   };
 
   // Filter and classify
@@ -257,7 +314,7 @@ export default function Results() {
                             <PoliticianCard
                               key={pol.id}
                               id={pol.id}
-                              imageSrc={pol.photo_origin_url}
+                              imageSrc={getImageUrl(pol)}
                               name={`${pol.first_name} ${pol.last_name}`}
                               title={pol.office_title}
                               onClick={() => handlePoliticianClick(pol.id)}
@@ -283,7 +340,7 @@ export default function Results() {
                             <PoliticianCard
                               key={pol.id}
                               id={pol.id}
-                              imageSrc={pol.photo_origin_url}
+                              imageSrc={getImageUrl(pol)}
                               name={`${pol.first_name} ${pol.last_name}`}
                               title={pol.office_title}
                               onClick={() => handlePoliticianClick(pol.id)}
@@ -309,7 +366,7 @@ export default function Results() {
                             <PoliticianCard
                               key={pol.id}
                               id={pol.id}
-                              imageSrc={pol.photo_origin_url}
+                              imageSrc={getImageUrl(pol)}
                               name={`${pol.first_name} ${pol.last_name}`}
                               title={pol.office_title}
                               onClick={() => handlePoliticianClick(pol.id)}
@@ -326,7 +383,7 @@ export default function Results() {
 
             {federalFiltered.length === 0 && phase !== 'loading' && zip && (
               <p className="text-center text-gray-600 mt-8">
-                No results found for ZIP code {zip}.
+                No results found for this location.
               </p>
             )}
           </div>

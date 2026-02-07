@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import PoliticianGrid from "../components/PoliticianGrid";
-import { fetchPoliticiansProgressive } from "../lib/api";
+import { fetchPoliticiansProgressive, searchPoliticians } from "../lib/api";
 import {
   classifyCategory,
   STATE_ORDER,
@@ -22,6 +22,7 @@ function Spinner() {
 function Dashboard() {
   const [searchParams, setSearchParams] = useSearchParams();
   const zipFromUrl = searchParams.get("zip") || "";
+  const queryFromUrl = searchParams.get("q") || "";
 
   const [zip, setZip] = useState("");
   const [list, setList] = useState([]);
@@ -29,8 +30,10 @@ function Dashboard() {
   const [statusHdr, setStatusHdr] = useState(""); // for debugging UI
   const [error, setError] = useState(null);
 
-  const handleSearch = useCallback(async (zipcode) => {
-    if (!zipcode || !/^\d{5}$/.test(zipcode)) return;
+  const handleSearch = useCallback(async (query) => {
+    if (!query) return;
+
+    const isZip = /^\d{5}$/.test(query);
 
     setPhase("loading");
     setList([]);
@@ -38,30 +41,41 @@ function Dashboard() {
     setError(null);
 
     try {
-      await fetchPoliticiansProgressive(
-        zipcode,
-        // onUpdate: render partials as we go
-        ({ status, data, error: apiError }) => {
-          if (apiError) {
-            setError(`Failed to fetch data: ${apiError}`);
-            setPhase("idle");
-            return;
-          }
-          setList(Array.isArray(data) ? data : []);
-          setStatusHdr(status || "");
-          const s = (status || "").toLowerCase();
-          if (s === "fresh") {
-            setPhase("fresh");
-          } else if (s === "timeout") {
-            setPhase("idle");
-          } else if (s === "warming") {
-            setPhase("loading"); // Keep showing spinner while warming
-          } else {
-            setPhase("partial"); // warmed/stale -> keep spinner, but show what we have
-          }
-        },
-        { maxAttempts: 8, intervalMs: 1500 }
-      );
+      if (isZip) {
+        await fetchPoliticiansProgressive(
+          query,
+          ({ status, data, error: apiError }) => {
+            if (apiError) {
+              setError(`Failed to fetch data: ${apiError}`);
+              setPhase("idle");
+              return;
+            }
+            setList(Array.isArray(data) ? data : []);
+            setStatusHdr(status || "");
+            const s = (status || "").toLowerCase();
+            if (s === "fresh") {
+              setPhase("fresh");
+            } else if (s === "timeout") {
+              setPhase("idle");
+            } else if (s === "warming") {
+              setPhase("loading");
+            } else {
+              setPhase("partial");
+            }
+          },
+          { maxAttempts: 8, intervalMs: 1500 }
+        );
+      } else {
+        const result = await searchPoliticians(query);
+        if (result.error) {
+          setError(`Failed to fetch data: ${result.error}`);
+          setPhase("idle");
+          return;
+        }
+        setList(Array.isArray(result.data) ? result.data : []);
+        setStatusHdr(result.status || "");
+        setPhase("fresh");
+      }
     } catch (err) {
       console.error("Search error:", err);
       setError(`Unable to connect to the server. Please make sure the backend is running on http://localhost:5050`);
@@ -70,18 +84,21 @@ function Dashboard() {
   }, []);
 
   useEffect(() => {
-    const initial = zipFromUrl || "";
+    const initial = zipFromUrl || queryFromUrl || "";
     if (initial) {
       setZip(initial);
-      if (!zipFromUrl) setSearchParams({ zip: initial }, { replace: true });
       handleSearch(initial);
     }
   }, []);
 
   const onSearchClick = () => {
     const normalized = (zip || "").trim();
-    if (!/^\d{5}$/.test(normalized)) return;
-    setSearchParams({ zip: normalized });
+    if (!normalized) return;
+    if (/^\d{5}$/.test(normalized)) {
+      setSearchParams({ zip: normalized });
+    } else {
+      setSearchParams({ q: normalized });
+    }
     handleSearch(normalized);
   };
 
@@ -174,10 +191,8 @@ function Dashboard() {
           onKeyDown={(e) => {
             if (e.key === "Enter") onSearchClick();
           }}
-          placeholder="Enter ZIP code"
+          placeholder="Enter ZIP code or address"
           className="border p-2 mr-2"
-          inputMode="numeric"
-          maxLength={5}
         />
         <button
           onClick={onSearchClick}
@@ -254,8 +269,7 @@ function Dashboard() {
               />
               {localPols.length == 0 && phase !== "loading" && (
                 <p className="mt-4">
-                  Sorry, we don't have data on local politicians for{" "}
-                  {zip.length == 5 ? zip : "your zip code"}.
+                  Sorry, we don't have data on local politicians for this location.
                 </p>
               )}
             </div>

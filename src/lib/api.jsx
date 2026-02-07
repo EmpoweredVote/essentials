@@ -72,6 +72,32 @@ export async function fetchPoliticiansProgressive(
   return timeoutResult;
 }
 
+export async function searchPoliticians(query) {
+  try {
+    const res = await fetch(`${API}/essentials/politicians/search`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    });
+
+    const status =
+      res.headers.get("X-Data-Status") || res.headers.get("x-data-status") || "";
+
+    if (!res.ok) {
+      const text = await res.text();
+      console.error(`Search API error: ${res.status}`, text);
+      return { status: "error", data: [], error: `${res.status} ${res.statusText}` };
+    }
+
+    const data = await res.json();
+    return { status: status || "fresh", data };
+  } catch (error) {
+    console.error("Search error:", error);
+    return { status: "error", data: [], error: error.message };
+  }
+}
+
 export async function fetchPolitician(id) {
   try {
     const res = await fetch(`${API}/essentials/politician/${id}`, {
