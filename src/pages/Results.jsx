@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { SiteHeader, FilterSidebar, CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
 import ResultsHeader from '../components/ResultsHeader';
-import { fetchPoliticiansProgressive, searchPoliticians } from '../lib/api';
+import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
   classifyCategory,
   STATE_ORDER,
@@ -36,11 +36,43 @@ export default function Results() {
   const queryFromUrl = searchParams.get('q') || '';
 
   const [zip, setZip] = useState(zipFromUrl || queryFromUrl);
-  const [list, setList] = useState([]);
-  const [phase, setPhase] = useState('idle'); // "idle" | "loading" | "partial" | "fresh"
-  const [error, setError] = useState(null);
-  const [selectedFilter, setSelectedFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Attempt sessionStorage restore for back-navigation
+  const [cachedResult, setCachedResult] = useState(() => {
+    const initial = zipFromUrl || queryFromUrl;
+    if (!initial) return null;
+    try {
+      const cached = sessionStorage.getItem('ev:results');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed.query === initial && Date.now() - parsed.timestamp < 600000) {
+          return parsed;
+        }
+      }
+    } catch { /* ignore */ }
+    return null;
+  });
+
+  // Wire up the hook with sessionStorage gating
+  const activeQuery = zipFromUrl || queryFromUrl || '';
+  const {
+    data: hookData,
+    phase: hookPhase,
+    error,
+  } = usePoliticianData(activeQuery, {
+    enabled: !!activeQuery && !cachedResult,
+    initialData: [],
+  });
+
+  // Derive actual data and phase from cache or hook
+  const list = cachedResult ? cachedResult.list : hookData;
+  const phase = cachedResult ? 'fresh' : hookPhase;
+
+  // Initialize selectedFilter from cache if available
+  const [selectedFilter, setSelectedFilter] = useState(
+    cachedResult?.filter || 'All'
+  );
 
   // Building images mapping
   const buildingImages = {
@@ -50,60 +82,9 @@ export default function Results() {
     Local: '/images/city-hall.jpg',
   };
 
-  const handleSearch = useCallback(async (query) => {
-    if (!query) return;
-
-    const isZip = /^\d{5}$/.test(query);
-
-    sessionStorage.removeItem('ev:results');
-    setPhase('loading');
-    setList([]);
-    setError(null);
-
-    try {
-      if (isZip) {
-        await fetchPoliticiansProgressive(
-          query,
-          ({ status, data, error: apiError }) => {
-            if (apiError) {
-              setError(`Failed to fetch data: ${apiError}`);
-              setPhase('idle');
-              return;
-            }
-            setList(Array.isArray(data) ? data : []);
-            const s = (status || '').toLowerCase();
-            if (s === 'fresh') {
-              setPhase('fresh');
-            } else if (s === 'timeout') {
-              setPhase('idle');
-            } else if (s === 'warming') {
-              setPhase('loading');
-            } else {
-              setPhase('partial');
-            }
-          },
-          { maxAttempts: 8, intervalMs: 1500 }
-        );
-      } else {
-        const result = await searchPoliticians(query);
-        if (result.error) {
-          setError(`Failed to fetch data: ${result.error}`);
-          setPhase('idle');
-          return;
-        }
-        setList(Array.isArray(result.data) ? result.data : []);
-        setPhase('fresh');
-      }
-    } catch (err) {
-      console.error('Search error:', err);
-      setError('Unable to connect to the server.');
-      setPhase('idle');
-    }
-  }, []);
-
   // Save results to sessionStorage for back-navigation restoration
   useEffect(() => {
-    if (list.length > 0 && (phase === 'fresh' || phase === 'partial')) {
+    if (list.length > 0 && phase === 'fresh') {
       const query = zipFromUrl || queryFromUrl;
       if (query) {
         sessionStorage.setItem('ev:results', JSON.stringify({
@@ -116,29 +97,6 @@ export default function Results() {
     }
   }, [list, phase, selectedFilter, zipFromUrl, queryFromUrl]);
 
-  useEffect(() => {
-    const initial = zipFromUrl || queryFromUrl;
-    if (!initial) return;
-
-    setZip(initial);
-
-    // Try restoring from sessionStorage (e.g. back-navigation)
-    try {
-      const cached = sessionStorage.getItem('ev:results');
-      if (cached) {
-        const { query: cachedQuery, list: cachedList, filter, timestamp } = JSON.parse(cached);
-        if (cachedQuery === initial && Date.now() - timestamp < 600000) {
-          setList(cachedList);
-          setSelectedFilter(filter || 'All');
-          setPhase('fresh');
-          return;
-        }
-      }
-    } catch { /* ignore parse errors */ }
-
-    handleSearch(initial);
-  }, [zipFromUrl, queryFromUrl, handleSearch]);
-
   const handleZipChange = (newZip) => {
     setZip(newZip);
   };
@@ -150,12 +108,14 @@ export default function Results() {
   const handleZipSubmit = () => {
     const normalized = zip.trim();
     if (!normalized) return;
+    // Clear sessionStorage cache so hook runs fresh
+    setCachedResult(null);
+    sessionStorage.removeItem('ev:results');
     if (/^\d{5}$/.test(normalized)) {
       setSearchParams({ zip: normalized });
     } else {
       setSearchParams({ q: normalized });
     }
-    handleSearch(normalized);
   };
 
   // Filter and classify
@@ -293,7 +253,7 @@ export default function Results() {
           )}
 
           {/* Spinner */}
-          {(phase === 'loading' || phase === 'partial') && <Spinner />}
+          {(phase === 'checking' || phase === 'warming' || phase === 'loading') && <Spinner />}
 
           {/* Results */}
           <div className="px-8 pb-8">
