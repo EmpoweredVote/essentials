@@ -98,6 +98,33 @@ export async function searchPoliticians(query) {
   }
 }
 
+export async function checkCacheStatus(zip, signal) {
+  const res = await fetch(`${API}/essentials/cache-status/${zip}`, {
+    credentials: "include",
+    signal,
+  });
+
+  if (!res.ok) {
+    throw new Error(`Cache status check failed: ${res.status}`);
+  }
+
+  return res.json();
+}
+
+export async function fetchPoliticiansSingle(zip, signal) {
+  const res = await fetch(`${API}/essentials/politicians/${zip}`, {
+    credentials: "include",
+    cache: "no-store",
+    signal,
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch politicians: ${res.status}`);
+  }
+
+  return res.json();
+}
+
 export async function fetchPolitician(id) {
   try {
     const res = await fetch(`${API}/essentials/politician/${id}`, {
