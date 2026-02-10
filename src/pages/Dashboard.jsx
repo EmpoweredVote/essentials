@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import PoliticianGrid from "../components/PoliticianGrid";
-import { fetchPoliticiansProgressive, searchPoliticians } from "../lib/api";
+import { usePoliticianData } from "../hooks/usePoliticianData";
 import {
   classifyCategory,
   STATE_ORDER,
@@ -25,71 +25,18 @@ function Dashboard() {
   const queryFromUrl = searchParams.get("q") || "";
 
   const [zip, setZip] = useState("");
-  const [list, setList] = useState([]);
-  const [phase, setPhase] = useState("idle"); // "idle" | "loading" | "partial" | "fresh"
-  const [statusHdr, setStatusHdr] = useState(""); // for debugging UI
-  const [error, setError] = useState(null);
+  const [activeQuery, setActiveQuery] = useState("");
 
-  const handleSearch = useCallback(async (query) => {
-    if (!query) return;
-
-    const isZip = /^\d{5}$/.test(query);
-
-    setPhase("loading");
-    setList([]);
-    setStatusHdr("");
-    setError(null);
-
-    try {
-      if (isZip) {
-        await fetchPoliticiansProgressive(
-          query,
-          ({ status, data, error: apiError }) => {
-            if (apiError) {
-              setError(`Failed to fetch data: ${apiError}`);
-              setPhase("idle");
-              return;
-            }
-            setList(Array.isArray(data) ? data : []);
-            setStatusHdr(status || "");
-            const s = (status || "").toLowerCase();
-            if (s === "fresh") {
-              setPhase("fresh");
-            } else if (s === "timeout") {
-              setPhase("idle");
-            } else if (s === "warming") {
-              setPhase("loading");
-            } else {
-              setPhase("partial");
-            }
-          },
-          { maxAttempts: 8, intervalMs: 1500 }
-        );
-      } else {
-        const result = await searchPoliticians(query);
-        if (result.error) {
-          setError(`Failed to fetch data: ${result.error}`);
-          setPhase("idle");
-          return;
-        }
-        setList(Array.isArray(result.data) ? result.data : []);
-        setStatusHdr(result.status || "");
-        setPhase("fresh");
-      }
-    } catch (err) {
-      console.error("Search error:", err);
-      setError(`Unable to connect to the server. Please make sure the backend is running on http://localhost:5050`);
-      setPhase("idle");
-    }
-  }, []);
+  // Use the hook for data fetching
+  const { data: list, phase, error } = usePoliticianData(activeQuery);
 
   useEffect(() => {
     const initial = zipFromUrl || queryFromUrl || "";
     if (initial) {
       setZip(initial);
-      handleSearch(initial);
+      setActiveQuery(initial);
     }
-  }, []);
+  }, [zipFromUrl, queryFromUrl]);
 
   const onSearchClick = () => {
     const normalized = (zip || "").trim();
@@ -99,7 +46,7 @@ function Dashboard() {
     } else {
       setSearchParams({ q: normalized });
     }
-    handleSearch(normalized);
+    setActiveQuery(normalized);
   };
 
   // Filter + classify the current list (which may be partial)
@@ -209,14 +156,6 @@ function Dashboard() {
         </div>
       )}
 
-      {/* debug hint  */}
-      {/* {statusHdr && (
-        <div className="text-center text-sm text-zinc-500 mt-2">
-          X-Data-Status: {statusHdr} — Phase: {phase} — Showing {list.length}{" "}
-          officials
-        </div>
-      )} */}
-
       <div className="flex flex-row justify-center mt-6 border-b-4 border-ev-yellow">
         <button
           className={`${
@@ -252,8 +191,8 @@ function Dashboard() {
         </button>
       </div>
 
-      {/* Spinner while loading or (optionally) while partial */}
-      {(phase === "loading" || phase === "partial") && <Spinner />}
+      {/* Spinner while checking, warming, or loading */}
+      {(phase === "checking" || phase === "warming" || phase === "loading") && <Spinner />}
 
       <div className="mt-8 px-[10%]">
         {selectedTab == "All" && (
@@ -267,7 +206,7 @@ function Dashboard() {
                 gridTitle={"Local Politicians"}
                 polList={localPols}
               />
-              {localPols.length == 0 && phase !== "loading" && (
+              {localPols.length == 0 && phase !== "loading" && phase !== "checking" && phase !== "warming" && (
                 <p className="mt-4">
                   Sorry, we don't have data on local politicians for this location.
                 </p>
@@ -322,7 +261,7 @@ function Dashboard() {
 
         {selectedTab == "Local" && (
           <div>
-            {localPols.length == 0 && phase !== "loading" && (
+            {localPols.length == 0 && phase !== "loading" && phase !== "checking" && phase !== "warming" && (
               <p className="mt-4">
                 Sorry, we don't have data on local politicians for{" "}
                 {zip.length == 5 ? zip : "your zip code"}.

@@ -1,19 +1,13 @@
 // import { useState } from "react";
-// import { fetchPoliticiansProgressive } from "../lib/api";
+// import { usePoliticianData } from "../hooks/usePoliticianData";
 // import { useNavigate } from "react-router-dom";
 
 // function Home() {
 //   const [zip, setZip] = useState("");
-//   const [data, setData] = useState(null);
+//   const { data, phase, error } = usePoliticianData(zip);
 
-//   async function handleSearch() {
-//     try {
-//       const result = await fetchPoliticiansProgressive(zip);
-//       setData(result);
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   }
+//   // Hook automatically fetches when zip changes
+//   // No manual handleSearch needed
 
 //   return (
 //     <div>
@@ -24,12 +18,10 @@
 //           placeholder="Enter ZIP code"
 //           className="border p-2 mr-2"
 //         />
-//         <button
-//           onClick={handleSearch}
-//           className="bg-blue-500 text-white px-4 py-2"
-//         >
-//           Search
-//         </button>
+//         {phase === "checking" && <span>Checking cache...</span>}
+//         {phase === "warming" && <span>Warming cache...</span>}
+//         {phase === "loading" && <span>Loading...</span>}
+//         {error && <span className="text-red-500">{error}</span>}
 
 //         {data && (
 //           <pre className="mt-4 bg-gray-100 p-4">
