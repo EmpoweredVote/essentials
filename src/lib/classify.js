@@ -25,8 +25,10 @@ export const STATE_ORDER = [
 ];
 
 export const LOCAL_ORDER = [
-  "Local Executives",
-  "Local Legislators",
+  "Municipal Executives",
+  "City Council",
+  "Municipal Officials",
+  "Township Officials",
   "County Executives",
   "County Legislators",
   "County Officials",
@@ -144,18 +146,22 @@ export function classifyCategory(pol) {
   }
 
   if (dt === "LOCAL_EXEC") {
-    if (hasAny(title, ROLE_LOCAL_EXEC))
-      return { tier: "Local", group: "Local Executives" };
+    if (hasAny(title, ["township"]))
+      return { tier: "Local", group: "Township Officials" };
     if (
       hasAny(chamber, BODY_AGENCY) ||
       hasAny(title, ["commissioner", "director", "chief"])
     ) {
       return { tier: "Local", group: "Local Departments & Special Districts" };
     }
-    return { tier: "Local", group: "Local Executives" };
+    return { tier: "Local", group: "Municipal Executives" };
   }
 
   if (dt === "LOCAL") {
+    // Township officials
+    if (hasAny(title, ["township"]) || hasAny(chamber, ["township"]))
+      return { tier: "Local", group: "Township Officials" };
+    // City council and similar legislative bodies
     if (
       hasAny(chamber, [
         "council",
@@ -164,7 +170,11 @@ export function classifyCategory(pol) {
       ]) ||
       hasAny(title, ROLE_LOCAL_LEGIS)
     ) {
-      return { tier: "Local", group: "Local Legislators" };
+      return { tier: "Local", group: "City Council" };
+    }
+    // Municipal officials (clerk, etc.)
+    if (hasAny(title, ["clerk", "city"])) {
+      return { tier: "Local", group: "Municipal Officials" };
     }
     if (
       hasAny(chamber, BODY_AGENCY) ||
@@ -177,7 +187,7 @@ export function classifyCategory(pol) {
       hasAny(chamber, ["board of commissioners"]) ||
       hasAny(title, ["commissioner"])
     ) {
-      return { tier: "Local", group: "Local Legislators" };
+      return { tier: "Local", group: "City Council" };
     }
     return { tier: "Local", group: "Local (Other)" };
   }
@@ -246,8 +256,10 @@ export const CATEGORY_DISPLAY_NAMES = {
   "Departments, Boards & Commissions": "Boards & Commissions",
 
   // Local
-  "Local Executives": "Mayor",
-  "Local Legislators": "Council",
+  "Municipal Executives": "Mayor",
+  "City Council": "City Council",
+  "Municipal Officials": "City Officials",
+  "Township Officials": "Township",
   "County Executives": "County Executive",
   "County Legislators": "County Board",
   "County Officials": "County Officials",

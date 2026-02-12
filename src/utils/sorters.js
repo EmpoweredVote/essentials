@@ -78,6 +78,11 @@ const LOCAL_EXEC_RANK = [
 export const localExecRankKey = (pol) =>
   rankFromList(LOCAL_EXEC_RANK, pol.office_title);
 
+// Township rank: trustee (executive) before board members
+const TOWNSHIP_RANK = ["trustee"];
+export const townshipRankKey = (pol) =>
+  rankFromList(TOWNSHIP_RANK, pol.office_title);
+
 export const makeComparator =
   (keyFn, dir = "asc") =>
   (a, b) => {
@@ -199,7 +204,7 @@ export const GROUP_SORT_OPTIONS = {
       cmp: (dir) => makeComparator(lastNameKey, dir),
     },
   ],
-  "Local Executives": [
+  "Municipal Executives": [
     {
       id: "role_rank",
       label: "Role",
@@ -216,12 +221,36 @@ export const GROUP_SORT_OPTIONS = {
       cmp: (dir) => makeComparator(lastNameKey, dir),
     },
   ],
-  "Local Legislators": [
+  "City Council": [
     { id: "body", label: "Body", cmp: (dir) => makeComparator(agencyKey, dir) },
     {
       id: "district",
       label: "District/Ward",
       cmp: (dir) => makeComparator(districtNumberKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "Municipal Officials": [
+    {
+      id: "role",
+      label: "Role/Title",
+      cmp: (dir) => makeComparator(roleKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "Township Officials": [
+    {
+      id: "role_rank",
+      label: "Role",
+      cmp: (dir) => makeComparator(townshipRankKey, dir),
     },
     {
       id: "name",
