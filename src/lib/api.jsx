@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL || "https://ev-backend-h3n8.onrender.com";
 
 // Debug: log the API URL on first load
 if (!window.__API_LOGGED__) {
