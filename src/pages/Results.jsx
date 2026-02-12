@@ -11,6 +11,14 @@ import {
   orderedEntries,
   getDisplayName,
 } from '../lib/classify';
+import { GROUP_SORT_OPTIONS } from '../utils/sorters';
+
+/** Sort a polList using the default (first) sort option for its category */
+function defaultSort(category, polList) {
+  const opts = GROUP_SORT_OPTIONS[category];
+  if (!opts || opts.length === 0) return polList;
+  return [...polList].sort(opts[0].cmp('asc'));
+}
 
 function getImageUrl(pol) {
   if (pol.images && pol.images.length > 0) {
@@ -270,7 +278,7 @@ export default function Results() {
                       )}
                       {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
-                          {polList.map((pol) => (
+                          {defaultSort(category, polList).map((pol) => (
                             <PoliticianCard
                               key={pol.id}
                               id={pol.id}
@@ -296,7 +304,7 @@ export default function Results() {
                       )}
                       {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
-                          {polList.map((pol) => (
+                          {defaultSort(category, polList).map((pol) => (
                             <PoliticianCard
                               key={pol.id}
                               id={pol.id}
@@ -322,7 +330,7 @@ export default function Results() {
                       )}
                       {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
-                          {polList.map((pol) => (
+                          {defaultSort(category, polList).map((pol) => (
                             <PoliticianCard
                               key={pol.id}
                               id={pol.id}
