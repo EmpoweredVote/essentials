@@ -232,7 +232,7 @@ export default function Results() {
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
       <SiteHeader logoSrc="/EVLogo.svg" />
 
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         {/* Filter Sidebar */}
         <FilterSidebar
           zipCode={zip}
@@ -264,7 +264,7 @@ export default function Results() {
           {(phase === 'warming' || phase === 'loading') && <Spinner />}
 
           {/* Results */}
-          <div className="px-8 pb-8">
+          <div className="px-4 md:px-8 pb-8">
             {Object.entries(searchFilteredPoliticians).map(([tier, groups]) =>
               Object.keys(groups).length > 0 ? (
                 <div key={tier}>

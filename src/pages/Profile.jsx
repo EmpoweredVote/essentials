@@ -22,9 +22,25 @@ const DEFAULT_SHORT_TITLES = [
   'Policing',
 ];
 
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.innerWidth <= breakpoint;
+  });
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
+    const handler = (e) => setIsMobile(e.matches);
+    mql.addEventListener('change', handler);
+    setIsMobile(mql.matches);
+    return () => mql.removeEventListener('change', handler);
+  }, [breakpoint]);
+  return isMobile;
+}
+
 function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const [pol, setPol] = useState({});
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -157,7 +173,7 @@ function Profile() {
         onNavigate={(href) => navigate(href)}
       />
 
-      <main className="container mx-auto px-6 py-8 max-w-6xl">
+      <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
         {loadingProfile ? (
           <div className="flex justify-center items-center py-24">
             <div className="animate-spin rounded-full h-10 w-10 border-4 border-[var(--ev-teal)] border-t-transparent" />
@@ -173,7 +189,7 @@ function Profile() {
           }
         >
           {/* Issues and Prioritization Section */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-8">
             <h3 className="text-2xl font-bold text-[var(--ev-teal)] mb-6">
               Issues and Prioritization
             </h3>
@@ -220,7 +236,7 @@ function Profile() {
                     invertedSpokes={invertedSpokes}
                     onToggleInversion={toggleInversion}
                     onReplaceTopic={() => {}}
-                    size={420}
+                    size={isMobile ? 280 : 420}
                   />
                 </div>
 

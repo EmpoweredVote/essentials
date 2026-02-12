@@ -4,9 +4,9 @@ export default function ResultsHeader({ resultsCount, onSearch, onSortChange }) 
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <div className="flex items-center justify-between mb-6 px-8 py-4">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6 px-4 sm:px-8 py-4">
       {/* Search Bar */}
-      <div className="flex-1 max-w-md">
+      <div className="flex-1 max-w-full sm:max-w-md">
         <div className="relative">
           <svg
             className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"

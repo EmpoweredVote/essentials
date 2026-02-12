@@ -131,7 +131,7 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <div className="flex flex-row gap-4 justify-center">
+      <div className="flex flex-row gap-4 justify-center px-4 sm:px-0">
         <input
           value={zip}
           onChange={(e) => setZip(e.target.value)}
@@ -139,11 +139,11 @@ function Dashboard() {
             if (e.key === "Enter") onSearchClick();
           }}
           placeholder="Enter ZIP code or address"
-          className="border p-2 mr-2"
+          className="border p-2 mr-2 min-w-0 flex-1 sm:flex-none"
         />
         <button
           onClick={onSearchClick}
-          className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 cursor-pointer"
+          className="bg-blue-500 text-white px-4 py-2 hover:bg-blue-700 cursor-pointer whitespace-nowrap"
         >
           Search
         </button>
@@ -156,11 +156,11 @@ function Dashboard() {
         </div>
       )}
 
-      <div className="flex flex-row justify-center mt-6 border-b-4 border-ev-yellow">
+      <div className="flex flex-row justify-center mt-6 border-b-4 border-ev-yellow overflow-x-auto">
         <button
           className={`${
             selectedTab == "All" ? "bg-sky-950 text-white" : ""
-          }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
+          }  px-3 sm:px-6 py-2 text-sm sm:text-base border border-transparent border-b-sky-950 cursor-pointer whitespace-nowrap`}
           onClick={() => setSelectedTab("All")}
         >
           All ({filteredPols.length})
@@ -168,7 +168,7 @@ function Dashboard() {
         <button
           className={`${
             selectedTab == "Federal" ? "bg-sky-950 text-white" : ""
-          }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
+          }  px-3 sm:px-6 py-2 text-sm sm:text-base border border-transparent border-b-sky-950 cursor-pointer whitespace-nowrap`}
           onClick={() => setSelectedTab("Federal")}
         >
           Federal ({federalPols.length})
@@ -176,7 +176,7 @@ function Dashboard() {
         <button
           className={`${
             selectedTab == "State" ? "bg-sky-950 text-white" : ""
-          }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
+          }  px-3 sm:px-6 py-2 text-sm sm:text-base border border-transparent border-b-sky-950 cursor-pointer whitespace-nowrap`}
           onClick={() => setSelectedTab("State")}
         >
           State ({statePols.length})
@@ -184,7 +184,7 @@ function Dashboard() {
         <button
           className={`${
             selectedTab == "Local" ? "bg-sky-950 text-white" : ""
-          }  px-16 py-2 border border-transparent border-b-sky-950 cursor-pointer`}
+          }  px-3 sm:px-6 py-2 text-sm sm:text-base border border-transparent border-b-sky-950 cursor-pointer whitespace-nowrap`}
           onClick={() => setSelectedTab("Local")}
         >
           Local ({localPols.length})
@@ -194,7 +194,7 @@ function Dashboard() {
       {/* Spinner while warming or loading */}
       {(phase === "warming" || phase === "loading") && <Spinner />}
 
-      <div className="mt-8 px-[10%]">
+      <div className="mt-8 px-4 sm:px-8 lg:px-[10%]">
         {selectedTab == "All" && (
           <div>
             <div className="flex items-center gap-4 mb-4">

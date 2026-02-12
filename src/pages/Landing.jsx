@@ -26,11 +26,11 @@ export default function Landing() {
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
       <SiteHeader logoSrc="/EVLogo.svg" />
 
-      <main className="container mx-auto px-6 py-16">
+      <main className="container mx-auto px-4 sm:px-6 py-16">
         <div className="flex flex-col md:flex-row items-center justify-center gap-12">
           {/* Left side - Content */}
           <div className="flex-1 max-w-xl text-center">
-            <h1 className="text-5xl font-bold text-[var(--ev-teal)] mb-6">
+            <h1 className="text-3xl sm:text-5xl font-bold text-[var(--ev-teal)] mb-6">
               Find Your Representatives
             </h1>
             <p className="text-xl text-gray-700 mb-8">
@@ -38,19 +38,19 @@ export default function Landing() {
             </p>
 
             {/* Search Input + Button */}
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <input
                 type="text"
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Enter ZIP code or address"
-                className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
+                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
               />
               <button
                 onClick={handleSearch}
                 disabled={!zip.trim()}
-                className="px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-4 sm:px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Search
               </button>
@@ -63,7 +63,7 @@ export default function Landing() {
               {/* Placeholder for magnifying glass illustration */}
               <div className="text-white text-center">
                 <svg
-                  className="w-48 h-48 mx-auto mb-4"
+                  className="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-4"
                   viewBox="0 0 200 200"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
