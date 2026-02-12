@@ -27,6 +27,7 @@ function Profile() {
   const navigate = useNavigate();
 
   const [pol, setPol] = useState({});
+  const [loadingProfile, setLoadingProfile] = useState(true);
   const [topics, setTopics] = useState([]);
   const [answersByShort, setAnswersByShort] = useState({});
   const [loadingCompass, setLoadingCompass] = useState(true);
@@ -60,12 +61,15 @@ function Profile() {
   // Fetch politician
   useEffect(() => {
     if (!id) return;
+    setLoadingProfile(true);
     (async () => {
       try {
         const result = await fetchPolitician(id);
         setPol(result);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoadingProfile(false);
       }
     })();
   }, [id]);
@@ -154,9 +158,14 @@ function Profile() {
       />
 
       <main className="container mx-auto px-6 py-8 max-w-6xl">
+        {loadingProfile ? (
+          <div className="flex justify-center items-center py-24">
+            <div className="animate-spin rounded-full h-10 w-10 border-4 border-[var(--ev-teal)] border-t-transparent" />
+          </div>
+        ) : (
         <PoliticianProfile
           politician={pol}
-          onBack={() => navigate('/results')}
+          onBack={() => navigate(-1)}
           backLabel={
             pol.first_name
               ? `${pol.first_name} ${pol.last_name}`
@@ -237,6 +246,7 @@ function Profile() {
             )}
           </div>
         </PoliticianProfile>
+        )}
       </main>
     </div>
   );

@@ -27,9 +27,9 @@ export default function Landing() {
       <SiteHeader logoSrc="/EVLogo.svg" />
 
       <main className="container mx-auto px-6 py-16">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12">
           {/* Left side - Content */}
-          <div className="flex-1 max-w-xl">
+          <div className="flex-1 max-w-xl text-center">
             <h1 className="text-5xl font-bold text-[var(--ev-teal)] mb-6">
               Find Your Representatives
             </h1>
