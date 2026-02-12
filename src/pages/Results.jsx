@@ -253,7 +253,7 @@ export default function Results() {
           )}
 
           {/* Spinner */}
-          {(phase === 'checking' || phase === 'warming' || phase === 'loading') && <Spinner />}
+          {(phase === 'warming' || phase === 'loading') && <Spinner />}
 
           {/* Results */}
           <div className="px-8 pb-8">

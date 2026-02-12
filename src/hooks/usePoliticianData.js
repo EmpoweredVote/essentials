@@ -1,43 +1,49 @@
 import { useState, useEffect, useRef } from "react";
-import { checkCacheStatus, fetchPoliticiansSingle, searchPoliticians } from "../lib/api";
+import { fetchPoliticiansOnce, searchPoliticians } from "../lib/api";
+
+const EMPTY_ARRAY = [];
+let instanceCounter = 0;
 
 /**
- * Custom hook for fetching politician data with optimized cache-status polling.
+ * Custom hook for fetching politician data.
  *
- * For ZIP codes: Polls the lightweight cache-status endpoint with exponential backoff,
- * then fetches data once when cache is fresh. Reduces network traffic by ~80%.
+ * For ZIP codes: Calls the data endpoint directly. The backend returns stale/cached
+ * data immediately (200) or signals warming-in-progress (202). Retries with backoff
+ * on 202 responses. No cache-status polling needed.
  *
  * For addresses: Calls searchPoliticians directly without polling.
  *
  * @param {string} query - ZIP code or address query
  * @param {Object} options - Configuration options
  * @param {boolean} options.enabled - Gate to prevent fetching (default: true)
- * @param {number} options.maxAttempts - Max cache-status polls before timeout (default: 10)
- * @param {number} options.baseInterval - Starting backoff interval in ms (default: 1000)
+ * @param {number} options.maxRetries - Max retries on 202 warming responses (default: 6)
  * @param {Array} options.initialData - Pre-populated data from sessionStorage (default: [])
  *
- * @returns {Object} { data, phase, error }
+ * @returns {Object} { data, phase, error, dataStatus }
  * - data: Array of politicians
- * - phase: "idle" | "checking" | "warming" | "loading" | "fresh" | "error"
+ * - phase: "idle" | "warming" | "loading" | "fresh" | "error"
  * - error: Error message string or null
+ * - dataStatus: "fresh" | "stale" | "warmed" | null
  */
 export function usePoliticianData(query, options = {}) {
   const {
     enabled = true,
-    maxAttempts = 10,
-    baseInterval = 1000,
-    initialData = [],
+    maxRetries = 6,
+    initialData = EMPTY_ARRAY,
   } = options;
 
   const [data, setData] = useState(initialData);
   const [phase, setPhase] = useState("idle");
   const [error, setError] = useState(null);
+  const [dataStatus, setDataStatus] = useState(null);
 
   const controllerRef = useRef(null);
-  const latestRequestRef = useRef(0);
+
+  // Store config in refs so they don't trigger effect re-runs
+  const configRef = useRef({ maxRetries, initialData });
+  configRef.current = { maxRetries, initialData };
 
   useEffect(() => {
-    // Guard: if disabled or no query, reset to idle
     if (!enabled || !query) {
       setPhase("idle");
       return;
@@ -46,111 +52,101 @@ export function usePoliticianData(query, options = {}) {
     // Abort any previous in-flight request
     controllerRef.current?.abort();
 
-    // Create new AbortController for this request
     const controller = new AbortController();
     controllerRef.current = controller;
     const signal = controller.signal;
 
-    // Increment request counter to detect stale responses
-    latestRequestRef.current += 1;
-    const requestId = latestRequestRef.current;
+    const id = ++instanceCounter;
+    console.log(`[usePoliticianData] effect #${id} starting for query="${query}"`);
 
-    async function pollAndFetch() {
+    async function fetchData() {
+      const { maxRetries: max, initialData: initial } = configRef.current;
+
       try {
-        // Reset error state
         setError(null);
 
-        // Determine if query is ZIP code
         const isZip = /^\d{5}$/.test(query);
 
         if (isZip) {
-          // ZIP path: Poll cache-status, then fetch data once
-          setData(initialData); // Reset data for new ZIP query
-          setPhase("checking");
+          setData(initial);
+          setPhase("loading");
 
-          for (let attempt = 0; attempt < maxAttempts; attempt++) {
-            // Check abort before each iteration
-            if (signal.aborted) return;
-
-            // Poll cache status
-            const status = await checkCacheStatus(query, signal);
-
-            // Check abort after response
-            if (signal.aborted) return;
-
-            // Check if this response is stale
-            if (requestId !== latestRequestRef.current) return;
-
-            // If cache is fresh, fetch data and finish
-            if (status.allFresh === true) {
-              setPhase("loading");
-              const result = await fetchPoliticiansSingle(query, signal);
-
-              // Guard against abort/stale
-              if (signal.aborted) return;
-              if (requestId !== latestRequestRef.current) return;
-
-              setData(result);
-              setPhase("fresh");
+          for (let attempt = 0; attempt <= max; attempt++) {
+            if (signal.aborted) {
+              console.log(`[usePoliticianData] #${id} aborted at attempt ${attempt}`);
               return;
             }
 
-            // If warming, update phase
-            if (status.warming === true) {
+            console.log(`[usePoliticianData] #${id} fetch attempt ${attempt}`);
+            const result = await fetchPoliticiansOnce(query, attempt);
+
+            if (signal.aborted) return;
+
+            if (result.status === "warming") {
               setPhase("warming");
+              if (attempt >= max) break;
+              // Backoff: use Retry-After from server, with min 2s and max 8s
+              const delay = Math.min(Math.max((result.retryAfter || 3) * 1000, 2000), 8000);
+              const jitter = Math.random() * 500;
+              await new Promise((resolve) => setTimeout(resolve, delay + jitter));
+              continue;
             }
 
-            // Calculate exponential backoff with jitter
-            const backoff = Math.min(baseInterval * Math.pow(1.5, attempt), 5000);
-            const jitter = Math.random() * 200;
-            const delay = backoff + jitter;
+            if (result.status === "error") {
+              setError(result.error || "Failed to fetch politicians");
+              setPhase("error");
+              return;
+            }
 
-            // Sleep before next poll
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            // Success — status is "fresh", "stale", or "warmed"
+            setData(Array.isArray(result.data) ? result.data : []);
+            setDataStatus(result.status || "fresh");
+            setPhase("fresh");
+            console.log(`[usePoliticianData] #${id} complete — status=${result.status}`);
+            return;
           }
 
-          // If loop exhausts, timeout
+          // Exhausted retries
           setError("Request timed out. The server may still be fetching data - please try again in a moment.");
           setPhase("error");
-
+          console.log(`[usePoliticianData] #${id} timed out after ${max} retries`);
         } else {
-          // Address path: Call searchPoliticians directly
+          // Address search
           setPhase("loading");
           const result = await searchPoliticians(query);
-
-          // Guard against abort/stale
           if (signal.aborted) return;
-          if (requestId !== latestRequestRef.current) return;
 
-          // Handle error response
           if (result.error) {
             setError(result.error);
             setPhase("error");
             return;
           }
 
-          // Set data
           setData(Array.isArray(result.data) ? result.data : []);
+          setDataStatus(result.status || "fresh");
           setPhase("fresh");
         }
-
       } catch (err) {
-        // Ignore AbortError (intentional cancellation)
-        if (err.name === "AbortError") return;
-
-        // Other errors
+        if (err.name === "AbortError") {
+          console.log(`[usePoliticianData] #${id} aborted (AbortError)`);
+          return;
+        }
+        console.log(`[usePoliticianData] #${id} error: ${err.message}`);
         setError(err.message);
         setPhase("error");
       }
     }
 
-    pollAndFetch();
+    fetchData();
 
-    // Cleanup: abort on unmount or query change
     return () => {
+      console.log(`[usePoliticianData] #${id} cleanup — aborting`);
       controller.abort();
     };
-  }, [query, enabled, maxAttempts, baseInterval, initialData]);
+    // Only query and enabled should trigger re-runs.
+    // Config values are read from ref.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, enabled]);
 
-  return { data, phase, error };
+  return { data, phase, error, dataStatus };
 }

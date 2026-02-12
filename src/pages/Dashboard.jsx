@@ -191,8 +191,8 @@ function Dashboard() {
         </button>
       </div>
 
-      {/* Spinner while checking, warming, or loading */}
-      {(phase === "checking" || phase === "warming" || phase === "loading") && <Spinner />}
+      {/* Spinner while warming or loading */}
+      {(phase === "warming" || phase === "loading") && <Spinner />}
 
       <div className="mt-8 px-[10%]">
         {selectedTab == "All" && (
@@ -206,7 +206,7 @@ function Dashboard() {
                 gridTitle={"Local Politicians"}
                 polList={localPols}
               />
-              {localPols.length == 0 && phase !== "loading" && phase !== "checking" && phase !== "warming" && (
+              {localPols.length == 0 && phase !== "loading" && phase !== "warming" && (
                 <p className="mt-4">
                   Sorry, we don't have data on local politicians for this location.
                 </p>
@@ -261,7 +261,7 @@ function Dashboard() {
 
         {selectedTab == "Local" && (
           <div>
-            {localPols.length == 0 && phase !== "loading" && phase !== "checking" && phase !== "warming" && (
+            {localPols.length == 0 && phase !== "loading" && phase !== "warming" && (
               <p className="mt-4">
                 Sorry, we don't have data on local politicians for{" "}
                 {zip.length == 5 ? zip : "your zip code"}.
