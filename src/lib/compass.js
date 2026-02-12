@@ -1,5 +1,5 @@
 // src/lib/compass.js
-const API = import.meta.env.VITE_API_URL || "https://ev-backend-h3n8.onrender.com";
+const API = import.meta.env.VITE_API_URL || "/api";
 
 // All topics (full topic objects: { id, short_title, stances, ... })
 export async function fetchTopics() {
