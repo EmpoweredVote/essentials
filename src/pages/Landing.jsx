@@ -1,10 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SiteHeader } from '@chrisandrewsedu/ev-ui';
+import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 export default function Landing() {
   const [zip, setZip] = useState('');
   const navigate = useNavigate();
+  const inputRef = useRef(null);
+
+  useGooglePlacesAutocomplete(inputRef, {
+    onPlaceSelected: (formattedAddress) => {
+      setZip(formattedAddress);
+      navigate(`/results?q=${encodeURIComponent(formattedAddress)}`);
+    },
+  });
 
   const handleSearch = () => {
     const normalized = zip.trim();
@@ -40,6 +49,7 @@ export default function Landing() {
             {/* Search Input + Button */}
             <div className="flex flex-col sm:flex-row gap-3">
               <input
+                ref={inputRef}
                 type="text"
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}

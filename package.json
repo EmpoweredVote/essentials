@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chrisandrewsedu/ev-ui": "^0.1.8",
+    "@chrisandrewsedu/ev-ui": "^0.1.14",
+    "@googlemaps/js-api-loader": "^2.0.2",
     "@react-spring/web": "^10.0.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { SiteHeader, FilterSidebar, CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
+import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import ResultsHeader from '../components/ResultsHeader';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
@@ -45,6 +46,16 @@ export default function Results() {
 
   const [zip, setZip] = useState(zipFromUrl || queryFromUrl);
   const [searchQuery, setSearchQuery] = useState('');
+  const zipInputRef = useRef(null);
+
+  useGooglePlacesAutocomplete(zipInputRef, {
+    onPlaceSelected: (formattedAddress) => {
+      setZip(formattedAddress);
+      setCachedResult(null);
+      sessionStorage.removeItem('ev:results');
+      setSearchParams({ q: formattedAddress });
+    },
+  });
 
   // Attempt sessionStorage restore for back-navigation
   const [cachedResult, setCachedResult] = useState(() => {
@@ -243,6 +254,7 @@ export default function Results() {
           onFilterChange={setSelectedFilter}
           locationLabel={locationLabel}
           buildingImageSrc={buildingImages[selectedFilter]}
+          zipInputRef={zipInputRef}
         />
 
         {/* Main Content */}
