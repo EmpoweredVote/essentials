@@ -137,3 +137,30 @@ export async function fetchPolitician(id) {
     throw error;
   }
 }
+
+export async function fetchCandidates(zipOrQuery) {
+  try {
+    // For ZIP codes, use the direct endpoint
+    const zip = /^\d{5}$/.test(zipOrQuery) ? zipOrQuery : null;
+    if (!zip) {
+      // Address search: we don't have a candidate search-by-address endpoint yet
+      // Return empty for non-ZIP queries
+      return [];
+    }
+
+    const res = await fetch(`${API}/essentials/candidates/${zip}`, {
+      credentials: "include",
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error(`Candidates API error: ${res.status}`);
+      return [];
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching candidates:", error);
+    return [];
+  }
+}
