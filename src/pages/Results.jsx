@@ -13,6 +13,7 @@ import {
   getDisplayName,
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS } from '../utils/sorters';
+import { getBuildingImages } from '../lib/buildingImages';
 
 /** Sort a polList using the default (first) sort option for its category */
 function defaultSort(category, polList) {
@@ -27,6 +28,20 @@ function getImageUrl(pol) {
     return defaultImg ? defaultImg.url : pol.images[0].url;
   }
   return pol.photo_origin_url;
+}
+
+function formatTermDate(dateStr) {
+  if (!dateStr) return null;
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return null;
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+function getTermLine(pol) {
+  const start = formatTermDate(pol.term_start);
+  if (!start) return null;
+  const end = formatTermDate(pol.term_end);
+  return end ? `${start} \u2014 ${end}` : `${start} \u2014 ?`;
 }
 
 function Spinner() {
@@ -93,13 +108,8 @@ export default function Results() {
     cachedResult?.filter || 'All'
   );
 
-  // Building images mapping
-  const buildingImages = {
-    All: '/images/us-landmarks.jpg',
-    Federal: '/images/us-landmarks.jpg',
-    State: '/images/state-capitol.jpg',
-    Local: '/images/city-hall.jpg',
-  };
+  // Scroll-spy tier tracking for building image swap
+  const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
   // Save results to sessionStorage for back-navigation restoration
   useEffect(() => {
@@ -141,6 +151,19 @@ export default function Results() {
   const filteredPols = useMemo(
     () => list.filter((p) => p?.first_name !== 'VACANT'),
     [list]
+  );
+
+  // Derive representing city for building image selection
+  const representingCity = useMemo(() => {
+    for (const p of filteredPols) {
+      if (p.representing_city) return p.representing_city;
+    }
+    return null;
+  }, [filteredPols]);
+
+  const buildingImageMap = useMemo(
+    () => getBuildingImages(representingCity),
+    [representingCity]
   );
 
   // Determine user's state from state or local politicians
@@ -235,6 +258,32 @@ export default function Results() {
     return city && state ? `${city}, ${state}` : null;
   }, [filteredPols, selectedFilter]);
 
+  // Derive active building image based on filter or scroll-spy
+  const activeBuildingImage =
+    selectedFilter === 'All'
+      ? buildingImageMap[scrollActiveTier] || buildingImageMap.Local
+      : buildingImageMap[selectedFilter] || buildingImageMap.Federal;
+
+  // Scroll-spy: swap building image as user scrolls between tier sections
+  useEffect(() => {
+    if (selectedFilter !== 'All') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setScrollActiveTier(entry.target.dataset.tier);
+          }
+        }
+      },
+      { rootMargin: '-40% 0px -60% 0px', threshold: 0 }
+    );
+
+    const sections = document.querySelectorAll('[data-tier]');
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [selectedFilter]);
+
   const handlePoliticianClick = (id) => {
     navigate(`/politician/${id}`);
   };
@@ -253,7 +302,7 @@ export default function Results() {
           selectedFilter={selectedFilter}
           onFilterChange={setSelectedFilter}
           locationLabel={locationLabel}
-          buildingImageSrc={buildingImages[selectedFilter]}
+          buildingImageSrc={activeBuildingImage}
           zipInputRef={zipInputRef}
         />
 
@@ -281,7 +330,7 @@ export default function Results() {
               Object.keys(groups).length > 0 ? (
                 <div key={tier}>
                   {tier === 'Local' && (
-                    <>
+                    <div data-tier="Local">
                       {selectedFilter === 'All' && (
                         <div className="flex items-center gap-4 mb-4">
                           <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Local</span>
@@ -291,23 +340,35 @@ export default function Results() {
                       {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
                           {defaultSort(category, polList).map((pol) => (
-                            <PoliticianCard
-                              key={pol.id}
-                              id={pol.id}
-                              imageSrc={getImageUrl(pol)}
-                              name={`${pol.first_name} ${pol.last_name}`}
-                              title={pol.office_title}
-                              onClick={() => handlePoliticianClick(pol.id)}
-                              variant="horizontal"
-                            />
+                            <div key={pol.id}>
+                              <PoliticianCard
+                                id={pol.id}
+                                imageSrc={getImageUrl(pol)}
+                                name={`${pol.first_name} ${pol.last_name}`}
+                                title={pol.office_title}
+                                onClick={() => handlePoliticianClick(pol.id)}
+                                variant="horizontal"
+                              />
+                              {getTermLine(pol) && (
+                                <p style={{
+                                  fontFamily: "'Manrope', sans-serif",
+                                  fontSize: '12px',
+                                  color: '#718096',
+                                  margin: '2px 0 0 92px',
+                                  lineHeight: 1.2,
+                                }}>
+                                  {getTermLine(pol)}
+                                </p>
+                              )}
+                            </div>
                           ))}
                         </CategorySection>
                       ))}
-                    </>
+                    </div>
                   )}
 
                   {tier === 'State' && (
-                    <>
+                    <div data-tier="State">
                       {selectedFilter === 'All' && (
                         <div className="flex items-center gap-4 mt-10 mb-4">
                           <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">State</span>
@@ -317,23 +378,35 @@ export default function Results() {
                       {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
                           {defaultSort(category, polList).map((pol) => (
-                            <PoliticianCard
-                              key={pol.id}
-                              id={pol.id}
-                              imageSrc={getImageUrl(pol)}
-                              name={`${pol.first_name} ${pol.last_name}`}
-                              title={pol.office_title}
-                              onClick={() => handlePoliticianClick(pol.id)}
-                              variant="horizontal"
-                            />
+                            <div key={pol.id}>
+                              <PoliticianCard
+                                id={pol.id}
+                                imageSrc={getImageUrl(pol)}
+                                name={`${pol.first_name} ${pol.last_name}`}
+                                title={pol.office_title}
+                                onClick={() => handlePoliticianClick(pol.id)}
+                                variant="horizontal"
+                              />
+                              {getTermLine(pol) && (
+                                <p style={{
+                                  fontFamily: "'Manrope', sans-serif",
+                                  fontSize: '12px',
+                                  color: '#718096',
+                                  margin: '2px 0 0 92px',
+                                  lineHeight: 1.2,
+                                }}>
+                                  {getTermLine(pol)}
+                                </p>
+                              )}
+                            </div>
                           ))}
                         </CategorySection>
                       ))}
-                    </>
+                    </div>
                   )}
 
                   {tier === 'Federal' && (
-                    <>
+                    <div data-tier="Federal">
                       {selectedFilter === 'All' && (
                         <div className="flex items-center gap-4 mt-10 mb-4">
                           <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Federal</span>
@@ -343,19 +416,31 @@ export default function Results() {
                       {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
                           {defaultSort(category, polList).map((pol) => (
-                            <PoliticianCard
-                              key={pol.id}
-                              id={pol.id}
-                              imageSrc={getImageUrl(pol)}
-                              name={`${pol.first_name} ${pol.last_name}`}
-                              title={pol.office_title}
-                              onClick={() => handlePoliticianClick(pol.id)}
-                              variant="horizontal"
-                            />
+                            <div key={pol.id}>
+                              <PoliticianCard
+                                id={pol.id}
+                                imageSrc={getImageUrl(pol)}
+                                name={`${pol.first_name} ${pol.last_name}`}
+                                title={pol.office_title}
+                                onClick={() => handlePoliticianClick(pol.id)}
+                                variant="horizontal"
+                              />
+                              {getTermLine(pol) && (
+                                <p style={{
+                                  fontFamily: "'Manrope', sans-serif",
+                                  fontSize: '12px',
+                                  color: '#718096',
+                                  margin: '2px 0 0 92px',
+                                  lineHeight: 1.2,
+                                }}>
+                                  {getTermLine(pol)}
+                                </p>
+                              )}
+                            </div>
                           ))}
                         </CategorySection>
                       ))}
-                    </>
+                    </div>
                   )}
                 </div>
               ) : null
