@@ -6,9 +6,9 @@ const hasAny = (s, list) => {
 };
 
 export const FEDERAL_ORDER = [
-  "President / VP",
   "U.S. Senate",
   "U.S. House",
+  "President / VP",
   "Cabinet",
   "Independent Agencies & Commissions",
   "Executive (Other)",
