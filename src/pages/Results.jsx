@@ -14,6 +14,7 @@ import {
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS } from '../utils/sorters';
 import { getBuildingImages } from '../lib/buildingImages';
+import { fetchCandidates } from '../lib/api';
 
 /** Sort a polList using the default (first) sort option for its category */
 function defaultSort(category, polList) {
@@ -44,11 +45,62 @@ function getTermLine(pol) {
   return end ? `${start} \u2014 ${end}` : `${start} \u2014 ?`;
 }
 
+function formatElectionDate(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
 function Spinner() {
   return (
     <div className="flex items-center justify-center gap-2 text-gray-600 mt-4">
       <div className="h-4 w-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
       <span>Loading results…</span>
+    </div>
+  );
+}
+
+/** Render a politician or candidate card with term date or election date below */
+function renderPoliticianCard(pol, handlePoliticianClick) {
+  const termLine = getTermLine(pol);
+  const isCandidate = pol.is_candidate;
+
+  return (
+    <div key={pol.id}>
+      <PoliticianCard
+        id={pol.id}
+        imageSrc={getImageUrl(pol)}
+        name={`${pol.first_name} ${pol.last_name}`}
+        title={pol.office_title}
+        badge={isCandidate ? 'Candidate' : undefined}
+        onClick={isCandidate ? undefined : () => handlePoliticianClick(pol.id)}
+        variant="horizontal"
+      />
+      {!isCandidate && termLine && (
+        <p style={{
+          fontFamily: "'Manrope', sans-serif",
+          fontSize: '12px',
+          color: '#718096',
+          margin: '2px 0 0 92px',
+          lineHeight: 1.2,
+        }}>
+          {termLine}
+        </p>
+      )}
+      {isCandidate && pol.election_date && (
+        <p style={{
+          fontFamily: "'Manrope', sans-serif",
+          fontSize: '12px',
+          color: '#ff5740',
+          fontWeight: 600,
+          margin: '2px 0 0 92px',
+          lineHeight: 1.2,
+        }}>
+          {formatElectionDate(pol.election_date)}
+          {pol.election_name ? ` \u2014 ${pol.election_name}` : ''}
+        </p>
+      )}
     </div>
   );
 }
@@ -111,6 +163,11 @@ export default function Results() {
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
+  // Candidate toggle state
+  const [showCandidates, setShowCandidates] = useState(false);
+  const [candidateData, setCandidateData] = useState([]);
+  const [candidatesLoading, setCandidatesLoading] = useState(false);
+
   // Save results to sessionStorage for back-navigation restoration
   useEffect(() => {
     if (list.length > 0 && phase === 'fresh') {
@@ -125,6 +182,26 @@ export default function Results() {
       }
     }
   }, [list, phase, selectedFilter, zipFromUrl, queryFromUrl]);
+
+  // Fetch candidates only when toggle is on
+  useEffect(() => {
+    if (!showCandidates || !activeQuery) {
+      setCandidateData([]);
+      return;
+    }
+
+    let cancelled = false;
+    setCandidatesLoading(true);
+
+    fetchCandidates(activeQuery).then((data) => {
+      if (!cancelled) {
+        setCandidateData(data || []);
+        setCandidatesLoading(false);
+      }
+    });
+
+    return () => { cancelled = true; };
+  }, [showCandidates, activeQuery]);
 
   const handleZipChange = (newZip) => {
     setZip(newZip);
@@ -200,15 +277,34 @@ export default function Results() {
     [federalFiltered]
   );
 
+  // Classify candidates (only when toggle is on)
+  const classifiedCandidates = useMemo(() => {
+    if (!showCandidates || candidateData.length === 0) return [];
+    return candidateData.map((c) => ({
+      pol: { ...c, id: `candidate-${c.external_id}` },
+      cat: classifyCategory(c),
+    }));
+  }, [showCandidates, candidateData]);
+
   const byTier = useMemo(() => {
     const map = { Local: {}, State: {}, Federal: {}, Unknown: {} };
+
+    // Officials first
     for (const { pol, cat } of classified) {
       const tier = map[cat.tier] ? cat.tier : 'Unknown';
       if (!map[tier][cat.group]) map[tier][cat.group] = [];
       map[tier][cat.group].push(pol);
     }
+
+    // Candidates after officials (within same groups)
+    for (const { pol, cat } of classifiedCandidates) {
+      const tier = map[cat.tier] ? cat.tier : 'Unknown';
+      if (!map[tier][cat.group]) map[tier][cat.group] = [];
+      map[tier][cat.group].push(pol);
+    }
+
     return map;
-  }, [classified]);
+  }, [classified, classifiedCandidates]);
 
   // Filter by selected level
   const displayedPoliticians = useMemo(() => {
@@ -308,6 +404,39 @@ export default function Results() {
 
         {/* Main Content */}
         <main className="flex-1">
+          {/* Candidate Toggle - subtle secondary placement */}
+          {activeQuery && (
+            <div style={{
+              padding: '8px 32px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              borderBottom: '1px solid #e2ebef',
+            }}>
+              <label style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontFamily: "'Manrope', sans-serif",
+                fontSize: '13px',
+                color: '#718096',
+                cursor: 'pointer',
+                userSelect: 'none',
+              }}>
+                <input
+                  type="checkbox"
+                  checked={showCandidates}
+                  onChange={(e) => setShowCandidates(e.target.checked)}
+                  style={{ accentColor: '#00657c', width: '14px', height: '14px' }}
+                />
+                Show Candidates
+                {candidatesLoading && (
+                  <span style={{ fontSize: '11px', color: '#a0aec0' }}>(loading...)</span>
+                )}
+              </label>
+            </div>
+          )}
+
           {/* Results Header */}
           <ResultsHeader
             resultsCount={federalFiltered.length}
@@ -339,29 +468,9 @@ export default function Results() {
                       )}
                       {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
-                          {defaultSort(category, polList).map((pol) => (
-                            <div key={pol.id}>
-                              <PoliticianCard
-                                id={pol.id}
-                                imageSrc={getImageUrl(pol)}
-                                name={`${pol.first_name} ${pol.last_name}`}
-                                title={pol.office_title}
-                                onClick={() => handlePoliticianClick(pol.id)}
-                                variant="horizontal"
-                              />
-                              {getTermLine(pol) && (
-                                <p style={{
-                                  fontFamily: "'Manrope', sans-serif",
-                                  fontSize: '12px',
-                                  color: '#718096',
-                                  margin: '2px 0 0 92px',
-                                  lineHeight: 1.2,
-                                }}>
-                                  {getTermLine(pol)}
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                          {defaultSort(category, polList).map((pol) =>
+                            renderPoliticianCard(pol, handlePoliticianClick)
+                          )}
                         </CategorySection>
                       ))}
                     </div>
@@ -377,29 +486,9 @@ export default function Results() {
                       )}
                       {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
-                          {defaultSort(category, polList).map((pol) => (
-                            <div key={pol.id}>
-                              <PoliticianCard
-                                id={pol.id}
-                                imageSrc={getImageUrl(pol)}
-                                name={`${pol.first_name} ${pol.last_name}`}
-                                title={pol.office_title}
-                                onClick={() => handlePoliticianClick(pol.id)}
-                                variant="horizontal"
-                              />
-                              {getTermLine(pol) && (
-                                <p style={{
-                                  fontFamily: "'Manrope', sans-serif",
-                                  fontSize: '12px',
-                                  color: '#718096',
-                                  margin: '2px 0 0 92px',
-                                  lineHeight: 1.2,
-                                }}>
-                                  {getTermLine(pol)}
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                          {defaultSort(category, polList).map((pol) =>
+                            renderPoliticianCard(pol, handlePoliticianClick)
+                          )}
                         </CategorySection>
                       ))}
                     </div>
@@ -415,29 +504,9 @@ export default function Results() {
                       )}
                       {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
                         <CategorySection key={category} title={getDisplayName(category)}>
-                          {defaultSort(category, polList).map((pol) => (
-                            <div key={pol.id}>
-                              <PoliticianCard
-                                id={pol.id}
-                                imageSrc={getImageUrl(pol)}
-                                name={`${pol.first_name} ${pol.last_name}`}
-                                title={pol.office_title}
-                                onClick={() => handlePoliticianClick(pol.id)}
-                                variant="horizontal"
-                              />
-                              {getTermLine(pol) && (
-                                <p style={{
-                                  fontFamily: "'Manrope', sans-serif",
-                                  fontSize: '12px',
-                                  color: '#718096',
-                                  margin: '2px 0 0 92px',
-                                  lineHeight: 1.2,
-                                }}>
-                                  {getTermLine(pol)}
-                                </p>
-                              )}
-                            </div>
-                          ))}
+                          {defaultSort(category, polList).map((pol) =>
+                            renderPoliticianCard(pol, handlePoliticianClick)
+                          )}
                         </CategorySection>
                       ))}
                     </div>
