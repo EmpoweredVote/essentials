@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { SiteHeader, FilterSidebar, CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
+import { SiteHeader, FilterSidebar, CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import ResultsHeader from '../components/ResultsHeader';
 import { usePoliticianData } from '../hooks/usePoliticianData';
@@ -114,6 +114,10 @@ export default function Results() {
   const [zip, setZip] = useState(zipFromUrl || queryFromUrl);
   const [searchQuery, setSearchQuery] = useState('');
   const zipInputRef = useRef(null);
+  const mainRef = useRef(null);
+
+  // Detect desktop breakpoint for two-panel layout
+  const isDesktop = useMediaQuery('(min-width: 769px)');
 
   useGooglePlacesAutocomplete(zipInputRef, {
     onPlaceSelected: (formattedAddress) => {
@@ -361,6 +365,7 @@ export default function Results() {
       : buildingImageMap[selectedFilter] || buildingImageMap.Federal;
 
   // Scroll-spy: swap building image as user scrolls between tier sections
+  // On desktop, observe within the scrolling main panel (not the viewport)
   useEffect(() => {
     if (selectedFilter !== 'All') return;
 
@@ -372,13 +377,17 @@ export default function Results() {
           }
         }
       },
-      { rootMargin: '-40% 0px -60% 0px', threshold: 0 }
+      {
+        root: isDesktop ? mainRef.current : null,
+        rootMargin: '-40% 0px -60% 0px',
+        threshold: 0,
+      }
     );
 
     const sections = document.querySelectorAll('[data-tier]');
     sections.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [selectedFilter]);
+  }, [selectedFilter, isDesktop, mainRef.current]);
 
   const handlePoliticianClick = (id) => {
     navigate(`/politician/${id}`);
@@ -388,7 +397,16 @@ export default function Results() {
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
       <SiteHeader logoSrc="/EVLogo.svg" />
 
-      <div className="flex flex-col md:flex-row">
+      {/* Two-panel layout: height-constrained on desktop, flex-col on mobile */}
+      <div
+        className={isDesktop ? '' : 'flex flex-col'}
+        style={isDesktop ? {
+          display: 'flex',
+          flexDirection: 'row',
+          height: 'calc(100vh - 75px)',
+          overflow: 'hidden',
+        } : undefined}
+      >
         {/* Filter Sidebar */}
         <FilterSidebar
           zipCode={zip}
@@ -402,8 +420,12 @@ export default function Results() {
           zipInputRef={zipInputRef}
         />
 
-        {/* Main Content */}
-        <main className="flex-1">
+        {/* Main Content — independently scrollable on desktop */}
+        <main
+          ref={mainRef}
+          className="flex-1"
+          style={isDesktop ? { overflowY: 'auto', minWidth: 0 } : undefined}
+        >
           {/* Candidate Toggle - subtle secondary placement */}
           {activeQuery && (
             <div style={{
