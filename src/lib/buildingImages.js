@@ -6,14 +6,14 @@
 
 const CURATED = {
   bloomington: {
-    Local: '/images/bloomington-city-hall.svg',
-    State: '/images/indiana-state-capitol.svg',
-    Federal: '/images/us-capitol.svg',
+    Local: '/images/bloomington-city-hall.jpg',
+    State: '/images/indiana-state-house.jpg',
+    Federal: '/images/us-capitol.jpg',
   },
   'los angeles': {
-    Local: '/images/la-city-hall.svg',
-    State: '/images/california-state-capitol.svg',
-    Federal: '/images/us-capitol.svg',
+    Local: '/images/la-city-hall.jpg',
+    State: '/images/california-state-capitol.jpg',
+    Federal: '/images/us-capitol.jpg',
   },
 };
 
