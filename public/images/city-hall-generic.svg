@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 375" width="300" height="375">
+  <rect width="300" height="375" fill="#2c3e50"/>
+  <rect x="125" y="90" width="50" height="75" fill="#95a5a6"/>
+  <rect x="85" y="160" width="130" height="12" fill="#95a5a6"/>
+  <rect x="55" y="172" width="190" height="110" fill="#34495e"/>
+  <rect x="70" y="182" width="35" height="58" fill="#7f8c8d"/>
+  <rect x="132" y="182" width="35" height="58" fill="#7f8c8d"/>
+  <rect x="195" y="182" width="35" height="58" fill="#7f8c8d"/>
+  <rect x="35" y="282" width="230" height="8" fill="#95a5a6"/>
+  <text x="150" y="335" font-family="sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">City Hall</text>
+</svg>

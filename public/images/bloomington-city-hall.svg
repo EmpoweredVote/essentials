@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 375" width="300" height="375">
+  <rect width="300" height="375" fill="#1e3a5f"/>
+  <rect x="115" y="100" width="70" height="60" fill="#c8963c"/>
+  <rect x="70" y="160" width="160" height="12" fill="#c8963c"/>
+  <rect x="50" y="172" width="200" height="110" fill="#2a5080"/>
+  <rect x="65" y="182" width="40" height="60" fill="#5599cc"/>
+  <rect x="130" y="182" width="40" height="60" fill="#5599cc"/>
+  <rect x="195" y="182" width="40" height="60" fill="#5599cc"/>
+  <rect x="30" y="282" width="240" height="8" fill="#c8963c"/>
+  <text x="150" y="335" font-family="sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">Bloomington City Hall</text>
+</svg>

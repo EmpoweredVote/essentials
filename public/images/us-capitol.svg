@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 375" width="300" height="375">
+  <rect width="300" height="375" fill="#1a3a5c"/>
+  <rect x="120" y="80" width="60" height="80" fill="#c8a84b"/>
+  <rect x="90" y="155" width="120" height="10" fill="#c8a84b"/>
+  <rect x="60" y="165" width="180" height="120" fill="#2c5282"/>
+  <rect x="75" y="175" width="30" height="50" fill="#4a90d9"/>
+  <rect x="135" y="175" width="30" height="50" fill="#4a90d9"/>
+  <rect x="195" y="175" width="30" height="50" fill="#4a90d9"/>
+  <rect x="40" y="285" width="220" height="8" fill="#c8a84b"/>
+  <text x="150" y="340" font-family="sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">U.S. Capitol</text>
+</svg>
