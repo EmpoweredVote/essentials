@@ -239,6 +239,15 @@ export default function Results() {
     for (const p of filteredPols) {
       if (p.representing_city) return p.representing_city;
     }
+    // Fallback: extract city name from local politicians' chamber_name
+    // (BallotReady data stores city in chamber_name but not representing_city)
+    for (const p of filteredPols) {
+      const dt = p?.district_type || '';
+      if (dt === 'LOCAL' && p.chamber_name) {
+        const match = p.chamber_name.match(/^(\w[\w\s]+?)\s+City\b/);
+        if (match) return match[1];
+      }
+    }
     return null;
   }, [filteredPols]);
 
