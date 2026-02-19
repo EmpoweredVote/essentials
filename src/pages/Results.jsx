@@ -31,20 +31,6 @@ function getImageUrl(pol) {
   return pol.photo_origin_url;
 }
 
-function formatTermDate(dateStr) {
-  if (!dateStr) return null;
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return null;
-  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-}
-
-function getTermLine(pol) {
-  const start = formatTermDate(pol.term_start);
-  if (!start) return null;
-  const end = formatTermDate(pol.term_end);
-  return end ? `${start} \u2014 ${end}` : `${start} \u2014 ?`;
-}
-
 function formatElectionDate(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr);
@@ -61,9 +47,8 @@ function Spinner() {
   );
 }
 
-/** Render a politician or candidate card with term date or election date below */
+/** Render a politician or candidate card with election date below for candidates */
 function renderPoliticianCard(pol, handlePoliticianClick) {
-  const termLine = getTermLine(pol);
   const isCandidate = pol.is_candidate;
 
   return (
@@ -77,17 +62,6 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
         onClick={isCandidate ? undefined : () => handlePoliticianClick(pol.id)}
         variant="horizontal"
       />
-      {!isCandidate && termLine && (
-        <p style={{
-          fontFamily: "'Manrope', sans-serif",
-          fontSize: '12px',
-          color: '#718096',
-          margin: '2px 0 0 92px',
-          lineHeight: 1.2,
-        }}>
-          {termLine}
-        </p>
-      )}
       {isCandidate && pol.election_date && (
         <p style={{
           fontFamily: "'Manrope', sans-serif",
