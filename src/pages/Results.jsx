@@ -460,8 +460,29 @@ export default function Results() {
 
           {/* Results */}
           <div className="px-4 md:px-8 pb-8">
-            {Object.entries(searchFilteredPoliticians).map(([tier, groups]) =>
-              Object.keys(groups).length > 0 ? (
+            {Object.entries(searchFilteredPoliticians).map(([tier, groups]) => {
+              const hasGroups = Object.keys(groups).length > 0;
+
+              // Local empty-state: when no local data but search is active
+              if (!hasGroups && tier === 'Local' && activeQuery && phase !== 'loading' && phase !== 'warming') {
+                return (
+                  <div key={tier} data-tier="Local">
+                    {selectedFilter === 'All' && (
+                      <div className="flex items-center gap-4 mb-4">
+                        <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Local</span>
+                        <hr className="flex-1 border-gray-200" />
+                      </div>
+                    )}
+                    <p className="mt-4 text-gray-500">
+                      Local representative data is not yet available for this area.
+                    </p>
+                  </div>
+                );
+              }
+
+              if (!hasGroups) return null;
+
+              return (
                 <div key={tier}>
                   {tier === 'Local' && (
                     <div data-tier="Local">
@@ -517,8 +538,8 @@ export default function Results() {
                     </div>
                   )}
                 </div>
-              ) : null
-            )}
+              );
+            })}
 
             {federalFiltered.length === 0 && phase !== 'loading' && zip && (
               <p className="text-center text-gray-600 mt-8">
