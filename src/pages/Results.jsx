@@ -463,18 +463,19 @@ export default function Results() {
             {Object.entries(searchFilteredPoliticians).map(([tier, groups]) => {
               const hasGroups = Object.keys(groups).length > 0;
 
-              // Local empty-state: when no local data but search is active
-              if (!hasGroups && tier === 'Local' && activeQuery && phase !== 'loading' && phase !== 'warming') {
+              // Empty-state for Local/State: when no data but search is active
+              if (!hasGroups && (tier === 'Local' || tier === 'State') && activeQuery && phase !== 'loading' && phase !== 'warming') {
+                const isFirst = tier === 'Local';
                 return (
-                  <div key={tier} data-tier="Local">
+                  <div key={tier} data-tier={tier}>
                     {selectedFilter === 'All' && (
-                      <div className="flex items-center gap-4 mb-4">
-                        <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Local</span>
+                      <div className={`flex items-center gap-4 ${isFirst ? 'mb-4' : 'mt-10 mb-4'}`}>
+                        <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">{tier}</span>
                         <hr className="flex-1 border-gray-200" />
                       </div>
                     )}
                     <p className="mt-4 text-gray-500">
-                      Local representative data is not yet available for this area.
+                      {tier} representative data is not yet available for this area.
                     </p>
                   </div>
                 );
