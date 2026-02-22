@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -18,13 +18,18 @@ function ensureConfigured() {
  *
  * @param {React.RefObject<HTMLInputElement>} inputRef
  * @param {{ onPlaceSelected: (formattedAddress: string) => void }} options
+ * @returns {{ loadError: boolean }}
  */
 export default function useGooglePlacesAutocomplete(inputRef, { onPlaceSelected }) {
+  const [loadError, setLoadError] = useState(false);
   const callbackRef = useRef(onPlaceSelected);
   callbackRef.current = onPlaceSelected;
 
   useEffect(() => {
-    if (!API_KEY || !inputRef.current) return;
+    if (!API_KEY || !inputRef.current) {
+      setLoadError(true);
+      return;
+    }
 
     let autocomplete = null;
 
@@ -46,6 +51,9 @@ export default function useGooglePlacesAutocomplete(inputRef, { onPlaceSelected 
             callbackRef.current(place.formatted_address);
           }
         });
+      })
+      .catch(() => {
+        setLoadError(true);
       });
 
     return () => {
@@ -54,4 +62,6 @@ export default function useGooglePlacesAutocomplete(inputRef, { onPlaceSelected 
       }
     };
   }, [inputRef]);
+
+  return { loadError };
 }

@@ -4,31 +4,32 @@ import { SiteHeader } from '@chrisandrewsedu/ev-ui';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 export default function Landing() {
-  const [zip, setZip] = useState('');
+  const [addressInput, setAddressInput] = useState('');
+  const [hasValidSelection, setHasValidSelection] = useState(false);
+  const [showSelectionHint, setShowSelectionHint] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  useGooglePlacesAutocomplete(inputRef, {
+  const { loadError } = useGooglePlacesAutocomplete(inputRef, {
     onPlaceSelected: (formattedAddress) => {
-      setZip(formattedAddress);
-      navigate(`/results?q=${encodeURIComponent(formattedAddress)}`);
+      setAddressInput(formattedAddress);
+      setHasValidSelection(true);
+      setShowSelectionHint(false);
     },
   });
 
-  const handleSearch = () => {
-    const normalized = zip.trim();
-    if (!normalized) return;
-    if (/^\d{5}$/.test(normalized)) {
-      navigate(`/results?zip=${normalized}`);
-    } else {
-      navigate(`/results?q=${encodeURIComponent(normalized)}`);
-    }
+  const handleInputChange = (e) => {
+    setAddressInput(e.target.value);
+    setHasValidSelection(false);
+    setShowSelectionHint(false);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+  const handleSearch = () => {
+    if (!hasValidSelection) {
+      setShowSelectionHint(true);
+      return;
     }
+    navigate(`/results?q=${encodeURIComponent(addressInput)}`);
   };
 
   return (
@@ -43,7 +44,7 @@ export default function Landing() {
               Find Your Representatives
             </h1>
             <p className="text-xl text-gray-700 mb-8">
-              Enter your ZIP code or address to see who represents you
+              Enter your address to see who represents you
             </p>
 
             {/* Search Input + Button */}
@@ -51,20 +52,34 @@ export default function Landing() {
               <input
                 ref={inputRef}
                 type="text"
-                value={zip}
-                onChange={(e) => setZip(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Enter ZIP code or address"
-                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
+                value={addressInput}
+                onChange={handleInputChange}
+                placeholder="Enter your address"
+                disabled={loadError}
+                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
               />
               <button
                 onClick={handleSearch}
-                disabled={!zip.trim()}
+                disabled={!addressInput.trim() || loadError}
                 className="px-4 sm:px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Search
               </button>
             </div>
+
+            {/* Degraded mode error message */}
+            {loadError && (
+              <p className="mt-3 text-sm text-red-600">
+                Address search is temporarily unavailable. Please try again later.
+              </p>
+            )}
+
+            {/* Selection hint */}
+            {showSelectionHint && !loadError && (
+              <p className="mt-3 text-sm text-amber-700">
+                Please select an address from the suggestions.
+              </p>
+            )}
           </div>
 
           {/* Right side - Illustration */}
