@@ -28,7 +28,7 @@ function Dashboard() {
   const [activeQuery, setActiveQuery] = useState("");
 
   // Use the hook for data fetching
-  const { data: list, phase, error } = usePoliticianData(activeQuery);
+  const { data: list, phase, error, formattedAddress } = usePoliticianData(activeQuery);
 
   useEffect(() => {
     const initial = zipFromUrl || queryFromUrl || "";
@@ -41,11 +41,7 @@ function Dashboard() {
   const onSearchClick = () => {
     const normalized = (zip || "").trim();
     if (!normalized) return;
-    if (/^\d{5}$/.test(normalized)) {
-      setSearchParams({ zip: normalized });
-    } else {
-      setSearchParams({ q: normalized });
-    }
+    setSearchParams({ q: normalized });
     setActiveQuery(normalized);
   };
 
@@ -138,7 +134,7 @@ function Dashboard() {
           onKeyDown={(e) => {
             if (e.key === "Enter") onSearchClick();
           }}
-          placeholder="Enter ZIP code or address"
+          placeholder="Enter your address"
           className="border p-2 mr-2 min-w-0 flex-1 sm:flex-none"
         />
         <button
@@ -154,6 +150,12 @@ function Dashboard() {
         <div className="text-center text-red-600 bg-red-50 border border-red-200 rounded p-4 mt-4 mx-auto max-w-2xl">
           {error}
         </div>
+      )}
+
+      {formattedAddress && (
+        <p className="text-center text-sm text-zinc-500 mt-2">
+          Showing results for <span className="font-medium text-zinc-700">{formattedAddress}</span>
+        </p>
       )}
 
       <div className="flex flex-row justify-center mt-6 border-b-4 border-ev-yellow overflow-x-auto">
@@ -206,9 +208,9 @@ function Dashboard() {
                 gridTitle={"Local Politicians"}
                 polList={localPols}
               />
-              {localPols.length == 0 && phase !== "loading" && phase !== "warming" && (
-                <p className="mt-4">
-                  Sorry, we don't have data on local politicians for this location.
+              {localPols.length === 0 && phase !== "loading" && phase !== "warming" && activeQuery && (
+                <p className="mt-4 text-zinc-500">
+                  Local representative data is not yet available for this area.
                 </p>
               )}
             </div>
@@ -261,10 +263,9 @@ function Dashboard() {
 
         {selectedTab == "Local" && (
           <div>
-            {localPols.length == 0 && phase !== "loading" && phase !== "warming" && (
-              <p className="mt-4">
-                Sorry, we don't have data on local politicians for{" "}
-                {zip.length == 5 ? zip : "your zip code"}.
+            {localPols.length === 0 && phase !== "loading" && phase !== "warming" && activeQuery && (
+              <p className="mt-4 text-zinc-500">
+                Local representative data is not yet available for this area.
               </p>
             )}
             {orderedEntries(byTier.Local, LOCAL_ORDER).map(
