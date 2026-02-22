@@ -36,6 +36,7 @@ export function usePoliticianData(query, options = {}) {
   const [phase, setPhase] = useState("idle");
   const [error, setError] = useState(null);
   const [dataStatus, setDataStatus] = useState(null);
+  const [formattedAddress, setFormattedAddress] = useState("");
 
   const controllerRef = useRef(null);
 
@@ -46,6 +47,7 @@ export function usePoliticianData(query, options = {}) {
   useEffect(() => {
     if (!enabled || !query) {
       setPhase("idle");
+      setFormattedAddress("");
       return;
     }
 
@@ -64,6 +66,7 @@ export function usePoliticianData(query, options = {}) {
 
       try {
         setError(null);
+        setFormattedAddress("");
 
         const isZip = /^\d{5}$/.test(query);
 
@@ -124,6 +127,7 @@ export function usePoliticianData(query, options = {}) {
 
           setData(Array.isArray(result.data) ? result.data : []);
           setDataStatus(result.status || "fresh");
+          setFormattedAddress(result.formattedAddress || "");
           setPhase("fresh");
         }
       } catch (err) {
@@ -148,5 +152,5 @@ export function usePoliticianData(query, options = {}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, enabled]);
 
-  return { data, phase, error, dataStatus };
+  return { data, phase, error, dataStatus, formattedAddress };
 }

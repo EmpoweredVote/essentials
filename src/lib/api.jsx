@@ -83,18 +83,20 @@ export async function searchPoliticians(query) {
 
     const status =
       res.headers.get("X-Data-Status") || res.headers.get("x-data-status") || "";
+    const formattedAddress =
+      res.headers.get("X-Formatted-Address") || res.headers.get("x-formatted-address") || "";
 
     if (!res.ok) {
       const text = await res.text();
       console.error(`Search API error: ${res.status}`, text);
-      return { status: "error", data: [], error: `${res.status} ${res.statusText}` };
+      return { status: "error", data: [], error: `${res.status} ${res.statusText}`, formattedAddress: "" };
     }
 
     const data = await res.json();
-    return { status: status || "fresh", data };
+    return { status: status || "fresh", data, formattedAddress };
   } catch (error) {
     console.error("Search error:", error);
-    return { status: "error", data: [], error: error.message };
+    return { status: "error", data: [], error: error.message, formattedAddress: "" };
   }
 }
 
