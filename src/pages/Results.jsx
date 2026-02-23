@@ -67,6 +67,26 @@ function SkeletonSection() {
 function renderPoliticianCard(pol, handlePoliticianClick) {
   const isCandidate = pol.is_candidate;
 
+  // Build subtitle: chamber + district for 3rd card line
+  const subtitle = (() => {
+    const chamber = pol.chamber_name || '';
+    const distId = pol.district_id || '';
+
+    if (!chamber) return undefined;
+
+    // BallotReady LOCAL: chamber_name equals office_title — use district_label directly
+    if (chamber === pol.office_title) {
+      return pol.district_label || undefined;
+    }
+
+    // Standard: "Indiana Senate, District 40"
+    if (distId) {
+      return `${chamber}, District ${distId}`;
+    }
+
+    return chamber;
+  })();
+
   return (
     <div key={pol.id}>
       <PoliticianCard
@@ -74,6 +94,7 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
         imageSrc={getImageUrl(pol)}
         name={`${pol.first_name} ${pol.last_name}`}
         title={pol.office_title}
+        subtitle={subtitle}
         badge={isCandidate ? 'Candidate' : undefined}
         onClick={isCandidate ? undefined : () => handlePoliticianClick(pol.id)}
         variant="horizontal"
@@ -145,7 +166,6 @@ export default function Results() {
     data: hookData,
     phase: hookPhase,
     error,
-    dataStatus,
     formattedAddress,
   } = usePoliticianData(activeQuery, {
     enabled: !!activeQuery && !cachedResult,
@@ -400,97 +420,152 @@ export default function Results() {
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
       <SiteHeader logoSrc="/EVLogo.svg" />
 
-      {/* Page body: flex column filling viewport below SiteHeader */}
-      <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 75px)' }}>
+      {/* Page body: two-panel layout filling viewport below SiteHeader */}
+      <div
+        style={{ height: 'calc(100vh - 75px)' }}
+        className={isDesktop ? 'flex overflow-hidden' : 'flex flex-col'}
+      >
+        {/* Filter Sidebar — desktop only */}
+        {isDesktop && (
+          <LocalFilterSidebar
+            selectedFilter={selectedFilter}
+            onFilterChange={setSelectedFilter}
+            locationLabel={locationLabel}
+            buildingImageSrc={activeBuildingImage}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            showCandidates={showCandidates}
+            onShowCandidatesChange={setShowCandidates}
+            candidatesLoading={candidatesLoading}
+          />
+        )}
 
-        {/* Address Bar — flex-shrink-0 so it doesn't collapse.
-            Must be ABOVE the overflow:hidden two-panel container so
-            the Google .pac-container dropdown is not clipped. */}
-        <div className="px-4 sm:px-8 py-3 border-b border-gray-200 bg-white flex-shrink-0">
-          <div className="flex gap-3">
-            <input
-              ref={addressInputRef}
-              type="text"
-              value={addressInput}
-              onChange={handleInputChange}
-              placeholder="Enter your address"
-              disabled={loadError}
-              className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
-                         focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]
-                         disabled:bg-gray-100 disabled:cursor-not-allowed"
-            />
-            <button
-              onClick={handleAddressSearch}
-              disabled={!addressInput.trim() || loadError}
-              className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
-                         hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
-            >
-              Search
-            </button>
+        {/* Main Content — independently scrollable on desktop */}
+        <main
+          ref={mainRef}
+          className="flex-1"
+          style={isDesktop ? { overflowY: 'auto', minWidth: 0 } : { overflowY: 'auto' }}
+        >
+          {/* Address Bar — inside scrollable content, not sticky */}
+          <div className="px-4 sm:px-8 py-3 border-t border-gray-200 bg-[var(--ev-bg-light)]">
+            <div className="flex gap-3">
+              <input
+                ref={addressInputRef}
+                type="text"
+                value={addressInput}
+                onChange={handleInputChange}
+                placeholder="Enter your address"
+                disabled={loadError}
+                className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
+                           focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]
+                           disabled:bg-gray-100 disabled:cursor-not-allowed"
+              />
+              <button
+                onClick={handleAddressSearch}
+                disabled={!addressInput.trim() || loadError}
+                className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
+                           hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
+              >
+                Search
+              </button>
+            </div>
+
+            {loadError && (
+              <p className="mt-1 text-sm text-red-600">
+                Address search is temporarily unavailable. Please try again later.
+              </p>
+            )}
+            {showSelectionHint && !loadError && (
+              <p className="mt-1 text-sm text-amber-700">
+                Please select an address from the suggestions.
+              </p>
+            )}
           </div>
 
-          {loadError && (
-            <p className="mt-1 text-sm text-red-600">
-              Address search is temporarily unavailable. Please try again later.
-            </p>
-          )}
-          {showSelectionHint && !loadError && (
-            <p className="mt-1 text-sm text-amber-700">
-              Please select an address from the suggestions.
-            </p>
-          )}
-          {dataStatus === 'no-geofence-data' && activeQuery && !loadError && (
-            <p className="mt-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
-              Local representative data is not yet available for this area.
-              Showing federal and state officials based on your state.
-            </p>
-          )}
-        </div>
-
-        {/* Two-panel layout — flex-1 fills remaining height, overflow hidden */}
-        <div
-          className={isDesktop ? 'flex-1 flex overflow-hidden' : 'flex flex-col flex-1'}
-        >
-          {/* Filter Sidebar — desktop only */}
-          {isDesktop && (
-            <LocalFilterSidebar
-              selectedFilter={selectedFilter}
-              onFilterChange={setSelectedFilter}
-              locationLabel={locationLabel}
-              buildingImageSrc={activeBuildingImage}
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              showCandidates={showCandidates}
-              onShowCandidatesChange={setShowCandidates}
-              candidatesLoading={candidatesLoading}
-            />
-          )}
-
-          {/* Main Content — independently scrollable on desktop */}
-          <main
-            ref={mainRef}
-            className="flex-1"
-            style={isDesktop ? { overflowY: 'auto', minWidth: 0 } : undefined}
-          >
-            {/* Error message */}
-            {error && (
-              <div className="mx-8 mt-4 mb-4 text-center text-red-600 bg-red-50 border border-red-200 rounded p-4">
-                {error}
+          {/* Mobile filter controls — shown only on mobile */}
+          {!isDesktop && (
+            <div className="px-4 py-3 bg-white border-b border-gray-200">
+              {/* Tier filter pills */}
+              <div className="flex gap-2 mb-3">
+                {['All', 'Local', 'State', 'Federal'].map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => setSelectedFilter(filter)}
+                    className={`px-3 py-1 text-sm rounded-full border transition-colors ${
+                      selectedFilter === filter
+                        ? 'bg-[#00657c] text-white border-[#00657c]'
+                        : 'bg-white text-gray-600 border-gray-300'
+                    }`}
+                    style={{ fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    {filter}
+                  </button>
+                ))}
               </div>
-            )}
-
-            {/* Loading skeletons */}
-            {(phase === 'loading' || phase === 'warming') && (
-              <div className="px-4 md:px-8 pt-6">
-                <SkeletonSection />
-                <SkeletonSection />
-                <SkeletonSection />
+              {/* Name search + Candidates toggle row */}
+              <div className="flex items-center gap-3">
+                <div className="relative flex-1">
+                  <svg
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search representative"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
+                    style={{ fontFamily: "'Manrope', sans-serif" }}
+                  />
+                </div>
+                <label
+                  className="flex items-center gap-1.5 cursor-pointer select-none whitespace-nowrap"
+                  style={{ fontFamily: "'Manrope', sans-serif", fontSize: '13px', color: '#718096' }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={showCandidates}
+                    onChange={(e) => setShowCandidates(e.target.checked)}
+                    style={{ accentColor: '#00657c', width: '14px', height: '14px' }}
+                  />
+                  Candidates
+                  {candidatesLoading && (
+                    <span style={{ fontSize: '11px', color: '#a0aec0' }}>...</span>
+                  )}
+                </label>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Results */}
-            {phase !== 'loading' && phase !== 'warming' && (
-              <div className="px-4 md:px-8 pb-8">
+          {/* Error message */}
+          {error && (
+            <div className="mx-8 mt-4 mb-4 text-center text-red-600 bg-red-50 border border-red-200 rounded p-4">
+              {error}
+            </div>
+          )}
+
+          {/* Loading skeletons */}
+          {(phase === 'loading' || phase === 'warming') && (
+            <div className="px-4 md:px-8 pt-6">
+              <SkeletonSection />
+              <SkeletonSection />
+              <SkeletonSection />
+            </div>
+          )}
+
+          {/* Results */}
+          {phase !== 'loading' && phase !== 'warming' && (
+              <div className="px-4 md:px-8 pt-6 pb-8">
                 {Object.entries(searchFilteredPoliticians).map(([tier, groups]) => {
                   const hasGroups = Object.keys(groups).length > 0;
 
@@ -580,8 +655,7 @@ export default function Results() {
                 )}
               </div>
             )}
-          </main>
-        </div>
+        </main>
       </div>
     </div>
   );
