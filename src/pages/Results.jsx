@@ -83,7 +83,10 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
 
   const subtitle = (() => {
     if (dashIdx > 0) return cleanTitle.slice(dashIdx + 3);
-    if (cleanChamber && pol.district_id) return `District ${pol.district_id}`;
+    // Only show "District N" for actual numbered districts;
+    // suppress geographic names like "CA", "UNITED STATES", "Indiana"
+    if (cleanChamber && pol.district_id && /^\d+$/.test(pol.district_id))
+      return `District ${pol.district_id}`;
     return undefined;
   })();
 
@@ -318,14 +321,22 @@ export default function Results() {
 
   const byTier = useMemo(() => {
     const map = { Local: {}, State: {}, Federal: {}, Unknown: {} };
+    const seen = new Set();
 
     for (const { pol, cat } of classified) {
+      // Deduplicate by name + office to handle same person with different external IDs
+      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
       const tier = map[cat.tier] ? cat.tier : 'Unknown';
       if (!map[tier][cat.group]) map[tier][cat.group] = [];
       map[tier][cat.group].push(pol);
     }
 
     for (const { pol, cat } of classifiedCandidates) {
+      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
       const tier = map[cat.tier] ? cat.tier : 'Unknown';
       if (!map[tier][cat.group]) map[tier][cat.group] = [];
       map[tier][cat.group].push(pol);
