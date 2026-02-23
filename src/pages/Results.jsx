@@ -70,11 +70,20 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
   // Use chamber_name as title when available (avoids duplication with subtitle)
   const cardTitle = pol.chamber_name || pol.office_title;
 
-  // Subtitle: just the district portion
+  // Subtitle: extract just the district portion (strip chamber_name prefix from office_title)
   const subtitle = (() => {
     if (!pol.chamber_name) return undefined;
-    if (pol.district_label) return pol.district_label;
+
+    // If office_title starts with chamber_name, the suffix is the district info
+    // e.g., "Bloomington City Common Council - At Large" → "At Large"
+    if (pol.office_title && pol.office_title.startsWith(pol.chamber_name)) {
+      const suffix = pol.office_title.slice(pol.chamber_name.length).replace(/^\s*[-–—]\s*/, '').trim();
+      if (suffix) return suffix;
+    }
+
+    // Fall back to district_id for non-LOCAL (e.g., "Indiana Senate" → "District 40")
     if (pol.district_id) return `District ${pol.district_id}`;
+
     return undefined;
   })();
 
