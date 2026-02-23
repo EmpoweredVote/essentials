@@ -67,24 +67,15 @@ function SkeletonSection() {
 function renderPoliticianCard(pol, handlePoliticianClick) {
   const isCandidate = pol.is_candidate;
 
-  // Build subtitle: chamber + district for 3rd card line
+  // Use chamber_name as title when available (avoids duplication with subtitle)
+  const cardTitle = pol.chamber_name || pol.office_title;
+
+  // Subtitle: just the district portion
   const subtitle = (() => {
-    const chamber = pol.chamber_name || '';
-    const distId = pol.district_id || '';
-
-    if (!chamber) return undefined;
-
-    // BallotReady LOCAL: chamber_name equals office_title — use district_label directly
-    if (chamber === pol.office_title) {
-      return pol.district_label || undefined;
-    }
-
-    // Standard: "Indiana Senate, District 40"
-    if (distId) {
-      return `${chamber}, District ${distId}`;
-    }
-
-    return chamber;
+    if (!pol.chamber_name) return undefined;
+    if (pol.district_label) return pol.district_label;
+    if (pol.district_id) return `District ${pol.district_id}`;
+    return undefined;
   })();
 
   return (
@@ -93,7 +84,7 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
         id={pol.id}
         imageSrc={getImageUrl(pol)}
         name={`${pol.first_name} ${pol.last_name}`}
-        title={pol.office_title}
+        title={cardTitle}
         subtitle={subtitle}
         badge={isCandidate ? 'Candidate' : undefined}
         onClick={isCandidate ? undefined : () => handlePoliticianClick(pol.id)}
