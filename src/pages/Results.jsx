@@ -67,8 +67,10 @@ function SkeletonSection() {
 function renderPoliticianCard(pol, handlePoliticianClick) {
   const isCandidate = pol.is_candidate;
 
-  // Strip "(Retain Name?)" from office_title (BallotReady retention election artifact)
-  const cleanTitle = (pol.office_title || '').replace(/\s*\(Retain\s+.+?\?\)/, '');
+  // Strip "(Retain Name?)" from BallotReady retention election artifacts
+  const stripRetain = (s) => (s || '').replace(/\s*\(Retain\s+.+?\?\)/, '');
+  const cleanTitle = stripRetain(pol.office_title);
+  const cleanChamber = stripRetain(pol.chamber_name);
 
   // Split office_title on " - " to separate body from seat designation
   // e.g., "Bloomington City Common Council - At Large" → title: "...Council", subtitle: "At Large"
@@ -77,11 +79,11 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
 
   const cardTitle = dashIdx > 0
     ? cleanTitle.slice(0, dashIdx)
-    : (pol.chamber_name || cleanTitle);
+    : (cleanChamber || cleanTitle);
 
   const subtitle = (() => {
     if (dashIdx > 0) return cleanTitle.slice(dashIdx + 3);
-    if (pol.chamber_name && pol.district_id) return `District ${pol.district_id}`;
+    if (cleanChamber && pol.district_id) return `District ${pol.district_id}`;
     return undefined;
   })();
 
