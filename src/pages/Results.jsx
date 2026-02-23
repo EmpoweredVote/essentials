@@ -67,23 +67,18 @@ function SkeletonSection() {
 function renderPoliticianCard(pol, handlePoliticianClick) {
   const isCandidate = pol.is_candidate;
 
-  // Use chamber_name as title when available (avoids duplication with subtitle)
-  const cardTitle = pol.chamber_name || pol.office_title;
+  // Split office_title on " - " to separate body from seat designation
+  // e.g., "Bloomington City Common Council - At Large" → ["Bloomington City Common Council", "At Large"]
+  const dashIdx = (pol.office_title || '').lastIndexOf(' - ');
 
-  // Subtitle: extract just the district portion (strip chamber_name prefix from office_title)
+  const cardTitle = pol.chamber_name
+    || (dashIdx > 0 ? pol.office_title.slice(0, dashIdx) : pol.office_title);
+
   const subtitle = (() => {
-    if (!pol.chamber_name) return undefined;
-
-    // If office_title starts with chamber_name, the suffix is the district info
-    // e.g., "Bloomington City Common Council - At Large" → "At Large"
-    if (pol.office_title && pol.office_title.startsWith(pol.chamber_name)) {
-      const suffix = pol.office_title.slice(pol.chamber_name.length).replace(/^\s*[-–—]\s*/, '').trim();
-      if (suffix) return suffix;
-    }
-
-    // Fall back to district_id for non-LOCAL (e.g., "Indiana Senate" → "District 40")
-    if (pol.district_id) return `District ${pol.district_id}`;
-
+    // If office_title has " - ", the suffix is the seat designation
+    if (dashIdx > 0) return pol.office_title.slice(dashIdx + 3);
+    // State/federal: use district_id when chamber_name is the title
+    if (pol.chamber_name && pol.district_id) return `District ${pol.district_id}`;
     return undefined;
   })();
 
