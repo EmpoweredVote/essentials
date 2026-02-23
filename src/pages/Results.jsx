@@ -68,16 +68,16 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
   const isCandidate = pol.is_candidate;
 
   // Split office_title on " - " to separate body from seat designation
-  // e.g., "Bloomington City Common Council - At Large" → ["Bloomington City Common Council", "At Large"]
+  // e.g., "Bloomington City Common Council - At Large" → title: "...Council", subtitle: "At Large"
+  // Always prefer the dash-split over chamber_name (which may equal office_title for LOCAL)
   const dashIdx = (pol.office_title || '').lastIndexOf(' - ');
 
-  const cardTitle = pol.chamber_name
-    || (dashIdx > 0 ? pol.office_title.slice(0, dashIdx) : pol.office_title);
+  const cardTitle = dashIdx > 0
+    ? pol.office_title.slice(0, dashIdx)
+    : (pol.chamber_name || pol.office_title);
 
   const subtitle = (() => {
-    // If office_title has " - ", the suffix is the seat designation
     if (dashIdx > 0) return pol.office_title.slice(dashIdx + 3);
-    // State/federal: use district_id when chamber_name is the title
     if (pol.chamber_name && pol.district_id) return `District ${pol.district_id}`;
     return undefined;
   })();
