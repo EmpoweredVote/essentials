@@ -13,7 +13,7 @@ import {
   getDisplayName,
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS } from '../utils/sorters';
-import { getBuildingImages } from '../lib/buildingImages';
+import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchCandidates } from '../lib/api';
 
 /** Sort a polList using the default (first) sort option for its category */
@@ -275,12 +275,12 @@ export default function Results() {
     return null;
   }, [filteredPols]);
 
-  // Extract state abbreviation from the address string (e.g., "Orem, UT 84057")
-  const userState = useMemo(() => {
-    const addr = addressInput || '';
-    const match = addr.match(/\b([A-Z]{2})\s+\d{5}\b/);
-    return match ? match[1] : null;
-  }, [addressInput]);
+  // Extract state abbreviation from the address string
+  // Handles "Orem, UT 84057" and "South Dakota, USA"
+  const userState = useMemo(
+    () => parseStateFromAddress(addressInput),
+    [addressInput]
+  );
 
   const buildingImageMap = useMemo(
     () => getBuildingImages(representingCity, userState),

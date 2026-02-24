@@ -59,6 +59,14 @@ const STATE_CAPITOLS = {
   WY: 'wyoming',
 };
 
+/** Reverse map: lowercase full state name → abbreviation (derived from STATE_CAPITOLS) */
+const STATE_NAME_TO_ABBREV = Object.fromEntries(
+  Object.entries(STATE_CAPITOLS).map(([abbrev, stem]) => [
+    stem.replace(/-/g, ' '),  // "new-york" → "new york"
+    abbrev,
+  ])
+);
+
 const FEDERAL_IMAGE = '/images/us-capitol.jpg';
 
 const CURATED_LOCAL = {
@@ -99,4 +107,27 @@ export function getBuildingImages(representingCity, stateAbbrev) {
     State: stateImage,
     Federal: FEDERAL_IMAGE,
   };
+}
+
+/**
+ * Parse a two-letter state abbreviation from an address string.
+ * Matches "ST 84057" (abbreviation before ZIP) or "South Dakota, USA" (state name suffix).
+ * @param {string} address
+ * @returns {string|null} Two-letter abbreviation or null
+ */
+export function parseStateFromAddress(address) {
+  const addr = address || '';
+
+  // Pattern 1: two-letter abbreviation before a ZIP code (e.g., "Orem, UT 84057")
+  const zipMatch = addr.match(/\b([A-Z]{2})\s+\d{5}\b/);
+  if (zipMatch) return zipMatch[1];
+
+  // Pattern 2: full state name at the end (e.g., "South Dakota, USA")
+  const suffixMatch = addr.match(/,\s*([^,]+?)\s*,\s*USA\s*$/i);
+  if (suffixMatch) {
+    const abbrev = STATE_NAME_TO_ABBREV[suffixMatch[1].toLowerCase().trim()];
+    if (abbrev) return abbrev;
+  }
+
+  return null;
 }
