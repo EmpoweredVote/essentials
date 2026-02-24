@@ -6,6 +6,14 @@ import {
   lastNameKey,
 } from "../utils/sorters";
 
+function getImageUrl(pol) {
+  if (pol.images && pol.images.length > 0) {
+    const defaultImg = pol.images.find((img) => img.type === "default");
+    return defaultImg ? defaultImg.url : pol.images[0].url;
+  }
+  return pol.photo_origin_url;
+}
+
 function PoliticianGrid({ gridTitle, polList }) {
   const options = GROUP_SORT_OPTIONS[gridTitle] || [
     {
@@ -166,7 +174,7 @@ function PoliticianGrid({ gridTitle, polList }) {
           <PoliticianCard
             key={pol.id}
             id={pol.id}
-            image={pol.photo_origin_url}
+            imageSrc={getImageUrl(pol)}
             name={`${pol.first_name} ${pol.last_name}`}
             title={
               pol.chamber_name_formal || pol.chamber_name || pol.office_title
