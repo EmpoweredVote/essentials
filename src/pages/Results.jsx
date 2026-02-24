@@ -275,11 +275,6 @@ export default function Results() {
     return null;
   }, [filteredPols]);
 
-  const buildingImageMap = useMemo(
-    () => getBuildingImages(representingCity),
-    [representingCity]
-  );
-
   // Determine user's state from state or local politicians
   const userState = useMemo(() => {
     for (const p of filteredPols) {
@@ -290,6 +285,11 @@ export default function Results() {
     }
     return null;
   }, [filteredPols]);
+
+  const buildingImageMap = useMemo(
+    () => getBuildingImages(representingCity, userState),
+    [representingCity, userState]
+  );
 
   // Filter federal politicians: only show senators/reps from user's state
   const federalFiltered = useMemo(() => {
