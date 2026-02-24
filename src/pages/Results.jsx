@@ -275,16 +275,12 @@ export default function Results() {
     return null;
   }, [filteredPols]);
 
-  // Determine user's state from state or local politicians
+  // Extract state abbreviation from the address string (e.g., "Orem, UT 84057")
   const userState = useMemo(() => {
-    for (const p of filteredPols) {
-      const dt = p?.district_type || '';
-      if (dt.includes('STATE') || dt.includes('LOCAL') || dt === 'COUNTY' || dt === 'SCHOOL') {
-        if (p.representing_state) return p.representing_state.toUpperCase();
-      }
-    }
-    return null;
-  }, [filteredPols]);
+    const addr = addressInput || '';
+    const match = addr.match(/\b([A-Z]{2})\s+\d{5}\b/);
+    return match ? match[1] : null;
+  }, [addressInput]);
 
   const buildingImageMap = useMemo(
     () => getBuildingImages(representingCity, userState),
