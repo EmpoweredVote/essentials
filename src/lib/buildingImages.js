@@ -122,8 +122,9 @@ export function parseStateFromAddress(address) {
   const zipMatch = addr.match(/\b([A-Z]{2})\s+\d{5}\b/);
   if (zipMatch) return zipMatch[1];
 
-  // Pattern 2: full state name at the end (e.g., "South Dakota, USA")
-  const suffixMatch = addr.match(/,\s*([^,]+?)\s*,\s*USA\s*$/i);
+  // Pattern 2: full state name before ", USA" at the end
+  // Handles both "South Dakota, USA" and "Pierre, South Dakota, USA"
+  const suffixMatch = addr.match(/(?:^|,)\s*([^,]+?)\s*,\s*USA\s*$/i);
   if (suffixMatch) {
     const abbrev = STATE_NAME_TO_ABBREV[suffixMatch[1].toLowerCase().trim()];
     if (abbrev) return abbrev;
