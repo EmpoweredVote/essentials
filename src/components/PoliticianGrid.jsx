@@ -14,6 +14,44 @@ function getImageUrl(pol) {
   return pol.photo_origin_url;
 }
 
+/**
+ * Qualify a generic local title with the jurisdiction name.
+ * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"
+ */
+function qualifyTitle(baseTitle, pol) {
+  if (!pol.government_name || !baseTitle) return baseTitle;
+
+  const dt = pol.district_type || "";
+  if (!dt.startsWith("LOCAL") && dt !== "COUNTY") return baseTitle;
+
+  // Extract first segment: "Los Angeles County, California, US" → "Los Angeles County"
+  const gov = pol.government_name.split(",")[0].trim();
+  // Core name for duplicate detection: strip "City of " and trailing " County"
+  const govCore = gov
+    .replace(/^City of\s+/i, "")
+    .replace(/\s+County$/i, "")
+    .trim();
+
+  // Already qualified (e.g. "Bloomington City Common Council" already contains "Bloomington")
+  if (govCore && baseTitle.toLowerCase().includes(govCore.toLowerCase()))
+    return baseTitle;
+
+  // For county officials use full gov name; for city officials strip "City of "
+  let prefix = dt === "COUNTY" ? gov : gov.replace(/^City of\s+/i, "");
+
+  // Avoid "Los Angeles County County Board of Supervisors"
+  if (prefix.endsWith("County") && baseTitle.startsWith("County"))
+    prefix = prefix.replace(/\s+County$/, "");
+
+  return `${prefix} ${baseTitle}`;
+}
+
+function getDisplayTitle(pol) {
+  const base =
+    pol.chamber_name_formal || pol.chamber_name || pol.office_title;
+  return qualifyTitle(base, pol);
+}
+
 function PoliticianGrid({ gridTitle, polList }) {
   const options = GROUP_SORT_OPTIONS[gridTitle] || [
     {
@@ -176,9 +214,7 @@ function PoliticianGrid({ gridTitle, polList }) {
             id={pol.id}
             imageSrc={getImageUrl(pol)}
             name={`${pol.first_name} ${pol.last_name}`}
-            title={
-              pol.chamber_name_formal || pol.chamber_name || pol.office_title
-            }
+            title={getDisplayTitle(pol)}
           />
         ))}
       </div>

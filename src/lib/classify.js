@@ -161,11 +161,13 @@ export function classifyCategory(pol) {
     // Township officials
     if (hasAny(title, ["township"]) || hasAny(chamber, ["township"]))
       return { tier: "Local", group: "Township Officials" };
+    // County legislative bodies (BallotReady sometimes uses LOCAL for these)
+    if (hasAny(chamber, ["board of supervisors", "county council", "county commission"]))
+      return { tier: "Local", group: "County Legislators" };
     // City council and similar legislative bodies
     if (
       hasAny(chamber, [
         "council",
-        "board of supervisors",
         "board of aldermen",
       ]) ||
       hasAny(title, ROLE_LOCAL_LEGIS)
