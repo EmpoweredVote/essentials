@@ -71,7 +71,17 @@ const FEDERAL_IMAGE = '/images/us-capitol.jpg';
 
 const CURATED_LOCAL = {
   bloomington: '/images/bloomington-city-hall.jpg',
-  'los angeles': '/images/la-city-hall.jpg',
+  'los angeles': 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0644000.jpg',
+  'long beach': 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0643000.jpg',
+  glendale: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0630000.jpg',
+  pomona: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0658072.jpg',
+  torrance: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0680000.jpg',
+  pasadena: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0656000.jpg',
+  'west covina': 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0684200.jpg',
+  downey: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0619766.jpg',
+  burbank: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0608954.jpg',
+  carson: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0611530.jpg',
+  norwalk: 'https://zlbutxtrjcixpdgfzrgv.storage.supabase.co/storage/v1/object/public/politician-photos/la_county/building_photos/0652526.jpg',
 };
 
 const FALLBACK_LOCAL = '/images/city-hall-generic.svg';
