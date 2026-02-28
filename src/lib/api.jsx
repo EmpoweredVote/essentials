@@ -8,6 +8,7 @@ if (!window.__API_LOGGED__) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// @deprecated — no longer used by usePoliticianData. Kept for backward compatibility.
 export async function fetchPoliticiansOnce(zip, attempt = 0) {
   try {
     const url = `${API}/essentials/politicians/${zip}?a=${attempt}&t=${Date.now()}`;
@@ -38,6 +39,7 @@ export async function fetchPoliticiansOnce(zip, attempt = 0) {
   }
 }
 
+// @deprecated — no longer used by usePoliticianData. Kept for backward compatibility.
 export async function fetchPoliticiansProgressive(
   zip,
   onUpdate,
