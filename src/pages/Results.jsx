@@ -170,6 +170,10 @@ export default function Results() {
   const [hasValidSelection, setHasValidSelection] = useState(!!queryFromUrl);
   const [showSelectionHint, setShowSelectionHint] = useState(false);
 
+  // Search counter — incrementing this forces usePoliticianData to re-fetch
+  // even when the query text hasn't changed (re-search same location edge case)
+  const [searchKey, setSearchKey] = useState(0);
+
   const addressInputRef = useRef(null);
   const mainRef = useRef(null);
 
@@ -203,6 +207,7 @@ export default function Results() {
   });
 
   // Wire up the hook with sessionStorage gating
+  // searchKey forces re-fetch even when the query text is unchanged (same-location re-search)
   const activeQuery = queryFromUrl;
   const {
     data: hookData,
@@ -212,6 +217,7 @@ export default function Results() {
   } = usePoliticianData(activeQuery, {
     enabled: !!activeQuery && !cachedResult,
     initialData: [],
+    key: searchKey,
   });
 
   // Sync backend-validated formatted address into address bar
@@ -289,6 +295,7 @@ export default function Results() {
     }
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
+    setSearchKey(k => k + 1);
     setSearchParams({ q: addressInput });
   };
 
@@ -528,6 +535,15 @@ export default function Results() {
             )}
           </div>
 
+          {/* Area label — shown when we have a backend-validated formatted address */}
+          {formattedAddress && phase === 'fresh' && list.length > 0 && (
+            <div className="px-4 sm:px-8 pb-2">
+              <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                Showing representatives for <span className="font-semibold text-gray-700">{formattedAddress}</span>
+              </p>
+            </div>
+          )}
+
           {/* Mobile filter controls — shown only on mobile */}
           {!isDesktop && (
             <div className="px-4 py-3 bg-white border-b border-gray-200">
@@ -601,7 +617,7 @@ export default function Results() {
           )}
 
           {/* Loading skeletons */}
-          {(phase === 'loading' || phase === 'warming') && (
+          {phase === 'loading' && (
             <div className="px-4 md:px-8 pt-6">
               <SkeletonSection />
               <SkeletonSection />
@@ -610,7 +626,7 @@ export default function Results() {
           )}
 
           {/* Results */}
-          {phase !== 'loading' && phase !== 'warming' && (
+          {phase !== 'loading' && (
               <div className="px-4 md:px-8 pt-6 pb-8">
                 {Object.entries(searchFilteredPoliticians).map(([tier, groups]) => {
                   const hasGroups = Object.keys(groups).length > 0;
