@@ -96,8 +96,8 @@ const FALLBACK_STATE = '/images/state-capitol-generic.svg';
 export function getBuildingImages(representingCity, stateAbbrev) {
   const city = (representingCity || '').toLowerCase();
 
-  // Local: check curated cities, else generic SVG
-  let localImage = FALLBACK_LOCAL;
+  // Local: check curated cities, else null (no placeholder)
+  let localImage = null;
   for (const [key, src] of Object.entries(CURATED_LOCAL)) {
     if (city.includes(key)) {
       localImage = src;
@@ -105,8 +105,8 @@ export function getBuildingImages(representingCity, stateAbbrev) {
     }
   }
 
-  // State: look up abbreviation for real capitol photo, else generic SVG
-  let stateImage = FALLBACK_STATE;
+  // State: look up abbreviation for real capitol photo, else null
+  let stateImage = null;
   const abbrev = (stateAbbrev || '').toUpperCase();
   if (STATE_CAPITOLS[abbrev]) {
     stateImage = `/images/state-capitols/${STATE_CAPITOLS[abbrev]}.jpg`;

@@ -140,10 +140,8 @@ export default function LocalFilterSidebar({
             className="w-full rounded-lg object-cover flex-shrink"
             style={{ flexGrow: 1, minHeight: 0, aspectRatio: '1/2.25' }}
             onError={(e) => {
-              // Fall back to generic SVG if image fails to load
-              if (!e.target.src.endsWith('.svg')) {
-                e.target.src = '/images/state-capitol-generic.svg';
-              }
+              // Hide the image if it fails to load
+              e.target.style.display = 'none';
             }}
           />
         </div>
