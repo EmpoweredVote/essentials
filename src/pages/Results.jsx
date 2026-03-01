@@ -185,9 +185,11 @@ export default function Results() {
       setAddressInput(formattedAddress);
       setHasValidSelection(true);
       setShowSelectionHint(false);
-      setCachedResult(null);
-      sessionStorage.removeItem('ev:results');
-      // Do NOT navigate yet — user must click Search
+      // Do NOT clear cache or navigate — user must click Search.
+      // Cache clearing happens in handleAddressSearch when the user
+      // actually submits. Clearing here would flip `enabled` in the
+      // data hook while the URL still points at the *old* query,
+      // causing a spurious re-fetch of the previous results.
     },
   });
 
