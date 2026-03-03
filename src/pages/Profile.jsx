@@ -73,7 +73,7 @@ function Profile() {
         ) : (
           <PoliticianProfile
             politician={pol}
-            onBack={() => navigate(-1)}
+            onBack={() => navigate('/')}
             backLabel={
               pol.first_name
                 ? `${pol.first_name} ${pol.last_name}`
@@ -81,6 +81,7 @@ function Profile() {
             }
             legislativeSummary={legislativeSummary}
             politicianId={id}
+            onNavigateToRecord={(href) => navigate(href)}
           />
         )}
       </main>
