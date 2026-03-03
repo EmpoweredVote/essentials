@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchPolitician } from '../lib/api';
+import { fetchPolitician, fetchLegislativeSummary } from '../lib/api';
 import {
   Header,
   PoliticianProfile,
@@ -12,6 +12,7 @@ function Profile() {
 
   const [pol, setPol] = useState({});
   const [loadingProfile, setLoadingProfile] = useState(true);
+  const [legislativeSummary, setLegislativeSummary] = useState(null);
 
   // Navigation config
   const navItems = [
@@ -34,14 +35,18 @@ function Profile() {
     href: '/donate',
   };
 
-  // Fetch politician
+  // Fetch politician and legislative summary in parallel
   useEffect(() => {
     if (!id) return;
     setLoadingProfile(true);
     (async () => {
       try {
-        const result = await fetchPolitician(id);
+        const [result, legSummary] = await Promise.all([
+          fetchPolitician(id),
+          fetchLegislativeSummary(id),
+        ]);
         setPol(result);
+        setLegislativeSummary(legSummary);
       } catch (err) {
         console.error(err);
       } finally {
@@ -74,6 +79,8 @@ function Profile() {
                 ? `${pol.first_name} ${pol.last_name}`
                 : undefined
             }
+            legislativeSummary={legislativeSummary}
+            politicianId={id}
           />
         )}
       </main>
