@@ -263,6 +263,23 @@ export default function Results() {
     }
   }, [list, phase, selectedFilter, queryFromUrl]);
 
+  // Restore scroll position when returning from a profile page
+  useEffect(() => {
+    if (!cachedResult) return;
+    const saved = sessionStorage.getItem('ev:scrollTop');
+    if (!saved) return;
+    const scrollTop = parseInt(saved, 10);
+    sessionStorage.removeItem('ev:scrollTop');
+    // Wait a tick for the DOM to render cached results
+    requestAnimationFrame(() => {
+      if (isDesktop && mainRef.current) {
+        mainRef.current.scrollTop = scrollTop;
+      } else {
+        window.scrollTo(0, scrollTop);
+      }
+    });
+  }, [cachedResult, isDesktop]);
+
   // Fetch candidates only when toggle is on
   useEffect(() => {
     if (!showCandidates || !activeQuery) {
@@ -468,6 +485,11 @@ export default function Results() {
   }, [selectedFilter, isDesktop, mainRef.current]);
 
   const handlePoliticianClick = (id) => {
+    // Save scroll position before navigating to profile
+    const scrollTop = isDesktop
+      ? mainRef.current?.scrollTop ?? 0
+      : window.scrollY;
+    sessionStorage.setItem('ev:scrollTop', String(scrollTop));
     navigate(`/politician/${id}`);
   };
 

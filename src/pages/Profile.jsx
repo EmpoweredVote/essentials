@@ -73,7 +73,19 @@ function Profile() {
         ) : (
           <PoliticianProfile
             politician={pol}
-            onBack={() => navigate('/')}
+            onBack={() => {
+              try {
+                const cached = sessionStorage.getItem('ev:results');
+                if (cached) {
+                  const { query } = JSON.parse(cached);
+                  if (query) {
+                    navigate(`/results?q=${encodeURIComponent(query)}`);
+                    return;
+                  }
+                }
+              } catch { /* fall through */ }
+              navigate('/');
+            }}
             backLabel={
               pol.first_name
                 ? `${pol.first_name} ${pol.last_name}`
