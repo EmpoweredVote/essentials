@@ -168,3 +168,73 @@ export async function fetchCandidates(zipOrQuery) {
     return [];
   }
 }
+
+export async function fetchLegislativeSummary(id) {
+  try {
+    const res = await fetch(`${API}/essentials/politician/${id}/legislative-summary`, {
+      credentials: "include",
+    });
+    if (!res.ok) return { recent_bills: [], recent_votes: [] };
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching legislative summary:", error);
+    return { recent_bills: [], recent_votes: [] };
+  }
+}
+
+export async function fetchLegislativeCommittees(id) {
+  try {
+    const res = await fetch(`${API}/essentials/politician/${id}/committees`, {
+      credentials: "include",
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching legislative committees:", error);
+    return [];
+  }
+}
+
+export async function fetchLegislativeLeadership(id) {
+  try {
+    const res = await fetch(`${API}/essentials/politician/${id}/leadership`, {
+      credentials: "include",
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching legislative leadership:", error);
+    return [];
+  }
+}
+
+export async function fetchLegislativeBills(id, { all = false, limit } = {}) {
+  try {
+    const params = new URLSearchParams();
+    if (all) params.set('all', 'true');
+    if (limit !== undefined) params.set('limit', String(limit));
+    const qs = params.toString() ? `?${params}` : '';
+    const res = await fetch(`${API}/essentials/politician/${id}/bills${qs}`, {
+      credentials: "include",
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching legislative bills:", error);
+    return [];
+  }
+}
+
+export async function fetchLegislativeVotes(id, { limit } = {}) {
+  try {
+    const qs = limit !== undefined ? `?limit=${limit}` : '';
+    const res = await fetch(`${API}/essentials/politician/${id}/votes${qs}`, {
+      credentials: "include",
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching legislative votes:", error);
+    return [];
+  }
+}
