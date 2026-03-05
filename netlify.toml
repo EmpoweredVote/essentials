@@ -1,6 +1,6 @@
 [build]
   command = '''
-    rm -rf ../ev-ui && git clone --depth 1 https://github.com/chrisandrewsedu/ev-ui.git ../ev-ui
+    rm -rf ../ev-ui && git clone --depth 1 https://github.com/EmpoweredVote/ev-ui.git ../ev-ui
     cd ../ev-ui && npm install && npm run build
     cd /opt/build/repo && npm run build
   '''
