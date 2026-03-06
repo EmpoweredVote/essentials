@@ -103,8 +103,6 @@ export function classifyCategory(pol) {
   const chamber = pol?.chamber_name_formal || pol?.chamber_name || "";
   const title = pol?.office_title || "";
 
-  if (pol?.first_name === "VACANT") return { tier: "Hidden", group: "Vacant" };
-
   if (dt === "NATIONAL_UPPER") return { tier: "Federal", group: "U.S. Senate" };
   if (dt === "NATIONAL_LOWER") return { tier: "Federal", group: "U.S. House" };
   if (dt === "STATE_UPPER") return { tier: "State", group: "State Senate" };

@@ -93,6 +93,7 @@ function qualifyLocalTitle(baseTitle, pol) {
 /** Render a politician or candidate card with election date below for candidates */
 function renderPoliticianCard(pol, handlePoliticianClick) {
   const isCandidate = pol.is_candidate;
+  const isVacant = pol.is_vacant;
 
   // Strip "(Retain Name?)" from BallotReady retention election artifacts
   const stripRetain = (s) => (s || '').replace(/\s*\(Retain\s+.+?\?\)/, '');
@@ -128,6 +129,24 @@ function renderPoliticianCard(pol, handlePoliticianClick) {
       return 'At-Large';
     return undefined;
   })();
+
+  // Vacant offices: render dimmed card with "Vacant" name, no photo, no click handler
+  if (isVacant) {
+    return (
+      <div key={pol.id || `vacant-${pol.office_title}`} style={{ opacity: 0.55 }}>
+        <PoliticianCard
+          id={pol.id}
+          imageSrc={undefined}
+          name="Vacant"
+          title={cardTitle}
+          subtitle={subtitle}
+          badge="Vacant"
+          onClick={undefined}
+          variant="horizontal"
+        />
+      </div>
+    );
+  }
 
   return (
     <div key={pol.id}>
@@ -318,11 +337,8 @@ export default function Results() {
     setSearchParams({ q: addressInput });
   };
 
-  // Filter and classify
-  const filteredPols = useMemo(
-    () => list.filter((p) => p?.first_name !== 'VACANT'),
-    [list]
-  );
+  // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
+  const filteredPols = useMemo(() => list, [list]);
 
   // Derive representing city for building image selection
   const representingCity = useMemo(() => {
@@ -385,8 +401,9 @@ export default function Results() {
     const seen = new Set();
 
     for (const { pol, cat } of classified) {
-      // Deduplicate by name + office to handle same person with different external IDs
-      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}`;
+      // Deduplicate by name + office to handle same person with different external IDs.
+      // Include is_vacant in key to prevent vacant/filled collisions on the same seat.
+      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}-${pol.is_vacant || false}`;
       if (seen.has(key)) continue;
       seen.add(key);
       const tier = map[cat.tier] ? cat.tier : 'Unknown';
@@ -395,7 +412,7 @@ export default function Results() {
     }
 
     for (const { pol, cat } of classifiedCandidates) {
-      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}`;
+      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}-${pol.is_vacant || false}`;
       if (seen.has(key)) continue;
       seen.add(key);
       const tier = map[cat.tier] ? cat.tier : 'Unknown';
