@@ -19,6 +19,53 @@ export async function fetchPoliticianAnswers(politicianId) {
   return res.json();
 }
 
+// User's compass answers: [{ topic_id, value, write_in_text }, ...]
+// Returns [] if the user is not logged in (401) or on any network error.
+export async function fetchUserAnswers() {
+  try {
+    const res = await fetch(`${API}/compass/answers`, {
+      credentials: "include",
+    });
+    if (res.status === 401) return [];
+    if (!res.ok) throw new Error(`fetchUserAnswers failed: ${res.status}`);
+    return res.json();
+  } catch (err) {
+    console.error("fetchUserAnswers error:", err);
+    return [];
+  }
+}
+
+// User's selected topic IDs: string[]
+// Returns [] if the user is not logged in (401) or on any network error.
+export async function fetchSelectedTopics() {
+  try {
+    const res = await fetch(`${API}/compass/selected-topics`, {
+      credentials: "include",
+    });
+    if (res.status === 401) return [];
+    if (!res.ok) throw new Error(`fetchSelectedTopics failed: ${res.status}`);
+    return res.json();
+  } catch (err) {
+    console.error("fetchSelectedTopics error:", err);
+    return [];
+  }
+}
+
+// Politicians that have compass stances: [{ id, first_name, last_name, ... }]
+// Public endpoint — returns [] on any error.
+export async function fetchPoliticiansWithStances() {
+  try {
+    const res = await fetch(`${API}/compass/politicians`, {
+      credentials: "include",
+    });
+    if (!res.ok) throw new Error(`fetchPoliticiansWithStances failed: ${res.status}`);
+    return res.json();
+  } catch (err) {
+    console.error("fetchPoliticiansWithStances error:", err);
+    return [];
+  }
+}
+
 /**
  * Build { [short_title]: value } only for the allowed short titles.
  * Any missing answers default to 0.
