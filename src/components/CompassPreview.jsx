@@ -3,6 +3,9 @@ import { createPortal } from 'react-dom';
 import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 
+const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
+const MAX_SPOKES = 8;
+
 /**
  * CompassPreview — tooltip/popover with a mini radar chart for a politician.
  *
@@ -29,7 +32,9 @@ export default function CompassPreview({
   const [pos, setPos] = useState({ top: 0, left: 0, arrowSide: 'bottom' });
   const popoverRef = useRef(null);
   const leaveTimerRef = useRef(null);
-  const POPOVER_WIDTH = 220;
+
+  const hasUserCompass = userAnswers && userAnswers.length > 0;
+  const POPOVER_WIDTH = hasUserCompass ? 240 : 260;
 
   // Fetch politician answers on mount
   useEffect(() => {
@@ -60,7 +65,7 @@ export default function CompassPreview({
 
     const rect = anchor.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
-    const POPOVER_APPROX_HEIGHT = 260;
+    const POPOVER_APPROX_HEIGHT = hasUserCompass ? 280 : 220;
     const GAP = 8;
 
     // Decide whether to show above or below the anchor
@@ -77,7 +82,7 @@ export default function CompassPreview({
     left = Math.max(8, Math.min(left, window.innerWidth - POPOVER_WIDTH - 8));
 
     setPos({ top, left, arrowSide: showAbove ? 'bottom' : 'top' });
-  }, [anchorRef]);
+  }, [anchorRef, hasUserCompass, POPOVER_WIDTH]);
 
   // Dismiss on scroll
   useEffect(() => {
@@ -121,23 +126,26 @@ export default function CompassPreview({
   let polData = {};
   let userData = {};
 
-  if (!loading && polAnswers !== null && allTopics.length > 0) {
+  if (!loading && polAnswers !== null && allTopics.length > 0 && hasUserCompass) {
     // Determine which short_titles to display:
-    // If user has selectedTopics, filter to those; otherwise use all topics politician answered
+    // Use selectedTopics if available, otherwise use topics the politician answered
     let allowedShorts;
 
     if (selectedTopics && selectedTopics.length > 0) {
-      // Map topic IDs → short_title
       const selectedIdSet = new Set(selectedTopics.map(String));
       allowedShorts = allTopics
         .filter((t) => selectedIdSet.has(String(t.id)))
         .map((t) => t.short_title);
     } else {
-      // Use all topics the politician answered
       const answeredTopicIds = new Set(polAnswers.map((a) => String(a.topic_id)));
       allowedShorts = allTopics
         .filter((t) => answeredTopicIds.has(String(t.id)))
         .map((t) => t.short_title);
+    }
+
+    // Cap at MAX_SPOKES to keep the mini chart readable
+    if (allowedShorts.length > MAX_SPOKES) {
+      allowedShorts = allowedShorts.slice(0, MAX_SPOKES);
     }
 
     if (allowedShorts.length > 0) {
@@ -150,14 +158,12 @@ export default function CompassPreview({
       topics = topicsFiltered;
       polData = polMap;
 
-      if (userAnswers && userAnswers.length > 0) {
-        const { answersByShort: userMap } = buildAnswerMapByShortTitle(
-          allTopics,
-          userAnswers,
-          allowedShorts
-        );
-        userData = userMap;
-      }
+      const { answersByShort: userMap } = buildAnswerMapByShortTitle(
+        allTopics,
+        userAnswers,
+        allowedShorts
+      );
+      userData = userMap;
     }
   }
 
@@ -228,7 +234,7 @@ export default function CompassPreview({
         >
           {politicianName + "'s Compass"}
         </p>
-        {Object.keys(userData).length > 0 && (
+        {hasUserCompass && hasData && (
           <p style={{ margin: '2px 0 0', fontSize: '10px', color: '#9ca3af' }}>
             <span style={{ color: '#ff5740', fontWeight: 600 }}>Pink</span> = politician,{' '}
             <span style={{ color: '#59b0c4', fontWeight: 600 }}>blue</span> = you
@@ -236,8 +242,8 @@ export default function CompassPreview({
         )}
       </div>
 
-      {/* Chart area */}
-      <div style={{ padding: '4px 8px 8px' }}>
+      {/* Chart area or CTA */}
+      <div style={{ padding: '8px 12px 12px' }}>
         {loading && (
           <div
             style={{
@@ -261,7 +267,57 @@ export default function CompassPreview({
           </div>
         )}
 
-        {!loading && !hasData && (
+        {/* CTA mode: no user compass data */}
+        {!loading && !hasUserCompass && (
+          <div style={{ textAlign: 'center', padding: '8px 0 4px' }}>
+            {/* Greyed-out compass icon */}
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              style={{ margin: '0 auto 10px', opacity: 0.25 }}
+            >
+              <path
+                d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
+                fill="#00657c"
+              />
+            </svg>
+            <p
+              style={{
+                margin: '0 0 12px',
+                fontSize: '12px',
+                color: '#718096',
+                lineHeight: 1.5,
+              }}
+            >
+              Calibrate your compass to see how you align with {politicianName}
+            </p>
+            <a
+              href={COMPASS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                padding: '6px 16px',
+                backgroundColor: '#00657c',
+                color: 'white',
+                fontSize: '12px',
+                fontWeight: 600,
+                borderRadius: '6px',
+                textDecoration: 'none',
+                transition: 'background-color 0.2s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
+            >
+              Take the Quiz
+            </a>
+          </div>
+        )}
+
+        {/* Radar chart mode: user has compass data */}
+        {!loading && hasUserCompass && !hasData && (
           <p
             style={{
               margin: 0,
@@ -275,12 +331,12 @@ export default function CompassPreview({
           </p>
         )}
 
-        {!loading && hasData && (
+        {!loading && hasUserCompass && hasData && (
           <RadarChartCore
             topics={topics}
             data={polData}
             compareData={Object.keys(userData).length > 0 ? userData : {}}
-            size={180}
+            size={200}
             labelFontSize={9}
             padding={40}
             labelOffset={12}
