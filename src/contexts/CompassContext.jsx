@@ -28,6 +28,7 @@ export function CompassProvider({ children }) {
   const [politicianIdsWithStances, setPoliticianIdsWithStances] = useState(
     new Set()
   );
+  const [invertedSpokes, setInvertedSpokes] = useState({});
   const [compassLoading, setCompassLoading] = useState(true);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ export function CompassProvider({ children }) {
         // 4. User-specific data — priority: logged-in API > fragment > localStorage cache > empty
         let answers = [];
         let selected = [];
+        let inverted = {};
 
         if (authRes.ok) {
           // Logged-in path: fetch from API, clear any guest cache
@@ -76,20 +78,22 @@ export function CompassProvider({ children }) {
           // Guest with fresh fragment: convert to API format and cache for future visits
           answers = convertGuestAnswersToApiFormat(fragment.answers, topics);
           selected = fragment.selectedTopics;
-          saveGuestCompass(fragment.answers, fragment.selectedTopics);
+          inverted = fragment.invertedSpokes || {};
+          saveGuestCompass(fragment.answers, fragment.selectedTopics, inverted);
         } else {
           // Guest without fragment: try localStorage cache
           const cached = loadGuestCompass();
           if (cached) {
             answers = convertGuestAnswersToApiFormat(cached.answers, topics);
             selected = cached.selectedTopics;
+            inverted = cached.invertedSpokes || {};
           }
-          // If no cache either, answers and selected stay as [] — CTA mode (existing behavior)
         }
 
         if (!cancelled) {
           setUserAnswers(answers);
           setSelectedTopics(selected);
+          setInvertedSpokes(inverted);
         }
       } catch (err) {
         console.error("CompassContext load error:", err);
@@ -113,6 +117,7 @@ export function CompassProvider({ children }) {
       userAnswers,
       selectedTopics,
       allTopics,
+      invertedSpokes,
       politicianIdsWithStances,
       compassLoading,
     }),
@@ -122,6 +127,7 @@ export function CompassProvider({ children }) {
       userAnswers,
       selectedTopics,
       allTopics,
+      invertedSpokes,
       politicianIdsWithStances,
       compassLoading,
     ]

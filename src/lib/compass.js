@@ -79,12 +79,12 @@ export function buildAnswerMapByShortTitle(
   const topicById = new Map(allTopics.map((t) => [t.id, t]));
   const shortById = new Map(allTopics.map((t) => [t.id, t.short_title]));
 
-  // Initialize with 0 for each allowed short title
+  // Initialize with 0 for each allowed short title (in allowedShorts order to preserve spoke layout)
   const out = {};
-  for (const t of allTopics) {
-    if (allowed.has(String(t.short_title).toLowerCase())) {
-      out[t.short_title] = 0;
-    }
+  const topicByShortLower = new Map(allTopics.map((t) => [t.short_title.toLowerCase(), t]));
+  for (const s of allowedShorts) {
+    const t = topicByShortLower.get(s.toLowerCase());
+    if (t) out[t.short_title] = 0;
   }
 
   // Fill in any provided answers that match our allowed set
@@ -96,10 +96,11 @@ export function buildAnswerMapByShortTitle(
     }
   }
 
-  // Return topics filtered to our allowed set too (preserve full objects)
-  const topicsFiltered = allTopics.filter((t) =>
-    allowed.has(String(t.short_title).toLowerCase())
-  );
+  // Return topics in the same order as allowedShorts (preserves user's spoke layout)
+  const topicByShort = new Map(allTopics.map((t) => [t.short_title.toLowerCase(), t]));
+  const topicsFiltered = allowedShorts
+    .map((s) => topicByShort.get(s.toLowerCase()))
+    .filter(Boolean);
 
   return { topicsFiltered, answersByShort: out };
 }
@@ -140,7 +141,7 @@ export function parseCompassFragment() {
     // Strip fragment from URL for clean navigation
     history.replaceState(null, "", window.location.pathname + window.location.search);
 
-    return { answers: decoded.a, selectedTopics: decoded.s };
+    return { answers: decoded.a, selectedTopics: decoded.s, invertedSpokes: decoded.i || {} };
   } catch {
     return null;
   }
@@ -170,10 +171,10 @@ export function convertGuestAnswersToApiFormat(guestAnswers, allTopics) {
  * @param {Object} answers        - { [short_title]: value }
  * @param {Array}  selectedTopics - [uuid, ...]
  */
-export function saveGuestCompass(answers, selectedTopics) {
+export function saveGuestCompass(answers, selectedTopics, invertedSpokes = {}) {
   localStorage.setItem(
     GUEST_COMPASS_KEY,
-    JSON.stringify({ a: answers, s: selectedTopics })
+    JSON.stringify({ a: answers, s: selectedTopics, i: invertedSpokes })
   );
 }
 
@@ -194,7 +195,7 @@ export function loadGuestCompass() {
     ) {
       return null;
     }
-    return { answers: parsed.a, selectedTopics: parsed.s };
+    return { answers: parsed.a, selectedTopics: parsed.s, invertedSpokes: parsed.i || {} };
   } catch {
     return null;
   }

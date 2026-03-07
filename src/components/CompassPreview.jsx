@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
+import { useCompass } from '../contexts/CompassContext';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
@@ -36,10 +37,11 @@ export default function CompassPreview({
   const popoverRef = useRef(null);
   const leaveTimerRef = useRef(null);
 
+  const { invertedSpokes = {} } = useCompass();
   const hasUserCompass = userAnswers && userAnswers.length > 0;
 
-  // Build return URL pointing back to the current profile page (for CTA link)
-  const returnUrl = window.location.origin + location.pathname;
+  // Build return URL pointing back to the current page (includes query string for /results?q=...)
+  const returnUrl = window.location.origin + location.pathname + location.search;
   const ctaHref = `${COMPASS_URL}?return=${encodeURIComponent(returnUrl)}`;
   const POPOVER_WIDTH = hasUserCompass ? 280 : 260;
 
@@ -139,9 +141,11 @@ export default function CompassPreview({
     let allowedShorts;
 
     if (selectedTopics && selectedTopics.length > 0) {
-      const selectedIdSet = new Set(selectedTopics.map(String));
-      allowedShorts = allTopics
-        .filter((t) => selectedIdSet.has(String(t.id)))
+      // Preserve user's chosen topic order (matches CompassV2 spoke layout)
+      const topicById = new Map(allTopics.map((t) => [String(t.id), t]));
+      allowedShorts = selectedTopics
+        .map((id) => topicById.get(String(id)))
+        .filter(Boolean)
         .map((t) => t.short_title);
     } else {
       const answeredTopicIds = new Set(polAnswers.map((a) => String(a.topic_id)));
@@ -171,6 +175,8 @@ export default function CompassPreview({
         allowedShorts
       );
       userData = userMap;
+
+
     }
   }
 
@@ -342,6 +348,7 @@ export default function CompassPreview({
             topics={topics}
             data={userData}
             compareData={polData}
+            invertedSpokes={invertedSpokes}
             size={240}
             labelFontSize={9}
             padding={40}
