@@ -4,6 +4,7 @@ import Landing from "./pages/Landing";
 import Results from "./pages/Results";
 import Profile from "./pages/Profile";
 import LegislativeRecord from "./pages/LegislativeRecord";
+import CandidateProfile from "./pages/CandidateProfile";
 import { CompassProvider } from "./contexts/CompassContext";
 import AuthIndicator from "./components/AuthIndicator";
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/results" element={<Results />} />
         <Route path="/politician/:id" element={<Profile />} />
         <Route path="/politician/:id/record" element={<LegislativeRecord />} />
+        <Route path="/candidate/:id" element={<CandidateProfile />} />
       </Routes>
     </CompassProvider>
   );

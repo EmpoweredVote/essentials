@@ -332,7 +332,7 @@ export default function Results() {
   const classifiedCandidates = useMemo(() => {
     if (!showCandidates || candidateData.length === 0) return [];
     return candidateData.map((c) => ({
-      pol: { ...c, id: `candidate-${c.external_id}` },
+      pol: { ...c },
       cat: classifyCategory(c),
     }));
   }, [showCandidates, candidateData]);
@@ -519,8 +519,16 @@ export default function Results() {
           name={`${pol.first_name} ${pol.last_name}`}
           title={cardTitle}
           subtitle={subtitle}
-          badge={isCandidate ? 'Candidate' : undefined}
-          onClick={isCandidate ? undefined : () => handlePoliticianClick(pol.id)}
+          style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : {}}
+          onClick={() => {
+            if (isCandidate) {
+              const scrollTop = isDesktop ? mainRef.current?.scrollTop ?? 0 : window.scrollY;
+              sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+              navigate(`/candidate/${pol.id}`);
+            } else {
+              handlePoliticianClick(pol.id);
+            }
+          }}
           onCompassClick={hasStances ? () => {
             const cardEl = document.querySelector(`[data-pol-id="${pol.id}"] .ev-compass-button`);
             setPreviewPol({

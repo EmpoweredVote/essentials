@@ -144,27 +144,41 @@ export async function fetchPolitician(id) {
 
 export async function fetchCandidates(zipOrQuery) {
   try {
-    // For ZIP codes, use the direct endpoint
-    const zip = /^\d{5}$/.test(zipOrQuery) ? zipOrQuery : null;
-    if (!zip) {
-      // Address search: we don't have a candidate search-by-address endpoint yet
-      // Return empty for non-ZIP queries
-      return [];
+    const isZip = /^\d{5}$/.test(zipOrQuery);
+
+    if (isZip) {
+      // ZIP: use existing GET endpoint
+      const res = await fetch(`${API}/essentials/candidates/${zipOrQuery}`, {
+        credentials: "include",
+        cache: "no-store",
+      });
+      if (!res.ok) return [];
+      return res.json();
     }
 
-    const res = await fetch(`${API}/essentials/candidates/${zip}`, {
+    // Address: use POST search endpoint
+    const res = await fetch(`${API}/essentials/candidates/search`, {
+      method: "POST",
       credentials: "include",
-      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: zipOrQuery }),
     });
-
-    if (!res.ok) {
-      console.error(`Candidates API error: ${res.status}`);
-      return [];
-    }
-
+    if (!res.ok) return [];
     return res.json();
   } catch (error) {
     console.error("Error fetching candidates:", error);
+    return [];
+  }
+}
+
+export async function fetchEndorsements(id) {
+  try {
+    const res = await fetch(`${API}/essentials/politician/${id}/endorsements`, {
+      credentials: "include",
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
     return [];
   }
 }
