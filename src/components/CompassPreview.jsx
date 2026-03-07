@@ -21,6 +21,7 @@ const MAX_SPOKES = 8;
 export default function CompassPreview({
   politicianId,
   politicianName,
+  legendName,
   allTopics,
   userAnswers,
   selectedTopics,
@@ -224,7 +225,7 @@ export default function CompassPreview({
         {hasUserCompass && hasData ? (
           <p style={{ margin: 0, fontSize: '10px', color: '#9ca3af', lineHeight: 1.4 }}>
             <span style={{ color: '#ff5740', fontWeight: 600 }}>Coral</span> = you,{' '}
-            <span style={{ color: '#59b0c4', fontWeight: 600 }}>blue</span> = {politicianName.split(' ')[0]}
+            <span style={{ color: '#59b0c4', fontWeight: 600 }}>blue</span> = {legendName || politicianName}
           </p>
         ) : (
           <p

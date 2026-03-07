@@ -40,6 +40,25 @@ function formatElectionDate(dateStr) {
   return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
+/** Derive a short formal name for the compass legend, e.g. "Senator Young" */
+function formatLegendName(pol) {
+  const dt = pol.district_type || '';
+  const last = pol.last_name || '';
+  const titleMap = {
+    NATIONAL_EXEC: 'President',
+    NATIONAL_UPPER: 'Senator',
+    NATIONAL_LOWER: 'Representative',
+    STATE_EXEC: 'Governor',
+    STATE_UPPER: 'Senator',
+    STATE_LOWER: 'Representative',
+    LOCAL_EXEC: 'Mayor',
+  };
+  const prefix = titleMap[dt];
+  if (prefix) return `${prefix} ${last}`;
+  // Fallback: full name
+  return `${pol.first_name} ${last}`.trim();
+}
+
 /** Loading skeleton for a single politician card row */
 function SkeletonCard() {
   return (
@@ -507,6 +526,7 @@ export default function Results() {
             setPreviewPol({
               id: pol.id,
               name: `${pol.first_name} ${pol.last_name}`,
+              shortTitle: formatLegendName(pol),
               anchorEl: cardEl,
             });
           } : undefined}
@@ -785,6 +805,7 @@ export default function Results() {
         <CompassPreview
           politicianId={previewPol.id}
           politicianName={previewPol.name}
+          legendName={previewPol.shortTitle}
           allTopics={allTopics}
           userAnswers={userAnswers}
           selectedTopics={selectedTopics}
