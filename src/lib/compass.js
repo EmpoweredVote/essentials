@@ -103,3 +103,106 @@ export function buildAnswerMapByShortTitle(
 
   return { topicsFiltered, answersByShort: out };
 }
+
+// ─── Guest compass bridge utilities ──────────────────────────────────────────
+
+/** localStorage key for guest compass cache */
+export const GUEST_COMPASS_KEY = "guestCompass";
+
+/**
+ * Reads window.location.hash for a compass fragment.
+ * Fragment format: #compass=BASE64(JSON.stringify({ a: {[short_title]: value}, s: [uuid, ...] }))
+ *
+ * Returns { answers: {[short_title]: value}, selectedTopics: [uuid, ...] } on success,
+ * or null if hash is missing, malformed, or invalid.
+ *
+ * Side effect: strips the fragment from the URL via history.replaceState on successful parse.
+ */
+export function parseCompassFragment() {
+  try {
+    const hash = window.location.hash;
+    if (!hash.startsWith("#compass=")) return null;
+
+    const base64str = hash.slice("#compass=".length);
+    if (!base64str) return null;
+
+    const decoded = JSON.parse(atob(base64str));
+
+    if (
+      !decoded ||
+      typeof decoded.a !== "object" ||
+      decoded.a === null ||
+      !Array.isArray(decoded.s)
+    ) {
+      return null;
+    }
+
+    // Strip fragment from URL for clean navigation
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+
+    return { answers: decoded.a, selectedTopics: decoded.s };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Converts guest answers from { [short_title]: value } format (CompassV2 localStorage)
+ * to the API format [{ topic_id, value, write_in_text }] used by CompassContext.
+ *
+ * @param {Object} guestAnswers - { [short_title]: number }
+ * @param {Array}  allTopics    - full topic objects from fetchTopics()
+ * @returns {Array} - [{ topic_id, value, write_in_text: "" }, ...]
+ */
+export function convertGuestAnswersToApiFormat(guestAnswers, allTopics) {
+  const result = [];
+  for (const [shortTitle, value] of Object.entries(guestAnswers)) {
+    const topic = allTopics.find((t) => t.short_title === shortTitle);
+    if (topic) {
+      result.push({ topic_id: topic.id, value, write_in_text: "" });
+    }
+  }
+  return result;
+}
+
+/**
+ * Saves guest compass data to localStorage.
+ * @param {Object} answers        - { [short_title]: value }
+ * @param {Array}  selectedTopics - [uuid, ...]
+ */
+export function saveGuestCompass(answers, selectedTopics) {
+  localStorage.setItem(
+    GUEST_COMPASS_KEY,
+    JSON.stringify({ a: answers, s: selectedTopics })
+  );
+}
+
+/**
+ * Reads guest compass data from localStorage.
+ * Returns { answers, selectedTopics } or null if missing/invalid.
+ */
+export function loadGuestCompass() {
+  try {
+    const raw = localStorage.getItem(GUEST_COMPASS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (
+      !parsed ||
+      typeof parsed.a !== "object" ||
+      parsed.a === null ||
+      !Array.isArray(parsed.s)
+    ) {
+      return null;
+    }
+    return { answers: parsed.a, selectedTopics: parsed.s };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Removes guest compass cache from localStorage.
+ */
+export function clearGuestCompass() {
+  localStorage.removeItem(GUEST_COMPASS_KEY);
+}
