@@ -34,7 +34,7 @@ export default function CompassPreview({
   const leaveTimerRef = useRef(null);
 
   const hasUserCompass = userAnswers && userAnswers.length > 0;
-  const POPOVER_WIDTH = hasUserCompass ? 240 : 260;
+  const POPOVER_WIDTH = hasUserCompass ? 280 : 260;
 
   // Fetch politician answers on mount
   useEffect(() => {
@@ -65,7 +65,7 @@ export default function CompassPreview({
 
     const rect = anchor.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
-    const POPOVER_APPROX_HEIGHT = hasUserCompass ? 280 : 220;
+    const POPOVER_APPROX_HEIGHT = hasUserCompass ? 320 : 220;
     const GAP = 8;
 
     // Decide whether to show above or below the anchor
@@ -221,23 +221,24 @@ export default function CompassPreview({
           borderBottom: '1px solid #f0f4f5',
         }}
       >
-        <p
-          style={{
-            margin: 0,
-            fontSize: '11px',
-            fontWeight: 700,
-            color: '#00657c',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {politicianName + "'s Compass"}
-        </p>
-        {hasUserCompass && hasData && (
-          <p style={{ margin: '2px 0 0', fontSize: '10px', color: '#9ca3af' }}>
-            <span style={{ color: '#ff5740', fontWeight: 600 }}>Pink</span> = politician,{' '}
-            <span style={{ color: '#59b0c4', fontWeight: 600 }}>blue</span> = you
+        {hasUserCompass && hasData ? (
+          <p style={{ margin: 0, fontSize: '10px', color: '#9ca3af', lineHeight: 1.4 }}>
+            <span style={{ color: '#ff5740', fontWeight: 600 }}>Coral</span> = you,{' '}
+            <span style={{ color: '#59b0c4', fontWeight: 600 }}>blue</span> = {politicianName.split(' ')[0]}
+          </p>
+        ) : (
+          <p
+            style={{
+              margin: 0,
+              fontSize: '11px',
+              fontWeight: 700,
+              color: '#00657c',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {politicianName}
           </p>
         )}
       </div>
@@ -334,9 +335,9 @@ export default function CompassPreview({
         {!loading && hasUserCompass && hasData && (
           <RadarChartCore
             topics={topics}
-            data={polData}
-            compareData={Object.keys(userData).length > 0 ? userData : {}}
-            size={200}
+            data={userData}
+            compareData={polData}
+            size={240}
             labelFontSize={9}
             padding={40}
             labelOffset={12}
