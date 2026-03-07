@@ -245,7 +245,7 @@ export default function CompassPreview({
       </div>
 
       {/* Chart area or CTA */}
-      <div style={{ padding: '8px 12px 12px' }}>
+      <div style={{ padding: hasUserCompass && hasData ? '0' : '8px 12px 12px' }}>
         {loading && (
           <div
             style={{
