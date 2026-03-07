@@ -4,6 +4,11 @@ import {
   fetchUserAnswers,
   fetchSelectedTopics,
   fetchPoliticiansWithStances,
+  parseCompassFragment,
+  convertGuestAnswersToApiFormat,
+  saveGuestCompass,
+  loadGuestCompass,
+  clearGuestCompass,
 } from "../lib/compass";
 
 const API = import.meta.env.VITE_API_URL || "/api";
@@ -30,21 +35,33 @@ export function CompassProvider({ children }) {
 
     async function loadAll() {
       try {
-        // Auth check — always runs
-        const authRes = await fetch(`${API}/auth/me`, {
-          credentials: "include",
-        });
+        // 1. Check for URL fragment (highest priority — fresh bridge data from CompassV2)
+        //    Must be synchronous and happen before any async calls so the fragment is
+        //    available when we decide which data source to use.
+        const fragment = parseCompassFragment();
 
-        // Compass data — always runs (topics + politician stances are public)
+        // 2. Auth check
+        const authRes = await fetch(`${API}/auth/me`, { credentials: "include" });
+
+        // 3. Public data (topics + politician stances) — always fetched
         const [topics, polsWithStances] = await Promise.all([
           fetchTopics(),
           fetchPoliticiansWithStances(),
         ]);
 
-        // User-specific data — only if logged in
+        if (!cancelled) {
+          setAllTopics(topics);
+          setPoliticianIdsWithStances(
+            new Set(polsWithStances.map((p) => String(p.id)))
+          );
+        }
+
+        // 4. User-specific data — priority: logged-in API > fragment > localStorage cache > empty
         let answers = [];
         let selected = [];
+
         if (authRes.ok) {
+          // Logged-in path: fetch from API, clear any guest cache
           const authData = await authRes.json();
           if (!cancelled) {
             setIsLoggedIn(true);
@@ -54,13 +71,23 @@ export function CompassProvider({ children }) {
             fetchUserAnswers(),
             fetchSelectedTopics(),
           ]);
+          clearGuestCompass(); // Clean separation: logged-in = API only
+        } else if (fragment) {
+          // Guest with fresh fragment: convert to API format and cache for future visits
+          answers = convertGuestAnswersToApiFormat(fragment.answers, topics);
+          selected = fragment.selectedTopics;
+          saveGuestCompass(fragment.answers, fragment.selectedTopics);
+        } else {
+          // Guest without fragment: try localStorage cache
+          const cached = loadGuestCompass();
+          if (cached) {
+            answers = convertGuestAnswersToApiFormat(cached.answers, topics);
+            selected = cached.selectedTopics;
+          }
+          // If no cache either, answers and selected stay as [] — CTA mode (existing behavior)
         }
 
         if (!cancelled) {
-          setAllTopics(topics);
-          setPoliticianIdsWithStances(
-            new Set(polsWithStances.map((p) => String(p.id)))
-          );
           setUserAnswers(answers);
           setSelectedTopics(selected);
         }

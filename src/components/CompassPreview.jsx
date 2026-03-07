@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useLocation } from 'react-router-dom';
 import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 
@@ -28,6 +29,7 @@ export default function CompassPreview({
   anchorRef,
   onClose,
 }) {
+  const location = useLocation();
   const [polAnswers, setPolAnswers] = useState(null);
   const [loading, setLoading] = useState(true);
   const [pos, setPos] = useState({ top: 0, left: 0, arrowSide: 'bottom' });
@@ -35,6 +37,10 @@ export default function CompassPreview({
   const leaveTimerRef = useRef(null);
 
   const hasUserCompass = userAnswers && userAnswers.length > 0;
+
+  // Build return URL pointing back to the current profile page (for CTA link)
+  const returnUrl = window.location.origin + location.pathname;
+  const ctaHref = `${COMPASS_URL}?return=${encodeURIComponent(returnUrl)}`;
   const POPOVER_WIDTH = hasUserCompass ? 280 : 260;
 
   // Fetch politician answers on mount
@@ -296,9 +302,7 @@ export default function CompassPreview({
               Calibrate your compass to see how you align with {politicianName}
             </p>
             <a
-              href={COMPASS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={ctaHref}
               style={{
                 display: 'inline-block',
                 padding: '6px 16px',
