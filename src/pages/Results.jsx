@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { SiteHeader, CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
+import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
   classifyCategory,
@@ -15,6 +16,7 @@ import {
 import { GROUP_SORT_OPTIONS } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchCandidates } from '../lib/api';
+import { useCompass } from '../contexts/CompassContext';
 
 /** Sort a polList using the default (first) sort option for its category */
 function defaultSort(category, polList) {
@@ -90,92 +92,6 @@ function qualifyLocalTitle(baseTitle, pol) {
   return `${prefix} ${baseTitle}`;
 }
 
-/** Render a politician or candidate card with election date below for candidates */
-function renderPoliticianCard(pol, handlePoliticianClick) {
-  const isCandidate = pol.is_candidate;
-  const isVacant = pol.is_vacant;
-
-  // Strip "(Retain Name?)" from BallotReady retention election artifacts
-  const stripRetain = (s) => (s || '').replace(/\s*\(Retain\s+.+?\?\)/, '');
-  const cleanTitle = stripRetain(pol.office_title);
-  const cleanChamber = stripRetain(pol.chamber_name);
-
-  // Split office_title on " - " to separate body from seat designation
-  // e.g., "Bloomington City Common Council - At Large" → title: "...Council", subtitle: "At Large"
-  // Always prefer the dash-split over chamber_name (which may equal office_title for LOCAL)
-  const dashIdx = cleanTitle.lastIndexOf(' - ');
-
-  const cardTitle = (() => {
-    if (dashIdx > 0) return qualifyLocalTitle(cleanTitle.slice(0, dashIdx), pol);
-    // SCHOOL: prepend school district name (e.g. "Los Angeles Unified Board of Education")
-    if (pol.district_type === 'SCHOOL' && pol.government_name) {
-      const schoolName = pol.government_name.split(',')[0];
-      return cleanChamber ? `${schoolName} ${cleanChamber}` : schoolName;
-    }
-    // Executive/officer positions: prefer office_title (e.g. "Mayor", "Governor", "Sheriff")
-    if (/(_EXEC)$/.test(pol.district_type) || pol.district_type === 'COUNTY')
-      return qualifyLocalTitle(cleanTitle || cleanChamber, pol);
-    // Default: prefer chamber_name (e.g. "City Council", "State Senate")
-    return qualifyLocalTitle(cleanChamber || cleanTitle, pol);
-  })();
-
-  const subtitle = (() => {
-    if (dashIdx > 0) return cleanTitle.slice(dashIdx + 3);
-    // Numbered district (1+)
-    if (pol.district_id && /^[1-9]\d*$/.test(pol.district_id))
-      return `District ${pol.district_id}`;
-    // At-large (district_id "0" = represents the whole area), but not for executives
-    if (pol.district_id === '0' && !/(_EXEC)$/.test(pol.district_type))
-      return 'At-Large';
-    return undefined;
-  })();
-
-  // Vacant offices: render dimmed card with "Vacant" name, no photo, no click handler
-  if (isVacant) {
-    return (
-      <div key={pol.id || `vacant-${pol.office_title}`} style={{ opacity: 0.55 }}>
-        <PoliticianCard
-          id={pol.id}
-          imageSrc={undefined}
-          name="Vacant"
-          title={cardTitle}
-          subtitle={subtitle}
-          badge="Vacant"
-          onClick={undefined}
-          variant="horizontal"
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div key={pol.id}>
-      <PoliticianCard
-        id={pol.id}
-        imageSrc={getImageUrl(pol)}
-        name={`${pol.first_name} ${pol.last_name}`}
-        title={cardTitle}
-        subtitle={subtitle}
-        badge={isCandidate ? 'Candidate' : undefined}
-        onClick={isCandidate ? undefined : () => handlePoliticianClick(pol.id)}
-        variant="horizontal"
-      />
-      {isCandidate && pol.election_date && (
-        <p style={{
-          fontFamily: "'Manrope', sans-serif",
-          fontSize: '12px',
-          color: '#ff5740',
-          fontWeight: 600,
-          margin: '2px 0 0 92px',
-          lineHeight: 1.2,
-        }}>
-          {formatElectionDate(pol.election_date)}
-          {pol.election_name ? ` \u2014 ${pol.election_name}` : ''}
-        </p>
-      )}
-    </div>
-  );
-}
 
 export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -267,6 +183,12 @@ export default function Results() {
   const [showCandidates, setShowCandidates] = useState(false);
   const [candidateData, setCandidateData] = useState([]);
   const [candidatesLoading, setCandidatesLoading] = useState(false);
+
+  // Compass integration — context provides politician IDs with stances + user data
+  const { politicianIdsWithStances, allTopics, userAnswers, selectedTopics } = useCompass();
+
+  // Active compass preview state: { id, name, anchorEl } or null
+  const [previewPol, setPreviewPol] = useState(null);
 
   // Save results to sessionStorage for back-navigation restoration
   useEffect(() => {
@@ -510,6 +432,103 @@ export default function Results() {
     navigate(`/politician/${id}`);
   };
 
+  /** Render a politician or candidate card with election date below for candidates */
+  const renderPoliticianCard = (pol) => {
+    const isCandidate = pol.is_candidate;
+    const isVacant = pol.is_vacant;
+
+    // Strip "(Retain Name?)" from BallotReady retention election artifacts
+    const stripRetain = (s) => (s || '').replace(/\s*\(Retain\s+.+?\?\)/, '');
+    const cleanTitle = stripRetain(pol.office_title);
+    const cleanChamber = stripRetain(pol.chamber_name);
+
+    // Split office_title on " - " to separate body from seat designation
+    // e.g., "Bloomington City Common Council - At Large" → title: "...Council", subtitle: "At Large"
+    // Always prefer the dash-split over chamber_name (which may equal office_title for LOCAL)
+    const dashIdx = cleanTitle.lastIndexOf(' - ');
+
+    const cardTitle = (() => {
+      if (dashIdx > 0) return qualifyLocalTitle(cleanTitle.slice(0, dashIdx), pol);
+      // SCHOOL: prepend school district name (e.g. "Los Angeles Unified Board of Education")
+      if (pol.district_type === 'SCHOOL' && pol.government_name) {
+        const schoolName = pol.government_name.split(',')[0];
+        return cleanChamber ? `${schoolName} ${cleanChamber}` : schoolName;
+      }
+      // Executive/officer positions: prefer office_title (e.g. "Mayor", "Governor", "Sheriff")
+      if (/(_EXEC)$/.test(pol.district_type) || pol.district_type === 'COUNTY')
+        return qualifyLocalTitle(cleanTitle || cleanChamber, pol);
+      // Default: prefer chamber_name (e.g. "City Council", "State Senate")
+      return qualifyLocalTitle(cleanChamber || cleanTitle, pol);
+    })();
+
+    const subtitle = (() => {
+      if (dashIdx > 0) return cleanTitle.slice(dashIdx + 3);
+      // Numbered district (1+)
+      if (pol.district_id && /^[1-9]\d*$/.test(pol.district_id))
+        return `District ${pol.district_id}`;
+      // At-large (district_id "0" = represents the whole area), but not for executives
+      if (pol.district_id === '0' && !/(_EXEC)$/.test(pol.district_type))
+        return 'At-Large';
+      return undefined;
+    })();
+
+    // Vacant offices: render dimmed card with "Vacant" name, no photo, no click handler
+    if (isVacant) {
+      return (
+        <div key={pol.id || `vacant-${pol.office_title}`} style={{ opacity: 0.55 }}>
+          <PoliticianCard
+            id={pol.id}
+            imageSrc={undefined}
+            name="Vacant"
+            title={cardTitle}
+            subtitle={subtitle}
+            badge="Vacant"
+            onClick={undefined}
+            variant="horizontal"
+          />
+        </div>
+      );
+    }
+
+    const hasStances = politicianIdsWithStances && politicianIdsWithStances.has(String(pol.id));
+
+    return (
+      <div key={pol.id} data-pol-id={pol.id}>
+        <PoliticianCard
+          id={pol.id}
+          imageSrc={getImageUrl(pol)}
+          name={`${pol.first_name} ${pol.last_name}`}
+          title={cardTitle}
+          subtitle={subtitle}
+          badge={isCandidate ? 'Candidate' : undefined}
+          onClick={isCandidate ? undefined : () => handlePoliticianClick(pol.id)}
+          onCompassClick={hasStances ? () => {
+            const cardEl = document.querySelector(`[data-pol-id="${pol.id}"] .ev-compass-button`);
+            setPreviewPol({
+              id: pol.id,
+              name: `${pol.first_name} ${pol.last_name}`,
+              anchorEl: cardEl,
+            });
+          } : undefined}
+          variant="horizontal"
+        />
+        {isCandidate && pol.election_date && (
+          <p style={{
+            fontFamily: "'Manrope', sans-serif",
+            fontSize: '12px',
+            color: '#ff5740',
+            fontWeight: 600,
+            margin: '2px 0 0 92px',
+            lineHeight: 1.2,
+          }}>
+            {formatElectionDate(pol.election_date)}
+            {pol.election_name ? ` \u2014 ${pol.election_name}` : ''}
+          </p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
       <SiteHeader logoSrc="/EVLogo.svg" />
@@ -705,7 +724,7 @@ export default function Results() {
                           {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
                             <CategorySection key={category} title={getDisplayName(category)}>
                               {defaultSort(category, polList).map((pol) =>
-                                renderPoliticianCard(pol, handlePoliticianClick)
+                                renderPoliticianCard(pol)
                               )}
                             </CategorySection>
                           ))}
@@ -723,7 +742,7 @@ export default function Results() {
                           {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
                             <CategorySection key={category} title={getDisplayName(category)}>
                               {defaultSort(category, polList).map((pol) =>
-                                renderPoliticianCard(pol, handlePoliticianClick)
+                                renderPoliticianCard(pol)
                               )}
                             </CategorySection>
                           ))}
@@ -741,7 +760,7 @@ export default function Results() {
                           {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
                             <CategorySection key={category} title={getDisplayName(category)}>
                               {defaultSort(category, polList).map((pol) =>
-                                renderPoliticianCard(pol, handlePoliticianClick)
+                                renderPoliticianCard(pol)
                               )}
                             </CategorySection>
                           ))}
@@ -760,6 +779,19 @@ export default function Results() {
             )}
         </main>
       </div>
+
+      {/* Compass popover — rendered at body level via portal */}
+      {previewPol && (
+        <CompassPreview
+          politicianId={previewPol.id}
+          politicianName={previewPol.name}
+          allTopics={allTopics}
+          userAnswers={userAnswers}
+          selectedTopics={selectedTopics}
+          anchorRef={{ current: previewPol.anchorEl }}
+          onClose={() => setPreviewPol(null)}
+        />
+      )}
     </div>
   );
 }
