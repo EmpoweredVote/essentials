@@ -481,14 +481,17 @@ export default function Results() {
     })();
 
     const subtitle = (() => {
-      if (dashIdx > 0) return cleanTitle.slice(dashIdx + 3);
-      // Numbered district (1+)
-      if (pol.district_id && /^[1-9]\d*$/.test(pol.district_id))
-        return `District ${pol.district_id}`;
-      // At-large (district_id "0" = represents the whole area), but not for executives
-      if (pol.district_id === '0' && !/(_EXEC)$/.test(pol.district_type))
-        return 'At-Large';
-      return undefined;
+      let base;
+      if (dashIdx > 0) base = cleanTitle.slice(dashIdx + 3);
+      else if (pol.district_id && /^[1-9]\d*$/.test(pol.district_id))
+        base = `District ${pol.district_id}`;
+      else if (pol.district_id === '0' && !/(_EXEC)$/.test(pol.district_type))
+        base = 'At-Large';
+      else base = undefined;
+
+      // For candidates: append "Candidate" to subtitle
+      if (isCandidate) return base ? `${base} · Candidate` : 'Candidate';
+      return base;
     })();
 
     // Vacant offices: render dimmed card with "Vacant" name, no photo, no click handler
@@ -540,19 +543,6 @@ export default function Results() {
           } : undefined}
           variant="horizontal"
         />
-        {isCandidate && pol.election_date && (
-          <p style={{
-            fontFamily: "'Manrope', sans-serif",
-            fontSize: '12px',
-            color: '#ff5740',
-            fontWeight: 600,
-            margin: '2px 0 0 92px',
-            lineHeight: 1.2,
-          }}>
-            {formatElectionDate(pol.election_date)}
-            {pol.election_name ? ` \u2014 ${pol.election_name}` : ''}
-          </p>
-        )}
       </div>
     );
   };
