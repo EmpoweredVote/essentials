@@ -5,6 +5,7 @@ import {
   Header,
   PoliticianProfile,
 } from '@chrisandrewsedu/ev-ui';
+import CompassCard from '../components/CompassCard';
 
 const API = import.meta.env.VITE_API_URL || '/api';
 
@@ -97,6 +98,7 @@ function Profile() {
             <div className="animate-spin rounded-full h-10 w-10 border-4 border-[var(--ev-teal)] border-t-transparent" />
           </div>
         ) : (
+          <>
           <PoliticianProfile
             politician={pol}
             onBack={() => {
@@ -144,6 +146,12 @@ function Profile() {
             politicianId={id}
             onNavigateToRecord={(href) => navigate(href)}
           />
+
+          <CompassCard
+            politicianId={id}
+            politicianName={pol.first_name ? `${pol.first_name} ${pol.last_name}` : ''}
+          />
+          </>
         )}
       </main>
     </div>
