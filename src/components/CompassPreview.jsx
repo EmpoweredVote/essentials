@@ -284,7 +284,7 @@ export default function CompassPreview({
         {/* CTA mode: no user compass data */}
         {!loading && !hasUserCompass && (
           <div style={{ textAlign: 'center', padding: '8px 0 4px' }}>
-            {/* Greyed-out compass icon */}
+            {/* Greyed-out radar chart icon */}
             <svg
               width="48"
               height="48"
@@ -292,9 +292,30 @@ export default function CompassPreview({
               fill="none"
               style={{ margin: '0 auto 10px', opacity: 0.25 }}
             >
-              <path
-                d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"
+              <polygon
+                points="12,1 21.5,6.5 21.5,17.5 12,23 2.5,17.5 2.5,6.5"
+                fill="none"
+                stroke="#00657c"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+              <line x1="12" y1="12" x2="12" y2="1" stroke="#00657c" strokeWidth="1" />
+              <line x1="12" y1="12" x2="21.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
+              <line x1="12" y1="12" x2="21.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
+              <line x1="12" y1="12" x2="12" y2="23" stroke="#00657c" strokeWidth="1" />
+              <line x1="12" y1="12" x2="2.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
+              <line x1="12" y1="12" x2="2.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
+              <polygon
+                points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
                 fill="#00657c"
+                opacity="0.35"
+              />
+              <polygon
+                points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
+                fill="none"
+                stroke="#00657c"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
               />
             </svg>
             <p
