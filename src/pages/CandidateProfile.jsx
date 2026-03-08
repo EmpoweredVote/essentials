@@ -84,29 +84,6 @@ export default function CandidateProfile() {
       />
 
       <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
-        {/* Candidate election banner */}
-        {!loadingProfile && activeElection && (
-          <div
-            style={{
-              borderLeft: '4px solid #fed12e',
-              backgroundColor: '#fffef5',
-              borderRadius: '0 8px 8px 0',
-              padding: '12px 16px',
-              marginBottom: '16px',
-              fontFamily: "'Manrope', sans-serif",
-            }}
-          >
-            <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
-              Candidate for {activeElection.position_name || pol.office_title}
-            </p>
-            {activeElection.election_date && (
-              <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
-                Election: {formatElectionDateFull(activeElection.election_date)}
-              </p>
-            )}
-          </div>
-        )}
-
         {loadingProfile ? (
           <div className="flex justify-center items-center py-24">
             <div className="animate-spin rounded-full h-10 w-10 border-4 border-[var(--ev-teal)] border-t-transparent" />
@@ -131,6 +108,29 @@ export default function CandidateProfile() {
               pol.first_name
                 ? `${pol.first_name} ${pol.last_name}`
                 : undefined
+            }
+            banner={
+              activeElection ? (
+                <div
+                  style={{
+                    borderLeft: '4px solid #fed12e',
+                    backgroundColor: '#fffef5',
+                    borderRadius: '0 8px 8px 0',
+                    padding: '12px 16px',
+                    marginTop: '16px',
+                    fontFamily: "'Manrope', sans-serif",
+                  }}
+                >
+                  <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
+                    Candidate for {activeElection.position_name || pol.office_title}
+                  </p>
+                  {activeElection.election_date && (
+                    <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
+                      Election: {formatElectionDateFull(activeElection.election_date)}
+                    </p>
+                  )}
+                </div>
+              ) : null
             }
             legislativeSummary={legislativeSummary}
             politicianId={id}
