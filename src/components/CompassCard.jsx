@@ -150,7 +150,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         {hasUserCompass ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left zone: radar chart */}
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-start">
               {polLoading && (
                 <div
                   style={{
@@ -239,7 +239,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                       alignItems: 'center',
                       gap: '16px',
                       marginBottom: '4px',
-                      fontSize: '12px',
+                      fontSize: '15px',
                       fontFamily: "'Manrope', sans-serif",
                     }}
                   >
@@ -269,16 +269,16 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     </span>
                   </div>
 
-                  {/* Chart container — responsive */}
-                  <div style={{ maxWidth: '100%', overflow: 'hidden' }}>
+                  {/* Chart container — responsive, fills left column */}
+                  <div style={{ width: '100%', overflow: 'hidden' }}>
                     <RadarChartCore
                       topics={topicsFiltered}
                       data={userData}
                       compareData={polData}
                       invertedSpokes={invertedSpokes}
-                      size={300}
-                      labelFontSize={10}
-                      padding={45}
+                      size={400}
+                      labelFontSize={18}
+                      padding={40}
                       labelOffset={14}
                     />
                   </div>
