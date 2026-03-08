@@ -72,7 +72,7 @@ function Profile() {
         ]);
         setPol(result);
         setLegislativeSummary(legSummary);
-        const active = (elections || []).find((e) => !e.withdrawn) || elections?.[0] || null;
+        const active = (elections || []).find((e) => e.is_active && !e.withdrawn) || null;
         setActiveElection(active);
       } catch (err) {
         console.error(err);
