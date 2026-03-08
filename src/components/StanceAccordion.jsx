@@ -29,9 +29,10 @@ function getDisplayUrl(url) {
  *   politicianId  — politician UUID
  *   allTopics     — full topic objects with stances arrays
  */
-export default function StanceAccordion({ topics, polAnswers, politicianId, allTopics }) {
+export default function StanceAccordion({ topics, polAnswers, politicianId, allTopics, expandedTopics }) {
   const [expandedTopicId, setExpandedTopicId] = useState(null);
   const [loadingId, setLoadingId] = useState(null);
+  const [showAll, setShowAll] = useState(false);
   const contextCache = useRef(new Map());
 
   // Build lookup: topic_id -> polAnswer value
@@ -106,6 +107,9 @@ export default function StanceAccordion({ topics, polAnswers, politicianId, allT
 
   if (!topics || topics.length === 0) return null;
 
+  const hasToggle = expandedTopics && expandedTopics.length > topics.length;
+  const visibleTopics = hasToggle && showAll ? expandedTopics : topics;
+
   return (
     <div
       className="flex flex-col"
@@ -118,13 +122,15 @@ export default function StanceAccordion({ topics, polAnswers, politicianId, allT
         Stance Breakdown
       </h3>
 
-      {topics.map((topic) => {
+      {visibleTopics.map((topic) => {
         const topicId = String(topic.id);
         const value = polAnswerMap[topicId];
         const label = getStanceLabel(topicId, value);
         const isExpanded = expandedTopicId === topicId;
         const isLoading = loadingId === topicId;
         const cached = contextCache.current.get(topicId);
+        const fullTopic = topicById[topicId];
+        const questionText = fullTopic?.question_text;
 
         return (
           <div key={topicId} className="border-b border-neutral-100">
@@ -138,6 +144,11 @@ export default function StanceAccordion({ topics, polAnswers, politicianId, allT
                 <span className="text-sm font-medium text-neutral-800 truncate">
                   {topic.short_title}
                 </span>
+                {questionText && (
+                  <span className="text-xs text-neutral-400 mt-0.5">
+                    {questionText}
+                  </span>
+                )}
                 <span className="text-xs text-neutral-500 mt-0.5">
                   {label}
                 </span>
@@ -238,6 +249,17 @@ export default function StanceAccordion({ topics, polAnswers, politicianId, allT
           </div>
         );
       })}
+
+      {hasToggle && (
+        <button
+          type="button"
+          onClick={() => setShowAll((v) => !v)}
+          className="text-sm font-medium mt-2 px-2 py-1 self-start cursor-pointer hover:underline"
+          style={{ color: '#00657c' }}
+        >
+          {showAll ? 'Show fewer' : `Show all ${expandedTopics.length} topics`}
+        </button>
+      )}
     </div>
   );
 }

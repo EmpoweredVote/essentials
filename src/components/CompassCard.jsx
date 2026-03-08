@@ -130,6 +130,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     }
   }
 
+  // Build allPolTopics: ALL topics the politician has answered (for accordion)
+  let allPolTopics = [];
+  if (!polLoading && polAnswers !== null && polAnswers.length > 0 && allTopics.length > 0) {
+    const polAnsweredIds = new Set(polAnswers.map((a) => String(a.topic_id)));
+    allPolTopics = allTopics.filter((t) => polAnsweredIds.has(String(t.id)));
+  }
+
   const hasData = topicsFiltered.length > 0;
 
   // Build legend name: "[Position] [Last Name]"
@@ -304,68 +311,97 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                 </div>
               ) : (
                 <StanceAccordion
-                  topics={topicsFiltered}
+                  topics={topicsFiltered.length > 0 ? topicsFiltered : allPolTopics}
                   polAnswers={polAnswers}
                   politicianId={politicianId}
                   allTopics={allTopics}
+                  expandedTopics={topicsFiltered.length > 0 ? allPolTopics : undefined}
                 />
               )}
             </div>
           </div>
         ) : (
-          /* CTA fallback — user has no compass data */
-          <div className="flex flex-col items-center py-8 px-4">
-            {/* Greyed-out compass SVG icon */}
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="none"
-              style={{ opacity: 0.25, marginBottom: '16px' }}
-            >
-              <polygon
-                points="12,1 21.5,6.5 21.5,17.5 12,23 2.5,17.5 2.5,6.5"
+          /* Guest fallback — 2-column: CTA left, accordion right */
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Left zone: CTA with compass icon */}
+            <div className="flex flex-col items-center py-8 px-4">
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
                 fill="none"
-                stroke="#00657c"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-              />
-              <line x1="12" y1="12" x2="12" y2="1" stroke="#00657c" strokeWidth="1" />
-              <line x1="12" y1="12" x2="21.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
-              <line x1="12" y1="12" x2="21.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
-              <line x1="12" y1="12" x2="12" y2="23" stroke="#00657c" strokeWidth="1" />
-              <line x1="12" y1="12" x2="2.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
-              <line x1="12" y1="12" x2="2.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
-              <polygon
-                points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
-                fill="#00657c"
-                opacity="0.35"
-              />
-              <polygon
-                points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
-                fill="none"
-                stroke="#00657c"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-              />
-            </svg>
+                style={{ opacity: 0.25, marginBottom: '16px' }}
+              >
+                <polygon
+                  points="12,1 21.5,6.5 21.5,17.5 12,23 2.5,17.5 2.5,6.5"
+                  fill="none"
+                  stroke="#00657c"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
+                <line x1="12" y1="12" x2="12" y2="1" stroke="#00657c" strokeWidth="1" />
+                <line x1="12" y1="12" x2="21.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
+                <line x1="12" y1="12" x2="21.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
+                <line x1="12" y1="12" x2="12" y2="23" stroke="#00657c" strokeWidth="1" />
+                <line x1="12" y1="12" x2="2.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
+                <line x1="12" y1="12" x2="2.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
+                <polygon
+                  points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
+                  fill="#00657c"
+                  opacity="0.35"
+                />
+                <polygon
+                  points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
+                  fill="none"
+                  stroke="#00657c"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
+              </svg>
 
-            <p
-              className="text-gray-500 text-center mb-6"
-              style={{ fontSize: '15px', lineHeight: 1.6 }}
-            >
-              Calibrate your compass to see how you align with {politicianName}
-            </p>
+              <p
+                className="text-gray-500 text-center mb-6"
+                style={{ fontSize: '15px', lineHeight: 1.6 }}
+              >
+                Calibrate your compass to see how you align with {politicianName}
+              </p>
 
-            <a
-              href={ctaHref}
-              className="inline-block px-6 py-2.5 text-white font-semibold rounded-lg text-sm transition-colors"
-              style={{ backgroundColor: '#00657c' }}
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
-            >
-              Take the Quiz
-            </a>
+              <a
+                href={ctaHref}
+                className="inline-block px-6 py-2.5 text-white font-semibold rounded-lg text-sm transition-colors"
+                style={{ backgroundColor: '#00657c' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
+              >
+                Calibrate your compass
+              </a>
+            </div>
+
+            {/* Right zone: stance breakdown accordion */}
+            <div className="flex flex-col">
+              {polLoading || !polAnswers ? (
+                <div className="flex items-center justify-center py-8">
+                  <div
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      border: '2px solid #e2e8f0',
+                      borderTopColor: '#00657c',
+                      borderRadius: '50%',
+                      animation: 'ev-spin 0.8s linear infinite',
+                    }}
+                  />
+                </div>
+              ) : allPolTopics.length > 0 ? (
+                <StanceAccordion
+                  topics={allPolTopics.slice(0, 4)}
+                  polAnswers={polAnswers}
+                  politicianId={politicianId}
+                  allTopics={allTopics}
+                  expandedTopics={allPolTopics.length > 4 ? allPolTopics : undefined}
+                />
+              ) : null}
+            </div>
           </div>
         )}
       </div>
