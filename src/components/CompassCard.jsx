@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
+import StanceAccordion from './StanceAccordion';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
@@ -12,7 +13,7 @@ const MAX_SPOKES = 8;
  *
  * Gates display: only renders for politicians that have stance data.
  * Left zone: RadarChartCore dual-overlay (coral user + blue politician).
- * Right zone: skeleton placeholder (Phase 71 fills with stance breakdown).
+ * Right zone: StanceAccordion with topic stance labels, reasoning, and sources.
  *
  * Props:
  *   politicianId    — politician UUID
@@ -286,13 +287,29 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               )}
             </div>
 
-            {/* Right zone: breakdown placeholder (Phase 71) */}
-            <div className="flex flex-col justify-center gap-3">
-              <div className="h-4 bg-gray-100 animate-pulse rounded w-full" />
-              <div className="h-4 bg-gray-100 animate-pulse rounded w-3/4" />
-              <div className="h-4 bg-gray-100 animate-pulse rounded w-5/6" />
-              <div className="h-4 bg-gray-100 animate-pulse rounded w-2/3" />
-              <div className="h-4 bg-gray-100 animate-pulse rounded w-4/5" />
+            {/* Right zone: stance breakdown accordion */}
+            <div className="flex flex-col">
+              {polLoading || !polAnswers ? (
+                <div className="flex items-center justify-center py-8">
+                  <div
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      border: '2px solid #e2e8f0',
+                      borderTopColor: '#00657c',
+                      borderRadius: '50%',
+                      animation: 'ev-spin 0.8s linear infinite',
+                    }}
+                  />
+                </div>
+              ) : (
+                <StanceAccordion
+                  topics={topicsFiltered}
+                  polAnswers={polAnswers}
+                  politicianId={politicianId}
+                  allTopics={allTopics}
+                />
+              )}
             </div>
           </div>
         ) : (
