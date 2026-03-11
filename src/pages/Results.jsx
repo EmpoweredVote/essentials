@@ -740,7 +740,7 @@ export default function Results() {
                             </div>
                           )}
                           {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
-                            <CategorySection key={category} title={getDisplayName(category)}>
+                            <CategorySection key={category} title={getDisplayName(category)} websiteUrl={polList[0]?.government_body_url || undefined}>
                               {defaultSort(category, polList).map((pol) =>
                                 renderPoliticianCard(pol)
                               )}
@@ -758,7 +758,7 @@ export default function Results() {
                             </div>
                           )}
                           {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
-                            <CategorySection key={category} title={getDisplayName(category)}>
+                            <CategorySection key={category} title={getDisplayName(category)} websiteUrl={polList[0]?.government_body_url || undefined}>
                               {defaultSort(category, polList).map((pol) =>
                                 renderPoliticianCard(pol)
                               )}
@@ -776,7 +776,7 @@ export default function Results() {
                             </div>
                           )}
                           {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
-                            <CategorySection key={category} title={getDisplayName(category)}>
+                            <CategorySection key={category} title={getDisplayName(category)} websiteUrl={polList[0]?.government_body_url || undefined}>
                               {defaultSort(category, polList).map((pol) =>
                                 renderPoliticianCard(pol)
                               )}
