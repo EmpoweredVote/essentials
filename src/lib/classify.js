@@ -194,7 +194,7 @@ export function classifyCategory(pol) {
 
   // County officials - treat as Local
   if (dt === "COUNTY") {
-    if (hasAny(title, ["commissioner", "supervisor", "council"])) {
+    if (hasAny(title, ["commissioner", "commission", "supervisor", "council"])) {
       return { tier: "Local", group: "County Legislators" };
     }
     if (hasAny(title, ROLE_LOCAL_EXEC)) {
