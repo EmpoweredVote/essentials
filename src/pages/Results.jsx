@@ -112,6 +112,47 @@ function qualifyLocalTitle(baseTitle, pol) {
 }
 
 
+/**
+ * Sub-groups a polList by government_body_name.
+ * Returns an array of { title, websiteUrl, pols } objects:
+ * - Named sub-groups (sorted alphabetically by body name) come first.
+ * - Politicians without a government_body_name fall into an unnamed bucket
+ *   using getDisplayName(category) as the title.
+ */
+function splitByBodyName(category, polList) {
+  const named = {};
+  const unnamed = [];
+
+  for (const pol of polList) {
+    if (pol.government_body_name) {
+      if (!named[pol.government_body_name]) {
+        named[pol.government_body_name] = [];
+      }
+      named[pol.government_body_name].push(pol);
+    } else {
+      unnamed.push(pol);
+    }
+  }
+
+  const result = Object.keys(named)
+    .sort()
+    .map((bodyName) => ({
+      title: bodyName,
+      websiteUrl: named[bodyName][0]?.government_body_url || undefined,
+      pols: named[bodyName],
+    }));
+
+  if (unnamed.length > 0) {
+    result.push({
+      title: getDisplayName(category),
+      websiteUrl: undefined,
+      pols: unnamed,
+    });
+  }
+
+  return result;
+}
+
 export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -739,13 +780,19 @@ export default function Results() {
                               <hr className="flex-1 border-gray-200" />
                             </div>
                           )}
-                          {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) => (
-                            <CategorySection key={category} title={getDisplayName(category)} websiteUrl={polList[0]?.government_body_url || undefined}>
-                              {defaultSort(category, polList).map((pol) =>
-                                renderPoliticianCard(pol)
-                              )}
-                            </CategorySection>
-                          ))}
+                          {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) =>
+                            splitByBodyName(category, polList).map(({ title, websiteUrl, pols }, idx) => (
+                              <CategorySection
+                                key={`${category}-${title}-${idx}`}
+                                title={title}
+                                websiteUrl={websiteUrl}
+                              >
+                                {defaultSort(category, pols).map((pol) =>
+                                  renderPoliticianCard(pol)
+                                )}
+                              </CategorySection>
+                            ))
+                          )}
                         </div>
                       )}
 
@@ -757,13 +804,19 @@ export default function Results() {
                               <hr className="flex-1 border-gray-200" />
                             </div>
                           )}
-                          {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => (
-                            <CategorySection key={category} title={getDisplayName(category)} websiteUrl={polList[0]?.government_body_url || undefined}>
-                              {defaultSort(category, polList).map((pol) =>
-                                renderPoliticianCard(pol)
-                              )}
-                            </CategorySection>
-                          ))}
+                          {orderedEntries(groups, STATE_ORDER).map(([category, polList]) =>
+                            splitByBodyName(category, polList).map(({ title, websiteUrl, pols }, idx) => (
+                              <CategorySection
+                                key={`${category}-${title}-${idx}`}
+                                title={title}
+                                websiteUrl={websiteUrl}
+                              >
+                                {defaultSort(category, pols).map((pol) =>
+                                  renderPoliticianCard(pol)
+                                )}
+                              </CategorySection>
+                            ))
+                          )}
                         </div>
                       )}
 
@@ -775,13 +828,19 @@ export default function Results() {
                               <hr className="flex-1 border-gray-200" />
                             </div>
                           )}
-                          {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => (
-                            <CategorySection key={category} title={getDisplayName(category)} websiteUrl={polList[0]?.government_body_url || undefined}>
-                              {defaultSort(category, polList).map((pol) =>
-                                renderPoliticianCard(pol)
-                              )}
-                            </CategorySection>
-                          ))}
+                          {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) =>
+                            splitByBodyName(category, polList).map(({ title, websiteUrl, pols }, idx) => (
+                              <CategorySection
+                                key={`${category}-${title}-${idx}`}
+                                title={title}
+                                websiteUrl={websiteUrl}
+                              >
+                                {defaultSort(category, pols).map((pol) =>
+                                  renderPoliticianCard(pol)
+                                )}
+                              </CategorySection>
+                            ))
+                          )}
                         </div>
                       )}
                     </div>
