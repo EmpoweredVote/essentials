@@ -1,9 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
+import { RadarChartCore, StanceAccordion } from '@chrisandrewsedu/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
-import StanceAccordion from './StanceAccordion';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
@@ -316,6 +315,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   politicianId={politicianId}
                   allTopics={allTopics}
                   expandedTopics={topicsFiltered.length > 0 ? allPolTopics : undefined}
+                  apiUrl={import.meta.env.VITE_API_URL}
                 />
               )}
             </div>
@@ -399,6 +399,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   politicianId={politicianId}
                   allTopics={allTopics}
                   expandedTopics={allPolTopics.length > 4 ? allPolTopics : undefined}
+                  apiUrl={import.meta.env.VITE_API_URL}
                 />
               ) : null}
             </div>
