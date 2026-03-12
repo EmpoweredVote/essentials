@@ -112,10 +112,13 @@ export const GUEST_COMPASS_KEY = "guestCompass";
 
 /**
  * Reads window.location.hash for a compass fragment.
- * Fragment format: #compass=BASE64(JSON.stringify({ a: {[short_title]: value}, s: [uuid, ...] }))
+ * Fragment format: #compass=BASE64(JSON.stringify({ a: {[short_title]: value}, s: [uuid, ...], v: {[quote_id]: 'agreed'|'disagreed'} }))
  *
- * Returns { answers: {[short_title]: value}, selectedTopics: [uuid, ...] } on success,
- * or null if hash is missing, malformed, or invalid.
+ * Returns { answers, selectedTopics, invertedSpokes, verdicts } on success,
+ * or null if hash is missing, malformed, or has no useful data.
+ *
+ * - answers/selectedTopics/invertedSpokes are null/[] if compass data is absent (verdict-only fragment)
+ * - verdicts is {} if v key is absent
  *
  * Side effect: strips the fragment from the URL via history.replaceState on successful parse.
  */
@@ -128,20 +131,30 @@ export function parseCompassFragment() {
     if (!base64str) return null;
 
     const decoded = JSON.parse(atob(base64str));
+    if (!decoded || typeof decoded !== 'object') return null;
 
-    if (
-      !decoded ||
-      typeof decoded.a !== "object" ||
-      decoded.a === null ||
-      !Array.isArray(decoded.s)
-    ) {
-      return null;
-    }
+    // Extract verdicts regardless of whether compass data is present
+    const verdicts =
+      decoded.v && typeof decoded.v === 'object' ? decoded.v : {};
 
-    // Strip fragment from URL for clean navigation
-    history.replaceState(null, "", window.location.pathname + window.location.search);
+    // Compass data is optional — only validate if present
+    const hasCompassData =
+      typeof decoded.a === 'object' &&
+      decoded.a !== null &&
+      Array.isArray(decoded.s);
 
-    return { answers: decoded.a, selectedTopics: decoded.s, invertedSpokes: decoded.i || {} };
+    // Strip fragment from URL (same behavior as before)
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+
+    // Return null only if there's nothing useful
+    if (!hasCompassData && Object.keys(verdicts).length === 0) return null;
+
+    return {
+      answers: hasCompassData ? decoded.a : null,
+      selectedTopics: hasCompassData ? decoded.s : [],
+      invertedSpokes: decoded.i || {},
+      verdicts,
+    };
   } catch {
     return null;
   }
@@ -206,4 +219,40 @@ export function loadGuestCompass() {
  */
 export function clearGuestCompass() {
   localStorage.removeItem(GUEST_COMPASS_KEY);
+}
+
+// ─── Guest verdict bridge utilities ──────────────────────────────────────────
+
+/** localStorage key for guest verdict cache */
+export const GUEST_VERDICTS_KEY = "guestVerdicts";
+
+/**
+ * Saves guest verdicts to localStorage.
+ * @param {Object} verdicts - { [quote_id]: 'agreed' | 'disagreed' }
+ */
+export function saveGuestVerdicts(verdicts) {
+  localStorage.setItem(GUEST_VERDICTS_KEY, JSON.stringify(verdicts));
+}
+
+/**
+ * Reads guest verdicts from localStorage.
+ * Returns { [quote_id]: 'agreed' | 'disagreed' } or null if missing/invalid.
+ */
+export function loadGuestVerdicts() {
+  try {
+    const raw = localStorage.getItem(GUEST_VERDICTS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Removes guest verdict cache from localStorage.
+ */
+export function clearGuestVerdicts() {
+  localStorage.removeItem(GUEST_VERDICTS_KEY);
 }
