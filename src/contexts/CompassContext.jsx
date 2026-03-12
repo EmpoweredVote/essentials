@@ -118,8 +118,11 @@ export function CompassProvider({ children }) {
           setSelectedTopics(selected);
           setInvertedSpokes(inverted);
           setVerdicts(newVerdicts);
-          // Deep-link: auto-open the topic the user just evaluated in ReadRank
-          if (fragment?.topicId) setInitialTopicId(fragment.topicId);
+          // Deep-link: resolve topic_key from fragment to the UUID used by StanceAccordion rows
+          if (fragment?.topicId) {
+            const match = topics.find((t) => t.topic_key === fragment.topicId);
+            if (match) setInitialTopicId(String(match.id));
+          }
         }
       } catch (err) {
         console.error("CompassContext load error:", err);
