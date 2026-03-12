@@ -4,6 +4,7 @@ import {
   fetchUserAnswers,
   fetchSelectedTopics,
   fetchPoliticiansWithStances,
+  fetchUserVerdicts,
   parseCompassFragment,
   convertGuestAnswersToApiFormat,
   saveGuestCompass,
@@ -99,10 +100,10 @@ export function CompassProvider({ children }) {
           }
         }
 
-        // Verdict priority: API (Phase 82, skip) > fragment > localStorage > empty
+        // Verdict priority: API > fragment > localStorage > empty
         let newVerdicts = {};
         if (authRes.ok) {
-          // Logged-in: clear any stale guest verdicts (API fetch deferred to Phase 82)
+          newVerdicts = await fetchUserVerdicts();
           clearGuestVerdicts();
         } else if (fragment && Object.keys(fragment.verdicts || {}).length > 0) {
           // Guest with fresh verdict fragment

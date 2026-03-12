@@ -260,3 +260,24 @@ export function loadGuestVerdicts() {
 export function clearGuestVerdicts() {
   localStorage.removeItem(GUEST_VERDICTS_KEY);
 }
+
+/**
+ * Fetches the authenticated user's verdicts from the backend.
+ * Returns { [quote_id]: 'agreed' | 'disagreed' } shape.
+ * Returns {} on error or non-ok response.
+ * Must only be called inside an authRes.ok guard.
+ */
+export async function fetchUserVerdicts() {
+  try {
+    const res = await fetch(`${API}/compass/verdicts`, { credentials: "include" });
+    if (!res.ok) return {};
+    const list = await res.json(); // [{ id, user_id, quote_id, verdict, created_at }]
+    const map = {};
+    for (const item of list) {
+      map[item.quote_id] = item.verdict;
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
