@@ -9,6 +9,9 @@ import {
   saveGuestCompass,
   loadGuestCompass,
   clearGuestCompass,
+  saveGuestVerdicts,
+  loadGuestVerdicts,
+  clearGuestVerdicts,
 } from "../lib/compass";
 
 const API = import.meta.env.VITE_API_URL || "/api";
@@ -29,6 +32,7 @@ export function CompassProvider({ children }) {
     new Set()
   );
   const [invertedSpokes, setInvertedSpokes] = useState({});
+  const [verdicts, setVerdicts] = useState({});
   const [compassLoading, setCompassLoading] = useState(true);
 
   useEffect(() => {
@@ -76,10 +80,14 @@ export function CompassProvider({ children }) {
           clearGuestCompass(); // Clean separation: logged-in = API only
         } else if (fragment) {
           // Guest with fresh fragment: convert to API format and cache for future visits
-          answers = convertGuestAnswersToApiFormat(fragment.answers, topics);
-          selected = fragment.selectedTopics;
-          inverted = fragment.invertedSpokes || {};
-          saveGuestCompass(fragment.answers, fragment.selectedTopics, inverted);
+          // Guard: fragment.answers may be null if user came from Read & Rank without CompassV2
+          if (fragment.answers !== null) {
+            answers = convertGuestAnswersToApiFormat(fragment.answers, topics);
+            selected = fragment.selectedTopics;
+            inverted = fragment.invertedSpokes || {};
+            saveGuestCompass(fragment.answers, fragment.selectedTopics, inverted);
+          }
+          // Note: verdicts from fragment are handled separately in the verdicts block below
         } else {
           // Guest without fragment: try localStorage cache
           const cached = loadGuestCompass();
@@ -90,10 +98,25 @@ export function CompassProvider({ children }) {
           }
         }
 
+        // Verdict priority: API (Phase 82, skip) > fragment > localStorage > empty
+        let newVerdicts = {};
+        if (authRes.ok) {
+          // Logged-in: clear any stale guest verdicts (API fetch deferred to Phase 82)
+          clearGuestVerdicts();
+        } else if (fragment && Object.keys(fragment.verdicts || {}).length > 0) {
+          // Guest with fresh verdict fragment
+          newVerdicts = fragment.verdicts;
+          saveGuestVerdicts(newVerdicts);
+        } else {
+          // Guest without fragment: try localStorage cache
+          newVerdicts = loadGuestVerdicts() || {};
+        }
+
         if (!cancelled) {
           setUserAnswers(answers);
           setSelectedTopics(selected);
           setInvertedSpokes(inverted);
+          setVerdicts(newVerdicts);
         }
       } catch (err) {
         console.error("CompassContext load error:", err);
@@ -118,6 +141,7 @@ export function CompassProvider({ children }) {
       selectedTopics,
       allTopics,
       invertedSpokes,
+      verdicts,
       politicianIdsWithStances,
       compassLoading,
     }),
@@ -128,6 +152,7 @@ export function CompassProvider({ children }) {
       selectedTopics,
       allTopics,
       invertedSpokes,
+      verdicts,
       politicianIdsWithStances,
       compassLoading,
     ]
