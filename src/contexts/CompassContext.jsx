@@ -33,6 +33,7 @@ export function CompassProvider({ children }) {
   );
   const [invertedSpokes, setInvertedSpokes] = useState({});
   const [verdicts, setVerdicts] = useState({});
+  const [initialTopicId, setInitialTopicId] = useState(null);
   const [compassLoading, setCompassLoading] = useState(true);
 
   useEffect(() => {
@@ -117,6 +118,8 @@ export function CompassProvider({ children }) {
           setSelectedTopics(selected);
           setInvertedSpokes(inverted);
           setVerdicts(newVerdicts);
+          // Deep-link: auto-open the topic the user just evaluated in ReadRank
+          if (fragment?.topicId) setInitialTopicId(fragment.topicId);
         }
       } catch (err) {
         console.error("CompassContext load error:", err);
@@ -142,6 +145,7 @@ export function CompassProvider({ children }) {
       allTopics,
       invertedSpokes,
       verdicts,
+      initialTopicId,
       politicianIdsWithStances,
       compassLoading,
     }),
@@ -153,6 +157,7 @@ export function CompassProvider({ children }) {
       allTopics,
       invertedSpokes,
       verdicts,
+      initialTopicId,
       politicianIdsWithStances,
       compassLoading,
     ]

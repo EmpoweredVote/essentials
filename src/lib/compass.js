@@ -137,6 +137,9 @@ export function parseCompassFragment() {
     const verdicts =
       decoded.v && typeof decoded.v === 'object' ? decoded.v : {};
 
+    // Extract optional topic deep-link
+    const topicId = typeof decoded.t === 'string' ? decoded.t : null;
+
     // Compass data is optional — only validate if present
     const hasCompassData =
       typeof decoded.a === 'object' &&
@@ -154,6 +157,7 @@ export function parseCompassFragment() {
       selectedTopics: hasCompassData ? decoded.s : [],
       invertedSpokes: decoded.i || {},
       verdicts,
+      topicId,
     };
   } catch {
     return null;

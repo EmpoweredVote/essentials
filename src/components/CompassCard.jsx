@@ -27,6 +27,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     allTopics,
     invertedSpokes,
     verdicts,
+    initialTopicId,
     compassLoading,
   } = useCompass();
   const location = useLocation();
@@ -318,6 +319,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   expandedTopics={topicsFiltered.length > 0 ? allPolTopics : undefined}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
+                  initialExpandedTopicId={initialTopicId}
                 />
               )}
             </div>
@@ -403,6 +405,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   expandedTopics={allPolTopics.length > 4 ? allPolTopics : undefined}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
+                  initialExpandedTopicId={initialTopicId}
                 />
               ) : null}
             </div>
