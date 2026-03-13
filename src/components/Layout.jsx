@@ -14,7 +14,7 @@ export function Layout({ children }) {
         items: [
           {
             label: "Sign in",
-            href: "https://compass.empowered.vote/login",
+            href: `https://compass.empowered.vote/login?returnTo=${encodeURIComponent(window.location.href)}`,
           },
         ],
       };
