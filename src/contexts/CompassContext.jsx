@@ -140,6 +140,19 @@ export function CompassProvider({ children }) {
     };
   }, []);
 
+  const logout = async () => {
+    try {
+      await fetch(`${API}/auth/logout`, { method: 'POST', credentials: 'include' });
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+    setIsLoggedIn(false);
+    setUserName(null);
+    setUserAnswers([]);
+    setSelectedTopics([]);
+    setVerdicts({});
+  };
+
   const value = useMemo(
     () => ({
       isLoggedIn,
@@ -152,6 +165,7 @@ export function CompassProvider({ children }) {
       initialTopicId,
       politicianIdsWithStances,
       compassLoading,
+      logout,
     }),
     [
       isLoggedIn,
