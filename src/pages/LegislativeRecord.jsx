@@ -7,7 +7,8 @@ import {
   fetchLegislativeBills,
   fetchLegislativeVotes,
 } from '../lib/api';
-import { Header, LegislativeRecord } from '@chrisandrewsedu/ev-ui';
+import { LegislativeRecord } from '@chrisandrewsedu/ev-ui';
+import { Layout } from '../components/Layout';
 
 function LegislativeRecordPage() {
   const { id } = useParams();
@@ -19,27 +20,6 @@ function LegislativeRecordPage() {
   const [bills, setBills] = useState([]);
   const [votes, setVotes] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Navigation config — same as Profile.jsx
-  const navItems = [
-    { label: 'About Us', href: '/about' },
-    {
-      label: 'Features',
-      href: '/features',
-      dropdown: [
-        { label: 'Political Compass', href: '/compass' },
-        { label: 'Find Representatives', href: '/' },
-        { label: 'Treasury Tracker', href: '/treasury' },
-      ],
-    },
-    { label: 'Volunteer', href: '/volunteer' },
-    { label: 'FAQ', href: '/faq' },
-  ];
-
-  const ctaButton = {
-    label: 'Donate',
-    href: '/donate',
-  };
 
   useEffect(() => {
     if (!id) return;
@@ -65,14 +45,8 @@ function LegislativeRecordPage() {
   }, [id]);
 
   return (
+    <Layout>
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
-      <Header
-        logoSrc="/EVLogo.svg"
-        logoAlt="Empowered Vote"
-        navItems={navItems}
-        ctaButton={ctaButton}
-        onNavigate={(href) => navigate(href)}
-      />
 
       <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
         <button
@@ -96,6 +70,7 @@ function LegislativeRecordPage() {
         />
       </main>
     </div>
+    </Layout>
   );
 }
 

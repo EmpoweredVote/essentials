@@ -1,10 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary } from '../lib/api';
-import {
-  Header,
-  PoliticianProfile,
-} from '@chrisandrewsedu/ev-ui';
+import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
+import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
 
 const API = import.meta.env.VITE_API_URL || '/api';
@@ -24,27 +22,6 @@ function Profile() {
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [legislativeSummary, setLegislativeSummary] = useState(null);
   const [activeElection, setActiveElection] = useState(null);
-
-  // Navigation config
-  const navItems = [
-    { label: 'About Us', href: '/about' },
-    {
-      label: 'Features',
-      href: '/features',
-      dropdown: [
-        { label: 'Political Compass', href: '/compass' },
-        { label: 'Find Representatives', href: '/' },
-        { label: 'Treasury Tracker', href: '/treasury' },
-      ],
-    },
-    { label: 'Volunteer', href: '/volunteer' },
-    { label: 'FAQ', href: '/faq' },
-  ];
-
-  const ctaButton = {
-    label: 'Donate',
-    href: '/donate',
-  };
 
   // Fetch politician, legislative summary, and elections in parallel
   useEffect(() => {
@@ -83,14 +60,8 @@ function Profile() {
   }, [id]);
 
   return (
+    <Layout>
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
-      <Header
-        logoSrc="/EVLogo.svg"
-        logoAlt="Empowered Vote"
-        navItems={navItems}
-        ctaButton={ctaButton}
-        onNavigate={(href) => navigate(href)}
-      />
 
       <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
         {loadingProfile ? (
@@ -156,6 +127,7 @@ function Profile() {
         )}
       </main>
     </div>
+    </Layout>
   );
 }
 

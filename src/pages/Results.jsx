@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { SiteHeader, CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
+import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
+import { Layout } from '../components/Layout';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
 import CompassPreview from '../components/CompassPreview';
@@ -589,8 +590,8 @@ export default function Results() {
   };
 
   return (
+    <Layout>
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
-      <SiteHeader logoSrc="/EVLogo.svg" />
 
       {/* Page body: two-panel layout filling viewport below SiteHeader */}
       <div
@@ -871,5 +872,6 @@ export default function Results() {
         />
       )}
     </div>
+    </Layout>
   );
 }

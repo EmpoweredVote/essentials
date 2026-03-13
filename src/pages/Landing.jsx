@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SiteHeader } from '@chrisandrewsedu/ev-ui';
+import { Layout } from '../components/Layout';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 export default function Landing() {
@@ -33,8 +33,8 @@ export default function Landing() {
   };
 
   return (
+    <Layout>
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
-      <SiteHeader logoSrc="/EVLogo.svg" />
 
       <main className="container mx-auto px-4 sm:px-6 py-16">
         <div className="flex flex-col md:flex-row items-center justify-center gap-12">
@@ -128,5 +128,6 @@ export default function Landing() {
         </div>
       </main>
     </div>
+    </Layout>
   );
 }
