@@ -35,7 +35,7 @@ export const districtNumberKey = (pol) => {
     pol.office_title || ""
   }`;
   const m = label.match(/(\d{1,3})/);
-  return m ? parseInt(m[1], 10) : Number.POSITIVE_INFINITY;
+  return m ? parseInt(m[1], 10) : -1;
 };
 
 // Custom role ranks for special groups
@@ -82,6 +82,40 @@ export const localExecRankKey = (pol) =>
 const TOWNSHIP_RANK = ["trustee"];
 export const townshipRankKey = (pol) =>
   rankFromList(TOWNSHIP_RANK, pol.office_title);
+
+// At-large seats sort before numbered districts
+export const atLargeFirstKey = (pol) => (pol.district_id === '0' ? 0 : 1);
+
+// Alphabetical sort by district label (for non-numbered districts like townships)
+export const districtLabelKey = (pol) => lower(pol.district_label || '');
+
+// Chief Justice/Chief Judge sorts before other justices/judges
+export const chiefJusticeFirstKey = (pol) => {
+  const title = lower(pol.office_title || '');
+  return title.includes('chief') ? 0 : 1;
+};
+
+// Seat number for judges: "Seat 1", "Seat 2", etc.
+export const seatNumberKey = (pol) => {
+  const label = `${pol.office_title || ""} ${pol.district_label || ""}`;
+  const m = label.match(/seat\s*(\d+)/i);
+  return m ? parseInt(m[1], 10) : Number.POSITIVE_INFINITY;
+};
+
+// Court rank: Supreme Court first, then Appellate/Appeals, then others
+const COURT_RANK = ["supreme", "appellate", "appeals"];
+export const courtRankKey = (pol) => {
+  const chamber = lower(pol.chamber_name_formal || pol.chamber_name || "");
+  const title = lower(pol.office_title || "");
+  const text = `${chamber} ${title}`;
+  for (let i = 0; i < COURT_RANK.length; i++) {
+    if (text.includes(COURT_RANK[i])) return i;
+  }
+  return 999;
+};
+
+// Appointment date for seniority ordering (Supreme Court justices)
+export const appointmentDateKey = (pol) => pol.appointment_date || "9999-12-31";
 
 export const makeComparator =
   (keyFn, dir = "asc") =>
@@ -355,6 +389,21 @@ export const GROUP_SORT_OPTIONS = {
       cmp: (dir) => makeComparator((p) => lower(p.government_name), dir),
     },
     {
+      id: "at_large",
+      label: "At-Large First",
+      cmp: (dir) => makeComparator(atLargeFirstKey, dir),
+    },
+    {
+      id: "district",
+      label: "District Number",
+      cmp: (dir) => makeComparator(districtNumberKey, dir),
+    },
+    {
+      id: "district_label",
+      label: "District/Township",
+      cmp: (dir) => makeComparator(districtLabelKey, dir),
+    },
+    {
       id: "name",
       label: "Name",
       cmp: (dir) => makeComparator(lastNameKey, dir),
@@ -362,9 +411,29 @@ export const GROUP_SORT_OPTIONS = {
   ],
   "State Judiciary": [
     {
-      id: "court",
+      id: "court_rank",
       label: "Court",
-      cmp: (dir) => makeComparator(agencyKey, dir),
+      cmp: (dir) => makeComparator(courtRankKey, dir),
+    },
+    {
+      id: "chief",
+      label: "Chief",
+      cmp: (dir) => makeComparator(chiefJusticeFirstKey, dir),
+    },
+    {
+      id: "seniority",
+      label: "Seniority",
+      cmp: (dir) => makeComparator(appointmentDateKey, dir),
+    },
+    {
+      id: "district",
+      label: "District",
+      cmp: (dir) => makeComparator(districtNumberKey, dir),
+    },
+    {
+      id: "seat",
+      label: "Seat",
+      cmp: (dir) => makeComparator(seatNumberKey, dir),
     },
     {
       id: "name",
@@ -377,6 +446,11 @@ export const GROUP_SORT_OPTIONS = {
       id: "court",
       label: "Court",
       cmp: (dir) => makeComparator(agencyKey, dir),
+    },
+    {
+      id: "seat",
+      label: "Seat",
+      cmp: (dir) => makeComparator(seatNumberKey, dir),
     },
     {
       id: "name",
