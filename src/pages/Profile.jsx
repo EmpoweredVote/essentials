@@ -4,6 +4,7 @@ import { fetchPolitician, fetchLegislativeSummary } from '../lib/api';
 import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
+import { getSeatBallotStatus } from '../utils/ballotStatus';
 
 const API = import.meta.env.VITE_API_URL || '/api';
 
@@ -90,29 +91,59 @@ function Profile() {
                 ? `${pol.first_name} ${pol.last_name}`
                 : undefined
             }
-            banner={
-              activeElection ? (
-                <div
-                  style={{
-                    borderLeft: '4px solid #fed12e',
-                    backgroundColor: '#fffef5',
-                    borderRadius: '0 8px 8px 0',
-                    padding: '12px 16px',
-                    marginTop: '16px',
-                    fontFamily: "'Manrope', sans-serif",
-                  }}
-                >
-                  <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
-                    Candidate for {activeElection.position_name || pol.office_title}
-                  </p>
-                  {activeElection.election_date && (
-                    <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
-                      Election: {formatElectionDateFull(activeElection.election_date)}
+            banner={(() => {
+              const ballotStatus = getSeatBallotStatus(pol.term_end, pol.term_date_precision);
+
+              if (ballotStatus) {
+                return (
+                  <div
+                    style={{
+                      borderLeft: '4px solid #f6ad55',
+                      backgroundColor: '#fffaf0',
+                      borderRadius: '0 8px 8px 0',
+                      padding: '12px 16px',
+                      marginTop: '16px',
+                      fontFamily: "'Manrope', sans-serif",
+                    }}
+                  >
+                    <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
+                      This seat is on the ballot
                     </p>
-                  )}
-                </div>
-              ) : null
-            }
+                    <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
+                      {activeElection
+                        ? `Incumbent is seeking reelection${activeElection.election_date ? ` · Election: ${formatElectionDateFull(activeElection.election_date)}` : ''}`
+                        : 'Open seat'}
+                    </p>
+                  </div>
+                );
+              }
+
+              if (activeElection) {
+                return (
+                  <div
+                    style={{
+                      borderLeft: '4px solid #fed12e',
+                      backgroundColor: '#fffef5',
+                      borderRadius: '0 8px 8px 0',
+                      padding: '12px 16px',
+                      marginTop: '16px',
+                      fontFamily: "'Manrope', sans-serif",
+                    }}
+                  >
+                    <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
+                      Candidate for {activeElection.position_name || pol.office_title}
+                    </p>
+                    {activeElection.election_date && (
+                      <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
+                        Election: {formatElectionDateFull(activeElection.election_date)}
+                      </p>
+                    )}
+                  </div>
+                );
+              }
+
+              return null;
+            })()}
             legislativeSummary={legislativeSummary}
             politicianId={id}
             onNavigateToRecord={(href) => navigate(href)}

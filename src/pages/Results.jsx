@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
+import { getSeatBallotStatus } from '../utils/ballotStatus';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
 import CompassPreview from '../components/CompassPreview';
@@ -613,6 +614,7 @@ export default function Results() {
     }
 
     const hasStances = politicianIdsWithStances && politicianIdsWithStances.has(String(pol.id));
+    const ballot = !isCandidate && getSeatBallotStatus(pol.term_end, pol.term_date_precision);
 
     return (
       <div key={pol.id} data-pol-id={pol.id}>
@@ -622,6 +624,7 @@ export default function Results() {
           name={`${pol.first_name} ${pol.last_name}`}
           title={cardTitle}
           subtitle={subtitle}
+          badge={ballot ? "On Ballot" : undefined}
           style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : {}}
           onClick={() => {
             if (isCandidate) {
