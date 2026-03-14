@@ -88,6 +88,7 @@ function SkeletonSection() {
 /**
  * Qualify a generic local title with the jurisdiction name.
  * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"
+ * Only used when a card is NOT inside a government_body_name section.
  */
 function qualifyLocalTitle(baseTitle, pol) {
   if (!pol.government_name || !baseTitle) return baseTitle;
@@ -97,19 +98,69 @@ function qualifyLocalTitle(baseTitle, pol) {
 
   const gov = pol.government_name.split(',')[0].trim();
   const govCore = gov
-    .replace(/^City of\s+/i, '')
-    .replace(/\s+County$/i, '')
+    .replace(/^(City|Town|Village)\s+of\s+/i, '')
+    .replace(/\s+(Township|County)$/i, '')
     .trim();
 
   if (govCore && baseTitle.toLowerCase().includes(govCore.toLowerCase()))
     return baseTitle;
 
-  let prefix = dt === 'COUNTY' ? gov : gov.replace(/^City of\s+/i, '');
+  let prefix = dt === 'COUNTY'
+    ? gov
+    : gov.replace(/^(City|Town|Village)\s+of\s+/i, '');
 
   if (prefix.endsWith('County') && baseTitle.startsWith('County'))
     prefix = prefix.replace(/\s+County$/, '');
 
   return `${prefix} ${baseTitle}`;
+}
+
+/**
+ * Simplify a card title when it's displayed inside a government_body_name section.
+ * The section header already shows the body name (e.g., "Ellettsville Town Council"),
+ * so the card should only show what differentiates this position — not repeat the
+ * jurisdiction or body name.
+ *
+ * Examples:
+ *   "Ellettsville Town Council"        → "Town Council"   (section: "Ellettsville Town Council")
+ *   "Monroe County: Richland Twp Board"→ "Township Board" (section: "Richland Township")
+ *   "City Common Council"              → "City Common Council" (section: "Bloomington Common Council")
+ *   "Assessor"                         → "Assessor"       (section: "Monroe County Government")
+ */
+function simplifyForBody(title, pol) {
+  if (!title) return title;
+
+  let simplified = title;
+
+  // Strip "X County: " prefix (e.g., "Monroe County: Richland Township Board")
+  simplified = simplified.replace(/^[\w\s]+?County:\s*/i, '');
+
+  // For school districts, the section header already names the school corporation,
+  // so extract just the board type (e.g., "School Board", "Board of Education").
+  if (pol.district_type === 'SCHOOL') {
+    const boardMatch = simplified.match(
+      /\b(School Board|Board of Education|Board of Trustees)\b.*$/i
+    );
+    if (boardMatch) return boardMatch[0];
+  }
+
+  // Strip jurisdiction name derived from government_name
+  if (pol.government_name) {
+    const coreJurisdiction = pol.government_name
+      .split(',')[0]
+      .trim()
+      .replace(/^(City|Town|Village)\s+of\s+/i, '')
+      .replace(/\s+(Township|County)$/i, '');
+
+    if (
+      coreJurisdiction &&
+      simplified.toLowerCase().startsWith(coreJurisdiction.toLowerCase() + ' ')
+    ) {
+      simplified = simplified.slice(coreJurisdiction.length).trim();
+    }
+  }
+
+  return simplified || title;
 }
 
 
@@ -508,18 +559,24 @@ export default function Results() {
     // Always prefer the dash-split over chamber_name (which may equal office_title for LOCAL)
     const dashIdx = cleanTitle.lastIndexOf(' - ');
 
+    // Choose qualification strategy: when inside a body-name section (header
+    // already shows "Ellettsville Town Council" etc.), simplify the card title
+    // to avoid redundancy.  Otherwise qualify with jurisdiction name.
+    const qualify = pol.government_body_name ? simplifyForBody : qualifyLocalTitle;
+
     const cardTitle = (() => {
-      if (dashIdx > 0) return qualifyLocalTitle(cleanTitle.slice(0, dashIdx), pol);
+      if (dashIdx > 0) return qualify(cleanTitle.slice(0, dashIdx), pol);
       // SCHOOL: prepend school district name (e.g. "Los Angeles Unified Board of Education")
       if (pol.district_type === 'SCHOOL' && pol.government_name) {
         const schoolName = pol.government_name.split(',')[0];
-        return cleanChamber ? `${schoolName} ${cleanChamber}` : schoolName;
+        const raw = cleanChamber ? `${schoolName} ${cleanChamber}` : schoolName;
+        return pol.government_body_name ? simplifyForBody(raw, pol) : raw;
       }
       // Executive/officer positions: prefer office_title (e.g. "Mayor", "Governor", "Sheriff")
       if (/(_EXEC)$/.test(pol.district_type) || pol.district_type === 'COUNTY')
-        return qualifyLocalTitle(cleanTitle || cleanChamber, pol);
+        return qualify(cleanTitle || cleanChamber, pol);
       // Default: prefer chamber_name (e.g. "City Council", "State Senate")
-      return qualifyLocalTitle(cleanChamber || cleanTitle, pol);
+      return qualify(cleanChamber || cleanTitle, pol);
     })();
 
     const subtitle = (() => {
