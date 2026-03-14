@@ -14,16 +14,17 @@ import {
   orderedEntries,
   getDisplayName,
 } from '../lib/classify';
-import { GROUP_SORT_OPTIONS } from '../utils/sorters';
+import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchCandidates } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 
-/** Sort a polList using the default (first) sort option for its category */
+/** Sort a polList using all sort options for its category, chained as tie-breakers */
 function defaultSort(category, polList) {
   const opts = GROUP_SORT_OPTIONS[category];
   if (!opts || opts.length === 0) return polList;
-  return [...polList].sort(opts[0].cmp('asc'));
+  const chained = chainComparators(...opts.map((o) => o.cmp('asc')));
+  return [...polList].sort(chained);
 }
 
 function getImageUrl(pol) {
