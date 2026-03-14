@@ -10,7 +10,7 @@ function getInitials(name) {
   return initials.toUpperCase();
 }
 
-function PoliticianCard({ image, imageSrc, name, title, level, id }) {
+function PoliticianCard({ image, imageSrc, name, title, level, id, badge }) {
   const navigate = useNavigate();
   const src = imageSrc || image;
   const [imgError, setImgError] = useState(false);
@@ -23,6 +23,11 @@ function PoliticianCard({ image, imageSrc, name, title, level, id }) {
         onClick={() => navigate(`/politician/${id}`)}
       >
         <div className="relative w-full aspect-[4/5] overflow-hidden rounded-lg bg-zinc-100">
+          {badge && (
+            <span className="absolute bottom-2 right-2 z-10 bg-amber-500 text-white text-[10px] font-semibold uppercase tracking-wide px-2 py-1 rounded-full leading-none">
+              {badge}
+            </span>
+          )}
           {src && !imgError ? (
             <img
               src={src}

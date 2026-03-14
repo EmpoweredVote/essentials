@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import PoliticianCard from "./PoliticianCard";
+import { getSeatBallotStatus } from "../utils/ballotStatus";
 import {
   GROUP_SORT_OPTIONS,
   makeComparator,
@@ -208,15 +209,19 @@ function PoliticianGrid({ gridTitle, polList }) {
       </div>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {sorted.map((pol) => (
-          <PoliticianCard
-            key={pol.id}
-            id={pol.id}
-            imageSrc={getImageUrl(pol)}
-            name={`${pol.first_name} ${pol.last_name}`}
-            title={getDisplayTitle(pol)}
-          />
-        ))}
+        {sorted.map((pol) => {
+          const ballot = getSeatBallotStatus(pol.term_end, pol.term_date_precision);
+          return (
+            <PoliticianCard
+              key={pol.id}
+              id={pol.id}
+              imageSrc={getImageUrl(pol)}
+              name={`${pol.first_name} ${pol.last_name}`}
+              title={getDisplayTitle(pol)}
+              badge={ballot ? "On Ballot" : undefined}
+            />
+          );
+        })}
       </div>
     </div>
   );
