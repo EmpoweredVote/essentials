@@ -95,10 +95,10 @@ export const chiefJusticeFirstKey = (pol) => {
   return title.includes('chief') ? 0 : 1;
 };
 
-// Seat number for judges: "Seat 1", "Seat 2", etc.
+// Division/Seat number for judges: "Division 1", "Seat 2", etc.
 export const seatNumberKey = (pol) => {
   const label = `${pol.office_title || ""} ${pol.district_label || ""}`;
-  const m = label.match(/seat\s*(\d+)/i);
+  const m = label.match(/(?:seat|division)\s*(\d+)/i);
   return m ? parseInt(m[1], 10) : Number.POSITIVE_INFINITY;
 };
 
