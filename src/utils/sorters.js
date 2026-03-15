@@ -458,4 +458,21 @@ export const GROUP_SORT_OPTIONS = {
       cmp: (dir) => makeComparator(lastNameKey, dir),
     },
   ],
+  "Federal Judiciary": [
+    {
+      id: "court_role",
+      label: "Role",
+      cmp: (dir) => makeComparator(chiefJusticeFirstKey, dir),
+    },
+    {
+      id: "seniority",
+      label: "Seniority",
+      cmp: (dir) => makeComparator(appointmentDateKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
 };
