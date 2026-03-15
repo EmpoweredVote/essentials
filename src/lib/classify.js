@@ -12,6 +12,7 @@ export const FEDERAL_ORDER = [
   "Cabinet",
   "Independent Agencies & Commissions",
   "Executive (Other)",
+  "Federal Judiciary",
 ];
 
 export const STATE_ORDER = [
@@ -108,6 +109,10 @@ export function classifyCategory(pol) {
   if (dt === "STATE_UPPER") return { tier: "State", group: "State Senate" };
   if (dt === "STATE_LOWER")
     return { tier: "State", group: "State House/Assembly" };
+
+  if (dt === "NATIONAL_JUDICIAL") {
+    return { tier: "Federal", group: "Federal Judiciary" };
+  }
 
   if (dt === "NATIONAL_EXEC") {
     // Elected federal executives: President and VP
@@ -246,6 +251,7 @@ export const CATEGORY_DISPLAY_NAMES = {
   "Cabinet": "Cabinet",
   "Independent Agencies & Commissions": "Agencies",
   "Executive (Other)": "Other Executive",
+  "Federal Judiciary": "U.S. Supreme Court",
 
   // State
   "Governor & Lt. Governor": "Governor",
