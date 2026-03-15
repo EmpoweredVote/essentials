@@ -568,6 +568,9 @@ export default function Results() {
 
     const cardTitle = (() => {
       if (dashIdx > 0) return qualify(cleanTitle.slice(0, dashIdx), pol);
+      // NATIONAL_JUDICIAL: use chamber name (e.g. "U.S. Supreme Court")
+      if (pol.district_type === 'NATIONAL_JUDICIAL')
+        return cleanChamber || cleanTitle;
       // SCHOOL: prepend school district name (e.g. "Los Angeles Unified Board of Education")
       if (pol.district_type === 'SCHOOL' && pol.government_name) {
         const schoolName = pol.government_name.split(',')[0];
@@ -584,6 +587,8 @@ export default function Results() {
     const subtitle = (() => {
       let base;
       if (dashIdx > 0) base = cleanTitle.slice(dashIdx + 3);
+      // NATIONAL_JUDICIAL: show role (e.g. "Chief Justice", "Associate Justice")
+      else if (pol.district_type === 'NATIONAL_JUDICIAL') base = cleanTitle;
       else if (pol.district_id && /^[1-9]\d*$/.test(pol.district_id))
         base = `District ${pol.district_id}`;
       else if (pol.district_id === '0' && !/(_EXEC)$/.test(pol.district_type))
