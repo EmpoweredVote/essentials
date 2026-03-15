@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { fetchPolitician, fetchLegislativeSummary } from '../lib/api';
+import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord } from '../lib/api';
 import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
@@ -23,8 +23,9 @@ function Profile() {
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [legislativeSummary, setLegislativeSummary] = useState(null);
   const [activeElection, setActiveElection] = useState(null);
+  const [judicialRecord, setJudicialRecord] = useState(null);
 
-  // Fetch politician, legislative summary, and elections in parallel
+  // Fetch politician, legislative summary, elections, and judicial record in parallel
   useEffect(() => {
     if (!id) return;
     setLoadingProfile(true);
@@ -43,15 +44,19 @@ function Profile() {
 
     (async () => {
       try {
-        const [result, legSummary, elections] = await Promise.all([
+        const [result, legSummary, elections, jRecord] = await Promise.all([
           fetchPolitician(id),
           fetchLegislativeSummary(id),
           fetchElections(),
+          fetchJudicialRecord(id),
         ]);
         setPol(result);
         setLegislativeSummary(legSummary);
         const active = (elections || []).find((e) => e.is_active && !e.withdrawn) || null;
         setActiveElection(active);
+        if (result.is_judicial) {
+          setJudicialRecord(jRecord);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -145,6 +150,7 @@ function Profile() {
               return null;
             })()}
             legislativeSummary={legislativeSummary}
+            judicialRecord={judicialRecord}
             politicianId={id}
             onNavigateToRecord={(href) => navigate(href)}
           />

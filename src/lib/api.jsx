@@ -252,3 +252,16 @@ export async function fetchLegislativeVotes(id, { limit } = {}) {
     return [];
   }
 }
+
+export async function fetchJudicialRecord(id) {
+  try {
+    const res = await fetch(`${API}/essentials/politician/${id}/judicial-record`, {
+      credentials: "include",
+    });
+    if (!res.ok) return { evaluations: [], metrics: [], disciplinary_records: [] };
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching judicial record:", error);
+    return { evaluations: [], metrics: [], disciplinary_records: [] };
+  }
+}
