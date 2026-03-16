@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord } from '../lib/api';
 import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
@@ -18,6 +18,7 @@ function formatElectionDateFull(dateStr) {
 function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [pol, setPol] = useState({});
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -89,6 +90,11 @@ function Profile() {
                   }
                 }
               } catch { /* fall through */ }
+              const addressParam = searchParams.get('q');
+              if (addressParam) {
+                navigate(`/results?q=${encodeURIComponent(addressParam)}`);
+                return;
+              }
               navigate('/');
             }}
             backLabel={
