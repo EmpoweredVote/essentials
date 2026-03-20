@@ -4,6 +4,7 @@ import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord } from '.
 import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
+import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 
 const API = import.meta.env.VITE_API_URL || '/api';
@@ -166,6 +167,9 @@ function Profile() {
             politicianName={pol.first_name ? `${pol.first_name} ${pol.last_name}` : ''}
             politicianTitle={pol.office_title || ''}
           />
+          <div className="mt-6">
+            <CampaignFinanceSection politicianId={id} />
+          </div>
           </>
         )}
       </main>
