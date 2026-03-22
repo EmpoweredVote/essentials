@@ -1,11 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary } from '../lib/api';
+import { apiFetch } from '../lib/auth';
 import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
-
-const API = import.meta.env.VITE_API_URL || '/api';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
@@ -29,10 +28,8 @@ export default function CandidateProfile() {
 
     const fetchElections = async () => {
       try {
-        const res = await fetch(`${API}/essentials/politician/${id}/elections`, {
-          credentials: 'include',
-        });
-        if (!res.ok) return [];
+        const res = await apiFetch(`/essentials/politician/${id}/elections`);
+        if (!res || !res.ok) return [];
         return res.json();
       } catch {
         return [];

@@ -1,13 +1,12 @@
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord } from '../lib/api';
+import { apiFetch } from '../lib/auth';
 import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
-
-const API = import.meta.env.VITE_API_URL || '/api';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
@@ -34,10 +33,8 @@ function Profile() {
 
     const fetchElections = async () => {
       try {
-        const res = await fetch(`${API}/essentials/politician/${id}/elections`, {
-          credentials: 'include',
-        });
-        if (!res.ok) return [];
+        const res = await apiFetch(`/essentials/politician/${id}/elections`);
+        if (!res || !res.ok) return [];
         return res.json();
       } catch {
         return [];
