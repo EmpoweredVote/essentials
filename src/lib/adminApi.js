@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL || "/api";
+import { apiFetch } from './auth';
 
 /**
  * Fetch the unresolved contributions queue.
@@ -13,9 +13,13 @@ export async function fetchUnresolvedQueue({ source = "", show = "active" } = {}
   if (show) params.set("show", show);
   const qs = params.toString() ? `?${params}` : "";
 
-  const res = await fetch(`${API}/campaign-finance/admin/unresolved${qs}`, {
-    credentials: "include",
-  });
+  const res = await apiFetch(`/campaign-finance/admin/unresolved${qs}`);
+
+  if (!res) {
+    const err = new Error("Unauthorized");
+    err.status = 401;
+    throw err;
+  }
 
   if (!res.ok) {
     const err = new Error(`Fetch unresolved queue failed: ${res.status}`);
@@ -36,12 +40,16 @@ export async function fetchUnresolvedQueue({ source = "", show = "active" } = {}
  * @returns {Promise<{linked: boolean, contributions_moved: number, politician_name: string}>}
  */
 export async function resolveUnresolved({ adapter_name, external_id, politician_id }) {
-  const res = await fetch(`${API}/campaign-finance/admin/unresolved/resolve`, {
+  const res = await apiFetch(`/campaign-finance/admin/unresolved/resolve`, {
     method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ adapter_name, external_id, politician_id }),
   });
+
+  if (!res) {
+    const err = new Error("Unauthorized");
+    err.status = 401;
+    throw err;
+  }
 
   if (!res.ok) {
     const text = await res.text();
@@ -61,12 +69,16 @@ export async function resolveUnresolved({ adapter_name, external_id, politician_
  * @returns {Promise<{dismissed: boolean, rows_affected: number}>}
  */
 export async function dismissUnresolved({ adapter_name, external_id }) {
-  const res = await fetch(`${API}/campaign-finance/admin/unresolved/dismiss`, {
+  const res = await apiFetch(`/campaign-finance/admin/unresolved/dismiss`, {
     method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ adapter_name, external_id }),
   });
+
+  if (!res) {
+    const err = new Error("Unauthorized");
+    err.status = 401;
+    throw err;
+  }
 
   if (!res.ok) {
     const text = await res.text();
@@ -86,12 +98,16 @@ export async function dismissUnresolved({ adapter_name, external_id }) {
  * @returns {Promise<{restored: boolean, rows_affected: number}>}
  */
 export async function restoreUnresolved({ adapter_name, external_id }) {
-  const res = await fetch(`${API}/campaign-finance/admin/unresolved/restore`, {
+  const res = await apiFetch(`/campaign-finance/admin/unresolved/restore`, {
     method: "POST",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ adapter_name, external_id }),
   });
+
+  if (!res) {
+    const err = new Error("Unauthorized");
+    err.status = 401;
+    throw err;
+  }
 
   if (!res.ok) {
     const text = await res.text();
@@ -110,9 +126,13 @@ export async function restoreUnresolved({ adapter_name, external_id }) {
  */
 export async function searchPoliticiansAdmin(query) {
   const params = new URLSearchParams({ q: query, limit: "10" });
-  const res = await fetch(`${API}/essentials/politicians?${params}`, {
-    credentials: "include",
-  });
+  const res = await apiFetch(`/essentials/politicians?${params}`);
+
+  if (!res) {
+    const err = new Error("Unauthorized");
+    err.status = 401;
+    throw err;
+  }
 
   if (!res.ok) {
     const err = new Error(`Politician search failed: ${res.status}`);

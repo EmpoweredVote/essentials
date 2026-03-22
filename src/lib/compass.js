@@ -1,20 +1,17 @@
 // src/lib/compass.js
-const API = import.meta.env.VITE_API_URL || "/api";
+import { apiFetch } from './auth';
 
 // All topics (full topic objects: { id, short_title, stances, ... })
 export async function fetchTopics() {
-  const res = await fetch(`${API}/compass/topics`, {
-    credentials: "include",
-  });
+  const res = await apiFetch('/compass/topics');
+  if (!res) throw new Error('fetchTopics failed: Unauthorized');
   if (!res.ok) throw new Error(`fetchTopics failed: ${res.status}`);
   return res.json();
 }
 // Politician answers: [{ topic_id, value }, ...]
 export async function fetchPoliticianAnswers(politicianId) {
-  const res = await fetch(
-    `${API}/compass/politicians/${politicianId}/answers`,
-    { credentials: "include" }
-  );
+  const res = await apiFetch(`/compass/politicians/${politicianId}/answers`);
+  if (!res) throw new Error('fetchPoliticianAnswers failed: Unauthorized');
   if (!res.ok) throw new Error(`fetchPoliticianAnswers failed: ${res.status}`);
   return res.json();
 }
@@ -23,10 +20,8 @@ export async function fetchPoliticianAnswers(politicianId) {
 // Returns [] if the user is not logged in (401) or on any network error.
 export async function fetchUserAnswers() {
   try {
-    const res = await fetch(`${API}/compass/answers`, {
-      credentials: "include",
-    });
-    if (res.status === 401) return [];
+    const res = await apiFetch('/compass/answers');
+    if (!res) return []; // 401 handled by apiFetch (redirects); treat as empty
     if (!res.ok) throw new Error(`fetchUserAnswers failed: ${res.status}`);
     return res.json();
   } catch (err) {
@@ -39,10 +34,8 @@ export async function fetchUserAnswers() {
 // Returns [] if the user is not logged in (401) or on any network error.
 export async function fetchSelectedTopics() {
   try {
-    const res = await fetch(`${API}/compass/selected-topics`, {
-      credentials: "include",
-    });
-    if (res.status === 401) return [];
+    const res = await apiFetch('/compass/selected-topics');
+    if (!res) return []; // 401 handled by apiFetch (redirects); treat as empty
     if (!res.ok) throw new Error(`fetchSelectedTopics failed: ${res.status}`);
     return res.json();
   } catch (err) {
@@ -55,9 +48,8 @@ export async function fetchSelectedTopics() {
 // Public endpoint — returns [] on any error.
 export async function fetchPoliticiansWithStances() {
   try {
-    const res = await fetch(`${API}/compass/politicians`, {
-      credentials: "include",
-    });
+    const res = await apiFetch('/compass/politicians');
+    if (!res) throw new Error('fetchPoliticiansWithStances failed: Unauthorized');
     if (!res.ok) throw new Error(`fetchPoliticiansWithStances failed: ${res.status}`);
     return res.json();
   } catch (err) {
@@ -269,8 +261,8 @@ export function clearGuestVerdicts() {
  */
 export async function fetchUserVerdicts() {
   try {
-    const res = await fetch(`${API}/compass/verdicts`, { credentials: "include" });
-    if (!res.ok) return {};
+    const res = await apiFetch('/compass/verdicts');
+    if (!res || !res.ok) return {};
     const list = await res.json(); // [{ id, user_id, quote_id, verdict, created_at }]
     const map = {};
     for (const item of list) {

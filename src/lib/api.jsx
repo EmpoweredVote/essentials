@@ -1,8 +1,8 @@
-const API = import.meta.env.VITE_API_URL || "/api";
+import { apiFetch } from './auth';
 
 // Debug: log the API URL on first load
 if (!window.__API_LOGGED__) {
-  console.log("API URL:", API);
+  console.log("API URL: (using apiFetch Bearer wrapper)");
   window.__API_LOGGED__ = true;
 }
 
@@ -11,12 +11,13 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // @deprecated — no longer used by usePoliticianData. Kept for backward compatibility.
 export async function fetchPoliticiansOnce(zip, attempt = 0) {
   try {
-    const url = `${API}/essentials/politicians/${zip}?a=${attempt}&t=${Date.now()}`;
-    const res = await fetch(url, {
+    const url = `/essentials/politicians/${zip}?a=${attempt}&t=${Date.now()}`;
+    const res = await apiFetch(url, {
       method: "GET",
-      credentials: "include",
       cache: "no-store",
     });
+
+    if (!res) return { status: "error", data: [], error: "Unauthorized" };
 
     const status =
       res.headers.get("X-Data-Status") || res.headers.get("x-data-status") || "";
@@ -76,12 +77,12 @@ export async function fetchPoliticiansProgressive(
 
 export async function searchPoliticians(query) {
   try {
-    const res = await fetch(`${API}/essentials/politicians/search`, {
+    const res = await apiFetch(`/essentials/politicians/search`, {
       method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query }),
     });
+
+    if (!res) return { status: "error", data: [], error: "Unauthorized", formattedAddress: "" };
 
     const status =
       res.headers.get("X-Data-Status") || res.headers.get("x-data-status") || "";
@@ -103,10 +104,11 @@ export async function searchPoliticians(query) {
 }
 
 export async function checkCacheStatus(zip, signal) {
-  const res = await fetch(`${API}/essentials/cache-status/${zip}`, {
-    credentials: "include",
-    signal,
-  });
+  const res = await apiFetch(`/essentials/cache-status/${zip}`, { signal });
+
+  if (!res) {
+    throw new Error("Unauthorized");
+  }
 
   if (!res.ok) {
     throw new Error(`Cache status check failed: ${res.status}`);
@@ -116,11 +118,14 @@ export async function checkCacheStatus(zip, signal) {
 }
 
 export async function fetchPoliticiansSingle(zip, signal) {
-  const res = await fetch(`${API}/essentials/politicians/${zip}`, {
-    credentials: "include",
+  const res = await apiFetch(`/essentials/politicians/${zip}`, {
     cache: "no-store",
     signal,
   });
+
+  if (!res) {
+    throw new Error("Unauthorized");
+  }
 
   if (!res.ok) {
     throw new Error(`Failed to fetch politicians: ${res.status}`);
@@ -131,9 +136,8 @@ export async function fetchPoliticiansSingle(zip, signal) {
 
 export async function fetchPolitician(id) {
   try {
-    const res = await fetch(`${API}/essentials/politician/${id}`, {
-      credentials: "include",
-    });
+    const res = await apiFetch(`/essentials/politician/${id}`);
+    if (!res) throw new Error("Unauthorized");
     if (!res.ok) throw new Error("Failed to fetch politician");
     return res.json();
   } catch (error) {
@@ -148,22 +152,19 @@ export async function fetchCandidates(zipOrQuery) {
 
     if (isZip) {
       // ZIP: use existing GET endpoint
-      const res = await fetch(`${API}/essentials/candidates/${zipOrQuery}`, {
-        credentials: "include",
+      const res = await apiFetch(`/essentials/candidates/${zipOrQuery}`, {
         cache: "no-store",
       });
-      if (!res.ok) return [];
+      if (!res || !res.ok) return [];
       return res.json();
     }
 
     // Address: use POST search endpoint
-    const res = await fetch(`${API}/essentials/candidates/search`, {
+    const res = await apiFetch(`/essentials/candidates/search`, {
       method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query: zipOrQuery }),
     });
-    if (!res.ok) return [];
+    if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
     console.error("Error fetching candidates:", error);
@@ -173,10 +174,8 @@ export async function fetchCandidates(zipOrQuery) {
 
 export async function fetchEndorsements(id) {
   try {
-    const res = await fetch(`${API}/essentials/politician/${id}/endorsements`, {
-      credentials: "include",
-    });
-    if (!res.ok) return [];
+    const res = await apiFetch(`/essentials/politician/${id}/endorsements`);
+    if (!res || !res.ok) return [];
     return res.json();
   } catch {
     return [];
@@ -185,10 +184,8 @@ export async function fetchEndorsements(id) {
 
 export async function fetchLegislativeSummary(id) {
   try {
-    const res = await fetch(`${API}/essentials/politician/${id}/legislative-summary`, {
-      credentials: "include",
-    });
-    if (!res.ok) return { recent_bills: [], recent_votes: [] };
+    const res = await apiFetch(`/essentials/politician/${id}/legislative-summary`);
+    if (!res || !res.ok) return { recent_bills: [], recent_votes: [] };
     return res.json();
   } catch (error) {
     console.error("Error fetching legislative summary:", error);
@@ -198,10 +195,8 @@ export async function fetchLegislativeSummary(id) {
 
 export async function fetchLegislativeCommittees(id) {
   try {
-    const res = await fetch(`${API}/essentials/politician/${id}/committees`, {
-      credentials: "include",
-    });
-    if (!res.ok) return [];
+    const res = await apiFetch(`/essentials/politician/${id}/committees`);
+    if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
     console.error("Error fetching legislative committees:", error);
@@ -211,10 +206,8 @@ export async function fetchLegislativeCommittees(id) {
 
 export async function fetchLegislativeLeadership(id) {
   try {
-    const res = await fetch(`${API}/essentials/politician/${id}/leadership`, {
-      credentials: "include",
-    });
-    if (!res.ok) return [];
+    const res = await apiFetch(`/essentials/politician/${id}/leadership`);
+    if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
     console.error("Error fetching legislative leadership:", error);
@@ -228,10 +221,8 @@ export async function fetchLegislativeBills(id, { all = false, limit } = {}) {
     if (all) params.set('all', 'true');
     if (limit !== undefined) params.set('limit', String(limit));
     const qs = params.toString() ? `?${params}` : '';
-    const res = await fetch(`${API}/essentials/politician/${id}/bills${qs}`, {
-      credentials: "include",
-    });
-    if (!res.ok) return [];
+    const res = await apiFetch(`/essentials/politician/${id}/bills${qs}`);
+    if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
     console.error("Error fetching legislative bills:", error);
@@ -242,10 +233,8 @@ export async function fetchLegislativeBills(id, { all = false, limit } = {}) {
 export async function fetchLegislativeVotes(id, { limit } = {}) {
   try {
     const qs = limit !== undefined ? `?limit=${limit}` : '';
-    const res = await fetch(`${API}/essentials/politician/${id}/votes${qs}`, {
-      credentials: "include",
-    });
-    if (!res.ok) return [];
+    const res = await apiFetch(`/essentials/politician/${id}/votes${qs}`);
+    if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
     console.error("Error fetching legislative votes:", error);
@@ -255,10 +244,8 @@ export async function fetchLegislativeVotes(id, { limit } = {}) {
 
 export async function fetchJudicialRecord(id) {
   try {
-    const res = await fetch(`${API}/essentials/politician/${id}/judicial-record`, {
-      credentials: "include",
-    });
-    if (!res.ok) return { evaluations: [], metrics: [], disciplinary_records: [] };
+    const res = await apiFetch(`/essentials/politician/${id}/judicial-record`);
+    if (!res || !res.ok) return { evaluations: [], metrics: [], disciplinary_records: [] };
     return res.json();
   } catch (error) {
     console.error("Error fetching judicial record:", error);
