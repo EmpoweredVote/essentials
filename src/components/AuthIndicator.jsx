@@ -1,8 +1,31 @@
 import { useCompass } from "../contexts/CompassContext";
+import { redirectToLogin } from "../lib/auth";
 
 export default function AuthIndicator() {
   const { isLoggedIn, userName } = useCompass();
-  if (!isLoggedIn || !userName) return null;
+
+  if (!isLoggedIn) {
+    return (
+      <button
+        onClick={() => redirectToLogin()}
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          fontFamily: "'Manrope', sans-serif",
+          fontWeight: 600,
+          fontSize: 13,
+          color: "#00657c",
+          padding: "4px 8px",
+          borderRadius: 4,
+          textDecoration: "underline",
+          flexShrink: 0,
+        }}
+      >
+        Sign in
+      </button>
+    );
+  }
 
   const initials =
     userName

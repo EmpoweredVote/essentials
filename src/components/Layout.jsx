@@ -1,5 +1,6 @@
 import { Header, defaultNavItems, defaultCtaButton } from "@chrisandrewsedu/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
+import { redirectToLogin } from "../lib/auth";
 import { useSearchParams } from "react-router-dom";
 
 export function Layout({ children }) {
@@ -17,7 +18,7 @@ export function Layout({ children }) {
         items: [
           {
             label: "Sign in",
-            href: `https://compass.empowered.vote/login?returnTo=${encodeURIComponent(window.location.href)}`,
+            onClick: () => redirectToLogin(),
           },
         ],
       };
