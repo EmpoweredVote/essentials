@@ -14,8 +14,7 @@ import {
   loadGuestVerdicts,
   clearGuestVerdicts,
 } from "../lib/compass";
-
-const API = import.meta.env.VITE_API_URL || "/api";
+import { extractHashToken, getToken, apiFetch, clearToken, redirectToLogin } from "../lib/auth";
 
 const CompassContext = createContext(null);
 
@@ -42,15 +41,29 @@ export function CompassProvider({ children }) {
 
     async function loadAll() {
       try {
-        // 1. Check for URL fragment (highest priority — fresh bridge data from CompassV2)
+        // 1. Extract Bearer token from URL hash if present (synchronous — must happen first
+        //    so the token is in localStorage before any apiFetch calls)
+        extractHashToken();
+
+        // 2. Check for URL fragment (highest priority — fresh bridge data from CompassV2)
         //    Must be synchronous and happen before any async calls so the fragment is
         //    available when we decide which data source to use.
         const fragment = parseCompassFragment();
 
-        // 2. Auth check
-        const authRes = await fetch(`${API}/auth/me`, { credentials: "include" });
+        // 3. Auth check — only attempt if we have a token
+        const token = getToken();
+        let authedUser = null;
 
-        // 3. Public data (topics + politician stances) — always fetched
+        if (token) {
+          const authRes = await apiFetch('/auth/me');
+          // authRes is null if 401 (apiFetch clears token + redirects)
+          if (authRes && authRes.ok) {
+            const authData = await authRes.json();
+            authedUser = authData;
+          }
+        }
+
+        // 4. Public data (topics + politician stances) — always fetched
         const [topics, polsWithStances] = await Promise.all([
           fetchTopics(),
           fetchPoliticiansWithStances(),
@@ -63,17 +76,16 @@ export function CompassProvider({ children }) {
           );
         }
 
-        // 4. User-specific data — priority: logged-in API > fragment > localStorage cache > empty
+        // 5. User-specific data — priority: logged-in API > fragment > localStorage cache > empty
         let answers = [];
         let selected = [];
         let inverted = {};
 
-        if (authRes.ok) {
+        if (authedUser) {
           // Logged-in path: fetch from API, clear any guest cache
-          const authData = await authRes.json();
           if (!cancelled) {
             setIsLoggedIn(true);
-            setUserName(authData.username ?? null);
+            setUserName(authedUser.display_name ?? null);
           }
           [answers, selected] = await Promise.all([
             fetchUserAnswers(),
@@ -102,7 +114,7 @@ export function CompassProvider({ children }) {
 
         // Verdict priority: API > fragment > localStorage > empty
         let newVerdicts = {};
-        if (authRes.ok) {
+        if (authedUser) {
           newVerdicts = await fetchUserVerdicts();
           clearGuestVerdicts();
         } else if (fragment && Object.keys(fragment.verdicts || {}).length > 0) {
@@ -142,10 +154,11 @@ export function CompassProvider({ children }) {
 
   const logout = async () => {
     try {
-      await fetch(`${API}/auth/logout`, { method: 'POST', credentials: 'include' });
+      await apiFetch('/auth/logout', { method: 'POST' });
     } catch (err) {
       console.error('Logout error:', err);
     }
+    clearToken();
     setIsLoggedIn(false);
     setUserName(null);
     setUserAnswers([]);
