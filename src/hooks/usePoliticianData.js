@@ -8,7 +8,7 @@ let instanceCounter = 0;
  * Custom hook for fetching politician data.
  *
  * All queries (ZIP codes, cities, addresses) go through the unified
- * POST /essentials/politicians/search endpoint. The backend handles
+ * POST /essentials/candidates/search endpoint. The backend handles
  * area vs point detection and returns results synchronously.
  *
  * @param {string} query - ZIP code, city name, or address

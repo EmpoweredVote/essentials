@@ -55,7 +55,7 @@ export function CompassProvider({ children }) {
         let authedUser = null;
 
         if (token) {
-          const authRes = await apiFetch('/auth/me');
+          const authRes = await apiFetch('/account/me');
           // authRes is null if 401 (apiFetch clears token + redirects)
           if (authRes && authRes.ok) {
             const authData = await authRes.json();

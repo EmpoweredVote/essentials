@@ -11,7 +11,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // @deprecated — no longer used by usePoliticianData. Kept for backward compatibility.
 export async function fetchPoliticiansOnce(zip, attempt = 0) {
   try {
-    const url = `/essentials/politicians/${zip}?a=${attempt}&t=${Date.now()}`;
+    const url = `/essentials/candidates/${zip}?a=${attempt}&t=${Date.now()}`;
     const res = await apiFetch(url, {
       method: "GET",
       cache: "no-store",
@@ -77,7 +77,7 @@ export async function fetchPoliticiansProgressive(
 
 export async function searchPoliticians(query) {
   try {
-    const res = await apiFetch(`/essentials/politicians/search`, {
+    const res = await apiFetch(`/essentials/candidates/search`, {
       method: "POST",
       body: JSON.stringify({ query }),
     });
@@ -118,7 +118,7 @@ export async function checkCacheStatus(zip, signal) {
 }
 
 export async function fetchPoliticiansSingle(zip, signal) {
-  const res = await apiFetch(`/essentials/politicians/${zip}`, {
+  const res = await apiFetch(`/essentials/candidates/${zip}`, {
     cache: "no-store",
     signal,
   });
@@ -136,7 +136,7 @@ export async function fetchPoliticiansSingle(zip, signal) {
 
 export async function fetchPolitician(id) {
   try {
-    const res = await apiFetch(`/essentials/politician/${id}`);
+    const res = await apiFetch(`/essentials/politicians/${id}`);
     if (!res) throw new Error("Unauthorized");
     if (!res.ok) throw new Error("Failed to fetch politician");
     return res.json();
@@ -174,7 +174,7 @@ export async function fetchCandidates(zipOrQuery) {
 
 export async function fetchEndorsements(id) {
   try {
-    const res = await apiFetch(`/essentials/politician/${id}/endorsements`);
+    const res = await apiFetch(`/essentials/politicians/${id}/endorsements`);
     if (!res || !res.ok) return [];
     return res.json();
   } catch {
@@ -184,7 +184,7 @@ export async function fetchEndorsements(id) {
 
 export async function fetchLegislativeSummary(id) {
   try {
-    const res = await apiFetch(`/essentials/politician/${id}/legislative-summary`);
+    const res = await apiFetch(`/essentials/politicians/${id}/legislative`);
     if (!res || !res.ok) return { recent_bills: [], recent_votes: [] };
     return res.json();
   } catch (error) {
@@ -195,7 +195,7 @@ export async function fetchLegislativeSummary(id) {
 
 export async function fetchLegislativeCommittees(id) {
   try {
-    const res = await apiFetch(`/essentials/politician/${id}/committees`);
+    const res = await apiFetch(`/essentials/politicians/${id}/committees`);
     if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
@@ -206,7 +206,7 @@ export async function fetchLegislativeCommittees(id) {
 
 export async function fetchLegislativeLeadership(id) {
   try {
-    const res = await apiFetch(`/essentials/politician/${id}/leadership`);
+    const res = await apiFetch(`/essentials/politicians/${id}/leadership`);
     if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
@@ -221,7 +221,7 @@ export async function fetchLegislativeBills(id, { all = false, limit } = {}) {
     if (all) params.set('all', 'true');
     if (limit !== undefined) params.set('limit', String(limit));
     const qs = params.toString() ? `?${params}` : '';
-    const res = await apiFetch(`/essentials/politician/${id}/bills${qs}`);
+    const res = await apiFetch(`/essentials/politicians/${id}/bills${qs}`);
     if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
@@ -233,7 +233,7 @@ export async function fetchLegislativeBills(id, { all = false, limit } = {}) {
 export async function fetchLegislativeVotes(id, { limit } = {}) {
   try {
     const qs = limit !== undefined ? `?limit=${limit}` : '';
-    const res = await apiFetch(`/essentials/politician/${id}/votes${qs}`);
+    const res = await apiFetch(`/essentials/politicians/${id}/votes${qs}`);
     if (!res || !res.ok) return [];
     return res.json();
   } catch (error) {
@@ -244,7 +244,7 @@ export async function fetchLegislativeVotes(id, { limit } = {}) {
 
 export async function fetchJudicialRecord(id) {
   try {
-    const res = await apiFetch(`/essentials/politician/${id}/judicial-record`);
+    const res = await apiFetch(`/essentials/politicians/${id}/judicial-record`);
     if (!res || !res.ok) return { evaluations: [], metrics: [], disciplinary_records: [] };
     return res.json();
   } catch (error) {

@@ -28,7 +28,7 @@ export default function CandidateProfile() {
 
     const fetchElections = async () => {
       try {
-        const res = await apiFetch(`/essentials/politician/${id}/elections`);
+        const res = await apiFetch(`/essentials/politicians/${id}/elections`);
         if (!res || !res.ok) return [];
         return res.json();
       } catch {
