@@ -19,6 +19,7 @@ import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchCandidates } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
+import LocationBrowser from '../components/LocationBrowser';
 
 /** Sort a polList using all sort options for its category, chained as tie-breakers */
 function defaultSort(category, polList) {
@@ -217,6 +218,12 @@ export default function Results() {
   const navigate = useNavigate();
   const queryFromUrl = searchParams.get('q') || '';
 
+  // Search mode: 'address' or 'browse'
+  const [searchMode, setSearchMode] = useState('address');
+  // Browse results injected directly into the list
+  const [browseResults, setBrowseResults] = useState(null);
+  const [browseLoading, setBrowseLoading] = useState(false);
+
   // Address bar state
   const [addressInput, setAddressInput] = useState(
     queryFromUrl ? decodeURIComponent(queryFromUrl) : ''
@@ -284,9 +291,13 @@ export default function Results() {
     }
   }, [formattedAddress]);
 
-  // Derive actual data and phase from cache or hook
-  const list = cachedResult ? cachedResult.list : hookData;
-  const phase = cachedResult ? 'fresh' : hookPhase;
+  // Derive actual data and phase from cache, hook, or browse results
+  const list = searchMode === 'browse' && browseResults
+    ? browseResults
+    : (cachedResult ? cachedResult.list : hookData);
+  const phase = searchMode === 'browse'
+    ? (browseLoading ? 'loading' : (browseResults ? 'fresh' : 'idle'))
+    : (cachedResult ? 'fresh' : hookPhase);
 
   // Initialize selectedFilter from cache if available
   const [selectedFilter, setSelectedFilter] = useState(
@@ -742,39 +753,76 @@ export default function Results() {
           className="flex-1"
           style={isDesktop ? { overflowY: 'auto', minWidth: 0 } : { overflowY: 'auto' }}
         >
-          {/* Address Bar — inside scrollable content, not sticky */}
+          {/* Search Mode Toggle + Search Bar */}
           <div className="px-4 sm:px-8 py-3 border-t border-gray-200 bg-[var(--ev-bg-light)]">
-            <div className="flex gap-3">
-              <input
-                ref={addressInputRef}
-                type="text"
-                value={addressInput}
-                onChange={handleInputChange}
-                placeholder="Enter your address"
-                disabled={loadError}
-                className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
-                           focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]
-                           disabled:bg-gray-100 disabled:cursor-not-allowed"
-              />
+            {/* Mode toggle */}
+            <div className="flex gap-2 mb-3">
               <button
-                onClick={handleAddressSearch}
-                disabled={!addressInput.trim() || loadError}
-                className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
-                           hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
+                onClick={() => { setSearchMode('address'); setBrowseResults(null); }}
+                className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                  searchMode === 'address'
+                    ? 'bg-[var(--ev-teal)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
               >
-                Search
+                Search by Address
+              </button>
+              <button
+                onClick={() => setSearchMode('browse')}
+                className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                  searchMode === 'browse'
+                    ? 'bg-[var(--ev-teal)] text-white'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
+              >
+                Browse by Location
               </button>
             </div>
 
-            {loadError && (
-              <p className="mt-1 text-sm text-red-600">
-                Address search is temporarily unavailable. Please try again later.
-              </p>
-            )}
-            {showSelectionHint && !loadError && (
-              <p className="mt-1 text-sm text-amber-700">
-                Please select an address from the suggestions.
-              </p>
+            {searchMode === 'address' ? (
+              <>
+                <div className="flex gap-3">
+                  <input
+                    ref={addressInputRef}
+                    type="text"
+                    value={addressInput}
+                    onChange={handleInputChange}
+                    placeholder="Enter your address"
+                    disabled={loadError}
+                    className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
+                               focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]
+                               disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  />
+                  <button
+                    onClick={handleAddressSearch}
+                    disabled={!addressInput.trim() || loadError}
+                    className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
+                               hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
+                  >
+                    Search
+                  </button>
+                </div>
+                {loadError && (
+                  <p className="mt-1 text-sm text-red-600">
+                    Address search is temporarily unavailable. Please try again later.
+                  </p>
+                )}
+                {showSelectionHint && !loadError && (
+                  <p className="mt-1 text-sm text-amber-700">
+                    Please select an address from the suggestions.
+                  </p>
+                )}
+              </>
+            ) : (
+              <LocationBrowser
+                onResults={(data, areaName, state) => {
+                  setBrowseResults(data);
+                  if (areaName) {
+                    setAddressInput(`${areaName}, ${state}`);
+                  }
+                }}
+                onLoading={setBrowseLoading}
+              />
             )}
           </div>
 
