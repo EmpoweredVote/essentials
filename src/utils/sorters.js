@@ -66,6 +66,16 @@ const rankFromList = (list, title) => {
 export const cabinetRankKey = (pol) =>
   rankFromList(CABINET_RANK, pol.office_title);
 
+// Governor rank — Governor before Lt. Governor
+const GOVERNOR_RANK = [
+  "governor",
+  "lieutenant governor",
+  "lt. governor",
+  "lt governor",
+];
+export const governorRankKey = (pol) =>
+  rankFromList(GOVERNOR_RANK, pol.office_title);
+
 // Local exec rank
 const LOCAL_EXEC_RANK = [
   "mayor",
@@ -144,6 +154,18 @@ export const electedFirstKey = (pol) => (pol.is_elected ? 0 : 1);
 
 // utils/sorters.js (continued)
 export const GROUP_SORT_OPTIONS = {
+  "Governor & Lt. Governor": [
+    {
+      id: "role_rank",
+      label: "Role",
+      cmp: (dir) => makeComparator(governorRankKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
   "President / VP": [
     {
       id: "role_rank",
