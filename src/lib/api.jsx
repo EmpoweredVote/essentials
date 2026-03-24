@@ -103,20 +103,6 @@ export async function searchPoliticians(query) {
   }
 }
 
-export async function checkCacheStatus(zip, signal) {
-  const res = await apiFetch(`/essentials/cache-status/${zip}`, { signal });
-
-  if (!res) {
-    throw new Error("Unauthorized");
-  }
-
-  if (!res.ok) {
-    throw new Error(`Cache status check failed: ${res.status}`);
-  }
-
-  return res.json();
-}
-
 export async function fetchPoliticiansSingle(zip, signal) {
   const res = await apiFetch(`/essentials/candidates/${zip}`, {
     cache: "no-store",

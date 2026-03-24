@@ -18,6 +18,7 @@ export default function CampaignFinanceSection({ politicianId }) {
     summary,
     contributions,
     loading,
+    error,
     dataUpdatedAt,
     fetchContributions,
     fetchMoreContributions,
@@ -39,6 +40,10 @@ export default function CampaignFinanceSection({ politicianId }) {
   function handleExpand() {
     setExpanded((v) => !v);
   }
+
+  // Don't render section if API errored (endpoint missing) or no data after loading
+  if (!loading && !summary && error) return null;
+  if (!loading && summary && !summary.available_cycles?.length) return null;
 
   return (
     <section className="mt-8" aria-label="Campaign Finance">
