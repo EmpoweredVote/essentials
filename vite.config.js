@@ -17,4 +17,13 @@ export default defineConfig({
       : {},
     dedupe: ["react", "react-dom", "@react-spring/web"],
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://ev-accounts-api.onrender.com',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 });
