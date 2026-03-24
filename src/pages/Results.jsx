@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
@@ -26,6 +26,11 @@ function defaultSort(category, polList) {
   if (!opts || opts.length === 0) return polList;
   const chained = chainComparators(...opts.map((o) => o.cmp('asc')));
   return [...polList].sort(chained);
+}
+
+/** Stable key that identifies a specific seat (office + district). */
+function seatKey(pol) {
+  return `${pol.office_title}||${pol.district_type}||${pol.district_id || ''}`;
 }
 
 function getImageUrl(pol) {
@@ -432,9 +437,21 @@ export default function Results() {
     }));
   }, [showCandidates, candidateData]);
 
+  // Map seatKey → [candidates] so renderSeatGroup can look up challengers per incumbent
+  const candidateBySeat = useMemo(() => {
+    const map = new Map();
+    for (const c of candidateData) {
+      const key = seatKey(c);
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(c);
+    }
+    return map;
+  }, [candidateData]);
+
   const byTier = useMemo(() => {
     const map = { Local: {}, State: {}, Federal: {}, Unknown: {} };
     const seen = new Set();
+    const incumbentSeats = new Set();
 
     for (const { pol, cat } of classified) {
       // Deduplicate by name + office to handle same person with different external IDs.
@@ -445,9 +462,15 @@ export default function Results() {
       const tier = map[cat.tier] ? cat.tier : 'Unknown';
       if (!map[tier][cat.group]) map[tier][cat.group] = [];
       map[tier][cat.group].push(pol);
+      incumbentSeats.add(seatKey(pol));
     }
 
+    // Only add orphaned challengers: open seats where no incumbent appears in the
+    // main results. Challengers whose seat has a known incumbent are rendered inline
+    // by renderSeatGroup so we skip them here to avoid duplication.
     for (const { pol, cat } of classifiedCandidates) {
+      if (pol.is_incumbent) continue; // already in map as a sitting rep
+      if (incumbentSeats.has(seatKey(pol))) continue; // rendered inline via renderSeatGroup
       const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}-${pol.is_vacant || false}`;
       if (seen.has(key)) continue;
       seen.add(key);
@@ -655,6 +678,39 @@ export default function Results() {
     );
   };
 
+  /**
+   * Renders a seat group: the incumbent card plus any challengers immediately
+   * after it (animated in). If the incumbent is not running for re-election
+   * (no challenger carries is_incumbent: true), the incumbent is hidden and
+   * only challengers are shown.
+   */
+  const renderSeatGroup = (pol) => {
+    const sk = seatKey(pol);
+    const seatCandidates = showCandidates ? (candidateBySeat.get(sk) || []) : [];
+    const challengers = seatCandidates.filter((c) => !c.is_incumbent);
+    // incumbentRunning: true when no challengers (uncontested) or when the
+    // candidates list includes this same person as is_incumbent: true.
+    const incumbentRunning =
+      challengers.length === 0 || seatCandidates.some((c) => c.is_incumbent);
+
+    return (
+      <Fragment key={pol.id ?? `seat-${sk}`}>
+        {incumbentRunning && renderPoliticianCard(pol)}
+        {challengers.map((c, i) => (
+          <div
+            key={c.id}
+            className="ev-candidate-enter"
+            style={{ '--delay': `${i * 60}ms` }}
+          >
+            {renderPoliticianCard(c)}
+          </div>
+        ))}
+      </Fragment>
+    );
+  };
+
+  const candidateCount = candidateData.length;
+
   return (
     <Layout>
     <div className="min-h-screen bg-[var(--ev-bg-light)]">
@@ -676,6 +732,7 @@ export default function Results() {
             showCandidates={showCandidates}
             onShowCandidatesChange={setShowCandidates}
             candidatesLoading={candidatesLoading}
+            candidateCount={candidateCount}
           />
         )}
 
@@ -776,21 +833,29 @@ export default function Results() {
                     style={{ fontFamily: "'Manrope', sans-serif" }}
                   />
                 </div>
-                <label
-                  className="flex items-center gap-1.5 cursor-pointer select-none whitespace-nowrap"
-                  style={{ fontFamily: "'Manrope', sans-serif", fontSize: '13px', color: '#718096' }}
+                <button
+                  onClick={() => setShowCandidates((v) => !v)}
+                  className={`flex items-center gap-1.5 px-3 py-1 text-sm rounded-full border-2 transition-all whitespace-nowrap font-medium ${
+                    showCandidates
+                      ? 'bg-amber-50 border-amber-400 text-amber-800'
+                      : 'bg-white border-gray-300 text-gray-600'
+                  }`}
+                  style={{ fontFamily: "'Manrope', sans-serif" }}
                 >
-                  <input
-                    type="checkbox"
-                    checked={showCandidates}
-                    onChange={(e) => setShowCandidates(e.target.checked)}
-                    style={{ accentColor: '#00657c', width: '14px', height: '14px' }}
-                  />
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                  </svg>
                   Candidates
                   {candidatesLoading && (
-                    <span style={{ fontSize: '11px', color: '#a0aec0' }}>...</span>
+                    <span style={{ fontSize: '11px', color: '#a0aec0' }}>…</span>
                   )}
-                </label>
+                  {showCandidates && candidateCount > 0 && !candidatesLoading && (
+                    <span className="bg-amber-400 text-amber-900 text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
+                      {candidateCount}
+                    </span>
+                  )}
+                </button>
               </div>
             </div>
           )}
@@ -855,7 +920,7 @@ export default function Results() {
                                 websiteUrl={websiteUrl}
                               >
                                 {defaultSort(category, pols).map((pol) =>
-                                  renderPoliticianCard(pol)
+                                  renderSeatGroup(pol)
                                 )}
                               </CategorySection>
                             ))
@@ -879,7 +944,7 @@ export default function Results() {
                                 websiteUrl={websiteUrl}
                               >
                                 {defaultSort(category, pols).map((pol) =>
-                                  renderPoliticianCard(pol)
+                                  renderSeatGroup(pol)
                                 )}
                               </CategorySection>
                             ))
@@ -903,7 +968,7 @@ export default function Results() {
                                 websiteUrl={websiteUrl}
                               >
                                 {defaultSort(category, pols).map((pol) =>
-                                  renderPoliticianCard(pol)
+                                  renderSeatGroup(pol)
                                 )}
                               </CategorySection>
                             ))
