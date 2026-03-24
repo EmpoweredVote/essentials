@@ -12,7 +12,9 @@ import ExpandedView from './ExpandedView';
  */
 export default function CampaignFinanceSection({ politicianId }) {
   const [expanded, setExpanded] = useState(false);
-  const [cycle, setCycle] = useState(null);
+  const currentYear = new Date().getFullYear();
+  const defaultCycle = String(currentYear % 2 === 0 ? currentYear : currentYear - 1);
+  const [cycle, setCycle] = useState(defaultCycle);
 
   const {
     summary,
@@ -24,9 +26,9 @@ export default function CampaignFinanceSection({ politicianId }) {
     fetchMoreContributions,
   } = useCampaignFinance(politicianId, cycle);
 
-  // Set initial cycle from first available cycle once summary loads
+  // Update cycle if current cycle is not in the politician's available cycles
   useEffect(() => {
-    if (summary?.available_cycles?.length > 0 && cycle === null) {
+    if (summary?.available_cycles?.length > 0 && !summary.available_cycles.includes(cycle)) {
       setCycle(summary.available_cycles[0]);
     }
   }, [summary, cycle]);

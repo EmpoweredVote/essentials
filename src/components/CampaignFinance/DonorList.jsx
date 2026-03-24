@@ -131,24 +131,24 @@ export default function DonorList({ donors, contributions, onFetchContributions,
 
       <ul className="divide-y divide-gray-50">
         {sortedDonors.map((donor) => {
-          const isExpanded = expandedDonor === donor.donor_name;
+          const isExpanded = expandedDonor === donor.name;
           const donorType = (donor.donor_type || '').toLowerCase();
           const isPac = donorType === 'pac' || donorType === 'committee';
 
           // Filter transactions for this donor
           const donorTxns = contributions?.results
             ? contributions.results.filter(
-                (tx) => tx.donor_name === donor.donor_name
+                (tx) => tx.donor_name === donor.name
               )
             : [];
 
           return (
-            <li key={donor.donor_name}>
+            <li key={donor.name}>
               {/* Donor row */}
               <button
                 type="button"
                 className="w-full text-left px-3 py-3 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-                onClick={() => toggleDonor(donor.donor_name)}
+                onClick={() => toggleDonor(donor.name)}
                 aria-expanded={isExpanded}
               >
                 <div className="sm:grid sm:grid-cols-[2fr_1fr_1fr] sm:gap-2 sm:items-center flex flex-col gap-1">
@@ -162,7 +162,7 @@ export default function DonorList({ donors, contributions, onFetchContributions,
                       )}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 truncate">{donor.donor_name}</p>
+                      <p className="text-sm font-semibold text-gray-900 truncate">{donor.name}</p>
                       {(donor.employer || donor.occupation) && (
                         <p className="text-xs text-gray-500 truncate">
                           {[donor.employer, donor.occupation].filter(Boolean).join(' · ')}
