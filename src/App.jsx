@@ -8,6 +8,15 @@ import JudicialRecord from "./pages/JudicialRecord";
 import CandidateProfile from "./pages/CandidateProfile";
 import UnresolvedQueue from "./pages/admin/UnresolvedQueue";
 import { CompassProvider } from "./contexts/CompassContext";
+import { getToken, redirectToLogin } from "./lib/auth";
+
+function RequireAuth({ children }) {
+  if (!getToken()) {
+    redirectToLogin();
+    return null;
+  }
+  return children;
+}
 
 function App() {
   return (
@@ -19,7 +28,7 @@ function App() {
         <Route path="/politician/:id/record" element={<LegislativeRecord />} />
         <Route path="/politician/:id/judicial-record" element={<JudicialRecord />} />
         <Route path="/candidate/:id" element={<CandidateProfile />} />
-        <Route path="/admin/unresolved" element={<UnresolvedQueue />} />
+        <Route path="/admin/unresolved" element={<RequireAuth><UnresolvedQueue /></RequireAuth>} />
       </Routes>
     </CompassProvider>
   );

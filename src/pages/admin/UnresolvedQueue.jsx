@@ -274,8 +274,13 @@ function QueueRow({ entry, showDismissed, onRefresh, onToast }) {
               <>
                 <button
                   onClick={handleResolveClick}
-                  disabled={actionLoading}
-                  className={`rounded px-2.5 py-1 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 ${
+                  disabled={actionLoading || entry.adapter_name !== 'indiana'}
+                  title={
+                    entry.adapter_name !== 'indiana'
+                      ? `Resolve is only supported for Indiana entries. ${entry.adapter_name} entries cannot be backfilled.`
+                      : undefined
+                  }
+                  className={`rounded px-2.5 py-1 text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed ${
                     resolving
                       ? "bg-blue-100 text-blue-700 border border-blue-300"
                       : "bg-blue-600 text-white hover:bg-blue-700"
