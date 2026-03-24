@@ -20,7 +20,9 @@ export const STATE_ORDER = [
   "Statewide Constitutional Officers",
   "State Senate",
   "State House/Assembly",
-  "State Judiciary",
+  "State Supreme Court",
+  "State Court of Appeals",
+  "State Tax Court",
   "Departments, Boards & Commissions",
   "Executive (Other)",
 ];
@@ -39,7 +41,7 @@ export const LOCAL_ORDER = [
   "Local (Other)",
 ];
 
-export const STATE_JUDICIARY_ORDER = ["State Judiciary"];
+export const STATE_JUDICIARY_ORDER = ["State Supreme Court", "State Court of Appeals", "State Tax Court"];
 
 const BODY_LEGIS_UPPER = ["senate"];
 const BODY_LEGIS_LOWER = ["house", "assembly"];
@@ -216,10 +218,16 @@ export function classifyCategory(pol) {
     return { tier: "Local", group: "School Board" };
   }
 
-  // Judicial officials - treat as Local/State depending on context
+  // Judicial officials - separate state courts by type, local courts grouped
   if (dt === "JUDICIAL") {
-    if (hasAny(chamber, ["supreme", "appellate", "appeals"])) {
-      return { tier: "State", group: "State Judiciary" };
+    if (hasAny(chamber, ["supreme"])) {
+      return { tier: "State", group: "State Supreme Court" };
+    }
+    if (hasAny(chamber, ["appellate", "appeals"])) {
+      return { tier: "State", group: "State Court of Appeals" };
+    }
+    if (hasAny(chamber, ["tax"])) {
+      return { tier: "State", group: "State Tax Court" };
     }
     return { tier: "Local", group: "Local Judiciary" };
   }
@@ -258,7 +266,9 @@ export const CATEGORY_DISPLAY_NAMES = {
   "Statewide Constitutional Officers": "Constitutional Officers",
   "State Senate": "State Senate",
   "State House/Assembly": "State House",
-  "State Judiciary": "State Courts",
+  "State Supreme Court": "Supreme Court",
+  "State Court of Appeals": "Court of Appeals",
+  "State Tax Court": "Tax Court",
   "Departments, Boards & Commissions": "Boards & Commissions",
 
   // Local

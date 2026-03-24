@@ -180,6 +180,11 @@ function simplifyForBody(title, pol) {
  *   using getDisplayName(category) as the title.
  */
 function splitByBodyName(category, polList) {
+  // Don't split judiciary by body name — group all circuit/superior court judges together
+  if (category === 'Local Judiciary') {
+    return [{ title: getDisplayName(category), websiteUrl: undefined, pols: polList }];
+  }
+
   const named = {};
   const unnamed = [];
 
