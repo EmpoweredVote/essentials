@@ -184,7 +184,7 @@ export async function fetchEndorsements(id) {
 
 export async function fetchLegislativeSummary(id) {
   try {
-    const res = await apiFetch(`/essentials/politicians/${id}/legislative`);
+    const res = await apiFetch(`/essentials/politicians/${id}/legislative-summary`);
     if (!res || !res.ok) return { recent_bills: [], recent_votes: [] };
     return res.json();
   } catch (error) {
