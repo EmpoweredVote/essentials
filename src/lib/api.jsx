@@ -145,10 +145,10 @@ export async function fetchCandidates(zipOrQuery) {
       return res.json();
     }
 
-    // Address: use POST search endpoint
+    // Address: use POST search endpoint (includeChallengers so non-incumbents appear)
     const res = await apiFetch(`/essentials/candidates/search`, {
       method: "POST",
-      body: JSON.stringify({ query: zipOrQuery }),
+      body: JSON.stringify({ query: zipOrQuery, includeChallengers: true }),
     });
     if (!res || !res.ok) return [];
     return res.json();
