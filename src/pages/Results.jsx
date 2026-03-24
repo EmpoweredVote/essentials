@@ -984,19 +984,24 @@ export default function Results() {
                               <hr className="flex-1 border-gray-200" />
                             </div>
                           )}
-                          {orderedEntries(groups, STATE_ORDER).map(([category, polList]) =>
-                            splitByBodyName(category, polList).map(({ title, websiteUrl, pols }, idx) => (
+                          {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => {
+                            // State legislative groups: use government_name to qualify
+                            // e.g., "State Senate" → "Indiana State Senate"
+                            const stateName = polList[0]?.government_name?.split(',')[0]?.replace(/^State of /, '') || '';
+                            const qualifiedTitle = stateName
+                              ? `${stateName} ${category.replace('State ', '').replace('State House/Assembly', 'House of Representatives')}`
+                              : category;
+                            return (
                               <CategorySection
-                                key={`${category}-${title}-${idx}`}
-                                title={title}
-                                websiteUrl={websiteUrl}
+                                key={category}
+                                title={qualifiedTitle}
                               >
-                                {defaultSort(category, pols).map((pol) =>
+                                {defaultSort(category, polList).map((pol) =>
                                   renderSeatGroup(pol)
                                 )}
                               </CategorySection>
-                            ))
-                          )}
+                            );
+                          })}
                         </div>
                       )}
 
@@ -1008,19 +1013,26 @@ export default function Results() {
                               <hr className="flex-1 border-gray-200" />
                             </div>
                           )}
-                          {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) =>
-                            splitByBodyName(category, polList).map(({ title, websiteUrl, pols }, idx) => (
+                          {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => {
+                            // Federal groups: qualify with state for House reps
+                            // e.g., "U.S. House" → "U.S. House of Representatives - Indiana"
+                            let qualifiedTitle = category;
+                            if (category === 'U.S. House' && polList[0]?.representing_state) {
+                              const stateNames = { IN: 'Indiana', CA: 'California' };
+                              const stateFull = stateNames[polList[0].representing_state] || polList[0].representing_state;
+                              qualifiedTitle = `U.S. House of Representatives - ${stateFull}`;
+                            }
+                            return (
                               <CategorySection
-                                key={`${category}-${title}-${idx}`}
-                                title={title}
-                                websiteUrl={websiteUrl}
+                                key={category}
+                                title={qualifiedTitle}
                               >
-                                {defaultSort(category, pols).map((pol) =>
+                                {defaultSort(category, polList).map((pol) =>
                                   renderSeatGroup(pol)
                                 )}
                               </CategorySection>
-                            ))
-                          )}
+                            );
+                          })}
                         </div>
                       )}
                     </div>
