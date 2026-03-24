@@ -14,7 +14,7 @@ import {
   loadGuestVerdicts,
   clearGuestVerdicts,
 } from "../lib/compass";
-import { extractHashToken, getToken, apiFetch, clearToken, redirectToLogin } from "../lib/auth";
+import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin } from "../lib/auth";
 
 const CompassContext = createContext(null);
 
@@ -50,20 +50,40 @@ export function CompassProvider({ children }) {
         //    available when we decide which data source to use.
         const fragment = parseCompassFragment();
 
-        // 3. Auth check — only attempt if we have a token
+        // 3. SSO check — only when no local token exists
+        if (!getToken()) {
+          try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 2000);
+            const res = await fetch('/api/auth/session', {
+              credentials: 'include',
+              signal: controller.signal,
+            });
+            clearTimeout(timeout);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.access_token) setToken(data.access_token);
+            }
+          } catch {
+            // Silent fallback — no cookie or network error
+          }
+        }
+
+        // 4. Auth check — only attempt if we have a token
         const token = getToken();
         let authedUser = null;
 
         if (token) {
-          const authRes = await apiFetch('/account/me');
-          // authRes is null if 401 (apiFetch clears token + redirects)
-          if (authRes && authRes.ok) {
+          const authRes = await publicFetch('/account/me');
+          if (authRes.status === 401) {
+            clearToken();
+          } else if (authRes.ok) {
             const authData = await authRes.json();
             authedUser = authData;
           }
         }
 
-        // 4. Public data (topics + politician stances) — always fetched
+        // 5. Public data (topics + politician stances) — always fetched
         const [topics, polsWithStances] = await Promise.all([
           fetchTopics(),
           fetchPoliticiansWithStances(),
@@ -76,7 +96,7 @@ export function CompassProvider({ children }) {
           );
         }
 
-        // 5. User-specific data — priority: logged-in API > fragment > localStorage cache > empty
+        // 6. User-specific data — priority: logged-in API > fragment > localStorage cache > empty
         let answers = [];
         let selected = [];
         let inverted = {};
@@ -154,9 +174,16 @@ export function CompassProvider({ children }) {
 
   const logout = async () => {
     try {
-      await apiFetch('/auth/logout', { method: 'POST' });
-    } catch (err) {
-      console.error('Logout error:', err);
+      const token = getToken();
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      });
+    } catch {
+      // Network error — clear local state anyway
     }
     clearToken();
     setIsLoggedIn(false);
