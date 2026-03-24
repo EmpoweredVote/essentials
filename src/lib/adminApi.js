@@ -40,10 +40,13 @@ export async function fetchUnresolvedQueue({ source = "", show = "active" } = {}
  * @returns {Promise<{linked: boolean, contributions_moved: number, politician_name: string}>}
  */
 export async function resolveUnresolved({ adapter_name, external_id, politician_id }) {
-  const res = await apiFetch(`/campaign-finance/admin/unresolved/resolve`, {
-    method: "POST",
-    body: JSON.stringify({ adapter_name, external_id, politician_id }),
-  });
+  const res = await apiFetch(
+    `/campaign-finance/admin/unresolved/${encodeURIComponent(adapter_name)}/${encodeURIComponent(external_id)}/resolve`,
+    {
+      method: "POST",
+      body: JSON.stringify({ politician_id }),
+    }
+  );
 
   if (!res) {
     const err = new Error("Unauthorized");
@@ -69,10 +72,10 @@ export async function resolveUnresolved({ adapter_name, external_id, politician_
  * @returns {Promise<{dismissed: boolean, rows_affected: number}>}
  */
 export async function dismissUnresolved({ adapter_name, external_id }) {
-  const res = await apiFetch(`/campaign-finance/admin/unresolved/dismiss`, {
-    method: "POST",
-    body: JSON.stringify({ adapter_name, external_id }),
-  });
+  const res = await apiFetch(
+    `/campaign-finance/admin/unresolved/${encodeURIComponent(adapter_name)}/${encodeURIComponent(external_id)}/dismiss`,
+    { method: "POST" }
+  );
 
   if (!res) {
     const err = new Error("Unauthorized");
@@ -98,10 +101,10 @@ export async function dismissUnresolved({ adapter_name, external_id }) {
  * @returns {Promise<{restored: boolean, rows_affected: number}>}
  */
 export async function restoreUnresolved({ adapter_name, external_id }) {
-  const res = await apiFetch(`/campaign-finance/admin/unresolved/restore`, {
-    method: "POST",
-    body: JSON.stringify({ adapter_name, external_id }),
-  });
+  const res = await apiFetch(
+    `/campaign-finance/admin/unresolved/${encodeURIComponent(adapter_name)}/${encodeURIComponent(external_id)}/restore`,
+    { method: "POST" }
+  );
 
   if (!res) {
     const err = new Error("Unauthorized");
