@@ -42,7 +42,7 @@ export default function useGooglePlacesAutocomplete(inputRef, { onPlaceSelected 
         autocomplete = new placesLib.Autocomplete(inputRef.current, {
           componentRestrictions: { country: 'us' },
           fields: ['formatted_address', 'address_components'],
-          types: ['geocode'],
+          types: ['address'],
         });
 
         autocomplete.addListener('place_changed', () => {
