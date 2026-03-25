@@ -463,6 +463,37 @@ export const GROUP_SORT_OPTIONS = {
       cmp: (dir) => makeComparator(lastNameKey, dir),
     },
   ],
+  "State Supreme Court": [
+    {
+      id: "court_role",
+      label: "Role",
+      cmp: (dir) => makeComparator(chiefJusticeFirstKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "State Court of Appeals": [
+    {
+      id: "district",
+      label: "District",
+      cmp: (dir) => makeComparator(districtNumberKey, dir),
+    },
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
+  "State Tax Court": [
+    {
+      id: "name",
+      label: "Name",
+      cmp: (dir) => makeComparator(lastNameKey, dir),
+    },
+  ],
   "Local Judiciary": [
     {
       id: "court",
