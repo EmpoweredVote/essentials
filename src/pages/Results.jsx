@@ -93,6 +93,15 @@ function SkeletonSection() {
   );
 }
 
+/** Normalize district subtitle for consistent display
+ *  e.g. "Indiana 9th Congressional District" → "District 9" */
+function normalizeDistrictSubtitle(raw) {
+  if (!raw) return raw;
+  const match = raw.match(/(\d+)(?:st|nd|rd|th)\s+Congressional\s+District/i);
+  if (match) return `District ${match[1]}`;
+  return raw;
+}
+
 /**
  * Qualify a generic local title with the jurisdiction name.
  * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"
@@ -625,7 +634,7 @@ export default function Results() {
 
     const subtitle = (() => {
       let base;
-      if (dashIdx > 0) base = cleanTitle.slice(dashIdx + 3);
+      if (dashIdx > 0) base = normalizeDistrictSubtitle(cleanTitle.slice(dashIdx + 3));
       // NATIONAL_JUDICIAL: show role (e.g. "Chief Justice", "Associate Justice")
       else if (pol.district_type === 'NATIONAL_JUDICIAL') base = cleanTitle;
       else if (pol.district_id && /^[1-9]\d*$/.test(pol.district_id))
