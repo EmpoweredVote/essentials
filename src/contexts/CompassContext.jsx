@@ -15,6 +15,7 @@ import {
   clearGuestVerdicts,
 } from "../lib/compass";
 import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
+import { fetchMyRepresentatives } from "../lib/api";
 
 const CompassContext = createContext(null);
 
@@ -36,6 +37,8 @@ export function CompassProvider({ children }) {
   const [verdicts, setVerdicts] = useState({});
   const [initialTopicId, setInitialTopicId] = useState(null);
   const [compassLoading, setCompassLoading] = useState(true);
+  const [myRepresentatives, setMyRepresentatives] = useState(null);
+  const [myRepresentativesAddress, setMyRepresentativesAddress] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -109,10 +112,16 @@ export function CompassProvider({ children }) {
             setUserName(authedUser.display_name ?? null);
             setUserJurisdiction(authedUser.jurisdiction ?? null);
           }
-          [answers, selected] = await Promise.all([
+          const [answersResult, selectedResult, repsResult] = await Promise.all([
             fetchUserAnswers(),
             fetchSelectedTopics(),
+            fetchMyRepresentatives(),
           ]);
+          [answers, selected] = [answersResult, selectedResult];
+          if (!cancelled && !repsResult.error && repsResult.data.length > 0) {
+            setMyRepresentatives(repsResult.data);
+            setMyRepresentativesAddress(repsResult.formattedAddress || null);
+          }
           clearGuestCompass(); // Clean separation: logged-in = API only
         } else if (fragment) {
           // Guest with fresh fragment: convert to API format and cache for future visits
@@ -209,6 +218,8 @@ export function CompassProvider({ children }) {
       initialTopicId,
       politicianIdsWithStances,
       compassLoading,
+      myRepresentatives,
+      myRepresentativesAddress,
       logout,
     }),
     [
@@ -223,6 +234,8 @@ export function CompassProvider({ children }) {
       initialTopicId,
       politicianIdsWithStances,
       compassLoading,
+      myRepresentatives,
+      myRepresentativesAddress,
     ]
   );
 

@@ -139,11 +139,13 @@ export async function fetchPolitician(id) {
  */
 export async function fetchMyRepresentatives() {
   const res = await apiFetch('/essentials/representatives/me');
-  if (!res) return { data: [], error: null }; // 401 — apiFetch already redirected
-  if (res.status === 204) return { data: [], error: null }; // no jurisdiction on file
-  if (!res.ok) return { data: [], error: `${res.status}` };
+  if (!res) return { data: [], error: null, formattedAddress: '' }; // 401 — apiFetch already redirected
+  if (res.status === 204) return { data: [], error: null, formattedAddress: '' }; // no saved location
+  if (!res.ok) return { data: [], error: `${res.status}`, formattedAddress: '' };
+  const formattedAddress =
+    res.headers.get('X-Formatted-Address') || res.headers.get('x-formatted-address') || '';
   const data = await res.json();
-  return { data: Array.isArray(data) ? data : [], error: null };
+  return { data: Array.isArray(data) ? data : [], error: null, formattedAddress };
 }
 
 export async function fetchCandidates(zipOrQuery) {

@@ -17,7 +17,7 @@ import {
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchCandidates, fetchMyRepresentatives } from '../lib/api';
+import { fetchCandidates } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 import LocationBrowser from '../components/LocationBrowser';
 
@@ -329,25 +329,23 @@ export default function Results() {
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, compassLoading } = useCompass();
+  const { politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
 
-  // Prefilled mode: Connected user with jurisdiction — fetch their reps directly (no geocoding)
+  // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
   const isPrefilled = searchParams.get('prefilled') === 'true';
   useEffect(() => {
     if (!isPrefilled || compassLoading) return;
-    setSearchMode('browse');
-    setBrowseLoading(true);
-    fetchMyRepresentatives().then(({ data, error }) => {
-      if (!error) {
-        setBrowseResults(data);
-        // Show the user's county (or district) name in the address bar
-        const label = userJurisdiction?.county_name || userJurisdiction?.congressional_district_name || 'Your area';
-        setAddressInput(label);
-        setHasValidSelection(true);
-      }
-      setBrowseLoading(false);
-    });
-  }, [isPrefilled, compassLoading]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (myRepresentatives && myRepresentatives.length > 0) {
+      setSearchMode('browse');
+      setBrowseResults(myRepresentatives);
+      const label = myRepresentativesAddress
+        || userJurisdiction?.county_name
+        || userJurisdiction?.congressional_district_name
+        || 'Your area';
+      setAddressInput(label);
+      setHasValidSelection(true);
+    }
+  }, [isPrefilled, compassLoading, myRepresentatives, myRepresentativesAddress, userJurisdiction]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Active compass preview state: { id, name, anchorEl } or null
   const [previewPol, setPreviewPol] = useState(null);
