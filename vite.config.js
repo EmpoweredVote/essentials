@@ -20,7 +20,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ev-accounts-api.onrender.com',
+        target: 'https://accounts-api.empowered.vote',
         changeOrigin: true,
         secure: true,
       },

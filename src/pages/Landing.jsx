@@ -1,7 +1,8 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
+import { useCompass } from '../contexts/CompassContext';
 
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
@@ -9,6 +10,14 @@ export default function Landing() {
   const [showSelectionHint, setShowSelectionHint] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
+  const { isLoggedIn, userJurisdiction, compassLoading } = useCompass();
+
+  // Auto-redirect Connected users with jurisdiction — skip address input entirely
+  useEffect(() => {
+    if (!compassLoading && isLoggedIn && userJurisdiction) {
+      navigate('/results?prefilled=true', { replace: true });
+    }
+  }, [compassLoading, isLoggedIn, userJurisdiction, navigate]);
 
   const { loadError } = useGooglePlacesAutocomplete(inputRef, {
     onPlaceSelected: (formattedAddress) => {

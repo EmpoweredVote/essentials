@@ -14,7 +14,7 @@ import {
   loadGuestVerdicts,
   clearGuestVerdicts,
 } from "../lib/compass";
-import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin } from "../lib/auth";
+import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
 
 const CompassContext = createContext(null);
 
@@ -25,6 +25,7 @@ export function useCompass() {
 export function CompassProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
+  const [userJurisdiction, setUserJurisdiction] = useState(null);
   const [userAnswers, setUserAnswers] = useState([]);
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [allTopics, setAllTopics] = useState([]);
@@ -55,7 +56,7 @@ export function CompassProvider({ children }) {
           try {
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 2000);
-            const res = await fetch('/api/auth/session', {
+            const res = await fetch(`${API_BASE}/auth/session`, {
               credentials: 'include',
               signal: controller.signal,
             });
@@ -106,6 +107,7 @@ export function CompassProvider({ children }) {
           if (!cancelled) {
             setIsLoggedIn(true);
             setUserName(authedUser.display_name ?? null);
+            setUserJurisdiction(authedUser.jurisdiction ?? null);
           }
           [answers, selected] = await Promise.all([
             fetchUserAnswers(),
@@ -175,7 +177,7 @@ export function CompassProvider({ children }) {
   const logout = async () => {
     try {
       const token = getToken();
-      await fetch('/api/auth/logout', {
+      await fetch(`${API_BASE}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -188,6 +190,7 @@ export function CompassProvider({ children }) {
     clearToken();
     setIsLoggedIn(false);
     setUserName(null);
+    setUserJurisdiction(null);
     setUserAnswers([]);
     setSelectedTopics([]);
     setVerdicts({});
@@ -197,6 +200,7 @@ export function CompassProvider({ children }) {
     () => ({
       isLoggedIn,
       userName,
+      userJurisdiction,
       userAnswers,
       selectedTopics,
       allTopics,
@@ -210,6 +214,7 @@ export function CompassProvider({ children }) {
     [
       isLoggedIn,
       userName,
+      userJurisdiction,
       userAnswers,
       selectedTopics,
       allTopics,

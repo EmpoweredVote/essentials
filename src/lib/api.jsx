@@ -132,6 +132,20 @@ export async function fetchPolitician(id) {
   }
 }
 
+/**
+ * Fetch representatives for the currently logged-in Connected user using their
+ * stored jurisdiction (no address input required). Returns { data, error }.
+ * Returns { data: [], error: null } when no location is on file (204 response).
+ */
+export async function fetchMyRepresentatives() {
+  const res = await apiFetch('/essentials/representatives/me');
+  if (!res) return { data: [], error: null }; // 401 — apiFetch already redirected
+  if (res.status === 204) return { data: [], error: null }; // no jurisdiction on file
+  if (!res.ok) return { data: [], error: `${res.status}` };
+  const data = await res.json();
+  return { data: Array.isArray(data) ? data : [], error: null };
+}
+
 export async function fetchCandidates(zipOrQuery) {
   try {
     const isZip = /^\d{5}$/.test(zipOrQuery);
