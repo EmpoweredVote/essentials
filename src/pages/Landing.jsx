@@ -10,14 +10,14 @@ export default function Landing() {
   const [showSelectionHint, setShowSelectionHint] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
-  const { isLoggedIn, myRepresentativesAddress, compassLoading } = useCompass();
+  const { isLoggedIn, myRepresentatives, compassLoading } = useCompass();
 
-  // Auto-redirect Connected users who have a saved location — skip address input entirely
+  // Auto-redirect Connected users who have representatives data — skip address input entirely
   useEffect(() => {
-    if (!compassLoading && isLoggedIn && myRepresentativesAddress) {
+    if (!compassLoading && isLoggedIn && myRepresentatives && myRepresentatives.length > 0) {
       navigate('/results?prefilled=true', { replace: true });
     }
-  }, [compassLoading, isLoggedIn, myRepresentativesAddress, navigate]);
+  }, [compassLoading, isLoggedIn, myRepresentatives, navigate]);
 
   const { loadError } = useGooglePlacesAutocomplete(inputRef, {
     onPlaceSelected: (formattedAddress) => {
