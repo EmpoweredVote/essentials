@@ -148,6 +148,25 @@ export async function fetchMyRepresentatives() {
   return { data: Array.isArray(data) ? data : [], error: null, formattedAddress };
 }
 
+/**
+ * Save the user's home location to their Connected profile.
+ * Geocodes the address, encrypts coordinates via the accounts API, and
+ * persists the matched address. Fire-and-forget safe — returns null on failure.
+ */
+export async function saveMyLocation(address) {
+  try {
+    const res = await apiFetch('/connect/set-location', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address }),
+    });
+    if (!res || !res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
 export async function fetchCandidates(zipOrQuery) {
   try {
     const isZip = /^\d{5}$/.test(zipOrQuery);

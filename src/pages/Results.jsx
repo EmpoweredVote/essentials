@@ -17,7 +17,7 @@ import {
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchCandidates } from '../lib/api';
+import { fetchCandidates, saveMyLocation } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 import LocationBrowser from '../components/LocationBrowser';
 
@@ -329,7 +329,7 @@ export default function Results() {
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
+  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
 
   // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
   const isPrefilled = searchParams.get('prefilled') === 'true';
@@ -346,6 +346,15 @@ export default function Results() {
       setHasValidSelection(true);
     }
   }, [isPrefilled, compassLoading, myRepresentatives, myRepresentativesAddress, userJurisdiction]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-save location for Connected users: fires once per address on a successful search
+  const savedAddressRef = useRef(null);
+  useEffect(() => {
+    if (!isLoggedIn || !formattedAddress || phase !== 'fresh') return;
+    if (savedAddressRef.current === formattedAddress) return; // already saved this address
+    savedAddressRef.current = formattedAddress;
+    saveMyLocation(activeQuery).catch(() => {}); // fire-and-forget
+  }, [isLoggedIn, formattedAddress, phase, activeQuery]);
 
   // Active compass preview state: { id, name, anchorEl } or null
   const [previewPol, setPreviewPol] = useState(null);
