@@ -2,6 +2,7 @@ import { Header, defaultNavItems, defaultCtaButton } from "@chrisandrewsedu/ev-u
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { useSearchParams } from "react-router-dom";
+import { NavSearch } from './NavSearch/NavSearch';
 
 export function Layout({ children }) {
   const { isLoggedIn, userName, logout } = useCompass();
@@ -49,6 +50,7 @@ export function Layout({ children }) {
         onNavigate={(href) => { window.location.href = href; }}
         profileMenu={profileMenu}
       />
+      <NavSearch />
       {children}
     </>
   );
