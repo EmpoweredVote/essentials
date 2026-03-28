@@ -1,4 +1,4 @@
-import { apiFetch } from './auth';
+import { apiFetch, publicFetch } from './auth';
 
 // Debug: log the API URL on first load
 if (!window.__API_LOGGED__) {
@@ -271,5 +271,21 @@ export async function fetchJudicialRecord(id) {
   } catch (error) {
     console.error("Error fetching judicial record:", error);
     return { evaluations: [], metrics: [], disciplinary_records: [] };
+  }
+}
+
+export async function searchPoliticiansByName(q, signal) {
+  try {
+    const res = await publicFetch(
+      `/campaign-finance/search?q=${encodeURIComponent(q)}&limit=8`,
+      { signal }
+    );
+    if (!res || !res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data.results) ? data.results : [];
+  } catch (err) {
+    if (err.name === "AbortError") throw err;
+    console.error("Name search error:", err);
+    return [];
   }
 }
