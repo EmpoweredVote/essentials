@@ -283,7 +283,6 @@ export default function Results() {
   useEffect(() => {
     if (formattedAddress) {
       setAddressInput(formattedAddress);
-      setHasValidSelection(true);
     }
   }, [formattedAddress]);
 
@@ -325,7 +324,6 @@ export default function Results() {
         || userJurisdiction?.congressional_district_name
         || 'Your area';
       setAddressInput(label);
-      setHasValidSelection(true);
     }
   }, [isPrefilled, compassLoading, myRepresentatives, myRepresentativesAddress, userJurisdiction]); // eslint-disable-line react-hooks/exhaustive-deps
 
