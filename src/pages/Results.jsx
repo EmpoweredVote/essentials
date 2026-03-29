@@ -3,7 +3,6 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
-import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
 import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
@@ -242,31 +241,14 @@ export default function Results() {
   const [addressInput, setAddressInput] = useState(
     queryFromUrl ? decodeURIComponent(queryFromUrl) : ''
   );
-  const [hasValidSelection, setHasValidSelection] = useState(!!queryFromUrl);
-  const [showSelectionHint, setShowSelectionHint] = useState(false);
-
   // Search counter — incrementing this forces usePoliticianData to re-fetch
   // even when the query text hasn't changed (re-search same location edge case)
   const [searchKey, setSearchKey] = useState(0);
 
-  const addressInputRef = useRef(null);
   const mainRef = useRef(null);
 
   // Detect desktop breakpoint for two-panel layout
   const isDesktop = useMediaQuery('(min-width: 769px)');
-
-  const { loadError } = useGooglePlacesAutocomplete(addressInputRef, {
-    onPlaceSelected: (formattedAddress) => {
-      setAddressInput(formattedAddress);
-      setHasValidSelection(true);
-      setShowSelectionHint(false);
-      // Do NOT clear cache or navigate — user must click Search.
-      // Cache clearing happens in handleAddressSearch when the user
-      // actually submits. Clearing here would flip `enabled` in the
-      // data hook while the URL still points at the *old* query,
-      // causing a spurious re-fetch of the previous results.
-    },
-  });
 
   // Attempt sessionStorage restore for back-navigation
   const [cachedResult, setCachedResult] = useState(() => {
@@ -410,22 +392,12 @@ export default function Results() {
     return () => { cancelled = true; };
   }, [showCandidates, activeQuery]);
 
-  // Address bar handlers
-  const handleInputChange = (e) => {
-    setAddressInput(e.target.value);
-    setHasValidSelection(false);
-    setShowSelectionHint(false);
-  };
-
   const handleAddressSearch = () => {
-    if (!hasValidSelection) {
-      setShowSelectionHint(true);
-      return;
-    }
+    if (!addressInput.trim()) return;
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
     setSearchKey(k => k + 1);
-    setSearchParams({ q: addressInput });
+    setSearchParams({ q: addressInput.trim() });
   };
 
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
@@ -822,35 +794,23 @@ export default function Results() {
               <>
                 <div className="flex gap-3">
                   <input
-                    ref={addressInputRef}
                     type="text"
                     value={addressInput}
-                    onChange={handleInputChange}
-                    placeholder="Enter your address"
-                    disabled={loadError}
+                    onChange={(e) => setAddressInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleAddressSearch()}
+                    placeholder="Enter your address or zip code"
                     className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
-                               focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]
-                               disabled:bg-gray-100 disabled:cursor-not-allowed"
+                               focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
                   />
                   <button
                     onClick={handleAddressSearch}
-                    disabled={!addressInput.trim() || loadError}
+                    disabled={!addressInput.trim()}
                     className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
                                hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
                   >
                     Search
                   </button>
                 </div>
-                {loadError && (
-                  <p className="mt-1 text-sm text-red-600">
-                    Address search is temporarily unavailable. Please try again later.
-                  </p>
-                )}
-                {showSelectionHint && !loadError && (
-                  <p className="mt-1 text-sm text-amber-700">
-                    Please select an address from the suggestions.
-                  </p>
-                )}
               </>
             ) : (
               <LocationBrowser

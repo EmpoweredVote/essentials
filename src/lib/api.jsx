@@ -180,8 +180,8 @@ export async function fetchCandidates(zipOrQuery) {
       return res.json();
     }
 
-    // Address: use POST search endpoint (includeChallengers so non-incumbents appear)
-    const res = await apiFetch(`/essentials/candidates/search`, {
+    // Address: use election-search endpoint (includeChallengers so non-incumbents appear)
+    const res = await apiFetch(`/essentials/candidates/election-search`, {
       method: "POST",
       body: JSON.stringify({ query: zipOrQuery, includeChallengers: true }),
     });
@@ -277,12 +277,21 @@ export async function fetchJudicialRecord(id) {
 export async function searchPoliticiansByName(q, signal) {
   try {
     const res = await publicFetch(
-      `/campaign-finance/search?q=${encodeURIComponent(q)}&limit=8`,
+      `/essentials/politicians?q=${encodeURIComponent(q)}&limit=8`,
       { signal }
     );
     if (!res || !res.ok) return [];
     const data = await res.json();
-    return Array.isArray(data.results) ? data.results : [];
+    // GetAllPoliticians returns a plain array of OfficialOut.
+    // Map to the shape NavSearchResult expects: { uuid, name, office_title, jurisdiction, district }
+    const arr = Array.isArray(data) ? data : [];
+    return arr.map((p) => ({
+      uuid: p.id,
+      name: p.full_name,
+      office_title: p.office_title,
+      jurisdiction: p.representing_state || p.representing_city || '',
+      district: p.district_label || '',
+    }));
   } catch (err) {
     if (err.name === "AbortError") throw err;
     console.error("Name search error:", err);

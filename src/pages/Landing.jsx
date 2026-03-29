@@ -1,15 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
-import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import { useCompass } from '../contexts/CompassContext';
 
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
-  const [hasValidSelection, setHasValidSelection] = useState(false);
-  const [showSelectionHint, setShowSelectionHint] = useState(false);
   const navigate = useNavigate();
-  const inputRef = useRef(null);
   const { isLoggedIn, myRepresentatives, compassLoading } = useCompass();
 
   // Auto-redirect Connected users who have representatives data — skip address input entirely
@@ -19,26 +15,9 @@ export default function Landing() {
     }
   }, [compassLoading, isLoggedIn, myRepresentatives, navigate]);
 
-  const { loadError } = useGooglePlacesAutocomplete(inputRef, {
-    onPlaceSelected: (formattedAddress) => {
-      setAddressInput(formattedAddress);
-      setHasValidSelection(true);
-      setShowSelectionHint(false);
-    },
-  });
-
-  const handleInputChange = (e) => {
-    setAddressInput(e.target.value);
-    setHasValidSelection(false);
-    setShowSelectionHint(false);
-  };
-
   const handleSearch = () => {
-    if (!hasValidSelection) {
-      setShowSelectionHint(true);
-      return;
-    }
-    navigate(`/results?q=${encodeURIComponent(addressInput)}`);
+    if (!addressInput.trim()) return;
+    navigate(`/results?q=${encodeURIComponent(addressInput.trim())}`);
   };
 
   return (
@@ -59,36 +38,21 @@ export default function Landing() {
             {/* Search Input + Button */}
             <div className="flex flex-col sm:flex-row gap-3">
               <input
-                ref={inputRef}
                 type="text"
                 value={addressInput}
-                onChange={handleInputChange}
-                placeholder="Enter your address"
-                disabled={loadError}
-                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm disabled:bg-gray-100 disabled:cursor-not-allowed"
+                onChange={(e) => setAddressInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                placeholder="Enter your address or zip code"
+                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
               />
               <button
                 onClick={handleSearch}
-                disabled={!addressInput.trim() || loadError}
+                disabled={!addressInput.trim()}
                 className="px-4 sm:px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Search
               </button>
             </div>
-
-            {/* Degraded mode error message */}
-            {loadError && (
-              <p className="mt-3 text-sm text-red-600">
-                Address search is temporarily unavailable. Please try again later.
-              </p>
-            )}
-
-            {/* Selection hint */}
-            {showSelectionHint && !loadError && (
-              <p className="mt-3 text-sm text-amber-700">
-                Please select an address from the suggestions.
-              </p>
-            )}
           </div>
 
           {/* Right side - Illustration */}
