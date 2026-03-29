@@ -4,6 +4,39 @@ import SummaryCard from './SummaryCard';
 import ExpandedView from './ExpandedView';
 
 /**
+ * LocalUnavailableBanner — shown when a local/county politician has no digital filings.
+ * Satisfies COV-05: visitors are never shown a blank campaign finance section for local offices.
+ */
+function LocalUnavailableBanner() {
+  return (
+    <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 flex gap-3">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <p className="text-sm text-blue-800">
+          Campaign finance filings for this office are held by the Monroe County Election Office
+          and are not yet available digitally.
+        </p>
+        <a
+          href="mailto:election@co.monroe.in.us"
+          className="text-sm text-blue-700 underline mt-1 inline-block"
+        >
+          election@co.monroe.in.us
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/**
  * CampaignFinanceSection — orchestrator component for campaign finance display.
  * Placed on the politician profile page below other profile content.
  *
@@ -45,6 +78,20 @@ export default function CampaignFinanceSection({ politicianId }) {
 
   // Don't render section if API errored (endpoint missing) or no data after loading
   if (!loading && !summary && error) return null;
+
+  // Coverage gap banner for local offices with no digital data
+  if (!loading && summary?.coverage_status === 'local_unavailable') {
+    return (
+      <section className="mt-8" aria-label="Campaign Finance">
+        <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
+          Transparent Motivations
+        </h2>
+        <LocalUnavailableBanner />
+      </section>
+    );
+  }
+
+  // No data at all — suppress section entirely
   if (!loading && summary && !summary.available_cycles?.length) return null;
 
   return (
