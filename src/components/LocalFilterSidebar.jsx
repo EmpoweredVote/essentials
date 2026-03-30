@@ -25,7 +25,7 @@ export default function LocalFilterSidebar({
   return (
     <aside
       style={{
-        width: '160px',
+        width: '300px',
         flexShrink: 0,
         position: 'sticky',
         top: 0,
