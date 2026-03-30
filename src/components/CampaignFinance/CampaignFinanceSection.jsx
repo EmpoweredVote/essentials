@@ -22,15 +22,9 @@ function LocalUnavailableBanner() {
       </svg>
       <div>
         <p className="text-sm text-blue-800">
-          Campaign finance filings for this office are held by the Monroe County Election Office
-          and are not yet available digitally.
+          Campaign finance filings for this office may be held by a local or state election
+          authority and are not yet available digitally on Empowered Vote.
         </p>
-        <a
-          href="mailto:election@co.monroe.in.us"
-          className="text-sm text-blue-700 underline mt-1 inline-block"
-        >
-          election@co.monroe.in.us
-        </a>
       </div>
     </div>
   );
