@@ -183,15 +183,6 @@ export function CompassProvider({ children }) {
     };
   }, []);
 
-  // Called by Results.jsx after a successful address search so the prefilled view
-  // reflects the precise search results rather than the city-level /representatives/me data.
-  const updateMyRepresentatives = (data, address) => {
-    if (Array.isArray(data) && data.length > 0) {
-      setMyRepresentatives(data);
-      if (address) setMyRepresentativesAddress(address);
-    }
-  };
-
   const logout = async () => {
     try {
       const token = getToken();
@@ -229,7 +220,6 @@ export function CompassProvider({ children }) {
       compassLoading,
       myRepresentatives,
       myRepresentativesAddress,
-      updateMyRepresentatives,
       logout,
     }),
     [
