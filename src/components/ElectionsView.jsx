@@ -62,41 +62,31 @@ export default function ElectionsView({
     return seed;
   }, []);
 
-  // Pre-process elections: merge races with same position_name, group by tier
+  // Pre-process elections: group races by tier, shuffle candidates
   const processedElections = useMemo(() => {
     if (!elections || elections.length === 0) return [];
 
     return elections.map((election) => {
-      // Merge races with the same cleaned position_name (e.g., Republican + Democratic primaries)
-      const mergedByPosition = {};
-      for (const race of election.races) {
-        const key = cleanPositionName(race.position_name);
-        if (!mergedByPosition[key]) {
-          mergedByPosition[key] = {
-            positionName: key,
-            district_type: race.district_type,
-            seats: race.seats,
-            candidates: [],
-          };
-        }
-        // Deduplicate candidates by candidate_id (in case same person appears in multiple race records)
-        const existing = new Set(mergedByPosition[key].candidates.map((c) => c.candidate_id));
-        for (const c of race.candidates) {
-          if (!existing.has(c.candidate_id)) {
-            mergedByPosition[key].candidates.push(c);
-            existing.add(c.candidate_id);
-          }
-        }
-      }
+      const isPrimary = election.election_type === 'primary';
 
-      // Group merged positions by tier
+      // Group races by tier — keep separate (primaries have distinct party ballots)
       const tierMap = {};
-      for (const pos of Object.values(mergedByPosition)) {
-        const tier = getTier(pos.district_type);
+      for (const race of election.races) {
+        const tier = getTier(race.district_type);
         if (!tierMap[tier]) tierMap[tier] = [];
+
+        // Build display title: position name + party ballot label for primaries
+        const cleaned = cleanPositionName(race.position_name);
+        const ballotLabel =
+          isPrimary && race.primary_party
+            ? `${cleaned} — ${race.primary_party} Primary`
+            : cleaned;
+
         tierMap[tier].push({
-          ...pos,
-          shuffledCandidates: seededShuffle(pos.candidates, sessionSeed),
+          ...race,
+          displayTitle: ballotLabel,
+          cleanedPosition: cleaned,
+          shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
         });
       }
 
@@ -189,7 +179,7 @@ export default function ElectionsView({
                   </div>
 
                   {positions.map((pos) => (
-                    <CategorySection key={pos.positionName} title={pos.positionName}>
+                    <CategorySection key={pos.race_id} title={pos.displayTitle}>
                       {pos.shuffledCandidates.map((candidate) => (
                         <div
                           key={candidate.candidate_id}
@@ -199,7 +189,7 @@ export default function ElectionsView({
                             id={candidate.politician_id || candidate.candidate_id}
                             imageSrc={candidate.photo_url || undefined}
                             name={candidate.full_name}
-                            title={pos.positionName}
+                            title={pos.cleanedPosition}
                             subtitle={
                               candidate.is_incumbent ? 'Incumbent' : undefined
                             }
