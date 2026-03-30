@@ -183,6 +183,14 @@ export function CompassProvider({ children }) {
     };
   }, []);
 
+  const refreshMyRepresentatives = async () => {
+    const result = await fetchMyRepresentatives();
+    if (!result.error && result.data.length > 0) {
+      setMyRepresentatives(result.data);
+      setMyRepresentativesAddress(result.formattedAddress || null);
+    }
+  };
+
   const logout = async () => {
     try {
       const token = getToken();
@@ -220,6 +228,7 @@ export function CompassProvider({ children }) {
       compassLoading,
       myRepresentatives,
       myRepresentativesAddress,
+      refreshMyRepresentatives,
       logout,
     }),
     [

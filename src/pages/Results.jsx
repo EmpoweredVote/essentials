@@ -310,7 +310,7 @@ export default function Results() {
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
+  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, refreshMyRepresentatives, compassLoading } = useCompass();
 
   // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
   const isPrefilled = searchParams.get('prefilled') === 'true';
@@ -327,14 +327,17 @@ export default function Results() {
     }
   }, [isPrefilled, compassLoading, myRepresentatives, myRepresentativesAddress, userJurisdiction]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Auto-save location for Connected users: fires once per address on a successful search
+  // Auto-save location for Connected users: fires once per address on a successful search,
+  // then refreshes the context's representative list so the prefilled view stays current.
   const savedAddressRef = useRef(null);
   useEffect(() => {
     if (!isLoggedIn || !formattedAddress || phase !== 'fresh') return;
     if (savedAddressRef.current === formattedAddress) return; // already saved this address
     savedAddressRef.current = formattedAddress;
-    saveMyLocation(activeQuery).catch(() => {}); // fire-and-forget
-  }, [isLoggedIn, formattedAddress, phase, activeQuery]);
+    saveMyLocation(activeQuery)
+      .then((res) => { if (res) refreshMyRepresentatives(); })
+      .catch(() => {});
+  }, [isLoggedIn, formattedAddress, phase, activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Active compass preview state: { id, name, anchorEl } or null
   const [previewPol, setPreviewPol] = useState(null);

@@ -154,7 +154,9 @@ export async function fetchMyRepresentatives() {
   const formattedAddress =
     res.headers.get('X-Formatted-Address') || res.headers.get('x-formatted-address') || '';
   const data = await res.json();
-  return { data: Array.isArray(data) ? data : [], error: null, formattedAddress };
+  const arr = Array.isArray(data) ? data : [];
+  console.log(`[fetchMyRepresentatives] ${arr.length} reps returned, address="${formattedAddress}"`);
+  return { data: arr, error: null, formattedAddress };
 }
 
 /**
