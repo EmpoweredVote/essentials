@@ -189,8 +189,8 @@ export async function fetchCandidates(zipOrQuery) {
       return res.json();
     }
 
-    // Address: use election-search endpoint (includeChallengers so non-incumbents appear)
-    const res = await apiFetch(`/essentials/candidates/election-search`, {
+    // Address: use search endpoint with includeChallengers so non-incumbents appear
+    const res = await apiFetch(`/essentials/candidates/search`, {
       method: "POST",
       body: JSON.stringify({ query: zipOrQuery, includeChallengers: true }),
     });
