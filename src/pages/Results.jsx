@@ -4,6 +4,7 @@ import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
+import SegmentedControl from '../components/SegmentedControl';
 import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
@@ -301,6 +302,11 @@ export default function Results() {
     cachedResult?.filter || 'All'
   );
 
+  // Initialize appointedFilter from cache if available (defaults to 'All' per FILT-03)
+  const [appointedFilter, setAppointedFilter] = useState(
+    cachedResult?.appointedFilter || 'All'
+  );
+
   const [searchQuery, setSearchQuery] = useState('');
 
   // Scroll-spy tier tracking for building image swap
@@ -353,11 +359,12 @@ export default function Results() {
           query: queryFromUrl,
           list,
           filter: selectedFilter,
+          appointedFilter: appointedFilter,
           timestamp: Date.now(),
         }));
       }
     }
-  }, [list, phase, selectedFilter, queryFromUrl]);
+  }, [list, phase, selectedFilter, appointedFilter, queryFromUrl]);
 
   // Restore scroll position when returning from a profile page
   useEffect(() => {
@@ -442,6 +449,27 @@ export default function Results() {
       return next;
     });
   };
+
+  // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
+  function resolveIsAppointed(pol) {
+    if (pol.is_appointed !== undefined && pol.is_appointed !== null) {
+      return pol.is_appointed;
+    }
+    return !pol.is_elected;
+  }
+
+  // Filter logic per CONTEXT D-06
+  function matchesAppointedFilter(pol, filter) {
+    if (filter === 'All') return true;
+    const resolved = resolveIsAppointed(pol);
+    if (filter === 'Elected') {
+      return !resolved || pol.faces_retention_vote === true;
+    }
+    if (filter === 'Appointed') {
+      return resolved === true;
+    }
+    return true;
+  }
 
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
   const filteredPols = useMemo(() => list, [list]);
@@ -547,15 +575,29 @@ export default function Results() {
     return map;
   }, [classified, classifiedCandidates]);
 
+  // Elected/Appointed filter — applied within tier/group buckets (per D-01)
+  const appointedFilteredByTier = useMemo(() => {
+    if (appointedFilter === 'All') return byTier;
+    const result = {};
+    for (const [tier, groups] of Object.entries(byTier)) {
+      result[tier] = {};
+      for (const [group, pols] of Object.entries(groups)) {
+        const filtered = pols.filter(pol => matchesAppointedFilter(pol, appointedFilter));
+        if (filtered.length > 0) result[tier][group] = filtered;
+      }
+    }
+    return result;
+  }, [byTier, appointedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Filter by selected level
   const displayedPoliticians = useMemo(() => {
     if (selectedFilter === 'All') {
-      return byTier;
+      return appointedFilteredByTier;
     }
     return {
-      [selectedFilter]: byTier[selectedFilter] || {},
+      [selectedFilter]: appointedFilteredByTier[selectedFilter] || {},
     };
-  }, [byTier, selectedFilter]);
+  }, [appointedFilteredByTier, selectedFilter]);
 
   // Search filter
   const searchFilteredPoliticians = useMemo(() => {
@@ -791,6 +833,8 @@ export default function Results() {
           <LocalFilterSidebar
             selectedFilter={selectedFilter}
             onFilterChange={setSelectedFilter}
+            appointedFilter={appointedFilter}
+            onAppointedFilterChange={setAppointedFilter}
             locationLabel={locationLabel}
             buildingImageSrc={activeBuildingImage}
             searchQuery={searchQuery}
@@ -929,6 +973,21 @@ export default function Results() {
                   </button>
                 ))}
               </div>
+              {/* Type filter — elected/appointed (per D-02) */}
+              <div style={{ marginTop: '8px', marginBottom: '8px' }}>
+                <SegmentedControl
+                  options={[
+                    { value: 'All', label: 'All' },
+                    { value: 'Elected', label: 'Elected' },
+                    { value: 'Appointed', label: 'Appointed' },
+                  ]}
+                  value={appointedFilter}
+                  onChange={setAppointedFilter}
+                  ariaLabel="Filter by type"
+                  minHeight="44px"
+                />
+              </div>
+
               {/* Name search + Candidates toggle row */}
               <div className="flex items-center gap-3">
                 <div className="relative flex-1">
@@ -1116,6 +1175,14 @@ export default function Results() {
                 {federalFiltered.length === 0 && phase !== 'loading' && activeQuery && (
                   <p className="text-center text-gray-600 mt-8">
                     No results found for this location.
+                  </p>
+                )}
+
+                {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
+                {federalFiltered.length > 0 && appointedFilter !== 'All' &&
+                  Object.values(searchFilteredPoliticians).every(groups => Object.keys(groups).length === 0) && (
+                  <p className="text-sm text-gray-500 text-center py-8">
+                    No {appointedFilter.toLowerCase()} officials found for this area.
                   </p>
                 )}
               </div>

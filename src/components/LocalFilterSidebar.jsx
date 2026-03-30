@@ -3,9 +3,13 @@
  * Avoids an ev-ui publish cycle. Desktop-only (hidden on mobile via CSS; Results.jsx
  * conditionally renders it only when isDesktop is true).
  */
+import SegmentedControl from './SegmentedControl';
+
 export default function LocalFilterSidebar({
   selectedFilter,
   onFilterChange,
+  appointedFilter,
+  onAppointedFilterChange,
   locationLabel,
   buildingImageSrc,
   searchQuery,
@@ -65,6 +69,23 @@ export default function LocalFilterSidebar({
             </label>
           ))}
         </div>
+      </div>
+
+      <hr className="border-gray-200 my-4" />
+
+      {/* Type filter — elected/appointed segmented control (per D-02, D-03) */}
+      <div className="mb-1">
+        <p className="text-sm font-medium text-gray-500 mb-2" style={{ fontFamily: "'Manrope', sans-serif" }}>Type</p>
+        <SegmentedControl
+          options={[
+            { value: 'All', label: 'All' },
+            { value: 'Elected', label: 'Elected' },
+            { value: 'Appointed', label: 'Appointed' },
+          ]}
+          value={appointedFilter}
+          onChange={onAppointedFilterChange}
+          ariaLabel="Filter by type"
+        />
       </div>
 
       <hr className="border-gray-200 my-4" />
