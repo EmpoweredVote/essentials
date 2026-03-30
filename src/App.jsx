@@ -6,7 +6,6 @@ import Profile from "./pages/Profile";
 import LegislativeRecord from "./pages/LegislativeRecord";
 import JudicialRecord from "./pages/JudicialRecord";
 import CandidateProfile from "./pages/CandidateProfile";
-import Elections from "./pages/Elections";
 import UnresolvedQueue from "./pages/admin/UnresolvedQueue";
 import { CompassProvider } from "./contexts/CompassContext";
 import { getToken, redirectToLogin, extractHashToken } from "./lib/auth";
@@ -32,7 +31,6 @@ function App() {
         <Route path="/politician/:id/record" element={<LegislativeRecord />} />
         <Route path="/politician/:id/judicial-record" element={<JudicialRecord />} />
         <Route path="/candidate/:id" element={<CandidateProfile />} />
-        <Route path="/elections" element={<Elections />} />
         <Route path="/admin/unresolved" element={<RequireAuth><UnresolvedQueue /></RequireAuth>} />
       </Routes>
     </CompassProvider>
