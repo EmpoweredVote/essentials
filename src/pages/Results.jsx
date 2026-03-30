@@ -891,7 +891,7 @@ export default function Results() {
               >
                 Elections
                 {electionsData && electionsData.length > 0 && (
-                  <span className="w-2 h-2 rounded-full bg-[#00657C] ml-1" />
+                  <span className="w-2 h-2 rounded-full bg-[#FED12E] ml-1" />
                 )}
               </button>
             </div>
@@ -1125,7 +1125,6 @@ export default function Results() {
               <ElectionsView
                 elections={electionsData}
                 loading={electionsLoading}
-                buildingImageMap={buildingImageMap}
                 onCandidateClick={(id, isPolitician) => {
                   const scrollTop = isDesktop
                     ? mainRef.current?.scrollTop ?? 0

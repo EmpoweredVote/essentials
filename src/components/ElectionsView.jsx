@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
-import { PoliticianCard } from '@chrisandrewsedu/ev-ui';
-import { classifyCategory } from '../lib/classify';
+import { CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
 
 /** Timezone-safe days-until helper */
 function daysUntil(dateStr) {
@@ -31,35 +30,14 @@ function formatDate(dateStr) {
   });
 }
 
-/** Strip leading zeros from district numbers in position names.
+/** Strip leading zeros from district numbers.
  *  "State Representative, District 060" → "State Representative, District 60" */
 function cleanPositionName(name) {
   if (!name) return name;
   return name.replace(/District\s+0+(\d+)/gi, 'District $1');
 }
 
-/**
- * Split a position name into title and district subtitle.
- * "State Representative, District 60" → { title: "State Representative", subtitle: "District 60" }
- * "United States Representative, Ninth District" → { title: "U.S. Representative", subtitle: "Ninth District" }
- */
-function splitPosition(name) {
-  if (!name) return { title: name, subtitle: undefined };
-  const cleaned = cleanPositionName(name);
-
-  // Try comma split: "State Representative, District 60"
-  const commaIdx = cleaned.indexOf(',');
-  if (commaIdx > 0) {
-    return {
-      title: cleaned.slice(0, commaIdx).trim(),
-      subtitle: cleaned.slice(commaIdx + 1).trim(),
-    };
-  }
-
-  return { title: cleaned, subtitle: undefined };
-}
-
-/** Map district_type to tier name for section headers */
+/** Map district_type to tier name */
 function getTier(districtType) {
   if (!districtType) return 'Other';
   if (districtType.startsWith('NATIONAL')) return 'Federal';
@@ -67,13 +45,11 @@ function getTier(districtType) {
   return 'Local';
 }
 
-/** Tier display order */
 const TIER_ORDER = ['Local', 'State', 'Federal', 'Other'];
 
 export default function ElectionsView({
   elections,
   loading,
-  buildingImageMap,
   onCandidateClick,
 }) {
   // Session seed for stable candidate randomization
@@ -86,20 +62,41 @@ export default function ElectionsView({
     return seed;
   }, []);
 
-  // Pre-process elections: group races by tier, shuffle candidates
+  // Pre-process elections: merge races with same position_name, group by tier
   const processedElections = useMemo(() => {
     if (!elections || elections.length === 0) return [];
 
     return elections.map((election) => {
-      // Group races by tier
-      const tierMap = {};
-
+      // Merge races with the same cleaned position_name (e.g., Republican + Democratic primaries)
+      const mergedByPosition = {};
       for (const race of election.races) {
-        const tier = getTier(race.district_type);
+        const key = cleanPositionName(race.position_name);
+        if (!mergedByPosition[key]) {
+          mergedByPosition[key] = {
+            positionName: key,
+            district_type: race.district_type,
+            seats: race.seats,
+            candidates: [],
+          };
+        }
+        // Deduplicate candidates by candidate_id (in case same person appears in multiple race records)
+        const existing = new Set(mergedByPosition[key].candidates.map((c) => c.candidate_id));
+        for (const c of race.candidates) {
+          if (!existing.has(c.candidate_id)) {
+            mergedByPosition[key].candidates.push(c);
+            existing.add(c.candidate_id);
+          }
+        }
+      }
+
+      // Group merged positions by tier
+      const tierMap = {};
+      for (const pos of Object.values(mergedByPosition)) {
+        const tier = getTier(pos.district_type);
         if (!tierMap[tier]) tierMap[tier] = [];
         tierMap[tier].push({
-          ...race,
-          shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
+          ...pos,
+          shuffledCandidates: seededShuffle(pos.candidates, sessionSeed),
         });
       }
 
@@ -107,23 +104,26 @@ export default function ElectionsView({
     });
   }, [elections, sessionSeed]);
 
-  // Loading state
+  // Loading state — matches SkeletonSection from Results.jsx
   if (loading) {
     return (
-      <div className="space-y-6">
+      <div>
         {[0, 1].map((i) => (
           <div key={i} className="mb-6 animate-pulse">
-            <div className="h-5 bg-gray-200 rounded w-48 mb-4" />
-            <div className="space-y-3">
-              {[0, 1, 2].map((j) => (
-                <div key={j} className="flex items-center gap-3 py-2">
-                  <div className="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0" />
-                  <div className="flex-1 flex flex-col gap-2">
-                    <div className="h-4 bg-gray-200 rounded w-2/3" />
-                    <div className="h-3 bg-gray-200 rounded w-1/2" />
-                  </div>
-                </div>
-              ))}
+            <div className="h-4 bg-gray-200 rounded w-24 mb-4" />
+            <div className="flex items-center gap-3 py-2">
+              <div className="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0" />
+              <div className="flex-1 flex flex-col gap-2">
+                <div className="h-4 bg-gray-200 rounded w-2/3" />
+                <div className="h-3 bg-gray-200 rounded w-1/2" />
+              </div>
+            </div>
+            <div className="flex items-center gap-3 py-2">
+              <div className="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0" />
+              <div className="flex-1 flex flex-col gap-2">
+                <div className="h-4 bg-gray-200 rounded w-2/3" />
+                <div className="h-3 bg-gray-200 rounded w-1/2" />
+              </div>
             </div>
           </div>
         ))}
@@ -149,35 +149,38 @@ export default function ElectionsView({
   }
 
   return (
-    <div className="space-y-8">
+    <div>
       {processedElections.map((election) => {
         const days = daysUntil(election.election_date);
         const dateStr = formatDate(election.election_date);
 
         return (
-          <div key={election.election_id}>
-            {/* Election header */}
-            <div className="bg-white border-b border-[#E2EBEF] py-4 px-6 mb-4 rounded-t-lg">
-              <p className="text-[16px] font-semibold text-[#00657C]">
+          <div key={election.election_id} className="mb-8">
+            {/* Election header — prominent date + countdown */}
+            <div className="mb-6">
+              <h2 className="text-[18px] font-semibold text-[#00657C] mb-1">
                 {election.election_name}
-                <span className="text-[#718096] font-normal"> · </span>
-                {dateStr}
+              </h2>
+              <p className="text-[15px]">
+                <span className="font-semibold text-[#2D3748]">{dateStr}</span>
                 {days > 0 && days < 60 && (
-                  <>
-                    <span className="text-[#718096] font-normal"> · </span>
-                    <span className="text-[#00657C]">{days} days away</span>
-                  </>
+                  <span
+                    className="ml-2 inline-block px-2 py-0.5 rounded-full text-[13px] font-semibold"
+                    style={{ backgroundColor: '#FED12E', color: '#5A4B00' }}
+                  >
+                    {days} days away
+                  </span>
                 )}
               </p>
             </div>
 
             {/* Tier sections: Local > State > Federal */}
             {TIER_ORDER.map((tier) => {
-              const races = election.tierMap[tier];
-              if (!races || races.length === 0) return null;
+              const positions = election.tierMap[tier];
+              if (!positions || positions.length === 0) return null;
 
               return (
-                <div key={tier} className="mb-6">
+                <div key={tier}>
                   <div className="flex items-center gap-4 mb-4">
                     <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">
                       {tier}
@@ -185,61 +188,33 @@ export default function ElectionsView({
                     <hr className="flex-1 border-gray-200" />
                   </div>
 
-                  {races.map((race) => {
-                    const { title, subtitle } = splitPosition(race.position_name);
-
-                    return (
-                      <div key={race.race_id} className="mb-6">
-                        {/* Race position header */}
-                        <p className="text-[14px] font-semibold text-[#4A5568] mb-1">
-                          {title}
-                          {subtitle && (
-                            <span className="font-normal text-[#718096]">
-                              {' '}
-                              — {subtitle}
-                            </span>
-                          )}
-                          {race.seats > 1 && (
-                            <span className="font-normal text-[#718096]">
-                              {' '}
-                              · {race.seats} seats
-                            </span>
-                          )}
-                        </p>
-
-                        {/* Candidate cards — horizontal, same as Representatives tab */}
-                        {race.shuffledCandidates.map((candidate) => (
-                          <div
-                            key={candidate.candidate_id}
-                            className={
-                              candidate.is_incumbent ? 'incumbent-card' : ''
+                  {positions.map((pos) => (
+                    <CategorySection key={pos.positionName} title={pos.positionName}>
+                      {pos.shuffledCandidates.map((candidate) => (
+                        <div
+                          key={candidate.candidate_id}
+                          className={candidate.is_incumbent ? 'incumbent-card' : ''}
+                        >
+                          <PoliticianCard
+                            id={candidate.politician_id || candidate.candidate_id}
+                            imageSrc={candidate.photo_url || undefined}
+                            name={candidate.full_name}
+                            title={pos.positionName}
+                            subtitle={
+                              candidate.is_incumbent ? 'Incumbent' : undefined
                             }
-                          >
-                            <PoliticianCard
-                              id={candidate.politician_id || candidate.candidate_id}
-                              imageSrc={candidate.photo_url || undefined}
-                              name={candidate.full_name}
-                              title={title}
-                              subtitle={
-                                candidate.is_incumbent
-                                  ? subtitle
-                                    ? `${subtitle} · Incumbent`
-                                    : 'Incumbent'
-                                  : subtitle || undefined
-                              }
-                              onClick={() =>
-                                onCandidateClick(
-                                  candidate.politician_id || candidate.candidate_id,
-                                  !!candidate.politician_id
-                                )
-                              }
-                              variant="horizontal"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  })}
+                            onClick={() =>
+                              onCandidateClick(
+                                candidate.politician_id || candidate.candidate_id,
+                                !!candidate.politician_id
+                              )
+                            }
+                            variant="horizontal"
+                          />
+                        </div>
+                      ))}
+                    </CategorySection>
+                  ))}
                 </div>
               );
             })}
