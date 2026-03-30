@@ -1126,12 +1126,12 @@ export default function Results() {
                 elections={electionsData}
                 loading={electionsLoading}
                 buildingImageMap={buildingImageMap}
-                onCandidateClick={(id) => {
+                onCandidateClick={(id, isPolitician) => {
                   const scrollTop = isDesktop
                     ? mainRef.current?.scrollTop ?? 0
                     : window.scrollY;
                   sessionStorage.setItem('ev:scrollTop', String(scrollTop));
-                  navigate(`/candidate/${id}`);
+                  navigate(isPolitician ? `/politician/${id}` : `/candidate/${id}`);
                 }}
               />
             </div>

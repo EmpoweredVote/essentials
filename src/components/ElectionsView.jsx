@@ -1,19 +1,6 @@
 import { useMemo } from 'react';
-import { CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
-import {
-  classifyCategory,
-  LOCAL_ORDER,
-  STATE_ORDER,
-  FEDERAL_ORDER,
-  orderedEntries,
-} from '../lib/classify';
-
-const TYPE_LABELS = {
-  primary: 'Primary',
-  general: 'General',
-  retention: 'Retention',
-  special: 'Special Election',
-};
+import { PoliticianCard } from '@chrisandrewsedu/ev-ui';
+import { classifyCategory } from '../lib/classify';
 
 /** Timezone-safe days-until helper */
 function daysUntil(dateStr) {
@@ -44,12 +31,44 @@ function formatDate(dateStr) {
   });
 }
 
-/** Tier ordering arrays in display order: Local first */
-const TIER_CONFIG = [
-  { tier: 'Local', order: LOCAL_ORDER },
-  { tier: 'State', order: STATE_ORDER },
-  { tier: 'Federal', order: FEDERAL_ORDER },
-];
+/** Strip leading zeros from district numbers in position names.
+ *  "State Representative, District 060" → "State Representative, District 60" */
+function cleanPositionName(name) {
+  if (!name) return name;
+  return name.replace(/District\s+0+(\d+)/gi, 'District $1');
+}
+
+/**
+ * Split a position name into title and district subtitle.
+ * "State Representative, District 60" → { title: "State Representative", subtitle: "District 60" }
+ * "United States Representative, Ninth District" → { title: "U.S. Representative", subtitle: "Ninth District" }
+ */
+function splitPosition(name) {
+  if (!name) return { title: name, subtitle: undefined };
+  const cleaned = cleanPositionName(name);
+
+  // Try comma split: "State Representative, District 60"
+  const commaIdx = cleaned.indexOf(',');
+  if (commaIdx > 0) {
+    return {
+      title: cleaned.slice(0, commaIdx).trim(),
+      subtitle: cleaned.slice(commaIdx + 1).trim(),
+    };
+  }
+
+  return { title: cleaned, subtitle: undefined };
+}
+
+/** Map district_type to tier name for section headers */
+function getTier(districtType) {
+  if (!districtType) return 'Other';
+  if (districtType.startsWith('NATIONAL')) return 'Federal';
+  if (districtType.startsWith('STATE')) return 'State';
+  return 'Local';
+}
+
+/** Tier display order */
+const TIER_ORDER = ['Local', 'State', 'Federal', 'Other'];
 
 export default function ElectionsView({
   elections,
@@ -67,25 +86,24 @@ export default function ElectionsView({
     return seed;
   }, []);
 
-  // Pre-process elections: classify races by tier/group, shuffle candidates
+  // Pre-process elections: group races by tier, shuffle candidates
   const processedElections = useMemo(() => {
     if (!elections || elections.length === 0) return [];
 
     return elections.map((election) => {
-      // Group races by tier, then by group within tier
-      const tierGroups = { Local: {}, State: {}, Federal: {} };
+      // Group races by tier
+      const tierMap = {};
 
       for (const race of election.races) {
-        const cat = classifyCategory({ district_type: race.district_type });
-        const tier = tierGroups[cat.tier] ? cat.tier : 'Local';
-        if (!tierGroups[tier][cat.group]) tierGroups[tier][cat.group] = [];
-        tierGroups[tier][cat.group].push({
+        const tier = getTier(race.district_type);
+        if (!tierMap[tier]) tierMap[tier] = [];
+        tierMap[tier].push({
           ...race,
           shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
         });
       }
 
-      return { ...election, tierGroups };
+      return { ...election, tierMap };
     });
   }, [elections, sessionSeed]);
 
@@ -95,13 +113,15 @@ export default function ElectionsView({
       <div className="space-y-6">
         {[0, 1].map((i) => (
           <div key={i} className="mb-6 animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-24 mb-4" />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="h-5 bg-gray-200 rounded w-48 mb-4" />
+            <div className="space-y-3">
               {[0, 1, 2].map((j) => (
-                <div key={j} className="flex flex-col items-center gap-2 p-4">
-                  <div className="w-16 h-16 rounded-full bg-gray-200" />
-                  <div className="h-4 bg-gray-200 rounded w-2/3" />
-                  <div className="h-3 bg-gray-200 rounded w-1/2" />
+                <div key={j} className="flex items-center gap-3 py-2">
+                  <div className="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0" />
+                  <div className="flex-1 flex flex-col gap-2">
+                    <div className="h-4 bg-gray-200 rounded w-2/3" />
+                    <div className="h-3 bg-gray-200 rounded w-1/2" />
+                  </div>
                 </div>
               ))}
             </div>
@@ -133,7 +153,6 @@ export default function ElectionsView({
       {processedElections.map((election) => {
         const days = daysUntil(election.election_date);
         const dateStr = formatDate(election.election_date);
-        const typeLabel = TYPE_LABELS[election.election_type] || election.election_type;
 
         return (
           <div key={election.election_id}>
@@ -153,9 +172,9 @@ export default function ElectionsView({
             </div>
 
             {/* Tier sections: Local > State > Federal */}
-            {TIER_CONFIG.map(({ tier, order }) => {
-              const groups = election.tierGroups[tier];
-              if (!groups || Object.keys(groups).length === 0) return null;
+            {TIER_ORDER.map((tier) => {
+              const races = election.tierMap[tier];
+              if (!races || races.length === 0) return null;
 
               return (
                 <div key={tier} className="mb-6">
@@ -166,60 +185,61 @@ export default function ElectionsView({
                     <hr className="flex-1 border-gray-200" />
                   </div>
 
-                  {orderedEntries(groups, order).map(([group, races]) => (
-                    <CategorySection
-                      key={group}
-                      title={group}
-                      style={{ marginBottom: '16px' }}
-                    >
-                      {races.map((race) => (
-                        <div key={race.race_id} className="mb-4">
-                          <p className="text-[14px] text-[#4A5568] mb-2">
-                            {race.position_name}
-                            {race.seats > 1 && (
-                              <span className="text-[#718096]">
-                                {' '}
-                                · {race.seats} seats
-                              </span>
-                            )}
-                          </p>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {race.shuffledCandidates.map((candidate) => (
-                              <div
-                                key={candidate.candidate_id}
-                                className={
-                                  candidate.is_incumbent ? 'incumbent-card' : ''
-                                }
-                                style={
-                                  candidate.is_incumbent
-                                    ? {
-                                        '--incumbent-color': '#00657C',
-                                      }
-                                    : undefined
-                                }
-                              >
-                                <PoliticianCard
-                                  id={candidate.candidate_id}
-                                  imageSrc={candidate.photo_url || undefined}
-                                  name={candidate.full_name}
-                                  title={race.position_name}
-                                  subtitle={
-                                    candidate.is_incumbent
-                                      ? 'Incumbent'
-                                      : undefined
-                                  }
-                                  onClick={() =>
-                                    onCandidateClick(candidate.candidate_id)
-                                  }
-                                  variant="vertical"
-                                />
-                              </div>
-                            ))}
+                  {races.map((race) => {
+                    const { title, subtitle } = splitPosition(race.position_name);
+
+                    return (
+                      <div key={race.race_id} className="mb-6">
+                        {/* Race position header */}
+                        <p className="text-[14px] font-semibold text-[#4A5568] mb-1">
+                          {title}
+                          {subtitle && (
+                            <span className="font-normal text-[#718096]">
+                              {' '}
+                              — {subtitle}
+                            </span>
+                          )}
+                          {race.seats > 1 && (
+                            <span className="font-normal text-[#718096]">
+                              {' '}
+                              · {race.seats} seats
+                            </span>
+                          )}
+                        </p>
+
+                        {/* Candidate cards — horizontal, same as Representatives tab */}
+                        {race.shuffledCandidates.map((candidate) => (
+                          <div
+                            key={candidate.candidate_id}
+                            className={
+                              candidate.is_incumbent ? 'incumbent-card' : ''
+                            }
+                          >
+                            <PoliticianCard
+                              id={candidate.politician_id || candidate.candidate_id}
+                              imageSrc={candidate.photo_url || undefined}
+                              name={candidate.full_name}
+                              title={title}
+                              subtitle={
+                                candidate.is_incumbent
+                                  ? subtitle
+                                    ? `${subtitle} · Incumbent`
+                                    : 'Incumbent'
+                                  : subtitle || undefined
+                              }
+                              onClick={() =>
+                                onCandidateClick(
+                                  candidate.politician_id || candidate.candidate_id,
+                                  !!candidate.politician_id
+                                )
+                              }
+                              variant="horizontal"
+                            />
                           </div>
-                        </div>
-                      ))}
-                    </CategorySection>
-                  ))}
+                        ))}
+                      </div>
+                    );
+                  })}
                 </div>
               );
             })}
