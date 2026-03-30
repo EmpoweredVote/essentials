@@ -274,6 +274,22 @@ export async function fetchJudicialRecord(id) {
   }
 }
 
+export async function fetchElectionsByAddress(address) {
+  try {
+    const res = await publicFetch(
+      `/essentials/elections-by-address?address=${encodeURIComponent(address)}`
+    );
+    if (!res) return { elections: [], error: null };
+    if (res.status === 503) return { elections: [], error: 'geocoder_unavailable' };
+    if (!res.ok) return { elections: [], error: `${res.status}` };
+    const data = await res.json();
+    return { elections: Array.isArray(data.elections) ? data.elections : [], error: null };
+  } catch (err) {
+    console.error('fetchElectionsByAddress error:', err);
+    return { elections: [], error: err.message };
+  }
+}
+
 export async function searchPoliticiansByName(q, signal) {
   try {
     const res = await publicFetch(
