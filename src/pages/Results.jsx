@@ -1196,13 +1196,13 @@ export default function Results() {
               <ElectionsView
                 elections={electionsData}
                 loading={electionsLoading}
-                onCandidateClick={(id, isPolitician) => {
+                onCandidateClick={(id) => {
                   const scrollTop = isDesktop
                     ? mainRef.current?.scrollTop ?? 0
                     : window.scrollY;
                   sessionStorage.setItem('ev:scrollTop', String(scrollTop));
                   sessionStorage.setItem('ev:fromView', 'elections');
-                  navigate(isPolitician ? `/politician/${id}` : `/candidate/${id}`);
+                  navigate(`/candidate/${id}`);
                 }}
               />
             </div>

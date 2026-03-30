@@ -290,6 +290,22 @@ export async function fetchElectionsByAddress(address) {
   }
 }
 
+/**
+ * Fetch a single race candidate by race_candidates UUID.
+ * Returns candidate detail with politician_id linkage (nullable).
+ * Used by CandidateProfile.jsx to resolve candidate -> politician.
+ */
+export async function fetchRaceCandidate(id) {
+  try {
+    const res = await publicFetch(`/essentials/race-candidates/${id}`);
+    if (!res || !res.ok) return null;
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching race candidate:', error);
+    return null;
+  }
+}
+
 export async function searchPoliticiansByName(q, signal) {
   try {
     const res = await publicFetch(

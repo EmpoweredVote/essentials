@@ -186,7 +186,7 @@ export default function ElectionsView({
                           className={candidate.is_incumbent ? 'incumbent-card' : ''}
                         >
                           <PoliticianCard
-                            id={candidate.politician_id || candidate.candidate_id}
+                            id={candidate.candidate_id}
                             imageSrc={candidate.photo_url || undefined}
                             name={candidate.full_name}
                             title={pos.cleanedPosition}
@@ -194,10 +194,7 @@ export default function ElectionsView({
                               candidate.is_incumbent ? 'Incumbent' : undefined
                             }
                             onClick={() =>
-                              onCandidateClick(
-                                candidate.politician_id || candidate.candidate_id,
-                                !!candidate.politician_id
-                              )
+                              onCandidateClick(candidate.candidate_id)
                             }
                             variant="horizontal"
                           />
