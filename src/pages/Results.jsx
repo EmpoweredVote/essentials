@@ -299,8 +299,6 @@ export default function Results() {
     cachedResult?.filter || 'All'
   );
 
-  const [searchQuery, setSearchQuery] = useState('');
-
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
@@ -517,31 +515,6 @@ export default function Results() {
     };
   }, [byTier, selectedFilter]);
 
-  // Search filter
-  const searchFilteredPoliticians = useMemo(() => {
-    if (!searchQuery.trim()) return displayedPoliticians;
-
-    const query = searchQuery.toLowerCase();
-    const result = {};
-
-    Object.entries(displayedPoliticians).forEach(([tier, groups]) => {
-      result[tier] = {};
-      Object.entries(groups).forEach(([group, pols]) => {
-        const filtered = pols.filter(
-          (p) =>
-            p.first_name?.toLowerCase().includes(query) ||
-            p.last_name?.toLowerCase().includes(query) ||
-            p.office_title?.toLowerCase().includes(query)
-        );
-        if (filtered.length > 0) {
-          result[tier][group] = filtered;
-        }
-      });
-    });
-
-    return result;
-  }, [displayedPoliticians, searchQuery]);
-
   // Location label
   const locationLabel = useMemo(() => {
     if (!filteredPols.length) return null;
@@ -752,8 +725,6 @@ export default function Results() {
             onFilterChange={setSelectedFilter}
             locationLabel={locationLabel}
             buildingImageSrc={activeBuildingImage}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
             showCandidates={showCandidates}
             onShowCandidatesChange={setShowCandidates}
             candidatesLoading={candidatesLoading}
@@ -857,56 +828,30 @@ export default function Results() {
                   </button>
                 ))}
               </div>
-              {/* Name search + Candidates toggle row */}
-              <div className="flex items-center gap-3">
-                <div className="relative flex-1">
-                  <svg
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                  <input
-                    type="text"
-                    placeholder="Search representative"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg
-                               focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
-                    style={{ fontFamily: "'Manrope', sans-serif" }}
-                  />
-                </div>
-                <button
-                  onClick={() => setShowCandidates((v) => !v)}
-                  className={`flex items-center gap-1.5 px-3 py-1 text-sm rounded-full border-2 transition-all whitespace-nowrap font-medium ${
-                    showCandidates
-                      ? 'bg-amber-50 border-amber-400 text-amber-800'
-                      : 'bg-white border-gray-300 text-gray-600'
-                  }`}
-                  style={{ fontFamily: "'Manrope', sans-serif" }}
-                >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                  </svg>
-                  Candidates
-                  {candidatesLoading && (
-                    <span style={{ fontSize: '11px', color: '#a0aec0' }}>…</span>
-                  )}
-                  {showCandidates && candidateCount > 0 && !candidatesLoading && (
-                    <span className="bg-amber-400 text-amber-900 text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
-                      {candidateCount}
-                    </span>
-                  )}
-                </button>
-              </div>
+              {/* Candidates toggle */}
+              <button
+                onClick={() => setShowCandidates((v) => !v)}
+                className={`flex items-center gap-1.5 px-3 py-1 text-sm rounded-full border-2 transition-all whitespace-nowrap font-medium ${
+                  showCandidates
+                    ? 'bg-amber-50 border-amber-400 text-amber-800'
+                    : 'bg-white border-gray-300 text-gray-600'
+                }`}
+                style={{ fontFamily: "'Manrope', sans-serif" }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+                Candidates
+                {candidatesLoading && (
+                  <span style={{ fontSize: '11px', color: '#a0aec0' }}>…</span>
+                )}
+                {showCandidates && candidateCount > 0 && !candidatesLoading && (
+                  <span className="bg-amber-400 text-amber-900 text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
+                    {candidateCount}
+                  </span>
+                )}
+              </button>
             </div>
           )}
 
@@ -931,7 +876,7 @@ export default function Results() {
           {/* Results */}
           {phase !== 'loading' && (
               <div className="px-4 md:px-8 pt-6 pb-8">
-                {Object.entries(searchFilteredPoliticians).map(([tier, groups]) => {
+                {Object.entries(displayedPoliticians).map(([tier, groups]) => {
                   const hasGroups = Object.keys(groups).length > 0;
 
                   // Empty-state for Local/State: when no data but search is active

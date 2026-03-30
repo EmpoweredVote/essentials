@@ -1,3 +1,5 @@
+import { NavSearch } from './NavSearch/NavSearch';
+
 /**
  * LocalFilterSidebar — local replacement for ev-ui FilterSidebar on the Results page.
  * Avoids an ev-ui publish cycle. Desktop-only (hidden on mobile via CSS; Results.jsx
@@ -8,8 +10,6 @@ export default function LocalFilterSidebar({
   onFilterChange,
   locationLabel,
   buildingImageSrc,
-  searchQuery,
-  onSearchChange,
   showCandidates,
   onShowCandidatesChange,
   candidatesLoading,
@@ -25,19 +25,27 @@ export default function LocalFilterSidebar({
   return (
     <aside
       style={{
-        width: '300px',
+        width: '160px',
         flexShrink: 0,
         position: 'sticky',
         top: 0,
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        padding: '24px',
+        padding: '16px',
         backgroundColor: '#ffffff',
         borderRight: '1px solid #e2ebef',
         overflowY: 'auto',
       }}
     >
+      {/* Search Politicians */}
+      <div className="mb-1">
+        <p className="text-sm font-medium text-gray-500 mb-2">Search Politicians</p>
+        <NavSearch compact />
+      </div>
+
+      <hr className="border-gray-200 my-4" />
+
       {/* Filter radio buttons */}
       <div className="mb-1">
         <p className="text-sm font-medium text-gray-500 mb-2">Group</p>
@@ -64,36 +72,6 @@ export default function LocalFilterSidebar({
               </span>
             </label>
           ))}
-        </div>
-      </div>
-
-      <hr className="border-gray-200 my-4" />
-
-      {/* Name search input */}
-      <div className="mb-1">
-        <div className="relative">
-          <svg
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder="Search representative"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg
-                       focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
-            style={{ fontFamily: "'Manrope', sans-serif" }}
-          />
         </div>
       </div>
 
@@ -131,7 +109,7 @@ export default function LocalFilterSidebar({
                 fontWeight: showCandidates ? 600 : 400,
                 color: showCandidates ? '#92400e' : '#718096',
               }}>
-                Show Candidates
+                Candidates
               </span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -197,7 +175,6 @@ export default function LocalFilterSidebar({
             className="w-full rounded-lg object-cover flex-shrink"
             style={{ flexGrow: 1, minHeight: 0, aspectRatio: '1/2.25' }}
             onError={(e) => {
-              // Hide the image if it fails to load
               e.target.style.display = 'none';
             }}
           />

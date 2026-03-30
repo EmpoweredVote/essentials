@@ -13,7 +13,7 @@ import { NavSearchResult } from './NavSearchResult';
 export function NavSearchDropdown({ results, phase, query, selectedIndex, onSelect }) {
   if (phase === 'loading') {
     return (
-      <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
+      <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 min-w-[260px]">
         {[0, 1, 2, 3].map((i) => (
           <div key={i} className="px-4 py-2">
             <div className="h-4 w-3/4 bg-gray-200 rounded animate-pulse" />
@@ -26,7 +26,7 @@ export function NavSearchDropdown({ results, phase, query, selectedIndex, onSele
 
   if (phase === 'fresh' && results.length > 0) {
     return (
-      <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 max-h-[400px] overflow-y-auto">
+      <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 max-h-[400px] overflow-y-auto min-w-[260px]">
         {results.map((result, index) => (
           <NavSearchResult
             key={result.uuid}
@@ -42,7 +42,7 @@ export function NavSearchDropdown({ results, phase, query, selectedIndex, onSele
 
   if (phase === 'fresh' && results.length === 0) {
     return (
-      <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50">
+      <div className="absolute left-0 right-0 top-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50 min-w-[260px]">
         <div className="text-sm text-gray-500 px-4 py-3">
           No results on Empowered Vote.
         </div>
