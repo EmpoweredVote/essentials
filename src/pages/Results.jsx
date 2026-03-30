@@ -796,7 +796,7 @@ export default function Results() {
                     value={addressInput}
                     onChange={(e) => setAddressInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleAddressSearch()}
-                    placeholder="Enter your address or zip code"
+                    placeholder="Enter your full street address"
                     className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
                   />
@@ -908,7 +908,9 @@ export default function Results() {
           {/* Error message */}
           {error && (
             <div className="mx-8 mt-4 mb-4 text-center text-red-600 bg-red-50 border border-red-200 rounded p-4">
-              {error}
+              {error === 'address_not_found'
+                ? 'We couldn\'t find that address. Please enter a full street address (e.g. "123 Main St, Los Angeles, CA").'
+                : error}
             </div>
           )}
 
