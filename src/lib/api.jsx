@@ -79,7 +79,7 @@ export async function searchPoliticians(query) {
   try {
     const res = await apiFetch(`/essentials/candidates/search`, {
       method: "POST",
-      body: JSON.stringify({ address: query }),
+      body: JSON.stringify({ query }),
     });
 
     if (!res) return { status: "error", data: [], error: "Unauthorized", formattedAddress: "" };
