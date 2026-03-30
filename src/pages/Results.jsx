@@ -16,9 +16,10 @@ import {
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchCandidates, saveMyLocation } from '../lib/api';
+import { fetchCandidates, fetchElectionsByAddress, saveMyLocation } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 import LocationBrowser from '../components/LocationBrowser';
+import ElectionsView from '../components/ElectionsView';
 
 /** Sort a polList using all sort options for its category, chained as tie-breakers */
 function defaultSort(category, polList) {
@@ -230,6 +231,7 @@ export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const queryFromUrl = searchParams.get('q') || '';
+  const activeView = searchParams.get('view') || 'representatives';
 
   // Search mode: 'address' or 'browse'
   const [searchMode, setSearchMode] = useState('address');
@@ -308,6 +310,10 @@ export default function Results() {
   const [showCandidates, setShowCandidates] = useState(false);
   const [candidateData, setCandidateData] = useState([]);
   const [candidatesLoading, setCandidatesLoading] = useState(false);
+
+  // Elections tab data
+  const [electionsData, setElectionsData] = useState(null);
+  const [electionsLoading, setElectionsLoading] = useState(false);
 
   // Compass integration — context provides politician IDs with stances + user data
   const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
@@ -390,12 +396,51 @@ export default function Results() {
     return () => { cancelled = true; };
   }, [showCandidates, activeQuery]);
 
+  // Lazy-fetch elections when Elections tab is active
+  useEffect(() => {
+    if (activeView !== 'elections' || !activeQuery) return;
+    if (electionsData !== null) return; // already loaded for this query
+
+    let cancelled = false;
+    setElectionsLoading(true);
+
+    fetchElectionsByAddress(decodeURIComponent(activeQuery)).then((data) => {
+      if (!cancelled) {
+        setElectionsData(data.elections || []);
+        setElectionsLoading(false);
+      }
+    });
+
+    return () => { cancelled = true; };
+  }, [activeView, activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reset elections data when address changes
+  useEffect(() => {
+    setElectionsData(null);
+  }, [activeQuery]);
+
+  const switchView = (view) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      if (view === 'representatives') {
+        next.delete('view');
+      } else {
+        next.set('view', view);
+      }
+      return next;
+    });
+  };
+
   const handleAddressSearch = () => {
     if (!addressInput.trim()) return;
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
     setSearchKey(k => k + 1);
-    setSearchParams({ q: addressInput.trim() });
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('q', addressInput.trim());
+      return next;
+    });
   };
 
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
@@ -823,6 +868,37 @@ export default function Results() {
             )}
           </div>
 
+          {/* Tab toggle — Representatives / Elections */}
+          {activeQuery && (
+            <div className="flex border-b border-[#E2EBEF] px-4 sm:px-8">
+              <button
+                className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
+                  activeView === 'representatives'
+                    ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
+                    : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                }`}
+                onClick={() => switchView('representatives')}
+              >
+                Representatives
+              </button>
+              <button
+                className={`px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
+                  activeView === 'elections'
+                    ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
+                    : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                }`}
+                onClick={() => switchView('elections')}
+              >
+                Elections
+                {electionsData && electionsData.length > 0 && (
+                  <span className="w-2 h-2 rounded-full bg-[#00657C] ml-1" />
+                )}
+              </button>
+            </div>
+          )}
+
+          {activeView === 'representatives' ? (
+          <>
           {/* Area label — shown when we have a backend-validated formatted address */}
           {formattedAddress && phase === 'fresh' && list.length > 0 && (
             <div className="px-4 sm:px-8 pb-2">
@@ -1043,6 +1119,23 @@ export default function Results() {
                 )}
               </div>
             )}
+          </>
+          ) : (
+            <div className="px-4 md:px-8 pt-6 pb-8">
+              <ElectionsView
+                elections={electionsData}
+                loading={electionsLoading}
+                buildingImageMap={buildingImageMap}
+                onCandidateClick={(id) => {
+                  const scrollTop = isDesktop
+                    ? mainRef.current?.scrollTop ?? 0
+                    : window.scrollY;
+                  sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+                  navigate(`/candidate/${id}`);
+                }}
+              />
+            </div>
+          )}
         </main>
       </div>
 
