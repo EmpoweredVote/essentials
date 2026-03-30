@@ -68,12 +68,14 @@ export default function CandidateProfile() {
           <PoliticianProfile
             politician={pol}
             onBack={() => {
+              const fromView = sessionStorage.getItem('ev:fromView') || 'representatives';
+              const viewParam = fromView === 'elections' ? '&view=elections' : '';
               try {
                 const cached = sessionStorage.getItem('ev:results');
                 if (cached) {
                   const { query } = JSON.parse(cached);
                   if (query) {
-                    navigate(`/results?q=${encodeURIComponent(query)}`);
+                    navigate(`/results?q=${encodeURIComponent(query)}${viewParam}`);
                     return;
                   }
                 }
@@ -81,9 +83,9 @@ export default function CandidateProfile() {
               navigate('/');
             }}
             backLabel={
-              pol.first_name
-                ? `${pol.first_name} ${pol.last_name}`
-                : undefined
+              (sessionStorage.getItem('ev:fromView') === 'elections')
+                ? 'Elections'
+                : 'Representatives'
             }
             banner={(() => {
               const ballotStatus = getSeatBallotStatus(pol.term_end, pol.term_date_precision);

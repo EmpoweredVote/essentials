@@ -631,6 +631,7 @@ export default function Results() {
       ? mainRef.current?.scrollTop ?? 0
       : window.scrollY;
     sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+    sessionStorage.setItem('ev:fromView', 'representatives');
     navigate(`/politician/${id}`);
   };
 
@@ -1130,6 +1131,7 @@ export default function Results() {
                     ? mainRef.current?.scrollTop ?? 0
                     : window.scrollY;
                   sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+                  sessionStorage.setItem('ev:fromView', 'elections');
                   navigate(isPolitician ? `/politician/${id}` : `/candidate/${id}`);
                 }}
               />
