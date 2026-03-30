@@ -310,7 +310,7 @@ export default function Results() {
   const [candidatesLoading, setCandidatesLoading] = useState(false);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, refreshMyRepresentatives, compassLoading } = useCompass();
+  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, updateMyRepresentatives, compassLoading } = useCompass();
 
   // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
   const isPrefilled = searchParams.get('prefilled') === 'true';
@@ -327,17 +327,19 @@ export default function Results() {
     }
   }, [isPrefilled, compassLoading, myRepresentatives, myRepresentativesAddress, userJurisdiction]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Auto-save location for Connected users: fires once per address on a successful search,
-  // then refreshes the context's representative list so the prefilled view stays current.
+  // Auto-save location for Connected users: fires once per address on a successful search.
+  // Updates the context with the precise search results so the prefilled view stays current —
+  // /representatives/me returns a city-level geocode that misses district-specific officials.
   const savedAddressRef = useRef(null);
   useEffect(() => {
-    if (!isLoggedIn || !formattedAddress || phase !== 'fresh') return;
+    if (!isLoggedIn || !formattedAddress || phase !== 'fresh' || searchMode === 'browse') return;
     if (savedAddressRef.current === formattedAddress) return; // already saved this address
     savedAddressRef.current = formattedAddress;
-    saveMyLocation(activeQuery)
-      .then((res) => { if (res) refreshMyRepresentatives(); })
-      .catch(() => {});
-  }, [isLoggedIn, formattedAddress, phase, activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+    saveMyLocation(activeQuery).catch(() => {});
+    if (hookData && hookData.length > 0) {
+      updateMyRepresentatives(hookData, formattedAddress);
+    }
+  }, [isLoggedIn, formattedAddress, phase, activeQuery, searchMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Active compass preview state: { id, name, anchorEl } or null
   const [previewPol, setPreviewPol] = useState(null);

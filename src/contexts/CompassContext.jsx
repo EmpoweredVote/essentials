@@ -183,11 +183,12 @@ export function CompassProvider({ children }) {
     };
   }, []);
 
-  const refreshMyRepresentatives = async () => {
-    const result = await fetchMyRepresentatives();
-    if (!result.error && result.data.length > 0) {
-      setMyRepresentatives(result.data);
-      setMyRepresentativesAddress(result.formattedAddress || null);
+  // Called by Results.jsx after a successful address search so the prefilled view
+  // reflects the precise search results rather than the city-level /representatives/me data.
+  const updateMyRepresentatives = (data, address) => {
+    if (Array.isArray(data) && data.length > 0) {
+      setMyRepresentatives(data);
+      if (address) setMyRepresentativesAddress(address);
     }
   };
 
@@ -228,7 +229,7 @@ export function CompassProvider({ children }) {
       compassLoading,
       myRepresentatives,
       myRepresentativesAddress,
-      refreshMyRepresentatives,
+      updateMyRepresentatives,
       logout,
     }),
     [
