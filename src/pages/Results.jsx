@@ -452,9 +452,9 @@ export default function Results() {
 
   // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
   function resolveIsAppointed(pol) {
-    if (pol.is_appointed !== undefined && pol.is_appointed !== null) {
-      return pol.is_appointed;
-    }
+    // politician.is_appointed=true is an individual override (e.g. interim appointment)
+    if (pol.is_appointed === true) return true;
+    // Otherwise fall back to office-level: is_elected derives from !is_appointed_position
     return !pol.is_elected;
   }
 
@@ -1066,6 +1066,9 @@ export default function Results() {
                   // Empty-state for Local/State: when no data but search is active
                   if (!hasGroups && (tier === 'Local' || tier === 'State') && activeQuery) {
                     const isFirst = tier === 'Local';
+                    const emptyMessage = appointedFilter !== 'All'
+                      ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
+                      : `${tier} representative data is not yet available for this area.`;
                     return (
                       <div key={tier} data-tier={tier}>
                         {selectedFilter === 'All' && (
@@ -1075,7 +1078,7 @@ export default function Results() {
                           </div>
                         )}
                         <p className="mt-4 text-gray-500">
-                          {tier} representative data is not yet available for this area.
+                          {emptyMessage}
                         </p>
                       </div>
                     );
