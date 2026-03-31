@@ -30,11 +30,32 @@ function formatDate(dateStr) {
   });
 }
 
-/** Strip leading zeros from district numbers.
- *  "State Representative, District 060" → "State Representative, District 60" */
-function cleanPositionName(name) {
+/** Word-number mapping for ordinal district names */
+const WORD_TO_NUM = {
+  first: 1, second: 2, third: 3, fourth: 4, fifth: 5,
+  sixth: 6, seventh: 7, eighth: 8, ninth: 9, tenth: 10,
+  eleventh: 11, twelfth: 12, thirteenth: 13, fourteenth: 14, fifteenth: 15,
+  sixteenth: 16, seventeenth: 17, eighteenth: 18, nineteenth: 19, twentieth: 20,
+};
+
+/** Normalize position names for consistent display.
+ *  - Strips leading zeros: "District 060" → "District 60"
+ *  - Abbreviates federal titles: "United States Representative" → "US Representative"
+ *  - Converts ordinal words: "Ninth District" → "District 9"  */
+export function cleanPositionName(name) {
   if (!name) return name;
-  return name.replace(/District\s+0+(\d+)/gi, 'District $1');
+  let cleaned = name;
+  // Strip leading zeros from district numbers
+  cleaned = cleaned.replace(/District\s+0+(\d+)/gi, 'District $1');
+  // Abbreviate federal titles
+  cleaned = cleaned.replace(/United States Representative/gi, 'US Representative');
+  cleaned = cleaned.replace(/United States Senator/gi, 'US Senator');
+  // Convert "Ninth District" → "District 9" (word-form ordinals)
+  cleaned = cleaned.replace(
+    /,?\s+(First|Second|Third|Fourth|Fifth|Sixth|Seventh|Eighth|Ninth|Tenth|Eleventh|Twelfth|Thirteenth|Fourteenth|Fifteenth|Sixteenth|Seventeenth|Eighteenth|Nineteenth|Twentieth)\s+District/gi,
+    (_, word) => `, District ${WORD_TO_NUM[word.toLowerCase()]}`
+  );
+  return cleaned;
 }
 
 /** Map district_type to tier name */

@@ -4,6 +4,7 @@ import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord, fetchRac
 import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
+import { cleanPositionName } from '../components/ElectionsView';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
@@ -129,7 +130,7 @@ export default function CandidateProfile() {
       }}
     >
       <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
-        Candidate for {candidateData.position_name}
+        Candidate for {cleanPositionName(candidateData.position_name)}
       </p>
       {candidateData.election_date && (
         <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
