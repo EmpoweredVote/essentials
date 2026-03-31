@@ -42,7 +42,7 @@ export default function Landing() {
                 value={addressInput}
                 onChange={(e) => setAddressInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                placeholder="Enter your address or zip code"
+                placeholder="Enter your full street address"
                 className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
               />
               <button

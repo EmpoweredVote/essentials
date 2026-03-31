@@ -308,7 +308,6 @@ export default function Results() {
   );
 
   const [searchQuery, setSearchQuery] = useState('');
-
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
@@ -334,14 +333,14 @@ export default function Results() {
     }
   }, [isPrefilled, compassLoading, myRepresentatives, myRepresentativesAddress, userJurisdiction]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Auto-save location for Connected users: fires once per address on a successful search
+  // Auto-save location for Connected users: fires once per address on a successful search.
   const savedAddressRef = useRef(null);
   useEffect(() => {
-    if (!isLoggedIn || !formattedAddress || phase !== 'fresh') return;
+    if (!isLoggedIn || !formattedAddress || phase !== 'fresh' || searchMode === 'browse') return;
     if (savedAddressRef.current === formattedAddress) return; // already saved this address
     savedAddressRef.current = formattedAddress;
-    saveMyLocation(activeQuery).catch(() => {}); // fire-and-forget
-  }, [isLoggedIn, formattedAddress, phase, activeQuery]);
+    saveMyLocation(activeQuery).catch(() => {});
+  }, [isLoggedIn, formattedAddress, phase, activeQuery, searchMode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Active compass preview state: { id, name, anchorEl } or null
   const [previewPol, setPreviewPol] = useState(null);
@@ -539,31 +538,6 @@ export default function Results() {
       [selectedFilter]: appointedFilteredByTier[selectedFilter] || {},
     };
   }, [appointedFilteredByTier, selectedFilter]);
-
-  // Search filter
-  const searchFilteredPoliticians = useMemo(() => {
-    if (!searchQuery.trim()) return displayedPoliticians;
-
-    const query = searchQuery.toLowerCase();
-    const result = {};
-
-    Object.entries(displayedPoliticians).forEach(([tier, groups]) => {
-      result[tier] = {};
-      Object.entries(groups).forEach(([group, pols]) => {
-        const filtered = pols.filter(
-          (p) =>
-            p.first_name?.toLowerCase().includes(query) ||
-            p.last_name?.toLowerCase().includes(query) ||
-            p.office_title?.toLowerCase().includes(query)
-        );
-        if (filtered.length > 0) {
-          result[tier][group] = filtered;
-        }
-      });
-    });
-
-    return result;
-  }, [displayedPoliticians, searchQuery]);
 
   // Location label
   const locationLabel = useMemo(() => {
@@ -798,7 +772,7 @@ export default function Results() {
                     value={addressInput}
                     onChange={(e) => setAddressInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleAddressSearch()}
-                    placeholder="Enter your address or zip code"
+                    placeholder="Enter your full street address"
                     className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
                   />
@@ -931,7 +905,9 @@ export default function Results() {
           {/* Error message */}
           {error && (
             <div className="mx-8 mt-4 mb-4 text-center text-red-600 bg-red-50 border border-red-200 rounded p-4">
-              {error}
+              {error === 'address_not_found'
+                ? 'We couldn\'t find that address. Please enter a full street address (e.g. "123 Main St, Los Angeles, CA").'
+                : error}
             </div>
           )}
 
@@ -947,7 +923,7 @@ export default function Results() {
           {/* Results */}
           {phase !== 'loading' && (
               <div className="px-4 md:px-8 pt-6 pb-8">
-                {Object.entries(searchFilteredPoliticians).map(([tier, groups]) => {
+                {Object.entries(displayedPoliticians).map(([tier, groups]) => {
                   const hasGroups = Object.keys(groups).length > 0;
 
                   // Empty-state for Local/State: when no data but search is active

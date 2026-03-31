@@ -133,7 +133,6 @@ export default function LocalFilterSidebar({
             className="w-full rounded-lg object-cover flex-shrink"
             style={{ flexGrow: 1, minHeight: 0, aspectRatio: '1/2.25' }}
             onError={(e) => {
-              // Hide the image if it fails to load
               e.target.style.display = 'none';
             }}
           />

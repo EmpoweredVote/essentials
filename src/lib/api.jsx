@@ -90,9 +90,18 @@ export async function searchPoliticians(query) {
       res.headers.get("X-Formatted-Address") || res.headers.get("x-formatted-address") || "";
 
     if (!res.ok) {
-      const text = await res.text();
-      console.error(`Search API error: ${res.status}`, text);
-      return { status: "error", data: [], error: `${res.status} ${res.statusText}`, formattedAddress: "" };
+      // Parse JSON error body if available (accounts-api returns { code, message })
+      let errorMessage = `${res.status} ${res.statusText}`;
+      try {
+        const errJson = await res.json();
+        if (errJson.code === "ADDRESS_NOT_FOUND") {
+          errorMessage = "address_not_found";
+        } else if (errJson.message) {
+          errorMessage = errJson.message;
+        }
+      } catch { /* fall through to generic message */ }
+      console.error(`Search API error: ${res.status}`, errorMessage);
+      return { status: "error", data: [], error: errorMessage, formattedAddress: "" };
     }
 
     const data = await res.json();
@@ -180,8 +189,8 @@ export async function fetchCandidates(zipOrQuery) {
       return res.json();
     }
 
-    // Address: use election-search endpoint (includeChallengers so non-incumbents appear)
-    const res = await apiFetch(`/essentials/candidates/election-search`, {
+    // Address: use search endpoint with includeChallengers so non-incumbents appear
+    const res = await apiFetch(`/essentials/candidates/search`, {
       method: "POST",
       body: JSON.stringify({ query: zipOrQuery, includeChallengers: true }),
     });
