@@ -17,7 +17,7 @@ import {
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchCandidates, fetchElectionsByAddress, saveMyLocation } from '../lib/api';
+import { fetchElectionsByAddress, saveMyLocation } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
@@ -312,11 +312,6 @@ export default function Results() {
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
-  // Candidate toggle state
-  const [showCandidates, setShowCandidates] = useState(false);
-  const [candidateData, setCandidateData] = useState([]);
-  const [candidatesLoading, setCandidatesLoading] = useState(false);
-
   // Elections tab data
   const [electionsData, setElectionsData] = useState(null);
   const [electionsLoading, setElectionsLoading] = useState(false);
@@ -382,26 +377,6 @@ export default function Results() {
       }
     });
   }, [cachedResult, isDesktop]);
-
-  // Fetch candidates only when toggle is on
-  useEffect(() => {
-    if (!showCandidates || !activeQuery) {
-      setCandidateData([]);
-      return;
-    }
-
-    let cancelled = false;
-    setCandidatesLoading(true);
-
-    fetchCandidates(activeQuery).then((data) => {
-      if (!cancelled) {
-        setCandidateData(data || []);
-        setCandidatesLoading(false);
-      }
-    });
-
-    return () => { cancelled = true; };
-  }, [showCandidates, activeQuery]);
 
   // Lazy-fetch elections when Elections tab is active
   useEffect(() => {
@@ -521,26 +496,6 @@ export default function Results() {
     [federalFiltered]
   );
 
-  // Classify candidates (only when toggle is on)
-  const classifiedCandidates = useMemo(() => {
-    if (!showCandidates || candidateData.length === 0) return [];
-    return candidateData.map((c) => ({
-      pol: { ...c },
-      cat: classifyCategory(c),
-    }));
-  }, [showCandidates, candidateData]);
-
-  // Map seatKey → [candidates] so renderSeatGroup can look up challengers per incumbent
-  const candidateBySeat = useMemo(() => {
-    const map = new Map();
-    for (const c of candidateData) {
-      const key = seatKey(c);
-      if (!map.has(key)) map.set(key, []);
-      map.get(key).push(c);
-    }
-    return map;
-  }, [candidateData]);
-
   const byTier = useMemo(() => {
     const map = { Local: {}, State: {}, Federal: {}, Unknown: {} };
     const seen = new Set();
@@ -558,22 +513,8 @@ export default function Results() {
       incumbentSeats.add(seatKey(pol));
     }
 
-    // Only add orphaned challengers: open seats where no incumbent appears in the
-    // main results. Challengers whose seat has a known incumbent are rendered inline
-    // by renderSeatGroup so we skip them here to avoid duplication.
-    for (const { pol, cat } of classifiedCandidates) {
-      if (pol.is_incumbent) continue; // already in map as a sitting rep
-      if (incumbentSeats.has(seatKey(pol))) continue; // rendered inline via renderSeatGroup
-      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}-${pol.is_vacant || false}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      const tier = map[cat.tier] ? cat.tier : 'Unknown';
-      if (!map[tier][cat.group]) map[tier][cat.group] = [];
-      map[tier][cat.group].push(pol);
-    }
-
     return map;
-  }, [classified, classifiedCandidates]);
+  }, [classified]);
 
   // Elected/Appointed filter — applied within tier/group buckets (per D-01)
   const appointedFilteredByTier = useMemo(() => {
@@ -786,38 +727,13 @@ export default function Results() {
     );
   };
 
-  /**
-   * Renders a seat group: the incumbent card plus any challengers immediately
-   * after it (animated in). If the incumbent is not running for re-election
-   * (no challenger carries is_incumbent: true), the incumbent is hidden and
-   * only challengers are shown.
-   */
   const renderSeatGroup = (pol) => {
-    const sk = seatKey(pol);
-    const seatCandidates = showCandidates ? (candidateBySeat.get(sk) || []) : [];
-    const challengers = seatCandidates.filter((c) => !c.is_incumbent);
-    // incumbentRunning: true when no challengers (uncontested) or when the
-    // candidates list includes this same person as is_incumbent: true.
-    const incumbentRunning =
-      challengers.length === 0 || seatCandidates.some((c) => c.is_incumbent);
-
     return (
-      <Fragment key={pol.id ?? `seat-${sk}`}>
-        {incumbentRunning && renderPoliticianCard(pol)}
-        {challengers.map((c, i) => (
-          <div
-            key={c.id}
-            className="ev-candidate-enter"
-            style={{ '--delay': `${i * 60}ms` }}
-          >
-            {renderPoliticianCard(c)}
-          </div>
-        ))}
+      <Fragment key={pol.id ?? `seat-${seatKey(pol)}`}>
+        {renderPoliticianCard(pol)}
       </Fragment>
     );
   };
-
-  const candidateCount = candidateData.length;
 
   return (
     <Layout>
@@ -839,10 +755,6 @@ export default function Results() {
             buildingImageSrc={activeBuildingImage}
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
-            showCandidates={showCandidates}
-            onShowCandidatesChange={setShowCandidates}
-            candidatesLoading={candidatesLoading}
-            candidateCount={candidateCount}
           />
         )}
 
@@ -988,55 +900,30 @@ export default function Results() {
                 />
               </div>
 
-              {/* Name search + Candidates toggle row */}
-              <div className="flex items-center gap-3">
-                <div className="relative flex-1">
-                  <svg
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                  <input
-                    type="text"
-                    placeholder="Search representative"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg
-                               focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
-                    style={{ fontFamily: "'Manrope', sans-serif" }}
-                  />
-                </div>
-                <button
-                  onClick={() => setShowCandidates((v) => !v)}
-                  className={`flex items-center gap-1.5 px-3 py-1 text-sm rounded-full border-2 transition-all whitespace-nowrap font-medium ${
-                    showCandidates
-                      ? 'bg-amber-50 border-amber-400 text-amber-800'
-                      : 'bg-white border-gray-300 text-gray-600'
-                  }`}
-                  style={{ fontFamily: "'Manrope', sans-serif" }}
+              {/* Name search */}
+              <div className="relative">
+                <svg
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                  </svg>
-                  Candidates
-                  {candidatesLoading && (
-                    <span style={{ fontSize: '11px', color: '#a0aec0' }}>…</span>
-                  )}
-                  {showCandidates && candidateCount > 0 && !candidatesLoading && (
-                    <span className="bg-amber-400 text-amber-900 text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
-                      {candidateCount}
-                    </span>
-                  )}
-                </button>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  type="text"
+                  placeholder="Search representative"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg
+                             focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
+                  style={{ fontFamily: "'Manrope', sans-serif" }}
+                />
               </div>
             </div>
           )}
