@@ -4,6 +4,7 @@ import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
+import SegmentedControl from '../components/SegmentedControl';
 import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
@@ -16,9 +17,10 @@ import {
 } from '../lib/classify';
 import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchCandidates, saveMyLocation } from '../lib/api';
+import { fetchElectionsByAddress, saveMyLocation } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 import LocationBrowser from '../components/LocationBrowser';
+import ElectionsView from '../components/ElectionsView';
 
 /** Sort a polList using all sort options for its category, chained as tie-breakers */
 function defaultSort(category, polList) {
@@ -230,6 +232,7 @@ export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const queryFromUrl = searchParams.get('q') || '';
+  const activeView = searchParams.get('view') || 'representatives';
 
   // Search mode: 'address' or 'browse'
   const [searchMode, setSearchMode] = useState('address');
@@ -299,13 +302,18 @@ export default function Results() {
     cachedResult?.filter || 'All'
   );
 
+  // Initialize appointedFilter from cache if available (defaults to 'All' per FILT-03)
+  const [appointedFilter, setAppointedFilter] = useState(
+    cachedResult?.appointedFilter || 'All'
+  );
+
+  const [searchQuery, setSearchQuery] = useState('');
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
-  // Candidate toggle state
-  const [showCandidates, setShowCandidates] = useState(false);
-  const [candidateData, setCandidateData] = useState([]);
-  const [candidatesLoading, setCandidatesLoading] = useState(false);
+  // Elections tab data
+  const [electionsData, setElectionsData] = useState(null);
+  const [electionsLoading, setElectionsLoading] = useState(false);
 
   // Compass integration — context provides politician IDs with stances + user data
   const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
@@ -345,11 +353,12 @@ export default function Results() {
           query: queryFromUrl,
           list,
           filter: selectedFilter,
+          appointedFilter: appointedFilter,
           timestamp: Date.now(),
         }));
       }
     }
-  }, [list, phase, selectedFilter, queryFromUrl]);
+  }, [list, phase, selectedFilter, appointedFilter, queryFromUrl]);
 
   // Restore scroll position when returning from a profile page
   useEffect(() => {
@@ -368,33 +377,73 @@ export default function Results() {
     });
   }, [cachedResult, isDesktop]);
 
-  // Fetch candidates only when toggle is on
+  // Lazy-fetch elections when Elections tab is active
   useEffect(() => {
-    if (!showCandidates || !activeQuery) {
-      setCandidateData([]);
-      return;
-    }
+    if (activeView !== 'elections' || !activeQuery) return;
+    if (electionsData !== null) return; // already loaded for this query
 
     let cancelled = false;
-    setCandidatesLoading(true);
+    setElectionsLoading(true);
 
-    fetchCandidates(activeQuery).then((data) => {
+    fetchElectionsByAddress(decodeURIComponent(activeQuery)).then((data) => {
       if (!cancelled) {
-        setCandidateData(data || []);
-        setCandidatesLoading(false);
+        setElectionsData(data.elections || []);
+        setElectionsLoading(false);
       }
     });
 
     return () => { cancelled = true; };
-  }, [showCandidates, activeQuery]);
+  }, [activeView, activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reset elections data when address changes
+  useEffect(() => {
+    setElectionsData(null);
+  }, [activeQuery]);
+
+  const switchView = (view) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      if (view === 'representatives') {
+        next.delete('view');
+      } else {
+        next.set('view', view);
+      }
+      return next;
+    });
+  };
 
   const handleAddressSearch = () => {
     if (!addressInput.trim()) return;
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
     setSearchKey(k => k + 1);
-    setSearchParams({ q: addressInput.trim() });
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('q', addressInput.trim());
+      return next;
+    });
   };
+
+  // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
+  function resolveIsAppointed(pol) {
+    // politician.is_appointed=true is an individual override (e.g. interim appointment)
+    if (pol.is_appointed === true) return true;
+    // Otherwise fall back to office-level: is_elected derives from !is_appointed_position
+    return !pol.is_elected;
+  }
+
+  // Filter logic per CONTEXT D-06
+  function matchesAppointedFilter(pol, filter) {
+    if (filter === 'All') return true;
+    const resolved = resolveIsAppointed(pol);
+    if (filter === 'Elected') {
+      return !resolved || pol.faces_retention_vote === true;
+    }
+    if (filter === 'Appointed') {
+      return resolved === true;
+    }
+    return true;
+  }
 
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
   const filteredPols = useMemo(() => list, [list]);
@@ -446,26 +495,6 @@ export default function Results() {
     [federalFiltered]
   );
 
-  // Classify candidates (only when toggle is on)
-  const classifiedCandidates = useMemo(() => {
-    if (!showCandidates || candidateData.length === 0) return [];
-    return candidateData.map((c) => ({
-      pol: { ...c },
-      cat: classifyCategory(c),
-    }));
-  }, [showCandidates, candidateData]);
-
-  // Map seatKey → [candidates] so renderSeatGroup can look up challengers per incumbent
-  const candidateBySeat = useMemo(() => {
-    const map = new Map();
-    for (const c of candidateData) {
-      const key = seatKey(c);
-      if (!map.has(key)) map.set(key, []);
-      map.get(key).push(c);
-    }
-    return map;
-  }, [candidateData]);
-
   const byTier = useMemo(() => {
     const map = { Local: {}, State: {}, Federal: {}, Unknown: {} };
     const seen = new Set();
@@ -483,32 +512,32 @@ export default function Results() {
       incumbentSeats.add(seatKey(pol));
     }
 
-    // Only add orphaned challengers: open seats where no incumbent appears in the
-    // main results. Challengers whose seat has a known incumbent are rendered inline
-    // by renderSeatGroup so we skip them here to avoid duplication.
-    for (const { pol, cat } of classifiedCandidates) {
-      if (pol.is_incumbent) continue; // already in map as a sitting rep
-      if (incumbentSeats.has(seatKey(pol))) continue; // rendered inline via renderSeatGroup
-      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}-${pol.is_vacant || false}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      const tier = map[cat.tier] ? cat.tier : 'Unknown';
-      if (!map[tier][cat.group]) map[tier][cat.group] = [];
-      map[tier][cat.group].push(pol);
-    }
-
     return map;
-  }, [classified, classifiedCandidates]);
+  }, [classified]);
+
+  // Elected/Appointed filter — applied within tier/group buckets (per D-01)
+  const appointedFilteredByTier = useMemo(() => {
+    if (appointedFilter === 'All') return byTier;
+    const result = {};
+    for (const [tier, groups] of Object.entries(byTier)) {
+      result[tier] = {};
+      for (const [group, pols] of Object.entries(groups)) {
+        const filtered = pols.filter(pol => matchesAppointedFilter(pol, appointedFilter));
+        if (filtered.length > 0) result[tier][group] = filtered;
+      }
+    }
+    return result;
+  }, [byTier, appointedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Filter by selected level
   const displayedPoliticians = useMemo(() => {
     if (selectedFilter === 'All') {
-      return byTier;
+      return appointedFilteredByTier;
     }
     return {
-      [selectedFilter]: byTier[selectedFilter] || {},
+      [selectedFilter]: appointedFilteredByTier[selectedFilter] || {},
     };
-  }, [byTier, selectedFilter]);
+  }, [appointedFilteredByTier, selectedFilter]);
 
   // Location label
   const locationLabel = useMemo(() => {
@@ -559,6 +588,7 @@ export default function Results() {
       ? mainRef.current?.scrollTop ?? 0
       : window.scrollY;
     sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+    sessionStorage.setItem('ev:fromView', 'representatives');
     navigate(`/politician/${id}`);
   };
 
@@ -671,38 +701,13 @@ export default function Results() {
     );
   };
 
-  /**
-   * Renders a seat group: the incumbent card plus any challengers immediately
-   * after it (animated in). If the incumbent is not running for re-election
-   * (no challenger carries is_incumbent: true), the incumbent is hidden and
-   * only challengers are shown.
-   */
   const renderSeatGroup = (pol) => {
-    const sk = seatKey(pol);
-    const seatCandidates = showCandidates ? (candidateBySeat.get(sk) || []) : [];
-    const challengers = seatCandidates.filter((c) => !c.is_incumbent);
-    // incumbentRunning: true when no challengers (uncontested) or when the
-    // candidates list includes this same person as is_incumbent: true.
-    const incumbentRunning =
-      challengers.length === 0 || seatCandidates.some((c) => c.is_incumbent);
-
     return (
-      <Fragment key={pol.id ?? `seat-${sk}`}>
-        {incumbentRunning && renderPoliticianCard(pol)}
-        {challengers.map((c, i) => (
-          <div
-            key={c.id}
-            className="ev-candidate-enter"
-            style={{ '--delay': `${i * 60}ms` }}
-          >
-            {renderPoliticianCard(c)}
-          </div>
-        ))}
+      <Fragment key={pol.id ?? `seat-${seatKey(pol)}`}>
+        {renderPoliticianCard(pol)}
       </Fragment>
     );
   };
-
-  const candidateCount = candidateData.length;
 
   return (
     <Layout>
@@ -718,12 +723,12 @@ export default function Results() {
           <LocalFilterSidebar
             selectedFilter={selectedFilter}
             onFilterChange={setSelectedFilter}
+            appointedFilter={appointedFilter}
+            onAppointedFilterChange={setAppointedFilter}
             locationLabel={locationLabel}
             buildingImageSrc={activeBuildingImage}
-            showCandidates={showCandidates}
-            onShowCandidatesChange={setShowCandidates}
-            candidatesLoading={candidatesLoading}
-            candidateCount={candidateCount}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
           />
         )}
 
@@ -794,6 +799,37 @@ export default function Results() {
             )}
           </div>
 
+          {/* Tab toggle — Representatives / Elections */}
+          {activeQuery && (
+            <div className="flex border-b border-[#E2EBEF] px-4 sm:px-8">
+              <button
+                className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
+                  activeView === 'representatives'
+                    ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
+                    : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                }`}
+                onClick={() => switchView('representatives')}
+              >
+                Representatives
+              </button>
+              <button
+                className={`px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
+                  activeView === 'elections'
+                    ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
+                    : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                }`}
+                onClick={() => switchView('elections')}
+              >
+                Elections
+                {electionsData && electionsData.length > 0 && (
+                  <span className="w-2 h-2 rounded-full bg-[#FED12E] ml-1" />
+                )}
+              </button>
+            </div>
+          )}
+
+          {activeView === 'representatives' ? (
+          <>
           {/* Area label — shown when we have a backend-validated formatted address */}
           {formattedAddress && phase === 'fresh' && list.length > 0 && (
             <div className="px-4 sm:px-8 pb-2">
@@ -823,30 +859,46 @@ export default function Results() {
                   </button>
                 ))}
               </div>
-              {/* Candidates toggle */}
-              <button
-                onClick={() => setShowCandidates((v) => !v)}
-                className={`flex items-center gap-1.5 px-3 py-1 text-sm rounded-full border-2 transition-all whitespace-nowrap font-medium ${
-                  showCandidates
-                    ? 'bg-amber-50 border-amber-400 text-amber-800'
-                    : 'bg-white border-gray-300 text-gray-600'
-                }`}
-                style={{ fontFamily: "'Manrope', sans-serif" }}
-              >
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              {/* Type filter — elected/appointed (per D-02) */}
+              <div style={{ marginTop: '8px', marginBottom: '8px' }}>
+                <SegmentedControl
+                  options={[
+                    { value: 'All', label: 'All' },
+                    { value: 'Elected', label: 'Elected' },
+                    { value: 'Appointed', label: 'Appointed' },
+                  ]}
+                  value={appointedFilter}
+                  onChange={setAppointedFilter}
+                  ariaLabel="Filter by type"
+                  minHeight="44px"
+                />
+              </div>
+
+              {/* Name search */}
+              <div className="relative">
+                <svg
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
-                Candidates
-                {candidatesLoading && (
-                  <span style={{ fontSize: '11px', color: '#a0aec0' }}>…</span>
-                )}
-                {showCandidates && candidateCount > 0 && !candidatesLoading && (
-                  <span className="bg-amber-400 text-amber-900 text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">
-                    {candidateCount}
-                  </span>
-                )}
-              </button>
+                <input
+                  type="text"
+                  placeholder="Search representative"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg
+                             focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
+                  style={{ fontFamily: "'Manrope', sans-serif" }}
+                />
+              </div>
             </div>
           )}
 
@@ -877,6 +929,9 @@ export default function Results() {
                   // Empty-state for Local/State: when no data but search is active
                   if (!hasGroups && (tier === 'Local' || tier === 'State') && activeQuery) {
                     const isFirst = tier === 'Local';
+                    const emptyMessage = appointedFilter !== 'All'
+                      ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
+                      : `${tier} representative data is not yet available for this area.`;
                     return (
                       <div key={tier} data-tier={tier}>
                         {selectedFilter === 'All' && (
@@ -886,7 +941,7 @@ export default function Results() {
                           </div>
                         )}
                         <p className="mt-4 text-gray-500">
-                          {tier} representative data is not yet available for this area.
+                          {emptyMessage}
                         </p>
                       </div>
                     );
@@ -988,8 +1043,33 @@ export default function Results() {
                     No results found for this location.
                   </p>
                 )}
+
+                {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
+                {federalFiltered.length > 0 && appointedFilter !== 'All' &&
+                  Object.values(searchFilteredPoliticians).every(groups => Object.keys(groups).length === 0) && (
+                  <p className="text-sm text-gray-500 text-center py-8">
+                    No {appointedFilter.toLowerCase()} officials found for this area.
+                  </p>
+                )}
               </div>
             )}
+          </>
+          ) : (
+            <div className="px-4 md:px-8 pt-6 pb-8">
+              <ElectionsView
+                elections={electionsData}
+                loading={electionsLoading}
+                onCandidateClick={(id) => {
+                  const scrollTop = isDesktop
+                    ? mainRef.current?.scrollTop ?? 0
+                    : window.scrollY;
+                  sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+                  sessionStorage.setItem('ev:fromView', 'elections');
+                  navigate(`/candidate/${id}`);
+                }}
+              />
+            </div>
+          )}
         </main>
       </div>
 
