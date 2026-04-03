@@ -19,6 +19,7 @@ import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchElectionsByAddress, saveMyLocation } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
+import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
 
@@ -412,17 +413,26 @@ export default function Results() {
     });
   };
 
-  const handleAddressSearch = () => {
-    if (!addressInput.trim()) return;
+  const handleAddressSearch = (overrideAddress) => {
+    const addr = (typeof overrideAddress === 'string' ? overrideAddress : addressInput).trim();
+    if (!addr) return;
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
     setSearchKey(k => k + 1);
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
-      next.set('q', addressInput.trim());
+      next.set('q', addr);
       return next;
     });
   };
+
+  const addressInputRef = useRef(null);
+  useGooglePlacesAutocomplete(addressInputRef, {
+    onPlaceSelected: (addr) => {
+      setAddressInput(addr);
+      handleAddressSearch(addr);
+    },
+  });
 
   // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
   function resolveIsAppointed(pol) {
@@ -768,6 +778,7 @@ export default function Results() {
               <>
                 <div className="flex gap-3">
                   <input
+                    ref={addressInputRef}
                     type="text"
                     value={addressInput}
                     onChange={(e) => setAddressInput(e.target.value)}
