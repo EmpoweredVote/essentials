@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
+import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
@@ -14,6 +15,14 @@ export default function Landing() {
       navigate('/results?prefilled=true', { replace: true });
     }
   }, [compassLoading, isLoggedIn, myRepresentatives, navigate]);
+
+  const inputRef = useRef(null);
+  useGooglePlacesAutocomplete(inputRef, {
+    onPlaceSelected: (addr) => {
+      setAddressInput(addr);
+      navigate(`/results?q=${encodeURIComponent(addr)}`);
+    },
+  });
 
   const handleSearch = () => {
     if (!addressInput.trim()) return;
@@ -38,6 +47,7 @@ export default function Landing() {
             {/* Search Input + Button */}
             <div className="flex flex-col sm:flex-row gap-3">
               <input
+                ref={inputRef}
                 type="text"
                 value={addressInput}
                 onChange={(e) => setAddressInput(e.target.value)}
