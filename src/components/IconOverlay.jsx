@@ -19,7 +19,7 @@ import { BallotIcon, CompassIcon, BranchIcon } from '@chrisandrewsedu/ev-ui';
  *
  * @param {{ IconComponent: React.ComponentType, color: string, tooltip: string, size: number }} props
  */
-function IconWithTooltip({ IconComponent, color, tooltip, size = 14 }) {
+function IconWithTooltip({ IconComponent, color, tooltip, size = 14, extraProps = {} }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -50,7 +50,7 @@ function IconWithTooltip({ IconComponent, color, tooltip, size = 14 }) {
         style={{ display: 'inline-flex', padding: '5px' }}
         {...getReferenceProps()}
       >
-        <IconComponent size={size} color={color} />
+        <IconComponent size={size} color={color} {...extraProps} />
       </span>
 
       {isOpen && (
@@ -133,6 +133,7 @@ export default function IconOverlay({ ballot, hasStances, branch }) {
           color="#005366"
           tooltip={`${branch} branch`}
           size={14}
+          extraProps={{ branch: branch.toLowerCase() }}
         />
       )}
     </div>

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
+import { CategorySection, PoliticianCard, useMediaQuery, tierColors } from '@chrisandrewsedu/ev-ui';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -955,11 +955,10 @@ export default function Results() {
                       ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
                       : `${tier} representative data is not yet available for this area.`;
                     return (
-                      <div key={tier} data-tier={tier}>
+                      <div key={tier} data-tier={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors[tier.toLowerCase()]?.bg ?? '#FFFFFF' }}>
                         {selectedFilter === 'All' && (
-                          <div className={`flex items-center gap-4 ${isFirst ? 'mb-4' : 'mt-10 mb-4'}`}>
-                            <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">{tier}</span>
-                            <hr className="flex-1 border-gray-200" />
+                          <div className="mb-3">
+                            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors[tier.toLowerCase()]?.text }}>{tier}</span>
                           </div>
                         )}
                         <p className="mt-4 text-gray-500">
@@ -974,11 +973,10 @@ export default function Results() {
                   return (
                     <div key={tier}>
                       {tier === 'Local' && (
-                        <div data-tier="Local">
+                        <div data-tier="Local" className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors.local.bg }}>
                           {selectedFilter === 'All' && (
-                            <div className="flex items-center gap-4 mb-4">
-                              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Local</span>
-                              <hr className="flex-1 border-gray-200" />
+                            <div className="mb-3">
+                              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors.local.text }}>Local</span>
                             </div>
                           )}
                           {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) =>
@@ -999,11 +997,10 @@ export default function Results() {
                       )}
 
                       {tier === 'State' && (
-                        <div data-tier="State">
+                        <div data-tier="State" className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors.state.bg }}>
                           {selectedFilter === 'All' && (
-                            <div className="flex items-center gap-4 mt-10 mb-4">
-                              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">State</span>
-                              <hr className="flex-1 border-gray-200" />
+                            <div className="mb-3">
+                              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors.state.text }}>State</span>
                             </div>
                           )}
                           {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => {
@@ -1029,11 +1026,10 @@ export default function Results() {
                       )}
 
                       {tier === 'Federal' && (
-                        <div data-tier="Federal">
+                        <div data-tier="Federal" className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors.federal.bg }}>
                           {selectedFilter === 'All' && (
-                            <div className="flex items-center gap-4 mt-10 mb-4">
-                              <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">Federal</span>
-                              <hr className="flex-1 border-gray-200" />
+                            <div className="mb-3">
+                              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors.federal.text }}>Federal</span>
                             </div>
                           )}
                           {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => {
