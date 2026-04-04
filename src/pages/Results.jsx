@@ -38,12 +38,17 @@ function seatKey(pol) {
   return `${pol.office_title}||${pol.district_type}||${pol.district_id || ''}`;
 }
 
-function getImageUrl(pol) {
+function getImageData(pol) {
   if (pol.images && pol.images.length > 0) {
     const defaultImg = pol.images.find((img) => img.type === 'default');
-    return defaultImg ? defaultImg.url : pol.images[0].url;
+    const img = defaultImg || pol.images[0];
+    return { url: img.url, focalPoint: img.focal_point || null };
   }
-  return pol.photo_origin_url;
+  return { url: pol.photo_origin_url, focalPoint: null };
+}
+
+function getImageUrl(pol) {
+  return getImageData(pol).url;
 }
 
 function formatElectionDate(dateStr) {
@@ -687,15 +692,16 @@ export default function Results() {
     const ballot = !isCandidate && getSeatBallotStatus(pol.term_end, pol.term_date_precision);
     const branch = getBranch(pol.district_type, pol.office_title);
 
+    const imgData = getImageData(pol);
     return (
       <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative' }}>
         <PoliticianCard
           id={pol.id}
-          imageSrc={getImageUrl(pol)}
+          imageSrc={imgData.url}
           name={`${pol.first_name} ${pol.last_name}`}
           title={cardTitle}
           subtitle={subtitle}
-          imageFocalPoint="center 20%"
+          imageFocalPoint={imgData.focalPoint || 'center 20%'}
           style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : {}}
           onClick={() => {
             if (isCandidate) {

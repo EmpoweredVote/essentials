@@ -77,6 +77,11 @@ function Profile() {
           <>
           <PoliticianProfile
             politician={pol}
+            imageFocalPoint={(() => {
+              const defaultImg = pol.images?.find((img) => img.type === 'default');
+              const img = defaultImg || pol.images?.[0];
+              return img?.focal_point || undefined;
+            })()}
             onBack={() => {
               const fromView = sessionStorage.getItem('ev:fromView') || 'representatives';
               const viewParam = fromView === 'elections' ? '&view=elections' : '';

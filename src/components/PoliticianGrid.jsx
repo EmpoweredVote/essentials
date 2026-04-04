@@ -7,12 +7,17 @@ import {
   lastNameKey,
 } from "../utils/sorters";
 
-function getImageUrl(pol) {
+function getImageData(pol) {
   if (pol.images && pol.images.length > 0) {
     const defaultImg = pol.images.find((img) => img.type === "default");
-    return defaultImg ? defaultImg.url : pol.images[0].url;
+    const img = defaultImg || pol.images[0];
+    return { url: img.url, focalPoint: img.focal_point || null };
   }
-  return pol.photo_origin_url;
+  return { url: pol.photo_origin_url, focalPoint: null };
+}
+
+function getImageUrl(pol) {
+  return getImageData(pol).url;
 }
 
 /**
@@ -211,11 +216,13 @@ function PoliticianGrid({ gridTitle, polList }) {
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {sorted.map((pol) => {
           const ballot = getSeatBallotStatus(pol.term_end, pol.term_date_precision);
+          const imgData = getImageData(pol);
           return (
             <PoliticianCard
               key={pol.id}
               id={pol.id}
-              imageSrc={getImageUrl(pol)}
+              imageSrc={imgData.url}
+              imageFocalPoint={imgData.focalPoint || 'center 20%'}
               name={`${pol.first_name} ${pol.last_name}`}
               title={getDisplayTitle(pol)}
               badge={ballot ? "On Ballot" : undefined}

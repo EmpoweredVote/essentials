@@ -242,7 +242,7 @@ export default function ElectionsView({
                                 <PoliticianCard
                                   id={candidate.candidate_id}
                                   imageSrc={candidate.photo_url || undefined}
-                                  imageFocalPoint="center 20%"
+                                  imageFocalPoint={candidate.focal_point || 'center 20%'} // TODO: wire focal_point when elections API includes it
                                   name={candidate.full_name}
                                   title={posGroup.cleanedPosition}
                                   onClick={() => onCandidateClick(candidate.candidate_id)}
