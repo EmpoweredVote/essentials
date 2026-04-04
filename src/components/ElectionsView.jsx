@@ -202,24 +202,17 @@ export default function ElectionsView({
                   {positions.map((pos) => (
                     <CategorySection key={pos.race_id} title={pos.displayTitle}>
                       {pos.shuffledCandidates.map((candidate) => (
-                        <div
+                        <PoliticianCard
                           key={candidate.candidate_id}
-                          className={candidate.is_incumbent ? 'incumbent-card' : ''}
-                        >
-                          <PoliticianCard
-                            id={candidate.candidate_id}
-                            imageSrc={candidate.photo_url || undefined}
-                            name={candidate.full_name}
-                            title={pos.cleanedPosition}
-                            subtitle={
-                              candidate.is_incumbent ? 'Incumbent' : undefined
-                            }
-                            onClick={() =>
-                              onCandidateClick(candidate.candidate_id)
-                            }
-                            variant="horizontal"
-                          />
-                        </div>
+                          id={candidate.candidate_id}
+                          imageSrc={candidate.photo_url || undefined}
+                          name={candidate.full_name}
+                          title={pos.cleanedPosition}
+                          onClick={() =>
+                            onCandidateClick(candidate.candidate_id)
+                          }
+                          variant="horizontal"
+                        />
                       ))}
                     </CategorySection>
                   ))}
@@ -230,12 +223,6 @@ export default function ElectionsView({
         );
       })}
 
-      {/* Incumbent badge color override */}
-      <style>{`
-        .incumbent-card .ev-politician-card p:last-child {
-          color: #00657C;
-        }
-      `}</style>
     </div>
   );
 }
