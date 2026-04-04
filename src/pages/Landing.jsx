@@ -4,6 +4,11 @@ import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
+const COVERAGE_AREAS = [
+  { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
+  { county: 'Los Angeles County', state: 'California', address: '500 W Temple St, Los Angeles, CA 90012' },
+];
+
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
   const navigate = useNavigate();
@@ -37,12 +42,46 @@ export default function Landing() {
         <div className="flex flex-col items-center justify-center gap-12">
           {/* Content */}
           <div className="flex-1 max-w-xl text-center">
-            <h1 className="text-3xl sm:text-5xl font-bold text-[var(--ev-teal)] mb-6">
+            <h1 className="text-3xl sm:text-5xl font-semibold text-[var(--ev-teal)] mb-6">
               Find Your Representatives
             </h1>
             <p className="text-xl text-gray-700 mb-8">
               Enter your address to see who represents you
             </p>
+
+            {/* Coverage area cards */}
+            <p className="text-sm text-gray-500 mb-3">We currently cover:</p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-2">
+              {COVERAGE_AREAS.map((area) => (
+                <button
+                  key={area.county}
+                  onClick={() => navigate(`/results?q=${encodeURIComponent(area.address)}`)}
+                  className="flex-1 text-left px-4 py-3 bg-white border-2 border-[var(--ev-teal)] rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                >
+                  <div className="text-base font-semibold text-[var(--ev-teal)]">{area.county}</div>
+                  <div className="text-sm text-gray-600">{area.state}</div>
+                </button>
+              ))}
+            </div>
+
+            {/* Browse by location link */}
+            <div className="text-center mt-2 mb-2">
+              <button
+                onClick={() => navigate('/results?mode=browse')}
+                className="text-sm text-[var(--ev-teal)] hover:underline cursor-pointer bg-transparent border-none"
+                style={{ fontFamily: "'Manrope', sans-serif" }}
+              >
+                Browse by location →
+              </button>
+            </div>
+
+            {/* "or search by address" divider */}
+            <div className="relative my-6">
+              <hr className="border-gray-200" />
+              <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] px-3 text-sm text-gray-400">
+                or search by address
+              </span>
+            </div>
 
             {/* Search Input + Button */}
             <div className="flex flex-col sm:flex-row gap-3">
