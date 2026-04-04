@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CategorySection, PoliticianCard, useMediaQuery } from '@chrisandrewsedu/ev-ui';
+import IconOverlay from '../components/IconOverlay';
+import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
@@ -401,6 +403,13 @@ export default function Results() {
     setElectionsData(null);
   }, [activeQuery]);
 
+  // Handle ?mode=browse from Landing page "Browse by location" link (per D-05)
+  useEffect(() => {
+    if (searchParams.get('mode') === 'browse') {
+      setSearchMode('browse');
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const switchView = (view) => {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
@@ -676,16 +685,17 @@ export default function Results() {
 
     const hasStances = politicianIdsWithStances && politicianIdsWithStances.has(String(pol.id));
     const ballot = !isCandidate && getSeatBallotStatus(pol.term_end, pol.term_date_precision);
+    const branch = getBranch(pol.district_type, pol.office_title);
 
     return (
-      <div key={pol.id} data-pol-id={pol.id}>
+      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative' }}>
         <PoliticianCard
           id={pol.id}
           imageSrc={getImageUrl(pol)}
           name={`${pol.first_name} ${pol.last_name}`}
           title={cardTitle}
           subtitle={subtitle}
-          badge={ballot ? "On Ballot" : undefined}
+          imageFocalPoint="center 20%"
           style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : {}}
           onClick={() => {
             if (isCandidate) {
@@ -707,6 +717,7 @@ export default function Results() {
           } : undefined}
           variant="horizontal"
         />
+        <IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />
       </div>
     );
   };
@@ -976,6 +987,7 @@ export default function Results() {
                                 key={`${category}-${title}-${idx}`}
                                 title={title}
                                 websiteUrl={websiteUrl}
+                                tier="local"
                               >
                                 {defaultSort(category, pols).map((pol) =>
                                   renderSeatGroup(pol)
@@ -1005,6 +1017,7 @@ export default function Results() {
                               <CategorySection
                                 key={category}
                                 title={qualifiedTitle}
+                                tier="state"
                               >
                                 {defaultSort(category, polList).map((pol) =>
                                   renderSeatGroup(pol)
@@ -1036,6 +1049,7 @@ export default function Results() {
                               <CategorySection
                                 key={category}
                                 title={qualifiedTitle}
+                                tier="federal"
                               >
                                 {defaultSort(category, polList).map((pol) =>
                                   renderSeatGroup(pol)
