@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
+import IconOverlay from './IconOverlay';
+import { getBranch } from '../utils/branchType';
 
 /** Timezone-safe days-until helper */
 function daysUntil(dateStr) {
@@ -83,35 +85,44 @@ export default function ElectionsView({
     return seed;
   }, []);
 
-  // Pre-process elections: group races by tier, shuffle candidates
+  // Pre-process elections: group races by tier then by position, shuffle candidates per party ballot
   const processedElections = useMemo(() => {
     if (!elections || elections.length === 0) return [];
 
     return elections.map((election) => {
       const isPrimary = election.election_type === 'primary';
 
-      // Group races by tier — keep separate (primaries have distinct party ballots)
+      // Group races by tier, then by cleanedPosition within each tier
       const tierMap = {};
       for (const race of election.races) {
         const tier = getTier(race.district_type);
-        if (!tierMap[tier]) tierMap[tier] = [];
+        if (!tierMap[tier]) tierMap[tier] = {};
 
-        // Build display title: position name + party ballot label for primaries
         const cleaned = cleanPositionName(race.position_name);
-        const ballotLabel =
-          isPrimary && race.primary_party
-            ? `${cleaned} — ${race.primary_party} Primary`
-            : cleaned;
 
-        tierMap[tier].push({
-          ...race,
-          displayTitle: ballotLabel,
-          cleanedPosition: cleaned,
+        if (!tierMap[tier][cleaned]) {
+          tierMap[tier][cleaned] = {
+            cleanedPosition: cleaned,
+            districtType: race.district_type,
+            parties: [],
+          };
+        }
+
+        // Each race entry is one party's ballot (for primaries) or the full field (for generals)
+        tierMap[tier][cleaned].parties.push({
+          party: isPrimary && race.primary_party ? race.primary_party : null,
           shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
+          raceId: race.race_id,
         });
       }
 
-      return { ...election, tierMap };
+      // Convert nested objects to arrays for rendering
+      const tierPositions = {};
+      for (const [tier, positions] of Object.entries(tierMap)) {
+        tierPositions[tier] = Object.values(positions);
+      }
+
+      return { ...election, tierPositions };
     });
   }, [elections, sessionSeed]);
 
@@ -187,8 +198,12 @@ export default function ElectionsView({
 
             {/* Tier sections: Local > State > Federal */}
             {TIER_ORDER.map((tier) => {
-              const positions = election.tierMap[tier];
+              const positions = election.tierPositions[tier];
               if (!positions || positions.length === 0) return null;
+
+              // Map tier name to tier prop value for CategorySection hue differentiation
+              const tierPropMap = { Federal: 'federal', State: 'state', Local: 'local' };
+              const tierProp = tierPropMap[tier] || undefined;
 
               return (
                 <div key={tier}>
@@ -199,20 +214,45 @@ export default function ElectionsView({
                     <hr className="flex-1 border-gray-200" />
                   </div>
 
-                  {positions.map((pos) => (
-                    <CategorySection key={pos.race_id} title={pos.displayTitle}>
-                      {pos.shuffledCandidates.map((candidate) => (
-                        <PoliticianCard
-                          key={candidate.candidate_id}
-                          id={candidate.candidate_id}
-                          imageSrc={candidate.photo_url || undefined}
-                          name={candidate.full_name}
-                          title={pos.cleanedPosition}
-                          onClick={() =>
-                            onCandidateClick(candidate.candidate_id)
-                          }
-                          variant="horizontal"
-                        />
+                  {positions.map((posGroup) => (
+                    <CategorySection
+                      key={posGroup.cleanedPosition}
+                      title={posGroup.cleanedPosition}
+                      tier={tierProp}
+                    >
+                      {posGroup.parties.map((partyGroup) => (
+                        <div key={partyGroup.raceId}>
+                          {/* Party sub-label for primaries — lightweight gray text, not a section header */}
+                          {partyGroup.party && (
+                            <p
+                              className="text-sm text-gray-500 mt-2 mb-1 ml-1"
+                              style={{ fontFamily: "'Manrope', sans-serif" }}
+                            >
+                              {partyGroup.party} Primary
+                            </p>
+                          )}
+                          {partyGroup.shuffledCandidates.map((candidate) => {
+                            const branch = getBranch(posGroup.districtType, posGroup.cleanedPosition);
+                            // All election candidates are on the ballot by definition
+                            const ballot = { onBallot: true, termEndDate: new Date(election.election_date) };
+                            const hasStances = false; // Candidates typically lack stances data
+
+                            return (
+                              <div key={candidate.candidate_id} style={{ position: 'relative' }}>
+                                <PoliticianCard
+                                  id={candidate.candidate_id}
+                                  imageSrc={candidate.photo_url || undefined}
+                                  imageFocalPoint="center 20%"
+                                  name={candidate.full_name}
+                                  title={posGroup.cleanedPosition}
+                                  onClick={() => onCandidateClick(candidate.candidate_id)}
+                                  variant="horizontal"
+                                />
+                                <IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />
+                              </div>
+                            );
+                          })}
+                        </div>
                       ))}
                     </CategorySection>
                   ))}
