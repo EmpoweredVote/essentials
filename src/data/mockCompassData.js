@@ -5,105 +5,74 @@
 // Uses real topic short_titles from compass.topics for dual overlay compatibility.
 // short_titles are exact case-sensitive strings from SELECT short_title FROM compass.topics WHERE is_active = true.
 //
-// Active topics (queried 2026-04-04):
-//   Abortion, AI Regulation, Campaign Finance, Civil Rights, Climate, Deportation,
-//   Fossil Fuels, Healthcare, Housing, Immigration, Medicare/Medicaid, Misinformation,
-//   Redistricting, Religious Freedom, Same-Sex Marriage, Social Security, Taxes & Spending,
-//   Trade & Tariffs, Trans Athletes, Voting Rights
+// Limited to 8 topics per profile — the compass max spoke count.
+// Chosen for visual variety: a mix of social, economic, environment, and security topics.
+
+// The 8 topics used across all mock profiles. Exported so CompassFirstCard can
+// filter RadarChartCore spokes to match (avoids 20-spoke clutter).
+export const MOCK_TOPICS = [
+  "Healthcare", "Climate", "Immigration", "Taxes & Spending",
+  "Civil Rights", "Deportation", "Housing", "Religious Freedom",
+];
 
 const PROFILES = {
-  // Progressive: High on social/environment/equity topics, low on restrictive/economic-conservative topics
+  // Progressive: High on social/environment, low on restrictive topics
   progressive: {
-    "Abortion": 9,
-    "AI Regulation": 7,
-    "Campaign Finance": 8,
-    "Civil Rights": 9,
-    "Climate": 9,
-    "Deportation": 2,
-    "Fossil Fuels": 2,
     "Healthcare": 8,
-    "Housing": 8,
+    "Climate": 9,
     "Immigration": 8,
-    "Medicare/Medicaid": 9,
-    "Misinformation": 7,
-    "Redistricting": 8,
-    "Religious Freedom": 4,
-    "Same-Sex Marriage": 9,
-    "Social Security": 8,
     "Taxes & Spending": 7,
-    "Trade & Tariffs": 4,
-    "Trans Athletes": 8,
-    "Voting Rights": 9,
+    "Civil Rights": 9,
+    "Deportation": 2,
+    "Housing": 8,
+    "Religious Freedom": 4,
   },
-  // Moderate: Mid-range values across all topics — near-circular radar shape
+  // Moderate: Mid-range values — near-circular radar shape
   moderate: {
-    "Abortion": 5,
-    "AI Regulation": 5,
-    "Campaign Finance": 6,
-    "Civil Rights": 6,
-    "Climate": 6,
-    "Deportation": 5,
-    "Fossil Fuels": 4,
     "Healthcare": 5,
-    "Housing": 5,
+    "Climate": 6,
     "Immigration": 5,
-    "Medicare/Medicaid": 5,
-    "Misinformation": 5,
-    "Redistricting": 5,
-    "Religious Freedom": 5,
-    "Same-Sex Marriage": 6,
-    "Social Security": 6,
     "Taxes & Spending": 5,
-    "Trade & Tariffs": 5,
-    "Trans Athletes": 4,
-    "Voting Rights": 6,
+    "Civil Rights": 6,
+    "Deportation": 5,
+    "Housing": 5,
+    "Religious Freedom": 5,
   },
-  // Conservative: High on security/economic/traditional topics, low on social/environment
+  // Conservative: High on security/traditional, low on social/environment
   conservative: {
-    "Abortion": 2,
-    "AI Regulation": 3,
-    "Campaign Finance": 3,
-    "Civil Rights": 5,
-    "Climate": 3,
-    "Deportation": 9,
-    "Fossil Fuels": 8,
     "Healthcare": 3,
-    "Housing": 4,
-    "Immigration": 2,
-    "Medicare/Medicaid": 4,
-    "Misinformation": 4,
-    "Redistricting": 3,
-    "Religious Freedom": 9,
-    "Same-Sex Marriage": 2,
-    "Social Security": 5,
-    "Taxes & Spending": 2,
-    "Trade & Tariffs": 8,
-    "Trans Athletes": 2,
-    "Voting Rights": 3,
-  },
-  // Mixed: 2-3 strong spikes, remainder low — creates spiky asymmetric radar
-  mixed: {
-    "Abortion": 3,
-    "AI Regulation": 9,
-    "Campaign Finance": 2,
-    "Civil Rights": 7,
     "Climate": 3,
-    "Deportation": 4,
-    "Fossil Fuels": 3,
-    "Healthcare": 9,
-    "Housing": 2,
-    "Immigration": 3,
-    "Medicare/Medicaid": 8,
-    "Misinformation": 2,
-    "Redistricting": 3,
-    "Religious Freedom": 2,
-    "Same-Sex Marriage": 4,
-    "Social Security": 3,
+    "Immigration": 2,
     "Taxes & Spending": 2,
-    "Trade & Tariffs": 8,
-    "Trans Athletes": 3,
-    "Voting Rights": 3,
+    "Civil Rights": 5,
+    "Deportation": 9,
+    "Housing": 4,
+    "Religious Freedom": 9,
   },
+  // Mixed: 2-3 strong spikes, remainder low — spiky asymmetric radar
+  mixed: {
+    "Healthcare": 9,
+    "Climate": 3,
+    "Immigration": 3,
+    "Taxes & Spending": 2,
+    "Civil Rights": 7,
+    "Deportation": 4,
+    "Housing": 2,
+    "Religious Freedom": 2,
+  },
+};
+
+// Mock user compass — a single consistent overlay (coral) across all politician cards.
+// Slightly left-leaning moderate to create visible contrast against all 4 profiles.
+export const MOCK_USER_COMPASS = {
+  "Healthcare": 7,
+  "Climate": 6,
+  "Immigration": 5,
+  "Taxes & Spending": 4,
+  "Civil Rights": 8,
+  "Deportation": 3,
+  "Housing": 7,
+  "Religious Freedom": 5,
 };
 
 // Bloomington, IN politicians (108 total from 100 W Kirkwood Ave address).

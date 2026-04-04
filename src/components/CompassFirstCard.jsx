@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
 import { useCompass } from '../contexts/CompassContext';
 import { buildAnswerMapByShortTitle } from '../lib/compass';
+import { MOCK_TOPICS, MOCK_USER_COMPASS } from '../data/mockCompassData';
 import IconOverlay from './IconOverlay';
 
 /**
@@ -35,8 +36,8 @@ export const VARIANT_CONFIG = {
     horizontal: false,
   },
   C: {
-    radarSize: 140,
-    gridCols: 'grid-cols-1',
+    radarSize: 250,
+    gridCols: 'grid-cols-1 md:grid-cols-2',
     padding: '16px',
     borderRadius: '12px',
     shadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
@@ -107,18 +108,15 @@ export default function CompassFirstCard({ politician, mockAnswers, variant = 'A
     titleWeight, titleLineClamp, horizontal } = config;
 
   // Build user answer map for dual overlay (coral layer — user data)
+  // Limit to the 8 mock topics so the radar has exactly 8 spokes (compass max).
   let topicsFiltered = [];
   let userAnswerMap = {};
 
   if (!compassLoading && allTopics.length > 0) {
-    const allowedShorts = allTopics
-      .filter(t => t.is_active !== false)
-      .map(t => t.short_title);
-
     const { topicsFiltered: tf, answersByShort } = buildAnswerMapByShortTitle(
       allTopics,
       userAnswers || [],
-      allowedShorts
+      MOCK_TOPICS
     );
     topicsFiltered = tf;
     userAnswerMap = answersByShort;
@@ -157,20 +155,28 @@ export default function CompassFirstCard({ politician, mockAnswers, variant = 'A
     outline: 'none',
   };
 
-  // Radar area — either live RadarChartCore or placeholder
+  // Radar area — either live RadarChartCore or placeholder.
+  // RadarChartCore adds label padding around the polygon, so the SVG is
+  // wider than `size`. We give the wrapper a fixed width and clip overflow
+  // so the radar + labels fit within a known allocation.
+  const radarWrapperSize = radarSize + 10; // minimal label padding
   const radarNode = !compassLoading && mockAnswers ? (
-    <div style={{ flexShrink: 0, overflow: 'hidden', width: radarSize, height: radarSize }}>
+    <div style={{
+      flexShrink: 0,
+      width: radarWrapperSize,
+      overflow: 'hidden',
+    }}>
       <RadarChartCore
         topics={topicsFiltered}
-        data={userAnswerMap}
+        data={Object.values(userAnswerMap).some(v => v > 0) ? userAnswerMap : MOCK_USER_COMPASS}
         compareData={mockAnswers}
         invertedSpokes={{}}
         onToggleInversion={() => {}}
         onReplaceTopic={() => {}}
         size={radarSize}
-        labelFontSize={0}
-        padding={0}
-        labelOffset={0}
+        padding={20}
+        labelOffset={5}
+        labelFontSize={12}
       />
     </div>
   ) : (
@@ -186,8 +192,9 @@ export default function CompassFirstCard({ politician, mockAnswers, variant = 'A
         flex: horizontal ? 1 : undefined,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: horizontal ? 'center' : undefined,
+        justifyContent: 'center',
         marginTop: horizontal ? 0 : '8px',
+        gap: '4px',
       }}
     >
       {/* Politician name */}
@@ -200,7 +207,6 @@ export default function CompassFirstCard({ politician, mockAnswers, variant = 'A
           textAlign: horizontal ? 'left' : 'center',
           color: '#1a202c',
           margin: 0,
-          marginBottom: '4px',
         }}
       >
         {politician.full_name}
@@ -226,26 +232,19 @@ export default function CompassFirstCard({ politician, mockAnswers, variant = 'A
         {politician.office_title || ''}
       </p>
 
-      {/* Icon overlay row — wrapped in relative container so IconOverlay's
-          absolute position anchors to this box, not the card root. */}
+      {/* Icon row — IconOverlay uses position:absolute (for photo overlays).
+          Override via a wrapper that resets its child to static flow. */}
       {(politician.ballot || mockAnswers || politician.branch) && (
         <div
-          style={{
-            position: 'relative',
-            display: 'flex',
-            justifyContent: horizontal ? 'flex-start' : 'center',
-            marginTop: '8px',
-            height: '28px',
-          }}
+          className="compass-card-icons"
+          style={{ alignSelf: horizontal ? 'flex-start' : 'center' }}
         >
-          {/* Inner relative anchor for IconOverlay's bottom:4/right:4 */}
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <IconOverlay
-              ballot={politician.ballot || null}
-              hasStances={Boolean(mockAnswers)}
-              branch={politician.branch || null}
-            />
-          </div>
+          <IconOverlay
+            ballot={politician.ballot || null}
+            hasStances={Boolean(mockAnswers)}
+            branch={politician.branch || null}
+          />
+          <style>{`.compass-card-icons > div { position: static !important; background: none !important; padding: 0 !important; }`}</style>
         </div>
       )}
     </div>

@@ -209,7 +209,11 @@ export default function Prototype() {
                 <CategorySection title={category} tier={tierStr}>
                   <div
                     className={VARIANT_CONFIG[variant].gridCols}
-                    style={{ display: 'grid', gap: '16px' }}
+                    style={{
+                      display: 'grid',
+                      gap: '16px',
+                      gridColumn: '1 / -1', // span all CategorySection columns
+                    }}
                   >
                     {polList.map((pol) => (
                       <CompassFirstCard
