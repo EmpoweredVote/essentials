@@ -93,7 +93,7 @@ export default function IconOverlay({ ballot, hasStances, branch }) {
   if (!ballot && !hasStances && !branch) return null;
 
   const ballotTooltip = ballot
-    ? `This seat is on your ballot \u2014 Election: ${ballot.electionDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
+    ? `This seat is on your ballot \u2014 ${ballot.electionLabel}: ${ballot.electionDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`
     : null;
 
   return (

@@ -108,7 +108,7 @@ function Profile() {
                 : 'Representatives'
             }
             banner={(() => {
-              const ballotStatus = getSeatBallotStatus(pol.term_end, pol.term_date_precision);
+              const ballotStatus = getSeatBallotStatus(pol.term_end, pol.term_date_precision, pol.next_primary_date, pol.next_general_date);
 
               if (ballotStatus) {
                 return (

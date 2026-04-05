@@ -689,7 +689,7 @@ export default function Results() {
     }
 
     const hasStances = politicianIdsWithStances && politicianIdsWithStances.has(String(pol.id));
-    const ballot = !isCandidate && getSeatBallotStatus(pol.term_end, pol.term_date_precision);
+    const ballot = !isCandidate && getSeatBallotStatus(pol.term_end, pol.term_date_precision, pol.next_primary_date, pol.next_general_date);
     const branch = getBranch(pol.district_type, pol.office_title);
 
     const imgData = getImageData(pol);

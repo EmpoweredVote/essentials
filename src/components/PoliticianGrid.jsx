@@ -215,7 +215,7 @@ function PoliticianGrid({ gridTitle, polList }) {
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {sorted.map((pol) => {
-          const ballot = getSeatBallotStatus(pol.term_end, pol.term_date_precision);
+          const ballot = getSeatBallotStatus(pol.term_end, pol.term_date_precision, pol.next_primary_date, pol.next_general_date);
           const imgData = getImageData(pol);
           return (
             <PoliticianCard

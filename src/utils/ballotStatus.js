@@ -28,29 +28,56 @@ export function getElectionDate(termEndDate) {
 }
 
 /**
- * Determine whether a seat is "on the ballot" within the next year.
+ * Determine whether a seat is "on the ballot".
  *
- * @param {string} termEnd   - Term end date string (ISO or year-only)
- * @param {string} precision - "year", "month", or "day"
- * @returns {{ onBallot: true, termEndDate: Date, electionDate: Date } | null}
+ * Priority order:
+ *   1. Real primary date from DB (if valid and in the future)
+ *   2. Real general date from DB (if valid and in the future)
+ *   3. Heuristic fallback: term end within 1 year (existing logic)
+ *
+ * @param {string} termEnd          - Term end date string (ISO or year-only)
+ * @param {string} precision        - "year", "month", or "day"
+ * @param {string} [nextPrimaryDate] - ISO date string from DB (optional)
+ * @param {string} [nextGeneralDate] - ISO date string from DB (optional)
+ * @returns {{ onBallot: true, termEndDate: Date, electionDate: Date, electionLabel: string } | null}
  */
-export function getSeatBallotStatus(termEnd, precision) {
-  if (!termEnd) return null;
-
-  let date;
-  if (precision === 'year' && /^\d{4}$/.test(termEnd)) {
-    date = new Date(parseInt(termEnd, 10), 11, 31);
-  } else {
-    date = new Date(termEnd);
+export function getSeatBallotStatus(termEnd, precision, nextPrimaryDate, nextGeneralDate) {
+  // Parse term end date (may be null if termEnd is falsy)
+  let date = null;
+  if (termEnd) {
+    if (precision === 'year' && /^\d{4}$/.test(termEnd)) {
+      date = new Date(parseInt(termEnd, 10), 11, 31);
+    } else {
+      date = new Date(termEnd);
+    }
+    if (isNaN(date.getTime())) date = null;
   }
 
-  if (isNaN(date.getTime())) return null;
-
   const now = new Date();
+
+  // Priority 1: real primary date from DB (if in the future)
+  if (nextPrimaryDate) {
+    const primaryDate = new Date(nextPrimaryDate);
+    if (!isNaN(primaryDate.getTime()) && primaryDate > now) {
+      return { onBallot: true, termEndDate: date || primaryDate, electionDate: primaryDate, electionLabel: 'Primary' };
+    }
+  }
+
+  // Priority 2: real general date from DB (if in the future)
+  if (nextGeneralDate) {
+    const generalDate = new Date(nextGeneralDate);
+    if (!isNaN(generalDate.getTime()) && generalDate > now) {
+      return { onBallot: true, termEndDate: date || generalDate, electionDate: generalDate, electionLabel: 'General' };
+    }
+  }
+
+  // Priority 3: heuristic fallback using term end date
+  if (!date) return null;
+
   const oneYearFromNow = new Date(now);
   oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
 
   if (date <= now || date > oneYearFromNow) return null;
 
-  return { onBallot: true, termEndDate: date, electionDate: getElectionDate(date) };
+  return { onBallot: true, termEndDate: date, electionDate: getElectionDate(date), electionLabel: 'Election' };
 }
