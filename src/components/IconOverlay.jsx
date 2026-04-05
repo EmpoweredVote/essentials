@@ -84,7 +84,7 @@ function IconWithTooltip({ IconComponent, color, tooltip, size = 14, extraProps 
  * tooltips, positioned in the bottom-right corner of a politician card photo area.
  *
  * @param {{
- *   ballot: { onBallot: boolean, termEndDate: Date } | null,
+ *   ballot: { onBallot: boolean, termEndDate: Date, electionDate: Date } | null,
  *   hasStances: boolean,
  *   branch: 'Executive' | 'Legislative' | 'Judicial' | null,
  * }} props
@@ -93,7 +93,7 @@ export default function IconOverlay({ ballot, hasStances, branch }) {
   if (!ballot && !hasStances && !branch) return null;
 
   const ballotTooltip = ballot
-    ? `On your ballot \u2014 ${ballot.termEndDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
+    ? `This seat is on your ballot \u2014 Election: ${ballot.electionDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`
     : null;
 
   return (
