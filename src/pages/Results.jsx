@@ -935,8 +935,8 @@ export default function Results() {
                           {body.subgroups.map((sg) => (
                             <SubGroupSection
                               key={sg.key}
-                              title={sg.label}
-                              websiteUrl={sg.url || undefined}
+                              title={body.subgroups.length > 1 ? sg.label : undefined}
+                              websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
                             >
                               {sg.pols.map((pol) =>
                                 renderSeatGroup(pol)

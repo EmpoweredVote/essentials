@@ -69,9 +69,8 @@ function getAccordionKey(pol) {
   return pol.government_name || 'Unknown';
 }
 
-// Cabinet = VP + heads of executive departments (Secretary of X, Attorney General)
+// Cabinet = heads of executive departments (Secretary of X, Attorney General)
 const FEDERAL_CABINET_TITLES = [
-  'vice president',
   'secretary of state', 'secretary of the treasury', 'secretary of defense',
   'attorney general',
   'secretary of the interior', 'secretary of agriculture', 'secretary of commerce',
@@ -88,7 +87,7 @@ function getFederalAccordionKey(pol) {
     return 'U.S. Congress';
   if (dt === 'NATIONAL_JUDICIAL')
     return 'U.S. Supreme Court';
-  if (title.includes('president') && !title.includes('vice'))
+  if (title.includes('president') || title.includes('vice president'))
     return 'U.S. Executive';
   if (FEDERAL_CABINET_TITLES.some(kw => title.includes(kw)))
     return 'U.S. Cabinet';
@@ -170,7 +169,12 @@ function getSubGroupUrl(pols) {
 }
 
 /** Get the website URL for an accordion (from government_body_url of first pol) */
-function getAccordionUrl(pols) {
+function getAccordionUrl(pols, accordionKey) {
+  // Cabinet groupings link to the White House cabinet page
+  if (accordionKey === 'U.S. Cabinet' || accordionKey === 'U.S. Cabinet-Level Officials') {
+    return 'https://www.whitehouse.gov/administration/cabinet/';
+  }
+
   // For judiciary, use government_body_url directly
   if (pols[0]?.district_type === 'JUDICIAL') {
     return pols[0]?.government_body_url || '';
@@ -369,7 +373,7 @@ export function groupIntoHierarchy(politicians) {
         return {
           key,
           title: key.includes(',') ? stripSuffix(key) : key, // Strip suffix for government_name keys
-          url: getAccordionUrl(pols),
+          url: getAccordionUrl(pols, key),
           subgroups,
           _pols: pols, // for ordering
         };
