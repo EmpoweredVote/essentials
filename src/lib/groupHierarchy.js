@@ -170,7 +170,10 @@ function getSubGroupUrl(pols) {
 
 /** Get the website URL for an accordion (from government_body_url of first pol) */
 function getAccordionUrl(pols, accordionKey) {
-  // Cabinet groupings link to the White House cabinet page
+  // Federal executive groupings with known URLs
+  if (accordionKey === 'U.S. Executive') {
+    return 'https://www.whitehouse.gov/';
+  }
   if (accordionKey === 'U.S. Cabinet' || accordionKey === 'U.S. Cabinet-Level Officials') {
     return 'https://www.whitehouse.gov/administration/cabinet/';
   }
