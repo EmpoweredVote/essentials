@@ -712,18 +712,21 @@ export default function Results() {
               handlePoliticianClick(pol.id);
             }
           }}
-          onCompassClick={hasStances ? () => {
-            const cardEl = document.querySelector(`[data-pol-id="${pol.id}"] .ev-compass-button`);
+          variant="horizontal"
+        />
+        <IconOverlay
+          ballot={ballot}
+          hasStances={hasStances}
+          branch={branch}
+          onCompassClick={hasStances ? (e) => {
             setPreviewPol({
               id: pol.id,
               name: `${pol.first_name} ${pol.last_name}`,
               shortTitle: formatLegendName(pol),
-              anchorEl: cardEl,
+              anchorEl: e.currentTarget,
             });
           } : undefined}
-          variant="horizontal"
         />
-        <IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />
       </div>
     );
   };
