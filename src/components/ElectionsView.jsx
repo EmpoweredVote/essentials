@@ -60,6 +60,34 @@ export function cleanPositionName(name) {
   return cleaned;
 }
 
+/** Derive card title and subtitle from a race position name.
+ *  e.g., "Judge of the Monroe Circuit Court, 10th Judicial Circuit, No. 5"
+ *    → title: "Indiana Circuit Court Judge", subtitle: "10th Circuit, Division 5"
+ *  e.g., "State Representative, District 60"
+ *    → title: "State Representative", subtitle: "District 60"
+ */
+function deriveCardTitleSubtitle(positionName, districtType) {
+  const pos = positionName || '';
+
+  // Judicial positions
+  if (districtType === 'JUDICIAL') {
+    const circuitMatch = pos.match(/(\d+)(?:st|nd|rd|th)\s+(?:Judicial\s+)?Circuit/i);
+    const divMatch = pos.match(/No\.\s*(\d+)/i) || pos.match(/Division\s*(\d+)/i);
+    const circuit = circuitMatch ? `${circuitMatch[1]}th Circuit` : '';
+    const division = divMatch ? `Division ${divMatch[1]}` : '';
+    const subtitle = [circuit, division].filter(Boolean).join(', ');
+    return { title: 'Indiana Circuit Court Judge', subtitle: subtitle || undefined };
+  }
+
+  // Positions with comma-separated district: "State Representative, District 60"
+  const commaIdx = pos.indexOf(', ');
+  if (commaIdx > 0) {
+    return { title: pos.slice(0, commaIdx), subtitle: pos.slice(commaIdx + 2) };
+  }
+
+  return { title: pos, subtitle: undefined };
+}
+
 /** Map district_type to tier name */
 function getTier(districtType) {
   if (!districtType) return 'Other';
@@ -326,6 +354,7 @@ export default function ElectionsView({
                               electionDate: elDate,
                               electionLabel: election.election_type === 'primary' ? 'Primary' : 'General',
                             };
+                            const { title: cardTitle, subtitle: cardSubtitle } = deriveCardTitleSubtitle(race.cleanedPosition, race.districtType);
 
                             return (
                               <div key={candidate.candidate_id}>
@@ -334,7 +363,8 @@ export default function ElectionsView({
                                   imageSrc={candidate.photo_url || undefined}
                                   imageFocalPoint={candidate.focal_point || 'center 20%'}
                                   name={candidate.full_name}
-                                  title={race.cleanedPosition}
+                                  title={cardTitle}
+                                  subtitle={cardSubtitle}
                                   onClick={() => onCandidateClick(candidate.candidate_id)}
                                   variant="horizontal"
                                   footer={<IconOverlay ballot={ballot} hasStances={false} branch={branch} />}
