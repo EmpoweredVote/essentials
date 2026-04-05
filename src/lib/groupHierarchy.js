@@ -170,13 +170,14 @@ function getSubGroupUrl(pols) {
 
 /** Get the website URL for an accordion (from government_body_url of first pol) */
 function getAccordionUrl(pols, accordionKey) {
-  // Federal executive groupings with known URLs
-  if (accordionKey === 'U.S. Executive') {
-    return 'https://www.whitehouse.gov/';
-  }
-  if (accordionKey === 'U.S. Cabinet' || accordionKey === 'U.S. Cabinet-Level Officials') {
-    return 'https://www.whitehouse.gov/administration/cabinet/';
-  }
+  // Federal groupings with known URLs
+  const FEDERAL_URLS = {
+    'U.S. Congress': 'https://www.congress.gov/',
+    'U.S. Executive': 'https://www.whitehouse.gov/',
+    'U.S. Cabinet': 'https://www.whitehouse.gov/administration/cabinet/',
+    'U.S. Cabinet-Level Officials': 'https://www.whitehouse.gov/administration/cabinet/',
+  };
+  if (FEDERAL_URLS[accordionKey]) return FEDERAL_URLS[accordionKey];
 
   // For judiciary, use government_body_url directly
   if (pols[0]?.district_type === 'JUDICIAL') {
