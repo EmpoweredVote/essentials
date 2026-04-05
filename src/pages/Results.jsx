@@ -967,6 +967,13 @@ export default function Results() {
           </>
           ) : (
             <div className="px-4 md:px-8 pt-6 pb-8">
+              {formattedAddress && electionsData && electionsData.length > 0 && (
+                <div className="pb-2">
+                  <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                    Showing elections for <span className="font-semibold text-gray-700">{formattedAddress}</span>
+                  </p>
+                </div>
+              )}
               <ElectionsView
                 elections={electionsData}
                 loading={electionsLoading}
