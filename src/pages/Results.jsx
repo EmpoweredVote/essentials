@@ -565,6 +565,14 @@ export default function Results() {
       // NATIONAL_JUDICIAL: use chamber name (e.g. "U.S. Supreme Court")
       if (pol.district_type === 'NATIONAL_JUDICIAL')
         return cleanChamber || cleanTitle;
+      // JUDICIAL (state/local): show the role from office_title
+      // e.g., "Indiana Supreme Court Chief Justice" → "Chief Justice"
+      //        "Indiana Circuit Court Judge - 10th Circuit, Division 1" → handled by dashIdx above
+      if (pol.district_type === 'JUDICIAL') {
+        // Extract role: last word(s) like "Chief Justice", "Justice", "Judge"
+        const roleMatch = cleanTitle.match(/((?:Chief\s+)?(?:Justice|Judge))\b/i);
+        return roleMatch ? roleMatch[1] : cleanTitle;
+      }
       // SCHOOL: prepend school district name (e.g. "Los Angeles Unified Board of Education")
       if (pol.district_type === 'SCHOOL' && pol.government_name) {
         const schoolName = pol.government_name.split(',')[0];

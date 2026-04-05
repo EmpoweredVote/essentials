@@ -245,6 +245,70 @@ function subGroupOrderScore(label, pols) {
   return 30; // Other (clerk, officials, etc.)
 }
 
+// ── Politician sorting within sub-groups ─────────────────────────
+
+/**
+ * Sort politicians within a sub-group:
+ *   - Judicial: Chief Justice first, then by appointment_date (seniority),
+ *     then by division number, then alphabetical
+ *   - Others: District seats before At-Large, district numbers ascending,
+ *     alphabetical by last name as tie-breaker
+ */
+function sortPoliticians(pols) {
+  if (pols.length === 0) return pols;
+
+  const isJudicialGroup = pols[0]?.district_type === 'JUDICIAL' || pols[0]?.district_type === 'NATIONAL_JUDICIAL';
+
+  if (isJudicialGroup) {
+    return [...pols].sort((a, b) => {
+      const aTitle = (a.office_title || '').toLowerCase();
+      const bTitle = (b.office_title || '').toLowerCase();
+
+      // Chief Justice/Chief Judge always first
+      const aIsChief = aTitle.includes('chief');
+      const bIsChief = bTitle.includes('chief');
+      if (aIsChief !== bIsChief) return aIsChief ? -1 : 1;
+
+      // By appointment_date (seniority — earliest first)
+      if (a.appointment_date && b.appointment_date) {
+        const diff = new Date(a.appointment_date) - new Date(b.appointment_date);
+        if (diff !== 0) return diff;
+      }
+      if (a.appointment_date && !b.appointment_date) return -1;
+      if (!a.appointment_date && b.appointment_date) return 1;
+
+      // By division/seat number extracted from title
+      const aDivMatch = aTitle.match(/division\s+(\d+)/i) || aTitle.match(/seat\s+(\d+)/i);
+      const bDivMatch = bTitle.match(/division\s+(\d+)/i) || bTitle.match(/seat\s+(\d+)/i);
+      if (aDivMatch && bDivMatch) {
+        const diff = parseInt(aDivMatch[1], 10) - parseInt(bDivMatch[1], 10);
+        if (diff !== 0) return diff;
+      }
+
+      // Alphabetical fallback
+      return (a.last_name || '').localeCompare(b.last_name || '');
+    });
+  }
+
+  return [...pols].sort((a, b) => {
+    const aId = a.district_id ?? '';
+    const bId = b.district_id ?? '';
+
+    // At-large (district_id "0") sorts after numbered districts
+    const aIsAtLarge = aId === '0' || (a.district_label || '').toLowerCase().includes('at-large');
+    const bIsAtLarge = bId === '0' || (b.district_label || '').toLowerCase().includes('at-large');
+    if (aIsAtLarge !== bIsAtLarge) return aIsAtLarge ? 1 : -1;
+
+    // Numeric district sort
+    const aNum = parseInt(aId, 10);
+    const bNum = parseInt(bId, 10);
+    if (!isNaN(aNum) && !isNaN(bNum) && aNum !== bNum) return aNum - bNum;
+
+    // Alphabetical fallback
+    return (a.last_name || '').localeCompare(b.last_name || '');
+  });
+}
+
 // ── Main grouping function ───────────────────────────────────────
 
 /**
@@ -288,7 +352,7 @@ export function groupIntoHierarchy(politicians) {
             key: sgKey,
             label: getSubGroupLabel(sgPols, stripSuffix(pols[0]?.government_name)),
             url: getSubGroupUrl(sgPols),
-            pols: sgPols,
+            pols: sortPoliticians(sgPols),
           }))
           .sort((a, b) => {
             const sa = subGroupOrderScore(a.label, a.pols);
