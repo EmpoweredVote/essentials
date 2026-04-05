@@ -17,9 +17,9 @@ import { BallotIcon, CompassIcon, BranchIcon } from '@chrisandrewsedu/ev-ui';
 /**
  * A single icon wrapped in an accessible tooltip using @floating-ui/react.
  *
- * @param {{ IconComponent: React.ComponentType, color: string, tooltip: string, size: number }} props
+ * @param {{ IconComponent: React.ComponentType, color: string, tooltip: string, size: number, onClick: Function }} props
  */
-function IconWithTooltip({ IconComponent, color, tooltip, size = 14, extraProps = {} }) {
+function IconWithTooltip({ IconComponent, color, tooltip, size = 14, extraProps = {}, onClick }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -47,8 +47,9 @@ function IconWithTooltip({ IconComponent, color, tooltip, size = 14, extraProps 
         ref={refs.setReference}
         aria-label={tooltip}
         tabIndex={0}
-        style={{ display: 'inline-flex', padding: '5px' }}
+        style={{ display: 'inline-flex', padding: '5px', ...(onClick ? { cursor: 'pointer' } : {}) }}
         {...getReferenceProps()}
+        onClick={onClick ? (e) => { e.stopPropagation(); onClick(e); } : undefined}
       >
         <IconComponent size={size} color={color} {...extraProps} />
       </span>
@@ -87,9 +88,10 @@ function IconWithTooltip({ IconComponent, color, tooltip, size = 14, extraProps 
  *   ballot: { onBallot: boolean, termEndDate: Date, electionDate: Date } | null,
  *   hasStances: boolean,
  *   branch: 'Executive' | 'Legislative' | 'Judicial' | null,
+ *   onCompassClick: (e: React.MouseEvent) => void,
  * }} props
  */
-export default function IconOverlay({ ballot, hasStances, branch }) {
+export default function IconOverlay({ ballot, hasStances, branch, onCompassClick }) {
   if (!ballot && !hasStances && !branch) return null;
 
   const ballotTooltip = ballot
@@ -125,6 +127,7 @@ export default function IconOverlay({ ballot, hasStances, branch }) {
           color="#00657C"
           tooltip="Compare your views"
           size={14}
+          onClick={onCompassClick}
         />
       )}
       {branch && (
