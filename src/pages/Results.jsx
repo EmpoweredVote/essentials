@@ -673,7 +673,7 @@ export default function Results() {
     // Vacant offices: render dimmed card with "Vacant" name, no photo, no click handler
     if (isVacant) {
       return (
-        <div key={pol.id || `vacant-${pol.office_title}`} style={{ opacity: 0.55 }}>
+        <div key={pol.id || `vacant-${pol.office_title}`} style={{ opacity: 0.55, height: '100%' }}>
           <PoliticianCard
             id={pol.id}
             imageSrc={undefined}
@@ -694,7 +694,7 @@ export default function Results() {
 
     const imgData = getImageData(pol);
     return (
-      <div key={pol.id} data-pol-id={pol.id}>
+      <div key={pol.id} data-pol-id={pol.id} style={{ height: '100%' }}>
         <PoliticianCard
           id={pol.id}
           imageSrc={imgData.url}
