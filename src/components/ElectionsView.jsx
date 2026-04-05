@@ -90,12 +90,14 @@ function deriveBodyAndSubGroup(positionName, districtType) {
   }
 
   // Judicial - derive court name from position
+  // e.g., "Judge of the Monroe Circuit Court, 10th Judicial Circuit, No. 5"
+  //   → body: "Monroe Circuit Court", subgroup: "Judge, Division 5"
   if (dt === 'JUDICIAL') {
     const courtMatch = pos.match(/^(?:Judge of the\s+)?(.+?Court)/i);
-    if (courtMatch) {
-      return { body: courtMatch[1], subgroup: pos.replace(/^Judge of the\s+/i, '') };
-    }
-    return { body: 'Courts', subgroup: pos };
+    const divisionMatch = pos.match(/No\.\s*(\d+)/i) || pos.match(/Division\s*(\d+)/i) || pos.match(/Seat\s*(\d+)/i);
+    const body = courtMatch ? courtMatch[1] : 'Courts';
+    const subgroup = divisionMatch ? `Judge, Division ${divisionMatch[1]}` : 'Judge';
+    return { body, subgroup };
   }
 
   // County
