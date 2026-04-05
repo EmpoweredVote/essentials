@@ -290,9 +290,14 @@ function sortPoliticians(pols) {
       if (a.appointment_date && !b.appointment_date) return -1;
       if (!a.appointment_date && b.appointment_date) return 1;
 
+      // By district_id (numeric) — works for appeals court districts
+      const aDistNum = parseInt(a.district_id, 10);
+      const bDistNum = parseInt(b.district_id, 10);
+      if (!isNaN(aDistNum) && !isNaN(bDistNum) && aDistNum !== bDistNum) return aDistNum - bDistNum;
+
       // By division/seat number extracted from title
-      const aDivMatch = aTitle.match(/division\s+(\d+)/i) || aTitle.match(/seat\s+(\d+)/i);
-      const bDivMatch = bTitle.match(/division\s+(\d+)/i) || bTitle.match(/seat\s+(\d+)/i);
+      const aDivMatch = aTitle.match(/division\s+(\d+)/i) || aTitle.match(/seat\s+(\d+)/i) || aTitle.match(/district\s+(\d+)/i);
+      const bDivMatch = bTitle.match(/division\s+(\d+)/i) || bTitle.match(/seat\s+(\d+)/i) || bTitle.match(/district\s+(\d+)/i);
       if (aDivMatch && bDivMatch) {
         const diff = parseInt(aDivMatch[1], 10) - parseInt(bDivMatch[1], 10);
         if (diff !== 0) return diff;
