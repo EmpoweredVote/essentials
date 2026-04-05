@@ -57,7 +57,7 @@ export function getSeatBallotStatus(termEnd, precision, nextPrimaryDate, nextGen
 
   // Priority 1: real primary date from DB (if in the future)
   if (nextPrimaryDate) {
-    const primaryDate = new Date(nextPrimaryDate);
+    const primaryDate = new Date(nextPrimaryDate + 'T12:00:00');
     if (!isNaN(primaryDate.getTime()) && primaryDate > now) {
       return { onBallot: true, termEndDate: date || primaryDate, electionDate: primaryDate, electionLabel: 'Primary' };
     }
@@ -65,7 +65,7 @@ export function getSeatBallotStatus(termEnd, precision, nextPrimaryDate, nextGen
 
   // Priority 2: real general date from DB (if in the future)
   if (nextGeneralDate) {
-    const generalDate = new Date(nextGeneralDate);
+    const generalDate = new Date(nextGeneralDate + 'T12:00:00');
     if (!isNaN(generalDate.getTime()) && generalDate > now) {
       return { onBallot: true, termEndDate: date || generalDate, electionDate: generalDate, electionLabel: 'General' };
     }

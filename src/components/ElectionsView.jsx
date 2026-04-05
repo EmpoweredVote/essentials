@@ -234,7 +234,7 @@ export default function ElectionsView({
                           {partyGroup.shuffledCandidates.map((candidate) => {
                             const branch = getBranch(posGroup.districtType, posGroup.cleanedPosition);
                             // All election candidates are on the ballot by definition
-                            const elDate = new Date(election.election_date);
+                            const elDate = new Date(election.election_date + 'T12:00:00');
                             const ballot = { onBallot: true, termEndDate: elDate, electionDate: elDate, electionLabel: election.election_type === 'primary' ? 'Primary' : 'General' };
                             const hasStances = false; // Candidates typically lack stances data
 
