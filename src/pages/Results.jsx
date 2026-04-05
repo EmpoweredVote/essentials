@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { CategorySection, PoliticianCard, useMediaQuery, tierColors } from '@chrisandrewsedu/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, useMediaQuery, tierColors } from '@chrisandrewsedu/ev-ui';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -9,29 +9,13 @@ import LocalFilterSidebar from '../components/LocalFilterSidebar';
 import SegmentedControl from '../components/SegmentedControl';
 import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
-import {
-  classifyCategory,
-  STATE_ORDER,
-  FEDERAL_ORDER,
-  LOCAL_ORDER,
-  orderedEntries,
-  getDisplayName,
-} from '../lib/classify';
-import { GROUP_SORT_OPTIONS, chainComparators } from '../utils/sorters';
+import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchElectionsByAddress, saveMyLocation } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
-
-/** Sort a polList using all sort options for its category, chained as tie-breakers */
-function defaultSort(category, polList) {
-  const opts = GROUP_SORT_OPTIONS[category];
-  if (!opts || opts.length === 0) return polList;
-  const chained = chainComparators(...opts.map((o) => o.cmp('asc')));
-  return [...polList].sort(chained);
-}
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -189,52 +173,6 @@ function simplifyForBody(title, pol) {
   return simplified || title;
 }
 
-
-/**
- * Sub-groups a polList by government_body_name.
- * Returns an array of { title, websiteUrl, pols } objects:
- * - Named sub-groups (sorted alphabetically by body name) come first.
- * - Politicians without a government_body_name fall into an unnamed bucket
- *   using getDisplayName(category) as the title.
- */
-function splitByBodyName(category, polList) {
-  // Don't split judiciary by body name — group all circuit/superior court judges together
-  if (category === 'Local Judiciary') {
-    return [{ title: getDisplayName(category), websiteUrl: undefined, pols: polList }];
-  }
-
-  const named = {};
-  const unnamed = [];
-
-  for (const pol of polList) {
-    if (pol.government_body_name) {
-      if (!named[pol.government_body_name]) {
-        named[pol.government_body_name] = [];
-      }
-      named[pol.government_body_name].push(pol);
-    } else {
-      unnamed.push(pol);
-    }
-  }
-
-  const result = Object.keys(named)
-    .sort()
-    .map((bodyName) => ({
-      title: bodyName,
-      websiteUrl: named[bodyName][0]?.government_body_url || undefined,
-      pols: named[bodyName],
-    }));
-
-  if (unnamed.length > 0) {
-    result.push({
-      title: getDisplayName(category),
-      websiteUrl: undefined,
-      pols: unnamed,
-    });
-  }
-
-  return result;
-}
 
 export default function Results() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -514,54 +452,40 @@ export default function Results() {
     });
   }, [filteredPols, userState]);
 
-  const classified = useMemo(
-    () => federalFiltered.map((p) => ({ pol: p, cat: classifyCategory(p) })),
-    [federalFiltered]
+  const deduped = useMemo(() => {
+    const seen = new Set();
+    return federalFiltered.filter((pol) => {
+      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${pol.government_body_name || ''}-${pol.is_vacant || false}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [federalFiltered]);
+
+  const hierarchy = useMemo(
+    () => groupIntoHierarchy(deduped),
+    [deduped]
   );
 
-  const byTier = useMemo(() => {
-    const map = { Local: {}, State: {}, Federal: {}, Unknown: {} };
-    const seen = new Set();
-    const incumbentSeats = new Set();
+  const filteredHierarchy = useMemo(() => {
+    if (appointedFilter === 'All' && selectedFilter === 'All') return hierarchy;
 
-    for (const { pol, cat } of classified) {
-      // Deduplicate by name + office to handle same person with different external IDs.
-      // Include is_vacant in key to prevent vacant/filled collisions on the same seat.
-      const key = `${pol.first_name}-${pol.last_name}-${pol.office_title}-${cat.group}-${pol.is_vacant || false}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      const tier = map[cat.tier] ? cat.tier : 'Unknown';
-      if (!map[tier][cat.group]) map[tier][cat.group] = [];
-      map[tier][cat.group].push(pol);
-      incumbentSeats.add(seatKey(pol));
-    }
-
-    return map;
-  }, [classified]);
-
-  // Elected/Appointed filter — applied within tier/group buckets (per D-01)
-  const appointedFilteredByTier = useMemo(() => {
-    if (appointedFilter === 'All') return byTier;
-    const result = {};
-    for (const [tier, groups] of Object.entries(byTier)) {
-      result[tier] = {};
-      for (const [group, pols] of Object.entries(groups)) {
-        const filtered = pols.filter(pol => matchesAppointedFilter(pol, appointedFilter));
-        if (filtered.length > 0) result[tier][group] = filtered;
-      }
-    }
-    return result;
-  }, [byTier, appointedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Filter by selected level
-  const displayedPoliticians = useMemo(() => {
-    if (selectedFilter === 'All') {
-      return appointedFilteredByTier;
-    }
-    return {
-      [selectedFilter]: appointedFilteredByTier[selectedFilter] || {},
-    };
-  }, [appointedFilteredByTier, selectedFilter]);
+    return hierarchy
+      .filter(({ tier }) => selectedFilter === 'All' || tier === selectedFilter)
+      .map(({ tier, bodies }) => ({
+        tier,
+        bodies: bodies.map((body) => ({
+          ...body,
+          subgroups: body.subgroups.map((sg) => ({
+            ...sg,
+            pols: appointedFilter === 'All'
+              ? sg.pols
+              : sg.pols.filter((pol) => matchesAppointedFilter(pol, appointedFilter)),
+          })).filter((sg) => sg.pols.length > 0),
+        })).filter((body) => body.subgroups.length > 0),
+      }))
+      .filter(({ bodies }) => bodies.length > 0);
+  }, [hierarchy, appointedFilter, selectedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Location label
   const locationLabel = useMemo(() => {
@@ -956,116 +880,63 @@ export default function Results() {
           {/* Results */}
           {phase !== 'loading' && (
               <div className="px-4 md:px-8 pt-6 pb-8">
-                {Object.entries(displayedPoliticians).map(([tier, groups]) => {
-                  const hasGroups = Object.keys(groups).length > 0;
+                {/* Empty states for tiers with no data */}
+                {phase !== 'loading' && activeQuery && ['Local', 'State'].map((tier) => {
+                  const tierKey = tier.toLowerCase();
+                  const tierStyle = tierColors[tierKey];
+                  const hasTier = filteredHierarchy.some(h => h.tier === tier);
+                  if (hasTier) return null;
+                  // Only show if filtering to All or this specific tier
+                  if (selectedFilter !== 'All' && selectedFilter !== tier) return null;
 
-                  // Empty-state for Local/State: when no data but search is active
-                  if (!hasGroups && (tier === 'Local' || tier === 'State') && activeQuery) {
-                    const isFirst = tier === 'Local';
-                    const emptyMessage = appointedFilter !== 'All'
-                      ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
-                      : `${tier} representative data is not yet available for this area.`;
-                    return (
-                      <div key={tier} data-tier={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors[tier.toLowerCase()]?.bg ?? '#FFFFFF' }}>
-                        {selectedFilter === 'All' && (
-                          <div className="mb-3">
-                            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors[tier.toLowerCase()]?.text }}>{tier}</span>
-                          </div>
-                        )}
-                        <p className="mt-4 text-gray-500">
-                          {emptyMessage}
-                        </p>
-                      </div>
-                    );
-                  }
-
-                  if (!hasGroups) return null;
+                  const emptyMessage = appointedFilter !== 'All'
+                    ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
+                    : `${tier} representative data is not yet available for this area.`;
 
                   return (
-                    <div key={tier}>
-                      {tier === 'Local' && (
-                        <div data-tier="Local" className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors.local.bg }}>
-                          {selectedFilter === 'All' && (
-                            <div className="mb-3">
-                              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors.local.text }}>Local</span>
-                            </div>
-                          )}
-                          {orderedEntries(groups, LOCAL_ORDER).map(([category, polList]) =>
-                            splitByBodyName(category, polList).map(({ title, websiteUrl, pols }, idx) => (
-                              <CategorySection
-                                key={`${category}-${title}-${idx}`}
-                                title={title}
-                                websiteUrl={websiteUrl}
-                                tier="local"
-                              >
-                                {defaultSort(category, pols).map((pol) =>
-                                  renderSeatGroup(pol)
-                                )}
-                              </CategorySection>
-                            ))
-                          )}
+                    <div key={`empty-${tier}`} data-tier={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierStyle?.bg ?? '#FFFFFF' }}>
+                      {selectedFilter === 'All' && (
+                        <div className="mb-3">
+                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle?.text }}>{tier}</span>
                         </div>
                       )}
+                      <p className="mt-4 text-gray-500">{emptyMessage}</p>
+                    </div>
+                  );
+                })}
 
-                      {tier === 'State' && (
-                        <div data-tier="State" className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors.state.bg }}>
-                          {selectedFilter === 'All' && (
-                            <div className="mb-3">
-                              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors.state.text }}>State</span>
-                            </div>
-                          )}
-                          {orderedEntries(groups, STATE_ORDER).map(([category, polList]) => {
-                            // State legislative groups: use government_name to qualify
-                            // e.g., "State Senate" → "Indiana State Senate"
-                            const stateName = polList[0]?.government_name?.split(',')[0]?.replace(/^State of /, '') || '';
-                            const qualifiedTitle = stateName
-                              ? `${stateName} ${category.replace('State ', '').replace('State House/Assembly', 'House of Representatives')}`
-                              : category;
-                            return (
-                              <CategorySection
-                                key={category}
-                                title={qualifiedTitle}
-                                tier="state"
-                              >
-                                {defaultSort(category, polList).map((pol) =>
-                                  renderSeatGroup(pol)
-                                )}
-                              </CategorySection>
-                            );
-                          })}
-                        </div>
-                      )}
+                {filteredHierarchy.map(({ tier, bodies }) => {
+                  const tierKey = tier.toLowerCase();
+                  const tierStyle = tierColors[tierKey];
+                  if (!tierStyle) return null;
 
-                      {tier === 'Federal' && (
-                        <div data-tier="Federal" className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierColors.federal.bg }}>
-                          {selectedFilter === 'All' && (
-                            <div className="mb-3">
-                              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierColors.federal.text }}>Federal</span>
-                            </div>
-                          )}
-                          {orderedEntries(groups, FEDERAL_ORDER).map(([category, polList]) => {
-                            // Federal groups: qualify with state for House reps
-                            // e.g., "U.S. House" → "U.S. House of Representatives - Indiana"
-                            let qualifiedTitle = category;
-                            if (category === 'U.S. House' && polList[0]?.representing_state) {
-                              const stateNames = { IN: 'Indiana', CA: 'California' };
-                              const stateFull = stateNames[polList[0].representing_state] || polList[0].representing_state;
-                              qualifiedTitle = `U.S. House of Representatives - ${stateFull}`;
-                            }
-                            return (
-                              <CategorySection
-                                key={category}
-                                title={qualifiedTitle}
-                                tier="federal"
-                              >
-                                {defaultSort(category, polList).map((pol) =>
-                                  renderSeatGroup(pol)
-                                )}
-                              </CategorySection>
-                            );
-                          })}
+                  return (
+                    <div key={tier} data-tier={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierStyle.bg }}>
+                      {selectedFilter === 'All' && (
+                        <div className="mb-3">
+                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
                         </div>
                       )}
+                      {bodies.map((body) => (
+                        <GovernmentBodySection
+                          key={body.key}
+                          title={body.title}
+                          websiteUrl={body.url || undefined}
+                          tier={tierKey}
+                        >
+                          {body.subgroups.map((sg) => (
+                            <SubGroupSection
+                              key={sg.key}
+                              title={sg.label}
+                              websiteUrl={sg.url || undefined}
+                            >
+                              {sg.pols.map((pol) =>
+                                renderSeatGroup(pol)
+                              )}
+                            </SubGroupSection>
+                          ))}
+                        </GovernmentBodySection>
+                      ))}
                     </div>
                   );
                 })}
@@ -1078,7 +949,7 @@ export default function Results() {
 
                 {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
                 {federalFiltered.length > 0 && appointedFilter !== 'All' &&
-                  Object.values(searchFilteredPoliticians).every(groups => Object.keys(groups).length === 0) && (
+                  filteredHierarchy.length === 0 && (
                   <p className="text-sm text-gray-500 text-center py-8">
                     No {appointedFilter.toLowerCase()} officials found for this area.
                   </p>
