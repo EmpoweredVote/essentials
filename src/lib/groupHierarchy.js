@@ -69,25 +69,30 @@ function getAccordionKey(pol) {
   return pol.government_name || 'Unknown';
 }
 
-const FEDERAL_CABINET_KW = ['secretary of'];
-const FEDERAL_AGENCY_KW = ['commission', 'department', 'board', 'authority', 'agency', 'office of', 'bureau'];
+// Cabinet = VP + heads of executive departments (Secretary of X, Attorney General)
+const FEDERAL_CABINET_TITLES = [
+  'vice president',
+  'secretary of state', 'secretary of the treasury', 'secretary of defense',
+  'attorney general',
+  'secretary of the interior', 'secretary of agriculture', 'secretary of commerce',
+  'secretary of labor', 'secretary of health', 'secretary of housing',
+  'secretary of transportation', 'secretary of energy', 'secretary of education',
+  'secretary of veterans', 'secretary of homeland',
+];
 
 function getFederalAccordionKey(pol) {
   const dt = pol.district_type || '';
-  const ch = (pol.chamber_name_formal || pol.chamber_name || '').toLowerCase();
   const title = (pol.office_title || '').toLowerCase();
 
   if (dt === 'NATIONAL_UPPER' || dt === 'NATIONAL_LOWER')
     return 'U.S. Congress';
   if (dt === 'NATIONAL_JUDICIAL')
     return 'U.S. Supreme Court';
-  if (title.includes('president') || title.includes('vice president'))
+  if (title.includes('president') && !title.includes('vice'))
     return 'U.S. Executive';
-  if (FEDERAL_CABINET_KW.some(kw => title.includes(kw)))
-    return 'U.S. Executive';
-  if (FEDERAL_AGENCY_KW.some(kw => ch.includes(kw) || title.includes(kw)))
-    return 'U.S. Agencies & Commissions';
-  return 'U.S. Executive';
+  if (FEDERAL_CABINET_TITLES.some(kw => title.includes(kw)))
+    return 'U.S. Cabinet';
+  return 'U.S. Cabinet-Level Officials';
 }
 
 // ── Sub-group key ────────────────────────────────────────────────
@@ -196,12 +201,13 @@ const STATE_BODY_ORDER_KW = [
   'Supreme Court',
 ];
 
-const FEDERAL_BODY_ORDER_KW = [
-  'Congress',
-  'Executive',
-  'Agencies',
-  'Supreme Court',
-];
+const FEDERAL_BODY_ORDER = {
+  'U.S. Congress': 0,
+  'U.S. Executive': 1,
+  'U.S. Cabinet': 2,
+  'U.S. Cabinet-Level Officials': 3,
+  'U.S. Supreme Court': 4,
+};
 
 function bodyOrderScore(accordionKey, pols) {
   const tier = getTier(pols[0]);
@@ -220,9 +226,8 @@ function bodyOrderScore(accordionKey, pols) {
   }
 
   if (tier === 'Federal') {
-    const key = accordionKey.toLowerCase();
-    const idx = FEDERAL_BODY_ORDER_KW.findIndex(kw => key.includes(kw.toLowerCase()));
-    return idx >= 0 ? idx : 50;
+    const score = FEDERAL_BODY_ORDER[accordionKey];
+    return score !== undefined ? score : 50;
   }
 
   return 50;
