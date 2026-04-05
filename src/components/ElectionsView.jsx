@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { CategorySection, PoliticianCard } from '@chrisandrewsedu/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, tierColors } from '@chrisandrewsedu/ev-ui';
 import IconOverlay from './IconOverlay';
 import { getBranch } from '../utils/branchType';
 
@@ -68,7 +68,61 @@ function getTier(districtType) {
   return 'Local';
 }
 
-const TIER_ORDER = ['Local', 'State', 'Federal', 'Other'];
+/** Derive government body accordion key and sub-group label from a race's position and district type */
+function deriveBodyAndSubGroup(positionName, districtType) {
+  const pos = positionName || '';
+  const dt = districtType || '';
+
+  // Federal
+  if (dt === 'NATIONAL_LOWER' || dt === 'NATIONAL_UPPER') {
+    return { body: 'U.S. Congress', subgroup: pos };
+  }
+  if (dt === 'NATIONAL_EXEC') {
+    return { body: 'U.S. Executive', subgroup: pos };
+  }
+
+  // State
+  if (dt === 'STATE_LOWER' || dt === 'STATE_UPPER') {
+    return { body: 'Indiana General Assembly', subgroup: pos };
+  }
+  if (dt.startsWith('STATE')) {
+    return { body: 'Indiana Executive', subgroup: pos };
+  }
+
+  // Judicial - derive court name from position
+  if (dt === 'JUDICIAL') {
+    const courtMatch = pos.match(/^(?:Judge of the\s+)?(.+?Court)/i);
+    if (courtMatch) {
+      return { body: courtMatch[1], subgroup: pos.replace(/^Judge of the\s+/i, '') };
+    }
+    return { body: 'Courts', subgroup: pos };
+  }
+
+  // County
+  if (dt === 'COUNTY') {
+    const countyMatch = pos.match(/^(.+?\s+County)\s+(.+)$/i);
+    if (countyMatch) {
+      return { body: countyMatch[1], subgroup: countyMatch[2] };
+    }
+    return { body: pos, subgroup: pos };
+  }
+
+  // Local/Township
+  if (dt === 'LOCAL' || dt === 'LOCAL_EXEC') {
+    const townshipMatch = pos.match(/^(.+?\s+Township)\s+(.+)$/i);
+    if (townshipMatch) {
+      return { body: townshipMatch[1], subgroup: townshipMatch[2] };
+    }
+    return { body: pos, subgroup: pos };
+  }
+
+  // School
+  if (dt === 'SCHOOL') {
+    return { body: pos, subgroup: pos };
+  }
+
+  return { body: 'Other', subgroup: pos };
+}
 
 export default function ElectionsView({
   elections,
@@ -85,44 +139,86 @@ export default function ElectionsView({
     return seed;
   }, []);
 
-  // Pre-process elections: group races by tier then by position, shuffle candidates per party ballot
+  // Pre-process elections: group races by tier → government body → sub-group (position + party)
   const processedElections = useMemo(() => {
     if (!elections || elections.length === 0) return [];
 
     return elections.map((election) => {
       const isPrimary = election.election_type === 'primary';
 
-      // Group races by tier, then by cleanedPosition within each tier
-      const tierMap = {};
+      // Build hierarchy: tier → body → subgroup (position + party)
+      const tierMap = {}; // tier → { bodyKey → { races: [] } }
+
       for (const race of election.races) {
         const tier = getTier(race.district_type);
-        if (!tierMap[tier]) tierMap[tier] = {};
-
         const cleaned = cleanPositionName(race.position_name);
+        const { body, subgroup } = deriveBodyAndSubGroup(cleaned, race.district_type);
+        const party = isPrimary && race.primary_party ? race.primary_party : null;
+        const subgroupKey = party ? `${subgroup}||${party}` : subgroup;
+        const subgroupLabel = party ? `${subgroup} — ${party} Primary` : subgroup;
 
-        if (!tierMap[tier][cleaned]) {
-          tierMap[tier][cleaned] = {
-            cleanedPosition: cleaned,
-            districtType: race.district_type,
-            parties: [],
-          };
-        }
+        if (!tierMap[tier]) tierMap[tier] = {};
+        if (!tierMap[tier][body]) tierMap[tier][body] = { races: [] };
 
-        // Each race entry is one party's ballot (for primaries) or the full field (for generals)
-        tierMap[tier][cleaned].parties.push({
-          party: isPrimary && race.primary_party ? race.primary_party : null,
-          shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
+        tierMap[tier][body].races.push({
+          key: subgroupKey,
+          label: subgroupLabel,
+          party,
+          districtType: race.district_type,
           raceId: race.race_id,
+          shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
+          cleanedPosition: cleaned,
         });
       }
 
-      // Convert nested objects to arrays for rendering
-      const tierPositions = {};
-      for (const [tier, positions] of Object.entries(tierMap)) {
-        tierPositions[tier] = Object.values(positions);
-      }
+      // Convert to ordered arrays
+      const TIER_ORDER = ['Local', 'State', 'Federal', 'Other'];
 
-      return { ...election, tierPositions };
+      // Body ordering within tiers (same convention as representatives view)
+      const bodyOrderScore = (bodyKey, tier) => {
+        if (tier === 'Local') {
+          const lower = bodyKey.toLowerCase();
+          if (lower.includes('township')) return 1;
+          if (lower.includes('school')) return 2;
+          if (lower.includes('county') && !lower.includes('court')) return 3;
+          if (lower.includes('court')) return 4;
+          return 0; // city first
+        }
+        if (tier === 'State') {
+          const lower = bodyKey.toLowerCase();
+          if (lower.includes('assembly') || lower.includes('legislature')) return 0;
+          if (lower.includes('executive')) return 1;
+          if (lower.includes('court')) return 2;
+          return 1;
+        }
+        if (tier === 'Federal') {
+          const lower = bodyKey.toLowerCase();
+          if (lower.includes('congress')) return 0;
+          if (lower.includes('executive')) return 1;
+          return 2;
+        }
+        return 0;
+      };
+
+      const hierarchy = TIER_ORDER
+        .filter(tier => tierMap[tier])
+        .map(tier => ({
+          tier,
+          bodies: Object.entries(tierMap[tier])
+            .map(([bodyKey, { races }]) => ({
+              key: bodyKey,
+              title: bodyKey,
+              races: races.sort((a, b) => a.label.localeCompare(b.label)),
+            }))
+            .sort((a, b) => {
+              const sa = bodyOrderScore(a.key, tier);
+              const sb = bodyOrderScore(b.key, tier);
+              if (sa !== sb) return sa - sb;
+              return a.key.localeCompare(b.key);
+            }),
+        }));
+
+      return { ...election, hierarchy };
     });
   }, [elections, sessionSeed]);
 
@@ -197,65 +293,56 @@ export default function ElectionsView({
             </div>
 
             {/* Tier sections: Local > State > Federal */}
-            {TIER_ORDER.map((tier) => {
-              const positions = election.tierPositions[tier];
-              if (!positions || positions.length === 0) return null;
-
-              // Map tier name to tier prop value for CategorySection hue differentiation
-              const tierPropMap = { Federal: 'federal', State: 'state', Local: 'local' };
-              const tierProp = tierPropMap[tier] || undefined;
+            {election.hierarchy.map(({ tier, bodies }) => {
+              const tierKey = tier.toLowerCase();
+              const tierStyle = tierColors[tierKey];
+              if (!tierStyle) return null;
 
               return (
-                <div key={tier}>
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="text-sm font-medium text-gray-500 uppercase tracking-wide">
-                      {tier}
-                    </span>
-                    <hr className="flex-1 border-gray-200" />
+                <div key={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierStyle.bg }}>
+                  <div className="mb-3">
+                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
                   </div>
 
-                  {positions.map((posGroup) => (
-                    <CategorySection
-                      key={posGroup.cleanedPosition}
-                      title={posGroup.cleanedPosition}
-                      tier={tierProp}
+                  {bodies.map((body) => (
+                    <GovernmentBodySection
+                      key={body.key}
+                      title={body.title}
+                      tier={tierKey}
                     >
-                      {posGroup.parties.map((partyGroup) => (
-                        <div key={partyGroup.raceId}>
-                          {/* Party sub-label for primaries — lightweight gray text, not a section header */}
-                          {partyGroup.party && (
-                            <p
-                              className="text-sm text-gray-500 mt-2 mb-1 ml-1"
-                              style={{ fontFamily: "'Manrope', sans-serif" }}
-                            >
-                              {partyGroup.party} Primary
-                            </p>
-                          )}
-                          {partyGroup.shuffledCandidates.map((candidate) => {
-                            const branch = getBranch(posGroup.districtType, posGroup.cleanedPosition);
-                            // All election candidates are on the ballot by definition
+                      {body.races.map((race) => (
+                        <SubGroupSection
+                          key={race.key}
+                          title={race.label}
+                        >
+                          {race.shuffledCandidates.map((candidate) => {
+                            const branch = getBranch(race.districtType, race.cleanedPosition);
                             const elDate = new Date(election.election_date + 'T12:00:00');
-                            const ballot = { onBallot: true, termEndDate: elDate, electionDate: elDate, electionLabel: election.election_type === 'primary' ? 'Primary' : 'General' };
-                            const hasStances = false; // Candidates typically lack stances data
+                            const ballot = {
+                              onBallot: true,
+                              termEndDate: elDate,
+                              electionDate: elDate,
+                              electionLabel: election.election_type === 'primary' ? 'Primary' : 'General',
+                            };
 
                             return (
                               <div key={candidate.candidate_id}>
                                 <PoliticianCard
                                   id={candidate.candidate_id}
                                   imageSrc={candidate.photo_url || undefined}
-                                  imageFocalPoint={candidate.focal_point || 'center 20%'} // TODO: wire focal_point when elections API includes it
+                                  imageFocalPoint={candidate.focal_point || 'center 20%'}
                                   name={candidate.full_name}
-                                  title={posGroup.cleanedPosition}
+                                  title={race.cleanedPosition}
                                   onClick={() => onCandidateClick(candidate.candidate_id)}
                                   variant="horizontal"
-                                  footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
+                                  footer={<IconOverlay ballot={ballot} hasStances={false} branch={branch} />}
                                 />
                               </div>
                             );
                           })}
-                        </div>
+                        </SubGroupSection>
                       ))}
-                    </CategorySection>
+                    </GovernmentBodySection>
                   ))}
                 </div>
               );
