@@ -694,7 +694,7 @@ export default function Results() {
 
     const imgData = getImageData(pol);
     return (
-      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative' }}>
+      <div key={pol.id} data-pol-id={pol.id}>
         <PoliticianCard
           id={pol.id}
           imageSrc={imgData.url}
@@ -713,19 +713,21 @@ export default function Results() {
             }
           }}
           variant="horizontal"
-        />
-        <IconOverlay
-          ballot={ballot}
-          hasStances={hasStances}
-          branch={branch}
-          onCompassClick={hasStances ? (e) => {
-            setPreviewPol({
-              id: pol.id,
-              name: `${pol.first_name} ${pol.last_name}`,
-              shortTitle: formatLegendName(pol),
-              anchorEl: e.currentTarget,
-            });
-          } : undefined}
+          footer={
+            <IconOverlay
+              ballot={ballot}
+              hasStances={hasStances}
+              branch={branch}
+              onCompassClick={hasStances ? (e) => {
+                setPreviewPol({
+                  id: pol.id,
+                  name: `${pol.first_name} ${pol.last_name}`,
+                  shortTitle: formatLegendName(pol),
+                  anchorEl: e.currentTarget,
+                });
+              } : undefined}
+            />
+          }
         />
       </div>
     );

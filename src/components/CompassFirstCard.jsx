@@ -232,19 +232,13 @@ export default function CompassFirstCard({ politician, mockAnswers, variant = 'A
         {politician.office_title || ''}
       </p>
 
-      {/* Icon row — IconOverlay uses position:absolute (for photo overlays).
-          Override via a wrapper that resets its child to static flow. */}
       {(politician.ballot || mockAnswers || politician.branch) && (
-        <div
-          className="compass-card-icons"
-          style={{ alignSelf: horizontal ? 'flex-start' : 'center' }}
-        >
+        <div style={{ alignSelf: horizontal ? 'flex-start' : 'center' }}>
           <IconOverlay
             ballot={politician.ballot || null}
             hasStances={Boolean(mockAnswers)}
             branch={politician.branch || null}
           />
-          <style>{`.compass-card-icons > div { position: static !important; background: none !important; padding: 0 !important; }`}</style>
         </div>
       )}
     </div>

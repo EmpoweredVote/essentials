@@ -239,7 +239,7 @@ export default function ElectionsView({
                             const hasStances = false; // Candidates typically lack stances data
 
                             return (
-                              <div key={candidate.candidate_id} style={{ position: 'relative' }}>
+                              <div key={candidate.candidate_id}>
                                 <PoliticianCard
                                   id={candidate.candidate_id}
                                   imageSrc={candidate.photo_url || undefined}
@@ -248,8 +248,8 @@ export default function ElectionsView({
                                   title={posGroup.cleanedPosition}
                                   onClick={() => onCandidateClick(candidate.candidate_id)}
                                   variant="horizontal"
+                                  footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
                                 />
-                                <IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />
                               </div>
                             );
                           })}
