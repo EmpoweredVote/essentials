@@ -81,8 +81,8 @@ function IconWithTooltip({ IconComponent, color, tooltip, size = 14, extraProps 
 }
 
 /**
- * IconOverlay — renders a semi-transparent strip of icon badges with accessible
- * tooltips, positioned in the bottom-right corner of a politician card photo area.
+ * IconOverlay — renders a row of icon badges with accessible tooltips below
+ * politician card text content (static flow, left-aligned, no background).
  *
  * @param {{
  *   ballot: { onBallot: boolean, termEndDate: Date, electionDate: Date } | null,
@@ -101,16 +101,11 @@ export default function IconOverlay({ ballot, hasStances, branch, onCompassClick
   return (
     <div
       style={{
-        position: 'absolute',
-        bottom: 4,
-        right: 4,
         display: 'flex',
         gap: 4,
         alignItems: 'center',
-        padding: 4,
-        background: 'rgba(255,255,255,0.82)',
-        borderRadius: 4,
-        zIndex: 1,
+        justifyContent: 'flex-start',
+        padding: 0,
       }}
     >
       {ballot && (
