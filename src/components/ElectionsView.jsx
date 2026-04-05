@@ -157,6 +157,7 @@ function deriveBodyAndSubGroup(positionName, districtType) {
 export default function ElectionsView({
   elections,
   loading,
+  tierFilter = 'All',
   onCandidateClick,
 }) {
   // Session seed for stable candidate randomization
@@ -323,7 +324,9 @@ export default function ElectionsView({
             </div>
 
             {/* Tier sections: Local > State > Federal */}
-            {election.hierarchy.map(({ tier, bodies }) => {
+            {election.hierarchy
+              .filter(({ tier }) => tierFilter === 'All' || tier === tierFilter)
+              .map(({ tier, bodies }) => {
               const tierKey = tier.toLowerCase();
               const tierStyle = tierColors[tierKey];
               if (!tierStyle) return null;

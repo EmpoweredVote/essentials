@@ -977,6 +977,7 @@ export default function Results() {
               <ElectionsView
                 elections={electionsData}
                 loading={electionsLoading}
+                tierFilter={selectedFilter}
                 onCandidateClick={(id) => {
                   const scrollTop = isDesktop
                     ? mainRef.current?.scrollTop ?? 0
