@@ -2,7 +2,7 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord } from '../lib/api';
 import { apiFetch } from '../lib/auth';
-import { PoliticianProfile } from '@chrisandrewsedu/ev-ui';
+import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, tierColors } from '@chrisandrewsedu/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, tierColors } from '@empoweredvote/ev-ui';
 import IconOverlay from './IconOverlay';
 import { getBranch } from '../utils/branchType';
 

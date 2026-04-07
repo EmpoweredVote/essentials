@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
-import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
+import { RadarChartCore } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 

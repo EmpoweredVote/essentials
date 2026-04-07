@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchJudicialRecord } from '../lib/api';
-import { JudicialRecordDetail } from '@chrisandrewsedu/ev-ui';
+import { JudicialRecordDetail } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 
 function JudicialRecord() {

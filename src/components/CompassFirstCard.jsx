@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { RadarChartCore } from '@chrisandrewsedu/ev-ui';
+import { RadarChartCore } from '@empoweredvote/ev-ui';
 import { useCompass } from '../contexts/CompassContext';
 import { buildAnswerMapByShortTitle } from '../lib/compass';
 import { MOCK_TOPICS, MOCK_USER_COMPASS } from '../data/mockCompassData';

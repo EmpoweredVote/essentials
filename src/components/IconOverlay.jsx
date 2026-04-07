@@ -12,7 +12,7 @@ import {
   shift,
   autoUpdate,
 } from '@floating-ui/react';
-import { BallotIcon, CompassIcon, BranchIcon } from '@chrisandrewsedu/ev-ui';
+import { BallotIcon, CompassIcon, BranchIcon } from '@empoweredvote/ev-ui';
 
 /**
  * A single icon wrapped in an accessible tooltip using @floating-ui/react.

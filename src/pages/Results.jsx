@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, useMediaQuery, tierColors } from '@chrisandrewsedu/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, useMediaQuery, tierColors } from '@empoweredvote/ev-ui';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';

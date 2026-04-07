@@ -7,7 +7,7 @@ import {
   fetchLegislativeBills,
   fetchLegislativeVotes,
 } from '../lib/api';
-import { LegislativeRecord } from '@chrisandrewsedu/ev-ui';
+import { LegislativeRecord } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 
 function LegislativeRecordPage() {

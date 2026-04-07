@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { RadarChartCore, StanceAccordion } from '@chrisandrewsedu/ev-ui';
+import { RadarChartCore, StanceAccordion } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 

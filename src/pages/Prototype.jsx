@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { SiteHeader, CategorySection } from '@chrisandrewsedu/ev-ui';
+import { SiteHeader, CategorySection } from '@empoweredvote/ev-ui';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
   classifyCategory,
