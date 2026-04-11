@@ -7,6 +7,7 @@ import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
+import { useCompass } from '../contexts/CompassContext';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
@@ -25,6 +26,7 @@ function Profile() {
   const [legislativeSummary, setLegislativeSummary] = useState(null);
   const [activeElection, setActiveElection] = useState(null);
   const [judicialRecord, setJudicialRecord] = useState(null);
+  const { politicianIdsWithStances } = useCompass();
 
   // Fetch politician, legislative summary, elections, and judicial record in parallel
   useEffect(() => {
@@ -166,11 +168,62 @@ function Profile() {
             onNavigateToRecord={(href) => navigate(href)}
           />
 
-          <CompassCard
-            politicianId={id}
-            politicianName={pol.first_name ? `${pol.first_name} ${pol.last_name}` : ''}
-            politicianTitle={pol.office_title || ''}
-          />
+          {(() => {
+            // Plan C: explicit treatment for offices where compass doesn't apply
+            const engagement = pol.policy_engagement_level || 'full';
+            const hasStances = politicianIdsWithStances.has(String(id));
+
+            // Administrative offices — no compass comparison applies
+            if (engagement === 'none') {
+              return (
+                <section className="mt-8">
+                  <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                    Compass &amp; Issues
+                  </h2>
+                  <div className="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <p className="text-gray-600" style={{ fontSize: '15px', lineHeight: 1.6, margin: 0 }}>
+                      This is an administrative office — it doesn't take policy positions,
+                      so no compass comparison applies. See the role description and contact
+                      information above.
+                    </p>
+                  </div>
+                </section>
+              );
+            }
+
+            // Contested judges without stance research — honest placeholder.
+            // Use district_type (reliably set by backend) instead of is_judicial
+            // (which is not on the API response per pre-execution verification).
+            const isJudge =
+              pol.district_type === 'JUDICIAL' || pol.district_type === 'NATIONAL_JUDICIAL';
+            if (isJudge && engagement === 'full' && !hasStances) {
+              return (
+                <section className="mt-8">
+                  <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                    Compass &amp; Issues
+                  </h2>
+                  <div className="bg-white rounded-xl shadow-sm p-6 text-center">
+                    <p className="text-gray-600 mb-2" style={{ fontSize: '15px', lineHeight: 1.6 }}>
+                      Judges are typically evaluated on their record rather than stated policy positions.
+                    </p>
+                    <p className="text-gray-500" style={{ fontSize: '14px', lineHeight: 1.6, margin: 0 }}>
+                      We're working on surfacing judicial records. In the meantime, you can review the
+                      role description and contact information above.
+                    </p>
+                  </div>
+                </section>
+              );
+            }
+
+            // Default: render the existing CompassCard
+            return (
+              <CompassCard
+                politicianId={id}
+                politicianName={pol.first_name ? `${pol.first_name} ${pol.last_name}` : ''}
+                politicianTitle={pol.office_title || ''}
+              />
+            );
+          })()}
           <div className="mt-6">
             <CampaignFinanceSection politicianId={id} />
           </div>

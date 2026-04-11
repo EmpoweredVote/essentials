@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, useMediaQuery, tierColors } from '@empoweredvote/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, useMediaQuery, tierColors, CompassCoverageCallout, computeTierCoverage } from '@empoweredvote/ev-ui';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -544,6 +544,30 @@ export default function Results() {
     navigate(`/politician/${id}`);
   };
 
+  // Plan C: tier coverage analysis for the coverage callout
+  const selectedTopicObjects = (allTopics ?? []).filter((t) =>
+    (selectedTopics ?? []).map(String).includes(String(t.id))
+  );
+  const tierCoverage = computeTierCoverage(selectedTopicObjects);
+  const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
+
+  // Build a list of tiers that (a) have <3 applicable topics in the user's compass
+  // and (b) are present in the current results set. We use the group filter if
+  // one is selected; otherwise we show callouts for all under-covered tiers.
+  // Note: selectedFilter is capitalized ('All'|'Local'|'State'|'Federal'), so we
+  // lowercase it to match the CompassCoverageCallout tier prop.
+  const currentResultsTiers = (() => {
+    if (selectedFilter && selectedFilter !== 'All') {
+      return [selectedFilter.toLowerCase()];
+    }
+    return ['federal', 'state', 'local'];
+  })();
+
+  const underCoveredTiers = currentResultsTiers.filter((tier) => {
+    if (!selectedTopics || selectedTopics.length === 0) return false;
+    return tierCoverage[tier] < 3;
+  });
+
   /** Render a politician or candidate card with election date below for candidates */
   const renderPoliticianCard = (pol) => {
     const isCandidate = pol.is_candidate;
@@ -892,6 +916,20 @@ export default function Results() {
           {/* Results */}
           {phase !== 'loading' && (
               <div className="px-4 md:px-8 pt-6 pb-8">
+                {/* Plan C: tier coverage callouts for under-covered tiers */}
+                {underCoveredTiers.length > 0 && (
+                  <div className="mb-2">
+                    {underCoveredTiers.map((tier) => (
+                      <CompassCoverageCallout
+                        key={tier}
+                        tier={tier}
+                        count={tierCoverage[tier]}
+                        totalSelected={selectedTopics?.length ?? 0}
+                        compassUrl={`${COMPASS_URL}?return=${encodeURIComponent(window.location.href)}`}
+                      />
+                    ))}
+                  </div>
+                )}
                 {/* Empty states for tiers with no data */}
                 {phase !== 'loading' && activeQuery && ['Local', 'State'].map((tier) => {
                   const tierKey = tier.toLowerCase();

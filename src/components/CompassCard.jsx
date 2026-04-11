@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { RadarChartCore, StanceAccordion } from '@empoweredvote/ev-ui';
+import { RadarChartCore, StanceAccordion, ExpandCompassNudge } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 
@@ -138,6 +138,12 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     allPolTopics = allTopics.filter((t) => polAnsweredIds.has(String(t.id)));
   }
 
+  // Plan C: count topics the politician has stances on that the user hasn't answered
+  const userAnsweredIds = new Set((userAnswers ?? []).map((a) => String(a.topic_id)));
+  const missingTopicCount = allPolTopics.filter(
+    (t) => !userAnsweredIds.has(String(t.id))
+  ).length;
+
   const hasData = topicsFiltered.length > 0;
 
   // Build legend name: "[Position] [Last Name]"
@@ -157,6 +163,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
       <div className="bg-white rounded-xl shadow-sm p-6">
         {hasUserCompass ? (
+          <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Left zone: radar chart */}
             <div className="flex flex-col items-start">
@@ -324,6 +331,14 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               )}
             </div>
           </div>
+          {!polLoading && missingTopicCount > 0 && (
+            <ExpandCompassNudge
+              politicianName={politicianName}
+              missingCount={missingTopicCount}
+              compassUrl={ctaHref}
+            />
+          )}
+          </>
         ) : (
           /* Guest fallback — 2-column: CTA left, accordion right */
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
