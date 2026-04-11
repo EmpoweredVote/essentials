@@ -279,14 +279,18 @@ export default function Results() {
     }
   }, [isPrefilled, compassLoading, myRepresentatives, myRepresentativesAddress, userJurisdiction]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Auto-save location for Connected users: fires once per address on a successful search.
+  // Auto-save location for Connected users: fires only when no location is on file yet.
+  // Do NOT fire when the user already has a saved location — require explicit user action to update.
+  // Prevents automated tools (e.g. Playwright) or repeated searches from silently overwriting
+  // stored coordinates with a different address.
   const savedAddressRef = useRef(null);
   useEffect(() => {
     if (!isLoggedIn || !formattedAddress || phase !== 'fresh' || searchMode === 'browse') return;
-    if (savedAddressRef.current === formattedAddress) return; // already saved this address
+    if (compassLoading || (myRepresentatives && myRepresentatives.length > 0)) return; // location already on file
+    if (savedAddressRef.current === formattedAddress) return;
     savedAddressRef.current = formattedAddress;
     saveMyLocation(activeQuery).catch(() => {});
-  }, [isLoggedIn, formattedAddress, phase, activeQuery, searchMode]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isLoggedIn, formattedAddress, phase, activeQuery, searchMode, compassLoading, myRepresentatives]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Active compass preview state: { id, name, anchorEl } or null
   const [previewPol, setPreviewPol] = useState(null);
