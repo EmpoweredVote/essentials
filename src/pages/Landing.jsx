@@ -12,7 +12,7 @@ const COVERAGE_AREAS = [
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
   const navigate = useNavigate();
-  const { isLoggedIn, myRepresentatives, compassLoading } = useCompass();
+  const { isLoggedIn, myRepresentatives, myLocationNotSet, compassLoading } = useCompass();
 
   // Auto-redirect Connected users who have representatives data — skip address input entirely
   useEffect(() => {
@@ -75,33 +75,53 @@ export default function Landing() {
               </button>
             </div>
 
-            {/* "or search by address" divider */}
-            <div className="relative my-6">
-              <hr className="border-gray-200" />
-              <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] px-3 text-sm text-gray-400">
-                or search by address
-              </span>
-            </div>
+            {!compassLoading && isLoggedIn && myLocationNotSet ? (
+              /* Connected user with no location stored — direct them to set it in their profile */
+              <div className="mt-6 px-6 py-5 bg-white border border-[var(--ev-teal)] rounded-lg shadow-sm text-center">
+                <p className="text-gray-700 mb-3">
+                  You're logged in, but your home location hasn't been set yet.
+                </p>
+                <a
+                  href="https://app.empowered.vote/settings/location"
+                  className="inline-block px-6 py-3 text-base font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] transition-colors"
+                >
+                  Set your location in your profile
+                </a>
+                <p className="text-sm text-gray-400 mt-3">
+                  Once set, we'll take you straight to your elected leaders on every visit.
+                </p>
+              </div>
+            ) : (
+              <>
+                {/* "or search by address" divider */}
+                <div className="relative my-6">
+                  <hr className="border-gray-200" />
+                  <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] px-3 text-sm text-gray-400">
+                    or search by address
+                  </span>
+                </div>
 
-            {/* Search Input + Button */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                ref={inputRef}
-                type="text"
-                value={addressInput}
-                onChange={(e) => setAddressInput(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                placeholder="Enter your full street address"
-                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
-              />
-              <button
-                onClick={handleSearch}
-                disabled={!addressInput.trim()}
-                className="px-4 sm:px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Search
-              </button>
-            </div>
+                {/* Search Input + Button */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={addressInput}
+                    onChange={(e) => setAddressInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    placeholder="Enter your full street address"
+                    className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
+                  />
+                  <button
+                    onClick={handleSearch}
+                    disabled={!addressInput.trim()}
+                    className="px-4 sm:px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Search
+                  </button>
+                </div>
+              </>
+            )}
           </div>
 
 

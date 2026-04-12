@@ -149,7 +149,7 @@ export async function fetchPolitician(id) {
 export async function fetchMyRepresentatives() {
   const res = await apiFetch('/essentials/representatives/me');
   if (!res) return { data: [], error: null, formattedAddress: '' }; // 401 — apiFetch already redirected
-  if (res.status === 204) return { data: [], error: null, formattedAddress: '' }; // no saved location
+  if (res.status === 204) return { data: [], error: null, formattedAddress: '', noLocation: true }; // Connected but no location set
   if (!res.ok) return { data: [], error: `${res.status}`, formattedAddress: '' };
   const formattedAddress =
     res.headers.get('X-Formatted-Address') || res.headers.get('x-formatted-address') || '';

@@ -15,6 +15,9 @@ import { getToken, clearToken, redirectToLogin, extractHashToken } from "./lib/a
 // Extract JWT from hash fragment on every page load (Auth Hub callback handler)
 extractHashToken();
 
+// One-time cleanup of legacy localStorage keys from pre-refactor code (Oct 2025)
+localStorage.removeItem('lastZip');
+
 function RequireAuth({ children }) {
   if (!getToken()) {
     redirectToLogin();

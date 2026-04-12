@@ -39,6 +39,7 @@ export function CompassProvider({ children }) {
   const [compassLoading, setCompassLoading] = useState(true);
   const [myRepresentatives, setMyRepresentatives] = useState(null);
   const [myRepresentativesAddress, setMyRepresentativesAddress] = useState(null);
+  const [myLocationNotSet, setMyLocationNotSet] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -121,6 +122,8 @@ export function CompassProvider({ children }) {
           if (!cancelled && !repsResult.error && repsResult.data.length > 0) {
             setMyRepresentatives(repsResult.data);
             setMyRepresentativesAddress(repsResult.formattedAddress || null);
+          } else if (!cancelled && repsResult.noLocation) {
+            setMyLocationNotSet(true);
           }
           clearGuestCompass(); // Clean separation: logged-in = API only
         } else if (fragment) {
@@ -220,6 +223,7 @@ export function CompassProvider({ children }) {
       compassLoading,
       myRepresentatives,
       myRepresentativesAddress,
+      myLocationNotSet,
       logout,
     }),
     [
@@ -236,6 +240,7 @@ export function CompassProvider({ children }) {
       compassLoading,
       myRepresentatives,
       myRepresentativesAddress,
+      myLocationNotSet,
     ]
   );
 
