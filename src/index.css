@@ -82,3 +82,14 @@ body {
   font-size: 14px;
   color: #111827;
 }
+
+/* Politician card: never truncate names — allow wrap to 2 lines */
+.ev-politician-card h3 {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  line-height: 1.25 !important;
+}
