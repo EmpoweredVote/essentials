@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
-import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 const COVERAGE_AREAS = [
   { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
@@ -31,14 +30,6 @@ export default function Landing() {
     document.addEventListener('visibilitychange', handleVisible);
     return () => document.removeEventListener('visibilitychange', handleVisible);
   }, [myLocationNotSet]);
-
-  const inputRef = useRef(null);
-  useGooglePlacesAutocomplete(inputRef, {
-    onPlaceSelected: (addr) => {
-      setAddressInput(addr);
-      navigate(`/results?q=${encodeURIComponent(addr)}`);
-    },
-  });
 
   const handleSearch = () => {
     if (!addressInput.trim()) return;
@@ -110,7 +101,6 @@ export default function Landing() {
             {/* Search Input + Button */}
             <div className="flex flex-col sm:flex-row gap-3">
               <input
-                ref={inputRef}
                 type="text"
                 value={addressInput}
                 onChange={(e) => setAddressInput(e.target.value)}
