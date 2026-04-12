@@ -28,8 +28,13 @@ export function getBranch(districtType, officeTitle) {
 
     case 'COUNTY': {
       const title = officeTitle || '';
-      if (/council|commissioner/i.test(title)) return 'Legislative';
-      if (/sheriff|clerk|auditor|assessor|recorder|coroner|treasurer/i.test(title)) return 'Executive';
+      // County Council = legislative (appropriations, ordinances)
+      if (/council/i.test(title)) return 'Legislative';
+      // County Commissioners = executive (run day-to-day county government)
+      if (/commissioner/i.test(title)) return 'Executive';
+      // Other constitutional county officers = executive
+      if (/sheriff|clerk|auditor|assessor|recorder|coroner|treasurer|prosecutor|surveyor/i.test(title))
+        return 'Executive';
       return null;
     }
 
