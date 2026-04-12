@@ -111,7 +111,7 @@ export default function IconOverlay({ ballot, hasStances, branch, onCompassClick
       {ballot && (
         <IconWithTooltip
           IconComponent={BallotIcon}
-          color="#003E4D"
+          color="#00657C"
           tooltip={ballotTooltip}
           size={14}
         />
@@ -128,7 +128,7 @@ export default function IconOverlay({ ballot, hasStances, branch, onCompassClick
       {branch && (
         <IconWithTooltip
           IconComponent={BranchIcon}
-          color="#005366"
+          color="#00657C"
           tooltip={`${branch} branch`}
           size={14}
           extraProps={{ branch: branch.toLowerCase() }}
