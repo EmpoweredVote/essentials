@@ -21,6 +21,17 @@ export default function Landing() {
     }
   }, [compassLoading, isLoggedIn, myRepresentatives, navigate]);
 
+  // Re-check when the user returns to this tab after setting their location elsewhere
+  // (CompassContext loads once on mount; visibilitychange triggers a fresh load)
+  useEffect(() => {
+    if (!myLocationNotSet) return;
+    const handleVisible = () => {
+      if (document.visibilityState === 'visible') window.location.reload();
+    };
+    document.addEventListener('visibilitychange', handleVisible);
+    return () => document.removeEventListener('visibilitychange', handleVisible);
+  }, [myLocationNotSet]);
+
   const inputRef = useRef(null);
   useGooglePlacesAutocomplete(inputRef, {
     onPlaceSelected: (addr) => {
