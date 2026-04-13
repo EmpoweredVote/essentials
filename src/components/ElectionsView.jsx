@@ -1,7 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import {
+  useFloating, useHover, useFocus, useDismiss, useRole, useInteractions,
+  FloatingPortal, offset, flip, shift, autoUpdate,
+} from '@floating-ui/react';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, tierColors, pillars } from '@empoweredvote/ev-ui';
 import IconOverlay from './IconOverlay';
 import { getBranch } from '../utils/branchType';
+import { getOfficeDescription } from '../utils/officeDescriptions';
 
 /** Timezone-safe days-until helper */
 function daysUntil(dateStr) {
@@ -146,6 +151,76 @@ function deriveBodyAndSubGroup(positionName, districtType) {
   }
 
   return { body: 'Other', subgroup: pos };
+}
+
+/** Small ⓘ icon that shows the office's responsibilities on hover */
+function RoleInfoTooltip({ description }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    middleware: [offset(6), flip(), shift({ padding: 6 })],
+    whileElementsMounted: autoUpdate,
+  });
+  const hover = useHover(context);
+  const focus = useFocus(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: 'tooltip' });
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
+
+  return (
+    <>
+      <span
+        ref={refs.setReference}
+        tabIndex={0}
+        aria-label="About this office"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          cursor: 'default',
+          opacity: 0.5,
+          textTransform: 'none',
+          letterSpacing: 'normal',
+          lineHeight: 1,
+          marginLeft: '3px',
+          verticalAlign: 'middle',
+        }}
+        {...getReferenceProps()}
+      >
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5" />
+          <rect x="7.25" y="7" width="1.5" height="5" rx="0.75" fill="currentColor" />
+          <rect x="7.25" y="4" width="1.5" height="1.5" rx="0.75" fill="currentColor" />
+        </svg>
+      </span>
+      {isOpen && (
+        <FloatingPortal>
+          <div
+            ref={refs.setFloating}
+            style={{
+              ...floatingStyles,
+              zIndex: 70,
+              background: '#2F3237',
+              color: '#EBEDEF',
+              padding: '8px 10px',
+              borderRadius: '6px',
+              fontSize: '13px',
+              fontFamily: "'Manrope', sans-serif",
+              pointerEvents: 'none',
+              maxWidth: '260px',
+              lineHeight: 1.45,
+              textTransform: 'none',
+              letterSpacing: 'normal',
+              fontWeight: 400,
+            }}
+            {...getFloatingProps()}
+          >
+            {description}
+          </div>
+        </FloatingPortal>
+      )}
+    </>
+  );
 }
 
 export default function ElectionsView({
@@ -438,7 +513,16 @@ export default function ElectionsView({
                             }}
                           >
                             <SubGroupSection
-                              title={race.label}
+                              title={(() => {
+                                const desc = getOfficeDescription(race.cleanedPosition);
+                                if (!desc) return race.label;
+                                return (
+                                  <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                    {race.label}
+                                    <RoleInfoTooltip description={desc} />
+                                  </span>
+                                );
+                              })()}
                             >
                               {isEmpty ? (
                                 <div
@@ -486,16 +570,16 @@ export default function ElectionsView({
                                           style={{
                                             position: 'absolute',
                                             bottom: 0,
-                                            left: 0,
-                                            right: 0,
-                                            backgroundColor: 'rgba(90,0,0,0.62)',
+                                            left: '0',
+                                            width: '64px',
+                                            backgroundColor: 'rgba(120,0,0,0.78)',
                                             color: '#fff',
-                                            fontSize: '9px',
+                                            fontSize: '8px',
                                             fontWeight: 700,
-                                            letterSpacing: '0.5px',
+                                            letterSpacing: '0.4px',
                                             textAlign: 'center',
                                             textTransform: 'uppercase',
-                                            padding: '4px 0',
+                                            padding: '3px 0',
                                             pointerEvents: 'none',
                                           }}
                                         >
