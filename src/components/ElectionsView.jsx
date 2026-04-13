@@ -101,20 +101,14 @@ function deriveBodyAndSubGroup(positionName, districtType) {
   const pos = positionName || '';
   const dt = districtType || '';
 
-  // Federal
-  if (dt === 'NATIONAL_LOWER' || dt === 'NATIONAL_UPPER') {
-    return { body: 'U.S. Congress', subgroup: pos };
-  }
-  if (dt === 'NATIONAL_EXEC') {
-    return { body: 'U.S. Executive', subgroup: pos };
+  // Federal — each office is its own body (like Local) to enable per-office ordering
+  if (dt.startsWith('NATIONAL')) {
+    return { body: pos, subgroup: pos };
   }
 
-  // State
-  if (dt === 'STATE_LOWER' || dt === 'STATE_UPPER') {
-    return { body: 'State Legislature', subgroup: pos };
-  }
+  // State — each office is its own body to enable per-office ordering
   if (dt.startsWith('STATE')) {
-    return { body: 'State Executive', subgroup: pos };
+    return { body: pos, subgroup: pos };
   }
 
   // Judicial - derive court name from position
@@ -226,16 +220,31 @@ export default function ElectionsView({
         }
         if (tier === 'State') {
           const lower = bodyKey.toLowerCase();
-          if (lower.includes('assembly') || lower.includes('legislature')) return 0;
-          if (lower.includes('executive')) return 1;
-          if (lower.includes('court')) return 2;
-          return 1;
+          // Executive
+          if (lower.includes('governor') && !lower.includes('lieutenant')) return 0;
+          if (lower.includes('lieutenant governor')) return 1;
+          if (lower.includes('attorney general')) return 4;
+          if (lower.includes('secretary of state')) return 5;
+          if (lower.includes('state treasurer')) return 6;
+          if (lower.includes('state controller') || lower.includes('state comptroller')) return 7;
+          if (lower.includes('state auditor')) return 8;
+          if (lower.includes('insurance commissioner')) return 9;
+          if (lower.includes('superintendent of public instruction') || lower.includes('superintendent of schools')) return 10;
+          // Legislative
+          if (lower.includes('state senate') || lower.includes('senate district')) return 2;
+          if (lower.includes('assembly') || lower.includes('state house') || lower.includes('state representative')) return 3;
+          // Judicial
+          if (lower.includes('supreme court')) return 12;
+          if (lower.includes('court of appeal') || lower.includes('appellate')) return 13;
+          if (lower.includes('judge') || lower.includes('justice') || lower.includes('court')) return 14;
+          return 11; // other statewide executive
         }
         if (tier === 'Federal') {
           const lower = bodyKey.toLowerCase();
-          if (lower.includes('congress')) return 0;
-          if (lower.includes('executive')) return 1;
-          return 2;
+          if (lower.includes('president')) return 0;
+          if (lower.includes('senate') || lower.includes('senator')) return 1;
+          if (lower.includes('representative') || lower.includes('house')) return 2;
+          return 3;
         }
         return 0;
       };
@@ -247,18 +256,26 @@ export default function ElectionsView({
         .map(tier => ({
           tier,
           bodies: Object.entries(tierMap[tier])
-            .map(([bodyKey, { races }]) => ({
-              key: bodyKey,
-              title: bodyKey,
-              races: races.sort((a, b) => {
+            .map(([bodyKey, { races }]) => {
+              const sortedRaces = races.sort((a, b) => {
                 const branchA = getBranch(a.districtType, a.cleanedPosition) ?? 'Legislative';
                 const branchB = getBranch(b.districtType, b.cleanedPosition) ?? 'Legislative';
                 const bScore = (BRANCH_ORDER[branchA] ?? 1) - (BRANCH_ORDER[branchB] ?? 1);
                 if (bScore !== 0) return bScore;
                 return a.label.localeCompare(b.label);
-              }),
-            }))
+              });
+              const firstRace = sortedRaces[0];
+              const branch = firstRace
+                ? getBranch(firstRace.districtType, firstRace.cleanedPosition)
+                : null;
+              return { key: bodyKey, title: bodyKey, branch, races: sortedRaces };
+            })
             .sort((a, b) => {
+              // Sort by branch first (Executive → Legislative → Judicial)
+              const ba = BRANCH_ORDER[a.branch] ?? 3;
+              const bb = BRANCH_ORDER[b.branch] ?? 3;
+              if (ba !== bb) return ba - bb;
+              // Then by office priority within branch
               const sa = bodyOrderScore(a.key, tier);
               const sb = bodyOrderScore(b.key, tier);
               if (sa !== sb) return sa - sb;
@@ -354,12 +371,53 @@ export default function ElectionsView({
                     <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
                   </div>
 
-                  {bodies.map((body) => (
-                    <GovernmentBodySection
-                      key={body.key}
-                      title={body.title}
-                      tier={tierKey}
-                    >
+                  {(() => {
+                    // Group consecutive bodies by branch for visual separation
+                    const branchGroups = [];
+                    for (const body of bodies) {
+                      const b = body.branch || 'Other';
+                      const last = branchGroups[branchGroups.length - 1];
+                      if (last && last.branch === b) {
+                        last.bodies.push(body);
+                      } else {
+                        branchGroups.push({ branch: b, bodies: [body] });
+                      }
+                    }
+                    const showBranchHeaders = branchGroups.length > 1;
+                    return branchGroups.map(({ branch, bodies: branchBodies }, groupIdx) => (
+                      <div key={branch}>
+                        {showBranchHeaders && (
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            marginTop: groupIdx > 0 ? '16px' : '0',
+                            marginBottom: '6px',
+                          }}>
+                            <span style={{
+                              fontSize: '10px',
+                              fontWeight: 700,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.6px',
+                              color: tierStyle.text,
+                              opacity: 0.75,
+                            }}>
+                              {branch}
+                            </span>
+                            <div style={{
+                              flex: 1,
+                              height: '1px',
+                              backgroundColor: tierStyle.text,
+                              opacity: 0.2,
+                            }} />
+                          </div>
+                        )}
+                        {branchBodies.map((body) => (
+                          <GovernmentBodySection
+                            key={body.key}
+                            title={body.title}
+                            tier={tierKey}
+                          >
                       {body.races.map((race, raceIdx) => {
                         const activeCandidates = race.shuffledCandidates.filter(
                           (c) => c.candidate_status !== 'withdrawn'
@@ -473,8 +531,11 @@ export default function ElectionsView({
                           </div>
                         );
                       })}
-                    </GovernmentBodySection>
-                  ))}
+                          </GovernmentBodySection>
+                        ))}
+                      </div>
+                    ));
+                  })()}
                 </div>
               );
             })}
