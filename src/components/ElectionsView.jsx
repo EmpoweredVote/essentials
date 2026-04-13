@@ -111,10 +111,10 @@ function deriveBodyAndSubGroup(positionName, districtType) {
 
   // State
   if (dt === 'STATE_LOWER' || dt === 'STATE_UPPER') {
-    return { body: 'Indiana General Assembly', subgroup: pos };
+    return { body: 'State Legislature', subgroup: pos };
   }
   if (dt.startsWith('STATE')) {
-    return { body: 'Indiana Executive', subgroup: pos };
+    return { body: 'State Executive', subgroup: pos };
   }
 
   // Judicial - derive court name from position
