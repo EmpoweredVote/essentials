@@ -210,11 +210,19 @@ export default function ElectionsView({
       const bodyOrderScore = (bodyKey, tier) => {
         if (tier === 'Local') {
           const lower = bodyKey.toLowerCase();
-          if (lower.includes('township')) return 1;
-          if (lower.includes('school')) return 2;
-          if ((lower.includes('county') || lower.includes('supervisors')) && !lower.includes('court')) return 3;
-          if (lower.includes('court')) return 4;
-          return 0; // city first
+          // City races first, ordered by importance to the voter
+          if (lower.includes('mayor')) return 0;
+          if (lower.includes('council') && !lower.includes('county')) return 1;
+          // Other city offices (attorney, controller, clerk, etc.)
+          if (!lower.includes('county') && !lower.includes('supervisors') &&
+              !lower.includes('township') && !lower.includes('school') &&
+              !lower.includes('education') && !lower.includes('court')) return 2;
+          // Sub-city bodies
+          if (lower.includes('township')) return 4;
+          if (lower.includes('school') || lower.includes('education')) return 5;
+          if ((lower.includes('county') || lower.includes('supervisors')) && !lower.includes('court')) return 6;
+          if (lower.includes('court')) return 7;
+          return 3;
         }
         if (tier === 'State') {
           const lower = bodyKey.toLowerCase();
