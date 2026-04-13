@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import ElectionsView from '../components/ElectionsView';
-import { fetchElectionsByAddress } from '../lib/api';
+import { fetchElectionsByAddress, fetchMyElections } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
 
 const SHORTCUTS = [
@@ -26,24 +26,19 @@ export default function Elections() {
     if (compassLoading) return;
     if (!isLoggedIn || !userJurisdiction) return;
 
-    const address = [userJurisdiction.city, userJurisdiction.state]
-      .filter(Boolean)
-      .join(', ');
-    if (!address) return;
-
     let cancelled = false;
 
     const autoFetch = async () => {
       setFetchLoading(true);
       setFetchError(null);
-      const { elections, error } = await fetchElectionsByAddress(address);
+      const { elections, error, formattedAddress } = await fetchMyElections();
       if (cancelled) return;
       setFetchLoading(false);
       if (error) {
         setFetchError(error);
       } else {
         setElectionsData(elections);
-        setLocationLabel(address);
+        setLocationLabel(formattedAddress || [userJurisdiction.city, userJurisdiction.state].filter(Boolean).join(', '));
       }
     };
 

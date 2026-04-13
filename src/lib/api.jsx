@@ -283,6 +283,17 @@ export async function fetchJudicialRecord(id) {
   }
 }
 
+export async function fetchMyElections() {
+  const res = await apiFetch('/essentials/elections/me');
+  if (!res) return { elections: [], error: null, formattedAddress: '', noLocation: false };
+  if (res.status === 204) return { elections: [], error: null, formattedAddress: '', noLocation: true };
+  if (!res.ok) return { elections: [], error: `${res.status}`, formattedAddress: '', noLocation: false };
+  const formattedAddress =
+    res.headers.get('X-Formatted-Address') || res.headers.get('x-formatted-address') || '';
+  const data = await res.json();
+  return { elections: Array.isArray(data.elections) ? data.elections : [], error: null, formattedAddress, noLocation: false };
+}
+
 export async function fetchElectionsByAddress(address) {
   try {
     const res = await publicFetch(
