@@ -211,7 +211,7 @@ export default function ElectionsView({
           const lower = bodyKey.toLowerCase();
           if (lower.includes('township')) return 1;
           if (lower.includes('school')) return 2;
-          if (lower.includes('county') && !lower.includes('court')) return 3;
+          if ((lower.includes('county') || lower.includes('supervisors')) && !lower.includes('court')) return 3;
           if (lower.includes('court')) return 4;
           return 0; // city first
         }
