@@ -23,7 +23,7 @@ This milestone delivers a standalone Elections page at `/elections` — a dedica
 **Plans:** 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Fix LEFT JOIN + null-safe dedup/grouping + shape test
+- [x] 01-01-PLAN.md — Fix LEFT JOIN + null-safe dedup/grouping + shape test
 
 **Success Criteria:**
 1. Querying the elections endpoint for a jurisdiction that contains a race with no filed candidates returns that race in the response payload.
@@ -85,7 +85,7 @@ Plans:
 
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
-| 1 — Backend Fix | 0-candidate races returned by API | ELEC-11 | Planned |
+| 1 — Backend Fix | 0-candidate races returned by API | ELEC-11 | Complete ✓ |
 | 2 — Elections Page | Dedicated route, tier-aware auto-detect, address input, shortcuts | ELEC-01, ELEC-02, ELEC-03, ELEC-04, ELEC-05, ELEC-06, ELEC-07 | Pending |
 | 3 — Unopposed UX | All race types render with correct treatment | ELEC-08, ELEC-09, ELEC-10 | Pending |
 | 4 — Navigation | Landing card + header nav entry | ELEC-12, ELEC-13 | Pending |

@@ -23,7 +23,7 @@
 
 ### Backend
 
-- [ ] **ELEC-11**: Backend elections query uses LEFT JOIN on race_candidates so races with 0 candidates are returned (not silently dropped by current INNER JOIN)
+- [x] **ELEC-11**: Backend elections query uses LEFT JOIN on race_candidates so races with 0 candidates are returned (not silently dropped by current INNER JOIN)
 
 ### Navigation
 
@@ -58,7 +58,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ELEC-11 | Phase 1 | Pending |
+| ELEC-11 | Phase 1 | Complete ✓ |
 | ELEC-01 | Phase 2 | Pending |
 | ELEC-02 | Phase 2 | Pending |
 | ELEC-03 | Phase 2 | Pending |
