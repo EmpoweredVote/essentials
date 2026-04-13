@@ -360,28 +360,11 @@ export default function ElectionsView({
                           <div
                             key={race.key}
                             style={{
-                              borderLeft: raceIdx % 2 === 1 ? '2px solid #E5E7EB' : 'none',
-                              paddingLeft: raceIdx % 2 === 1 ? '8px' : '0',
+                              backgroundColor: raceIdx % 2 === 1 ? 'rgba(0,0,0,0.03)' : 'transparent',
+                              borderRadius: '6px',
+                              padding: raceIdx % 2 === 1 ? '4px 6px' : '0',
                             }}
                           >
-                            {isUnopposed && (
-                              <div style={{ marginBottom: '4px' }}>
-                                <span
-                                  style={{
-                                    fontSize: '11px',
-                                    fontWeight: 600,
-                                    color: '#6B7280',
-                                    backgroundColor: '#F3F4F6',
-                                    borderRadius: '9999px',
-                                    padding: '2px 8px',
-                                    letterSpacing: '0.3px',
-                                    whiteSpace: 'nowrap',
-                                  }}
-                                >
-                                  Running Unopposed
-                                </span>
-                              </div>
-                            )}
                             <SubGroupSection
                               title={race.label}
                             >
@@ -414,7 +397,7 @@ export default function ElectionsView({
                                   const { title: cardTitle, subtitle: cardSubtitle } = deriveCardTitleSubtitle(race.cleanedPosition, race.districtType);
 
                                   return (
-                                    <div key={candidate.candidate_id}>
+                                    <div key={candidate.candidate_id} style={{ position: 'relative' }}>
                                       <PoliticianCard
                                         id={candidate.candidate_id}
                                         imageSrc={candidate.photo_url || undefined}
@@ -426,6 +409,27 @@ export default function ElectionsView({
                                         variant="horizontal"
                                         footer={<IconOverlay ballot={ballot} hasStances={false} branch={branch} />}
                                       />
+                                      {isUnopposed && (
+                                        <div
+                                          style={{
+                                            position: 'absolute',
+                                            bottom: '8px',
+                                            left: '0',
+                                            width: '64px',
+                                            backgroundColor: 'rgba(0,0,0,0.55)',
+                                            color: '#fff',
+                                            fontSize: '8px',
+                                            fontWeight: 700,
+                                            letterSpacing: '0.4px',
+                                            textAlign: 'center',
+                                            textTransform: 'uppercase',
+                                            padding: '3px 0',
+                                            pointerEvents: 'none',
+                                          }}
+                                        >
+                                          Unopposed
+                                        </div>
+                                      )}
                                     </div>
                                   );
                                 })
