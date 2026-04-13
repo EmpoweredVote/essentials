@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, tierColors } from '@empoweredvote/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, tierColors, pillars } from '@empoweredvote/ev-ui';
 import IconOverlay from './IconOverlay';
 import { getBranch } from '../utils/branchType';
 
@@ -231,6 +231,8 @@ export default function ElectionsView({
         return 0;
       };
 
+      const BRANCH_ORDER = { Executive: 0, Legislative: 1, Judicial: 2 };
+
       const hierarchy = TIER_ORDER
         .filter(tier => tierMap[tier])
         .map(tier => ({
@@ -239,7 +241,13 @@ export default function ElectionsView({
             .map(([bodyKey, { races }]) => ({
               key: bodyKey,
               title: bodyKey,
-              races: races.sort((a, b) => a.label.localeCompare(b.label)),
+              races: races.sort((a, b) => {
+                const branchA = getBranch(a.districtType, a.cleanedPosition) ?? 'Legislative';
+                const branchB = getBranch(b.districtType, b.cleanedPosition) ?? 'Legislative';
+                const bScore = (BRANCH_ORDER[branchA] ?? 1) - (BRANCH_ORDER[branchB] ?? 1);
+                if (bScore !== 0) return bScore;
+                return a.label.localeCompare(b.label);
+              }),
             }))
             .sort((a, b) => {
               const sa = bodyOrderScore(a.key, tier);
@@ -343,40 +351,89 @@ export default function ElectionsView({
                       title={body.title}
                       tier={tierKey}
                     >
-                      {body.races.map((race) => (
-                        <SubGroupSection
-                          key={race.key}
-                          title={race.label}
-                        >
-                          {race.shuffledCandidates.map((candidate) => {
-                            const branch = getBranch(race.districtType, race.cleanedPosition);
-                            const elDate = new Date(election.election_date + 'T12:00:00');
-                            const ballot = {
-                              onBallot: true,
-                              termEndDate: elDate,
-                              electionDate: elDate,
-                              electionLabel: election.election_type === 'primary' ? 'Primary' : 'General',
-                            };
-                            const { title: cardTitle, subtitle: cardSubtitle } = deriveCardTitleSubtitle(race.cleanedPosition, race.districtType);
+                      {body.races.map((race, raceIdx) => {
+                        const candidateCount = race.shuffledCandidates.length;
+                        const isUnopposed = candidateCount === 1;
+                        const isEmpty = candidateCount === 0;
 
-                            return (
-                              <div key={candidate.candidate_id}>
-                                <PoliticianCard
-                                  id={candidate.candidate_id}
-                                  imageSrc={candidate.photo_url || undefined}
-                                  imageFocalPoint={candidate.focal_point || 'center 20%'}
-                                  name={candidate.full_name}
-                                  title={cardTitle}
-                                  subtitle={cardSubtitle}
-                                  onClick={() => onCandidateClick(candidate.candidate_id)}
-                                  variant="horizontal"
-                                  footer={<IconOverlay ballot={ballot} hasStances={false} branch={branch} />}
-                                />
+                        return (
+                          <div
+                            key={race.key}
+                            style={{
+                              borderLeft: raceIdx % 2 === 1 ? '2px solid #E5E7EB' : 'none',
+                              paddingLeft: raceIdx % 2 === 1 ? '8px' : '0',
+                            }}
+                          >
+                            {isUnopposed && (
+                              <div style={{ marginBottom: '4px' }}>
+                                <span
+                                  style={{
+                                    fontSize: '11px',
+                                    fontWeight: 600,
+                                    color: '#6B7280',
+                                    backgroundColor: '#F3F4F6',
+                                    borderRadius: '9999px',
+                                    padding: '2px 8px',
+                                    letterSpacing: '0.3px',
+                                    whiteSpace: 'nowrap',
+                                  }}
+                                >
+                                  Running Unopposed
+                                </span>
                               </div>
-                            );
-                          })}
-                        </SubGroupSection>
-                      ))}
+                            )}
+                            <SubGroupSection
+                              title={race.label}
+                            >
+                              {isEmpty ? (
+                                <div
+                                  style={{
+                                    backgroundColor: pillars.empower.light,
+                                    borderLeft: `3px solid ${pillars.empower.textColor}`,
+                                    borderRadius: '6px',
+                                    padding: '12px 16px',
+                                  }}
+                                >
+                                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#1C1C1C', margin: 0 }}>
+                                    No candidates have filed
+                                  </p>
+                                  <p style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px', marginBottom: 0 }}>
+                                    This seat is currently uncontested.
+                                  </p>
+                                </div>
+                              ) : (
+                                race.shuffledCandidates.map((candidate) => {
+                                  const branch = getBranch(race.districtType, race.cleanedPosition);
+                                  const elDate = new Date(election.election_date + 'T12:00:00');
+                                  const ballot = {
+                                    onBallot: true,
+                                    termEndDate: elDate,
+                                    electionDate: elDate,
+                                    electionLabel: election.election_type === 'primary' ? 'Primary' : 'General',
+                                  };
+                                  const { title: cardTitle, subtitle: cardSubtitle } = deriveCardTitleSubtitle(race.cleanedPosition, race.districtType);
+
+                                  return (
+                                    <div key={candidate.candidate_id}>
+                                      <PoliticianCard
+                                        id={candidate.candidate_id}
+                                        imageSrc={candidate.photo_url || undefined}
+                                        imageFocalPoint={candidate.focal_point || 'center 20%'}
+                                        name={candidate.full_name}
+                                        title={cardTitle}
+                                        subtitle={cardSubtitle}
+                                        onClick={() => onCandidateClick(candidate.candidate_id)}
+                                        variant="horizontal"
+                                        footer={<IconOverlay ballot={ballot} hasStances={false} branch={branch} />}
+                                      />
+                                    </div>
+                                  );
+                                })
+                              )}
+                            </SubGroupSection>
+                          </div>
+                        );
+                      })}
                     </GovernmentBodySection>
                   ))}
                 </div>
