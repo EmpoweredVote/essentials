@@ -158,6 +158,7 @@ export default function ElectionsView({
   elections,
   loading,
   tierFilter = 'All',
+  hideWithdrawn = false,
   onCandidateClick,
 }) {
   // Session seed for stable candidate randomization
@@ -352,9 +353,14 @@ export default function ElectionsView({
                       tier={tierKey}
                     >
                       {body.races.map((race, raceIdx) => {
-                        const candidateCount = race.shuffledCandidates.length;
-                        const isUnopposed = candidateCount === 1;
-                        const isEmpty = candidateCount === 0;
+                        const activeCandidates = race.shuffledCandidates.filter(
+                          (c) => c.candidate_status !== 'withdrawn'
+                        );
+                        const displayCandidates = hideWithdrawn
+                          ? activeCandidates
+                          : race.shuffledCandidates;
+                        const isUnopposed = activeCandidates.length === 1;
+                        const isEmpty = displayCandidates.length === 0;
 
                         return (
                           <div
@@ -385,7 +391,7 @@ export default function ElectionsView({
                                   </p>
                                 </div>
                               ) : (
-                                race.shuffledCandidates.map((candidate) => {
+                                displayCandidates.map((candidate) => {
                                   const branch = getBranch(race.districtType, race.cleanedPosition);
                                   const elDate = new Date(election.election_date + 'T12:00:00');
                                   const ballot = {
@@ -409,7 +415,28 @@ export default function ElectionsView({
                                         variant="horizontal"
                                         footer={<IconOverlay ballot={ballot} hasStances={false} branch={branch} />}
                                       />
-                                      {isUnopposed && (
+                                      {candidate.candidate_status === 'withdrawn' && (
+                                        <div
+                                          style={{
+                                            position: 'absolute',
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0,
+                                            backgroundColor: 'rgba(90,0,0,0.62)',
+                                            color: '#fff',
+                                            fontSize: '9px',
+                                            fontWeight: 700,
+                                            letterSpacing: '0.5px',
+                                            textAlign: 'center',
+                                            textTransform: 'uppercase',
+                                            padding: '4px 0',
+                                            pointerEvents: 'none',
+                                          }}
+                                        >
+                                          Withdrawn
+                                        </div>
+                                      )}
+                                      {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
                                         <div
                                           style={{
                                             position: 'absolute',

@@ -20,6 +20,7 @@ export default function Elections() {
   const [locationLabel, setLocationLabel] = useState(null);
   const [addressInput, setAddressInput] = useState('');
   const [showChangeInput, setShowChangeInput] = useState(false);
+  const [hideWithdrawn, setHideWithdrawn] = useState(false);
 
   // Tier-aware auto-load for connected users with a stored jurisdiction
   useEffect(() => {
@@ -173,10 +174,26 @@ export default function Elections() {
           </div>
         )}
 
+        {/* Filter controls — only when results are loaded */}
+        {electionsData && electionsData.length > 0 && (
+          <div className="mb-4 flex items-center gap-2 text-sm text-gray-600">
+            <label className="flex items-center gap-1.5 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={hideWithdrawn}
+                onChange={(e) => setHideWithdrawn(e.target.checked)}
+                className="w-4 h-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+              />
+              Hide withdrawn candidates
+            </label>
+          </div>
+        )}
+
         {/* Elections results */}
         <ElectionsView
           elections={electionsData}
           loading={fetchLoading}
+          hideWithdrawn={hideWithdrawn}
           onCandidateClick={(id) => navigate('/candidate/' + id)}
         />
       </div>
