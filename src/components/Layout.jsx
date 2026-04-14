@@ -22,7 +22,7 @@ export function Layout({ children }) {
         ],
       };
 
-  const navItems = currentAddress
+  const baseNavItems = currentAddress
     ? defaultNavItems.map(item => {
         if (item.dropdown) {
           return {
@@ -37,6 +37,8 @@ export function Layout({ children }) {
         return item;
       })
     : defaultNavItems;
+
+  const navItems = [...baseNavItems, { label: "Elections", href: "/elections" }];
 
   return (
     <>
