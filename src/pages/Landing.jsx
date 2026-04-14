@@ -66,17 +66,6 @@ export default function Landing() {
               ))}
             </div>
 
-            {/* Elections card */}
-            <div className="mt-3 mb-2">
-              <button
-                onClick={() => navigate('/elections')}
-                className="w-full text-left px-4 py-3 bg-white border-2 border-[var(--ev-teal)] rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
-              >
-                <div className="text-base font-semibold text-[var(--ev-teal)]">Upcoming Elections</div>
-                <div className="text-sm text-gray-600">See what's on your ballot</div>
-              </button>
-            </div>
-
             {/* Browse by location link */}
             <div className="text-center mt-2 mb-2">
               <button

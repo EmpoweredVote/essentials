@@ -99,7 +99,7 @@ export default function Elections() {
             <span>Showing elections for <strong>{locationLabel}</strong></span>
             <button
               onClick={() => setShowChangeInput(true)}
-              className="text-teal-600 underline hover:text-teal-800"
+              className="text-[var(--ev-teal)] underline hover:text-[var(--ev-teal-dark)]"
             >
               Change
             </button>
@@ -116,12 +116,12 @@ export default function Elections() {
                 onChange={(e) => setAddressInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Enter your address"
-                className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
               />
               <button
                 onClick={() => handleSearch()}
                 disabled={fetchLoading}
-                className="flex items-center gap-1 bg-teal-600 text-white px-4 py-2 rounded text-sm font-medium hover:bg-teal-700 disabled:opacity-60"
+                className="flex items-center gap-1 bg-[var(--ev-teal)] text-white px-4 py-2 rounded text-sm font-medium hover:bg-[var(--ev-teal-dark)] disabled:opacity-60"
               >
                 {fetchLoading ? (
                   <svg
@@ -164,7 +164,7 @@ export default function Elections() {
                     key={label}
                     onClick={() => handleSearch(address)}
                     disabled={fetchLoading}
-                    className="border border-teal-600 text-teal-700 px-3 py-1.5 rounded text-sm font-medium hover:bg-teal-50 disabled:opacity-60"
+                    className="border border-[var(--ev-teal)] text-[var(--ev-teal)] px-3 py-1.5 rounded text-sm font-medium hover:bg-[var(--ev-bg-light)] disabled:opacity-60"
                   >
                     {label}
                   </button>
@@ -182,7 +182,7 @@ export default function Elections() {
                 type="checkbox"
                 checked={hideWithdrawn}
                 onChange={(e) => setHideWithdrawn(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
+                className="w-4 h-4 rounded border-gray-300 text-[var(--ev-teal)] focus:ring-[var(--ev-teal)]"
               />
               Hide withdrawn candidates
             </label>
