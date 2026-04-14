@@ -494,12 +494,17 @@ export default function ElectionsView({
                             tier={tierKey}
                           >
                       {body.races.map((race, raceIdx) => {
-                        const activeCandidates = race.shuffledCandidates.filter(
+                        // Withdrawn incumbents are officeholders not seeking re-election —
+                        // omit them from the election view entirely (they appear on profile pages).
+                        const electionCandidates = race.shuffledCandidates.filter(
+                          (c) => !(c.is_incumbent && c.candidate_status === 'withdrawn')
+                        );
+                        const activeCandidates = electionCandidates.filter(
                           (c) => c.candidate_status !== 'withdrawn'
                         );
                         const displayCandidates = hideWithdrawn
                           ? activeCandidates
-                          : race.shuffledCandidates;
+                          : electionCandidates;
                         const isUnopposed = activeCandidates.length === 1;
                         const isEmpty = displayCandidates.length === 0;
 
