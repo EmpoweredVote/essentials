@@ -611,7 +611,7 @@ export default function ElectionsView({
                                             pointerEvents: 'none',
                                           }}
                                         >
-                                          Unopposed
+                                          Running Unopposed
                                         </div>
                                       )}
                                     </div>
