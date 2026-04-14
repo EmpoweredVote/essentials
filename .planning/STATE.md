@@ -2,48 +2,41 @@
 
 ## Current Position
 
-Phase: 4 — Navigation Entry Points
-Plan: 04-01 ✓
-Status: Phase complete — all 4 phases done, v2.0 milestone complete
-Last activity: 2026-04-14 — Phase 4 Plan 01 executed
+Phase: Next milestone — not yet planned
+Plan: N/A
+Status: Ready to plan next milestone
+Last activity: 2026-04-13 — v2.0 milestone complete
 
-Progress: [████████████████████] Phase 4 of 4 complete (4/4 phases)
+Progress: [████████████████████] v2.0 complete (4/4 phases)
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-12)
-See: .planning/ROADMAP.md (created 2026-04-12)
+See: .planning/PROJECT.md (updated 2026-04-13 after v2.0 milestone)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v2.0 milestone COMPLETE — all 13 requirements shipped
-
-## Performance Metrics
-
-- Phases complete: 4/4
-- Requirements shipped: 13/13
-- Plans complete: 4
+**Current focus:** Planning next milestone — data completeness and Elections page enhancements
 
 ## Accumulated Context
 
-### Key Decisions
+### Key Decisions (carry forward)
 
 - Candidate ordering is seeded-random per session (sessionStorage key `ev:election-seed`), never alphabetical
 - Party data lives on races (`primary_party`), never on individual candidates — antipartisan design
 - Connected users must never see address input if `me.jurisdiction` is non-null (EDOC-01)
 - Elections data lives in `essentials` schema on Postgres, served by Express backend at `C:\EV-Accounts`
 - Elections page is a standalone top-level route (`/elections`), not embedded in Results
-- LEFT JOIN with `candidate_status != 'withdrawn'` in ON clause (not WHERE) — standard pattern for optional relationships (preserves 0-candidate race rows where WHERE would make them invisible)
-- Layout.jsx nav extension: two-step pattern (baseNavItems with Read & Rank injection, then spread + append new items) — do not mutate defaultNavItems
-- Elections card copy locked: "Upcoming Elections" / "See what's on your ballot"; nav label locked: "Elections"
+- Use `elections/me` for Connected auto-load — Census Geocoder unreliable with city+state
+- Elections page is view-only — never calls `saveMyLocation`
+- LEFT JOIN with filter in ON clause (not WHERE) — standard pattern for optional relationships in this codebase
+- Layout.jsx nav extension: two-step pattern (baseNavItems, then spread + append) — do not mutate defaultNavItems
 
 ### Known Architecture
 
 - Frontend: React 19/JSX + Vite + Tailwind CSS 4, deployed to Render
 - Backend: Express TypeScript at `C:\EV-Accounts`, deployed via Render push to `master`
 - Elections query: `electionService.ts` → `getElectionsByCoordinate(lat, lng)` — geocodes address, PostGIS geofence match
-- Backend now returns 0-candidate races with empty `candidates: []` array (Phase 1 fix deployed)
-- Existing component: `ElectionsView.jsx` handles randomization and grouping — extended in Phase 3 for three-state rendering (contested/unopposed/empty), branch sort, and left-border zebra stripe
-- Connected user detection: `detectUserState()` from CompassContext — `jurisdiction` non-null = auto-fetch
+- Backend returns 0-candidate races with empty `candidates: []` array (Phase 1 fix deployed)
+- ElectionsView.jsx: three-state rendering (contested/unopposed/empty), branch sort, local civic priority, left-border zebra stripe
 
 ### Database State (as of 2026-04-12)
 
@@ -51,17 +44,12 @@ See: .planning/ROADMAP.md (created 2026-04-12)
 - 61 races, 124 candidates
 - 6,928 geofence boundaries loaded
 
-### Pending Todos
+### Pending Todos (accounts team backlog)
 
-- Accounts team: CA Governor challenger candidates (10 filed, not yet seeded) — request filed 2026-04-13
-- Accounts team: LAUSD sub-district geofences pending (all 3 board races show for any LAUSD address)
-- Accounts team: CA SoS challenger ingestion script in progress (all CA primary races)
-- Accounts team: seeding quality control — seeded candidates during Phase 2 QA required significant cleanup
-
-## Session Continuity
-
-Last session: 2026-04-14
-Stopped at: Phase 4 Plan 01 complete — v2.0 milestone fully shipped
+- CA Governor challenger candidates (10 filed, not yet seeded) — request filed 2026-04-13
+- LAUSD sub-district geofences pending (all 3 board races show for any LAUSD address)
+- CA SoS challenger ingestion script in progress (all CA primary races)
 
 ---
 *State initialized: 2026-04-12 — Roadmap created*
+*Updated: 2026-04-13 — v2.0 milestone complete*
