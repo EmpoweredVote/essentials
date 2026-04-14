@@ -17,9 +17,9 @@
 
 ### Elections Page — Unopposed & Empty Races
 
-- [ ] **ELEC-08**: Race with exactly 1 candidate shows that candidate's card plus an "Running Unopposed" badge on the section header
-- [ ] **ELEC-09**: Race with 0 candidates shows a section notice ("No candidates have filed") instead of a candidate list
-- [ ] **ELEC-10**: No races are hidden — unopposed and empty races surface alongside contested races
+- [x] **ELEC-08**: Race with exactly 1 candidate shows that candidate's card plus an "Running Unopposed" badge on the section header
+- [x] **ELEC-09**: Race with 0 candidates shows a section notice ("No candidates have filed") instead of a candidate list
+- [x] **ELEC-10**: No races are hidden — unopposed and empty races surface alongside contested races
 
 ### Backend
 
@@ -66,9 +66,9 @@
 | ELEC-05 | Phase 2 | Pending |
 | ELEC-06 | Phase 2 | Pending |
 | ELEC-07 | Phase 2 | Pending |
-| ELEC-08 | Phase 3 | Pending |
-| ELEC-09 | Phase 3 | Pending |
-| ELEC-10 | Phase 3 | Pending |
+| ELEC-08 | Phase 3 | Complete ✓ |
+| ELEC-09 | Phase 3 | Complete ✓ |
+| ELEC-10 | Phase 3 | Complete ✓ |
 | ELEC-12 | Phase 4 | Pending |
 | ELEC-13 | Phase 4 | Pending |
 

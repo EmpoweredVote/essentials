@@ -92,7 +92,7 @@ Plans:
 |-------|------|--------------|--------|
 | 1 — Backend Fix | 0-candidate races returned by API | ELEC-11 | Complete ✓ |
 | 2 — Elections Page | Dedicated route, tier-aware auto-detect, address input, shortcuts | ELEC-01, ELEC-02, ELEC-03, ELEC-04, ELEC-05, ELEC-06, ELEC-07 | Complete ✓ |
-| 3 — Unopposed UX | All race types render with correct treatment | ELEC-08, ELEC-09, ELEC-10 | Planned |
+| 3 — Unopposed UX | All race types render with correct treatment | ELEC-08, ELEC-09, ELEC-10 | Complete ✓ |
 | 4 — Navigation | Landing card + header nav entry | ELEC-12, ELEC-13 | Pending |
 
 ---
