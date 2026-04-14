@@ -346,11 +346,14 @@ export default function ElectionsView({
               return { key: bodyKey, title: bodyKey, branch, races: sortedRaces };
             })
             .sort((a, b) => {
-              // Sort by branch first (Executive → Legislative → Judicial)
-              const ba = BRANCH_ORDER[a.branch] ?? 3;
-              const bb = BRANCH_ORDER[b.branch] ?? 3;
-              if (ba !== bb) return ba - bb;
-              // Then by office priority within branch
+              // Local tier: use priority score directly (Mayor > Council > Township > County > Court)
+              // Branch-first sorting is wrong for Local — it would place Township Exec before City Council
+              if (tier !== 'Local') {
+                // State/Federal: branch first (Executive → Legislative → Judicial), then by score
+                const ba = BRANCH_ORDER[a.branch] ?? 3;
+                const bb = BRANCH_ORDER[b.branch] ?? 3;
+                if (ba !== bb) return ba - bb;
+              }
               const sa = bodyOrderScore(a.key, tier);
               const sb = bodyOrderScore(b.key, tier);
               if (sa !== sb) return sa - sb;
@@ -512,9 +515,8 @@ export default function ElectionsView({
                           <div
                             key={race.key}
                             style={{
-                              backgroundColor: raceIdx % 2 === 1 ? 'rgba(0,0,0,0.03)' : 'transparent',
-                              borderRadius: '6px',
-                              padding: raceIdx % 2 === 1 ? '4px 6px' : '0',
+                              borderLeft: raceIdx % 2 === 1 ? '2px solid #E5E7EB' : '2px solid transparent',
+                              paddingLeft: raceIdx % 2 === 1 ? '8px' : '6px',
                             }}
                           >
                             <SubGroupSection
