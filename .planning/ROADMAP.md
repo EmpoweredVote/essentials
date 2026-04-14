@@ -82,7 +82,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 04-01-PLAN.md — Elections card on landing page + Elections nav item in site header
+- [x] 04-01-PLAN.md — Elections card on landing page + Elections nav item in site header
 
 **Success Criteria:**
 1. The landing page includes an Elections card or button that links to `/elections`, visually consistent with the existing county cards.
@@ -98,7 +98,7 @@ Plans:
 | 1 — Backend Fix | 0-candidate races returned by API | ELEC-11 | Complete ✓ |
 | 2 — Elections Page | Dedicated route, tier-aware auto-detect, address input, shortcuts | ELEC-01, ELEC-02, ELEC-03, ELEC-04, ELEC-05, ELEC-06, ELEC-07 | Complete ✓ |
 | 3 — Unopposed UX | All race types render with correct treatment | ELEC-08, ELEC-09, ELEC-10 | Complete ✓ |
-| 4 — Navigation | Landing card + header nav entry | ELEC-12, ELEC-13 | Pending |
+| 4 — Navigation | Landing card + header nav entry | ELEC-12, ELEC-13 | Complete ✓ |
 
 ---
 

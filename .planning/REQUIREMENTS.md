@@ -7,13 +7,13 @@
 
 ### Elections Page — Core
 
-- [ ] **ELEC-01**: User can navigate to a dedicated Elections page at `/elections`
-- [ ] **ELEC-02**: Connected user with stored location lands on Elections page and sees their local election results immediately — no address input required
-- [ ] **ELEC-03**: Inform user (no account) sees an address input and can search for elections by address
-- [ ] **ELEC-04**: Connected user without jurisdiction sees an address input (same as Inform for location)
-- [ ] **ELEC-05**: User can see county shortcut buttons (Monroe County, LA County) to quickly load elections for those areas without typing
-- [ ] **ELEC-06**: User can type a different address to explore elections outside their stored location
-- [ ] **ELEC-07**: Candidate order within each race is randomized per session (seeded shuffle — not alphabetical)
+- [x] **ELEC-01**: User can navigate to a dedicated Elections page at `/elections`
+- [x] **ELEC-02**: Connected user with stored location lands on Elections page and sees their local election results immediately — no address input required
+- [x] **ELEC-03**: Inform user (no account) sees an address input and can search for elections by address
+- [x] **ELEC-04**: Connected user without jurisdiction sees an address input (same as Inform for location)
+- [x] **ELEC-05**: User can see county shortcut buttons (Monroe County, LA County) to quickly load elections for those areas without typing
+- [x] **ELEC-06**: User can type a different address to explore elections outside their stored location
+- [x] **ELEC-07**: Candidate order within each race is randomized per session (seeded shuffle — not alphabetical)
 
 ### Elections Page — Unopposed & Empty Races
 
@@ -27,8 +27,8 @@
 
 ### Navigation
 
-- [ ] **ELEC-12**: Landing page includes an Elections card/button alongside the county cards, linking to `/elections`
-- [ ] **ELEC-13**: Site header includes an Elections navigation entry linking to `/elections`
+- [x] **ELEC-12**: Landing page includes an Elections card/button alongside the county cards, linking to `/elections`
+- [x] **ELEC-13**: Site header includes an Elections navigation entry linking to `/elections`
 
 ## Future Requirements
 
@@ -59,18 +59,18 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | ELEC-11 | Phase 1 | Complete ✓ |
-| ELEC-01 | Phase 2 | Pending |
-| ELEC-02 | Phase 2 | Pending |
-| ELEC-03 | Phase 2 | Pending |
-| ELEC-04 | Phase 2 | Pending |
-| ELEC-05 | Phase 2 | Pending |
-| ELEC-06 | Phase 2 | Pending |
-| ELEC-07 | Phase 2 | Pending |
+| ELEC-01 | Phase 2 | Complete ✓ |
+| ELEC-02 | Phase 2 | Complete ✓ |
+| ELEC-03 | Phase 2 | Complete ✓ |
+| ELEC-04 | Phase 2 | Complete ✓ |
+| ELEC-05 | Phase 2 | Complete ✓ |
+| ELEC-06 | Phase 2 | Complete ✓ |
+| ELEC-07 | Phase 2 | Complete ✓ |
 | ELEC-08 | Phase 3 | Complete ✓ |
 | ELEC-09 | Phase 3 | Complete ✓ |
 | ELEC-10 | Phase 3 | Complete ✓ |
-| ELEC-12 | Phase 4 | Pending |
-| ELEC-13 | Phase 4 | Pending |
+| ELEC-12 | Phase 4 | Complete ✓ |
+| ELEC-13 | Phase 4 | Complete ✓ |
 
 **Coverage:**
 - v1 requirements: 13 total
