@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 3 — Unopposed and Empty Race UX
-Plan: 03-01 ✓
-Status: Complete — verified
-Last activity: 2026-04-14 — Phase 3 Plan 01 executed and human-verified
+Phase: 4 — Navigation Entry Points
+Plan: 04-01 ✓
+Status: Phase complete — all 4 phases done, v2.0 milestone complete
+Last activity: 2026-04-14 — Phase 4 Plan 01 executed
 
-Progress: [███████████████░░░░░] Phase 3 of 4 complete (3/4 phases)
+Progress: [████████████████████] Phase 4 of 4 complete (4/4 phases)
 
 ## Project Reference
 
@@ -15,13 +15,13 @@ See: .planning/PROJECT.md (updated 2026-04-12)
 See: .planning/ROADMAP.md (created 2026-04-12)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Milestone v2.0 — Elections Page, Phase 2 — Elections Page
+**Current focus:** v2.0 milestone COMPLETE — all 13 requirements shipped
 
 ## Performance Metrics
 
-- Phases complete: 3/4
-- Requirements shipped: 11/13
-- Plans complete: 3
+- Phases complete: 4/4
+- Requirements shipped: 13/13
+- Plans complete: 4
 
 ## Accumulated Context
 
@@ -33,6 +33,8 @@ See: .planning/ROADMAP.md (created 2026-04-12)
 - Elections data lives in `essentials` schema on Postgres, served by Express backend at `C:\EV-Accounts`
 - Elections page is a standalone top-level route (`/elections`), not embedded in Results
 - LEFT JOIN with `candidate_status != 'withdrawn'` in ON clause (not WHERE) — standard pattern for optional relationships (preserves 0-candidate race rows where WHERE would make them invisible)
+- Layout.jsx nav extension: two-step pattern (baseNavItems with Read & Rank injection, then spread + append new items) — do not mutate defaultNavItems
+- Elections card copy locked: "Upcoming Elections" / "See what's on your ballot"; nav label locked: "Elections"
 
 ### Known Architecture
 
@@ -59,7 +61,7 @@ See: .planning/ROADMAP.md (created 2026-04-12)
 ## Session Continuity
 
 Last session: 2026-04-14
-Stopped at: Phase 3 complete — ready to plan Phase 4
+Stopped at: Phase 4 Plan 01 complete — v2.0 milestone fully shipped
 
 ---
 *State initialized: 2026-04-12 — Roadmap created*
