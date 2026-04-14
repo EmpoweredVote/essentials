@@ -61,7 +61,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 03-01-PLAN.md — Unopposed badge, empty notice, branch sort, and zebra-stripe in ElectionsView
+- [x] 03-01-PLAN.md — Unopposed badge, empty notice, branch sort, and zebra-stripe in ElectionsView
 
 **Success Criteria:**
 1. A race section containing exactly one candidate displays that candidate's card alongside an "Running Unopposed" badge on the section header.
@@ -78,6 +78,11 @@ Plans:
 **Dependencies:** Phase 2 (the `/elections` route must exist before linking to it).
 
 **Requirements:** ELEC-12, ELEC-13
+
+**Plans:** 1 plan
+
+Plans:
+- [ ] 04-01-PLAN.md — Elections card on landing page + Elections nav item in site header
 
 **Success Criteria:**
 1. The landing page includes an Elections card or button that links to `/elections`, visually consistent with the existing county cards.
