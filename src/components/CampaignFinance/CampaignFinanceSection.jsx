@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useCampaignFinance } from './hooks/useCampaignFinance';
 import SummaryCard from './SummaryCard';
 import ExpandedView from './ExpandedView';
+import DonorSearch from './DonorSearch';
 
 /**
  * LocalUnavailableBanner — shown when a local/county politician has no digital filings.
@@ -159,6 +160,9 @@ export default function CampaignFinanceSection({ politicianId }) {
             />
           )}
         </div>
+
+        {/* Donor search — lets visitors look up which politicians a donor funded */}
+        <DonorSearch currentPoliticianId={politicianId} />
       </div>
     </section>
   );
