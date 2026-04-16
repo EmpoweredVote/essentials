@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@empoweredvote/ev-ui": "^0.4.2",
+    "@empoweredvote/ev-ui": "^0.4.3",
     "@floating-ui/react": "^0.27.19",
     "@googlemaps/js-api-loader": "^2.0.2",
     "@react-spring/web": "^10.0.2",
