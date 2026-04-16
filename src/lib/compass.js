@@ -263,10 +263,10 @@ export async function fetchUserVerdicts() {
   try {
     const res = await apiFetch('/compass/verdicts');
     if (!res || !res.ok) return {};
-    const list = await res.json(); // [{ id, user_id, quote_id, verdict, created_at }]
+    const list = await res.json(); // [{ quote_id, supported, rank, session_size, ... }]
     const map = {};
     for (const item of list) {
-      map[item.quote_id] = item.verdict;
+      map[item.quote_id] = item.supported === true ? 'agreed' : 'disagreed';
     }
     return map;
   } catch {
