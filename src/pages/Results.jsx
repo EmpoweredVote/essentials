@@ -16,6 +16,9 @@ import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
+import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug } from '../lib/treasury';
+
+const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || 'https://treasurytracker.empowered.vote';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -260,6 +263,10 @@ export default function Results() {
   // Elections tab data
   const [electionsData, setElectionsData] = useState(null);
   const [electionsLoading, setElectionsLoading] = useState(false);
+
+  // Treasury CTA — one-shot fetch of available municipalities on mount
+  const [treasuryCities, setTreasuryCities] = useState([]);
+  useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
   const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
@@ -929,26 +936,48 @@ export default function Results() {
                           <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
                         </div>
                       )}
-                      {bodies.map((body) => (
-                        <GovernmentBodySection
-                          key={body.key}
-                          title={body.title}
-                          websiteUrl={body.url || undefined}
-                          tier={tierKey}
-                        >
-                          {body.subgroups.map((sg) => (
-                            <SubGroupSection
-                              key={sg.key}
-                              title={body.subgroups.length > 1 ? sg.label : undefined}
-                              websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
+                      {bodies.map((body) => {
+                        const treasuryMatch = tier === 'Local'
+                          ? findMatchingMunicipality(body.title, treasuryCities)
+                          : null;
+                        return (
+                          <Fragment key={body.key}>
+                            <GovernmentBodySection
+                              title={body.title}
+                              websiteUrl={body.url || undefined}
+                              tier={tierKey}
                             >
-                              {sg.pols.map((pol) =>
-                                renderSeatGroup(pol)
-                              )}
-                            </SubGroupSection>
-                          ))}
-                        </GovernmentBodySection>
-                      ))}
+                              {body.subgroups.map((sg) => (
+                                <SubGroupSection
+                                  key={sg.key}
+                                  title={body.subgroups.length > 1 ? sg.label : undefined}
+                                  websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
+                                >
+                                  {sg.pols.map((pol) =>
+                                    renderSeatGroup(pol)
+                                  )}
+                                </SubGroupSection>
+                              ))}
+                            </GovernmentBodySection>
+                            {treasuryMatch && (
+                              <div className="mt-2 mb-4">
+                                <a
+                                  href={`${TREASURY_URL}/?entity=${toTreasurySlug(treasuryMatch)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-sm text-[#59b0c4] hover:text-[#00657c] transition-colors"
+                                  style={{ fontFamily: "'Manrope', sans-serif" }}
+                                >
+                                  Explore {treasuryMatch.name} revenue and expenses
+                                  <svg viewBox="0 0 16 16" className="w-3 h-3 ml-1" fill="currentColor" aria-hidden="true">
+                                    <path fillRule="evenodd" d="M4.22 11.78a.75.75 0 010-1.06L9.44 5.5H5.75a.75.75 0 010-1.5h5.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0V6.56l-5.22 5.22a.75.75 0 01-1.06 0z" clipRule="evenodd"/>
+                                  </svg>
+                                </a>
+                              </div>
+                            )}
+                          </Fragment>
+                        );
+                      })}
                     </div>
                   );
                 })}
