@@ -45,6 +45,48 @@ function formatElectionDate(dateStr) {
   return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
+/**
+ * Normalize a Census Geocoder address (often ALL CAPS) to title case.
+ * Handles common abbreviations: "ST", "AVE", "BLVD", "IN", "CA", etc.
+ * e.g., "200 W KIRKWOOD AVE, BLOOMINGTON, IN, 47404"
+ *    → "200 W Kirkwood Ave, Bloomington, IN, 47404"
+ */
+const STATE_ABBREVS = new Set([
+  'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
+  'KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY',
+  'NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV',
+  'WI','WY','DC',
+]);
+const STREET_ABBREVS = new Set([
+  'ST','AVE','BLVD','DR','RD','LN','CT','PL','WAY','TER','CIR','PKWY','HWY','FWY',
+  'N','S','E','W','NE','NW','SE','SW',
+]);
+function toAddressTitleCase(address) {
+  if (!address) return address;
+  return address
+    .split(', ')
+    .map((part, partIdx) => {
+      const upper = part.toUpperCase();
+      // Keep state abbreviations and zip codes as-is
+      if (partIdx > 0 && (STATE_ABBREVS.has(upper) || /^\d{5}(-\d{4})?$/.test(part))) {
+        return upper;
+      }
+      return part
+        .split(' ')
+        .map((word) => {
+          const up = word.toUpperCase();
+          // Keep state abbreviations and single letters uppercase
+          if (STATE_ABBREVS.has(up)) return up;
+          // Common street abbreviations: capitalize first letter only
+          if (STREET_ABBREVS.has(up)) return up.charAt(0) + up.slice(1).toLowerCase();
+          if (!word) return word;
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        })
+        .join(' ');
+    })
+    .join(', ');
+}
+
 /** Derive a short formal name for the compass legend, e.g. "Senator Young" */
 function formatLegendName(pol) {
   const dt = pol.district_type || '';
@@ -231,10 +273,10 @@ export default function Results() {
     key: searchKey,
   });
 
-  // Sync backend-validated formatted address into address bar
+  // Sync backend-validated formatted address into address bar (normalized to title case)
   useEffect(() => {
     if (formattedAddress) {
-      setAddressInput(formattedAddress);
+      setAddressInput(toAddressTitleCase(formattedAddress));
     }
   }, [formattedAddress]);
 
@@ -810,7 +852,7 @@ export default function Results() {
           {formattedAddress && phase === 'fresh' && list.length > 0 && (
             <div className="px-4 sm:px-8 pb-2">
               <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                Showing representatives for <span className="font-semibold text-gray-700">{formattedAddress}</span>
+                Showing representatives for <span className="font-semibold text-gray-700">{toAddressTitleCase(formattedAddress)}</span>
               </p>
             </div>
           )}
@@ -1003,7 +1045,7 @@ export default function Results() {
               {formattedAddress && electionsData && electionsData.length > 0 && (
                 <div className="pb-2">
                   <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                    Showing elections for <span className="font-semibold text-gray-700">{formattedAddress}</span>
+                    Showing elections for <span className="font-semibold text-gray-700">{toAddressTitleCase(formattedAddress)}</span>
                   </p>
                 </div>
               )}
