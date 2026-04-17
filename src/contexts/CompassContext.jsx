@@ -118,18 +118,44 @@ export function CompassProvider({ children }) {
             fetchSelectedTopics(),
             fetchMyRepresentatives(),
           ]);
-          [answers, selected] = [answersResult, selectedResult];
           if (!cancelled && !repsResult.error && repsResult.data.length > 0) {
             setMyRepresentatives(repsResult.data);
             setMyRepresentativesAddress(repsResult.formattedAddress || null);
           } else if (!cancelled && repsResult.noLocation) {
             setMyLocationNotSet(true);
           }
-          clearGuestCompass(); // Clean separation: logged-in = API only
+          if (answersResult.length === 0) {
+            // API has no answers — fall back to guest cache so returning calibrated guests
+            // see their compass overlay even before they've saved API answers (INTG-01 fix).
+            const guestCache = loadGuestCompass();
+            if (guestCache) {
+              if (import.meta.env.DEV) {
+                console.log('[CompassContext] priority=storage (authed+empty-api, guest cache fallback)', { guestCache });
+              }
+              answers = convertGuestAnswersToApiFormat(guestCache.answers, topics);
+              selected = guestCache.selectedTopics;
+              inverted = guestCache.invertedSpokes || {};
+              // Preserve guest cache — don't clear, user may return without fragment
+            } else {
+              if (import.meta.env.DEV) {
+                console.log('[CompassContext] priority=empty (authed, no api answers, no guest cache)');
+              }
+              clearGuestCompass();
+            }
+          } else {
+            if (import.meta.env.DEV) {
+              console.log('[CompassContext] priority=api (authed, api answers count:', answersResult.length, ')');
+            }
+            [answers, selected] = [answersResult, selectedResult];
+            clearGuestCompass(); // Has API answers — clean separation
+          }
         } else if (fragment) {
           // Guest with fresh fragment: convert to API format and cache for future visits
           // Guard: fragment.answers may be null if user came from Read & Rank without CompassV2
           if (fragment.answers !== null) {
+            if (import.meta.env.DEV) {
+              console.log('[CompassContext] priority=fragment (guest, fresh compass fragment)', { answers: fragment.answers });
+            }
             answers = convertGuestAnswersToApiFormat(fragment.answers, topics);
             selected = fragment.selectedTopics;
             inverted = fragment.invertedSpokes || {};
@@ -140,9 +166,16 @@ export function CompassProvider({ children }) {
           // Guest without fragment: try localStorage cache
           const cached = loadGuestCompass();
           if (cached) {
+            if (import.meta.env.DEV) {
+              console.log('[CompassContext] priority=storage (guest, loading cached guestCompass)', { cached });
+            }
             answers = convertGuestAnswersToApiFormat(cached.answers, topics);
             selected = cached.selectedTopics;
             inverted = cached.invertedSpokes || {};
+          } else {
+            if (import.meta.env.DEV) {
+              console.log('[CompassContext] priority=empty (guest, no fragment, no cached data)');
+            }
           }
         }
 
