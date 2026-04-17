@@ -56,6 +56,8 @@ function normalize(s) {
  * @param {Array}  cities    - from fetchTreasuryCities()
  * @returns {object|null}    - matching city object, or null
  */
+const ENTITY_TYPE_WORDS = ['township', 'county', 'village', 'borough', 'town', 'parish'];
+
 export function findMatchingMunicipality(bodyTitle, cities) {
   if (!bodyTitle || !Array.isArray(cities)) return null;
 
@@ -64,8 +66,13 @@ export function findMatchingMunicipality(bodyTitle, cities) {
   const candidates = cities.filter((c) => {
     if (!c.available_datasets || c.available_datasets.length === 0) return false;
     const cityName = normalize(c.name);
-    // Title must start with the municipality name (word-boundary safe via space or end)
-    return t === cityName || t.startsWith(cityName + ' ');
+    if (t !== cityName && !t.startsWith(cityName + ' ')) return false;
+    // Reject if the next word after the city name is a different entity type
+    // e.g. "Bloomington Township" should not match the city of "Bloomington"
+    const rest = t.slice(cityName.length).trim();
+    const nextWord = rest.split(/\s+/)[0];
+    if (nextWord && ENTITY_TYPE_WORDS.includes(nextWord)) return false;
+    return true;
   });
 
   if (candidates.length === 0) return null;
