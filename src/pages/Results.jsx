@@ -12,6 +12,7 @@ import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchElectionsByAddress, saveMyLocation } from '../lib/api';
+import { saveUserAddress } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
@@ -274,9 +275,15 @@ export default function Results() {
   });
 
   // Sync backend-validated formatted address into address bar (normalized to title case)
+  // Also persist to cross-app localStorage bridge so Compass can pre-select user's state (G-114-011)
   useEffect(() => {
     if (formattedAddress) {
       setAddressInput(toAddressTitleCase(formattedAddress));
+      // Parse state from formatted address — Census Geocoder format: "200 W KIRKWOOD AVE, BLOOMINGTON, IN, 47404"
+      // Comma-separated segments; find the 2-letter uppercase state code segment.
+      const segments = formattedAddress.split(',').map((s) => s.trim());
+      const stateSeg = segments.find((s) => /^[A-Z]{2}$/.test(s));
+      if (stateSeg) saveUserAddress(formattedAddress, stateSeg);
     }
   }, [formattedAddress]);
 

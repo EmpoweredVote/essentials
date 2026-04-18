@@ -253,6 +253,52 @@ export function clearGuestVerdicts() {
   localStorage.removeItem(GUEST_VERDICTS_KEY);
 }
 
+// ─── Cross-app address bridge ─────────────────────────────────────────────────
+// Written by essentials/src/pages/Results.jsx after a successful address search.
+// Read by CompassV2 InlinePoliticianPicker for state pre-selection (G-114-011 D-02 Tier 1).
+// Contract: key 'evUserAddress', value JSON { addr: string, state: string (USPS 2-letter), ts: epoch ms }.
+// TTL default 30 days. Other apps cannot import this file — they read the literal key string.
+
+/** localStorage key for cross-app user address bridge */
+export const USER_ADDRESS_KEY = "evUserAddress";
+
+/**
+ * Saves the user's last-searched address to localStorage for cross-app geo-default.
+ * @param {string} addr  - Full formatted address string
+ * @param {string} state - USPS 2-letter state code (e.g. 'IN', 'CA')
+ */
+export function saveUserAddress(addr, state) {
+  if (!state || typeof state !== 'string') return;
+  try {
+    localStorage.setItem(USER_ADDRESS_KEY, JSON.stringify({ addr, state, ts: Date.now() }));
+  } catch { /* noop — storage may be full or unavailable */ }
+}
+
+/**
+ * Reads the cross-app address bridge from localStorage.
+ * Returns { addr, state } or null if missing, expired, or malformed.
+ * @param {{ ttlMs?: number }} options - TTL in ms (default 30 days)
+ */
+export function loadUserAddress({ ttlMs = 30 * 24 * 60 * 60 * 1000 } = {}) {
+  try {
+    const raw = localStorage.getItem(USER_ADDRESS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.state !== 'string') return null;
+    if (parsed.ts && Date.now() - parsed.ts > ttlMs) return null;
+    return { addr: parsed.addr, state: parsed.state };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Removes the cross-app address bridge from localStorage.
+ */
+export function clearUserAddress() {
+  try { localStorage.removeItem(USER_ADDRESS_KEY); } catch { /* noop */ }
+}
+
 /**
  * Fetches the authenticated user's verdicts from the backend.
  * Returns { [quote_id]: 'agreed' | 'disagreed' } shape.
