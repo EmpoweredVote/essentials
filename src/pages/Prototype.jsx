@@ -80,7 +80,6 @@ export default function Prototype() {
               color: '#003E4D',
               marginBottom: '4px',
               margin: 0,
-              marginBottom: '4px',
               fontFamily: "'Manrope', sans-serif",
             }}
           >
