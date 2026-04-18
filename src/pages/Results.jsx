@@ -376,15 +376,13 @@ export default function Results() {
     });
   }, [cachedResult, isDesktop]);
 
-  // Eagerly fetch elections when address query is available.
-  // This enables the cross-reference annotation on Representatives cards (G-114-004)
-  // without waiting for the user to click the Elections tab.
+  // Lazy-fetch elections when Elections tab is active
   useEffect(() => {
-    if (!activeQuery) return;
+    if (activeView !== 'elections' || !activeQuery) return;
+    if (electionsData !== null) return; // already loaded for this query
 
     let cancelled = false;
     setElectionsLoading(true);
-    setElectionsData(null);
 
     fetchElectionsByAddress(decodeURIComponent(activeQuery)).then((data) => {
       if (!cancelled) {
@@ -394,7 +392,12 @@ export default function Results() {
     });
 
     return () => { cancelled = true; };
-  }, [activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeView, activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reset elections data when address changes
+  useEffect(() => {
+    setElectionsData(null);
+  }, [activeQuery]);
 
   // Handle ?mode=browse from Landing page "Browse by location" link (per D-05)
   useEffect(() => {
@@ -516,29 +519,6 @@ export default function Results() {
     () => groupIntoHierarchy(deduped),
     [deduped]
   );
-
-  /**
-   * Cross-reference map: politician UUID → office they're running for in an upcoming election.
-   * Only populated when elections data is available.
-   * Used to add "Running for [office] — see Elections tab" annotations (G-114-004).
-   */
-  const electionCrossRef = useMemo(() => {
-    if (!electionsData || electionsData.length === 0) return {};
-    const map = {};
-    for (const election of electionsData) {
-      for (const race of (election.races || [])) {
-        for (const candidate of (race.candidates || [])) {
-          if (candidate.politician_id && candidate.candidate_status !== 'withdrawn') {
-            // Store the first matched race for this politician
-            if (!map[candidate.politician_id]) {
-              map[candidate.politician_id] = race.position_name || '';
-            }
-          }
-        }
-      }
-    }
-    return map;
-  }, [electionsData]);
 
   const filteredHierarchy = useMemo(() => {
     if (appointedFilter === 'All' && selectedFilter === 'All') return hierarchy;
@@ -697,9 +677,6 @@ export default function Results() {
     const ballot = !isCandidate && getSeatBallotStatus(pol.term_end, pol.term_date_precision, pol.next_primary_date, pol.next_general_date);
     const branch = getBranch(pol.district_type, pol.office_title);
 
-    // Cross-reference: is this sitting official also running for a different office? (G-114-004)
-    const runningForOffice = !isCandidate && pol.id ? electionCrossRef[pol.id] : null;
-
     const imgData = getImageData(pol);
     return (
       <div key={pol.id} data-pol-id={pol.id} style={{ height: '100%' }}>
@@ -737,26 +714,6 @@ export default function Results() {
             />
           }
         />
-        {runningForOffice && (
-          <button
-            onClick={() => switchView('elections')}
-            style={{
-              display: 'block',
-              width: '100%',
-              textAlign: 'left',
-              padding: '4px 8px 4px 72px',
-              fontSize: '12px',
-              fontFamily: "'Manrope', sans-serif",
-              color: '#00657c',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              lineHeight: 1.4,
-            }}
-          >
-            Running for {runningForOffice} — see Elections tab
-          </button>
-        )}
       </div>
     );
   };
