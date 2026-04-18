@@ -45,6 +45,48 @@ function formatElectionDate(dateStr) {
   return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
+/**
+ * Normalize a Census Geocoder address (often ALL CAPS) to title case.
+ * Handles common abbreviations: "ST", "AVE", "BLVD", "IN", "CA", etc.
+ * e.g., "200 W KIRKWOOD AVE, BLOOMINGTON, IN, 47404"
+ *    → "200 W Kirkwood Ave, Bloomington, IN, 47404"
+ */
+const STATE_ABBREVS = new Set([
+  'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS',
+  'KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY',
+  'NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV',
+  'WI','WY','DC',
+]);
+const STREET_ABBREVS = new Set([
+  'ST','AVE','BLVD','DR','RD','LN','CT','PL','WAY','TER','CIR','PKWY','HWY','FWY',
+  'N','S','E','W','NE','NW','SE','SW',
+]);
+function toAddressTitleCase(address) {
+  if (!address) return address;
+  return address
+    .split(', ')
+    .map((part, partIdx) => {
+      const upper = part.toUpperCase();
+      // Keep state abbreviations and zip codes as-is
+      if (partIdx > 0 && (STATE_ABBREVS.has(upper) || /^\d{5}(-\d{4})?$/.test(part))) {
+        return upper;
+      }
+      return part
+        .split(' ')
+        .map((word) => {
+          const up = word.toUpperCase();
+          // Keep state abbreviations and single letters uppercase
+          if (STATE_ABBREVS.has(up)) return up;
+          // Common street abbreviations: capitalize first letter only
+          if (STREET_ABBREVS.has(up)) return up.charAt(0) + up.slice(1).toLowerCase();
+          if (!word) return word;
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        })
+        .join(' ');
+    })
+    .join(', ');
+}
+
 /** Derive a short formal name for the compass legend, e.g. "Senator Young" */
 function formatLegendName(pol) {
   const dt = pol.district_type || '';
@@ -231,10 +273,10 @@ export default function Results() {
     key: searchKey,
   });
 
-  // Sync backend-validated formatted address into address bar
+  // Sync backend-validated formatted address into address bar (normalized to title case)
   useEffect(() => {
     if (formattedAddress) {
-      setAddressInput(formattedAddress);
+      setAddressInput(toAddressTitleCase(formattedAddress));
     }
   }, [formattedAddress]);
 
@@ -334,13 +376,15 @@ export default function Results() {
     });
   }, [cachedResult, isDesktop]);
 
-  // Lazy-fetch elections when Elections tab is active
+  // Eagerly fetch elections when address query is available.
+  // This enables the cross-reference annotation on Representatives cards (G-114-004)
+  // without waiting for the user to click the Elections tab.
   useEffect(() => {
-    if (activeView !== 'elections' || !activeQuery) return;
-    if (electionsData !== null) return; // already loaded for this query
+    if (!activeQuery) return;
 
     let cancelled = false;
     setElectionsLoading(true);
+    setElectionsData(null);
 
     fetchElectionsByAddress(decodeURIComponent(activeQuery)).then((data) => {
       if (!cancelled) {
@@ -350,12 +394,7 @@ export default function Results() {
     });
 
     return () => { cancelled = true; };
-  }, [activeView, activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Reset elections data when address changes
-  useEffect(() => {
-    setElectionsData(null);
-  }, [activeQuery]);
+  }, [activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle ?mode=browse from Landing page "Browse by location" link (per D-05)
   useEffect(() => {
@@ -477,6 +516,29 @@ export default function Results() {
     () => groupIntoHierarchy(deduped),
     [deduped]
   );
+
+  /**
+   * Cross-reference map: politician UUID → office they're running for in an upcoming election.
+   * Only populated when elections data is available.
+   * Used to add "Running for [office] — see Elections tab" annotations (G-114-004).
+   */
+  const electionCrossRef = useMemo(() => {
+    if (!electionsData || electionsData.length === 0) return {};
+    const map = {};
+    for (const election of electionsData) {
+      for (const race of (election.races || [])) {
+        for (const candidate of (race.candidates || [])) {
+          if (candidate.politician_id && candidate.candidate_status !== 'withdrawn') {
+            // Store the first matched race for this politician
+            if (!map[candidate.politician_id]) {
+              map[candidate.politician_id] = race.position_name || '';
+            }
+          }
+        }
+      }
+    }
+    return map;
+  }, [electionsData]);
 
   const filteredHierarchy = useMemo(() => {
     if (appointedFilter === 'All' && selectedFilter === 'All') return hierarchy;
@@ -635,6 +697,9 @@ export default function Results() {
     const ballot = !isCandidate && getSeatBallotStatus(pol.term_end, pol.term_date_precision, pol.next_primary_date, pol.next_general_date);
     const branch = getBranch(pol.district_type, pol.office_title);
 
+    // Cross-reference: is this sitting official also running for a different office? (G-114-004)
+    const runningForOffice = !isCandidate && pol.id ? electionCrossRef[pol.id] : null;
+
     const imgData = getImageData(pol);
     return (
       <div key={pol.id} data-pol-id={pol.id} style={{ height: '100%' }}>
@@ -672,6 +737,26 @@ export default function Results() {
             />
           }
         />
+        {runningForOffice && (
+          <button
+            onClick={() => switchView('elections')}
+            style={{
+              display: 'block',
+              width: '100%',
+              textAlign: 'left',
+              padding: '4px 8px 4px 72px',
+              fontSize: '12px',
+              fontFamily: "'Manrope', sans-serif",
+              color: '#00657c',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              lineHeight: 1.4,
+            }}
+          >
+            Running for {runningForOffice} — see Elections tab
+          </button>
+        )}
       </div>
     );
   };
@@ -810,7 +895,7 @@ export default function Results() {
           {formattedAddress && phase === 'fresh' && list.length > 0 && (
             <div className="px-4 sm:px-8 pb-2">
               <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                Showing representatives for <span className="font-semibold text-gray-700">{formattedAddress}</span>
+                Showing representatives for <span className="font-semibold text-gray-700">{toAddressTitleCase(formattedAddress)}</span>
               </p>
             </div>
           )}
@@ -1003,7 +1088,7 @@ export default function Results() {
               {formattedAddress && electionsData && electionsData.length > 0 && (
                 <div className="pb-2">
                   <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                    Showing elections for <span className="font-semibold text-gray-700">{formattedAddress}</span>
+                    Showing elections for <span className="font-semibold text-gray-700">{toAddressTitleCase(formattedAddress)}</span>
                   </p>
                 </div>
               )}

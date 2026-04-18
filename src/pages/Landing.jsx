@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
+import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 const COVERAGE_AREAS = [
   { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
@@ -10,8 +11,16 @@ const COVERAGE_AREAS = [
 
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
+  const addressInputRef = useRef(null);
   const navigate = useNavigate();
   const { isLoggedIn, myRepresentatives, myLocationNotSet, compassLoading } = useCompass();
+
+  useGooglePlacesAutocomplete(addressInputRef, {
+    onPlaceSelected: (addr) => {
+      setAddressInput(addr);
+      navigate(`/results?q=${encodeURIComponent(addr)}`);
+    },
+  });
 
   // Auto-redirect Connected users who have representatives data — skip address input entirely
   useEffect(() => {
@@ -101,6 +110,7 @@ export default function Landing() {
             {/* Search Input + Button */}
             <div className="flex flex-col sm:flex-row gap-3">
               <input
+                ref={addressInputRef}
                 type="text"
                 value={addressInput}
                 onChange={(e) => setAddressInput(e.target.value)}
