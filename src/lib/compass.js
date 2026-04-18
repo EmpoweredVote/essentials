@@ -270,8 +270,12 @@ export const USER_ADDRESS_KEY = "evUserAddress";
 export function saveUserAddress(addr, state) {
   if (!state || typeof state !== 'string') return;
   try {
-    localStorage.setItem(USER_ADDRESS_KEY, JSON.stringify({ addr, state, ts: Date.now() }));
-  } catch { /* noop — storage may be full or unavailable */ }
+    // Use a cookie with domain=.empowered.vote so CompassV2 (different subdomain) can read it.
+    // localStorage is origin-scoped and won't cross subdomains.
+    const value = encodeURIComponent(JSON.stringify({ addr, state, ts: Date.now() }));
+    const maxAge = 30 * 24 * 60 * 60; // 30 days in seconds
+    document.cookie = `evUserAddress=${value}; domain=.empowered.vote; path=/; max-age=${maxAge}; SameSite=Lax; Secure`;
+  } catch { /* noop */ }
 }
 
 /**
@@ -281,9 +285,9 @@ export function saveUserAddress(addr, state) {
  */
 export function loadUserAddress({ ttlMs = 30 * 24 * 60 * 60 * 1000 } = {}) {
   try {
-    const raw = localStorage.getItem(USER_ADDRESS_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
+    const match = document.cookie.split('; ').find((c) => c.startsWith('evUserAddress='));
+    if (!match) return null;
+    const parsed = JSON.parse(decodeURIComponent(match.split('=').slice(1).join('=')));
     if (!parsed || typeof parsed.state !== 'string') return null;
     if (parsed.ts && Date.now() - parsed.ts > ttlMs) return null;
     return { addr: parsed.addr, state: parsed.state };
@@ -293,10 +297,10 @@ export function loadUserAddress({ ttlMs = 30 * 24 * 60 * 60 * 1000 } = {}) {
 }
 
 /**
- * Removes the cross-app address bridge from localStorage.
+ * Removes the cross-app address bridge cookie.
  */
 export function clearUserAddress() {
-  try { localStorage.removeItem(USER_ADDRESS_KEY); } catch { /* noop */ }
+  try { document.cookie = 'evUserAddress=; domain=.empowered.vote; path=/; max-age=0; SameSite=Lax; Secure'; } catch { /* noop */ }
 }
 
 /**
