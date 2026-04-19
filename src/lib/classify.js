@@ -169,6 +169,13 @@ export function classifyCategory(pol) {
     // County legislative bodies (BallotReady sometimes uses LOCAL for these)
     if (hasAny(chamber, ["board of supervisors", "county council", "county commission"]))
       return { tier: "Local", group: "County Legislators" };
+    // Municipal administrative officials (clerk, treasurer, auditor, etc.) —
+    // check BEFORE chamber-council match because clerks are sometimes
+    // attached to the council chamber administratively (e.g., Nicole Bolden,
+    // Bloomington City Clerk, chamber="Common City Council").
+    if (hasAny(title, ["clerk", "treasurer", "auditor", "recorder", "assessor"])) {
+      return { tier: "Local", group: "Municipal Officials" };
+    }
     // City council and similar legislative bodies
     if (
       hasAny(chamber, [
@@ -178,10 +185,6 @@ export function classifyCategory(pol) {
       hasAny(title, ROLE_LOCAL_LEGIS)
     ) {
       return { tier: "Local", group: "City Council" };
-    }
-    // Municipal officials (clerk, etc.)
-    if (hasAny(title, ["clerk", "city"])) {
-      return { tier: "Local", group: "Municipal Officials" };
     }
     if (
       hasAny(chamber, BODY_AGENCY) ||
