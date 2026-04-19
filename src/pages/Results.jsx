@@ -990,26 +990,14 @@ export default function Results() {
                           ? findMatchingMunicipality(body.title, treasuryCities)
                           : null;
                         return (
-                          <Fragment key={body.key}>
-                            <GovernmentBodySection
-                              title={body.title}
-                              websiteUrl={body.url || undefined}
-                              tier={tierKey}
-                            >
-                              {body.subgroups.map((sg) => (
-                                <SubGroupSection
-                                  key={sg.key}
-                                  title={body.subgroups.length > 1 ? sg.label : undefined}
-                                  websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
-                                >
-                                  {sg.pols.map((pol) =>
-                                    renderSeatGroup(pol)
-                                  )}
-                                </SubGroupSection>
-                              ))}
-                            </GovernmentBodySection>
+                          <GovernmentBodySection
+                            key={body.key}
+                            title={body.title}
+                            websiteUrl={body.url || undefined}
+                            tier={tierKey}
+                          >
                             {treasuryMatch && (
-                              <div className="mt-2 mb-4">
+                              <div className="mb-3">
                                 <a
                                   href={`${TREASURY_URL}/?entity=${toTreasurySlug(treasuryMatch)}`}
                                   target="_blank"
@@ -1024,7 +1012,18 @@ export default function Results() {
                                 </a>
                               </div>
                             )}
-                          </Fragment>
+                            {body.subgroups.map((sg) => (
+                              <SubGroupSection
+                                key={sg.key}
+                                title={body.subgroups.length > 1 ? sg.label : undefined}
+                                websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
+                              >
+                                {sg.pols.map((pol) =>
+                                  renderSeatGroup(pol)
+                                )}
+                              </SubGroupSection>
+                            ))}
+                          </GovernmentBodySection>
                         );
                       })}
                     </div>
