@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { SiteHeader, CategorySection } from '@empoweredvote/ev-ui';
+import { SiteHeader, CategorySection, CompassCardHorizontal } from '@empoweredvote/ev-ui';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
   classifyCategory,
@@ -10,7 +10,14 @@ import {
 } from '../lib/classify';
 import SegmentedControl from '../components/SegmentedControl';
 import CompassFirstCard, { VARIANT_CONFIG } from '../components/CompassFirstCard';
-import MOCK_STANCES from '../data/mockCompassData';
+import MOCK_STANCES, { MOCK_USER_COMPASS } from '../data/mockCompassData';
+
+// Shape MOCK_USER_COMPASS { [short_title]: value } into the array format
+// CompassCardHorizontal's fallback path accepts: [{ short_title, value }]
+const USER_ANSWERS = Object.entries(MOCK_USER_COMPASS).map(([short_title, value]) => ({
+  short_title,
+  value,
+}));
 
 const BLOOMINGTON_ADDRESS = '100 W Kirkwood Ave, Bloomington, IN 47404';
 
@@ -37,11 +44,23 @@ const TIER_RENDER_ORDER = ['Local', 'State', 'Federal'];
 
 export default function Prototype() {
   const [variant, setVariant] = useState('A');
+  const [view, setView] = useState(() => {
+    try {
+      const stored = localStorage.getItem('ev:compass-card-view');
+      return stored === 'portrait' ? 'portrait' : 'compass';
+    } catch {
+      return 'compass';
+    }
+  });
   const { data: politicians, phase } = usePoliticianData(BLOOMINGTON_ADDRESS, { enabled: true });
 
   useEffect(() => {
     document.title = 'Compass Prototype \u2014 Empowered Vote';
   }, []);
+
+  useEffect(() => {
+    try { localStorage.setItem('ev:compass-card-view', view); } catch {}
+  }, [view]);
 
   const tierGroups = useMemo(() => {
     if (!politicians || politicians.length === 0) return null;
@@ -98,14 +117,26 @@ export default function Prototype() {
           </p>
         </div>
 
-        {/* Variant toggle */}
+        {/* Controls bar: view-mode toggle + legacy variant toggle */}
         <div
           style={{
-            maxWidth: '320px',
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '24px',
+            flexWrap: 'wrap',
             margin: '24px auto 32px auto',
             padding: '0 32px',
           }}
         >
+          <SegmentedControl
+            options={[
+              { value: 'compass', label: 'Compass' },
+              { value: 'portrait', label: 'Portrait' },
+            ]}
+            value={view}
+            onChange={setView}
+            ariaLabel="Card view mode"
+          />
           <SegmentedControl
             options={VARIANT_OPTIONS}
             value={variant}
@@ -227,6 +258,73 @@ export default function Prototype() {
               </div>
             ));
           })}
+
+          {/* CompassCardHorizontal (ev-ui port) — 5 harness scenarios for Phase 127 verification */}
+          {politicians && politicians.length > 0 && (
+            <section style={{ marginTop: 48 }}>
+              <h2 style={{ fontFamily: "'Manrope', sans-serif", color: '#003E4D', marginBottom: 8 }}>
+                CompassCardHorizontal (ev-ui port)
+              </h2>
+              <p style={{ fontSize: 14, color: '#555', marginBottom: 24, fontFamily: "'Manrope', sans-serif" }}>
+                Current view mode: <strong>{view}</strong> — toggle via the segmented control above.
+              </p>
+
+              {/* Scenarios 1 + 3: representatives surface — live userAnswers + explicit empty-data */}
+              <h3 style={{ fontFamily: "'Manrope', sans-serif", color: '#003E4D', marginBottom: 12 }}>
+                Representatives surface
+              </h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))', gap: 16, marginBottom: 16 }}>
+                {politicians.slice(0, 3).map((p) => (
+                  <CompassCardHorizontal
+                    key={`rep-${p.id}`}
+                    politician={p}
+                    userAnswers={USER_ANSWERS}
+                    view={view}
+                    surface="representatives"
+                  />
+                ))}
+
+                {/* Scenario 3: explicit empty-data — forces PlaceholderRadar in compass view */}
+                <CompassCardHorizontal
+                  key="rep-empty"
+                  politician={politicians[0]}
+                  userAnswers={null}
+                  view={view}
+                  surface="representatives"
+                />
+
+                {/* Scenario: missing photo — forces initials fallback in portrait view */}
+                <CompassCardHorizontal
+                  key="rep-nophoto"
+                  politician={{ ...politicians[0], photo_origin_url: null, images: null, full_name: 'No Photo Politician' }}
+                  userAnswers={USER_ANSWERS}
+                  view={view}
+                  surface="representatives"
+                />
+              </div>
+
+              {/* Scenario 5: elections surface with one running_unopposed=true */}
+              <h3 style={{ marginTop: 32, fontFamily: "'Manrope', sans-serif", color: '#003E4D', marginBottom: 12 }}>
+                Elections surface
+              </h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))', gap: 16 }}>
+                <CompassCardHorizontal
+                  key="elec-contested"
+                  politician={{ ...politicians[0], office_running_for: politicians[0].office_title, running_unopposed: false }}
+                  userAnswers={USER_ANSWERS}
+                  view={view}
+                  surface="elections"
+                />
+                <CompassCardHorizontal
+                  key="elec-unopposed"
+                  politician={{ ...(politicians[1] || politicians[0]), office_running_for: (politicians[1] || politicians[0]).office_title, running_unopposed: true }}
+                  userAnswers={USER_ANSWERS}
+                  view={view}
+                  surface="elections"
+                />
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>
