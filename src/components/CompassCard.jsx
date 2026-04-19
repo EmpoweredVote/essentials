@@ -96,16 +96,25 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         .map((t) => t.short_title);
     }
 
-    // Intersection: only topics where BOTH user AND politician have answers
     const userAnsweredIds = new Set(userAnswers.map((a) => String(a.topic_id)));
     const polAnsweredIds = new Set(polAnswers.map((a) => String(a.topic_id)));
     const topicByShortLower = new Map(allTopics.map((t) => [t.short_title.toLowerCase(), t]));
 
-    allowedShorts = allowedShorts.filter((s) => {
-      const topic = topicByShortLower.get(s.toLowerCase());
-      if (!topic) return false;
-      return userAnsweredIds.has(String(topic.id)) && polAnsweredIds.has(String(topic.id));
-    });
+    // When user has explicit selections, show all their topics (pol may have no stance on some).
+    // When falling back to pol-answered topics, require both parties have answered.
+    if (selectedTopics && selectedTopics.length > 0) {
+      allowedShorts = allowedShorts.filter((s) => {
+        const topic = topicByShortLower.get(s.toLowerCase());
+        if (!topic) return false;
+        return userAnsweredIds.has(String(topic.id));
+      });
+    } else {
+      allowedShorts = allowedShorts.filter((s) => {
+        const topic = topicByShortLower.get(s.toLowerCase());
+        if (!topic) return false;
+        return userAnsweredIds.has(String(topic.id)) && polAnsweredIds.has(String(topic.id));
+      });
+    }
 
     // Cap at MAX_SPOKES
     if (allowedShorts.length > MAX_SPOKES) {
