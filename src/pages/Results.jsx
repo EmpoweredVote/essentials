@@ -58,6 +58,21 @@ const STATE_ABBREVS = new Set([
   'NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV',
   'WI','WY','DC',
 ]);
+const STATE_NAMES = {
+  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas',
+  CA: 'California', CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware',
+  FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho',
+  IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas',
+  KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
+  MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi',
+  MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada',
+  NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York',
+  NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma',
+  OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
+  SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah',
+  VT: 'Vermont', VA: 'Virginia', WA: 'Washington', WV: 'West Virginia',
+  WI: 'Wisconsin', WY: 'Wyoming', DC: 'District of Columbia',
+};
 const STREET_ABBREVS = new Set([
   'ST','AVE','BLVD','DR','RD','LN','CT','PL','WAY','TER','CIR','PKWY','HWY','FWY',
   'N','S','E','W','NE','NW','SE','SW',
@@ -383,9 +398,9 @@ export default function Results() {
     });
   }, [cachedResult, isDesktop]);
 
-  // Lazy-fetch elections when Elections tab is active
+  // Eager-fetch elections when address search completes (not lazily on tab click)
   useEffect(() => {
-    if (activeView !== 'elections' || !activeQuery) return;
+    if (!activeQuery) return;
     if (electionsData !== null) return; // already loaded for this query
 
     let cancelled = false;
@@ -399,7 +414,7 @@ export default function Results() {
     });
 
     return () => { cancelled = true; };
-  }, [activeView, activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Reset elections data when address changes
   useEffect(() => {
@@ -497,6 +512,36 @@ export default function Results() {
     () => getBuildingImages(representingCity, userState),
     [representingCity, userState]
   );
+
+  const electionsLabelSuffix = useMemo(() => {
+    if (!electionsData || electionsData.length === 0) return null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const upcoming = electionsData
+      .filter((e) => {
+        if (!e.election_date) return false;
+        const d = new Date(e.election_date + 'T12:00:00');
+        return d >= today;
+      })
+      .sort((a, b) => new Date(a.election_date) - new Date(b.election_date));
+
+    if (upcoming.length === 0) return null;
+    const next = upcoming[0];
+
+    const stateName = userState ? (STATE_NAMES[userState] || '') : '';
+    const typeRaw = next.election_type || '';
+    const typeCap = typeRaw ? typeRaw.charAt(0).toUpperCase() + typeRaw.slice(1).toLowerCase() : '';
+    const dateStr = new Date(next.election_date + 'T12:00:00').toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+
+    const parts = [stateName, typeCap].filter(Boolean).join(' ');
+    if (!parts && !dateStr) return null;
+    return `${parts} · ${dateStr}`;
+  }, [electionsData, userState]);
 
   // Filter federal politicians: only show senators/reps from user's state
   const federalFiltered = useMemo(() => {
@@ -845,9 +890,12 @@ export default function Results() {
                 }`}
                 onClick={() => switchView('elections')}
               >
-                Elections
+                <span className="sm:hidden">Elections</span>
+                <span className="hidden sm:inline">
+                  {electionsLabelSuffix ? `Elections - ${electionsLabelSuffix}` : 'Elections'}
+                </span>
                 {electionsData && electionsData.length > 0 && (
-                  <span className="w-2 h-2 rounded-full bg-[#FED12E] ml-1" />
+                  <span className="w-2 h-2 rounded-full bg-[#FED12E] ml-1 animate-pulse" />
                 )}
               </button>
             </div>
