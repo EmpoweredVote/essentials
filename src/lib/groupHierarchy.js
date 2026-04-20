@@ -94,15 +94,35 @@ function getFederalAccordionKey(pol) {
   return 'U.S. Cabinet-Level Officials';
 }
 
+// ── Admin officer detection ──────────────────────────────────────
+
+const ADMIN_OFFICER_TITLE_RE = /\b(clerk|treasurer|auditor|recorder|assessor)\b/i;
+
+/**
+ * Returns true when a politician holds an administrative officer role
+ * (clerk, treasurer, auditor, recorder, assessor) at the LOCAL district level.
+ * Guards against reclassifying COUNTY clerks or state-level treasurers.
+ */
+function isAdminOfficer(pol) {
+  const dt = pol.district_type || '';
+  // Only applies to LOCAL* (LOCAL, LOCAL_EXEC treated separately by district_type segment)
+  if (!dt.startsWith('LOCAL')) return false;
+  const title = pol.office_title || '';
+  return ADMIN_OFFICER_TITLE_RE.test(title);
+}
+
 // ── Sub-group key ────────────────────────────────────────────────
 
 function getSubGroupKey(pol) {
-  // Use government_body_name + district_type as compound key
-  // This separates mayor (LOCAL_EXEC) from clerk (LOCAL) even when
-  // they share government_body_name "City of Bloomington"
+  // Use government_body_name + district_type + role segment as compound key.
+  // This separates:
+  //   - Mayor (LOCAL_EXEC) from council (LOCAL) via district_type
+  //   - Admin officers (clerk/treasurer/etc., LOCAL) from council members (LOCAL)
+  //     via a third "ADMIN" vs "MEMBER" segment
   const body = pol.government_body_name || '';
   const dt = pol.district_type || '';
-  return `${body}||${dt}`;
+  const roleSegment = (dt === 'LOCAL' && isAdminOfficer(pol)) ? 'ADMIN' : 'MEMBER';
+  return `${body}||${dt}||${roleSegment}`;
 }
 
 // ── Display name helpers ─────────────────────────────────────────
@@ -116,6 +136,7 @@ function stripSuffix(name) {
 /**
  * Derive display label for a sub-group.
  * Rules (in order):
+ * 0. Admin officers (clerk/treasurer/etc. at LOCAL level): derive clean role label
  * 1. Role-split groups (same body, different district_type): use cleaned office_title
  * 2. Use government_body_name as-is
  * 3. Replace generic words ("Government") with "Officials"
@@ -127,6 +148,25 @@ function getSubGroupLabel(pols, accordionTitle) {
   const first = pols[0];
   const body = first.government_body_name || '';
   const dt = first.district_type || '';
+
+  // Rule 0: Admin officer sub-groups — all pols in this group are admin officers
+  // Derive a clean label from office_title
+  if (pols.every(p => isAdminOfficer(p))) {
+    const title = first.office_title || '';
+    // Strip leading jurisdiction prefix ("City ", "Town ", "Village ", "County ")
+    const cleaned = title
+      .replace(/^(City|Town|Village|County)\s+/i, '')
+      .replace(/\s+-\s+.*$/, ''); // strip " - District N" suffix
+    // If cleaned is a bare role word (e.g., "Clerk"), re-add a jurisdiction qualifier
+    // by deriving it from the government_name (e.g., "City Clerk")
+    if (cleaned && /^(clerk|treasurer|auditor|recorder|assessor)$/i.test(cleaned)) {
+      const govName = stripSuffix(first.government_name);
+      // Derive jurisdiction word: "City of Bloomington" -> "City"
+      const jurisdictionWord = govName.match(/^(City|Town|Village|County)/i)?.[1] || '';
+      return jurisdictionWord ? `${jurisdictionWord} ${cleaned}` : cleaned;
+    }
+    return cleaned || title;
+  }
 
   // Rule 1: Role-split — when body name matches the accordion's government_name
   // (e.g., body="City of Bloomington", accordion="City of Bloomington")
@@ -249,13 +289,18 @@ function subGroupOrderScore(label, pols) {
   const lower = label.toLowerCase();
   const titleLower = (pols[0]?.office_title || '').toLowerCase();
 
+  // Admin officers score 25 — after executives (20) but before generic "other" (30).
+  // Check this BEFORE the legislative keyword check to prevent admin officers whose
+  // label or accordion key contains "council" from being misclassified as legislative.
+  if (pols.length > 0 && pols.every(p => isAdminOfficer(p))) return 25;
+
   // House before Senate (smaller representation first)
   if (lower.includes('house') || lower.includes('assembly')) return 0;
   if (lower.includes('senate')) return 1;
 
   if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 10;
   if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 20;
-  return 30; // Other (clerk, officials, etc.)
+  return 30; // Other (officials, etc.)
 }
 
 // ── Politician sorting within sub-groups ─────────────────────────
