@@ -453,12 +453,16 @@ export default function Results() {
         const schoolLower = schoolFilter?.toLowerCase();
         filtered = data.filter((pol) => {
           const dt = pol.district_type || '';
-          const govLower = (pol.government_name || '').toLowerCase();
+          // Check both government_name and government_body_name — one may be empty
+          const combinedLower = `${pol.government_name || ''} ${pol.government_body_name || ''}`.toLowerCase().trim();
           if (dt === 'LOCAL' || dt === 'LOCAL_EXEC') {
-            return cityLower ? govLower.includes(cityLower) : true;
+            // No name data — let it through rather than hide valid officials
+            if (!combinedLower) return true;
+            return cityLower ? combinedLower.includes(cityLower) : true;
           }
           if (dt === 'SCHOOL') {
-            return schoolLower ? govLower.includes(schoolLower) : true;
+            if (!combinedLower) return true;
+            return schoolLower ? combinedLower.includes(schoolLower) : true;
           }
           return true;
         });

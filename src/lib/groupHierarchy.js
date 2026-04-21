@@ -250,8 +250,8 @@ const STATE_BODY_ORDER_KW = [
 ];
 
 const FEDERAL_BODY_ORDER = {
-  'U.S. Congress': 0,
-  'U.S. Executive': 1,
+  'U.S. Executive': 0,
+  'U.S. Congress': 1,
   'U.S. Cabinet': 2,
   'U.S. Cabinet-Level Officials': 3,
   'U.S. Supreme Court': 4,
