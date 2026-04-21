@@ -11,7 +11,7 @@ import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchElectionsByAddress, saveMyLocation } from '../lib/api';
+import { fetchElectionsByAddress, saveMyLocation, browseByArea } from '../lib/api';
 import { saveUserAddress } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
@@ -426,6 +426,25 @@ export default function Results() {
     if (searchParams.get('mode') === 'browse') {
       setSearchMode('browse');
     }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Handle ?browse_geo_id + ?browse_mtfcc shortcut buttons (e.g. LA County)
+  // Calls browse-by-area directly rather than geocoding an address
+  useEffect(() => {
+    const geoId = searchParams.get('browse_geo_id');
+    const mtfcc = searchParams.get('browse_mtfcc');
+    const label = searchParams.get('browse_label');
+    if (!geoId || !mtfcc) return;
+
+    setSearchMode('browse');
+    setBrowseLoading(true);
+    if (label) setAddressInput(decodeURIComponent(label));
+
+    browseByArea(geoId, mtfcc).then(({ data, error }) => {
+      if (error) console.error('browse shortcut error:', error);
+      setBrowseResults(data);
+      setBrowseLoading(false);
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const switchView = (view) => {

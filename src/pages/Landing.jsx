@@ -6,7 +6,7 @@ import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 const COVERAGE_AREAS = [
   { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
-  { county: 'Los Angeles County', state: 'California', address: '500 W Temple St, Los Angeles, CA 90012' },
+  { county: 'Los Angeles County', state: 'California', browseGeoId: '06037', browseMtfcc: 'G4020' },
 ];
 
 export default function Landing() {
@@ -66,7 +66,9 @@ export default function Landing() {
               {COVERAGE_AREAS.map((area) => (
                 <button
                   key={area.county}
-                  onClick={() => navigate(`/results?q=${encodeURIComponent(area.address)}`)}
+                  onClick={() => area.browseGeoId
+                  ? navigate(`/results?browse_geo_id=${area.browseGeoId}&browse_mtfcc=${area.browseMtfcc}&browse_label=${encodeURIComponent(area.county)}`)
+                  : navigate(`/results?q=${encodeURIComponent(area.address)}`)}
                   className="flex-1 text-left px-4 py-3 bg-white border-2 border-[var(--ev-teal)] rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
                 >
                   <div className="text-base font-semibold text-[var(--ev-teal)]">{area.county}</div>

@@ -294,6 +294,21 @@ export async function fetchMyElections() {
   return { elections: Array.isArray(data.elections) ? data.elections : [], error: null, formattedAddress, noLocation: false };
 }
 
+export async function browseByArea(geoId, mtfcc) {
+  try {
+    const res = await publicFetch('/essentials/browse/by-area', {
+      method: 'POST',
+      body: JSON.stringify({ geo_id: geoId, mtfcc }),
+    });
+    if (!res || !res.ok) return { data: [], error: `${res?.status ?? 'unknown'}` };
+    const data = await res.json();
+    return { data: Array.isArray(data) ? data : [], error: null };
+  } catch (err) {
+    console.error('browseByArea error:', err);
+    return { data: [], error: err.message };
+  }
+}
+
 export async function fetchElectionsByAddress(address) {
   try {
     const res = await publicFetch(

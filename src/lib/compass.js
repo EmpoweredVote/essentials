@@ -1,5 +1,5 @@
 // src/lib/compass.js
-import { apiFetch } from './auth';
+import { apiFetch, publicFetch } from './auth';
 
 // All topics (full topic objects: { id, short_title, stances, ... })
 export async function fetchTopics() {
@@ -48,7 +48,7 @@ export async function fetchSelectedTopics() {
 // Public endpoint — returns [] on any error.
 export async function fetchPoliticiansWithStances() {
   try {
-    const res = await apiFetch('/compass/politicians');
+    const res = await publicFetch('/compass/politicians');
     if (!res) throw new Error('fetchPoliticiansWithStances failed: Unauthorized');
     if (!res.ok) throw new Error(`fetchPoliticiansWithStances failed: ${res.status}`);
     return res.json();
