@@ -429,11 +429,16 @@ export default function Results() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle ?browse_geo_id + ?browse_mtfcc shortcut buttons (e.g. LA County)
-  // Calls browse-by-area directly rather than geocoding an address
+  // Calls browse-by-area directly rather than geocoding an address.
+  // Optional filters:
+  //   browse_city_filter  — for LOCAL/LOCAL_EXEC, keep only where government_name includes this string
+  //   browse_school_filter — for SCHOOL, keep only where government_name includes this string
   useEffect(() => {
     const geoId = searchParams.get('browse_geo_id');
     const mtfcc = searchParams.get('browse_mtfcc');
     const label = searchParams.get('browse_label');
+    const cityFilter = searchParams.get('browse_city_filter');
+    const schoolFilter = searchParams.get('browse_school_filter');
     if (!geoId || !mtfcc) return;
 
     setSearchMode('browse');
@@ -442,7 +447,23 @@ export default function Results() {
 
     browseByArea(geoId, mtfcc).then(({ data, error }) => {
       if (error) console.error('browse shortcut error:', error);
-      setBrowseResults(data);
+      let filtered = data;
+      if (cityFilter || schoolFilter) {
+        const cityLower = cityFilter?.toLowerCase();
+        const schoolLower = schoolFilter?.toLowerCase();
+        filtered = data.filter((pol) => {
+          const dt = pol.district_type || '';
+          const govLower = (pol.government_name || '').toLowerCase();
+          if (dt === 'LOCAL' || dt === 'LOCAL_EXEC') {
+            return cityLower ? govLower.includes(cityLower) : true;
+          }
+          if (dt === 'SCHOOL') {
+            return schoolLower ? govLower.includes(schoolLower) : true;
+          }
+          return true;
+        });
+      }
+      setBrowseResults(filtered);
       setBrowseLoading(false);
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
