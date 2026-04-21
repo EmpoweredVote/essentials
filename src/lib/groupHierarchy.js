@@ -289,7 +289,7 @@ function subGroupOrderScore(label, pols) {
   const lower = label.toLowerCase();
   const titleLower = (pols[0]?.office_title || '').toLowerCase();
 
-  // Admin officers score 25 — after executives (20) but before generic "other" (30).
+  // Admin officers score 25 — after executives (10) and legislative (20) but before generic "other" (30).
   // Check this BEFORE the legislative keyword check to prevent admin officers whose
   // label or accordion key contains "council" from being misclassified as legislative.
   if (pols.length > 0 && pols.every(p => isAdminOfficer(p))) return 25;
@@ -298,8 +298,8 @@ function subGroupOrderScore(label, pols) {
   if (lower.includes('house') || lower.includes('assembly')) return 0;
   if (lower.includes('senate')) return 1;
 
-  if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 10;
-  if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 20;
+  if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 10;
+  if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 20;
   return 30; // Other (officials, etc.)
 }
 
