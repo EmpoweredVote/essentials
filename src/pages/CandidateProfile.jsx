@@ -4,6 +4,7 @@ import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord, fetchRac
 import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
+import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { cleanPositionName } from '../components/ElectionsView';
 
 function formatElectionDateFull(dateStr) {
@@ -168,6 +169,11 @@ export default function CandidateProfile() {
                   politicianName={pol.full_name || `${pol.first_name} ${pol.last_name}`}
                   politicianTitle={pol.office_title || candidateData?.position_name || ''}
                 />
+              )}
+              {polId && (
+                <div className="mt-6">
+                  <CampaignFinanceSection politicianId={polId} />
+                </div>
               )}
             </>
           )}
