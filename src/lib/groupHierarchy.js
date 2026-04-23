@@ -111,6 +111,19 @@ function isAdminOfficer(pol) {
   return ADMIN_OFFICER_TITLE_RE.test(title);
 }
 
+// ── Judicial official detection ──────────────────────────────────
+
+const JUDICIAL_OFFICIAL_TITLE_RE = /\bclerk\b|\badministrator\b|\bcourt officer\b/i;
+
+/**
+ * Returns true when a JUDICIAL-district politician holds a clerk/administrator role
+ * rather than being a judge. Separate from isAdminOfficer to keep LOCAL and JUDICIAL
+ * logic distinct and avoid cross-contamination.
+ */
+function isJudicialOfficial(pol) {
+  return pol.district_type === 'JUDICIAL' && JUDICIAL_OFFICIAL_TITLE_RE.test(pol.office_title || '');
+}
+
 // ── Sub-group key ────────────────────────────────────────────────
 
 function getSubGroupKey(pol) {
@@ -119,8 +132,15 @@ function getSubGroupKey(pol) {
   //   - Mayor (LOCAL_EXEC) from council (LOCAL) via district_type
   //   - Admin officers (clerk/treasurer/etc., LOCAL) from council members (LOCAL)
   //     via a third "ADMIN" vs "MEMBER" segment
+  //   - JUDICIAL clerks/officials from judges via "OFFICIAL" vs "JUDGE" segment
   const body = pol.government_body_name || '';
   const dt = pol.district_type || '';
+
+  if (dt === 'JUDICIAL') {
+    const judicialSeg = isJudicialOfficial(pol) ? 'OFFICIAL' : 'JUDGE';
+    return `${body}||${dt}||${judicialSeg}`;
+  }
+
   const roleSegment = (dt === 'LOCAL' && isAdminOfficer(pol)) ? 'ADMIN' : 'MEMBER';
   return `${body}||${dt}||${roleSegment}`;
 }
@@ -183,6 +203,13 @@ function getSubGroupLabel(pols, accordionTitle) {
 
   // Rule 4: Courts — derive from shared office_title prefix
   if (dt === 'JUDICIAL') {
+    // Rule 4a: Judicial officials (clerk, administrator) sub-group
+    if (pols.every(p => isJudicialOfficial(p))) {
+      // Derive court type from accordion/body name: "Monroe Circuit Court" -> "Circuit Court"
+      const courtName = (body || accordionTitle || '').replace(/^.*?\b(Circuit Court|Superior Court|District Court|Court)\b.*$/i, '$1');
+      return courtName ? `${courtName} Officials` : 'Court Officials';
+    }
+    // Rule 4b: Judges sub-group — derive from shared office_title prefix
     const titles = pols.map(p => p.office_title || '');
     // Find common prefix like "Indiana Circuit Court Judge - 10th Circuit"
     const circuitMatch = titles[0]?.match(/^(.+?Circuit)(?:,|\s+-)/);
@@ -289,7 +316,12 @@ function subGroupOrderScore(label, pols) {
   const lower = label.toLowerCase();
   const titleLower = (pols[0]?.office_title || '').toLowerCase();
 
-  // Admin officers score 25 — after executives (10) and legislative (20) but before generic "other" (30).
+  // Judicial officials (clerks) sort AFTER judges within the same court body.
+  if (pols.length > 0 && pols.every(p => isJudicialOfficial(p))) return 30;
+  // Judges sort FIRST within a court body (before officials).
+  if (pols.length > 0 && pols[0]?.district_type === 'JUDICIAL' && !pols.every(p => isJudicialOfficial(p))) return 15;
+
+  // Admin officers score 25 — after executives (20) but before generic "other" (30).
   // Check this BEFORE the legislative keyword check to prevent admin officers whose
   // label or accordion key contains "council" from being misclassified as legislative.
   if (pols.length > 0 && pols.every(p => isAdminOfficer(p))) return 25;

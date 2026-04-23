@@ -1082,7 +1082,10 @@ export default function Results() {
                         </div>
                       )}
                       {bodies.map((body) => {
-                        const treasuryMatch = tier === 'Local'
+                        const isJudicialBody = body.subgroups.some(sg =>
+                          sg.pols.some(p => p.district_type === 'JUDICIAL')
+                        );
+                        const treasuryMatch = (tier === 'Local' && !isJudicialBody)
                           ? findMatchingMunicipality(body.title, treasuryCities)
                           : null;
                         return (
