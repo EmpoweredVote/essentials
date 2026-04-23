@@ -174,3 +174,75 @@ describe('Admin officer sub-group splitting', () => {
   });
 
 });
+
+// ─── Judicial sub-group splitting ────────────────────────────────────────────
+
+function makeJudicialPol(overrides) {
+  return {
+    district_type: 'JUDICIAL',
+    government_name: 'Monroe County, Indiana, US',
+    government_body_name: 'Monroe Circuit Court',
+    chamber_name_formal: 'Monroe Circuit Court',
+    chamber_name: 'Monroe Circuit Court',
+    office_title: 'Indiana Circuit Court Judge - 10th Circuit, Division 1',
+    district_id: '1',
+    last_name: 'Judge',
+    ...overrides,
+  };
+}
+
+describe('Judicial sub-group splitting (judges vs. court officials)', () => {
+
+  // Test F: 3 judges + 1 clerk -> two sub-groups (judges, officials)
+  it('Test F: 3 judges + clerk -> two sub-groups; clerk in "Circuit Court Officials"', () => {
+    const pols = [
+      makeJudicialPol({ office_title: 'Indiana Circuit Court Judge - 10th Circuit, Division 1', last_name: 'JudgeA', district_id: '1' }),
+      makeJudicialPol({ office_title: 'Indiana Circuit Court Judge - 10th Circuit, Division 2', last_name: 'JudgeB', district_id: '2' }),
+      makeJudicialPol({ office_title: 'Indiana Circuit Court Judge - 10th Circuit, Division 3', last_name: 'JudgeC', district_id: '3' }),
+      makeJudicialPol({ office_title: 'Clerk of the Monroe Circuit Court', last_name: 'Brown', district_id: '0' }),
+    ];
+
+    const hierarchy = groupIntoHierarchy(pols);
+    const localTier = hierarchy.find(t => t.tier === 'Local');
+    expect(localTier).toBeDefined();
+
+    const courtBody = localTier.bodies.find(b => b.title === 'Monroe Circuit Court');
+    expect(courtBody).toBeDefined();
+
+    // Must have exactly 2 sub-groups
+    expect(courtBody.subgroups.length).toBe(2);
+
+    // Officials sub-group exists and contains only Brown
+    const officialsGroup = courtBody.subgroups.find(sg => sg.label === 'Circuit Court Officials');
+    expect(officialsGroup).toBeDefined();
+    expect(officialsGroup.pols.length).toBe(1);
+    expect(officialsGroup.pols[0].last_name).toBe('Brown');
+
+    // Judges sub-group contains all 3 judges
+    const judgesGroup = courtBody.subgroups.find(sg => /Circuit Judges$/.test(sg.label));
+    expect(judgesGroup).toBeDefined();
+    expect(judgesGroup.pols.length).toBe(3);
+
+    // Judges sub-group sorts BEFORE officials sub-group
+    const judgesIdx = courtBody.subgroups.indexOf(judgesGroup);
+    const officialsIdx = courtBody.subgroups.indexOf(officialsGroup);
+    expect(judgesIdx).toBeLessThan(officialsIdx);
+  });
+
+  // Test G: Judges only (no clerk) -> exactly 1 sub-group
+  it('Test G: judges only (no clerk) -> exactly 1 sub-group, no "Officials" group', () => {
+    const pols = [
+      makeJudicialPol({ office_title: 'Indiana Circuit Court Judge - 10th Circuit, Division 1', last_name: 'JudgeX', district_id: '1' }),
+      makeJudicialPol({ office_title: 'Indiana Circuit Court Judge - 10th Circuit, Division 2', last_name: 'JudgeY', district_id: '2' }),
+    ];
+
+    const hierarchy = groupIntoHierarchy(pols);
+    const localTier = hierarchy.find(t => t.tier === 'Local');
+    const courtBody = localTier.bodies.find(b => b.title === 'Monroe Circuit Court');
+    expect(courtBody).toBeDefined();
+
+    expect(courtBody.subgroups.length).toBe(1);
+    expect(courtBody.subgroups[0].label).not.toContain('Officials');
+  });
+
+});
