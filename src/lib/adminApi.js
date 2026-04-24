@@ -145,3 +145,59 @@ export async function searchPoliticiansAdmin(query) {
 
   return res.json();
 }
+
+/**
+ * Fetch all pending candidates from the discovery staging queue.
+ * @returns {Promise<Array>} Array of staging entries with race, election, and jurisdiction context.
+ */
+export async function fetchStagingQueue() {
+  const res = await apiFetch('/admin/discovery/staging');
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  if (!res.ok) {
+    const err = new Error(`Fetch staging queue failed: ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
+
+/**
+ * Approve a pending staging candidate by UUID.
+ * @param {string} id - UUID of the candidate_staging row
+ * @returns {Promise<Object>} Approval result with id, fullName, status, confidence, action, warning
+ */
+export async function approveStagingCandidate(id) {
+  const res = await apiFetch(`/admin/discovery/staging/${encodeURIComponent(id)}/approve`, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  });
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  if (!res.ok) {
+    const text = await res.text();
+    const err = new Error(text || `Approve failed: ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
+
+/**
+ * Dismiss a pending staging candidate by UUID.
+ * @param {string} id - UUID of the candidate_staging row
+ * @param {string} [reason] - Reason for dismissal (defaults to 'Dismissed by admin')
+ * @returns {Promise<Object>} Dismissal result with id, fullName, status, dismissedReason, confidence, action
+ */
+export async function dismissStagingCandidate(id, reason = 'Dismissed by admin') {
+  const res = await apiFetch(`/admin/discovery/staging/${encodeURIComponent(id)}/dismiss`, {
+    method: 'POST',
+    body: JSON.stringify({ reason }),
+  });
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  if (!res.ok) {
+    const text = await res.text();
+    const err = new Error(text || `Dismiss failed: ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
