@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 5 of 7 — DB Foundation + Agent Core (v2.1)
-Plan: 0 of 4 in current phase
-Status: Ready to plan — Phase 5
-Last activity: 2026-04-23 — Roadmap created for v2.1 Claude Candidate Discovery
+Plan: 1 of 4 in current phase
+Status: In progress
+Last activity: 2026-04-23 — Completed 05-01 DB migrations plan (migration 070 applied)
 
-Progress: [████████░░░░░░░░░░░░] v2.1 phases 5-7 not started (v2.0 complete)
+Progress: [████████░░░░░░░░░░░░] v2.1 phase 5 in progress (1/4 plans done)
 
 ## Project Reference
 
