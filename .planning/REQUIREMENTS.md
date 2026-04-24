@@ -74,30 +74,30 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| REG-01 | — | Pending |
-| REG-02 | — | Pending |
-| AGENT-01 | — | Pending |
-| AGENT-02 | — | Pending |
-| AGENT-03 | — | Pending |
-| AGENT-04 | — | Pending |
-| STAG-01 | — | Pending |
-| STAG-02 | — | Pending |
-| STAG-03 | — | Pending |
-| STAG-04 | — | Pending |
-| STAG-05 | — | Pending |
-| STAG-06 | — | Pending |
-| SCHED-01 | — | Pending |
-| SCHED-02 | — | Pending |
-| SCHED-03 | — | Pending |
-| OBS-01 | — | Pending |
-| OBS-02 | — | Pending |
-| OBS-03 | — | Pending |
+| REG-01 | Phase 5 | Pending |
+| REG-02 | Phase 5 | Pending |
+| AGENT-01 | Phase 5 | Pending |
+| AGENT-02 | Phase 5 | Pending |
+| AGENT-03 | Phase 5 | Pending |
+| AGENT-04 | Phase 5 | Pending |
+| STAG-01 | Phase 5 | Pending |
+| STAG-02 | Phase 7 | Pending |
+| STAG-03 | Phase 5 | Pending |
+| STAG-04 | Phase 5 | Pending |
+| STAG-05 | Phase 5 | Pending |
+| STAG-06 | Phase 6 | Pending |
+| SCHED-01 | Phase 5 | Pending |
+| SCHED-02 | Phase 6 | Pending |
+| SCHED-03 | Phase 7 | Pending |
+| OBS-01 | Phase 5 | Pending |
+| OBS-02 | Phase 6 | Pending |
+| OBS-03 | Phase 6 | Pending |
 
 **Coverage:**
 - v2.1 requirements: 18 total
-- Mapped to phases: 0 (roadmap not yet created)
-- Unmapped: 18 ⚠️
+- Mapped to phases: 18/18 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-23*
-*Last updated: 2026-04-23 after initial definition*
+*Last updated: 2026-04-23 — traceability filled after roadmap creation*
