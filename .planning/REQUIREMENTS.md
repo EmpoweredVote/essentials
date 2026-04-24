@@ -74,22 +74,22 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| REG-01 | Phase 5 | Pending |
-| REG-02 | Phase 5 | Pending |
-| AGENT-01 | Phase 5 | Pending |
-| AGENT-02 | Phase 5 | Pending |
-| AGENT-03 | Phase 5 | Pending |
-| AGENT-04 | Phase 5 | Pending |
-| STAG-01 | Phase 5 | Pending |
+| REG-01 | Phase 5 | Complete |
+| REG-02 | Phase 5 | Complete |
+| AGENT-01 | Phase 5 | Complete |
+| AGENT-02 | Phase 5 | Complete |
+| AGENT-03 | Phase 5 | Complete |
+| AGENT-04 | Phase 5 | Complete |
+| STAG-01 | Phase 5 | Complete |
 | STAG-02 | Phase 7 | Pending |
-| STAG-03 | Phase 5 | Pending |
-| STAG-04 | Phase 5 | Pending |
-| STAG-05 | Phase 5 | Pending |
+| STAG-03 | Phase 5 | Complete |
+| STAG-04 | Phase 5 | Complete |
+| STAG-05 | Phase 5 | Complete |
 | STAG-06 | Phase 6 | Pending |
-| SCHED-01 | Phase 5 | Pending |
+| SCHED-01 | Phase 5 | Complete |
 | SCHED-02 | Phase 6 | Pending |
 | SCHED-03 | Phase 7 | Pending |
-| OBS-01 | Phase 5 | Pending |
+| OBS-01 | Phase 5 | Complete |
 | OBS-02 | Phase 6 | Pending |
 | OBS-03 | Phase 6 | Pending |
 

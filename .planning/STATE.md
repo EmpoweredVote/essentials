@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 5 of 7 — DB Foundation + Agent Core (v2.1)
-Plan: 4 of 4 in current phase
-Status: Awaiting human verification (Phase 5 checkpoint)
-Last activity: 2026-04-24 — Completed 05-04 admin endpoints — awaiting human verification
+Phase: 6 of 7 — Admin Review UI + Email + Per-Race Trigger (v2.1)
+Plan: 0 of 3 in current phase
+Status: Ready to plan
+Last activity: 2026-04-24 — Completed Phase 5 (DB Foundation + Agent Core) — verified 7/7 must-haves
 
-Progress: [████████████░░░░░░░░] v2.1 phase 5 complete (4/4 plans done, awaiting verification)
+Progress: [████████████████░░░░] v2.1 phase 5 complete (5/7 phases done across v2.0+v2.1)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v2.1 — Phase 5: DB Foundation + Agent Core
+**Current focus:** v2.1 — Phase 6: Admin Review UI + Email + Per-Race Trigger
 
 ## Accumulated Context
 
@@ -30,6 +30,8 @@ See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 - approveCandidate() requires pre-existing race row — staging rows with no match flagged as flagged=true, flag_reason "no matching race in DB"
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Migration numbering starts at 070 (highest existing is 069_donor_name_normalized.sql)
+- Discovery agent model: claude-sonnet-4-6 (Haiku doesn't support web_search_20250305; Opus too expensive)
+- Discovery agent cost: ~$0.017/run with Sonnet; $20 API credits added 2026-04-24
 
 ### Known Architecture
 
@@ -38,15 +40,16 @@ See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 - node-cron 4.2.1 already installed in backend — no new infra for scheduling
 - emailService.ts already exists — import sendEmail() directly
 - race_candidates already supports NULL politician_id for challengers (migration 042)
-- New packages needed: @anthropic-ai/sdk v0.91.0, resend v6.12.0
-- New backend files: lib/discoveryService.ts, lib/discoveryAgentRunner.ts, routes/essentialsDiscovery.ts, cron/discoveryCron.ts
+- New packages needed: resend v6.12.0 (for Phase 6 email; @anthropic-ai/sdk already installed in Phase 5)
+- Phase 5 files: lib/discoveryService.ts, lib/discoveryAgentRunner.ts, routes/essentialsDiscovery.ts
+- Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
+- tool_choice: any on first turn, forced report_candidates on continuation turns (pause_turn loop pattern)
 
 ### Pending Todos (accounts team backlog)
 
 - CA Governor challenger candidates (10 filed, not yet seeded)
 - LAUSD sub-district geofences pending
 - CA SoS challenger ingestion in progress
-- Anthropic Console: enable web search org-wide before Phase 5 execute (console.anthropic.com/settings/privacy)
 
 ### Blockers/Concerns
 
@@ -55,4 +58,4 @@ See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-24 — Completed 05-04 admin endpoints — awaiting Phase 5 human verification*
+*Updated: 2026-04-24 — Phase 5 complete and verified; advancing to Phase 6*

@@ -66,10 +66,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 05-01: DB migrations — discovery_jurisdictions, candidate_staging, discovery_runs tables
-- [ ] 05-02: discoveryAgentRunner.ts — Anthropic SDK wrapper with citation-required output schema
-- [ ] 05-03: discoveryService.ts — orchestration, name normalization, confidence scoring, withdrawal diff, staging writes, run log
-- [ ] 05-04: SCHED-01 + STAG-04 + STAG-05 — on-demand trigger endpoint + approve/dismiss API endpoints
+- [x] 05-01: DB migrations — discovery_jurisdictions, candidate_staging, discovery_runs tables
+- [x] 05-02: discoveryAgentRunner.ts — Anthropic SDK wrapper with citation-required output schema
+- [x] 05-03: discoveryService.ts — orchestration, name normalization, confidence scoring, withdrawal diff, staging writes, run log
+- [x] 05-04: SCHED-01 + STAG-04 + STAG-05 — on-demand trigger endpoint + approve/dismiss API endpoints
 
 ---
 
@@ -128,6 +128,6 @@ Phases execute in numeric order: 5 → 6 → 7
 | 2. Connected User Auto-Load | v2.0 | 1/1 | Complete | 2026-04-13 |
 | 3. Elections Page — Full Rendering | v2.0 | 1/1 | Complete | 2026-04-13 |
 | 4. Navigation + Discoverability | v2.0 | 1/1 | Complete | 2026-04-13 |
-| 5. DB Foundation + Agent Core | v2.1 | 0/4 | Not started | - |
+| 5. DB Foundation + Agent Core | v2.1 | 4/4 | Complete | 2026-04-24 |
 | 6. Admin Review UI + Email + Per-Race Trigger | v2.1 | 0/3 | Not started | - |
 | 7. Cron Automation + Auto-Upsert | v2.1 | 0/2 | Not started | - |
