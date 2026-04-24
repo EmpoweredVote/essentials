@@ -63,7 +63,7 @@ Plans:
   4. Candidates currently in `race_candidates` but absent from the agent's discovered list are flagged in staging with reason "no longer appears on official source" — the pipeline is never add-only
   5. Every discovery run produces a row in `discovery_runs` with jurisdiction, timestamp, counts (found / staged / error), status, and raw agent JSONB output for hallucination audit
 
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
 - [ ] 05-01: DB migrations — discovery_jurisdictions, candidate_staging, discovery_runs tables
@@ -87,7 +87,7 @@ Plans:
   3. Admin receives an error email when a discovery run fails or returns zero candidates for a jurisdiction that previously returned non-zero results
   4. Admin can trigger discovery for a single race via `POST /admin/discover/race/:id` and see results appear in the staging queue within seconds
 
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
 - [ ] 06-01: Admin staging review UI — extends UnresolvedQueue.jsx pattern; per-item race context, source URL link, approve/dismiss actions
@@ -109,7 +109,7 @@ Plans:
   2. Candidates with `official` or `matched` confidence are automatically upserted to `race_candidates` with admin notified after the fact; only `uncertain` candidates require human approval
   3. Simultaneous cron and manual trigger runs cannot occur — a run lock prevents overlap and the second caller receives a clear "already running" response
 
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
 - [ ] 07-01: discoveryCron.ts — weekly sweep, sequential for...of, exponential backoff on 429, run lock
