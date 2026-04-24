@@ -35,13 +35,17 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ### Active
 
-<!-- Current scope. Building toward these. -->
+<!-- Current scope. Building toward these. — v2.1 Candidate Discovery -->
 
-- [ ] All races for Monroe County, IN 2026 primary verified and filled (DATA-01)
-- [ ] All races for LA County, CA 2026 primary verified and filled (DATA-02)
-- [ ] Candidate headshots uploaded for all candidates where available (DATA-03)
-- [ ] Filter elections by tier (Local / State / Federal) (ELEC-F01)
-- [ ] Share a specific election/race via deep link (ELEC-F02)
+- [ ] Jurisdiction registry — config-driven table of covered areas with election authority URLs (REG-01)
+- [ ] Claude discovery agent — given a jurisdiction, finds races and candidates from official sources (DISC-01)
+- [ ] Confidence-based upsert — auto-upsert when source is official or match is clean; admin gate otherwise (DISC-02)
+- [ ] Staging queue — low-confidence discoveries held for admin approval before going live (DISC-03)
+- [ ] On-demand trigger — admin can bootstrap any jurisdiction instantly (DISC-04)
+- [ ] Scheduled discovery — cron runs periodically for all registered jurisdictions with upcoming elections (DISC-05)
+- [ ] Discovery run log — every run recorded to DB with results, confidence, status (OBS-01)
+- [ ] Admin email notifications — summary email on flagged/review items and errors (OBS-02)
+- [ ] New jurisdiction onboarding — adding a config row is sufficient to make a city discoverable and schedulable (SCALE-01)
 
 ### Out of Scope
 
@@ -85,5 +89,16 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Local tier skips branch-first sort | BRANCH_ORDER correct for State/Federal but wrong for Local civic priority | ✓ Good — v2.0 |
 | navItems two-step in Layout.jsx | Clean separation of Read & Rank injection from Elections append; no defaultNavItems mutation | ✓ Good — v2.0 |
 
+## Current Milestone: v2.1 — Claude Candidate Discovery
+
+**Goal:** Replace manual/API-dependent candidate seeding with a Claude-powered discovery system that scales to any jurisdiction by config entry alone.
+
+**Target features:**
+- Jurisdiction registry (DB table) as the source of truth for coverage areas + election authority URLs
+- Claude agents that discover races and candidates from official sources (SOS, county clerk pages)
+- Confidence-based automation: auto-upsert (official source or clean DB match) with admin gate for ambiguous cases
+- Scheduled weekly discovery + on-demand bootstrap trigger for new cities
+- DB run log + email notifications for review items and errors
+
 ---
-*Last updated: 2026-04-13 after v2.0 milestone*
+*Last updated: 2026-04-23 after v2.1 milestone start*

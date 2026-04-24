@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: Next milestone — not yet planned
-Plan: N/A
-Status: Ready to plan next milestone
-Last activity: 2026-04-13 — v2.0 milestone complete
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements — v2.1 Candidate Discovery
+Last activity: 2026-04-23 — Milestone v2.1 started
 
-Progress: [████████████████████] v2.0 complete (4/4 phases)
+Progress: [░░░░░░░░░░░░░░░░░░░░] v2.1 not started
 
 ## Project Reference
 
