@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 7 of 7 — Cron Automation + Auto-Upsert (v2.1)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-04-25 — Completed 07-01 (autoUpsert branch + suppressRunEmail + helper)
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-04-25 — Completed 07-02 (discoveryCron.ts sweep orchestrator + lock guards + cron wiring)
 
-Progress: [███████████████████░] v2.1 phase 7 plan 1 complete (1/2 plans in phase 7)
+Progress: [████████████████████] v2.1 phase 7 COMPLETE (2/2 plans in phase 7)
 
 ## Project Reference
 
@@ -64,6 +64,21 @@ See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 - suppressRunEmail only gates per-run review notification; zero-candidate regression + failure emails always fire
 - Cron callers will pass: `{ triggeredBy: 'cron', autoUpsert: true, suppressRunEmail: true }`
 
+### Key Decisions Added — Phase 7 Plan 02
+
+- In-process boolean lock (not Redis) — single-instance Render deployment; process restart clears lock naturally; 2h TTL timer guards slow sweeps
+- Routes use acquireRunLock() (atomic check-and-set), not isRunLockHeld() — prevents TOCTOU race; isRunLockHeld exported as debugging aid only
+- Lock released in .finally() on fire-and-forget promise chains — no leak on background run failure
+- Sweep-summary email silence guard — suppressed when all outcome lists empty (no noise on clean weeks)
+- Cron scheduled at '0 2 * * 0' (Sunday 02:00 UTC) — one hour before districtStaleness (03:00 UTC)
+- STAG-02 + SCHED-03 requirements both satisfied; Phase 7 complete
+
+### Session Continuity
+
+Last session: 2026-04-25T21:54:32Z
+Stopped at: Completed 07-02-PLAN.md (Phase 7 final plan)
+Resume file: None — Phase 7 fully complete
+
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-25 — Plan 07-01 complete; runDiscoveryForJurisdiction extended with autoUpsert + suppressRunEmail; ready for 07-02 cron sweep job*
+*Updated: 2026-04-25 — Plan 07-02 complete; Phase 7 fully complete; discoveryCron.ts + discoverySweep.ts + route lock guards wired and committed*
