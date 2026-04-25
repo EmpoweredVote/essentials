@@ -112,8 +112,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 07-01: discoveryCron.ts — weekly sweep, sequential for...of, exponential backoff on 429, run lock
-- [ ] 07-02: Auto-upsert branch in discoveryService — official/matched confidence path skips staging gate, notifies admin
+- [ ] 07-01-PLAN.md — Auto-upsert branch + email-suppress flag in discoveryService.ts
+- [ ] 07-02-PLAN.md — discoveryCron.ts (sweep + lock + sweep-summary email), thin cron wrapper, index.ts wiring, route 409 guards
 
 ---
 
