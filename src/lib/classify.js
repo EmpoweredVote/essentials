@@ -294,3 +294,31 @@ export const CATEGORY_DISPLAY_NAMES = {
 export function getDisplayName(categoryName) {
   return CATEGORY_DISPLAY_NAMES[categoryName] || categoryName;
 }
+
+/**
+ * Compute the CompassCardHorizontal variant for a politician.
+ * Used by page-level components (Prototype.jsx, future Results.jsx).
+ *
+ * STATE-01: < 3 answers => 'empty'
+ * STATE-02: admin title  => 'administrative'
+ * STATE-03: judicial     => 'judicial'
+ * else                   => 'compass'
+ *
+ * @param {object} pol         politician record with office_title, district_type
+ * @param {Array}  userAnswers user's compass answers array (or null/[])
+ * @returns {'compass' | 'empty' | 'administrative' | 'judicial'}
+ */
+export function computeVariant(pol, userAnswers) {
+  if ((userAnswers || []).length < 3) return 'empty';
+
+  const title = (pol?.office_title || '').toLowerCase();
+  const dt = pol?.district_type || '';
+
+  // Administrative detection — mirrors classify.js lines 172-176, 213
+  if (/clerk|treasurer|auditor|recorder|assessor/.test(title)) return 'administrative';
+
+  // Judicial detection — mirrors officeDescriptions.js:89 + JUDICIAL district_type
+  if (dt === 'JUDICIAL' || /judge|justice|court/.test(title)) return 'judicial';
+
+  return 'compass';
+}
