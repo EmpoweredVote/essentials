@@ -1,5 +1,33 @@
 # Milestones
 
+## v2.1 Claude Candidate Discovery (Shipped: 2026-04-25)
+
+**Delivered:** A Claude-powered candidate discovery pipeline that finds, scores, and stages candidates from official election authority sources — scaling to any jurisdiction by adding a single config row, with admin review UI, email alerts, and weekly automated discovery.
+
+**Phases completed:** 5-7 (9 plans total)
+
+**Key accomplishments:**
+
+- 3-table DB schema (discovery_jurisdictions, candidate_staging, discovery_runs) with `citation_url NOT NULL` enforcing hallucination prevention at the schema layer
+- Claude agent runner with forced `tool_choice=report_candidates` citation output and server-side web_search — every discovered candidate has a verifiable source URL before reaching the service layer
+- Discovery orchestrator with Levenshtein fuzzy name matching at 85% threshold, three-tier confidence scoring (official/matched/uncertain), and withdrawal detection diffed against existing race_candidates
+- Admin staging queue — JWT-gated React UI with race grouping, confidence badges, 30-day urgency indicators, and optimistic approve/dismiss with Undo toast
+- Email notifications — urgency-aware review email, zero-candidate regression alert, and failure alert via Resend
+- Weekly cron sweep at Sunday 02:00 UTC with in-process lock, sequential jurisdiction processing, auto-upsert for official/matched candidates, and sweep-summary email
+
+**Stats:**
+
+- ~57 files created/modified across backend + frontend
+- ~1,733 LOC TypeScript (6 core discovery-layer files)
+- 3 phases, 9 plans
+- 3 days (2026-04-23 → 2026-04-25)
+
+**Git range (backend):** `36cb281` chore(05-01) → `0d89b91` fix(stag-04)
+
+**What's next:** Race completeness audit — detect missing races (not just missing candidates) from official ballot data
+
+---
+
 ## v2.0 Elections Page (Shipped: 2026-04-13)
 
 **Delivered:** A dedicated `/elections` page that gives any user instant access to their local ballot — Connected users auto-load with no address input, Inform users get address entry with county shortcuts, and all races surface regardless of candidate count.

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN and Los Angeles County, CA. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN and Los Angeles County, CA. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline that finds candidates from official election authority sources, scores confidence, and stages them for admin review or auto-upsert.
 
 ## Core Value
 
@@ -32,20 +32,27 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ No-candidates race handling — "No candidates have filed" coral notice for 0-candidate races — v2.0
 - ✓ Backend LEFT JOIN fix — races with 0 candidates returned with `candidates: []`, not silently dropped — v2.0
 - ✓ Navigation entries — "Upcoming Elections" card on Landing page + "Elections" item in site header — v2.0
+- ✓ Jurisdiction registry — config-driven table of covered areas with election authority URLs — v2.1
+- ✓ Claude discovery agent — citation-required structured output via forced tool_choice; finds candidates from official sources — v2.1
+- ✓ Confidence scoring — official (domain allowlist), matched (fuzzy name ≥85%), uncertain (neither) — v2.1
+- ✓ Staging queue — candidate_staging table; uncertain candidates held for admin approval — v2.1
+- ✓ Auto-upsert — official/matched candidates with resolved race_id upserted directly to race_candidates — v2.1
+- ✓ Admin approve/dismiss endpoints — approve triggers upsert to race_candidates; dismiss records reason — v2.1
+- ✓ Admin staging review UI — JWT-gated React page with race grouping, confidence badges, urgency indicators, optimistic actions — v2.1
+- ✓ On-demand discovery trigger — POST /admin/discover/jurisdiction/:id and /discover/race/:id — v2.1
+- ✓ Weekly cron discovery — Sunday 02:00 UTC, sequential processing, in-process lock, auto-upsert enabled — v2.1
+- ✓ Discovery run log — every run recorded to discovery_runs with status, counts, raw agent JSONB — v2.1
+- ✓ Admin email notifications — urgency-aware review email, zero-candidate regression alert, failure alert — v2.1
+- ✓ New jurisdiction onboarding — adding a discovery_jurisdictions row is sufficient to enable discovery and scheduling — v2.1
 
 ### Active
 
-<!-- Current scope. Building toward these. — v2.1 Candidate Discovery -->
+<!-- Current scope. Building toward these. — v2.2 -->
 
-- [ ] Jurisdiction registry — config-driven table of covered areas with election authority URLs (REG-01)
-- [ ] Claude discovery agent — given a jurisdiction, finds races and candidates from official sources (DISC-01)
-- [ ] Confidence-based upsert — auto-upsert when source is official or match is clean; admin gate otherwise (DISC-02)
-- [ ] Staging queue — low-confidence discoveries held for admin approval before going live (DISC-03)
-- [ ] On-demand trigger — admin can bootstrap any jurisdiction instantly (DISC-04)
-- [ ] Scheduled discovery — cron runs periodically for all registered jurisdictions with upcoming elections (DISC-05)
-- [ ] Discovery run log — every run recorded to DB with results, confidence, status (OBS-01)
-- [ ] Admin email notifications — summary email on flagged/review items and errors (OBS-02)
-- [ ] New jurisdiction onboarding — adding a config row is sufficient to make a city discoverable and schedulable (SCALE-01)
+- [ ] Race completeness audit — detect races missing from DB by diffing official ballot against essentials.races (not just missing candidates)
+- [ ] Proximity-aware cron — daily cadence within 30 days of election, configurable per jurisdiction
+- [ ] Indiana local races — county clerk source for Monroe County Commissioner, Clerk, Assessor, Township races
+- [ ] Admin discovery dashboard — run history with per-run stats, coverage health per jurisdiction
 
 ### Out of Scope
 
@@ -61,9 +68,11 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 - **Stack**: React 19 + Vite + Tailwind CSS 4 + React Router 7. UI components from `@empoweredvote/ev-ui`.
 - **Backend**: Express API (`C:\EV-Accounts`), deployed via Render push to master. Database: Postgres with PostGIS in `essentials` schema.
-- **Shipped v2.0**: Dedicated Elections page at `/elections` — all 13 requirements satisfied, 4 phases complete.
-- **Database state**: 2 elections loaded (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124 candidates, 6,928 geofence boundaries.
-- **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; CA SoS challenger ingestion in progress.
+- **Shipped v2.0**: Dedicated Elections page at `/elections` — 4 phases, 4 plans complete (2026-04-13).
+- **Shipped v2.1**: Claude candidate discovery pipeline — 3 phases, 9 plans, 18/18 requirements (2026-04-25). ~1,733 LOC TypeScript in 6 core discovery files.
+- **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
+- **Database state**: 2 elections (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124+ candidates, 6,928 geofence boundaries. Discovery pipeline now auto-populates candidates.
+- **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
 - **Auth**: Redirect-only flow via Auth Hub (`accounts.empowered.vote`). No direct login from Essentials.
 - **Anti-patterns enforced**: No Google Places autocomplete. No address re-entry for Connected users. Party data on races only, never on candidates.
 
@@ -88,17 +97,14 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Left-border zebra stripe over background fill | rgba(0,0,0,0.03) invisible on all tier backgrounds; 2px #E5E7EB border is visible | ✓ Good — v2.0 |
 | Local tier skips branch-first sort | BRANCH_ORDER correct for State/Federal but wrong for Local civic priority | ✓ Good — v2.0 |
 | navItems two-step in Layout.jsx | Clean separation of Read & Rank injection from Elections append; no defaultNavItems mutation | ✓ Good — v2.0 |
-
-## Current Milestone: v2.1 — Claude Candidate Discovery
-
-**Goal:** Replace manual/API-dependent candidate seeding with a Claude-powered discovery system that scales to any jurisdiction by config entry alone.
-
-**Target features:**
-- Jurisdiction registry (DB table) as the source of truth for coverage areas + election authority URLs
-- Claude agents that discover races and candidates from official sources (SOS, county clerk pages)
-- Confidence-based automation: auto-upsert (official source or clean DB match) with admin gate for ambiguous cases
-- Scheduled weekly discovery + on-demand bootstrap trigger for new cities
-- DB run log + email notifications for review items and errors
+| Forced tool_choice=report_candidates | 'any'/'auto' lets Claude pick web_search as final call, producing no typed results — forced tool is the only reliable citation-required output | ✓ Good — v2.1 |
+| NAME_MATCH_THRESHOLD = 0.85 | 0.80 produced too many false-positive matches; 0.85 locked as project-wide constant | ✓ Good — v2.1 |
+| No Postgres transaction in discovery orchestrator | Run row IS the audit trail; partial staging failures preserved and visible, not rolled back | ✓ Good — v2.1 |
+| confidence + flagged computed independently | official + flagged=true = official source with no race in DB (ballot-completeness radar) | ✓ Good — v2.1 |
+| Dual-router JWT+token staging pattern | JWT-gated browser router + X-Admin-Token server-to-server router under same prefix; auth at route level not mount level | ✓ Good — v2.1 |
+| In-process lock (not Redis) for discovery sweep | Single-instance Render deployment; process restart clears lock; 2h TTL guards slow sweeps | ✓ Good — v2.1 |
+| Sequential jurisdiction processing in cron | Never Promise.all — exhausts Anthropic rate limit quota with no usable output | ✓ Good — v2.1 |
+| web_search max_uses: 1 (with sourceUrl) / 2 (without) | Prevents quota exhaustion per discovery run | ✓ Good — v2.1 |
 
 ---
-*Last updated: 2026-04-23 after v2.1 milestone start*
+*Last updated: 2026-04-25 after v2.1 milestone*
