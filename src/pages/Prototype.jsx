@@ -289,7 +289,7 @@ export default function Prototype() {
                         tierVisuals={null}
                         view={view}
                         surface="representatives"
-                        variant={computeVariant(pol, userAnswers)}
+                        variant={computeVariant(pol, userAnswers, politicianIdsWithStances.has(String(pol.id)))}
                         onBuildCompass={handleBuildCompass}
                         onClick={() => { /* prototype: no-op or navigate to profile */ }}
                       />

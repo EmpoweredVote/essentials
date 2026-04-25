@@ -308,7 +308,7 @@ export function getDisplayName(categoryName) {
  * @param {Array}  userAnswers user's compass answers array (or null/[])
  * @returns {'compass' | 'empty' | 'administrative' | 'judicial'}
  */
-export function computeVariant(pol, userAnswers) {
+export function computeVariant(pol, userAnswers, hasStances = true) {
   const title = (pol?.office_title || '').toLowerCase();
   const dt = pol?.district_type || '';
 
@@ -318,6 +318,9 @@ export function computeVariant(pol, userAnswers) {
 
   // For compass-eligible roles: show CTA until user has enough answers
   if ((userAnswers || []).length < 3) return 'empty';
+
+  // Compass-eligible role + user has answers but politician has no stances on file
+  if (!hasStances) return 'no-stances';
 
   return 'compass';
 }

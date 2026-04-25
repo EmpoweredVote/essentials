@@ -74,6 +74,22 @@ describe('computeVariant — judicial detection (STATE-03)', () => {
   );
 });
 
+describe('computeVariant — no-stances detection', () => {
+  const answers = [1, 2, 3];
+  it('returns "no-stances" when compass-eligible role has no stances and user has answers', () => {
+    expect(computeVariant(makePol({}), answers, false)).toBe('no-stances');
+  });
+  it('returns "compass" when hasStances defaults to true', () => {
+    expect(computeVariant(makePol({}), answers)).toBe('compass');
+  });
+  it('returns "empty" before checking hasStances when user has < 3 answers', () => {
+    expect(computeVariant(makePol({}), [1], false)).toBe('empty');
+  });
+  it('returns "administrative" before checking hasStances for admin role', () => {
+    expect(computeVariant(makePol({ office_title: 'City Clerk' }), answers, false)).toBe('administrative');
+  });
+});
+
 describe('computeVariant — role checked before answer count', () => {
   it('returns "administrative" for admin title even with 0 answers', () => {
     expect(computeVariant(makePol({ office_title: 'City Clerk' }), [])).toBe('administrative');
