@@ -309,16 +309,15 @@ export function getDisplayName(categoryName) {
  * @returns {'compass' | 'empty' | 'administrative' | 'judicial'}
  */
 export function computeVariant(pol, userAnswers) {
-  if ((userAnswers || []).length < 3) return 'empty';
-
   const title = (pol?.office_title || '').toLowerCase();
   const dt = pol?.district_type || '';
 
-  // Administrative detection — mirrors classify.js lines 172-176, 213
+  // Admin and judicial never have compass data — always show unavailable plate
   if (/clerk|treasurer|auditor|recorder|assessor/.test(title)) return 'administrative';
-
-  // Judicial detection — mirrors officeDescriptions.js:89 + JUDICIAL district_type
   if (dt === 'JUDICIAL' || /judge|justice|court/.test(title)) return 'judicial';
+
+  // For compass-eligible roles: show CTA until user has enough answers
+  if ((userAnswers || []).length < 3) return 'empty';
 
   return 'compass';
 }
