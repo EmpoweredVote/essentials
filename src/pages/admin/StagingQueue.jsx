@@ -68,18 +68,29 @@ function Toast({ message, type, onClose, onUndo }) {
 function QueueRow({ entry, urgent, onApprove, onDismiss }) {
   const confClass = CONFIDENCE_STYLES[entry.confidence] ?? CONFIDENCE_STYLES.uncertain;
   const urgentBorder = urgent ? 'border-l-4 border-l-orange-500' : '';
+  const isAlreadyLive = !!entry.matched_candidate_id;
+  const isAlias = isAlreadyLive && entry.matched_name &&
+    entry.matched_name.toLowerCase() !== entry.full_name.toLowerCase();
   return (
     <div className={`flex items-center gap-3 border-b border-gray-200 px-4 py-3 ${urgentBorder}`}>
       <div className="flex-1">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="font-medium">{entry.full_name}</span>
           <span className={`text-xs rounded px-2 py-0.5 ${confClass}`}>{entry.confidence}</span>
-          {entry.flagged && entry.flag_reason && (
+          {isAlreadyLive && (
+            <span className="text-xs rounded px-2 py-0.5 bg-blue-100 text-blue-800 border border-blue-300">
+              already live
+            </span>
+          )}
+          {entry.flagged && entry.flag_reason && !isAlreadyLive && (
             <span className="text-xs text-red-700">({entry.flag_reason})</span>
           )}
         </div>
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-500 mt-0.5">
           {entry.jurisdiction_name ?? '—'} · {entry.action ?? 'new'}
+          {isAlias && (
+            <span className="ml-1 text-blue-600"> · alias for {entry.matched_name}</span>
+          )}
           {' · '}
           <a href={entry.citation_url} target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">
             View source
