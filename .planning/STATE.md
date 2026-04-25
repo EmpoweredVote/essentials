@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 7 of 7 — Cron Automation + Auto-Upsert (v2.1)
-Plan: 0 of 2 in current phase
-Status: Ready to plan
-Last activity: 2026-04-25 — Completed Phase 6 (Admin Review UI + Email + Per-Race Trigger) — verified 12/12 must-haves
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-04-25 — Completed 07-01 (autoUpsert branch + suppressRunEmail + helper)
 
-Progress: [██████████████████░░] v2.1 phase 6 complete (6/7 phases done across v2.0+v2.1)
+Progress: [███████████████████░] v2.1 phase 7 plan 1 complete (1/2 plans in phase 7)
 
 ## Project Reference
 
@@ -56,6 +56,14 @@ See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 - Phase 1 planning flag: validate Anthropic rate limit headroom with a 3-jurisdiction test before Phase 7 cron sweep
 - lavote.gov election ID (id query parameter) changes each cycle — document as mandatory manual update per election cycle
 
+### Key Decisions Added — Phase 7 Plan 01
+
+- autoUpsert eligibility: `raceId !== null && (confidence === 'official' || confidence === 'matched')` — uncertain and unmatched-race candidates always go pending
+- SELECT-then-INSERT idempotency (not ON CONFLICT) — race_candidates has no unique index on (race_id, full_name)
+- Auto-upserted candidates always get a candidate_staging audit row: status='approved', reviewed_by='cron'
+- suppressRunEmail only gates per-run review notification; zero-candidate regression + failure emails always fire
+- Cron callers will pass: `{ triggeredBy: 'cron', autoUpsert: true, suppressRunEmail: true }`
+
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-25 — Phase 6 complete and verified (12/12 must-haves); advancing to Phase 7*
+*Updated: 2026-04-25 — Plan 07-01 complete; runDiscoveryForJurisdiction extended with autoUpsert + suppressRunEmail; ready for 07-02 cron sweep job*
