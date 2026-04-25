@@ -11,6 +11,7 @@ import {
 } from '../lib/classify';
 import SegmentedControl from '../components/SegmentedControl';
 import { useCompass } from '../contexts/CompassContext';
+import { fetchPoliticianAnswers } from '../lib/compass';
 
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
@@ -46,6 +47,7 @@ export default function Prototype() {
   const compass = useCompass();
   const rawAnswers = compass?.userAnswers || [];
   const allTopics = compass?.allTopics || [];
+  const politicianIdsWithStances = compass?.politicianIdsWithStances || new Set();
 
   // CompassCardHorizontal.renderCompass() needs topic objects embedded on each answer.
   // API and guest-bridge both return { topic_id, value } without topic — enrich here.
@@ -54,6 +56,40 @@ export default function Prototype() {
     const topic = allTopics.find(t => t.id === a.topic_id);
     return topic ? { ...a, topic } : a;
   });
+
+  // Per-politician stances cache: { [politicianId]: { [short_title]: value } }
+  const [stancesByPolId, setStancesByPolId] = useState({});
+
+  // Fetch stances for every politician that has them, once topics + list are known.
+  useEffect(() => {
+    if (!politicians || politicians.length === 0 || allTopics.length === 0) return;
+    const topicById = new Map(allTopics.map(t => [t.id, t]));
+    const targets = politicians.filter(p => politicianIdsWithStances.has(String(p.id)) && !stancesByPolId[p.id]);
+    if (targets.length === 0) return;
+    let cancelled = false;
+    Promise.all(
+      targets.map(p =>
+        fetchPoliticianAnswers(p.id)
+          .then(rows => {
+            const map = {};
+            for (const r of rows) {
+              const t = topicById.get(r.topic_id);
+              if (t?.short_title) map[t.short_title] = r.value ?? 0;
+            }
+            return [p.id, map];
+          })
+          .catch(() => [p.id, {}])
+      )
+    ).then(pairs => {
+      if (cancelled) return;
+      setStancesByPolId(prev => {
+        const next = { ...prev };
+        for (const [id, map] of pairs) next[id] = map;
+        return next;
+      });
+    });
+    return () => { cancelled = true; };
+  }, [politicians, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     document.title = 'Compass Prototype — Empowered Vote';
@@ -248,7 +284,7 @@ export default function Prototype() {
                     {polList.map((pol) => (
                       <CompassCardHorizontal
                         key={pol.id}
-                        politician={pol}
+                        politician={{ ...pol, stances: stancesByPolId[pol.id] || pol.stances || {} }}
                         userAnswers={userAnswers || []}
                         tierVisuals={null}
                         view={view}
