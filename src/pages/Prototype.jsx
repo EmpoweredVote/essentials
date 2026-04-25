@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { SiteHeader, CategorySection } from '@empoweredvote/ev-ui';
+import { SiteHeader, CategorySection, CompassCardHorizontal } from '@empoweredvote/ev-ui';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
   classifyCategory,
@@ -7,19 +7,15 @@ import {
   FEDERAL_ORDER,
   STATE_ORDER,
   LOCAL_ORDER,
+  computeVariant,
 } from '../lib/classify';
 import SegmentedControl from '../components/SegmentedControl';
-import CompassFirstCard, { VARIANT_CONFIG } from '../components/CompassFirstCard';
-import MOCK_STANCES from '../data/mockCompassData';
+import { useCompass } from '../contexts/CompassContext';
 
+
+const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 
 const BLOOMINGTON_ADDRESS = '100 W Kirkwood Ave, Bloomington, IN 47404';
-
-const VARIANT_OPTIONS = [
-  { value: 'A', label: 'Spacious' },
-  { value: 'B', label: 'Compact' },
-  { value: 'C', label: 'Horizontal' },
-];
 
 const TIER_ORDER_MAP = {
   Federal: FEDERAL_ORDER,
@@ -37,7 +33,6 @@ const TIER_STRING_MAP = {
 const TIER_RENDER_ORDER = ['Local', 'State', 'Federal'];
 
 export default function Prototype() {
-  const [variant, setVariant] = useState('A');
   const [view, setView] = useState(() => {
     try {
       const stored = localStorage.getItem('ev:compass-card-view');
@@ -48,13 +43,21 @@ export default function Prototype() {
   });
   const { data: politicians, phase } = usePoliticianData(BLOOMINGTON_ADDRESS, { enabled: true });
 
+  const compass = useCompass();
+  const userAnswers = compass?.userAnswers || [];
+
   useEffect(() => {
-    document.title = 'Compass Prototype \u2014 Empowered Vote';
+    document.title = 'Compass Prototype — Empowered Vote';
   }, []);
 
   useEffect(() => {
     try { localStorage.setItem('ev:compass-card-view', view); } catch {}
   }, [view]);
+
+  function handleBuildCompass() {
+    const returnUrl = window.location.href;
+    window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
+  }
 
   const tierGroups = useMemo(() => {
     if (!politicians || politicians.length === 0) return null;
@@ -111,7 +114,7 @@ export default function Prototype() {
           </p>
         </div>
 
-        {/* Controls bar: view-mode toggle + legacy variant toggle */}
+        {/* Controls bar: view-mode toggle */}
         <div
           style={{
             display: 'flex',
@@ -130,12 +133,6 @@ export default function Prototype() {
             value={view}
             onChange={setView}
             ariaLabel="Card view mode"
-          />
-          <SegmentedControl
-            options={VARIANT_OPTIONS}
-            value={variant}
-            onChange={setVariant}
-            ariaLabel="Card layout variant"
           />
         </div>
 
@@ -232,19 +229,24 @@ export default function Prototype() {
               <div key={`${tier}-${category}`} style={{ marginBottom: '24px' }}>
                 <CategorySection title={category} tier={tierStr}>
                   <div
-                    className={VARIANT_CONFIG[variant].gridCols}
                     style={{
                       display: 'grid',
+                      gridTemplateColumns: 'repeat(2, 1fr)',
                       gap: '16px',
-                      gridColumn: '1 / -1', // span all CategorySection columns
+                      gridColumn: '1 / -1',
                     }}
                   >
                     {polList.map((pol) => (
-                      <CompassFirstCard
+                      <CompassCardHorizontal
                         key={pol.id}
                         politician={pol}
-                        mockAnswers={MOCK_STANCES[pol.id] || null}
-                        variant={variant}
+                        userAnswers={userAnswers || []}
+                        tierVisuals={null}
+                        view={view}
+                        surface="representatives"
+                        variant={computeVariant(pol, userAnswers)}
+                        onBuildCompass={handleBuildCompass}
+                        onClick={() => { /* prototype: no-op or navigate to profile */ }}
                       />
                     ))}
                   </div>
