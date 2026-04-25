@@ -85,13 +85,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | STAG-03 | Phase 5 | Complete |
 | STAG-04 | Phase 5 | Complete |
 | STAG-05 | Phase 5 | Complete |
-| STAG-06 | Phase 6 | Pending |
+| STAG-06 | Phase 6 | Complete |
 | SCHED-01 | Phase 5 | Complete |
-| SCHED-02 | Phase 6 | Pending |
+| SCHED-02 | Phase 6 | Complete |
 | SCHED-03 | Phase 7 | Pending |
 | OBS-01 | Phase 5 | Complete |
-| OBS-02 | Phase 6 | Pending |
-| OBS-03 | Phase 6 | Pending |
+| OBS-02 | Phase 6 | Complete |
+| OBS-03 | Phase 6 | Complete |
 
 **Coverage:**
 - v2.1 requirements: 18 total

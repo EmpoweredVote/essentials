@@ -73,7 +73,7 @@ Plans:
 
 ---
 
-#### Phase 6: Admin Review UI + Email + Per-Race Trigger
+#### ✅ Phase 6: Admin Review UI + Email + Per-Race Trigger
 
 **Goal**: Admin can review, approve, and dismiss staged candidates through a browser UI, receives email when items need attention, and can trigger discovery for individual races.
 
@@ -90,9 +90,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 06-01: Admin staging review UI — extends UnresolvedQueue.jsx pattern; per-item race context, source URL link, approve/dismiss actions
-- [ ] 06-02: Email notifications — Resend via existing emailService.ts; urgency-aware subject; zero-candidate regression alert
-- [ ] 06-03: SCHED-02 — per-race on-demand trigger endpoint
+- [x] 06-01: Admin staging review UI — extends UnresolvedQueue.jsx pattern; per-item race context, source URL link, approve/dismiss actions
+- [x] 06-02: Email notifications — Resend via existing emailService.ts; urgency-aware subject; zero-candidate regression alert
+- [x] 06-03: SCHED-02 — per-race on-demand trigger endpoint
 
 ---
 
@@ -117,6 +117,24 @@ Plans:
 
 ---
 
+---
+
+## Backlog
+
+These are known gaps that are not yet scoped into a milestone. They should inform future milestone planning.
+
+### Race Completeness Audit (high priority)
+
+**Problem:** There is no systematic way to detect missing races. The candidate discovery pipeline finds candidates for races that already exist in `essentials.races`, but does not surface races that are on an official ballot but absent from the DB. Gaps are only discovered by chance (e.g. noticing a high-profile race is missing).
+
+**Why it matters:** An LA Mayor race was missing despite LA City Attorney, LA City Controller, and all City Council districts being present. The only reason it was caught is that a team member lives in LA. There is no visibility into what else might be missing for jurisdictions we are less familiar with.
+
+**What the fix looks like:** A race audit tool that, for a given election, fetches the authoritative candidate filing list (LA City Clerk, California SoS, etc.) and diffs it against `essentials.races` — surfacing offices on the official ballot that have no race row in the DB. This is distinct from candidate discovery; it answers "what races are we missing?" not "what candidates are we missing?"
+
+**Possible implementation:** A new admin endpoint or script that takes an election_id, hits the relevant official source, and returns a list of unregistered races. Could be Claude-powered (same pattern as candidate discovery) or a direct scrape.
+
+---
+
 ## Progress
 
 **Execution Order:**
@@ -129,5 +147,5 @@ Phases execute in numeric order: 5 → 6 → 7
 | 3. Elections Page — Full Rendering | v2.0 | 1/1 | Complete | 2026-04-13 |
 | 4. Navigation + Discoverability | v2.0 | 1/1 | Complete | 2026-04-13 |
 | 5. DB Foundation + Agent Core | v2.1 | 4/4 | Complete | 2026-04-24 |
-| 6. Admin Review UI + Email + Per-Race Trigger | v2.1 | 0/3 | Not started | - |
+| 6. Admin Review UI + Email + Per-Race Trigger | v2.1 | 3/3 | Complete | 2026-04-25 |
 | 7. Cron Automation + Auto-Upsert | v2.1 | 0/2 | Not started | - |

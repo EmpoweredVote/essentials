@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 6 of 7 — Admin Review UI + Email + Per-Race Trigger (v2.1)
-Plan: 0 of 3 in current phase
+Phase: 7 of 7 — Cron Automation + Auto-Upsert (v2.1)
+Plan: 0 of 2 in current phase
 Status: Ready to plan
-Last activity: 2026-04-24 — Completed Phase 5 (DB Foundation + Agent Core) — verified 7/7 must-haves
+Last activity: 2026-04-25 — Completed Phase 6 (Admin Review UI + Email + Per-Race Trigger) — verified 12/12 must-haves
 
-Progress: [████████████████░░░░] v2.1 phase 5 complete (5/7 phases done across v2.0+v2.1)
+Progress: [██████████████████░░] v2.1 phase 6 complete (6/7 phases done across v2.0+v2.1)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v2.1 — Phase 6: Admin Review UI + Email + Per-Race Trigger
+**Current focus:** v2.1 — Phase 7: Cron Automation + Auto-Upsert
 
 ## Accumulated Context
 
@@ -58,4 +58,4 @@ See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-24 — Phase 5 complete and verified; advancing to Phase 6*
+*Updated: 2026-04-25 — Phase 6 complete and verified (12/12 must-haves); advancing to Phase 7*
