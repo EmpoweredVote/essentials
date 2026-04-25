@@ -73,3 +73,15 @@ describe('computeVariant — judicial detection (STATE-03)', () => {
     }
   );
 });
+
+describe('computeVariant — role checked before answer count', () => {
+  it('returns "administrative" for admin title even with 0 answers', () => {
+    expect(computeVariant(makePol({ office_title: 'City Clerk' }), [])).toBe('administrative');
+  });
+  it('returns "judicial" for JUDICIAL district_type even with 0 answers', () => {
+    expect(computeVariant(makePol({ district_type: 'JUDICIAL' }), [])).toBe('judicial');
+  });
+  it('returns "empty" for compass-eligible role with 0 answers', () => {
+    expect(computeVariant(makePol({}), [])).toBe('empty');
+  });
+});
