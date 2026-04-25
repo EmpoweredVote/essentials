@@ -14,7 +14,7 @@ Progress: [████████████████████] v2.1 ph
 See: .planning/PROJECT.md (updated 2026-04-23 after v2.1 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v2.1 — Phase 7: Cron Automation + Auto-Upsert
+**Current focus:** v2.1 milestone complete — ready for /gsd:audit-milestone
 
 ## Accumulated Context
 

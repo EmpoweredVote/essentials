@@ -22,7 +22,7 @@ Requirements for the Claude Candidate Discovery milestone. Builds on the electio
 ### Staging Queue
 
 - [ ] **STAG-01**: Every discovered candidate lands in a `candidate_staging` table first — never written directly to `race_candidates`
-- [ ] **STAG-02**: High-confidence candidates (`official` OR `matched`) are auto-upserted to `race_candidates` and admin is notified after the fact
+- [x] **STAG-02**: High-confidence candidates (`official` OR `matched`) are auto-upserted to `race_candidates` and admin is notified after the fact
 - [ ] **STAG-03**: `uncertain` candidates remain in staging and require explicit admin action before going live
 - [ ] **STAG-04**: Admin can approve a staged candidate via API endpoint (triggers upsert to `race_candidates`)
 - [ ] **STAG-05**: Admin can dismiss a staged candidate via API endpoint with a reason recorded
@@ -32,7 +32,7 @@ Requirements for the Claude Candidate Discovery milestone. Builds on the electio
 
 - [ ] **SCHED-01**: Admin can trigger discovery for an entire jurisdiction on-demand via `POST /admin/discover/jurisdiction/:id`
 - [ ] **SCHED-02**: Admin can trigger discovery for a single race on-demand via `POST /admin/discover/race/:id`
-- [ ] **SCHED-03**: Weekly cron runs discovery for all jurisdictions with elections within 6 months, processing jurisdictions sequentially (never parallel — rate limit constraint)
+- [x] **SCHED-03**: Weekly cron runs discovery for all jurisdictions with elections within 6 months, processing jurisdictions sequentially (never parallel — rate limit constraint)
 
 ### Observability
 
@@ -81,14 +81,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AGENT-03 | Phase 5 | Complete |
 | AGENT-04 | Phase 5 | Complete |
 | STAG-01 | Phase 5 | Complete |
-| STAG-02 | Phase 7 | Pending |
+| STAG-02 | Phase 7 | Complete |
 | STAG-03 | Phase 5 | Complete |
 | STAG-04 | Phase 5 | Complete |
 | STAG-05 | Phase 5 | Complete |
 | STAG-06 | Phase 6 | Complete |
 | SCHED-01 | Phase 5 | Complete |
 | SCHED-02 | Phase 6 | Complete |
-| SCHED-03 | Phase 7 | Pending |
+| SCHED-03 | Phase 7 | Complete |
 | OBS-01 | Phase 5 | Complete |
 | OBS-02 | Phase 6 | Complete |
 | OBS-03 | Phase 6 | Complete |

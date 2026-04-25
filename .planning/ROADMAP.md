@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v2.0 Elections Page** - Phases 1-4 (shipped 2026-04-13)
-- 🚧 **v2.1 Claude Candidate Discovery** - Phases 5-7 (in progress)
+- ✅ **v2.1 Claude Candidate Discovery** - Phases 5-7 (shipped 2026-04-25)
 
 ## Phases
 
@@ -42,7 +42,7 @@ Plans:
 
 ---
 
-### 🚧 v2.1 Claude Candidate Discovery (In Progress)
+### ✅ v2.1 Claude Candidate Discovery (Complete — 2026-04-25)
 
 **Milestone Goal:** Replace manual candidate seeding with a Claude-powered discovery pipeline that scales to any jurisdiction by adding a single config row.
 
@@ -96,7 +96,7 @@ Plans:
 
 ---
 
-#### Phase 7: Cron Automation + Auto-Upsert
+#### ✅ Phase 7: Cron Automation + Auto-Upsert
 
 **Goal**: Discovery runs automatically on a weekly schedule for all registered jurisdictions, and high-confidence candidates are upserted to race_candidates without requiring manual approval.
 
@@ -112,8 +112,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 07-01-PLAN.md — Auto-upsert branch + email-suppress flag in discoveryService.ts
-- [ ] 07-02-PLAN.md — discoveryCron.ts (sweep + lock + sweep-summary email), thin cron wrapper, index.ts wiring, route 409 guards
+- [x] 07-01-PLAN.md — Auto-upsert branch + email-suppress flag in discoveryService.ts
+- [x] 07-02-PLAN.md — discoveryCron.ts (sweep + lock + sweep-summary email), thin cron wrapper, index.ts wiring, route 409 guards
 
 ---
 
@@ -148,4 +148,4 @@ Phases execute in numeric order: 5 → 6 → 7
 | 4. Navigation + Discoverability | v2.0 | 1/1 | Complete | 2026-04-13 |
 | 5. DB Foundation + Agent Core | v2.1 | 4/4 | Complete | 2026-04-24 |
 | 6. Admin Review UI + Email + Per-Race Trigger | v2.1 | 3/3 | Complete | 2026-04-25 |
-| 7. Cron Automation + Auto-Upsert | v2.1 | 0/2 | Not started | - |
+| 7. Cron Automation + Auto-Upsert | v2.1 | 2/2 | Complete | 2026-04-25 |
