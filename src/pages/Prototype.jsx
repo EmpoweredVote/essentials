@@ -44,7 +44,16 @@ export default function Prototype() {
   const { data: politicians, phase } = usePoliticianData(BLOOMINGTON_ADDRESS, { enabled: true });
 
   const compass = useCompass();
-  const userAnswers = compass?.userAnswers || [];
+  const rawAnswers = compass?.userAnswers || [];
+  const allTopics = compass?.allTopics || [];
+
+  // CompassCardHorizontal.renderCompass() needs topic objects embedded on each answer.
+  // API and guest-bridge both return { topic_id, value } without topic — enrich here.
+  const userAnswers = rawAnswers.map(a => {
+    if (a.topic?.short_title) return a; // already enriched
+    const topic = allTopics.find(t => t.id === a.topic_id);
+    return topic ? { ...a, topic } : a;
+  });
 
   useEffect(() => {
     document.title = 'Compass Prototype — Empowered Vote';
