@@ -297,7 +297,7 @@ export function getDisplayName(categoryName) {
 
 /**
  * Compute the CompassCardHorizontal variant for a politician.
- * Used by page-level components (Prototype.jsx, future Results.jsx).
+ * Used by page-level components (Results.jsx, ElectionsView.jsx).
  *
  * STATE-01: < 3 answers => 'empty'
  * STATE-02: admin title  => 'administrative'
