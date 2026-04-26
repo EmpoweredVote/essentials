@@ -1350,7 +1350,7 @@ export default function Results() {
                 justifyContent: 'flex-end',
                 paddingRight: isDesktop ? 48 : 12,
                 paddingTop: 8,
-                marginBottom: -40,
+                marginBottom: -70,
                 pointerEvents: 'none',
               }}
             >
