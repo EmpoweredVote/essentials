@@ -509,6 +509,16 @@ export default function Results() {
     const topic = allTopics.find(t => t.id === a.topic_id);
     return topic ? { ...a, topic } : a;
   }), [rawUserAnswers, allTopics]);
+  // Filter answers by selectedTopics — when the user removes a spoke in CompassV2,
+  // selectedTopics is updated but the answer value is preserved. Only show answers
+  // for topics that are still selected. When selectedTopics is empty (no filtering),
+  // show all answers to preserve existing behavior.
+  const filteredAnswers = useMemo(() => {
+    if (!selectedTopics || selectedTopics.length === 0) return userAnswers;
+    return userAnswers.filter(a =>
+      selectedTopics.includes(a.topic_id) || selectedTopics.includes(String(a.topic_id))
+    );
+  }, [userAnswers, selectedTopics]);
   const [savingSuggested, setSavingSuggested] = useState(false);
 
   // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
@@ -1042,7 +1052,7 @@ export default function Results() {
       <div key={pol.id} data-pol-id={pol.id} style={{ height: '100%' }}>
         <CompassCardVertical
           politician={polForCard}
-          userAnswers={userAnswers}
+          userAnswers={filteredAnswers}
           invertedSpokes={invertedSpokes}
           variant={computeVariant(pol, rawUserAnswers, hasStances)}
           surface="representatives"
