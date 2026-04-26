@@ -10,7 +10,6 @@ import { getSeatBallotStatus } from '../utils/ballotStatus';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
 import FilterBar, { StickyCompassKey } from '../components/FilterBar';
 import SegmentedControl from '../components/SegmentedControl';
-import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
@@ -402,7 +401,6 @@ export default function Results() {
   }, [isLoggedIn, formattedAddress, phase, activeQuery, searchMode, compassLoading, myRepresentatives]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Active compass preview state: { id, name, anchorEl } or null
-  const [previewPol, setPreviewPol] = useState(null);
 
   // Save results to sessionStorage for back-navigation restoration
   useEffect(() => {
@@ -1341,19 +1339,6 @@ export default function Results() {
         </main>
       </div>
 
-      {/* Compass popover — rendered at body level via portal */}
-      {previewPol && (
-        <CompassPreview
-          politicianId={previewPol.id}
-          politicianName={previewPol.name}
-          legendName={previewPol.shortTitle}
-          allTopics={allTopics}
-          userAnswers={userAnswers}
-          selectedTopics={selectedTopics}
-          anchorRef={{ current: previewPol.anchorEl }}
-          onClose={() => setPreviewPol(null)}
-        />
-      )}
     </div>
     </Layout>
   );
