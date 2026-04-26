@@ -61,28 +61,28 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUDIT-01 | — | Pending |
-| AUDIT-02 | — | Pending |
-| AUDIT-03 | — | Pending |
-| ADMUI-01 | — | Pending |
-| ADMUI-02 | — | Pending |
-| ADMUI-03 | — | Pending |
-| DASH-01 | — | Pending |
-| DASH-02 | — | Pending |
-| DASH-03 | — | Pending |
-| STANCE-01 | — | Pending |
-| STANCE-02 | — | Pending |
-| STANCE-03 | — | Pending |
-| STANCE-04 | — | Pending |
-| INDIANA-01 | — | Pending |
-| INDIANA-02 | — | Pending |
-| INDIANA-03 | — | Pending |
+| AUDIT-01 | Phase 9 | Pending |
+| AUDIT-02 | Phase 9 | Pending |
+| AUDIT-03 | Phase 9 | Pending |
+| ADMUI-01 | Phase 8 | Pending |
+| ADMUI-02 | Phase 8 | Pending |
+| ADMUI-03 | Phase 8 | Pending |
+| DASH-01 | Phase 8 | Pending |
+| DASH-02 | Phase 8 | Pending |
+| DASH-03 | Phase 8 | Pending |
+| STANCE-01 | Phase 10 | Pending |
+| STANCE-02 | Phase 10 | Pending |
+| STANCE-03 | Phase 10 | Pending |
+| STANCE-04 | Phase 10 | Pending |
+| INDIANA-01 | Phase 11 | Pending |
+| INDIANA-02 | Phase 11 | Pending |
+| INDIANA-03 | Phase 11 | Pending |
 
 **Coverage:**
 - v2.2 requirements: 16 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 16 ⚠️
+- Mapped to phases: 16
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-04-26*
-*Last updated: 2026-04-26 after initial definition*
+*Last updated: 2026-04-26 — traceability filled after v2.2 roadmap creation*
