@@ -264,32 +264,55 @@ export function clearGuestVerdicts() {
  * Saves the user's last-searched address to ev-context for cross-subdomain
  * sharing. Other EV apps (compass, read-rank, etc.) pick this up live via
  * evContext.subscribe().
- * @param {string} addr  - Full formatted address string
- * @param {string} state - USPS 2-letter state code (e.g. 'IN', 'CA')
+ *
+ * Always writes the guest top-level `address` slice for back-compat. When a
+ * `userId` is supplied (authed user, 260426-mc5), additionally mirrors into
+ * the userId-stamped authed slice so cross-subdomain hydration for that user
+ * is namespaced and won't leak across user switches.
+ *
+ * @param {string} addr   - Full formatted address string
+ * @param {string} state  - USPS 2-letter state code (e.g. 'IN', 'CA')
+ * @param {string=} userId - Optional authed user id; when present, also writes authed slice
  */
-export function saveUserAddress(addr, state) {
+export function saveUserAddress(addr, state, userId) {
   if (!state || typeof state !== 'string') return;
   // Also clear the legacy .empowered.vote cookie if any device still has it
   // from a prior visit — prevents stale cookie data from out-living the broker write.
   try {
     document.cookie = 'evUserAddress=; domain=.empowered.vote; path=/; max-age=0; SameSite=Lax; Secure';
   } catch { /* noop */ }
+  const addrPayload = { addr, state, ts: Date.now() };
   // Async, fire-and-forget; broker offline is non-fatal but means the write is lost.
   import('@empoweredvote/ev-ui').then(({ evContext }) => {
     evContext.get().then((current) => {
-      const next = { ...(current || {}), address: { addr, state, ts: Date.now() } };
+      const next = { ...(current || {}), address: addrPayload };
       evContext.set(next).catch(() => {});
     }).catch(() => {});
+    if (userId) {
+      evContext.setAuthedSlice(userId, { address: addrPayload }).catch(() => {});
+    }
   }).catch(() => {});
 }
 
 /**
  * Async read of the cross-subdomain address bridge from ev-context.
  * Returns { addr, state } | null. Honors a 30-day TTL.
+ *
+ * When `userId` is provided (260426-mc5), prefers the userId-stamped authed
+ * slice and falls back to the guest slice on miss / mismatch.
  */
-export async function loadUserAddressFromContext({ ttlMs = 30 * 24 * 60 * 60 * 1000 } = {}) {
+export async function loadUserAddressFromContext({ ttlMs = 30 * 24 * 60 * 60 * 1000, userId } = {}) {
   try {
     const { evContext } = await import('@empoweredvote/ev-ui');
+    if (userId) {
+      const slice = await evContext.getAuthedSlice(userId);
+      const a = slice && slice.address;
+      if (a && typeof a.addr === 'string' && typeof a.state === 'string') {
+        if (!a.ts || Date.now() - a.ts <= ttlMs) {
+          return { addr: a.addr, state: a.state };
+        }
+      }
+    }
     const shared = await evContext.get();
     const a = shared && shared.address;
     if (!a || typeof a.addr !== 'string' || typeof a.state !== 'string') return null;

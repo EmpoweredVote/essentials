@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, CompassKey, useMediaQuery, tierColors } from '@empoweredvote/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, CompassKey, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant } from '../lib/classify';
 import { fetchPoliticianAnswers } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
@@ -15,6 +15,7 @@ import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
 import { fetchElectionsByAddress, fetchElectionsByArea, saveMyLocation, browseByArea } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
+import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
@@ -122,6 +123,76 @@ function formatLegendName(pol) {
   if (prefix) return `${prefix} ${last}`;
   // Fallback: full name
   return `${pol.first_name} ${last}`.trim();
+}
+
+/**
+ * 260426-mw6 — Inline banner for guest → authed promotion (compass or address).
+ * Rendered when useEvContextPromotion's shouldPrompt is true.
+ */
+function PromotionBanner({ kind, payload, onSave, onDismiss, status, error }) {
+  const saving = status === 'saving';
+  let message;
+  if (kind === 'compass') {
+    const ans = (payload && (payload.answers || payload.a)) || {};
+    const count = Object.keys(ans).length;
+    if (count === 0) return null;
+    message = (
+      <>You answered <strong>{count}</strong> question{count === 1 ? '' : 's'} before signing up — save them to your account?</>
+    );
+  } else if (kind === 'address') {
+    const addr = (payload && (payload.formatted || payload.addr)) || '';
+    if (!addr) return null;
+    message = (
+      <>Use <strong>{addr}</strong> as your saved address?</>
+    );
+  } else {
+    return null;
+  }
+  return (
+    <div
+      role="status"
+      style={{
+        display: 'flex', alignItems: 'center', gap: '12px',
+        padding: '10px 16px', background: '#E4F3F6',
+        borderBottom: '1px solid #C0E8F2',
+        fontFamily: "'Manrope', sans-serif", fontSize: '14px', color: '#003E4D',
+      }}
+    >
+      <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        {message}
+        {status === 'error' && error && (
+          <span style={{ color: '#e64a34', marginLeft: 8 }}>
+            ({error.message})
+          </span>
+        )}
+      </span>
+      <button
+        type="button"
+        disabled={saving}
+        onClick={onSave}
+        style={{
+          padding: '6px 14px', borderRadius: '9999px', border: 'none',
+          background: '#00657c', color: '#fff', fontSize: '13px',
+          fontWeight: 600, cursor: saving ? 'wait' : 'pointer',
+          opacity: saving ? 0.6 : 1,
+        }}
+      >
+        {saving ? 'Saving…' : 'Save'}
+      </button>
+      <button
+        type="button"
+        onClick={onDismiss}
+        disabled={saving}
+        aria-label="Dismiss"
+        style={{
+          padding: '4px 8px', border: 'none', background: 'transparent',
+          color: '#6b7280', fontSize: '18px', lineHeight: 1, cursor: 'pointer',
+        }}
+      >
+        ×
+      </button>
+    </div>
+  );
 }
 
 /** Loading skeleton for a single politician card row */
@@ -363,13 +434,91 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes } = useCompass();
+
+  // 260426-mw6 — guest → authed promotion. Two banners:
+  //   1) compass: when API has zero answers but ev-context has guest answers.
+  //   2) address: when no saved address but ev-context has a guest address.
+  // Hook decides shouldPrompt; we just render the banner when true.
+  const compassPromoteWriter = async (compassPayload) => {
+    const ans = (compassPayload && (compassPayload.answers || compassPayload.a)) || {};
+    const inv = (compassPayload && (compassPayload.invertedSpokes || compassPayload.i)) || {};
+    const writeIns = (compassPayload && (compassPayload.writeIns || compassPayload.w)) || {};
+    const titleToId = new Map((allTopics || []).map((t) => [t.short_title, t.id]));
+    for (const [shortTitle, value] of Object.entries(ans)) {
+      const topic_id = titleToId.get(shortTitle);
+      if (!topic_id) continue;
+      const numeric = typeof value === 'number' ? value : Number(value);
+      if (!Number.isFinite(numeric) || numeric <= 0) continue;
+      const body = { topic_id, value: numeric, inverted: !!inv[shortTitle] };
+      if (typeof writeIns[shortTitle] === 'string' && writeIns[shortTitle].length > 0) {
+        body.write_in_text = writeIns[shortTitle];
+      }
+      const res = await apiFetch('/compass/answers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!res || !res.ok) {
+        throw new Error(`Failed to save answer for ${shortTitle} (${res?.status ?? 'no response'})`);
+      }
+    }
+  };
+  const {
+    shouldPrompt: promoteCompassShouldPrompt,
+    payload: promoteCompassPayload,
+    promote: promoteCompass,
+    dismiss: dismissCompassPromotion,
+    status: promoteCompassStatus,
+    error: promoteCompassError,
+  } = useEvContextPromotion({
+    domain: 'compass',
+    isLoggedIn,
+    userId,
+    apiData: rawUserAnswers, // empty array when API has nothing
+    apiWriter: compassPromoteWriter,
+  });
+
+  const addressPromoteWriter = async (addressPayload) => {
+    const addr = addressPayload && (addressPayload.formatted || addressPayload.addr);
+    if (!addr) throw new Error('Missing address');
+    const result = await saveMyLocation(addr);
+    if (!result) throw new Error('Failed to save address');
+    // Mirror through saveUserAddress for legacy cookie + ev-context guest slice.
+    const state = (addressPayload && addressPayload.state)
+      || (typeof addr === 'string' ? (addr.match(/\b([A-Z]{2})\b\s*\d{5}/) || [])[1] : null);
+    if (state) saveUserAddress(addr, state, userId);
+  };
+  const {
+    shouldPrompt: promoteAddressShouldPrompt,
+    payload: promoteAddressPayload,
+    promote: promoteAddress,
+    dismiss: dismissAddressPromotion,
+    status: promoteAddressStatus,
+    error: promoteAddressError,
+  } = useEvContextPromotion({
+    domain: 'address',
+    isLoggedIn,
+    userId,
+    apiData: myRepresentativesAddress, // string when API has it; null otherwise
+    apiWriter: addressPromoteWriter,
+  });
   // Enrich answers with topic objects (CompassCardVertical needs topic.short_title)
   const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
     if (a.topic?.short_title) return a;
     const topic = allTopics.find(t => t.id === a.topic_id);
     return topic ? { ...a, topic } : a;
   }), [rawUserAnswers, allTopics]);
+  // Filter answers by selectedTopics — when the user removes a spoke in CompassV2,
+  // selectedTopics is updated but the answer value is preserved. Only show answers
+  // for topics that are still selected. When selectedTopics is empty (no filtering),
+  // show all answers to preserve existing behavior.
+  const filteredAnswers = useMemo(() => {
+    if (!selectedTopics || selectedTopics.length === 0) return userAnswers;
+    return userAnswers.filter(a =>
+      selectedTopics.includes(a.topic_id) || selectedTopics.includes(String(a.topic_id))
+    );
+  }, [userAnswers, selectedTopics]);
   const [savingSuggested, setSavingSuggested] = useState(false);
 
   // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
@@ -903,7 +1052,7 @@ export default function Results() {
       <div key={pol.id} data-pol-id={pol.id} style={{ height: '100%' }}>
         <CompassCardVertical
           politician={polForCard}
-          userAnswers={userAnswers}
+          userAnswers={filteredAnswers}
           invertedSpokes={invertedSpokes}
           variant={computeVariant(pol, rawUserAnswers, hasStances)}
           surface="representatives"
@@ -951,6 +1100,30 @@ export default function Results() {
           }}
         >
           {/* CompassKey now lives inside the representatives area below — no sticky overlay */}
+
+          {/* 260426-mw6 — compass promotion banner: API empty + guest answers exist */}
+          {promoteCompassShouldPrompt && (
+            <PromotionBanner
+              kind="compass"
+              payload={promoteCompassPayload}
+              onSave={promoteCompass}
+              onDismiss={dismissCompassPromotion}
+              status={promoteCompassStatus}
+              error={promoteCompassError}
+            />
+          )}
+
+          {/* 260426-mw6 — address promotion banner: no saved address + guest address exists */}
+          {promoteAddressShouldPrompt && (
+            <PromotionBanner
+              kind="address"
+              payload={promoteAddressPayload}
+              onSave={promoteAddress}
+              onDismiss={dismissAddressPromotion}
+              status={promoteAddressStatus}
+              error={promoteAddressError}
+            />
+          )}
 
           {/* "Save this address?" prompt for authed users with no API location */}
           {isLoggedIn && suggestedSaveAddress && (

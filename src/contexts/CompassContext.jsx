@@ -27,6 +27,7 @@ export function useCompass() {
 export function CompassProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [userJurisdiction, setUserJurisdiction] = useState(null);
   const [userAnswers, setUserAnswers] = useState([]);
   const [selectedTopics, setSelectedTopics] = useState([]);
@@ -115,8 +116,30 @@ export function CompassProvider({ children }) {
           if (!cancelled) {
             setIsLoggedIn(true);
             setUserName(authedUser.display_name ?? null);
+            // Capture userId for authed ev-context slice (260426-mc5).
+            if (authedUser.id) setUserId(authedUser.id);
             setUserJurisdiction(authedUser.jurisdiction ?? null);
           }
+          // Authed SWR hydrate (260426-mc5): before the API responds, seed
+          // local state from the userId-stamped authed slice so the compass /
+          // address render instantly. The API fetch below replaces these
+          // values silently — API always wins on conflict.
+          if (authedUser?.id && !cancelled) {
+            try {
+              const authedSlice = await evContext.getAuthedSlice(authedUser.id);
+              if (authedSlice?.compass?.a && typeof authedSlice.compass.a === 'object') {
+                const cached = convertGuestAnswersToApiFormat(authedSlice.compass.a, topics);
+                if (cached.length > 0) setUserAnswers(cached);
+                if (authedSlice.compass.i && typeof authedSlice.compass.i === 'object') {
+                  setInvertedSpokes(authedSlice.compass.i);
+                }
+              }
+              if (authedSlice?.address?.addr && typeof authedSlice.address.addr === 'string') {
+                setMyRepresentativesAddress(authedSlice.address.addr);
+              }
+            } catch { /* broker offline — fall through to API */ }
+          }
+
           const [answersResult, selectedResult, repsResult] = await Promise.all([
             fetchUserAnswers(),
             fetchSelectedTopics(),
@@ -132,10 +155,16 @@ export function CompassProvider({ children }) {
               const stateMatch = repsResult.formattedAddress.match(/\b([A-Z]{2})\b\s*\d{5}/);
               const state = stateMatch ? stateMatch[1] : (authedUser?.jurisdiction?.state ?? null);
               if (state) {
+                const addrPayload = { addr: repsResult.formattedAddress, state, ts: Date.now() };
                 evContext.get().then((current) => {
-                  const next = { ...(current || {}), address: { addr: repsResult.formattedAddress, state, ts: Date.now() } };
+                  const next = { ...(current || {}), address: addrPayload };
                   evContext.set(next).catch(() => {});
                 }).catch(() => {});
+                // Authed mirror (260426-mc5): also stamp under userId-keyed slice
+                // so cross-subdomain hydration for this user is namespaced.
+                if (authedUser?.id) {
+                  evContext.setAuthedSlice(authedUser.id, { address: addrPayload }).catch(() => {});
+                }
               }
             }
           } else if (!cancelled && repsResult.noLocation) {
@@ -180,10 +209,18 @@ export function CompassProvider({ children }) {
               if (t?.short_title) aMap[t.short_title] = row.value ?? 0;
             }
             if (Object.keys(aMap).length > 0) {
+              const compassPayload = { a: aMap, s: Array.isArray(selectedResult) ? selectedResult : [], i: {} };
               evContext.get().then((current) => {
-                const next = { ...(current || {}), compass: { a: aMap, s: Array.isArray(selectedResult) ? selectedResult : [], i: {} } };
+                const next = { ...(current || {}), compass: compassPayload };
                 evContext.set(next).catch(() => {});
               }).catch(() => {});
+              // Authed mirror (260426-mc5): per D-01 we exclude `s` (selectedTopics)
+              // from the authed slice — only answers/inverted/writeIns.
+              if (authedUser?.id) {
+                evContext.setAuthedSlice(authedUser.id, {
+                  compass: { a: aMap, i: {} },
+                }).catch(() => {});
+              }
             }
           }
         } else if (fragment) {
@@ -327,6 +364,7 @@ export function CompassProvider({ children }) {
     () => ({
       isLoggedIn,
       userName,
+      userId,
       userJurisdiction,
       userAnswers,
       selectedTopics,
@@ -346,6 +384,7 @@ export function CompassProvider({ children }) {
     [
       isLoggedIn,
       userName,
+      userId,
       userJurisdiction,
       userAnswers,
       selectedTopics,
