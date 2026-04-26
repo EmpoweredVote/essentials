@@ -9,7 +9,6 @@ import JudicialRecord from "./pages/JudicialRecord";
 import CandidateProfile from "./pages/CandidateProfile";
 import UnresolvedQueue from "./pages/admin/UnresolvedQueue";
 import StagingQueue from "./pages/admin/StagingQueue";
-import Prototype from "./pages/Prototype";
 import Elections from "./pages/Elections";
 import { CompassProvider } from "./contexts/CompassContext";
 import { getToken, clearToken, redirectToLogin, extractHashToken } from "./lib/auth";
@@ -57,7 +56,6 @@ function App() {
         <Route path="/candidate/:id" element={<CandidateProfile />} />
         <Route path="/admin/unresolved" element={<RequireAuth><UnresolvedQueue /></RequireAuth>} />
         <Route path="/admin/staging" element={<RequireAuth><StagingQueue /></RequireAuth>} />
-        <Route path="/prototype" element={<Prototype />} />
         <Route path="/elections" element={<Elections />} />
       </Routes>
     </CompassProvider>
