@@ -1,12 +1,17 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   useFloating, useHover, useFocus, useDismiss, useRole, useInteractions,
   FloatingPortal, offset, flip, shift, autoUpdate,
 } from '@floating-ui/react';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, tierColors, pillars } from '@empoweredvote/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, CompassKey, useMediaQuery, tierColors, pillars } from '@empoweredvote/ev-ui';
 import IconOverlay from './IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { getOfficeDescription } from '../utils/officeDescriptions';
+import { useCompass } from '../contexts/CompassContext';
+import { computeVariant } from '../lib/classify';
+import { fetchPoliticianAnswers } from '../lib/compass';
+
+const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 
 /** Timezone-safe days-until helper */
 function daysUntil(dateStr) {
@@ -230,6 +235,68 @@ export default function ElectionsView({
   hideWithdrawn = false,
   onCandidateClick,
 }) {
+  const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances } = useCompass();
+  const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
+    if (a.topic?.short_title) return a;
+    const topic = allTopics.find(t => t.id === a.topic_id);
+    return topic ? { ...a, topic } : a;
+  }), [rawUserAnswers, allTopics]);
+  const isWideForVertical = useMediaQuery('(min-width: 1080px)');
+  const isWideForThree = useMediaQuery('(min-width: 1500px)');
+
+  const handleBuildCompass = () => {
+    const returnUrl = window.location.href;
+    window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
+  };
+
+  // Per-candidate stances cache for compass overlay on the new vertical card.
+  const [stancesByPolId, setStancesByPolId] = useState({});
+  // Use politician_id (when linked) since stance data is keyed to politicians,
+  // not candidates. Some candidates have no politician link (challengers without
+  // a record yet) — they simply won't have a stance overlay.
+  const visibleCandidateIds = useMemo(() => {
+    const ids = new Set();
+    if (!elections) return ids;
+    for (const el of elections) {
+      for (const race of (el.races || [])) {
+        for (const c of (race.candidates || [])) {
+          if (c.politician_id) ids.add(String(c.politician_id));
+        }
+      }
+    }
+    return ids;
+  }, [elections]);
+
+  useEffect(() => {
+    if (allTopics.length === 0 || visibleCandidateIds.size === 0) return;
+    const topicById = new Map(allTopics.map(t => [t.id, t]));
+    const targets = [...visibleCandidateIds].filter(id => politicianIdsWithStances.has(id) && !stancesByPolId[id]);
+    if (targets.length === 0) return;
+    let cancelled = false;
+    Promise.all(
+      targets.map(id =>
+        fetchPoliticianAnswers(id)
+          .then(rows => {
+            const map = {};
+            for (const r of rows) {
+              const t = topicById.get(r.topic_id);
+              if (t?.short_title) map[t.short_title] = r.value ?? 0;
+            }
+            return [id, map];
+          })
+          .catch(() => [id, {}])
+      )
+    ).then(pairs => {
+      if (cancelled) return;
+      setStancesByPolId(prev => {
+        const next = { ...prev };
+        for (const [id, m] of pairs) next[id] = m;
+        return next;
+      });
+    });
+    return () => { cancelled = true; };
+  }, [visibleCandidateIds, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Session seed for stable candidate randomization
   const sessionSeed = useMemo(() => {
     let seed = sessionStorage.getItem('ev:election-seed');
@@ -411,30 +478,10 @@ export default function ElectionsView({
 
   return (
     <div>
+      {/* CompassKey lives in the page-level FilterBar — no per-view duplicate */}
       {processedElections.map((election) => {
-        const days = daysUntil(election.election_date);
-        const dateStr = formatDate(election.election_date);
-
         return (
           <div key={election.election_id} className="mb-8">
-            {/* Election header — prominent date + countdown */}
-            <div className="mb-6">
-              <h2 className="text-[18px] font-semibold text-[#00657C] mb-1">
-                {election.election_name}
-              </h2>
-              <p className="text-[15px]">
-                <span className="font-semibold text-[#2D3748]">{dateStr}</span>
-                {days > 0 && days < 60 && (
-                  <span
-                    className="ml-2 inline-block px-2 py-0.5 rounded-full text-[13px] font-semibold"
-                    style={{ backgroundColor: '#FED12E', color: '#5A4B00' }}
-                  >
-                    {days} days away
-                  </span>
-                )}
-              </p>
-            </div>
-
             {/* Tier sections: Local > State > Federal */}
             {election.hierarchy
               .filter(({ tier }) => tierFilter === 'All' || tier === tierFilter)
@@ -505,9 +552,14 @@ export default function ElectionsView({
                         const activeCandidates = electionCandidates.filter(
                           (c) => c.candidate_status !== 'withdrawn'
                         );
+                        // Show active candidates first, then any withdrawn ones at the end
+                        // (preserves antipartisan shuffle order within each group).
+                        const withdrawnCandidates = electionCandidates.filter(
+                          (c) => c.candidate_status === 'withdrawn'
+                        );
                         const displayCandidates = hideWithdrawn
                           ? activeCandidates
-                          : electionCandidates;
+                          : [...activeCandidates, ...withdrawnCandidates];
                         const isUnopposed = activeCandidates.length === 1;
                         const isEmpty = displayCandidates.length === 0;
 
@@ -530,6 +582,13 @@ export default function ElectionsView({
                                   </span>
                                 );
                               })()}
+                              gridTemplateColumns={isWideForThree
+                                ? 'repeat(3, minmax(0, 560px))'
+                                : isWideForVertical
+                                  ? 'repeat(2, minmax(0, 560px))'
+                                  : 'minmax(0, 560px)'}
+                              gap="16px"
+                              justifyContent="start"
                             >
                               {isEmpty ? (
                                 <div
@@ -559,61 +618,33 @@ export default function ElectionsView({
                                   };
                                   const { title: cardTitle, subtitle: cardSubtitle } = deriveCardTitleSubtitle(race.cleanedPosition, race.districtType);
 
+                                  const polIdKey = candidate.politician_id ? String(candidate.politician_id) : null;
+                                  const candHasStances = polIdKey ? politicianIdsWithStances.has(polIdKey) : false;
+                                  const polForCard = {
+                                    id: candidate.candidate_id,
+                                    full_name: candidate.full_name,
+                                    office_running_for: cardTitle,
+                                    district_label: cardSubtitle,
+                                    photo_origin_url: candidate.photo_url || undefined,
+                                    imageFocalPoint: candidate.focal_point || 'center 20%',
+                                    ballot,
+                                    branch,
+                                    hasStances: candHasStances,
+                                    stances: (polIdKey && stancesByPolId[polIdKey]) || {},
+                                    running_unopposed: isUnopposed && candidate.candidate_status !== 'withdrawn',
+                                    withdrawn: candidate.candidate_status === 'withdrawn',
+                                  };
                                   return (
-                                    <div key={candidate.candidate_id} style={{ position: 'relative' }}>
-                                      <PoliticianCard
-                                        id={candidate.candidate_id}
-                                        imageSrc={candidate.photo_url || undefined}
-                                        imageFocalPoint={candidate.focal_point || 'center 20%'}
-                                        name={candidate.full_name}
-                                        title={cardTitle}
-                                        subtitle={cardSubtitle}
+                                    <div key={candidate.candidate_id} style={{ height: '100%' }}>
+                                      <CompassCardVertical
+                                        politician={polForCard}
+                                        userAnswers={userAnswers}
+                                        invertedSpokes={invertedSpokes}
+                                        variant={computeVariant({ office_title: cardTitle, district_type: race.districtType }, rawUserAnswers, candHasStances)}
+                                        surface="elections"
+                                        onBuildCompass={handleBuildCompass}
                                         onClick={() => onCandidateClick(candidate.candidate_id)}
-                                        variant="horizontal"
-                                        footer={<IconOverlay ballot={ballot} hasStances={false} branch={branch} />}
                                       />
-                                      {candidate.candidate_status === 'withdrawn' && (
-                                        <div
-                                          style={{
-                                            position: 'absolute',
-                                            bottom: 0,
-                                            left: '0',
-                                            width: '64px',
-                                            backgroundColor: 'rgba(120,0,0,0.78)',
-                                            color: '#fff',
-                                            fontSize: '8px',
-                                            fontWeight: 700,
-                                            letterSpacing: '0.4px',
-                                            textAlign: 'center',
-                                            textTransform: 'uppercase',
-                                            padding: '3px 0',
-                                            pointerEvents: 'none',
-                                          }}
-                                        >
-                                          Withdrawn
-                                        </div>
-                                      )}
-                                      {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
-                                        <div
-                                          style={{
-                                            position: 'absolute',
-                                            bottom: '8px',
-                                            left: '0',
-                                            width: '64px',
-                                            backgroundColor: 'rgba(0,0,0,0.55)',
-                                            color: '#fff',
-                                            fontSize: '8px',
-                                            fontWeight: 700,
-                                            letterSpacing: '0.4px',
-                                            textAlign: 'center',
-                                            textTransform: 'uppercase',
-                                            padding: '3px 0',
-                                            pointerEvents: 'none',
-                                          }}
-                                        >
-                                          Running Unopposed
-                                        </div>
-                                      )}
                                     </div>
                                   );
                                 })

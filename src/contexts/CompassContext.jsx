@@ -16,6 +16,7 @@ import {
 } from "../lib/compass";
 import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
 import { fetchMyRepresentatives } from "../lib/api";
+import { evContext } from "@empoweredvote/ev-ui";
 
 const CompassContext = createContext(null);
 
@@ -40,6 +41,9 @@ export function CompassProvider({ children }) {
   const [myRepresentatives, setMyRepresentatives] = useState(null);
   const [myRepresentativesAddress, setMyRepresentativesAddress] = useState(null);
   const [myLocationNotSet, setMyLocationNotSet] = useState(false);
+  // Address found in ev-context for an authed user who has no saved API location.
+  // Pages can render a "Save this as your address?" prompt from this signal.
+  const [suggestedSaveAddress, setSuggestedSaveAddress] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -121,8 +125,28 @@ export function CompassProvider({ children }) {
           if (!cancelled && !repsResult.error && repsResult.data.length > 0) {
             setMyRepresentatives(repsResult.data);
             setMyRepresentativesAddress(repsResult.formattedAddress || null);
+            // Mirror API-saved address to ev-context so other apps (read-rank,
+            // compass) see the canonical value even before this user signed up.
+            // API > ev-context: overwrite the guest entry so the apps converge.
+            if (repsResult.formattedAddress) {
+              const stateMatch = repsResult.formattedAddress.match(/\b([A-Z]{2})\b\s*\d{5}/);
+              const state = stateMatch ? stateMatch[1] : (authedUser?.jurisdiction?.state ?? null);
+              if (state) {
+                evContext.get().then((current) => {
+                  const next = { ...(current || {}), address: { addr: repsResult.formattedAddress, state, ts: Date.now() } };
+                  evContext.set(next).catch(() => {});
+                }).catch(() => {});
+              }
+            }
           } else if (!cancelled && repsResult.noLocation) {
             setMyLocationNotSet(true);
+            // Authed user with no saved location yet: surface ev-context address
+            // via suggestedSaveAddress so pages can offer to save it to the account.
+            evContext.get().then((shared) => {
+              const a = shared && shared.address;
+              if (cancelled || !a || typeof a.addr !== 'string') return;
+              setSuggestedSaveAddress({ addr: a.addr, state: a.state || null });
+            }).catch(() => {});
           }
           if (answersResult.length === 0) {
             // API has no answers — fall back to guest cache so returning calibrated guests
@@ -148,6 +172,19 @@ export function CompassProvider({ children }) {
             }
             [answers, selected] = [answersResult, selectedResult];
             clearGuestCompass(); // Has API answers — clean separation
+            // Mirror API compass to ev-context so other apps see canonical state.
+            // Convert API rows back to {short_title: value} format.
+            const aMap = {};
+            for (const row of answersResult) {
+              const t = topics.find((tt) => tt.id === row.topic_id);
+              if (t?.short_title) aMap[t.short_title] = row.value ?? 0;
+            }
+            if (Object.keys(aMap).length > 0) {
+              evContext.get().then((current) => {
+                const next = { ...(current || {}), compass: { a: aMap, s: Array.isArray(selectedResult) ? selectedResult : [], i: {} } };
+                evContext.set(next).catch(() => {});
+              }).catch(() => {});
+            }
           }
         } else if (fragment) {
           // Guest with fresh fragment: convert to API format and cache for future visits
@@ -160,21 +197,43 @@ export function CompassProvider({ children }) {
             selected = fragment.selectedTopics;
             inverted = fragment.invertedSpokes || {};
             saveGuestCompass(fragment.answers, fragment.selectedTopics, inverted);
+            // Push fragment data to ev-context broker so other subdomains pick it up
+            try {
+              const current = await evContext.get();
+              const next = { ...(current || {}), compass: {
+                a: fragment.answers, s: fragment.selectedTopics, i: inverted,
+              }};
+              evContext.set(next).catch(() => {});
+            } catch { /* broker offline — fragment still works locally */ }
           }
           // Note: verdicts from fragment are handled separately in the verdicts block below
         } else {
-          // Guest without fragment: try localStorage cache
-          const cached = loadGuestCompass();
-          if (cached) {
+          // Guest without fragment: try cross-subdomain ev-context broker first,
+          // then fall back to same-origin localStorage cache.
+          let shared = null;
+          try { shared = await evContext.get(); } catch { shared = null; }
+          const sharedCompass = shared && shared.compass;
+          if (sharedCompass && sharedCompass.a && Object.keys(sharedCompass.a).length > 0) {
             if (import.meta.env.DEV) {
-              console.log('[CompassContext] priority=storage (guest, loading cached guestCompass)', { cached });
+              console.log('[CompassContext] priority=ev-context (guest, cross-subdomain shared)', { sharedCompass });
             }
-            answers = convertGuestAnswersToApiFormat(cached.answers, topics);
-            selected = cached.selectedTopics;
-            inverted = cached.invertedSpokes || {};
+            answers = convertGuestAnswersToApiFormat(sharedCompass.a, topics);
+            selected = Array.isArray(sharedCompass.s) ? sharedCompass.s : [];
+            inverted = sharedCompass.i || {};
+            saveGuestCompass(sharedCompass.a, selected, inverted);
           } else {
-            if (import.meta.env.DEV) {
-              console.log('[CompassContext] priority=empty (guest, no fragment, no cached data)');
+            const cached = loadGuestCompass();
+            if (cached) {
+              if (import.meta.env.DEV) {
+                console.log('[CompassContext] priority=storage (guest, loading cached guestCompass)', { cached });
+              }
+              answers = convertGuestAnswersToApiFormat(cached.answers, topics);
+              selected = cached.selectedTopics;
+              inverted = cached.invertedSpokes || {};
+            } else {
+              if (import.meta.env.DEV) {
+                console.log('[CompassContext] priority=empty (guest, no fragment, no cached data)');
+              }
             }
           }
         }
@@ -219,6 +278,29 @@ export function CompassProvider({ children }) {
     };
   }, []);
 
+  // Cross-subdomain live-sync via ev-context broker: when the user updates
+  // their compass on any other EV subdomain (compass.*, readrank.*, etc.),
+  // we apply it locally without requiring a refresh. Guest only —
+  // logged-in users use API as source of truth.
+  useEffect(() => {
+    if (isLoggedIn) return;
+    const unsub = evContext.subscribe((shared) => {
+      const c = shared && shared.compass;
+      if (!c || typeof c.a !== 'object' || c.a === null) return;
+      if (allTopics.length === 0) {
+        // Topics not loaded yet — cache the raw payload so initial load picks it up
+        try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch {}
+        return;
+      }
+      const apiAnswers = convertGuestAnswersToApiFormat(c.a, allTopics);
+      setUserAnswers(apiAnswers);
+      if (Array.isArray(c.s)) setSelectedTopics(c.s);
+      if (c.i && typeof c.i === 'object') setInvertedSpokes(c.i);
+      try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch {}
+    });
+    return unsub;
+  }, [isLoggedIn, allTopics]);
+
   const logout = async () => {
     try {
       const token = getToken();
@@ -257,6 +339,8 @@ export function CompassProvider({ children }) {
       myRepresentatives,
       myRepresentativesAddress,
       myLocationNotSet,
+      suggestedSaveAddress,
+      dismissSuggestedSaveAddress: () => setSuggestedSaveAddress(null),
       logout,
     }),
     [
@@ -274,6 +358,7 @@ export function CompassProvider({ children }) {
       myRepresentatives,
       myRepresentativesAddress,
       myLocationNotSet,
+      suggestedSaveAddress,
     ]
   );
 

@@ -8,6 +8,7 @@ import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import LocalFilterSidebar from '../components/LocalFilterSidebar';
+import FilterBar, { StickyCompassKey } from '../components/FilterBar';
 import SegmentedControl from '../components/SegmentedControl';
 import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
@@ -286,8 +287,9 @@ export default function Results() {
 
   // Detect desktop breakpoint for two-panel layout
   const isDesktop = useMediaQuery('(min-width: 769px)');
-  // 2-col vertical compass cards above 1080px container, otherwise 1 col centered
+  // Card grid breakpoints: 3 cols on big screens, 2 on medium, 1 below
   const isWideForVertical = useMediaQuery('(min-width: 1080px)');
+  const isWideForThree = useMediaQuery('(min-width: 1500px)');
 
   // Attempt sessionStorage restore for back-navigation
   const [cachedResult, setCachedResult] = useState(() => {
@@ -937,26 +939,21 @@ export default function Results() {
         style={{ height: 'calc(100vh - 75px)' }}
         className={isDesktop ? 'flex overflow-hidden' : 'flex flex-col'}
       >
-        {/* Filter Sidebar — desktop only */}
-        {isDesktop && (
-          <LocalFilterSidebar
-            selectedFilter={selectedFilter}
-            onFilterChange={setSelectedFilter}
-            appointedFilter={appointedFilter}
-            onAppointedFilterChange={setAppointedFilter}
-            locationLabel={locationLabel}
-            buildingImageSrc={activeBuildingImage}
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-          />
-        )}
-
-        {/* Main Content — independently scrollable on desktop */}
+        {/* Main Content — independently scrollable on desktop. Inner content
+            capped at 1808px (3 × 560 cards + gaps + side padding) and centered
+            so the workspace doesn't sprawl across ultrawide monitors. */}
         <main
           ref={mainRef}
           className="flex-1"
-          style={isDesktop ? { overflowY: 'auto', minWidth: 0 } : { overflowY: 'auto' }}
+          style={{
+            ...(isDesktop ? { overflowY: 'auto', minWidth: 0 } : { overflowY: 'auto' }),
+            maxWidth: 1808,
+            marginInline: 'auto',
+            width: '100%',
+          }}
         >
+          {/* CompassKey now lives inside the representatives area below — no sticky overlay */}
+
           {/* "Save this address?" prompt for authed users with no API location */}
           {isLoggedIn && suggestedSaveAddress && (
             <div
@@ -1003,8 +1000,8 @@ export default function Results() {
               </button>
             </div>
           )}
-          {/* Search Bar — collapsed chip when address is set, full input otherwise */}
-          <div className="px-4 sm:px-8 py-3 border-t border-gray-200 bg-[var(--ev-bg-light)]">
+          {/* Search Bar — collapsed chip when address is set, full input otherwise. */}
+          <div className="px-6 sm:px-12 py-3 bg-[var(--ev-bg-light)]">
             {/* Collapsed chip — shown when we have a result and not actively editing */}
             {(formattedAddress || (searchMode === 'browse' && browseResults)) && !editingSearch && (
               <div className="flex items-center gap-2">
@@ -1027,6 +1024,8 @@ export default function Results() {
                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
                   </svg>
                 </button>
+                {/* Sticky CompassKey is positioned floating at top of <main>;
+                    it visually overlaps this row at scroll = 0, then pins as the user scrolls. */}
               </div>
             )}
 
@@ -1116,109 +1115,82 @@ export default function Results() {
             </div>
           </div>
 
-          {/* Tab toggle — Representatives / Elections */}
+          {/* Tab toggle + inline filters — tabs left, filters right */}
           {(activeQuery || browseResults) && (
-            <div className="flex border-b border-[#E2EBEF] px-4 sm:px-8">
-              <button
-                className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
-                  activeView === 'representatives'
-                    ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
-                    : 'text-[#718096] font-normal hover:text-[#4A5568]'
-                }`}
-                onClick={() => switchView('representatives')}
-              >
-                Representatives
-              </button>
-              <button
-                className={`px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
-                  activeView === 'elections'
-                    ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
-                    : 'text-[#718096] font-normal hover:text-[#4A5568]'
-                }`}
-                onClick={() => switchView('elections')}
-              >
-                <span className="sm:hidden">Elections</span>
-                <span className="hidden sm:inline">
-                  {electionsLabelSuffix ? `Elections - ${electionsLabelSuffix}` : 'Elections'}
-                </span>
-                {electionsDaysAway && (
-                  <span
-                    className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
-                    style={{ backgroundColor: '#FED12E', color: '#1a1a1a' }}
-                  >
-                    {electionsDaysAway}
+            <div className="flex flex-wrap items-center gap-y-2 border-b border-[#E2EBEF] px-6 sm:px-12">
+              <div className="flex">
+                <button
+                  className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
+                    activeView === 'representatives'
+                      ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
+                      : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                  }`}
+                  onClick={() => switchView('representatives')}
+                >
+                  Representatives
+                </button>
+                <button
+                  className={`px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
+                    activeView === 'elections'
+                      ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
+                      : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                  }`}
+                  onClick={() => switchView('elections')}
+                >
+                  <span className="sm:hidden">Elections</span>
+                  <span className="hidden sm:inline">
+                    {electionsLabelSuffix ? `Elections - ${electionsLabelSuffix}` : 'Elections'}
                   </span>
-                )}
-              </button>
+                  {electionsDaysAway && (
+                    <span
+                      className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
+                      style={{ backgroundColor: '#FED12E', color: '#1a1a1a' }}
+                    >
+                      {electionsDaysAway}
+                    </span>
+                  )}
+                </button>
+              </div>
+              <div className="flex-1 min-w-0 flex justify-end py-2 sm:pl-4 w-full sm:w-auto">
+                <FilterBar
+                  selectedFilter={selectedFilter}
+                  onFilterChange={setSelectedFilter}
+                  appointedFilter={appointedFilter}
+                  onAppointedFilterChange={setAppointedFilter}
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Sticky CompassKey — sits below the tab+filter row at scroll = 0,
+              right-aligned. Negative margin-bottom prevents it from claiming
+              its own row in the layout; the cards section beneath pulls up to
+              start under it. As the user scrolls, the cards slide past while
+              the key stays pinned to top: 8 of <main>. */}
+          {(activeQuery || browseResults) && (
+            <div
+              style={{
+                position: 'sticky',
+                top: 8,
+                zIndex: 30,
+                display: 'flex',
+                justifyContent: 'flex-end',
+                paddingRight: isDesktop ? 48 : 12,
+                paddingTop: 8,
+                marginBottom: -40,
+                pointerEvents: 'none',
+              }}
+            >
+              <div style={{ pointerEvents: 'auto' }}>
+                <CompassKey compact={!isDesktop} />
+              </div>
             </div>
           )}
 
           {activeView === 'representatives' ? (
           <>
-          {/* Address chip above already shows the location — no duplicate label here */}
-
-          {/* Mobile filter controls — shown only on mobile */}
-          {!isDesktop && (
-            <div className="px-4 py-3 bg-white border-b border-gray-200">
-              {/* Tier filter pills */}
-              <div className="flex gap-2 mb-3">
-                {['All', 'Local', 'State', 'Federal'].map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => setSelectedFilter(filter)}
-                    className={`px-3 py-1 text-sm rounded-full border transition-colors ${
-                      selectedFilter === filter
-                        ? 'bg-[#00657c] text-white border-[#00657c]'
-                        : 'bg-white text-gray-600 border-gray-300'
-                    }`}
-                    style={{ fontFamily: "'Manrope', sans-serif" }}
-                  >
-                    {filter}
-                  </button>
-                ))}
-              </div>
-              {/* Type filter — elected/appointed (per D-02) */}
-              <div style={{ marginTop: '8px', marginBottom: '8px' }}>
-                <SegmentedControl
-                  options={[
-                    { value: 'All', label: 'All' },
-                    { value: 'Elected', label: 'Elected' },
-                    { value: 'Appointed', label: 'Appointed' },
-                  ]}
-                  value={appointedFilter}
-                  onChange={setAppointedFilter}
-                  ariaLabel="Filter by type"
-                  minHeight="44px"
-                />
-              </div>
-
-              {/* Name search */}
-              <div className="relative">
-                <svg
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search representative"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-sm border border-gray-300 rounded-lg
-                             focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
-                  style={{ fontFamily: "'Manrope', sans-serif" }}
-                />
-              </div>
-            </div>
-          )}
 
           {/* Error message */}
           {error && (
@@ -1231,7 +1203,7 @@ export default function Results() {
 
           {/* Loading skeletons */}
           {phase === 'loading' && (
-            <div className="px-4 md:px-8 pt-6">
+            <div className="px-6 md:px-12 pt-6">
               <SkeletonSection />
               <SkeletonSection />
               <SkeletonSection />
@@ -1240,12 +1212,7 @@ export default function Results() {
 
           {/* Results */}
           {phase !== 'loading' && (
-              <div className="px-4 md:px-8 pt-6 pb-8">
-                {(activeQuery || browseResults) && (
-                  <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'flex-end' }}>
-                    <CompassKey />
-                  </div>
-                )}
+              <div className="px-6 md:px-12 pt-6 pb-8">
                 {/* Empty states for tiers with no data */}
                 {phase !== 'loading' && activeQuery && ['Local', 'State'].map((tier) => {
                   const tierKey = tier.toLowerCase();
@@ -1260,7 +1227,7 @@ export default function Results() {
                     : `${tier} representative data is not yet available for this area.`;
 
                   return (
-                    <div key={`empty-${tier}`} data-tier={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierStyle?.bg ?? '#FFFFFF' }}>
+                    <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: tierStyle?.bg ?? '#FFFFFF' }}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
                           <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle?.text }}>{tier}</span>
@@ -1277,7 +1244,7 @@ export default function Results() {
                   if (!tierStyle) return null;
 
                   return (
-                    <div key={tier} data-tier={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierStyle.bg }}>
+                    <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: tierStyle.bg }}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
                           <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
@@ -1318,9 +1285,13 @@ export default function Results() {
                                 key={sg.key}
                                 title={body.subgroups.length > 1 ? sg.label : undefined}
                                 websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
-                                gridTemplateColumns={isWideForVertical ? 'repeat(2, minmax(0, 560px))' : 'minmax(0, 560px)'}
+                                gridTemplateColumns={isWideForThree
+                                  ? 'repeat(3, minmax(0, 560px))'
+                                  : isWideForVertical
+                                    ? 'repeat(2, minmax(0, 560px))'
+                                    : 'minmax(0, 560px)'}
                                 gap="16px"
-                                justifyContent="center"
+                                justifyContent="start"
                               >
                                 {sg.pols.map((pol) =>
                                   renderSeatGroup(pol)
@@ -1351,7 +1322,7 @@ export default function Results() {
             )}
           </>
           ) : (
-            <div className="px-4 md:px-8 pt-6 pb-8">
+            <div className="px-6 md:px-12 pt-6 pb-8">
               <ElectionsView
                 elections={electionsData}
                 loading={electionsLoading}

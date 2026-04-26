@@ -316,11 +316,12 @@ export function computeVariant(pol, userAnswers, hasStances = true) {
   if (/clerk|treasurer|auditor|recorder|assessor/.test(title)) return 'administrative';
   if (dt === 'JUDICIAL' || /judge|justice|court/.test(title)) return 'judicial';
 
-  // For compass-eligible roles: show CTA until user has enough answers
-  if ((userAnswers || []).length < 3) return 'empty';
-
-  // Compass-eligible role + user has answers but politician has no stances on file
+  // No stances on file — show "no stances" plate regardless of user calibration,
+  // so we don't bait the user into calibrating only to find no comparison data.
   if (!hasStances) return 'no-stances';
+
+  // For compass-eligible roles with stances: show CTA until user has enough answers
+  if ((userAnswers || []).length < 3) return 'empty';
 
   return 'compass';
 }

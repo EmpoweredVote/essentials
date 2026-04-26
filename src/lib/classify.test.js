@@ -82,8 +82,10 @@ describe('computeVariant — no-stances detection', () => {
   it('returns "compass" when hasStances defaults to true', () => {
     expect(computeVariant(makePol({}), answers)).toBe('compass');
   });
-  it('returns "empty" before checking hasStances when user has < 3 answers', () => {
-    expect(computeVariant(makePol({}), [1], false)).toBe('empty');
+  it('returns "no-stances" even when user has < 3 answers (avoids baiting calibration)', () => {
+    expect(computeVariant(makePol({}), [1], false)).toBe('no-stances');
+    expect(computeVariant(makePol({}), [], false)).toBe('no-stances');
+    expect(computeVariant(makePol({}), null, false)).toBe('no-stances');
   });
   it('returns "administrative" before checking hasStances for admin role', () => {
     expect(computeVariant(makePol({ office_title: 'City Clerk' }), answers, false)).toBe('administrative');

@@ -253,54 +253,70 @@ export function clearGuestVerdicts() {
   localStorage.removeItem(GUEST_VERDICTS_KEY);
 }
 
-// ─── Cross-app address bridge ─────────────────────────────────────────────────
+// ─── Cross-subdomain address bridge (ev-context) ──────────────────────────────
 // Written by essentials/src/pages/Results.jsx after a successful address search.
-// Read by CompassV2 InlinePoliticianPicker for state pre-selection (G-114-011 D-02 Tier 1).
-// Contract: key 'evUserAddress', value JSON { addr: string, state: string (USPS 2-letter), ts: epoch ms }.
-// TTL default 30 days. Other apps cannot import this file — they read the literal key string.
-
-/** localStorage key for cross-app user address bridge */
-export const USER_ADDRESS_KEY = "evUserAddress";
+// Read by CompassV2 InlinePoliticianPicker for state pre-selection.
+// Backed by the ev-context broker (https://ev-context.empowered.vote) under the
+// top-level `address` key: { addr: string, state: string, ts: epoch ms }.
+// 30-day staleness check is enforced at read time by callers as needed.
 
 /**
- * Saves the user's last-searched address to localStorage for cross-app geo-default.
+ * Saves the user's last-searched address to ev-context for cross-subdomain
+ * sharing. Other EV apps (compass, read-rank, etc.) pick this up live via
+ * evContext.subscribe().
  * @param {string} addr  - Full formatted address string
  * @param {string} state - USPS 2-letter state code (e.g. 'IN', 'CA')
  */
 export function saveUserAddress(addr, state) {
   if (!state || typeof state !== 'string') return;
+  // Also clear the legacy .empowered.vote cookie if any device still has it
+  // from a prior visit — prevents stale cookie data from out-living the broker write.
   try {
-    // Use a cookie with domain=.empowered.vote so CompassV2 (different subdomain) can read it.
-    // localStorage is origin-scoped and won't cross subdomains.
-    const value = encodeURIComponent(JSON.stringify({ addr, state, ts: Date.now() }));
-    const maxAge = 30 * 24 * 60 * 60; // 30 days in seconds
-    document.cookie = `evUserAddress=${value}; domain=.empowered.vote; path=/; max-age=${maxAge}; SameSite=Lax; Secure`;
+    document.cookie = 'evUserAddress=; domain=.empowered.vote; path=/; max-age=0; SameSite=Lax; Secure';
   } catch { /* noop */ }
+  // Async, fire-and-forget; broker offline is non-fatal but means the write is lost.
+  import('@empoweredvote/ev-ui').then(({ evContext }) => {
+    evContext.get().then((current) => {
+      const next = { ...(current || {}), address: { addr, state, ts: Date.now() } };
+      evContext.set(next).catch(() => {});
+    }).catch(() => {});
+  }).catch(() => {});
 }
 
 /**
- * Reads the cross-app address bridge from localStorage.
- * Returns { addr, state } or null if missing, expired, or malformed.
- * @param {{ ttlMs?: number }} options - TTL in ms (default 30 days)
+ * Async read of the cross-subdomain address bridge from ev-context.
+ * Returns { addr, state } | null. Honors a 30-day TTL.
  */
-export function loadUserAddress({ ttlMs = 30 * 24 * 60 * 60 * 1000 } = {}) {
+export async function loadUserAddressFromContext({ ttlMs = 30 * 24 * 60 * 60 * 1000 } = {}) {
   try {
-    const match = document.cookie.split('; ').find((c) => c.startsWith('evUserAddress='));
-    if (!match) return null;
-    const parsed = JSON.parse(decodeURIComponent(match.split('=').slice(1).join('=')));
-    if (!parsed || typeof parsed.state !== 'string') return null;
-    if (parsed.ts && Date.now() - parsed.ts > ttlMs) return null;
-    return { addr: parsed.addr, state: parsed.state };
+    const { evContext } = await import('@empoweredvote/ev-ui');
+    const shared = await evContext.get();
+    const a = shared && shared.address;
+    if (!a || typeof a.addr !== 'string' || typeof a.state !== 'string') return null;
+    if (a.ts && Date.now() - a.ts > ttlMs) return null;
+    return { addr: a.addr, state: a.state };
   } catch {
     return null;
   }
 }
 
 /**
- * Removes the cross-app address bridge cookie.
+ * Clears the cross-subdomain address from ev-context. Also nukes the legacy
+ * .empowered.vote cookie in case it's still present from before the migration.
  */
-export function clearUserAddress() {
-  try { document.cookie = 'evUserAddress=; domain=.empowered.vote; path=/; max-age=0; SameSite=Lax; Secure'; } catch { /* noop */ }
+export async function clearUserAddress() {
+  try {
+    document.cookie = 'evUserAddress=; domain=.empowered.vote; path=/; max-age=0; SameSite=Lax; Secure';
+  } catch { /* noop */ }
+  try {
+    const { evContext } = await import('@empoweredvote/ev-ui');
+    const current = await evContext.get();
+    if (current && current.address) {
+      const next = { ...current };
+      delete next.address;
+      await evContext.set(next);
+    }
+  } catch { /* noop */ }
 }
 
 /**

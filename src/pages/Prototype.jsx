@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { SiteHeader, CategorySection, CompassCardHorizontal } from '@empoweredvote/ev-ui';
+import { SiteHeader, CategorySection, CompassCardHorizontal, CompassCardVertical, useMediaQuery } from '@empoweredvote/ev-ui';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import {
   classifyCategory,
@@ -42,12 +42,28 @@ export default function Prototype() {
       return 'compass';
     }
   });
+  const [layout, setLayout] = useState(() => {
+    try {
+      const stored = localStorage.getItem('ev:compass-card-layout');
+      return stored === 'vertical' ? 'vertical' : 'horizontal';
+    } catch {
+      return 'horizontal';
+    }
+  });
+  useEffect(() => {
+    try { localStorage.setItem('ev:compass-card-layout', layout); } catch {}
+  }, [layout]);
   const { data: politicians, phase } = usePoliticianData(BLOOMINGTON_ADDRESS, { enabled: true });
+
+  const isWideForVertical = useMediaQuery('(min-width: 1080px)');
+  const isWideForHorizontal = useMediaQuery('(min-width: 1240px)');
+  const isTwoCol = layout === 'vertical' ? isWideForVertical : isWideForHorizontal;
 
   const compass = useCompass();
   const rawAnswers = compass?.userAnswers || [];
   const allTopics = compass?.allTopics || [];
   const politicianIdsWithStances = compass?.politicianIdsWithStances || new Set();
+  const invertedSpokes = compass?.invertedSpokes || {};
 
   // CompassCardHorizontal.renderCompass() needs topic objects embedded on each answer.
   // API and guest-bridge both return { topic_id, value } without topic — enrich here.
@@ -179,6 +195,15 @@ export default function Prototype() {
             onChange={setView}
             ariaLabel="Card view mode"
           />
+          <SegmentedControl
+            options={[
+              { value: 'horizontal', label: 'Horizontal' },
+              { value: 'vertical', label: 'Vertical' },
+            ]}
+            value={layout}
+            onChange={setLayout}
+            ariaLabel="Card layout"
+          />
         </div>
 
         {/* Content area */}
@@ -276,24 +301,31 @@ export default function Prototype() {
                   <div
                     style={{
                       display: 'grid',
-                      gridTemplateColumns: 'repeat(2, 1fr)',
+                      gridTemplateColumns: isTwoCol
+                        ? 'repeat(2, 1fr)'
+                        : `minmax(0, ${layout === 'vertical' ? '560px' : '640px'})`,
+                      justifyContent: 'center',
                       gap: '16px',
                       gridColumn: '1 / -1',
                     }}
                   >
-                    {polList.map((pol) => (
-                      <CompassCardHorizontal
-                        key={pol.id}
-                        politician={{ ...pol, stances: stancesByPolId[pol.id] || pol.stances || {} }}
-                        userAnswers={userAnswers || []}
-                        tierVisuals={null}
-                        view={view}
-                        surface="representatives"
-                        variant={computeVariant(pol, userAnswers, politicianIdsWithStances.has(String(pol.id)))}
-                        onBuildCompass={handleBuildCompass}
-                        onClick={() => { /* prototype: no-op or navigate to profile */ }}
-                      />
-                    ))}
+                    {polList.map((pol) => {
+                      const Card = layout === 'vertical' ? CompassCardVertical : CompassCardHorizontal;
+                      return (
+                        <Card
+                          key={pol.id}
+                          politician={{ ...pol, stances: stancesByPolId[pol.id] || pol.stances || {} }}
+                          userAnswers={userAnswers || []}
+                          invertedSpokes={invertedSpokes}
+                          tierVisuals={null}
+                          view={view}
+                          surface="representatives"
+                          variant={computeVariant(pol, userAnswers, politicianIdsWithStances.has(String(pol.id)))}
+                          onBuildCompass={handleBuildCompass}
+                          onClick={() => { /* prototype: no-op or navigate to profile */ }}
+                        />
+                      );
+                    })}
                   </div>
                 </CategorySection>
               </div>
