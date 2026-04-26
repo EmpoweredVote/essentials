@@ -536,9 +536,18 @@ export default function Results() {
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
     setSearchKey(k => k + 1);
+    // Switching to address search clears any prior browse-by-area state so the
+    // URL doesn't end up with both ?browse_geo_id=... and ?q=...
+    setBrowseResults(null);
+    setSearchMode('address');
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       next.set('q', addr);
+      next.delete('browse_geo_id');
+      next.delete('browse_mtfcc');
+      next.delete('browse_label');
+      next.delete('browse_city_filter');
+      next.delete('browse_school_filter');
       return next;
     });
   };
