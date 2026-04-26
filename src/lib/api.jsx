@@ -325,6 +325,23 @@ export async function fetchElectionsByAddress(address) {
   }
 }
 
+export async function fetchElectionsByArea(geoId, mtfcc) {
+  try {
+    const res = await publicFetch('/essentials/browse/elections-by-area', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ geo_id: geoId, mtfcc }),
+    });
+    if (!res) return { elections: [], error: null };
+    if (!res.ok) return { elections: [], error: `${res.status}` };
+    const data = await res.json();
+    return { elections: Array.isArray(data.elections) ? data.elections : [], error: null };
+  } catch (err) {
+    console.error('fetchElectionsByArea error:', err);
+    return { elections: [], error: err.message };
+  }
+}
+
 /**
  * Fetch a single race candidate by race_candidates UUID.
  * Returns candidate detail with politician_id linkage (nullable).

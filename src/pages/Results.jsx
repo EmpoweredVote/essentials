@@ -1,6 +1,8 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, useMediaQuery, tierColors } from '@empoweredvote/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, CompassKey, useMediaQuery, tierColors } from '@empoweredvote/ev-ui';
+import { computeVariant } from '../lib/classify';
+import { fetchPoliticianAnswers } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -11,8 +13,8 @@ import CompassPreview from '../components/CompassPreview';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchElectionsByAddress, saveMyLocation, browseByArea } from '../lib/api';
-import { saveUserAddress } from '../lib/compass';
+import { fetchElectionsByAddress, fetchElectionsByArea, saveMyLocation, browseByArea } from '../lib/api';
+import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
@@ -243,9 +245,17 @@ export default function Results() {
 
   // Search mode: 'address' or 'browse'
   const [searchMode, setSearchMode] = useState('address');
+  const [editingSearch, setEditingSearch] = useState(false);
   // Browse results injected directly into the list
   const [browseResults, setBrowseResults] = useState(null);
   const [browseLoading, setBrowseLoading] = useState(false);
+  // Currently-browsed area (geo_id + mtfcc), captured from URL shortcut params
+  // OR from the LocationBrowser callback. Used to drive elections-by-area fetch.
+  const [browseArea, setBrowseArea] = useState(() => {
+    const g = searchParams.get('browse_geo_id');
+    const m = searchParams.get('browse_mtfcc');
+    return g && m ? { geo_id: g, mtfcc: m } : null;
+  });
 
   // Address bar state
   const [addressInput, setAddressInput] = useState(
@@ -255,10 +265,29 @@ export default function Results() {
   // even when the query text hasn't changed (re-search same location edge case)
   const [searchKey, setSearchKey] = useState(0);
 
+  // Prefill from cross-subdomain ev-context on mount when no URL query is present.
+  // Lets a user who entered their address on read-rank/etc. land on essentials with
+  // it already typed in, and vice versa. Empty/typed input wins over the prefill.
+  // Also bail when the URL is a browse-by-area shortcut (e.g. ?browse_geo_id=...) —
+  // the user explicitly chose a county/area and shouldn't see a stale address bleed in.
+  useEffect(() => {
+    if (queryFromUrl) return;
+    if (addressInput.trim().length > 0) return;
+    if (searchParams.get('browse_geo_id')) return;
+    let cancelled = false;
+    loadUserAddressFromContext().then((stored) => {
+      if (cancelled || !stored?.addr) return;
+      setAddressInput(toAddressTitleCase(stored.addr));
+    });
+    return () => { cancelled = true; };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const mainRef = useRef(null);
 
   // Detect desktop breakpoint for two-panel layout
   const isDesktop = useMediaQuery('(min-width: 769px)');
+  // 2-col vertical compass cards above 1080px container, otherwise 1 col centered
+  const isWideForVertical = useMediaQuery('(min-width: 1080px)');
 
   // Attempt sessionStorage restore for back-navigation
   const [cachedResult, setCachedResult] = useState(() => {
@@ -333,7 +362,14 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading } = useCompass();
+  const { isLoggedIn, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes } = useCompass();
+  // Enrich answers with topic objects (CompassCardVertical needs topic.short_title)
+  const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
+    if (a.topic?.short_title) return a;
+    const topic = allTopics.find(t => t.id === a.topic_id);
+    return topic ? { ...a, topic } : a;
+  }), [rawUserAnswers, allTopics]);
+  const [savingSuggested, setSavingSuggested] = useState(false);
 
   // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
   const isPrefilled = searchParams.get('prefilled') === 'true';
@@ -398,28 +434,42 @@ export default function Results() {
     });
   }, [cachedResult, isDesktop]);
 
-  // Eager-fetch elections when address search completes (not lazily on tab click)
+  // Eager-fetch elections when search completes (not lazily on tab click)
+  // Branches on searchMode: address mode hits /elections-by-address, browse mode
+  // hits /browse/elections-by-area using the current browseArea (geo_id + mtfcc).
   useEffect(() => {
-    if (!activeQuery) return;
-    if (electionsData !== null) return; // already loaded for this query
-
+    if (electionsData !== null) return; // already loaded for current key
     let cancelled = false;
-    setElectionsLoading(true);
 
-    fetchElectionsByAddress(decodeURIComponent(activeQuery)).then((data) => {
-      if (!cancelled) {
-        setElectionsData(data.elections || []);
-        setElectionsLoading(false);
-      }
-    });
+    if (searchMode === 'browse') {
+      const geoId = browseArea?.geo_id || searchParams.get('browse_geo_id');
+      const mtfcc = browseArea?.mtfcc || searchParams.get('browse_mtfcc');
+      if (!geoId || !mtfcc) return;
+      setElectionsLoading(true);
+      fetchElectionsByArea(geoId, mtfcc).then((data) => {
+        if (!cancelled) {
+          setElectionsData(data.elections || []);
+          setElectionsLoading(false);
+        }
+      });
+    } else {
+      if (!activeQuery) return;
+      setElectionsLoading(true);
+      fetchElectionsByAddress(decodeURIComponent(activeQuery)).then((data) => {
+        if (!cancelled) {
+          setElectionsData(data.elections || []);
+          setElectionsLoading(false);
+        }
+      });
+    }
 
     return () => { cancelled = true; };
-  }, [activeQuery]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeQuery, searchMode, browseArea?.geo_id, browseArea?.mtfcc]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Reset elections data when address changes
+  // Reset elections data when the active key changes (address OR browsed area)
   useEffect(() => {
     setElectionsData(null);
-  }, [activeQuery]);
+  }, [activeQuery, browseArea?.geo_id, browseArea?.mtfcc]);
 
   // Handle ?mode=browse from Landing page "Browse by location" link (per D-05)
   useEffect(() => {
@@ -443,6 +493,7 @@ export default function Results() {
 
     setSearchMode('browse');
     setBrowseLoading(true);
+    setBrowseArea({ geo_id: geoId, mtfcc });
     if (label) setAddressInput(decodeURIComponent(label));
 
     browseByArea(geoId, mtfcc).then(({ data, error }) => {
@@ -529,6 +580,44 @@ export default function Results() {
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
   const filteredPols = useMemo(() => list, [list]);
 
+  // Per-politician stances cache for CompassCardVertical comparison overlay
+  const [stancesByPolId, setStancesByPolId] = useState({});
+  useEffect(() => {
+    if (!filteredPols || filteredPols.length === 0 || allTopics.length === 0) return;
+    const topicById = new Map(allTopics.map(t => [t.id, t]));
+    const targets = filteredPols.filter(p => politicianIdsWithStances.has(String(p.id)) && !stancesByPolId[p.id]);
+    if (targets.length === 0) return;
+    let cancelled = false;
+    Promise.all(
+      targets.map(p =>
+        fetchPoliticianAnswers(p.id)
+          .then(rows => {
+            const map = {};
+            for (const r of rows) {
+              const t = topicById.get(r.topic_id);
+              if (t?.short_title) map[t.short_title] = r.value ?? 0;
+            }
+            return [p.id, map];
+          })
+          .catch(() => [p.id, {}])
+      )
+    ).then(pairs => {
+      if (cancelled) return;
+      setStancesByPolId(prev => {
+        const next = { ...prev };
+        for (const [id, m] of pairs) next[id] = m;
+        return next;
+      });
+    });
+    return () => { cancelled = true; };
+  }, [filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
+  const handleBuildCompass = () => {
+    const returnUrl = window.location.href;
+    window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
+  };
+
   // Derive representing city for building image selection
   const representingCity = useMemo(() => {
     for (const p of filteredPols) {
@@ -586,6 +675,22 @@ export default function Results() {
     if (!parts && !dateStr) return null;
     return `${parts} · ${dateStr}`;
   }, [electionsData, userState]);
+
+  const electionsDaysAway = useMemo(() => {
+    if (!electionsData || electionsData.length === 0) return null;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const upcoming = electionsData
+      .filter((e) => e.election_date && new Date(e.election_date + 'T12:00:00') >= today)
+      .sort((a, b) => new Date(a.election_date) - new Date(b.election_date));
+    if (upcoming.length === 0) return null;
+    const target = new Date(upcoming[0].election_date + 'T12:00:00');
+    target.setHours(0, 0, 0, 0);
+    const days = Math.round((target - today) / (1000 * 60 * 60 * 24));
+    if (days === 0) return 'Today';
+    if (days === 1) return 'Tomorrow';
+    return `${days} days away`;
+  }, [electionsData]);
 
   // Filter federal politicians: only show senators/reps from user's state
   const federalFiltered = useMemo(() => {
@@ -778,41 +883,34 @@ export default function Results() {
     const branch = getBranch(pol.district_type, pol.office_title);
 
     const imgData = getImageData(pol);
+    const polForCard = {
+      ...pol,
+      full_name: `${pol.first_name} ${pol.last_name}`,
+      office_title: cardTitle,
+      district_label: subtitle,
+      photo_origin_url: imgData.url,
+      imageFocalPoint: imgData.focalPoint || 'center 20%',
+      ballot,
+      branch,
+      hasStances,
+      stances: stancesByPolId[pol.id] || {},
+    };
     return (
       <div key={pol.id} data-pol-id={pol.id} style={{ height: '100%' }}>
-        <PoliticianCard
-          id={pol.id}
-          imageSrc={imgData.url}
-          name={`${pol.first_name} ${pol.last_name}`}
-          title={cardTitle}
-          subtitle={subtitle}
-          imageFocalPoint={imgData.focalPoint || 'center 20%'}
-          style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : {}}
+        <CompassCardVertical
+          politician={polForCard}
+          userAnswers={userAnswers}
+          invertedSpokes={invertedSpokes}
+          variant={computeVariant(pol, rawUserAnswers, hasStances)}
+          surface="representatives"
+          onBuildCompass={handleBuildCompass}
           onClick={() => {
-            if (isCandidate) {
-              const scrollTop = isDesktop ? mainRef.current?.scrollTop ?? 0 : window.scrollY;
-              sessionStorage.setItem('ev:scrollTop', String(scrollTop));
-              navigate(`/candidate/${pol.id}`);
-            } else {
-              handlePoliticianClick(pol.id);
-            }
+            const scrollTop = isDesktop ? mainRef.current?.scrollTop ?? 0 : window.scrollY;
+            sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+            if (isCandidate) navigate(`/candidate/${pol.id}`);
+            else handlePoliticianClick(pol.id);
           }}
-          variant="horizontal"
-          footer={
-            <IconOverlay
-              ballot={ballot}
-              hasStances={hasStances}
-              branch={branch}
-              onCompassClick={hasStances ? (e) => {
-                setPreviewPol({
-                  id: pol.id,
-                  name: `${pol.first_name} ${pol.last_name}`,
-                  shortTitle: formatLegendName(pol),
-                  anchorEl: e.currentTarget,
-                });
-              } : undefined}
-            />
-          }
+          tierVisuals={isCandidate ? { bg: '#fffef5' } : null}
         />
       </div>
     );
@@ -855,70 +953,154 @@ export default function Results() {
           className="flex-1"
           style={isDesktop ? { overflowY: 'auto', minWidth: 0 } : { overflowY: 'auto' }}
         >
-          {/* Search Mode Toggle + Search Bar */}
-          <div className="px-4 sm:px-8 py-3 border-t border-gray-200 bg-[var(--ev-bg-light)]">
-            {/* Mode toggle */}
-            <div className="flex gap-2 mb-3">
+          {/* "Save this address?" prompt for authed users with no API location */}
+          {isLoggedIn && suggestedSaveAddress && (
+            <div
+              role="status"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '12px',
+                padding: '10px 16px', background: '#E4F3F6',
+                borderBottom: '1px solid #C0E8F2',
+                fontFamily: "'Manrope', sans-serif", fontSize: '14px', color: '#003E4D',
+              }}
+            >
+              <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                Use <strong>{suggestedSaveAddress.addr}</strong> as your saved address?
+              </span>
               <button
-                onClick={() => { setSearchMode('address'); setBrowseResults(null); }}
-                className={`px-3 py-1 text-sm rounded-full transition-colors ${
-                  searchMode === 'address'
-                    ? 'bg-[var(--ev-teal)] text-white'
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
+                type="button"
+                disabled={savingSuggested}
+                onClick={async () => {
+                  setSavingSuggested(true);
+                  try { await saveMyLocation(suggestedSaveAddress.addr); } catch {}
+                  setSavingSuggested(false);
+                  dismissSuggestedSaveAddress();
+                  setAddressInput(toAddressTitleCase(suggestedSaveAddress.addr));
+                }}
+                style={{
+                  padding: '6px 14px', borderRadius: '9999px', border: 'none',
+                  background: '#00657c', color: '#fff', fontSize: '13px',
+                  fontWeight: 600, cursor: savingSuggested ? 'wait' : 'pointer',
+                  opacity: savingSuggested ? 0.6 : 1,
+                }}
               >
-                Search by Address
+                {savingSuggested ? 'Saving…' : 'Save'}
               </button>
               <button
-                onClick={() => setSearchMode('browse')}
-                className={`px-3 py-1 text-sm rounded-full transition-colors ${
-                  searchMode === 'browse'
-                    ? 'bg-[var(--ev-teal)] text-white'
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
+                type="button"
+                onClick={dismissSuggestedSaveAddress}
+                aria-label="Dismiss"
+                style={{
+                  padding: '4px 8px', border: 'none', background: 'transparent',
+                  color: '#6b7280', fontSize: '18px', lineHeight: 1, cursor: 'pointer',
+                }}
               >
-                Browse by Location
+                ×
               </button>
             </div>
+          )}
+          {/* Search Bar — collapsed chip when address is set, full input otherwise */}
+          <div className="px-4 sm:px-8 py-3 border-t border-gray-200 bg-[var(--ev-bg-light)]">
+            {/* Collapsed chip — shown when we have a result and not actively editing */}
+            {(formattedAddress || (searchMode === 'browse' && browseResults)) && !editingSearch && (
+              <div className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#00657c' }}>
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span className="text-sm text-gray-700 truncate" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                  {formattedAddress ? toAddressTitleCase(formattedAddress) : addressInput}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setEditingSearch(true)}
+                  aria-label="Edit search"
+                  className="ml-1 inline-flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 transition-colors"
+                  style={{ color: '#00657c' }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                  </svg>
+                </button>
+              </div>
+            )}
 
-            {searchMode === 'address' ? (
-              <>
+            {/* Full search form — always in the DOM so the autocomplete ref stays attached.
+                Hidden via CSS when the chip is visible to preserve the Google Places binding. */}
+            <div className={(formattedAddress || (searchMode === 'browse' && browseResults)) && !editingSearch ? 'hidden' : ''}>
+              {/* Mode toggle */}
+              <div className="flex gap-2 mb-3">
+                <button
+                  onClick={() => { setSearchMode('address'); setBrowseResults(null); }}
+                  className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                    searchMode === 'address'
+                      ? 'bg-[var(--ev-teal)] text-white'
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                >
+                  Search by Address
+                </button>
+                <button
+                  onClick={() => setSearchMode('browse')}
+                  className={`px-3 py-1 text-sm rounded-full transition-colors ${
+                    searchMode === 'browse'
+                      ? 'bg-[var(--ev-teal)] text-white'
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                >
+                  Browse by Location
+                </button>
+              </div>
+
+              {searchMode === 'address' ? (
                 <div className="flex gap-3">
                   <input
                     ref={addressInputRef}
                     type="text"
                     value={addressInput}
                     onChange={(e) => setAddressInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleAddressSearch()}
+                    onKeyDown={(e) => e.key === 'Enter' && (handleAddressSearch(), setEditingSearch(false))}
                     placeholder="Enter your full street address"
                     className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
                                focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
                   />
                   <button
-                    onClick={handleAddressSearch}
+                    onClick={() => { handleAddressSearch(); setEditingSearch(false); }}
                     disabled={!addressInput.trim()}
                     className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
                                hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
                   >
                     Search
                   </button>
+                  {(formattedAddress || (searchMode === 'browse' && browseResults)) && (
+                    <button
+                      type="button"
+                      onClick={() => setEditingSearch(false)}
+                      className="px-3 py-2 text-sm text-gray-600 hover:text-gray-800"
+                    >
+                      Cancel
+                    </button>
+                  )}
                 </div>
-              </>
-            ) : (
-              <LocationBrowser
-                onResults={(data, areaName, state) => {
-                  setBrowseResults(data);
-                  if (areaName) {
-                    setAddressInput(`${areaName}, ${state}`);
-                  }
-                }}
-                onLoading={setBrowseLoading}
-              />
-            )}
+              ) : (
+                <LocationBrowser
+                  onResults={(data, areaName, state, area) => {
+                    setBrowseResults(data);
+                    if (area && area.geo_id && area.mtfcc) {
+                      setBrowseArea({ geo_id: area.geo_id, mtfcc: area.mtfcc });
+                    }
+                    if (areaName) setAddressInput(`${areaName}, ${state}`);
+                    setEditingSearch(false);
+                  }}
+                  onLoading={setBrowseLoading}
+                />
+              )}
+            </div>
           </div>
 
           {/* Tab toggle — Representatives / Elections */}
-          {activeQuery && (
+          {(activeQuery || browseResults) && (
             <div className="flex border-b border-[#E2EBEF] px-4 sm:px-8">
               <button
                 className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
@@ -942,8 +1124,13 @@ export default function Results() {
                 <span className="hidden sm:inline">
                   {electionsLabelSuffix ? `Elections - ${electionsLabelSuffix}` : 'Elections'}
                 </span>
-                {electionsData && electionsData.length > 0 && (
-                  <span className="w-2 h-2 rounded-full bg-[#FED12E] ml-1 animate-pulse" />
+                {electionsDaysAway && (
+                  <span
+                    className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
+                    style={{ backgroundColor: '#FED12E', color: '#1a1a1a' }}
+                  >
+                    {electionsDaysAway}
+                  </span>
                 )}
               </button>
             </div>
@@ -951,14 +1138,7 @@ export default function Results() {
 
           {activeView === 'representatives' ? (
           <>
-          {/* Area label — shown when we have a backend-validated formatted address */}
-          {formattedAddress && phase === 'fresh' && list.length > 0 && (
-            <div className="px-4 sm:px-8 pb-2">
-              <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                Showing representatives for <span className="font-semibold text-gray-700">{toAddressTitleCase(formattedAddress)}</span>
-              </p>
-            </div>
-          )}
+          {/* Address chip above already shows the location — no duplicate label here */}
 
           {/* Mobile filter controls — shown only on mobile */}
           {!isDesktop && (
@@ -1044,6 +1224,11 @@ export default function Results() {
           {/* Results */}
           {phase !== 'loading' && (
               <div className="px-4 md:px-8 pt-6 pb-8">
+                {(activeQuery || browseResults) && (
+                  <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'flex-end' }}>
+                    <CompassKey />
+                  </div>
+                )}
                 {/* Empty states for tiers with no data */}
                 {phase !== 'loading' && activeQuery && ['Local', 'State'].map((tier) => {
                   const tierKey = tier.toLowerCase();
@@ -1116,6 +1301,9 @@ export default function Results() {
                                 key={sg.key}
                                 title={body.subgroups.length > 1 ? sg.label : undefined}
                                 websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
+                                gridTemplateColumns={isWideForVertical ? 'repeat(2, minmax(0, 560px))' : 'minmax(0, 560px)'}
+                                gap="16px"
+                                justifyContent="center"
                               >
                                 {sg.pols.map((pol) =>
                                   renderSeatGroup(pol)
@@ -1147,13 +1335,6 @@ export default function Results() {
           </>
           ) : (
             <div className="px-4 md:px-8 pt-6 pb-8">
-              {formattedAddress && electionsData && electionsData.length > 0 && (
-                <div className="pb-2">
-                  <p className="text-sm text-gray-500" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                    Showing elections for <span className="font-semibold text-gray-700">{toAddressTitleCase(formattedAddress)}</span>
-                  </p>
-                </div>
-              )}
               <ElectionsView
                 elections={electionsData}
                 loading={electionsLoading}

@@ -87,7 +87,10 @@ export default function LocationBrowser({ onResults, onLoading }) {
       }
 
       const data = await res.json();
-      if (onResults) onResults(data, selectedArea.name, selectedState);
+      if (onResults) onResults(data, selectedArea.name, selectedState, {
+        geo_id: selectedArea.geo_id,
+        mtfcc: selectedArea.mtfcc,
+      });
     } catch (err) {
       console.error('Browse error:', err);
       setError('Something went wrong. Please try again.');
