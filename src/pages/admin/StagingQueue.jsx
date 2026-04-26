@@ -3,6 +3,7 @@ import {
   fetchStagingQueue,
   approveStagingCandidate,
   dismissStagingCandidate,
+  fetchRacesForJurisdiction,
 } from '../../lib/adminApi';
 
 const CONFIDENCE_ORDER = { uncertain: 0, matched: 1, official: 2 };
@@ -46,6 +47,57 @@ function groupByRace(entries) {
     );
   }
   return [...map.values()];
+}
+
+function RacePickerModal({ entry, onConfirm, onCancel }) {
+  const [races, setRaces] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedRaceId, setSelectedRaceId] = useState('');
+
+  useEffect(() => {
+    if (!entry.discovery_jurisdiction_id) { setLoading(false); return; }
+    fetchRacesForJurisdiction(entry.discovery_jurisdiction_id)
+      .then(setRaces)
+      .catch(() => setRaces([]))
+      .finally(() => setLoading(false));
+  }, [entry.discovery_jurisdiction_id]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+        <h2 className="text-lg font-semibold mb-1">Assign Race</h2>
+        <p className="text-sm text-gray-500 mb-4">
+          No race was matched for <strong>{entry.full_name}</strong>. Select the correct race to approve.
+        </p>
+        {loading ? (
+          <div className="text-sm text-gray-500 py-4 text-center">Loading races…</div>
+        ) : races.length === 0 ? (
+          <div className="text-sm text-red-600 py-4">No races found for this jurisdiction.</div>
+        ) : (
+          <select
+            className="w-full border border-gray-300 rounded px-3 py-2 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+            value={selectedRaceId}
+            onChange={e => setSelectedRaceId(e.target.value)}
+          >
+            <option value="">— select a race —</option>
+            {races.map(r => (
+              <option key={r.id} value={r.id}>{r.position_name}</option>
+            ))}
+          </select>
+        )}
+        <div className="flex justify-end gap-2">
+          <button onClick={onCancel} className="px-4 py-2 text-sm rounded bg-gray-100 text-gray-700 hover:bg-gray-200">Cancel</button>
+          <button
+            onClick={() => onConfirm(selectedRaceId)}
+            disabled={!selectedRaceId}
+            className="px-4 py-2 text-sm rounded bg-green-600 text-white hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            Approve
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function Toast({ message, type, onClose, onUndo }) {
@@ -109,6 +161,7 @@ export default function StagingQueue() {
   const [authError, setAuthError] = useState(false);
   const [error, setError] = useState('');
   const [toast, setToast] = useState(null);
+  const [racePicker, setRacePicker] = useState(null); // entry awaiting race assignment
 
   const loadQueue = useCallback(async () => {
     setLoading(true);
@@ -126,7 +179,16 @@ export default function StagingQueue() {
 
   useEffect(() => { loadQueue(); }, [loadQueue]);
 
-  const handleApprove = async (entry) => {
+  const handleApprove = (entry) => {
+    if (!entry.race_id) {
+      setRacePicker(entry);
+      return;
+    }
+    doApprove(entry, null);
+  };
+
+  const doApprove = async (entry, raceId) => {
+    setRacePicker(null);
     setEntries(prev => prev.filter(e => e.id !== entry.id));
     setToast({
       message: `Approved ${entry.full_name}`,
@@ -134,7 +196,7 @@ export default function StagingQueue() {
       onUndo: () => { setToast(null); loadQueue(); },
     });
     try {
-      await approveStagingCandidate(entry.id);
+      await approveStagingCandidate(entry.id, raceId);
     } catch (err) {
       setToast({ message: `Approve failed: ${err.message}`, type: 'error' });
       loadQueue();
@@ -206,6 +268,13 @@ export default function StagingQueue() {
         </div>
       )}
       {toast && <Toast {...toast} onClose={() => setToast(null)} />}
+      {racePicker && (
+        <RacePickerModal
+          entry={racePicker}
+          onConfirm={(raceId) => doApprove(racePicker, raceId)}
+          onCancel={() => setRacePicker(null)}
+        />
+      )}
     </div>
   );
 }

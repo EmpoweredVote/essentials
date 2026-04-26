@@ -164,17 +164,35 @@ export async function fetchStagingQueue() {
 /**
  * Approve a pending staging candidate by UUID.
  * @param {string} id - UUID of the candidate_staging row
- * @returns {Promise<Object>} Approval result with id, fullName, status, confidence, action, warning
+ * @param {string} [raceId] - Optional race UUID to assign when none was matched
+ * @returns {Promise<Object>} Approval result with id, fullName, status, confidence, action, upsertResult
  */
-export async function approveStagingCandidate(id) {
+export async function approveStagingCandidate(id, raceId) {
   const res = await apiFetch(`/admin/discovery/staging/${encodeURIComponent(id)}/approve`, {
     method: 'POST',
-    body: JSON.stringify({}),
+    body: JSON.stringify(raceId ? { race_id: raceId } : {}),
   });
   if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
   if (!res.ok) {
     const text = await res.text();
     const err = new Error(text || `Approve failed: ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res.json();
+}
+
+/**
+ * Fetch all races for the election associated with a discovery jurisdiction.
+ * Used to populate the race picker when approving a candidate with no matched race.
+ * @param {string} jurisdictionId - UUID of the discovery_jurisdictions row
+ * @returns {Promise<Array<{id: string, position_name: string}>>}
+ */
+export async function fetchRacesForJurisdiction(jurisdictionId) {
+  const res = await apiFetch(`/admin/discovery/staging/races-for-jurisdiction/${encodeURIComponent(jurisdictionId)}`);
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  if (!res.ok) {
+    const err = new Error(`Fetch races failed: ${res.status}`);
     err.status = res.status;
     throw err;
   }
