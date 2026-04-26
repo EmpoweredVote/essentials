@@ -438,8 +438,8 @@ export default function Results() {
   // Branches on searchMode: address mode hits /elections-by-address, browse mode
   // hits /browse/elections-by-area using the current browseArea (geo_id + mtfcc).
   useEffect(() => {
-    if (electionsData !== null) return; // already loaded for current key
     let cancelled = false;
+    setElectionsData(null);
 
     if (searchMode === 'browse') {
       const geoId = browseArea?.geo_id || searchParams.get('browse_geo_id');
@@ -465,11 +465,6 @@ export default function Results() {
 
     return () => { cancelled = true; };
   }, [activeQuery, searchMode, browseArea?.geo_id, browseArea?.mtfcc]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Reset elections data when the active key changes (address OR browsed area)
-  useEffect(() => {
-    setElectionsData(null);
-  }, [activeQuery, browseArea?.geo_id, browseArea?.mtfcc]);
 
   // Handle ?mode=browse from Landing page "Browse by location" link (per D-05)
   useEffect(() => {
@@ -1053,42 +1048,55 @@ export default function Results() {
                 </button>
               </div>
 
-              {searchMode === 'address' ? (
-                <div className="flex gap-3">
-                  <input
-                    ref={addressInputRef}
-                    type="text"
-                    value={addressInput}
-                    onChange={(e) => setAddressInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && (handleAddressSearch(), setEditingSearch(false))}
-                    placeholder="Enter your full street address"
-                    className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
-                               focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
-                  />
+              {/* Address input — always in the DOM so the Google Places autocomplete ref
+                  stays attached regardless of which mode is active. Hidden via CSS in browse mode. */}
+              <div className={searchMode !== 'address' ? 'hidden' : 'flex gap-3'}>
+                <input
+                  ref={addressInputRef}
+                  type="text"
+                  value={addressInput}
+                  onChange={(e) => setAddressInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && (handleAddressSearch(), setEditingSearch(false))}
+                  placeholder="Enter your full street address"
+                  className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
+                             focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
+                />
+                <button
+                  onClick={() => { handleAddressSearch(); setEditingSearch(false); }}
+                  disabled={!addressInput.trim()}
+                  className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
+                             hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
+                >
+                  Search
+                </button>
+                {(formattedAddress || (searchMode === 'browse' && browseResults)) && (
                   <button
-                    onClick={() => { handleAddressSearch(); setEditingSearch(false); }}
-                    disabled={!addressInput.trim()}
-                    className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
-                               hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
+                    type="button"
+                    onClick={() => setEditingSearch(false)}
+                    className="px-3 py-2 text-sm text-gray-600 hover:text-gray-800"
                   >
-                    Search
+                    Cancel
                   </button>
-                  {(formattedAddress || (searchMode === 'browse' && browseResults)) && (
-                    <button
-                      type="button"
-                      onClick={() => setEditingSearch(false)}
-                      className="px-3 py-2 text-sm text-gray-600 hover:text-gray-800"
-                    >
-                      Cancel
-                    </button>
-                  )}
-                </div>
-              ) : (
+                )}
+              </div>
+
+              {searchMode !== 'address' && (
                 <LocationBrowser
                   onResults={(data, areaName, state, area) => {
                     setBrowseResults(data);
                     if (area && area.geo_id && area.mtfcc) {
                       setBrowseArea({ geo_id: area.geo_id, mtfcc: area.mtfcc });
+                      setSearchParams((prev) => {
+                        const next = new URLSearchParams(prev);
+                        next.set('browse_geo_id', area.geo_id);
+                        next.set('browse_mtfcc', area.mtfcc);
+                        if (areaName) next.set('browse_label', areaName);
+                        else next.delete('browse_label');
+                        next.delete('browse_city_filter');
+                        next.delete('browse_school_filter');
+                        next.set('mode', 'browse');
+                        return next;
+                      }, { replace: true });
                     }
                     if (areaName) setAddressInput(`${areaName}, ${state}`);
                     setEditingSearch(false);
