@@ -236,7 +236,7 @@ export default function CompassFirstCard({ politician, mockAnswers, variant = 'A
         <div style={{ alignSelf: horizontal ? 'flex-start' : 'center' }}>
           <IconOverlay
             ballot={politician.ballot || null}
-            hasStances={Boolean(mockAnswers)}
+            hasStances={false}
             branch={politician.branch || null}
           />
         </div>
