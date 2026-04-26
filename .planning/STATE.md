@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: Not started
-Plan: Not started
-Status: Ready to plan next milestone
-Last activity: 2026-04-25 — v2.1 milestone complete
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-26 — Milestone v2.2 started
 
-Progress: [████████████████████] v2.1 SHIPPED — ready for /gsd:new-milestone
+Progress: [░░░░░░░░░░░░░░░░░░░░] v2.2 in progress
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-25 after v2.1 milestone)
+See: .planning/PROJECT.md (updated 2026-04-26 after v2.2 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Planning next milestone (v2.2)
+**Current focus:** v2.2 — Data Depth & Admin Tooling
 
 ## Accumulated Context
 
@@ -28,8 +28,8 @@ See: .planning/PROJECT.md (updated 2026-04-25 after v2.1 milestone)
 - Jurisdictions processed sequentially (never parallel) — exhausts Claude API rate limit quota
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
-- Migration numbering continues from 070 (highest existing is 070_discovery_tables.sql)
-- Next migration: 071
+- Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
+- Next migration: 083
 
 ### Known Architecture
 

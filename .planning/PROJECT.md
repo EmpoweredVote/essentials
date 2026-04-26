@@ -8,6 +8,17 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
+## Current Milestone: v2.2 Data Depth & Admin Tooling
+
+**Goal:** Surface data gaps proactively, make compass work for local politicians, and give admins the tools to manage discovery without touching the terminal.
+
+**Target features:**
+- Race completeness audit — diff official ballot vs DB to catch missing races
+- Admin discovery trigger UI — jurisdictions panel with one-click Run Discovery
+- Compass stances integration — 25 local politician stance files → inform.politician_answers
+- Indiana local races — Monroe County clerk source for Commissioner, Clerk, Assessor, Township
+- Admin discovery dashboard — run history with per-run stats and coverage health
+
 ## Requirements
 
 ### Validated
@@ -44,13 +55,15 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ Discovery run log — every run recorded to discovery_runs with status, counts, raw agent JSONB — v2.1
 - ✓ Admin email notifications — urgency-aware review email, zero-candidate regression alert, failure alert — v2.1
 - ✓ New jurisdiction onboarding — adding a discovery_jurisdictions row is sufficient to enable discovery and scheduling — v2.1
+- ✓ Proximity-aware cron — daily cadence within 30 days of election, configurable per jurisdiction — v2.1
 
 ### Active
 
 <!-- Current scope. Building toward these. — v2.2 -->
 
 - [ ] Race completeness audit — detect races missing from DB by diffing official ballot against essentials.races (not just missing candidates)
-- [ ] Proximity-aware cron — daily cadence within 30 days of election, configurable per jurisdiction
+- [ ] Admin discovery trigger UI — jurisdictions panel in admin with Run Discovery button per jurisdiction
+- [ ] Compass stances integration — bridge essentials.politicians into inform.politician_answers using existing stance research files (~25 local politicians)
 - [ ] Indiana local races — county clerk source for Monroe County Commissioner, Clerk, Assessor, Township races
 - [ ] Admin discovery dashboard — run history with per-run stats, coverage health per jurisdiction
 
@@ -107,4 +120,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | web_search max_uses: 1 (with sourceUrl) / 2 (without) | Prevents quota exhaustion per discovery run | ✓ Good — v2.1 |
 
 ---
-*Last updated: 2026-04-25 after v2.1 milestone*
+*Last updated: 2026-04-26 after v2.2 milestone start*
