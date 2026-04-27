@@ -336,6 +336,7 @@ export default function ElectionsView({
           raceId: race.race_id,
           shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
           cleanedPosition: cleaned,
+          seats: race.seats ?? 1,
         });
       }
 
@@ -560,7 +561,8 @@ export default function ElectionsView({
                         const displayCandidates = hideWithdrawn
                           ? activeCandidates
                           : [...activeCandidates, ...withdrawnCandidates];
-                        const isUnopposed = activeCandidates.length === 1;
+                        const seats = race.seats ?? 1;
+                        const isUnopposed = activeCandidates.length > 0 && activeCandidates.length <= seats;
                         const isEmpty = displayCandidates.length === 0;
 
                         return (
@@ -631,7 +633,9 @@ export default function ElectionsView({
                                     branch,
                                     hasStances: candHasStances,
                                     stances: (polIdKey && stancesByPolId[polIdKey]) || {},
-                                    running_unopposed: isUnopposed && candidate.candidate_status !== 'withdrawn',
+                                    running_unopposed: isUnopposed && candidate.candidate_status !== 'withdrawn'
+                                      ? (seats > 1 ? `Running Unopposed (${seats} seats)` : true)
+                                      : false,
                                     withdrawn: candidate.candidate_status === 'withdrawn',
                                   };
                                   return (
