@@ -263,17 +263,14 @@ export async function fetchDiscoveryCoverage() {
 
 /**
  * Trigger a discovery run for a jurisdiction.
- *
- * NOTE: The underlying POST /admin/discover/jurisdiction/:id route uses
- * X-Admin-Token authentication (not JWT Bearer). Since apiFetch sends JWT Bearer,
- * this call will likely return 401. See FINDINGS in 08-03-SUMMARY.md.
+ * Uses JWT-gated POST /admin/discovery/trigger/:id (added in Phase 8).
  * The caller inspects the raw response: 202 = accepted, 409 = conflict, others = error.
  *
  * @param {string} jurisdictionId - UUID of the discovery_jurisdictions row
  * @returns {Promise<Response>} Raw fetch Response — caller inspects status
  */
 export async function triggerDiscoveryRun(jurisdictionId) {
-  const res = await apiFetch(`/admin/discover/jurisdiction/${encodeURIComponent(jurisdictionId)}`, { method: 'POST' });
+  const res = await apiFetch(`/admin/discovery/trigger/${encodeURIComponent(jurisdictionId)}`, { method: 'POST' });
   if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
   return res; // caller inspects status: 202 = accepted, 409 = conflict, others = error
 }
