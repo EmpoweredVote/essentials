@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 8 of 11 (Admin Discovery UI + Dashboard)
-Plan: 08-01 complete
-Status: Wave 1 done — Wave 2 ready
-Last activity: 2026-04-27 — plan 08-01 complete (migration 083 + discoveryService auto-upserted persistence)
+Plan: 08-02 complete
+Status: Wave 2 done — Wave 3 ready
+Last activity: 2026-04-27 — plan 08-02 complete (backend discovery dashboard GET endpoints)
 
-Progress: [█░░░░░░░░░░░░░░░░░░░] v2.2 in progress (1/7 plans)
+Progress: [██░░░░░░░░░░░░░░░░░░] v2.2 in progress (2/7 plans)
 
 ## Project Reference
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-04-26 after v2.2 milestone start)
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
 - Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
-- Next migration: 083
+- Next migration: 084 (083 used by plan 08-01: candidates_auto_upserted column)
 
 ### Known Architecture
 
@@ -51,4 +51,4 @@ None.
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-26 — v2.2 roadmap created; Phase 8 ready to plan*
+*Updated: 2026-04-27 — plan 08-02 complete; discovery dashboard backend GET endpoints live*
