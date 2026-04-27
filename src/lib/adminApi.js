@@ -219,3 +219,61 @@ export async function dismissStagingCandidate(id, reason = 'Dismissed by admin')
   }
   return res.json();
 }
+
+/**
+ * Fetch all discovery jurisdictions with last-run summary and active candidate count.
+ * @returns {Promise<Array>} Flat array of jurisdiction objects
+ */
+export async function fetchDiscoveryJurisdictions() {
+  const res = await apiFetch('/admin/discovery/jurisdictions');
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  if (!res.ok) { const err = new Error(`Fetch jurisdictions failed: ${res.status}`); err.status = res.status; throw err; }
+  return res.json();
+}
+
+/**
+ * Fetch paginated discovery run history, optionally filtered by jurisdiction.
+ * @param {Object} params
+ * @param {number} [params.limit=25]
+ * @param {number} [params.offset=0]
+ * @param {string} [params.jurisdiction_id] - UUID to filter by jurisdiction
+ * @returns {Promise<{runs: Array, total: number, limit: number, offset: number}>}
+ */
+export async function fetchDiscoveryRuns({ limit = 25, offset = 0, jurisdiction_id } = {}) {
+  const qs = new URLSearchParams();
+  qs.set('limit', String(limit));
+  qs.set('offset', String(offset));
+  if (jurisdiction_id) qs.set('jurisdiction_id', jurisdiction_id);
+  const res = await apiFetch(`/admin/discovery/runs?${qs}`);
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  if (!res.ok) { const err = new Error(`Fetch runs failed: ${res.status}`); err.status = res.status; throw err; }
+  return res.json();
+}
+
+/**
+ * Fetch per-jurisdiction race/candidate coverage health stats.
+ * @returns {Promise<Array>} Flat array of coverage objects
+ */
+export async function fetchDiscoveryCoverage() {
+  const res = await apiFetch('/admin/discovery/coverage');
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  if (!res.ok) { const err = new Error(`Fetch coverage failed: ${res.status}`); err.status = res.status; throw err; }
+  return res.json();
+}
+
+/**
+ * Trigger a discovery run for a jurisdiction.
+ *
+ * NOTE: The underlying POST /admin/discover/jurisdiction/:id route uses
+ * X-Admin-Token authentication (not JWT Bearer). Since apiFetch sends JWT Bearer,
+ * this call will likely return 401. See FINDINGS in 08-03-SUMMARY.md.
+ * The caller inspects the raw response: 202 = accepted, 409 = conflict, others = error.
+ *
+ * @param {string} jurisdictionId - UUID of the discovery_jurisdictions row
+ * @returns {Promise<Response>} Raw fetch Response — caller inspects status
+ */
+export async function triggerDiscoveryRun(jurisdictionId) {
+  const res = await apiFetch(`/admin/discover/jurisdiction/${encodeURIComponent(jurisdictionId)}`, { method: 'POST' });
+  if (!res) { const err = new Error('Unauthorized'); err.status = 401; throw err; }
+  return res; // caller inspects status: 202 = accepted, 409 = conflict, others = error
+}
