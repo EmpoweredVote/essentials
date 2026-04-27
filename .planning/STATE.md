@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 8 of 11 (Admin Discovery UI + Dashboard)
-Plan: —
-Status: Ready to plan
-Last activity: 2026-04-26 — v2.2 roadmap created; Phase 8 pending planning
+Plan: 08-01 complete
+Status: Wave 1 done — Wave 2 ready
+Last activity: 2026-04-27 — plan 08-01 complete (migration 083 + discoveryService auto-upserted persistence)
 
-Progress: [░░░░░░░░░░░░░░░░░░░░] v2.2 in progress (0/7 plans)
+Progress: [█░░░░░░░░░░░░░░░░░░░] v2.2 in progress (1/7 plans)
 
 ## Project Reference
 
