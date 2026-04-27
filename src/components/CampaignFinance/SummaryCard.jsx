@@ -42,15 +42,13 @@ export default function SummaryCard({
   summary,
   cycle,
   onCycleChange,
-  onExpand,
-  expanded,
   dataUpdatedAt,
   loading,
 }) {
   // Loading skeleton
   if (loading) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 animate-pulse">
+      <div className="p-5 animate-pulse">
         <div className="flex justify-between items-center mb-4">
           <div className="h-5 bg-gray-200 rounded w-40" />
           <div className="h-7 bg-gray-200 rounded w-28" />
@@ -67,7 +65,7 @@ export default function SummaryCard({
 
   if (hasNoData) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+      <div className="p-5">
         <div className="flex items-center gap-2 mb-2">
           <h3 className="text-base font-semibold text-gray-800" style={{ fontFamily: "'Manrope', sans-serif" }}>
             Campaign Finance
@@ -84,14 +82,7 @@ export default function SummaryCard({
   const availableCycles = summary.available_cycles || [];
 
   return (
-    <div
-      className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 cursor-pointer hover:shadow-md transition-shadow"
-      onClick={onExpand}
-      role="button"
-      tabIndex={0}
-      aria-expanded={expanded}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onExpand(); } }}
-    >
+    <div className="p-5">
       {/* Header row */}
       <div className="flex items-center justify-between mb-3">
         <h3
@@ -102,15 +93,10 @@ export default function SummaryCard({
         </h3>
 
         <div className="flex items-center gap-3">
-          {/* Cycle selector — stop click propagation so it doesn't toggle expand */}
           {availableCycles.length > 1 ? (
             <select
               value={cycle || ''}
-              onChange={(e) => {
-                e.stopPropagation();
-                onCycleChange(e.target.value);
-              }}
-              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => onCycleChange(e.target.value)}
               className="text-sm border border-gray-200 rounded-md px-2 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {availableCycles.map((c) => (
@@ -122,18 +108,6 @@ export default function SummaryCard({
           ) : availableCycles.length === 1 ? (
             <span className="text-sm text-gray-500">{formatCycleLabel(availableCycles[0])}</span>
           ) : null}
-
-          {/* Chevron */}
-          <svg
-            className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
         </div>
       </div>
 

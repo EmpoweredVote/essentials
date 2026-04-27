@@ -63,7 +63,6 @@ function DataPendingBanner() {
  *   politicianId — politician UUID string
  */
 export default function CampaignFinanceSection({ politicianId }) {
-  const [expanded, setExpanded] = useState(false);
   const currentYear = new Date().getFullYear();
   const defaultCycle = String(currentYear % 2 === 0 ? currentYear : currentYear - 1);
   const [cycle, setCycle] = useState(defaultCycle);
@@ -87,12 +86,6 @@ export default function CampaignFinanceSection({ politicianId }) {
 
   function handleCycleChange(newCycle) {
     setCycle(newCycle);
-    // Reset expanded state and contributions when cycle changes
-    setExpanded(false);
-  }
-
-  function handleExpand() {
-    setExpanded((v) => !v);
   }
 
   // Don't render section if API errored (endpoint missing) or no data after loading
@@ -139,27 +132,16 @@ export default function CampaignFinanceSection({ politicianId }) {
           summary={summary}
           cycle={cycle}
           onCycleChange={handleCycleChange}
-          onExpand={handleExpand}
-          expanded={expanded}
           dataUpdatedAt={dataUpdatedAt}
           loading={loading}
         />
 
-        {/* Expanded view with smooth max-height transition */}
-        <div
-          className={`overflow-hidden transition-all duration-300 ${
-            expanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
-          }`}
-        >
-          {expanded && summary && (
-            <ExpandedView
-              summary={summary}
-              contributions={contributions}
-              onFetchContributions={() => fetchContributions()}
-              onFetchMore={fetchMoreContributions}
-            />
-          )}
-        </div>
+        <ExpandedView
+          summary={summary}
+          contributions={contributions}
+          onFetchContributions={() => fetchContributions()}
+          onFetchMore={fetchMoreContributions}
+        />
 
         {/* Donor search — lets visitors look up which politicians a donor funded */}
         <DonorSearch currentPoliticianId={politicianId} />
