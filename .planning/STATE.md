@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 8 of 11 (Admin Discovery UI + Dashboard)
-Plan: 08-02 complete
-Status: Wave 2 done — Wave 3 ready
-Last activity: 2026-04-27 — plan 08-02 complete (backend discovery dashboard GET endpoints)
+Plan: 08-03 complete
+Status: Wave 3 done — Wave 4 (human verify) pending
+Last activity: 2026-04-27 — plan 08-03 complete (React discovery dashboard UI)
 
-Progress: [██░░░░░░░░░░░░░░░░░░] v2.2 in progress (2/7 plans)
+Progress: [███░░░░░░░░░░░░░░░░░] v2.2 in progress (3/7 plans)
 
 ## Project Reference
 
@@ -47,8 +47,8 @@ See: .planning/PROJECT.md (updated 2026-04-26 after v2.2 milestone start)
 
 ### Open Blockers
 
-None.
+- triggerDiscoveryRun auth mismatch: POST /admin/discover/jurisdiction/:id uses X-Admin-Token; apiFetch sends JWT Bearer. Run Discovery button will 401 until a JWT-gated trigger endpoint is added (Wave 4 issue or future plan).
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-27 — plan 08-02 complete; discovery dashboard backend GET endpoints live*
+*Updated: 2026-04-27 — plan 08-03 complete; React discovery dashboard UI live at /admin/discovery*
