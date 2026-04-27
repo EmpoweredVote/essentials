@@ -67,11 +67,13 @@ Full details: [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md)
   2. Admin can trigger a discovery run for any jurisdiction by clicking Run Discovery and sees a spinner while the run is in progress
   3. Admin can view the full discovery run history with per-run stats (jurisdiction, date/time, candidates found, staged, auto-upserted, status)
   4. Admin can see per-jurisdiction coverage health showing total races, races with candidates, and races with zero candidates
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 08-01: Jurisdictions panel — GET endpoint + admin UI list with Run Discovery trigger + progress feedback
-- [ ] 08-02: Discovery run history dashboard + per-jurisdiction coverage health
+- [ ] 08-01-PLAN.md — Migration 083 + persist autoUpserted in discoveryService.ts
+- [ ] 08-02-PLAN.md — Backend GET endpoints (jurisdictions, runs, coverage) on JWT-gated router
+- [ ] 08-03-PLAN.md — DiscoveryDashboard.jsx page + adminApi helpers + /admin/discovery route
+- [ ] 08-04-PLAN.md — Human-verify checkpoint for end-to-end UI flow
 
 #### Phase 9: Race Completeness Audit
 **Goal**: Admins can detect races that exist on the official ballot but are missing from the database, without writing SQL
@@ -143,7 +145,7 @@ Phases execute in numeric order: 8 → 9 → 10 → 11
 | 5. DB Foundation + Agent Core | v2.1 | 4/4 | Complete | 2026-04-24 |
 | 6. Admin Review UI + Email + Per-Race Trigger | v2.1 | 3/3 | Complete | 2026-04-25 |
 | 7. Cron Automation + Auto-Upsert | v2.1 | 2/2 | Complete | 2026-04-25 |
-| 8. Admin Discovery UI + Dashboard | v2.2 | 0/2 | Not started | - |
+| 8. Admin Discovery UI + Dashboard | v2.2 | 0/4 | Not started | - |
 | 9. Race Completeness Audit | v2.2 | 0/2 | Not started | - |
 | 10. Compass Stances Integration | v2.2 | 0/2 | Not started | - |
 | 11. Indiana Local Races | v2.2 | 0/1 | Not started | - |
