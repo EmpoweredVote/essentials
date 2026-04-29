@@ -422,6 +422,14 @@ export default function Results() {
   );
 
   const [searchQuery, setSearchQuery] = useState('');
+  // Compass mode toggle — persisted across sessions; off by default for dense view
+  const [compassMode, setCompassMode] = useState(() => {
+    try { return localStorage.getItem('ev:compassMode') === 'true'; } catch { return false; }
+  });
+  const handleCompassModeChange = (val) => {
+    setCompassMode(val);
+    try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
+  };
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
@@ -733,9 +741,10 @@ export default function Results() {
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
   const filteredPols = useMemo(() => list, [list]);
 
-  // Per-politician stances cache for CompassCardVertical comparison overlay
+  // Per-politician stances cache for CompassCardVertical comparison overlay (compass mode only)
   const [stancesByPolId, setStancesByPolId] = useState({});
   useEffect(() => {
+    if (!compassMode) return;
     if (!filteredPols || filteredPols.length === 0 || allTopics.length === 0) return;
     const topicById = new Map(allTopics.map(t => [t.id, t]));
     const targets = filteredPols.filter(p => politicianIdsWithStances.has(String(p.id)) && !stancesByPolId[p.id]);
@@ -1036,6 +1045,32 @@ export default function Results() {
     const branch = getBranch(pol.district_type, pol.office_title);
 
     const imgData = getImageData(pol);
+    const handleCardClick = () => {
+      const scrollTop = isDesktop ? mainRef.current?.scrollTop ?? 0 : window.scrollY;
+      sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+      if (isCandidate) navigate(`/candidate/${pol.id}`);
+      else handlePoliticianClick(pol.id);
+    };
+
+    if (!compassMode) {
+      return (
+        <div key={pol.id} data-pol-id={pol.id}>
+          <PoliticianCard
+            id={pol.id}
+            imageSrc={imgData.url}
+            name={`${pol.first_name} ${pol.last_name}`}
+            title={cardTitle}
+            subtitle={subtitle}
+            imageFocalPoint={imgData.focalPoint || 'center 20%'}
+            style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : {}}
+            onClick={handleCardClick}
+            variant="horizontal"
+            footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
+          />
+        </div>
+      );
+    }
+
     const polForCard = {
       ...pol,
       full_name: `${pol.first_name} ${pol.last_name}`,
@@ -1057,12 +1092,7 @@ export default function Results() {
           variant={computeVariant(pol, rawUserAnswers, hasStances)}
           surface="representatives"
           onBuildCompass={handleBuildCompass}
-          onClick={() => {
-            const scrollTop = isDesktop ? mainRef.current?.scrollTop ?? 0 : window.scrollY;
-            sessionStorage.setItem('ev:scrollTop', String(scrollTop));
-            if (isCandidate) navigate(`/candidate/${pol.id}`);
-            else handlePoliticianClick(pol.id);
-          }}
+          onClick={handleCardClick}
           tierVisuals={isCandidate ? { bg: '#fffef5' } : null}
         />
       </div>
@@ -1330,17 +1360,15 @@ export default function Results() {
                   onAppointedFilterChange={setAppointedFilter}
                   searchQuery={searchQuery}
                   onSearchChange={setSearchQuery}
+                  compassMode={compassMode}
+                  onCompassModeChange={handleCompassModeChange}
                 />
               </div>
             </div>
           )}
 
-          {/* Sticky CompassKey — sits below the tab+filter row at scroll = 0,
-              right-aligned. Negative margin-bottom prevents it from claiming
-              its own row in the layout; the cards section beneath pulls up to
-              start under it. As the user scrolls, the cards slide past while
-              the key stays pinned to top: 8 of <main>. */}
-          {(activeQuery || browseResults) && (
+          {/* Sticky CompassKey — only shown when compass mode is active */}
+          {compassMode && (activeQuery || browseResults) && (
             <div
               style={{
                 position: 'sticky',
@@ -1498,6 +1526,7 @@ export default function Results() {
                 elections={electionsData}
                 loading={electionsLoading}
                 tierFilter={selectedFilter}
+                compassMode={compassMode}
                 onCandidateClick={(id) => {
                   const scrollTop = isDesktop
                     ? mainRef.current?.scrollTop ?? 0

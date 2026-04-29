@@ -233,6 +233,7 @@ export default function ElectionsView({
   loading,
   tierFilter = 'All',
   hideWithdrawn = false,
+  compassMode = false,
   onCandidateClick,
 }) {
   const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances } = useCompass();
@@ -268,6 +269,7 @@ export default function ElectionsView({
   }, [elections]);
 
   useEffect(() => {
+    if (!compassMode) return;
     if (allTopics.length === 0 || visibleCandidateIds.size === 0) return;
     const topicById = new Map(allTopics.map(t => [t.id, t]));
     const targets = [...visibleCandidateIds].filter(id => politicianIdsWithStances.has(id) && !stancesByPolId[id]);
@@ -295,7 +297,7 @@ export default function ElectionsView({
       });
     });
     return () => { cancelled = true; };
-  }, [visibleCandidateIds, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [compassMode, visibleCandidateIds, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Session seed for stable candidate randomization
   const sessionSeed = useMemo(() => {
@@ -622,6 +624,35 @@ export default function ElectionsView({
 
                                   const polIdKey = candidate.politician_id ? String(candidate.politician_id) : null;
                                   const candHasStances = polIdKey ? politicianIdsWithStances.has(polIdKey) : false;
+
+                                  if (!compassMode) {
+                                    return (
+                                      <div key={candidate.candidate_id} style={{ position: 'relative' }}>
+                                        <PoliticianCard
+                                          id={candidate.candidate_id}
+                                          imageSrc={candidate.photo_url || undefined}
+                                          imageFocalPoint={candidate.focal_point || 'center 20%'}
+                                          name={candidate.full_name}
+                                          title={cardTitle}
+                                          subtitle={cardSubtitle}
+                                          onClick={() => onCandidateClick(candidate.candidate_id)}
+                                          variant="horizontal"
+                                          footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
+                                        />
+                                        {candidate.candidate_status === 'withdrawn' && (
+                                          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(120,0,0,0.78)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                            Withdrawn
+                                          </div>
+                                        )}
+                                        {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
+                                          <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                            {seats > 1 ? `${seats} seats` : 'Unopposed'}
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  }
+
                                   const polForCard = {
                                     id: candidate.candidate_id,
                                     full_name: candidate.full_name,

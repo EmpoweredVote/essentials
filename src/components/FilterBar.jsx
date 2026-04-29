@@ -63,7 +63,8 @@ function Dropdown({ label, value, options, onChange, ariaLabel }) {
 }
 
 /**
- * Inline filter controls — Tier dropdown, Type dropdown, name search input.
+ * Inline filter controls — Tier dropdown, Type dropdown, name search input,
+ * and an optional Compass toggle checkbox.
  * No wrapper chrome (no border/padding/background) so it can be dropped
  * directly into another row (e.g. next to the Reps/Elections tabs).
  */
@@ -71,6 +72,7 @@ export default function FilterBar({
   selectedFilter, onFilterChange,
   appointedFilter, onAppointedFilterChange,
   searchQuery, onSearchChange,
+  compassMode, onCompassModeChange,
 }) {
   return (
     <div
@@ -123,6 +125,27 @@ export default function FilterBar({
           onBlur={(e) => { e.currentTarget.style.borderColor = '#d1d5db'; }}
         />
       </div>
+      {onCompassModeChange !== undefined && (
+        <label
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '5px',
+            cursor: 'pointer',
+            fontFamily: "'Manrope', sans-serif", fontSize: '13px',
+            fontWeight: 500,
+            color: compassMode ? '#00657c' : '#374151',
+            whiteSpace: 'nowrap',
+            userSelect: 'none',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={!!compassMode}
+            onChange={(e) => onCompassModeChange(e.target.checked)}
+            style={{ accentColor: '#00657c', cursor: 'pointer' }}
+          />
+          Compass
+        </label>
+      )}
     </div>
   );
 }
