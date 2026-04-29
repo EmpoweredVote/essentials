@@ -429,6 +429,7 @@ export default function Results() {
   const handleCompassModeChange = (val) => {
     setCompassMode(val);
     try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
+    if (val) enableCompass();
   };
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
@@ -442,7 +443,7 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, enableCompass } = useCompass();
 
   // 260426-mw6 — guest → authed promotion. Two banners:
   //   1) compass: when API has zero answers but ev-context has guest answers.

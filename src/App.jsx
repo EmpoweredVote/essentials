@@ -47,7 +47,7 @@ function App() {
   }, []);
 
   return (
-    <CompassProvider>
+    <CompassProvider compassEnabled={localStorage.getItem('ev:compassMode') === 'true'}>
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/results" element={<Results />} />
