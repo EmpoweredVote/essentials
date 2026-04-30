@@ -38,7 +38,7 @@ export function Layout({ children }) {
       })
     : defaultNavItems;
 
-  const navItems = [...baseNavItems, { label: "Elections", href: "/elections" }];
+  const navItems = baseNavItems;
 
   return (
     <>

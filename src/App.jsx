@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Results from "./pages/Results";
 import Profile from "./pages/Profile";
@@ -10,7 +10,6 @@ import CandidateProfile from "./pages/CandidateProfile";
 import UnresolvedQueue from "./pages/admin/UnresolvedQueue";
 import StagingQueue from "./pages/admin/StagingQueue";
 import DiscoveryDashboard from "./pages/admin/DiscoveryDashboard";
-import Elections from "./pages/Elections";
 import { CompassProvider } from "./contexts/CompassContext";
 import { getToken, clearToken, redirectToLogin, extractHashToken } from "./lib/auth";
 
@@ -58,7 +57,7 @@ function App() {
         <Route path="/admin/unresolved" element={<RequireAuth><UnresolvedQueue /></RequireAuth>} />
         <Route path="/admin/staging" element={<RequireAuth><StagingQueue /></RequireAuth>} />
         <Route path="/admin/discovery" element={<RequireAuth><DiscoveryDashboard /></RequireAuth>} />
-        <Route path="/elections" element={<Elections />} />
+        <Route path="/elections" element={<Navigate to="/results?prefilled=true&view=elections" replace />} />
       </Routes>
     </CompassProvider>
   );
