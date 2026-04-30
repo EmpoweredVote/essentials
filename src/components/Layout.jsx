@@ -38,10 +38,7 @@ export function Layout({ children }) {
       })
     : defaultNavItems;
 
-  const electionsHref = isLoggedIn
-    ? "/results?prefilled=true&view=elections"
-    : "/elections";
-  const navItems = [...baseNavItems, { label: "Elections", href: electionsHref }];
+  const navItems = [...baseNavItems, { label: "Elections", href: "/elections" }];
 
   return (
     <>
