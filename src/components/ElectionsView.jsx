@@ -494,7 +494,7 @@ export default function ElectionsView({
               if (!tierStyle) return null;
 
               return (
-                <div key={tier} className="-mx-4 md:-mx-8 px-4 md:px-8 py-3" style={{ backgroundColor: tierStyle.bg }}>
+                <div key={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: tierStyle.bg }}>
                   <div className="mb-3">
                     <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
                   </div>

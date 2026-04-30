@@ -13,7 +13,7 @@ import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, saveMyLocation, browseByArea } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchMyElections, saveMyLocation, browseByArea } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
@@ -602,7 +602,20 @@ export default function Results() {
     if (searchMode === 'browse') {
       const geoId = browseArea?.geo_id || searchParams.get('browse_geo_id');
       const mtfcc = browseArea?.mtfcc || searchParams.get('browse_mtfcc');
-      if (!geoId || !mtfcc) return;
+      if (!geoId || !mtfcc) {
+        // Prefilled mode: user is logged in with saved location but no browse area params.
+        // Fall back to the auth-aware /elections/me endpoint.
+        if (isPrefilled) {
+          setElectionsLoading(true);
+          fetchMyElections().then((data) => {
+            if (!cancelled) {
+              setElectionsData(data.elections || []);
+              setElectionsLoading(false);
+            }
+          });
+        }
+        return;
+      }
       setElectionsLoading(true);
       fetchElectionsByArea(geoId, mtfcc).then((data) => {
         if (!cancelled) {
@@ -622,7 +635,7 @@ export default function Results() {
     }
 
     return () => { cancelled = true; };
-  }, [activeQuery, searchMode, browseArea?.geo_id, browseArea?.mtfcc]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeQuery, searchMode, browseArea?.geo_id, browseArea?.mtfcc, isPrefilled]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle ?mode=browse from Landing page "Browse by location" link (per D-05)
   useEffect(() => {
