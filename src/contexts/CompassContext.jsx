@@ -57,13 +57,9 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     const fragment = parseCompassFragment();
 
     try {
-      const [topics, polsWithStances] = await Promise.all([
-        fetchTopics(),
-        fetchPoliticiansWithStances(),
-      ]);
+      const topics = await fetchTopics();
 
       setAllTopics(topics);
-      setPoliticianIdsWithStances(new Set(polsWithStances.map((p) => String(p.id))));
 
       let answers = [];
       let selected = [];
@@ -273,9 +269,14 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
             }
           }
         }
-      } catch (err) {
-        console.error("CompassContext auth load error:", err);
-      } finally {
+      // Always fetch politician stances set — needed to gate CompassCard on profile pages
+      // regardless of whether the user ever enables compass mode.
+      fetchPoliticiansWithStances().then((pols) => {
+        if (!cancelled) setPoliticianIdsWithStances(new Set(pols.map((p) => String(p.id))));
+      }).catch(() => {});
+    } catch (err) {
+      console.error("CompassContext auth load error:", err);
+    } finally {
         if (!cancelled) {
           setCompassLoading(false);
         }
