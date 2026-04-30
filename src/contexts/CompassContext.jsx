@@ -269,10 +269,13 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
             }
           }
         }
-      // Always fetch politician stances set — needed to gate CompassCard on profile pages
-      // regardless of whether the user ever enables compass mode.
-      fetchPoliticiansWithStances().then((pols) => {
-        if (!cancelled) setPoliticianIdsWithStances(new Set(pols.map((p) => String(p.id))));
+      // Always fetch topics + politician stances — needed to render CompassCard on profile
+      // pages regardless of whether the user ever enables compass mode on the Results page.
+      Promise.all([fetchTopics(), fetchPoliticiansWithStances()]).then(([topics, pols]) => {
+        if (!cancelled) {
+          setAllTopics(topics);
+          setPoliticianIdsWithStances(new Set(pols.map((p) => String(p.id))));
+        }
       }).catch(() => {});
     } catch (err) {
       console.error("CompassContext auth load error:", err);
