@@ -1,4 +1,4 @@
-import { Header, defaultNavItems, defaultCtaButton } from "@empoweredvote/ev-ui";
+import { Header, FeedbackButton, defaultNavItems, defaultCtaButton } from "@empoweredvote/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { useSearchParams } from "react-router-dom";
@@ -47,6 +47,7 @@ export function Layout({ children }) {
         logoAlt="Empowered Vote"
         navItems={navItems}
         ctaButton={defaultCtaButton}
+        secondaryAction={<FeedbackButton />}
         onNavigate={(href) => { window.location.href = href; }}
         profileMenu={profileMenu}
       />
