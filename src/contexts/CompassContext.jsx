@@ -278,10 +278,6 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       } finally {
         if (!cancelled) {
           setCompassLoading(false);
-          // If compass was already enabled (persisted preference), kick off data load now
-          if (initialCompassEnabled) {
-            loadCompassData();
-          }
         }
       }
     }
