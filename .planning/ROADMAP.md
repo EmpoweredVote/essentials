@@ -133,10 +133,13 @@ Plans:
   2. All 24 target city governments have rows in `essentials.governments` with their Census place FIPS codes
   3. Each city government has at least one `essentials.chambers` row (City Council) and seat-level `essentials.offices` rows for Mayor and each Council seat
   4. A SQL query joining governments → chambers → offices for any of the 24 cities returns complete, non-null results with no orphaned rows
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 12-01: TBD
+- [ ] 12-01-PLAN.md — Migration 087: ALTER TABLE geo_id + TX state + Collin County (wave 1)
+- [ ] 12-02-PLAN.md — Migration 088: Tier 1 cities — Plano, McKinney, Allen, Frisco (wave 2)
+- [ ] 12-03-PLAN.md — Migration 089: Tier 2 cities — Murphy, Celina, Prosper, Richardson (wave 2)
+- [ ] 12-04-PLAN.md — Migration 090: Tier 3-4 cities — Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville, Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge (wave 2)
 
 #### Phase 13: Tier 1 Officials — Plano + McKinney
 **Goal**: All incumbent mayor and council members for Plano and McKinney are in the database, linked to their office rows, with available contact information
@@ -253,7 +256,7 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 9. Race Completeness Audit | v2.2 | 0/2 | Parked | - |
 | 10. Compass Stances Integration | v2.2 | 0/2 | Parked | - |
 | 11. Indiana Local Races | v2.2 | 0/1 | Parked | - |
-| 12. TX DB Foundation | v3.0 | 0/TBD | Not started | - |
+| 12. TX DB Foundation | v3.0 | 0/4 | Not started | - |
 | 13. Tier 1 Officials — Plano + McKinney | v3.0 | 0/TBD | Not started | - |
 | 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 0/TBD | Not started | - |
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 0/TBD | Not started | - |
