@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 8 of 11 (Admin Discovery UI + Dashboard)
-Plan: 08-03 complete
-Status: Wave 3 done — Wave 4 (human verify) pending
-Last activity: 2026-04-27 — plan 08-03 complete (React discovery dashboard UI)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements for v3.0
+Last activity: 2026-04-30 — v3.0 milestone started (Collin County, TX coverage); v2.2 parked
 
-Progress: [███░░░░░░░░░░░░░░░░░] v2.2 in progress (3/7 plans)
+Progress: [░░░░░░░░░░░░░░░░░░░░] v3.0 not started
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-26 after v2.2 milestone start)
+See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v2.2 — Data Depth & Admin Tooling (Phase 8: Admin Discovery UI + Dashboard)
+**Current focus:** v3.0 — Collin County, TX Coverage (greenfield TX data expansion)
 
 ## Accumulated Context
 
@@ -45,10 +45,23 @@ See: .planning/PROJECT.md (updated 2026-04-26 after v2.2 milestone start)
 - LAUSD sub-district geofences pending
 - lavote.gov election ID changes each cycle — mandatory manual update per election cycle
 
-### Open Blockers
+### Parked from v2.2 (backlog — resume after v3.0)
 
-- triggerDiscoveryRun auth mismatch: POST /admin/discover/jurisdiction/:id uses X-Admin-Token; apiFetch sends JWT Bearer. Run Discovery button will 401 until a JWT-gated trigger endpoint is added (Wave 4 issue or future plan).
+- Phase 8-04: Human-verify checkpoint for Admin Discovery UI (blocked on Run Discovery 401 auth mismatch)
+- Phase 9: Race Completeness Audit
+- Phase 10: Compass Stances Integration (CA/IN local politicians)
+- Phase 11: Indiana Local Races (Monroe County Commissioner, Clerk, Assessor, Township)
+- Blocker: POST /admin/discover/jurisdiction/:id uses X-Admin-Token; apiFetch sends JWT Bearer — needs JWT-gated trigger endpoint
+
+### TX v3.0 Notes
+
+- Zero TX records in essentials schema today — fully greenfield
+- Texas municipal elections are nonpartisan — no party affiliation on ballot or in DB
+- May 3, 2026 TX uniform election just happened — research winners as new incumbents
+- Collin County Elections primary source: collincountyvotes.gov
+- Stance research sparse for Tier 3-4 cities (small digital footprint expected)
+- Migration numbering: next migration is 085 (084 used by plan 08-02, check before writing)
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-27 — plan 08-03 complete; React discovery dashboard UI live at /admin/discovery*
+*Updated: 2026-04-30 — v3.0 milestone started; v2.2 parked with phases 8-04, 9, 10, 11 in backlog*

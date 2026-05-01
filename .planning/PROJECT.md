@@ -2,22 +2,28 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN and Los Angeles County, CA. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline that finds candidates from official election authority sources, scores confidence, and stages them for admin review or auto-upsert.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, and Collin County, TX. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline that finds candidates from official election authority sources, scores confidence, and stages them for admin review or auto-upsert.
 
 ## Core Value
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: v2.2 Data Depth & Admin Tooling
+## Current Milestone: v3.0 Collin County, TX Coverage
 
-**Goal:** Surface data gaps proactively, make compass work for local politicians, and give admins the tools to manage discovery without touching the terminal.
+**Goal:** Populate the Essentials + Compass database for 24 Collin County, TX cities — government structures, current incumbents, discovery jurisdiction setup, headshots, and Compass stances where public record exists.
 
 **Target features:**
-- Race completeness audit — diff official ballot vs DB to catch missing races
-- Admin discovery trigger UI — jurisdictions panel with one-click Run Discovery
-- Compass stances integration — 25 local politician stance files → inform.politician_answers
-- Indiana local races — Monroe County clerk source for Commissioner, Clerk, Assessor, Township
-- Admin discovery dashboard — run history with per-run stats and coverage health
+- DB foundation — TX state + Collin County + 24 city governments, chambers, offices in essentials schema
+- Incumbent officials — Mayor + City Council for all 24 cities, prioritized Plano → McKinney → Allen → Frisco → Murphy → Celina → Prosper → Richardson → Tier 3 → Tier 4
+- Discovery setup — all 24 cities in discovery_jurisdictions (collincountyvotes.gov source, Census GEOIDs)
+- Headshots — find, resize (600×750 Lanczos q90), upload for Tier 1+2 politicians
+- Compass stances — stance research for Plano, McKinney, Allen tier; best-effort for Tier 2
+
+**Parked from v2.2 (backlog):**
+- Race completeness audit (Phase 9)
+- Compass stances integration for CA/IN (Phase 10)
+- Indiana local races (Phase 11)
+- Admin Discovery UI auth fix (Run Discovery 401 blocker)
 
 ## Requirements
 
@@ -59,13 +65,15 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ### Active
 
-<!-- Current scope. Building toward these. — v2.2 -->
+<!-- Current scope. Building toward these. — v3.0 -->
 
-- [ ] Race completeness audit — detect races missing from DB by diffing official ballot against essentials.races (not just missing candidates)
-- [ ] Admin discovery trigger UI — jurisdictions panel in admin with Run Discovery button per jurisdiction
-- [ ] Compass stances integration — bridge essentials.politicians into inform.politician_answers using existing stance research files (~25 local politicians)
-- [ ] Indiana local races — county clerk source for Monroe County Commissioner, Clerk, Assessor, Township races
-- [ ] Admin discovery dashboard — run history with per-run stats, coverage health per jurisdiction
+- [ ] TX DB foundation — essentials.governments + chambers + offices for TX state, Collin County, and 24 cities
+- [ ] Tier 1 officials — Plano, McKinney, Allen, Frisco incumbents in essentials.politicians with contact info
+- [ ] Tier 2 officials — Murphy, Celina, Prosper, Richardson incumbents in essentials.politicians
+- [ ] Tier 3-4 officials — remaining 16 cities incumbents where findable online
+- [ ] Discovery jurisdictions — all 24 cities in essentials.discovery_jurisdictions (collincountyvotes.gov, Census GEOIDs, allowed_domains)
+- [ ] Headshots — Tier 1+2 politicians found, resized 600×750 Lanczos q90, uploaded
+- [ ] Compass stances — Plano/McKinney/Allen tier researched and ingested; Tier 2 best-effort
 
 ### Out of Scope
 
@@ -120,4 +128,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | web_search max_uses: 1 (with sourceUrl) / 2 (without) | Prevents quota exhaustion per discovery run | ✓ Good — v2.1 |
 
 ---
-*Last updated: 2026-04-26 after v2.2 milestone start*
+*Last updated: 2026-04-30 after v3.0 milestone start (v2.2 parked, TX expansion begins)*
