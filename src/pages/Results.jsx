@@ -422,6 +422,20 @@ export default function Results() {
   );
 
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Client-side name filter — applied only to the grid (not to non-display logic like locationLabel)
+  const trimmedSearch = (searchQuery || '').trim().toLowerCase();
+  const visibleList = trimmedSearch && Array.isArray(list)
+    ? list.filter((p) => {
+        const name = (p?.full_name || '').toLowerCase();
+        const first = (p?.first_name || '').toLowerCase();
+        const last = (p?.last_name || '').toLowerCase();
+        return name.includes(trimmedSearch)
+            || first.includes(trimmedSearch)
+            || last.includes(trimmedSearch);
+      })
+    : list;
+
   // Compass mode toggle — persisted across sessions; off by default for dense view
   const [compassMode, setCompassMode] = useState(() => {
     try { return localStorage.getItem('ev:compassMode') === 'true'; } catch { return false; }
@@ -753,7 +767,8 @@ export default function Results() {
   }
 
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
-  const filteredPols = useMemo(() => list, [list]);
+  // Uses visibleList (name-filtered) so the grid narrows when user types in FilterBar search.
+  const filteredPols = useMemo(() => visibleList, [visibleList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Per-politician stances cache for CompassCardVertical comparison overlay (compass mode only)
   const [stancesByPolId, setStancesByPolId] = useState({});
@@ -794,13 +809,15 @@ export default function Results() {
     window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
   };
 
-  // Derive representing city for building image selection
+  // Derive representing city for building image selection — uses unfiltered list
+  // so the building image doesn't disappear when search filter narrows the grid.
   const representingCity = useMemo(() => {
-    for (const p of filteredPols) {
+    const src = Array.isArray(list) ? list : [];
+    for (const p of src) {
       if (p.representing_city) return p.representing_city;
     }
     // Fallback: extract city name from local politicians' chamber_name
-    for (const p of filteredPols) {
+    for (const p of src) {
       const dt = p?.district_type || '';
       if (dt === 'LOCAL' && p.chamber_name) {
         const match = p.chamber_name.match(/^(\w[\w\s]+?)\s+City\b/);
@@ -808,7 +825,7 @@ export default function Results() {
       }
     }
     return null;
-  }, [filteredPols]);
+  }, [list]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"
@@ -917,10 +934,11 @@ export default function Results() {
       .filter(({ bodies }) => bodies.length > 0);
   }, [hierarchy, appointedFilter, selectedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Location label
+  // Location label — uses unfiltered list so the label stays stable while user searches.
   const locationLabel = useMemo(() => {
-    if (!filteredPols.length) return null;
-    const sample = filteredPols[0];
+    const src = Array.isArray(list) ? list : [];
+    if (!src.length) return null;
+    const sample = src[0];
     const city = sample.representing_city;
     const state = sample.representing_state;
 
@@ -928,7 +946,7 @@ export default function Results() {
       return state ? `${state}, USA` : null;
     }
     return city && state ? `${city}, ${state}` : null;
-  }, [filteredPols, selectedFilter]);
+  }, [list, selectedFilter]);
 
   // Derive active building image based on filter or scroll-spy
   const activeBuildingImage =
@@ -1450,6 +1468,13 @@ export default function Results() {
                     </div>
                   );
                 })}
+
+                {/* Name-search no-matches state */}
+                {trimmedSearch && Array.isArray(visibleList) && visibleList.length === 0 && Array.isArray(list) && list.length > 0 && (
+                  <p className="mt-4 text-gray-500 text-center">
+                    No matches for &ldquo;{searchQuery}&rdquo;. Clear the search box to see all results.
+                  </p>
+                )}
 
                 {filteredHierarchy.map(({ tier, bodies }) => {
                   const tierKey = tier.toLowerCase();
