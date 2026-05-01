@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 12 — TX DB Foundation (in progress)
-Plan: 03 of 4 complete
+Plan: 02 and 03 of 4 complete
 Status: In progress
-Last activity: 2026-05-01 — Completed 12-03-PLAN.md (Tier 2 cities: Murphy, Celina, Prosper, Richardson)
+Last activity: 2026-05-01 — Completed 12-02-PLAN.md (Tier 1 cities: Plano, McKinney, Allen, Frisco applied)
 
 Progress: [█░░░░░░░░░░░░░░░░░░░] v3.0 Phase 12 in progress (3/4 plans complete)
 
@@ -64,9 +64,9 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
 - Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
 - CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
-- Migration 088 (Tier 1 cities) has the slug bug and needs to be fixed before applying
+- Migration 088 (Tier 1 cities): slug bug fixed and migration applied 2026-05-01; 4 cities, 30 offices verified
 - Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-05-01 — Plan 12-03 complete; Tier 2 cities (Murphy, Celina, Prosper, Richardson) seeded*
+*Updated: 2026-05-01 — Plan 12-02 applied; Tier 1 cities (Plano, McKinney, Allen, Frisco) seeded and verified*
