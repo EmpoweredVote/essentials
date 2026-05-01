@@ -14,8 +14,8 @@
 
 ### OFF — Incumbent Officials
 
-- [ ] **OFF-01**: Plano incumbent mayor and all council members are in `essentials.politicians`, linked to their office rows, with email/URL contact info where available
-- [ ] **OFF-02**: McKinney incumbent mayor and council members are in `essentials.politicians`
+- [x] **OFF-01**: Plano incumbent mayor and all council members are in `essentials.politicians`, linked to their office rows, with email/URL contact info where available
+- [x] **OFF-02**: McKinney incumbent mayor and council members are in `essentials.politicians`
 - [ ] **OFF-03**: Allen incumbent mayor and council members are in `essentials.politicians`
 - [ ] **OFF-04**: Frisco incumbent mayor and council members are in `essentials.politicians`
 - [ ] **OFF-05**: Murphy incumbent officials are in `essentials.politicians`
@@ -79,8 +79,8 @@
 | GEO-02 | Phase 12 | Complete |
 | GEO-03 | Phase 12 | Complete |
 | GEO-04 | Phase 12 | Complete |
-| OFF-01 | Phase 13 | Pending |
-| OFF-02 | Phase 13 | Pending |
+| OFF-01 | Phase 13 | Complete |
+| OFF-02 | Phase 13 | Complete |
 | OFF-03 | Phase 14 | Pending |
 | OFF-04 | Phase 14 | Pending |
 | OFF-05 | Phase 14 | Pending |

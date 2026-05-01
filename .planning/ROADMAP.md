@@ -153,8 +153,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 13-01-PLAN.md — Migration 091: Plano incumbent politicians (Mayor + Place 1-5, 7-8) with bio URLs + emails
-- [ ] 13-02-PLAN.md — Migration 092: McKinney incumbent politicians (Mayor + At-Large 1-2 + District 1-4) with bio URL anchors
+- [x] 13-01-PLAN.md — Migration 091: Plano incumbent politicians (Mayor + Place 1-5, 7-8) with bio URLs + emails
+- [x] 13-02-PLAN.md — Migration 092: McKinney incumbent politicians (Mayor + At-Large 1-2 + District 1-4) with bio URL anchors
 
 #### Phase 14: Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson
 **Goal**: All incumbent mayor and council members for the six Tier 2 cities are in the database, linked to their office rows
@@ -258,7 +258,7 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 10. Compass Stances Integration | v2.2 | 0/2 | Parked | - |
 | 11. Indiana Local Races | v2.2 | 0/1 | Parked | - |
 | 12. TX DB Foundation | v3.0 | 4/4 | Complete | 2026-04-30 |
-| 13. Tier 1 Officials — Plano + McKinney | v3.0 | 0/TBD | Not started | - |
+| 13. Tier 1 Officials — Plano + McKinney | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 0/TBD | Not started | - |
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 0/TBD | Not started | - |
 | 16. Discovery Jurisdiction Setup | v3.0 | 0/TBD | Not started | - |
