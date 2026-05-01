@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 13 — Tier 1 Officials — Plano + McKinney (in progress)
-Plan: 1/2 complete
-Status: 13-01 (Plano) complete; 13-02 (McKinney) in progress
-Last activity: 2026-05-01 — Completed 13-01-PLAN.md (migration 091 applied, 8 Plano incumbents seeded)
+Phase: 13 — Tier 1 Officials — Plano + McKinney (complete ✓)
+Plan: 2/2 complete
+Status: Both 13-01 (Plano) and 13-02 (McKinney) complete — 15 politicians seeded (8 Plano + 7 McKinney)
+Last activity: 2026-05-01 — Completed 13-02-PLAN.md (migration 092 applied, 7 McKinney incumbents seeded)
 
-Progress: [███░░░░░░░░░░░░░░░░░] v3.0 1/7 phases complete (phase 13 in progress)
+Progress: [████░░░░░░░░░░░░░░░░] v3.0 2/7 phases complete
 
 ## Project Reference
 
@@ -29,7 +29,8 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
 - Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
-- Next migration: 091 (083-090 all used; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
+- Next migration: 093 (091 = Plano politicians, 092 = McKinney politicians; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
+- email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
 
 ### Known Architecture
 
@@ -60,19 +61,21 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - May 3, 2026 TX uniform election just happened — research winners as new incumbents
 - Collin County Elections primary source: collincountyvotes.gov
 - Stance research sparse for Tier 3-4 cities (small digital footprint expected)
-- Migration numbering: next migration is 091 (090 used by plan 12-04)
+- Migration numbering: next migration is 093 (092 used by plan 13-02)
 - Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
 - Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
 - CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
 - Migration 088 (Tier 1 cities): slug bug fixed and migration applied 2026-05-01; 4 cities, 30 offices verified
 - Migration 091 (Plano politicians): applied 2026-05-01; 8 incumbents seeded, Place 6 vacant, 100% email+bio coverage
+- Migration 092 (McKinney politicians): applied 2026-05-01; 7 incumbents seeded, 0% email (CloudFlare), 100% bio URL
+- McKinney At-Large offices: DB titles are 'Council Member At-Large Place 1/2' (not 'At-Large 1/2') — use exact DB titles in WHERE clauses
+- supabase CLI v2.75.0 has NO 'db query' command — use psql with DATABASE_URL from backend/.env instead
 - Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
 - Fairview is legally a Town — use 'Town of Fairview' and 'Town Council' everywhere
 - Princeton has 8 council seats (Mayor + Place 1-7), confirmed
 - Copeville (GEOID 4816600) excluded — may be unincorporated CDP; add in follow-up if confirmed incorporated
-- supabase db query --linked is preferred migration method (bypasses connection pooler max client issues)
 - Tier 3-4 seeding complete: Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville, Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-05-01 — Phase 13 started; migration 091 applied; 8 Plano incumbents seeded; 13-02 (McKinney) next*
+*Updated: 2026-05-01 — Phase 13 complete; migrations 091 (Plano, 8 rows) and 092 (McKinney, 7 rows) applied; 15 Tier 1 politicians seeded*
