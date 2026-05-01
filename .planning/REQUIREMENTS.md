@@ -1,88 +1,110 @@
-# Requirements: Essentials — Empowered Vote v2.2
+# Requirements: Essentials — Empowered Vote v3.0
 
-**Defined:** 2026-04-26
+**Defined:** 2026-04-30
 **Core Value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## v2.2 Requirements
+## v3.0 Requirements
 
-### AUDIT — Race Completeness Audit
+### GEO — Geographic Foundation
 
-- [ ] **AUDIT-01**: Admin can trigger a race completeness check for a given election that fetches the authoritative candidate list and identifies offices on the official ballot with no matching race row in `essentials.races`
-- [ ] **AUDIT-02**: Race completeness results surface missing races (not missing candidates) with the office name and source citation
-- [ ] **AUDIT-03**: Admin can see completeness audit output in the admin UI without writing SQL
+- [ ] **GEO-01**: Texas state government row exists in `essentials.governments` with correct FIPS geo_id
+- [ ] **GEO-02**: Collin County government row exists in `essentials.governments` with FIPS geo_id `48085`
+- [ ] **GEO-03**: All 24 target cities have rows in `essentials.governments` with their Census place FIPS codes
+- [ ] **GEO-04**: Each city government has at least one chamber (City Council) in `essentials.chambers` and seat-level offices (Mayor + each Council seat) in `essentials.offices`
 
-### ADMUI — Admin Discovery UI
+### OFF — Incumbent Officials
 
-- [ ] **ADMUI-01**: Admin can view all rows in `discovery_jurisdictions` in the admin UI with jurisdiction name, election date, last run status, and last run timestamp
-- [ ] **ADMUI-02**: Admin can trigger a discovery run for any jurisdiction from the admin UI via a Run Discovery button (calls existing `POST /api/admin/discover/jurisdiction/:id`)
-- [ ] **ADMUI-03**: Admin sees run progress feedback (spinner while lock is held, result when complete)
+- [ ] **OFF-01**: Plano incumbent mayor and all council members are in `essentials.politicians`, linked to their office rows, with email/URL contact info where available
+- [ ] **OFF-02**: McKinney incumbent mayor and council members are in `essentials.politicians`
+- [ ] **OFF-03**: Allen incumbent mayor and council members are in `essentials.politicians`
+- [ ] **OFF-04**: Frisco incumbent mayor and council members are in `essentials.politicians`
+- [ ] **OFF-05**: Murphy incumbent officials are in `essentials.politicians`
+- [ ] **OFF-06**: Celina incumbent officials are in `essentials.politicians`
+- [ ] **OFF-07**: Prosper incumbent officials are in `essentials.politicians`
+- [ ] **OFF-08**: Richardson incumbent officials are in `essentials.politicians`
+- [ ] **OFF-09**: Tier 3 city incumbents (Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville) are in `essentials.politicians` where findable online
+- [ ] **OFF-10**: Tier 4 city incumbents (Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge, Copeville) are in `essentials.politicians` where findable (sparse expected)
 
-### DASH — Admin Discovery Dashboard
+### DISC — Discovery Jurisdiction Setup
 
-- [ ] **DASH-01**: Admin can view the full discovery run history across all jurisdictions
-- [ ] **DASH-02**: Each run entry shows: jurisdiction name, run date/time, candidates found, candidates staged, candidates auto-upserted, status (success/failed/running)
-- [ ] **DASH-03**: Admin can see per-jurisdiction coverage health — total races, races with ≥1 candidate, races with 0 candidates
+- [ ] **DISC-01**: All 24 cities are added to `essentials.discovery_jurisdictions` with `collincountyvotes.gov` as `source_url` and correct Census `jurisdiction_geoid`
+- [ ] **DISC-02**: Each row has `allowed_domains` set to `{collincountyvotes.gov, <city-official-domain>}`
+- [ ] **DISC-03**: A test discovery run for Plano produces valid staged candidates from official source
 
-### STANCE — Compass Stances Integration
+### HEAD — Headshots
 
-- [ ] **STANCE-01**: Each politician in `essentials.politicians` who has a stance research file can be linked to a record in `inform.politicians` (create if not exists)
-- [ ] **STANCE-02**: Stance research values (1-5 scale) can be converted and inserted into `inform.politician_answers` for each covered topic
-- [ ] **STANCE-03**: The political compass renders correctly for politicians sourced from LA County and Monroe County (not just those with pre-existing `inform.politicians` records)
-- [ ] **STANCE-04**: Admin can trigger or run the stance ingestion for a batch of politicians without manual SQL
+- [ ] **HEAD-01**: Headshots found, resized to 600×750 Lanczos q90, and uploaded for all Tier 1 politicians (Plano, McKinney, Allen, Frisco)
+- [ ] **HEAD-02**: Headshots found and uploaded for Tier 2 politicians (Murphy, Celina, Prosper, Richardson) where publicly available
+- [ ] **HEAD-03**: Headshots for Tier 3-4 politicians where findable (best-effort)
 
-### INDIANA — Indiana Local Races
+### COMP — Compass Stances
 
-- [ ] **INDIANA-01**: Monroe County local races (Commissioner, Clerk, Assessor, and Township races) are seeded into `essentials.races` with correct `election_id` for the May 5, 2026 Indiana Primary
-- [ ] **INDIANA-02**: Candidates for Monroe County local races are seeded into `essentials.race_candidates` with designations and source
-- [ ] **INDIANA-03**: Monroe County is added to `discovery_jurisdictions` with the county clerk as the `source_url` so the discovery pipeline can keep it current
+- [ ] **COMP-01**: Stance research completed and ingested for Plano council members where public record exists
+- [ ] **COMP-02**: Stance research completed and ingested for McKinney council members
+- [ ] **COMP-03**: Stance research completed and ingested for Allen council members
+- [ ] **COMP-04**: Stance research attempted for Frisco, Murphy, Celina, Richardson — ingested where viable, documented as sparse where not
 
 ## Future Requirements
 
-### Deeper compass coverage
+### Geofences (v3.1)
 
-- **STANCE-F01**: Candidate stances (race_candidates with no politician_id) can also be represented in the compass via a lightweight profile
-- **STANCE-F02**: Stance confidence levels displayed to user ("Based on public statements" vs "Verified questionnaire")
+- **GEO-F01**: PostGIS geofence boundaries loaded for all 24 Collin County cities from Census TIGER shapefiles — enables address-based "who represents me" lookup for TX
+- **GEO-F02**: Collin County geofence loaded so county-level offices appear in address lookups
 
-### Race audit automation
+### Campaign Finance (v3.x)
 
-- **AUDIT-F01**: Race completeness audit runs automatically as part of the weekly cron sweep, not just on admin demand
-- **AUDIT-F02**: Admin receives email when audit detects a missing high-profile race (e.g. citywide Mayor, At-Large Council)
+- **FIN-F01**: Texas Ethics Commission (TEC) campaign finance data integrated for Collin County politicians
+- **FIN-F02**: TEC donor/industry breakdown displayed on TX politician profiles
+
+### Tier 3-4 Compass (v3.1)
+
+- **COMP-F01**: Stance research for Tier 3-4 cities once digital footprint assessment confirms viable sources
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| Candidate-level compass scores from discovery agent | Agent output is candidate names/designations only, not policy stances — different source of truth |
-| State/federal politician stance ingestion | Existing inform.politicians records already cover these; this milestone is local-only |
-| Real-time cron dashboard (websocket) | Polling every 5s on page open is sufficient for admin tool; complexity not justified |
-| Avalon/Covina/Pomona/Beverly Hills/Glendale stances | No stance research files exist for these cities yet; out of scope for v2.2 |
+| PostGIS geofence boundaries | Significant GIS work; needed for address-based rep lookup but not for officials DB itself — deferred to v3.1 |
+| TEC campaign finance integration | Different system from FEC; no integration built yet |
+| School district / MUD / special district boards | Scope limited to city councils and county government only |
+| Justice of the Peace, constable, county judge races | Too granular for initial TX expansion |
+| v2.2 parked phases (Race Audit, IN local races, CA/IN stances) | Parked in backlog; not v3.0 scope |
+| Geofences for cities with partial Collin County presence (Plano, Frisco, etc.) | Multi-county geofence splitting is complex; defer to v3.1 geofence phase |
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUDIT-01 | Phase 9 | Pending |
-| AUDIT-02 | Phase 9 | Pending |
-| AUDIT-03 | Phase 9 | Pending |
-| ADMUI-01 | Phase 8 | Pending |
-| ADMUI-02 | Phase 8 | Pending |
-| ADMUI-03 | Phase 8 | Pending |
-| DASH-01 | Phase 8 | Pending |
-| DASH-02 | Phase 8 | Pending |
-| DASH-03 | Phase 8 | Pending |
-| STANCE-01 | Phase 10 | Pending |
-| STANCE-02 | Phase 10 | Pending |
-| STANCE-03 | Phase 10 | Pending |
-| STANCE-04 | Phase 10 | Pending |
-| INDIANA-01 | Phase 11 | Pending |
-| INDIANA-02 | Phase 11 | Pending |
-| INDIANA-03 | Phase 11 | Pending |
+| GEO-01 | Phase 12 | Pending |
+| GEO-02 | Phase 12 | Pending |
+| GEO-03 | Phase 12 | Pending |
+| GEO-04 | Phase 12 | Pending |
+| OFF-01 | Phase 13 | Pending |
+| OFF-02 | Phase 13 | Pending |
+| OFF-03 | Phase 14 | Pending |
+| OFF-04 | Phase 14 | Pending |
+| OFF-05 | Phase 14 | Pending |
+| OFF-06 | Phase 14 | Pending |
+| OFF-07 | Phase 14 | Pending |
+| OFF-08 | Phase 14 | Pending |
+| OFF-09 | Phase 15 | Pending |
+| OFF-10 | Phase 15 | Pending |
+| DISC-01 | Phase 16 | Pending |
+| DISC-02 | Phase 16 | Pending |
+| DISC-03 | Phase 16 | Pending |
+| HEAD-01 | Phase 17 | Pending |
+| HEAD-02 | Phase 17 | Pending |
+| HEAD-03 | Phase 17 | Pending |
+| COMP-01 | Phase 18 | Pending |
+| COMP-02 | Phase 18 | Pending |
+| COMP-03 | Phase 18 | Pending |
+| COMP-04 | Phase 18 | Pending |
 
 **Coverage:**
-- v2.2 requirements: 16 total
-- Mapped to phases: 16
+- v3.0 requirements: 24 total
+- Mapped to phases: 24
 - Unmapped: 0 ✓
 
 ---
-*Requirements defined: 2026-04-26*
-*Last updated: 2026-04-26 — traceability filled after v2.2 roadmap creation*
+*Requirements defined: 2026-04-30*
+*Last updated: 2026-04-30 — initial definition*

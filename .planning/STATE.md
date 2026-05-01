@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 12 — TX DB Foundation (next)
 Plan: —
-Status: Defining requirements for v3.0
-Last activity: 2026-04-30 — v3.0 milestone started (Collin County, TX coverage); v2.2 parked
+Status: Roadmap defined; Phase 12 ready to plan
+Last activity: 2026-04-30 — v3.0 roadmap created (Phases 12-18); Phase 12 is next
 
-Progress: [░░░░░░░░░░░░░░░░░░░░] v3.0 not started
+Progress: [░░░░░░░░░░░░░░░░░░░░] v3.0 0/7 phases complete
 
 ## Project Reference
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
 - Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
-- Next migration: 084 (083 used by plan 08-01: candidates_auto_upserted column)
+- Next migration: 085 (083 used by plan 08-01, 084 used by plan 08-02 — check before writing)
 
 ### Known Architecture
 
@@ -61,7 +61,9 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Collin County Elections primary source: collincountyvotes.gov
 - Stance research sparse for Tier 3-4 cities (small digital footprint expected)
 - Migration numbering: next migration is 085 (084 used by plan 08-02, check before writing)
+- Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
+- Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-30 — v3.0 milestone started; v2.2 parked with phases 8-04, 9, 10, 11 in backlog*
+*Updated: 2026-04-30 — v3.0 roadmap created; Phases 12-18 defined; Phase 12 is next*
