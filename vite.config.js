@@ -15,7 +15,7 @@ export default defineConfig({
     alias: useLocalEvUi
       ? { "@empoweredvote/ev-ui": localEvUi }
       : {},
-    dedupe: ["react", "react-dom", "@react-spring/web"],
+    dedupe: ["react", "react-dom", "@react-spring/web", "@floating-ui/react"],
   },
   server: {
     proxy: {
