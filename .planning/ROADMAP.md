@@ -164,10 +164,12 @@ Plans:
   1. `essentials.politicians` has incumbent rows for all six Tier 2 cities (Allen, Frisco, Murphy, Celina, Prosper, Richardson) with `is_active=true` and `is_incumbent=true`
   2. Every Tier 2 politician row is linked via `office_id` to a valid `essentials.offices` row
   3. Contact info (email or URL) is populated where publicly listed on each city's official website
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 14-01: TBD
+- [ ] 14-01-PLAN.md — Migration 094: Allen + Frisco incumbent politicians (Mayor + Place 1-6 each, 14 rows)
+- [ ] 14-02-PLAN.md — Migration 095: Richardson incumbent politicians (Mayor + District 1-4 + Place 5-6, 7 rows, 2-year terms)
+- [ ] 14-03-PLAN.md — Migration 096: Murphy + Celina + Prosper incumbent politicians (Mayor + Place 1-6 each, 21 rows)
 
 #### Phase 15: Tier 3-4 Officials — Remaining 16 Cities
 **Goal**: Incumbent officials for all 16 Tier 3-4 cities are in the database where findable from official city websites or Collin County records
