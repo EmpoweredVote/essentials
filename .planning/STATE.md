@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 12 — TX DB Foundation (next)
-Plan: —
-Status: Roadmap defined; Phase 12 ready to plan
-Last activity: 2026-04-30 — v3.0 roadmap created (Phases 12-18); Phase 12 is next
+Phase: 12 — TX DB Foundation (in progress)
+Plan: 03 of 4 complete
+Status: In progress
+Last activity: 2026-05-01 — Completed 12-03-PLAN.md (Tier 2 cities: Murphy, Celina, Prosper, Richardson)
 
-Progress: [░░░░░░░░░░░░░░░░░░░░] v3.0 0/7 phases complete
+Progress: [█░░░░░░░░░░░░░░░░░░░] v3.0 Phase 12 in progress (3/4 plans complete)
 
 ## Project Reference
 
@@ -60,10 +60,13 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - May 3, 2026 TX uniform election just happened — research winners as new incumbents
 - Collin County Elections primary source: collincountyvotes.gov
 - Stance research sparse for Tier 3-4 cities (small digital footprint expected)
-- Migration numbering: next migration is 085 (084 used by plan 08-02, check before writing)
+- Migration numbering: next migration is 090 (089 used by plan 12-03)
 - Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
 - Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
+- CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
+- Migration 088 (Tier 1 cities) has the slug bug and needs to be fixed before applying
+- Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-30 — v3.0 roadmap created; Phases 12-18 defined; Phase 12 is next*
+*Updated: 2026-05-01 — Plan 12-03 complete; Tier 2 cities (Murphy, Celina, Prosper, Richardson) seeded*
