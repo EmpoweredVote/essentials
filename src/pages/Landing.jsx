@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
+import { searchPoliticiansByName } from '../lib/api';
 
 const COVERAGE_AREAS = [
   { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
@@ -44,6 +45,29 @@ export default function Landing() {
     if (!addressInput.trim()) return;
     navigate(`/results?q=${encodeURIComponent(addressInput.trim())}`);
   };
+
+  // Name search state
+  const [nameQuery, setNameQuery] = useState('');
+  const [nameResults, setNameResults] = useState([]);
+  const [nameStatus, setNameStatus] = useState('idle'); // idle | loading | fresh | error
+  const debounceRef = useRef(null);
+
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    const q = nameQuery.trim();
+    if (q.length < 2) {
+      setNameResults([]);
+      setNameStatus('idle');
+      return;
+    }
+    setNameStatus('loading');
+    debounceRef.current = setTimeout(async () => {
+      const { status, data } = await searchPoliticiansByName(q);
+      setNameResults(Array.isArray(data) ? data : []);
+      setNameStatus(status === 'fresh' ? 'fresh' : 'error');
+    }, 300);
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+  }, [nameQuery]);
 
   return (
     <Layout>
@@ -139,6 +163,82 @@ export default function Landing() {
                 Search
               </button>
             </div>
+
+            {/* "or search by name" divider */}
+            <div className="relative my-6">
+              <hr className="border-gray-200" />
+              <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] px-3 text-sm text-gray-400">
+                or search by name
+              </span>
+            </div>
+
+            {/* Name Search Input */}
+            <div className="relative">
+              <svg
+                width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                aria-hidden="true"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="text"
+                value={nameQuery}
+                onChange={(e) => setNameQuery(e.target.value)}
+                placeholder="Search candidates by name…"
+                aria-label="Search candidates by name"
+                className="w-full pl-12 pr-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
+              />
+            </div>
+
+            {/* Name Search Results */}
+            {nameQuery.trim().length >= 2 && (
+              <div className="mt-2 text-left">
+                {nameStatus === 'loading' && (
+                  <p className="text-sm text-gray-500 py-2">Searching&hellip;</p>
+                )}
+                {nameStatus === 'fresh' && nameResults.length === 0 && (
+                  <p className="text-sm text-gray-500 py-2">No candidates match &ldquo;{nameQuery.trim()}&rdquo;.</p>
+                )}
+                {nameStatus === 'error' && (
+                  <p className="text-sm text-red-500 py-2">Search failed. Try again.</p>
+                )}
+                {nameStatus === 'fresh' && nameResults.length > 0 && (
+                  <ul className="divide-y divide-gray-100 bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                    {nameResults.map((pol) => (
+                      <li key={pol.id}>
+                        <Link
+                          to={`/politician/${pol.id}`}
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-[var(--ev-bg-light)] transition-colors"
+                        >
+                          {pol.photo_origin_url && (
+                            <img
+                              src={pol.photo_origin_url}
+                              alt=""
+                              className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                            />
+                          )}
+                          <div className="min-w-0">
+                            <div className="font-semibold text-[var(--ev-teal)] truncate">{pol.full_name}</div>
+                            {(pol.office_title || pol.representing_state) && (
+                              <div className="text-sm text-gray-500 truncate">
+                                {[pol.office_title, pol.representing_state].filter(Boolean).join(' — ')}
+                              </div>
+                            )}
+                          </div>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+            {nameQuery.trim().length < 2 && nameQuery.trim().length > 0 && (
+              <p className="mt-2 text-sm text-gray-400 text-left">Type at least 2 letters to search.</p>
+            )}
           </div>
 
 
