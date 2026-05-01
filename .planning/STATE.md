@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 12 — TX DB Foundation (in progress)
-Plan: 04 of 5 complete (plans 01-04 done)
-Status: In progress
-Last activity: 2026-04-30 — Completed 12-04-PLAN.md (Tier 3-4 cities: 15 cities, 97 offices seeded)
+Phase: 12 — TX DB Foundation (complete ✓)
+Plan: 4/4 complete
+Status: Phase 12 verified and complete; Phase 13 (Tier 1 Officials) is next
+Last activity: 2026-04-30 — Phase 12 fully executed, verified, and committed
 
-Progress: [████░░░░░░░░░░░░░░░░] v3.0 Phase 12 in progress (4/5 plans complete)
+Progress: [██░░░░░░░░░░░░░░░░░░] v3.0 1/7 phases complete
 
 ## Project Reference
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
 - Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
-- Next migration: 085 (083 used by plan 08-01, 084 used by plan 08-02 — check before writing)
+- Next migration: 091 (083-090 all used; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
 
 ### Known Architecture
 
@@ -74,4 +74,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-30 — Plan 12-04 applied; Tier 3-4 cities (15 cities, 97 offices) seeded and verified*
+*Updated: 2026-04-30 — Phase 12 complete; 4 migrations (087-090) applied; TX state + Collin County + 23 cities seeded; 151 offices total; Phase 13 next*

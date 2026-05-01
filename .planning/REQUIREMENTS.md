@@ -7,10 +7,10 @@
 
 ### GEO — Geographic Foundation
 
-- [ ] **GEO-01**: Texas state government row exists in `essentials.governments` with correct FIPS geo_id
-- [ ] **GEO-02**: Collin County government row exists in `essentials.governments` with FIPS geo_id `48085`
-- [ ] **GEO-03**: All 24 target cities have rows in `essentials.governments` with their Census place FIPS codes
-- [ ] **GEO-04**: Each city government has at least one chamber (City Council) in `essentials.chambers` and seat-level offices (Mayor + each Council seat) in `essentials.offices`
+- [x] **GEO-01**: Texas state government row exists in `essentials.governments` with correct FIPS geo_id
+- [x] **GEO-02**: Collin County government row exists in `essentials.governments` with FIPS geo_id `48085`
+- [x] **GEO-03**: All 24 target cities have rows in `essentials.governments` with their Census place FIPS codes
+- [x] **GEO-04**: Each city government has at least one chamber (City Council) in `essentials.chambers` and seat-level offices (Mayor + each Council seat) in `essentials.offices`
 
 ### OFF — Incumbent Officials
 
@@ -75,10 +75,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| GEO-01 | Phase 12 | Pending |
-| GEO-02 | Phase 12 | Pending |
-| GEO-03 | Phase 12 | Pending |
-| GEO-04 | Phase 12 | Pending |
+| GEO-01 | Phase 12 | Complete |
+| GEO-02 | Phase 12 | Complete |
+| GEO-03 | Phase 12 | Complete |
+| GEO-04 | Phase 12 | Complete |
 | OFF-01 | Phase 13 | Pending |
 | OFF-02 | Phase 13 | Pending |
 | OFF-03 | Phase 14 | Pending |
