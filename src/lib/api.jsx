@@ -358,20 +358,24 @@ export async function fetchRaceCandidate(id) {
   }
 }
 
-export async function searchPoliticiansByName(q, signal) {
+export async function searchPoliticiansByName(query) {
+  const q = (query || '').trim();
+  if (q.length < 2) return { status: 'idle', data: [], error: '' };
   try {
-    const res = await publicFetch(
-      `/campaign-finance/search?q=${encodeURIComponent(q)}&limit=8`,
-      { signal }
-    );
-    if (!res || !res.ok) return [];
+    const res = await publicFetch(`/essentials/candidates/search-by-name?q=${encodeURIComponent(q)}`);
+    if (!res) return { status: 'error', data: [], error: 'Unauthorized' };
+    if (!res.ok) {
+      let errorMessage = `${res.status} ${res.statusText}`;
+      try {
+        const errJson = await res.json();
+        if (errJson?.message) errorMessage = errJson.message;
+      } catch { /* fall through */ }
+      return { status: 'error', data: [], error: errorMessage };
+    }
     const data = await res.json();
-    // campaign-finance/search returns { results, count, query, truncated }
-    // Each result already has: uuid, name, office_title, jurisdiction, district
-    return Array.isArray(data.results) ? data.results : [];
-  } catch (err) {
-    if (err.name === "AbortError") throw err;
-    console.error("Name search error:", err);
-    return [];
+    return { status: 'fresh', data, error: '' };
+  } catch (error) {
+    console.error('searchPoliticiansByName error:', error);
+    return { status: 'error', data: [], error: error?.message || 'Network error' };
   }
 }
