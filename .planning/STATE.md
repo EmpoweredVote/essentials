@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 12 — TX DB Foundation (in progress)
-Plan: 02 and 03 of 4 complete
+Plan: 04 of 5 complete (plans 01-04 done)
 Status: In progress
-Last activity: 2026-05-01 — Completed 12-02-PLAN.md (Tier 1 cities: Plano, McKinney, Allen, Frisco applied)
+Last activity: 2026-04-30 — Completed 12-04-PLAN.md (Tier 3-4 cities: 15 cities, 97 offices seeded)
 
-Progress: [█░░░░░░░░░░░░░░░░░░░] v3.0 Phase 12 in progress (3/4 plans complete)
+Progress: [████░░░░░░░░░░░░░░░░] v3.0 Phase 12 in progress (4/5 plans complete)
 
 ## Project Reference
 
@@ -60,13 +60,18 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - May 3, 2026 TX uniform election just happened — research winners as new incumbents
 - Collin County Elections primary source: collincountyvotes.gov
 - Stance research sparse for Tier 3-4 cities (small digital footprint expected)
-- Migration numbering: next migration is 090 (089 used by plan 12-03)
+- Migration numbering: next migration is 091 (090 used by plan 12-04)
 - Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
 - Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
 - CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
 - Migration 088 (Tier 1 cities): slug bug fixed and migration applied 2026-05-01; 4 cities, 30 offices verified
 - Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
+- Fairview is legally a Town — use 'Town of Fairview' and 'Town Council' everywhere
+- Princeton has 8 council seats (Mayor + Place 1-7), confirmed
+- Copeville (GEOID 4816600) excluded — may be unincorporated CDP; add in follow-up if confirmed incorporated
+- supabase db query --linked is preferred migration method (bypasses connection pooler max client issues)
+- Tier 3-4 seeding complete: Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville, Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-05-01 — Plan 12-02 applied; Tier 1 cities (Plano, McKinney, Allen, Frisco) seeded and verified*
+*Updated: 2026-04-30 — Plan 12-04 applied; Tier 3-4 cities (15 cities, 97 offices) seeded and verified*
