@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 12 — TX DB Foundation (complete ✓)
-Plan: 4/4 complete
-Status: Phase 12 verified and complete; Phase 13 (Tier 1 Officials) is next
-Last activity: 2026-04-30 — Phase 12 fully executed, verified, and committed
+Phase: 13 — Tier 1 Officials — Plano + McKinney (in progress)
+Plan: 1/2 complete
+Status: 13-01 (Plano) complete; 13-02 (McKinney) in progress
+Last activity: 2026-05-01 — Completed 13-01-PLAN.md (migration 091 applied, 8 Plano incumbents seeded)
 
-Progress: [██░░░░░░░░░░░░░░░░░░] v3.0 1/7 phases complete
+Progress: [███░░░░░░░░░░░░░░░░░] v3.0 1/7 phases complete (phase 13 in progress)
 
 ## Project Reference
 
@@ -65,6 +65,7 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
 - CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
 - Migration 088 (Tier 1 cities): slug bug fixed and migration applied 2026-05-01; 4 cities, 30 offices verified
+- Migration 091 (Plano politicians): applied 2026-05-01; 8 incumbents seeded, Place 6 vacant, 100% email+bio coverage
 - Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
 - Fairview is legally a Town — use 'Town of Fairview' and 'Town Council' everywhere
 - Princeton has 8 council seats (Mayor + Place 1-7), confirmed
@@ -74,4 +75,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-04-30 — Phase 12 complete; 4 migrations (087-090) applied; TX state + Collin County + 23 cities seeded; 151 offices total; Phase 13 next*
+*Updated: 2026-05-01 — Phase 13 started; migration 091 applied; 8 Plano incumbents seeded; 13-02 (McKinney) next*
