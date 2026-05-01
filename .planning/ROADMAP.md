@@ -150,10 +150,11 @@ Plans:
   2. `essentials.politicians` has a row for every current McKinney incumbent with `is_active=true` and `is_incumbent=true`
   3. Every politician row is linked via `office_id` to a valid `essentials.offices` row created in Phase 12
   4. Email and/or official URL contact fields are populated for at least 80% of Tier 1 politicians where publicly available on city websites
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 13-01: TBD
+- [ ] 13-01-PLAN.md — Migration 091: Plano incumbent politicians (Mayor + Place 1-5, 7-8) with bio URLs + emails
+- [ ] 13-02-PLAN.md — Migration 092: McKinney incumbent politicians (Mayor + At-Large 1-2 + District 1-4) with bio URL anchors
 
 #### Phase 14: Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson
 **Goal**: All incumbent mayor and council members for the six Tier 2 cities are in the database, linked to their office rows
