@@ -16,12 +16,12 @@
 
 - [x] **OFF-01**: Plano incumbent mayor and all council members are in `essentials.politicians`, linked to their office rows, with email/URL contact info where available
 - [x] **OFF-02**: McKinney incumbent mayor and council members are in `essentials.politicians`
-- [ ] **OFF-03**: Allen incumbent mayor and council members are in `essentials.politicians`
-- [ ] **OFF-04**: Frisco incumbent mayor and council members are in `essentials.politicians`
-- [ ] **OFF-05**: Murphy incumbent officials are in `essentials.politicians`
-- [ ] **OFF-06**: Celina incumbent officials are in `essentials.politicians`
-- [ ] **OFF-07**: Prosper incumbent officials are in `essentials.politicians`
-- [ ] **OFF-08**: Richardson incumbent officials are in `essentials.politicians`
+- [x] **OFF-03**: Allen incumbent mayor and council members are in `essentials.politicians`
+- [x] **OFF-04**: Frisco incumbent mayor and council members are in `essentials.politicians`
+- [x] **OFF-05**: Murphy incumbent officials are in `essentials.politicians`
+- [x] **OFF-06**: Celina incumbent officials are in `essentials.politicians`
+- [x] **OFF-07**: Prosper incumbent officials are in `essentials.politicians`
+- [x] **OFF-08**: Richardson incumbent officials are in `essentials.politicians`
 - [ ] **OFF-09**: Tier 3 city incumbents (Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville) are in `essentials.politicians` where findable online
 - [ ] **OFF-10**: Tier 4 city incumbents (Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge, Copeville) are in `essentials.politicians` where findable (sparse expected)
 
@@ -81,12 +81,12 @@
 | GEO-04 | Phase 12 | Complete |
 | OFF-01 | Phase 13 | Complete |
 | OFF-02 | Phase 13 | Complete |
-| OFF-03 | Phase 14 | Pending |
-| OFF-04 | Phase 14 | Pending |
-| OFF-05 | Phase 14 | Pending |
-| OFF-06 | Phase 14 | Pending |
-| OFF-07 | Phase 14 | Pending |
-| OFF-08 | Phase 14 | Pending |
+| OFF-03 | Phase 14 | Complete |
+| OFF-04 | Phase 14 | Complete |
+| OFF-05 | Phase 14 | Complete |
+| OFF-06 | Phase 14 | Complete |
+| OFF-07 | Phase 14 | Complete |
+| OFF-08 | Phase 14 | Complete |
 | OFF-09 | Phase 15 | Pending |
 | OFF-10 | Phase 15 | Pending |
 | DISC-01 | Phase 16 | Pending |
@@ -107,4 +107,4 @@
 
 ---
 *Requirements defined: 2026-04-30*
-*Last updated: 2026-04-30 — initial definition*
+*Last updated: 2026-05-01 — Phase 14 complete; OFF-03 through OFF-08 marked Complete*

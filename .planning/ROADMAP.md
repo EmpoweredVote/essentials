@@ -167,9 +167,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 14-01-PLAN.md — Migration 094: Allen + Frisco incumbent politicians (Mayor + Place 1-6 each, 14 rows)
-- [ ] 14-02-PLAN.md — Migration 095: Richardson incumbent politicians (Mayor + District 1-4 + Place 5-6, 7 rows, 2-year terms)
-- [ ] 14-03-PLAN.md — Migration 096: Murphy + Celina + Prosper incumbent politicians (Mayor + Place 1-6 each, 21 rows)
+- [x] 14-01-PLAN.md — Migration 094: Allen + Frisco incumbent politicians (Mayor + Place 1-6 each, 14 rows)
+- [x] 14-02-PLAN.md — Migration 095: Richardson incumbent politicians (Mayor + District 1-4 + Place 5-6, 7 rows, 2-year terms)
+- [x] 14-03-PLAN.md — Migration 096: Murphy + Celina + Prosper incumbent politicians (Mayor + Place 1-6 each, 21 rows)
 
 #### Phase 15: Tier 3-4 Officials — Remaining 16 Cities
 **Goal**: Incumbent officials for all 16 Tier 3-4 cities are in the database where findable from official city websites or Collin County records
@@ -261,7 +261,7 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 11. Indiana Local Races | v2.2 | 0/1 | Parked | - |
 | 12. TX DB Foundation | v3.0 | 4/4 | Complete | 2026-04-30 |
 | 13. Tier 1 Officials — Plano + McKinney | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 0/TBD | Not started | - |
+| 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 3/3 | Complete | 2026-05-01 |
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 0/TBD | Not started | - |
 | 16. Discovery Jurisdiction Setup | v3.0 | 0/TBD | Not started | - |
 | 17. Headshots | v3.0 | 0/TBD | Not started | - |

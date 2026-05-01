@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 13 — Tier 1 Officials — Plano + McKinney (complete ✓)
-Plan: 2/2 complete
-Status: Both 13-01 (Plano) and 13-02 (McKinney) complete — 15 politicians seeded (8 Plano + 7 McKinney)
-Last activity: 2026-05-01 — Completed 13-02-PLAN.md (migration 092 applied, 7 McKinney incumbents seeded)
+Phase: 14 — Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson (complete ✓)
+Plan: 3/3 complete
+Status: 14-01/02/03 complete — 42 politicians seeded across 6 Tier 2 cities; 42/42 active incumbents with office_id links
+Last activity: 2026-05-01 — Completed 14-03-PLAN.md (migration 096 applied, 21 Murphy/Celina/Prosper incumbents seeded)
 
-Progress: [████░░░░░░░░░░░░░░░░] v3.0 2/7 phases complete
+Progress: [██████░░░░░░░░░░░░░░] v3.0 3/7 phases complete
 
 ## Project Reference
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
 - Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
-- Next migration: 094 (091 = Plano politicians, 092 = McKinney politicians, 093 = McKinney emails; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
+- Next migration: 097 (091 = Plano politicians, 092 = McKinney politicians, 093 = McKinney emails, 094 = Allen+Frisco politicians, 095 = Richardson politicians, 096 = Murphy+Celina+Prosper politicians; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
 - McKinney email pattern: role-based `{role}@mckinneytexas.org` — mayor, AtLarge1, AtLarge2, District1–4
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
 
@@ -71,6 +71,13 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Migration 092 (McKinney politicians): applied 2026-05-01; 7 incumbents seeded, 100% email (role-based), 100% bio URL
 - Migration 093 (McKinney emails): applied 2026-05-01; email_addresses added to all 7 McKinney politicians (role-based: mayor/AtLarge1/AtLarge2/District1-4@mckinneytexas.org)
 - McKinney At-Large offices: DB titles are 'Council Member At-Large Place 1/2' (not 'At-Large 1/2') — use exact DB titles in WHERE clauses
+- Migration 094 (Allen+Frisco politicians): applied 2026-05-01; 14 incumbents seeded (Allen 7/7 email, Frisco 0/7 CloudFlare)
+- Migration 095 (Richardson politicians): applied 2026-05-01; 7 incumbents seeded, 2-year terms valid_from='2025-05-01', all 7/7 email (Firstname.Lastname@cor.gov)
+- Migration 096 (Murphy+Celina+Prosper politicians): applied 2026-05-01; 21 incumbents seeded (only Celina Mayor has email: rtubbs@celina-tx.gov)
+- Richardson DB office titles: 'Council Member District 1-4' (geographic residency districts, not 'Place 1-4') — matches migration 089 decisions
+- Richardson email pattern: Firstname.Lastname@cor.gov — confirmed by user; all 7 rows populated
+- Post-election flags (May 3, 2026 TX uniform election): 7+ seats across Allen/Frisco/Murphy/Celina to update after results certified; Prosper races were uncontested cancellations (already definitive); Amy Bartley (Prosper Place 3) new term begins 2026-05-12
+- Jené Butler (Celina Place 1): é accent in full_name — UTF-8 preserved in migration 096
 - supabase CLI v2.75.0 has NO 'db query' command — use psql with DATABASE_URL from backend/.env instead
 - Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
 - Fairview is legally a Town — use 'Town of Fairview' and 'Town Council' everywhere
@@ -80,4 +87,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-05-01 — Phase 13 complete; migrations 091-093 applied; 15 Tier 1 politicians seeded with full email + bio URL coverage*
+*Updated: 2026-05-01 — Phase 14 complete; migrations 094-096 applied; 42 Tier 2 politicians seeded across 6 cities (Allen/Frisco/Murphy/Celina/Prosper/Richardson)*
