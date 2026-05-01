@@ -130,7 +130,7 @@ Plans:
 **Requirements**: GEO-01, GEO-02, GEO-03, GEO-04
 **Success Criteria** (what must be TRUE):
   1. `essentials.governments` contains a Texas state row with the correct FIPS geo_id and a Collin County row with geo_id `48085`
-  2. All 24 target city governments have rows in `essentials.governments` with their Census place FIPS codes
+  2. All 23 incorporated target city governments have rows in `essentials.governments` with their Census place FIPS codes (Copeville excluded pending municipal incorporation verification)
   3. Each city government has at least one `essentials.chambers` row (City Council) and seat-level `essentials.offices` rows for Mayor and each Council seat
   4. A SQL query joining governments → chambers → offices for any of the 24 cities returns complete, non-null results with no orphaned rows
 **Plans**: 4 plans
