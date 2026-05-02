@@ -208,10 +208,13 @@ Plans:
   2. Tier 2 politicians (Murphy, Celina, Prosper, Richardson) have headshots uploaded where a public photo exists on the city website or official bio page
   3. Tier 3-4 headshots are attempted; any found are resized and uploaded; cities with no findable photo are noted
   4. No uploaded image has superimposed text, campaign graphics, or banners over the politician's face
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 17-01: TBD
+- [ ] 17-01-PLAN.md — Tier 1 headshots (Plano, McKinney, Allen, Frisco) — required-100% coverage; Frisco via Ballotpedia (CloudFlare bypass)
+- [ ] 17-02-PLAN.md — Tier 2 headshots (Murphy, Celina, Prosper, Richardson) — best-effort; Richardson via Ballotpedia (cor.net 403 bypass)
+- [ ] 17-03-PLAN.md — Tier 3-4 sweep (15 cities) — 2-source ceiling per politician; sparse coverage expected
+- [ ] 17-04-PLAN.md — Phase-wide coverage roll-up + cross-tier sampling + STATE.md update
 
 #### Phase 18: Compass Stances
 **Goal**: Compass stance data for Plano, McKinney, and Allen council members is ingested into inform.politician_answers so the political compass renders on their profiles
@@ -266,5 +269,5 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 3/3 | Complete | 2026-05-01 |
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 17. Headshots | v3.0 | 0/TBD | Not started | - |
+| 17. Headshots | v3.0 | 0/4 | Not started | - |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
