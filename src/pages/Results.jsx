@@ -13,7 +13,7 @@ import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
@@ -615,6 +615,20 @@ export default function Results() {
     setElectionsData(null);
 
     if (searchMode === 'browse') {
+      const rawGovList = searchParams.get('browse_government_list');
+      if (rawGovList) {
+        const ids = rawGovList.split(',').map((s) => s.trim()).filter(Boolean);
+        if (ids.length > 0) {
+          setElectionsLoading(true);
+          fetchElectionsByGovernmentList(ids).then((data) => {
+            if (!cancelled) {
+              setElectionsData(data.elections || []);
+              setElectionsLoading(false);
+            }
+          });
+          return;
+        }
+      }
       const geoId = browseArea?.geo_id || searchParams.get('browse_geo_id');
       const mtfcc = browseArea?.mtfcc || searchParams.get('browse_mtfcc');
       if (!geoId || !mtfcc) {
