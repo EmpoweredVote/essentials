@@ -179,10 +179,11 @@ Plans:
   1. All 8 Tier 3 cities (Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville) have at least one politician row in `essentials.politicians`, or are documented as having no findable public roster
   2. All 8 Tier 4 cities (Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge, Copeville) are attempted; sparse results are expected and acceptable
   3. Every politician row that was created has `is_active=true`, `is_incumbent=true`, and a valid `office_id` link
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 15-01: TBD
+- [x] 15-01-PLAN.md — Migration 097: Tier 3 cities (Anna, Fairview, Farmersville, Lavon, Lucas, Melissa, Princeton, Van Alstyne) — 45 seed-now rows + 10 election stubs
+- [x] 15-02-PLAN.md — Migration 098: Tier 4 cities (Blue Ridge, Josephine, Lowry Crossing, Nevada, Parker, Saint Paul, Weston) — election stubs + DB gap docs
 
 #### Phase 16: Discovery Jurisdiction Setup
 **Goal**: All 24 Collin County cities are registered in the discovery pipeline so the weekly cron will find candidates from collincountyvotes.gov
@@ -262,7 +263,7 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 12. TX DB Foundation | v3.0 | 4/4 | Complete | 2026-04-30 |
 | 13. Tier 1 Officials — Plano + McKinney | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 3/3 | Complete | 2026-05-01 |
-| 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 0/TBD | Not started | - |
+| 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 16. Discovery Jurisdiction Setup | v3.0 | 0/TBD | Not started | - |
 | 17. Headshots | v3.0 | 0/TBD | Not started | - |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |

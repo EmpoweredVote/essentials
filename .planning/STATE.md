@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 14 — Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson (complete ✓)
-Plan: 3/3 complete
-Status: 14-01/02/03 complete — 42 politicians seeded across 6 Tier 2 cities; 42/42 active incumbents with office_id links
-Last activity: 2026-05-01 — Completed 14-03-PLAN.md (migration 096 applied, 21 Murphy/Celina/Prosper incumbents seeded)
+Phase: 15 — Tier 3-4 Officials — Remaining 16 Cities (complete ✓)
+Plan: 2/2 complete
+Status: 15-01/02 complete — 74 politicians seeded across 15 Tier 3-4 cities (45 Tier 3 + 29 Tier 4); 74/74 active incumbents with office_id links; 19 NOT-YET-SEEDED stubs for May 3 election seats; Copeville excluded (possibly unincorporated CDP)
+Last activity: 2026-05-01 — Completed 15-01 (migration 097, 45 Tier 3 politicians) + 15-02 (migration 098, 29 Tier 4 politicians)
 
-Progress: [██████░░░░░░░░░░░░░░] v3.0 3/7 phases complete
+Progress: [████████░░░░░░░░░░░░] v3.0 4/7 phases complete
 
 ## Project Reference
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
 - Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
-- Next migration: 097 (091 = Plano politicians, 092 = McKinney politicians, 093 = McKinney emails, 094 = Allen+Frisco politicians, 095 = Richardson politicians, 096 = Murphy+Celina+Prosper politicians; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
+- Next migration: 099 (097 = Tier 3 politicians, 098 = Tier 4 politicians; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
 - McKinney email pattern: role-based `{role}@mckinneytexas.org` — mayor, AtLarge1, AtLarge2, District1–4
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
 
@@ -87,4 +87,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 
 ---
 *State initialized: 2026-04-12*
-*Updated: 2026-05-01 — Phase 14 complete; migrations 094-096 applied; 42 Tier 2 politicians seeded across 6 cities (Allen/Frisco/Murphy/Celina/Prosper/Richardson)*
+*Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
