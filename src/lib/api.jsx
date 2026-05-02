@@ -309,6 +309,21 @@ export async function browseByArea(geoId, mtfcc) {
   }
 }
 
+export async function browseByGovernmentList(governmentGeoIds) {
+  try {
+    const res = await publicFetch('/essentials/browse/by-government-list', {
+      method: 'POST',
+      body: JSON.stringify({ government_geo_ids: governmentGeoIds }),
+    });
+    if (!res || !res.ok) return { data: [], error: `${res?.status ?? 'unknown'}` };
+    const data = await res.json();
+    return { data: Array.isArray(data) ? data : [], error: null };
+  } catch (err) {
+    console.error('browseByGovernmentList error:', err);
+    return { data: [], error: err.message };
+  }
+}
+
 export async function fetchElectionsByAddress(address) {
   try {
     const res = await publicFetch(

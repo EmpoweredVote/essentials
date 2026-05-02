@@ -13,7 +13,7 @@ import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, fetchMyElections, saveMyLocation, browseByArea } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
@@ -345,6 +345,7 @@ export default function Results() {
     if (queryFromUrl) return;
     if (addressInput.trim().length > 0) return;
     if (searchParams.get('browse_geo_id')) return;
+    if (searchParams.get('browse_government_list')) return;
     let cancelled = false;
     loadUserAddressFromContext().then((stored) => {
       if (cancelled || !stored?.addr) return;
@@ -656,6 +657,27 @@ export default function Results() {
     if (searchParams.get('mode') === 'browse') {
       setSearchMode('browse');
     }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Handle ?browse_government_list shortcut (e.g. Collin County TX) —
+  // queries politicians directly by government geo_id list, bypassing geofences.
+  useEffect(() => {
+    const raw = searchParams.get('browse_government_list');
+    const label = searchParams.get('browse_label');
+    if (!raw) return;
+
+    const ids = raw.split(',').map((s) => s.trim()).filter(Boolean);
+    if (ids.length === 0) return;
+
+    setSearchMode('browse');
+    setBrowseLoading(true);
+    if (label) setAddressInput(decodeURIComponent(label));
+
+    browseByGovernmentList(ids).then(({ data, error }) => {
+      if (error) console.error('browse government list error:', error);
+      setBrowseResults(data);
+      setBrowseLoading(false);
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle ?browse_geo_id + ?browse_mtfcc shortcut buttons (e.g. LA County)
