@@ -89,9 +89,9 @@
 | OFF-08 | Phase 14 | Complete |
 | OFF-09 | Phase 15 | Pending |
 | OFF-10 | Phase 15 | Pending |
-| DISC-01 | Phase 16 | Pending |
-| DISC-02 | Phase 16 | Pending |
-| DISC-03 | Phase 16 | Pending |
+| DISC-01 | Phase 16 | Complete |
+| DISC-02 | Phase 16 | Complete |
+| DISC-03 | Phase 16 | Complete |
 | HEAD-01 | Phase 17 | Pending |
 | HEAD-02 | Phase 17 | Pending |
 | HEAD-03 | Phase 17 | Pending |
