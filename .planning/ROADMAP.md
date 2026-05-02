@@ -186,17 +186,18 @@ Plans:
 - [x] 15-02-PLAN.md — Migration 098: Tier 4 cities (Blue Ridge, Josephine, Lowry Crossing, Nevada, Parker, Saint Paul, Weston) — election stubs + DB gap docs
 
 #### Phase 16: Discovery Jurisdiction Setup
-**Goal**: All 24 Collin County cities are registered in the discovery pipeline so the weekly cron will find candidates from collincountyvotes.gov
+**Goal**: All 23 confirmed-incorporated Collin County cities are registered in the discovery pipeline so the weekly cron will find candidates from collincountytx.gov (Copeville excluded pending incorporation verification; domain corrected from collincountyvotes.gov per phase 16 research)
 **Depends on**: Phase 12
 **Requirements**: DISC-01, DISC-02, DISC-03
 **Success Criteria** (what must be TRUE):
-  1. All 24 cities have rows in `essentials.discovery_jurisdictions` with `source_url` set to `collincountyvotes.gov` and correct Census `jurisdiction_geoid`
-  2. Each row has `allowed_domains` containing at minimum `{collincountyvotes.gov}` plus the city's official domain
+  1. All 23 cities have rows in `essentials.discovery_jurisdictions` with `source_url` on the city's official elections page and correct Census `jurisdiction_geoid`
+  2. Each row has `allowed_domains` containing `{collincountytx.gov, co.collin.tx.us, <city-official-domain>}` (no news, no third-party sources)
   3. A test discovery run triggered for Plano completes without error and produces at least one staged candidate entry with a valid `citation_url` from an allowed domain
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 16-01: TBD
+- [ ] 16-01-PLAN.md — Migration 099: 23 Collin County cities seeded into essentials.discovery_jurisdictions (DISC-01, DISC-02)
+- [ ] 16-02-PLAN.md — Test discovery run for Plano: trigger POST /discover/jurisdiction/:id, verify discovery_runs + candidate_staging rows, human-verify in admin UI (DISC-03)
 
 #### Phase 17: Headshots
 **Goal**: Official headshot photos for Tier 1 and Tier 2 politicians are found, correctly resized, and stored in Supabase Storage with politician_images rows
@@ -264,6 +265,6 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 13. Tier 1 Officials — Plano + McKinney | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 3/3 | Complete | 2026-05-01 |
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 16. Discovery Jurisdiction Setup | v3.0 | 0/TBD | Not started | - |
+| 16. Discovery Jurisdiction Setup | v3.0 | 0/2 | Not started | - |
 | 17. Headshots | v3.0 | 0/TBD | Not started | - |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
