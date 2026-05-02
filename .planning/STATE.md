@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 15 — Tier 3-4 Officials — Remaining 16 Cities (complete ✓)
-Plan: 2/2 complete
-Status: 15-01/02 complete — 74 politicians seeded across 15 Tier 3-4 cities (45 Tier 3 + 29 Tier 4); 74/74 active incumbents with office_id links; 19 NOT-YET-SEEDED stubs for May 3 election seats; Copeville excluded (possibly unincorporated CDP)
-Last activity: 2026-05-01 — Completed 15-01 (migration 097, 45 Tier 3 politicians) + 15-02 (migration 098, 29 Tier 4 politicians)
+Phase: 16 — Discovery Jurisdiction Setup (in progress)
+Plan: 1/2 complete
+Status: 16-01 complete — 23 Collin County cities seeded into essentials.discovery_jurisdictions; TX election row (May 2, 2026) seeded; 23/23 geo_id matches verified
+Last activity: 2026-05-01 — Completed 16-01 (migration 099, TX election + 23 discovery_jurisdictions rows)
 
-Progress: [████████░░░░░░░░░░░░] v3.0 4/7 phases complete
+Progress: [████████░░░░░░░░░░░░] v3.0 4.5/7 phases complete (16 in progress)
 
 ## Project Reference
 
@@ -28,8 +28,8 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Jurisdictions processed sequentially (never parallel) — exhausts Claude API rate limit quota
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
-- Migration numbering continues from 082 (highest existing is 082_la_city_candidate_details.sql)
-- Next migration: 099 (097 = Tier 3 politicians, 098 = Tier 4 politicians; always verify with `ls /c/EV-Accounts/backend/migrations/ | sort | tail -5`)
+- Migration numbering continues from 099 (highest existing is 099_collin_county_discovery_jurisdictions.sql) — next is 100
+- TX election date confirmed: 2026-05-02 (NOT May 3 as CONTEXT.md stated — all official sources confirm May 2)
 - McKinney email pattern: role-based `{role}@mckinneytexas.org` — mayor, AtLarge1, AtLarge2, District1–4
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
 
@@ -57,10 +57,10 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 
 ### TX v3.0 Notes
 
-- Zero TX records in essentials schema today — fully greenfield
+- TX election row in DB: '2026 Texas Municipal General', election_date='2026-05-02', election_type='general', jurisdiction_level='city', state='TX'
 - Texas municipal elections are nonpartisan — no party affiliation on ballot or in DB
-- May 3, 2026 TX uniform election just happened — research winners as new incumbents
-- Collin County Elections primary source: collincountyvotes.gov
+- May 2, 2026 TX uniform election just happened — research winners as new incumbents
+- Collin County Elections primary source: collincountytx.gov (NOT collincountyvotes.gov — that domain does not exist)
 - Stance research sparse for Tier 3-4 cities (small digital footprint expected)
 - Migration numbering: next migration is 094 (093 used for McKinney email backfill)
 - Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
@@ -88,3 +88,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 ---
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
+*Updated: 2026-05-01 — Phase 16-01 complete; migration 099 applied; TX election row seeded (2026-05-02); 23 Collin County cities in discovery_jurisdictions; 23/23 governments matched*
