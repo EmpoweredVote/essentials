@@ -8,6 +8,7 @@ import { searchPoliticiansByName } from '../lib/api';
 const COVERAGE_AREAS = [
   { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
   { county: 'Los Angeles County', state: 'California', browseGeoId: '06037', browseMtfcc: 'G4020', browseCityFilter: 'los angeles', browseSchoolFilter: 'los angeles unified' },
+  { county: 'Collin County', state: 'Texas', browseGeoId: '48085', browseMtfcc: 'G4020' },
 ];
 
 export default function Landing() {
