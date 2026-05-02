@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 16 — Discovery Jurisdiction Setup (in progress)
-Plan: 1/2 complete
-Status: 16-01 complete — 23 Collin County cities seeded into essentials.discovery_jurisdictions; TX election row (May 2, 2026) seeded; 23/23 geo_id matches verified
-Last activity: 2026-05-01 — Completed 16-01 (migration 099, TX election + 23 discovery_jurisdictions rows)
+Phase: 16 — Discovery Jurisdiction Setup (complete)
+Plan: 2/2 complete
+Status: 16-02 complete — DISC-01, DISC-02, DISC-03 all satisfied; Allen test run produced 2 staged Mayor candidates from collincountytx.gov; weekly cron armed for all 23 TX cities
+Last activity: 2026-05-01 — Completed 16-02 (discovery test run; Allen: 2 staged candidates; DISC-03 satisfied)
 
-Progress: [████████░░░░░░░░░░░░] v3.0 4.5/7 phases complete (16 in progress)
+Progress: [█████████░░░░░░░░░░░] v3.0 5/7 phases complete (Phase 16 done)
 
 ## Project Reference
 
@@ -84,8 +84,12 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Princeton has 8 council seats (Mayor + Place 1-7), confirmed
 - Copeville (GEOID 4816600) excluded — may be unincorporated CDP; add in follow-up if confirmed incorporated
 - Tier 3-4 seeding complete: Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville, Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge
+- Phase 16-02 discovery test run: Allen run (run_id=47c4085a-cc46-47f8-ba21-f1726cf44799) returned 2 staged Mayor candidates — Chris Schulmeister + Dave Shafer — from collincountytx.gov sample ballot PDF; DISC-03 satisfied
+- Plano returned 0 candidates (expected — odd-year city; next general May 2027); Allen chosen as DISC-03 verification target
+- Domain whitelist enforcement confirmed: 0 violations across both runs; weekly cron now armed for all 23 TX cities (Sunday 02:00 UTC)
 
 ---
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
 *Updated: 2026-05-01 — Phase 16-01 complete; migration 099 applied; TX election row seeded (2026-05-02); 23 Collin County cities in discovery_jurisdictions; 23/23 governments matched*
+*Updated: 2026-05-01 — Phase 16 complete (2/2 plans); DISC-01, DISC-02, DISC-03 all satisfied; Allen test run produced 2 staged Mayor candidates; Phase 16 done*

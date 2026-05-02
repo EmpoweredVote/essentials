@@ -185,7 +185,7 @@ Plans:
 - [x] 15-01-PLAN.md — Migration 097: Tier 3 cities (Anna, Fairview, Farmersville, Lavon, Lucas, Melissa, Princeton, Van Alstyne) — 45 seed-now rows + 10 election stubs
 - [x] 15-02-PLAN.md — Migration 098: Tier 4 cities (Blue Ridge, Josephine, Lowry Crossing, Nevada, Parker, Saint Paul, Weston) — election stubs + DB gap docs
 
-#### Phase 16: Discovery Jurisdiction Setup
+#### Phase 16: Discovery Jurisdiction Setup ✅ Complete (2026-05-01)
 **Goal**: All 23 confirmed-incorporated Collin County cities are registered in the discovery pipeline so the weekly cron will find candidates from collincountytx.gov (Copeville excluded pending incorporation verification; domain corrected from collincountyvotes.gov per phase 16 research)
 **Depends on**: Phase 12
 **Requirements**: DISC-01, DISC-02, DISC-03
@@ -197,7 +197,7 @@ Plans:
 
 Plans:
 - [x] 16-01-PLAN.md — Migration 099: 23 Collin County cities seeded into essentials.discovery_jurisdictions (DISC-01, DISC-02)
-- [ ] 16-02-PLAN.md — Test discovery run for Plano: trigger POST /discover/jurisdiction/:id, verify discovery_runs + candidate_staging rows, human-verify in admin UI (DISC-03)
+- [x] 16-02-PLAN.md — Test discovery run for Plano: trigger POST /discover/jurisdiction/:id, verify discovery_runs + candidate_staging rows, human-verify in admin UI (DISC-03)
 
 #### Phase 17: Headshots
 **Goal**: Official headshot photos for Tier 1 and Tier 2 politicians are found, correctly resized, and stored in Supabase Storage with politician_images rows
@@ -265,6 +265,6 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 13. Tier 1 Officials — Plano + McKinney | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 3/3 | Complete | 2026-05-01 |
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 16. Discovery Jurisdiction Setup | v3.0 | 1/2 | In progress | - |
+| 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 17. Headshots | v3.0 | 0/TBD | Not started | - |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
