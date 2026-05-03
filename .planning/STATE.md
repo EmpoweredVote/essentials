@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 19 — TX Congressional Seats + Geofences (in progress)
-Plan: 3/5 complete
-Status: 19-03 complete — migration 105 applied; 37 TX House politicians + 38 offices seeded
-Last activity: 2026-05-03 — Completed 19-03 (migration 105: 37 TX US House politicians + 38 offices; TX-23 vacant)
+Plan: 4/5 complete
+Status: 19-04 complete — backend PostGIS intersection wired; Collin County returns 5 US House reps with county_geo_id=48085
+Last activity: 2026-05-03 — Completed 19-04 (getPoliticiansByGovernmentList + countyGeoId; route /by-government-list accepts county_geo_id)
 
-Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 in progress (19-03/5 done)
+Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 in progress (19-04/5 done)
 
 ## Project Reference
 
@@ -97,7 +97,8 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Collin County G4020 boundary loaded 2026-05-03: geo_id='48085', state='48', geom=ST_Polygon, srid=4326, valid=t; 3235 county records scanned; idempotent
 - Migration 105 applied 2026-05-03: 37 TX House politicians + 38 offices (37 active + 1 vacant TX-23); chamber_id=c2facc31; external_ids -100301..-100338 (skip -100323); idempotent
 - US House chamber UUID confirmed: c2facc31-7b13-428c-b7b9-32d0d3b95f76 (chamber.name_formal = 'United States House of Representatives')
-- Next: 19-04 (PostGIS intersection query — districts + offices + politicians chain now fully populated for TX US House)
+- 19-04 complete 2026-05-03: getPoliticiansByGovernmentList extended with countyGeoId option; PostGIS G4020↔G5200 intersection query; route /by-government-list accepts county_geo_id; smoke test: 5 NATIONAL_LOWER reps for Collin County (Keith Self TX-3, Pat Fallon TX-4, +3 others); LA County unchanged (55 politicians); invalid input → 400
+- Next: 19-05 (Frontend — pass county_geo_id from Landing.jsx Collin County entry; update browseByGovernmentList API fn; Results.jsx forward parameter)
 
 ---
 *State initialized: 2026-04-12*
@@ -107,3 +108,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-03 — Phase 19-01 complete; 38 TX G5200 boundaries + 38 NATIONAL_LOWER districts confirmed; migration 104 applied (district_id backfill UPDATE 38)*
 *Updated: 2026-05-03 — Phase 19-02 complete; Collin County G4020 boundary inserted (geo_id=48085, state=48, srid=4326, valid); 3235 records scanned; idempotent*
 *Updated: 2026-05-03 — Phase 19-03 complete; migration 105 applied; 37 TX House politicians + 38 offices (TX-23 vacant); chamber c2facc31; all idempotent*
+*Updated: 2026-05-03 — Phase 19-04 complete; PostGIS G4020↔G5200 backend wired; getPoliticiansByGovernmentList +countyGeoId; smoke test passed (5 US House reps for Collin County)*

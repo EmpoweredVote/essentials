@@ -230,7 +230,7 @@ Plans:
 - [x] 19-01-PLAN.md — Load TX congressional district boundaries (G5200) and backfill district_id
 - [x] 19-02-PLAN.md — Load Collin County G4020 geofence boundary
 - [x] 19-03-PLAN.md — Migration 105: seed 37 TX House politicians + TX-23 vacancy
-- [ ] 19-04-PLAN.md — Backend: extend getPoliticiansByGovernmentList with countyGeoId PostGIS intersection
+- [x] 19-04-PLAN.md — Backend: extend getPoliticiansByGovernmentList with countyGeoId PostGIS intersection
 - [ ] 19-05-PLAN.md — Frontend: thread browseCountyGeoId from Landing through Results to API + user verify
 
 ---
@@ -290,4 +290,4 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 17. Headshots | v3.0 | 0/4 | Not started | - |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
-| 19. TX Congressional Seats + Geofences | v3.0 | 3/5 | In progress | - |
+| 19. TX Congressional Seats + Geofences | v3.0 | 4/5 | In progress | - |
