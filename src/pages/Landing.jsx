@@ -8,7 +8,7 @@ import { searchPoliticiansByName } from '../lib/api';
 const COVERAGE_AREAS = [
   { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
   { county: 'Los Angeles County', state: 'California', browseGeoId: '06037', browseMtfcc: 'G4020', browseCityFilter: 'los angeles', browseSchoolFilter: 'los angeles unified' },
-  { county: 'Collin County', state: 'Texas', browseGovernmentList: ['4801924','4803300','4808872','4813684','4825224','4825488','4827684','4838068','4841800','4844308','4845012','4845744','4847496','4850100','4850760','4855152','4863000','4863276','4863432','4863500','4864220','4875960','4877740'] },
+  { county: 'Collin County', state: 'Texas', browseStateAbbrev: 'TX', browseGovernmentList: ['4801924','4803300','4808872','4813684','4825224','4825488','4827684','4838068','4841800','4844308','4845012','4845744','4847496','4850100','4850760','4855152','4863000','4863276','4863432','4863500','4864220','4875960','4877740'] },
 ];
 
 export default function Landing() {
@@ -97,6 +97,7 @@ export default function Landing() {
                         browse_government_list: area.browseGovernmentList.join(','),
                         browse_label: area.county,
                       });
+                      if (area.browseStateAbbrev) params.set('browse_state', area.browseStateAbbrev);
                       navigate(`/results?${params}`);
                     } else if (area.browseGeoId) {
                       const params = new URLSearchParams({

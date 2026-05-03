@@ -309,11 +309,11 @@ export async function browseByArea(geoId, mtfcc) {
   }
 }
 
-export async function browseByGovernmentList(governmentGeoIds) {
+export async function browseByGovernmentList(governmentGeoIds, state) {
   try {
     const res = await publicFetch('/essentials/browse/by-government-list', {
       method: 'POST',
-      body: JSON.stringify({ government_geo_ids: governmentGeoIds }),
+      body: JSON.stringify({ government_geo_ids: governmentGeoIds, ...(state ? { state } : {}) }),
     });
     if (!res || !res.ok) return { data: [], error: `${res?.status ?? 'unknown'}` };
     const data = await res.json();

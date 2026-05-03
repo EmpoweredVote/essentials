@@ -683,11 +683,13 @@ export default function Results() {
     const ids = raw.split(',').map((s) => s.trim()).filter(Boolean);
     if (ids.length === 0) return;
 
+    const browseState = searchParams.get('browse_state') ?? undefined;
+
     setSearchMode('browse');
     setBrowseLoading(true);
     if (label) setAddressInput(decodeURIComponent(label));
 
-    browseByGovernmentList(ids).then(({ data, error }) => {
+    browseByGovernmentList(ids, browseState).then(({ data, error }) => {
       if (error) console.error('browse government list error:', error);
       setBrowseResults(data);
       setBrowseLoading(false);
