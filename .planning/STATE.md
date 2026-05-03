@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 19 — TX Congressional Seats + Geofences (in progress)
-Plan: 2/5 complete
-Status: 19-02 complete — Collin County G4020 boundary (geo_id=48085) inserted; ST_Polygon, SRID 4326, valid
-Last activity: 2026-05-03 — Completed 19-02 (Collin County G4020 boundary load; 3235 county records scanned)
+Plan: 3/5 complete
+Status: 19-03 complete — migration 105 applied; 37 TX House politicians + 38 offices seeded
+Last activity: 2026-05-03 — Completed 19-03 (migration 105: 37 TX US House politicians + 38 offices; TX-23 vacant)
 
-Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 in progress (19-02/5 done)
+Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 in progress (19-03/5 done)
 
 ## Project Reference
 
@@ -95,7 +95,9 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Migration 104 (district_id backfill): applied 2026-05-03; UPDATE 38 first run, UPDATE 0 re-run; idempotent
 - Congressional boundaries already loaded (all 50 states prior run); load-us-congressional-boundaries.ts is safe to re-run
 - Collin County G4020 boundary loaded 2026-05-03: geo_id='48085', state='48', geom=ST_Polygon, srid=4326, valid=t; 3235 county records scanned; idempotent
-- Next: 19-03 (TX state legislative boundaries) or 19-04 (PostGIS intersection query — both G5200 and G4020 sides now available)
+- Migration 105 applied 2026-05-03: 37 TX House politicians + 38 offices (37 active + 1 vacant TX-23); chamber_id=c2facc31; external_ids -100301..-100338 (skip -100323); idempotent
+- US House chamber UUID confirmed: c2facc31-7b13-428c-b7b9-32d0d3b95f76 (chamber.name_formal = 'United States House of Representatives')
+- Next: 19-04 (PostGIS intersection query — districts + offices + politicians chain now fully populated for TX US House)
 
 ---
 *State initialized: 2026-04-12*
@@ -104,3 +106,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-01 — Phase 16 complete (2/2 plans); DISC-01, DISC-02, DISC-03 all satisfied; Allen test run produced 2 staged Mayor candidates; Phase 16 done*
 *Updated: 2026-05-03 — Phase 19-01 complete; 38 TX G5200 boundaries + 38 NATIONAL_LOWER districts confirmed; migration 104 applied (district_id backfill UPDATE 38)*
 *Updated: 2026-05-03 — Phase 19-02 complete; Collin County G4020 boundary inserted (geo_id=48085, state=48, srid=4326, valid); 3235 records scanned; idempotent*
+*Updated: 2026-05-03 — Phase 19-03 complete; migration 105 applied; 37 TX House politicians + 38 offices (TX-23 vacant); chamber c2facc31; all idempotent*
