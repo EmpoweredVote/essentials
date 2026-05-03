@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 19 — TX Congressional Seats + Geofences (complete)
-Plan: 5/5 complete
-Status: Phase 19 complete — full TX congressional rep integration; Collin County shows 5 US House reps via PostGIS; verified on production
-Last activity: 2026-05-03 — Completed 19-05 (frontend wiring api.jsx + Landing.jsx + Results.jsx; user verified on production)
+Phase: 17 — Headshots (complete, all 4 plans)
+Plan: 4/4 complete
+Status: Phase 17 complete — 57/75 Tier 3/4 imaged (34 confirmed availability gaps); 37/37 TX US House reps + Keith E. Sonderling imaged; migration 106 applied (office_id backfill + Labor Secretary update)
+Last activity: 2026-05-03 — Completed 17-04 (TX House reps + Sonderling; 38 federal headshots via Wikipedia/Wikimedia Commons)
 
-Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 complete (5/5 plans done)
+Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 17 complete (4/4 plans done); Phase 19 also complete
 
 ## Project Reference
 
@@ -112,3 +112,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-03 — Phase 19-03 complete; migration 105 applied; 37 TX House politicians + 38 offices (TX-23 vacant); chamber c2facc31; all idempotent*
 *Updated: 2026-05-03 — Phase 19-04 complete; PostGIS G4020↔G5200 backend wired; getPoliticiansByGovernmentList +countyGeoId; smoke test passed (5 US House reps for Collin County)*
 *Updated: 2026-05-03 — Phase 19 complete (5/5 plans); frontend wired api.jsx+Landing.jsx+Results.jsx; production verified; G4020 county intersection pattern documented; Dallas/Tarrant/Bexar/Travis queued for future expansion*
+*Updated: 2026-05-03 — Phase 17 complete (4/4 plans); 37/37 TX House reps + Sonderling imaged via Wikipedia; migration 106 applied (office_id backfill + Labor Secretary transition); 57/75 Tier 3/4 imaged (34 confirmed gaps)*
