@@ -228,7 +228,7 @@ Plans:
 
 Plans:
 - [x] 19-01-PLAN.md — Load TX congressional district boundaries (G5200) and backfill district_id
-- [ ] 19-02-PLAN.md — Load Collin County G4020 geofence boundary
+- [x] 19-02-PLAN.md — Load Collin County G4020 geofence boundary
 - [ ] 19-03-PLAN.md — Migration 105: seed 37 TX House politicians + TX-23 vacancy
 - [ ] 19-04-PLAN.md — Backend: extend getPoliticiansByGovernmentList with countyGeoId PostGIS intersection
 - [ ] 19-05-PLAN.md — Frontend: thread browseCountyGeoId from Landing through Results to API + user verify

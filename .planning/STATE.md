@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 19 — TX Congressional Seats + Geofences (in progress)
-Plan: 1/5 complete
-Status: 19-01 complete — 38 TX G5200 boundaries confirmed; 38 TX NATIONAL_LOWER districts with district_id backfilled via migration 104
-Last activity: 2026-05-03 — Completed 19-01 (TX congressional boundary load + district_id backfill)
+Plan: 2/5 complete
+Status: 19-02 complete — Collin County G4020 boundary (geo_id=48085) inserted; ST_Polygon, SRID 4326, valid
+Last activity: 2026-05-03 — Completed 19-02 (Collin County G4020 boundary load; 3235 county records scanned)
 
-Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 started (19-01/5 done)
+Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 in progress (19-02/5 done)
 
 ## Project Reference
 
@@ -94,7 +94,8 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - district_id backfill: LTRIM(SUBSTRING(geo_id FROM 3), '0') — strips '48' prefix then leading zeros
 - Migration 104 (district_id backfill): applied 2026-05-03; UPDATE 38 first run, UPDATE 0 re-run; idempotent
 - Congressional boundaries already loaded (all 50 states prior run); load-us-congressional-boundaries.ts is safe to re-run
-- Next: 19-02 (Collin County G4020 geofence boundary)
+- Collin County G4020 boundary loaded 2026-05-03: geo_id='48085', state='48', geom=ST_Polygon, srid=4326, valid=t; 3235 county records scanned; idempotent
+- Next: 19-03 (TX state legislative boundaries) or 19-04 (PostGIS intersection query — both G5200 and G4020 sides now available)
 
 ---
 *State initialized: 2026-04-12*
@@ -102,3 +103,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-01 — Phase 16-01 complete; migration 099 applied; TX election row seeded (2026-05-02); 23 Collin County cities in discovery_jurisdictions; 23/23 governments matched*
 *Updated: 2026-05-01 — Phase 16 complete (2/2 plans); DISC-01, DISC-02, DISC-03 all satisfied; Allen test run produced 2 staged Mayor candidates; Phase 16 done*
 *Updated: 2026-05-03 — Phase 19-01 complete; 38 TX G5200 boundaries + 38 NATIONAL_LOWER districts confirmed; migration 104 applied (district_id backfill UPDATE 38)*
+*Updated: 2026-05-03 — Phase 19-02 complete; Collin County G4020 boundary inserted (geo_id=48085, state=48, srid=4326, valid); 3235 records scanned; idempotent*
