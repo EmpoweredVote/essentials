@@ -1066,9 +1066,9 @@ export default function Results() {
       // Executive/officer positions: prefer office_title (e.g. "Mayor", "Governor", "Sheriff")
       if (/(_EXEC)$/.test(pol.district_type) || pol.district_type === 'COUNTY')
         return qualify(cleanTitle || cleanChamber, pol);
-      // LOCAL admin officers (clerk, treasurer, auditor, recorder, assessor): use office_title
-      // so the card shows "City Clerk" rather than the chamber name they share with council members
-      if (pol.district_type === 'LOCAL' && /\b(clerk|treasurer|auditor|recorder|assessor)\b/i.test(cleanTitle))
+      // LOCAL named officers (mayor, clerk, treasurer, etc.): use office_title
+      // so the card shows "Mayor" or "City Clerk" rather than the chamber name they share with council members
+      if (pol.district_type === 'LOCAL' && /\b(mayor|clerk|treasurer|auditor|recorder|assessor|city manager|city administrator|city secretary)\b/i.test(cleanTitle))
         return qualify(cleanTitle, pol);
       // Default: prefer chamber_name (e.g. "City Council", "State Senate")
       return qualify(cleanChamber || cleanTitle, pol);
