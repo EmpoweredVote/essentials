@@ -684,12 +684,13 @@ export default function Results() {
     if (ids.length === 0) return;
 
     const browseState = searchParams.get('browse_state') ?? undefined;
+    const browseCountyGeoId = searchParams.get('browse_county_geo_id') || undefined;
 
     setSearchMode('browse');
     setBrowseLoading(true);
     if (label) setAddressInput(decodeURIComponent(label));
 
-    browseByGovernmentList(ids, browseState).then(({ data, error }) => {
+    browseByGovernmentList(ids, browseState, { countyGeoId: browseCountyGeoId }).then(({ data, error }) => {
       if (error) console.error('browse government list error:', error);
       setBrowseResults(data);
       setBrowseLoading(false);
