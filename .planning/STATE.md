@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 16 — Discovery Jurisdiction Setup (complete)
-Plan: 2/2 complete
-Status: 16-02 complete — DISC-01, DISC-02, DISC-03 all satisfied; Allen test run produced 2 staged Mayor candidates from collincountytx.gov; weekly cron armed for all 23 TX cities
-Last activity: 2026-05-01 — Completed 16-02 (discovery test run; Allen: 2 staged candidates; DISC-03 satisfied)
+Phase: 19 — TX Congressional Seats + Geofences (in progress)
+Plan: 1/5 complete
+Status: 19-01 complete — 38 TX G5200 boundaries confirmed; 38 TX NATIONAL_LOWER districts with district_id backfilled via migration 104
+Last activity: 2026-05-03 — Completed 19-01 (TX congressional boundary load + district_id backfill)
 
-Progress: [█████████░░░░░░░░░░░] v3.0 5/7 phases complete (Phase 16 done)
+Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 19 started (19-01/5 done)
 
 ## Project Reference
 
@@ -88,8 +88,17 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Plano returned 0 candidates (expected — odd-year city; next general May 2027); Allen chosen as DISC-03 verification target
 - Domain whitelist enforcement confirmed: 0 violations across both runs; weekly cron now armed for all 23 TX cities (Sunday 02:00 UTC)
 
+### Phase 19 Notes
+
+- geo_id pattern confirmed: STATEFP(2) + CD119FP(zero-padded 2 digits) = 4-char string ('4803' for TX-3)
+- district_id backfill: LTRIM(SUBSTRING(geo_id FROM 3), '0') — strips '48' prefix then leading zeros
+- Migration 104 (district_id backfill): applied 2026-05-03; UPDATE 38 first run, UPDATE 0 re-run; idempotent
+- Congressional boundaries already loaded (all 50 states prior run); load-us-congressional-boundaries.ts is safe to re-run
+- Next: 19-02 (Collin County G4020 geofence boundary)
+
 ---
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
 *Updated: 2026-05-01 — Phase 16-01 complete; migration 099 applied; TX election row seeded (2026-05-02); 23 Collin County cities in discovery_jurisdictions; 23/23 governments matched*
 *Updated: 2026-05-01 — Phase 16 complete (2/2 plans); DISC-01, DISC-02, DISC-03 all satisfied; Allen test run produced 2 staged Mayor candidates; Phase 16 done*
+*Updated: 2026-05-03 — Phase 19-01 complete; 38 TX G5200 boundaries + 38 NATIONAL_LOWER districts confirmed; migration 104 applied (district_id backfill UPDATE 38)*

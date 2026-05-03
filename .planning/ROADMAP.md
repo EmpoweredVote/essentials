@@ -216,6 +216,25 @@ Plans:
 - [ ] 17-03-PLAN.md — Tier 3-4 sweep (15 cities) — 2-source ceiling per politician; sparse coverage expected
 - [ ] 17-04-PLAN.md — Phase-wide coverage roll-up + cross-tier sampling + STATE.md update
 
+#### Phase 19: TX Congressional Seats + Geofences
+**Goal**: All 38 TX US House members are loaded as NATIONAL_LOWER politician records; TX county geofences (G4020) are loaded into geofence_boundaries; the by-government-list supplemental query is extended to include NATIONAL_LOWER reps via county geofence intersection — so browsing any TX government-list area automatically shows the correct congressional reps.
+**Depends on**: Phase 12
+**Success Criteria** (what must be TRUE):
+  1. All 38 TX US House members exist in `essentials.politicians` with correct `NATIONAL_LOWER` district records and `d.state = 'TX'`
+  2. Collin County geofence (geo_id `48085`, MTFCC `G4020`) exists in `essentials.geofence_boundaries` with valid PostGIS geometry
+  3. The `by-government-list` supplemental query returns the correct TX congressional reps (TX-3, TX-4, etc.) when browsing Collin County
+  4. No regressions — LA County and Indiana browse still return their congressional reps correctly
+**Plans**: 5 plans
+
+Plans:
+- [x] 19-01-PLAN.md — Load TX congressional district boundaries (G5200) and backfill district_id
+- [ ] 19-02-PLAN.md — Load Collin County G4020 geofence boundary
+- [ ] 19-03-PLAN.md — Migration 105: seed 37 TX House politicians + TX-23 vacancy
+- [ ] 19-04-PLAN.md — Backend: extend getPoliticiansByGovernmentList with countyGeoId PostGIS intersection
+- [ ] 19-05-PLAN.md — Frontend: thread browseCountyGeoId from Landing through Results to API + user verify
+
+---
+
 #### Phase 18: Compass Stances
 **Goal**: Compass stance data for Plano, McKinney, and Allen council members is ingested into inform.politician_answers so the political compass renders on their profiles
 **Depends on**: Phase 13
@@ -271,3 +290,4 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 17. Headshots | v3.0 | 0/4 | Not started | - |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
+| 19. TX Congressional Seats + Geofences | v3.0 | 1/5 | In progress | - |
