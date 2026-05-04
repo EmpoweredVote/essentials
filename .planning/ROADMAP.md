@@ -261,8 +261,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 20-01-PLAN.md — Migration 107: fix TX executive chamber name_formal + back-fill politicians.office_id for 8 TX state/federal officials
-- [ ] 20-02-PLAN.md — Wikipedia headshots for all 8 (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz)
+- [x] 20-01-PLAN.md — Migration 107: fix TX executive chamber name_formal + back-fill politicians.office_id for 8 TX state/federal officials
+- [x] 20-02-PLAN.md — Wikipedia headshots for all 8 (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz)
 
 ---
 
@@ -305,3 +305,4 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 17. Headshots | v3.0 | 0/4 | Not started | - |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
 | 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
+| 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |

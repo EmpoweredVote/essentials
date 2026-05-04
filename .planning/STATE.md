@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 20 — TX State + Federal Officials (in progress)
-Plan: 1/2 complete
-Status: Migration 107 applied — 6 TX executive chambers name_formal populated; 8 TX state/federal politicians office_id backfilled; profile rendering unblocked
-Last activity: 2026-05-04 — Completed 20-01 (migration 107: chambers name_formal + politicians office_id backfill)
+Phase: 20 — TX State + Federal Officials (complete, all 2 plans)
+Plan: 2/2 complete
+Status: Phase 20 complete — 8 TX state/federal officials (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz) have migration 107 fixes (chamber name_formal + office_id) + Wikipedia headshots (600×750 cc_by_sa); profile pages fully render
+Last activity: 2026-05-04 — Completed 20-02 (Wikipedia headshots for 8 TX state/federal officials)
 
-Progress: [█████████░░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20-01 complete; 20-02 (headshots) next
+Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20 complete; Phase 18 (Compass Stances) remains
 
 ## Project Reference
 
@@ -108,7 +108,8 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - chambers name_formal back-fill pattern: WHERE name_formal = '' AND id IN (explicit UUIDs) — never name matching
 - politicians office_id back-fill pattern: BETWEEN range (-100210..-100199) provides headroom; guarded by IS NULL
 - All 8 office_id UUIDs verified against expected values from migration 103
-- Plan 20-02 (headshots for 8 TX state/federal officials) is unblocked
+- Plan 20-02 complete 2026-05-04: 8 Wikipedia headshots imported (cc_by_sa); all 600×750 via LANCZOS; PIL spot-check passed; zero orphans; profile pages now render title + chamber + photo
+- Sid Miller disambiguation: correct Wikipedia article is /wiki/Sid_Miller_(politician) (not /wiki/Sid_Miller which is a disambiguation page)
 
 ---
 *State initialized: 2026-04-12*
@@ -122,3 +123,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-03 — Phase 19 complete (5/5 plans); frontend wired api.jsx+Landing.jsx+Results.jsx; production verified; G4020 county intersection pattern documented; Dallas/Tarrant/Bexar/Travis queued for future expansion*
 *Updated: 2026-05-03 — Phase 17 complete (4/4 plans); 37/37 TX House reps + Sonderling imaged via Wikipedia; migration 106 applied (office_id backfill + Labor Secretary transition); 57/75 Tier 3/4 imaged (34 confirmed gaps)*
 *Updated: 2026-05-04 — Phase 20-01 complete; migration 107 applied; 6 TX executive chambers name_formal populated; 8 TX state/federal politicians office_id backfilled (Cruz/Cornyn/Abbott/Patrick/Paxton/Hegar/Buckingham/Miller); idempotent re-run confirmed UPDATE 0/0*
+*Updated: 2026-05-04 — Phase 20 complete (2/2 plans); 8 Wikipedia headshots imported (cc_by_sa, 600×750); all profile pages now render title + chamber + photo; Phase 18 (Compass Stances) is next*
