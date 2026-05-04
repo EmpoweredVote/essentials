@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 21 — TX State Legislature (in progress, 2/5 plans)
-Plan: 2/5 complete
-Status: Phase 21 in progress — 21-02 complete: Texas State Senate + Texas House of Representatives chambers created (migration 108); both name_formal populated; both slug auto-generated; idempotent
-Last activity: 2026-05-04 — Completed 21-02 (TX state legislature chambers)
+Phase: 21 — TX State Legislature (in progress, 3/5 plans)
+Plan: 3/5 complete
+Status: Phase 21 in progress — 21-03 complete: 30 TX state senators + D4 vacancy seeded (migration 109); 31 senate offices; all office_id back-filled; idempotent
+Last activity: 2026-05-04 — Completed 21-03 (TX state senators seeded)
 
-Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20 complete; Phase 21 started (1/5); Phase 18 (Compass Stances) remains
+Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20 complete; Phase 21 in progress (3/5); Phase 18 (Compass Stances) remains
 
 ## Project Reference
 
@@ -111,7 +111,10 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Script cached TIGER ZIPs locally; clean re-run will skip downloads and re-extract
 - Texas State Senate chamber UUID: 0b970b1c-5308-4a56-bfe9-b74ae9e58ea2 (Plans 21-03 must use this)
 - Texas House of Representatives chamber UUID: 5ac03af0-938f-4a31-84f1-e7a644711e0e (Plans 21-04 must use this)
-- Migration 108 applied 2026-05-04: 2 TX legislative chambers created; name_formal=name; slug auto-generated; idempotent re-run INSERT 0 0/0 0
+- Migration 108 applied 2026-05-04: 2 TX legislative chambers created; name_formal=name; slug auto-generated; idempotent re-run INSERT 0 0
+- Migration 109 applied 2026-05-04: 30 TX state senators + 31 senate offices (D4 vacant); external_ids -100401..-100403, -100405..-100431; all 30 office_id back-filled; idempotent re-run 0 changes
+- D9 senator name confirmed: Taylor Rehmet (not Rehmert) — verified from official senate.texas.gov source
+- TX Senate vacancy pattern: D4 office has politician_id NULL, is_vacant=true; external_id -100404 intentionally unused; matches TX-23 US House vacancy pattern from migration 105/0 0
 
 ### Phase 20 Notes
 
@@ -137,3 +140,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 20 complete (2/2 plans); 8 Wikipedia headshots imported (cc_by_sa, 600×750); all profile pages now render title + chamber + photo; Phase 18 (Compass Stances) is next*
 *Updated: 2026-05-04 — Phase 21-01 complete; 181 TX state legislative boundaries loaded (31 G5210/STATE_UPPER Senate + 150 G5220/STATE_LOWER House); essentials.geofence_boundaries state='48', essentials.districts state='TX'; SRID 4326 all valid; idempotent*
 *Updated: 2026-05-04 — Phase 21-02 complete; migration 108 applied; Texas State Senate (0b970b1c) + Texas House of Representatives (5ac03af0) chambers created; name_formal=name; slug auto-generated; idempotent re-run confirmed INSERT 0 0*
+*Updated: 2026-05-04 — Phase 21-03 complete; migration 109 applied; 30 TX state senators + 31 senate offices (D4 vacant, is_vacant=true); all 30 politicians office_id back-filled; idempotent; senate half of Phase 21 complete*
