@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 20 — TX State + Federal Officials (complete, all 2 plans)
-Plan: 2/2 complete
-Status: Phase 20 complete — 8 TX state/federal officials (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz) have migration 107 fixes (chamber name_formal + office_id) + Wikipedia headshots (600×750 cc_by_sa); profile pages fully render
-Last activity: 2026-05-04 — Completed 20-02 (Wikipedia headshots for 8 TX state/federal officials)
+Phase: 21 — TX State Legislature (in progress, 1/5 plans)
+Plan: 1/5 complete
+Status: Phase 21 in progress — 21-01 complete: 181 TX state legislative boundaries loaded (31 G5210 Senate + 150 G5220 House); 181 districts seeded (31 STATE_UPPER + 150 STATE_LOWER); PostGIS geometry valid at SRID 4326
+Last activity: 2026-05-04 — Completed 21-01 (TX state legislative boundaries + districts)
 
-Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20 complete; Phase 18 (Compass Stances) remains
+Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20 complete; Phase 21 started (1/5); Phase 18 (Compass Stances) remains
 
 ## Project Reference
 
@@ -102,6 +102,14 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - G4020 county boundary intersection PATTERN ESTABLISHED: to add congressional rep lookup for any TX county, (a) load county G4020 boundary into DB, (b) add browseCountyGeoId to COVERAGE_AREAS entry in Landing.jsx — no other code changes needed
 - Priority TX counties for future expansion: Dallas (48113), Tarrant (48439), Bexar (48029), Travis (48453)
 
+### Phase 21 Notes
+
+- MTFCC mapping RESOLVED: G5210=Senate=STATE_UPPER (SLDU/31), G5220=House=STATE_LOWER (SLDL/150) — matches TIGER spec AND essentialsService.ts:567-568
+- geofence_boundaries.state = FIPS '48'; districts.state = abbreviation 'TX' (intentionally different — established pattern)
+- load-tx-state-boundaries.ts: auto-download pattern modeled on load-us-congressional-boundaries.ts (NOT load-ca-state-boundaries.ts — that has inverted MTFCC bug)
+- 181 boundaries + 181 districts loaded 2026-05-04; idempotent re-run confirmed (Already existed: 181)
+- Script cached TIGER ZIPs locally; clean re-run will skip downloads and re-extract
+
 ### Phase 20 Notes
 
 - Migration 107 applied 2026-05-04: 6 TX executive chambers name_formal populated (Texas Governor, Lt. Governor, AG, Comptroller, Land Commissioner, Agriculture Commissioner); 8 TX state/federal politicians office_id backfilled (external_id -100200..-100207)
@@ -124,3 +132,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-03 — Phase 17 complete (4/4 plans); 37/37 TX House reps + Sonderling imaged via Wikipedia; migration 106 applied (office_id backfill + Labor Secretary transition); 57/75 Tier 3/4 imaged (34 confirmed gaps)*
 *Updated: 2026-05-04 — Phase 20-01 complete; migration 107 applied; 6 TX executive chambers name_formal populated; 8 TX state/federal politicians office_id backfilled (Cruz/Cornyn/Abbott/Patrick/Paxton/Hegar/Buckingham/Miller); idempotent re-run confirmed UPDATE 0/0*
 *Updated: 2026-05-04 — Phase 20 complete (2/2 plans); 8 Wikipedia headshots imported (cc_by_sa, 600×750); all profile pages now render title + chamber + photo; Phase 18 (Compass Stances) is next*
+*Updated: 2026-05-04 — Phase 21-01 complete; 181 TX state legislative boundaries loaded (31 G5210/STATE_UPPER Senate + 150 G5220/STATE_LOWER House); essentials.geofence_boundaries state='48', essentials.districts state='TX'; SRID 4326 all valid; idempotent*
