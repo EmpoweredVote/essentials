@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 17 — Headshots (complete, all 4 plans)
-Plan: 4/4 complete
-Status: Phase 17 complete — 57/75 Tier 3/4 imaged (34 confirmed availability gaps); 37/37 TX US House reps + Keith E. Sonderling imaged; migration 106 applied (office_id backfill + Labor Secretary update)
-Last activity: 2026-05-03 — Completed 17-04 (TX House reps + Sonderling; 38 federal headshots via Wikipedia/Wikimedia Commons)
+Phase: 20 — TX State + Federal Officials (in progress)
+Plan: 1/2 complete
+Status: Migration 107 applied — 6 TX executive chambers name_formal populated; 8 TX state/federal politicians office_id backfilled; profile rendering unblocked
+Last activity: 2026-05-04 — Completed 20-01 (migration 107: chambers name_formal + politicians office_id backfill)
 
-Progress: [█████████░░░░░░░░░░░] v3.0 — Phase 17 complete (4/4 plans done); Phase 19 also complete
+Progress: [█████████░░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20-01 complete; 20-02 (headshots) next
 
 ## Project Reference
 
@@ -62,7 +62,7 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - May 2, 2026 TX uniform election just happened — research winners as new incumbents
 - Collin County Elections primary source: collincountytx.gov (NOT collincountyvotes.gov — that domain does not exist)
 - Stance research sparse for Tier 3-4 cities (small digital footprint expected)
-- Migration numbering: next migration is 094 (093 used for McKinney email backfill)
+- Migration numbering: next migration is 108 (107 applied 2026-05-04: chambers name_formal + politicians office_id backfill for TX state/federal officials)
 - Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
 - Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
 - CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
@@ -102,6 +102,14 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - G4020 county boundary intersection PATTERN ESTABLISHED: to add congressional rep lookup for any TX county, (a) load county G4020 boundary into DB, (b) add browseCountyGeoId to COVERAGE_AREAS entry in Landing.jsx — no other code changes needed
 - Priority TX counties for future expansion: Dallas (48113), Tarrant (48439), Bexar (48029), Travis (48453)
 
+### Phase 20 Notes
+
+- Migration 107 applied 2026-05-04: 6 TX executive chambers name_formal populated (Texas Governor, Lt. Governor, AG, Comptroller, Land Commissioner, Agriculture Commissioner); 8 TX state/federal politicians office_id backfilled (external_id -100200..-100207)
+- chambers name_formal back-fill pattern: WHERE name_formal = '' AND id IN (explicit UUIDs) — never name matching
+- politicians office_id back-fill pattern: BETWEEN range (-100210..-100199) provides headroom; guarded by IS NULL
+- All 8 office_id UUIDs verified against expected values from migration 103
+- Plan 20-02 (headshots for 8 TX state/federal officials) is unblocked
+
 ---
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
@@ -113,3 +121,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-03 — Phase 19-04 complete; PostGIS G4020↔G5200 backend wired; getPoliticiansByGovernmentList +countyGeoId; smoke test passed (5 US House reps for Collin County)*
 *Updated: 2026-05-03 — Phase 19 complete (5/5 plans); frontend wired api.jsx+Landing.jsx+Results.jsx; production verified; G4020 county intersection pattern documented; Dallas/Tarrant/Bexar/Travis queued for future expansion*
 *Updated: 2026-05-03 — Phase 17 complete (4/4 plans); 37/37 TX House reps + Sonderling imaged via Wikipedia; migration 106 applied (office_id backfill + Labor Secretary transition); 57/75 Tier 3/4 imaged (34 confirmed gaps)*
+*Updated: 2026-05-04 — Phase 20-01 complete; migration 107 applied; 6 TX executive chambers name_formal populated; 8 TX state/federal politicians office_id backfilled (Cruz/Cornyn/Abbott/Patrick/Paxton/Hegar/Buckingham/Miller); idempotent re-run confirmed UPDATE 0/0*
