@@ -250,6 +250,20 @@ Plans:
 Plans:
 - [ ] 18-01: TBD
 
+#### Phase 20: TX State + Federal Officials — Offices and Headshots
+**Goal**: The 8 pre-seeded TX state/federal official stubs (Greg Abbott, Dan Patrick, Ken Paxton, Glenn Hegar, Dawn Buckingham, Sid Miller, John Cornyn, Ted Cruz) have fully wired office records and headshots so their profile pages render correctly — title, chamber, and photo all present.
+**Depends on**: Phase 19
+**Success Criteria** (what must be TRUE):
+  1. TX state executive chambers exist (Governor's Office, Lt. Governor's Office, Attorney General's Office, Comptroller's Office, Land Commissioner's Office, Agriculture Commissioner's Office) and TX Senate chamber exists for senators
+  2. Each of the 8 politicians has an `office_id` set linking to a correctly titled, correctly chambered office record
+  3. All 8 politicians have headshots in `essentials.politician_images` (cc_by_sa from Wikipedia)
+  4. Profile pages for all 8 render with title and photo (no blank/unfinished appearance)
+**Plans**: 2 plans
+
+Plans:
+- [ ] 20-01-PLAN.md — Migration 107: fix TX executive chamber name_formal + back-fill politicians.office_id for 8 TX state/federal officials
+- [ ] 20-02-PLAN.md — Wikipedia headshots for all 8 (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz)
+
 ---
 
 ## Backlog
