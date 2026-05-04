@@ -275,11 +275,11 @@ Plans:
 **Plans**: 5 plans
 
 Plans:
-- [ ] 21-01-PLAN.md — Load TX state legislative district boundaries (SLDU + SLDL) via auto-download script
-- [ ] 21-02-PLAN.md — Migration 108: create Texas State Senate + Texas House of Representatives chambers
-- [ ] 21-03-PLAN.md — Migration 109: seed 30 TX state senators + D4 vacancy
-- [ ] 21-04-PLAN.md — Migration 110: seed 150 TX state representatives
-- [ ] 21-05-PLAN.md — End-to-end verification: roadmap criteria + 5 sample point queries + regression check
+- [x] 21-01-PLAN.md — Load TX state legislative district boundaries (SLDU + SLDL) via auto-download script
+- [x] 21-02-PLAN.md — Migration 108: create Texas State Senate + Texas House of Representatives chambers
+- [x] 21-03-PLAN.md — Migration 109: seed 30 TX state senators + D4 vacancy
+- [x] 21-04-PLAN.md — Migration 110: seed 150 TX state representatives
+- [x] 21-05-PLAN.md — End-to-end verification: roadmap criteria + 5 sample point queries + regression check
 
 ---
 
@@ -323,3 +323,4 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
 | 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
 | 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |
+| 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |

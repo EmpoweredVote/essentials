@@ -2,12 +2,14 @@
 
 ## Current Position
 
-Phase: 21 — TX State Legislature (in progress, 4/5 plans)
-Plan: 4/5 complete
-Status: Phase 21 in progress — 21-04 complete: 150 TX House reps + 150 offices seeded (migration 110); all office_id back-filled; idempotent
-Last activity: 2026-05-04 — Completed 21-04 (TX state house officials seeded)
+Phase: 21 — TX State Legislature (complete, all 5 plans)
+Plan: 5/5 complete
+Status: Phase 21 complete — 21-05 verification passed; all 4 roadmap success criteria PASS; 11-row regression clean
+Last activity: 2026-05-04 — Completed 21-05 (end-to-end verification); Phase 21 done
 
-Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-17, 19, 20 complete; Phase 21 in progress (4/5); Phase 18 (Compass Stances) remains
+Next: Phase 17 (Headshots — 4 plans, not started) or Phase 18 (Compass Stances — TBD plans, not started)
+
+Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-16, 19, 20, 21 complete; Phase 17 (Headshots) + Phase 18 (Compass Stances) remain
 
 ## Project Reference
 
@@ -116,6 +118,11 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - D9 senator name confirmed: Taylor Rehmet (not Rehmert) — verified from official senate.texas.gov source
 - TX Senate vacancy pattern: D4 office has politician_id NULL, is_vacant=true; external_id -100404 intentionally unused; matches TX-23 US House vacancy pattern from migration 105/0 0
 - Migration 110 applied 2026-05-04: 150 TX House reps + 150 offices; chamber 5ac03af0; external_ids -100501..-100650; idempotent; D115 full name 'Cassandra Garcia Hernandez' (compound last name); 88R/62D
+- Phase 21 verified 2026-05-04: all 4 roadmap success criteria PASS — 31 G5210 + 150 G5220 boundaries valid, 31 STATE_UPPER + 150 STATE_LOWER districts matched, 30 senators + 150 reps with 100% office_id back-fill, 5 TX addresses each returned 1 STATE_UPPER + 1 STATE_LOWER row
+- Regression check 2026-05-04: 11-row query at Capitol Austin clean — Lloyd Doggett (TX-37), Sarah Eckhardt (D14), Gina Hinojosa (D49), Cruz/Cornyn, Abbott/Patrick/Paxton/Hegar/Buckingham/Miller all present
+- Point query notes: Senate predictions 5/5 exact; House 2/5 exact (Austin + Houston); Dallas D114/San Antonio D123/McKinney D61 returned instead of estimated D100/D125/D89 — TIGER geometry is authoritative, all correct-area reps
+- Next migration is 111 (110 applied 2026-05-04: 150 TX state reps)
+- Phase 21 complete 2026-05-04 — TX state legislators now appear in point queries alongside federal officials
 
 ### Phase 20 Notes
 
@@ -143,3 +150,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 21-02 complete; migration 108 applied; Texas State Senate (0b970b1c) + Texas House of Representatives (5ac03af0) chambers created; name_formal=name; slug auto-generated; idempotent re-run confirmed INSERT 0 0*
 *Updated: 2026-05-04 — Phase 21-03 complete; migration 109 applied; 30 TX state senators + 31 senate offices (D4 vacant, is_vacant=true); all 30 politicians office_id back-filled; idempotent; senate half of Phase 21 complete*
 *Updated: 2026-05-04 — Phase 21-04 complete; migration 110 applied; 150 TX House reps + 150 offices (no vacancies); chamber 5ac03af0; external_ids -100501..-100650; 88R/62D; all 150 office_id back-filled; idempotent; house half of Phase 21 complete*
+*Updated: 2026-05-04 — Phase 21 complete (5/5 plans); end-to-end verification passed; all 4 roadmap success criteria PASS; 5 TX addresses each return 1 STATE_UPPER + 1 STATE_LOWER; 11-row regression clean (Phase 19/20 intact); next migration is 111*
