@@ -264,6 +264,23 @@ Plans:
 - [x] 20-01-PLAN.md — Migration 107: fix TX executive chamber name_formal + back-fill politicians.office_id for 8 TX state/federal officials
 - [x] 20-02-PLAN.md — Wikipedia headshots for all 8 (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz)
 
+#### Phase 21: TX State Legislature — Boundaries + Officials
+**Goal**: Any Texas address search returns the correct TX State Senator and TX State House Representative, alongside the existing federal and state-exec results.
+**Depends on**: Phase 19 (TX congressional geofences must be loaded)
+**Success Criteria** (what must be TRUE):
+  1. All 31 TX State Senate district boundaries (G5210) and all 150 TX State House district boundaries (G5220) are loaded into `essentials.geofence_boundaries`
+  2. All 31 STATE_UPPER districts and 150 STATE_LOWER districts exist in `essentials.districts` with correct `geo_id` values matching the geofence boundaries
+  3. All current TX state senators (31) and state representatives (150) are seeded in `essentials.politicians` + `essentials.offices`, linked to their districts
+  4. A point query for any TX street address returns at least one STATE_UPPER and one STATE_LOWER result (verified with sample addresses across multiple districts)
+**Plans**: 5 plans
+
+Plans:
+- [ ] 21-01-PLAN.md — Load TX state legislative district boundaries (SLDU + SLDL) via auto-download script
+- [ ] 21-02-PLAN.md — Migration 108: create Texas State Senate + Texas House of Representatives chambers
+- [ ] 21-03-PLAN.md — Migration 109: seed 30 TX state senators + D4 vacancy
+- [ ] 21-04-PLAN.md — Migration 110: seed 150 TX state representatives
+- [ ] 21-05-PLAN.md — End-to-end verification: roadmap criteria + 5 sample point queries + regression check
+
 ---
 
 ## Backlog
