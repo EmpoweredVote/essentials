@@ -1,5 +1,32 @@
 # Milestones
 
+## v3.1 Local Compass Expansion (Shipped: 2026-05-05)
+
+**Delivered:** Expanded the political compass with 10 new LOCAL-scope topics and 10 companion Focused Communities, and wired frontend scope filtering so city council profiles show only locally-relevant questions.
+
+**Phases completed:** 22-25 (7 plans total)
+
+**Key accomplishments:**
+
+- Audited compass scope mechanism — confirmed scope lives in `compass_topic_roles` join table (not `compass_stances`); 42 existing politician answers for "Criminalization of Homelessness" → keep-both decision documented
+- Added 10 new LOCAL-scope compass topics with full 5-stance metadata — 50 stance rows and 14 scope-role rows applied to production `inform` schema via Supabase migration
+- Seeded 10 companion Focused Communities in `connect.communities` with authored descriptions and `fc_community_slug` backfill — all 10 live at fc.empowered.vote
+- Closed Affordable Housing LOCAL scope gap — topic was missing local scope row; migration 20260505000001 added it
+- Wired `districtScope` filtering in CompassCard/Profile/CandidateProfile.jsx — local politicians now see only LOCAL-applicable compass topics; cross-cutting topics correctly default to all tiers
+
+**Stats:**
+
+- 29 files created/modified (4,510 insertions, 49 deletions)
+- 11,658 total LOC JSX/JS (frontend)
+- 4 phases, 7 plans
+- 2 days (2026-05-04 → 2026-05-05)
+
+**Git range:** `e2332c1` (docs: start milestone v3.1) → `63512af` (docs(25): complete scope-audit-retirement phase)
+
+**What's next:** v3.0 remaining — Collin County headshots (Phase 17) and compass stances ingestion for Plano/McKinney/Allen (Phase 18)
+
+---
+
 ## v2.1 Claude Candidate Discovery (Shipped: 2026-04-25)
 
 **Delivered:** A Claude-powered candidate discovery pipeline that finds, scores, and stages candidates from official election authority sources — scaling to any jurisdiction by adding a single config row, with admin review UI, email alerts, and weekly automated discovery.

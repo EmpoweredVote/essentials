@@ -2,20 +2,19 @@
 
 ## Current Position
 
-Phase: 25 — Scope Audit + Retirement (complete)
-Plan: 2 of 2
-Status: Phase 25 complete — v3.1 Local Compass Expansion milestone COMPLETE (all 4 phases done)
-Last activity: 2026-05-05 — Completed 25-01 (Affordable Housing local scope added) + 25-02 (districtScope filtering in CompassCard/Profile/CandidateProfile); verification 4/4 passed
+Phase: Next is Phase 17 (Headshots) — v3.0 remaining work
+Plan: Not started
+Status: v3.1 milestone SHIPPED 2026-05-05 — ready to resume v3.0 Phase 17 or plan next milestone
+Last activity: 2026-05-05 — v3.1 Local Compass Expansion complete + archived
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
-v3.1 progress: [████████████████████] Phases 22 + 23 + 24 + 25 done (4/4 phases) — COMPLETE
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
+See: .planning/PROJECT.md (updated 2026-05-05 after v3.1 milestone completion)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v3.0 — Collin County, TX Coverage (greenfield TX data expansion)
+**Current focus:** v3.0 remaining — Phase 17 Headshots + Phase 18 Compass Stances for Collin County politicians
 
 ## Accumulated Context
 

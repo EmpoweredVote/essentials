@@ -2,23 +2,11 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, and Collin County, TX. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline that finds candidates from official election authority sources, scores confidence, and stages them for admin review or auto-upsert.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, and Collin County, TX. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline that finds candidates from official election authority sources, scores confidence, and stages them for admin review or auto-upsert. The political compass includes 10 LOCAL-scope topics covering policies city governments directly control, with scope filtering so local politician profiles show only locally-relevant questions.
 
 ## Core Value
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
-
-## Current Milestone: v3.1 Local Compass Expansion
-
-**Goal:** Add 10 new LOCAL-scope compass topics with companion Focused Communities so city council and mayoral candidates can be compared on policies their government directly controls.
-
-**Target features:**
-- 10 new topics in `inform.compass_stances` (Residential Zoning, Growth/Development, Public Safety, Homelessness Response, Economic Dev, Transportation, Environmental, Rent Regulation, Local Immigration, Sanitation) — each with 5 stances + full metadata + LOCAL scope tag
-- 10 companion communities in `connect.communities` (1:1 with new topics, authored descriptions)
-- Scope audit of existing topics — confirm LOCAL tags are correct across all existing topics
-- Conditional retirement of "Criminalization of Homelessness" pending data audit
-
-**Execution note:** Primary work is in `C:\Focused Communities\supabase\migrations\` (both `inform` and `connect` schema). No Essentials frontend changes expected.
 
 ## v3.0 Remaining Work (In Progress)
 
@@ -68,18 +56,17 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ Admin email notifications — urgency-aware review email, zero-candidate regression alert, failure alert — v2.1
 - ✓ New jurisdiction onboarding — adding a discovery_jurisdictions row is sufficient to enable discovery and scheduling — v2.1
 - ✓ Proximity-aware cron — daily cadence within 30 days of election, configurable per jurisdiction — v2.1
+- ✓ 10 new LOCAL compass topics with full 5-stance metadata (50 stances, 14 scope-role rows) in production `inform` schema — v3.1
+- ✓ 10 companion Focused Communities in `connect.communities` with authored descriptions, all live at fc.empowered.vote — v3.1
+- ✓ LOCAL scope tagging audit — Affordable Housing gap closed; all 5 LOCAL-applicable existing topics confirmed correct — v3.1
+- ✓ `districtScope` filtering in CompassCard/Profile/CandidateProfile.jsx — local politicians see only LOCAL-applicable compass topics — v3.1
+- ✓ "Criminalization of Homelessness" keep-both decision documented (42 existing politician answers; complementary framing to Homelessness Response) — v3.1
 
 ### Active
 
 <!-- v3.0 remaining -->
 - [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17)
 - [ ] Compass stances — Plano/McKinney/Allen ingested (Phase 18)
-
-<!-- v3.1 scope -->
-- [ ] 10 new LOCAL compass topics in `inform.compass_stances` with full stance metadata
-- [ ] 10 companion Focused Communities in `connect.communities`
-- [ ] LOCAL scope tagging audit across all existing topics
-- [ ] "Criminalization of Homelessness" retirement decision + execution (conditional)
 
 ### Out of Scope
 
@@ -97,6 +84,7 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Backend**: Express API (`C:\EV-Accounts`), deployed via Render push to master. Database: Postgres with PostGIS in `essentials` schema.
 - **Shipped v2.0**: Dedicated Elections page at `/elections` — 4 phases, 4 plans complete (2026-04-13).
 - **Shipped v2.1**: Claude candidate discovery pipeline — 3 phases, 9 plans, 18/18 requirements (2026-04-25). ~1,733 LOC TypeScript in 6 core discovery files.
+- **Shipped v3.1**: Local Compass Expansion — 4 phases, 7 plans, 25/26 requirements (2026-05-05). 10 LOCAL topics + 10 FC communities + scope filtering wired in essentials frontend.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
 - **Database state**: 2 elections (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124+ candidates, 6,928 geofence boundaries. Discovery pipeline now auto-populates candidates.
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
@@ -132,6 +120,11 @@ A resident can look up who represents them — and who is on their ballot — wi
 | In-process lock (not Redis) for discovery sweep | Single-instance Render deployment; process restart clears lock; 2h TTL guards slow sweeps | ✓ Good — v2.1 |
 | Sequential jurisdiction processing in cron | Never Promise.all — exhausts Anthropic rate limit quota with no usable output | ✓ Good — v2.1 |
 | web_search max_uses: 1 (with sourceUrl) / 2 (without) | Prevents quota exhaustion per discovery run | ✓ Good — v2.1 |
+| Compass scope in compass_topic_roles (not compass_stances) | compass_stances has no scope column; scope is a join table — audited Phase 22 | ✓ Good — v3.1 |
+| Keep both "Criminalization of Homelessness" + "Homelessness Response" | 42 existing politician answers; complementary framing (enforcement vs. service delivery) — retiring would orphan real data | ✓ Good — v3.1 |
+| 4 of 10 new topics get LOCAL+STATE dual scope | Topics where state co-governs (transportation, environment, public safety, homelessness services) warrant state scope too | ✓ Good — v3.1 |
+| local-immigration topic_key → immigration-policy slug | Decouples public FC URL from internal key; prevents confusion with existing federal Immigration topic | ✓ Good — v3.1 |
+| `t[key] !== false` in CompassCard scope filter | Cross-cutting topics (no scope rows, undefined flags) correctly pass all tier filters — `=== true` would break them | ✓ Good — v3.1 |
 
 ---
-*Last updated: 2026-05-04 after v3.1 milestone start (Local Compass Expansion — phases 22-25)*
+*Last updated: 2026-05-05 after v3.1 milestone completion (Local Compass Expansion — phases 22-25 shipped)*
