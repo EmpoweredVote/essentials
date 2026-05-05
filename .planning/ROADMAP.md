@@ -394,4 +394,4 @@ v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 | 22. Compass Schema Audit | v3.1 | 1/1 | Complete | 2026-05-04 |
 | 23. New LOCAL Compass Topics | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 25. Scope Audit + Retirement | v3.1 | 0/2 | Not started | - |
+| 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |

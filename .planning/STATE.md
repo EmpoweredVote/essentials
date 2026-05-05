@@ -2,13 +2,13 @@
 
 ## Current Position
 
-Phase: 25 — Scope Audit + Retirement (in progress)
-Plan: 2 of ? (plans 25-01 + 25-02 complete)
-Status: In progress — Phase 25 scope tags corrected + scope filtering wired; any remaining plans next
-Last activity: 2026-05-05 — Completed 25-01-PLAN.md (scope audit migration applied; Affordable Housing local scope added)
+Phase: 25 — Scope Audit + Retirement (complete)
+Plan: 2 of 2
+Status: Phase 25 complete — v3.1 Local Compass Expansion milestone COMPLETE (all 4 phases done)
+Last activity: 2026-05-05 — Completed 25-01 (Affordable Housing local scope added) + 25-02 (districtScope filtering in CompassCard/Profile/CandidateProfile); verification 4/4 passed
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
-v3.1 progress: [████████░░░░░░░░░░░░] Phases 22 + 23 + 24 + 25-01 + 25-02 done
+v3.1 progress: [████████████████████] Phases 22 + 23 + 24 + 25 done (4/4 phases) — COMPLETE
 
 ## Project Reference
 
@@ -226,3 +226,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-05 — Phase 24 complete (2/2 plans); migration applied via supabase db push; 10 connect.communities rows seeded; fc_community_slug populated for all 10 LOCAL topic_keys; immigration-policy slug exception verified live; Phase 25 next*
 *Updated: 2026-05-05 — Phase 25-02 complete; CompassCard districtScope filtering wired; Profile.jsx + CandidateProfile.jsx thread districtScope from pol.district_type; build passes; local officials now see only LOCAL-applicable compass topics*
 *Updated: 2026-05-05 — Phase 25-01 complete (executed after 25-02); migration 20260505000001_phase25_scope_audit.sql applied; Affordable Housing local scope added; all 5 target topics confirmed has_local=true; plan's topic_keys corrected (housing/childcare/data-centers)*
+*Updated: 2026-05-05 — Phase 25 complete (2/2 plans); verification 4/4 passed; SCOPE-02 satisfied (all 5 LOCAL-applicable topics have local scope tags); RETIRE-01 kept both (42 politician answers intact); districtScope filtering live in essentials frontend; v3.1 milestone COMPLETE*
