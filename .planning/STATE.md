@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 25 — Scope Audit + Retirement (in progress)
-Plan: 2 of ? (plan 25-02 complete)
-Status: In progress — Phase 25 scope filtering wired; Plan 25-03 next if any
-Last activity: 2026-05-05 — Completed 25-02-PLAN.md (districtScope filtering in CompassCard + Profile + CandidateProfile; build passes)
+Plan: 2 of ? (plans 25-01 + 25-02 complete)
+Status: In progress — Phase 25 scope tags corrected + scope filtering wired; any remaining plans next
+Last activity: 2026-05-05 — Completed 25-01-PLAN.md (scope audit migration applied; Affordable Housing local scope added)
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
 v3.1 progress: [████████░░░░░░░░░░░░] Phases 22 + 23 + 24 + 25-01 + 25-02 done
@@ -189,6 +189,17 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - All 4 verification queries passed: 10 communities, 0 orphans, 50 stances all with descriptions, 10 non-null fc_community_slug rows
 - Correct FC community URL pattern: /communities/:slug (NOT /:slug — plan had wrong paths)
 
+### Phase 25 Notes
+
+- Migration 20260505000001_phase25_scope_audit.sql applied 2026-05-05: local scope row added for Affordable Housing (topic_key='housing', UUID 669cac97-66a6-4087-b036-936fbe62efb3)
+- Audit finding: plan used wrong topic_keys (affordable-housing, childcare-affordability, data-center-development) — actual DB keys are 'housing', 'childcare', 'data-centers'
+- childcare + data-centers: already had federal+local+state scope rows — no change needed
+- homelessness: still has federal+local+state — RETIRE-01 keep-both decision preserved
+- jail-capacity: already had local+state — no change needed
+- Post-migration verification: all 5 topics show has_local=true; 12 total rows in compass_topic_roles for these 5 topics
+- Topic UUID reference: housing=669cac97, childcare=c1ac1330, data-centers=4559b513, homelessness=4938766b, jail-capacity=c267e137
+- DATABASE_URL stored at C:/Users/Chris/AppData/Local/Temp/backend.env (not C:\Focused Communities\backend\.env which does not exist)
+
 ---
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
@@ -214,3 +225,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 24-01 complete; 10 companion community descriptions authored and user-approved at checkpoint (zero edits); migration 20260504000002_phase24_companion_communities.sql written (10 INSERTs + 10 UPDATEs, all 7 verification checks pass); immigration-policy slug decoupled from local-immigration topic_key; ready for supabase db push in Plan 24-02*
 *Updated: 2026-05-05 — Phase 24 complete (2/2 plans); migration applied via supabase db push; 10 connect.communities rows seeded; fc_community_slug populated for all 10 LOCAL topic_keys; immigration-policy slug exception verified live; Phase 25 next*
 *Updated: 2026-05-05 — Phase 25-02 complete; CompassCard districtScope filtering wired; Profile.jsx + CandidateProfile.jsx thread districtScope from pol.district_type; build passes; local officials now see only LOCAL-applicable compass topics*
+*Updated: 2026-05-05 — Phase 25-01 complete (executed after 25-02); migration 20260505000001_phase25_scope_audit.sql applied; Affordable Housing local scope added; all 5 target topics confirmed has_local=true; plan's topic_keys corrected (housing/childcare/data-centers)*
