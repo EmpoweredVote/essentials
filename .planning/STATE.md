@@ -132,6 +132,37 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Plan 20-02 complete 2026-05-04: 8 Wikipedia headshots imported (cc_by_sa); all 600×750 via LANCZOS; PIL spot-check passed; zero orphans; profile pages now render title + chamber + photo
 - Sid Miller disambiguation: correct Wikipedia article is /wiki/Sid_Miller_(politician) (not /wiki/Sid_Miller which is a disambiguation page)
 
+### Phase 22 Notes
+
+**AUDIT-01 — Scope Mechanism:**
+- `inform.compass_stances` has NO scope/level/race_type column. The table holds only stance text content (id, topic_id, value, text, supporting_points, description, example_perspectives).
+- Scope filtering lives in `inform.compass_topic_roles` — a join table with columns (topic_id UUID, role_scope TEXT, is_required BOOLEAN). Valid role_scope values: 'federal', 'state', 'local'. Constrained by CHECK (role_scope IN ('federal', 'state', 'local')) per migration 059.
+- `inform.compass_topics.office_scope` (TEXT[]) exists but is informational only — never used as a render filter. All 26 live topics currently have office_scope = NULL.
+- compassService.ts `getCompassTopics()` converts compass_topic_roles rows to three booleans (applies_federal, applies_state, applies_local) at query time. Topics with ZERO rows in compass_topic_roles default to all three tiers = true (cross-cutting behavior).
+- Six live topics are currently cross-cutting (no compass_topic_roles rows): Affordable Housing, AI Oversight, Deportation Priorities, Healthcare Access, Immigration and Treatment, Taxation and Public Spending.
+- The frontend (src/lib/compass.js) does NOT currently filter displayed topics by these boolean flags — the flags are returned in the API response but filtering is not enforced in the essentials UI.
+- Pattern to add LOCAL scope to a new topic (from migration 063): INSERT INTO inform.compass_topic_roles (topic_id, role_scope, is_required) VALUES ('<uuid>', 'local', true) ON CONFLICT (topic_id, role_scope) DO NOTHING;
+
+**AUDIT-02 — "Criminalization of Homelessness" Answer Count:**
+- topic_id: 4938766b-b45a-46e3-93bd-b8b30651271a
+- topic_key: homelessness
+- is_live: true
+- fc_community_slug: criminalization-of-homelessness
+- tier roles: federal, state, local (3 rows in compass_topic_roles — all tiers)
+- office_scope: NULL
+- Politician answer count: 42 (confirmed via live COUNT(*) on inform.politician_answers)
+- Value distribution: 3× value=1, 27× value=2, 6× value=3, 4× value=4, 1× value=5
+- Politicians span LA council members, CA statewide officials, and Indiana politicians
+- topic_rewrites: 0 rows (no active or historical rewrite for this topic)
+- companion connect.communities row exists (slug: criminalization-of-homelessness); 0 members, 0 threads
+
+**RETIRE-01 — Retirement Decision: KEEP BOTH**
+- Reasoning: 42 politician answers is substantial data spanning real politicians with a diverse value distribution (1–5). Retiring would orphan all 42 politician_answers rows.
+- "Criminalization of Homelessness" (rights/enforcement frame: should sleeping in public spaces be criminalized?) is complementary to, not duplicative of, the proposed Phase 23 "Homelessness Response" topic (service delivery frame: what is the primary strategy for addressing homelessness?).
+- No retirement action is warranted. Both topics should remain live.
+- Pure retirement pattern (for reference only): UPDATE inform.compass_topics SET is_live = false WHERE id = '<topic_id>'; — no topic_rewrites row needed for pure retirement.
+- slug_history is a TEXT[] column on the connect.communities row itself (NOT a separate table — ROADMAP.md had this wrong).
+
 ---
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
@@ -151,3 +182,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 21-04 complete; migration 110 applied; 150 TX House reps + 150 offices (no vacancies); chamber 5ac03af0; external_ids -100501..-100650; 88R/62D; all 150 office_id back-filled; idempotent; house half of Phase 21 complete*
 *Updated: 2026-05-04 — Phase 21 complete (5/5 plans); end-to-end verification passed; all 4 roadmap success criteria PASS; 5 TX addresses each return 1 STATE_UPPER + 1 STATE_LOWER; 11-row regression clean (Phase 19/20 intact); next migration is 111
 *Updated: 2026-05-04 — Milestone v3.1 Local Compass Expansion defined; 26 requirements across 4 phases (22-25); primary execution in C:\Focused Communities\supabase\migrations\*
+*Updated: 2026-05-04 — Phase 22 complete (1/1 plans); compass schema audit done; AUDIT-01: scope lives in compass_topic_roles (not compass_stances); AUDIT-02: 42 politician answers for Criminalization of Homelessness; RETIRE-01: keep both (complementary framing); next migration is 111*
