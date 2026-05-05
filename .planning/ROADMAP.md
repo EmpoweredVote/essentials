@@ -329,8 +329,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 24-01-PLAN.md — Author 10 community descriptions inline + write Phase 24 migration SQL (with user review checkpoint)
-- [ ] 24-02-PLAN.md — Apply migration via supabase db push + run 4 verification queries + user spot-checks 3 live communities
+- [x] 24-01-PLAN.md — Author 10 community descriptions inline + write Phase 24 migration SQL (with user review checkpoint)
+- [x] 24-02-PLAN.md — Apply migration via supabase db push + run 4 verification queries + user spot-checks 3 live communities
 
 #### Phase 25: Scope Audit + Retirement
 **Goal**: Existing LOCAL-applicable topics have correct scope tags; "Criminalization of Homelessness" is retired or confirmed kept based on Phase 22 decision
@@ -388,5 +388,5 @@ v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 | 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |
 | 22. Compass Schema Audit | v3.1 | 1/1 | Complete | 2026-05-04 |
 | 23. New LOCAL Compass Topics | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 24. Companion Focused Communities | v3.1 | 0/TBD | Not started | - |
+| 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 25. Scope Audit + Retirement | v3.1 | 0/TBD | Not started | - |

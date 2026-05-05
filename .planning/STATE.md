@@ -2,13 +2,13 @@
 
 ## Current Position
 
-Phase: 24 — Companion Focused Communities (in progress)
-Plan: 1 of 2
-Status: Plan 24-01 complete — Plan 24-02 (apply migration via supabase db push) next
-Last activity: 2026-05-04 — Completed 24-01-PLAN.md (10 community descriptions approved + migration SQL written; 8d0238d in C:/Focused Communities)
+Phase: 24 — Companion Focused Communities (complete)
+Plan: 2 of 2
+Status: Phase 24 complete — Phase 25 (Scope Audit + Retirement) next
+Last activity: 2026-05-05 — Completed 24-02-PLAN.md (migration applied + all 4 verification queries passed + 3 communities spot-checked live at /communities/[slug])
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
-v3.1 progress: [███░░░░░░░░░░░░░░░░░] Phases 22 + 23 done (2/4 phases)
+v3.1 progress: [██████░░░░░░░░░░░░░░] Phases 22 + 23 + 24 done (3/4 phases)
 
 ## Project Reference
 
@@ -173,6 +173,13 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Pure retirement pattern (for reference only): UPDATE inform.compass_topics SET is_live = false WHERE id = '<topic_id>'; — no topic_rewrites row needed for pure retirement.
 - slug_history is a TEXT[] column on the connect.communities row itself (NOT a separate table — ROADMAP.md had this wrong).
 
+### Phase 24 Notes
+
+- Migration 20260504000002_phase24_companion_communities.sql applied 2026-05-05: 10 connect.communities rows seeded + fc_community_slug populated for all 10 LOCAL topic_keys
+- local-immigration topic_key → immigration-policy slug exception verified live at fc.empowered.vote/communities/immigration-policy
+- All 4 verification queries passed: 10 communities, 0 orphans, 50 stances all with descriptions, 10 non-null fc_community_slug rows
+- Correct FC community URL pattern: /communities/:slug (NOT /:slug — plan had wrong paths)
+
 ---
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
@@ -196,3 +203,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 23-01 complete; 50 LOCAL compass stances authored across 10 topics; migration 20260504000001_phase23_local_compass_topics.sql written + user-approved via checkpoint; 6 LOCAL-only + 4 LOCAL+STATE topics; local-immigration isolated from federal topic; ready for supabase db push in Plan 23-02*
 *Updated: 2026-05-04 — Phase 23 complete (2/2 plans); migration applied via supabase db push (with migration history repair); 10 topics + 50 stances + 14 scope-role rows confirmed via psql; fc_community_slug NULL for all 10 topics — Phase 24 next*
 *Updated: 2026-05-04 — Phase 24-01 complete; 10 companion community descriptions authored and user-approved at checkpoint (zero edits); migration 20260504000002_phase24_companion_communities.sql written (10 INSERTs + 10 UPDATEs, all 7 verification checks pass); immigration-policy slug decoupled from local-immigration topic_key; ready for supabase db push in Plan 24-02*
+*Updated: 2026-05-05 — Phase 24 complete (2/2 plans); migration applied via supabase db push; 10 connect.communities rows seeded; fc_community_slug populated for all 10 LOCAL topic_keys; immigration-policy slug exception verified live; Phase 25 next*
