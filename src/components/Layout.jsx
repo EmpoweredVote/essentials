@@ -2,6 +2,7 @@ import { Header, FeedbackButton, defaultNavItems, defaultCtaButton } from "@empo
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { useSearchParams } from "react-router-dom";
+import { ThemeToggle } from "./ThemeToggle";
 export function Layout({ children }) {
   const { isLoggedIn, userName, logout } = useCompass();
   const [searchParams] = useSearchParams();
@@ -47,7 +48,7 @@ export function Layout({ children }) {
         logoAlt="Empowered Vote"
         navItems={navItems}
         ctaButton={defaultCtaButton}
-        secondaryAction={<FeedbackButton />}
+        secondaryAction={<div className="flex items-center gap-2"><ThemeToggle /><FeedbackButton /></div>}
         onNavigate={(href) => { window.location.href = href; }}
         profileMenu={profileMenu}
       />

@@ -69,7 +69,7 @@ function Profile() {
 
   return (
     <Layout>
-    <div className="min-h-screen bg-[var(--ev-bg-light)]">
+    <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
 
       <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
         {loadingProfile ? (
@@ -181,8 +181,8 @@ function Profile() {
                   <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
                     Compass &amp; Issues
                   </h2>
-                  <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-                    <p className="text-gray-600" style={{ fontSize: '15px', lineHeight: 1.6, margin: 0 }}>
+                  <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6 text-center">
+                    <p className="text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', lineHeight: 1.6, margin: 0 }}>
                       This is an administrative office — it doesn't take policy positions,
                       so no compass comparison applies. See the role description and contact
                       information above.
@@ -203,11 +203,11 @@ function Profile() {
                   <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
                     Compass &amp; Issues
                   </h2>
-                  <div className="bg-white rounded-xl shadow-sm p-6 text-center">
-                    <p className="text-gray-600 mb-2" style={{ fontSize: '15px', lineHeight: 1.6 }}>
+                  <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6 text-center">
+                    <p className="text-gray-600 dark:text-gray-300 mb-2" style={{ fontSize: '15px', lineHeight: 1.6 }}>
                       Judges are typically evaluated on their record rather than stated policy positions.
                     </p>
-                    <p className="text-gray-500" style={{ fontSize: '14px', lineHeight: 1.6, margin: 0 }}>
+                    <p className="text-gray-500 dark:text-gray-400" style={{ fontSize: '14px', lineHeight: 1.6, margin: 0 }}>
                       We're working on surfacing judicial records. In the meantime, you can review the
                       role description and contact information above.
                     </p>

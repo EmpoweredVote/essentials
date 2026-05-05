@@ -72,21 +72,21 @@ export default function Landing() {
 
   return (
     <Layout>
-    <div className="min-h-screen bg-[var(--ev-bg-light)]">
+    <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
 
       <main className="container mx-auto px-4 sm:px-6 py-16">
         <div className="flex flex-col items-center justify-center gap-12">
           {/* Content */}
           <div className="flex-1 max-w-xl text-center">
-            <h1 className="text-3xl sm:text-5xl font-semibold text-[var(--ev-teal)] mb-6">
+            <h1 className="text-3xl sm:text-5xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-6">
               Find Your Representatives
             </h1>
-            <p className="text-xl text-gray-700 mb-8">
+            <p className="text-xl text-gray-700 dark:text-gray-300 mb-8">
               Enter your address to see who represents you
             </p>
 
             {/* Coverage area cards */}
-            <p className="text-sm text-gray-500 mb-3">We currently cover:</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">We currently cover:</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-2">
               {COVERAGE_AREAS.map((area) => (
                 <button
@@ -113,10 +113,10 @@ export default function Landing() {
                       navigate(`/results?q=${encodeURIComponent(area.address)}`);
                     }
                   }}
-                  className="flex-1 text-left px-4 py-3 bg-white border-2 border-[var(--ev-teal)] rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                  className="flex-1 text-left px-4 py-3 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
                 >
-                  <div className="text-base font-semibold text-[var(--ev-teal)]">{area.county}</div>
-                  <div className="text-sm text-gray-600">{area.state}</div>
+                  <div className="text-base font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light">{area.county}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{area.state}</div>
                 </button>
               ))}
             </div>
@@ -125,7 +125,7 @@ export default function Landing() {
             <div className="text-center mt-2 mb-2">
               <button
                 onClick={() => navigate('/results?mode=browse')}
-                className="text-sm text-[var(--ev-teal)] hover:underline cursor-pointer bg-transparent border-none"
+                className="text-sm text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline cursor-pointer bg-transparent border-none"
                 style={{ fontFamily: "'Manrope', sans-serif" }}
               >
                 Browse by location →
@@ -134,21 +134,21 @@ export default function Landing() {
 
             {!compassLoading && isLoggedIn && myLocationNotSet && (
               /* Connected user with no location stored — nudge to set it, but don't block the form */
-              <div className="mt-4 px-4 py-3 bg-white border border-[var(--ev-teal)] rounded-lg shadow-sm text-center text-sm">
+              <div className="mt-4 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-center text-sm">
                 <a
                   href="https://app.empowered.vote/settings/location"
-                  className="font-semibold text-[var(--ev-teal)] hover:underline"
+                  className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline"
                 >
                   Set your home location in your profile
                 </a>
-                {' '}to get taken straight to your elected leaders on every visit.
+                {' '}<span className="text-gray-700 dark:text-gray-300">to get taken straight to your elected leaders on every visit.</span>
               </div>
             )}
 
             {/* "or search by address" divider */}
             <div className="relative my-6">
-              <hr className="border-gray-200" />
-              <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] px-3 text-sm text-gray-400">
+              <hr className="border-gray-200 dark:border-gray-700" />
+              <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] dark:bg-ev-navy px-3 text-sm text-gray-400 dark:text-gray-500">
                 or search by address
               </span>
             </div>
@@ -162,7 +162,7 @@ export default function Landing() {
                 onChange={(e) => setAddressInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Enter your full street address"
-                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
+                className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
               />
               <button
                 onClick={handleSearch}
@@ -175,8 +175,8 @@ export default function Landing() {
 
             {/* "or search by name" divider */}
             <div className="relative my-6">
-              <hr className="border-gray-200" />
-              <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] px-3 text-sm text-gray-400">
+              <hr className="border-gray-200 dark:border-gray-700" />
+              <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] dark:bg-ev-navy px-3 text-sm text-gray-400 dark:text-gray-500">
                 or search by name
               </span>
             </div>
@@ -198,7 +198,7 @@ export default function Landing() {
                 onChange={(e) => setNameQuery(e.target.value)}
                 placeholder="Search candidates by name…"
                 aria-label="Search candidates by name"
-                className="w-full pl-12 pr-4 py-3 text-lg border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white shadow-sm"
+                className="w-full pl-12 pr-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
               />
             </div>
 
@@ -206,21 +206,21 @@ export default function Landing() {
             {nameQuery.trim().length >= 2 && (
               <div className="mt-2 text-left">
                 {nameStatus === 'loading' && (
-                  <p className="text-sm text-gray-500 py-2">Searching&hellip;</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 py-2">Searching&hellip;</p>
                 )}
                 {nameStatus === 'fresh' && nameResults.length === 0 && (
-                  <p className="text-sm text-gray-500 py-2">No candidates match &ldquo;{nameQuery.trim()}&rdquo;.</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 py-2">No candidates match &ldquo;{nameQuery.trim()}&rdquo;.</p>
                 )}
                 {nameStatus === 'error' && (
                   <p className="text-sm text-red-500 py-2">Search failed. Try again.</p>
                 )}
                 {nameStatus === 'fresh' && nameResults.length > 0 && (
-                  <ul className="divide-y divide-gray-100 bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+                  <ul className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
                     {nameResults.map((pol) => (
                       <li key={pol.id}>
                         <Link
                           to={`/politician/${pol.id}`}
-                          className="flex items-center gap-3 px-4 py-3 hover:bg-[var(--ev-bg-light)] transition-colors"
+                          className="flex items-center gap-3 px-4 py-3 hover:bg-[var(--ev-bg-light)] dark:hover:bg-gray-800 transition-colors"
                         >
                           {pol.photo_origin_url && (
                             <img
@@ -231,9 +231,9 @@ export default function Landing() {
                             />
                           )}
                           <div className="min-w-0">
-                            <div className="font-semibold text-[var(--ev-teal)] truncate">{pol.full_name}</div>
+                            <div className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light truncate">{pol.full_name}</div>
                             {(pol.office_title || pol.representing_state) && (
-                              <div className="text-sm text-gray-500 truncate">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
                                 {[pol.office_title, pol.representing_state].filter(Boolean).join(' — ')}
                               </div>
                             )}
@@ -246,7 +246,7 @@ export default function Landing() {
               </div>
             )}
             {nameQuery.trim().length < 2 && nameQuery.trim().length > 0 && (
-              <p className="mt-2 text-sm text-gray-400 text-left">Type at least 2 letters to search.</p>
+              <p className="mt-2 text-sm text-gray-400 dark:text-gray-500 text-left">Type at least 2 letters to search.</p>
             )}
           </div>
 

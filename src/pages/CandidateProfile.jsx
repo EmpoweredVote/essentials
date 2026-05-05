@@ -97,7 +97,7 @@ export default function CandidateProfile() {
   if (notFound && !loadingProfile) {
     return (
       <Layout>
-        <div className="min-h-screen bg-[var(--ev-bg-light)]">
+        <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
           <main className="container mx-auto px-4 sm:px-6 py-16 max-w-6xl text-center">
             <h2 style={{ fontSize: '16px', fontWeight: 700, color: '#2d3748', margin: 0 }}>
               Candidate not found
@@ -143,7 +143,7 @@ export default function CandidateProfile() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-[var(--ev-bg-light)]">
+      <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
         <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
           {loadingProfile ? (
             <div className="flex justify-center items-center py-24">

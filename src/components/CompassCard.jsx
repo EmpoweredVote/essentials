@@ -182,7 +182,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         Compass &amp; Issues
       </h2>
 
-      <div className="bg-white rounded-xl shadow-sm p-6">
+      <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6">
         {hasUserCompass ? (
           <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -290,7 +290,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                           backgroundColor: '#ff5740',
                         }}
                       />
-                      <span style={{ fontWeight: 600, color: '#4a5568' }}>You</span>
+                      <span className="font-semibold text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', fontFamily: "'Manrope', sans-serif" }}>You</span>
                     </span>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span
@@ -302,7 +302,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                           backgroundColor: '#59b0c4',
                         }}
                       />
-                      <span style={{ fontWeight: 600, color: '#4a5568' }}>{legendLabel}</span>
+                      <span className="font-semibold text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', fontFamily: "'Manrope', sans-serif" }}>{legendLabel}</span>
                     </span>
                   </div>
 

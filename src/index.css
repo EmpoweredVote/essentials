@@ -1,3 +1,5 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
@@ -6,6 +8,15 @@
   --color-ev-yellow: #fed12e;
   --color-ev-yellow-light: #fef3c7;
   --color-ev-yellow-dark: #eab308;
+
+  /* Empowered Vote - Dark Mode Palette */
+  --color-ev-navy: #020618;
+  --color-ev-navy-card: #1a2235;
+  --color-ev-navy-elevated: #1e2a3a;
+  --color-ev-black: #1c1c1c;
+  --color-ev-teal-light: #59b0c4;
+  --color-ev-coral: #ff5740;
+  --color-ev-blue: #3b82f6;
 }
 
 :root {
@@ -19,8 +30,13 @@
 
 html,
 body {
-  @apply bg-[var(--ev-bg-light)];
+  @apply bg-[var(--ev-bg-light)] dark:bg-ev-navy;
+  color: #111827;
   font-family: 'Manrope', sans-serif;
+}
+
+.dark body {
+  color: #f3f4f6;
 }
 
 /* Google Places Autocomplete dropdown */

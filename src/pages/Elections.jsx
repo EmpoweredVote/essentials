@@ -95,7 +95,7 @@ export default function Elections() {
 
         {/* Connected auto-load: show location label + Change button */}
         {connectedAutoLoad && locationLabel && !showChangeInput && (
-          <div className="mb-4 flex items-center gap-2 text-sm text-gray-600">
+          <div className="mb-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
             <span>Showing elections for <strong>{locationLabel}</strong></span>
             <button
               onClick={() => setShowChangeInput(true)}
@@ -116,7 +116,7 @@ export default function Elections() {
                 onChange={(e) => setAddressInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Enter your address"
-                className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
+                className="flex-1 border border-gray-300 dark:border-gray-700 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500"
               />
               <button
                 onClick={() => handleSearch()}
@@ -164,7 +164,7 @@ export default function Elections() {
                     key={label}
                     onClick={() => handleSearch(address)}
                     disabled={fetchLoading}
-                    className="border border-[var(--ev-teal)] text-[var(--ev-teal)] px-3 py-1.5 rounded text-sm font-medium hover:bg-[var(--ev-bg-light)] disabled:opacity-60"
+                    className="border border-[var(--ev-teal)] dark:border-ev-teal-light text-[var(--ev-teal)] dark:text-ev-teal-light px-3 py-1.5 rounded text-sm font-medium hover:bg-[var(--ev-bg-light)] dark:hover:bg-gray-800 disabled:opacity-60"
                   >
                     {label}
                   </button>
@@ -176,7 +176,7 @@ export default function Elections() {
 
         {/* Filter controls — only when results are loaded */}
         {electionsData && electionsData.length > 0 && (
-          <div className="mb-4 flex items-center gap-2 text-sm text-gray-600">
+          <div className="mb-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
             <label className="flex items-center gap-1.5 cursor-pointer select-none">
               <input
                 type="checkbox"

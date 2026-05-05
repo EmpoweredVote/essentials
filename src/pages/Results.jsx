@@ -151,14 +151,10 @@ function PromotionBanner({ kind, payload, onSave, onDismiss, status, error }) {
   return (
     <div
       role="status"
-      style={{
-        display: 'flex', alignItems: 'center', gap: '12px',
-        padding: '10px 16px', background: '#E4F3F6',
-        borderBottom: '1px solid #C0E8F2',
-        fontFamily: "'Manrope', sans-serif", fontSize: '14px', color: '#003E4D',
-      }}
+      className="flex items-center gap-3 px-4 py-[10px] bg-[#E4F3F6] dark:bg-gray-800 border-b border-[#C0E8F2] dark:border-gray-700 text-[#003E4D] dark:text-gray-200 text-sm"
+      style={{ fontFamily: "'Manrope', sans-serif" }}
     >
-      <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+      <span className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
         {message}
         {status === 'error' && error && (
           <span style={{ color: '#e64a34', marginLeft: 8 }}>
@@ -184,10 +180,7 @@ function PromotionBanner({ kind, payload, onSave, onDismiss, status, error }) {
         onClick={onDismiss}
         disabled={saving}
         aria-label="Dismiss"
-        style={{
-          padding: '4px 8px', border: 'none', background: 'transparent',
-          color: '#6b7280', fontSize: '18px', lineHeight: 1, cursor: 'pointer',
-        }}
+        className="px-2 py-1 border-none bg-transparent text-gray-500 dark:text-gray-400 text-lg leading-none cursor-pointer"
       >
         ×
       </button>
@@ -199,10 +192,10 @@ function PromotionBanner({ kind, payload, onSave, onDismiss, status, error }) {
 function SkeletonCard() {
   return (
     <div className="flex items-center gap-3 py-2 animate-pulse">
-      <div className="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0" />
+      <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex-shrink-0" />
       <div className="flex-1 flex flex-col gap-2">
-        <div className="h-4 bg-gray-200 rounded w-2/3" />
-        <div className="h-3 bg-gray-200 rounded w-1/2" />
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
       </div>
     </div>
   );
@@ -212,7 +205,7 @@ function SkeletonCard() {
 function SkeletonSection() {
   return (
     <div className="mb-6 animate-pulse">
-      <div className="h-4 bg-gray-200 rounded w-24 mb-4" />
+      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24 mb-4" />
       <SkeletonCard />
       <SkeletonCard />
       <SkeletonCard />
@@ -1180,7 +1173,7 @@ export default function Results() {
 
   return (
     <Layout>
-    <div className="min-h-screen bg-[var(--ev-bg-light)]">
+    <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
 
       {/* Page body: two-panel layout filling viewport below SiteHeader */}
       <div
@@ -1230,14 +1223,10 @@ export default function Results() {
           {isLoggedIn && suggestedSaveAddress && (
             <div
               role="status"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '12px',
-                padding: '10px 16px', background: '#E4F3F6',
-                borderBottom: '1px solid #C0E8F2',
-                fontFamily: "'Manrope', sans-serif", fontSize: '14px', color: '#003E4D',
-              }}
+              className="flex items-center gap-3 px-4 py-[10px] bg-[#E4F3F6] dark:bg-gray-800 border-b border-[#C0E8F2] dark:border-gray-700 text-[#003E4D] dark:text-gray-200 text-sm"
+              style={{ fontFamily: "'Manrope', sans-serif" }}
             >
-              <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              <span className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
                 Use <strong>{suggestedSaveAddress.addr}</strong> as your saved address?
               </span>
               <button
@@ -1263,17 +1252,14 @@ export default function Results() {
                 type="button"
                 onClick={dismissSuggestedSaveAddress}
                 aria-label="Dismiss"
-                style={{
-                  padding: '4px 8px', border: 'none', background: 'transparent',
-                  color: '#6b7280', fontSize: '18px', lineHeight: 1, cursor: 'pointer',
-                }}
+                className="px-2 py-1 border-none bg-transparent text-gray-500 dark:text-gray-400 text-lg leading-none cursor-pointer"
               >
                 ×
               </button>
             </div>
           )}
           {/* Search Bar — collapsed chip when address is set, full input otherwise. */}
-          <div className="px-6 sm:px-12 py-3 bg-[var(--ev-bg-light)]">
+          <div className="px-6 sm:px-12 py-3 bg-[var(--ev-bg-light)] dark:bg-ev-navy">
             {/* Collapsed chip — shown when we have a result and not actively editing */}
             {(formattedAddress || (searchMode === 'browse' && browseResults)) && !editingSearch && (
               <div className="flex items-center gap-2">
@@ -1281,14 +1267,14 @@ export default function Results() {
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
-                <span className="text-sm text-gray-700 truncate" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                <span className="text-sm text-gray-700 dark:text-gray-300 truncate" style={{ fontFamily: "'Manrope', sans-serif" }}>
                   {formattedAddress ? toAddressTitleCase(formattedAddress) : addressInput}
                 </span>
                 <button
                   type="button"
                   onClick={() => setEditingSearch(true)}
                   aria-label="Edit search"
-                  className="ml-1 inline-flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 transition-colors"
+                  className="ml-1 inline-flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
                   style={{ color: '#00657c' }}
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1311,7 +1297,7 @@ export default function Results() {
                   className={`px-3 py-1 text-sm rounded-full transition-colors ${
                     searchMode === 'address'
                       ? 'bg-[var(--ev-teal)] text-white'
-                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                      : 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
                   }`}
                 >
                   Search by Address
@@ -1321,7 +1307,7 @@ export default function Results() {
                   className={`px-3 py-1 text-sm rounded-full transition-colors ${
                     searchMode === 'browse'
                       ? 'bg-[var(--ev-teal)] text-white'
-                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                      : 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
                   }`}
                 >
                   Browse by Location
@@ -1338,8 +1324,9 @@ export default function Results() {
                   onChange={(e) => setAddressInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && (handleAddressSearch(), setEditingSearch(false))}
                   placeholder="Enter your full street address"
-                  className="flex-1 min-w-0 px-4 py-2 border border-gray-300 rounded-lg
-                             focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]"
+                  className="flex-1 min-w-0 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg
+                             focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]
+                             bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500"
                 />
                 <button
                   onClick={() => { handleAddressSearch(); setEditingSearch(false); }}
@@ -1353,7 +1340,7 @@ export default function Results() {
                   <button
                     type="button"
                     onClick={() => setEditingSearch(false)}
-                    className="px-3 py-2 text-sm text-gray-600 hover:text-gray-800"
+                    className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
                   >
                     Cancel
                   </button>
@@ -1389,13 +1376,13 @@ export default function Results() {
 
           {/* Tab toggle + inline filters — tabs left, filters right */}
           {(activeQuery || browseResults) && (
-            <div className="flex flex-wrap items-center gap-y-2 border-b border-[#E2EBEF] px-6 sm:px-12">
+            <div className="flex flex-wrap items-center gap-y-2 border-b border-[#E2EBEF] dark:border-gray-800 px-6 sm:px-12">
               <div className="flex">
                 <button
                   className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
                     activeView === 'representatives'
-                      ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
-                      : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                      ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
+                      : 'text-[#718096] dark:text-gray-500 font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
                   }`}
                   onClick={() => switchView('representatives')}
                 >
@@ -1404,8 +1391,8 @@ export default function Results() {
                 <button
                   className={`px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
                     activeView === 'elections'
-                      ? 'text-[#00657C] font-semibold border-b-2 border-[#00657C]'
-                      : 'text-[#718096] font-normal hover:text-[#4A5568]'
+                      ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
+                      : 'text-[#718096] dark:text-gray-500 font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
                   }`}
                   onClick={() => switchView('elections')}
                 >
@@ -1503,14 +1490,14 @@ export default function Results() {
                           <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle?.text }}>{tier}</span>
                         </div>
                       )}
-                      <p className="mt-4 text-gray-500">{emptyMessage}</p>
+                      <p className="mt-4 text-gray-500 dark:text-gray-400">{emptyMessage}</p>
                     </div>
                   );
                 })}
 
                 {/* Name-search no-matches state */}
                 {trimmedSearch && Array.isArray(visibleList) && visibleList.length === 0 && Array.isArray(list) && list.length > 0 && (
-                  <p className="mt-4 text-gray-500 text-center">
+                  <p className="mt-4 text-gray-500 dark:text-gray-400 text-center">
                     No matches for &ldquo;{searchQuery}&rdquo;. Clear the search box to see all results.
                   </p>
                 )}
@@ -1583,7 +1570,7 @@ export default function Results() {
                 })}
 
                 {federalFiltered.length === 0 && phase !== 'loading' && activeQuery && (
-                  <p className="text-center text-gray-600 mt-8">
+                  <p className="text-center text-gray-600 dark:text-gray-400 mt-8">
                     No results found for this location.
                   </p>
                 )}
@@ -1591,7 +1578,7 @@ export default function Results() {
                 {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
                 {federalFiltered.length > 0 && appointedFilter !== 'All' &&
                   filteredHierarchy.length === 0 && (
-                  <p className="text-sm text-gray-500 text-center py-8">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
                     No {appointedFilter.toLowerCase()} officials found for this area.
                   </p>
                 )}
