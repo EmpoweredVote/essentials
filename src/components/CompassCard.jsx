@@ -18,8 +18,9 @@ const MAX_SPOKES = 8;
  *   politicianId    — politician UUID
  *   politicianName  — display name for CTA text
  *   politicianTitle — office title (e.g., "U.S. Senator")
+ *   districtScope   — 'local' | 'state' | 'federal' | null (filters topics shown)
  */
-export default function CompassCard({ politicianId, politicianName, politicianTitle }) {
+export default function CompassCard({ politicianId, politicianName, politicianTitle, districtScope }) {
   const {
     politicianIdsWithStances,
     userAnswers,
@@ -31,6 +32,17 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     compassLoading,
   } = useCompass();
   const location = useLocation();
+
+  // Derive scope-filtered topics. If districtScope is not provided, use all topics (no filter).
+  const scopedTopics = useMemo(() => {
+    if (!districtScope || allTopics.length === 0) return allTopics;
+    const key = districtScope === 'local'
+      ? 'applies_local'
+      : districtScope === 'state'
+        ? 'applies_state'
+        : 'applies_federal';
+    return allTopics.filter((t) => t[key] !== false);
+  }, [allTopics, districtScope]);
 
   const [polAnswers, setPolAnswers] = useState(null);
   const [polLoading, setPolLoading] = useState(true);
@@ -77,13 +89,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   let polData = {};
   let userData = {};
 
-  if (!polLoading && polAnswers !== null && allTopics.length > 0 && hasUserCompass) {
+  if (!polLoading && polAnswers !== null && scopedTopics.length > 0 && hasUserCompass) {
     // Determine which short_titles to display
     let allowedShorts;
 
     if (selectedTopics && selectedTopics.length > 0) {
       // Preserve user's chosen topic order
-      const topicById = new Map(allTopics.map((t) => [String(t.id), t]));
+      const topicById = new Map(scopedTopics.map((t) => [String(t.id), t]));
       allowedShorts = selectedTopics
         .map((id) => topicById.get(String(id)))
         .filter(Boolean)
@@ -91,14 +103,14 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     } else {
       // Fall back to topics the politician answered
       const answeredTopicIds = new Set(polAnswers.map((a) => String(a.topic_id)));
-      allowedShorts = allTopics
+      allowedShorts = scopedTopics
         .filter((t) => answeredTopicIds.has(String(t.id)))
         .map((t) => t.short_title);
     }
 
     const userAnsweredIds = new Set(userAnswers.map((a) => String(a.topic_id)));
     const polAnsweredIds = new Set(polAnswers.map((a) => String(a.topic_id)));
-    const topicByShortLower = new Map(allTopics.map((t) => [t.short_title.toLowerCase(), t]));
+    const topicByShortLower = new Map(scopedTopics.map((t) => [t.short_title.toLowerCase(), t]));
 
     // When user has explicit selections, show all their topics (pol may have no stance on some).
     // When falling back to pol-answered topics, require both parties have answered.
@@ -123,7 +135,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
     if (allowedShorts.length > 0) {
       const { topicsFiltered: polTopics, answersByShort: polMap } = buildAnswerMapByShortTitle(
-        allTopics,
+        scopedTopics,
         polAnswers,
         allowedShorts
       );
@@ -132,7 +144,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       polData = polMap;
 
       const { answersByShort: userMap } = buildAnswerMapByShortTitle(
-        allTopics,
+        scopedTopics,
         userAnswers,
         allowedShorts
       );
@@ -140,11 +152,11 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     }
   }
 
-  // Build allPolTopics: ALL topics the politician has answered (for accordion)
+  // Build allPolTopics: ALL topics the politician has answered (for accordion), scoped by tier
   let allPolTopics = [];
-  if (!polLoading && polAnswers !== null && polAnswers.length > 0 && allTopics.length > 0) {
+  if (!polLoading && polAnswers !== null && polAnswers.length > 0 && scopedTopics.length > 0) {
     const polAnsweredIds = new Set(polAnswers.map((a) => String(a.topic_id)));
-    allPolTopics = allTopics.filter((t) => polAnsweredIds.has(String(t.id)));
+    allPolTopics = scopedTopics.filter((t) => polAnsweredIds.has(String(t.id)));
   }
 
   // Plan C: count topics the politician has stances on that the user hasn't answered
@@ -331,7 +343,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   topics={topicsFiltered.length > 0 ? topicsFiltered : allPolTopics}
                   polAnswers={polAnswers}
                   politicianId={politicianId}
-                  allTopics={allTopics}
+                  allTopics={scopedTopics}
                   expandedTopics={topicsFiltered.length > 0 ? allPolTopics : undefined}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
@@ -425,7 +437,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   topics={allPolTopics.slice(0, 4)}
                   polAnswers={polAnswers}
                   politicianId={politicianId}
-                  allTopics={allTopics}
+                  allTopics={scopedTopics}
                   expandedTopics={allPolTopics.length > 4 ? allPolTopics : undefined}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
