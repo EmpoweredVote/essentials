@@ -2,13 +2,13 @@
 
 ## Current Position
 
-Phase: 23 — New Local Compass Topics (in progress)
-Plan: 1 of 2
-Status: In progress — Plan 23-01 complete; Plan 23-02 (apply migration) next
-Last activity: 2026-05-04 — Completed 23-01-PLAN.md (50 LOCAL stances authored; migration written + user-approved)
+Phase: 23 — New Local Compass Topics (complete)
+Plan: 2 of 2
+Status: Phase 23 complete — Phase 24 (fc_community_slug population) next
+Last activity: 2026-05-04 — Completed 23-02-PLAN.md (Phase 23 migration applied + all 5 verification queries passed)
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
-v3.1 progress: [█░░░░░░░░░░░░░░░░░░░] Phase 22 done (1/4 phases)
+v3.1 progress: [███░░░░░░░░░░░░░░░░░] Phases 22 + 23 done (2/4 phases)
 
 ## Project Reference
 
@@ -132,6 +132,16 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Plan 20-02 complete 2026-05-04: 8 Wikipedia headshots imported (cc_by_sa); all 600×750 via LANCZOS; PIL spot-check passed; zero orphans; profile pages now render title + chamber + photo
 - Sid Miller disambiguation: correct Wikipedia article is /wiki/Sid_Miller_(politician) (not /wiki/Sid_Miller which is a disambiguation page)
 
+### Phase 23 Notes
+
+- Phase 23 migration applied 2026-05-04: 20260504000001_phase23_local_compass_topics.sql via supabase db push
+- 10 LOCAL topic_keys live (is_live=true, went_live_at set): residential-zoning, growth-and-development, public-safety-approach, homelessness-response, economic-development, transportation-priorities, local-environment, rent-regulation, local-immigration, city-sanitation
+- All 50 stances confirmed present + content-complete (text, description, 3+ supporting_points, 3+ example_perspectives)
+- 14 scope-role rows in compass_topic_roles: 10 local (all topics) + 4 state (growth-and-development, economic-development, transportation-priorities, rent-regulation)
+- fc_community_slug is NULL for all 10 topics — Phase 24 must populate
+- Migration history repair pattern: remote-only phantom versions → reverted; locally-applied untracked → applied; then push succeeds
+- compassService.ts already surfaces these topics to local politicians without code changes (scope filtering wired in compass_topic_roles)
+
 ### Phase 22 Notes
 
 **AUDIT-01 — Scope Mechanism:**
@@ -184,3 +194,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Milestone v3.1 Local Compass Expansion defined; 26 requirements across 4 phases (22-25); primary execution in C:\Focused Communities\supabase\migrations\*
 *Updated: 2026-05-04 — Phase 22 complete (1/1 plans); compass schema audit done; AUDIT-01: scope lives in compass_topic_roles (not compass_stances); AUDIT-02: 42 politician answers for Criminalization of Homelessness; RETIRE-01: keep both (complementary framing); next migration is 111*
 *Updated: 2026-05-04 — Phase 23-01 complete; 50 LOCAL compass stances authored across 10 topics; migration 20260504000001_phase23_local_compass_topics.sql written + user-approved via checkpoint; 6 LOCAL-only + 4 LOCAL+STATE topics; local-immigration isolated from federal topic; ready for supabase db push in Plan 23-02*
+*Updated: 2026-05-04 — Phase 23 complete (2/2 plans); migration applied via supabase db push (with migration history repair); 10 topics + 50 stances + 14 scope-role rows confirmed via psql; fc_community_slug NULL for all 10 topics — Phase 24 next*
