@@ -53,16 +53,16 @@
 
 ### TOPIC — New LOCAL Compass Topics
 
-- [ ] **TOPIC-01**: Residential Zoning topic added to `inform.compass_stances` with 5 stances (question, description, text, supporting_points, example_perspectives) and LOCAL scope
-- [ ] **TOPIC-02**: Growth and Development Pace topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-03**: Public Safety Approach topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-04**: Homelessness Response topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-05**: Economic Development Incentives topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-06**: Transportation Priorities topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-07**: Environmental Protection vs. Development (local) topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-08**: Rent Regulation topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-09**: Local Immigration Enforcement topic added with 5 stances and LOCAL scope
-- [ ] **TOPIC-10**: City Sanitation and Cleanliness topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-01**: Residential Zoning topic added to `inform.compass_stances` with 5 stances (question, description, text, supporting_points, example_perspectives) and LOCAL scope
+- [x] **TOPIC-02**: Growth and Development Pace topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-03**: Public Safety Approach topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-04**: Homelessness Response topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-05**: Economic Development Incentives topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-06**: Transportation Priorities topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-07**: Environmental Protection vs. Development (local) topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-08**: Rent Regulation topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-09**: Local Immigration Enforcement topic added with 5 stances and LOCAL scope
+- [x] **TOPIC-10**: City Sanitation and Cleanliness topic added with 5 stances and LOCAL scope
 
 ### COMM — Companion Focused Communities
 
@@ -79,7 +79,7 @@
 
 ### SCOPE — Scope Tagging
 
-- [ ] **SCOPE-01**: All 10 new topics carry LOCAL scope tag in `inform.compass_stances`
+- [x] **SCOPE-01**: All 10 new topics carry LOCAL scope tag in `inform.compass_stances`
 - [ ] **SCOPE-02**: Existing LOCAL-applicable topics audited — scope tags confirmed or added where missing
 
 ### RETIRE — Conditional Retirement (gated on AUDIT-02)
@@ -157,17 +157,17 @@
 | AUDIT-01 | Phase 22 | Complete |
 | AUDIT-02 | Phase 22 | Complete |
 | RETIRE-01 | Phase 22 | Complete |
-| TOPIC-01 | Phase 23 | Pending |
-| TOPIC-02 | Phase 23 | Pending |
-| TOPIC-03 | Phase 23 | Pending |
-| TOPIC-04 | Phase 23 | Pending |
-| TOPIC-05 | Phase 23 | Pending |
-| TOPIC-06 | Phase 23 | Pending |
-| TOPIC-07 | Phase 23 | Pending |
-| TOPIC-08 | Phase 23 | Pending |
-| TOPIC-09 | Phase 23 | Pending |
-| TOPIC-10 | Phase 23 | Pending |
-| SCOPE-01 | Phase 23 | Pending |
+| TOPIC-01 | Phase 23 | Complete |
+| TOPIC-02 | Phase 23 | Complete |
+| TOPIC-03 | Phase 23 | Complete |
+| TOPIC-04 | Phase 23 | Complete |
+| TOPIC-05 | Phase 23 | Complete |
+| TOPIC-06 | Phase 23 | Complete |
+| TOPIC-07 | Phase 23 | Complete |
+| TOPIC-08 | Phase 23 | Complete |
+| TOPIC-09 | Phase 23 | Complete |
+| TOPIC-10 | Phase 23 | Complete |
+| SCOPE-01 | Phase 23 | Complete |
 | COMM-01 | Phase 24 | Pending |
 | COMM-02 | Phase 24 | Pending |
 | COMM-03 | Phase 24 | Pending |
