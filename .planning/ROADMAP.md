@@ -311,6 +311,11 @@ Plans:
   2. Each topic has exactly 5 stance rows (positions 1-5) with `text`, `description`, `supporting_points` (array), and `example_perspectives` (array) populated
   3. A query joining all 10 topics to their stances returns exactly 50 rows
   4. When filtered by LOCAL scope, all 10 new topics appear and no FEDERAL-only topics are included
+**Plans**: 2 plans
+
+Plans:
+- [ ] 23-01-PLAN.md — Author 50 stance content blocks + write Phase 23 migration SQL (with user review checkpoint)
+- [ ] 23-02-PLAN.md — Apply migration via supabase db push + verify topic/stance/scope-role row counts in inform schema
 
 #### Phase 24: Companion Focused Communities
 **Goal**: All 10 new topics have companion communities in `connect.communities` with authored descriptions and verified stance display
@@ -377,6 +382,6 @@ v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 | 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |
 | 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |
 | 22. Compass Schema Audit | v3.1 | 1/1 | Complete | 2026-05-04 |
-| 23. New LOCAL Compass Topics | v3.1 | 0/TBD | Not started | - |
+| 23. New LOCAL Compass Topics | v3.1 | 0/2 | Not started | - |
 | 24. Companion Focused Communities | v3.1 | 0/TBD | Not started | - |
 | 25. Scope Audit + Retirement | v3.1 | 0/TBD | Not started | - |
