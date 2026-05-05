@@ -8,16 +8,22 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: v3.0 Collin County, TX Coverage
+## Current Milestone: v3.1 Local Compass Expansion
 
-**Goal:** Populate the Essentials + Compass database for 24 Collin County, TX cities — government structures, current incumbents, discovery jurisdiction setup, headshots, and Compass stances where public record exists.
+**Goal:** Add 10 new LOCAL-scope compass topics with companion Focused Communities so city council and mayoral candidates can be compared on policies their government directly controls.
 
 **Target features:**
-- DB foundation — TX state + Collin County + 24 city governments, chambers, offices in essentials schema
-- Incumbent officials — Mayor + City Council for all 24 cities, prioritized Plano → McKinney → Allen → Frisco → Murphy → Celina → Prosper → Richardson → Tier 3 → Tier 4
-- Discovery setup — all 24 cities in discovery_jurisdictions (collincountyvotes.gov source, Census GEOIDs)
-- Headshots — find, resize (600×750 Lanczos q90), upload for Tier 1+2 politicians
-- Compass stances — stance research for Plano, McKinney, Allen tier; best-effort for Tier 2
+- 10 new topics in `inform.compass_stances` (Residential Zoning, Growth/Development, Public Safety, Homelessness Response, Economic Dev, Transportation, Environmental, Rent Regulation, Local Immigration, Sanitation) — each with 5 stances + full metadata + LOCAL scope tag
+- 10 companion communities in `connect.communities` (1:1 with new topics, authored descriptions)
+- Scope audit of existing topics — confirm LOCAL tags are correct across all existing topics
+- Conditional retirement of "Criminalization of Homelessness" pending data audit
+
+**Execution note:** Primary work is in `C:\Focused Communities\supabase\migrations\` (both `inform` and `connect` schema). No Essentials frontend changes expected.
+
+## v3.0 Remaining Work (In Progress)
+
+- [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17, not started)
+- [ ] Compass Stances — Plano/McKinney/Allen ingestion (Phase 18, not started)
 
 **Parked from v2.2 (backlog):**
 - Race completeness audit (Phase 9)
@@ -65,15 +71,15 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ### Active
 
-<!-- Current scope. Building toward these. — v3.0 -->
+<!-- v3.0 remaining -->
+- [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17)
+- [ ] Compass stances — Plano/McKinney/Allen ingested (Phase 18)
 
-- [ ] TX DB foundation — essentials.governments + chambers + offices for TX state, Collin County, and 24 cities
-- [ ] Tier 1 officials — Plano, McKinney, Allen, Frisco incumbents in essentials.politicians with contact info
-- [ ] Tier 2 officials — Murphy, Celina, Prosper, Richardson incumbents in essentials.politicians
-- [ ] Tier 3-4 officials — remaining 16 cities incumbents where findable online
-- [ ] Discovery jurisdictions — all 24 cities in essentials.discovery_jurisdictions (collincountyvotes.gov, Census GEOIDs, allowed_domains)
-- [ ] Headshots — Tier 1+2 politicians found, resized 600×750 Lanczos q90, uploaded
-- [ ] Compass stances — Plano/McKinney/Allen tier researched and ingested; Tier 2 best-effort
+<!-- v3.1 scope -->
+- [ ] 10 new LOCAL compass topics in `inform.compass_stances` with full stance metadata
+- [ ] 10 companion Focused Communities in `connect.communities`
+- [ ] LOCAL scope tagging audit across all existing topics
+- [ ] "Criminalization of Homelessness" retirement decision + execution (conditional)
 
 ### Out of Scope
 
@@ -128,4 +134,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | web_search max_uses: 1 (with sourceUrl) / 2 (without) | Prevents quota exhaustion per discovery run | ✓ Good — v2.1 |
 
 ---
-*Last updated: 2026-04-30 after v3.0 milestone start (v2.2 parked, TX expansion begins)*
+*Last updated: 2026-05-04 after v3.1 milestone start (Local Compass Expansion — phases 22-25)*

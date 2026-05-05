@@ -5,7 +5,8 @@
 - ✅ **v2.0 Elections Page** - Phases 1-4 (shipped 2026-04-13)
 - ✅ **v2.1 Claude Candidate Discovery** — Phases 5-7 (shipped 2026-04-25) — [archive](milestones/v2.1-ROADMAP.md)
 - 🚧 **v2.2 Data Depth & Admin Tooling** — Phases 8-11 (parked)
-- 🚧 **v3.0 Collin County, TX Coverage** — Phases 12-18 (in progress)
+- 🚧 **v3.0 Collin County, TX Coverage** — Phases 12-21 (in progress; Phases 17+18 pending)
+- 🚧 **v3.1 Local Compass Expansion** — Phases 22-25 (defining)
 
 ## Phases
 
@@ -283,6 +284,52 @@ Plans:
 
 ---
 
+---
+
+### 🚧 v3.1 Local Compass Expansion (Defining)
+
+**Milestone Goal:** Add 10 new LOCAL-scope compass topics with companion Focused Communities so voters can compare city council and mayoral candidates on policies their government directly controls. Primary execution in `C:\Focused Communities\supabase\migrations\`.
+
+#### Phase 22: Compass Schema Audit
+**Goal**: Identify how scope filtering works in `inform.compass_stances` and determine whether "Criminalization of Homelessness" has enough politician answer data to warrant keeping vs. retiring
+**Requirements**: AUDIT-01, AUDIT-02, RETIRE-01
+**Success Criteria** (what must be TRUE):
+  1. The scope/level mechanism in `inform.compass_stances` is documented — column name, type, valid values, and how the compass widget uses it to filter questions by race type confirmed or absence of scope column confirmed
+  2. A SQL query against `inform.politician_answers` returns the exact count of answers linked to the "Criminalization of Homelessness" topic_id
+  3. A written retirement decision exists in STATE.md: "retire" (if answer count is 0 or negligible) or "keep both" (if meaningful data exists) — with reasoning
+
+#### Phase 23: New LOCAL Compass Topics
+**Goal**: All 10 new LOCAL compass topics exist in `inform.compass_stances` with complete 5-stance metadata and correct scope tags
+**Depends on**: Phase 22 (scope column structure must be known before migrations)
+**Requirements**: TOPIC-01 through TOPIC-10, SCOPE-01
+**Success Criteria** (what must be TRUE):
+  1. All 10 new topics exist in `inform.compass_stances` with `name`, `question`, and LOCAL scope tag
+  2. Each topic has exactly 5 stance rows (positions 1-5) with `text`, `description`, `supporting_points` (array), and `example_perspectives` (array) populated
+  3. A query joining all 10 topics to their stances returns exactly 50 rows
+  4. When filtered by LOCAL scope, all 10 new topics appear and no FEDERAL-only topics are included
+
+#### Phase 24: Companion Focused Communities
+**Goal**: All 10 new topics have companion communities in `connect.communities` with authored descriptions and verified stance display
+**Depends on**: Phase 23 (topic_ids must exist before communities can reference them)
+**Requirements**: COMM-01 through COMM-10
+**Success Criteria** (what must be TRUE):
+  1. All 10 new communities exist in `connect.communities` with unique `slug`, authored `description`, and correct `topic_id` matching the Phase 23 topics
+  2. An RPC call to `get_stances_for_community` for each new community returns 5 stances with non-null descriptions
+  3. Each community is accessible at fc.empowered.vote/[slug] and renders all 5 stance cards without error
+  4. No orphaned communities — every new `topic_id` resolves to a valid topic in `inform.compass_stances`
+
+#### Phase 25: Scope Audit + Retirement
+**Goal**: Existing LOCAL-applicable topics have correct scope tags; "Criminalization of Homelessness" is retired or confirmed kept based on Phase 22 decision
+**Depends on**: Phase 22 (retirement decision), Phase 23 (scope tagging pattern established)
+**Requirements**: SCOPE-02, RETIRE-02
+**Success Criteria** (what must be TRUE):
+  1. All existing LOCAL-applicable topics (Affordable Housing, Childcare Affordability, Jail Capacity, Criminalization of Homelessness, Data Center Development) have scope tags confirmed or corrected in `inform.compass_stances`
+  2. If retiring "Criminalization of Homelessness": topic is marked retired; companion community slug archived in `slug_history`; no orphaned politician_answers remain
+  3. If keeping both: rationale is documented in STATE.md explaining the distinction between the two homelessness questions
+  4. The compass widget correctly shows only LOCAL-scoped questions when viewing a local race context
+
+---
+
 ## Backlog
 
 These are known gaps that are not yet scoped into a milestone.
@@ -300,6 +347,7 @@ These are known gaps that are not yet scoped into a milestone.
 **Execution Order:**
 v2.2 (parked): 8 → 9 → 10 → 11
 v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 18 (after 13)
+v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -324,3 +372,7 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 | 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
 | 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |
 | 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |
+| 22. Compass Schema Audit | v3.1 | 0/TBD | Not started | - |
+| 23. New LOCAL Compass Topics | v3.1 | 0/TBD | Not started | - |
+| 24. Companion Focused Communities | v3.1 | 0/TBD | Not started | - |
+| 25. Scope Audit + Retirement | v3.1 | 0/TBD | Not started | - |

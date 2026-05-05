@@ -44,6 +44,51 @@
 - [ ] **COMP-03**: Stance research completed and ingested for Allen council members
 - [ ] **COMP-04**: Stance research attempted for Frisco, Murphy, Celina, Richardson — ingested where viable, documented as sparse where not
 
+## v3.1 Requirements
+
+### AUDIT — Pre-flight Checks
+
+- [ ] **AUDIT-01**: Scope/level mechanism in `inform.compass_stances` identified — confirm if a scope column exists and how the compass filters questions by race type
+- [ ] **AUDIT-02**: Politician answer count for "Criminalization of Homelessness" queried from `inform.politician_answers` — retirement decision documented
+
+### TOPIC — New LOCAL Compass Topics
+
+- [ ] **TOPIC-01**: Residential Zoning topic added to `inform.compass_stances` with 5 stances (question, description, text, supporting_points, example_perspectives) and LOCAL scope
+- [ ] **TOPIC-02**: Growth and Development Pace topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-03**: Public Safety Approach topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-04**: Homelessness Response topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-05**: Economic Development Incentives topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-06**: Transportation Priorities topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-07**: Environmental Protection vs. Development (local) topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-08**: Rent Regulation topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-09**: Local Immigration Enforcement topic added with 5 stances and LOCAL scope
+- [ ] **TOPIC-10**: City Sanitation and Cleanliness topic added with 5 stances and LOCAL scope
+
+### COMM — Companion Focused Communities
+
+- [ ] **COMM-01**: Residential Zoning community added to `connect.communities` with authored description and verified `topic_id` link
+- [ ] **COMM-02**: Growth and Development Pace community added
+- [ ] **COMM-03**: Public Safety Approach community added
+- [ ] **COMM-04**: Homelessness Response community added
+- [ ] **COMM-05**: Economic Development Incentives community added
+- [ ] **COMM-06**: Transportation Priorities community added
+- [ ] **COMM-07**: Environmental Protection vs. Development community added
+- [ ] **COMM-08**: Rent Regulation community added
+- [ ] **COMM-09**: Local Immigration Enforcement community added
+- [ ] **COMM-10**: City Sanitation and Cleanliness community added
+
+### SCOPE — Scope Tagging
+
+- [ ] **SCOPE-01**: All 10 new topics carry LOCAL scope tag in `inform.compass_stances`
+- [ ] **SCOPE-02**: Existing LOCAL-applicable topics audited — scope tags confirmed or added where missing
+
+### RETIRE — Conditional Retirement (gated on AUDIT-02)
+
+- [ ] **RETIRE-01**: Retirement decision for "Criminalization of Homelessness" documented based on AUDIT-02 findings
+- [ ] **RETIRE-02**: If retiring — topic record updated in `inform.compass_stances`; companion community archived in `connect.communities` with `slug_history` entry preserved
+
+---
+
 ## Future Requirements
 
 ### Geofences (v3.1)
@@ -100,11 +145,47 @@
 | COMP-03 | Phase 18 | Pending |
 | COMP-04 | Phase 18 | Pending |
 
-**Coverage:**
+**v3.0 Coverage:**
 - v3.0 requirements: 24 total
 - Mapped to phases: 24
 - Unmapped: 0 ✓
 
+### v3.1 Traceability
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| AUDIT-01 | Phase 22 | Pending |
+| AUDIT-02 | Phase 22 | Pending |
+| RETIRE-01 | Phase 22 | Pending |
+| TOPIC-01 | Phase 23 | Pending |
+| TOPIC-02 | Phase 23 | Pending |
+| TOPIC-03 | Phase 23 | Pending |
+| TOPIC-04 | Phase 23 | Pending |
+| TOPIC-05 | Phase 23 | Pending |
+| TOPIC-06 | Phase 23 | Pending |
+| TOPIC-07 | Phase 23 | Pending |
+| TOPIC-08 | Phase 23 | Pending |
+| TOPIC-09 | Phase 23 | Pending |
+| TOPIC-10 | Phase 23 | Pending |
+| SCOPE-01 | Phase 23 | Pending |
+| COMM-01 | Phase 24 | Pending |
+| COMM-02 | Phase 24 | Pending |
+| COMM-03 | Phase 24 | Pending |
+| COMM-04 | Phase 24 | Pending |
+| COMM-05 | Phase 24 | Pending |
+| COMM-06 | Phase 24 | Pending |
+| COMM-07 | Phase 24 | Pending |
+| COMM-08 | Phase 24 | Pending |
+| COMM-09 | Phase 24 | Pending |
+| COMM-10 | Phase 24 | Pending |
+| SCOPE-02 | Phase 25 | Pending |
+| RETIRE-02 | Phase 25 | Pending |
+
+**v3.1 Coverage:**
+- v3.1 requirements: 26 total
+- Mapped to phases: 26
+- Unmapped: 0 ✓
+
 ---
 *Requirements defined: 2026-04-30*
-*Last updated: 2026-05-01 — Phase 14 complete; OFF-03 through OFF-08 marked Complete*
+*Last updated: 2026-05-04 — v3.1 Local Compass Expansion requirements added (26 requirements, phases 22-25)*

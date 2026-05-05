@@ -2,14 +2,13 @@
 
 ## Current Position
 
-Phase: 21 — TX State Legislature (complete, all 5 plans)
-Plan: 5/5 complete
-Status: Phase 21 complete — 21-05 verification passed; all 4 roadmap success criteria PASS; 11-row regression clean
-Last activity: 2026-05-04 — Completed 21-05 (end-to-end verification); Phase 21 done
+Phase: 22 — Compass Schema Audit (not started)
+Plan: —
+Status: Defining — v3.1 Local Compass Expansion milestone started
+Last activity: 2026-05-04 — Milestone v3.1 defined (26 requirements, phases 22-25); v3.0 Phases 17+18 still pending
 
-Next: Phase 17 (Headshots — 4 plans, not started) or Phase 18 (Compass Stances — TBD plans, not started)
-
-Progress: [██████████░░░░░░░░░░] v3.0 — Phases 12-16, 19, 20, 21 complete; Phase 17 (Headshots) + Phase 18 (Compass Stances) remain
+v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
+v3.1 progress: [░░░░░░░░░░░░░░░░░░░░] Phases 22-25 not started
 
 ## Project Reference
 
@@ -150,4 +149,5 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 21-02 complete; migration 108 applied; Texas State Senate (0b970b1c) + Texas House of Representatives (5ac03af0) chambers created; name_formal=name; slug auto-generated; idempotent re-run confirmed INSERT 0 0*
 *Updated: 2026-05-04 — Phase 21-03 complete; migration 109 applied; 30 TX state senators + 31 senate offices (D4 vacant, is_vacant=true); all 30 politicians office_id back-filled; idempotent; senate half of Phase 21 complete*
 *Updated: 2026-05-04 — Phase 21-04 complete; migration 110 applied; 150 TX House reps + 150 offices (no vacancies); chamber 5ac03af0; external_ids -100501..-100650; 88R/62D; all 150 office_id back-filled; idempotent; house half of Phase 21 complete*
-*Updated: 2026-05-04 — Phase 21 complete (5/5 plans); end-to-end verification passed; all 4 roadmap success criteria PASS; 5 TX addresses each return 1 STATE_UPPER + 1 STATE_LOWER; 11-row regression clean (Phase 19/20 intact); next migration is 111*
+*Updated: 2026-05-04 — Phase 21 complete (5/5 plans); end-to-end verification passed; all 4 roadmap success criteria PASS; 5 TX addresses each return 1 STATE_UPPER + 1 STATE_LOWER; 11-row regression clean (Phase 19/20 intact); next migration is 111
+*Updated: 2026-05-04 — Milestone v3.1 Local Compass Expansion defined; 26 requirements across 4 phases (22-25); primary execution in C:\Focused Communities\supabase\migrations\*
