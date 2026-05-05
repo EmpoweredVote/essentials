@@ -168,6 +168,13 @@ export default function CandidateProfile() {
                   politicianId={polId}
                   politicianName={pol.full_name || `${pol.first_name} ${pol.last_name}`}
                   politicianTitle={pol.office_title || candidateData?.position_name || ''}
+                  districtScope={(() => {
+                    const dt = pol.district_type || '';
+                    if (dt === 'LOCAL' || dt === 'LOCAL_EXEC' || dt === 'COUNTY') return 'local';
+                    if (dt.startsWith('STATE_')) return 'state';
+                    if (dt.startsWith('NATIONAL_')) return 'federal';
+                    return null; // district_type unavailable for challenger — show all topics
+                  })()}
                 />
               )}
               {polId && (

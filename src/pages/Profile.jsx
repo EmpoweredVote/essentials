@@ -216,12 +216,22 @@ function Profile() {
               );
             }
 
+            // Derive compass scope from district_type for topic filtering
+            const districtScope = (() => {
+              const dt = pol.district_type || '';
+              if (dt === 'LOCAL' || dt === 'LOCAL_EXEC' || dt === 'COUNTY') return 'local';
+              if (dt.startsWith('STATE_')) return 'state';
+              if (dt.startsWith('NATIONAL_')) return 'federal';
+              return null; // cross-cutting / unknown — show all topics
+            })();
+
             // Default: render the existing CompassCard
             return (
               <CompassCard
                 politicianId={id}
                 politicianName={pol.first_name ? `${pol.first_name} ${pol.last_name}` : ''}
                 politicianTitle={pol.office_title || ''}
+                districtScope={districtScope}
               />
             );
           })()}
