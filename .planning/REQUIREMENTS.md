@@ -48,8 +48,8 @@
 
 ### AUDIT — Pre-flight Checks
 
-- [ ] **AUDIT-01**: Scope/level mechanism in `inform.compass_stances` identified — confirm if a scope column exists and how the compass filters questions by race type
-- [ ] **AUDIT-02**: Politician answer count for "Criminalization of Homelessness" queried from `inform.politician_answers` — retirement decision documented
+- [x] **AUDIT-01**: Scope/level mechanism in `inform.compass_stances` identified — confirm if a scope column exists and how the compass filters questions by race type
+- [x] **AUDIT-02**: Politician answer count for "Criminalization of Homelessness" queried from `inform.politician_answers` — retirement decision documented
 
 ### TOPIC — New LOCAL Compass Topics
 
@@ -84,7 +84,7 @@
 
 ### RETIRE — Conditional Retirement (gated on AUDIT-02)
 
-- [ ] **RETIRE-01**: Retirement decision for "Criminalization of Homelessness" documented based on AUDIT-02 findings
+- [x] **RETIRE-01**: Retirement decision for "Criminalization of Homelessness" documented based on AUDIT-02 findings
 - [ ] **RETIRE-02**: If retiring — topic record updated in `inform.compass_stances`; companion community archived in `connect.communities` with `slug_history` entry preserved
 
 ---
@@ -154,9 +154,9 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUDIT-01 | Phase 22 | Pending |
-| AUDIT-02 | Phase 22 | Pending |
-| RETIRE-01 | Phase 22 | Pending |
+| AUDIT-01 | Phase 22 | Complete |
+| AUDIT-02 | Phase 22 | Complete |
+| RETIRE-01 | Phase 22 | Complete |
 | TOPIC-01 | Phase 23 | Pending |
 | TOPIC-02 | Phase 23 | Pending |
 | TOPIC-03 | Phase 23 | Pending |
