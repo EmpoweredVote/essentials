@@ -2,13 +2,13 @@
 
 ## Current Position
 
-Phase: 24 — Companion Focused Communities (complete)
-Plan: 2 of 2
-Status: Phase 24 complete — Phase 25 (Scope Audit + Retirement) next
-Last activity: 2026-05-05 — Completed 24-02-PLAN.md (migration applied + all 4 verification queries passed + 3 communities spot-checked live at /communities/[slug])
+Phase: 25 — Scope Audit + Retirement (in progress)
+Plan: 2 of ? (plan 25-02 complete)
+Status: In progress — Phase 25 scope filtering wired; Plan 25-03 next if any
+Last activity: 2026-05-05 — Completed 25-02-PLAN.md (districtScope filtering in CompassCard + Profile + CandidateProfile; build passes)
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
-v3.1 progress: [██████░░░░░░░░░░░░░░] Phases 22 + 23 + 24 done (3/4 phases)
+v3.1 progress: [████████░░░░░░░░░░░░] Phases 22 + 23 + 24 + 25-01 + 25-02 done
 
 ## Project Reference
 
@@ -142,6 +142,15 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 - Migration history repair pattern: remote-only phantom versions → reverted; locally-applied untracked → applied; then push succeeds
 - compassService.ts already surfaces these topics to local politicians without code changes (scope filtering wired in compass_topic_roles)
 
+### Phase 25 Notes
+
+- districtScope prop pattern: CompassCard accepts 'local'|'state'|'federal'|null; null = show all topics (safe default)
+- Scope key mapping: 'local'→applies_local, 'state'→applies_state, 'federal'→applies_federal (t[key] !== false — treats undefined as true for cross-cutting topics)
+- district_type mapping: LOCAL/LOCAL_EXEC/COUNTY→'local', STATE_*→'state', NATIONAL_*→'federal', null/JUDICIAL/other→null
+- CandidateProfile challenger case: pol.district_type is undefined for challenger minimal obj → derivation returns null → all topics shown (correct safe default)
+- Pre-existing main.jsx breakage fixed: ThemeProvider was imported from ev-ui but not exported (build blocker, reverted)
+- Plan 25-02 complete 2026-05-05: districtScope filtering wired; local officials now see only LOCAL-applicable compass topics
+
 ### Phase 22 Notes
 
 **AUDIT-01 — Scope Mechanism:**
@@ -204,3 +213,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 23 complete (2/2 plans); migration applied via supabase db push (with migration history repair); 10 topics + 50 stances + 14 scope-role rows confirmed via psql; fc_community_slug NULL for all 10 topics — Phase 24 next*
 *Updated: 2026-05-04 — Phase 24-01 complete; 10 companion community descriptions authored and user-approved at checkpoint (zero edits); migration 20260504000002_phase24_companion_communities.sql written (10 INSERTs + 10 UPDATEs, all 7 verification checks pass); immigration-policy slug decoupled from local-immigration topic_key; ready for supabase db push in Plan 24-02*
 *Updated: 2026-05-05 — Phase 24 complete (2/2 plans); migration applied via supabase db push; 10 connect.communities rows seeded; fc_community_slug populated for all 10 LOCAL topic_keys; immigration-policy slug exception verified live; Phase 25 next*
+*Updated: 2026-05-05 — Phase 25-02 complete; CompassCard districtScope filtering wired; Profile.jsx + CandidateProfile.jsx thread districtScope from pol.district_type; build passes; local officials now see only LOCAL-applicable compass topics*
