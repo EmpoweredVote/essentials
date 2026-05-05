@@ -326,6 +326,11 @@ Plans:
   2. An RPC call to `get_stances_for_community` for each new community returns 5 stances with non-null descriptions
   3. Each community is accessible at fc.empowered.vote/[slug] and renders all 5 stance cards without error
   4. No orphaned communities — every new `topic_id` resolves to a valid topic in `inform.compass_stances`
+**Plans**: 2 plans
+
+Plans:
+- [ ] 24-01-PLAN.md — Author 10 community descriptions inline + write Phase 24 migration SQL (with user review checkpoint)
+- [ ] 24-02-PLAN.md — Apply migration via supabase db push + run 4 verification queries + user spot-checks 3 live communities
 
 #### Phase 25: Scope Audit + Retirement
 **Goal**: Existing LOCAL-applicable topics have correct scope tags; "Criminalization of Homelessness" is retired or confirmed kept based on Phase 22 decision
