@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 22 — Compass Schema Audit (complete)
-Plan: 1 of 1
-Status: Phase complete — Phase 23 (Local Compass Topics) next
-Last activity: 2026-05-04 — Completed 22-01-PLAN.md (audit findings documented, no migrations)
+Phase: 23 — New Local Compass Topics (in progress)
+Plan: 1 of 2
+Status: In progress — Plan 23-01 complete; Plan 23-02 (apply migration) next
+Last activity: 2026-05-04 — Completed 23-01-PLAN.md (50 LOCAL stances authored; migration written + user-approved)
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
 v3.1 progress: [█░░░░░░░░░░░░░░░░░░░] Phase 22 done (1/4 phases)
@@ -183,3 +183,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 21 complete (5/5 plans); end-to-end verification passed; all 4 roadmap success criteria PASS; 5 TX addresses each return 1 STATE_UPPER + 1 STATE_LOWER; 11-row regression clean (Phase 19/20 intact); next migration is 111
 *Updated: 2026-05-04 — Milestone v3.1 Local Compass Expansion defined; 26 requirements across 4 phases (22-25); primary execution in C:\Focused Communities\supabase\migrations\*
 *Updated: 2026-05-04 — Phase 22 complete (1/1 plans); compass schema audit done; AUDIT-01: scope lives in compass_topic_roles (not compass_stances); AUDIT-02: 42 politician answers for Criminalization of Homelessness; RETIRE-01: keep both (complementary framing); next migration is 111*
+*Updated: 2026-05-04 — Phase 23-01 complete; 50 LOCAL compass stances authored across 10 topics; migration 20260504000001_phase23_local_compass_topics.sql written + user-approved via checkpoint; 6 LOCAL-only + 4 LOCAL+STATE topics; local-immigration isolated from federal topic; ready for supabase db push in Plan 23-02*
