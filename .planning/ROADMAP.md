@@ -297,6 +297,10 @@ Plans:
   1. The scope/level mechanism in `inform.compass_stances` is documented — column name, type, valid values, and how the compass widget uses it to filter questions by race type confirmed or absence of scope column confirmed
   2. A SQL query against `inform.politician_answers` returns the exact count of answers linked to the "Criminalization of Homelessness" topic_id
   3. A written retirement decision exists in STATE.md: "retire" (if answer count is 0 or negligible) or "keep both" (if meaningful data exists) — with reasoning
+**Plans**: 1 plan
+
+Plans:
+- [ ] 22-01-PLAN.md — Document scope mechanism (compass_topic_roles), answer count (42), and retirement decision (keep both) in STATE.md
 
 #### Phase 23: New LOCAL Compass Topics
 **Goal**: All 10 new LOCAL compass topics exist in `inform.compass_stances` with complete 5-stance metadata and correct scope tags
@@ -372,7 +376,7 @@ v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 | 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
 | 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |
 | 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |
-| 22. Compass Schema Audit | v3.1 | 0/TBD | Not started | - |
+| 22. Compass Schema Audit | v3.1 | 0/1 | Not started | - |
 | 23. New LOCAL Compass Topics | v3.1 | 0/TBD | Not started | - |
 | 24. Companion Focused Communities | v3.1 | 0/TBD | Not started | - |
 | 25. Scope Audit + Retirement | v3.1 | 0/TBD | Not started | - |
