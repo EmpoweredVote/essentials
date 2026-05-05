@@ -341,6 +341,11 @@ Plans:
   2. If retiring "Criminalization of Homelessness": topic is marked retired; companion community slug archived in `slug_history`; no orphaned politician_answers remain
   3. If keeping both: rationale is documented in STATE.md explaining the distinction between the two homelessness questions
   4. The compass widget correctly shows only LOCAL-scoped questions when viewing a local race context
+**Plans**: 2 plans
+
+Plans:
+- [ ] 25-01-PLAN.md — Scope audit migration: query + fix compass_topic_roles for 5 existing LOCAL-applicable topics
+- [ ] 25-02-PLAN.md — Frontend scope filtering: districtScope prop threading Profile.jsx + CandidateProfile.jsx → CompassCard.jsx
 
 ---
 
@@ -389,4 +394,4 @@ v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 | 22. Compass Schema Audit | v3.1 | 1/1 | Complete | 2026-05-04 |
 | 23. New LOCAL Compass Topics | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 25. Scope Audit + Retirement | v3.1 | 0/TBD | Not started | - |
+| 25. Scope Audit + Retirement | v3.1 | 0/2 | Not started | - |
