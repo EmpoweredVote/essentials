@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 23 — New Local Compass Topics (complete)
-Plan: 2 of 2
-Status: Phase 23 complete — Phase 24 (fc_community_slug population) next
-Last activity: 2026-05-04 — Completed 23-02-PLAN.md (Phase 23 migration applied + all 5 verification queries passed)
+Phase: 24 — Companion Focused Communities (in progress)
+Plan: 1 of 2
+Status: Plan 24-01 complete — Plan 24-02 (apply migration via supabase db push) next
+Last activity: 2026-05-04 — Completed 24-01-PLAN.md (10 community descriptions approved + migration SQL written; 8d0238d in C:/Focused Communities)
 
 v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
 v3.1 progress: [███░░░░░░░░░░░░░░░░░] Phases 22 + 23 done (2/4 phases)
@@ -195,3 +195,4 @@ See: .planning/PROJECT.md (updated 2026-04-30 after v3.0 milestone start)
 *Updated: 2026-05-04 — Phase 22 complete (1/1 plans); compass schema audit done; AUDIT-01: scope lives in compass_topic_roles (not compass_stances); AUDIT-02: 42 politician answers for Criminalization of Homelessness; RETIRE-01: keep both (complementary framing); next migration is 111*
 *Updated: 2026-05-04 — Phase 23-01 complete; 50 LOCAL compass stances authored across 10 topics; migration 20260504000001_phase23_local_compass_topics.sql written + user-approved via checkpoint; 6 LOCAL-only + 4 LOCAL+STATE topics; local-immigration isolated from federal topic; ready for supabase db push in Plan 23-02*
 *Updated: 2026-05-04 — Phase 23 complete (2/2 plans); migration applied via supabase db push (with migration history repair); 10 topics + 50 stances + 14 scope-role rows confirmed via psql; fc_community_slug NULL for all 10 topics — Phase 24 next*
+*Updated: 2026-05-04 — Phase 24-01 complete; 10 companion community descriptions authored and user-approved at checkpoint (zero edits); migration 20260504000002_phase24_companion_communities.sql written (10 INSERTs + 10 UPDATEs, all 7 verification checks pass); immigration-policy slug decoupled from local-immigration topic_key; ready for supabase db push in Plan 24-02*
