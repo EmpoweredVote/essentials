@@ -2,7 +2,7 @@
 
 *Milestone:* v3.2 Legal Candidate Evaluation Framework  
 *Defined:* 2026-05-06  
-*Status:* Active — roadmap pending
+*Status:* Active — roadmap defined
 
 ---
 
@@ -71,22 +71,22 @@
 
 | Requirement | Phase |
 |-------------|-------|
-| COMPASS-01  | TBD   |
-| COMPASS-02  | TBD   |
-| COMPASS-03  | TBD   |
-| COMPASS-04  | TBD   |
-| COMPASS-05  | TBD   |
-| COMPASS-06  | TBD   |
-| BAR-01      | TBD   |
-| BAR-02      | TBD   |
-| BAR-03      | TBD   |
-| BAR-04      | TBD   |
-| STANCE-01   | TBD   |
-| STANCE-02   | TBD   |
-| STANCE-03   | TBD   |
-| FINANCE-01  | TBD   |
-| FINANCE-02  | TBD   |
-| DONOR-01    | TBD   |
-| DONOR-02    | TBD   |
-| DONOR-03    | TBD   |
-| DONOR-04    | TBD   |
+| COMPASS-01  | Phase 27 |
+| COMPASS-02  | Phase 27 |
+| COMPASS-03  | Phase 27 |
+| COMPASS-04  | Phase 27 |
+| COMPASS-05  | Phase 28 |
+| COMPASS-06  | Phase 28 |
+| BAR-01      | Phase 29 |
+| BAR-02      | Phase 29 |
+| BAR-03      | Phase 29 |
+| BAR-04      | Phase 29 |
+| STANCE-01   | Phase 30 |
+| STANCE-02   | Phase 30 |
+| STANCE-03   | Phase 30 |
+| FINANCE-01  | Phase 26 |
+| FINANCE-02  | Phase 26 |
+| DONOR-01    | Phase 31 |
+| DONOR-02    | Phase 31 |
+| DONOR-03    | Phase 31 |
+| DONOR-04    | Phase 31 |

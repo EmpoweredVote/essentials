@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: Not started (defining requirements for v3.2)
+Phase: 26 — Campaign Finance Gap Closure
 Plan: —
-Status: Defining requirements for v3.2 Legal Candidate Evaluation Framework
-Last activity: 2026-05-06 — Milestone v3.2 started; scope confirmed
+Status: Not started — roadmap defined; ready to begin Phase 26
+Last activity: 2026-05-06 — v3.2 roadmap created; Phases 26-31 defined; Phase 26 is next
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-05 after v3.1 milestone completion)
+See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v3.0 remaining — Phase 17 Headshots + Phase 18 Compass Stances for Collin County politicians
+**Current focus:** v3.2 Legal Candidate Evaluation Framework — Phase 26 Campaign Finance Gap Closure
 
 ## Accumulated Context
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-05 after v3.1 milestone completion)
 - Jurisdictions processed sequentially (never parallel) — exhausts Claude API rate limit quota
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
-- Migration numbering continues from 099 (highest existing is 099_collin_county_discovery_jurisdictions.sql) — next is 100
+- Migration numbering continues from 099 (highest existing is 099_collin_county_discovery_jurisdictions.sql) — next is 111
 - TX election date confirmed: 2026-05-02 (NOT May 3 as CONTEXT.md stated — all official sources confirm May 2)
 - McKinney email pattern: role-based `{role}@mckinneytexas.org` — mayor, AtLarge1, AtLarge2, District1–4
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
@@ -40,6 +40,10 @@ See: .planning/PROJECT.md (updated 2026-05-05 after v3.1 milestone completion)
 - Discovery files: lib/discoveryService.ts, lib/discoveryAgentRunner.ts, lib/discoveryCron.ts, cron/discoverySweep.ts, routes/essentialsDiscovery.ts, routes/stagingQueueAdmin.ts
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
+- Campaign finance gap script: `C:\EV-Accounts\backend\scripts\audit-la-socrata-gaps.ts` (run with --fix --ingest)
+- Contribution data: `transparent_motivations.contributions` table; `con_emp` (employer) + `con_occp` (occupation) identify law firm donors
+- Compass scope: lives in `inform.compass_topic_roles` (role_scope CHECK constraint currently: 'federal'|'state'|'local'); Phase 27 adds 'judicial'
+- districtScope derivation: LOCAL/LOCAL_EXEC/COUNTY→'local', STATE_*→'state', NATIONAL_*→'federal', JUDICIAL→'judicial' (Phase 28 wires this)
 
 ### Pending Todos (accounts team backlog)
 
@@ -62,7 +66,7 @@ See: .planning/PROJECT.md (updated 2026-05-05 after v3.1 milestone completion)
 - May 2, 2026 TX uniform election just happened — research winners as new incumbents
 - Collin County Elections primary source: collincountytx.gov (NOT collincountyvotes.gov — that domain does not exist)
 - Stance research sparse for Tier 3-4 cities (small digital footprint expected)
-- Migration numbering: next migration is 108 (107 applied 2026-05-04: chambers name_formal + politicians office_id backfill for TX state/federal officials)
+- Migration numbering: next migration is 111 (110 applied 2026-05-04: 150 TX state reps)
 - Phase 12 (TX DB Foundation) has no code dependencies — can start immediately
 - Phase 16 (Discovery Jurisdiction Setup) depends only on Phase 12 — can run in parallel with Phases 13-15
 - CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
@@ -226,3 +230,4 @@ See: .planning/PROJECT.md (updated 2026-05-05 after v3.1 milestone completion)
 *Updated: 2026-05-05 — Phase 25-02 complete; CompassCard districtScope filtering wired; Profile.jsx + CandidateProfile.jsx thread districtScope from pol.district_type; build passes; local officials now see only LOCAL-applicable compass topics*
 *Updated: 2026-05-05 — Phase 25-01 complete (executed after 25-02); migration 20260505000001_phase25_scope_audit.sql applied; Affordable Housing local scope added; all 5 target topics confirmed has_local=true; plan's topic_keys corrected (housing/childcare/data-centers)*
 *Updated: 2026-05-05 — Phase 25 complete (2/2 plans); verification 4/4 passed; SCOPE-02 satisfied (all 5 LOCAL-applicable topics have local scope tags); RETIRE-01 kept both (42 politician answers intact); districtScope filtering live in essentials frontend; v3.1 milestone COMPLETE*
+*Updated: 2026-05-06 — v3.2 Legal Candidate Evaluation Framework roadmap created; Phases 26-31 defined; 19/19 requirements mapped; Phase 26 Campaign Finance Gap Closure is next*
