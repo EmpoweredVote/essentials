@@ -313,7 +313,7 @@ Full details: [milestones/v3.1-ROADMAP.md](milestones/v3.1-ROADMAP.md)
   1. `audit-la-socrata-gaps.ts --fix --ingest` completes without error and the 32 previously-missing candidates each have at least one row in the la_socrata sources table
   2. A contribution count query on `transparent_motivations.contributions` for the 32 candidates returns non-zero rows for each candidate that had filed reports
   3. The gap audit procedure (what script to run, how to interpret output, when to re-run) is documented in a plan file so any future operator can repeat it without tribal knowledge
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 26-01-PLAN.md — Run audit-la-socrata-gaps.ts --fix --ingest; verify 32 candidates patched; document procedure
