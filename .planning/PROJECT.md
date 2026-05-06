@@ -8,6 +8,17 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
+## Current Milestone: v3.2 Legal Candidate Evaluation Framework
+
+**Goal:** Build civic infrastructure for evaluating judges and City Attorney/DA candidates — a judicial compass, bar evaluation data, and a donor-court conflict map — using only free/public sources, nationwide in scope.
+
+**Target features:**
+- 8 new judicial compass topics (4 universal + 4 role-specific) with 40 stances, scoped to legal offices
+- Bar evaluation data ingestion: LACBA ratings, CA State Bar discipline, CJP censures (all free/public) for LA legal candidates
+- Stance research for current LA legal candidates (Aida Ashouri, John McKinney, Marissa Roy)
+- Campaign finance gap closure: resolve 32 identified LA City candidates missing la_socrata sources
+- Donor-court conflict map: cross-reference top 15% donors against court appearances (lacourt.org / CourtListener)
+
 ## v3.0 Remaining Work (In Progress)
 
 - [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17, not started)
@@ -63,6 +74,13 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ "Criminalization of Homelessness" keep-both decision documented (42 existing politician answers; complementary framing to Homelessness Response) — v3.1
 
 ### Active
+
+<!-- v3.2 Legal Candidate Evaluation Framework -->
+- [ ] 8 judicial compass topics with 40 stances, scoped to legal offices (COMPASS)
+- [ ] Bar evaluation data: LACBA ratings, CA State Bar discipline, CJP censures (BAR)
+- [ ] Stance research: Aida Ashouri, John McKinney, Marissa Roy (STANCE)
+- [ ] Campaign finance gap closure: 32 LA City candidates (FINANCE)
+- [ ] Donor-court conflict map: top 15% donors vs. court appearances (DONOR)
 
 <!-- v3.0 remaining -->
 - [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17)
@@ -127,4 +145,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | `t[key] !== false` in CompassCard scope filter | Cross-cutting topics (no scope rows, undefined flags) correctly pass all tier filters — `=== true` would break them | ✓ Good — v3.1 |
 
 ---
-*Last updated: 2026-05-05 after v3.1 milestone completion (Local Compass Expansion — phases 22-25 shipped)*
+*Last updated: 2026-05-06 — Milestone v3.2 Legal Candidate Evaluation Framework started*

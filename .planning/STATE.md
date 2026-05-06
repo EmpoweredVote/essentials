@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: Next is Phase 17 (Headshots) — v3.0 remaining work
-Plan: Not started
-Status: v3.1 milestone SHIPPED 2026-05-05 — ready to resume v3.0 Phase 17 or plan next milestone
-Last activity: 2026-05-05 — v3.1 Local Compass Expansion complete + archived
+Phase: Not started (defining requirements for v3.2)
+Plan: —
+Status: Defining requirements for v3.2 Legal Candidate Evaluation Framework
+Last activity: 2026-05-06 — Milestone v3.2 started; scope confirmed
 
-v3.0 remaining: Phase 17 (Headshots — 4 plans) + Phase 18 (Compass Stances — TBD plans) still pending
+v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
 ## Project Reference
 
