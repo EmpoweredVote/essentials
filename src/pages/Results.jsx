@@ -921,8 +921,8 @@ export default function Results() {
     if (days === 0) return 'Today';
     if (days === 1) return 'Tomorrow';
     if (days > 1) return `${days} days away`;
-    if (days === -1) return 'Yesterday';
-    return `${Math.abs(days)} days ago`;
+    if (days >= -7) return days === -1 ? 'Yesterday' : `${Math.abs(days)} days ago`;
+    return null; // badge hidden for elections older than a week
   }, [electionsData]);
 
   // Filter federal politicians: only show senators/reps from user's state
