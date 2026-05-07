@@ -18,7 +18,7 @@ const MAX_SPOKES = 8;
  *   politicianId    — politician UUID
  *   politicianName  — display name for CTA text
  *   politicianTitle — office title (e.g., "U.S. Senator")
- *   districtScope   — 'local' | 'state' | 'federal' | null (filters topics shown)
+ *   districtScope   — 'local' | 'state' | 'federal' | 'judicial' | null (filters topics shown)
  */
 export default function CompassCard({ politicianId, politicianName, politicianTitle, districtScope }) {
   const {
@@ -36,11 +36,10 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // Derive scope-filtered topics. If districtScope is not provided, use all topics (no filter).
   const scopedTopics = useMemo(() => {
     if (!districtScope || allTopics.length === 0) return allTopics;
-    const key = districtScope === 'local'
-      ? 'applies_local'
-      : districtScope === 'state'
-        ? 'applies_state'
-        : 'applies_federal';
+    const key = districtScope === 'local'    ? 'applies_local'
+              : districtScope === 'state'    ? 'applies_state'
+              : districtScope === 'judicial' ? 'applies_judicial'
+              : 'applies_federal';
     return allTopics.filter((t) => t[key] !== false);
   }, [allTopics, districtScope]);
 
