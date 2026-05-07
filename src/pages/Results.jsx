@@ -1428,6 +1428,7 @@ export default function Results() {
                   onSearchChange={setSearchQuery}
                   compassMode={compassMode}
                   onCompassModeChange={handleCompassModeChange}
+                  isDark={isDark}
                 />
               </div>
             </div>

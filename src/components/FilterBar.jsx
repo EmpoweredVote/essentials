@@ -21,8 +21,12 @@ const TYPE_OPTIONS = [
   { value: 'Appointed', label: 'Appointed' },
 ];
 
-function Dropdown({ label, value, options, onChange, ariaLabel }) {
+function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
   const isActive = value !== 'All';
+  const bg = isDark ? '#1a2235' : '#fff';
+  const borderColor = isActive ? '#59b0c4' : (isDark ? '#2d3f5a' : '#d1d5db');
+  const textColor = isActive ? (isDark ? '#59b0c4' : '#00657c') : (isDark ? '#d1d5db' : '#374151');
+  const chevronStroke = isDark ? '%2359b0c4' : '%236b7280';
   return (
     <label
       style={{
@@ -42,20 +46,20 @@ function Dropdown({ label, value, options, onChange, ariaLabel }) {
           padding: '6px 28px 6px 10px',
           fontFamily: "'Manrope', sans-serif", fontSize: '13px',
           fontWeight: 500,
-          color: isActive ? '#00657c' : '#374151',
-          background: '#fff',
-          border: `1px solid ${isActive ? '#00657c' : '#d1d5db'}`,
+          color: textColor,
+          background: bg,
+          border: `1px solid ${borderColor}`,
           borderRadius: '6px',
           minHeight: '34px',
           cursor: 'pointer',
-          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")`,
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='${chevronStroke}' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")`,
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'right 10px center',
           backgroundSize: '10px 6px',
         }}
       >
         {options.map((o) => (
-          <option key={o.value} value={o.value}>{o.label}</option>
+          <option key={o.value} value={o.value} style={{ background: isDark ? '#1a2235' : '#fff', color: textColor }}>{o.label}</option>
         ))}
       </select>
     </label>
@@ -73,7 +77,15 @@ export default function FilterBar({
   appointedFilter, onAppointedFilterChange,
   searchQuery, onSearchChange,
   compassMode, onCompassModeChange,
+  isDark,
 }) {
+  const inputBg = isDark ? '#1a2235' : '#fff';
+  const inputBorder = isDark ? '#2d3f5a' : '#d1d5db';
+  const inputBorderFocus = isDark ? '#59b0c4' : '#00657c';
+  const inputText = isDark ? '#d1d5db' : '#374151';
+  const iconStroke = isDark ? '#59b0c4' : '#6b7280';
+  const compassTextColor = compassMode ? (isDark ? '#59b0c4' : '#00657c') : (isDark ? '#9ca3af' : '#374151');
+
   return (
     <div
       style={{
@@ -88,6 +100,7 @@ export default function FilterBar({
         value={selectedFilter}
         onChange={onFilterChange}
         options={TIER_OPTIONS}
+        isDark={isDark}
       />
       <Dropdown
         label="Type"
@@ -95,11 +108,12 @@ export default function FilterBar({
         value={appointedFilter}
         onChange={onAppointedFilterChange}
         options={TYPE_OPTIONS}
+        isDark={isDark}
       />
       <div style={{ position: 'relative', flex: '1 1 120px', minWidth: 0 }}>
         <svg
           width="14" height="14" viewBox="0 0 24 24" fill="none"
-          stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          stroke={iconStroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
           style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
           aria-hidden="true"
         >
@@ -116,13 +130,13 @@ export default function FilterBar({
             width: '100%',
             padding: '6px 10px 6px 30px',
             fontFamily: "'Manrope', sans-serif", fontSize: '13px',
-            border: '1px solid #d1d5db', borderRadius: '6px',
+            border: `1px solid ${inputBorder}`, borderRadius: '6px',
             minHeight: '34px',
-            background: '#fff', color: '#374151',
+            background: inputBg, color: inputText,
             outline: 'none', boxSizing: 'border-box',
           }}
-          onFocus={(e) => { e.currentTarget.style.borderColor = '#00657c'; }}
-          onBlur={(e) => { e.currentTarget.style.borderColor = '#d1d5db'; }}
+          onFocus={(e) => { e.currentTarget.style.borderColor = inputBorderFocus; }}
+          onBlur={(e) => { e.currentTarget.style.borderColor = inputBorder; }}
         />
       </div>
       {onCompassModeChange !== undefined && (
@@ -132,7 +146,7 @@ export default function FilterBar({
             cursor: 'pointer',
             fontFamily: "'Manrope', sans-serif", fontSize: '13px',
             fontWeight: 500,
-            color: compassMode ? '#00657c' : '#374151',
+            color: compassTextColor,
             whiteSpace: 'nowrap',
             userSelect: 'none',
           }}
@@ -141,7 +155,7 @@ export default function FilterBar({
             type="checkbox"
             checked={!!compassMode}
             onChange={(e) => onCompassModeChange(e.target.checked)}
-            style={{ accentColor: '#00657c', cursor: 'pointer' }}
+            style={{ accentColor: isDark ? '#59b0c4' : '#00657c', cursor: 'pointer' }}
           />
           Compass
         </label>
