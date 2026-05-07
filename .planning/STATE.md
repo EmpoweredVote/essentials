@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 28 — Judicial Compass Frontend + Communities
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-05-07 — Completed 28-01-PLAN.md; JudicialCompassSection built + wired; judicial_role in API
+Plan: 2 of 2 in current phase
+Status: Phase complete
+Last activity: 2026-05-07 — Completed 28-02-PLAN.md; 8 judicial communities seeded; all 8 fc_community_slug populated; COMPASS-06 satisfied
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -221,6 +221,8 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - compassService.ts: judicial_role added to SELECT; backend deployed to Render (push to master 14b27b1)
 - Frontend deployed to Render (push to main 649113a, post-rebase after 21 remote commits)
 - fc_community_slug NULL on all 8 judicial topics — Phase 28-02 must populate for community links to appear
+- Migration 20260506000001_phase28_judicial_communities.sql applied 2026-05-07: 8 connect.communities seeded (judicial compass communities, simplified plain-language descriptions); fc_community_slug populated on all 8 judicial topics; COMPASS-06 satisfied
+- Phase 28 COMPLETE (2/2 plans)
 
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
@@ -255,3 +257,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-06 — Phase 27 complete (3/3 plans); migration 113 applied (8 topics, 40 stances, 8 judicial role rows, 0 contamination); compassService.ts applies_judicial exposed with false fallback; Profile.jsx JUDICIAL/NATIONAL_JUDICIAL → 'judicial' scope (before NATIONAL_ catch-all); CompassCard.jsx maps 'judicial' → 'applies_judicial' key; TypeScript + build pass; verified 6/6; COMPASS-01/02/03/04 complete; Phase 28 next*
 *Updated: 2026-05-07 — Phase 27-03 complete; migration 113 applied (8 topics + 40 stances + 8 judicial role rows confirmed); compassService.ts applies_judicial flag live (false fallback); Profile.jsx JUDICIAL/NATIONAL_JUDICIAL→'judicial' scope (ordered before NATIONAL_ prefix); CompassCard.jsx four-arm ternary 'judicial'→'applies_judicial'; TypeScript + build pass; Phase 27 COMPLETE*
 *Updated: 2026-05-07 — Phase 28-01 complete; JudicialCompassSection.jsx built (burnt orange, scale icon, empty notch UI, deriveJudicialSubRole, filterJudicialTopics); compassService.ts judicial_role in SELECT (deployed to Render); Profile.jsx isJudge guard removed + JudicialCompassSection wired; CandidateProfile.jsx JUDICIAL arm added before NATIONAL_ check; frontend deployed to Render; COMPASS-05 satisfied; Phase 28-02 next*
+*Updated: 2026-05-07 — Phase 28-02 complete; migration 20260506000001_phase28_judicial_communities.sql applied via supabase db push (clean, no repair); 8 judicial connect.communities seeded (simplified plain-language descriptions); fc_community_slug populated on all 8 judicial compass_topics rows; 4/4 verification queries pass; COMPASS-06 satisfied; Phase 28 COMPLETE*
