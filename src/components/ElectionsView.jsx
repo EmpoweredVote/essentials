@@ -495,7 +495,7 @@ export default function ElectionsView({
               if (!tierStyle) return null;
 
               return (
-                <div key={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: isDark ? '#1a2235' : tierStyle.bg }}>
+                <div key={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: isDark ? 'transparent' : tierStyle.bg }}>
                   <div className="mb-3">
                     <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
                   </div>
@@ -638,7 +638,7 @@ export default function ElectionsView({
                                           subtitle={cardSubtitle}
                                           onClick={() => onCandidateClick(candidate.candidate_id)}
                                           variant="horizontal"
-                                          style={isDark ? { backgroundColor: '#0d1526', borderColor: '#2d3f5a' } : {}}
+                                          style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
                                           footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                         />
                                         {candidate.candidate_status === 'withdrawn' && (
@@ -679,7 +679,7 @@ export default function ElectionsView({
                                         invertedSpokes={invertedSpokes}
                                         variant={computeVariant({ office_title: cardTitle, district_type: race.districtType }, rawUserAnswers, candHasStances)}
                                         surface="elections"
-                                        tierVisuals={isDark ? { bg: '#0d1526', accent: '#59b0c4', text: '#59b0c4' } : undefined}
+                                        tierVisuals={isDark ? { bg: '#1a2235', accent: '#59b0c4', text: '#59b0c4' } : undefined}
                                         onBuildCompass={handleBuildCompass}
                                         onClick={() => onCandidateClick(candidate.candidate_id)}
                                       />
