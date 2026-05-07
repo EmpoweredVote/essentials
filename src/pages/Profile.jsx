@@ -221,6 +221,7 @@ function Profile() {
               const dt = pol.district_type || '';
               if (dt === 'LOCAL' || dt === 'LOCAL_EXEC' || dt === 'COUNTY') return 'local';
               if (dt.startsWith('STATE_')) return 'state';
+              if (dt === 'JUDICIAL' || dt === 'NATIONAL_JUDICIAL') return 'judicial';
               if (dt.startsWith('NATIONAL_')) return 'federal';
               return null; // cross-cutting / unknown — show all topics
             })();
