@@ -344,7 +344,7 @@ Plans:
   2. A City Attorney/DA candidate profile page renders the 4 universal judicial topics plus the 2 City Attorney/DA-specific topics (6 total) — not the 2 judge-specific topics
   3. A judge candidate profile page renders the 4 universal judicial topics plus the 2 judge-specific topics (6 total) — not the 2 City Attorney/DA-specific topics
   4. All 8 judicial compass topics have a companion Focused Community row in `connect.communities` with an authored description, and `fc_community_slug` is populated on each `inform.compass_topics` row
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
 - [ ] 28-01-PLAN.md — Frontend: extend districtScope derivation for JUDICIAL; wire role-specific topic filtering (judge vs. City Attorney/DA sub-scope)
@@ -450,7 +450,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 26. Campaign Finance Gap Closure | v3.2 | 1/1 | Complete | 2026-05-07 |
 | 27. Judicial Compass DB | v3.2 | 3/3 | Complete | 2026-05-06 |
-| 28. Judicial Compass Frontend + Communities | v3.2 | 0/TBD | Not started | - |
+| 28. Judicial Compass Frontend + Communities | v3.2 | 0/2 | Not started | - |
 | 29. Bar Evaluation Data | v3.2 | 0/TBD | Not started | - |
 | 30. Legal Candidate Stance Research | v3.2 | 0/TBD | Not started | - |
 | 31. Donor-Court Conflict Map | v3.2 | 0/TBD | Not started | - |
