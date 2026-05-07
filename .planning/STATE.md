@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 27 — Judicial Compass DB
-Plan: —
-Status: Not started — Phase 26 complete; ready to begin Phase 27
-Last activity: 2026-05-07 — Phase 26 complete; 16 LA City candidates seeded with la_socrata sources; maintenance procedure documented
+Plan: 01 of 3
+Status: In progress — Plan 27-01 complete; migration 112 applied to production
+Last activity: 2026-05-07 — Plan 27-01 complete; judicial_role column + expanded role_scope constraint live; 4 universal topics + 20 stances authored in migration 113 Part A
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -42,8 +42,10 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - Campaign finance gap script: `C:\EV-Accounts\backend\scripts\audit-la-socrata-gaps.ts` (run with --fix --ingest)
 - Contribution data: `transparent_motivations.contributions` table; `con_emp` (employer) + `con_occp` (occupation) identify law firm donors
-- Compass scope: lives in `inform.compass_topic_roles` (role_scope CHECK constraint currently: 'federal'|'state'|'local'); Phase 27 adds 'judicial'
+- Compass scope: lives in `inform.compass_topic_roles` (role_scope CHECK constraint: 'federal'|'state'|'local'|'judicial' — 'judicial' added by migration 112 in Phase 27-01)
 - districtScope derivation: LOCAL/LOCAL_EXEC/COUNTY→'local', STATE_*→'state', NATIONAL_*→'federal', JUDICIAL→'judicial' (Phase 28 wires this)
+- judicial_role column on inform.compass_topics: NULL=universal, 'judge'=judge-only, 'city_attorney_da'=DA/City Attorney only (added migration 112, applied 2026-05-07)
+- Migration 113 Part A (4 universal judicial topics) authored but NOT yet applied — Plan 27-02 extends it, Plan 27-03 applies it
 
 ### Pending Todos (accounts team backlog)
 
@@ -232,3 +234,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-05 — Phase 25 complete (2/2 plans); verification 4/4 passed; SCOPE-02 satisfied (all 5 LOCAL-applicable topics have local scope tags); RETIRE-01 kept both (42 politician answers intact); districtScope filtering live in essentials frontend; v3.1 milestone COMPLETE*
 *Updated: 2026-05-06 — v3.2 Legal Candidate Evaluation Framework roadmap created; Phases 26-31 defined; 19/19 requirements mapped; Phase 26 Campaign Finance Gap Closure is next*
 *Updated: 2026-05-07 — Phase 26 complete (1/1 plans); 16 active LA City race candidates seeded with la_socrata sources (13 auto + 3 manual); 15 legitimate_no_filers documented (9 County BOS candidates outside City Ethics jurisdiction + 6 City/Mayoral no-committees); Morgan Oyler deferred (null cmt_id in Socrata); 6 bad --fix source rows + 358 contaminated contributions cleaned up; run-la-socrata-ingest.ts created for ingest-only re-runs; FINANCE-01 + FINANCE-02 satisfied; Estuardo Mazariegos shared cmt_id issue (1479131 also linked to Ross J. Maza) documented as open item; Phase 27 Judicial Compass DB is next*
+*Updated: 2026-05-07 — Phase 27-01 complete; migration 112 applied to production: judicial_role nullable TEXT column on inform.compass_topics (CHECK judge|city_attorney_da); chk_role_scope_tier expanded to include 'judicial'; migration 113 Part A authored with 4 universal topics (judicial-criminal-justice, judicial-access-to-justice, judicial-government-deference, judicial-transparency) + 20 stances + 4 role rows (judicial_role=NULL); _apply-migration-112.ts created and run ("All checks passed."); migration 113 not yet applied — Plan 27-02 extends file, Plan 27-03 applies*
