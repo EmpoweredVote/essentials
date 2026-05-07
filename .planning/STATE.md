@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 28 — Judicial Compass Frontend + Communities
-Plan: —
-Status: Not started — Phase 27 complete; ready to begin Phase 28
-Last activity: 2026-05-06 — Phase 27 complete; 8 judicial compass topics + 40 stances live; compassService.ts applies_judicial wired; Profile.jsx/CompassCard.jsx scope derivation updated; verified 6/6
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-05-07 — Completed 28-01-PLAN.md; JudicialCompassSection built + wired; judicial_role in API
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -211,6 +211,17 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - DATABASE_URL stored at C:/Users/Chris/AppData/Local/Temp/backend.env (not C:\Focused Communities\backend\.env which does not exist)
 
 ---
+### Phase 28 Notes
+
+- JudicialCompassSection.jsx: filters allTopics by applies_judicial===true, then by judicialSubRole (from officeTitle string match); renderss empty notch UI with 'Stance research in progress' label
+- deriveJudicialSubRole: 'judge' if officeTitle includes 'judge'; 'city_attorney_da' if includes 'city attorney' or 'district attorney'; null for unknown → shows all judicial topics (safe default)
+- filterJudicialTopics: judicial_role===null|undefined = universal (show for all sub-roles); strict sub-role match otherwise
+- isJudge guard removed from Profile.jsx (was static placeholder text); replaced by JudicialCompassSection routing
+- CandidateProfile.jsx: JUDICIAL arm added to districtScope derivation (before NATIONAL_ catch-all — critical ordering)
+- compassService.ts: judicial_role added to SELECT; backend deployed to Render (push to master 14b27b1)
+- Frontend deployed to Render (push to main 649113a, post-rebase after 21 remote commits)
+- fc_community_slug NULL on all 8 judicial topics — Phase 28-02 must populate for community links to appear
+
 *State initialized: 2026-04-12*
 *Updated: 2026-05-01 — Phase 15 complete; migrations 097-098 applied; 74 Tier 3-4 politicians seeded across 15 cities (45 Tier 3 + 29 Tier 4); 19 stubs for May 3 election seats; Copeville excluded*
 *Updated: 2026-05-01 — Phase 16-01 complete; migration 099 applied; TX election row seeded (2026-05-02); 23 Collin County cities in discovery_jurisdictions; 23/23 governments matched*
@@ -243,3 +254,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-07 — Phase 27-02 complete; migration 113 Part B appended: Topics 5-6 judge-specific (judicial-interpretation, judicial-bail-pretrial) + Topics 7-8 city_attorney_da-specific (judicial-prosecution-priorities, judicial-police-accountability); migration 113 now complete with 8 topics + 40 stances + 8 role rows; all idempotent via topic_key guard; Plan 27-03 applies to production*
 *Updated: 2026-05-06 — Phase 27 complete (3/3 plans); migration 113 applied (8 topics, 40 stances, 8 judicial role rows, 0 contamination); compassService.ts applies_judicial exposed with false fallback; Profile.jsx JUDICIAL/NATIONAL_JUDICIAL → 'judicial' scope (before NATIONAL_ catch-all); CompassCard.jsx maps 'judicial' → 'applies_judicial' key; TypeScript + build pass; verified 6/6; COMPASS-01/02/03/04 complete; Phase 28 next*
 *Updated: 2026-05-07 — Phase 27-03 complete; migration 113 applied (8 topics + 40 stances + 8 judicial role rows confirmed); compassService.ts applies_judicial flag live (false fallback); Profile.jsx JUDICIAL/NATIONAL_JUDICIAL→'judicial' scope (ordered before NATIONAL_ prefix); CompassCard.jsx four-arm ternary 'judicial'→'applies_judicial'; TypeScript + build pass; Phase 27 COMPLETE*
+*Updated: 2026-05-07 — Phase 28-01 complete; JudicialCompassSection.jsx built (burnt orange, scale icon, empty notch UI, deriveJudicialSubRole, filterJudicialTopics); compassService.ts judicial_role in SELECT (deployed to Render); Profile.jsx isJudge guard removed + JudicialCompassSection wired; CandidateProfile.jsx JUDICIAL arm added before NATIONAL_ check; frontend deployed to Render; COMPASS-05 satisfied; Phase 28-02 next*

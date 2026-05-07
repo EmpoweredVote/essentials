@@ -347,7 +347,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 28-01-PLAN.md — Frontend: extend districtScope derivation for JUDICIAL; wire role-specific topic filtering (judge vs. City Attorney/DA sub-scope)
+- [x] 28-01-PLAN.md — Frontend: extend districtScope derivation for JUDICIAL; wire role-specific topic filtering (judge vs. City Attorney/DA sub-scope)
 - [ ] 28-02-PLAN.md — Seed 8 companion Focused Communities; populate fc_community_slug on judicial topics
 
 #### Phase 29: Bar Evaluation Data
