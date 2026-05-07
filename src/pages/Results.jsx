@@ -1601,6 +1601,7 @@ export default function Results() {
                 loading={electionsLoading}
                 tierFilter={selectedFilter}
                 compassMode={compassMode}
+                isDark={isDark}
                 onCandidateClick={(id) => {
                   const scrollTop = isDesktop
                     ? mainRef.current?.scrollTop ?? 0
