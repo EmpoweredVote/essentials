@@ -10,13 +10,13 @@
 
 ### COMPASS — Judicial Compass Topics
 
-- [ ] **COMPASS-01**: 4 universal legal compass topics authored in DB with full 5-stance metadata
+- [x] **COMPASS-01**: 4 universal legal compass topics authored in DB with full 5-stance metadata
   *(textualism vs. living law | rehabilitation vs. punishment | government/citizen deference | court access barriers)*
-- [ ] **COMPASS-02**: 2 judge-specific compass topics authored in DB with full 5-stance metadata
+- [x] **COMPASS-02**: 2 judge-specific compass topics authored in DB with full 5-stance metadata
   *(precedent deference | prosecutorial scrutiny)*
-- [ ] **COMPASS-03**: 2 City Attorney/DA-specific topics authored with full 5-stance metadata
+- [x] **COMPASS-03**: 2 City Attorney/DA-specific topics authored with full 5-stance metadata
   *(prosecution vs. diversion | defend employees vs. hold accountable)*
-- [ ] **COMPASS-04**: All 8 legal topics scoped to legal offices only — not shown to state legislators, council members, or other non-legal candidates
+- [x] **COMPASS-04**: All 8 legal topics scoped to legal offices only — not shown to state legislators, council members, or other non-legal candidates
 - [ ] **COMPASS-05**: Legal candidate profiles in essentials frontend surface judicial compass topics
 - [ ] **COMPASS-06**: 8 companion Focused Communities seeded for the new judicial topics
 

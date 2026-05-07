@@ -331,9 +331,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 27-01-PLAN.md — Schema (judicial_role column + expanded CHECK constraint) + 4 universal topics + 20 stances
-- [ ] 27-02-PLAN.md — 2 judge-specific topics + 10 stances; 2 City Attorney/DA-specific topics + 10 stances
-- [ ] 27-03-PLAN.md — Apply migration 113; patch compassService.ts applies_judicial; update Profile.jsx districtScope
+- [x] 27-01-PLAN.md — Schema (judicial_role column + expanded CHECK constraint) + 4 universal topics + 20 stances
+- [x] 27-02-PLAN.md — 2 judge-specific topics + 10 stances; 2 City Attorney/DA-specific topics + 10 stances
+- [x] 27-03-PLAN.md — Apply migration 113; patch compassService.ts applies_judicial; update Profile.jsx districtScope
 
 #### Phase 28: Judicial Compass Frontend + Communities
 **Goal**: Legal candidate profile pages in the essentials frontend surface judicial compass topics, and 8 companion Focused Communities are seeded for the new judicial topics
@@ -449,7 +449,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 26. Campaign Finance Gap Closure | v3.2 | 1/1 | Complete | 2026-05-07 |
-| 27. Judicial Compass DB | v3.2 | 0/TBD | Not started | - |
+| 27. Judicial Compass DB | v3.2 | 3/3 | Complete | 2026-05-06 |
 | 28. Judicial Compass Frontend + Communities | v3.2 | 0/TBD | Not started | - |
 | 29. Bar Evaluation Data | v3.2 | 0/TBD | Not started | - |
 | 30. Legal Candidate Stance Research | v3.2 | 0/TBD | Not started | - |

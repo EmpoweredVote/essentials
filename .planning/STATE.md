@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 27 — Judicial Compass DB
-Plan: 03 of 3
-Status: Phase complete — all 3 plans done; judicial compass DB + backend + frontend fully wired
-Last activity: 2026-05-07 — Plan 27-03 complete; migration 113 applied; compassService.ts + Profile.jsx + CompassCard.jsx patched; Phase 27 done
+Phase: 28 — Judicial Compass Frontend + Communities
+Plan: —
+Status: Not started — Phase 27 complete; ready to begin Phase 28
+Last activity: 2026-05-06 — Phase 27 complete; 8 judicial compass topics + 40 stances live; compassService.ts applies_judicial wired; Profile.jsx/CompassCard.jsx scope derivation updated; verified 6/6
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -241,4 +241,5 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-07 — Phase 26 complete (1/1 plans); 16 active LA City race candidates seeded with la_socrata sources (13 auto + 3 manual); 15 legitimate_no_filers documented (9 County BOS candidates outside City Ethics jurisdiction + 6 City/Mayoral no-committees); Morgan Oyler deferred (null cmt_id in Socrata); 6 bad --fix source rows + 358 contaminated contributions cleaned up; run-la-socrata-ingest.ts created for ingest-only re-runs; FINANCE-01 + FINANCE-02 satisfied; Estuardo Mazariegos shared cmt_id issue (1479131 also linked to Ross J. Maza) documented as open item; Phase 27 Judicial Compass DB is next*
 *Updated: 2026-05-07 — Phase 27-01 complete; migration 112 applied to production: judicial_role nullable TEXT column on inform.compass_topics (CHECK judge|city_attorney_da); chk_role_scope_tier expanded to include 'judicial'; migration 113 Part A authored with 4 universal topics (judicial-criminal-justice, judicial-access-to-justice, judicial-government-deference, judicial-transparency) + 20 stances + 4 role rows (judicial_role=NULL); _apply-migration-112.ts created and run ("All checks passed."); migration 113 not yet applied — Plan 27-02 extends file, Plan 27-03 applies*
 *Updated: 2026-05-07 — Phase 27-02 complete; migration 113 Part B appended: Topics 5-6 judge-specific (judicial-interpretation, judicial-bail-pretrial) + Topics 7-8 city_attorney_da-specific (judicial-prosecution-priorities, judicial-police-accountability); migration 113 now complete with 8 topics + 40 stances + 8 role rows; all idempotent via topic_key guard; Plan 27-03 applies to production*
+*Updated: 2026-05-06 — Phase 27 complete (3/3 plans); migration 113 applied (8 topics, 40 stances, 8 judicial role rows, 0 contamination); compassService.ts applies_judicial exposed with false fallback; Profile.jsx JUDICIAL/NATIONAL_JUDICIAL → 'judicial' scope (before NATIONAL_ catch-all); CompassCard.jsx maps 'judicial' → 'applies_judicial' key; TypeScript + build pass; verified 6/6; COMPASS-01/02/03/04 complete; Phase 28 next*
 *Updated: 2026-05-07 — Phase 27-03 complete; migration 113 applied (8 topics + 40 stances + 8 judicial role rows confirmed); compassService.ts applies_judicial flag live (false fallback); Profile.jsx JUDICIAL/NATIONAL_JUDICIAL→'judicial' scope (ordered before NATIONAL_ prefix); CompassCard.jsx four-arm ternary 'judicial'→'applies_judicial'; TypeScript + build pass; Phase 27 COMPLETE*
