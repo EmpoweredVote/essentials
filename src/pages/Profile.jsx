@@ -5,6 +5,7 @@ import { apiFetch } from '../lib/auth';
 import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
+import JudicialCompassSection from '../components/JudicialCompassSection';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import { useCompass } from '../contexts/CompassContext';
@@ -192,30 +193,6 @@ function Profile() {
               );
             }
 
-            // Contested judges without stance research — honest placeholder.
-            // Use district_type (reliably set by backend) instead of is_judicial
-            // (which is not on the API response per pre-execution verification).
-            const isJudge =
-              pol.district_type === 'JUDICIAL' || pol.district_type === 'NATIONAL_JUDICIAL';
-            if (isJudge && engagement === 'full' && !hasStances) {
-              return (
-                <section className="mt-8">
-                  <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                    Compass &amp; Issues
-                  </h2>
-                  <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6 text-center">
-                    <p className="text-gray-600 dark:text-gray-300 mb-2" style={{ fontSize: '15px', lineHeight: 1.6 }}>
-                      Judges are typically evaluated on their record rather than stated policy positions.
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-400" style={{ fontSize: '14px', lineHeight: 1.6, margin: 0 }}>
-                      We're working on surfacing judicial records. In the meantime, you can review the
-                      role description and contact information above.
-                    </p>
-                  </div>
-                </section>
-              );
-            }
-
             // Derive compass scope from district_type for topic filtering
             const districtScope = (() => {
               const dt = pol.district_type || '';
@@ -225,6 +202,16 @@ function Profile() {
               if (dt.startsWith('NATIONAL_')) return 'federal';
               return null; // cross-cutting / unknown — show all topics
             })();
+
+            // Route judicial profiles to JudicialCompassSection; all others get CompassCard
+            if (districtScope === 'judicial') {
+              return (
+                <JudicialCompassSection
+                  officeTitle={pol.office_title || ''}
+                  politicianId={id}
+                />
+              );
+            }
 
             // Default: render the existing CompassCard
             return (

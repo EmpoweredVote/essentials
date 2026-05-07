@@ -4,6 +4,7 @@ import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord, fetchRac
 import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
+import JudicialCompassSection from '../components/JudicialCompassSection';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { cleanPositionName } from '../components/ElectionsView';
 
@@ -162,21 +163,31 @@ export default function CandidateProfile() {
                 onNavigateToRecord={(href) => navigate(href)}
               />
 
-              {/* CompassCard — only for incumbents. Self-gates via politicianIdsWithStances. Per D-04. */}
-              {polId && (
-                <CompassCard
-                  politicianId={polId}
-                  politicianName={pol.full_name || `${pol.first_name} ${pol.last_name}`}
-                  politicianTitle={pol.office_title || candidateData?.position_name || ''}
-                  districtScope={(() => {
-                    const dt = pol.district_type || '';
-                    if (dt === 'LOCAL' || dt === 'LOCAL_EXEC' || dt === 'COUNTY') return 'local';
-                    if (dt.startsWith('STATE_')) return 'state';
-                    if (dt.startsWith('NATIONAL_')) return 'federal';
-                    return null; // district_type unavailable for challenger — show all topics
-                  })()}
-                />
-              )}
+              {/* CompassCard or JudicialCompassSection — only for incumbents. Per D-04. */}
+              {polId && (() => {
+                const dt = pol.district_type || '';
+                const dScope = dt === 'LOCAL' || dt === 'LOCAL_EXEC' || dt === 'COUNTY' ? 'local'
+                  : dt.startsWith('STATE_') ? 'state'
+                  : dt === 'JUDICIAL' || dt === 'NATIONAL_JUDICIAL' ? 'judicial'
+                  : dt.startsWith('NATIONAL_') ? 'federal'
+                  : null;
+                if (dScope === 'judicial') {
+                  return (
+                    <JudicialCompassSection
+                      officeTitle={pol.office_title || candidateData?.position_name || ''}
+                      politicianId={polId}
+                    />
+                  );
+                }
+                return (
+                  <CompassCard
+                    politicianId={polId}
+                    politicianName={pol.full_name || `${pol.first_name} ${pol.last_name}`}
+                    politicianTitle={pol.office_title || candidateData?.position_name || ''}
+                    districtScope={dScope}
+                  />
+                );
+              })()}
               {polId && (
                 <div className="mt-6">
                   <CampaignFinanceSection politicianId={polId} />
