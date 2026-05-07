@@ -328,12 +328,12 @@ Plans:
   3. A new `'judicial'` value is valid in `inform.compass_topic_roles.role_scope` (CHECK constraint updated), and all 8 topics have judicial scope rows — no federal/state/local rows for these topics
   4. `compassService.ts getCompassTopics()` returns judicial topics only when the caller requests judicial scope; a query for 'local' or 'state' scope returns zero of the 8 new judicial topics
   5. The JUDICIAL district_type in the frontend scope-derivation logic maps to the 'judicial' scope so judges see judicial topics and city council members do not
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 27-01-PLAN.md — DB schema: add 'judicial' to compass_topic_roles CHECK constraint; author 4 universal topics + 20 stances
-- [ ] 27-02-PLAN.md — Author 2 judge-specific topics + 10 stances; author 2 City Attorney/DA-specific topics + 10 stances
-- [ ] 27-03-PLAN.md — Seed 8 judicial scope rows in compass_topic_roles; update compassService.ts to handle judicial scope; verify isolation
+- [ ] 27-01-PLAN.md — Schema (judicial_role column + expanded CHECK constraint) + 4 universal topics + 20 stances
+- [ ] 27-02-PLAN.md — 2 judge-specific topics + 10 stances; 2 City Attorney/DA-specific topics + 10 stances
+- [ ] 27-03-PLAN.md — Apply migration 113; patch compassService.ts applies_judicial; update Profile.jsx districtScope
 
 #### Phase 28: Judicial Compass Frontend + Communities
 **Goal**: Legal candidate profile pages in the essentials frontend surface judicial compass topics, and 8 companion Focused Communities are seeded for the new judicial topics
