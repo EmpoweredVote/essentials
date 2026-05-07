@@ -348,7 +348,7 @@ Plans:
 
 Plans:
 - [x] 28-01-PLAN.md — Frontend: extend districtScope derivation for JUDICIAL; wire role-specific topic filtering (judge vs. City Attorney/DA sub-scope)
-- [ ] 28-02-PLAN.md — Seed 8 companion Focused Communities; populate fc_community_slug on judicial topics
+- [x] 28-02-PLAN.md — Seed 8 companion Focused Communities; populate fc_community_slug on judicial topics
 
 #### Phase 29: Bar Evaluation Data
 **Goal**: LACBA ratings, CA State Bar discipline status, and CJP censures for current LA legal candidates are researched from free/public sources, stored in the database, and surfaced on legal candidate profile pages
@@ -450,7 +450,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 26. Campaign Finance Gap Closure | v3.2 | 1/1 | Complete | 2026-05-07 |
 | 27. Judicial Compass DB | v3.2 | 3/3 | Complete | 2026-05-06 |
-| 28. Judicial Compass Frontend + Communities | v3.2 | 0/2 | Not started | - |
+| 28. Judicial Compass Frontend + Communities | v3.2 | 2/2 | Complete | 2026-05-07 |
 | 29. Bar Evaluation Data | v3.2 | 0/TBD | Not started | - |
 | 30. Legal Candidate Stance Research | v3.2 | 0/TBD | Not started | - |
 | 31. Donor-Court Conflict Map | v3.2 | 0/TBD | Not started | - |

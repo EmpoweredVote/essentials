@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 28 — Judicial Compass Frontend + Communities
-Plan: 2 of 2 in current phase
-Status: Phase complete
-Last activity: 2026-05-07 — Completed 28-02-PLAN.md; 8 judicial communities seeded; all 8 fc_community_slug populated; COMPASS-06 satisfied
+Phase: 29 — Bar Evaluation Data
+Plan: —
+Status: Not started — Phase 28 complete; ready to begin Phase 29
+Last activity: 2026-05-07 — Phase 28 complete; JudicialCompassSection built + deployed; 8 judicial companion communities seeded; COMPASS-05 + COMPASS-06 satisfied; verification 4/4 passed
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -258,3 +258,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-07 — Phase 27-03 complete; migration 113 applied (8 topics + 40 stances + 8 judicial role rows confirmed); compassService.ts applies_judicial flag live (false fallback); Profile.jsx JUDICIAL/NATIONAL_JUDICIAL→'judicial' scope (ordered before NATIONAL_ prefix); CompassCard.jsx four-arm ternary 'judicial'→'applies_judicial'; TypeScript + build pass; Phase 27 COMPLETE*
 *Updated: 2026-05-07 — Phase 28-01 complete; JudicialCompassSection.jsx built (burnt orange, scale icon, empty notch UI, deriveJudicialSubRole, filterJudicialTopics); compassService.ts judicial_role in SELECT (deployed to Render); Profile.jsx isJudge guard removed + JudicialCompassSection wired; CandidateProfile.jsx JUDICIAL arm added before NATIONAL_ check; frontend deployed to Render; COMPASS-05 satisfied; Phase 28-02 next*
 *Updated: 2026-05-07 — Phase 28-02 complete; migration 20260506000001_phase28_judicial_communities.sql applied via supabase db push (clean, no repair); 8 judicial connect.communities seeded (simplified plain-language descriptions); fc_community_slug populated on all 8 judicial compass_topics rows; 4/4 verification queries pass; COMPASS-06 satisfied; Phase 28 COMPLETE*
+*Updated: 2026-05-07 — Phase 28 complete (2/2 plans); verification 4/4 passed; COMPASS-05 + COMPASS-06 satisfied; JudicialCompassSection live with burnt orange treatment; judicial sub-role filtering (judge→6 topics, DA/City Attorney→6 topics, fallback→8); database.types.ts patched with judicial_role column; 8 companion communities live; Phase 29 Bar Evaluation Data is next*
