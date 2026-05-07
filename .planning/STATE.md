@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 26 — Campaign Finance Gap Closure
+Phase: 27 — Judicial Compass DB
 Plan: —
-Status: Not started — roadmap defined; ready to begin Phase 26
-Last activity: 2026-05-06 — v3.2 roadmap created; Phases 26-31 defined; Phase 26 is next
+Status: Not started — Phase 26 complete; ready to begin Phase 27
+Last activity: 2026-05-07 — Phase 26 complete; 16 LA City candidates seeded with la_socrata sources; maintenance procedure documented
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -14,7 +14,7 @@ v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — r
 See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v3.2 Legal Candidate Evaluation Framework — Phase 26 Campaign Finance Gap Closure
+**Current focus:** v3.2 Legal Candidate Evaluation Framework — Phase 27 Judicial Compass DB
 
 ## Accumulated Context
 
@@ -231,3 +231,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-05 — Phase 25-01 complete (executed after 25-02); migration 20260505000001_phase25_scope_audit.sql applied; Affordable Housing local scope added; all 5 target topics confirmed has_local=true; plan's topic_keys corrected (housing/childcare/data-centers)*
 *Updated: 2026-05-05 — Phase 25 complete (2/2 plans); verification 4/4 passed; SCOPE-02 satisfied (all 5 LOCAL-applicable topics have local scope tags); RETIRE-01 kept both (42 politician answers intact); districtScope filtering live in essentials frontend; v3.1 milestone COMPLETE*
 *Updated: 2026-05-06 — v3.2 Legal Candidate Evaluation Framework roadmap created; Phases 26-31 defined; 19/19 requirements mapped; Phase 26 Campaign Finance Gap Closure is next*
+*Updated: 2026-05-07 — Phase 26 complete (1/1 plans); 16 active LA City race candidates seeded with la_socrata sources (13 auto + 3 manual); 15 legitimate_no_filers documented (9 County BOS candidates outside City Ethics jurisdiction + 6 City/Mayoral no-committees); Morgan Oyler deferred (null cmt_id in Socrata); 6 bad --fix source rows + 358 contaminated contributions cleaned up; run-la-socrata-ingest.ts created for ingest-only re-runs; FINANCE-01 + FINANCE-02 satisfied; Estuardo Mazariegos shared cmt_id issue (1479131 also linked to Ross J. Maza) documented as open item; Phase 27 Judicial Compass DB is next*

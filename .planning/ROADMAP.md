@@ -316,7 +316,7 @@ Full details: [milestones/v3.1-ROADMAP.md](milestones/v3.1-ROADMAP.md)
 **Plans**: 1 plan
 
 Plans:
-- [ ] 26-01-PLAN.md — Run audit-la-socrata-gaps.ts --fix --ingest; verify 32 candidates patched; document procedure
+- [x] 26-01-PLAN.md — Run audit-la-socrata-gaps.ts --fix --ingest; verify 32 candidates patched; document procedure
 
 #### Phase 27: Judicial Compass DB
 **Goal**: All 8 judicial compass topics with 40 stances are authored in the database, scoped exclusively to legal offices via a new 'judicial' role_scope type, and not shown on any non-legal candidate profile
@@ -448,7 +448,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 23. New LOCAL Compass Topics | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 26. Campaign Finance Gap Closure | v3.2 | 0/TBD | Not started | - |
+| 26. Campaign Finance Gap Closure | v3.2 | 1/1 | Complete | 2026-05-07 |
 | 27. Judicial Compass DB | v3.2 | 0/TBD | Not started | - |
 | 28. Judicial Compass Frontend + Communities | v3.2 | 0/TBD | Not started | - |
 | 29. Bar Evaluation Data | v3.2 | 0/TBD | Not started | - |
