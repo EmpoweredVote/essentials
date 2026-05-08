@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { RadarChartCore, StanceAccordion, ExpandCompassNudge } from '@empoweredvote/ev-ui';
+import { RadarChartCore, StanceAccordion } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 
@@ -371,11 +371,42 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             </div>
           </div>
           {!polLoading && missingTopicCount > 0 && (
-            <ExpandCompassNudge
-              politicianName={politicianName}
-              missingCount={missingTopicCount}
-              compassUrl={ctaHref}
-            />
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '16px',
+                padding: '14px 16px',
+                marginTop: '16px',
+                backgroundColor: '#F5F9FA',
+                borderRadius: '10px',
+                border: '1px solid #e0e6eb',
+                fontFamily: "'Manrope', sans-serif",
+                flexWrap: 'wrap',
+              }}
+            >
+              <p style={{ margin: 0, fontSize: '14px', color: '#4a5568' }}>
+                <span style={{ fontWeight: 600, color: '#2d3748' }}>{missingTopicCount} new {missingTopicCount === 1 ? 'topic' : 'topics'} available</span>
+                {' '}— {politicianName ? `${politicianName} has stances on topics added since you last calibrated.` : 'Stances on topics added since you last calibrated.'}
+              </p>
+              <a
+                href={ctaHref}
+                style={{
+                  display: 'inline-block',
+                  padding: '6px 16px',
+                  backgroundColor: '#00657c',
+                  color: '#ffffff',
+                  borderRadius: '999px',
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Update my compass →
+              </a>
+            </div>
           )}
           </>
         ) : (
