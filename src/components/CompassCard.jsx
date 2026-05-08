@@ -83,62 +83,70 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   const returnUrl = window.location.origin + location.pathname + location.search;
   const ctaHref = `${COMPASS_URL}?return=${encodeURIComponent(returnUrl)}`;
 
-  // Build chart data from intersection of user + politician answers
+  // Build chart data using the spec §2 spoke-selection algorithm
   let topicsFiltered = [];
   let polData = {};
   let userData = {};
+  let replacedSpokes = {};
+  let hasEnoughSpokes = true;
 
   if (!polLoading && polAnswers !== null && scopedTopics.length > 0 && hasUserCompass) {
-    // Determine which short_titles to display
-    let allowedShorts;
+    const polAnsweredSet = new Set(polAnswers.filter((a) => a.value > 0).map((a) => String(a.topic_id)));
+    const userAnsweredSet = new Set(userAnswers.map((a) => String(a.topic_id)));
+
+    let displayTopicIds = [];
+    const newReplacedSpokes = {};
 
     if (selectedTopics && selectedTopics.length > 0) {
-      // Preserve user's chosen topic order
       const topicById = new Map(scopedTopics.map((t) => [String(t.id), t]));
-      allowedShorts = selectedTopics
-        .map((id) => topicById.get(String(id)))
-        .filter(Boolean)
-        .map((t) => t.short_title);
-    } else {
-      // Fall back to topics the politician answered
-      const answeredTopicIds = new Set(polAnswers.map((a) => String(a.topic_id)));
-      allowedShorts = scopedTopics
-        .filter((t) => answeredTopicIds.has(String(t.id)))
-        .map((t) => t.short_title);
-    }
+      const selectedTopicSet = new Set(selectedTopics.map(String));
 
-    const userAnsweredIds = new Set(userAnswers.map((a) => String(a.topic_id)));
-    const polAnsweredIds = new Set(polAnswers.map((a) => String(a.topic_id)));
-    const topicByShortLower = new Map(scopedTopics.map((t) => [t.short_title.toLowerCase(), t]));
+      // Replacement pool: scoped topics not in user's selected set where both parties have answered
+      const replacementPool = scopedTopics.filter((t) =>
+        !selectedTopicSet.has(String(t.id)) &&
+        userAnsweredSet.has(String(t.id)) &&
+        polAnsweredSet.has(String(t.id))
+      );
+      let ri = 0;
 
-    // When user has explicit selections, show all their topics (pol may have no stance on some).
-    // When falling back to pol-answered topics, require both parties have answered.
-    if (selectedTopics && selectedTopics.length > 0) {
-      allowedShorts = allowedShorts.filter((s) => {
-        const topic = topicByShortLower.get(s.toLowerCase());
-        if (!topic) return false;
-        return userAnsweredIds.has(String(topic.id));
-      });
+      for (const id of selectedTopics) {
+        const t = topicById.get(String(id));
+        if (!t || !userAnsweredSet.has(String(id))) continue;
+
+        if (polAnsweredSet.has(String(id))) {
+          displayTopicIds.push(String(id));
+        } else if (ri < replacementPool.length) {
+          const sub = replacementPool[ri++];
+          displayTopicIds.push(String(sub.id));
+          newReplacedSpokes[sub.short_title] = true;
+        }
+        // else: spoke dropped — pol hasn't answered and no replacement available
+      }
     } else {
-      allowedShorts = allowedShorts.filter((s) => {
-        const topic = topicByShortLower.get(s.toLowerCase());
-        if (!topic) return false;
-        return userAnsweredIds.has(String(topic.id)) && polAnsweredIds.has(String(topic.id));
-      });
+      // Fallback: topics where both user and pol have answered
+      displayTopicIds = scopedTopics
+        .filter((t) => userAnsweredSet.has(String(t.id)) && polAnsweredSet.has(String(t.id)))
+        .map((t) => String(t.id));
     }
 
     // Cap at MAX_SPOKES
-    if (allowedShorts.length > MAX_SPOKES) {
-      allowedShorts = allowedShorts.slice(0, MAX_SPOKES);
+    if (displayTopicIds.length > MAX_SPOKES) {
+      displayTopicIds = displayTopicIds.slice(0, MAX_SPOKES);
     }
 
-    if (allowedShorts.length > 0) {
+    hasEnoughSpokes = displayTopicIds.length >= 3;
+    replacedSpokes = newReplacedSpokes;
+
+    if (hasEnoughSpokes) {
+      const allowedShorts = displayTopicIds
+        .map((id) => scopedTopics.find((t) => String(t.id) === id)?.short_title)
+        .filter(Boolean);
+
       const { topicsFiltered: polTopics, answersByShort: polMap } = buildAnswerMapByShortTitle(
         scopedTopics,
         polAnswers,
         allowedShorts
       );
-
       topicsFiltered = polTopics;
       polData = polMap;
 
@@ -164,7 +172,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     (t) => !userAnsweredIds.has(String(t.id))
   ).length;
 
-  const hasData = topicsFiltered.length > 0;
+  const hasData = hasEnoughSpokes && topicsFiltered.length > 0;
 
   // Build legend name: "[Position] [Last Name]"
   const lastName = politicianName ? politicianName.split(' ').pop() : '';
@@ -211,7 +219,6 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               )}
 
               {!polLoading && !hasData && (
-                /* Zero overlap: user has compass but no shared topics with politician */
                 <div className="flex flex-col items-center py-8 px-4">
                   <svg
                     width="64"
@@ -251,18 +258,22 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     className="text-gray-500 text-center mb-6"
                     style={{ fontSize: '15px', lineHeight: 1.6 }}
                   >
-                    Add more topics to see how you compare with {politicianName}
+                    {!hasEnoughSpokes
+                      ? 'Not enough shared topics to display a comparison compass.'
+                      : `Add more topics to see how you compare with ${politicianName}`}
                   </p>
 
-                  <a
-                    href={ctaHref}
-                    className="inline-block px-6 py-2.5 text-white font-semibold rounded-lg text-sm transition-colors"
-                    style={{ backgroundColor: '#00657c' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
-                  >
-                    Take the Quiz
-                  </a>
+                  {hasEnoughSpokes && (
+                    <a
+                      href={ctaHref}
+                      className="inline-block px-6 py-2.5 text-white font-semibold rounded-lg text-sm transition-colors"
+                      style={{ backgroundColor: '#00657c' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
+                    >
+                      Take the Quiz
+                    </a>
+                  )}
                 </div>
               )}
 
@@ -286,7 +297,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                           width: '8px',
                           height: '8px',
                           borderRadius: '50%',
-                          backgroundColor: '#ff5740',
+                          backgroundColor: '#7C6B9E',
                         }}
                       />
                       <span className="font-semibold text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', fontFamily: "'Manrope', sans-serif" }}>You</span>
@@ -298,7 +309,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                           width: '8px',
                           height: '8px',
                           borderRadius: '50%',
-                          backgroundColor: '#59b0c4',
+                          backgroundColor: '#5A9A6E',
                         }}
                       />
                       <span className="font-semibold text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', fontFamily: "'Manrope', sans-serif" }}>{legendLabel}</span>
@@ -312,6 +323,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                       data={userData}
                       compareData={polData}
                       invertedSpokes={invertedSpokes}
+                      replacedSpokes={replacedSpokes}
+                      boldOriginalSpokes={true}
                       size={400}
                       labelFontSize={18}
                       padding={40}

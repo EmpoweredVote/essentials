@@ -46,7 +46,6 @@ export default function CandidateProfile() {
 
         if (candidate.politician_id) {
           // Step 2a: Linked politician — fetch full profile data regardless of incumbent status.
-          // polId (which enables compass/campaign sections) is only set for actual incumbents.
           const [polResult, legSummary, jRecord] = await Promise.all([
             fetchPolitician(candidate.politician_id),
             fetchLegislativeSummary(candidate.politician_id),
@@ -57,9 +56,7 @@ export default function CandidateProfile() {
           if (polResult?.is_judicial) {
             setJudicialRecord(jRecord);
           }
-          if (candidate.is_incumbent) {
-            setPolId(candidate.politician_id);
-          }
+          setPolId(candidate.politician_id);
         } else {
           // Step 2b: CHALLENGER — build minimal pol object from candidate data only
           setPol({
