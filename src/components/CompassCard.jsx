@@ -100,17 +100,22 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
     if (selectedTopics && selectedTopics.length > 0) {
       const topicById = new Map(scopedTopics.map((t) => [String(t.id), t]));
-      const selectedTopicSet = new Set(selectedTopics.map(String));
 
-      // Replacement pool: scoped topics not in user's selected set where both parties have answered
+      // Cap preferred spokes at MAX_SPOKES — post-calibration the Compass may
+      // incorrectly set all quiz topics as selected, which empties the replacement pool.
+      const preferredIds = selectedTopics.slice(0, MAX_SPOKES);
+      const preferredSet = new Set(preferredIds.map(String));
+
+      // Replacement pool: scoped topics not in preferred set where both parties have answered
+      // (includes overflow selected topics beyond MAX_SPOKES as candidates)
       const replacementPool = scopedTopics.filter((t) =>
-        !selectedTopicSet.has(String(t.id)) &&
+        !preferredSet.has(String(t.id)) &&
         userAnsweredSet.has(String(t.id)) &&
         polAnsweredSet.has(String(t.id))
       );
       let ri = 0;
 
-      for (const id of selectedTopics) {
+      for (const id of preferredIds) {
         const t = topicById.get(String(id));
         if (!t) continue;
 
