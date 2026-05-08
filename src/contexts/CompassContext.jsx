@@ -220,6 +220,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
 
         if (authedUser) {
           authedUserRef.current = authedUser;
+          loadCompassData();
           if (!cancelled) {
             setIsLoggedIn(true);
             setUserName(authedUser.display_name ?? null);
