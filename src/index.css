@@ -125,3 +125,18 @@ body {
 .dark .ev-politician-card span {
   color: inherit;
 }
+
+/* Dark mode: PoliticianProfile card — ev-ui uses inline styles so !important is required */
+.dark .ev-politician-profile > div {
+  background-color: #1a2235 !important;
+}
+
+.dark .ev-politician-profile h1,
+.dark .ev-politician-profile h2,
+.dark .ev-politician-profile h3 {
+  color: #f3f4f6 !important;
+}
+
+.dark .ev-politician-profile p {
+  color: #9ca3af !important;
+}

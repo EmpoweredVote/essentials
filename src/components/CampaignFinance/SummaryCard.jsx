@@ -67,11 +67,11 @@ export default function SummaryCard({
     return (
       <div className="p-5">
         <div className="flex items-center gap-2 mb-2">
-          <h3 className="text-base font-semibold text-gray-800" style={{ fontFamily: "'Manrope', sans-serif" }}>
+          <h3 className="text-base font-semibold text-gray-800 dark:text-gray-200" style={{ fontFamily: "'Manrope', sans-serif" }}>
             Campaign Finance
           </h3>
         </div>
-        <p className="text-gray-500 text-sm">
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
           Campaign finance data not yet available for this politician.
         </p>
       </div>
@@ -86,7 +86,7 @@ export default function SummaryCard({
       {/* Header row */}
       <div className="flex items-center justify-between mb-3">
         <h3
-          className="text-base font-semibold text-gray-800"
+          className="text-base font-semibold text-gray-800 dark:text-gray-200"
           style={{ fontFamily: "'Manrope', sans-serif" }}
         >
           Campaign Finance
@@ -97,7 +97,7 @@ export default function SummaryCard({
             <select
               value={cycle || ''}
               onChange={(e) => onCycleChange(e.target.value)}
-              className="text-sm border border-gray-200 rounded-md px-2 py-1 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="text-sm border border-gray-200 dark:border-gray-700 rounded-md px-2 py-1 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {availableCycles.map((c) => (
                 <option key={c} value={c}>
@@ -113,15 +113,15 @@ export default function SummaryCard({
 
       {/* Body: total raised */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-2xl font-bold text-gray-900" style={{ fontFamily: "'Manrope', sans-serif" }}>
+        <span className="text-2xl font-bold text-gray-900 dark:text-gray-100" style={{ fontFamily: "'Manrope', sans-serif" }}>
           {formatCurrency(summary.total_raised || 0)}
         </span>
         <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
-        <span className="text-sm text-gray-500 ml-1">total raised</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">total raised</span>
       </div>
 
       {/* Footer: source + freshness */}
-      <div className="flex items-center gap-2 text-xs text-gray-400">
+      <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
         <span>Data from FEC</span>
         {updatedLabel && (
           <>

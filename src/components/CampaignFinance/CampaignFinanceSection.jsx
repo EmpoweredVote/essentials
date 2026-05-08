@@ -127,7 +127,7 @@ export default function CampaignFinanceSection({ politicianId }) {
         Transparent Motivations
       </h2>
 
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
+      <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm overflow-hidden border border-gray-200 dark:border-white/10">
         <SummaryCard
           summary={summary}
           cycle={cycle}
