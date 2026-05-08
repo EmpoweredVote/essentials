@@ -104,13 +104,19 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
             if (t?.short_title) aMap[t.short_title] = row.value ?? 0;
           }
           if (Object.keys(aMap).length > 0) {
-            const compassPayload = { a: aMap, s: Array.isArray(selectedResult) ? selectedResult : [], i: {} };
+            // Only write selected topics (≤8) to ev-context — writing all answers crashes ev-ui (TDZ error)
+            const selectedShorts = (Array.isArray(selectedResult) ? selectedResult : [])
+              .map((id) => { const t = topics.find((tt) => String(tt.id) === String(id)); return t?.short_title; })
+              .filter(Boolean);
+            const selectedAMap = {};
+            for (const s of selectedShorts) { if (aMap[s] !== undefined) selectedAMap[s] = aMap[s]; }
+            const compassPayload = { a: selectedAMap, s: Array.isArray(selectedResult) ? selectedResult : [], i: inverted };
             evContext.get().then((current) => {
               const next = { ...(current || {}), compass: compassPayload };
               evContext.set(next).catch(() => {});
             }).catch(() => {});
             if (authedUser?.id) {
-              evContext.setAuthedSlice(authedUser.id, { compass: { a: aMap, i: {} } }).catch(() => {});
+              evContext.setAuthedSlice(authedUser.id, { compass: { a: selectedAMap, i: inverted } }).catch(() => {});
             }
           }
         }

@@ -112,16 +112,20 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
       for (const id of selectedTopics) {
         const t = topicById.get(String(id));
-        if (!t || !userAnsweredSet.has(String(id))) continue;
+        if (!t) continue;
 
-        if (polAnsweredSet.has(String(id))) {
+        const userHas = userAnsweredSet.has(String(id));
+        const polHas = polAnsweredSet.has(String(id));
+
+        if (userHas && polHas) {
           displayTopicIds.push(String(id));
         } else if (ri < replacementPool.length) {
+          // Either side is missing an answer — replace with a topic both have covered
           const sub = replacementPool[ri++];
           displayTopicIds.push(String(sub.id));
           newReplacedSpokes[sub.short_title] = true;
         }
-        // else: spoke dropped — pol hasn't answered and no replacement available
+        // else: no replacement available — spoke dropped
       }
     } else {
       // Fallback: topics where both user and pol have answered
