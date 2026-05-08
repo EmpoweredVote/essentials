@@ -310,6 +310,10 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     return unsub;
   }, [compassDataLoaded, isLoggedIn, allTopics]);
 
+  const toggleInversion = useCallback((shortTitle) => {
+    setInvertedSpokes((prev) => ({ ...prev, [shortTitle]: !prev[shortTitle] }));
+  }, []);
+
   const logout = async () => {
     try {
       const token = getToken();
@@ -348,6 +352,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       suggestedSaveAddress,
       dismissSuggestedSaveAddress: () => setSuggestedSaveAddress(null),
       enableCompass: loadCompassData,
+      toggleInversion,
       logout,
     }),
     [
@@ -368,6 +373,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       myLocationNotSet,
       suggestedSaveAddress,
       loadCompassData,
+      toggleInversion,
     ]
   );
 

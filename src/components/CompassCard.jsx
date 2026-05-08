@@ -27,6 +27,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     selectedTopics,
     allTopics,
     invertedSpokes,
+    toggleInversion,
     verdicts,
     initialTopicId,
     compassLoading,
@@ -192,7 +193,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6">
         {hasUserCompass ? (
           <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8">
             {/* Left zone: radar chart */}
             <div className="flex flex-col items-start">
               {polLoading && (
@@ -325,10 +326,11 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                       invertedSpokes={invertedSpokes}
                       replacedSpokes={replacedSpokes}
                       boldOriginalSpokes={true}
-                      size={400}
-                      labelFontSize={18}
-                      padding={40}
-                      labelOffset={14}
+                      onToggleInversion={toggleInversion}
+                      size={500}
+                      labelFontSize={14}
+                      padding={90}
+                      labelOffset={18}
                     />
                   </div>
                 </>
@@ -374,7 +376,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
           </>
         ) : (
           /* Guest fallback — 2-column: CTA left, accordion right */
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8">
             {/* Left zone: CTA with compass icon */}
             <div className="flex flex-col items-center py-8 px-4">
               <svg
