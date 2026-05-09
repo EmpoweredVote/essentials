@@ -359,12 +359,12 @@ Plans:
   2. Each current LA legal candidate has a CA State Bar discipline record checked — either a clean record confirmed or any public discipline actions stored with source URL
   3. Each current LA judicial candidate has a CJP censure record checked — either clean confirmed or any public censures/admonishments stored with source URL
   4. A legal candidate profile page in the essentials frontend displays bar evaluation data (LACBA rating, Bar discipline status, CJP record) in a readable section visible without authentication
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 29-01-PLAN.md — Research + store LACBA ratings for all current LA legal candidates (lacba.org)
-- [ ] 29-02-PLAN.md — Research + store CA State Bar discipline + CJP censures for all current LA legal candidates
-- [ ] 29-03-PLAN.md — Backend endpoint + frontend component: bar evaluation data section on legal candidate profiles
+- [ ] 29-01-PLAN.md — Migration 117: 11 Superior Court races + 29 challenger politicians + race_candidate links + LACBA judicial_evaluations (36 rows)
+- [ ] 29-02-PLAN.md — Migration 118: CA State Bar status research + insert + Connolly CJP disciplinary_records (3 actions) + CJP N/A for City Attorney and challenger attorneys
+- [ ] 29-03-PLAN.md — Frontend: fix judicialRecord fetch trigger (is_judicial → isLegalCandidate) + build BarEvaluationSection.jsx + deploy
 
 #### Phase 30: Legal Candidate Stance Research
 **Goal**: Aida Ashouri, John McKinney, and Marissa Roy each have stances inserted on the judicial compass topics applicable to their role, drawn from public record sources
@@ -451,6 +451,6 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 26. Campaign Finance Gap Closure | v3.2 | 1/1 | Complete | 2026-05-07 |
 | 27. Judicial Compass DB | v3.2 | 3/3 | Complete | 2026-05-06 |
 | 28. Judicial Compass Frontend + Communities | v3.2 | 2/2 | Complete | 2026-05-07 |
-| 29. Bar Evaluation Data | v3.2 | 0/TBD | Not started | - |
+| 29. Bar Evaluation Data | v3.2 | 0/3 | Not started | - |
 | 30. Legal Candidate Stance Research | v3.2 | 0/TBD | Not started | - |
 | 31. Donor-Court Conflict Map | v3.2 | 0/TBD | Not started | - |
