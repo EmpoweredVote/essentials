@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 29 — Bar Evaluation Data
-Plan: —
-Status: Not started — Phase 28 complete; ready to begin Phase 29
-Last activity: 2026-05-07 — Phase 28 complete; JudicialCompassSection built + deployed; 8 judicial companion communities seeded; COMPASS-05 + COMPASS-06 satisfied; verification 4/4 passed
+Plan: 01 of 2 — complete
+Status: In progress
+Last activity: 2026-05-09 — 29-01 complete; migration 117 applied; 11 LA Superior Court races + 25 challenger politicians + 32 LACBA judicial_evaluations seeded; BAR-01 data foundation satisfied
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -211,6 +211,17 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - DATABASE_URL stored at C:/Users/Chris/AppData/Local/Temp/backend.env (not C:\Focused Communities\backend\.env which does not exist)
 
 ---
+### Phase 29 Notes
+
+- Migration 117 applied 2026-05-09: 11 LA Superior Court contested races (Offices 2/14/64/65/66/81/87/116/131/176/181) for election_id 1ebca37f-cf96-47f4-bc2b-47ef266721fe
+- 25 challenger politicians created (attorneys, is_incumbent=false, is_active=true, data_source='LACBA 2026 JEEC Ratings')
+- 28 race_candidates rows: 25 challengers via full_name subquery + 3 incumbents via hardcoded UUID (Draper→Office 2, Walgren→Office 81, Connolly→Office 116)
+- 32 judicial_evaluations rows: source='LACBA JEEC', rating_date='2026-01-01'; 28 rated + 4 City Attorney "Not evaluated — office not covered by LACBA JEEC"
+- IDEMPOTENCY PATTERN: politicians table has NO unique constraint on full_name; use INSERT...SELECT...WHERE NOT EXISTS instead of ON CONFLICT DO NOTHING for politician inserts
+- All Superior Court races use office_id=NULL (no office records exist for these positions in the current schema)
+- City Attorney "not evaluated" source_url='https://www.lacba.org' (their evaluation page returns HTTP 403)
+- Patrick Connolly has 3 confirmed CJP disciplinary actions (cjp.ca.gov) — Plan 29-02 will seed these
+
 ### Phase 28 Notes
 
 - JudicialCompassSection.jsx: filters allTopics by applies_judicial===true, then by judicialSubRole (from officeTitle string match); renderss empty notch UI with 'Stance research in progress' label
@@ -259,3 +270,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-07 — Phase 28-01 complete; JudicialCompassSection.jsx built (burnt orange, scale icon, empty notch UI, deriveJudicialSubRole, filterJudicialTopics); compassService.ts judicial_role in SELECT (deployed to Render); Profile.jsx isJudge guard removed + JudicialCompassSection wired; CandidateProfile.jsx JUDICIAL arm added before NATIONAL_ check; frontend deployed to Render; COMPASS-05 satisfied; Phase 28-02 next*
 *Updated: 2026-05-07 — Phase 28-02 complete; migration 20260506000001_phase28_judicial_communities.sql applied via supabase db push (clean, no repair); 8 judicial connect.communities seeded (simplified plain-language descriptions); fc_community_slug populated on all 8 judicial compass_topics rows; 4/4 verification queries pass; COMPASS-06 satisfied; Phase 28 COMPLETE*
 *Updated: 2026-05-07 — Phase 28 complete (2/2 plans); verification 4/4 passed; COMPASS-05 + COMPASS-06 satisfied; JudicialCompassSection live with burnt orange treatment; judicial sub-role filtering (judge→6 topics, DA/City Attorney→6 topics, fallback→8); database.types.ts patched with judicial_role column; 8 companion communities live; Phase 29 Bar Evaluation Data is next*
+*Updated: 2026-05-09 — Phase 29-01 complete; migration 117 applied to production; 11 LA Superior Court races (Offices 2/14/64/65/66/81/87/116/131/176/181) seeded for June 2026 election; 25 challenger politicians created; 28 race_candidates rows linked; 32 judicial_evaluations rows (28 LACBA-rated + 4 City Attorney not-evaluated); fully idempotent (WHERE NOT EXISTS guard for politicians); BAR-01 data foundation satisfied; Phase 29-02 next (CJP disciplinary records + BarEvaluationSection UI)*
