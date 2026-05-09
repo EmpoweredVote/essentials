@@ -58,15 +58,15 @@ When no public record exists for a candidate on a specific topic:
 - Check council votes on criminal justice, police oversight, and related topics as primary evidence
 
 **Attorney candidates without a voting record** (McKinney, Roy):
-- Fixed source checklist — check all four, then stop; no open-ended search
-- Checklist:
-  1. LA Times voter guide
-  2. LACBA questionnaire / bar association materials
-  3. League of Women Voters / Vote411
-  4. Endorsing org questionnaires (LA Times editorial board responses, Knock LA, Abundant Housing LA)
-- If none of the four sources covers a topic, result is "researched, not found" — no further searching
+- Fixed source checklist by category — check all four categories, then stop; no open-ended search
+- Checklist (categories, with LA-specific examples in parentheses):
+  1. Local bar association questionnaire (LA: LACBA / JEEC)
+  2. Major regional newspaper voter guide (LA: LA Times voter guide)
+  3. League of Women Voters / Vote411 — national platform, applicable everywhere
+  4. Local endorsing org questionnaires — progressive and civic orgs that publish full Q&A responses (LA: Knock LA, Abundant Housing LA, LA Times editorial board responses)
+- If none of the four categories yields a source covering a topic, result is "researched, not found" — no further searching
 
-This fixed checklist is the **systemic standard for City Attorney/DA candidates** in all future phases.
+**Systemic standard for City Attorney/DA candidates in any city:** use these four categories; substitute the local equivalents for categories 1, 2, and 4. Category 3 (LWV/Vote411) is universal.
 
 ### Claude's Discretion
 - Exact wording of "researched, not found" evidence field entries
@@ -80,7 +80,7 @@ This fixed checklist is the **systemic standard for City Attorney/DA candidates*
 
 - Ashouri's council voting record is the highest-value research target for this phase — her votes on LAPD budget, police oversight, homelessness, and criminal justice are directly on-topic
 - The 1–5 scale is stance-definition matching, not liberal-conservative placement — this distinction must be explicit in the research agent prompt
-- The fixed source checklist (4 sources) is intentionally bounded; it creates a repeatable, auditable research process for future legal candidate phases
+- The fixed source checklist (4 categories) is intentionally bounded; it creates a repeatable, auditable research process for future legal candidate phases in any city — substitute local equivalents for categories 1, 2, and 4
 
 </specifics>
 
