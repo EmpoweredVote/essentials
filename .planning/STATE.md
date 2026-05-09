@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 29 — Bar Evaluation Data
-Plan: 03 of 3 — complete
-Status: Phase complete
-Last activity: 2026-05-09 — 29-03 complete; BarEvaluationSection.jsx built (LACBA rating badges + CJP discipline cards with description as primary content); judicialRecord fetch gate fixed from broken is_judicial to isLegalCandidate (district_type + office_title); deployed to Render; BAR-04 satisfied
+Phase: 30 — Legal Candidate Stance Research
+Plan: 01 of 3 — complete
+Status: In progress
+Last activity: 2026-05-09 — 30-01 complete; Ashouri 6/6 judicial compass topics ingested (all placed, no not-found rows); migration 119 applied; values: access-to-justice=1, criminal-justice=2, govt-deference=1, transparency=2, police-accountability=1, prosecution-priorities=1
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -211,6 +211,16 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - DATABASE_URL stored at C:/Users/Chris/AppData/Local/Temp/backend.env (not C:\Focused Communities\backend\.env which does not exist)
 
 ---
+### Phase 30 Notes
+
+- Migration 119 applied 2026-05-09: Ashouri 6 politician_answers + 6 politician_context rows; all judicial topics placed (no not-found rows)
+- Ashouri had 11 pre-existing politician_answers/context rows for other topics; judicial rows bring total to 17
+- Value placements: access-to-justice=1, criminal-justice=2, govt-deference=1 (inferred), transparency=2 (inferred), police-accountability=1, prosecution-priorities=1
+- Inference flag pattern: reasoning prefixed "Inferred from overall platform framing" when no direct quote; two topics flagged (govt-deference, transparency)
+- Patch Q&A (April 30, 2026) is highest-quality source for City Attorney candidates — structured interview with direct policy quotes
+- DSA-LA PDF (126 pages): minimal Ashouri content (no endorsement; limited policy detail)
+- Next migration is 120 (McKinney or Roy)
+
 ### Phase 29 Notes
 
 - Migration 117 applied 2026-05-09: 11 LA Superior Court contested races (Offices 2/14/64/65/66/81/87/116/131/176/181) for election_id 1ebca37f-cf96-47f4-bc2b-47ef266721fe
@@ -280,3 +290,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-09 — Phase 29-01 complete; migration 117 applied to production; 11 LA Superior Court races (Offices 2/14/64/65/66/81/87/116/131/176/181) seeded for June 2026 election; 25 challenger politicians created; 28 race_candidates rows linked; 32 judicial_evaluations rows (28 LACBA-rated + 4 City Attorney not-evaluated); fully idempotent (WHERE NOT EXISTS guard for politicians); BAR-01 data foundation satisfied; Phase 29-02 next (CJP disciplinary records + BarEvaluationSection UI)
 *Updated: 2026-05-09 — Phase 29-02 complete; migration 118 applied; 2 Connolly CJP admonishment rows (2016-03-23 + 2021-04-02) with plain-language voter-facing descriptions; scope narrowed from plan (no bulk State Bar/CJP N/A rows — zero voter signal); plain-language description standard established; Phase 29 COMPLETE (2/2 plans)*
 *Updated: 2026-05-09 — Phase 29-03 complete; BarEvaluationSection.jsx created (LACBA color-coded rating badges + CJP discipline cards); is_judicial gate fixed to isLegalCandidate in Profile.jsx + CandidateProfile.jsx; both pages import + render BarEvaluationSection; build pass; pushed 93df9b0 to main (Render auto-deploy); BAR-04 satisfied; Phase 29 COMPLETE (3/3 plans)*
+*Updated: 2026-05-09 — Phase 30-01 complete; Ashouri 6/6 judicial compass topics placed (no not-found); migration 119 applied to production; values: access-to-justice=1, criminal-justice=2, govt-deference=1, transparency=2, police-accountability=1, prosecution-priorities=1; inference-flagged: govt-deference + transparency; primary source: Patch Q&A; STANCE-01 partially satisfied (Ashouri done); Phase 30-02 (McKinney) next*
