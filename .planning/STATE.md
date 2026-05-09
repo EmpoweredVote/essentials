@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 29 — Bar Evaluation Data
-Plan: 01 of 2 — complete
-Status: In progress
-Last activity: 2026-05-09 — 29-01 complete; migration 117 applied; 11 LA Superior Court races + 25 challenger politicians + 32 LACBA judicial_evaluations seeded; BAR-01 data foundation satisfied
+Plan: 02 of 2 — complete
+Status: Phase complete
+Last activity: 2026-05-09 — 29-02 complete; migration 118 applied; 2 Connolly CJP admonishment rows with plain-language descriptions; scope narrowed from plan (no bulk State Bar rows, no CJP N/A rows, no Draper/Walgren entries); plain-language description standard established for judicial_disciplinary_records
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -220,7 +220,11 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - IDEMPOTENCY PATTERN: politicians table has NO unique constraint on full_name; use INSERT...SELECT...WHERE NOT EXISTS instead of ON CONFLICT DO NOTHING for politician inserts
 - All Superior Court races use office_id=NULL (no office records exist for these positions in the current schema)
 - City Attorney "not evaluated" source_url='https://www.lacba.org' (their evaluation page returns HTTP 403)
-- Patrick Connolly has 3 confirmed CJP disciplinary actions (cjp.ca.gov) — Plan 29-02 will seed these
+- Patrick Connolly has 2 CJP public admonishments in judicial_disciplinary_records (2016-03-23 + 2021-04-02); plain-language descriptions
+- Plain-language description standard: description field = voter-facing summary of what judge did; established in migration 118
+- Draper pending CJP proceedings: NOT documented (no imposed discipline; omit pending proceedings)
+- State Bar status rows + CJP N/A rows: SKIP (no voter signal without discipline; BarEvaluationSection links to CJP UI instead)
+- judicial_disciplinary_records pre-existing rows: 3 (other judges); 5 total after migration 118
 
 ### Phase 28 Notes
 
@@ -270,4 +274,5 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-07 — Phase 28-01 complete; JudicialCompassSection.jsx built (burnt orange, scale icon, empty notch UI, deriveJudicialSubRole, filterJudicialTopics); compassService.ts judicial_role in SELECT (deployed to Render); Profile.jsx isJudge guard removed + JudicialCompassSection wired; CandidateProfile.jsx JUDICIAL arm added before NATIONAL_ check; frontend deployed to Render; COMPASS-05 satisfied; Phase 28-02 next*
 *Updated: 2026-05-07 — Phase 28-02 complete; migration 20260506000001_phase28_judicial_communities.sql applied via supabase db push (clean, no repair); 8 judicial connect.communities seeded (simplified plain-language descriptions); fc_community_slug populated on all 8 judicial compass_topics rows; 4/4 verification queries pass; COMPASS-06 satisfied; Phase 28 COMPLETE*
 *Updated: 2026-05-07 — Phase 28 complete (2/2 plans); verification 4/4 passed; COMPASS-05 + COMPASS-06 satisfied; JudicialCompassSection live with burnt orange treatment; judicial sub-role filtering (judge→6 topics, DA/City Attorney→6 topics, fallback→8); database.types.ts patched with judicial_role column; 8 companion communities live; Phase 29 Bar Evaluation Data is next*
-*Updated: 2026-05-09 — Phase 29-01 complete; migration 117 applied to production; 11 LA Superior Court races (Offices 2/14/64/65/66/81/87/116/131/176/181) seeded for June 2026 election; 25 challenger politicians created; 28 race_candidates rows linked; 32 judicial_evaluations rows (28 LACBA-rated + 4 City Attorney not-evaluated); fully idempotent (WHERE NOT EXISTS guard for politicians); BAR-01 data foundation satisfied; Phase 29-02 next (CJP disciplinary records + BarEvaluationSection UI)*
+*Updated: 2026-05-09 — Phase 29-01 complete; migration 117 applied to production; 11 LA Superior Court races (Offices 2/14/64/65/66/81/87/116/131/176/181) seeded for June 2026 election; 25 challenger politicians created; 28 race_candidates rows linked; 32 judicial_evaluations rows (28 LACBA-rated + 4 City Attorney not-evaluated); fully idempotent (WHERE NOT EXISTS guard for politicians); BAR-01 data foundation satisfied; Phase 29-02 next (CJP disciplinary records + BarEvaluationSection UI)
+*Updated: 2026-05-09 — Phase 29-02 complete; migration 118 applied; 2 Connolly CJP admonishment rows (2016-03-23 + 2021-04-02) with plain-language voter-facing descriptions; scope narrowed from plan (no bulk State Bar/CJP N/A rows — zero voter signal); plain-language description standard established; Phase 29 COMPLETE (2/2 plans)*
