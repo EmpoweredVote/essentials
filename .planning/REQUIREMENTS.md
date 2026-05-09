@@ -22,10 +22,10 @@
 
 ### BAR — Bar Evaluation Data
 
-- [ ] **BAR-01**: LACBA attorney evaluation ratings researched and stored for current LA legal candidates
-- [ ] **BAR-02**: CA State Bar discipline status researched and stored for current LA legal candidates
-- [ ] **BAR-03**: CJP (Commission on Judicial Performance) censures/discipline researched and stored for current LA judicial candidates
-- [ ] **BAR-04**: Bar evaluation data surfaced on legal candidate profile pages in the essentials frontend
+- [x] **BAR-01**: LACBA attorney evaluation ratings researched and stored for current LA legal candidates
+- [x] **BAR-02**: CA State Bar discipline status researched and stored for current LA legal candidates
+- [x] **BAR-03**: CJP (Commission on Judicial Performance) censures/discipline researched and stored for current LA judicial candidates
+- [x] **BAR-04**: Bar evaluation data surfaced on legal candidate profile pages in the essentials frontend
 
 ### STANCE — Legal Candidate Stance Research
 
