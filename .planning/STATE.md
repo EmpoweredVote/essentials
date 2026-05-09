@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 29 — Bar Evaluation Data
-Plan: 02 of 2 — complete
+Plan: 03 of 3 — complete
 Status: Phase complete
-Last activity: 2026-05-09 — 29-02 complete; migration 118 applied; 2 Connolly CJP admonishment rows with plain-language descriptions; scope narrowed from plan (no bulk State Bar rows, no CJP N/A rows, no Draper/Walgren entries); plain-language description standard established for judicial_disciplinary_records
+Last activity: 2026-05-09 — 29-03 complete; BarEvaluationSection.jsx built (LACBA rating badges + CJP discipline cards with description as primary content); judicialRecord fetch gate fixed from broken is_judicial to isLegalCandidate (district_type + office_title); deployed to Render; BAR-04 satisfied
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -222,6 +222,8 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - City Attorney "not evaluated" source_url='https://www.lacba.org' (their evaluation page returns HTTP 403)
 - Patrick Connolly has 2 CJP public admonishments in judicial_disciplinary_records (2016-03-23 + 2021-04-02); plain-language descriptions
 - Plain-language description standard: description field = voter-facing summary of what judge did; established in migration 118
+- isLegalCandidate detection: district_type JUDICIAL/NATIONAL_JUDICIAL OR office_title includes 'city attorney'/'district attorney' — replaces broken is_judicial flag (backend never returns it)
+- BarEvaluationSection.jsx: renders after JudicialCompassSection, before CampaignFinanceSection; returns null when no data (no empty sections)
 - Draper pending CJP proceedings: NOT documented (no imposed discipline; omit pending proceedings)
 - State Bar status rows + CJP N/A rows: SKIP (no voter signal without discipline; BarEvaluationSection links to CJP UI instead)
 - judicial_disciplinary_records pre-existing rows: 3 (other judges); 5 total after migration 118
@@ -276,3 +278,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-07 — Phase 28 complete (2/2 plans); verification 4/4 passed; COMPASS-05 + COMPASS-06 satisfied; JudicialCompassSection live with burnt orange treatment; judicial sub-role filtering (judge→6 topics, DA/City Attorney→6 topics, fallback→8); database.types.ts patched with judicial_role column; 8 companion communities live; Phase 29 Bar Evaluation Data is next*
 *Updated: 2026-05-09 — Phase 29-01 complete; migration 117 applied to production; 11 LA Superior Court races (Offices 2/14/64/65/66/81/87/116/131/176/181) seeded for June 2026 election; 25 challenger politicians created; 28 race_candidates rows linked; 32 judicial_evaluations rows (28 LACBA-rated + 4 City Attorney not-evaluated); fully idempotent (WHERE NOT EXISTS guard for politicians); BAR-01 data foundation satisfied; Phase 29-02 next (CJP disciplinary records + BarEvaluationSection UI)
 *Updated: 2026-05-09 — Phase 29-02 complete; migration 118 applied; 2 Connolly CJP admonishment rows (2016-03-23 + 2021-04-02) with plain-language voter-facing descriptions; scope narrowed from plan (no bulk State Bar/CJP N/A rows — zero voter signal); plain-language description standard established; Phase 29 COMPLETE (2/2 plans)*
+*Updated: 2026-05-09 — Phase 29-03 complete; BarEvaluationSection.jsx created (LACBA color-coded rating badges + CJP discipline cards); is_judicial gate fixed to isLegalCandidate in Profile.jsx + CandidateProfile.jsx; both pages import + render BarEvaluationSection; build pass; pushed 93df9b0 to main (Render auto-deploy); BAR-04 satisfied; Phase 29 COMPLETE (3/3 plans)*
