@@ -5,6 +5,7 @@ import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
 import JudicialCompassSection from '../components/JudicialCompassSection';
+import BarEvaluationSection from '../components/BarEvaluationSection';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { cleanPositionName } from '../components/ElectionsView';
 
@@ -53,7 +54,13 @@ export default function CandidateProfile() {
           ]);
           setPol(polResult);
           setLegislativeSummary(legSummary);
-          if (polResult?.is_judicial) {
+          const isLegalCandidate = (
+            polResult?.district_type === 'JUDICIAL' ||
+            polResult?.district_type === 'NATIONAL_JUDICIAL' ||
+            (polResult?.office_title || '').toLowerCase().includes('city attorney') ||
+            (polResult?.office_title || '').toLowerCase().includes('district attorney')
+          );
+          if (isLegalCandidate) {
             setJudicialRecord(jRecord);
           }
           setPolId(candidate.politician_id);
@@ -188,6 +195,7 @@ export default function CandidateProfile() {
                   />
                 );
               })()}
+              <BarEvaluationSection judicialRecord={judicialRecord} />
               {polId && (
                 <div className="mt-6">
                   <CampaignFinanceSection politicianId={polId} />
