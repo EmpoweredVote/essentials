@@ -195,7 +195,7 @@ export default function CandidateProfile() {
                   : dt.startsWith('STATE_') ? 'state'
                   : dt === 'JUDICIAL' || dt === 'NATIONAL_JUDICIAL' ? 'judicial'
                   : dt.startsWith('NATIONAL_') ? 'federal'
-                  : null;
+                  : isLegalCandidate ? 'judicial' : null;
                 if (dScope === 'judicial') {
                   return (
                     <JudicialCompassSection
