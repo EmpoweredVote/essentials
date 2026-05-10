@@ -391,13 +391,13 @@ Plans:
   2. Each donor law firm name has been searched against lacourt.org (LA Superior Court) and CourtListener RECAP; appearance records are stored with source URLs
   3. Conflicts are computed and stored: a conflict record exists where a firm donated to a candidate AND appeared before that candidate (as judge) or before the same bench with no recusal on record
   4. A legal candidate profile page displays the donor-court conflict section showing any identified conflicts — or a "no conflicts identified" statement — visible without authentication
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 31-01-PLAN.md — Identify top-15% donors per LA legal candidate from contributions table; store donor list
-- [ ] 31-02-PLAN.md — Cross-reference donor firms against lacourt.org + CourtListener; store appearance records
-- [ ] 31-03-PLAN.md — Compute + store conflict records (donated + appeared, no recusal)
-- [ ] 31-04-PLAN.md — Backend endpoint + frontend component: donor-court conflict section on legal candidate profiles
+- [ ] 31-01-PLAN.md — Identify top-15% legal-professional donors per LA legal candidate (script + court-research-input.json)
+- [ ] 31-02-PLAN.md — Manual lacourt.org court research for top-15% donor firms (human-executed; produces court-research-results.json)
+- [ ] 31-03-PLAN.md — Migration 122 donor_court_conflicts table + apply-court-research.ts loader
+- [ ] 31-04-PLAN.md — Backend route + DonorCourtConflictSection component + deploy (judge vs City Attorney framing)
 
 ---
 
