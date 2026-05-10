@@ -8,6 +8,7 @@ import CompassCard from '../components/CompassCard';
 import JudicialCompassSection from '../components/JudicialCompassSection';
 import BarEvaluationSection from '../components/BarEvaluationSection';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
+import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import { useCompass } from '../contexts/CompassContext';
 
@@ -29,6 +30,7 @@ function Profile() {
   const [legislativeSummary, setLegislativeSummary] = useState(null);
   const [activeElection, setActiveElection] = useState(null);
   const [judicialRecord, setJudicialRecord] = useState(null);
+  const [isLegalPolitician, setIsLegalPolitician] = useState(false);
   const { politicianIdsWithStances } = useCompass();
 
   // Fetch politician, legislative summary, elections, and judicial record in parallel
@@ -62,10 +64,13 @@ function Profile() {
           result.district_type === 'JUDICIAL' ||
           result.district_type === 'NATIONAL_JUDICIAL' ||
           (result.office_title || '').toLowerCase().includes('city attorney') ||
-          (result.office_title || '').toLowerCase().includes('district attorney')
+          (result.office_title || '').toLowerCase().includes('district attorney') ||
+          (result.office_title || '').toLowerCase().includes('judge') ||
+          (result.office_title || '').toLowerCase().includes('justice')
         );
         if (isLegalCandidate) {
           setJudicialRecord(jRecord);
+          setIsLegalPolitician(true);
         }
       } catch (err) {
         console.error(err);
@@ -231,6 +236,7 @@ function Profile() {
             );
           })()}
           <BarEvaluationSection judicialRecord={judicialRecord} />
+          {isLegalPolitician && <LegalDonorActivitySection politicianId={id} />}
           <div className="mt-6">
             <CampaignFinanceSection politicianId={id} />
           </div>
