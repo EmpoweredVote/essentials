@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 30 — Legal Candidate Stance Research
-Plan: 02 of 3 — complete
-Status: In progress
-Last activity: 2026-05-09 — 30-02 complete; McKinney 5/6 judicial compass topics placed (judicial-transparency not found); migration 120 applied; values: prosecution-priorities=4, criminal-justice=4, police-accountability=4, access-to-justice=3, government-deference=3 (inferred)
+Plan: 03 of 3 — complete
+Status: Phase complete
+Last activity: 2026-05-10 — 30-03 complete; Roy 5/6 judicial compass topics placed (judicial-transparency not found); migration 121 applied; values: prosecution-priorities=2, criminal-justice=2, police-accountability=2, access-to-justice=1, government-deference=1 (inferred); Phase 30 COMPLETE (3/3 plans)
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -220,7 +220,10 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - Patch Q&A (April 30, 2026) is highest-quality source for City Attorney candidates — structured interview with direct policy quotes
 - DSA-LA PDF (126 pages): minimal Ashouri content (no endorsement; limited policy detail)
 - Migration 120 applied 2026-05-09: McKinney 5 politician_answers + 6 politician_context rows; judicial-transparency not found (context-only); values: prosecution-priorities=4, criminal-justice=4, police-accountability=4, access-to-justice=3, government-deference=3
-- Next migration is 121 (Marissa Roy)
+- Migration 121 applied 2026-05-10: Roy 5 politician_answers + 6 politician_context rows; judicial-transparency not found (context-only); values: prosecution-priorities=2, criminal-justice=2, police-accountability=2, access-to-justice=1, government-deference=1
+- judicial-transparency not-found pattern: general 'office integrity/accountability' framing (used by both McKinney and Roy) does not map to court proceedings transparency — the topic requires specific positions on open hearings, record sealing, evidence access
+- Fixed 4-category source checklist COMPLETE for all 3 LA City Attorney candidates: LACBA/JEEC (not applicable), LAist voter guide (primary), Vote411/LWV (not indexed), endorsing org questionnaires (LA Forward, Patch Q&A highest-quality)
+- Phase 30 COMPLETE; next migration is 122
 
 ### Phase 29 Notes
 
@@ -293,3 +296,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-09 — Phase 29-03 complete; BarEvaluationSection.jsx created (LACBA color-coded rating badges + CJP discipline cards); is_judicial gate fixed to isLegalCandidate in Profile.jsx + CandidateProfile.jsx; both pages import + render BarEvaluationSection; build pass; pushed 93df9b0 to main (Render auto-deploy); BAR-04 satisfied; Phase 29 COMPLETE (3/3 plans)*
 *Updated: 2026-05-09 — Phase 30-01 complete; Ashouri 6/6 judicial compass topics placed (no not-found); migration 119 applied to production; values: access-to-justice=1, criminal-justice=2, govt-deference=1, transparency=2, police-accountability=1, prosecution-priorities=1; inference-flagged: govt-deference + transparency; primary source: Patch Q&A; STANCE-01 partially satisfied (Ashouri done); Phase 30-02 (McKinney) next*
 *Updated: 2026-05-09 — Phase 30-02 complete; McKinney 5/6 judicial compass topics placed (judicial-transparency not found — no court proceedings statements in any source); migration 120 applied to production; values: prosecution-priorities=4, criminal-justice=4, police-accountability=4, access-to-justice=3, government-deference=3 (inferred); LA Forward/DSA-LA characterizations excluded per rules; Patch Q&A + mckinney4la.com/issues are highest-quality sources; STANCE-02 satisfied; Phase 30-03 (Roy) next*
+*Updated: 2026-05-10 — Phase 30-03 complete; Roy 5/6 judicial compass topics placed (judicial-transparency not found — same as McKinney; 'accountability and integrity' framing is about office culture, not court proceedings); migration 121 applied to production; values: prosecution-priorities=2, criminal-justice=2, police-accountability=2, access-to-justice=1, government-deference=1 (inferred); STANCE-03 satisfied; Phase 30 COMPLETE (3/3 plans); phase-wide: Ashouri 6/6, McKinney 5/6, Roy 5/6; 18 judicial context rows; all 15 placed stances have source citations (n_sources >= 3)*
