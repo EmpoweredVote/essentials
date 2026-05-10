@@ -55,11 +55,16 @@ export default function CandidateProfile() {
           ]);
           setPol(polResult);
           setLegislativeSummary(legSummary);
+          const positionName = (candidate?.position_name || '').toLowerCase();
           const isLegalCandidate = (
             polResult?.district_type === 'JUDICIAL' ||
             polResult?.district_type === 'NATIONAL_JUDICIAL' ||
             (polResult?.office_title || '').toLowerCase().includes('city attorney') ||
-            (polResult?.office_title || '').toLowerCase().includes('district attorney')
+            (polResult?.office_title || '').toLowerCase().includes('district attorney') ||
+            positionName.includes('city attorney') ||
+            positionName.includes('district attorney') ||
+            positionName.includes('judge') ||
+            positionName.includes('justice')
           );
           if (isLegalCandidate) {
             setJudicialRecord(jRecord);
@@ -102,11 +107,16 @@ export default function CandidateProfile() {
     ? 'Elections'
     : 'Representatives';
 
+  const positionName = (candidateData?.position_name || '').toLowerCase();
   const isLegalCandidate = (
     pol?.district_type === 'JUDICIAL' ||
     pol?.district_type === 'NATIONAL_JUDICIAL' ||
     (pol?.office_title || '').toLowerCase().includes('city attorney') ||
-    (pol?.office_title || '').toLowerCase().includes('district attorney')
+    (pol?.office_title || '').toLowerCase().includes('district attorney') ||
+    positionName.includes('city attorney') ||
+    positionName.includes('district attorney') ||
+    positionName.includes('judge') ||
+    positionName.includes('justice')
   );
 
   // Not-found state (withdrawn or invalid candidate)
