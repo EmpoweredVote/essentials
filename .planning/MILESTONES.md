@@ -1,5 +1,33 @@
 # Milestones
 
+## v3.2 Legal Candidate Evaluation Framework (Shipped: 2026-05-10)
+
+**Delivered:** Built civic infrastructure for evaluating judges and City Attorney/DA candidates — an 8-topic judicial compass, bar evaluation data from LACBA/CJP, stance research for 3 LA City Attorney candidates, legal donor activity display, and campaign finance gap closure — all from free/public sources.
+
+**Phases completed:** 26-32 (17 plans total)
+
+**Key accomplishments:**
+
+- Built complete judicial compass DB — 8 topics, 40 stances, 'judicial' role_scope in `compass_topic_roles`; `judicial_role` column on topics enables judge vs. City Attorney/DA sub-role filtering
+- JudicialCompassSection.jsx with burnt orange styling, deriveJudicialSubRole, filterJudicialTopics, and EmptyNotchRow for "Stance research in progress"; deployed to production
+- Bar evaluation data surfaced — 32 LACBA ratings for LA legal candidates, 2 CJP disciplinary records for Patrick Connolly with plain-language voter-facing descriptions; BarEvaluationSection.jsx on all legal profiles
+- Stance research complete for all 3 LA City Attorney candidates — 16 judicial compass stances with source citations from public record (Ashouri 6/6, McKinney 5/6, Roy 5/6)
+- Legal Donor Activity — firm-level legal-professional donor data for 4 candidates via real-time contributions query; LegalDonorActivitySection.jsx deployed; no paid APIs required
+- Campaign finance gap closed — 16 active LA candidates with la_socrata sources; 246 sources ingested; reusable maintenance procedure documented
+
+**Stats:**
+
+- 67 files created/modified (+11,268 / -200 lines)
+- ~12,489 total LOC (JS/JSX/TS, frontend)
+- 7 phases, 17 plans
+- 4 days (2026-05-06 → 2026-05-10)
+
+**Git range:** `ee6ede1` (docs(26): research campaign finance gap) → `edd560d` (docs(32): complete legal-profile-fixes phase)
+
+**What's next:** v3.0 remaining — Collin County headshots (Phase 17) and compass stances ingestion for Plano/McKinney/Allen (Phase 18)
+
+---
+
 ## v3.1 Local Compass Expansion (Shipped: 2026-05-05)
 
 **Delivered:** Expanded the political compass with 10 new LOCAL-scope topics and 10 companion Focused Communities, and wired frontend scope filtering so city council profiles show only locally-relevant questions.

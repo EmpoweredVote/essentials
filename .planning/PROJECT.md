@@ -2,22 +2,11 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, and Collin County, TX. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline that finds candidates from official election authority sources, scores confidence, and stages them for admin review or auto-upsert. The political compass includes 10 LOCAL-scope topics covering policies city governments directly control, with scope filtering so local politician profiles show only locally-relevant questions.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, and Collin County, TX. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources.
 
 ## Core Value
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
-
-## Current Milestone: v3.2 Legal Candidate Evaluation Framework
-
-**Goal:** Build civic infrastructure for evaluating judges and City Attorney/DA candidates — a judicial compass, bar evaluation data, and a donor-court conflict map — using only free/public sources, nationwide in scope.
-
-**Target features:**
-- 8 new judicial compass topics (4 universal + 4 role-specific) with 40 stances, scoped to legal offices
-- Bar evaluation data ingestion: LACBA ratings, CA State Bar discipline, CJP censures (all free/public) for LA legal candidates
-- Stance research for current LA legal candidates (Aida Ashouri, John McKinney, Marissa Roy)
-- Campaign finance gap closure: resolve 32 identified LA City candidates missing la_socrata sources
-- Donor-court conflict map: cross-reference top 15% donors against court appearances (lacourt.org / CourtListener)
 
 ## v3.0 Remaining Work (In Progress)
 
@@ -72,15 +61,16 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ LOCAL scope tagging audit — Affordable Housing gap closed; all 5 LOCAL-applicable existing topics confirmed correct — v3.1
 - ✓ `districtScope` filtering in CompassCard/Profile/CandidateProfile.jsx — local politicians see only LOCAL-applicable compass topics — v3.1
 - ✓ "Criminalization of Homelessness" keep-both decision documented (42 existing politician answers; complementary framing to Homelessness Response) — v3.1
+- ✓ 8 judicial compass topics (4 universal + 2 judge-specific + 2 City Attorney/DA-specific) with 40 stances, scoped to legal offices only via 'judicial' role_scope — v3.2
+- ✓ JudicialCompassSection.jsx with sub-role filtering (judge/city_attorney_da), burnt orange treatment, empty notch UI — v3.2
+- ✓ 8 companion Focused Communities for judicial topics; fc_community_slug populated on all 8 — v3.2
+- ✓ Bar evaluation data: 32 LACBA ratings + 2 CJP disciplinary records (Connolly) with plain-language descriptions; BarEvaluationSection.jsx on all legal profiles — v3.2
+- ✓ Judicial compass stances for 3 LA City Attorney candidates: Ashouri 6/6, McKinney 5/6, Roy 5/6, all sourced from public record — v3.2
+- ✓ Campaign finance gap closed: 16 active LA candidates have la_socrata sources; 246 sources ingested; maintenance procedure documented — v3.2
+- ✓ Legal Donor Activity: firm-level legal-professional donor data for 4 LA candidates; LegalDonorActivitySection.jsx on all legal profiles (candidate + politician) — v3.2
+- ✓ isLegalCandidate 6-condition parity across Profile.jsx + CandidateProfile.jsx — v3.2
 
 ### Active
-
-<!-- v3.2 Legal Candidate Evaluation Framework -->
-- [ ] 8 judicial compass topics with 40 stances, scoped to legal offices (COMPASS)
-- [ ] Bar evaluation data: LACBA ratings, CA State Bar discipline, CJP censures (BAR)
-- [ ] Stance research: Aida Ashouri, John McKinney, Marissa Roy (STANCE)
-- [ ] Campaign finance gap closure: 32 LA City candidates (FINANCE)
-- [ ] Donor-court conflict map: top 15% donors vs. court appearances (DONOR)
 
 <!-- v3.0 remaining -->
 - [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17)
@@ -103,6 +93,7 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Shipped v2.0**: Dedicated Elections page at `/elections` — 4 phases, 4 plans complete (2026-04-13).
 - **Shipped v2.1**: Claude candidate discovery pipeline — 3 phases, 9 plans, 18/18 requirements (2026-04-25). ~1,733 LOC TypeScript in 6 core discovery files.
 - **Shipped v3.1**: Local Compass Expansion — 4 phases, 7 plans, 25/26 requirements (2026-05-05). 10 LOCAL topics + 10 FC communities + scope filtering wired in essentials frontend.
+- **Shipped v3.2**: Legal Candidate Evaluation Framework — 7 phases, 17 plans, 15/15 active requirements (2026-05-10). Judicial compass, bar evaluation data, stance research for 3 LA City Attorney candidates, legal donor activity. 67 files, ~11k LOC delta.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
 - **Database state**: 2 elections (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124+ candidates, 6,928 geofence boundaries. Discovery pipeline now auto-populates candidates.
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
@@ -143,6 +134,13 @@ A resident can look up who represents them — and who is on their ballot — wi
 | 4 of 10 new topics get LOCAL+STATE dual scope | Topics where state co-governs (transportation, environment, public safety, homelessness services) warrant state scope too | ✓ Good — v3.1 |
 | local-immigration topic_key → immigration-policy slug | Decouples public FC URL from internal key; prevents confusion with existing federal Immigration topic | ✓ Good — v3.1 |
 | `t[key] !== false` in CompassCard scope filter | Cross-cutting topics (no scope rows, undefined flags) correctly pass all tier filters — `=== true` would break them | ✓ Good — v3.1 |
+| 'judicial' role_scope in compass_topic_roles + judicial_role column on compass_topics | Clean separation from legislative topics; judicial_role=NULL for universal topics, 'judge'/'city_attorney_da' for sub-role filtering | ✓ Good — v3.2 |
+| applies_judicial defaults to false in compassService.ts | Existing cross-cutting topics must NOT appear on judicial profiles; explicit opt-in required | ✓ Good — v3.2 |
+| Option C pivot for donor data — Legal Donor Activity without court cross-reference | lacourt.org PAOS charges $1–$4.75/search; ~237 firms not worth manual cost for MVP; firm-level transparency still meaningful | ✓ Good — v3.2 |
+| BarEvaluationSection omits clean-record rows | "Active — no discipline" rows have zero voter signal; section links to CJP UI for full history | ✓ Good — v3.2 |
+| Plain-language description standard for judicial_disciplinary_records | Voter-facing summary of what judge did, not bureaucratic label; description field is primary p-tag | ✓ Good — v3.2 |
+| isLegalCandidate 6-condition parity across Profile.jsx + CandidateProfile.jsx | Incumbents use office_title; candidates need position_name as additional signal — intentional asymmetry documented | ✓ Good — v3.2 |
+| dScope fallback: isLegalCandidate ? 'judicial' : null | Catches city attorney candidates with null district_type; prevents CompassCard from rendering legislative topics | ✓ Good — v3.2 |
 
 ---
-*Last updated: 2026-05-06 — Milestone v3.2 Legal Candidate Evaluation Framework started*
+*Last updated: 2026-05-10 after v3.2 milestone*

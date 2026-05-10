@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 32 — Legal Profile Fixes
-Plan: 01 of 1 — complete (phase complete)
-Status: Phase complete — v3.2 audit gap closure
-Last activity: 2026-05-10 — Phase 32-01 COMPLETE; closed COMPASS-05 (city attorney candidates dScope fallback → JudicialCompassSection) and DONOR-04 (Profile.jsx missing LegalDonorActivitySection for incumbent judges); isLegalCandidate unified 6-condition parity across CandidateProfile.jsx + Profile.jsx
+Phase: Not started — planning next milestone
+Plan: N/A
+Status: v3.2 milestone complete — ready for next milestone
+Last activity: 2026-05-10 — v3.2 milestone archived; git tag v3.2 created
 
-v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
+v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume or fold into next milestone
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
+See: .planning/PROJECT.md (updated 2026-05-10 after v3.2 milestone)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v3.2 audit gap closure — Phase 32 closed COMPASS-05 + DONOR-04; Phases 26-32 done
+**Current focus:** Planning next milestone — run `/gsd:new-milestone` to start
 
 ## Accumulated Context
 

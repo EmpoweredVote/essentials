@@ -7,7 +7,7 @@
 - 🚧 **v2.2 Data Depth & Admin Tooling** — Phases 8-11 (parked)
 - 🚧 **v3.0 Collin County, TX Coverage** — Phases 12-21 (in progress; Phases 17+18 pending)
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
-- 🚧 **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (in progress)
+- ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 
 ## Phases
 
@@ -299,115 +299,20 @@ Full details: [milestones/v3.1-ROADMAP.md](milestones/v3.1-ROADMAP.md)
 
 </details>
 
----
+<details>
+<summary>✅ v3.2 Legal Candidate Evaluation Framework (Phases 26-32) — SHIPPED 2026-05-10</summary>
 
-### 🚧 v3.2 Legal Candidate Evaluation Framework (Phases 26-32)
+- [x] Phase 26: Campaign Finance Gap Closure (1/1 plans) — completed 2026-05-07
+- [x] Phase 27: Judicial Compass DB (3/3 plans) — completed 2026-05-06
+- [x] Phase 28: Judicial Compass Frontend + Communities (2/2 plans) — completed 2026-05-07
+- [x] Phase 29: Bar Evaluation Data (3/3 plans) — completed 2026-05-09
+- [x] Phase 30: Legal Candidate Stance Research (3/3 plans) — completed 2026-05-09
+- [x] Phase 31: Legal Donor Activity (4/4 plans) — completed 2026-05-09
+- [x] Phase 32: Legal Profile Page Fixes (1/1 plans) — completed 2026-05-10
 
-**Milestone Goal:** Build civic infrastructure for evaluating judges and City Attorney/DA candidates using only free/public sources — a judicial compass (8 topics, 40 stances), bar evaluation data from LACBA/State Bar/CJP, stance research for current LA legal candidates, campaign finance gap closure for 32 LA City candidates, and a donor-court conflict map cross-referencing top donors against court appearance records.
+Full details: [milestones/v3.2-ROADMAP.md](milestones/v3.2-ROADMAP.md)
 
-#### Phase 26: Campaign Finance Gap Closure
-**Goal**: All 32 identified LA City candidates with missing campaign finance sources have their Socrata sources seeded and contributions ingested — and the gap audit is documented as a repeatable maintenance procedure
-**Depends on**: None (standalone data operation using existing script)
-**Requirements**: FINANCE-01, FINANCE-02
-**Success Criteria** (what must be TRUE):
-  1. `audit-la-socrata-gaps.ts --fix --ingest` completes without error and the 32 previously-missing candidates each have at least one row in the la_socrata sources table
-  2. A contribution count query on `transparent_motivations.contributions` for the 32 candidates returns non-zero rows for each candidate that had filed reports
-  3. The gap audit procedure (what script to run, how to interpret output, when to re-run) is documented in a plan file so any future operator can repeat it without tribal knowledge
-**Plans**: 1 plan
-
-Plans:
-- [x] 26-01-PLAN.md — Run audit-la-socrata-gaps.ts --fix --ingest; verify 32 candidates patched; document procedure
-
-#### Phase 27: Judicial Compass DB
-**Goal**: All 8 judicial compass topics with 40 stances are authored in the database, scoped exclusively to legal offices via a new 'judicial' role_scope type, and not shown on any non-legal candidate profile
-**Depends on**: Phase 26 (none — can run in parallel; independent of finance work)
-**Requirements**: COMPASS-01, COMPASS-02, COMPASS-03, COMPASS-04
-**Success Criteria** (what must be TRUE):
-  1. `inform.compass_topics` contains 8 new judicial topics (4 universal + 2 judge-specific + 2 City Attorney/DA-specific), all with `is_live=true` and full metadata
-  2. Each topic has exactly 5 stance rows in `inform.compass_stances` with non-empty `text`, `supporting_points`, and `example_perspectives` — 40 stances total
-  3. A new `'judicial'` value is valid in `inform.compass_topic_roles.role_scope` (CHECK constraint updated), and all 8 topics have judicial scope rows — no federal/state/local rows for these topics
-  4. `compassService.ts getCompassTopics()` returns judicial topics only when the caller requests judicial scope; a query for 'local' or 'state' scope returns zero of the 8 new judicial topics
-  5. The JUDICIAL district_type in the frontend scope-derivation logic maps to the 'judicial' scope so judges see judicial topics and city council members do not
-**Plans**: 3 plans
-
-Plans:
-- [x] 27-01-PLAN.md — Schema (judicial_role column + expanded CHECK constraint) + 4 universal topics + 20 stances
-- [x] 27-02-PLAN.md — 2 judge-specific topics + 10 stances; 2 City Attorney/DA-specific topics + 10 stances
-- [x] 27-03-PLAN.md — Apply migration 113; patch compassService.ts applies_judicial; update Profile.jsx districtScope
-
-#### Phase 28: Judicial Compass Frontend + Communities
-**Goal**: Legal candidate profile pages in the essentials frontend surface judicial compass topics, and 8 companion Focused Communities are seeded for the new judicial topics
-**Depends on**: Phase 27
-**Requirements**: COMPASS-05, COMPASS-06
-**Success Criteria** (what must be TRUE):
-  1. A JUDICIAL district_type candidate profile page renders the judicial compass topics (and only those topics) — not the standard legislative compass topics
-  2. A City Attorney/DA candidate profile page renders the 4 universal judicial topics plus the 2 City Attorney/DA-specific topics (6 total) — not the 2 judge-specific topics
-  3. A judge candidate profile page renders the 4 universal judicial topics plus the 2 judge-specific topics (6 total) — not the 2 City Attorney/DA-specific topics
-  4. All 8 judicial compass topics have a companion Focused Community row in `connect.communities` with an authored description, and `fc_community_slug` is populated on each `inform.compass_topics` row
-**Plans**: 2 plans
-
-Plans:
-- [x] 28-01-PLAN.md — Frontend: extend districtScope derivation for JUDICIAL; wire role-specific topic filtering (judge vs. City Attorney/DA sub-scope)
-- [x] 28-02-PLAN.md — Seed 8 companion Focused Communities; populate fc_community_slug on judicial topics
-
-#### Phase 29: Bar Evaluation Data
-**Goal**: LACBA ratings, CA State Bar discipline status, and CJP censures for current LA legal candidates are researched from free/public sources, stored in the database, and surfaced on legal candidate profile pages
-**Depends on**: Phase 27 (judicial topics must exist before bar data is displayed in context)
-**Requirements**: BAR-01, BAR-02, BAR-03, BAR-04
-**Success Criteria** (what must be TRUE):
-  1. Each current LA legal candidate (Aida Ashouri, John McKinney, Marissa Roy, and all judicial candidates) has a researched LACBA rating stored — or a documented "not rated" status where LACBA has no record
-  2. Each current LA legal candidate has a CA State Bar discipline record checked — either a clean record confirmed or any public discipline actions stored with source URL
-  3. Each current LA judicial candidate has a CJP censure record checked — either clean confirmed or any public censures/admonishments stored with source URL
-  4. A legal candidate profile page in the essentials frontend displays bar evaluation data (LACBA rating, Bar discipline status, CJP record) in a readable section visible without authentication
-**Plans**: 3 plans
-
-Plans:
-- [ ] 29-01-PLAN.md — Migration 117: 11 Superior Court races + 29 challenger politicians + race_candidate links + LACBA judicial_evaluations (36 rows)
-- [ ] 29-02-PLAN.md — Migration 118: CA State Bar status research + insert + Connolly CJP disciplinary_records (3 actions) + CJP N/A for City Attorney and challenger attorneys
-- [ ] 29-03-PLAN.md — Frontend: fix judicialRecord fetch trigger (is_judicial → isLegalCandidate) + build BarEvaluationSection.jsx + deploy
-
-#### Phase 30: Legal Candidate Stance Research
-**Goal**: Aida Ashouri, John McKinney, and Marissa Roy each have stances inserted on the judicial compass topics applicable to their role, drawn from public record sources
-**Depends on**: Phase 27 (judicial topics must exist before stances can be inserted)
-**Requirements**: STANCE-01, STANCE-02, STANCE-03
-**Success Criteria** (what must be TRUE):
-  1. `inform.politician_answers` rows exist for Aida Ashouri on each of the 6 applicable judicial compass topics (4 universal + 2 City Attorney/DA-specific) where public record evidence was found
-  2. `inform.politician_answers` rows exist for John McKinney on applicable judicial compass topics where public record evidence was found
-  3. `inform.politician_answers` rows exist for Marissa Roy on applicable judicial compass topics where public record evidence was found
-  4. Each inserted stance row has a source citation (URL or publication reference) stored in the supporting evidence field — no unsupported placements
-**Plans**: TBD
-
-Plans:
-- [x] 30-01-PLAN.md — Stance research + ingestion: Aida Ashouri (City Attorney candidate)
-- [x] 30-02-PLAN.md — Stance research + ingestion: John McKinney (City Attorney candidate)
-- [x] 30-03-PLAN.md — Stance research + ingestion: Marissa Roy (City Attorney candidate, cmt_id=1479257)
-
-#### Phase 31: Legal Donor Activity ✅ Complete (2026-05-09)
-**Goal (delivered)**: Top-15% legal-professional donors per LA legal candidate identified and surfaced on legal candidate profile pages as "Legal Donor Activity" — firm name, total donated, donor count, occupation context. Court cross-reference (lacourt.org) deferred — manual search cost not justified for MVP.
-**Depends on**: Phase 29
-**Requirements**: DONOR-01, DONOR-02, DONOR-03, DONOR-04
-**Plans**: 4 plans (02+03 skipped by design; Option C pivot)
-
-Plans:
-- [x] 31-01-PLAN.md — identify-legal-donors.ts + court-research-input.json (4 CA candidates, 237 firms)
-- [x] 31-02-PLAN.md — Research workbook generated; court research skipped (Option C pivot)
-- [x] 31-03-PLAN.md — Skipped (no migration needed for Option C)
-- [x] 31-04-PLAN.md — getLegalDonorFirms service + /legal-donor-activity route + LegalDonorActivitySection.jsx deployed
-
-#### Phase 32: Legal Profile Page Fixes
-**Goal**: Close the two partial gaps from the v3.2 audit — city attorney candidates see their judicial compass topics, and incumbent judge profiles show Legal Donor Activity data
-**Depends on**: Phase 28 (JudicialCompassSection), Phase 31 (LegalDonorActivitySection)
-**Requirements**: COMPASS-05 (close partial), DONOR-04 (close partial)
-**Gap Closure:** Closes gaps from v3.2-MILESTONE-AUDIT.md
-**Success Criteria** (what must be TRUE):
-  1. Ashouri, McKinney, and Roy candidate profile pages (`/candidate/:id`) render JudicialCompassSection with their city_attorney_da topics — not CompassCard with legislative topics
-  2. Connolly, Draper, and Walgren politician profile pages (`/politician/:id`) render LegalDonorActivitySection with firm-level donor data
-  3. `isLegalCandidate` logic is identical between Profile.jsx and CandidateProfile.jsx (both include 'judge'/'justice' in position_name check)
-  4. No regressions — non-legal candidate/politician profiles are unaffected; judicial challenger profiles still render correctly
-**Plans**: 1 plan
-
-Plans:
-- [x] 32-01-PLAN.md — Fix CandidateProfile.jsx dScope position_name fallback + add LegalDonorActivitySection to Profile.jsx + unify isLegalCandidate
+</details>
 
 ---
 
@@ -458,10 +363,10 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 23. New LOCAL Compass Topics | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 26. Campaign Finance Gap Closure | v3.2 | 1/1 | Complete | 2026-05-07 |
-| 27. Judicial Compass DB | v3.2 | 3/3 | Complete | 2026-05-06 |
-| 28. Judicial Compass Frontend + Communities | v3.2 | 2/2 | Complete | 2026-05-07 |
-| 29. Bar Evaluation Data | v3.2 | 3/3 | Complete | 2026-05-09 |
-| 30. Legal Candidate Stance Research | v3.2 | 3/3 | Complete | 2026-05-09 |
-| 31. Legal Donor Activity | v3.2 | 4/4 | Complete | 2026-05-09 |
-| 32. Legal Profile Page Fixes | v3.2 | 1/1 | Complete | 2026-05-10 |
+| 26. Campaign Finance Gap Closure | v3.2 ✅ | 1/1 | Complete | 2026-05-07 |
+| 27. Judicial Compass DB | v3.2 ✅ | 3/3 | Complete | 2026-05-06 |
+| 28. Judicial Compass Frontend + Communities | v3.2 ✅ | 2/2 | Complete | 2026-05-07 |
+| 29. Bar Evaluation Data | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
+| 30. Legal Candidate Stance Research | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
+| 31. Legal Donor Activity | v3.2 ✅ | 4/4 | Complete | 2026-05-09 |
+| 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
