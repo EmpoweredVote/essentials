@@ -382,22 +382,17 @@ Plans:
 - [x] 30-02-PLAN.md — Stance research + ingestion: John McKinney (City Attorney candidate)
 - [x] 30-03-PLAN.md — Stance research + ingestion: Marissa Roy (City Attorney candidate, cmt_id=1479257)
 
-#### Phase 31: Donor-Court Conflict Map
-**Goal**: The top 15% of donors for each LA legal candidate are cross-referenced against lacourt.org and CourtListener court appearances; conflicts are computed, stored, and surfaced on legal candidate profile pages
-**Depends on**: Phase 29 (legal candidate profiles must exist with bar data before adding conflict data)
+#### Phase 31: Legal Donor Activity ✅ Complete (2026-05-09)
+**Goal (delivered)**: Top-15% legal-professional donors per LA legal candidate identified and surfaced on legal candidate profile pages as "Legal Donor Activity" — firm name, total donated, donor count, occupation context. Court cross-reference (lacourt.org) deferred — manual search cost not justified for MVP.
+**Depends on**: Phase 29
 **Requirements**: DONOR-01, DONOR-02, DONOR-03, DONOR-04
-**Success Criteria** (what must be TRUE):
-  1. A script identifies the top 15% of donors by contribution amount for each LA legal candidate from `transparent_motivations.contributions` (using `con_emp`/`con_occp` to identify law firms) and stores the donor list
-  2. Each donor law firm name has been searched against lacourt.org (LA Superior Court) and CourtListener RECAP; appearance records are stored with source URLs
-  3. Conflicts are computed and stored: a conflict record exists where a firm donated to a candidate AND appeared before that candidate (as judge) or before the same bench with no recusal on record
-  4. A legal candidate profile page displays the donor-court conflict section showing any identified conflicts — or a "no conflicts identified" statement — visible without authentication
-**Plans**: 4 plans
+**Plans**: 4 plans (02+03 skipped by design; Option C pivot)
 
 Plans:
-- [ ] 31-01-PLAN.md — Identify top-15% legal-professional donors per LA legal candidate (script + court-research-input.json)
-- [ ] 31-02-PLAN.md — Manual lacourt.org court research for top-15% donor firms (human-executed; produces court-research-results.json)
-- [ ] 31-03-PLAN.md — Migration 122 donor_court_conflicts table + apply-court-research.ts loader
-- [ ] 31-04-PLAN.md — Backend route + DonorCourtConflictSection component + deploy (judge vs City Attorney framing)
+- [x] 31-01-PLAN.md — identify-legal-donors.ts + court-research-input.json (4 CA candidates, 237 firms)
+- [x] 31-02-PLAN.md — Research workbook generated; court research skipped (Option C pivot)
+- [x] 31-03-PLAN.md — Skipped (no migration needed for Option C)
+- [x] 31-04-PLAN.md — getLegalDonorFirms service + /legal-donor-activity route + LegalDonorActivitySection.jsx deployed
 
 ---
 
@@ -453,4 +448,4 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 28. Judicial Compass Frontend + Communities | v3.2 | 2/2 | Complete | 2026-05-07 |
 | 29. Bar Evaluation Data | v3.2 | 3/3 | Complete | 2026-05-09 |
 | 30. Legal Candidate Stance Research | v3.2 | 3/3 | Complete | 2026-05-09 |
-| 31. Donor-Court Conflict Map | v3.2 | 0/TBD | Not started | - |
+| 31. Legal Donor Activity | v3.2 | 4/4 | Complete | 2026-05-09 |

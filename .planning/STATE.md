@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 31 — Donor-Court Conflict Map
+Phase: 31 — Legal Donor Activity
 Plan: 04 of 4 — complete (phase complete)
-Status: Phase complete
-Last activity: 2026-05-09 — 31-04 complete; getLegalDonorFirms() service + /legal-donor-activity route deployed to Render; LegalDonorActivitySection.jsx live; section renders on judicial/city attorney/DA profiles between BarEvaluationSection and CampaignFinanceSection; smoke test confirmed 200 with firms array on Ashouri UUID
+Status: Phase complete — v3.2 milestone COMPLETE
+Last activity: 2026-05-09 — Phase 31 COMPLETE; Option C pivot (legal donor activity, no court research); getLegalDonorFirms() + /legal-donor-activity route + LegalDonorActivitySection.jsx deployed; isLegalCandidate fix for challengers (position_name fallback); Andrej Selivra duplicate fixed + autoUpsertToRaceCandidates patched (stripMiddleInitials + regexp_replace); v3.2 Legal Candidate Evaluation Framework COMPLETE (Phases 26-31)
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -14,7 +14,7 @@ v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — r
 See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v3.2 Legal Candidate Evaluation Framework — Phase 27 Judicial Compass DB
+**Current focus:** v3.2 Legal Candidate Evaluation Framework COMPLETE — all 6 phases (26-31) done 2026-05-09
 
 ## Accumulated Context
 
@@ -313,3 +313,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-10 — Phase 30-03 complete; Roy 5/6 judicial compass topics placed (judicial-transparency not found — same as McKinney; 'accountability and integrity' framing is about office culture, not court proceedings); migration 121 applied to production; values: prosecution-priorities=2, criminal-justice=2, police-accountability=2, access-to-justice=1, government-deference=1 (inferred); STANCE-03 satisfied; Phase 30 COMPLETE (3/3 plans); phase-wide: Ashouri 6/6, McKinney 5/6, Roy 5/6; 18 judicial context rows; all 15 placed stances have source citations (n_sources >= 3)*
 *Updated: 2026-05-09 — Phase 31-01 complete; identify-legal-donors.ts built (32 UUIDs from migration 117, --probe + extraction modes); court-research-input.json written; 4 CAs with data (Feldstein Soto=2631 rows, Roy=1270, McKinney=125, Ashouri=71); 28 judge challengers skipped (no confirmed contributions); top firms: Ashouri=Life Sciences Patent Law Firm ($300), McKinney=LA County DA's Office ($5,400), Roy=California DOJ ($41,053), Feldstein Soto=City of Los Angeles ($75,774); deterministic on re-run; ESM __dirname fix applied*
 *Updated: 2026-05-09 — Phase 31-04 complete (pivot from Donor-Court Conflicts to Legal Donor Activity — Option C); getLegalDonorFirms() + /legal-donor-activity route (backend commit 43c757b, deployed to Render); fetchLegalDonorActivity() + LegalDonorActivitySection.jsx + CandidateProfile.jsx wired (frontend commit e466d42, deployed to Render); isLegalCandidate gate: JUDICIAL/NATIONAL_JUDICIAL/city attorney/district attorney only; smoke test: Ashouri 200 with 8 firms; no migration needed; Phase 31 COMPLETE (4/4 plans — Plans 02/03 skipped by Option C pivot)*
+*Updated: 2026-05-09 — Phase 31 COMPLETE; isLegalCandidate bug fixed for challengers (position_name fallback — commit 6828d46); Andrej Selivra duplicate merged + autoUpsertToRaceCandidates patched with stripMiddleInitials() + regexp_replace stored-name normalization (backend commit c9736d0); v3.2 Legal Candidate Evaluation Framework COMPLETE (6/6 phases: 26 Campaign Finance Gap, 27 Judicial Compass DB, 28 Judicial Compass UI, 29 Bar Evaluation Data, 30 Stance Research, 31 Legal Donor Activity)*
