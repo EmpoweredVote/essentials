@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord, fetchRaceCandidate } from '../lib/api';
+import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
@@ -101,6 +102,13 @@ export default function CandidateProfile() {
     ? 'Elections'
     : 'Representatives';
 
+  const isLegalCandidate = (
+    pol?.district_type === 'JUDICIAL' ||
+    pol?.district_type === 'NATIONAL_JUDICIAL' ||
+    (pol?.office_title || '').toLowerCase().includes('city attorney') ||
+    (pol?.office_title || '').toLowerCase().includes('district attorney')
+  );
+
   // Not-found state (withdrawn or invalid candidate)
   if (notFound && !loadingProfile) {
     return (
@@ -196,6 +204,9 @@ export default function CandidateProfile() {
                 );
               })()}
               <BarEvaluationSection judicialRecord={judicialRecord} />
+              {polId && isLegalCandidate && (
+                <LegalDonorActivitySection politicianId={polId} />
+              )}
               {polId && (
                 <div className="mt-6">
                   <CampaignFinanceSection politicianId={polId} />

@@ -283,6 +283,17 @@ export async function fetchJudicialRecord(id) {
   }
 }
 
+export async function fetchLegalDonorActivity(id) {
+  try {
+    const res = await apiFetch(`/essentials/politicians/${id}/legal-donor-activity`);
+    if (!res || !res.ok) return { politician_id: id, firms: [], total_legal_donors: 0 };
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching legal donor activity:', error);
+    return { politician_id: id, firms: [], total_legal_donors: 0 };
+  }
+}
+
 export async function fetchMyElections() {
   const res = await apiFetch('/essentials/elections/me');
   if (!res) return { elections: [], error: null, formattedAddress: '', noLocation: false };
