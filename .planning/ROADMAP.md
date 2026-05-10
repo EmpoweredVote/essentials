@@ -378,9 +378,9 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 30-01-PLAN.md — Stance research + ingestion: Aida Ashouri (City Attorney candidate)
-- [ ] 30-02-PLAN.md — Stance research + ingestion: John McKinney (City Attorney candidate)
-- [ ] 30-03-PLAN.md — Stance research + ingestion: Marissa Roy (City Attorney candidate, cmt_id=1479257)
+- [x] 30-01-PLAN.md — Stance research + ingestion: Aida Ashouri (City Attorney candidate)
+- [x] 30-02-PLAN.md — Stance research + ingestion: John McKinney (City Attorney candidate)
+- [x] 30-03-PLAN.md — Stance research + ingestion: Marissa Roy (City Attorney candidate, cmt_id=1479257)
 
 #### Phase 31: Donor-Court Conflict Map
 **Goal**: The top 15% of donors for each LA legal candidate are cross-referenced against lacourt.org and CourtListener court appearances; conflicts are computed, stored, and surfaced on legal candidate profile pages
@@ -452,5 +452,5 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 27. Judicial Compass DB | v3.2 | 3/3 | Complete | 2026-05-06 |
 | 28. Judicial Compass Frontend + Communities | v3.2 | 2/2 | Complete | 2026-05-07 |
 | 29. Bar Evaluation Data | v3.2 | 3/3 | Complete | 2026-05-09 |
-| 30. Legal Candidate Stance Research | v3.2 | 0/TBD | Not started | - |
+| 30. Legal Candidate Stance Research | v3.2 | 3/3 | Complete | 2026-05-09 |
 | 31. Donor-Court Conflict Map | v3.2 | 0/TBD | Not started | - |

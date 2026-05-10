@@ -29,9 +29,9 @@
 
 ### STANCE — Legal Candidate Stance Research
 
-- [ ] **STANCE-01**: Aida Ashouri has stances inserted on applicable judicial compass topics
-- [ ] **STANCE-02**: John McKinney has stances inserted on applicable judicial compass topics
-- [ ] **STANCE-03**: Marissa Roy has stances inserted on applicable judicial compass topics
+- [x] **STANCE-01**: Aida Ashouri has stances inserted on applicable judicial compass topics
+- [x] **STANCE-02**: John McKinney has stances inserted on applicable judicial compass topics
+- [x] **STANCE-03**: Marissa Roy has stances inserted on applicable judicial compass topics
 
 ### FINANCE — Campaign Finance Completeness
 
