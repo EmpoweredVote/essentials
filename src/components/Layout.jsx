@@ -1,57 +1,49 @@
-import { Header, FeedbackButton, defaultNavItems, defaultCtaButton } from "@empoweredvote/ev-ui";
+import { Header } from "@empoweredvote/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
-import { useSearchParams } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "../hooks/useTheme";
+
+function buildFeedbackUrl() {
+  return `https://alpha.empowered.vote/feedback?feature=essentials&url=${encodeURIComponent(window.location.href)}`;
+}
+
 export function Layout({ children }) {
   const { isLoggedIn, userName, logout } = useCompass();
   const { isDark } = useTheme();
-  const [searchParams] = useSearchParams();
-  const currentAddress = searchParams.get('q') || '';
+
+  const feedbackItem = {
+    label: "Feedback",
+    onClick: () => window.open(buildFeedbackUrl(), '_blank', 'noopener,noreferrer'),
+  };
 
   const profileMenu = isLoggedIn
     ? {
         label: userName || "Account",
-        items: [{ label: "Sign out", onClick: logout }],
+        items: [
+          { label: "Profile", onClick: () => { window.location.href = 'https://login.empowered.vote/profile'; } },
+          { label: "EV Financials", onClick: () => { window.location.href = 'https://financials.empowered.vote'; } },
+          feedbackItem,
+          { label: "Sign out", onClick: logout },
+        ],
       }
     : {
         label: "Account",
         items: [
-          {
-            label: "Sign in",
-            onClick: () => redirectToLogin(),
-          },
+          { label: "EV Financials", onClick: () => { window.location.href = 'https://financials.empowered.vote'; } },
+          feedbackItem,
+          { label: "Sign in", onClick: () => redirectToLogin() },
         ],
       };
-
-  const baseNavItems = currentAddress
-    ? defaultNavItems.map(item => {
-        if (item.dropdown) {
-          return {
-            ...item,
-            dropdown: item.dropdown.map(sub =>
-              sub.label === 'Read & Rank'
-                ? { ...sub, href: `https://readrank.empowered.vote?address=${encodeURIComponent(currentAddress)}` }
-                : sub
-            ),
-          };
-        }
-        return item;
-      })
-    : defaultNavItems;
-
-  const navItems = baseNavItems;
 
   return (
     <>
       <Header
         logoSrc="/EVLogo.svg"
         logoAlt="Empowered Vote"
-        navItems={navItems}
-        ctaButton={defaultCtaButton}
-        secondaryAction={<div className="flex items-center gap-2"><ThemeToggle /><FeedbackButton /></div>}
-        onNavigate={(href) => { window.location.href = href; }}
+        navItems={[]}
+        secondaryAction={<ThemeToggle />}
+        onNavigate={(href) => { window.location.href = href === '/' ? 'https://alpha.empowered.vote' : href; }}
         profileMenu={profileMenu}
         style={isDark ? {
           backgroundColor: '#020618',

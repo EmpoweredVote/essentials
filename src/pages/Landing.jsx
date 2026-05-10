@@ -54,7 +54,10 @@ export default function Landing() {
   };
 
   const scrollToSearch = () => {
-    searchRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const el = searchRef.current;
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: y, behavior: 'smooth' });
   };
 
   const handleCountyClick = (area) => {
@@ -153,8 +156,8 @@ export default function Landing() {
                     {n}
                   </div>
                   <div>
-                    <p className={`font-bold mb-1 ${active ? 'text-white' : 'text-gray-400'}`}>{heading}</p>
-                    <p className={`text-sm leading-relaxed ${active ? 'text-gray-300' : 'text-gray-600'}`}>{body}</p>
+                    <p className={`font-bold mb-1 ${active ? 'text-white' : 'text-gray-300'}`}>{heading}</p>
+                    <p className={`text-sm leading-relaxed ${active ? 'text-gray-300' : 'text-gray-400'}`}>{body}</p>
                   </div>
                 </div>
               ))}
@@ -166,44 +169,38 @@ export default function Landing() {
 
       {/* ── Search Section ── */}
       <div ref={searchRef} className="scroll-mt-20">
-        <main className="container mx-auto px-4 sm:px-6 py-12">
-          <div className="flex flex-col items-center justify-center gap-12">
-            <div className="flex-1 max-w-xl w-full text-center">
+        <section className="w-full px-8 sm:px-12 lg:px-24 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
+            {/* Left: Alpha County chooser */}
+            <div>
               <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
                 Choose an Alpha County
               </h2>
               <p className="text-base text-gray-500 dark:text-gray-400 mb-6">
                 Each one is a preview of the full Essentials experience.
               </p>
-
-              {/* Coverage area cards */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-2">
+              <div className="flex flex-col gap-3 mb-3">
                 {COVERAGE_AREAS.map((area) => (
                   <button
                     key={area.county}
                     onClick={() => handleCountyClick(area)}
-                    className="flex-1 text-left px-4 py-3 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                    className="w-full text-left px-5 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
                   >
                     <div className="text-base font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light">{area.county}</div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">{area.state}</div>
                   </button>
                 ))}
               </div>
-
-              {/* Browse by location link */}
-              <div className="text-center mt-2 mb-2">
-                <button
-                  onClick={() => navigate('/results?mode=browse')}
-                  className="text-sm text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline cursor-pointer bg-transparent border-none"
-                  style={{ fontFamily: "'Manrope', sans-serif" }}
-                >
-                  Browse by location →
-                </button>
-              </div>
-
+              <button
+                onClick={() => navigate('/results?mode=browse')}
+                className="text-sm text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline cursor-pointer bg-transparent border-none"
+                style={{ fontFamily: "'Manrope', sans-serif" }}
+              >
+                Browse by location →
+              </button>
               {!compassLoading && isLoggedIn && myLocationNotSet && (
-                <div className="mt-4 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-center text-sm">
+                <div className="mt-4 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">
                   <a
                     href="https://app.empowered.vote/settings/location"
                     className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline"
@@ -213,17 +210,17 @@ export default function Landing() {
                   {' '}<span className="text-gray-700 dark:text-gray-300">to get taken straight to your elected leaders on every visit.</span>
                 </div>
               )}
+            </div>
 
-              {/* "or search by address" divider */}
-              <div className="relative my-6">
-                <hr className="border-gray-200 dark:border-gray-700" />
-                <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] dark:bg-ev-navy px-3 text-sm text-gray-400 dark:text-gray-500">
-                  or search by address
-                </span>
-              </div>
-
-              {/* Search Input + Button */}
-              <div className="flex flex-col sm:flex-row gap-3">
+            {/* Right: Search inputs */}
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
+                Search by Address
+              </h2>
+              <p className="text-base text-gray-500 dark:text-gray-400 mb-4">
+                Enter your full street address to find everyone who represents you.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 mb-8">
                 <input
                   ref={addressInputRef}
                   type="text"
@@ -273,7 +270,7 @@ export default function Landing() {
 
               {/* Name Search Results */}
               {nameQuery.trim().length >= 2 && (
-                <div className="mt-2 text-left">
+                <div className="mt-2">
                   {nameStatus === 'loading' && (
                     <p className="text-sm text-gray-500 dark:text-gray-400 py-2">Searching&hellip;</p>
                   )}
@@ -315,12 +312,12 @@ export default function Landing() {
                 </div>
               )}
               {nameQuery.trim().length < 2 && nameQuery.trim().length > 0 && (
-                <p className="mt-2 text-sm text-gray-400 dark:text-gray-500 text-left">Type at least 2 letters to search.</p>
+                <p className="mt-2 text-sm text-gray-400 dark:text-gray-500">Type at least 2 letters to search.</p>
               )}
-
             </div>
+
           </div>
-        </main>
+        </section>
       </div>
 
     </Layout>
