@@ -301,7 +301,7 @@ Full details: [milestones/v3.1-ROADMAP.md](milestones/v3.1-ROADMAP.md)
 
 ---
 
-### 🚧 v3.2 Legal Candidate Evaluation Framework (Phases 26-31)
+### 🚧 v3.2 Legal Candidate Evaluation Framework (Phases 26-32)
 
 **Milestone Goal:** Build civic infrastructure for evaluating judges and City Attorney/DA candidates using only free/public sources — a judicial compass (8 topics, 40 stances), bar evaluation data from LACBA/State Bar/CJP, stance research for current LA legal candidates, campaign finance gap closure for 32 LA City candidates, and a donor-court conflict map cross-referencing top donors against court appearance records.
 
@@ -394,6 +394,21 @@ Plans:
 - [x] 31-03-PLAN.md — Skipped (no migration needed for Option C)
 - [x] 31-04-PLAN.md — getLegalDonorFirms service + /legal-donor-activity route + LegalDonorActivitySection.jsx deployed
 
+#### Phase 32: Legal Profile Page Fixes
+**Goal**: Close the two partial gaps from the v3.2 audit — city attorney candidates see their judicial compass topics, and incumbent judge profiles show Legal Donor Activity data
+**Depends on**: Phase 28 (JudicialCompassSection), Phase 31 (LegalDonorActivitySection)
+**Requirements**: COMPASS-05 (close partial), DONOR-04 (close partial)
+**Gap Closure:** Closes gaps from v3.2-MILESTONE-AUDIT.md
+**Success Criteria** (what must be TRUE):
+  1. Ashouri, McKinney, and Roy candidate profile pages (`/candidate/:id`) render JudicialCompassSection with their city_attorney_da topics — not CompassCard with legislative topics
+  2. Connolly, Draper, and Walgren politician profile pages (`/politician/:id`) render LegalDonorActivitySection with firm-level donor data
+  3. `isLegalCandidate` logic is identical between Profile.jsx and CandidateProfile.jsx (both include 'judge'/'justice' in position_name check)
+  4. No regressions — non-legal candidate/politician profiles are unaffected; judicial challenger profiles still render correctly
+**Plans**: 1 plan
+
+Plans:
+- [ ] 32-01-PLAN.md — Fix CandidateProfile.jsx dScope position_name fallback + add LegalDonorActivitySection to Profile.jsx + unify isLegalCandidate
+
 ---
 
 ## Backlog
@@ -414,7 +429,7 @@ These are known gaps that are not yet scoped into a milestone.
 v2.2 (parked): 8 → 9 → 10 → 11
 v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 18 (after 13)
 v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
-v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29)
+v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29) → 32 (after 28+31)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -449,3 +464,4 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 29. Bar Evaluation Data | v3.2 | 3/3 | Complete | 2026-05-09 |
 | 30. Legal Candidate Stance Research | v3.2 | 3/3 | Complete | 2026-05-09 |
 | 31. Legal Donor Activity | v3.2 | 4/4 | Complete | 2026-05-09 |
+| 32. Legal Profile Page Fixes | v3.2 | 0/1 | Not started | - |
