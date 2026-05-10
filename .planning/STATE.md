@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 31 — Legal Donor Activity
-Plan: 04 of 4 — complete (phase complete)
-Status: Phase complete — v3.2 milestone COMPLETE
-Last activity: 2026-05-09 — Phase 31 COMPLETE; Option C pivot (legal donor activity, no court research); getLegalDonorFirms() + /legal-donor-activity route + LegalDonorActivitySection.jsx deployed; isLegalCandidate fix for challengers (position_name fallback); Andrej Selivra duplicate fixed + autoUpsertToRaceCandidates patched (stripMiddleInitials + regexp_replace); v3.2 Legal Candidate Evaluation Framework COMPLETE (Phases 26-31)
+Phase: 32 — Legal Profile Fixes
+Plan: 01 of 1 — complete (phase complete)
+Status: Phase complete — v3.2 audit gap closure
+Last activity: 2026-05-10 — Phase 32-01 COMPLETE; closed COMPASS-05 (city attorney candidates dScope fallback → JudicialCompassSection) and DONOR-04 (Profile.jsx missing LegalDonorActivitySection for incumbent judges); isLegalCandidate unified 6-condition parity across CandidateProfile.jsx + Profile.jsx
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -14,7 +14,7 @@ v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — r
 See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v3.2 Legal Candidate Evaluation Framework COMPLETE — all 6 phases (26-31) done 2026-05-09
+**Current focus:** v3.2 audit gap closure — Phase 32 closed COMPASS-05 + DONOR-04; Phases 26-32 done
 
 ## Accumulated Context
 
@@ -250,7 +250,9 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - City Attorney "not evaluated" source_url='https://www.lacba.org' (their evaluation page returns HTTP 403)
 - Patrick Connolly has 2 CJP public admonishments in judicial_disciplinary_records (2016-03-23 + 2021-04-02); plain-language descriptions
 - Plain-language description standard: description field = voter-facing summary of what judge did; established in migration 118
-- isLegalCandidate detection: district_type JUDICIAL/NATIONAL_JUDICIAL OR office_title includes 'city attorney'/'district attorney' — replaces broken is_judicial flag (backend never returns it)
+- isLegalCandidate detection: district_type JUDICIAL/NATIONAL_JUDICIAL OR office_title includes 'city attorney'/'district attorney'/'judge'/'justice' — 6 conditions; Profile.jsx and CandidateProfile.jsx must stay in parity (Phase 32-01)
+- dScope fallback: CandidateProfile.jsx dScope ternary ends `: isLegalCandidate ? 'judicial' : null` — catches city attorney candidates with null district_type (COMPASS-05 fix, Phase 32-01)
+- Profile.jsx isLegalPolitician: state var set true when isLegalCandidate; gates LegalDonorActivitySection render (DONOR-04 fix, Phase 32-01)
 - BarEvaluationSection.jsx: renders after JudicialCompassSection, before CampaignFinanceSection; returns null when no data (no empty sections)
 - Draper pending CJP proceedings: NOT documented (no imposed discipline; omit pending proceedings)
 - State Bar status rows + CJP N/A rows: SKIP (no voter signal without discipline; BarEvaluationSection links to CJP UI instead)
