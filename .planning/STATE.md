@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 30 — Legal Candidate Stance Research
-Plan: 03 of 3 — complete
-Status: Phase complete
-Last activity: 2026-05-10 — 30-03 complete; Roy 5/6 judicial compass topics placed (judicial-transparency not found); migration 121 applied; values: prosecution-priorities=2, criminal-justice=2, police-accountability=2, access-to-justice=1, government-deference=1 (inferred); Phase 30 COMPLETE (3/3 plans)
+Phase: 31 — Donor-Court Conflict Map
+Plan: 01 of 4 — complete
+Status: In progress
+Last activity: 2026-05-09 — 31-01 complete; identify-legal-donors.ts built; court-research-input.json written; 4 CAs with confirmed contributions (Feldstein Soto=2631, Roy=1270, McKinney=125, Ashouri=71); 28 judges skipped (no contribution data); deterministic output confirmed
 
 v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume after v3.2 or interleave
 
@@ -225,6 +225,20 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 - Fixed 4-category source checklist COMPLETE for all 3 LA City Attorney candidates: LACBA/JEEC (not applicable), LAist voter guide (primary), Vote411/LWV (not indexed), endorsing org questionnaires (LA Forward, Patch Q&A highest-quality)
 - Phase 30 COMPLETE; next migration is 122
 
+### Phase 31 Notes
+
+- identify-legal-donors.ts: 32 LEGAL_CANDIDATES from migration 117 (4 CAs + 28 judges); --probe + extraction modes
+- 4 candidates with confirmed contribution data: Feldstein Soto (2631 rows), Roy (1270), McKinney (125), Ashouri (71)
+- 28 judge challengers: skipped (no confirmed contributions — LA Ethics Commission data not ingested for judicial races)
+- Employer field: COALESCE(c.raw_record->>'contributor_employer', c.raw_record->>'con_empr', '') — NEVER con_emp
+- Occupation field: COALESCE(c.raw_record->>'contributor_occupation', c.raw_record->>'con_occp', '')
+- "associate" bare occupation excluded (too many non-legal collisions confirmed in Roy data: 9 rows)
+- Fuzzy dedup: fastest-levenshtein distance<=3 merge, 4-6 flag needs_review (same-first-letter pairs only)
+- 15% threshold: cumulative dollar walk, not percentile of donor count
+- court-research-input.json: 32 entries, 4 with firms, 28 empty; deterministic on re-run
+- Top firms: Ashouri=Life Sciences Patent Law Firm ($300), McKinney=LA County DA's Office ($5,400), Roy=California DOJ ($41,053), Feldstein Soto=City of LA ($75,774)
+- Anomaly: "City of Los Angeles" is top donor for Feldstein Soto (incumbent CA office colleagues) — not a court conflict; Plan 02 researcher should apply conflict framing only to private law firms
+
 ### Phase 29 Notes
 
 - Migration 117 applied 2026-05-09: 11 LA Superior Court contested races (Offices 2/14/64/65/66/81/87/116/131/176/181) for election_id 1ebca37f-cf96-47f4-bc2b-47ef266721fe
@@ -297,3 +311,4 @@ See: .planning/PROJECT.md (updated 2026-05-06 after v3.2 milestone definition)
 *Updated: 2026-05-09 — Phase 30-01 complete; Ashouri 6/6 judicial compass topics placed (no not-found); migration 119 applied to production; values: access-to-justice=1, criminal-justice=2, govt-deference=1, transparency=2, police-accountability=1, prosecution-priorities=1; inference-flagged: govt-deference + transparency; primary source: Patch Q&A; STANCE-01 partially satisfied (Ashouri done); Phase 30-02 (McKinney) next*
 *Updated: 2026-05-09 — Phase 30-02 complete; McKinney 5/6 judicial compass topics placed (judicial-transparency not found — no court proceedings statements in any source); migration 120 applied to production; values: prosecution-priorities=4, criminal-justice=4, police-accountability=4, access-to-justice=3, government-deference=3 (inferred); LA Forward/DSA-LA characterizations excluded per rules; Patch Q&A + mckinney4la.com/issues are highest-quality sources; STANCE-02 satisfied; Phase 30-03 (Roy) next*
 *Updated: 2026-05-10 — Phase 30-03 complete; Roy 5/6 judicial compass topics placed (judicial-transparency not found — same as McKinney; 'accountability and integrity' framing is about office culture, not court proceedings); migration 121 applied to production; values: prosecution-priorities=2, criminal-justice=2, police-accountability=2, access-to-justice=1, government-deference=1 (inferred); STANCE-03 satisfied; Phase 30 COMPLETE (3/3 plans); phase-wide: Ashouri 6/6, McKinney 5/6, Roy 5/6; 18 judicial context rows; all 15 placed stances have source citations (n_sources >= 3)*
+*Updated: 2026-05-09 — Phase 31-01 complete; identify-legal-donors.ts built (32 UUIDs from migration 117, --probe + extraction modes); court-research-input.json written; 4 CAs with data (Feldstein Soto=2631 rows, Roy=1270, McKinney=125, Ashouri=71); 28 judge challengers skipped (no confirmed contributions); top firms: Ashouri=Life Sciences Patent Law Firm ($300), McKinney=LA County DA's Office ($5,400), Roy=California DOJ ($41,053), Feldstein Soto=City of Los Angeles ($75,774); deterministic on re-run; ESM __dirname fix applied*
