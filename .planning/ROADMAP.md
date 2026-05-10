@@ -7,7 +7,7 @@
 - 🚧 **v2.2 Data Depth & Admin Tooling** — Phases 8-11 (parked)
 - 🚧 **v3.0 Collin County, TX Coverage** — Phases 12-21 (in progress; Phases 17+18 pending)
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
-- 🚧 **v3.2 Legal Candidate Evaluation Framework** — Phases 26-31 (in progress)
+- 🚧 **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (in progress)
 
 ## Phases
 
@@ -407,7 +407,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 32-01-PLAN.md — Fix CandidateProfile.jsx dScope position_name fallback + add LegalDonorActivitySection to Profile.jsx + unify isLegalCandidate
+- [x] 32-01-PLAN.md — Fix CandidateProfile.jsx dScope position_name fallback + add LegalDonorActivitySection to Profile.jsx + unify isLegalCandidate
 
 ---
 
@@ -464,4 +464,4 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 29. Bar Evaluation Data | v3.2 | 3/3 | Complete | 2026-05-09 |
 | 30. Legal Candidate Stance Research | v3.2 | 3/3 | Complete | 2026-05-09 |
 | 31. Legal Donor Activity | v3.2 | 4/4 | Complete | 2026-05-09 |
-| 32. Legal Profile Page Fixes | v3.2 | 0/1 | Not started | - |
+| 32. Legal Profile Page Fixes | v3.2 | 1/1 | Complete | 2026-05-10 |

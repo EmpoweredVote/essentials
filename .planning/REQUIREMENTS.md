@@ -35,15 +35,15 @@
 
 ### FINANCE — Campaign Finance Completeness
 
-- [ ] **FINANCE-01**: All 32 identified LA City candidates with missing la_socrata sources have sources seeded and ingest triggered
-- [ ] **FINANCE-02**: Campaign finance gap audit documented as a routine maintenance procedure
+- [x] **FINANCE-01**: All 32 identified LA City candidates with missing la_socrata sources have sources seeded and ingest triggered
+- [x] **FINANCE-02**: Campaign finance gap audit documented as a routine maintenance procedure
 
 ### DONOR — Donor-Court Conflict Map
 
-- [ ] **DONOR-01**: Top 15% of donors by amount identified for each LA legal candidate using existing contribution data
-- [ ] **DONOR-02**: Donor law firm names cross-referenced against lacourt.org (LA Superior) and CourtListener (federal) appearances
-- [ ] **DONOR-03**: Donor-court conflicts computed and stored (firm donated + appeared before same judge, no recusal on record)
-- [ ] **DONOR-04**: Conflict data surfaced on legal candidate profile pages
+- [x] **DONOR-01**: Top 15% of donors by amount identified for each LA legal candidate using existing contribution data
+- [ ] **DONOR-02**: Donor law firm names cross-referenced against lacourt.org (LA Superior) and CourtListener (federal) appearances *(deferred — Option C pivot)*
+- [ ] **DONOR-03**: Donor-court conflicts computed and stored (firm donated + appeared before same judge, no recusal on record) *(deferred — Option C pivot)*
+- [x] **DONOR-04**: Conflict data surfaced on legal candidate profile pages
 
 ---
 
