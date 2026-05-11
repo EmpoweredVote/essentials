@@ -47,7 +47,7 @@ function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
           fontFamily: "'Manrope', sans-serif", fontSize: '13px',
           fontWeight: 500,
           color: textColor,
-          background: bg,
+          backgroundColor: bg,
           border: `1px solid ${borderColor}`,
           borderRadius: '6px',
           minHeight: '34px',
@@ -59,7 +59,7 @@ function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
         }}
       >
         {options.map((o) => (
-          <option key={o.value} value={o.value} style={{ background: isDark ? '#1a2235' : '#fff', color: textColor }}>{o.label}</option>
+          <option key={o.value} value={o.value} style={{ backgroundColor: isDark ? '#1a2235' : '#fff', color: textColor }}>{o.label}</option>
         ))}
       </select>
     </label>
@@ -132,7 +132,7 @@ export default function FilterBar({
             fontFamily: "'Manrope', sans-serif", fontSize: '13px',
             border: `1px solid ${inputBorder}`, borderRadius: '6px',
             minHeight: '34px',
-            background: inputBg, color: inputText,
+            backgroundColor: inputBg, color: inputText,
             outline: 'none', boxSizing: 'border-box',
           }}
           onFocus={(e) => { e.currentTarget.style.borderColor = inputBorderFocus; }}
