@@ -201,7 +201,7 @@ Plans:
 - [x] 16-01-PLAN.md — Migration 099: 23 Collin County cities seeded into essentials.discovery_jurisdictions (DISC-01, DISC-02)
 - [x] 16-02-PLAN.md — Test discovery run for Plano: trigger POST /discover/jurisdiction/:id, verify discovery_runs + candidate_staging rows, human-verify in admin UI (DISC-03)
 
-#### Phase 17: Headshots
+#### Phase 17: Headshots ✅ Complete (2026-05-10)
 **Goal**: Official headshot photos for Tier 1 and Tier 2 politicians are found, correctly resized, and stored in Supabase Storage with politician_images rows
 **Depends on**: Phase 14
 **Requirements**: HEAD-01, HEAD-02, HEAD-03
@@ -213,10 +213,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 17-01-PLAN.md — Tier 1 headshots (Plano, McKinney, Allen, Frisco) — required-100% coverage; Frisco via Ballotpedia (CloudFlare bypass)
-- [ ] 17-02-PLAN.md — Tier 2 headshots (Murphy, Celina, Prosper, Richardson) — best-effort; Richardson via Ballotpedia (cor.net 403 bypass)
-- [ ] 17-03-PLAN.md — Tier 3-4 sweep (15 cities) — 2-source ceiling per politician; sparse coverage expected
-- [ ] 17-04-PLAN.md — Phase-wide coverage roll-up + cross-tier sampling + STATE.md update
+- [x] 17-01-PLAN.md — Tier 1 headshots (Plano, McKinney, Allen, Frisco) — required-100% coverage; Frisco via Ballotpedia (CloudFlare bypass)
+- [x] 17-02-PLAN.md — Tier 2 headshots (Murphy, Celina, Prosper, Richardson) — best-effort; Richardson via Ballotpedia (cor.net 403 bypass)
+- [x] 17-03-PLAN.md — Tier 3-4 sweep (15 cities) — 2-source ceiling per politician; sparse coverage expected
+- [x] 17-04-PLAN.md — Phase-wide coverage roll-up + cross-tier sampling + STATE.md update
 
 #### Phase 19: TX Congressional Seats + Geofences
 **Goal**: All 38 TX US House members are loaded as NATIONAL_LOWER politician records; TX county geofences (G4020) are loaded into geofence_boundaries; the by-government-list supplemental query is extended to include NATIONAL_LOWER reps via county geofence intersection — so browsing any TX government-list area automatically shows the correct congressional reps.
@@ -354,7 +354,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 3/3 | Complete | 2026-05-01 |
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 17. Headshots | v3.0 | 0/4 | Not started | - |
+| 17. Headshots | v3.0 | 4/4 | Complete | 2026-05-10 |
 | 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
 | 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
 | 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |

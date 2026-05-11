@@ -61,8 +61,8 @@ function SortHeader({ label, sortKey, sortBy, sortDir, onSort }) {
   const isActive = sortBy === sortKey;
   return (
     <button
-      className={`flex items-center gap-1 text-xs font-semibold uppercase tracking-wide hover:text-gray-900 transition-colors ${
-        isActive ? 'text-blue-600' : 'text-gray-500'
+      className={`flex items-center gap-1 text-xs font-semibold uppercase tracking-wide hover:text-gray-900 dark:hover:text-gray-100 transition-colors ${
+        isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'
       }`}
       onClick={() => onSort(sortKey)}
       type="button"
@@ -123,13 +123,13 @@ export default function DonorList({ donors, contributions, onFetchContributions,
   return (
     <div>
       {/* Column headers */}
-      <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr] gap-2 px-3 pb-2 border-b border-gray-100">
-        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">Donor</span>
+      <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr] gap-2 px-3 pb-2 border-b border-gray-100 dark:border-gray-700">
+        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Donor</span>
         <SortHeader label="Amount" sortKey="total_amount" sortBy={sortBy} sortDir={sortDir} onSort={handleSort} />
         <SortHeader label="# Contributions" sortKey="contribution_count" sortBy={sortBy} sortDir={sortDir} onSort={handleSort} />
       </div>
 
-      <ul className="divide-y divide-gray-50">
+      <ul className="divide-y divide-gray-100 dark:divide-gray-700">
         {sortedDonors.map((donor) => {
           const isExpanded = expandedDonor === donor.name;
           const donorType = (donor.donor_type || '').toLowerCase();
@@ -147,7 +147,7 @@ export default function DonorList({ donors, contributions, onFetchContributions,
               {/* Donor row */}
               <button
                 type="button"
-                className="w-full text-left px-3 py-3 hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+                className="w-full text-left px-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
                 onClick={() => toggleDonor(donor.name)}
                 aria-expanded={isExpanded}
               >
@@ -156,20 +156,20 @@ export default function DonorList({ donors, contributions, onFetchContributions,
                   <div className="flex items-start gap-2 min-w-0">
                     <div className="flex-shrink-0 mt-0.5">
                       {isPac ? (
-                        <BuildingIcon className="w-4 h-4 text-purple-500" />
+                        <BuildingIcon className="w-4 h-4 text-purple-400 dark:text-purple-400" />
                       ) : (
-                        <PersonIcon className="w-4 h-4 text-blue-500" />
+                        <PersonIcon className="w-4 h-4 text-blue-500 dark:text-blue-400" />
                       )}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 truncate">{donor.name}</p>
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">{donor.name}</p>
                       {(donor.employer || donor.occupation) && (
-                        <p className="text-xs text-gray-500 truncate">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                           {[donor.employer, donor.occupation].filter(Boolean).join(' · ')}
                         </p>
                       )}
                       {donor.sector && (
-                        <span className="inline-block mt-0.5 text-xs bg-gray-100 text-gray-700 rounded-full px-2 py-0.5">
+                        <span className="inline-block mt-0.5 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full px-2 py-0.5">
                           {donor.sector}
                         </span>
                       )}
@@ -178,7 +178,7 @@ export default function DonorList({ donors, contributions, onFetchContributions,
 
                   {/* Amount */}
                   <div className="flex items-center gap-1.5 sm:justify-start pl-6 sm:pl-0">
-                    <span className="text-sm font-medium text-gray-900">
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {formatCurrency(donor.total_amount || 0)}
                     </span>
                     <ConfidenceDot level={donor.confidence_level || 'HIGH'} />
@@ -186,7 +186,7 @@ export default function DonorList({ donors, contributions, onFetchContributions,
 
                   {/* Count */}
                   <div className="pl-6 sm:pl-0">
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
                       {donor.contribution_count || 0} donation{(donor.contribution_count || 0) !== 1 ? 's' : ''}
                     </span>
                   </div>
@@ -195,15 +195,15 @@ export default function DonorList({ donors, contributions, onFetchContributions,
 
               {/* Inline transaction list */}
               {isExpanded && (
-                <div className="pl-9 pr-3 pb-3 bg-gray-50 border-t border-gray-100">
+                <div className="pl-9 pr-3 pb-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
                   {contributions === null ? (
-                    <p className="text-xs text-gray-400 py-2">Loading transactions...</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 py-2">Loading transactions...</p>
                   ) : donorTxns.length === 0 ? (
-                    <p className="text-xs text-gray-400 py-2">No individual transactions found.</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500 py-2">No individual transactions found.</p>
                   ) : (
                     <ul className="space-y-1 pt-2">
                       {donorTxns.map((tx, i) => (
-                        <li key={i} className="flex justify-between text-xs text-gray-600">
+                        <li key={i} className="flex justify-between text-xs text-gray-600 dark:text-gray-300">
                           <span>{formatDate(tx.contribution_date || tx.date)}</span>
                           <span className="font-medium">{formatCurrency(tx.amount)}</span>
                         </li>
@@ -213,7 +213,7 @@ export default function DonorList({ donors, contributions, onFetchContributions,
                   {contributions?.page_info?.has_next_page && (
                     <button
                       type="button"
-                      className="mt-2 text-xs text-blue-600 hover:text-blue-800 underline"
+                      className="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
                       onClick={(e) => { e.stopPropagation(); onFetchMore(); }}
                     >
                       Load more

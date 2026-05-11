@@ -11,6 +11,7 @@ import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanc
 import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import { useCompass } from '../contexts/CompassContext';
+import { useTheme } from '../hooks/useTheme';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
@@ -24,6 +25,7 @@ function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { isDark } = useTheme();
 
   const [pol, setPol] = useState({});
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -131,17 +133,17 @@ function Profile() {
                   <div
                     style={{
                       borderLeft: '4px solid #f6ad55',
-                      backgroundColor: '#fffaf0',
+                      backgroundColor: isDark ? '#2d1f0a' : '#fffaf0',
                       borderRadius: '0 8px 8px 0',
                       padding: '12px 16px',
                       marginTop: '16px',
                       fontFamily: "'Manrope', sans-serif",
                     }}
                   >
-                    <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
+                    <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: isDark ? '#f3d89a' : '#2d3748' }}>
                       This seat is on the ballot
                     </p>
-                    <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
+                    <p style={{ margin: '4px 0 0', fontSize: '13px', color: isDark ? '#b8a07a' : '#718096' }}>
                       {activeElection
                         ? `Incumbent is seeking reelection${activeElection.election_date ? ` · Election: ${formatElectionDateFull(activeElection.election_date)}` : ''}`
                         : 'Open seat'}
@@ -155,18 +157,18 @@ function Profile() {
                   <div
                     style={{
                       borderLeft: '4px solid #fed12e',
-                      backgroundColor: '#fffef5',
+                      backgroundColor: isDark ? '#1f1a06' : '#fffef5',
                       borderRadius: '0 8px 8px 0',
                       padding: '12px 16px',
                       marginTop: '16px',
                       fontFamily: "'Manrope', sans-serif",
                     }}
                   >
-                    <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
+                    <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: isDark ? '#fde68a' : '#2d3748' }}>
                       Candidate for {activeElection.position_name || pol.office_title}
                     </p>
                     {activeElection.election_date && (
-                      <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
+                      <p style={{ margin: '4px 0 0', fontSize: '13px', color: isDark ? '#a38a50' : '#718096' }}>
                         Election: {formatElectionDateFull(activeElection.election_date)}
                       </p>
                     )}

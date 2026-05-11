@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: Not started — planning next milestone
+Phase: Phase 18 (Compass Stances) — not started
 Plan: N/A
-Status: v3.2 milestone complete — ready for next milestone
-Last activity: 2026-05-10 — v3.2 milestone archived; git tag v3.2 created
+Status: v3.0 nearly complete — Phase 17 marked done 2026-05-10; Phase 18 remains
+Last activity: 2026-05-10 — Phase 17 Headshots marked complete (Tier 1+2 fully covered; Tier 3-4 best-effort done)
 
-v3.0 remaining (parked): Phase 17 (Headshots) + Phase 18 (Compass Stances) — resume or fold into next milestone
+v3.0 remaining: Phase 18 (Compass Stances) — Plano, McKinney, Allen council stances into inform.politician_answers
 
 ## Project Reference
 

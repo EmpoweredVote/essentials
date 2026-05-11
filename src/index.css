@@ -140,3 +140,24 @@ body {
 .dark .ev-politician-profile p {
   color: #9ca3af !important;
 }
+
+/* Dark mode: contact info links and values inside ev-ui PoliticianProfile */
+.dark .ev-politician-profile a {
+  color: #59b0c4 !important;
+}
+
+.dark .ev-politician-profile a:hover {
+  color: #7ec8d8 !important;
+}
+
+.dark .ev-politician-profile span,
+.dark .ev-politician-profile li,
+.dark .ev-politician-profile address {
+  color: #d1d5db !important;
+}
+
+/* Contact section labels (e.g. "Email", "Website", "Phone") */
+.dark .ev-politician-profile [class*="label"],
+.dark .ev-politician-profile [class*="contact"] span {
+  color: #9ca3af !important;
+}

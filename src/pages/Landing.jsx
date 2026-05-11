@@ -110,25 +110,25 @@ export default function Landing() {
     <Layout>
 
       {/* ── Hero ── */}
-      <section className="bg-ev-navy text-white min-h-[calc(100vh-73px)] flex items-center">
+      <section className="bg-[var(--ev-bg-light)] dark:bg-ev-navy min-h-[calc(100vh-73px)] flex items-center">
         <div className="w-full px-12 sm:px-16 lg:px-24 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 lg:gap-24 items-center">
 
             {/* Left: headline + copy + CTA */}
             <div>
-              <p className="text-ev-teal-light text-xs font-bold uppercase tracking-widest mb-5">
+              <p className="text-[var(--ev-teal)] dark:text-ev-teal-light text-xs font-bold uppercase tracking-widest mb-5">
                 Empowered Essentials
               </p>
-              <h1 className="text-5xl sm:text-6xl font-bold leading-tight text-white">
+              <h1 className="text-5xl sm:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
                 Meet everyone<br />who represents you,
               </h1>
-              <p className="text-5xl sm:text-6xl font-bold text-ev-teal-light leading-tight mt-1 mb-8">
+              <p className="text-5xl sm:text-6xl font-bold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight mt-1 mb-8">
                 at every level.
               </p>
-              <p className="text-gray-400 text-lg leading-relaxed mb-3">
+              <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed mb-3">
                 Most voters can't name half the people on their ballot — let alone where they stand on the issues.
               </p>
-              <p className="text-gray-300 text-lg leading-relaxed mb-10">
+              <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-10">
                 Our Alpha Counties show exactly where we're headed: your full government, from city hall to Congress, all in one place.
               </p>
               <button
@@ -146,18 +146,20 @@ export default function Landing() {
                   key={n}
                   className={`flex items-start gap-4 p-5 rounded-2xl border transition-colors ${
                     active
-                      ? 'bg-ev-navy-card border-ev-teal-light'
-                      : 'bg-ev-navy-elevated border-white/10'
+                      ? 'bg-white dark:bg-ev-navy-card border-[var(--ev-teal)] dark:border-ev-teal-light'
+                      : 'bg-gray-50 dark:bg-ev-navy-elevated border-gray-200 dark:border-white/10'
                   }`}
                 >
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                    active ? 'bg-ev-teal-light/20 text-ev-teal-light' : 'bg-white/10 text-gray-500'
+                    active
+                      ? 'bg-[var(--ev-teal)]/10 dark:bg-ev-teal-light/20 text-[var(--ev-teal)] dark:text-ev-teal-light'
+                      : 'bg-gray-100 dark:bg-white/10 text-gray-400 dark:text-gray-500'
                   }`}>
                     {n}
                   </div>
                   <div>
-                    <p className={`font-bold mb-1 ${active ? 'text-white' : 'text-gray-300'}`}>{heading}</p>
-                    <p className={`text-sm leading-relaxed ${active ? 'text-gray-300' : 'text-gray-400'}`}>{body}</p>
+                    <p className={`font-bold mb-1 ${active ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-300'}`}>{heading}</p>
+                    <p className={`text-sm leading-relaxed ${active ? 'text-gray-600 dark:text-gray-300' : 'text-gray-500 dark:text-gray-400'}`}>{body}</p>
                   </div>
                 </div>
               ))}
@@ -170,7 +172,7 @@ export default function Landing() {
       {/* ── Search Section ── */}
       <div ref={searchRef} className="scroll-mt-20">
         <section className="w-full px-8 sm:px-12 lg:px-24 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
 
             {/* Left: Alpha County chooser */}
             <div>
@@ -212,108 +214,115 @@ export default function Landing() {
               )}
             </div>
 
-            {/* Right: Search inputs */}
-            <div>
-              <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
-                Search by Address
-              </h2>
-              <p className="text-base text-gray-500 dark:text-gray-400 mb-4">
-                Enter your full street address to find everyone who represents you.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 mb-8">
-                <input
-                  ref={addressInputRef}
-                  type="text"
-                  value={addressInput}
-                  onChange={(e) => setAddressInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                  placeholder="Enter your full street address"
-                  className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
-                />
-                <button
-                  onClick={handleSearch}
-                  disabled={!addressInput.trim()}
-                  className="px-4 sm:px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  Search
-                </button>
+            {/* Right: Search inputs — flex column so divider floats to center */}
+            <div className="flex flex-col">
+
+              {/* Top half: address search, input pushed to bottom */}
+              <div className="flex-1 flex flex-col">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
+                  Search by Address
+                </h2>
+                <p className="text-base text-gray-500 dark:text-gray-400 mb-4">
+                  Enter your full street address to find everyone who represents you.
+                </p>
+                <div className="mt-auto flex flex-col sm:flex-row gap-3">
+                  <input
+                    ref={addressInputRef}
+                    type="text"
+                    value={addressInput}
+                    onChange={(e) => setAddressInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    placeholder="Enter your full street address"
+                    className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
+                  />
+                  <button
+                    onClick={handleSearch}
+                    disabled={!addressInput.trim()}
+                    className="px-4 sm:px-8 py-3 text-lg font-bold text-white bg-[var(--ev-teal)] rounded-lg hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Search
+                  </button>
+                </div>
               </div>
 
-              {/* "or search by name" divider */}
-              <div className="relative my-6">
+              {/* Divider — centered between the two inputs */}
+              <div className="relative py-6">
                 <hr className="border-gray-200 dark:border-gray-700" />
-                <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[var(--ev-bg-light)] dark:bg-ev-navy px-3 text-sm text-gray-400 dark:text-gray-500">
+                <span className="absolute left-1/2 -translate-x-1/2 -top-2.5 translate-y-6 bg-[var(--ev-bg-light)] dark:bg-ev-navy px-3 text-sm text-gray-400 dark:text-gray-500">
                   or search by name
                 </span>
               </div>
 
-              {/* Name Search Input */}
-              <div className="relative">
-                <svg
-                  width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                  className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
-                  aria-hidden="true"
-                >
-                  <circle cx="11" cy="11" r="7" />
-                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                </svg>
-                <input
-                  type="text"
-                  value={nameQuery}
-                  onChange={(e) => setNameQuery(e.target.value)}
-                  placeholder="Search candidates by name…"
-                  aria-label="Search candidates by name"
-                  className="w-full pl-12 pr-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
-                />
+              {/* Bottom half: name search */}
+              <div className="flex-1">
+                <div className="relative">
+                  <svg
+                    width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                    aria-hidden="true"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <input
+                    type="text"
+                    value={nameQuery}
+                    onChange={(e) => setNameQuery(e.target.value)}
+                    placeholder="Search candidates by name…"
+                    aria-label="Search candidates by name"
+                    className="w-full pl-12 pr-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
+                  />
+                </div>
+
+                {/* Name Search Results */}
+                {nameQuery.trim().length >= 2 && (
+                  <div className="mt-2">
+                    {nameStatus === 'loading' && (
+                      <p className="text-sm text-gray-500 dark:text-gray-400 py-2">Searching&hellip;</p>
+                    )}
+                    {nameStatus === 'fresh' && nameResults.length === 0 && (
+                      <p className="text-sm text-gray-500 dark:text-gray-400 py-2">No candidates match &ldquo;{nameQuery.trim()}&rdquo;.</p>
+                    )}
+                    {nameStatus === 'error' && (
+                      <p className="text-sm text-red-500 py-2">Search failed. Try again.</p>
+                    )}
+                    {nameStatus === 'fresh' && nameResults.length > 0 && (
+                      <ul className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+                        {nameResults.map((pol) => (
+                          <li key={pol.id}>
+                            <Link
+                              to={`/politician/${pol.id}`}
+                              className="flex items-center gap-3 px-4 py-3 hover:bg-[var(--ev-bg-light)] dark:hover:bg-gray-800 transition-colors"
+                            >
+                              {pol.photo_origin_url && (
+                                <img
+                                  src={pol.photo_origin_url}
+                                  alt=""
+                                  className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                                />
+                              )}
+                              <div className="min-w-0">
+                                <div className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light truncate">{pol.full_name}</div>
+                                {(pol.office_title || pol.representing_state) && (
+                                  <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                                    {[pol.office_title, pol.representing_state].filter(Boolean).join(' — ')}
+                                  </div>
+                                )}
+                              </div>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
+                {nameQuery.trim().length < 2 && nameQuery.trim().length > 0 && (
+                  <p className="mt-2 text-sm text-gray-400 dark:text-gray-500">Type at least 2 letters to search.</p>
+                )}
               </div>
 
-              {/* Name Search Results */}
-              {nameQuery.trim().length >= 2 && (
-                <div className="mt-2">
-                  {nameStatus === 'loading' && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 py-2">Searching&hellip;</p>
-                  )}
-                  {nameStatus === 'fresh' && nameResults.length === 0 && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 py-2">No candidates match &ldquo;{nameQuery.trim()}&rdquo;.</p>
-                  )}
-                  {nameStatus === 'error' && (
-                    <p className="text-sm text-red-500 py-2">Search failed. Try again.</p>
-                  )}
-                  {nameStatus === 'fresh' && nameResults.length > 0 && (
-                    <ul className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
-                      {nameResults.map((pol) => (
-                        <li key={pol.id}>
-                          <Link
-                            to={`/politician/${pol.id}`}
-                            className="flex items-center gap-3 px-4 py-3 hover:bg-[var(--ev-bg-light)] dark:hover:bg-gray-800 transition-colors"
-                          >
-                            {pol.photo_origin_url && (
-                              <img
-                                src={pol.photo_origin_url}
-                                alt=""
-                                className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-                                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                              />
-                            )}
-                            <div className="min-w-0">
-                              <div className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light truncate">{pol.full_name}</div>
-                              {(pol.office_title || pol.representing_state) && (
-                                <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                                  {[pol.office_title, pol.representing_state].filter(Boolean).join(' — ')}
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              )}
-              {nameQuery.trim().length < 2 && nameQuery.trim().length > 0 && (
-                <p className="mt-2 text-sm text-gray-400 dark:text-gray-500">Type at least 2 letters to search.</p>
-              )}
             </div>
 
           </div>

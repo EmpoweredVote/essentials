@@ -6,6 +6,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import { useTheme } from '../../hooks/useTheme';
 
 /**
  * IndustryChart — horizontal bar chart showing campaign contributions by sector.
@@ -21,27 +22,33 @@ function formatDollarTick(value) {
 }
 
 function CustomTooltip({ active, payload }) {
+  const { isDark } = useTheme();
   if (!active || !payload || !payload.length) return null;
   const { sector, total, count } = payload[0].payload;
   return (
-    <div className="bg-white border border-gray-200 rounded shadow-md px-3 py-2 text-sm">
-      <p className="font-semibold text-gray-800 mb-1">{sector}</p>
-      <p className="text-gray-600">
+    <div className={`rounded shadow-md px-3 py-2 text-sm border ${
+      isDark
+        ? 'bg-gray-800 border-gray-600 text-white'
+        : 'bg-white border-gray-200 text-gray-800'
+    }`}>
+      <p className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-gray-800'}`}>{sector}</p>
+      <p className={isDark ? 'text-gray-300' : 'text-gray-600'}>
         {new Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
           maximumFractionDigits: 0,
         }).format(total)}
       </p>
-      <p className="text-gray-500 text-xs">{count} contribution{count !== 1 ? 's' : ''}</p>
+      <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{count} contribution{count !== 1 ? 's' : ''}</p>
     </div>
   );
 }
 
 export default function IndustryChart({ data }) {
+  const { isDark } = useTheme();
   if (!data || data.length === 0) {
     return (
-      <p className="text-gray-500 text-sm italic py-2">No sector data available</p>
+      <p className="text-gray-500 dark:text-gray-400 text-sm italic py-2">No sector data available</p>
     );
   }
 
@@ -58,14 +65,14 @@ export default function IndustryChart({ data }) {
           type="category"
           dataKey="sector"
           width={140}
-          tick={{ fontSize: 12, fill: '#4b5563' }}
+          tick={{ fontSize: 12, fill: isDark ? '#9ca3af' : '#4b5563' }}
           tickLine={false}
           axisLine={false}
         />
         <XAxis
           type="number"
           tickFormatter={formatDollarTick}
-          tick={{ fontSize: 11, fill: '#9ca3af' }}
+          tick={{ fontSize: 11, fill: isDark ? '#6b7280' : '#9ca3af' }}
           tickLine={false}
           axisLine={false}
         />
