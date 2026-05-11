@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { RadarChartCore, StanceAccordion } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
+import { useTheme } from '../hooks/useTheme';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
@@ -21,6 +22,7 @@ const MAX_SPOKES = 8;
  *   districtScope   — 'local' | 'state' | 'federal' | 'judicial' | null (filters topics shown)
  */
 export default function CompassCard({ politicianId, politicianName, politicianTitle, districtScope }) {
+  const { isDark } = useTheme();
   const {
     politicianIdsWithStances,
     userAnswers,
@@ -414,6 +416,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                       replacedSpokes={replacedSpokes}
                       boldOriginalSpokes={true}
                       onToggleInversion={toggleInversion}
+                      darkMode={isDark}
                       size={500}
                       labelFontSize={14}
                       padding={90}
