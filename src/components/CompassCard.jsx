@@ -28,6 +28,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     allTopics,
     invertedSpokes,
     toggleInversion,
+    batchInvertSpokes,
     verdicts,
     initialTopicId,
     compassLoading,
@@ -184,6 +185,38 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
   const hasData = hasEnoughSpokes && topicsFiltered.length > 0;
 
+  // Min/Max batch handlers — operate on what the user currently *sees* (display value),
+  // not the raw stored value, so they work correctly on already-inverted spokes.
+  function handleStanceMax() {
+    const next = { ...invertedSpokes };
+    for (const topic of topicsFiltered) {
+      const val = userData[topic.short_title];
+      if (!val || val <= 0) continue;
+      const isInverted = !!next[topic.short_title];
+      const displayVal = isInverted ? 6 - val : val;
+      if (displayVal < 3) {
+        if (val < 3) next[topic.short_title] = true;
+        else delete next[topic.short_title];
+      }
+    }
+    batchInvertSpokes(next);
+  }
+
+  function handleStanceMin() {
+    const next = { ...invertedSpokes };
+    for (const topic of topicsFiltered) {
+      const val = userData[topic.short_title];
+      if (!val || val <= 0) continue;
+      const isInverted = !!next[topic.short_title];
+      const displayVal = isInverted ? 6 - val : val;
+      if (displayVal > 3) {
+        if (val > 3) next[topic.short_title] = true;
+        else delete next[topic.short_title];
+      }
+    }
+    batchInvertSpokes(next);
+  }
+
   // Build legend name: "[Position] [Last Name]"
   const lastName = politicianName ? politicianName.split(' ').pop() : '';
   const legendLabel = politicianTitle
@@ -326,8 +359,53 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     </span>
                   </div>
 
-                  {/* Chart container — responsive, fills left column */}
-                  <div style={{ width: '100%', overflow: 'hidden' }}>
+                  {/* Chart container — position:relative so Min/Max buttons can overlay */}
+                  <div style={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
+                    {/* Min / Max buttons */}
+                    <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 10 }}>
+                      <button
+                        type="button"
+                        title="Stance Max — flip any spoke showing 1–2 to its strong side (4–5)"
+                        onClick={handleStanceMax}
+                        style={{
+                          width: 28, height: 28,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          borderRadius: 6, border: '1px solid',
+                          borderColor: 'var(--ev-border, #e2e8f0)',
+                          backgroundColor: 'var(--ev-bg-card, #fff)',
+                          color: '#4b5563',
+                          cursor: 'pointer',
+                          padding: 0,
+                        }}
+                        className="dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        {/* Expand / maximize icon */}
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 6V1h5M10 1h5v5M15 10v5h-5M6 15H1v-5"/>
+                        </svg>
+                      </button>
+                      <button
+                        type="button"
+                        title="Stance Min — flip any spoke showing 4–5 to its moderate side (1–2)"
+                        onClick={handleStanceMin}
+                        style={{
+                          width: 28, height: 28,
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          borderRadius: 6, border: '1px solid',
+                          borderColor: 'var(--ev-border, #e2e8f0)',
+                          backgroundColor: 'var(--ev-bg-card, #fff)',
+                          color: '#4b5563',
+                          cursor: 'pointer',
+                          padding: 0,
+                        }}
+                        className="dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        {/* Compress / minimize icon */}
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M6 1v5H1M15 6h-5V1M10 15v-5h5M1 10h5v5"/>
+                        </svg>
+                      </button>
+                    </div>
                     <RadarChartCore
                       topics={topicsFiltered}
                       data={userData}

@@ -320,6 +320,10 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     setInvertedSpokes((prev) => ({ ...prev, [shortTitle]: !prev[shortTitle] }));
   }, []);
 
+  const batchInvertSpokes = useCallback((newMap) => {
+    setInvertedSpokes(newMap);
+  }, []);
+
   const logout = async () => {
     try {
       const token = getToken();
@@ -359,6 +363,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       dismissSuggestedSaveAddress: () => setSuggestedSaveAddress(null),
       enableCompass: loadCompassData,
       toggleInversion,
+      batchInvertSpokes,
       logout,
     }),
     [
@@ -380,6 +385,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       suggestedSaveAddress,
       loadCompassData,
       toggleInversion,
+      batchInvertSpokes,
     ]
   );
 
