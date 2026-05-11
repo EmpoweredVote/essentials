@@ -182,6 +182,7 @@ function Profile() {
             judicialRecord={judicialRecord}
             politicianId={id}
             onNavigateToRecord={(href) => navigate(href)}
+            darkMode={isDark}
           />
 
           {(() => {

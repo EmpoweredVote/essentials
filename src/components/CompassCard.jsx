@@ -373,13 +373,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                           width: 28, height: 28,
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                           borderRadius: 6, border: '1px solid',
-                          borderColor: 'var(--ev-border, #e2e8f0)',
-                          backgroundColor: 'var(--ev-bg-card, #fff)',
-                          color: '#4b5563',
+                          borderColor: isDark ? '#4b5563' : '#e2e8f0',
+                          backgroundColor: isDark ? '#1f2937' : '#fff',
+                          color: isDark ? '#d1d5db' : '#4b5563',
                           cursor: 'pointer',
                           padding: 0,
                         }}
-                        className="dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        className="hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
                         {/* Expand / maximize icon */}
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -394,13 +394,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                           width: 28, height: 28,
                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                           borderRadius: 6, border: '1px solid',
-                          borderColor: 'var(--ev-border, #e2e8f0)',
-                          backgroundColor: 'var(--ev-bg-card, #fff)',
-                          color: '#4b5563',
+                          borderColor: isDark ? '#4b5563' : '#e2e8f0',
+                          backgroundColor: isDark ? '#1f2937' : '#fff',
+                          color: isDark ? '#d1d5db' : '#4b5563',
                           cursor: 'pointer',
                           padding: 0,
                         }}
-                        className="dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        className="hover:bg-gray-100 dark:hover:bg-gray-700"
                       >
                         {/* Compress / minimize icon */}
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

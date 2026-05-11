@@ -188,6 +188,7 @@ export default function CandidateProfile() {
                 judicialRecord={judicialRecord}
                 politicianId={polId || id}
                 onNavigateToRecord={(href) => navigate(href)}
+                darkMode={isDark}
               />
 
               {/* CompassCard or JudicialCompassSection — only for incumbents. Per D-04. */}
