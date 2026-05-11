@@ -9,6 +9,7 @@ import JudicialCompassSection from '../components/JudicialCompassSection';
 import BarEvaluationSection from '../components/BarEvaluationSection';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import { cleanPositionName } from '../components/ElectionsView';
+import { useTheme } from '../hooks/useTheme';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
@@ -20,6 +21,7 @@ function formatElectionDateFull(dateStr) {
 export default function CandidateProfile() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isDark } = useTheme();
 
   const [pol, setPol] = useState({});
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -149,18 +151,18 @@ export default function CandidateProfile() {
     <div
       style={{
         borderLeft: '4px solid #fed12e',
-        backgroundColor: '#fffef5',
+        backgroundColor: isDark ? '#1f1a06' : '#fffef5',
         borderRadius: '0 8px 8px 0',
         padding: '12px 16px',
         marginTop: '16px',
         fontFamily: "'Manrope', sans-serif",
       }}
     >
-      <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: '#2d3748' }}>
+      <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: isDark ? '#fde68a' : '#2d3748' }}>
         Candidate for {cleanPositionName(candidateData.position_name)}
       </p>
       {candidateData.election_date && (
-        <p style={{ margin: '4px 0 0', fontSize: '13px', color: '#718096' }}>
+        <p style={{ margin: '4px 0 0', fontSize: '13px', color: isDark ? '#a38a50' : '#718096' }}>
           Election: {formatElectionDateFull(candidateData.election_date)}
         </p>
       )}

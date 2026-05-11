@@ -76,7 +76,10 @@ export default function IndustryChart({ data }) {
           tickLine={false}
           axisLine={false}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip
+          content={<CustomTooltip />}
+          cursor={{ fill: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)' }}
+        />
         <Bar
           dataKey="total"
           fill="#3b82f6"

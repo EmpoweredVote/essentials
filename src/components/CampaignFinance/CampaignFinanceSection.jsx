@@ -10,19 +10,19 @@ import DonorSearch from './DonorSearch';
  */
 function LocalUnavailableBanner() {
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-xl p-5 flex gap-3">
+    <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-5 flex gap-3">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
+        className="w-5 h-5 text-blue-500 dark:text-blue-400 mt-0.5 flex-shrink-0"
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
       <div>
-        <p className="text-sm text-blue-800">
+        <p className="text-sm text-blue-800 dark:text-blue-300">
           Campaign finance filings for this office may be held by a local or state election
           authority and are not yet available digitally on Empowered Vote.
         </p>
@@ -34,19 +34,19 @@ function LocalUnavailableBanner() {
 /** DataPendingBanner - shown when politician has source rows but contributions not yet ingested. */
 function DataPendingBanner() {
   return (
-    <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 flex gap-3">
+    <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-5 flex gap-3">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0"
+        className="w-5 h-5 text-amber-500 dark:text-amber-400 mt-0.5 flex-shrink-0"
       >
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
       <div>
-        <p className="text-sm text-amber-800">
+        <p className="text-sm text-amber-800 dark:text-amber-300">
           Campaign finance filings for this candidate have been sourced and are being processed.
           Check back soon for detailed contribution data.
         </p>

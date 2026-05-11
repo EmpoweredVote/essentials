@@ -68,16 +68,16 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
   const pacPct = totalRaised > 0 ? (pacTotal / totalRaised) * 100 : 0;
 
   return (
-    <div className="border-t border-gray-100 px-5 pb-5 pt-4 space-y-6">
+    <div className="border-t border-gray-100 dark:border-gray-700 px-5 pb-5 pt-4 space-y-6">
 
       {/* Section 1: Individual vs PAC proportion bar */}
       <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">
+        <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
           Source Breakdown
         </h4>
 
         {/* Stacked proportion bar */}
-        <div className="flex rounded-full overflow-hidden h-3 mb-3 bg-gray-100">
+        <div className="flex rounded-full overflow-hidden h-3 mb-3 bg-gray-100 dark:bg-gray-700">
           {individualPct > 0 && (
             <div
               className="bg-blue-500 h-full transition-all duration-500"
@@ -96,16 +96,16 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
         <div className="flex flex-wrap gap-x-5 gap-y-1">
           <div className="flex items-center gap-1.5 text-sm">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0" />
-            <span className="text-gray-700">Individual:</span>
-            <span className="font-semibold text-gray-900">{formatCurrency(individualTotal)}</span>
-            <span className="text-gray-500">({formatPercent(individualTotal, totalRaised)})</span>
+            <span className="text-gray-700 dark:text-gray-300">Individual:</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(individualTotal)}</span>
+            <span className="text-gray-500 dark:text-gray-400">({formatPercent(individualTotal, totalRaised)})</span>
             <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
           </div>
           <div className="flex items-center gap-1.5 text-sm">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-purple-500 flex-shrink-0" />
-            <span className="text-gray-700">PAC/Committee:</span>
-            <span className="font-semibold text-gray-900">{formatCurrency(pacTotal)}</span>
-            <span className="text-gray-500">({formatPercent(pacTotal, totalRaised)})</span>
+            <span className="text-gray-700 dark:text-gray-300">PAC/Committee:</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(pacTotal)}</span>
+            <span className="text-gray-500 dark:text-gray-400">({formatPercent(pacTotal, totalRaised)})</span>
             <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
       {/* Section 2: Industry breakdown */}
       {summary.sector_breakdown && summary.sector_breakdown.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
             Industry Breakdown
           </h4>
           <IndustryChart data={summary.sector_breakdown} />
@@ -124,10 +124,10 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
       {/* Section 3: Top donors */}
       {summary.top_donors && summary.top_donors.length > 0 && (
         <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
             Top Donors
           </h4>
-          <div className="border border-gray-100 rounded-lg overflow-hidden">
+          <div className="border border-gray-100 dark:border-gray-700 rounded-lg overflow-hidden">
             <DonorList
               donors={summary.top_donors}
               contributions={contributions}
@@ -142,19 +142,19 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
       <div className="relative">
         <button
           type="button"
-          className="text-xs text-gray-400 hover:text-gray-600 underline focus:outline-none"
+          className="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 underline focus:outline-none"
           onClick={() => setShowConfidenceInfo((v) => !v)}
         >
           Learn more about confidence levels
         </button>
 
         {showConfidenceInfo && (
-          <div className="absolute bottom-full left-0 mb-2 z-20 bg-white border border-gray-200 rounded-xl shadow-lg p-4 w-80 max-w-[calc(100vw-2rem)]">
+          <div className="absolute bottom-full left-0 mb-2 z-20 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-4 w-80 max-w-[calc(100vw-2rem)]">
             <div className="flex justify-between items-start mb-3">
-              <h5 className="text-sm font-semibold text-gray-800">Data Confidence Levels</h5>
+              <h5 className="text-sm font-semibold text-gray-800 dark:text-gray-100">Data Confidence Levels</h5>
               <button
                 type="button"
-                className="text-gray-400 hover:text-gray-600 ml-2"
+                className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 ml-2"
                 onClick={() => setShowConfidenceInfo(false)}
                 aria-label="Close"
               >
@@ -168,8 +168,8 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
                 <li key={level} className="flex gap-2">
                   <span className={`inline-block w-2.5 h-2.5 rounded-full ${color} flex-shrink-0 mt-1`} />
                   <div>
-                    <p className="text-xs font-semibold text-gray-800">{label}</p>
-                    <p className="text-xs text-gray-500">{description}</p>
+                    <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">{label}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{description}</p>
                   </div>
                 </li>
               ))}
