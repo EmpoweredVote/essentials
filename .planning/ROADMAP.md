@@ -247,10 +247,13 @@ Plans:
   3. `inform.politician_answers` rows exist for Allen council members where public record exists
   4. The political compass widget renders without error on the profile page of at least one Plano, one McKinney, and one Allen politician
   5. Frisco, Murphy, Celina, and Richardson stances are ingested where research found viable data; cities with no viable stances are documented as sparse
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 18-01: TBD
+- [ ] 18-01-PLAN.md — Scale verification + Plano ingestion (7 rows)
+- [ ] 18-02-PLAN.md — McKinney + Allen ingestion (9 rows)
+- [ ] 18-03-PLAN.md — Frisco + Richardson ingestion + sparse city documentation (10 rows)
+- [ ] 18-04-PLAN.md — Compass render verification + phase completion
 
 #### Phase 20: TX State + Federal Officials — Offices and Headshots
 **Goal**: The 8 pre-seeded TX state/federal official stubs (Greg Abbott, Dan Patrick, Ken Paxton, Glenn Hegar, Dawn Buckingham, Sid Miller, John Cornyn, Ted Cruz) have fully wired office records and headshots so their profile pages render correctly — title, chamber, and photo all present.
@@ -355,7 +358,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 17. Headshots | v3.0 | 4/4 | Complete | 2026-05-10 |
-| 18. Compass Stances | v3.0 | 0/TBD | Not started | - |
+| 18. Compass Stances | v3.0 | 0/4 | In progress | - |
 | 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
 | 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |
 | 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |
