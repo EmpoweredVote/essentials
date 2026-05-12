@@ -5,7 +5,7 @@
 - ✅ **v2.0 Elections Page** - Phases 1-4 (shipped 2026-04-13)
 - ✅ **v2.1 Claude Candidate Discovery** — Phases 5-7 (shipped 2026-04-25) — [archive](milestones/v2.1-ROADMAP.md)
 - 🚧 **v2.2 Data Depth & Admin Tooling** — Phases 8-11 (parked)
-- 🚧 **v3.0 Collin County, TX Coverage** — Phases 12-21 (in progress; Phases 17+18 pending)
+- ✅ **v3.0 Collin County, TX Coverage** — Phases 12-21 (shipped 2026-05-12)
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 
@@ -250,10 +250,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 18-01-PLAN.md — Scale verification + Plano ingestion (7 rows)
-- [ ] 18-02-PLAN.md — McKinney + Allen ingestion (9 rows)
-- [ ] 18-03-PLAN.md — Frisco + Richardson ingestion + sparse city documentation (10 rows)
-- [ ] 18-04-PLAN.md — Compass render verification + phase completion
+- [x] 18-01-PLAN.md — Scale verification + Plano ingestion (7 rows)
+- [x] 18-02-PLAN.md — McKinney + Allen ingestion (9 rows)
+- [x] 18-03-PLAN.md — Frisco + Richardson ingestion + sparse city documentation (10 rows)
+- [x] 18-04-PLAN.md — Compass render verification + phase completion
 
 #### Phase 20: TX State + Federal Officials — Offices and Headshots
 **Goal**: The 8 pre-seeded TX state/federal official stubs (Greg Abbott, Dan Patrick, Ken Paxton, Glenn Hegar, Dawn Buckingham, Sid Miller, John Cornyn, Ted Cruz) have fully wired office records and headshots so their profile pages render correctly — title, chamber, and photo all present.
@@ -358,7 +358,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
 | 17. Headshots | v3.0 | 4/4 | Complete | 2026-05-10 |
-| 18. Compass Stances | v3.0 | 0/4 | In progress | - |
+| 18. Compass Stances | v3.0 | 4/4 | Complete | 2026-05-12 |
 | 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
 | 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |
 | 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |
