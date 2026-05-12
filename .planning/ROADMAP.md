@@ -1,4 +1,4 @@
-﻿# Roadmap: Essentials — Empowered Vote
+# Roadmap: Essentials — Empowered Vote
 
 ## Milestones
 
@@ -191,15 +191,20 @@ Plans:
 - [x] 33-01-PLAN.md — Verify UUIDs, add LOCAL_LENS_TOPICS + helpers to compass.js, wire localLensActive/toggleLocalLens into CompassContext
 
 #### Phase 34: Mini Compass Tile Component
-**Goal**: Candidate tiles in compass mode show a mini RadarChartCore (no labels) sized to fill the tile's right-side space, with a Local Lens icon and the 3-spoke minimum/fallback algorithm
-**Requirements**: MINI-01, MINI-02, MINI-03, MINI-04, MINI-05, MINI-06
+**Goal**: Calibrated users on /elections see a mini RadarChartCore (no labels) in the right-side space of each candidate tile, with Lens-aware spoke selection, silent absence below 3 bilateral spokes, and visual distinction for replacement spokes. Per-tile Lens icon (MINI-05/06) is deferred to Phase 36 global controls bar.
+**Requirements**: MINI-01, MINI-02, MINI-03, MINI-04 (MINI-05 + MINI-06 deferred to Phase 36 per 34-CONTEXT.md)
 **Success Criteria** (what must be TRUE):
   1. Candidate tiles with ≥3 overlapping bilateral answers show a mini compass in the right-side space without spoke labels
   2. Candidate tiles with <3 overlapping answers show no compass (silently absent, no error state)
   3. Preferred spokes missing bilateral answers are replaced from the scoped pool (same algorithm as CompassCard.jsx)
-  4. Green magnifying-glass icon visible in each mini compass top-right; green when Local Lens active, dim when off
-  5. Clicking the icon on any tile toggles global `localLensActive` and all visible mini compasses update
-**Plans**: TBD
+  4. When Lens is ON, replacement (non-local) spokes are visually distinct (reduced container opacity)
+  5. Toggling Local Lens (existing Phase 33 UI) updates all visible mini compasses simultaneously
+**Plans**: 3 plans
+
+Plans:
+- [ ] 34-01-PLAN.md — Extract computeDisplaySpokes() to compass.js + refactor CompassCard.jsx to consume it
+- [ ] 34-02-PLAN.md — Build MiniCompass.jsx component (label-suppressed RadarChartCore + container)
+- [ ] 34-03-PLAN.md — Wire MiniCompass into ElectionsView tiles + auto-activate compassMode on Elections.jsx + human-verify
 
 #### Phase 35: Hover Modal — Full Compass
 **Goal**: Hovering a mini compass reveals a floating modal with a full titled RadarChartCore, legend, Local Lens icon, and Min/Max controls
@@ -279,6 +284,6 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 31. Legal Donor Activity | v3.2 ✅ | 4/4 | Complete | 2026-05-09 |
 | 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
 | 33. Local Lens State System | v4.0 | 1/1 | Complete | 2026-05-12 |
-| 34. Mini Compass Tile Component | v4.0 | 0/TBD | Pending | - |
+| 34. Mini Compass Tile Component | v4.0 | 0/3 | Pending | - |
 | 35. Hover Modal — Full Compass | v4.0 | 0/TBD | Pending | - |
 | 36. Global Controls + Compass Default | v4.0 | 0/TBD | Pending | - |
