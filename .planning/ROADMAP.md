@@ -1,4 +1,4 @@
-# Roadmap: Essentials — Empowered Vote
+﻿# Roadmap: Essentials — Empowered Vote
 
 ## Milestones
 
@@ -185,7 +185,10 @@ Full details: [milestones/v3.2-ROADMAP.md](milestones/v3.2-ROADMAP.md)
   3. When deactivated, the exact prior `selectedTopics` and `invertedSpokes` are restored
   4. Refreshing the page with lens active keeps it active (localStorage persisted)
   5. Refreshing with lens inactive restores the pre-lens state correctly
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 33-01-PLAN.md — Verify UUIDs, add LOCAL_LENS_TOPICS + helpers to compass.js, wire localLensActive/toggleLocalLens into CompassContext
 
 #### Phase 34: Mini Compass Tile Component
 **Goal**: Candidate tiles in compass mode show a mini RadarChartCore (no labels) sized to fill the tile's right-side space, with a Local Lens icon and the 3-spoke minimum/fallback algorithm
@@ -275,7 +278,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 30. Legal Candidate Stance Research | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
 | 31. Legal Donor Activity | v3.2 ✅ | 4/4 | Complete | 2026-05-09 |
 | 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
-| 33. Local Lens State System | v4.0 | 0/TBD | Pending | - |
+| 33. Local Lens State System | v4.0 | 0/1 | Pending | - |
 | 34. Mini Compass Tile Component | v4.0 | 0/TBD | Pending | - |
 | 35. Hover Modal — Full Compass | v4.0 | 0/TBD | Pending | - |
 | 36. Global Controls + Compass Default | v4.0 | 0/TBD | Pending | - |
