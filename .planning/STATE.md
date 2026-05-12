@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: Phase 18 (Compass Stances) — in progress
-Plan: 18-01 complete (Plano council stances ingested)
-Status: v3.0 nearly complete — Phase 18 in progress (18-01 done; 18-02 McKinney + 18-03 Allen remain)
-Last activity: 2026-05-12 — Completed 18-01-PLAN.md (scale verified + 7 Plano rows ingested)
+Plan: 18-02 complete (McKinney + Allen council stances ingested)
+Status: v3.0 nearly complete — Phase 18 in progress (18-01 + 18-02 done; 18-03 remaining if applicable)
+Last activity: 2026-05-12 — Completed 18-02-PLAN.md (6 McKinney + 3 Allen rows ingested; 16 total Phase 18 rows)
 
-v3.0 remaining: Phase 18 Plans 02-03 (McKinney, Allen council stances into inform.politician_answers)
+v3.0 remaining: Phase 18 Plan 03 (any remaining cities with evidenced stances)
 
 ## Project Reference
 
@@ -219,6 +219,10 @@ See: .planning/PROJECT.md (updated 2026-05-10 after v3.2 milestone)
 - CSV files gitignored by EV-Accounts/.gitignore (backend/data/stance-research/*.csv); only apply scripts committed to backend repo
 - 18-01 complete 2026-05-12: 7 rows for 6 Plano politicians (Shun Thomas housing=3; Steve Lavine housing=3 + taxes=4; Bob Kehr housing=3; Chris Krupa Downs housing=4; Vidal Quintanilla housing=3; John B. Muns housing=3)
 - Maria Tu (d6bf8d34) + Rick Horne (bc4a88d7): excluded — no evidenced stances
+- 18-02 complete 2026-05-12: 9 rows — 6 McKinney housing stances (values: 2,3,3,3,3,4) + 3 Allen rows (Schaeffer housing=4 + taxes=4; Brooks housing=3)
+- Michael Jones (McKinney) + Tommy Baril/Ken Cook/Amy Gnadt/Carl Clemencich/Ben Trahan (Allen): excluded — no evidenced stances
+- Phase 18 total: 16 rows across Plano/McKinney/Allen in inform.politician_answers
+- apply script path pattern: path.join(__dirname, '..', 'data', 'stance-research', filename) — use for all future apply scripts
 
 ### Phase 30 Notes
 
@@ -325,3 +329,4 @@ See: .planning/PROJECT.md (updated 2026-05-10 after v3.2 milestone)
 *Updated: 2026-05-09 — Phase 31-01 complete; identify-legal-donors.ts built (32 UUIDs from migration 117, --probe + extraction modes); court-research-input.json written; 4 CAs with data (Feldstein Soto=2631 rows, Roy=1270, McKinney=125, Ashouri=71); 28 judge challengers skipped (no confirmed contributions); top firms: Ashouri=Life Sciences Patent Law Firm ($300), McKinney=LA County DA's Office ($5,400), Roy=California DOJ ($41,053), Feldstein Soto=City of Los Angeles ($75,774); deterministic on re-run; ESM __dirname fix applied*
 *Updated: 2026-05-09 — Phase 31-04 complete (pivot from Donor-Court Conflicts to Legal Donor Activity — Option C); getLegalDonorFirms() + /legal-donor-activity route (backend commit 43c757b, deployed to Render); fetchLegalDonorActivity() + LegalDonorActivitySection.jsx + CandidateProfile.jsx wired (frontend commit e466d42, deployed to Render); isLegalCandidate gate: JUDICIAL/NATIONAL_JUDICIAL/city attorney/district attorney only; smoke test: Ashouri 200 with 8 firms; no migration needed; Phase 31 COMPLETE (4/4 plans — Plans 02/03 skipped by Option C pivot)*
 *Updated: 2026-05-09 — Phase 31 COMPLETE; isLegalCandidate bug fixed for challengers (position_name fallback — commit 6828d46); Andrej Selivra duplicate merged + autoUpsertToRaceCandidates patched with stripMiddleInitials() + regexp_replace stored-name normalization (backend commit c9736d0); v3.2 Legal Candidate Evaluation Framework COMPLETE (6/6 phases: 26 Campaign Finance Gap, 27 Judicial Compass DB, 28 Judicial Compass UI, 29 Bar Evaluation Data, 30 Stance Research, 31 Legal Donor Activity)*
+*Updated: 2026-05-12 — Phase 18-02 complete; 6 McKinney housing stances (backend commit 28a0ae8) + 3 Allen stances (backend commit 11d3a3e) ingested; Phase 18 total: 16 rows; Michael Jones + 5 Allen members correctly absent; apply script path pattern (path.join __dirname) documented*
