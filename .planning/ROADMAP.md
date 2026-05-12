@@ -188,7 +188,7 @@ Full details: [milestones/v3.2-ROADMAP.md](milestones/v3.2-ROADMAP.md)
 **Plans**: 1 plan
 
 Plans:
-- [ ] 33-01-PLAN.md — Verify UUIDs, add LOCAL_LENS_TOPICS + helpers to compass.js, wire localLensActive/toggleLocalLens into CompassContext
+- [x] 33-01-PLAN.md — Verify UUIDs, add LOCAL_LENS_TOPICS + helpers to compass.js, wire localLensActive/toggleLocalLens into CompassContext
 
 #### Phase 34: Mini Compass Tile Component
 **Goal**: Candidate tiles in compass mode show a mini RadarChartCore (no labels) sized to fill the tile's right-side space, with a Local Lens icon and the 3-spoke minimum/fallback algorithm

@@ -9,11 +9,11 @@ Requirements for the Compass Experience milestone. Phases 33–36.
 
 ### Local Lens System
 
-- [ ] **LENS-01**: CompassContext exposes `localLensActive` boolean state and `toggleLocalLens()` function
-- [ ] **LENS-02**: `LOCAL_LENS_TOPICS` constant defines 8 topic UUIDs in order: Housing (669cac97), Homelessness (4938766b), Residential Zoning (d4f18138), Civil Rights (0bc588c6), Public Safety Approach (e9ebefcd), Local Immigration Enforcement (b9ccee94), Economic Development Incentives (eb3d1247), Transportation Priorities (ba59337e)
-- [ ] **LENS-03**: Activating Local Lens sets `selectedTopics` to `LOCAL_LENS_TOPICS` (preserves current `invertedSpokes` unchanged)
-- [ ] **LENS-04**: Deactivating Local Lens restores the exact `selectedTopics` and `invertedSpokes` that were in place before activation
-- [ ] **LENS-05**: `localLensActive` state and pre-lens snapshot persisted to localStorage; survive page navigation and tab switching
+- [x] **LENS-01**: CompassContext exposes `localLensActive` boolean state and `toggleLocalLens()` function
+- [x] **LENS-02**: `LOCAL_LENS_TOPICS` constant defines 8 topic UUIDs in order: Housing (669cac97), Homelessness (4938766b), Residential Zoning (d4f18138), Civil Rights (0bc588c6), Public Safety Approach (e9ebefcd), Local Immigration Enforcement (b9ccee94), Economic Development Incentives (eb3d1247), Transportation Priorities (ba59337e)
+- [x] **LENS-03**: Activating Local Lens sets `selectedTopics` to `LOCAL_LENS_TOPICS` (preserves current `invertedSpokes` unchanged)
+- [x] **LENS-04**: Deactivating Local Lens restores the exact `selectedTopics` and `invertedSpokes` that were in place before activation
+- [x] **LENS-05**: `localLensActive` state and pre-lens snapshot persisted to localStorage; survive page navigation and tab switching
 
 ### Mini Compass on Candidate Tiles
 
@@ -68,11 +68,11 @@ Requirements for the Compass Experience milestone. Phases 33–36.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LENS-01 | Phase 33 | Pending |
-| LENS-02 | Phase 33 | Pending |
-| LENS-03 | Phase 33 | Pending |
-| LENS-04 | Phase 33 | Pending |
-| LENS-05 | Phase 33 | Pending |
+| LENS-01 | Phase 33 | Complete |
+| LENS-02 | Phase 33 | Complete |
+| LENS-03 | Phase 33 | Complete |
+| LENS-04 | Phase 33 | Complete |
+| LENS-05 | Phase 33 | Complete |
 | MINI-01 | Phase 34 | Pending |
 | MINI-02 | Phase 34 | Pending |
 | MINI-03 | Phase 34 | Pending |
