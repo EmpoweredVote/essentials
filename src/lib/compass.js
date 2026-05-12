@@ -362,3 +362,57 @@ export async function fetchUserVerdicts() {
     return {};
   }
 }
+
+// ─── Local Lens preset ────────────────────────────────────────────────────────
+
+/**
+ * The 8 curated topic UUIDs that define the Local Lens preset.
+ * Order matches the user-approved sequence:
+ * Housing, Homelessness, Residential Zoning, Civil Rights,
+ * Public Safety Approach, Local Immigration Enforcement,
+ * Economic Development Incentives, Transportation Priorities
+ */
+export const LOCAL_LENS_TOPICS = [
+  '669cac97-66a6-4087-b036-936fbe62efb3', // Housing
+  '4938766b-b45a-46e3-93bd-b8b30651271a', // Homelessness
+  'd4f18138-a2e0-4110-b925-7387d9d0d16d', // Residential Zoning
+  '0bc588c6-39e1-4084-b5de-cac909b8b762', // Civil Rights
+  'e9ebefcd-c496-45e8-b816-a79f8442ba85', // Public Safety Approach
+  'b9ccee94-ad96-4f10-b655-889d8e5abe92', // Local Immigration Enforcement
+  'eb3d1247-0de1-4b7f-baec-7259861efd53', // Economic Development Incentives
+  'ba59337e-30e2-4aba-a39a-426b3366eb27', // Transportation Priorities
+];
+
+/** localStorage keys for Local Lens state */
+export const LOCAL_LENS_ACTIVE_KEY = 'ev:localLensActive';
+export const LOCAL_LENS_SNAPSHOT_KEY = 'ev:localLensSnapshot';
+
+/**
+ * Persists Local Lens activation state and pre-lens snapshot to localStorage.
+ * @param {boolean} isActive
+ * @param {{ selectedTopics: string[], invertedSpokes: object } | null} snapshot
+ */
+export function saveLocalLensState(isActive, snapshot) {
+  try {
+    localStorage.setItem(LOCAL_LENS_ACTIVE_KEY, isActive ? 'true' : 'false');
+    if (snapshot) {
+      localStorage.setItem(LOCAL_LENS_SNAPSHOT_KEY, JSON.stringify(snapshot));
+    } else {
+      localStorage.removeItem(LOCAL_LENS_SNAPSHOT_KEY);
+    }
+  } catch { /* storage unavailable — non-fatal */ }
+}
+
+/**
+ * Reads Local Lens state from localStorage.
+ * @returns {{ active: boolean, snapshot: { selectedTopics: string[], invertedSpokes: object } | null }}
+ */
+export function loadLocalLensState() {
+  try {
+    const active = localStorage.getItem(LOCAL_LENS_ACTIVE_KEY) === 'true';
+    const raw = localStorage.getItem(LOCAL_LENS_SNAPSHOT_KEY);
+    return { active, snapshot: raw ? JSON.parse(raw) : null };
+  } catch {
+    return { active: false, snapshot: null };
+  }
+}
