@@ -122,173 +122,23 @@ Plans:
 
 ---
 
-### 🚧 v3.0 Collin County, TX Coverage (In Progress)
+<details>
+<summary>✅ v3.0 Collin County, TX Coverage (Phases 12-21) — SHIPPED 2026-05-12</summary>
 
-**Milestone Goal:** Populate the Essentials + Compass database for 24 Collin County, TX cities — government structures, current incumbents, discovery jurisdiction setup, headshots, and Compass stances where public record exists.
+- [x] Phase 12: TX DB Foundation (4/4 plans) — completed 2026-04-30
+- [x] Phase 13: Tier 1 Officials — Plano + McKinney (2/2 plans) — completed 2026-05-01
+- [x] Phase 14: Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson (3/3 plans) — completed 2026-05-01
+- [x] Phase 15: Tier 3-4 Officials — Remaining 16 Cities (2/2 plans) — completed 2026-05-01
+- [x] Phase 16: Discovery Jurisdiction Setup (2/2 plans) — completed 2026-05-01
+- [x] Phase 17: Headshots (4/4 plans) — completed 2026-05-10
+- [x] Phase 18: Compass Stances (4/4 plans) — completed 2026-05-12
+- [x] Phase 19: TX Congressional Seats + Geofences (5/5 plans) — completed 2026-05-03
+- [x] Phase 20: TX State + Federal Officials — Offices and Headshots (2/2 plans) — completed 2026-05-04
+- [x] Phase 21: TX State Legislature — Boundaries + Officials (5/5 plans) — completed 2026-05-04
 
-#### Phase 12: TX DB Foundation
-**Goal**: Texas state, Collin County, and all 24 target cities have government, chamber, and office rows in the essentials schema with correct FIPS identifiers
-**Depends on**: Phase 11 (v2.2 backlog) — can start independently; no code dependencies
-**Requirements**: GEO-01, GEO-02, GEO-03, GEO-04
-**Success Criteria** (what must be TRUE):
-  1. `essentials.governments` contains a Texas state row with the correct FIPS geo_id and a Collin County row with geo_id `48085`
-  2. All 23 incorporated target city governments have rows in `essentials.governments` with their Census place FIPS codes (Copeville excluded pending municipal incorporation verification)
-  3. Each city government has at least one `essentials.chambers` row (City Council) and seat-level `essentials.offices` rows for Mayor and each Council seat
-  4. A SQL query joining governments → chambers → offices for any of the 24 cities returns complete, non-null results with no orphaned rows
-**Plans**: 4 plans
+Full details: [milestones/v3.0-ROADMAP.md](milestones/v3.0-ROADMAP.md)
 
-Plans:
-- [x] 12-01-PLAN.md — Migration 087: ALTER TABLE geo_id + TX state + Collin County (wave 1)
-- [x] 12-02-PLAN.md — Migration 088: Tier 1 cities — Plano, McKinney, Allen, Frisco (wave 2)
-- [x] 12-03-PLAN.md — Migration 089: Tier 2 cities — Murphy, Celina, Prosper, Richardson (wave 2)
-- [x] 12-04-PLAN.md — Migration 090: Tier 3-4 cities — Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville, Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge (wave 2)
-
-#### Phase 13: Tier 1 Officials — Plano + McKinney
-**Goal**: All incumbent mayor and council members for Plano and McKinney are in the database, linked to their office rows, with available contact information
-**Depends on**: Phase 12
-**Requirements**: OFF-01, OFF-02
-**Success Criteria** (what must be TRUE):
-  1. `essentials.politicians` has a row for every current Plano incumbent (mayor + all council seats) with `is_active=true` and `is_incumbent=true`
-  2. `essentials.politicians` has a row for every current McKinney incumbent with `is_active=true` and `is_incumbent=true`
-  3. Every politician row is linked via `office_id` to a valid `essentials.offices` row created in Phase 12
-  4. Email and/or official URL contact fields are populated for at least 80% of Tier 1 politicians where publicly available on city websites
-**Plans**: 2 plans
-
-Plans:
-- [x] 13-01-PLAN.md — Migration 091: Plano incumbent politicians (Mayor + Place 1-5, 7-8) with bio URLs + emails
-- [x] 13-02-PLAN.md — Migration 092: McKinney incumbent politicians (Mayor + At-Large 1-2 + District 1-4) with bio URL anchors
-
-#### Phase 14: Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson
-**Goal**: All incumbent mayor and council members for the six Tier 2 cities are in the database, linked to their office rows
-**Depends on**: Phase 13
-**Requirements**: OFF-03, OFF-04, OFF-05, OFF-06, OFF-07, OFF-08
-**Success Criteria** (what must be TRUE):
-  1. `essentials.politicians` has incumbent rows for all six Tier 2 cities (Allen, Frisco, Murphy, Celina, Prosper, Richardson) with `is_active=true` and `is_incumbent=true`
-  2. Every Tier 2 politician row is linked via `office_id` to a valid `essentials.offices` row
-  3. Contact info (email or URL) is populated where publicly listed on each city's official website
-**Plans**: 3 plans
-
-Plans:
-- [x] 14-01-PLAN.md — Migration 094: Allen + Frisco incumbent politicians (Mayor + Place 1-6 each, 14 rows)
-- [x] 14-02-PLAN.md — Migration 095: Richardson incumbent politicians (Mayor + District 1-4 + Place 5-6, 7 rows, 2-year terms)
-- [x] 14-03-PLAN.md — Migration 096: Murphy + Celina + Prosper incumbent politicians (Mayor + Place 1-6 each, 21 rows)
-
-#### Phase 15: Tier 3-4 Officials — Remaining 16 Cities
-**Goal**: Incumbent officials for all 16 Tier 3-4 cities are in the database where findable from official city websites or Collin County records
-**Depends on**: Phase 14
-**Requirements**: OFF-09, OFF-10
-**Success Criteria** (what must be TRUE):
-  1. All 8 Tier 3 cities (Anna, Melissa, Princeton, Lucas, Lavon, Fairview, Van Alstyne, Farmersville) have at least one politician row in `essentials.politicians`, or are documented as having no findable public roster
-  2. All 8 Tier 4 cities (Parker, Saint Paul, Nevada, Weston, Lowry Crossing, Josephine, Blue Ridge, Copeville) are attempted; sparse results are expected and acceptable
-  3. Every politician row that was created has `is_active=true`, `is_incumbent=true`, and a valid `office_id` link
-**Plans**: 2 plans
-
-Plans:
-- [x] 15-01-PLAN.md — Migration 097: Tier 3 cities (Anna, Fairview, Farmersville, Lavon, Lucas, Melissa, Princeton, Van Alstyne) — 45 seed-now rows + 10 election stubs
-- [x] 15-02-PLAN.md — Migration 098: Tier 4 cities (Blue Ridge, Josephine, Lowry Crossing, Nevada, Parker, Saint Paul, Weston) — election stubs + DB gap docs
-
-#### Phase 16: Discovery Jurisdiction Setup ✅ Complete (2026-05-01)
-**Goal**: All 23 confirmed-incorporated Collin County cities are registered in the discovery pipeline so the weekly cron will find candidates from collincountytx.gov (Copeville excluded pending incorporation verification; domain corrected from collincountyvotes.gov per phase 16 research)
-**Depends on**: Phase 12
-**Requirements**: DISC-01, DISC-02, DISC-03
-**Success Criteria** (what must be TRUE):
-  1. All 23 cities have rows in `essentials.discovery_jurisdictions` with `source_url` on the city's official elections page and correct Census `jurisdiction_geoid`
-  2. Each row has `allowed_domains` containing `{collincountytx.gov, co.collin.tx.us, <city-official-domain>}` (no news, no third-party sources)
-  3. A test discovery run triggered for Plano completes without error and produces at least one staged candidate entry with a valid `citation_url` from an allowed domain
-**Plans**: 2 plans
-
-Plans:
-- [x] 16-01-PLAN.md — Migration 099: 23 Collin County cities seeded into essentials.discovery_jurisdictions (DISC-01, DISC-02)
-- [x] 16-02-PLAN.md — Test discovery run for Plano: trigger POST /discover/jurisdiction/:id, verify discovery_runs + candidate_staging rows, human-verify in admin UI (DISC-03)
-
-#### Phase 17: Headshots ✅ Complete (2026-05-10)
-**Goal**: Official headshot photos for Tier 1 and Tier 2 politicians are found, correctly resized, and stored in Supabase Storage with politician_images rows
-**Depends on**: Phase 14
-**Requirements**: HEAD-01, HEAD-02, HEAD-03
-**Success Criteria** (what must be TRUE):
-  1. All Tier 1 politicians (Plano, McKinney, Allen, Frisco) have a `politician_images` row; each stored image is confirmed at 600×750 pixels in Supabase Storage
-  2. Tier 2 politicians (Murphy, Celina, Prosper, Richardson) have headshots uploaded where a public photo exists on the city website or official bio page
-  3. Tier 3-4 headshots are attempted; any found are resized and uploaded; cities with no findable photo are noted
-  4. No uploaded image has superimposed text, campaign graphics, or banners over the politician's face
-**Plans**: 4 plans
-
-Plans:
-- [x] 17-01-PLAN.md — Tier 1 headshots (Plano, McKinney, Allen, Frisco) — required-100% coverage; Frisco via Ballotpedia (CloudFlare bypass)
-- [x] 17-02-PLAN.md — Tier 2 headshots (Murphy, Celina, Prosper, Richardson) — best-effort; Richardson via Ballotpedia (cor.net 403 bypass)
-- [x] 17-03-PLAN.md — Tier 3-4 sweep (15 cities) — 2-source ceiling per politician; sparse coverage expected
-- [x] 17-04-PLAN.md — Phase-wide coverage roll-up + cross-tier sampling + STATE.md update
-
-#### Phase 19: TX Congressional Seats + Geofences
-**Goal**: All 38 TX US House members are loaded as NATIONAL_LOWER politician records; TX county geofences (G4020) are loaded into geofence_boundaries; the by-government-list supplemental query is extended to include NATIONAL_LOWER reps via county geofence intersection — so browsing any TX government-list area automatically shows the correct congressional reps.
-**Depends on**: Phase 12
-**Success Criteria** (what must be TRUE):
-  1. All 38 TX US House members exist in `essentials.politicians` with correct `NATIONAL_LOWER` district records and `d.state = 'TX'`
-  2. Collin County geofence (geo_id `48085`, MTFCC `G4020`) exists in `essentials.geofence_boundaries` with valid PostGIS geometry
-  3. The `by-government-list` supplemental query returns the correct TX congressional reps (TX-3, TX-4, etc.) when browsing Collin County
-  4. No regressions — LA County and Indiana browse still return their congressional reps correctly
-**Plans**: 5 plans
-
-Plans:
-- [x] 19-01-PLAN.md — Load TX congressional district boundaries (G5200) and backfill district_id
-- [x] 19-02-PLAN.md — Load Collin County G4020 geofence boundary
-- [x] 19-03-PLAN.md — Migration 105: seed 37 TX House politicians + TX-23 vacancy
-- [x] 19-04-PLAN.md — Backend: extend getPoliticiansByGovernmentList with countyGeoId PostGIS intersection
-- [x] 19-05-PLAN.md — Frontend: thread browseCountyGeoId from Landing through Results to API + user verify
-
----
-
-#### Phase 18: Compass Stances
-**Goal**: Compass stance data for Plano, McKinney, and Allen council members is ingested into inform.politician_answers so the political compass renders on their profiles
-**Depends on**: Phase 13
-**Requirements**: COMP-01, COMP-02, COMP-03, COMP-04
-**Success Criteria** (what must be TRUE):
-  1. `inform.politician_answers` rows exist for Plano council members for all compass topics where a public record stance was found
-  2. `inform.politician_answers` rows exist for McKinney council members where public record exists
-  3. `inform.politician_answers` rows exist for Allen council members where public record exists
-  4. The political compass widget renders without error on the profile page of at least one Plano, one McKinney, and one Allen politician
-  5. Frisco, Murphy, Celina, and Richardson stances are ingested where research found viable data; cities with no viable stances are documented as sparse
-**Plans**: 4 plans
-
-Plans:
-- [x] 18-01-PLAN.md — Scale verification + Plano ingestion (7 rows)
-- [x] 18-02-PLAN.md — McKinney + Allen ingestion (9 rows)
-- [x] 18-03-PLAN.md — Frisco + Richardson ingestion + sparse city documentation (10 rows)
-- [x] 18-04-PLAN.md — Compass render verification + phase completion
-
-#### Phase 20: TX State + Federal Officials — Offices and Headshots
-**Goal**: The 8 pre-seeded TX state/federal official stubs (Greg Abbott, Dan Patrick, Ken Paxton, Glenn Hegar, Dawn Buckingham, Sid Miller, John Cornyn, Ted Cruz) have fully wired office records and headshots so their profile pages render correctly — title, chamber, and photo all present.
-**Depends on**: Phase 19
-**Success Criteria** (what must be TRUE):
-  1. TX state executive chambers exist (Governor's Office, Lt. Governor's Office, Attorney General's Office, Comptroller's Office, Land Commissioner's Office, Agriculture Commissioner's Office) and TX Senate chamber exists for senators
-  2. Each of the 8 politicians has an `office_id` set linking to a correctly titled, correctly chambered office record
-  3. All 8 politicians have headshots in `essentials.politician_images` (cc_by_sa from Wikipedia)
-  4. Profile pages for all 8 render with title and photo (no blank/unfinished appearance)
-**Plans**: 2 plans
-
-Plans:
-- [x] 20-01-PLAN.md — Migration 107: fix TX executive chamber name_formal + back-fill politicians.office_id for 8 TX state/federal officials
-- [x] 20-02-PLAN.md — Wikipedia headshots for all 8 (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz)
-
-#### Phase 21: TX State Legislature — Boundaries + Officials
-**Goal**: Any Texas address search returns the correct TX State Senator and TX State House Representative, alongside the existing federal and state-exec results.
-**Depends on**: Phase 19 (TX congressional geofences must be loaded)
-**Success Criteria** (what must be TRUE):
-  1. All 31 TX State Senate district boundaries (G5210) and all 150 TX State House district boundaries (G5220) are loaded into `essentials.geofence_boundaries`
-  2. All 31 STATE_UPPER districts and 150 STATE_LOWER districts exist in `essentials.districts` with correct `geo_id` values matching the geofence boundaries
-  3. All current TX state senators (31) and state representatives (150) are seeded in `essentials.politicians` + `essentials.offices`, linked to their districts
-  4. A point query for any TX street address returns at least one STATE_UPPER and one STATE_LOWER result (verified with sample addresses across multiple districts)
-**Plans**: 5 plans
-
-Plans:
-- [x] 21-01-PLAN.md — Load TX state legislative district boundaries (SLDU + SLDL) via auto-download script
-- [x] 21-02-PLAN.md — Migration 108: create Texas State Senate + Texas House of Representatives chambers
-- [x] 21-03-PLAN.md — Migration 109: seed 30 TX state senators + D4 vacancy
-- [x] 21-04-PLAN.md — Migration 110: seed 150 TX state representatives
-- [x] 21-05-PLAN.md — End-to-end verification: roadmap criteria + 5 sample point queries + regression check
-
----
-
----
+</details>
 
 <details>
 <summary>✅ v3.1 Local Compass Expansion (Phases 22-25) — SHIPPED 2026-05-05</summary>

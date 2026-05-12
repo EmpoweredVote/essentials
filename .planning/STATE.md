@@ -2,16 +2,14 @@
 
 ## Current Position
 
-Phase: Phase 18 (Compass Stances) — COMPLETE
-Plan: 18-04 complete (compass render verified; Phase 18 + v3.0 milestone complete)
-Status: v3.0 COMPLETE — all Phases 12-21 done; next milestone TBD
-Last activity: 2026-05-12 — Completed 18-04-PLAN.md (human-verified compass on Plano/McKinney/Allen; ROADMAP updated)
-
-v3.0 remaining: None — all phases complete
+Phase: Not started — next milestone TBD
+Plan: Not started
+Status: v3.0 ARCHIVED — milestone complete and tagged; ready for next milestone planning
+Last activity: 2026-05-12 — v3.0 milestone archived (10 phases, 33 plans, 22/22 requirements)
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-10 after v3.2 milestone)
+See: .planning/PROJECT.md (updated 2026-05-12 after v3.0 milestone)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 **Current focus:** Planning next milestone — run `/gsd:new-milestone` to start

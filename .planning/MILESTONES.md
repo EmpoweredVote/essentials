@@ -1,5 +1,33 @@
 # Milestones
 
+## v3.0 Collin County, TX Coverage (Shipped: 2026-05-12)
+
+**Delivered:** Populated the Essentials + Compass database for 23 Collin County, TX cities — government structures, 120+ incumbent officials across all tiers, discovery pipeline setup, headshots for Tier 1+2, compass stances where public record exists, and full TX state/federal coverage including 38 US House members and all 31 senators + 150 state reps with geofence boundaries.
+
+**Phases completed:** 12-21 (33 plans total)
+
+**Key accomplishments:**
+
+- Seeded 23 Collin County TX city/town governments with complete structure (23 chambers, 151 offices, all Census FIPS codes); 120+ incumbent politicians across 4 tiers with is_active + is_incumbent flags
+- Discovery pipeline armed for 23 TX cities — test run confirmed working (2 Allen Mayor candidates staged from collincountytx.gov); weekly cron at Sunday 02:00 UTC; county domain allowlist enforced
+- 100% Tier 1+2 headshot coverage (57 politicians at 600×750 in Supabase Storage); Tier 3/4 best-effort — 34 confirmed online gaps user-verified as unavailable
+- 26 compass stance rows for 19 Collin County politicians across 5 cities (Plano, McKinney, Allen, Frisco, Richardson); compass widget renders on all three required profiles (human-verified)
+- 38 TX US House members seeded with NATIONAL_LOWER districts + Collin County G4020 geofence; PostGIS county-congressional intersection wired end-to-end — browsing Collin County shows 5 correct US reps in production
+- 8 TX state/federal executives (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz) with chambers, offices, Wikipedia headshots — all 8 profile pages render correctly
+- 31 TX senators + 150 TX state reps with 181 geofence boundaries loaded; any TX address point query returns correct STATE_UPPER + STATE_LOWER results (verified 5 addresses)
+
+**Stats:**
+
+- ~12,590 total LOC (JS/JSX/TS, frontend)
+- 10 phases, 33 plans
+- 12 days (2026-04-30 → 2026-05-12)
+
+**Git range:** `94e4aa8` (docs(12): research phase TX DB Foundation) → `8657219` (docs(18): add phase verification — 5/5 must-haves passed)
+
+**What's next:** Planning next milestone — `/gsd:new-milestone`
+
+---
+
 ## v3.2 Legal Candidate Evaluation Framework (Shipped: 2026-05-10)
 
 **Delivered:** Built civic infrastructure for evaluating judges and City Attorney/DA candidates — an 8-topic judicial compass, bar evaluation data from LACBA/CJP, stance research for 3 LA City Attorney candidates, legal donor activity display, and campaign finance gap closure — all from free/public sources.

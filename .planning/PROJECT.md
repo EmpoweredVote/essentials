@@ -8,17 +8,6 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## v3.0 Remaining Work (In Progress)
-
-- [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17, not started)
-- [ ] Compass Stances — Plano/McKinney/Allen ingestion (Phase 18, not started)
-
-**Parked from v2.2 (backlog):**
-- Race completeness audit (Phase 9)
-- Compass stances integration for CA/IN (Phase 10)
-- Indiana local races (Phase 11)
-- Admin Discovery UI auth fix (Run Discovery 401 blocker)
-
 ## Requirements
 
 ### Validated
@@ -69,12 +58,19 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ Campaign finance gap closed: 16 active LA candidates have la_socrata sources; 246 sources ingested; maintenance procedure documented — v3.2
 - ✓ Legal Donor Activity: firm-level legal-professional donor data for 4 LA candidates; LegalDonorActivitySection.jsx on all legal profiles (candidate + politician) — v3.2
 - ✓ isLegalCandidate 6-condition parity across Profile.jsx + CandidateProfile.jsx — v3.2
+- ✓ Collin County, TX government structure — 23 cities, 23 chambers, 151 offices with Census FIPS codes (Copeville excluded pending incorporation verification) — v3.0
+- ✓ Tier 1+2 Collin County incumbents — 57 rows across 8 cities with is_active + is_incumbent; 100% contact info coverage — v3.0
+- ✓ Tier 3-4 Collin County incumbents — 74 rows across 15 cities; sparse Tier 4 coverage documented (small digital footprint expected) — v3.0
+- ✓ Discovery pipeline armed for 23 TX cities — test run confirmed; weekly cron at Sunday 02:00 UTC; collincountytx.gov domain enforced — v3.0
+- ✓ Tier 1+2 headshots — 57 politicians at 600×750 in Supabase Storage; 34 Tier 3/4 gaps confirmed unavailable by user — v3.0
+- ✓ Compass stances for 5 TX cities — 26 rows in inform.politician_answers; renders on Plano/McKinney/Allen profiles (human-verified); sparse cities documented — v3.0
+- ✓ 38 TX US House members as NATIONAL_LOWER + Collin County G4020 geofence; PostGIS county-congressional intersection live in production — v3.0
+- ✓ 8 TX state/federal executives (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz) with chambers, offices, Wikipedia headshots — v3.0
+- ✓ 31 TX senators + 150 TX state reps with 181 geofence boundaries; any TX address returns correct STATE_UPPER + STATE_LOWER — v3.0
 
 ### Active
 
-<!-- v3.0 remaining -->
-- [ ] Headshots — Tier 1+2 Collin County politicians (Phase 17)
-- [ ] Compass stances — Plano/McKinney/Allen ingested (Phase 18)
+<!-- No active requirements — next milestone TBD; run /gsd:new-milestone -->
 
 ### Out of Scope
 
@@ -92,10 +88,11 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Backend**: Express API (`C:\EV-Accounts`), deployed via Render push to master. Database: Postgres with PostGIS in `essentials` schema.
 - **Shipped v2.0**: Dedicated Elections page at `/elections` — 4 phases, 4 plans complete (2026-04-13).
 - **Shipped v2.1**: Claude candidate discovery pipeline — 3 phases, 9 plans, 18/18 requirements (2026-04-25). ~1,733 LOC TypeScript in 6 core discovery files.
+- **Shipped v3.0**: Collin County, TX coverage — 10 phases, 33 plans, 22/22 requirements (2026-04-30 → 2026-05-12). 23 TX cities seeded (151 offices, 120+ politicians). 38 US House + 31 senators + 150 state reps with full geofence boundaries. 26 compass stances for 19 TX politicians.
 - **Shipped v3.1**: Local Compass Expansion — 4 phases, 7 plans, 25/26 requirements (2026-05-05). 10 LOCAL topics + 10 FC communities + scope filtering wired in essentials frontend.
 - **Shipped v3.2**: Legal Candidate Evaluation Framework — 7 phases, 17 plans, 15/15 active requirements (2026-05-10). Judicial compass, bar evaluation data, stance research for 3 LA City Attorney candidates, legal donor activity. 67 files, ~11k LOC delta.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
-- **Database state**: 2 elections (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124+ candidates, 6,928 geofence boundaries. Discovery pipeline now auto-populates candidates.
+- **Database state**: 2 elections (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124+ candidates, 7,290+ geofence boundaries (181 TX state legislative + 38 TX congressional + 1 Collin County G4020 added in v3.0). Discovery pipeline now auto-populates candidates for 23 TX cities (+ existing CA/IN jurisdictions).
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
 - **Auth**: Redirect-only flow via Auth Hub (`accounts.empowered.vote`). No direct login from Essentials.
 - **Anti-patterns enforced**: No Google Places autocomplete. No address re-entry for Connected users. Party data on races only, never on candidates.
@@ -143,4 +140,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | dScope fallback: isLegalCandidate ? 'judicial' : null | Catches city attorney candidates with null district_type; prevents CompassCard from rendering legislative topics | ✓ Good — v3.2 |
 
 ---
-*Last updated: 2026-05-10 after v3.2 milestone*
+*Last updated: 2026-05-12 after v3.0 milestone*
