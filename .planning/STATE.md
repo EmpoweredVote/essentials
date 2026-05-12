@@ -2,17 +2,17 @@
 
 ## Current Position
 
-Phase: Not started — next milestone TBD
+Phase: Not started — Phase 33 is next
 Plan: Not started
-Status: v3.0 ARCHIVED — milestone complete and tagged; ready for next milestone planning
-Last activity: 2026-05-12 — v3.0 milestone archived (10 phases, 33 plans, 22/22 requirements)
+Status: v4.0 Compass Experience — milestone defined; ready to plan Phase 33
+Last activity: 2026-05-12 — v4.0 milestone initialized (4 phases, 21 requirements)
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-12 after v3.0 milestone)
+See: .planning/PROJECT.md (updated 2026-05-12 after v4.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Planning next milestone — run `/gsd:new-milestone` to start
+**Current focus:** Phase 33 — Local Lens State System
 
 ## Accumulated Context
 

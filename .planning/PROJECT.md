@@ -70,7 +70,30 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ### Active
 
-<!-- No active requirements — next milestone TBD; run /gsd:new-milestone -->
+<!-- v4.0 Compass Experience — building Local Lens + mini compass tiles + hover modal + compass-default mode -->
+
+**Local Lens System**
+- [ ] CompassContext exposes `localLensActive` + `toggleLocalLens()` backed by 8 curated topic UUIDs
+- [ ] Activating lens saves prior selectedTopics + invertedSpokes; deactivating restores them exactly
+- [ ] Lens state persisted to localStorage
+
+**Mini Compass on Candidate Tiles**
+- [ ] Mini `RadarChartCore` (no spoke labels) renders in the right-side space of each candidate tile
+- [ ] Minimum 3 overlapping spokes required; silently absent when threshold not met
+- [ ] Spoke fallback: missing bilateral answers replaced from scoped pool
+- [ ] Green magnifying-glass icon in top-right; clicking any tile's icon toggles global lens state
+
+**Hover Modal**
+- [ ] Hovering a mini compass opens a FloatingPortal with full titled compass + Min/Max + Lens icon
+- [ ] Modal dismisses on mouse-leave
+
+**Global Controls Bar**
+- [ ] Global Min/Max + Local Lens toggle bar above elections list, affecting all compasses simultaneously
+
+**Compass-Default Experience**
+- [ ] Calibrated users (≥1 answer) see compass tiles by default on `/elections`, Results Elections tab, Results Reps tab
+- [ ] Uncalibrated users see existing `PoliticianCard` view unchanged
+- [ ] `/elections` and Results Elections tab in feature parity
 
 ### Out of Scope
 
@@ -139,5 +162,16 @@ A resident can look up who represents them — and who is on their ballot — wi
 | isLegalCandidate 6-condition parity across Profile.jsx + CandidateProfile.jsx | Incumbents use office_title; candidates need position_name as additional signal — intentional asymmetry documented | ✓ Good — v3.2 |
 | dScope fallback: isLegalCandidate ? 'judicial' : null | Catches city attorney candidates with null district_type; prevents CompassCard from rendering legislative topics | ✓ Good — v3.2 |
 
+## Current Milestone: v4.0 Compass Experience
+
+**Goal:** Turn the compass from an opt-in checkbox into the primary experience for calibrated users — with a Local Lens preset, mini compasses on every candidate tile, hover-to-expand modals, and synchronized global controls.
+
+**Target features:**
+- Local Lens toggle (8 curated topic UUIDs; saves/restores prior state on toggle off)
+- Mini compass on candidate tiles (no labels, max size, 3-spoke minimum, fallback algorithm)
+- Hover modal with full labeled compass + Min/Max + Lens controls
+- Global Min/Max + Lens control bar above elections list
+- Compass mode as default for calibrated users on Elections + Results pages
+
 ---
-*Last updated: 2026-05-12 after v3.0 milestone*
+*Last updated: 2026-05-12 after v4.0 Compass Experience milestone start*
