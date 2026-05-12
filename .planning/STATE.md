@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: Phase 18 (Compass Stances) — in progress
-Plan: 18-02 complete (McKinney + Allen council stances ingested)
-Status: v3.0 nearly complete — Phase 18 in progress (18-01 + 18-02 done; 18-03 remaining if applicable)
-Last activity: 2026-05-12 — Completed 18-02-PLAN.md (6 McKinney + 3 Allen rows ingested; 16 total Phase 18 rows)
+Phase: Phase 18 (Compass Stances) — COMPLETE
+Plan: 18-04 complete (compass render verified; Phase 18 + v3.0 milestone complete)
+Status: v3.0 COMPLETE — all Phases 12-21 done; next milestone TBD
+Last activity: 2026-05-12 — Completed 18-04-PLAN.md (human-verified compass on Plano/McKinney/Allen; ROADMAP updated)
 
-v3.0 remaining: Phase 18 Plan 03 (any remaining cities with evidenced stances)
+v3.0 remaining: None — all phases complete
 
 ## Project Reference
 
@@ -339,3 +339,4 @@ See: .planning/PROJECT.md (updated 2026-05-10 after v3.2 milestone)
 *Updated: 2026-05-09 — Phase 31 COMPLETE; isLegalCandidate bug fixed for challengers (position_name fallback — commit 6828d46); Andrej Selivra duplicate merged + autoUpsertToRaceCandidates patched with stripMiddleInitials() + regexp_replace stored-name normalization (backend commit c9736d0); v3.2 Legal Candidate Evaluation Framework COMPLETE (6/6 phases: 26 Campaign Finance Gap, 27 Judicial Compass DB, 28 Judicial Compass UI, 29 Bar Evaluation Data, 30 Stance Research, 31 Legal Donor Activity)*
 *Updated: 2026-05-12 — Phase 18 Plans 02+03 complete; McKinney 6 rows + Allen 3 rows + Frisco 8 rows + Richardson 2 rows ingested; Murphy/Celina/Prosper documented sparse; Phase 18 total: 26 rows across 19 Collin County TX politicians*
 *Updated: 2026-05-12 — Phase 18-02 complete; 6 McKinney housing stances (backend commit 28a0ae8) + 3 Allen stances (backend commit 11d3a3e) ingested; Phase 18 total: 16 rows; Michael Jones + 5 Allen members correctly absent; apply script path pattern (path.join __dirname) documented*
+*Updated: 2026-05-12 — Phase 18 COMPLETE (4/4 plans); compass renders on John B. Muns (Plano), Bill Cox (McKinney), Michael Schaeffer (Allen) — human verified; 26 rows across 19 politicians (Plano 7, McKinney 6, Allen 3, Frisco 8, Richardson 2); v3.0 milestone shipped — all Phases 12-21 complete; follow-up items: office title display (Mayor→"City Council"), city name header, Maria Tu pre-existing stances*
