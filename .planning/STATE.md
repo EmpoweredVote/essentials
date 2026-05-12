@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: Phase 18 (Compass Stances) — not started
-Plan: N/A
-Status: v3.0 nearly complete — Phase 17 marked done 2026-05-10; Phase 18 remains
-Last activity: 2026-05-10 — Phase 17 Headshots marked complete (Tier 1+2 fully covered; Tier 3-4 best-effort done)
+Phase: Phase 18 (Compass Stances) — in progress
+Plan: 18-01 complete (Plano council stances ingested)
+Status: v3.0 nearly complete — Phase 18 in progress (18-01 done; 18-02 McKinney + 18-03 Allen remain)
+Last activity: 2026-05-12 — Completed 18-01-PLAN.md (scale verified + 7 Plano rows ingested)
 
-v3.0 remaining: Phase 18 (Compass Stances) — Plano, McKinney, Allen council stances into inform.politician_answers
+v3.0 remaining: Phase 18 Plans 02-03 (McKinney, Allen council stances into inform.politician_answers)
 
 ## Project Reference
 
@@ -211,6 +211,15 @@ See: .planning/PROJECT.md (updated 2026-05-10 after v3.2 milestone)
 - DATABASE_URL stored at C:/Users/Chris/AppData/Local/Temp/backend.env (not C:\Focused Communities\backend\.env which does not exist)
 
 ---
+### Phase 18 Notes
+
+- Scale direction confirmed from live DB: 1=progressive, 5=conservative (Adam B. Schiff value=1 on taxes/healthcare/abortion; Adam Miller value=4 on housing/taxes)
+- Apply script pattern: import 'dotenv/config' + csv-parse/sync + pg Pool + upsert ON CONFLICT DO UPDATE; run with npx tsx from C:\EV-Accounts\backend
+- Use parseInt(r.value) directly — NOT 3 - parseInt(r.value) (old scripts like apply-malik-stances.ts used inversion; newer scripts and Phase 18 use direct value)
+- CSV files gitignored by EV-Accounts/.gitignore (backend/data/stance-research/*.csv); only apply scripts committed to backend repo
+- 18-01 complete 2026-05-12: 7 rows for 6 Plano politicians (Shun Thomas housing=3; Steve Lavine housing=3 + taxes=4; Bob Kehr housing=3; Chris Krupa Downs housing=4; Vidal Quintanilla housing=3; John B. Muns housing=3)
+- Maria Tu (d6bf8d34) + Rick Horne (bc4a88d7): excluded — no evidenced stances
+
 ### Phase 30 Notes
 
 - Migration 119 applied 2026-05-09: Ashouri 6 politician_answers + 6 politician_context rows; all judicial topics placed (no not-found rows)
