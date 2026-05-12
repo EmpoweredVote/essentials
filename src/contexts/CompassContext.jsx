@@ -13,6 +13,9 @@ import {
   saveGuestVerdicts,
   loadGuestVerdicts,
   clearGuestVerdicts,
+  LOCAL_LENS_TOPICS,
+  saveLocalLensState,
+  loadLocalLensState,
 } from "../lib/compass";
 import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
 import { fetchMyRepresentatives } from "../lib/api";
@@ -47,6 +50,18 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   // Refs so compass load can access auth state without stale closures
   const authedUserRef = useRef(null);
   const compassLoadStartedRef = useRef(false);
+
+  // ── Local Lens state ────────────────────────────────────────────────────
+  const localLensActiveRef = useRef(false);
+  const [localLensActive, setLocalLensActive] = useState(() => {
+    try { return localStorage.getItem('ev:localLensActive') === 'true'; } catch { return false; }
+  });
+  const [preLensSnapshot, setPreLensSnapshot] = useState(() => {
+    try {
+      const raw = localStorage.getItem('ev:localLensSnapshot');
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  });
 
   // ── Phase 2: compass data (topics, stances, user answers) ──────────────
   const loadCompassData = useCallback(async () => {
@@ -179,6 +194,10 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       }
 
       setCompassDataLoaded(true);
+      // Re-apply lens if it was active before data loaded (prevents loadCompassData from overwriting lens)
+      if (localLensActiveRef.current) {
+        setSelectedTopics(LOCAL_LENS_TOPICS);
+      }
     } catch (err) {
       console.error("CompassContext compass load error:", err);
       compassLoadStartedRef.current = false; // allow retry on error
@@ -297,6 +316,9 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     return () => { cancelled = true; };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Keep localLensActiveRef in sync with state for use inside callbacks/effects
+  useEffect(() => { localLensActiveRef.current = localLensActive; }, [localLensActive]);
+
   // Cross-subdomain live-sync — only active after compass data has been loaded
   useEffect(() => {
     if (!compassDataLoaded || isLoggedIn) return;
@@ -309,6 +331,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       }
       const apiAnswers = convertGuestAnswersToApiFormat(c.a, allTopics);
       setUserAnswers(apiAnswers);
+      if (localLensActiveRef.current) return; // don't overwrite lens topics from cross-tab sync
       if (Array.isArray(c.s)) setSelectedTopics(c.s);
       if (c.i && typeof c.i === 'object') setInvertedSpokes(c.i);
       try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch {}
@@ -323,6 +346,31 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   const batchInvertSpokes = useCallback((newMap) => {
     setInvertedSpokes(newMap);
   }, []);
+
+  const toggleLocalLens = useCallback(() => {
+    setLocalLensActive((prev) => {
+      if (!prev) {
+        // Activating — snapshot current state, apply lens topics
+        const snapshot = {
+          selectedTopics: [...selectedTopics],
+          invertedSpokes: { ...invertedSpokes },
+        };
+        setPreLensSnapshot(snapshot);
+        setSelectedTopics(LOCAL_LENS_TOPICS);
+        saveLocalLensState(true, snapshot);
+        return true;
+      } else {
+        // Deactivating — restore snapshot
+        if (preLensSnapshot) {
+          setSelectedTopics(preLensSnapshot.selectedTopics);
+          setInvertedSpokes(preLensSnapshot.invertedSpokes);
+        }
+        setPreLensSnapshot(null);
+        saveLocalLensState(false, null);
+        return false;
+      }
+    });
+  }, [selectedTopics, invertedSpokes, preLensSnapshot]);
 
   const logout = async () => {
     try {
@@ -364,6 +412,8 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       enableCompass: loadCompassData,
       toggleInversion,
       batchInvertSpokes,
+      localLensActive,
+      toggleLocalLens,
       logout,
     }),
     [
@@ -386,6 +436,8 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       loadCompassData,
       toggleInversion,
       batchInvertSpokes,
+      localLensActive,
+      toggleLocalLens,
     ]
   );
 
