@@ -645,7 +645,7 @@ export default function Results() {
               setElectionsData(data.elections || []);
               setElectionsLoading(false);
             }
-          });
+          }).catch(() => { if (!cancelled) setElectionsLoading(false); });
           return;
         }
       }
@@ -661,7 +661,7 @@ export default function Results() {
               setElectionsData(data.elections || []);
               setElectionsLoading(false);
             }
-          });
+          }).catch(() => { if (!cancelled) setElectionsLoading(false); });
         }
         return;
       }
@@ -671,7 +671,7 @@ export default function Results() {
           setElectionsData(data.elections || []);
           setElectionsLoading(false);
         }
-      });
+      }).catch(() => { if (!cancelled) setElectionsLoading(false); });
     } else {
       if (!activeQuery) return;
       setElectionsLoading(true);
@@ -680,7 +680,7 @@ export default function Results() {
           setElectionsData(data.elections || []);
           setElectionsLoading(false);
         }
-      });
+      }).catch(() => { if (!cancelled) setElectionsLoading(false); });
     }
 
     return () => { cancelled = true; };

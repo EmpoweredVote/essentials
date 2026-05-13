@@ -335,10 +335,11 @@ export default function ElectionsView({
       // "Los Angeles City Controller" — same race from two data sources). Keep the
       // longer (more descriptive) position name when a duplicate is found.
       const dedupedRaces = election.races.reduce((acc, race) => {
-        const key = race.candidates.map((c) => c.candidate_id).sort().join(',');
+        const cands = race.candidates || [];
+        const key = cands.map((c) => c.candidate_id).sort().join(',');
         if (!key) { acc.push(race); return acc; }
         const dupIdx = acc.findIndex((r) =>
-          r.candidates.map((c) => c.candidate_id).sort().join(',') === key
+          (r.candidates || []).map((c) => c.candidate_id).sort().join(',') === key
         );
         if (dupIdx >= 0) {
           if (race.position_name.length > acc[dupIdx].position_name.length) acc[dupIdx] = race;
@@ -368,7 +369,7 @@ export default function ElectionsView({
           party,
           districtType: race.district_type,
           raceId: race.race_id,
-          shuffledCandidates: seededShuffle(race.candidates, sessionSeed),
+          shuffledCandidates: seededShuffle(race.candidates || [], sessionSeed),
           cleanedPosition: cleaned,
           seats: race.seats ?? 1,
         });
