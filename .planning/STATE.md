@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 34 (Mini Compass Tile Component) — In progress
-Plan: 01 of 3 complete
-Status: v4.0 Compass Experience — Plan 34-01 complete; computeDisplaySpokes() extracted and wired
-Last activity: 2026-05-13 — Completed 34-01-PLAN.md (extract spoke algorithm to shared pure function)
+Plan: 02 of 3 complete
+Status: v4.0 Compass Experience — Plan 34-02 complete; MiniCompass.jsx built (label-free RadarChartCore tile)
+Last activity: 2026-05-13 — Completed 34-02-PLAN.md (create MiniCompass presentational component)
 
 ## Project Reference
 
@@ -33,6 +33,10 @@ See: .planning/PROJECT.md (updated 2026-05-12 after v4.0 milestone start)
 
 - computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
 - When localLensActive=true, computeDisplaySpokes uses LOCAL_LENS_TOPICS.slice(0, maxSpokes) as preferredIds regardless of selectedTopics value
+- MiniCompass prop contract: userAnswers, polAnswers, selectedTopics, scopedTopics, invertedSpokes, localLensActive, isDark, size=120 — all data passed in by parent; no internal fetching
+- INNER_SVG_SIZE=200 with CSS-constrained container (size px, default 120): RadarChartCore foreignObjects (190px) and hit-dots (r=14) do not scale with size prop — always pass 200 internally, constrain via CSS
+- MiniCompass container requires overflow:hidden to clip SVG bleed beyond circular border
+- Container opacity 0.7 ONLY when (hasReplacedSpokes && localLensActive) — when Lens is OFF, replacement spokes need no visual distinction
 
 ### Known Architecture
 
@@ -342,3 +346,4 @@ See: .planning/PROJECT.md (updated 2026-05-12 after v4.0 milestone start)
 *Updated: 2026-05-12 — Phase 18-02 complete; 6 McKinney housing stances (backend commit 28a0ae8) + 3 Allen stances (backend commit 11d3a3e) ingested; Phase 18 total: 16 rows; Michael Jones + 5 Allen members correctly absent; apply script path pattern (path.join __dirname) documented*
 *Updated: 2026-05-12 — Phase 18 COMPLETE (4/4 plans); compass renders on John B. Muns (Plano), Bill Cox (McKinney), Michael Schaeffer (Allen) — human verified; 26 rows across 19 politicians (Plano 7, McKinney 6, Allen 3, Frisco 8, Richardson 2); v3.0 milestone shipped — all Phases 12-21 complete; follow-up items: office title display (Mayor→"City Council"), city name header, Maria Tu pre-existing stances*
 *Updated: 2026-05-12 — Phase 33-01 COMPLETE; LOCAL_LENS_TOPICS (8 verified UUIDs) + saveLocalLensState/loadLocalLensState added to compass.js; localLensActive state + toggleLocalLens() + loadCompassData re-apply guard + live-sync guard wired into CompassContext; ref pattern for stable empty-deps callback established; LENS-01/02/03/04/05 all satisfied; build passes; Phase 34 Mini Compass Tile is next*
+*Updated: 2026-05-13 — Phase 34-02 COMPLETE; MiniCompass.jsx created (138 lines); pure-presentational label-free RadarChartCore tile; INNER_SVG_SIZE=200 with CSS-constrained 120px container; labelFontSize=0+tightFit=true+padding=10; silent absence (return null) when <3 spokes; container opacity 0.7 when hasReplacedSpokes&&localLensActive; overflow:hidden added for circular clip; build passes; commit b14d0ec; Plan 34-03 ElectionsView wiring is next*
