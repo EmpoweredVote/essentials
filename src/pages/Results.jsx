@@ -455,16 +455,6 @@ export default function Results() {
     try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
     if (val) enableCompass();
   };
-  // Auto-enable compass for calibrated users who haven't set an explicit preference
-  useEffect(() => {
-    if (!rawUserAnswers || rawUserAnswers.length < 3) return;
-    try {
-      if (localStorage.getItem('ev:compassMode') === null) {
-        setCompassMode(true);
-        localStorage.setItem('ev:compassMode', 'true');
-      }
-    } catch {}
-  }, [rawUserAnswers]);
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
@@ -478,6 +468,17 @@ export default function Results() {
 
   // Compass integration — context provides politician IDs with stances + user data
   const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, localLensActive, enableCompass } = useCompass();
+
+  // Auto-enable compass for calibrated users who haven't set an explicit preference
+  useEffect(() => {
+    if (!rawUserAnswers || rawUserAnswers.length < 3) return;
+    try {
+      if (localStorage.getItem('ev:compassMode') === null) {
+        setCompassMode(true);
+        localStorage.setItem('ev:compassMode', 'true');
+      }
+    } catch {}
+  }, [rawUserAnswers]);
 
   // 260426-mw6 — guest → authed promotion. Two banners:
   //   1) compass: when API has zero answers but ev-context has guest answers.
