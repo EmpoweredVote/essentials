@@ -4,6 +4,7 @@ import { Layout } from '../components/Layout';
 import ElectionsView from '../components/ElectionsView';
 import { fetchElectionsByAddress, fetchMyElections } from '../lib/api';
 import { useCompass } from '../contexts/CompassContext';
+import { useTheme } from '../hooks/useTheme';
 
 const SHORTCUTS = [
   { label: 'Monroe County', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
@@ -12,7 +13,9 @@ const SHORTCUTS = [
 
 export default function Elections() {
   const navigate = useNavigate();
-  const { isLoggedIn, userJurisdiction, compassLoading } = useCompass();
+  const { isLoggedIn, userJurisdiction, compassLoading, userAnswers } = useCompass();
+  const { isDark } = useTheme();
+  const compassMode = (userAnswers?.length ?? 0) >= 3;
 
   const [electionsData, setElectionsData] = useState(null); // null = not fetched
   const [fetchLoading, setFetchLoading] = useState(false);
@@ -194,6 +197,8 @@ export default function Elections() {
           elections={electionsData}
           loading={fetchLoading}
           hideWithdrawn={hideWithdrawn}
+          compassMode={compassMode}
+          isDark={isDark}
           onCandidateClick={(id) => navigate('/candidate/' + id)}
         />
       </div>
