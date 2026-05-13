@@ -18,6 +18,7 @@ import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
+import MiniCompass from '../components/MiniCompass';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
@@ -28,6 +29,19 @@ const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || 'https://treasurytrack
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
   return `${pol.office_title}||${pol.district_type}||${pol.district_id || ''}`;
+}
+
+function deriveScopedTopics(allTopics, districtType) {
+  if (!districtType || allTopics.length === 0) return allTopics;
+  const upper = String(districtType).toUpperCase();
+  const key = upper.startsWith('STATE_')               ? 'applies_state'
+            : upper.startsWith('NATIONAL_JUDICIAL')     ? 'applies_judicial'
+            : upper === 'JUDICIAL'                      ? 'applies_judicial'
+            : upper.startsWith('NATIONAL_')             ? 'applies_federal'
+            : (upper === 'LOCAL' || upper === 'LOCAL_EXEC' || upper === 'COUNTY' || upper === 'SCHOOL') ? 'applies_local'
+            : null;
+  if (!key) return allTopics;
+  return allTopics.filter((t) => t[key] !== false);
 }
 
 function getImageData(pol) {
@@ -453,7 +467,8 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, enableCompass } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, localLensActive, enableCompass } = useCompass();
+  const { isDark } = useTheme();
 
   // 260426-mw6 — guest → authed promotion. Two banners:
   //   1) compass: when API has zero answers but ev-context has guest answers.
@@ -1143,30 +1158,54 @@ export default function Results() {
       );
     }
 
-    const polForCard = {
-      ...pol,
-      full_name: `${pol.first_name} ${pol.last_name}`,
-      office_title: cardTitle,
-      district_label: subtitle,
-      photo_origin_url: imgData.url,
-      imageFocalPoint: imgData.focalPoint || 'center 20%',
-      ballot,
-      branch,
-      hasStances,
-      stances: stancesByPolId[pol.id] || {},
-    };
+    const stanceData = stancesByPolId[pol.id];
+    const polAnswersForMini = stanceData
+      ? Object.entries(stanceData).map(([short_title, value]) => {
+          const t = allTopics.find((x) => x.short_title === short_title);
+          return t ? { topic_id: t.id, value } : null;
+        }).filter(Boolean)
+      : null;
+    const scopedTopicsForPol = deriveScopedTopics(allTopics, pol.district_type);
+    const gradientBg = isDark
+      ? 'linear-gradient(to right, transparent, #1a2235 35%)'
+      : isCandidate
+        ? 'linear-gradient(to right, transparent, rgba(255,254,245,0.97) 30%)'
+        : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)';
     return (
-      <div key={pol.id} data-pol-id={pol.id} style={{ height: '100%' }}>
-        <CompassCardVertical
-          politician={polForCard}
-          userAnswers={filteredAnswers}
-          invertedSpokes={invertedSpokes}
-          variant={computeVariant(pol, rawUserAnswers, hasStances)}
-          surface="representatives"
-          onBuildCompass={handleBuildCompass}
+      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative' }}>
+        <PoliticianCard
+          id={pol.id}
+          imageSrc={imgData.url}
+          name={`${pol.first_name} ${pol.last_name}`}
+          title={cardTitle}
+          subtitle={subtitle}
+          imageFocalPoint={imgData.focalPoint || 'center 20%'}
+          style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
           onClick={handleCardClick}
-          tierVisuals={isCandidate ? { bg: '#fffef5' } : null}
+          variant="horizontal"
+          footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
         />
+        <div
+          onClick={handleCardClick}
+          style={{
+            position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: gradientBg,
+            borderRadius: '0 8px 8px 0',
+            cursor: 'pointer', zIndex: 1,
+          }}
+        >
+          <MiniCompass
+            userAnswers={rawUserAnswers}
+            polAnswers={polAnswersForMini}
+            selectedTopics={selectedTopics}
+            scopedTopics={scopedTopicsForPol}
+            invertedSpokes={invertedSpokes}
+            localLensActive={localLensActive}
+            isDark={isDark}
+            size={190}
+          />
+        </div>
       </div>
     );
   };
