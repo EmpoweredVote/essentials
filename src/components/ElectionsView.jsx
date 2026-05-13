@@ -701,15 +701,18 @@ export default function ElectionsView({
                                           {seats > 1 ? `${seats} seats` : 'Unopposed'}
                                         </div>
                                       )}
-                                      <div style={{
-                                        position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        background: isDark
-                                          ? 'linear-gradient(to right, transparent, #1a2235 35%)'
-                                          : 'linear-gradient(to right, transparent, rgba(249,250,251,0.97) 35%)',
-                                        borderRadius: '0 8px 8px 0',
-                                        pointerEvents: 'none', zIndex: 1,
-                                      }}>
+                                      <div
+                                        onClick={(e) => { e.stopPropagation(); onCandidateClick(candidate.candidate_id); }}
+                                        style={{
+                                          position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
+                                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          background: isDark
+                                            ? 'linear-gradient(to right, transparent, #1a2235 35%)'
+                                            : 'linear-gradient(to right, transparent, rgba(249,250,251,0.97) 35%)',
+                                          borderRadius: '0 8px 8px 0',
+                                          cursor: 'pointer', zIndex: 1,
+                                        }}
+                                      >
                                         <MiniCompass
                                           userAnswers={userAnswers}
                                           polAnswers={polAnswersForMini}
@@ -718,7 +721,7 @@ export default function ElectionsView({
                                           invertedSpokes={invertedSpokes}
                                           localLensActive={localLensActive}
                                           isDark={isDark}
-                                          size={200}
+                                          size={170}
                                         />
                                       </div>
                                     </div>

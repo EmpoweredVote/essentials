@@ -124,7 +124,7 @@ export default function MiniCompass({
           size={INNER_SVG_SIZE}
           labelFontSize={0}
           padding={10}
-          labelOffset={0}
+          labelOffset={15}
           tightFit={true}
           ringColor="transparent"
           darkMode={!!isDark}
