@@ -695,7 +695,7 @@ export default function ElectionsView({
                                     : null;
                                   const scopedTopicsForRace = deriveScopedTopics(allTopics, race.districtType);
                                   return (
-                                    <div key={candidate.candidate_id} style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden', backgroundColor: isDark ? '#1a2235' : '#ffffff' }}>
+                                    <div key={candidate.candidate_id} style={{ position: 'relative' }}>
                                       <PoliticianCard
                                         id={candidate.candidate_id}
                                         imageSrc={candidate.photo_url || undefined}
@@ -726,7 +726,7 @@ export default function ElectionsView({
                                           background: isDark
                                             ? 'linear-gradient(to right, transparent, #1a2235 35%)'
                                             : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)',
-                                          borderRadius: '0 8px 8px 0',
+                                          borderRadius: '0 10px 10px 0',
                                           cursor: 'pointer', zIndex: 1,
                                         }}
                                       >
