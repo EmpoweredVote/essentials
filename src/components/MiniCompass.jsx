@@ -99,10 +99,6 @@ export default function MiniCompass({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: containerOpacity,
-        borderRadius: '50%',
-        border: `1px solid ${isDark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)'}`,
-        boxSizing: 'border-box',
-        padding: 4,
         overflow: 'hidden',
       }}
       aria-label="Mini compass"
