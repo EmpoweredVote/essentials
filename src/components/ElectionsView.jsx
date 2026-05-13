@@ -331,10 +331,27 @@ export default function ElectionsView({
     return elections.map((election) => {
       const isPrimary = election.election_type === 'primary';
 
+      // Deduplicate races with identical candidate sets (e.g. "LA City Controller" vs
+      // "Los Angeles City Controller" — same race from two data sources). Keep the
+      // longer (more descriptive) position name when a duplicate is found.
+      const dedupedRaces = election.races.reduce((acc, race) => {
+        const key = race.candidates.map((c) => c.candidate_id).sort().join(',');
+        if (!key) { acc.push(race); return acc; }
+        const dupIdx = acc.findIndex((r) =>
+          r.candidates.map((c) => c.candidate_id).sort().join(',') === key
+        );
+        if (dupIdx >= 0) {
+          if (race.position_name.length > acc[dupIdx].position_name.length) acc[dupIdx] = race;
+        } else {
+          acc.push(race);
+        }
+        return acc;
+      }, []);
+
       // Build hierarchy: tier → body → subgroup (position + party)
       const tierMap = {}; // tier → { bodyKey → { races: [] } }
 
-      for (const race of election.races) {
+      for (const race of dedupedRaces) {
         const tier = getTier(race.district_type);
         const cleaned = cleanPositionName(race.position_name);
         const { body, subgroup } = deriveBodyAndSubGroup(cleaned, race.district_type);
