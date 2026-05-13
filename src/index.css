@@ -164,3 +164,9 @@ body {
 .dark .ev-politician-profile [class*="contact"] span {
   color: #9ca3af !important;
 }
+
+/* Dark mode: CompassKey pill — ev-ui uses inline background: #fff; target by aria-label */
+.dark [role="region"][aria-label="Compass legend"] {
+  background: #1a2235 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}

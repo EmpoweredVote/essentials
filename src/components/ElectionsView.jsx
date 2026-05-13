@@ -678,41 +678,49 @@ export default function ElectionsView({
                                     : null;
                                   const scopedTopicsForRace = deriveScopedTopics(allTopics, race.districtType);
                                   return (
-                                    <div key={candidate.candidate_id} style={{ position: 'relative', display: 'flex', alignItems: 'stretch', gap: '8px' }}>
-                                      <div style={{ flex: 1, minWidth: 0 }}>
-                                        <PoliticianCard
-                                          id={candidate.candidate_id}
-                                          imageSrc={candidate.photo_url || undefined}
-                                          imageFocalPoint={candidate.focal_point || 'center 20%'}
-                                          name={candidate.full_name}
-                                          title={cardTitle}
-                                          subtitle={cardSubtitle}
-                                          onClick={() => onCandidateClick(candidate.candidate_id)}
-                                          variant="horizontal"
-                                          style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
-                                          footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
-                                        />
-                                        {candidate.candidate_status === 'withdrawn' && (
-                                          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(120,0,0,0.78)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
-                                            Withdrawn
-                                          </div>
-                                        )}
-                                        {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
-                                          <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
-                                            {seats > 1 ? `${seats} seats` : 'Unopposed'}
-                                          </div>
-                                        )}
-                                      </div>
-                                      <MiniCompass
-                                        userAnswers={userAnswers}
-                                        polAnswers={polAnswersForMini}
-                                        selectedTopics={selectedTopics}
-                                        scopedTopics={scopedTopicsForRace}
-                                        invertedSpokes={invertedSpokes}
-                                        localLensActive={localLensActive}
-                                        isDark={isDark}
-                                        size={120}
+                                    <div key={candidate.candidate_id} style={{ position: 'relative' }}>
+                                      <PoliticianCard
+                                        id={candidate.candidate_id}
+                                        imageSrc={candidate.photo_url || undefined}
+                                        imageFocalPoint={candidate.focal_point || 'center 20%'}
+                                        name={candidate.full_name}
+                                        title={cardTitle}
+                                        subtitle={cardSubtitle}
+                                        onClick={() => onCandidateClick(candidate.candidate_id)}
+                                        variant="horizontal"
+                                        style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
+                                        footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                       />
+                                      {candidate.candidate_status === 'withdrawn' && (
+                                        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(120,0,0,0.78)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                          Withdrawn
+                                        </div>
+                                      )}
+                                      {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
+                                        <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                          {seats > 1 ? `${seats} seats` : 'Unopposed'}
+                                        </div>
+                                      )}
+                                      <div style={{
+                                        position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        background: isDark
+                                          ? 'linear-gradient(to right, transparent, #1a2235 35%)'
+                                          : 'linear-gradient(to right, transparent, rgba(249,250,251,0.97) 35%)',
+                                        borderRadius: '0 8px 8px 0',
+                                        pointerEvents: 'none', zIndex: 1,
+                                      }}>
+                                        <MiniCompass
+                                          userAnswers={userAnswers}
+                                          polAnswers={polAnswersForMini}
+                                          selectedTopics={selectedTopics}
+                                          scopedTopics={scopedTopicsForRace}
+                                          invertedSpokes={invertedSpokes}
+                                          localLensActive={localLensActive}
+                                          isDark={isDark}
+                                          size={200}
+                                        />
+                                      </div>
                                     </div>
                                   );
                                 })
