@@ -126,6 +126,7 @@ export default function MiniCompass({
           padding={10}
           labelOffset={0}
           tightFit={true}
+          ringColor="transparent"
           darkMode={!!isDark}
         />
       </div>
