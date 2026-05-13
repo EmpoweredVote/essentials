@@ -1578,7 +1578,7 @@ export default function Results() {
                   if (!tierStyle) return null;
 
                   return (
-                    <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle.bg } : undefined}>
+                    <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
                           <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
@@ -1614,24 +1614,25 @@ export default function Results() {
                                 </a>
                               </div>
                             )}
-                            {body.subgroups.map((sg) => (
-                              <SubGroupSection
-                                key={sg.key}
-                                title={body.subgroups.length > 1 ? sg.label : undefined}
-                                websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
-                                gridTemplateColumns={isWideForThree
-                                  ? 'repeat(3, minmax(0, 560px))'
-                                  : isWideForVertical
-                                    ? 'repeat(2, minmax(0, 560px))'
-                                    : 'minmax(0, 560px)'}
-                                gap="16px"
-                                justifyContent="start"
-                              >
-                                {sg.pols.map((pol) =>
-                                  renderSeatGroup(pol)
-                                )}
-                              </SubGroupSection>
-                            ))}
+                            {body.subgroups.map((sg) => {
+                              const maxCols = isWideForThree ? 3 : isWideForVertical ? 2 : 1;
+                              const cols = Math.min(maxCols, sg.pols.length || 1);
+                              const gridCols = cols === 1 ? 'minmax(0, 560px)' : `repeat(${cols}, minmax(0, 560px))`;
+                              return (
+                                <SubGroupSection
+                                  key={sg.key}
+                                  title={body.subgroups.length > 1 ? sg.label : undefined}
+                                  websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
+                                  gridTemplateColumns={gridCols}
+                                  gap="16px"
+                                  justifyContent="start"
+                                >
+                                  {sg.pols.map((pol) =>
+                                    renderSeatGroup(pol)
+                                  )}
+                                </SubGroupSection>
+                              );
+                            })}
                           </GovernmentBodySection>
                         );
                       })}
