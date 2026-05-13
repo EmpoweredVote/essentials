@@ -1192,7 +1192,7 @@ export default function Results() {
         ? 'linear-gradient(to right, transparent, rgba(255,254,245,0.97) 30%)'
         : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)';
     return (
-      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden' }}>
+      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden', backgroundColor: isDark ? '#1a2235' : isCandidate ? '#fffef5' : '#ffffff' }}>
         <PoliticianCard
           id={pol.id}
           imageSrc={imgData.url}
