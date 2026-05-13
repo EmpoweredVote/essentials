@@ -91,6 +91,7 @@ export default function MiniCompass({
 
   return (
     <div
+      className="mini-compass-host"
       style={{
         width: size,
         height: size,
@@ -99,37 +100,26 @@ export default function MiniCompass({
         alignItems: 'center',
         justifyContent: 'center',
         opacity: containerOpacity,
-        overflow: 'hidden',
       }}
       aria-label="Mini compass"
     >
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <RadarChartCore
-          topics={topicsFiltered}
-          data={userData}
-          compareData={polData}
-          invertedSpokes={invertedSpokes || {}}
-          replacedSpokes={{}}
-          boldOriginalSpokes={false}
-          onToggleInversion={() => {}}
-          onReplaceTopic={() => {}}
-          size={INNER_SVG_SIZE}
-          labelFontSize={0}
-          padding={10}
-          labelOffset={15}
-          tightFit={true}
-          ringColor="transparent"
-          darkMode={!!isDark}
-        />
-      </div>
+      <RadarChartCore
+        topics={topicsFiltered}
+        data={userData}
+        compareData={polData}
+        invertedSpokes={invertedSpokes || {}}
+        replacedSpokes={{}}
+        boldOriginalSpokes={false}
+        onToggleInversion={() => {}}
+        onReplaceTopic={() => {}}
+        size={INNER_SVG_SIZE}
+        labelFontSize={0}
+        padding={10}
+        labelOffset={8}
+        tightFit={true}
+        ringColor="transparent"
+        darkMode={!!isDark}
+      />
     </div>
   );
 }

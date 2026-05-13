@@ -165,6 +165,11 @@ body {
   color: #9ca3af !important;
 }
 
+/* MiniCompass: SVG and its foreignObject tooltip must overflow the container frame */
+.mini-compass-host svg {
+  overflow: visible !important;
+}
+
 /* Dark mode: CompassKey pill — ev-ui uses inline background: #fff; target by aria-label */
 .dark [role="region"][aria-label="Compass legend"] {
   background: #1a2235 !important;

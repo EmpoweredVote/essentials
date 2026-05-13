@@ -721,7 +721,7 @@ export default function ElectionsView({
                                           invertedSpokes={invertedSpokes}
                                           localLensActive={localLensActive}
                                           isDark={isDark}
-                                          size={170}
+                                          size={190}
                                         />
                                       </div>
                                     </div>
