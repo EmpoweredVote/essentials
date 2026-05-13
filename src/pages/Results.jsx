@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, CompassKey, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant } from '../lib/classify';
-import { fetchPoliticianAnswers } from '../lib/compass';
+import { fetchPoliticianAnswers, computeStanceSpokes } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -467,7 +467,7 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, localLensActive, enableCompass } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, localLensActive, enableCompass } = useCompass();
 
   // Auto-enable compass for calibrated users who haven't set an explicit preference
   useEffect(() => {
@@ -479,6 +479,33 @@ export default function Results() {
       }
     } catch {}
   }, [rawUserAnswers]);
+
+  // Auto-apply Stance Max the first time user crosses the 3-answer threshold
+  const prevAnswerCountRef = useRef(0);
+  useEffect(() => {
+    const count = rawUserAnswers?.length ?? 0;
+    const prev = prevAnswerCountRef.current;
+    prevAnswerCountRef.current = count;
+    if (prev < 3 && count >= 3) {
+      const hasAnyInversion = Object.values(invertedSpokes || {}).some(Boolean);
+      if (!hasAnyInversion && allTopics) {
+        const newMap = computeStanceSpokes('max', rawUserAnswers, allTopics, invertedSpokes || {});
+        batchInvertSpokes(newMap);
+      }
+    }
+  }, [rawUserAnswers, invertedSpokes, allTopics, batchInvertSpokes]);
+
+  const handleStanceMax = () => {
+    if (!rawUserAnswers || !allTopics) return;
+    const newMap = computeStanceSpokes('max', rawUserAnswers, allTopics, invertedSpokes || {});
+    batchInvertSpokes(newMap);
+  };
+
+  const handleStanceMin = () => {
+    if (!rawUserAnswers || !allTopics) return;
+    const newMap = computeStanceSpokes('min', rawUserAnswers, allTopics, invertedSpokes || {});
+    batchInvertSpokes(newMap);
+  };
 
   // 260426-mw6 — guest → authed promotion. Two banners:
   //   1) compass: when API has zero answers but ev-context has guest answers.
@@ -1510,7 +1537,33 @@ export default function Results() {
                 pointerEvents: 'none',
               }}
             >
-              <div style={{ pointerEvents: 'auto' }}>
+              <div style={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
+                {(rawUserAnswers?.length ?? 0) >= 3 && (
+                  <div style={{ display: 'flex', gap: 4 }}>
+                    <button
+                      onClick={handleStanceMin}
+                      title="Stance Min — pull strong spokes inward"
+                      style={{
+                        width: 28, height: 28, borderRadius: 6, border: '1px solid #ccc',
+                        background: isDark ? '#2a2a2a' : '#fff', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 14, lineHeight: 1,
+                        color: isDark ? '#e0e0e0' : '#333',
+                      }}
+                    >⊟</button>
+                    <button
+                      onClick={handleStanceMax}
+                      title="Stance Max — push weak spokes outward"
+                      style={{
+                        width: 28, height: 28, borderRadius: 6, border: '1px solid #ccc',
+                        background: isDark ? '#2a2a2a' : '#fff', cursor: 'pointer',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 14, lineHeight: 1,
+                        color: isDark ? '#e0e0e0' : '#333',
+                      }}
+                    >⊞</button>
+                  </div>
+                )}
                 <CompassKey compact={!isDesktop} />
               </div>
             </div>

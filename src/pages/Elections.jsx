@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import ElectionsView from '../components/ElectionsView';
+import { CompassKey, useMediaQuery } from '@empoweredvote/ev-ui';
 import { fetchElectionsByAddress, fetchMyElections } from '../lib/api';
+import { computeStanceSpokes } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 
@@ -13,9 +15,37 @@ const SHORTCUTS = [
 
 export default function Elections() {
   const navigate = useNavigate();
-  const { isLoggedIn, userJurisdiction, compassLoading, userAnswers } = useCompass();
+  const { isLoggedIn, userJurisdiction, compassLoading, userAnswers, allTopics, invertedSpokes, batchInvertSpokes } = useCompass();
   const { isDark } = useTheme();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
   const compassMode = (userAnswers?.length ?? 0) >= 3;
+
+  // Auto-apply Stance Max the first time user crosses the 3-answer threshold
+  const prevAnswerCountRef = useRef(0);
+  useEffect(() => {
+    const count = userAnswers?.length ?? 0;
+    const prev = prevAnswerCountRef.current;
+    prevAnswerCountRef.current = count;
+    if (prev < 3 && count >= 3) {
+      const hasAnyInversion = Object.values(invertedSpokes || {}).some(Boolean);
+      if (!hasAnyInversion && allTopics) {
+        const newMap = computeStanceSpokes('max', userAnswers, allTopics, invertedSpokes || {});
+        batchInvertSpokes(newMap);
+      }
+    }
+  }, [userAnswers, invertedSpokes, allTopics, batchInvertSpokes]);
+
+  const handleStanceMax = () => {
+    if (!userAnswers || !allTopics) return;
+    const newMap = computeStanceSpokes('max', userAnswers, allTopics, invertedSpokes || {});
+    batchInvertSpokes(newMap);
+  };
+
+  const handleStanceMin = () => {
+    if (!userAnswers || !allTopics) return;
+    const newMap = computeStanceSpokes('min', userAnswers, allTopics, invertedSpokes || {});
+    batchInvertSpokes(newMap);
+  };
 
   const [electionsData, setElectionsData] = useState(null); // null = not fetched
   const [fetchLoading, setFetchLoading] = useState(false);
@@ -189,6 +219,51 @@ export default function Elections() {
               />
               Hide withdrawn candidates
             </label>
+          </div>
+        )}
+
+        {/* Sticky CompassKey — only shown when compass mode is active */}
+        {compassMode && (
+          <div
+            style={{
+              position: 'sticky',
+              top: 8,
+              zIndex: 30,
+              display: 'flex',
+              justifyContent: 'flex-end',
+              paddingRight: isDesktop ? 48 : 12,
+              paddingTop: 8,
+              marginBottom: -70,
+              pointerEvents: 'none',
+            }}
+          >
+            <div style={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ display: 'flex', gap: 4 }}>
+                <button
+                  onClick={handleStanceMin}
+                  title="Stance Min — pull strong spokes inward"
+                  style={{
+                    width: 28, height: 28, borderRadius: 6, border: '1px solid #ccc',
+                    background: isDark ? '#2a2a2a' : '#fff', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 14, lineHeight: 1,
+                    color: isDark ? '#e0e0e0' : '#333',
+                  }}
+                >⊟</button>
+                <button
+                  onClick={handleStanceMax}
+                  title="Stance Max — push weak spokes outward"
+                  style={{
+                    width: 28, height: 28, borderRadius: 6, border: '1px solid #ccc',
+                    background: isDark ? '#2a2a2a' : '#fff', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 14, lineHeight: 1,
+                    color: isDark ? '#e0e0e0' : '#333',
+                  }}
+                >⊞</button>
+              </div>
+              <CompassKey compact={!isDesktop} />
+            </div>
           </div>
         )}
 
