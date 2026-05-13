@@ -416,3 +416,99 @@ export function loadLocalLensState() {
     return { active: false, snapshot: null };
   }
 }
+
+// ─── Shared spoke-selection algorithm ────────────────────────────────────────
+
+/**
+ * Pure function: computes which topic IDs to display as compass spokes.
+ *
+ * Used by CompassCard (profile page) and MiniCompass (elections tile).
+ * Extracted from CompassCard.jsx §2 spoke-selection algorithm so both
+ * components stay in lockstep without code duplication.
+ *
+ * @param {object} params
+ * @param {string[]}  params.selectedTopics   - Topic UUIDs from user calibration (may exceed maxSpokes — capped internally)
+ * @param {Array}     params.userAnswers       - [{ topic_id, value }, ...] — any value counts
+ * @param {Array}     params.polAnswers        - [{ topic_id, value }, ...] — null/undefined safe
+ * @param {Array}     params.scopedTopics      - Topic objects already filtered by districtScope
+ * @param {number}    [params.maxSpokes=8]     - Hard cap on displayed spokes (default 8)
+ * @param {boolean}   [params.localLensActive=false] - When true, preferredIds = LOCAL_LENS_TOPICS
+ *
+ * @returns {{
+ *   displayTopicIds: string[],
+ *   replacedSpokes: { [short_title]: boolean },
+ *   hasEnoughSpokes: boolean,
+ * }}
+ */
+export function computeDisplaySpokes({
+  selectedTopics,
+  userAnswers,
+  polAnswers,
+  scopedTopics,
+  maxSpokes = 8,
+  localLensActive = false,
+}) {
+  // Fast path: no politician answers or no scoped topics
+  if (!polAnswers || scopedTopics.length === 0) {
+    return { displayTopicIds: [], replacedSpokes: {}, hasEnoughSpokes: false };
+  }
+
+  // Build answer sets — String() coercion is defensive (UUIDs but kept from original)
+  const polAnsweredSet = new Set(polAnswers.filter((a) => a.value > 0).map((a) => String(a.topic_id)));
+  const userAnsweredSet = new Set(userAnswers.map((a) => String(a.topic_id)));
+
+  let displayTopicIds = [];
+  const replacedSpokes = {};
+
+  // Determine preferred IDs (lens-aware)
+  let preferredIds = null;
+  if (localLensActive) {
+    preferredIds = LOCAL_LENS_TOPICS.slice(0, maxSpokes);
+  } else if (selectedTopics && selectedTopics.length > 0) {
+    // Cap at maxSpokes — post-calibration bug can set all 36 topics as selected,
+    // which would empty the replacement pool. This guard must never be removed.
+    preferredIds = selectedTopics.slice(0, maxSpokes);
+  }
+
+  if (preferredIds !== null) {
+    const topicById = new Map(scopedTopics.map((t) => [String(t.id), t]));
+    const preferredSet = new Set(preferredIds.map(String));
+
+    // Replacement pool: scoped topics not in preferred set where both sides have answered
+    const replacementPool = scopedTopics.filter(
+      (t) =>
+        !preferredSet.has(String(t.id)) &&
+        userAnsweredSet.has(String(t.id)) &&
+        polAnsweredSet.has(String(t.id))
+    );
+    let ri = 0;
+
+    for (const id of preferredIds) {
+      if (!topicById.get(String(id))) continue; // topic not in scoped set — skip
+
+      if (userAnsweredSet.has(String(id)) && polAnsweredSet.has(String(id))) {
+        displayTopicIds.push(String(id));
+      } else if (ri < replacementPool.length) {
+        // Either side is missing an answer — substitute with a topic both have covered
+        const sub = replacementPool[ri++];
+        displayTopicIds.push(String(sub.id));
+        replacedSpokes[sub.short_title] = true;
+      }
+      // else: no replacement available — spoke dropped
+    }
+  } else {
+    // Fallback: no selectedTopics and not Lens — bilateral overlap
+    displayTopicIds = scopedTopics
+      .filter((t) => userAnsweredSet.has(String(t.id)) && polAnsweredSet.has(String(t.id)))
+      .map((t) => String(t.id));
+  }
+
+  // Cap at maxSpokes
+  if (displayTopicIds.length > maxSpokes) {
+    displayTopicIds = displayTopicIds.slice(0, maxSpokes);
+  }
+
+  const hasEnoughSpokes = displayTopicIds.length >= 3;
+
+  return { displayTopicIds, replacedSpokes, hasEnoughSpokes };
+}
