@@ -2,10 +2,10 @@
 
 ## Current Position
 
-Phase: 33 complete — Phase 34 (Mini Compass Tile Component) is next
-Plan: Not started
-Status: v4.0 Compass Experience — Phase 33 verified and shipped; Phase 34 ready to plan
-Last activity: 2026-05-12 — Phase 33 Local Lens State System complete; LENS-01 through LENS-05 verified
+Phase: 34 (Mini Compass Tile Component) — In progress
+Plan: 01 of 3 complete
+Status: v4.0 Compass Experience — Plan 34-01 complete; computeDisplaySpokes() extracted and wired
+Last activity: 2026-05-13 — Completed 34-01-PLAN.md (extract spoke algorithm to shared pure function)
 
 ## Project Reference
 
@@ -30,6 +30,9 @@ See: .planning/PROJECT.md (updated 2026-05-12 after v4.0 milestone start)
 - TX election date confirmed: 2026-05-02 (NOT May 3 as CONTEXT.md stated — all official sources confirm May 2)
 - McKinney email pattern: role-based `{role}@mckinneytexas.org` — mayor, AtLarge1, AtLarge2, District1–4
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
+
+- computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
+- When localLensActive=true, computeDisplaySpokes uses LOCAL_LENS_TOPICS.slice(0, maxSpokes) as preferredIds regardless of selectedTopics value
 
 ### Known Architecture
 
