@@ -170,8 +170,16 @@ body {
   overflow: visible !important;
 }
 
-/* Dark mode: CompassKey pill — ev-ui uses inline background: #fff; target by aria-label */
+/* Dark mode: CompassKey pill — ev-ui uses inline styles; target by aria-label */
 .dark [role="region"][aria-label="Compass legend"] {
   background: #1a2235 !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.dark [role="region"][aria-label="Compass legend"] span {
+  color: #d1d5db !important;
+}
+
+.dark [role="region"][aria-label="Compass legend"] button {
+  color: #9ca3af !important;
 }
