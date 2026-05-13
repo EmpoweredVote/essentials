@@ -468,7 +468,6 @@ export default function Results() {
 
   // Compass integration — context provides politician IDs with stances + user data
   const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, localLensActive, enableCompass } = useCompass();
-  const { isDark } = useTheme();
 
   // 260426-mw6 — guest → authed promotion. Two banners:
   //   1) compass: when API has zero answers but ev-context has guest answers.
