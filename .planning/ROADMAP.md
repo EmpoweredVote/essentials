@@ -202,9 +202,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 34-01-PLAN.md — Extract computeDisplaySpokes() to compass.js + refactor CompassCard.jsx to consume it
-- [ ] 34-02-PLAN.md — Build MiniCompass.jsx component (label-suppressed RadarChartCore + container)
-- [ ] 34-03-PLAN.md — Wire MiniCompass into ElectionsView tiles + auto-activate compassMode on Elections.jsx + human-verify
+- [x] 34-01-PLAN.md — Extract computeDisplaySpokes() to compass.js + refactor CompassCard.jsx to consume it
+- [x] 34-02-PLAN.md — Build MiniCompass.jsx component (label-suppressed RadarChartCore + container)
+- [x] 34-03-PLAN.md — Wire MiniCompass into ElectionsView tiles + auto-activate compassMode on Elections.jsx + human-verify
 
 #### Phase 35: Hover Modal — Full Compass
 **Goal**: Hovering a mini compass reveals a floating modal with a full titled RadarChartCore, legend, Local Lens icon, and Min/Max controls
@@ -284,6 +284,6 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 31. Legal Donor Activity | v3.2 ✅ | 4/4 | Complete | 2026-05-09 |
 | 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
 | 33. Local Lens State System | v4.0 | 1/1 | Complete | 2026-05-12 |
-| 34. Mini Compass Tile Component | v4.0 | 0/3 | Pending | - |
+| 34. Mini Compass Tile Component | v4.0 | 3/3 | Complete | 2026-05-13 |
 | 35. Hover Modal — Full Compass | v4.0 | 0/TBD | Pending | - |
 | 36. Global Controls + Compass Default | v4.0 | 0/TBD | Pending | - |
