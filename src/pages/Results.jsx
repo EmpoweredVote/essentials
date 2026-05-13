@@ -467,7 +467,7 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, localLensActive, enableCompass } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, localLensActive, toggleLocalLens, judicialLensActive, toggleJudicialLens, enableCompass } = useCompass();
 
   // Auto-enable compass for calibrated users who haven't set an explicit preference
   useEffect(() => {
@@ -1540,6 +1540,31 @@ export default function Results() {
               <div style={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
                 {(rawUserAnswers?.length ?? 0) >= 3 && (
                   <div style={{ display: 'flex', gap: 4 }}>
+                    {/* Local Lens — green magnifying glass */}
+                    <button
+                      className="stance-btn"
+                      onClick={toggleLocalLens}
+                      title={localLensActive ? 'Exit Local Lens' : 'Local Lens — 8 local questions'}
+                      style={localLensActive ? { background: '#5A9A6E', borderColor: '#5A9A6E', color: '#fff' } : {}}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="11" r="7" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                      </svg>
+                    </button>
+                    {/* Judicial Lens — burnt orange gavel */}
+                    <button
+                      className="stance-btn"
+                      onClick={toggleJudicialLens}
+                      title={judicialLensActive ? 'Exit Judicial Lens' : 'Judicial Lens — 8 judicial questions'}
+                      style={judicialLensActive ? { background: '#C2440A', borderColor: '#C2440A', color: '#fff' } : {}}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14 2L3 13l3 3L17 5l-3-3z" />
+                        <path d="M7 12l4 4" />
+                        <path d="M3 21h18" />
+                      </svg>
+                    </button>
                     <button className="stance-btn" onClick={handleStanceMin} title="Stance Min — pull strong spokes inward">⊟</button>
                     <button className="stance-btn" onClick={handleStanceMax} title="Stance Max — push weak spokes outward">⊞</button>
                   </div>

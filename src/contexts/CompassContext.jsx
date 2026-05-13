@@ -14,6 +14,7 @@ import {
   loadGuestVerdicts,
   clearGuestVerdicts,
   LOCAL_LENS_TOPICS,
+  JUDICIAL_LENS_TOPICS,
   saveLocalLensState,
   loadLocalLensState,
 } from "../lib/compass";
@@ -56,6 +57,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   const [localLensActive, setLocalLensActive] = useState(() => {
     try { return localStorage.getItem('ev:localLensActive') === 'true'; } catch { return false; }
   });
+  const [judicialLensActive, setJudicialLensActive] = useState(false);
   const [preLensSnapshot, setPreLensSnapshot] = useState(() => {
     try {
       const raw = localStorage.getItem('ev:localLensSnapshot');
@@ -385,6 +387,8 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   const toggleLocalLens = useCallback(() => {
     setLocalLensActive((prev) => {
       if (!prev) {
+        // Deactivate judicial lens if active
+        setJudicialLensActive(false);
         // Activating — snapshot current state, apply lens topics
         const snapshot = {
           selectedTopics: [...selectedTopics],
@@ -406,6 +410,31 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       }
     });
   }, [selectedTopics, invertedSpokes, preLensSnapshot]);
+
+  const toggleJudicialLens = useCallback(() => {
+    setJudicialLensActive((prev) => {
+      if (!prev) {
+        // Deactivate local lens if active
+        if (localLensActiveRef.current) {
+          setLocalLensActive(false);
+          saveLocalLensState(false, null);
+        }
+        // Apply judicial topics without snapshotting (judicial is display-only, no persist)
+        setSelectedTopics(JUDICIAL_LENS_TOPICS);
+        return true;
+      } else {
+        // Deactivating — restore snapshot or clear
+        if (preLensSnapshot) {
+          setSelectedTopics(preLensSnapshot.selectedTopics);
+          setInvertedSpokes(preLensSnapshot.invertedSpokes);
+          setPreLensSnapshot(null);
+        } else {
+          setSelectedTopics([]);
+        }
+        return false;
+      }
+    });
+  }, [preLensSnapshot]);
 
   const logout = async () => {
     try {
@@ -449,6 +478,8 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       batchInvertSpokes,
       localLensActive,
       toggleLocalLens,
+      judicialLensActive,
+      toggleJudicialLens,
       logout,
     }),
     [
@@ -473,6 +504,8 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       batchInvertSpokes,
       localLensActive,
       toggleLocalLens,
+      judicialLensActive,
+      toggleJudicialLens,
     ]
   );
 

@@ -388,6 +388,21 @@ export const LOCAL_LENS_ACTIVE_KEY = 'ev:localLensActive';
 export const LOCAL_LENS_SNAPSHOT_KEY = 'ev:localLensSnapshot';
 
 /**
+ * Judicial Lens — 8 topics for judges, DAs, and public defenders.
+ * Mirrors JUDICIAL_LENS.topicIds in EV-CompassV2/src/lib/lenses.js.
+ */
+export const JUDICIAL_LENS_TOPICS = [
+  '1fab5edf-6151-4da0-9704-a7f2113ba54c', // Bail & Pretrial
+  '9d45acaf-1ba4-4cb8-95e1-5ed985223b91', // Court Access
+  '9db07b16-1076-4b7d-ad89-ebe7b51f4336', // Criminal Justice
+  'e5e48f0e-8f3a-40e1-8080-889fea389603', // Government Deference
+  '448b1c9a-b6f3-42b8-8f39-d3bbb5bfa9ee', // Interpretation
+  'c267e137-0ff9-4e7d-9d13-e3cea1756cd0', // Jail Capacity
+  '6674d87e-999d-433a-aab7-3f626f59fd5f', // Legal Transparency
+  'abb99d95-cbb1-4617-8f8b-f220ef6028ca', // Prosecution
+];
+
+/**
  * Persists Local Lens activation state and pre-lens snapshot to localStorage.
  * @param {boolean} isActive
  * @param {{ selectedTopics: string[], invertedSpokes: object } | null} snapshot
