@@ -82,13 +82,22 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
 
       if (authedUser) {
         // SWR hydrate from authed ev-context slice (compass part)
+        // Also kept as fallback if the API returns empty (cross-app calibration case)
+        let evCachedAnswers = null;
         try {
           const authedSlice = await evContext.getAuthedSlice(authedUser.id);
           if (authedSlice?.compass?.a && typeof authedSlice.compass.a === 'object') {
             const cached = convertGuestAnswersToApiFormat(authedSlice.compass.a, topics);
-            if (cached.length > 0) setUserAnswers(cached);
-            if (authedSlice.compass.i && typeof authedSlice.compass.i === 'object') {
-              setInvertedSpokes(authedSlice.compass.i);
+            if (cached.length > 0) {
+              setUserAnswers(cached);
+              if (authedSlice.compass.i && typeof authedSlice.compass.i === 'object') {
+                setInvertedSpokes(authedSlice.compass.i);
+              }
+              evCachedAnswers = {
+                answers: cached,
+                selected: Array.isArray(authedSlice.compass.s) ? authedSlice.compass.s : [],
+                inverted: authedSlice.compass.i && typeof authedSlice.compass.i === 'object' ? authedSlice.compass.i : {},
+              };
             }
           }
         } catch { /* broker offline */ }
@@ -99,15 +108,23 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
         ]);
 
         if (answersResult.length === 0) {
-          const guestCache = loadGuestCompass();
-          if (guestCache) {
-            if (import.meta.env.DEV) console.log('[CompassContext] priority=storage (authed+empty-api, guest cache fallback)', { guestCache });
-            answers = convertGuestAnswersToApiFormat(guestCache.answers, topics);
-            selected = guestCache.selectedTopics;
-            inverted = guestCache.invertedSpokes || {};
+          if (evCachedAnswers) {
+            // Compass calibrated in another app — API hasn't synced yet but ev-context has it
+            if (import.meta.env.DEV) console.log('[CompassContext] priority=ev-context (authed+empty-api, cross-app fallback)', evCachedAnswers);
+            answers = evCachedAnswers.answers;
+            selected = evCachedAnswers.selected;
+            inverted = evCachedAnswers.inverted;
           } else {
-            if (import.meta.env.DEV) console.log('[CompassContext] priority=empty (authed, no api answers, no guest cache)');
-            clearGuestCompass();
+            const guestCache = loadGuestCompass();
+            if (guestCache) {
+              if (import.meta.env.DEV) console.log('[CompassContext] priority=storage (authed+empty-api, guest cache fallback)', { guestCache });
+              answers = convertGuestAnswersToApiFormat(guestCache.answers, topics);
+              selected = guestCache.selectedTopics;
+              inverted = guestCache.invertedSpokes || {};
+            } else {
+              if (import.meta.env.DEV) console.log('[CompassContext] priority=empty (authed, no api answers, no guest cache)');
+              clearGuestCompass();
+            }
           }
         } else {
           if (import.meta.env.DEV) console.log('[CompassContext] priority=api (authed, api answers count:', answersResult.length, ')');
@@ -238,6 +255,24 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
           const authRes = await publicFetch('/account/me');
           if (authRes.status === 401) {
             clearToken();
+            // Token expired — retry SSO before giving up (cookie session may still be valid)
+            try {
+              const controller = new AbortController();
+              const timeout = setTimeout(() => controller.abort(), 2000);
+              const ssoRes = await fetch(`${API_BASE}/auth/session`, {
+                credentials: 'include',
+                signal: controller.signal,
+              });
+              clearTimeout(timeout);
+              if (ssoRes.ok) {
+                const ssoData = await ssoRes.json();
+                if (ssoData.access_token) {
+                  setToken(ssoData.access_token);
+                  const retryRes = await publicFetch('/account/me');
+                  if (retryRes.ok) authedUser = await retryRes.json();
+                }
+              }
+            } catch { /* SSO offline — remain as guest */ }
           } else if (authRes.ok) {
             authedUser = await authRes.json();
           }
