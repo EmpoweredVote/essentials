@@ -1176,6 +1176,16 @@ export default function Results() {
         }).filter(Boolean)
       : null;
     const scopedTopicsForPol = deriveScopedTopics(allTopics, pol.district_type);
+
+    // Pre-check: only show overlay when there are likely ≥3 bilateral answers.
+    // MiniCompass does the authoritative check internally — this just avoids rendering
+    // a gradient fade for politicians where the compass would silently return null.
+    const userAnsweredIds = new Set((rawUserAnswers || []).map((a) => String(a.topic_id)));
+    const bilateralCount = (polAnswersForMini || []).filter(
+      (a) => a.value > 0 && userAnsweredIds.has(String(a.topic_id))
+    ).length;
+    const showCompassOverlay = bilateralCount >= 3;
+
     const gradientBg = isDark
       ? 'linear-gradient(to right, transparent, #1a2235 35%)'
       : isCandidate
@@ -1195,27 +1205,29 @@ export default function Results() {
           variant="horizontal"
           footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
         />
-        <div
-          onClick={handleCardClick}
-          style={{
-            position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            background: gradientBg,
-            borderRadius: '0 8px 8px 0',
-            cursor: 'pointer', zIndex: 1,
-          }}
-        >
-          <MiniCompass
-            userAnswers={rawUserAnswers}
-            polAnswers={polAnswersForMini}
-            selectedTopics={selectedTopics}
-            scopedTopics={scopedTopicsForPol}
-            invertedSpokes={invertedSpokes}
-            localLensActive={localLensActive}
-            isDark={isDark}
-            size={190}
-          />
-        </div>
+        {showCompassOverlay && (
+          <div
+            onClick={handleCardClick}
+            style={{
+              position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: gradientBg,
+              borderRadius: '0 8px 8px 0',
+              cursor: 'pointer', zIndex: 1,
+            }}
+          >
+            <MiniCompass
+              userAnswers={rawUserAnswers}
+              polAnswers={polAnswersForMini}
+              selectedTopics={selectedTopics}
+              scopedTopics={scopedTopicsForPol}
+              invertedSpokes={invertedSpokes}
+              localLensActive={localLensActive}
+              isDark={isDark}
+              size={190}
+            />
+          </div>
+        )}
       </div>
     );
   };
