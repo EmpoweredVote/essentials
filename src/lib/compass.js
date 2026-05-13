@@ -512,3 +512,29 @@ export function computeDisplaySpokes({
 
   return { displayTopicIds, replacedSpokes, hasEnoughSpokes };
 }
+
+/**
+ * Compute a new invertedSpokes map after applying Stance Max or Stance Min.
+ *
+ * Max: spokes whose display value is ≤ 2 are flipped outward (toward the edge).
+ * Min: spokes whose display value is ≥ 4 are flipped inward (toward center).
+ * Spokes at display value 3 are always left untouched.
+ * Stored answer values are never modified — only the inversion state changes.
+ *
+ * Formula: displayValue = isInverted ? (6 - storedValue) : storedValue
+ */
+export function computeStanceSpokes(direction, userAnswers, allTopics, invertedSpokes) {
+  const newMap = { ...invertedSpokes };
+  for (const answer of userAnswers) {
+    const v = Number(answer.value);
+    if (!v) continue;
+    const topic = allTopics.find(t => t.id === answer.topic_id);
+    if (!topic?.short_title) continue;
+    const short = topic.short_title;
+    const isInv = !!newMap[short];
+    const display = isInv ? (6 - v) : v;
+    if (direction === 'max' && display <= 2) newMap[short] = !isInv;
+    else if (direction === 'min' && display >= 4) newMap[short] = !isInv;
+  }
+  return newMap;
+}
