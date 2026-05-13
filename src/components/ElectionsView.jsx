@@ -695,7 +695,7 @@ export default function ElectionsView({
                                     : null;
                                   const scopedTopicsForRace = deriveScopedTopics(allTopics, race.districtType);
                                   return (
-                                    <div key={candidate.candidate_id} style={{ position: 'relative' }}>
+                                    <div key={candidate.candidate_id} style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden' }}>
                                       <PoliticianCard
                                         id={candidate.candidate_id}
                                         imageSrc={candidate.photo_url || undefined}

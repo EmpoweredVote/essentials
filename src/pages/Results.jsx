@@ -455,6 +455,16 @@ export default function Results() {
     try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
     if (val) enableCompass();
   };
+  // Auto-enable compass for calibrated users who haven't set an explicit preference
+  useEffect(() => {
+    if (!rawUserAnswers || rawUserAnswers.length < 3) return;
+    try {
+      if (localStorage.getItem('ev:compassMode') === null) {
+        setCompassMode(true);
+        localStorage.setItem('ev:compassMode', 'true');
+      }
+    } catch {}
+  }, [rawUserAnswers]);
   // Scroll-spy tier tracking for building image swap
   const [scrollActiveTier, setScrollActiveTier] = useState('Local');
 
@@ -1171,7 +1181,7 @@ export default function Results() {
         ? 'linear-gradient(to right, transparent, rgba(255,254,245,0.97) 30%)'
         : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)';
     return (
-      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative' }}>
+      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative', borderRadius: '10px', overflow: 'hidden' }}>
         <PoliticianCard
           id={pol.id}
           imageSrc={imgData.url}

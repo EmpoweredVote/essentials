@@ -165,6 +165,11 @@ body {
   color: #9ca3af !important;
 }
 
+/* CompassKey: hide "Topic = no stance" legend item — it's always the last span child */
+[role="region"][aria-label="Compass legend"] > span:last-of-type {
+  display: none !important;
+}
+
 /* MiniCompass: SVG and its foreignObject tooltip must overflow the container frame */
 .mini-compass-host svg {
   overflow: visible !important;
