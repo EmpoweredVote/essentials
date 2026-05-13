@@ -3,15 +3,29 @@ import {
   useFloating, useHover, useFocus, useDismiss, useRole, useInteractions,
   FloatingPortal, offset, flip, shift, autoUpdate,
 } from '@floating-ui/react';
-import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, CompassKey, useMediaQuery, tierColors, pillars } from '@empoweredvote/ev-ui';
+import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassKey, useMediaQuery, tierColors, pillars } from '@empoweredvote/ev-ui';
 import IconOverlay from './IconOverlay';
+import MiniCompass from './MiniCompass';
 import { getBranch } from '../utils/branchType';
 import { getOfficeDescription } from '../utils/officeDescriptions';
 import { useCompass } from '../contexts/CompassContext';
-import { computeVariant } from '../lib/classify';
 import { fetchPoliticianAnswers } from '../lib/compass';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
+
+/** Derive scope-filtered topic pool from a race's districtType */
+function deriveScopedTopics(allTopics, districtType) {
+  if (!districtType || allTopics.length === 0) return allTopics;
+  const upper = String(districtType).toUpperCase();
+  const key = upper.startsWith('STATE_')                  ? 'applies_state'
+            : upper.startsWith('NATIONAL_JUDICIAL')        ? 'applies_judicial'
+            : upper === 'JUDICIAL'                         ? 'applies_judicial'
+            : upper.startsWith('NATIONAL_')                ? 'applies_federal'
+            : (upper === 'LOCAL' || upper === 'LOCAL_EXEC' || upper === 'COUNTY' || upper === 'SCHOOL') ? 'applies_local'
+            : null;
+  if (!key) return allTopics;
+  return allTopics.filter((t) => t[key] !== false);
+}
 
 /** Timezone-safe days-until helper */
 function daysUntil(dateStr) {
@@ -237,7 +251,7 @@ export default function ElectionsView({
   onCandidateClick,
   isDark = false,
 }) {
-  const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances } = useCompass();
+  const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances, localLensActive, selectedTopics } = useCompass();
   const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
     if (a.topic?.short_title) return a;
     const topic = allTopics.find(t => t.id === a.topic_id);
@@ -655,33 +669,49 @@ export default function ElectionsView({
                                     );
                                   }
 
-                                  const polForCard = {
-                                    id: candidate.candidate_id,
-                                    full_name: candidate.full_name,
-                                    office_running_for: cardTitle,
-                                    district_label: cardSubtitle,
-                                    photo_origin_url: candidate.photo_url || undefined,
-                                    imageFocalPoint: candidate.focal_point || 'center 20%',
-                                    ballot,
-                                    branch,
-                                    hasStances: candHasStances,
-                                    stances: (polIdKey && stancesByPolId[polIdKey]) || {},
-                                    running_unopposed: isUnopposed && candidate.candidate_status !== 'withdrawn'
-                                      ? (seats > 1 ? `Running Unopposed (${seats} seats)` : true)
-                                      : false,
-                                    withdrawn: candidate.candidate_status === 'withdrawn',
-                                  };
+                                  // Compass mode: horizontal PoliticianCard with MiniCompass in the right-side space
+                                  const polAnswersForMini = (polIdKey && stancesByPolId[polIdKey])
+                                    ? Object.entries(stancesByPolId[polIdKey]).map(([short_title, value]) => {
+                                        const t = allTopics.find((x) => x.short_title === short_title);
+                                        return t ? { topic_id: t.id, value } : null;
+                                      }).filter(Boolean)
+                                    : null;
+                                  const scopedTopicsForRace = deriveScopedTopics(allTopics, race.districtType);
                                   return (
-                                    <div key={candidate.candidate_id} style={{ height: '100%' }}>
-                                      <CompassCardVertical
-                                        politician={polForCard}
+                                    <div key={candidate.candidate_id} style={{ position: 'relative', display: 'flex', alignItems: 'stretch', gap: '8px' }}>
+                                      <div style={{ flex: 1, minWidth: 0 }}>
+                                        <PoliticianCard
+                                          id={candidate.candidate_id}
+                                          imageSrc={candidate.photo_url || undefined}
+                                          imageFocalPoint={candidate.focal_point || 'center 20%'}
+                                          name={candidate.full_name}
+                                          title={cardTitle}
+                                          subtitle={cardSubtitle}
+                                          onClick={() => onCandidateClick(candidate.candidate_id)}
+                                          variant="horizontal"
+                                          style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
+                                          footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
+                                        />
+                                        {candidate.candidate_status === 'withdrawn' && (
+                                          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(120,0,0,0.78)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                            Withdrawn
+                                          </div>
+                                        )}
+                                        {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
+                                          <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                            {seats > 1 ? `${seats} seats` : 'Unopposed'}
+                                          </div>
+                                        )}
+                                      </div>
+                                      <MiniCompass
                                         userAnswers={userAnswers}
+                                        polAnswers={polAnswersForMini}
+                                        selectedTopics={selectedTopics}
+                                        scopedTopics={scopedTopicsForRace}
                                         invertedSpokes={invertedSpokes}
-                                        variant={computeVariant({ office_title: cardTitle, district_type: race.districtType }, rawUserAnswers, candHasStances)}
-                                        surface="elections"
-                                        tierVisuals={isDark ? { bg: '#1a2235', accent: '#59b0c4', text: '#59b0c4' } : undefined}
-                                        onBuildCompass={handleBuildCompass}
-                                        onClick={() => onCandidateClick(candidate.candidate_id)}
+                                        localLensActive={localLensActive}
+                                        isDark={isDark}
+                                        size={120}
                                       />
                                     </div>
                                   );
