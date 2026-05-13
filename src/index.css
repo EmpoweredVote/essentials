@@ -188,3 +188,33 @@ body {
 .dark [role="region"][aria-label="Compass legend"] button {
   color: #9ca3af !important;
 }
+
+/* Stance Min / Max buttons — sit beside CompassKey in the sticky bar */
+.stance-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #E2EBEF;
+  background: #FFFFFF;
+  color: #00657C;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.15s, border-color 0.15s;
+}
+.stance-btn:hover {
+  background: #F0F8FA;
+  border-color: #C9CFD1;
+}
+.dark .stance-btn {
+  background: #1a2235;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #d1d5db;
+}
+.dark .stance-btn:hover {
+  background: #1e2a3a;
+  border-color: rgba(255, 255, 255, 0.25);
+}

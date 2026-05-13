@@ -1540,28 +1540,8 @@ export default function Results() {
               <div style={{ pointerEvents: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
                 {(rawUserAnswers?.length ?? 0) >= 3 && (
                   <div style={{ display: 'flex', gap: 4 }}>
-                    <button
-                      onClick={handleStanceMin}
-                      title="Stance Min — pull strong spokes inward"
-                      style={{
-                        width: 28, height: 28, borderRadius: 6, border: '1px solid #ccc',
-                        background: isDark ? '#2a2a2a' : '#fff', cursor: 'pointer',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 14, lineHeight: 1,
-                        color: isDark ? '#e0e0e0' : '#333',
-                      }}
-                    >⊟</button>
-                    <button
-                      onClick={handleStanceMax}
-                      title="Stance Max — push weak spokes outward"
-                      style={{
-                        width: 28, height: 28, borderRadius: 6, border: '1px solid #ccc',
-                        background: isDark ? '#2a2a2a' : '#fff', cursor: 'pointer',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: 14, lineHeight: 1,
-                        color: isDark ? '#e0e0e0' : '#333',
-                      }}
-                    >⊞</button>
+                    <button className="stance-btn" onClick={handleStanceMin} title="Stance Min — pull strong spokes inward">⊟</button>
+                    <button className="stance-btn" onClick={handleStanceMax} title="Stance Max — push weak spokes outward">⊞</button>
                   </div>
                 )}
                 <CompassKey compact={!isDesktop} />
