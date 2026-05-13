@@ -708,7 +708,7 @@ export default function ElectionsView({
                                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                                           background: isDark
                                             ? 'linear-gradient(to right, transparent, #1a2235 35%)'
-                                            : 'linear-gradient(to right, transparent, rgba(249,250,251,0.97) 35%)',
+                                            : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)',
                                           borderRadius: '0 8px 8px 0',
                                           cursor: 'pointer', zIndex: 1,
                                         }}
