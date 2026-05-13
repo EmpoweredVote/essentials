@@ -887,7 +887,7 @@ export default function Results() {
       });
     });
     return () => { cancelled = true; };
-  }, [filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [compassMode, filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
   const handleBuildCompass = () => {
