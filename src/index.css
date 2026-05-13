@@ -120,10 +120,13 @@ body {
   background-color: #1e2a3a !important;
 }
 
-/* Also darken text that ev-ui sets with inline color */
-.dark .ev-politician-card p,
-.dark .ev-politician-card span {
-  color: inherit;
+/* Dark mode: ev-politician-card text — !important required; ev-ui uses inline styles */
+.dark .ev-politician-card h3 {
+  color: #f3f4f6 !important;
+}
+
+.dark .ev-politician-card p {
+  color: #d1d5db !important;
 }
 
 /* Dark mode: PoliticianProfile card — ev-ui uses inline styles so !important is required */
