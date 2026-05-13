@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { RadarChartCore, StanceAccordion } from '@empoweredvote/ev-ui';
-import { fetchPoliticianAnswers, buildAnswerMapByShortTitle } from '../lib/compass';
+import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 
@@ -34,6 +34,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     verdicts,
     initialTopicId,
     compassLoading,
+    localLensActive,
   } = useCompass();
   const location = useLocation();
 
@@ -87,71 +88,27 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   const returnUrl = window.location.origin + location.pathname + location.search;
   const ctaHref = `${COMPASS_URL}?return=${encodeURIComponent(returnUrl)}`;
 
-  // Build chart data using the spec §2 spoke-selection algorithm
+  // Build chart data via shared spoke-selection algorithm
   let topicsFiltered = [];
   let polData = {};
   let userData = {};
   let replacedSpokes = {};
-  let hasEnoughSpokes = true;
+  let hasEnoughSpokes = false;
 
   if (!polLoading && polAnswers !== null && scopedTopics.length > 0 && hasUserCompass) {
-    const polAnsweredSet = new Set(polAnswers.filter((a) => a.value > 0).map((a) => String(a.topic_id)));
-    const userAnsweredSet = new Set(userAnswers.map((a) => String(a.topic_id)));
-
-    let displayTopicIds = [];
-    const newReplacedSpokes = {};
-
-    if (selectedTopics && selectedTopics.length > 0) {
-      const topicById = new Map(scopedTopics.map((t) => [String(t.id), t]));
-
-      // Cap preferred spokes at MAX_SPOKES — post-calibration the Compass may
-      // incorrectly set all quiz topics as selected, which empties the replacement pool.
-      const preferredIds = selectedTopics.slice(0, MAX_SPOKES);
-      const preferredSet = new Set(preferredIds.map(String));
-
-      // Replacement pool: scoped topics not in preferred set where both parties have answered
-      // (includes overflow selected topics beyond MAX_SPOKES as candidates)
-      const replacementPool = scopedTopics.filter((t) =>
-        !preferredSet.has(String(t.id)) &&
-        userAnsweredSet.has(String(t.id)) &&
-        polAnsweredSet.has(String(t.id))
-      );
-      let ri = 0;
-
-      for (const id of preferredIds) {
-        const t = topicById.get(String(id));
-        if (!t) continue;
-
-        const userHas = userAnsweredSet.has(String(id));
-        const polHas = polAnsweredSet.has(String(id));
-
-        if (userHas && polHas) {
-          displayTopicIds.push(String(id));
-        } else if (ri < replacementPool.length) {
-          // Either side is missing an answer — replace with a topic both have covered
-          const sub = replacementPool[ri++];
-          displayTopicIds.push(String(sub.id));
-          newReplacedSpokes[sub.short_title] = true;
-        }
-        // else: no replacement available — spoke dropped
-      }
-    } else {
-      // Fallback: topics where both user and pol have answered
-      displayTopicIds = scopedTopics
-        .filter((t) => userAnsweredSet.has(String(t.id)) && polAnsweredSet.has(String(t.id)))
-        .map((t) => String(t.id));
-    }
-
-    // Cap at MAX_SPOKES
-    if (displayTopicIds.length > MAX_SPOKES) {
-      displayTopicIds = displayTopicIds.slice(0, MAX_SPOKES);
-    }
-
-    hasEnoughSpokes = displayTopicIds.length >= 3;
-    replacedSpokes = newReplacedSpokes;
+    const result = computeDisplaySpokes({
+      selectedTopics,
+      userAnswers,
+      polAnswers,
+      scopedTopics,
+      maxSpokes: MAX_SPOKES,
+      localLensActive,
+    });
+    hasEnoughSpokes = result.hasEnoughSpokes;
+    replacedSpokes = result.replacedSpokes;
 
     if (hasEnoughSpokes) {
-      const allowedShorts = displayTopicIds
+      const allowedShorts = result.displayTopicIds
         .map((id) => scopedTopics.find((t) => String(t.id) === id)?.short_title)
         .filter(Boolean);
 
