@@ -32,16 +32,16 @@ Requirements for the Compass Experience milestone. Phases 33–36.
 
 ### Global Controls Bar
 
-- [ ] **CTRL-01**: A global compass controls bar renders above the elections/reps list when compass mode is active; contains Min/Max buttons that operate on `CompassContext.invertedSpokes` and affect all mini compasses simultaneously
-- [ ] **CTRL-02**: Global controls bar includes a Local Lens toggle button that mirrors `localLensActive` state
+- [x] **CTRL-01**: A global compass controls bar renders above the elections/reps list when compass mode is active; contains Min/Max buttons that operate on `CompassContext.invertedSpokes` and affect all mini compasses simultaneously
+- [x] **CTRL-02**: Global controls bar includes a Local Lens toggle button that mirrors `localLensActive` state
 
 ### Compass-Default Experience
 
-- [ ] **DEFAULT-01**: Calibrated users (those with ≥1 answer in `CompassContext.userAnswers`) see compass tiles by default on the `/elections` page — no checkbox interaction required
-- [ ] **DEFAULT-02**: Same compass-default behavior on the Results page Elections tab
-- [ ] **DEFAULT-03**: Same compass-default behavior on the Results page Representatives tab
-- [ ] **DEFAULT-04**: Uncalibrated users (0 answers) see the existing `PoliticianCard` (horizontal) view unchanged — no regression
-- [ ] **DEFAULT-05**: `/elections` page and Results Elections tab are kept in feature parity for all compass-related changes throughout this milestone
+- [x] **DEFAULT-01**: Calibrated users (those with ≥3 answers in `CompassContext.userAnswers`) see compass tiles by default on the `/elections` page — no checkbox interaction required
+- [x] **DEFAULT-02**: Same compass-default behavior on the Results page Elections tab
+- [x] **DEFAULT-03**: Same compass-default behavior on the Results page Representatives tab
+- [x] **DEFAULT-04**: Uncalibrated users (0 answers) see the existing `PoliticianCard` (horizontal) view unchanged — no regression
+- [x] **DEFAULT-05**: `/elections` page and Results Elections tab are kept in feature parity for all compass-related changes throughout this milestone
 
 ## Future Requirements
 
@@ -82,13 +82,13 @@ Requirements for the Compass Experience milestone. Phases 33–36.
 | MODAL-01 | Phase 35 | Pending |
 | MODAL-02 | Phase 35 | Pending |
 | MODAL-03 | Phase 35 | Pending |
-| CTRL-01 | Phase 36 | Pending |
-| CTRL-02 | Phase 36 | Pending |
-| DEFAULT-01 | Phase 36 | Pending |
-| DEFAULT-02 | Phase 36 | Pending |
-| DEFAULT-03 | Phase 36 | Pending |
-| DEFAULT-04 | Phase 36 | Pending |
-| DEFAULT-05 | Phase 36 | Pending |
+| CTRL-01 | Phase 36 | Complete |
+| CTRL-02 | Phase 36 | Complete |
+| DEFAULT-01 | Phase 36 | Complete |
+| DEFAULT-02 | Phase 36 | Complete |
+| DEFAULT-03 | Phase 36 | Complete |
+| DEFAULT-04 | Phase 36 | Complete |
+| DEFAULT-05 | Phase 36 | Complete |
 
 **Coverage:**
 - v4.0 requirements: 21 total

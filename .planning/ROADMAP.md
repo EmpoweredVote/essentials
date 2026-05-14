@@ -8,7 +8,7 @@
 - ✅ **v3.0 Collin County, TX Coverage** — Phases 12-21 (shipped 2026-05-12)
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
-- 🚧 **v4.0 Compass Experience** — Phases 33-36 (in progress)
+- ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14)
 
 ## Phases
 
@@ -172,7 +172,7 @@ Full details: [milestones/v3.2-ROADMAP.md](milestones/v3.2-ROADMAP.md)
 
 ---
 
-### 🚧 v4.0 Compass Experience (In Progress)
+### ✅ v4.0 Compass Experience (Phases 33-36) — SHIPPED 2026-05-14
 
 **Milestone Goal:** Turn the compass from an opt-in checkbox into the primary experience for calibrated users — Local Lens preset, mini compasses on every candidate tile, hover modals, and synchronized global controls.
 
@@ -216,16 +216,16 @@ Plans:
 **Requirements**: CTRL-01, CTRL-02, DEFAULT-01, DEFAULT-02, DEFAULT-03, DEFAULT-04, DEFAULT-05
 **Success Criteria** (what must be TRUE):
   1. A compass controls bar (Min/Max + Local Lens toggle) renders above the elections/reps list when compass mode is active
-  2. Calibrated users (≥1 answer) arrive at `/elections` and see compass tiles immediately — no checkbox interaction
+  2. Calibrated users (≥3 answers) arrive at `/elections` and see compass tiles immediately — no checkbox interaction
   3. Same default on Results page Elections tab and Representatives tab
   4. Uncalibrated users see the existing PoliticianCard (horizontal) view with no change
   5. `/elections` and Results Elections tab are in feature parity for all compass interactions
 **Plans**: 3 plans
 
 Plans:
-- [ ] 36-01-PLAN.md — Extract CompassControlsBar shared component
-- [ ] 36-02-PLAN.md — Refactor Elections.jsx to stateful compassMode + consume CompassControlsBar
-- [ ] 36-03-PLAN.md — Refactor Results.jsx to consume CompassControlsBar + verify tab parity
+- [x] 36-01-PLAN.md — Extract CompassControlsBar shared component
+- [x] 36-02-PLAN.md — Refactor Elections.jsx to stateful compassMode + consume CompassControlsBar
+- [x] 36-03-PLAN.md — Refactor Results.jsx to consume CompassControlsBar + verify tab parity
 
 ---
 
@@ -286,4 +286,4 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 33. Local Lens State System | v4.0 | 1/1 | Complete | 2026-05-12 |
 | 34. Mini Compass Tile Component | v4.0 | 3/3 | Complete | 2026-05-13 |
 | 35. Hover Modal — Full Compass | v4.0 | 0/TBD | Parked | - |
-| 36. Global Controls + Compass Default | v4.0 | 0/TBD | Pending | - |
+| 36. Global Controls + Compass Default | v4.0 | 3/3 | Complete | 2026-05-14 |
