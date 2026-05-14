@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 36 (Global Controls Bar + Compass-Default Mode) — In progress
-Plan: 1 of TBD
-Status: v4.0 Compass Experience — Phase 34 COMPLETE; Phase 35 parked; Phase 36 Plan 01 complete (CompassControlsBar extracted)
-Last activity: 2026-05-14 — Completed 36-01-PLAN.md (CompassControlsBar.jsx created; Plans 36-02/03 will wire consumers)
+Plan: 3 of TBD
+Status: v4.0 Compass Experience — Phase 34 COMPLETE; Phase 35 parked; Phase 36 Plans 01/02/03 complete (CompassControlsBar extracted + wired to Elections + Results)
+Last activity: 2026-05-14 — Completed 36-03-PLAN.md (Results.jsx consumes CompassControlsBar; dual-tab parity verified; CTRL-01/02 + DEFAULT-02/03/05 satisfied)
 
 ## Project Reference
 
@@ -349,3 +349,4 @@ See: .planning/PROJECT.md (updated 2026-05-12 after v4.0 milestone start)
 *Updated: 2026-05-13 — Phase 34-02 COMPLETE; MiniCompass.jsx created (138 lines); pure-presentational label-free RadarChartCore tile; INNER_SVG_SIZE=200 with CSS-constrained 120px container; labelFontSize=0+tightFit=true+padding=10; silent absence (return null) when <3 spokes; container opacity 0.7 when hasReplacedSpokes&&localLensActive; overflow:hidden added for circular clip; build passes; commit b14d0ec; Plan 34-03 ElectionsView wiring is next*
 *Updated: 2026-05-13 — Phase 34 COMPLETE (3/3 plans); MiniCompass overlaid on candidate tiles in Elections + Representatives pages (size=190px); portal tooltip (createPortal to document.body, getScreenCTM() dot hit-detection); ringColor=transparent removes guide rings; transparent event-capture overlay suppresses built-in SVG tooltip; wrapper div borderRadius:10px+overflow:hidden clips gradient to card boundary; CompassKey dark mode + "Topic=no stance" hidden via CSS; race deduplication by candidate-ID set; auto-enable compass for calibrated users (localStorage null check); commits fca5adc–82ca916; Phase 35 Hover Modal is next*
 *Updated: 2026-05-14 — Phase 36-01 COMPLETE; CompassControlsBar.jsx created (62 lines, pure presentational); extracted from Elections.jsx lines 226-271 + Results.jsx lines 1526-1575; showStanceButtons >= 3 (Results.jsx defensive pattern); marginBottom:-70 load-bearing preserved; no compassMode prop (parent gates render); build passes; commit a287283; Plans 36-02/03 will wire consumers*
+*Updated: 2026-05-14 — Phase 36-03 COMPLETE; Results.jsx inline sticky controls block (~50 lines) replaced with <CompassControlsBar />; controls block kept OUTSIDE activeView ternary (covers both Representatives + Elections tabs); (activeQuery || browseResults) guard preserved; CompassKey import removed; all 6 human verification tests passed; DEFAULT-02/03/05 satisfied; CTRL-01/02 satisfied; Min/Max Heroicon SVG update applied to CompassControlsBar.jsx by orchestrator (commit 77b3d77); task commit 27d8385*
