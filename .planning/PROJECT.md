@@ -67,33 +67,16 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ 38 TX US House members as NATIONAL_LOWER + Collin County G4020 geofence; PostGIS county-congressional intersection live in production — v3.0
 - ✓ 8 TX state/federal executives (Abbott, Patrick, Paxton, Hegar, Buckingham, Miller, Cornyn, Cruz) with chambers, offices, Wikipedia headshots — v3.0
 - ✓ 31 TX senators + 150 TX state reps with 181 geofence boundaries; any TX address returns correct STATE_UPPER + STATE_LOWER — v3.0
+- ✓ `LOCAL_LENS_TOPICS` (8 UUIDs) + `toggleLocalLens()` in CompassContext with snapshot/restore and localStorage persistence — one-click preset for local governance topics — v4.0
+- ✓ `computeDisplaySpokes()` pure function in `compass.js` — single source of truth for lens-aware bilateral spoke selection shared by CompassCard and MiniCompass — v4.0
+- ✓ `MiniCompass.jsx` — label-free RadarChartCore tile with portal tooltip, silent absence below 3 bilateral spokes, container opacity signal for lens-on replacement spokes — v4.0
+- ✓ Mini compass wired into Elections + Representatives candidate tiles — overlay pattern, per-race scope filtering, portal tooltip, race deduplication — v4.0
+- ✓ `CompassControlsBar.jsx` shared sticky component — Min/Max (Heroicon SVGs) + Local Lens + Judicial Lens toggle; single source of truth for controls on both pages — v4.0
+- ✓ Compass-default mode — calibrated users (≥3 answers) auto-enable compass on `/elections` and Results pages; localStorage null-check; explicit `'false'` suppresses re-enable — v4.0
 
 ### Active
 
-<!-- v4.0 Compass Experience — building Local Lens + mini compass tiles + hover modal + compass-default mode -->
-
-**Local Lens System**
-- [ ] CompassContext exposes `localLensActive` + `toggleLocalLens()` backed by 8 curated topic UUIDs
-- [ ] Activating lens saves prior selectedTopics + invertedSpokes; deactivating restores them exactly
-- [ ] Lens state persisted to localStorage
-
-**Mini Compass on Candidate Tiles**
-- [ ] Mini `RadarChartCore` (no spoke labels) renders in the right-side space of each candidate tile
-- [ ] Minimum 3 overlapping spokes required; silently absent when threshold not met
-- [ ] Spoke fallback: missing bilateral answers replaced from scoped pool
-- [ ] Green magnifying-glass icon in top-right; clicking any tile's icon toggles global lens state
-
-**Hover Modal**
-- [ ] Hovering a mini compass opens a FloatingPortal with full titled compass + Min/Max + Lens icon
-- [ ] Modal dismisses on mouse-leave
-
-**Global Controls Bar**
-- [ ] Global Min/Max + Local Lens toggle bar above elections list, affecting all compasses simultaneously
-
-**Compass-Default Experience**
-- [ ] Calibrated users (≥1 answer) see compass tiles by default on `/elections`, Results Elections tab, Results Reps tab
-- [ ] Uncalibrated users see existing `PoliticianCard` view unchanged
-- [ ] `/elections` and Results Elections tab in feature parity
+<!-- Next milestone requirements will be defined via /gsd:new-milestone -->
 
 ### Out of Scope
 
@@ -114,6 +97,7 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Shipped v3.0**: Collin County, TX coverage — 10 phases, 33 plans, 22/22 requirements (2026-04-30 → 2026-05-12). 23 TX cities seeded (151 offices, 120+ politicians). 38 US House + 31 senators + 150 state reps with full geofence boundaries. 26 compass stances for 19 TX politicians.
 - **Shipped v3.1**: Local Compass Expansion — 4 phases, 7 plans, 25/26 requirements (2026-05-05). 10 LOCAL topics + 10 FC communities + scope filtering wired in essentials frontend.
 - **Shipped v3.2**: Legal Candidate Evaluation Framework — 7 phases, 17 plans, 15/15 active requirements (2026-05-10). Judicial compass, bar evaluation data, stance research for 3 LA City Attorney candidates, legal donor activity. 67 files, ~11k LOC delta.
+- **Shipped v4.0**: Compass Experience — 4 phases (3 active + 1 parked), 7 plans, all requirements satisfied (2026-05-12 → 2026-05-14). 32 files changed, 4,919 insertions. MiniCompass tiles, Local Lens preset, CompassControlsBar shared component, compass-default mode for calibrated users.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
 - **Database state**: 2 elections (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124+ candidates, 7,290+ geofence boundaries (181 TX state legislative + 38 TX congressional + 1 Collin County G4020 added in v3.0). Discovery pipeline now auto-populates candidates for 23 TX cities (+ existing CA/IN jurisdictions).
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
@@ -161,17 +145,13 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Plain-language description standard for judicial_disciplinary_records | Voter-facing summary of what judge did, not bureaucratic label; description field is primary p-tag | ✓ Good — v3.2 |
 | isLegalCandidate 6-condition parity across Profile.jsx + CandidateProfile.jsx | Incumbents use office_title; candidates need position_name as additional signal — intentional asymmetry documented | ✓ Good — v3.2 |
 | dScope fallback: isLegalCandidate ? 'judicial' : null | Catches city attorney candidates with null district_type; prevents CompassCard from rendering legislative topics | ✓ Good — v3.2 |
-
-## Current Milestone: v4.0 Compass Experience
-
-**Goal:** Turn the compass from an opt-in checkbox into the primary experience for calibrated users — with a Local Lens preset, mini compasses on every candidate tile, hover-to-expand modals, and synchronized global controls.
-
-**Target features:**
-- Local Lens toggle (8 curated topic UUIDs; saves/restores prior state on toggle off)
-- Mini compass on candidate tiles (no labels, max size, 3-spoke minimum, fallback algorithm)
-- Hover modal with full labeled compass + Min/Max + Lens controls
-- Global Min/Max + Lens control bar above elections list
-- Compass mode as default for calibrated users on Elections + Results pages
+| computeDisplaySpokes() as single source of truth | Extracted from CompassCard to compass.js; both CompassCard and MiniCompass share lens-aware bilateral spoke selection — never duplicate this algorithm | ✓ Good — v4.0 |
+| INNER_SVG_SIZE=200 with CSS-constrained container | RadarChartCore foreignObjects (190px) and hit-dots (r=14) do not scale with size prop; always pass 200 internally, constrain via CSS outer div | ✓ Good — v4.0 |
+| Container opacity 0.7 only when (hasReplacedSpokes && localLensActive) | Replacement spokes only need visual signal when Lens forces the topic set; when Lens is OFF, replacements are normal user-selected fallbacks | ✓ Good — v4.0 |
+| marginBottom: -70 load-bearing sticky overlay | Must not be removed — scroll behavior for controls bar breaks without it | ✓ Good — v4.0 |
+| MINI-05/06 per-tile Lens icon superseded by CTRL-02 | Global controls bar is the sole Local Lens entry point; per-tile magnifying-glass accepted as design change 2026-05-14 | ✓ Good — v4.0 |
+| Phase 35 Hover Modal parked | Spoke tooltips (Phase 34) + full-page compass navigation serve the information need; hover modal would conflict with tooltip layer | ✓ Good — v4.0 |
+| localStorage null-check auto-enable pattern | ev:compassMode absent → auto-enable; explicit 'false' suppresses re-enable on reload — canonical pattern for both Elections.jsx and Results.jsx | ✓ Good — v4.0 |
 
 ---
-*Last updated: 2026-05-12 after v4.0 Compass Experience milestone start*
+*Last updated: 2026-05-14 after v4.0 Compass Experience milestone*

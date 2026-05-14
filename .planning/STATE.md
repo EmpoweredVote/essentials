@@ -2,17 +2,17 @@
 
 ## Current Position
 
-Phase: 36 (Global Controls Bar + Compass-Default Mode) — COMPLETE
-Plan: 3 of 3
-Status: v4.0 Compass Experience — Phase 36 COMPLETE (all 3 plans done); Phase 35 parked
-Last activity: 2026-05-14 — Completed 36-02-SUMMARY.md (Elections.jsx stateful compassMode + CompassControlsBar wired; 5/5 checkpoint tests passed; Heroicon SVG fix 77b3d77)
+Phase: — (planning next milestone)
+Plan: Not started
+Status: v4.0 Compass Experience COMPLETE — all phases shipped; ready for /gsd:new-milestone
+Last activity: 2026-05-14 — v4.0 milestone archived; git tagged v4.0
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-12 after v4.0 milestone start)
+See: .planning/PROJECT.md (updated 2026-05-14 after v4.0 milestone)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 34 — Mini Compass Tile Component
+**Current focus:** Planning next milestone
 
 ## Accumulated Context
 

@@ -1,5 +1,32 @@
 # Milestones
 
+## v4.0 Compass Experience (Shipped: 2026-05-14)
+
+**Delivered:** Turned the political compass from an opt-in checkbox into the primary experience for calibrated users — mini compasses on every candidate tile, a Local Lens preset that snaps to 8 curated local topics, synchronized global Min/Max + Lens controls, and automatic compass-default mode on the Elections and Results pages.
+
+**Phases completed:** 33-36 (7 plans total; Phase 35 Hover Modal intentionally parked)
+
+**Key accomplishments:**
+
+- `LOCAL_LENS_TOPICS` (8 verified UUIDs) + `toggleLocalLens()` in CompassContext with snapshot/restore and localStorage persistence — one click to filter all compasses to housing/homelessness/public safety/immigration/transportation topics
+- `computeDisplaySpokes()` extracted as a shared pure function in `compass.js` — single source of truth for lens-aware bilateral spoke selection across CompassCard and MiniCompass; fallback algorithm and maxSpokes cap preserved
+- `MiniCompass.jsx` — label-free `RadarChartCore` tile with portal tooltip (getScreenCTM dot hit-detection), silent absence below 3 bilateral spokes, and container opacity 0.7 when replacement spokes are present with Lens active
+- Mini compass wired into Elections + Representatives candidate tiles via overlay pattern — gradient fade, per-race scope filtering, race deduplication, auto-enable for calibrated users
+- `CompassControlsBar.jsx` shared component — sticky Min/Max (Heroicon SVG arrows-pointing-in/out) + Local Lens + Judicial Lens toggle bar extracted from both pages; single source of truth for controls
+- Calibrated users (≥3 answers) arrive at `/elections` and Results in compass mode automatically — localStorage null-check auto-enable; explicit `'false'` suppresses re-enable; dual-tab parity verified (Elections + Reps tabs)
+
+**Stats:**
+
+- 32 files changed (4,919 insertions, 221 deletions)
+- 3 days (2026-05-12 → 2026-05-14)
+- 4 phases (3 active + 1 parked), 7 plans
+
+**Git range:** `f4299302` (docs(33): research phase) → `fa88e8c` (docs(36): complete phase)
+
+**What's next:** Planning next milestone — `/gsd:new-milestone`
+
+---
+
 ## v3.0 Collin County, TX Coverage (Shipped: 2026-05-12)
 
 **Delivered:** Populated the Essentials + Compass database for 23 Collin County, TX cities — government structures, 120+ incumbent officials across all tiers, discovery pipeline setup, headshots for Tier 1+2, compass stances where public record exists, and full TX state/federal coverage including 38 US House members and all 31 senators + 150 state reps with geofence boundaries.

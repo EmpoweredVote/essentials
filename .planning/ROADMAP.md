@@ -8,7 +8,7 @@
 - ✅ **v3.0 Collin County, TX Coverage** — Phases 12-21 (shipped 2026-05-12)
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
-- ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14)
+- ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 
 ## Phases
 
@@ -170,62 +170,17 @@ Full details: [milestones/v3.2-ROADMAP.md](milestones/v3.2-ROADMAP.md)
 
 ---
 
----
+<details>
+<summary>✅ v4.0 Compass Experience (Phases 33-36) — SHIPPED 2026-05-14</summary>
 
-### ✅ v4.0 Compass Experience (Phases 33-36) — SHIPPED 2026-05-14
+- [x] Phase 33: Local Lens State System (1/1 plans) — completed 2026-05-12
+- [x] Phase 34: Mini Compass Tile Component (3/3 plans) — completed 2026-05-13
+- [ ] Phase 35: Hover Modal (0/TBD) — PARKED (design superseded by spoke tooltips)
+- [x] Phase 36: Global Controls Bar + Compass-Default Mode (3/3 plans) — completed 2026-05-14
 
-**Milestone Goal:** Turn the compass from an opt-in checkbox into the primary experience for calibrated users — Local Lens preset, mini compasses on every candidate tile, hover modals, and synchronized global controls.
+Full details: [milestones/v4.0-ROADMAP.md](milestones/v4.0-ROADMAP.md)
 
-#### Phase 33: Local Lens State System
-**Goal**: CompassContext supports a Local Lens toggle that snapshots + restores user state and applies a curated 8-topic preset to all compasses simultaneously
-**Requirements**: LENS-01, LENS-02, LENS-03, LENS-04, LENS-05
-**Success Criteria** (what must be TRUE):
-  1. `toggleLocalLens()` switches `localLensActive` from false → true and back
-  2. When activated, all CompassCard/CompassCardVertical instances see the 8 LOCAL_LENS_TOPICS as their topic set
-  3. When deactivated, the exact prior `selectedTopics` and `invertedSpokes` are restored
-  4. Refreshing the page with lens active keeps it active (localStorage persisted)
-  5. Refreshing with lens inactive restores the pre-lens state correctly
-**Plans**: 1 plan
-
-Plans:
-- [x] 33-01-PLAN.md — Verify UUIDs, add LOCAL_LENS_TOPICS + helpers to compass.js, wire localLensActive/toggleLocalLens into CompassContext
-
-#### Phase 34: Mini Compass Tile Component
-**Goal**: Calibrated users on /elections see a mini RadarChartCore (no labels) in the right-side space of each candidate tile, with Lens-aware spoke selection, silent absence below 3 bilateral spokes, and visual distinction for replacement spokes. Per-tile Lens icon (MINI-05/06) is deferred to Phase 36 global controls bar.
-**Requirements**: MINI-01, MINI-02, MINI-03, MINI-04 (MINI-05 + MINI-06 deferred to Phase 36 per 34-CONTEXT.md)
-**Success Criteria** (what must be TRUE):
-  1. Candidate tiles with ≥3 overlapping bilateral answers show a mini compass in the right-side space without spoke labels
-  2. Candidate tiles with <3 overlapping answers show no compass (silently absent, no error state)
-  3. Preferred spokes missing bilateral answers are replaced from the scoped pool (same algorithm as CompassCard.jsx)
-  4. When Lens is ON, replacement (non-local) spokes are visually distinct (reduced container opacity)
-  5. Toggling Local Lens (existing Phase 33 UI) updates all visible mini compasses simultaneously
-**Plans**: 3 plans
-
-Plans:
-- [x] 34-01-PLAN.md — Extract computeDisplaySpokes() to compass.js + refactor CompassCard.jsx to consume it
-- [x] 34-02-PLAN.md — Build MiniCompass.jsx component (label-suppressed RadarChartCore + container)
-- [x] 34-03-PLAN.md — Wire MiniCompass into ElectionsView tiles + auto-activate compassMode on Elections.jsx + human-verify
-
-#### Phase 35: Hover Modal — Full Compass *(Parked — design superseded)*
-**Goal**: Hovering a mini compass reveals a floating modal with a full titled RadarChartCore, legend, Local Lens icon, and Min/Max controls
-**Status**: Parked — clicking the mini compass already navigates to a full compass view; hover design space is occupied by spoke tooltips. May revisit if a distinct use case emerges.
-**Plans**: TBD
-
-#### Phase 36: Global Controls Bar + Compass-Default Mode
-**Goal**: A global Min/Max + Local Lens control bar appears above the elections/reps list for all calibrated users; calibrated users default to compass mode on Elections and Results pages without needing to check a checkbox
-**Requirements**: CTRL-01, CTRL-02, DEFAULT-01, DEFAULT-02, DEFAULT-03, DEFAULT-04, DEFAULT-05
-**Success Criteria** (what must be TRUE):
-  1. A compass controls bar (Min/Max + Local Lens toggle) renders above the elections/reps list when compass mode is active
-  2. Calibrated users (≥3 answers) arrive at `/elections` and see compass tiles immediately — no checkbox interaction
-  3. Same default on Results page Elections tab and Representatives tab
-  4. Uncalibrated users see the existing PoliticianCard (horizontal) view with no change
-  5. `/elections` and Results Elections tab are in feature parity for all compass interactions
-**Plans**: 3 plans
-
-Plans:
-- [x] 36-01-PLAN.md — Extract CompassControlsBar shared component
-- [x] 36-02-PLAN.md — Refactor Elections.jsx to stateful compassMode + consume CompassControlsBar
-- [x] 36-03-PLAN.md — Refactor Results.jsx to consume CompassControlsBar + verify tab parity
+</details>
 
 ---
 
@@ -283,7 +238,7 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 30. Legal Candidate Stance Research | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
 | 31. Legal Donor Activity | v3.2 ✅ | 4/4 | Complete | 2026-05-09 |
 | 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
-| 33. Local Lens State System | v4.0 | 1/1 | Complete | 2026-05-12 |
-| 34. Mini Compass Tile Component | v4.0 | 3/3 | Complete | 2026-05-13 |
-| 35. Hover Modal — Full Compass | v4.0 | 0/TBD | Parked | - |
-| 36. Global Controls + Compass Default | v4.0 | 3/3 | Complete | 2026-05-14 |
+| 33. Local Lens State System | v4.0 ✅ | 1/1 | Complete | 2026-05-12 |
+| 34. Mini Compass Tile Component | v4.0 ✅ | 3/3 | Complete | 2026-05-13 |
+| 35. Hover Modal — Full Compass | v4.0 ✅ | 0/TBD | Parked | - |
+| 36. Global Controls + Compass Default | v4.0 ✅ | 3/3 | Complete | 2026-05-14 |
