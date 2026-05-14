@@ -206,14 +206,9 @@ Plans:
 - [x] 34-02-PLAN.md — Build MiniCompass.jsx component (label-suppressed RadarChartCore + container)
 - [x] 34-03-PLAN.md — Wire MiniCompass into ElectionsView tiles + auto-activate compassMode on Elections.jsx + human-verify
 
-#### Phase 35: Hover Modal — Full Compass
+#### Phase 35: Hover Modal — Full Compass *(Parked — design superseded)*
 **Goal**: Hovering a mini compass reveals a floating modal with a full titled RadarChartCore, legend, Local Lens icon, and Min/Max controls
-**Requirements**: MODAL-01, MODAL-02, MODAL-03
-**Success Criteria** (what must be TRUE):
-  1. Hovering over a mini compass opens a FloatingPortal containing a full compass with spoke title labels
-  2. Modal shows a two-color legend (user shape + candidate shape), the Local Lens icon, and Min/Max buttons
-  3. Moving the mouse off the compass (and modal) dismisses the modal without requiring a click
-  4. Min/Max and Lens actions inside the modal update global state and are immediately reflected in all mini compasses on the page
+**Status**: Parked — clicking the mini compass already navigates to a full compass view; hover design space is occupied by spoke tooltips. May revisit if a distinct use case emerges.
 **Plans**: TBD
 
 #### Phase 36: Global Controls Bar + Compass-Default Mode
@@ -225,7 +220,12 @@ Plans:
   3. Same default on Results page Elections tab and Representatives tab
   4. Uncalibrated users see the existing PoliticianCard (horizontal) view with no change
   5. `/elections` and Results Elections tab are in feature parity for all compass interactions
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 36-01-PLAN.md — Extract CompassControlsBar shared component
+- [ ] 36-02-PLAN.md — Refactor Elections.jsx to stateful compassMode + consume CompassControlsBar
+- [ ] 36-03-PLAN.md — Refactor Results.jsx to consume CompassControlsBar + verify tab parity
 
 ---
 
@@ -285,5 +285,5 @@ v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (af
 | 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
 | 33. Local Lens State System | v4.0 | 1/1 | Complete | 2026-05-12 |
 | 34. Mini Compass Tile Component | v4.0 | 3/3 | Complete | 2026-05-13 |
-| 35. Hover Modal — Full Compass | v4.0 | 0/TBD | Pending | - |
+| 35. Hover Modal — Full Compass | v4.0 | 0/TBD | Parked | - |
 | 36. Global Controls + Compass Default | v4.0 | 0/TBD | Pending | - |
