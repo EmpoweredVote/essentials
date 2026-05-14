@@ -33,6 +33,17 @@ function getStateAccordionKey(pol, stateName) {
   const ch = (pol.chamber_name_formal || pol.chamber_name || '').toLowerCase();
   const title = (pol.office_title || '').toLowerCase();
 
+  // SCHEMA-02 (Phase 133 D-09): route STATE_BOARD to dedicated accordion BEFORE
+  // legislature/dept/etc. keyword checks. getTier() already routes STATE_BOARD to
+  // 'State' via the dt.startsWith('STATE') clause — do NOT touch getTier (Pitfall 6).
+  if (
+    pol.district_type === 'STATE_BOARD' ||
+    ch.includes('board of education') ||
+    title.includes('state board of education')
+  ) {
+    return `${stateName} State Board of Education`;
+  }
+
   if (STATE_LEGISLATURE_KW.some(kw => ch.includes(kw)))
     return `${stateName} General Assembly`;
   if (STATE_EXEC_TOP_KW.some(kw => title.includes(kw)))
@@ -294,6 +305,9 @@ const STATE_BODY_ORDER_KW = [
   'Executive',
   'General Assembly', 'Legislature',
   'Departments', 'Commissions',
+  // SCHEMA-02 (Phase 133 D-09): State Board of Education sits between
+  // state legislators and judiciary
+  'State Board of Education',
   'Court of Appeals', 'Appeals',
   'Tax Court',
   'Supreme Court',

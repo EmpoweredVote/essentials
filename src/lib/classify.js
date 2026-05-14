@@ -20,6 +20,7 @@ export const STATE_ORDER = [
   "Statewide Constitutional Officers",
   "State Senate",
   "State House/Assembly",
+  "State Board of Education",
   "State Supreme Court",
   "State Court of Appeals",
   "State Tax Court",
@@ -111,6 +112,9 @@ export function classifyCategory(pol) {
   if (dt === "STATE_UPPER") return { tier: "State", group: "State Senate" };
   if (dt === "STATE_LOWER")
     return { tier: "State", group: "State House/Assembly" };
+  // SCHEMA-02 (Phase 133 D-09): dedicated State Board of Education group
+  if (dt === "STATE_BOARD")
+    return { tier: "State", group: "State Board of Education" };
 
   if (dt === "NATIONAL_JUDICIAL") {
     return { tier: "Federal", group: "Federal Judiciary" };
@@ -269,6 +273,7 @@ export const CATEGORY_DISPLAY_NAMES = {
   "Statewide Constitutional Officers": "Constitutional Officers",
   "State Senate": "State Senate",
   "State House/Assembly": "State House",
+  "State Board of Education": "State Board of Education",
   "State Supreme Court": "Supreme Court",
   "State Court of Appeals": "Court of Appeals",
   "State Tax Court": "Tax Court",

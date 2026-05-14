@@ -3,8 +3,8 @@
  * Covers STATE-01 (empty), STATE-02 (administrative), STATE-03 (judicial)
  */
 
-import { describe, it, expect } from 'vitest';
-import { computeVariant } from './classify.js';
+import { describe, it, expect, test } from 'vitest';
+import { computeVariant, classifyCategory } from './classify.js';
 
 function makePol(overrides) {
   return {
@@ -89,6 +89,13 @@ describe('computeVariant — no-stances detection', () => {
   });
   it('returns "administrative" before checking hasStances for admin role', () => {
     expect(computeVariant(makePol({ office_title: 'City Clerk' }), answers, false)).toBe('administrative');
+  });
+});
+
+describe('classifyCategory — SCHEMA-02 STATE_BOARD (Phase 133 D-09)', () => {
+  test('STATE_BOARD classifies into State tier with State Board of Education group', () => {
+    const pol = { district_type: 'STATE_BOARD', office_title: 'State Board of Education District 5' };
+    expect(classifyCategory(pol)).toEqual({ tier: 'State', group: 'State Board of Education' });
   });
 });
 
