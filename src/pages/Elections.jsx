@@ -15,10 +15,17 @@ const SHORTCUTS = [
 
 export default function Elections() {
   const navigate = useNavigate();
-  const { isLoggedIn, userJurisdiction, compassLoading, userAnswers, allTopics, invertedSpokes, batchInvertSpokes, localLensActive, toggleLocalLens, judicialLensActive, toggleJudicialLens } = useCompass();
+  const { isLoggedIn, userJurisdiction, compassLoading, userAnswers, allTopics, invertedSpokes, batchInvertSpokes, localLensActive, toggleLocalLens, judicialLensActive, toggleJudicialLens, enableCompass } = useCompass();
   const { isDark } = useTheme();
   const isDesktop = useMediaQuery('(min-width: 768px)');
-  const compassMode = (userAnswers?.length ?? 0) >= 3;
+  const [compassMode, setCompassMode] = useState(() => {
+    try { return localStorage.getItem('ev:compassMode') === 'true'; } catch { return false; }
+  });
+  const handleCompassModeChange = (val) => {
+    setCompassMode(val);
+    try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
+    if (val) enableCompass();
+  };
 
   // Auto-apply Stance Max the first time user crosses the 3-answer threshold
   const prevAnswerCountRef = useRef(0);
@@ -34,6 +41,17 @@ export default function Elections() {
       }
     }
   }, [userAnswers, invertedSpokes, allTopics, batchInvertSpokes]);
+
+  // Auto-enable compass for calibrated users who haven't set an explicit preference
+  useEffect(() => {
+    if (!userAnswers || userAnswers.length < 3) return;
+    try {
+      if (localStorage.getItem('ev:compassMode') === null) {
+        setCompassMode(true);
+        localStorage.setItem('ev:compassMode', 'true');
+      }
+    } catch {}
+  }, [userAnswers]);
 
   const handleStanceMax = () => {
     if (!userAnswers || !allTopics) return;
