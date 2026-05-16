@@ -229,9 +229,9 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 39-01: Commonwealth government row + MA Senate + MA House of Representatives chambers
-- [ ] 39-02: 40 MA state senators + 40 offices seeded (STATE_UPPER, district-linked)
-- [ ] 39-03: 160 MA state representatives + 160 offices seeded (STATE_LOWER, district-linked)
+- [x] 39-01: Commonwealth government row + MA Senate + MA House of Representatives chambers
+- [x] 39-02: 40 MA state senators + 40 offices seeded (STATE_UPPER, district-linked)
+- [x] 39-03: 160 MA state representatives + 160 offices seeded (STATE_LOWER, district-linked)
 
 #### Phase 40: MA Executives + Federal Officials
 **Goal**: MA statewide executives and all federal officials representing MA addresses are seeded with headshots, completing the full state/federal layer for any Massachusetts address lookup
@@ -401,7 +401,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 36. Global Controls + Compass Default | v4.0 ✅ | 3/3 | Complete | 2026-05-14 |
 | 37. Playbook Draft | v5.0 | 1/1 | Complete | 2026-05-16 |
 | 38. MA Geofences | v5.0 | 2/2 | Complete | 2026-05-16 |
-| 39. MA Government DB | v5.0 | 0/TBD | Not started | - |
+| 39. MA Government DB | v5.0 | 3/3 | Complete | 2026-05-16 |
 | 40. MA Executives + Federal Officials | v5.0 | 0/TBD | Not started | - |
 | 41. Cambridge City Structure | v5.0 | 0/TBD | Not started | - |
 | 42. Cambridge Headshots | v5.0 | 0/TBD | Not started | - |

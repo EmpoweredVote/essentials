@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 39 of 46 (MA Government DB) — v5.0 Location Onboarding Playbook
-Plan: 39-01 of 3 (MA Government Row + Chambers — complete)
-Status: In progress — 39-01 complete; 39-02 and 39-03 ready to run in parallel
-Last activity: 2026-05-16 — Completed 39-01: migration 150 applied; Commonwealth of Massachusetts + both chambers seeded
+Phase: 40 of 46 (MA Executives + Federal Officials) — v5.0 Location Onboarding Playbook
+Plan: 40-01 (not yet started)
+Status: Phase 39 complete — ready for Phase 40
+Last activity: 2026-05-16 — Completed 39-03: migration 152 applied; 158 MA house reps + 160 offices seeded via generator script
 
-Progress: [██░░░░░░░░] 20% (v5.0 — 2/10 phases complete)
+Progress: [███░░░░░░░] 30% (v5.0 — 3/10 phases complete)
 
 ## Project Reference
 
@@ -380,6 +380,9 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-16 — Phase 37-01 COMPLETE; LOCATION-ONBOARDING.md cold-start checklist (8 steps, Cambridge annotations) + 5 phase templates in .planning/templates/ (db-foundation, officials-seed, headshots, discovery-setup, compass-stances); PLAY-01 + PLAY-02 satisfied; Phase 38 MA Geofences is next*
 *Updated: 2026-05-16 — Phase 38-01 COMPLETE; MA registered in load-state-tiger-boundaries.ts (STATE_LAYER_ALLOWLIST + STATE_CITY_ASSERTIONS + STATE_RUN_MAKEVALID); MTFCC pre-flight assertion added; all 5 layers loaded: G4020=14, G4110=58, G5200=9, G5210=40, G5220=160; Cambridge geo_id='2511000' confirmed; 0 invalid geometries; place count corrected 351→58 (MA has 58 G4110 cities; 293 towns are G4040 COUSUB); 38-02 smoke test is next*
 *Updated: 2026-05-16 — Phase 38-02 COMPLETE; PostGIS spot checks verified for 4 Cambridge addresses; MA-05/MA-07 split confirmed (north=2505, east/south=2507); all Cambridge addresses return Cambridge city G4110=2511000 not Somerville; Middlesex intersects 8 G5200 districts; verify-ma-tiger-import.sql + smoke-ma-geofences.ts created; Phase 38 COMPLETE; Phase 39 MA politicians is next*
+*Updated: 2026-05-16 — Phase 39-01 COMPLETE; migration 150 applied; Commonwealth of Massachusetts government row + MA Senate + MA House of Representatives chambers seeded*
+*Updated: 2026-05-16 — Phase 39-02 COMPLETE; migration 151 applied; 40 MA state senators + 40 STATE_UPPER offices seeded; 25D11 Vanna Howard vacancy confirmed*
+*Updated: 2026-05-16 — Phase 39-03 COMPLETE; migration 152 applied via generate_ma_house.ps1 generator script; 158 named MA house reps + 160 STATE_LOWER offices seeded; 2 vacancies (25042 1st Franklin, 25075 17th Middlesex); Cambridge reps Rogers/Decker/Connolly have email_addresses; idempotent; generator script pattern established for future state legislative bodies; Phase 39 COMPLETE; Phase 40 MA Executives + Federal Officials is next*
 
 ## Session Continuity
 
