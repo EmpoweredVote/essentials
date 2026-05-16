@@ -1,270 +1,299 @@
-# Domain Pitfalls: Claude Candidate Discovery
+# Domain Pitfalls: Location Onboarding Playbook (v5.0)
 
-**Domain:** AI-powered civic election data discovery
-**Researched:** 2026-04-23
-**Stack:** Express/TypeScript, Claude API (Anthropic SDK), PostgreSQL/PostGIS, Render
+**Domain:** Cold-start US city onboarding — government structure, officials data, headshots, discovery pipeline, compass stances
+**Proof-of-concept city:** Cambridge, MA
+**Researched:** 2026-05-15
+**Prior locations completed:** Monroe County IN, Los Angeles County CA, Collin County TX
 
 ---
 
 ## Critical Pitfalls
 
-Mistakes that cause voter misinformation, data corruption, or system-level failures requiring manual recovery.
+Mistakes that cause DB corruption, incorrect geofencing, or voter-facing misinformation.
 
 ---
 
-### Pitfall 1: Claude Hallucinating Candidate Names Without Source Verification
+### Pitfall 1: Assuming Mayor = Elected Executive
 
-**What goes wrong:** Claude returns a plausible-sounding candidate name that does not actually appear on the official source page. Because Claude is generating from web search, it may synthesize a name from news coverage, speculation, or adjacent context — not the official filing record.
+**What goes wrong:** The DB schema and onboarding workflow are built around the pattern "mayor is the top elected executive." Cambridge uses Plan E — a council-manager form where the mayor is a ceremonial title elected from within the City Council (not separately by voters), and the real executive is an appointed City Manager (currently Yi-An Huang). If the onboarding workflow creates an `elected_executive` office or role for "Mayor," it misrepresents Cambridge's power structure.
 
-**Why it happens:** LLMs operating in agentic web-search mode treat all search results equally. A news article saying "five candidates are expected to file" can produce hallucinated names that never actually filed. Claude's confidence in these names is often indistinguishable from real ones.
+**Why it happens:** Every prior location used a strong-mayor or standard council structure. Monroe County IN has an elected County Commissioners board with a president. LA has an elected Mayor. TX cities (Plano, McKinney, etc.) use council-manager but their mayors are directly elected. Cambridge is the first city in the project where the mayor is not separately elected — they emerge from a council vote after the council election.
 
-**Consequences:** A fabricated candidate appears on the ballot display seen by real voters. Given the antipartisan mission, this is a severe trust failure — the app would be spreading misinformation about who voters can actually vote for.
+**Consequences:**
+- The mayor appears in the app as if they were elected to that role, misleading voters about how Cambridge government works
+- If any compass questions or stance research assumes the mayor controls executive functions, the framing is wrong — the City Manager does
+- Profile pages showing "Mayor" as a primary leadership role overstate that role's democratic accountability
 
 **Prevention:**
-- Require Claude to return a citation URL for every discovered candidate. Treat any candidate without a citation as low-confidence, never auto-upsert.
-- After Claude returns names, verify each name against the source URL via a second-pass fetch — confirm the name literally appears on the page.
-- Use a two-signal rule for auto-upsert: the name must appear in official DB data (Cicero) AND on an official source URL. One signal alone gates to staging queue.
-- Prompt Claude to explicitly say "not found on source" rather than guessing from context.
+- Treat Cambridge Mayor as an office within the City Council government body, not a separate government or office type
+- The Mayor role must be seeded as a council position, not an executive government row
+- City Manager should be present as a non-elected appointed official row — flagged clearly as appointed, not elected
+- Do NOT create a `LOCAL_EXEC` district_type row for the mayor; use the same `LOCAL` type as other council seats
 
-**Detection:** Spot-check the discovery run log by fetching the citation URL for a sample of auto-upserted candidates. If the name does not appear verbatim on the page, the verification step is broken.
+**Detection (warning sign):** Any phase plan that refers to "seeding the Mayor as a LOCAL_EXEC office" is wrong for Cambridge.
 
-**Phase:** Address in Phase 1 (Agent Core). The citation-verification loop must be part of the initial agent design, not retrofitted.
+**Phase that must address it:** Government Structure seed phase (equivalent to Phase 12 for TX).
 
 ---
 
-### Pitfall 2: Source URL Rot Between Discovery Runs
+### Pitfall 2: Cambridge STV Produces 19–37 Candidates Per Race — UI Has No Hard Limit
 
-**What goes wrong:** The URL for a county clerk's candidate filing page changes — a new election cycle page replaces the old one, or the site switches from a static HTML table to a JavaScript SPA. The agent silently returns zero candidates, and the weekly cron treats it as "no new candidates" rather than "agent broken."
+**What goes wrong:** Cambridge City Council (9 seats) had 19 candidates in 2025. School Committee (6 seats) had 18 candidates in 2025. The `ElectionsView.jsx` component renders every candidate as a `PoliticianCard` in a responsive grid. There is no pagination, no "show more" toggle, and no maximum per race. At 19+ candidates, the elections page becomes extremely long, potentially unusable on mobile.
 
-**Why it happens:** Government websites are updated per-election with little versioning. LA County (lavote.gov/Apps/CandidateList) already shows a JavaScript app with a query parameter election ID (`?id=4338`). That ID will change for the next election. Indiana's SOS uses Excel downloads at a year-templated URL. These are intentional "updates" by the election authority, invisible to the agent.
+**Why it happens:** Prior locations had small candidate fields. Monroe County races are typically 2–4 candidates. LA County individual races rarely exceed 10. Collin County municipal races are 3–6 candidates at most. Cambridge's STV system incentivizes large fields — any candidate with a viable vote share can win a seat, so filing is rational even with 9+ incumbents running.
 
-**Consequences:** Candidates who file in a new election cycle never appear in the system. The admin never learns the agent is broken. The app shows "no candidates" races instead of newly filed candidates.
+**Consequences:**
+- Mobile users scroll through 19 candidate cards before reaching the next race
+- Compass mode with MiniCompass overlays on 19 cards each trigger a stances fetch — potential rate limit or performance issue
+- If School Committee (18 candidates, 6 seats) and City Council (19 candidates, 9 seats) both render in the same election, that is 37 candidate cards before any state or federal races appear
 
 **Prevention:**
-- Store a `last_candidate_count` per jurisdiction in the discovery run log. Alert if a run returns zero when the previous run returned non-zero (regression detection).
-- Store the source URL in the jurisdiction registry, not hard-coded in agent logic. When a URL breaks, update one config row — not code.
-- Build a "health check" run mode that fetches the source URL and confirms the page is reachable and parseable, separate from candidate ingestion.
-- For lavote.gov specifically: the election ID in the URL will need to be updated per-election cycle. Document this as a mandatory onboarding step for each new election.
+- Verify the existing UI renders acceptably at 19 candidates before shipping Cambridge elections data. Test with a mock race of 19 entries.
+- Consider a "show all N candidates" toggle that defaults to showing the top N candidates (e.g., 9 for a 9-seat race) sorted by seeded shuffle, with "show all" expansion
+- Ensure the MiniCompass stances fetch in ElectionsView is batched, not 19 separate simultaneous fetches — the existing `Promise.all` for `visibleCandidateIds` is correct; verify it handles large sets
 
-**Detection:** Discovery run log shows `candidates_found: 0` for a jurisdiction that previously returned candidates. Alert threshold: any jurisdiction returning 0 for two consecutive weeks during an active filing period.
+**Detection (warning sign):** Loading the Cambridge elections page takes more than 3 seconds on first load, or the Anthropic API throws rate limit errors from a large compass stances batch.
 
-**Phase:** Address in Phase 2 (Jurisdiction Registry). The registry must include a `source_url_verified_at` timestamp and a health check mechanism.
+**Phase that must address it:** Discovery Pipeline + Elections seed phase. Pre-ship UI validation required before seeding election data.
 
 ---
 
-### Pitfall 3: Candidate Withdrawal Not Reflected — Stale Filing Shown as Active
+### Pitfall 3: Cambridge Has a 2025 Charter Amendment That Changed Government Structure — The New Charter Is in Force
 
-**What goes wrong:** The agent discovers a candidate during the filing period, upserts them, and the candidate later withdraws. Official sources update their pages, but the weekly cron does not re-check existing candidates for withdrawal status. The withdrawn candidate continues to appear on the app.
+**What goes wrong:** Research or documentation about Cambridge government references the pre-2025 "Plan E charter" that has been in place since 1938–1940. Cambridge voters approved a new expanded charter in November 2025 (75%+ yes). The most notable structural change: the School Committee no longer has the mayor as automatic chair — the School Committee now elects its own chair. If the onboarding seeds the mayor as a School Committee member, that is now incorrect under the new charter.
 
-**Why it happens:** Discovery scripts are designed to add new records; they do not currently have a removal or status-update path. Withdrawal is a post-filing event that occurs after the filing deadline — Indiana allows withdrawal up to 2 days after filing closes; Louisiana allows 7 days; California has its own window. The official page may show the candidate as withdrawn or simply remove them from the list.
+**Why it happens:** Most Wikipedia and Ballotpedia articles about Cambridge government describe the Plan E structure from before November 2025. The new charter will not appear in general reference sources for months.
 
-**Consequences:** A voter sees a withdrawn candidate on the ballot display. If they research that candidate expecting to see them in November, they will not be on the ballot. This is voter misinformation.
+**Consequences:**
+- Seeding the Mayor as a School Committee member (old structure) is incorrect under the new charter
+- Any "roles the mayor holds" list that includes School Committee chair is stale
 
 **Prevention:**
-- Each weekly discovery run for a jurisdiction should produce a full candidate list and compare it against the current DB state. Candidates present in DB but absent from the source should be flagged — not deleted — and sent to the admin review queue with reason "no longer appears on official source."
-- Never auto-delete. Withdrawals must go through human confirmation before the candidate is marked `withdrawn` in the DB.
-- Build the candidate status comparison as part of Phase 1 agent design, not Phase 3 or later.
-- Add a `ballot_status` field or use an existing `is_active` field to distinguish "filed," "withdrawn," and "on ballot" states.
+- Do NOT include Mayor as a School Committee position in the DB seed
+- Verify the current (post-Nov 2025) school committee structure from cambridgema.gov before seeding
+- The City Manager remains appointed; the strong-mayor proposal was dropped before the charter vote
 
-**Detection:** Admin receives a weekly diff showing "candidates in DB not found on source this week." If this list is never reviewed, withdrawals will not be caught.
+**Detection (warning sign):** Any plan that seeds the mayor as an automatic School Committee member.
 
-**Phase:** Address in Phase 1 (Agent Core) for the comparison logic; Phase 3 (Staging Queue) for the admin notification workflow.
+**Phase that must address it:** Government Structure seed phase, specifically the School Committee rows.
 
 ---
 
-### Pitfall 4: Duplicate Records — Cicero Incumbent Plus Discovered Challenger With Same Name
+### Pitfall 4: Massachusetts Municipal Elections Are Odd-Year — Next Cambridge Election Is November 2027, Not 2026
 
-**What goes wrong:** The Cicero API populates incumbents via the existing seeding process. The Claude agent independently discovers a new candidate whose name is identical or near-identical to an existing politician in the DB (e.g., "Mike Smith" running for a different office, or "Michael Smith" vs. "Mike Smith" for the same office). The upsert creates a duplicate `essentials.politicians` row, resulting in the candidate appearing twice on the ballot display — once as an incumbent with a profile and once as a discovered entry with no data.
+**What goes wrong:** Every prior location used even-year elections aligned with state/federal cycles (IN May 2026 primary, LA June 2026 primary, TX May 2026 municipal). Cambridge's last election was November 4, 2025. The next municipal election is November 2027. Seeding an election row with a 2026 date for Cambridge is incorrect and will show races as upcoming when they are not.
 
-**Why it happens:** The existing discovery scripts (Cal-Access, Indiana) already encounter this: they check `lower(full_name) = lower($1)` for exact match, but not for name variations. A Claude-powered agent using web search may extract "Mike Smith" from a source while the DB has "Michael Smith" from Cicero. These match the same person but fail the equality check.
+**Why it happens:** Massachusetts law requires city elections in odd-numbered years. Cambridge council and school committee terms are 2-year terms running from January 2026 through January 2028. State and federal elections are even-year. Town meetings (for MA towns, not cities) can be spring.
 
-**Consequences:** Ballot display shows duplicate candidates. The deduplication logic for candidate ordering (seeded shuffle) does not protect against true duplicates — both rows appear independently. If one has a photo and one does not, the display is visually broken and confusing.
+**Consequences:**
+- Discovery pipeline seeded with a 2026 election date fires the cron and returns zero candidates, triggering false regression alerts
+- A user looking at Cambridge elections sees a race with a November 2026 date that does not exist
+- The elections page shows "upcoming" races that already happened in 2025
 
 **Prevention:**
-- Before inserting any discovered candidate, run a three-step deduplication check:
-  1. Exact match on `lower(full_name)` within the same race.
-  2. Fuzzy match via pg_trgm similarity (threshold ~0.85) within the same race.
-  3. Check `politician_sources` for the `external_id` from the official source (e.g., Cal-Access filer ID, lavote.gov candidate ID).
-- Any fuzzy match (not exact) must go to the staging queue, never auto-upsert.
-- For the Claude agent specifically: include the race/office/district as part of the deduplication key. "Mike Smith" in District 5 City Council is distinct from "Mike Smith" in State Assembly.
-- Add a `UNIQUE` constraint or partial unique index on `(race_id, politician_id)` in the candidates-to-races join table to prevent the same person appearing twice in the same race.
+- Seed Cambridge election row with `election_date = '2027-11-04'` (or the confirmed 2027 date once available)
+- The 2025 Cambridge results (7 incumbents + 2 challengers won council; 2 incumbents + 4 new members won school committee) should be recorded as historical data, not "upcoming"
+- Do not use "current election in this state" as a shortcut for Cambridge — confirm the specific Cambridge municipal calendar
+- Consider whether the app should show the 2025 incumbents as current officeholders (yes) while the election display shows 2027 as the next cycle
 
-**Detection:** Ballot display shows two candidates with near-identical names in the same race. Also detectable by querying: `SELECT race_id, lower(p.full_name) FROM ... GROUP BY 1,2 HAVING count(*) > 1`.
+**Detection (warning sign):** Any plan that mentions seeding a Cambridge election in 2026 is wrong.
 
-**Phase:** Address in Phase 1 (Agent Core) for deduplication logic; Phase 2 (Staging Queue) for the fuzzy-match review flow.
+**Phase that must address it:** Elections seed phase — must confirm the 2027 election date before creating any election row.
 
 ---
 
-### Pitfall 5: Auto-Upsert of Low-Confidence Discoveries Bypasses the Human Gate
+### Pitfall 5: Cambridge Spans Multiple State Legislative Districts — Multi-District Representatives Are a Geofence Complexity
 
-**What goes wrong:** The confidence scoring logic has a threshold bug or edge case. A candidate with a LOW confidence signal gets auto-upserted because the code misclassifies the source type (e.g., a news article URL is mistaken for an official `.gov` source URL), or the threshold check is inverted, or an exception path skips the gate entirely.
+**What goes wrong:** Cambridge is split across at minimum 4 state house districts (24th, 25th, 26th, 29th Middlesex) and at least 2 state senate districts (Second Middlesex, Suffolk and Middlesex). The 29th Middlesex (Dave Rogers) covers only 2 precincts of Cambridge plus most of Arlington and all of Belmont. The 26th Middlesex (Mike Connolly) also covers parts of Somerville. If TIGER/PostGIS boundaries are used for MA state legislative geofences, any Cambridge address resolving to the 29th Middlesex will show Arlington-centric representatives that Cambridge residents may not recognize as "theirs."
 
-**Why it happens:** Confidence scoring is implemented in application code and is easy to get wrong under pressure. The "official source" detection (is this a `.gov` or official election authority domain?) sounds simple but has edge cases: lavote.gov is official; abc7.com/news/candidate-files is not; ballotpedia.org is authoritative but not official. The boundary is non-trivial.
+**Why it happens:** Cambridge is a dense city whose ward/precinct boundaries are carved up finely. TX state legislative districts for Collin County were relatively clean — each city fell mostly within one or two districts. Cambridge has 11 wards, many split across district lines.
 
-**Consequences:** Unverified candidates go live to voters without admin review. Because the discovery system is automated and runs weekly, incorrect auto-upserts may accumulate before anyone notices.
+**Consequences:**
+- A Cambridge address in the 24th Middlesex returns Dave Rogers as the state rep; that address may be only 2 precincts in Cambridge while the rest of the district is suburban
+- The app may show the correct representative but users may not recognize them as their Cambridge rep if they assumed Cambridge was one district
+- Multi-district geofence overlaps increase the chance of double-assignment bugs
 
 **Prevention:**
-- Maintain an explicit allowlist of official source domains per jurisdiction (e.g., `sos.ca.gov`, `lavote.gov`, `in.gov`). Only domain-matched sources qualify as "official" for auto-upsert.
-- Default confidence to LOW if domain is not on the allowlist, regardless of Claude's self-assessed confidence.
-- Log the confidence decision and the source domain for every candidate processed. Include in the run log email.
-- Write unit tests for the confidence scoring function with edge cases: news article URLs, Ballotpedia URLs, `.gov` subdomains, and redirecting URLs.
-- Implement a hard limit on auto-upserts per run (e.g., max 20 per jurisdiction per week). Anything above this threshold triggers a human review even if confidence is HIGH — a burst of new candidates is unusual and warrants verification.
+- Use MassGIS's published state house shapefile (2021 redistricting, effective 2022) for MA district geofences — it is more accurate than raw TIGER for MA-specific boundaries
+- Verify which Cambridge wards/precincts fall in each district before seeding geofences
+- The existing PostGIS geofencing approach (used for TX) is correct; the data source matters more than the approach
 
-**Detection:** Review the discovery run log for each run. Auto-upserted candidates should have a `source_url` from the official domain allowlist. Any without this should be investigated.
+**Detection (warning sign):** A Cambridge address lookup returns 3+ state house representatives. That would indicate overlapping polygons or a polygon import error.
 
-**Phase:** Address in Phase 1 (Agent Core). Confidence scoring is the most trust-critical component of the system.
+**Phase that must address it:** MA state legislative officials + geofence phase.
 
 ---
 
 ## Moderate Pitfalls
 
-Mistakes that cause delays, wasted admin time, or data quality degradation.
+Mistakes that cause data quality gaps or require rework, but not voter-facing misinformation.
 
 ---
 
-### Pitfall 6: Cron Job Accumulation on Render
+### Pitfall 6: Cambridge Official Email Addresses Follow a Pattern — But the Pattern Is Inconsistent
 
-**What goes wrong:** The scheduled discovery runs accumulate or overlap. Either a new weekly run starts before the previous one completes (unlikely on Render's native cron service, but possible if using `node-cron` inside the Express process), or on-demand triggers fired by the admin stack up multiple simultaneous runs.
+**What goes wrong:** Cambridge city council member email addresses follow a clear `firstname.lastname@cambridgema.gov` pattern (e.g., siddiqui@cambridgema.gov for Mayor Siddiqui). However, the search results show old council member emails like `CarloneCR@cambridgeMA.GOV` (with initials) and `MalnonAL@cambridgeMA.GOV` for members who are no longer on the council. The 2025 council has changed membership, and new members (Al-Zubi, Flaherty) may have different email formats.
 
-**Why it happens:** Render's native cron service guarantees at-most-one running instance and postpones the next scheduled run until the current one completes (verified from Render docs). However, this guarantee only applies to Render-managed cron jobs. If discovery is triggered via an Express API route (`POST /admin/discovery/run`), multiple admin clicks or API calls can queue multiple simultaneous runs. Additionally, if the Express process itself implements the weekly cron via `node-cron` rather than Render's cron service, the guarantee is lost.
+**Why it happens:** Cambridge's email format has evolved. Older members used `LastnameInitials@` format; newer members appear to use `firstname@` or `lastname@` patterns. No definitive pattern applies to every member. CloudFlare-style protection is less of an issue here than in TX (Cambridge's city website does not use heavy bot protection), but the email format must be verified per member.
 
-**Consequences:** Multiple simultaneous Claude API calls for the same jurisdiction blow through rate limits, create duplicate staging queue entries, and produce conflicting DB writes. The admin receives multiple near-identical email notifications.
+**Consequences:**
+- Seeding stale emails from old council configurations results in incorrect contact data
+- If the 2025 council members' emails are guessed rather than verified, some will bounce
 
 **Prevention:**
-- Use a DB-level lock for discovery runs: `INSERT INTO discovery_locks (jurisdiction_id, started_at) ... ON CONFLICT DO NOTHING`. If the insert fails (conflict), skip and log. This works regardless of whether runs originate from cron or admin trigger.
-- For the weekly schedule: use Render's native cron service (not `node-cron` in Express). Render guarantees single execution.
-- For on-demand triggers: implement a 60-second debounce or a run status check — if a run is already `in_progress` for a jurisdiction, return 409 Conflict instead of starting a new one.
-- Store `run_status` in the discovery run log (`pending`, `in_progress`, `complete`, `failed`). Check this before starting any new run.
+- Pull email addresses only from the official Cambridge city council members page (cambridgema.gov/Departments/citycouncil/members) at the time of seeding
+- Do not infer emails from old members' patterns; verify each new member individually
+- NULL is acceptable if an email cannot be confirmed from official sources — consistent with TX CloudFlare policy
 
-**Detection:** Discovery run log shows multiple rows for the same jurisdiction with overlapping `started_at` and `completed_at` timestamps.
+**Detection (warning sign):** Any plan that hard-codes email addresses without citing the official source URL.
 
-**Phase:** Address in Phase 2 (Cron + On-Demand Trigger). The lock mechanism is required before any production scheduling.
+**Phase that must address it:** Incumbents seed phase.
 
 ---
 
-### Pitfall 7: Claude API Rate Limiting During Batch Discovery
+### Pitfall 7: Cambridge Open Data Portal Exists But Does Not Publish Officials or Contact Data
 
-**What goes wrong:** A full sweep of all registered jurisdictions in one weekly batch triggers Claude API rate limits. At Tier 1, Claude Sonnet 4.x allows only 50 RPM and 30,000 ITPM. With 10+ jurisdictions, each requiring multiple web-search calls, the batch hits 429 errors. Error handling falls back to retrying immediately, which worsens the rate limit situation.
+**What goes wrong:** Cambridge has an unusually active open data program (data.cambridgema.gov) with hundreds of datasets. The onboarding researcher might assume that officials/contact data is available as a structured download from this portal. It is not. The portal focuses on operational data (permits, trash, police logs, public art) — not government personnel.
 
-**Why it happens:** Claude API rate limits apply at the organization level across all models in the same tier family. A weekly cron that fires off all jurisdiction discovery jobs simultaneously will burst-exceed the per-minute limits, especially if each discovery agent makes 5-10 Claude calls per jurisdiction (one per race category, or one per page of results).
+**Why it happens:** MA does not have a statewide officials data mandate equivalent to Texas's open records for government personnel. Cambridge's portal follows cities' typical pattern of publishing service data rather than personnel directories.
 
-**Consequences:** Discovery runs fail mid-batch, leaving some jurisdictions processed and others not. The run log shows partial results. If retries are not idempotent, partial runs may insert some candidates correctly and miss others.
+**Consequences:**
+- Time wasted searching data.cambridgema.gov for officials data that does not exist there
+- Onboarding researcher may conclude "Cambridge has great open data" and over-invest in that source
 
 **Prevention:**
-- Process jurisdictions sequentially with a delay between each (e.g., 5 seconds minimum between Claude calls). This sacrifices parallelism but respects rate limits.
-- Implement exponential backoff on 429 responses with a `retry-after` header reader (Anthropic returns this header).
-- Use `node-cron` or Render cron to spread jurisdiction discovery across the week rather than running all jurisdictions on Monday morning: stagger them (jurisdiction A on Monday, B on Tuesday, etc.).
-- Log rate limit events in the discovery run log so they are visible in the admin email summary.
-- Upgrade to Tier 2 ($40 deposit) before scaling to more than 5 jurisdictions — Tier 2 allows 1,000 RPM vs Tier 1's 50 RPM.
+- For Cambridge officials: use cambridgema.gov/Departments/citycouncil/members directly, not the open data portal
+- For candidate data during election season: use the election commission's official candidate PDFs (cambridgema.gov/Departments/electioncommission)
+- The Mass Municipal Data Hub (mma.org) has key local officials per municipality — useful as a secondary check, not a primary source
 
-**Detection:** Discovery run log shows `429` error codes or incomplete runs. Claude API console shows rate limit utilization spikes.
+**Detection (warning sign):** Any research or plan that cites data.cambridgema.gov as a source for officials or contact information.
 
-**Phase:** Address in Phase 2 (Cron + Scheduling). Rate limit strategy must be designed before the first multi-jurisdiction batch run.
+**Phase that must address it:** Research phase (this file). Flag clearly in LOCATION-ONBOARDING.md checklist: "Open data portals rarely publish officials/contacts."
 
 ---
 
-### Pitfall 8: Official Site Returns Outdated Pre-Filing-Period Data
+### Pitfall 8: LA-Specific Data Sources Are Not Generalizable — Cambridge Has None of Them
 
-**What goes wrong:** The agent discovers "candidates" from a page that is still showing the previous election's data. California's SOS Cal-Access page defaults to showing the current election's data but sometimes caches stale data during the transition between election cycles. LA County's lavote.gov candidate list uses an election ID in the URL — using an old ID returns old data, appearing valid.
+**What goes wrong:** The LA onboarding relied on uniquely rich sources: LACBA attorney ratings, CJP judicial discipline database, LA Ethics Commission campaign finance (FPPC Form 460), lavote.gov candidate list API. These sources do not exist or do not apply outside of California. The Cambridge onboarding should not assume analogous sources exist for MA.
 
-**Why it happens:** Election authority websites do not always clearly label which election cycle a page refers to. The agent has no ground truth for what the current filing period dates are. Cal-Access shows "2026 PRIMARY" in a dropdown, but the page header may not include a date. A web search for "2026 primary election candidates" may return results from a page still showing preliminary or pre-filing data.
+**Why it happens:** Researchers and plan writers may use LA as the mental model for "what a well-resourced location looks like." LA has exceptional civic transparency infrastructure. Cambridge, despite being a well-governed educated city, lacks equivalents for most of these.
 
-**Consequences:** Candidates from 2024 appear in 2026 races. Because the data looks official (it comes from `.gov`), the confidence score is HIGH and they auto-upsert. Voters see 2024 candidates listed for 2026 races.
+**Consequences:**
+- Phases planned around "find bar evaluation data for Cambridge attorneys" waste time — there is no Massachusetts equivalent of LACBA ratings for elected officials
+- Campaign finance for Cambridge candidates comes from the MA OCPF (Office of Campaign and Political Finance), not an FPPC-equivalent system — different format, different ingestion approach
+- Judicial compass stances for Cambridge courts (if applicable) would need different sourcing
 
 **Prevention:**
-- The jurisdiction registry must include `election_date` and `filing_close_date` for each jurisdiction. The agent should refuse to ingest candidates before `filing_close_date` — the candidate list is not authoritative until filing closes.
-- The source URL for candidate lists should be verified to include the correct election cycle year. Add a URL validation step that checks the page contains the expected election year before trusting its candidate list.
-- Include election cycle year in the agent prompt: "Find candidates for the June 2, 2026 primary election." Require the agent to confirm the page represents the 2026 cycle.
+- Treat LA's data richness as an outlier, not a baseline
+- For Cambridge compass stances: rely on the same approach as TX — public statements, voting records, news coverage, official positions
+- For Cambridge campaign finance: MA OCPF (ocpf.us) is the correct source; verify format before planning any ingestion phase
+- For headshots: the city council members page shows official photos; vote.cambridgecivic.com (a volunteer civic site) also has candidate photos — both are usable
 
-**Detection:** Ingest dates on candidates in the run log do not match the expected election cycle. Candidate names from 2024 races reappear in 2026 discovery.
+**Detection (warning sign):** Any phase plan that mentions "equivalent to LACBA" or "equivalent to LA Ethics Commission" for Cambridge.
 
-**Phase:** Address in Phase 2 (Jurisdiction Registry). Election date fields are required inputs, not optional metadata.
+**Phase that must address it:** All phases. Flag explicitly in LOCATION-ONBOARDING.md that LA-specific sources must be excluded from generic playbook steps.
 
 ---
 
-### Pitfall 9: Name Normalization Inconsistency Between Agent Output and DB
+### Pitfall 9: TX Assumption That Municipal = Nonpartisan Does Not Universally Hold
 
-**What goes wrong:** Claude extracts "JOHN Q. SMITH III" from the official source. The deduplication check compares against "John Smith" in the DB (entered by the Cicero import with middle-initial stripped). The names fail exact-match deduplication. A fuzzy match at 0.85 similarity may also miss them because the full-with-middle version and the short version differ more than the threshold. A duplicate is created.
+**What goes wrong:** Texas municipal elections are nonpartisan by design — no party labels on the ballot. The entire Collin County onboarding never needed to handle party affiliation at the local level. Cambridge municipal elections are also officially nonpartisan in that candidates do not appear with party labels. However, Cambridge candidates are typically well-known by political affiliation through endorsements and media coverage, and the charter review debate had strong partisan dimensions. If the playbook encodes "municipal = nonpartisan = skip all party handling," that is correct for Cambridge but may not generalize to all cities.
 
-**Why it happens:** The existing discovery scripts already encounter this: Indiana campaign finance data uses "LAST, FIRST" format with ALL CAPS; Cal-Access uses separate NAMF/NAML fields with mixed-case encoding. Claude extracting names from web search adds another normalization layer. The DB has names in title case without middle initials (Cicero's format). There is no canonical normalization applied consistently.
+**Why it happens:** Massachusetts cities run nonpartisan municipal elections (city charters, not state mandate). But some US cities (e.g., certain Southern cities, partisan mayoral races in larger cities like Chicago) run partisan municipal elections. The TX experience may encode a false assumption.
 
-**Consequences:** Every real person in the system can have multiple records with name variants. The staging queue fills with near-duplicate flagged entries that require manual deduplication — exactly the scenario seen in the Cal-Access script's `flagged_ambiguous_name` report.
+**Consequences:**
+- The playbook says "local races = no party data needed" and a future city with partisan local races breaks this assumption
+- Cambridge is fine with this assumption; the risk is to future onboardings
 
 **Prevention:**
-- Define and enforce a canonical name format in the DB: first name + last name only, title case, no middle initials, no suffixes (Jr./Sr. stripped). Apply this format at insert time in every discovery path.
-- When Claude extracts names, normalize them through this canonical function before deduplication check.
-- The fuzzy match for deduplication should use the normalized form, not the raw extracted form.
-- Store the original extracted name in `politician_sources.notes` for audit purposes.
-- Use pg_trgm similarity on the normalized name with a ~0.80 threshold (not 0.85 — "Mike Smith" vs "Michael Smith" scores ~0.73; lowering to 0.70 catches more variants at the cost of more false positives going to the staging queue, which is acceptable).
+- In LOCATION-ONBOARDING.md, add a required step: "Confirm whether this city's municipal elections are partisan or nonpartisan before seeding races"
+- Do not hardcode "no party for local" — make it a configurable field checked per location
+- For Cambridge: nonpartisan is confirmed correct
 
-**Detection:** Two `essentials.politicians` rows for the same person with different name variants. Detectable with a query comparing pg_trgm similarity across all politicians in the same government body.
+**Detection (warning sign):** A future location onboarding skips the party-confirmation step and later discovers a partisan local race.
 
-**Phase:** Address in Phase 1 (Agent Core). Name normalization must be a shared utility used by every discovery path.
+**Phase that must address it:** LOCATION-ONBOARDING.md checklist authoring phase. Add it as a required pre-seed verification.
 
 ---
 
-### Pitfall 10: Admin Review Queue Becomes a Bottleneck — Ignored in Practice
+### Pitfall 10: MassGIS Legislative Boundaries Use 2021 Redistricting — Confirm These Are the Current Effective Boundaries
 
-**What goes wrong:** The staging queue is built but not reviewed. Low-confidence candidates accumulate for weeks without action. The admin email notifications are sent but ignored because they arrive without priority context (all items appear equally urgent). Eventually the queue has hundreds of stale items including candidates for elections that have already passed.
+**What goes wrong:** MassGIS labels its state house and senate shapefile downloads as "Massachusetts House Legislative Districts (2021)" and "Massachusetts Senate Legislative Districts (2021)." The 2021 maps were enacted November 2021 and took effect for the 2022 elections. These are the current boundaries as of 2026. However, if a researcher sees "2021" in the filename and assumes an older dataset is needed, or confuses this with pre-redistricting data, they may import incorrect boundaries.
 
-**Why it happens:** This is a process failure that starts as a tooling failure. If the review UI is cumbersome (raw JSON, no context about the race, no quick approve/reject action), humans will not use it. If notifications do not convey urgency (e.g., "You have 47 items to review" weekly is ignored; "Election in 3 days, 12 unreviewed candidates" is not), reviews slip.
+**Why it happens:** TIGER/Line files are labeled by the year the census data was collected, not the year the political district went into effect. The 2021 MA redistricting label is confusing — it means "districts drawn based on 2020 census, enacted 2021, effective 2022."
 
-**Consequences:** Low-confidence candidates never go live. The discovery system adds overhead (Claude API cost, admin emails) with no voter-facing value because the staging queue is never actioned.
+**Consequences:**
+- Wrong geofences for Cambridge state reps if the pre-2021 boundaries are accidentally used
+- A 2016 or 2018 TIGER download would have the old district boundaries that were redrawn after the 2020 census
 
 **Prevention:**
-- The admin review queue must show per-item: race name, jurisdiction, election date, source URL, candidate name, and a one-click approve/reject. No raw JSON.
-- Notification emails must include a count of items older than 7 days AND a count of items for elections within 30 days. These are the urgency signals.
-- Set a policy: items in the queue for more than 14 days without action trigger a second notification to a different email address (escalation path).
-- Add auto-expiry: if a staging item's election date passes without action, mark it `expired` and remove it from the active queue.
+- Use MassGIS official shapefiles, not raw Census TIGER downloads, for MA state districts
+- Confirm the MassGIS file is labeled "(2021)" or "(2022 effective)" before import
+- Verify against malegislature.gov/Search/FindMyLegislator that a known Cambridge address returns the expected representative (Dave Rogers 24th, Mike Connolly 26th, or Marjorie Decker 25th)
 
-**Detection:** Run a query on `staging_candidates` for items older than 14 days. If count is non-zero and growing, the queue is not being reviewed.
+**Detection (warning sign):** A Cambridge address lookup returns the wrong state representative — cross-check against malegislature.gov/Search/FindMyLegislator.
 
-**Phase:** Address in Phase 3 (Staging Queue + Admin UI). The review experience is as important as the discovery logic.
+**Phase that must address it:** MA state legislative geofence phase.
 
 ---
 
 ## Minor Pitfalls
 
-Mistakes that cause technical debt or require code fixes but do not directly harm voters.
+Mistakes that cause wasted effort or technical debt but are fixable.
 
 ---
 
-### Pitfall 11: Discovery Run Log Not Queryable — Unusable for Debugging
+### Pitfall 11: Cambridge FIPS Code Ambiguity — City Place Code vs. County FIPS
 
-**What goes wrong:** The run log is stored as a JSON blob or unstructured text. When a run fails or produces unexpected results, debugging requires reading raw log files rather than querying the DB. Over time, the log fills with data that cannot be filtered, aggregated, or alerted on automatically.
+**What goes wrong:** Cambridge the city has Census place FIPS code 2511000 (state 25 = MA, place 11000 = Cambridge). Middlesex County (where Cambridge is located) has FIPS code 25017. A researcher searching "Cambridge MA FIPS code" may find the county code (25017) rather than the city code (2511000) and use it for geo_id seeding.
+
+**Why it happens:** Cambridge is so strongly associated with Harvard and MIT that many data sources reference it by the metro area rather than the specific municipality. County-level FIPS codes appear more frequently in demographic datasets.
+
+**Consequences:**
+- A geo_id of '25017' would create a Middlesex County government row, not a Cambridge city row
+- Geofences built on the county polygon would match Cambridge addresses but also match every other city in Middlesex County
 
 **Prevention:**
-- Store run results as structured DB rows: `jurisdiction_id`, `run_type` (scheduled/on-demand), `started_at`, `completed_at`, `candidates_found`, `auto_upserted`, `staged_for_review`, `errors`, `source_url`, `status`.
-- Store individual candidate discoveries as child rows linked to the run, not as a JSON blob on the run row.
-- This enables queries like "show me all runs for LA County in the last 30 days" and "show all candidates auto-upserted this week."
+- Cambridge city geo_id = '2511000' (7-digit Census place code, standard format used for all cities in this project)
+- Middlesex County geo_id = '25017' (if seeded separately as the county government)
+- The pattern is identical to TX: city geo_id is the 7-digit place code, county is the 5-digit county FIPS
 
-**Phase:** Address in Phase 2 (Observability). Structured logging is a prerequisite for the admin email notifications.
+**Detection (warning sign):** Any migration that seeds Cambridge with geo_id = '25017' — that is the county, not the city.
+
+**Phase that must address it:** Government Structure seed phase — first migration that creates the Cambridge government row.
 
 ---
 
-### Pitfall 12: Agent Timeout on Slow Government Sites
+### Pitfall 12: Cambridge City Councillor (with -ll-) vs. Councilor Spelling
 
-**What goes wrong:** A county clerk website is slow (common for government sites under load near filing deadlines). The Claude tool call with web search hangs for 60+ seconds. The Express request times out. The run is marked as failed. The retry logic fires immediately and hits the same slow site again.
+**What goes wrong:** Cambridge officially uses the spelling "Councillor" (double-l, British English convention) for its council members. The official website, ballots, and press releases all use "Councillor." The app may display "Councilor" (single-l, American English) if the title is auto-generated from an `office_title` field or normalized.
+
+**Why it happens:** Cambridge is one of a small number of US municipalities that retained the British spelling. This is cosmetically wrong but not functionally harmful.
 
 **Prevention:**
-- Set explicit timeouts on Claude API calls (not just the HTTP client). Use Claude's `max_tokens` as an implicit output constraint, and set a wall-clock timeout via `AbortController`.
-- Implement exponential backoff with jitter for retries. Do not retry a failed discovery run immediately — wait at least 10 minutes.
-- For the weekly cron, a single jurisdiction failure should not fail the entire batch. Use try/catch per jurisdiction, log the failure, and continue.
+- Seed Cambridge council office rows with `office_title = 'Councillor'` (double-l)
+- Do not rely on auto-generation or normalization that converts to "Councilor"
 
-**Phase:** Address in Phase 1 (Agent Core). Timeout and retry behavior must be designed from the start.
+**Detection (warning sign):** Profile pages showing Cambridge officials with "Councilor" instead of "Councillor."
+
+**Phase that must address it:** Government Structure seed phase.
 
 ---
 
-### Pitfall 13: Render Cron Service vs. Express `node-cron` Confusion
+### Pitfall 13: Discovery Cron Will Fire on a 2027 Election — 2-Year Gap Means No Candidates Until Filing Opens
 
-**What goes wrong:** The developer implements the weekly schedule using `node-cron` inside the Express process (because it is familiar), not as a Render cron job service. On Render's free/standard tier, Express servers may be spun down between requests. The cron inside the process never fires. Alternatively, if the Express server scales to multiple instances, `node-cron` runs in every instance — producing N simultaneous discovery runs.
+**What goes wrong:** If the discovery pipeline is seeded for Cambridge with a 2027 election date, the weekly cron will run and return zero candidates for approximately 2 years until the 2027 filing period opens. This is normal but will trigger zero-candidate regression alerts if not handled.
+
+**Why it happens:** The existing regression alert fires when "a run returns 0 candidates for a jurisdiction that previously returned non-zero." For a brand-new jurisdiction (no prior runs), this should not trigger. But if any initial seed run or test run populates candidates, then the next regular run returns 0, the alert fires incorrectly.
 
 **Prevention:**
-- Use Render's native cron job service for the weekly schedule. It runs as a separate service from the web server, on a fresh container, with Render's single-execution guarantee.
-- The on-demand trigger (admin fires discovery) should call an internal endpoint on the Express server protected by a service-to-service secret, with the DB-level lock (Pitfall 6) as the guard against simultaneous runs.
-- Document this architecture decision clearly in the phase plan so it is not accidentally changed.
+- Do not run a discovery test run for Cambridge until the 2027 filing period actually opens (approximately summer 2027)
+- OR: Seed Cambridge discovery_jurisdictions with a very far `election_date` and mark the jurisdiction as `inactive` until closer to 2027 filing
+- The regression alert logic should check `election_date > NOW() - INTERVAL '6 months'` before considering a zero-candidate run as a regression
 
-**Phase:** Address in Phase 2 (Cron + Scheduling Architecture).
+**Detection (warning sign):** Admin receives weekly "zero candidates regression" alerts for Cambridge starting immediately after the Cambridge discovery jurisdiction is seeded.
+
+**Phase that must address it:** Discovery Pipeline configuration phase.
 
 ---
 
@@ -272,27 +301,56 @@ Mistakes that cause technical debt or require code fixes but do not directly har
 
 | Phase Topic | Likely Pitfall | Mitigation |
 |-------------|---------------|------------|
-| Agent Core (citation + verification) | Hallucinated names with no source URL | Require citation for every name; verify name appears on cited page |
-| Agent Core (confidence scoring) | News article URL scored as "official" | Explicit domain allowlist per jurisdiction |
-| Agent Core (name extraction) | Name variants create duplicates | Normalize all names through canonical function before dedup check |
-| Jurisdiction Registry | Source URLs with election-cycle IDs | Require `election_date` and `source_url` per election, not per jurisdiction |
-| Upsert Pipeline | Auto-upsert bypasses human gate | Default to staging queue; auto-upsert only with dual-signal confirmation |
-| Upsert Pipeline | Withdrawn candidates stay live | Weekly run compares full candidate list and flags removals for review |
-| Cron Scheduling | Multiple simultaneous runs | DB-level lock + Render native cron service |
-| Cron Scheduling | Rate limits in batch runs | Sequential processing with delay; exponential backoff on 429 |
-| Staging Queue | Queue never reviewed | Rich review UI + urgency-aware notifications + auto-expiry |
-| Observability | Run log not queryable | Structured DB rows, not JSON blobs |
+| Government Structure seed | Mayor = appointed from council, not elected | Use LOCAL (not LOCAL_EXEC) for mayor office; seed City Manager as appointed |
+| Government Structure seed | School Committee chair changed (2025 charter) | Do NOT include mayor as automatic School Committee member |
+| Government Structure seed | Cambridge FIPS = 2511000, not 25017 | Verify 7-digit place code before first migration |
+| Government Structure seed | "Councillor" double-l spelling | Hard-code this title; do not normalize |
+| Election row seed | Next election is 2027, not 2026 | Confirm 2027 date before creating election row |
+| Incumbents seed | Email format inconsistent across members | Pull emails only from official city council members page at time of seeding |
+| MA state officials | 4+ state house districts split across Cambridge | Use MassGIS 2021 shapefile, not raw TIGER; verify with FindMyLegislator |
+| MA state officials | Geofence FIPS for districts uses 2021 redistricting | Label check: MassGIS "(2021)" files ARE the current effective boundaries |
+| Headshots | City council page has official photos | Use cambridgema.gov/Departments/citycouncil/members as primary source; vote.cambridgecivic.com as backup |
+| Discovery pipeline | Election not until 2027 — cron returns 0 forever | Mark jurisdiction inactive until 2027 filing period, or suppress regression alert |
+| Compass stances | No LACBA/CJP equivalent in MA | Use public voting record, policy statements, news sourcing — same approach as TX |
+| Elections UI | 19 Council + 18 School Committee = 37 cards | Pre-validate UI at scale; consider "show all" toggle before Cambridge elections ship |
+| Playbook generalization | Odd-year elections not default | Add "confirm election year type" to LOCATION-ONBOARDING.md checklist |
+| Playbook generalization | Open data portal ≠ officials data | Add explicit note: operational data portals rarely publish personnel/contact data |
+| Playbook generalization | LA data richness is an outlier | Mark LA-specific sources clearly in playbook; remove from generic checklist |
+
+---
+
+## Confidence Assessment
+
+| Pitfall Area | Confidence | Sources |
+|-------------|------------|---------|
+| Cambridge Plan E / city manager structure | HIGH | cambridgema.gov official, Harvard Crimson reporting |
+| 2025 charter amendment (mayor off School Committee) | HIGH | Harvard Crimson election night coverage, official results |
+| 2025 election date (Nov 4, 2025) and results | HIGH | Official Cambridge election results, multiple news sources |
+| Next election is 2027 (odd-year cycle) | HIGH | Massachusetts state law, MA elections commission |
+| Candidate counts (19 council, 18 school committee) | HIGH | Official Cambridge election commission candidate PDFs |
+| Cambridge FIPS = 2511000 | HIGH | US Census official GEOID documentation |
+| MassGIS 2021 redistricting = current effective | HIGH | MassGIS mass.gov official documentation |
+| Cambridge state rep districts (24th, 25th, 26th, 29th Middlesex) | HIGH | malegislature.gov + Cambridge election commission maps |
+| Cambridge open data portal content | HIGH | data.cambridgema.gov direct inspection |
+| MA odd-year municipal election requirement | HIGH | Massachusetts MGL + American Academy of Arts and Sciences report |
+| UI behavior with 19+ candidates | MEDIUM | Code inspection of ElectionsView.jsx — no hard limit found; performance not load-tested at this scale |
 
 ---
 
 ## Sources
 
-- Anthropic rate limits documentation (verified 2026-04-23): https://platform.claude.com/docs/en/api/rate-limits
-- OpenNews elections scraping pitfalls (MIT Election Lab / MEDSL): https://source.opennews.org/articles/elections-scraping/
-- Render cron job behavior documentation: https://render.com/docs/cronjobs
-- LA County Registrar candidate list structure (direct page inspection): https://www.lavote.gov/Apps/CandidateList/Index?id=4338
-- California SOS Cal-Access candidate page structure (direct page inspection): https://cal-access.sos.ca.gov/Campaign/Candidates/
-- Indiana SOS candidate data format (XLSX only): https://www.in.gov/sos/elections/candidate-information/
-- Spotify Engineering confidence scoring case study (2024): https://engineering.atspotify.com/2024/12/building-confidence-a-case-study-in-how-to-create-confidence-scores-for-genai-applications
-- OWASP LLM09 Misinformation risk: https://genai.owasp.org/llmrisk/llm092025-misinformation/
-- Existing codebase: `/c/EV-Accounts/backend/scripts/discover-cal-access-candidates.ts`, `discover-indiana-candidates.ts`
+- Cambridge Municipal Elections official page: https://www.cambridgema.gov/departments/electioncommission/cambridgemunicipalelections
+- Cambridge 2025 election official results: https://www.cambridgema.gov/Departments/electioncommission/news/2025/11/2025municipalelectionofficialresultsnovember14thupdate
+- Cambridge Plan E Charter: https://www.cambridgema.gov/publications/documents/p/planecharter
+- Cambridge City Manager's Office: https://www.cambridgema.gov/Departments/citymanagersoffice
+- 2025 charter ballot question result (Harvard Crimson): https://www.thecrimson.com/article/2025/11/5/cambridge-updates-charter/
+- MassGIS Massachusetts House Legislative Districts (2021): https://www.mass.gov/info-details/massgis-data-massachusetts-house-legislative-districts-2021
+- MA Congressional Districts (118th): https://www.mass.gov/info-details/massgis-data-us-congressional-districts-118th
+- Redistricting in Massachusetts (Ballotpedia): https://ballotpedia.org/Redistricting_in_Massachusetts
+- MA odd-year city elections (American Academy of Arts and Sciences): https://www.amacad.org/news/massachusetts-should-move-local-elections-even-numbered-years
+- Cambridge Open Data Program: https://www.cambridgema.gov/departments/opendata
+- Cambridge City Council Members page: https://www.cambridgema.gov/Departments/citycouncil/members
+- Cambridge state representative legislative district map: https://www.cambridgema.gov/-/media/Files/electioncommission/mapsandpollinglocations/legislativedistricts.pdf
+- Cambridge civic candidate pages (volunteer source for photos): http://vote.cambridgecivic.com/
+- US Census GEOID documentation: https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html
+- Existing codebase: `src/components/ElectionsView.jsx` (candidate rendering logic, no hard limit found on candidate count per race)

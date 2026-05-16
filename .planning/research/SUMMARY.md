@@ -1,150 +1,271 @@
-# Project Research Summary
+# Research Summary: v5.0 Location Onboarding Playbook — Cambridge, MA
 
-**Project:** v2.1 Claude Candidate Discovery
-**Domain:** AI-powered civic data discovery - challenger candidate ingestion for ballot display
-**Researched:** 2026-04-23
+**Project:** Essentials (empowered.vote) — Cambridge, MA civic coverage + reusable location playbook
+**Domain:** US city onboarding — government structure, officials data, geofences, elections, headshots
+**Researched:** 2026-05-15
 **Confidence:** HIGH
+
+---
 
 ## Executive Summary
 
-The v2.1 milestone adds an automated candidate discovery pipeline to the existing EmpoweredVote backend. The system uses Claude web search to extract challenger candidates from official election authority sites, routes discoveries through a confidence-gated staging queue, and upserts approved records into the existing race_candidates table. The infrastructure footprint is deliberately minimal: node-cron is already installed, emailService.ts already exists, and the race_candidates table already supports NULL politician_id rows for challengers. Only two new npm packages are required (@anthropic-ai/sdk, resend), and all new logic lives in-process within the existing Render web service.
+Cambridge, MA is the proof-of-concept city for the v5.0 Location Onboarding Playbook milestone. It uses a Council-Manager form of government with 9 at-large City Councillors (double-l) elected via Single Transferable Vote — the longest continuously-running STV jurisdiction in the US, in place since 1941. The Mayor is NOT a separately-elected office: it is a title given to the councillor who led first-choice votes in the preceding STV election, making it a derived ceremonial role with no independent executive authority. The City Manager (currently Yi-An Huang) is the actual chief executive. This is the single most important structural fact in the entire milestone and must drive every schema decision.
 
-The recommended approach is a three-phase build: foundation (DB tables + agent runner, manually triggered, output reviewed via direct SQL), then operationalization (admin review UI + email notifications + on-demand trigger), then automation (weekly cron + confidence-based auto-upsert). This sequence is non-negotiable. Enabling auto-upsert before confidence scoring has been validated against real election data is the fastest path to voter misinformation. Every discovered candidate must flow through candidate_staging and human approval before touching race_candidates.
+The implementation path is low-friction on the technology side. No new npm packages are required, TIGER 2024 boundaries work for MA with a one-line allowlist addition to the existing loader, and every migration pattern needed (governments, chambers, offices, politicians, geofences) already exists in the codebase from TX/CA/IN. The main effort is data collection — all Cambridge and MA sources are HTML-only with no bulk-download APIs — and the careful handling of three Cambridge-specific quirks: (1) the non-elected Mayor, (2) the odd-year election cycle (next city election is November 2027, not 2026), and (3) the 3+ state legislative districts splitting the city, which require PostGIS geofences rather than a simple one-district assumption.
 
-The top systemic risks are hallucinated candidate names (Claude synthesizing from news rather than filing records), source URL rot (government sites change election-cycle IDs silently), and stale withdrawal status (candidates who un-file remain live). All three require proactive architecture decisions in Phase 1: citation-required output schema, a zero-candidate regression alert, and a compare-not-add-only discovery loop. Name normalization is the deduplication linchpin. Without a canonical format applied at every insertion point, fuzzy matching will both over-flag real duplicates and under-catch variant spellings of the same person.
+The v5.0 milestone also codifies a reusable LOCATION-ONBOARDING.md playbook and phase templates in .planning/. Cambridge surfaces several generalizable insights: open data portals rarely contain officials/contact data, LA data richness is an outlier not a baseline, and future cities must have their partisan/nonpartisan status and election-year type confirmed before seeding commences.
+
+---
+
+## Critical Decisions
+
+These must be resolved before planning begins. Getting any one of them wrong corrupts the schema.
+
+| Decision | Answer | Rationale |
+|----------|--------|-----------|
+| **Mayor office type** | is_appointed_position = true on a LOCAL office row; share the politician row with one council seat | Mayor is NOT directly elected. Must not appear as a standalone elected executive. Do NOT use LOCAL_EXEC. |
+| **Mayor as School Committee member?** | NO — under the new 2025 charter, Mayor is no longer automatic School Committee member | The pre-2025 Plan E gave Mayor ex officio School Committee membership. The November 2025 charter change removed this. Do not model the Mayor as having a School Committee seat. |
+| **City Manager office type** | is_appointed_position = true; is_appointed = true on the politician row | Yi-An Huang is appointed by council; should appear in representative lookup results flagged as appointed. |
+| **Cambridge geo_id** | 2511000 (7-digit Census place code) | NOT 25017 (that is Middlesex County). Matches the project-wide pattern of 7-digit place codes for cities. |
+| **election_method enum** | stv_proportional — verify whether this value exists or needs adding | Cambridge STV is structurally unlike any prior city election method. Check the chambers table constraint before migrating. |
+| **Next Cambridge election** | November 2027 — seed election row with 2027 date | Massachusetts law requires municipal elections in odd-numbered years. There is NO Cambridge city election in 2026. Seeding a 2026 date is wrong. |
+| **Councillor spelling** | Double-l: Councillor | Cambridge official spelling. Hard-code in the offices title; do not normalize. |
 
 ---
 
 ## Key Findings
 
-### Recommended Stack
+### From STACK.md
 
-The backend stack is unchanged (Express/TypeScript, Postgres/PostGIS, Supabase, Render). Two packages are new. @anthropic-ai/sdk (v0.91.0) provides the Claude agent with web search using the web_search_20250305 tool. The allowed_domains parameter pins searches to official election authority URLs stored per jurisdiction, preventing news-site contamination. resend (v6.12.0) handles admin email on Render free tier (3,000/month, 100/day), consistent with the existing emailService.ts pattern. node-cron 4.2.1 is already installed - zero infrastructure change for scheduling.
+Massachusetts (FIPS 25) requires zero new npm packages. The load-state-tiger-boundaries.ts script already handles MA MTFCC codes (G5210 = Senate, G5220 = House — identical to TX). FIPS_TO_STATE already contains 25: ma. The only code change needed is one line added to STATE_LAYER_ALLOWLIST:
 
-**Core technologies:**
-- @anthropic-ai/sdk v0.91.0: Claude agent with server-side web search - recommended over Playwright/Cheerio because LLM handles heterogeneous HTML/Excel/PDF structures that break CSS selectors when government sites update
-- node-cron 4.2.1: Already installed - weekly cron runs in-process on single-instance Render web service; no separate Render Cron service needed
-- resend v6.12.0: Admin email notifications - permanent free tier sufficient; SendGrid eliminated free tier May 2025
-- pool.query() (existing): All three new tables use the existing Postgres pool; no new DB client
-- emailService.ts (existing): Import sendEmail() directly - already integrated with Resend, degrades gracefully when key absent
+```typescript
+MA: new Set(['cd', 'sldu', 'sldl', 'place']),
+```
 
-**Critical prerequisite:** Web search must be enabled org-wide in Anthropic Console (console.anthropic.com/settings/privacy) before the API tool works. This is a one-time admin toggle, not a code change.
+All candidate and officials data requires manual SQL migrations. The MA Secretary of State (sec.state.ma.us), Cambridge election commission, and malegislature.gov are HTML-only with no CSV exports or documented APIs.
 
-### Expected Features
+**Confirmed officials:**
+- City Council (9): McGovern (Mayor), Siddiqui, Azeem (Vice Mayor), Sobrinho-Wheeler, Simmons, Nolan, Zusy, Al-Zubi, Flaherty
+- School Committee (6 elected): Weinstein (Chair), Dube (Vice Chair), de Paula Santos, Harding Jr., Hudson, Jaikumar
+- State House (3 confirmed districts): 24th Middlesex (Rogers), 25th Middlesex (Decker), 26th Middlesex (Connolly)
+- US Congress: MA-05 (Clark) confirmed; MA-07 (Pressley) vs. MA-08 (Lynch) disputed — see Conflict Resolution below
+- US Senate: Warren, Markey
 
-Official election authority sources have no unified API. LA County uses a JavaScript app with per-election query parameters (the id query parameter on lavote.gov/Apps/CandidateList changes each cycle). Indiana SoS provides Excel downloads for state/federal races only; county-level races require county clerk sites or Ballotpedia fallback. California CAL-ACCESS bulk dump is structured but requires joining across multiple tables. Claude web search with allowed_domains is the correct abstraction for handling this heterogeneity.
+### From FEATURES.md
 
-**Must have (table stakes):**
-- Jurisdiction registry table with official_election_domains[] (enables deterministic confidence scoring), election_authority_url, election_date, filing_deadline, local_races_source enum
-- Claude discovery agent returning structured JSON with citation URL per candidate - no citation means low-confidence, never auto-upsert
-- Two-signal confidence scoring: official domain check (from allowlist) AND fuzzy DB match against races.position_name; Claude self-reported score alone is insufficient
-- candidate_staging table as the mandatory gate - every discovered candidate enters here first, regardless of confidence
-- discovery_runs log with raw_agent_output JSONB column for hallucination audit trail
-- Admin review UI with per-item race context, source URL link, and one-click approve/reject (extending existing UnresolvedQueue.jsx pattern)
-- Approve action upserts to race_candidates with is_incumbent=false, candidate_status filed, politician_id NULL
-- Reject action marks staging row rejected
-- Admin email shows count of staged items plus count of items for elections within 30 days (urgency signal, not just volume)
-- Withdrawal detection: each discovery run compares full discovered list against current DB state; candidates present in DB but absent from source are flagged for admin review, never auto-deleted
-- Sequential jurisdiction processing: one at a time, with delay between Claude calls - parallel runs exhaust rate limits with no usable output
+Cambridge government uses Council-Manager form — a first for this project. The STV election system means 18-25 candidates per 9-seat council race and 12-20 candidates per 6-seat school committee race. Ballotpedia does not reliably cover Cambridge (population ~118K, below their threshold). The MMA Data Hub (mma.org) is the fastest cold-start source for any MA city form of government and key officials.
 
-**Should have (differentiators):**
-- Election-proximity-aware scheduling: weekly during filing window, daily during pre-election sprint (filing-deadline + 14 days through election day)
-- Source URL and source excerpt stored per staging row (admin can verify with one click)
-- Fuzzy name match at approve time (pg_trgm, 0.80 threshold on normalized names) to catch Mike Smith vs Michael Smith
-- On-demand trigger endpoint for bootstrapping new jurisdictions without waiting for cron
-- DB-level run lock (check status = running before starting) to prevent simultaneous runs from cron and manual trigger
+**Table stakes** (Cambridge must have these to be usable):
+- Cambridge governments, chambers, offices rows
+- All 9 incumbents with headshots
+- All 6 school committee members with headshots
+- City boundary geofence (place layer, GEOID 2511000)
+- State legislative district geofences (2 confirmed senate + 3 confirmed house districts)
+- Federal district geofences (2 congressional districts)
+- State and federal politicians linked to Cambridge districts
 
-**Defer (v2+):**
-- Discovery run metrics dashboard (no data volume to display yet)
-- Diff view on re-discovery (requires staging version history)
-- New jurisdiction onboarding wizard (manual SQL seed is fine initially)
-- Auto-upsert for high-confidence results (enable only after confidence scoring is validated against real data)
-- Election-proximity-aware scheduling (weekly cron is sufficient for initial launch)
+**Differentiators** (valuable but not v5.0 MVP):
+- STV multi-round results display (round-by-round data exists as HTML; no prior UI art in codebase)
+- Cross-office politician linking (Azeem is simultaneously Councillor, Vice Mayor, and 2026 state senate candidate)
+- Charter change timeline display (2025 charter approved 73%)
+- Compass stances for Cambridge council members (housing/zoning is the dominant local issue)
 
-### Architecture Approach
+**Anti-features** (do NOT build in v5.0):
+- Mayor modeled as a separate elected office
+- All 6 house district geofences in phase 1 (ship senate + federal first)
+- STV round-by-round results visualization (high complexity, no precedent in codebase)
+- Real-time 2027 candidate discovery (filing not open until summer 2027)
 
-All new logic is in-process within the existing Express backend at C:/EV-Accounts/backend/src. Four new files: lib/discoveryService.ts (orchestration and DB ops), lib/discoveryAgentRunner.ts (Anthropic SDK wrapper, isolated for testability), routes/essentialsDiscovery.ts (HTTP surface: trigger, queue, approve/reject), cron/discoveryCron.ts (weekly sweep registration). Two existing files modified: index.ts (register router and start cron) and lib/env.ts (add ANTHROPIC_API_KEY). All three new DB tables land in the essentials schema. Migration numbering starts at 070 (current highest is 069_donor_name_normalized.sql).
+### From ARCHITECTURE.md
 
-**Major components:**
-1. discoveryAgentRunner.ts: Anthropic SDK call with web_search_20250305 tool; returns structured JSON per candidate with full_name, office_name, source_url, source_excerpt, is_incumbent, confidence; isolated module enables standalone testing against live election sites before wiring to service layer
-2. discoveryService.ts: Orchestrates the full run (load jurisdiction, create run row, call agent, normalize names, dedup check, write staging, update run log, send email); also implements getQueue(), approveCandidate(), rejectCandidate(); approveCandidate() upserts to race_candidates with exact-match then fuzzy-match dedup guard
-3. essentialsDiscovery.ts (route): POST /trigger/:id returns 202 immediately, runs async; GET /queue lists staging rows; PATCH /queue/:id/approve and /reject; all protected by requireAdminToken
-4. discoveryCron.ts: weekly schedule iterates enabled jurisdictions sequentially via for...of loop (never Promise.all)
-5. Three new essentials.* tables: discovery_jurisdictions (registry), discovery_runs (audit log with JSONB raw output), candidate_staging (review queue with partial unique index preventing same name+office twice per run)
+All patterns needed for Cambridge already exist in the codebase. Key reuse:
+- Migration 087: government row template
+- Migration 088: city chambers + offices template
+- Migrations 091-096: politician seed template
+- load-state-tiger-boundaries.ts: handles MA with one-line change
+- Landing.jsx COVERAGE_AREAS: Cambridge uses browseGovernmentList pattern with geo_id 2511000
 
-### Critical Pitfalls
+**New patterns required:**
+- At-large seat numbering: 9 at-large council seats with no ward numbers. Use 9 individual office rows titled Councillor (same title, no Place numbers — unlike TX cities).
+- Mayor as derived role: One politician row (McGovern) linked to both a Councillor office and a Mayor office (is_appointed_position = true). Schema supports dual-office linkage.
+- MA government name: Use Commonwealth of Massachusetts (not State of Massachusetts).
+- County layer: Skip the county layer for MA government purposes. Middlesex County government was largely abolished in 1997. Load the county G4020 boundary only for congressional intersection support via browseCountyGeoId: 25017.
 
-1. **Hallucinated candidate names** - Claude synthesizes names from news context, not filing records. Mitigation: require source_url for every candidate; run a second-pass fetch confirming the name appears verbatim on the cited page before staging; any candidate without a citation is immediately low-confidence and never auto-upserts.
+Critical path: A (TIGER boundaries) to B (government DB foundation) to C (Cambridge city structure) to D (incumbents + headshots) to E (geofences + state/federal politicians) to F (election data) to G (2026 state races) to H (compass stances) to I (playbook documentation). Phases A and B have no blocking dependencies and can start immediately.
 
-2. **Source URL rot** - Government sites change election-cycle page IDs silently. The lavote.gov id parameter changes each cycle; Indiana SoS uses year-templated Excel URLs. Mitigation: alert when any jurisdiction returns zero candidates after previously returning non-zero; store source_url in the registry so URL updates require only a DB row change, not a code deploy.
+### From PITFALLS.md
 
-3. **Withdrawal not detected** - Discovery adds but never removes; withdrawn candidates stay live. Mitigation: each run produces a full candidate list and compares against DB state; candidates in DB but absent from source are flagged for admin review with reason "no longer appears on official source"; no auto-deletion ever.
+Top 5 most dangerous pitfalls:
 
-4. **Duplicate from name variants** - "JOHN Q. SMITH III" (agent output) vs "John Smith" (Cicero import) fails exact match and may fail fuzzy match. Mitigation: canonical normalization (first + last, title case, no middle initial, no suffix) applied at every insert point; fuzzy match uses normalized form at 0.80 threshold; any match below exact goes to staging, never auto-upsert.
+1. **Mayor = elected executive** — Cambridge Mayor is a council-internal title, not a separately elected role. Wrong modeling misleads voters about the city actual power structure. Prevention: LOCAL (not LOCAL_EXEC) district type; is_appointed_position = true on Mayor office row; no election race row for Mayor.
 
-5. **Parallel jurisdiction processing** - Running all jurisdictions simultaneously on cron hits 429s mid-batch. Mitigation: sequential for...of loop with delay; exponential backoff on 429; upgrade to Anthropic Tier 2 ($40 deposit) before scaling beyond 5 jurisdictions.
+2. **19-37 candidates in one election view** — Cambridge STV produces ~19 council candidates and ~18 school committee candidates. The current ElectionsView.jsx has no pagination or hard limit on candidate cards per race. Prevention: UI load-test at 19+ cards before shipping Cambridge election data; add show-all toggle if needed.
+
+3. **2025 charter change — Mayor off School Committee** — Pre-2025 Plan E gave Mayor automatic School Committee membership. The November 2025 charter removes this. Prevention: seed School Committee as 6 elected members; do not add Mayor as automatic member.
+
+4. **Cambridge election is 2027, not 2026** — MA requires municipal elections in odd-numbered years. Last election was November 2025; next is November 2027. Prevention: seed election row with 2027 date; mark discovery jurisdiction inactive until 2027 filing opens.
+
+5. **Multi-district geofence complexity** — Cambridge spans 3+ state house districts and at least 2 senate districts. Use MassGIS 2021 shapefiles as verification source; confirm each district via FindMyLegislator before seeding geofences.
 
 ---
 
-## Implications for Roadmap
+## Conflict Resolutions
 
-Based on combined research, three phases are recommended. The sequence is dependency-driven: you cannot validate confidence scoring without first having the agent produce real output, and you should not automate before confidence scoring is validated.
+### 1. MA Boundary Source: TIGER 2024 vs. MassGIS 2021
 
-### Phase 1: Agent Core + DB Foundation
+**Recommendation: Use TIGER 2024 as primary source (consistent with CA/TX/IN/UT), with MassGIS 2021 as the required verification and fallback for state legislative districts.**
 
-**Rationale:** The agent and name normalization utility are the highest-risk components. They interact with live government sites, produce output that can harm voters if wrong, and require validation before any automation. Build them first in the most visible possible mode (manual trigger, output reviewed directly in Postgres) so problems surface before any cron or auto-upsert exists.
+The existing load-state-tiger-boundaries.ts is built around TIGER URLs and formats. TIGER 2024 reflects boundaries MA submitted to Census by May 2024. MassGIS 2021 is the canonical effective source for post-redistricting MA district boundaries (enacted 2021, effective 2022 elections — the label year does not mean outdated). Use TIGER 2024 first. After loading, run FindMyLegislator verification on 4+ Cambridge addresses across different wards. If any address returns the wrong state representative, fall back to MassGIS shapefiles for that layer. Document this verification step as required in the phase plan.
 
-**Delivers:** Three DB migrations (070-072); discoveryAgentRunner.ts callable standalone; discoveryService.runDiscoveryForJurisdiction() callable from a test script; staging rows visible in DB with correct confidence labels and source URLs.
+### 2. MA House District Count for Cambridge
 
-**Addresses:** Jurisdiction registry, Claude discovery agent (state/federal and local), confidence classification, candidate_staging and discovery_runs tables, name normalization utility, citation-required output schema, withdrawal comparison loop.
+**Working assumption: 3 primary districts (24th, 25th, 26th Middlesex) with up to 3 additional partial-coverage districts — ship with 3 confirmed, verify edge cases before adding more.**
 
-**Avoids:** Hallucination pitfall (citation requirement + second-pass verification), name variant duplicate pitfall (canonical normalization function), stale withdrawal pitfall (compare-not-add-only loop).
+The Stack researcher confirmed 3 districts via malegislature.gov (Rogers 24th, Decker 25th, Connolly 26th). The Features researcher (~6 districts) and Pitfalls researcher (29th Middlesex) reflect that Cambridge 11 wards have edge precincts crossing into additional districts at city boundaries. Ship phase 1 with the 3 confirmed districts. Before adding more, download the Cambridge Election Commission legislative district PDF and verify which wards/precincts fall in additional districts.
 
-**Research flag:** Needs phase-level research on Anthropic rate limits for claude-sonnet-4-6; structured output via tool use vs JSON-in-text; whether election authority page content fits in a single context window. Also needs architectural decision: does approveCandidate() create a races row if none exists, or require a pre-existing race?
+### 3. MA Senate District Count for Cambridge
 
-### Phase 2: Admin Review UI + Email + On-Demand Trigger
+**Working assumption: 2 confirmed + 1 probable = plan for 3, verify the third before migrating.**
 
-**Rationale:** With a validated agent, operationalize it for non-developer admin use. The registry formalizes the official_election_domains metadata that drives confidence scoring. The review UI makes the staging queue actionable without DB access. Email notifications close the feedback loop.
+Features says 2 (Middlesex and Suffolk with DiDomenico; Second Middlesex with Jehlen/2026 successor). Stack found Cambridge GIS explicitly confirms 3 senate districts cover the city. The third district identity is unverified and requires running FindMyLegislator with a Cambridge Ward 1-7 address. This is a required pre-migration research step — do not assume 2 is the final count.
 
-**Delivers:** Admin review queue page (extending UnresolvedQueue.jsx); approve/reject API endpoints wiring to race_candidates upsert; Resend-based email with urgency-aware subject line; on-demand trigger endpoint; zero-candidate regression alert in email.
+### 4. Congressional Districts: MA-05/MA-08 vs. MA-05/MA-07
 
-**Uses:** resend npm package, existing emailService.ts, existing requireAdminToken middleware, existing UnresolvedQueue.jsx pattern.
+**Verification required before seeding.** Stack researcher says MA-05 (Clark) and MA-08 (Lynch). Features researcher says MA-07 (Pressley) for the majority of Cambridge and MA-05 (Clark) for a portion. Cambridge GIS confirms 2 congressional districts cover the city. Run FindMyLegislator or check the Cambridge GIS congressional districts page to confirm the exact split before seeding congressional district politicians. Features researcher MA-07 (Pressley) is more likely correct for central Cambridge.
 
-**Addresses:** Admin review UI, approve/reject actions, email notifications, fuzzy-match dedup guard at approve time, on-demand trigger, source URL rot regression detection.
+### 5. Mayor Office — Critical Schema Decision
 
-**Avoids:** Review queue becoming an ignored bottleneck (urgency-aware email: items older than 7 days and items for elections within 30 days); auto-upsert bypassing human gate before confidence is proven.
+Both Features and Pitfalls researchers agree: Mayor is NOT a separately elected office.
 
-**Research flag:** Standard patterns - no additional research phase needed.
+Correct approach:
+- One offices row for Mayor with is_appointed_position = true
+- politician_id on that row points to Marc C. McGovern politician record (also linked to his Councillor office row)
+- No election race row for Cambridge Mayor
+- Profile page should include a description: Cambridge Mayor is selected from among the 9 City Councillors — the City Manager is the chief executive
+- Discovery agent allowlist for Cambridge must exclude any source that lists Mayor as a separate race
 
-### Phase 3: Cron Automation + Auto-Upsert (Post-Validation Only)
+---
 
-**Rationale:** Only after Phase 2 has produced real discovery runs reviewed by humans and validated as accurate does it make sense to automate. Cron and auto-upsert are efficiency features, not trust features - those are in Phases 1 and 2.
+## Feature Table
 
-**Delivers:** Weekly node-cron sweep processing all enabled jurisdictions sequentially; auto-upsert path for candidates meeting dual-signal high-confidence criteria (official domain + fuzzy DB race match); DB-level run lock preventing simultaneous runs.
+| Feature | Category | Complexity | Ship in v5.0? |
+|---------|----------|------------|---------------|
+| Cambridge government + 2 chambers | Table stakes | Low | Yes — Phase 1 |
+| 9 Councillor offices (at-large) | Table stakes | Low | Yes — Phase 1 |
+| 6 School Committee offices | Table stakes | Low | Yes — Phase 1 |
+| Mayor office (derived, not elected) | Table stakes | Low | Yes — Phase 1 with correct schema |
+| City Manager (appointed) | Table stakes | Low | Yes — Phase 1 |
+| 9 council incumbents + headshots | Table stakes | Medium | Yes — Phase 2 |
+| 6 school committee incumbents + headshots | Table stakes | Medium | Yes — Phase 2 |
+| Cambridge city boundary geofence | Table stakes | Medium | Yes — Phase 3 |
+| 2 confirmed senate district geofences | Table stakes | Medium | Yes — Phase 3 |
+| 3 confirmed house district geofences | Table stakes | Medium | Yes — Phase 3 |
+| 2 congressional district geofences | Table stakes | Medium | Yes — Phase 3 |
+| State + federal politicians linked | Table stakes | Medium | Yes — Phase 3 |
+| Landing.jsx Cambridge entry | Table stakes | Low | Yes — Phase 3 |
+| 2025 election results as historical data | Table stakes | Low | Yes — Phase 4 |
+| 2027 election placeholder race | Table stakes | Low | Yes — Phase 4 |
+| 2026 MA state/federal races (Azeem senate bid) | Table stakes | Medium | Yes — Phase 5 |
+| Compass stances for Cambridge councillors | Differentiator | High | Yes — Phase 6 |
+| Cross-office Azeem linking (council + senate candidate) | Differentiator | Low | Yes — Phase 5 |
+| LOCATION-ONBOARDING.md playbook | Playbook artifact | Medium | Yes — Phase 7 |
+| STV round-by-round results display | Differentiator | High | No — post-v5.0 |
+| 6 house edge-precinct district geofences | Nice to have | High | No — follow-on |
+| 2027 candidate discovery (active) | Future | Low setup | No — activate summer 2027 |
 
-**Implements:** discoveryCron.ts; auto-upsert branch in discoveryService.approveCandidate(); sequential processing loop with exponential backoff on 429.
+---
 
-**Avoids:** Rate limit exhaustion (sequential for...of with delays, exponential backoff); simultaneous run conflicts (status check before starting); stale withdrawal accumulation (comparison loop from Phase 1 now runs automatically on schedule).
+## Recommended Stack
 
-**Research flag:** Validate rate limit headroom with a 3-jurisdiction test batch before enabling against full jurisdiction list.
+No new packages. No new ingest pipelines. Pure SQL migration + existing scripts.
 
-### Phase Ordering Rationale
+| Component | Tool/Pattern | Notes |
+|-----------|-------------|-------|
+| MA boundary ingestion | load-state-tiger-boundaries.ts + one-line MA allowlist | Reuse existing; TIGER 2024 primary |
+| Fallback boundary source | MassGIS 2021 shapefiles (mass.gov) | Use only if FindMyLegislator verification fails |
+| Government/officials seeding | SQL migration scripts (pattern from migrations 087-110) | Manual data entry; no API available |
+| State legislator discovery | malegislature.gov profile pages (HTML) | Use FindMyLegislator to verify districts first |
+| Candidate data source | cambridgema.gov election commission (HTML/PDF) | No CSV/API available |
+| Compass stances | Same approach as TX Phase 30 | Public statements, voting records, local news |
+| Headshots | cambridgema.gov/Departments/citycouncil/members (primary); vote.cambridgecivic.com (backup) | 600x750 Lanczos per project standard |
+| Campaign finance (future, not v5.0) | MA OCPF (ocpf.us) | Different format from LA Ethics Commission; research separately before pursuing |
+| Landing.jsx | browseGovernmentList: [2511000] pattern | Same as Collin County TX |
+| Discovery pipeline | discovery_jurisdictions row marked inactive until 2027 filing | Do not activate until summer 2027 |
 
-- Phase 1 before Phase 2: Admin UI is useless without a working agent producing staging rows to review
-- Phase 2 before Phase 3: Cron and auto-upsert must not run unsupervised before confidence scoring has been validated against real election data
-- Name normalization in Phase 1, not later: Once duplicate records exist in race_candidates, cleanup is expensive; the dedup logic must be correct from the first insert
-- Withdrawal comparison loop in Phase 1, not deferred: PITFALLS.md identifies this as an architectural must-have. Once the agent produces output, every run must compare against DB state. Retrofitting this later risks a window of stale withdrawn candidates going live.
+---
 
-### Research Flags
+## Architecture Approach
 
-Needs deeper research during planning:
-- **Phase 1 (Agent Core):** Anthropic API rate limits for claude-sonnet-4-6 at current tier; structured output approach (tool use vs JSON-in-text); context window fit for large SoS pages
-- **Phase 1 (Approval Path):** Does approveCandidate() need to create a races row if none exists, or require a pre-existing race? Recommendation: require pre-existing race; flag staging candidates with no matching race as flagged=true with flag_reason "no matching race in DB"
+Cambridge slots cleanly into the existing multi-jurisdiction architecture. The address lookup pipeline (getRepresentativesByAddress), PostGIS geofence intersection, and essentialsService.ts statewide query all work automatically once geofences and district rows are loaded. Code changes required: (1) one-line MA allowlist in load-state-tiger-boundaries.ts, (2) Landing.jsx COVERAGE_AREAS entry, (3) new SQL migration files.
 
-Standard patterns - no research phase needed:
-- **Phase 2 (Admin UI):** UnresolvedQueue.jsx pattern is a direct analog; well-understood in codebase
-- **Phase 2 (Email):** Resend API and existing emailService.ts integration are documented and proven
-- **Phase 3 (Cron):** node-cron is already in use in the backend; in-process scheduling pattern is established
+**Suggested phase structure:**
+
+Phase A — MA TIGER boundary load (no blocking dependencies, start immediately)
+  - One-line code change to STATE_LAYER_ALLOWLIST
+  - Run: --state MA --fips 25 --layers cd,sldu,sldl,place
+
+Phase B — MA + Cambridge government DB foundation (no blocking dependencies)
+  - Commonwealth of Massachusetts government row
+  - Middlesex County government row (for congressional intersection)
+  - City of Cambridge government row (geo_id = 2511000)
+  - MA state legislative chambers (Senate, House)
+
+Phase C — Cambridge city structure (depends on Phase B)
+  - City Council chamber + 9 Councillor office rows
+  - School Committee chamber + 6 member office rows
+  - Mayor office row (is_appointed_position = true)
+  - City Manager office row (is_appointed_position = true)
+
+Phase D — Cambridge incumbents + headshots (depends on Phase C)
+  - 9 City Councillors with headshots (600x750, Lanczos)
+  - 6 School Committee members with headshots
+  - City Manager (appointed)
+
+Phase E — Geofences + state/federal politicians (depends on Phases A and B)
+  - Cambridge place geofence verified
+  - 2 senate + 3 house + 2 congressional geofences loaded
+  - Statewide officials (Warren, Markey, Governor, AG, Secretary of State)
+  - Congressional, senate, house politicians linked to Cambridge districts
+  - Landing.jsx COVERAGE_AREAS entry added
+
+Phase F — 2025 election historical data + 2027 placeholder (depends on Phase D)
+  - 2025 council + school committee races as completed
+  - All 20 council candidates + 18 school committee candidates as race_candidate rows
+  - 2027 placeholder election row; discovery jurisdiction marked inactive
+
+Phase G — 2026 MA state/federal races (depends on Phase E)
+  - Second Middlesex Senate primary (Azeem vs. 4 others; Sept 1, 2026)
+  - MA-05 House primary
+  - Azeem linked as candidate in senate race + existing council record
+
+Phase H — Compass stances (depends on Phase D)
+  - Research Cambridge councillors on housing/zoning, transit, development
+  - Apply via existing apply-*.ts pattern; run one at a time per memory guidance
+
+Phase I — LOCATION-ONBOARDING.md playbook (depends on all phases complete)
+  - Codify Cambridge learnings into reusable checklist
+  - Phase templates in .planning/templates/
+
+Critical path: A to B to C to D to E (parallel: F, G, H) to I
+
+---
+
+## Top Pitfalls with Prevention
+
+| Pitfall | Severity | Prevention |
+|---------|----------|------------|
+| Mayor seeded as LOCAL_EXEC elected office | Critical | is_appointed_position = true; no race row for Mayor; LOCAL type only |
+| Mayor as automatic School Committee member | Critical | 2025 charter removed this — do NOT add School Committee office for Mayor |
+| Seeding 2026 Cambridge election date | Critical | Next city election is November 2027; mark discovery inactive until 2027 filing |
+| Cambridge geo_id = 25017 (county) | High | City geo_id = 2511000 (7-digit place code); 25017 is Middlesex County |
+| 19+ candidates breaking ElectionsView | High | Load-test UI at 19 cards before shipping election data; add show-all toggle |
+| Wrong boundary year for MA districts | High | Use MassGIS 2021 as verification; confirm with FindMyLegislator after TIGER load |
+| Congressional district uncertainty (MA-05/07/08) | High | Run FindMyLegislator or check Cambridge GIS before seeding congressional politicians |
+| Third senate district unverified | Medium | Required pre-migration: test Cambridge Ward 1-7 address at FindMyLegislator |
+| Councillor vs. Councilor spelling | Low | Hard-code Councillor (double-l); no auto-normalization |
+| Discovery cron firing on 2027 election | Low | Mark Cambridge discovery_jurisdictions row inactive until summer 2027 |
+| Email addresses guessed from patterns | Low | Pull from cambridgema.gov/Departments/citycouncil/members at seeding time; NULL if unverifiable |
 
 ---
 
@@ -152,46 +273,61 @@ Standard patterns - no research phase needed:
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | node-cron installation confirmed by reading package.json directly; @anthropic-ai/sdk v0.91.0 verified from GitHub releases; web search tool API shape confirmed from official Anthropic docs; Resend free tier confirmed from resend.com/pricing |
-| Features | HIGH | LA County, Indiana SoS, and CA CAL-ACCESS source structures all verified by direct page fetch; Anthropic structured outputs docs confirmed confidence_score field; feature categorization grounded in verified source behavior, not assumptions |
-| Architecture | HIGH | Backend file structure confirmed by direct codebase inspection; race_candidates NULL politician_id pattern confirmed from migration 042; emailService.ts existence confirmed; migration numbering (next = 070) confirmed by reading migrations directory |
-| Pitfalls | HIGH | Rate limit values from official Anthropic docs; government site URL rot confirmed by directly observing lavote.gov election ID parameter and Indiana year-templated Excel URL; name variant problem confirmed by existing discover-cal-access-candidates.ts in codebase |
+| Stack | HIGH | TIGER 2024 URLs confirmed fetchable; FIPS_TO_STATE already has MA; MTFCC codes verified against codebase; zero new packages needed |
+| Features | HIGH | Government structure verified from official cambridge.gov + MMA Data Hub + Harvard Crimson; STV mechanics well-documented |
+| Architecture | HIGH | Based on direct codebase inspection of migrations 087-110, essentialsService.ts, Landing.jsx; all patterns exist |
+| Pitfalls | HIGH | 10 of 13 pitfalls confirmed HIGH confidence; 3 MEDIUM (UI performance at scale, Middlesex County G4020 decision, Mayor dual-office pattern) |
 
-**Overall confidence:** HIGH
+**Overall confidence: HIGH**
 
-### Gaps to Address
+---
 
-- **Anthropic rate limit stress test:** Tier 1 is 50 RPM. Validate with a 3-jurisdiction test batch before enabling Phase 3 cron sweep.
-- **Race row pre-existence requirement:** approveCandidate() behavior when no matching race row exists must be decided in Phase 1 planning. Recommended resolution: require pre-existing race; flag staging rows with no match as flagged=true.
-- **Indiana local races coverage gap:** Indiana SoS Excel file covers state and federal only. Scope v2.1 Indiana discovery to state and federal; document local races as a known gap. Ballotpedia fallback requires a separate agent strategy.
-- **lavote.gov election ID per-cycle:** The id query parameter changes each election cycle. Document as a mandatory manual update step when setting up each new election cycle for LA-region jurisdictions.
+## Gaps to Address in Planning
+
+| Gap | How to Handle |
+|-----|---------------|
+| Third MA senate district (Cambridge Ward 1-7) | Required pre-migration step: run FindMyLegislator; identify senator name and district before seeding |
+| Exact ward/precinct to house district mapping beyond 3 confirmed | Download Cambridge Election Commission legislative districts PDF; confirm edge districts before adding geofences |
+| Congressional district split (MA-05/07/08) | Verify at Cambridge GIS congressional districts page before seeding congressional politicians |
+| TIGER 2024 vs. MassGIS accuracy for MA state districts | Load TIGER first; run FindMyLegislator on 4+ Cambridge addresses; fall back to MassGIS if mismatch |
+| election_method enum value | Check chambers table constraint before migration; add stv_proportional if absent |
+| Cambridge GEOID 2511000 format confirmation | Verify against TIGER 2024 place shapefile before first migration |
+| Mayor ex officio School Committee status post-2025 charter | Confirm: is Mayor fully removed from School Committee, or still ex officio in some capacity? |
+| Migration next number | Run SELECT max(version) FROM supabase_migrations.schema_migrations before writing any migration |
+| UI performance at 19+ candidate cards | Load-test ElectionsView before shipping election data; add pagination/toggle if needed |
+| Middlesex County G4020 boundary decision | Decide whether to load for congressional intersection support; recommend loading for completeness |
 
 ---
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- Anthropic web search tool docs (platform.claude.com) - tool versions, allowed_domains parameter, pricing at $10 per 1,000 searches
-- @anthropic-ai/sdk GitHub releases - version 0.91.0 confirmed
-- Resend pricing (resend.com/pricing) - free tier limits confirmed: 3,000/month, 100/day
-- LA County candidate list (lavote.gov/Apps/CandidateList/Index) - direct page inspection confirming HTML structure and election ID URL pattern
-- IN SoS candidate information (in.gov/sos/elections/candidate-information/) - confirmed Excel format, state+federal only
-- Anthropic rate limits docs (platform.claude.com/docs/en/api/rate-limits) - Tier 1/2 limits
-- /c/EV-Accounts/backend/package.json - confirmed node-cron 4.2.1 already installed
-- /c/EV-Accounts/backend/migrations/ - confirmed migration 069 is highest; next = 070
-- /c/EV-Accounts/backend/src/ - confirmed layered architecture, emailService.ts, requireAdminToken, cron patterns
+- Cambridge City Council members: https://www.cambridgema.gov/Departments/citycouncil/members
+- Cambridge School Committee: https://www.cpsd.us/school-committee/school-committee-members-subcommittees
+- Cambridge Election Commission: https://www.cambridgema.gov/Departments/electioncommission
+- Cambridge 2025 official election results: https://www.cambridgema.gov/Departments/electioncommission/news/2025/11/2025municipalelectionofficialresultsnovember14thupdate
+- Cambridge Plan E Charter: https://www.cambridgema.gov/publications/documents/p/planecharter
+- Cambridge GIS senate districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_StateSenateDistricts
+- Cambridge GIS congressional districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_CongressionalDistricts
+- MassGIS House Districts (2021, current effective): https://www.mass.gov/info-details/massgis-data-massachusetts-house-legislative-districts-2021
+- MA legislature profile pages: https://malegislature.gov (Rogers 24th, Decker 25th, Connolly 26th)
+- TIGER SLDU MA confirmed: https://www2.census.gov/geo/tiger/TIGER2024/SLDU/tl_2024_25_sldu.zip
+- TIGER SLDL MA confirmed: https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_25_sldl.zip
+- MA Secretary of State elections: https://www.sec.state.ma.us/divisions/elections/
+- MMA Cambridge profile: https://www.mma.org/community/cambridge/
+- 2025 charter ballot result: https://www.thecrimson.com/article/2025/11/5/cambridge-updates-charter/
+- Burhan Azeem senate bid: https://www.thecrimson.com/article/2026/2/18/azeem-state-senate/
 
 ### Secondary (MEDIUM confidence)
-- Anthropic structured outputs docs - confidence_score field confirmed in schema
-- CA SoS CAL-ACCESS raw data - bulk dump format confirmed
-- Render cron job docs - single-execution guarantee confirmed for Render-managed cron
-- Democracy Works / Ballot Information Project - filing deadline and pre-election sprint timing patterns
-- Indiana Citizen 2026 primary list - confirmed state+federal scope only; local races absent
+- Cambridge GEOID 2511000: https://datacommons.org/place/geoId/2511000
+- Middlesex County FIPS 25017: https://www.geocod.io/geoids/massachusetts/middlesex-county-25017
+- Additional Cambridge house districts (Moran, Owens, Ryan): MMA Data Hub listing — exact ward/precinct mapping unverified
 
-### Tertiary (informational, not load-bearing)
-- OWASP LLM09 Misinformation risk - hallucination risk framing
-- Spotify Engineering confidence scoring case study (2024) - rule-augmented scoring pattern
+### Tertiary (LOW confidence / requires verification)
+- Third MA senate district covering Cambridge Ward 1-7: confirmed to exist by Cambridge GIS; senator identity requires FindMyLegislator address test
+- Azeem council status if he wins senate seat: not yet determined; depends on September 1, 2026 primary result
 
 ---
-*Research completed: 2026-04-23*
+
+*Research completed: 2026-05-15*
 *Ready for roadmap: yes*

@@ -1,424 +1,394 @@
-# Architecture Patterns: Claude-Powered Candidate Discovery Integration
+# Architecture: Cambridge, MA + Massachusetts Integration
 
-**Domain:** Civic data backend — Claude agent discovery pipeline added to existing Express/Postgres system
-**Researched:** 2026-04-23
-**Overall confidence:** HIGH — based on direct inspection of the live codebase at /c/EV-Accounts/backend/src
-
----
-
-## Existing Architecture (Verified)
-
-The backend at `/c/EV-Accounts/backend/src` follows a consistent layered pattern:
-
-```
-index.ts
-  └── registers routers (one file per feature area)
-  └── starts cron jobs (startXxxCron() functions)
-
-routes/*.ts        — HTTP surface only; no DB clients
-lib/*Service.ts    — all DB access; called by routes
-lib/db.ts          — exports pool (pg.Pool, max:5, Supabase session pooler)
-cron/*.ts          — cron registration files (import from lib/*Service or lib/*Scheduler)
-middleware/        — auth, requireAdmin, adminTokenAuth, serviceKeyAuth
-```
-
-**Key constraints observed:**
-- `routes/` files must not reference `supabaseAdmin` directly (enforced by `architecture.test.ts`)
-- All DB access uses `pool.query()` — essentials and staging schemas are NOT in PostgREST
-- Crons call a named function from a lib service; errors are caught and logged but non-fatal
-- Email is sent via `emailService.ts` (Resend API); missing key degrades gracefully to a warning
-- Admin mutations require `requireAdmin` middleware (JWT + role check)
-- Machine-to-machine endpoints use `requireAdminToken` (pre-shared `ADMIN_INGEST_TOKEN`) or `requireServiceKey`
-- Existing schemas: `essentials`, `staging`, `connect`, `inform`, `public`
+**Dimension:** Location Onboarding — v5.0 milestone
+**Researched:** 2026-05-15
+**Overall confidence:** HIGH — all conclusions drawn from direct codebase inspection
 
 ---
 
-## New Component Map
+## How This Document Is Organized
 
-### New files to create
-
-| File | Type | Purpose |
-|------|------|---------|
-| `src/lib/discoveryService.ts` | Service | Claude agent logic, jurisdiction DB ops, staging writes |
-| `src/lib/discoveryAgentRunner.ts` | Service | Anthropic SDK wrapper; assembles tool use + prompt |
-| `src/routes/essentialsDiscovery.ts` | Route | Admin HTTP surface: trigger, queue, approve |
-| `src/cron/discoveryCron.ts` | Cron | Scheduled sweep registration |
-
-### New DB tables (all in `essentials` schema)
-
-| Table | Purpose |
-|-------|---------|
-| `essentials.discovery_jurisdictions` | Registry of known jurisdictions with their election authority URLs |
-| `essentials.discovery_runs` | Log of each agent execution (jurisdiction, status, found count, errors) |
-| `essentials.candidate_staging` | Discovered candidates awaiting human review before upsert |
-
-### Modified files
-
-| File | Change |
-|------|--------|
-| `src/index.ts` | Import `essentialsDiscoveryRouter`; call `startDiscoveryCron()` |
-| `src/lib/env.ts` | Add `ANTHROPIC_API_KEY: z.string().optional()` |
+This file answers the seven architecture questions for Cambridge, MA onboarding. Each section states the conclusion first, then the evidence. A build-order diagram and integration matrix close the document.
 
 ---
 
-## DB Schema
+## 1. Government Type Mapping (City Council, School Committee)
 
-All tables use `pool.query()` exclusively — same pattern as `essentials.*` and `staging.*`.
+**Conclusion: Use `LOCAL` for both Cambridge City Council and School Committee. No new `district_type` value is needed.**
 
-### `essentials.discovery_jurisdictions`
+### Evidence
+
+The `district_type` field lives on `essentials.districts` and maps to MTFCC codes in `essentialsService.ts` lines 566-578. The relevant mappings for local government are:
 
 ```sql
-CREATE TABLE IF NOT EXISTS essentials.discovery_jurisdictions (
-  id                  uuid        NOT NULL DEFAULT uuid_generate_v4(),
-  name                text        NOT NULL,           -- "City of Los Angeles"
-  state               char(2)     NOT NULL,
-  jurisdiction_level  text        NOT NULL
-                      CHECK (jurisdiction_level IN ('city','county','district','state')),
-  election_authority_url text     NOT NULL,           -- primary URL agent fetches
-  secondary_urls      text[],                         -- additional pages (filing portals, etc.)
-  government_id       uuid        REFERENCES essentials.governments(id),
-  last_discovered_at  timestamptz,
-  discovery_enabled   boolean     NOT NULL DEFAULT true,
-  created_at          timestamptz NOT NULL DEFAULT now(),
-  updated_at          timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT discovery_jurisdictions_pkey PRIMARY KEY (id)
-);
+(gb.mtfcc = 'G4040' AND d.district_type IN ('LOCAL', 'LOCAL_EXEC'))
+OR (gb.mtfcc IN ('G4110', 'G4120') AND d.district_type IN ('LOCAL', 'LOCAL_EXEC'))
 ```
 
-**Notes:**
-- `government_id` FK is nullable — a jurisdiction can be registered before its government row exists
-- `discovery_enabled = false` pauses a jurisdiction without deletion (useful for off-cycle elections)
+`LOCAL` already covers city councils across all three existing jurisdictions (Monroe County IN, LA County CA, Collin County TX). The migration 088 pattern confirms: every city council office uses `LOCAL` regardless of whether seats are placed (Plano), district-based (McKinney), or at-large (Allen). Cambridge's 9-member at-large STV council is structurally identical to Allen's 6-member at-large council from the schema's perspective.
 
-### `essentials.discovery_runs`
+For School Committee: the existing `SCHOOL` district type (`G5420` MTFCC) is for geofenced unified school districts (unsd layer), not for school board seats that co-occupy the same city boundary. In every existing city with a school committee/board, it has been seeded under `LOCAL` within the city's government row, not as a separate SCHOOL-type entity. Follow that pattern.
 
-```sql
-CREATE TABLE IF NOT EXISTS essentials.discovery_runs (
-  id                  uuid        NOT NULL DEFAULT uuid_generate_v4(),
-  jurisdiction_id     uuid        NOT NULL REFERENCES essentials.discovery_jurisdictions(id),
-  triggered_by        text        NOT NULL
-                      CHECK (triggered_by IN ('cron','manual')),
-  status              text        NOT NULL DEFAULT 'running'
-                      CHECK (status IN ('running','completed','failed')),
-  candidates_found    int         NOT NULL DEFAULT 0,
-  candidates_staged   int         NOT NULL DEFAULT 0,
-  error_message       text,
-  raw_agent_output    jsonb,      -- full agent response for debugging
-  started_at          timestamptz NOT NULL DEFAULT now(),
-  completed_at        timestamptz,
-  created_at          timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT discovery_runs_pkey PRIMARY KEY (id)
-);
+**There is no `COUNCIL_MANAGER` district type and none is needed.** The `type` column on `essentials.governments` (not `district_type`) distinguishes `LOCAL` vs `STATE` vs `County`. Cambridge just gets `type = 'LOCAL'` on its government row.
 
-CREATE INDEX IF NOT EXISTS idx_discovery_runs_jurisdiction_id
-  ON essentials.discovery_runs(jurisdiction_id);
-CREATE INDEX IF NOT EXISTS idx_discovery_runs_status
-  ON essentials.discovery_runs(status);
-CREATE INDEX IF NOT EXISTS idx_discovery_runs_started_at
-  ON essentials.discovery_runs(started_at DESC);
-```
+### Cambridge-Specific Office Mapping
 
-**Notes:**
-- `raw_agent_output` (JSONB) captures the full Claude response — essential for debugging hallucinations
-- A jurisdiction can have multiple runs; query `ORDER BY started_at DESC LIMIT 1` for latest
-
-### `essentials.candidate_staging`
-
-```sql
-CREATE TABLE IF NOT EXISTS essentials.candidate_staging (
-  id                  uuid        NOT NULL DEFAULT uuid_generate_v4(),
-  discovery_run_id    uuid        NOT NULL REFERENCES essentials.discovery_runs(id),
-  jurisdiction_id     uuid        NOT NULL REFERENCES essentials.discovery_jurisdictions(id),
-  race_id             uuid        REFERENCES essentials.races(id),  -- nullable: race may not exist yet
-  full_name           text        NOT NULL,
-  first_name          text,
-  last_name           text,
-  office_name         text        NOT NULL,           -- as discovered, e.g. "City Council District 4"
-  election_date       date,
-  source_url          text        NOT NULL,           -- page where candidate was found
-  source_excerpt      text,                           -- quoted text from page that named the candidate
-  is_incumbent        boolean     NOT NULL DEFAULT false,
-  external_id         text,                           -- filing ID from election authority if present
-  status              text        NOT NULL DEFAULT 'pending'
-                      CHECK (status IN ('pending','approved','rejected','duplicate')),
-  reviewed_by         text,                           -- admin display_name
-  reviewed_at         timestamptz,
-  merged_to_race_candidate_id uuid REFERENCES essentials.race_candidates(id),
-  flagged             boolean     NOT NULL DEFAULT false,
-  flag_reason         text,
-  created_at          timestamptz NOT NULL DEFAULT now(),
-  updated_at          timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT candidate_staging_pkey PRIMARY KEY (id)
-);
-
-CREATE INDEX IF NOT EXISTS idx_candidate_staging_status
-  ON essentials.candidate_staging(status);
-CREATE INDEX IF NOT EXISTS idx_candidate_staging_jurisdiction_id
-  ON essentials.candidate_staging(jurisdiction_id);
-CREATE INDEX IF NOT EXISTS idx_candidate_staging_run_id
-  ON essentials.candidate_staging(discovery_run_id);
-
--- Partial unique: prevent staging the same candidate name+office twice within a run
-CREATE UNIQUE INDEX IF NOT EXISTS idx_candidate_staging_dedup
-  ON essentials.candidate_staging(discovery_run_id, lower(full_name), lower(office_name));
-```
-
-**Key design choices:**
-- `source_url` and `source_excerpt` are required — every staged candidate must cite where they were found
-- `flagged` + `flag_reason` allow the agent to mark uncertain entries without blocking the whole run
-- `merged_to_race_candidate_id` records where an approved staging entry landed in production
+| Cambridge Role | DB Pattern | district_type | Notes |
+|---|---|---|---|
+| City Council Member (9 seats) | `essentials.offices.title = 'City Council Member'` | LOCAL | At-large; no place numbers — use ordinal or simple index |
+| School Committee Member (6 seats) | `essentials.offices.title = 'School Committee Member'` | LOCAL | Same chamber pattern; separate chamber row under same government |
+| Mayor | `essentials.offices.title = 'Mayor'` | LOCAL | See section 3 for the structural quirk |
+| City Manager | `essentials.offices.title = 'City Manager'` | LOCAL | See section 2 for appointed treatment |
 
 ---
 
-## Component Architecture and Data Flow
+## 2. City Manager Office (Appointed, Non-Elected)
+
+**Conclusion: Seed the City Manager in `essentials.politicians` with `is_appointed = true` and a corresponding office row with `is_appointed_position = true`. This is the correct and fully supported pattern.**
+
+### Evidence
+
+The `is_appointed_position` column on `essentials.offices` exists exactly for this case. From `audit-is-appointed.ts` line 268:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  index.ts                                                   │
-│  ├── app.use('/api/admin/discovery', essentialsDiscoveryRouter)│
-│  └── startDiscoveryCron()                                   │
-└─────────────────────────────────────────────────────────────┘
-          │                          │
-          ▼                          ▼
-┌──────────────────────┐    ┌────────────────────┐
-│ essentialsDiscovery  │    │  discoveryCron.ts  │
-│ Router.ts            │    │  (node-cron)       │
-│                      │    │  schedule: weekly  │
-│ POST /trigger/:id    │    │  calls runDiscovery│
-│ GET  /queue          │    │  ForJurisdiction() │
-│ PATCH /queue/:id/    │    └────────────────────┘
-│       approve        │
-│ PATCH /queue/:id/    │
-│       reject         │
-└──────────────────────┘
-          │
-          ▼
-┌──────────────────────────────────────────────────────────────┐
-│  discoveryService.ts                                         │
-│                                                              │
-│  runDiscoveryForJurisdiction(jurisdictionId, triggeredBy)    │
-│    1. Load jurisdiction from discovery_jurisdictions         │
-│    2. Create discovery_runs row (status='running')           │
-│    3. Call discoveryAgentRunner.runAgent(urls, context)      │
-│    4. Parse structured output from agent                     │
-│    5. Write candidates to candidate_staging                  │
-│    6. Flag candidates needing review                         │
-│    7. Update discovery_runs (status='completed|failed')      │
-│    8. If flagged items > 0: sendEmail() admin notification   │
-│                                                              │
-│  getQueue(filters)     — list candidate_staging rows         │
-│  approveCandidate(id)  — upsert into race_candidates         │
-│  rejectCandidate(id)   — mark rejected                       │
-└──────────────────────────────────────────────────────────────┘
-          │
-          ▼
-┌─────────────────────────────────────────────────────────────┐
-│  discoveryAgentRunner.ts                                    │
-│                                                             │
-│  runAgent(urls, jurisdictionContext)                        │
-│    1. Fetch page content (node-fetch or built-in fetch)     │
-│    2. Build system prompt + user message                    │
-│    3. Call Anthropic SDK: client.messages.create(...)       │
-│    4. Return structured JSON: { candidates: [...] }         │
-│                                                             │
-│  Anthropic SDK: @anthropic-ai/sdk                          │
-│  Model: claude-opus-4 or claude-sonnet-4-5                  │
-└─────────────────────────────────────────────────────────────┘
-          │ writes
-          ▼
-┌──────────────────────────────────────────────────────────────┐
-│  Postgres (pool.query — essentials schema)                   │
-│                                                              │
-│  essentials.discovery_jurisdictions  ← registry             │
-│  essentials.discovery_runs           ← run log              │
-│  essentials.candidate_staging        ← review queue         │
-│                                      │                       │
-│  On approve:                         ▼                       │
-│  essentials.race_candidates  ← upserted (challenger rows)   │
-│  essentials.politicians      ← upserted (if new politician) │
-└──────────────────────────────────────────────────────────────┘
+is_elected is derived as NOT COALESCE(o.is_appointed_position, false)
+```
+
+From `essentialsService.ts` line 683:
+```typescript
+is_elected: !row.is_appointed_position,
+is_appointed: row.is_appointed ?? false,
+```
+
+The `PoliticianFlatRecord` interface exposes both `is_elected` (boolean) and `is_appointed` (boolean) separately to the frontend. The frontend already renders these distinctions.
+
+The City Manager will appear in address-based representative lookups because the office row will be linked to a district row covering Cambridge's city boundary, and the geofence query pulls all politicians attached to matching geofences — it does not filter out appointed positions. This is the intended behavior: residents should see their City Manager in results.
+
+**No schema changes required.** Just set `is_appointed_position = true` on the office row and `is_appointed = true` on the politician row. This is the audit-proven correct pairing.
+
+### Cambridge City Manager Seed Pattern
+
+```sql
+INSERT INTO essentials.offices (chamber_id, title, representing_city, representing_state,
+  normalized_position_name, seats, partisan_type, is_appointed_position)
+VALUES (v_chamber_id, 'City Manager', 'Cambridge', 'MA',
+  'City Manager', 1, NULL, true);  -- true = appointed, not elected
 ```
 
 ---
 
-## Question-by-Question Answers
+## 3. Mayor Role (Derived from Council, Not Separately Elected)
 
-### 1. Where does Claude agent logic live — dedicated service module or separate worker?
+**Conclusion: Seed the Mayor as a separate office row with `is_appointed_position = true` and a note in the bio/description. Do NOT create a separate election race for Mayor.**
 
-**Recommendation: In-process service module, not a separate worker.**
+### Rationale
 
-The existing pattern (campaign finance scheduler, district staleness service) demonstrates that long-running async work runs as a plain async function called from a cron or route handler. Render's long-running server supports this well. A separate worker process adds operational complexity (two Render services, inter-process communication) that is not warranted at this stage.
+In Cambridge, the Mayor is the council member who received the most first-choice STV votes in the previous council election. The Mayor chairs council sessions but has no additional executive authority (the City Manager has that). The Mayor is:
+- Not elected on a separate ballot line
+- Not appointed by the council in a formal vote
+- Determined by STV vote count ordering after the election
 
-Create `src/lib/discoveryService.ts` for DB operations and orchestration, plus `src/lib/discoveryAgentRunner.ts` to isolate the Anthropic SDK call. This keeps concerns separated without requiring a second process.
+**Best fit in the schema:** Treat Mayor as a derived/ceremonial role. The council member who is currently Mayor should have:
+- A `politicians` row (same person) linked to the `City Council Member` office (their actual elected seat)
+- A separate `offices` row for `Mayor` with `is_appointed_position = true` (since it is not a direct election)
+- The politician row linked to **both** offices via the `politician_id` FK on each office, OR handle it as a separate politician record for the ceremonial role only
 
-The only reason to break out a separate worker would be if discovery runs are long enough (> 30 seconds per jurisdiction) to block the request/response cycle. Since the cron path is fire-and-forget (returns void), and the manual trigger endpoint can return 202 Accepted immediately and run async, this is not a problem in-process.
+**Simpler approach (recommended):** Seed the Mayor as an additional office that shares the same politician. The `politician_id` on the Mayor office row points to the same politician as one of the council member office rows. This is clean and requires no schema changes.
 
-### 2. One agent per jurisdiction, or one per race?
+The mayor office row title should be `'Mayor'` with a brief `office_description` noting the STV-derived role to prevent misleading users into thinking it is a directly elected executive position.
 
-**Recommendation: One agent call per jurisdiction, not per race.**
+**Do not create a separate election race row for Mayor** — there is no Cambridge Mayor ballot line to discover. The discovery agent's domain allowlist for Cambridge should exclude any source that lists "Mayor" as a separate race.
 
-Election authority pages are jurisdiction-scoped (a city's election page lists all races for that city). Sending one well-crafted prompt per jurisdiction is more efficient and mirrors how the source data is structured. The agent output should be a structured list of `{ office_name, candidates: [...] }` objects — the service layer splits that into `candidate_staging` rows per candidate.
+---
 
-If a jurisdiction has many races and the agent output becomes unwieldy, the agent call can be batched by page/URL within the jurisdiction (e.g., one call per URL in `secondary_urls`), but not by race. Race-level calls would require knowing the races in advance, which defeats the purpose of discovery.
+## 4. Massachusetts Geofences (TIGER MTFCC Codes)
 
-### 3. DB schema for jurisdictions, discovery_runs, and candidate_staging
+**Conclusion: MA uses the identical MTFCC mapping as Texas. G5210 = Senate (STATE_UPPER), G5220 = House (STATE_LOWER). The `load-state-tiger-boundaries.ts` script handles MA with a one-line allowlist addition.**
 
-Specified in full above under **DB Schema**.
+### Evidence
 
-Key design decisions:
-- All three tables live in `essentials` schema (not `staging`) — they are a first-class operational system, not transient review data
-- `candidate_staging` has its own status lifecycle; it is NOT the same as `staging.politicians`
-- `discovery_runs` captures `raw_agent_output` as JSONB for hallucination auditing
-- `source_url` and `source_excerpt` are required fields — provenance is non-negotiable
+From `load-state-tiger-boundaries.ts` lines 34-39, the current allowlist is:
+```typescript
+const STATE_LAYER_ALLOWLIST: Record<string, Set<string>> = {
+  CA: new Set(['cd', 'sldu', 'sldl', 'unsd', 'place']),
+  TX: new Set(['cd', 'sldu', 'sldl', 'county']),
+  UT: new Set(['cd119', 'sldu', 'sldl', 'unsd', 'place', 'county']),
+  IN: new Set(['cd', 'sldu', 'sldl', 'unsd', 'place', 'cousub']),
+};
+```
 
-### 4. How does the on-demand endpoint relate to the scheduled cron?
-
-**Recommendation: Both call the same `runDiscoveryForJurisdiction()` service function.**
-
-This is the same pattern used by `campaignFinanceCron.ts` + `campaignFinanceAdmin.ts` — the cron calls `runFecScheduledJob()` and the manual trigger also calls it. No logic duplication.
+MA is not in the allowlist yet. Adding it requires:
 
 ```typescript
-// discoveryCron.ts
-cron.schedule('0 3 * * 1', async () => {  // Monday 3am UTC
-  const jurisdictions = await discoveryService.getEnabledJurisdictions();
-  for (const j of jurisdictions) {
-    await discoveryService.runDiscoveryForJurisdiction(j.id, 'cron');
-  }
-});
-
-// essentialsDiscovery.ts (route)
-router.post('/trigger/:id', requireAdminToken, async (req, res) => {
-  // Return 202 immediately; run async
-  res.status(202).json({ message: 'Discovery triggered' });
-  void discoveryService.runDiscoveryForJurisdiction(req.params.id, 'manual');
-});
+MA: new Set(['cd', 'sldu', 'sldl']),
 ```
 
-The `void` on the async call lets the response return immediately while the agent runs in the background. The run status can be polled via `GET /admin/discovery/runs/:jurisdictionId/latest`.
+And optionally `'place'` if city boundary geofences are needed (they are, for Cambridge). So the full MA entry should be:
 
-### 5. Upsert path — how discovered candidates flow into existing tables without duplicating Cicero data
-
-**The key insight: discovered candidates are challengers, not incumbents.**
-
-Cicero populates `essentials.politicians` with incumbents (`is_incumbent = true`). The discovery system targets challengers — people who filed to run but don't yet hold office. The existing `race_candidates` table was explicitly designed for this (per migration 042 comment: "challengers: `politician_id = NULL`; carry their own name/photo fields").
-
-**Deduplication strategy:**
-
-On approve in `discoveryService.approveCandidate(stagingId)`:
-
-```
-1. Load candidate_staging row
-2. Check if a race_candidates row already exists for this person in this race:
-     SELECT id FROM essentials.race_candidates
-     WHERE race_id = $raceId
-       AND lower(full_name) = lower($candidateName)
-       AND is_incumbent = false
-3. If found: mark staging as 'duplicate', set merged_to_race_candidate_id
-4. If not found: INSERT INTO essentials.race_candidates (race_id, full_name, first_name, last_name,
-                   is_incumbent=false, candidate_status='filed', source='discovery', external_id, ...)
-5. If incumbent match is needed: check essentials.politicians by name for possible link
-   (optional step — don't auto-link; flag for manual review)
+```typescript
+MA: new Set(['cd', 'sldu', 'sldl', 'place']),
 ```
 
-**Protecting Cicero incumbents:**
-- Discovery agents should be instructed in their system prompt to skip candidates with `is_incumbent=true` for offices where a politician record already exists
-- The approval path only writes `is_incumbent=false` rows — it cannot touch incumbent politicians
-- The `candidate_status='filed'` default on new inserts keeps discovered challengers out of the election query path until manually promoted to `'active'`
+### MTFCC Codes (from LAYER_DISPATCH, lines 165-232)
 
-**Preventing cross-run duplicates:**
-- The partial unique index `idx_candidate_staging_dedup` on `(discovery_run_id, lower(full_name), lower(office_name))` prevents the same candidate from appearing twice in a single run
-- Cross-run deduplication happens at the approve step via the race_candidates lookup above
+| Layer | MTFCC | district_type | Notes |
+|---|---|---|---|
+| `cd` | G5200 | NATIONAL_LOWER | MA-7 (Ayanna Pressley's district) |
+| `sldu` | G5210 | STATE_UPPER | MA Senate (40 districts) |
+| `sldl` | G5220 | STATE_LOWER | MA House (160 districts) |
+| `place` | G4110 | LOCAL | Cambridge city boundary |
 
-### 6. Build order
+### MA FIPS Code
 
-Build in this sequence. Each step has a clear deliverable and doesn't require the next step to be testable.
+Massachusetts FIPS state code is `25`. The run command:
+```bash
+npx tsx scripts/load-state-tiger-boundaries.ts --state MA --fips 25 --layers cd,sldu,sldl,place
+```
 
-**Step 1: DB migrations**
-- Migration: `discovery_jurisdictions`, `discovery_runs`, `candidate_staging` tables
-- Seed one jurisdiction (e.g., City of LA) for testing
-- No code changes needed — tables can be tested with direct SQL
+The FIPS_TO_STATE map (line 70) already includes `'25': 'ma'`, so the round-trip state↔FIPS check passes automatically once MA is added to the allowlist.
 
-**Step 2: discoveryAgentRunner.ts**
-- Install `@anthropic-ai/sdk` as a dependency
-- Add `ANTHROPIC_API_KEY` to `env.ts`
-- Write `runAgent(urls, context)` — takes URLs, returns structured JSON
-- Test standalone with a real election authority page
+### MA-Specific Consideration: Cambridge Is a City Within Middlesex County
 
-**Step 3: discoveryService.ts — core functions**
-- `runDiscoveryForJurisdiction()` — full orchestration: load jurisdiction → call agent → write staging rows → update run log
-- `getEnabledJurisdictions()` — returns jurisdictions where `discovery_enabled = true`
-- `getQueue(filters)` — list staging rows
-- Test by manually calling with a real jurisdiction ID
+Cambridge's Census place GEOID is `2511000` (FIPS: MA state 25 + place code 11000). When the `place` layer is loaded for MA, Cambridge's G4110 boundary will be inserted into `geofence_boundaries`, and the address lookup will match it. This is identical to how Texas cities work.
 
-**Step 4: essentialsDiscovery route**
-- `POST /api/admin/discovery/trigger/:id` — requireAdminToken, 202 response, void async call
-- `GET /api/admin/discovery/queue` — requireAdminToken, list staging rows
-- `PATCH /api/admin/discovery/queue/:id/approve` — requireAdminToken, upsert into race_candidates
-- `PATCH /api/admin/discovery/queue/:id/reject` — requireAdminToken, mark rejected
-- Register in `index.ts`
-
-**Step 5: discoveryCron.ts**
-- Register weekly sweep
-- Call `startDiscoveryCron()` in `index.ts`
-
-**Step 6: Email notification**
-- Add email call at end of `runDiscoveryForJurisdiction()` when `flagged > 0`
-- Reuse `emailService.sendEmail()` — already integrated, Resend API, gracefully degrades if key absent
+For Middlesex County itself, load the `county` layer (`G4020`, MTFCC = 'G4020') if Middlesex County government representation is needed. Cambridge is in Middlesex County (FIPS: `25017`). Whether to include county government depends on scope — Middlesex County does not have elected county commissioners in MA (the county government was largely abolished in 1997). **Skip county layer for MA.**
 
 ---
 
-## Integration Points with Existing Components
+## 5. Coverage Area Entry in Landing.jsx
 
-| Existing Component | Interaction |
-|-------------------|-------------|
-| `pool` (db.ts) | All new tables use `pool.query()` — no new DB client needed |
-| `emailService.ts` | Import `sendEmail()` for flagged-item admin notifications |
-| `requireAdminToken` middleware | Auth for all `/admin/discovery/*` routes (X-Admin-Token header) |
-| `electionService.ts` | No direct integration — discovery writes to `race_candidates`, which `electionService` already queries |
-| `essentials.politicians` | Incumbents are read-only from discovery perspective; challengers only in `race_candidates` |
-| `essentials.race_candidates` | Write target on approve; existing `candidate_status` field (`filed` → `active`) used |
-| `index.ts` | Two additions: router registration + cron start |
-| `env.ts` | Add `ANTHROPIC_API_KEY` |
+**Conclusion: Cambridge uses the `browseGovernmentList` pattern, identical to Collin County TX. A single COVERAGE_AREAS entry is all that is needed on the frontend.**
+
+### Evidence
+
+The current `COVERAGE_AREAS` array (Landing.jsx lines 8-12):
+```javascript
+const COVERAGE_AREAS = [
+  { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
+  { county: 'Los Angeles County', state: 'California', browseGovernmentList: ['0644000', '06037', '0622710'], browseStateAbbrev: 'CA', browseCountyGeoId: '06037' },
+  { county: 'Collin County', state: 'Texas', browseStateAbbrev: 'TX', browseCountyGeoId: '48085', browseGovernmentList: [...23 city geo_ids...] },
+];
+```
+
+Two patterns exist:
+1. `address` — single representative address (Monroe County, no geofences loaded yet)
+2. `browseGovernmentList` + `browseStateAbbrev` + optional `browseCountyGeoId` — for geofence-backed browsing (LA, TX)
+
+Cambridge should use the `browseGovernmentList` pattern. The entry:
+
+```javascript
+{
+  county: 'Middlesex County',
+  state: 'Massachusetts',
+  browseStateAbbrev: 'MA',
+  browseGovernmentList: ['2511000'],  // Cambridge place GEOID
+  browseCountyGeoId: '25017'         // Middlesex County FIPS (for congressional intersection)
+}
+```
+
+**Notes on `county` field name:** The label `county` in the object is display-only (used in the UI as the button label and `browse_label` URL param). For Cambridge, showing "Middlesex County, Massachusetts" is reasonable since users may recognize it. Alternatively, "Cambridge" as the label is more direct since it is a single city. Either works — the label is cosmetic.
+
+**`browseCountyGeoId`:** This drives the PostGIS county boundary intersection to find US House members. Middlesex County FIPS `25017` would need a `G4020` boundary loaded for the intersection to work. Since MA county government is largely abolished, consider whether to add county geofence just for congressional lookup (useful) vs. skip it (simpler). The TX pattern shows it is worthwhile — load Middlesex County `G4020` boundary, set `browseCountyGeoId: '25017'`.
 
 ---
 
-## Anti-Patterns to Avoid
+## 6. Existing Scripts to Reuse
 
-**Anti-pattern: Writing directly to `essentials.politicians` from the discovery agent**
-The discovery agent should never auto-promote candidates into `essentials.politicians`. That table holds incumbents with rich linked data (office, district, chamber, geofence). Challengers discovered by the agent belong in `race_candidates` with `is_incumbent=false`. Conflating these corrupts the data model and breaks geofence-based representative lookup.
+### Directly Reusable Without Modification
 
-**Anti-pattern: Auto-approving agent output**
-Agent output must flow through `candidate_staging` and require human approval before entering `race_candidates`. Claude can hallucinate names or misread filing deadlines. The staging queue is the firebreak.
+| Script | What to reuse | Notes |
+|---|---|---|
+| `load-state-tiger-boundaries.ts` | All of it, with one-line MA allowlist addition | Add `MA: new Set(['cd', 'sldu', 'sldl', 'place'])` to STATE_LAYER_ALLOWLIST |
+| `load-collin-county-boundary.ts` | Pattern for county G4020 load | Use as template for Middlesex County G4020 |
+| Migration 087 | Pattern for `governments` seed (state + county + city) | Template: INSERT state government + county government + city government |
+| Migration 088 | Pattern for city chambers + offices | Template: one government row + N chamber rows + N office rows per chamber |
+| Migration 091-096 | Pattern for politician seeds | Template: politicians with office_id backfill, email_addresses, urls |
+| Migration 103 | Pattern for state/federal executives | Template: Governor, Lt. Governor, AG, etc. |
+| Migration 108-110 | Pattern for legislative chambers + politicians | Template: Senate chamber, House chamber, 40 senators, 160 reps |
+| `apply-*.ts` scripts | Pattern for compass stances | Template: csv-parse + pg Pool + upsert ON CONFLICT DO UPDATE |
+| `importCambridge.ts` | Already imports Cambridge treasury data | Budget data import already works; no changes needed for v5.0 |
 
-**Anti-pattern: Trusting agent output for incumbent identification**
-The agent should report what it sees on the page. If it sees an incumbent's name, that name may already be in `essentials.politicians`. The approval step (not the agent) is responsible for checking for an existing politician match. Do not encode matching logic in the agent prompt.
+### Needs New Code
 
-**Anti-pattern: Running all jurisdictions in parallel on cron**
-The cron sweep should run jurisdictions sequentially (or with limited concurrency, e.g., 2 at a time). Parallel Claude API calls across all jurisdictions will exhaust rate limits and produce no useful output. This mirrors the memory note: "Always run stance research agents ONE at a time."
+| Need | New Script Required |
+|---|---|
+| MA TIGER boundary load | Add MA to `STATE_LAYER_ALLOWLIST` in existing script (one line change, not a new script) |
+| Cambridge city structure migration | New migration (e.g., `150_cambridge_ma_governments.sql`) |
+| Cambridge incumbents migration | New migration (e.g., `151_cambridge_ma_politicians.sql`) |
+| MA state officials migration | New migration (e.g., `152_ma_state_officials.sql`) |
+| MA state legislature migrations | New migrations for chambers, senators (40), reps (160) |
+| Cambridge discovery jurisdiction | New row in `discovery_jurisdictions` (can be a small migration or script) |
 
-**Anti-pattern: Storing agent output only in application logs**
-The `raw_agent_output` JSONB column in `discovery_runs` is required. If an agent misidentifies a candidate and the staging row is approved by mistake, the audit trail must show what the agent returned. Application logs are ephemeral on Render.
+### Migration Number
 
-**Anti-pattern: Separate Render service for the agent worker**
-The existing architecture runs campaign finance ingestion, district staleness, and calibration lapse crons all in-process. Adding a second service for discovery creates operational overhead (separate deploy, separate env vars, inter-service communication) with no benefit at this scale.
+Per STATE.md: "Next migration is 111" — but the list shows migrations up to 149 as of the last update (2026-05-15). Verify the actual next migration number with:
+```sql
+SELECT max(version) FROM supabase_migrations.schema_migrations;
+```
+The Cambridge structure migration should be numbered sequentially from whatever is actually next.
+
+---
+
+## 7. Playbook Document Location
+
+**Conclusion: `LOCATION-ONBOARDING.md` and phase templates live in `.planning/` in the essentials repo. Not in a separate `docs/` folder.**
+
+### Rationale
+
+The existing planning structure at `C:\Transparent Motivations\essentials\.planning\` already contains:
+- `PROJECT.md` — project definition and validated requirements
+- `STATE.md` — running accumulated context
+- `ROADMAP.md` — milestone phase structure
+- `phases/` — phase plans (15-xx, 18-xx, 19-xx, etc.)
+- `milestones/` — milestone summaries
+- `research/` — research files (this file)
+
+A new `docs/` folder would scatter documentation across two locations. Playbook documents are planning artifacts and belong in `.planning/`.
+
+**Proposed structure:**
+```
+.planning/
+  LOCATION-ONBOARDING.md          ← the master playbook checklist
+  templates/
+    phase-template-officials.md   ← seed politicians for a new city
+    phase-template-headshots.md   ← headshot pipeline
+    phase-template-discovery.md   ← discovery jurisdiction setup
+    phase-template-stances.md     ← compass stance research
+    phase-template-geofences.md   ← TIGER boundary load
+```
+
+The playbook file name `LOCATION-ONBOARDING.md` (already referenced in PROJECT.md requirements) is correct. It should live directly in `.planning/`, not in a subfolder, since it is a first-class project document alongside `PROJECT.md` and `STATE.md`.
+
+Phase templates belong in `.planning/templates/` since they are reusable skeletons, not specific to any single phase.
+
+---
+
+## Build Order
+
+The dependency graph for Cambridge/MA is:
+
+```
+Phase A: MA TIGER Boundaries (no blocking deps — can start immediately)
+  ├── Add MA to STATE_LAYER_ALLOWLIST in load-state-tiger-boundaries.ts
+  ├── Run: --state MA --fips 25 --layers cd,sldu,sldl,place
+  └── Load Middlesex County G4020 boundary (for congressional intersection)
+
+Phase B: MA Government DB Foundation (no blocking deps)
+  ├── Seed State of Massachusetts government row (type=STATE, geo_id='25')
+  ├── Seed Middlesex County government row (type=County, geo_id='25017')
+  ├── Seed City of Cambridge government row (type=LOCAL, geo_id='2511000')
+  └── Seed MA state legislative chambers (Senate, House)
+
+Phase C: MA + Federal Officials (depends on Phase B + Phase A)
+  ├── MA Governor + Lt. Gov + AG + Secretary of State (statewide, STATE_EXEC)
+  ├── US Senators (Warren, Markey — NATIONAL_UPPER)
+  ├── US House MA-7 (Pressley) ← use TIGER cd layer from Phase A
+  ├── MA state senators (40) ← use TIGER sldu layer from Phase A
+  └── MA state reps (160) ← use TIGER sldl layer from Phase A
+
+Phase D: Cambridge City Structure (depends on Phase B)
+  ├── City Council chamber (9 at-large seats)
+  ├── School Committee chamber (6 seats)
+  ├── City Manager office (is_appointed_position=true)
+  └── Mayor office (is_appointed_position=true, linked to a council member)
+
+Phase E: Cambridge Incumbents (depends on Phase D)
+  ├── 9 City Council members (is_incumbent=true, is_active=true)
+  ├── 6 School Committee members
+  ├── City Manager (appointed)
+  └── Mayor (links to existing council member politician)
+
+Phase F: Headshots (depends on Phase E)
+  └── 9 council + 6 school committee + City Manager photos at 600x750
+
+Phase G: Landing.jsx Entry (depends on Phase A — needs county boundary loaded)
+  └── Add Cambridge/Middlesex entry to COVERAGE_AREAS
+
+Phase H: Discovery Setup (depends on Phase D)
+  ├── Seed Cambridge election row (cambridge.gov/elections is the source)
+  ├── Seed races for next Cambridge election cycle
+  └── Seed discovery_jurisdictions row for Cambridge
+
+Phase I: Compass Stances (depends on Phase E — needs politician IDs)
+  └── Research + apply stances for council members (housing, development, transportation priority)
+
+Phase J: Playbook Retrospective (depends on all phases complete)
+  └── Update LOCATION-ONBOARDING.md with learnings
+```
+
+**Critical path:** A → B → D → E → (F, G, H, I in parallel) → J
+
+**Phases A and B have no dependencies** — either can start immediately after research.
+
+---
+
+## Integration Points Matrix
+
+| Existing System | How Cambridge Uses It | What Changes |
+|---|---|---|
+| `load-state-tiger-boundaries.ts` | Add MA allowlist entry; run with --state MA --fips 25 | 1-line code change in STATE_LAYER_ALLOWLIST |
+| `essentials.geofence_boundaries` | Receives MA sldu/sldl/cd/place boundaries | No schema change; same columns |
+| `essentials.districts` | Receives MA STATE_UPPER/STATE_LOWER/NATIONAL_LOWER rows | No schema change |
+| `essentials.governments` | Receives State of MA + Middlesex County + City of Cambridge | Standard INSERT |
+| `essentials.chambers` | Receives MA Senate + MA House + Cambridge City Council + School Committee + Admin chamber | Standard INSERT |
+| `essentials.offices` | Receives all MA/federal/Cambridge office rows | Standard INSERT; `is_appointed_position=true` for City Manager + Mayor |
+| `essentials.politicians` | Receives MA officials + Cambridge council/committee members | Standard INSERT with `is_appointed=true` for City Manager |
+| `getRepresentativesByAddress` | Works automatically once geofences + districts + offices linked via `district_id` FK | No code change to query |
+| `statewideQueryText` in essentialsService | Picks up MA STATE_EXEC + MA NATIONAL_UPPER automatically via `d.state = $1` filter | No code change; state = 'MA' |
+| `Landing.jsx COVERAGE_AREAS` | Add Cambridge entry with `browseGovernmentList: ['2511000']` | Small frontend change |
+| `essentials.discovery_jurisdictions` | Add Cambridge row | Standard INSERT |
+| Migration numbering | Continue sequentially from current max | Verify with DB query before writing migration |
+
+---
+
+## New DB Patterns Required for Cambridge
+
+### 1. At-Large STV Seat Numbering
+
+Cambridge has 9 at-large council seats with no geographic districts and no place numbers. The TX pattern uses "Place 1–8" for Plano. For Cambridge, use positional seat names like `'Council Member Seat 1'` through `'Council Member Seat 9'` OR simply `'City Council Member'` with `seats = 9` on a single office row.
+
+**Recommendation:** Follow the TX cities pattern with individual office rows — one per seat — even for at-large seats. This allows linking individual politician rows to individual offices (required for the `politician_id` FK on offices). Title them `'City Council Member'` uniformly (all 9 seats have the same title under STV — no numbered places). Each gets a unique office row.
+
+### 2. Mayor as Derived Role
+
+The Mayor office row has `is_appointed_position = true` even though the mayor emerged from an elected process (STV). Set `politician_id` on the Mayor office to point to the same politician as one of the 9 City Council Member offices. This creates a dual-office link for one politician, which the schema supports (no unique constraint on `offices.politician_id`).
+
+### 3. MA State Government Row
+
+```sql
+INSERT INTO essentials.governments (name, type, state, city, geo_id)
+VALUES ('Commonwealth of Massachusetts', 'STATE', 'MA', '', '25');
+```
+
+Note: Massachusetts officially calls itself a "Commonwealth" — use that full name.
 
 ---
 
 ## Confidence Assessment
 
-| Area | Confidence | Notes |
-|------|-----------|-------|
-| Express service/cron pattern | HIGH | Direct inspection of campaignFinanceCron, districtStaleness, index.ts |
-| DB schema design | HIGH | Based on migration 042 (race_candidates), stagingService.ts patterns |
-| Deduplication strategy | HIGH | race_candidates table and its `candidate_status` field directly support this |
-| Agent granularity (per jurisdiction) | MEDIUM | Reasonable assumption; actual token limits depend on page length |
-| Anthropic SDK integration | MEDIUM | SDK is well-documented; specific tool use patterns need phase-level research |
-| Rate limit behavior under load | LOW | No Anthropic rate limit values verified; sequential execution is a safe default |
+| Area | Confidence | Basis |
+|---|---|---|
+| district_type mapping (LOCAL for city council) | HIGH | Direct inspection of migrations 088-098, essentialsService.ts |
+| is_appointed_position for City Manager | HIGH | Direct inspection of audit-is-appointed.ts, essentialsService.ts |
+| Mayor as appointed-position office | MEDIUM | Derived from schema constraints + Cambridge government structure; no direct precedent in existing data for this exact pattern |
+| TIGER MTFCC codes for MA | HIGH | load-state-tiger-boundaries.ts LAYER_DISPATCH table + FIPS_TO_STATE map |
+| MA allowlist addition (one-line change) | HIGH | Direct inspection of STATE_LAYER_ALLOWLIST code |
+| Landing.jsx COVERAGE_AREAS pattern | HIGH | Direct inspection of Landing.jsx + handleCountyClick logic |
+| Migration template reuse | HIGH | Direct inspection of migrations 087-110 |
+| Cambridge place GEOID (2511000) | MEDIUM | Standard FIPS formula (MA=25, place=11000); verify against TIGER before loading |
+| Middlesex County G4020 usefulness | MEDIUM | Pattern established with Collin County; MA county government is largely abolished so county rep lookup has limited scope |
+| .planning/ location for playbook | HIGH | Matches existing .planning/ structure and PROJECT.md requirements |
 
 ---
 
 ## Open Questions for Phase-Level Research
 
-- What is the Anthropic API rate limit for the selected model tier, and does it affect cron sweep frequency?
-- Should the agent use tool use (structured output via `tools` parameter) or rely on JSON-in-text with schema enforcement? Tool use is more reliable for structured extraction.
-- How long do typical election authority pages take to fetch, and does the page content fit in a single Claude context window? Some SoS pages are large.
-- Does the approval path need to create a `race` row if one doesn't yet exist for the discovered election, or should approval require a pre-existing race?
+1. **Cambridge election cycle:** Cambridge holds city elections in odd years (2023, 2025, etc.). The next election is November 2025 (already past) or November 2027. Verify whether to seed a past or future election for the discovery pipeline. If 2027, the discovery pipeline will be idle for ~18 months after setup.
+
+2. **Cambridge city website URL structure:** The election authority URL for the discovery agent needs verification. `cambridge.gov/elections` or `cambridgema.gov/elections` — confirm the correct domain before seeding `discovery_jurisdictions`.
+
+3. **Middlesex County G4020:** Confirm whether to load the county boundary. If Cambridge is the only target city in Middlesex County, the county boundary is only needed for US House member intersection. Worth doing for completeness but not strictly required if the `place` boundary (G4110) alone is sufficient for the Cambridge address lookup.
+
+4. **School Committee election status:** Cambridge School Committee is elected, not appointed. Verify the term length and next election cycle before seeding races.
+
+5. **Cambridge GEOID:** Confirm `2511000` against the TIGER 2024 shapefile. The Census place code for Cambridge MA is standard but worth verifying the 7-digit format before migration.

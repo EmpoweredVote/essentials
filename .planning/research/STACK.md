@@ -1,289 +1,294 @@
-# Technology Stack — Candidate Discovery System
+# Technology Stack — v5.0 Location Onboarding: Cambridge, MA
 
-**Project:** EmpoweredVote candidate discovery (milestone addition)
-**Researched:** 2026-04-23
-**Scope:** NEW additions only. Existing stack (React 19, Vite, Tailwind 4, Express TypeScript, Postgres/PostGIS, Supabase) is validated and unchanged.
-
----
-
-## Summary of New Dependencies
-
-Three packages need to be added to `C:/EV-Accounts/backend/package.json`. One is already there.
-
-| Package | Status | Purpose |
-|---------|--------|---------|
-| `@anthropic-ai/sdk` | NOT installed | Claude agents with web search |
-| `node-cron` | ALREADY INSTALLED (`^4.2.1`) | Scheduler — no change needed |
-| `resend` | NOT installed | Admin email notifications |
-
-No new infrastructure services are required. Everything runs in the existing Render web service.
+**Project:** Essentials (empowered.vote) — Add Cambridge, MA coverage
+**Researched:** 2026-05-15
+**Milestone:** v5.0 Location Onboarding Playbook (subsequent milestone)
 
 ---
 
-## 1. Claude Agents with Web Search
+## Executive Summary
 
-### Package
+Adding Massachusetts (FIPS 25) and Cambridge, MA requires zero new npm packages. The
+`load-state-tiger-boundaries.ts` generalized loader already supports sldu/sldl/place/county/cd
+and the FIPS_TO_STATE map already contains entry `'25': 'ma'`. The only code change is a
+one-line addition to `STATE_LAYER_ALLOWLIST`. All boundary download URLs follow the exact
+same `tl_{vintage}_{fips}_{layer}.zip` pattern used for TX, CA, IN, UT.
 
-```bash
-npm install @anthropic-ai/sdk
+Cambridge officials data comes from three sources, all requiring manual SQL migration (no
+public APIs or bulk downloads exist): cambridge.ma.gov for council/school committee rosters,
+sec.state.ma.us for state legislative candidate lists (HTML-only, no CSV/Excel export), and
+malegislature.gov for confirming district-to-representative mapping.
+
+---
+
+## 1. TIGER Boundary Files for Massachusetts
+
+### MTFCC Codes (CONFIRMED — matches TX/CA/IN pattern exactly)
+
+| Layer | MTFCC | District Type | Field for District # | Skip Codes |
+|-------|-------|--------------|----------------------|------------|
+| sldu  | G5210 | STATE_UPPER  | SLDUST               | ZZZ, 000   |
+| sldl  | G5220 | STATE_LOWER  | SLDLST               | ZZZ, 000   |
+| place | G4110 | LOCAL        | (uses GEOID)         | —          |
+| county| G4020 | COUNTY       | COUNTYFP             | —          |
+| cd    | G5200 | NATIONAL_LOWER | CD119FP             | ZZ, ZZZ, 00, 000 |
+
+G5210 = State Senate (upper chamber). G5220 = State House (lower chamber). Same as TX.
+Confirmed by proximity1.com SLDL metadata and the existing LAYER_DISPATCH in load-state-tiger-boundaries.ts.
+
+### Download URLs (2024 vintage, FIPS 25)
+
+```
+MA State Senate (SLDU):
+https://www2.census.gov/geo/tiger/TIGER2024/SLDU/tl_2024_25_sldu.zip
+— 818 KB, confirmed fetchable (directory listing returned this file)
+
+MA State House (SLDL):
+https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_25_sldl.zip
+— ~1.8 MB, confirmed fetchable (binary shapefile verified in-session)
+
+MA Place boundaries (Cambridge city):
+https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_25_place.zip
+
+MA County (Middlesex):
+https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip
+— national file, filtered by STATEFP=25 at runtime
+
+MA Congressional Districts (119th):
+https://www2.census.gov/geo/tiger/TIGER2024/CD/tl_2024_25_cd119.zip
 ```
 
-**Current version:** `0.91.0` (released 2026-04-23 — verified against GitHub releases page)
+URL pattern: `https://www2.census.gov/geo/tiger/TIGER{vintage}/{LAYER}/tl_{vintage}_{fips}_{layer}.zip`
+County is the exception: always `tl_{vintage}_us_county.zip` (national file).
 
-### How the web search tool actually works
+### Loader Code Change Required
 
-The web search tool is a **server-side tool** — Anthropic executes the search on its own infrastructure. You do not call a search API yourself or parse HTML. You pass a tool descriptor in your `messages.create()` call; Claude decides when to invoke it, Anthropic runs the search, and results are returned inline in the response content blocks.
-
-**Two available tool versions:**
-
-| Version | When to use |
-|---------|-------------|
-| `web_search_20250305` | Standard. Supports `max_uses`, `allowed_domains`, `blocked_domains`, `user_location`. |
-| `web_search_20260209` | Adds dynamic filtering — Claude writes code to post-process results before they enter context, reducing token consumption. Requires code execution tool to also be enabled. Best for technical research with high signal-to-noise ratio. |
-
-**Recommendation: use `web_search_20250305` for this system.** The dynamic filtering version (`20260209`) is powerful but adds complexity (requires enabling the code execution tool too) and the cost benefit only materializes when crawling noisy pages. Official election authority pages are relatively structured. Start with `20250305` and upgrade if token costs become a problem.
-
-### TypeScript usage pattern
+`load-state-tiger-boundaries.ts` line 34–39: add MA to STATE_LAYER_ALLOWLIST.
 
 ```typescript
-import Anthropic from "@anthropic-ai/sdk";
-
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-
-const response = await client.messages.create({
-  model: "claude-sonnet-4-6",
-  max_tokens: 4096,
-  messages: [
-    {
-      role: "user",
-      content: `Find all candidates who have filed for the ${race.name} election in ${jurisdiction.name}. 
-                Search the official election authority website. Return structured JSON with: 
-                name, party, filing_date, website if available.`,
-    },
-  ],
-  tools: [
-    {
-      type: "web_search_20250305",
-      name: "web_search",
-      max_uses: 5,
-      allowed_domains: jurisdiction.official_election_domains, // string[] from your jurisdictions table
-    },
-  ],
-});
+MA: new Set(['cd', 'sldu', 'sldl', 'place', 'county']),
 ```
 
-**The `allowed_domains` parameter is valuable for this use case.** By pinning searches to known official election authority domains (e.g., `lavote.gov`, `sos.ca.gov`), you prevent Claude from pulling in news articles or unofficial sources. The jurisdictions registry table should store these domains per jurisdiction.
+No cousub layer needed for MA. Cambridge is an incorporated city (place-level); cousub is
+used for Indiana because IN uses civil townships as the sub-county unit. Massachusetts cities
+and towns are place-level in TIGER; the `place` layer suffices.
 
-### Pricing
-
-- **Web search:** $10 per 1,000 searches (charged per search invocation, regardless of result count; not charged on error)
-- **Token costs:** Web search results count as input tokens. Using `claude-sonnet-4-6` (same model already available), expect 2,000-6,000 input tokens per agent run from search results alone
-- **Per-run cost estimate:** A single jurisdiction scan with 5 searches ≈ $0.05 in search fees + ~$0.01-0.03 in token costs = ~$0.06-0.08 per run
-- **Weekly cron over 50 jurisdictions:** ~$3-4/week at current rates — negligible
-
-### ANTHROPIC_API_KEY setup
-
-Add to Render environment variables for the backend service. The SDK reads `ANTHROPIC_API_KEY` automatically.
-
-**Important prerequisite:** Web search must be enabled in the Anthropic Console admin settings (`console.anthropic.com/settings/privacy`) before it can be used via API. This is an organization-level toggle.
+FIPS_TO_STATE already has `'25': 'ma'` at line 74. No change needed there.
 
 ---
 
-## 2. Scheduler (Cron)
+## 2. Massachusetts FIPS and GEOIDs
 
-### Package
+| Entity | FIPS / GEOID | Notes |
+|--------|-------------|-------|
+| Massachusetts (state) | 25 | Standard 2-digit state FIPS |
+| Middlesex County | 25017 | Full GEOID = state + county |
+| Cambridge city (place) | 2511000 | STATEFP(25) + PLACEFP(11000) |
 
-`node-cron ^4.2.1` is **already installed**. No additional package needed.
-
-`@types/node-cron ^3.0.11` is also already in devDependencies.
-
-### Render deployment: in-process vs separate cron service
-
-**Decision: use in-process `node-cron` inside the existing Express web service.**
-
-Rationale:
-
-- The existing backend deploys as a single Render web service (not a background worker). Adding an in-process scheduler requires zero infrastructure changes.
-- A Render Cron Job is a **separate service** that spins up, runs a command, and exits. It costs a minimum of $1/month additional and adds deployment surface. For a weekly job that takes minutes, this overhead is not justified.
-- The main risk of in-process scheduling is job duplication across multiple instances. This backend runs as a **single-instance** Render web service (standard tier). Multi-instance risk does not apply.
-- The 12-hour Render run limit only applies to Render Cron Job services, not to long-running web services. In-process cron runs are not constrained by this limit.
-- If the server restarts (deploy, crash), the cron schedule resets cleanly at startup — which is acceptable for a weekly discovery run. A missed weekly run due to a deploy window is not a critical failure.
-
-### Usage pattern
-
-```typescript
-import cron from "node-cron";
-
-// In src/index.ts, after app.listen()
-cron.schedule("0 2 * * 1", async () => {
-  // Every Monday at 2am UTC
-  await runDiscoveryCycle();
-});
-```
-
-**If multi-instance is ever needed** (scaling up), the pattern to add is a Postgres-backed advisory lock: `SELECT pg_try_advisory_lock(42)` at the start of the cron handler, run the job only if the lock is acquired, release at the end. This prevents duplicate runs without adding BullMQ or Redis locking overhead.
+Cambridge's place GEOID `2511000` is what the `place` layer loader writes as `geo_id`.
+Confirmed via census.gov QuickFacts and Geocodio's GEOID lookup.
 
 ---
 
-## 3. Admin Email Notifications
+## 3. Massachusetts Secretary of State — Candidate and Election Data
 
-### Package
+**URL:** https://www.sec.state.ma.us/divisions/elections/
 
-```bash
-npm install resend
-```
+**Candidate lists:** https://www.sec.state.ma.us/divisions/elections/research-and-statistics/candidate-list-archive.htm
 
-**Current version:** `6.12.0` (verified from npm search results, 2026-04-23)
+**What is published:**
+- Candidate lists by election year, 2002–2024
+- Fields: candidate name, street address, city, party affiliation, office sought, district
+- Organized hierarchically: statewide offices → US Senate/House → MA Senate → MA House → County offices
+- Format: HTML table pages only. No CSV, Excel, or JSON export. No bulk download API.
+- 2024 state election: https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2024_state_election_candidates.htm
 
-### Why Resend over alternatives
+**Election results:** https://electionstats.state.ma.us/
+- Contains 29,574 elections, 11,011 candidates, data from 1970–2026
+- Web-only search interface. No bulk export, no API documented.
+- Searchable by year, office, district, candidate name.
 
-| Option | Verdict | Reason |
-|--------|---------|--------|
-| **Resend** | Recommended | Permanent free tier (3,000/month, 100/day), TypeScript-first API, minimal setup, `{ data, error }` pattern consistent with existing Supabase client patterns in this codebase |
-| SendGrid | Avoid | Free tier was eliminated May 2025; new accounts require paid plan from day one ($19.95/month minimum) |
-| Nodemailer | Avoid for this use case | SMTP configuration, deliverability management, and DNS setup are all on you. Fine for self-hosted, wrong choice when Resend/SendGrid handle this |
-| Postmark | Viable alternative | Strong deliverability, good DX, but requires paid account setup with no permanent free tier for low-volume internal tools |
-
-**For an internal admin notification tool sending <100 emails/day, Resend's free tier is sufficient indefinitely.** The 100/day cap is only a constraint if discovery runs are triggered very frequently or many notifications fire simultaneously.
-
-### TypeScript usage pattern
-
-```typescript
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-// Notify admin of items needing review
-const { data, error } = await resend.emails.send({
-  from: "Discovery Agent <discovery@empowered.vote>",
-  to: ["admin@empowered.vote"],
-  subject: `Candidate Discovery: ${stagingCount} items need review`,
-  html: `<p>${stagingCount} candidates found and staged for review.</p>
-         <p><a href="${ADMIN_URL}/discovery">Open review queue</a></p>`,
-});
-
-if (error) {
-  logger.error("Email notification failed", { error });
-}
-```
-
-### Setup requirements
-
-1. Add `RESEND_API_KEY` to Render environment variables
-2. Verify the sending domain (`empowered.vote`) in Resend dashboard (DNS TXT record)
-3. The `from` address must use the verified domain
+**Recommendation:** Use sec.state.ma.us HTML pages to manually identify state legislative
+candidates by district for Cambridge's three House and three Senate districts.
+Seed politicians via SQL migration (same pattern as TX/CA/IN). No automation possible
+without scraping.
 
 ---
 
-## 4. Staging/Review Queue
+## 4. Cambridge Official Sources
 
-### No additional packages needed
+### City Council
 
-The staging queue is a **database pattern**, not a package. Implement with new Postgres tables in the `essentials` schema alongside the existing elections, races, and candidates tables.
+**Official roster:** https://www.cambridgema.gov/Departments/citycouncil/members
 
-**Recommended table structure:**
+- 9 at-large members (no wards or districts)
+- Current members (elected November 2025, seated January 2026):
+  1. Marc C. McGovern (Mayor) — mmcgovern@cambridgema.gov
+  2. Sumbul Siddiqui — ssiddiqui@cambridgema.gov
+  3. Burhan Azeem — bazeem@cambridgema.gov
+  4. Jivan Sobrinho-Wheeler — jsobrinhowheeler@cambridgema.gov
+  5. E. Denise Simmons — dsimmons@cambridgema.gov
+  6. Patricia M. Nolan — pnolan@cambridgema.gov
+  7. Catherine Zusy — czusy@cambridgema.gov
+  8. Ayah A. Al-Zubi — aal-zubi@cambridgema.gov
+  9. Timothy R. Flaherty — tflaherty@cambridgema.gov
+- 2-year terms; next election November 2027
+- Elected via STV (Single Transferable Vote proportional representation) — at-large, 9 seats
+- Headshots present on the roster page
 
-```sql
--- Migration 070: candidate discovery infrastructure
-CREATE TABLE essentials.discovery_jurisdictions (
-  id              SERIAL PRIMARY KEY,
-  name            TEXT NOT NULL,
-  state           TEXT NOT NULL,
-  election_authority_url TEXT,
-  official_election_domains TEXT[], -- used as allowed_domains in web search
-  active          BOOLEAN DEFAULT true,
-  created_at      TIMESTAMPTZ DEFAULT now()
-);
+### School Committee
 
-CREATE TABLE essentials.discovery_runs (
-  id              SERIAL PRIMARY KEY,
-  jurisdiction_id INT REFERENCES essentials.discovery_jurisdictions(id),
-  started_at      TIMESTAMPTZ DEFAULT now(),
-  completed_at    TIMESTAMPTZ,
-  status          TEXT CHECK (status IN ('running', 'completed', 'failed')),
-  searches_used   INT,
-  candidates_found INT,
-  error_message   TEXT
-);
+**Official roster:** https://www.cpsd.us/school-committee/school-committee-members-subcommittees
 
-CREATE TABLE essentials.candidate_staging (
-  id              SERIAL PRIMARY KEY,
-  run_id          INT REFERENCES essentials.discovery_runs(id),
-  jurisdiction_id INT REFERENCES essentials.discovery_jurisdictions(id),
-  raw_name        TEXT NOT NULL,
-  raw_party       TEXT,
-  race_name       TEXT,
-  election_date   DATE,
-  source_url      TEXT,
-  confidence      TEXT CHECK (confidence IN ('high', 'medium', 'low')),
-  review_status   TEXT CHECK (review_status IN ('pending', 'approved', 'rejected', 'merged')) DEFAULT 'pending',
-  reviewed_by     TEXT,
-  reviewed_at     TIMESTAMPTZ,
-  candidate_id    INT, -- FK to essentials.candidates once merged
-  notes           TEXT,
-  created_at      TIMESTAMPTZ DEFAULT now()
-);
-```
+- 7 members: 6 elected at-large via STV (same election as City Council) + Mayor ex officio
+- Current members (elected November 2025):
+  1. David Weinstein (Chair) — dweinstein@cpsd.us
+  2. Caitlin Dube (Vice Chair) — cadube@cpsd.us
+  3. Luisa de Paula Santos — ldepaulasantos@cpsd.us
+  4. Richard Harding, Jr. — harding4cambridge@gmail.com
+  5. Elizabeth Hudson — ehudson@cpsd.us
+  6. Arjun Jaikumar — ajaikumar@cpsd.us
+  7. Mayor Sumbul Siddiqui (ex officio) — ssiddiqui@cambridgema.gov
+- 2-year terms aligned with City Council
 
-**Migration numbering:** Current highest migration is `069_donor_name_normalized.sql`. Next migrations start at `070`.
+### Election Commission
 
-**No migration framework needed.** The existing pattern uses numbered SQL files applied via `backend/scripts/applyMigrations.ts` using the direct Postgres connection. Continue this pattern.
+**URL:** https://www.cambridgema.gov/Departments/electioncommission
+
+**Election results:** https://www.cambridgema.gov/Departments/electioncommission/electionresults
+- Results published as web pages and PDFs (2001–present)
+- STV count-by-count detail: HTML pages (e.g. https://www.cambridgema.gov/Election2025/Council%20Round2.htm)
+- No machine-readable formats (CSV, XML, JSON). PDF only for official results.
+- Contact: elections@cambridgema.gov
+
+**Municipal elections page:** https://www.cambridgema.gov/departments/electioncommission/cambridgemunicipalelections
+- Specimen ballots (PDF), voter guides (8 languages), election calendar
 
 ---
 
-## 5. What NOT to Add
+## 5. STV / RCV Election Data — Machine-Readability Assessment
 
-| Package | Why not |
-|---------|---------|
-| BullMQ / Agenda | Overkill for a single weekly job. Adds Redis dependency (Upstash is already used for other things, but BullMQ requires a separate Redis queue, not a KV store). In-process node-cron is sufficient. |
-| Playwright / Puppeteer | The Claude web search tool handles fetching. You do not need a headless browser. |
-| Cheerio / html-parser | `node-html-parser` is already in devDependencies if ever needed for fallback parsing. Do not add Cheerio separately. |
-| LangChain / LlamaIndex | Anthropic SDK handles the agent loop directly. Claude's tool use is native. LangChain adds abstraction with no benefit here. |
-| Bull / Celery equivalent | Discovery runs are not a queue of independent tasks. They are a sequential weekly batch. No queue needed. |
+Cambridge uses STV (Single Transferable Vote) for both City Council (9 seats) and School
+Committee (6 elected seats). This has been in use since 1941.
 
----
+**Is candidate data machine-readable?** No.
+- Candidate lists are published as PDF specimen ballots on the city's election commission page
+- No API, no CSV, no structured download
+- The STV tabulation software is ChoicePlus Pro (Voting Solutions Inc.)
+- Round-by-round results are published as HTML pages on the city website after each election
 
-## Installation Summary
-
-```bash
-cd C:/EV-Accounts/backend
-
-# New dependencies (node-cron is already installed)
-npm install @anthropic-ai/sdk resend
-```
-
-**New environment variables to add in Render:**
-
-| Variable | Value source |
-|----------|-------------|
-| `ANTHROPIC_API_KEY` | Anthropic Console → API Keys |
-| `RESEND_API_KEY` | Resend Dashboard → API Keys |
+**Implication for seeding:** Cambridge candidates must be seeded manually from the HTML
+roster pages. This is identical to the approach used for all other cities in the app.
+The STV system affects how we describe the election to users (all 9 council seats filled
+from one at-large citywide ballot) but does not affect data ingestion mechanics.
 
 ---
 
-## Confidence Assessment
+## 6. Massachusetts Legislative Districts Covering Cambridge
 
-| Area | Confidence | Source |
-|------|------------|--------|
-| `@anthropic-ai/sdk` version (0.91.0) | HIGH | GitHub releases page, verified 2026-04-23 |
-| Web search tool API shape | HIGH | Official Anthropic docs (platform.claude.com), fetched directly |
-| `web_search_20250305` vs `20260209` | HIGH | Official docs confirmed both versions and requirements |
-| `allowed_domains` parameter | HIGH | Official docs confirmed parameter behavior |
-| Web search pricing ($10/1k) | HIGH | Official docs usage/pricing section |
-| `node-cron` already installed | HIGH | Read `backend/package.json` directly |
-| Render cron vs in-process | MEDIUM | Render docs confirm separate service model; in-process analysis is architectural inference based on single-instance deployment |
-| `resend` version (6.12.0) | MEDIUM | npm search result (npm page returned 403, version from search snippet) |
-| Resend free tier limits | HIGH | Fetched from resend.com/pricing directly |
-| Migration numbering (next = 070) | HIGH | Listed `backend/migrations/` directory directly |
+### State House (3 districts fully or partially in Cambridge)
+
+| District | Representative | Party |
+|----------|---------------|-------|
+| 24th Middlesex | David M. Rogers | D |
+| 25th Middlesex | Marjorie C. Decker | D |
+| 26th Middlesex | Mike Connolly | D |
+
+Source: malegislature.gov profile pages, confirmed via 2024 election results coverage.
+
+### State Senate (3 districts partially covering Cambridge)
+
+| District | Senator | Party | Notes |
+|----------|---------|-------|-------|
+| Middlesex and Suffolk | Sal DiDomenico | D | Includes parts of Cambridge + Charlestown, Chelsea, Everett |
+| Suffolk and Middlesex | William Brownsberger | D | Includes Cambridge Ward 8 Precinct 2, Ward 9; also Watertown, Belmont |
+| Third Middlesex (or similar) | TBD | — | Cambridge GIS confirms 3 senate districts; third requires address lookup at malegislature.gov/Search/FindMyLegislator |
+
+Cambridge straddles 3 senate districts. The Cambridge GIS data dictionary
+(https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_StateSenateDistricts)
+confirms exactly 3 elective senate districts cover the city. The third must be verified
+via the MA legislature's Find My Legislator tool using a Cambridge address in Ward 1–7
+(not covered by the two named districts above).
+
+### US Congressional (2 districts in Cambridge)
+
+| District | Representative | Party |
+|----------|---------------|-------|
+| MA-05 | Katherine Clark | D |
+| MA-08 | Stephen Lynch | D |
+
+Cambridge is split between MA-05 and MA-08 per the Cambridge GIS data dictionary
+(https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_CongressionalDistricts).
+
+### US Senate (statewide — both cover Cambridge)
+
+| Senator | Party |
+|---------|-------|
+| Elizabeth Warren | D |
+| Ed Markey | D |
+
+---
+
+## 7. New npm Packages Required
+
+None. The existing stack handles everything:
+
+| Capability | Package | Already Present |
+|-----------|---------|-----------------|
+| Shapefile parsing | `shapefile` | Yes (used in load-state-tiger-boundaries.ts) |
+| ZIP extraction | `adm-zip` | Yes |
+| HTTP download | Node `https` built-in | Yes |
+| PostGIS upsert | `pg` + SQL | Yes |
+| GeoJSON geometry | PostGIS ST_GeomFromGeoJSON | Yes |
+
+No new tools for MA-specific data ingestion. All data sources require manual migration
+scripts (SQL INSERT statements), not new ingest pipelines.
+
+---
+
+## 8. MassGIS as an Alternative Boundary Source
+
+MassGIS (https://www.mass.gov/info-details/massgis-data-massachusetts-house-legislative-districts-2021)
+publishes its own state legislative district shapefiles updated January 2025 for post-November-2024
+member changes. This is a valid alternative if TIGER 2024 boundaries don't reflect post-redistricting
+changes. However:
+
+- The existing loader is built around TIGER URLs and formats
+- TIGER 2024 SLDU/SLDL files reflect boundaries submitted by MA to Census Bureau by May 31, 2024
+- MassGIS files would require testing for format compatibility (projection, field names)
+
+**Recommendation:** Use TIGER 2024 files first (consistent with existing CA/TX/IN/UT pattern).
+Fall back to MassGIS only if TIGER boundaries are outdated post-redistricting.
+
+---
+
+## 9. Next Migration Number
+
+Per project context: next migration is ~122.
 
 ---
 
 ## Sources
 
-- [@anthropic-ai/sdk GitHub releases](https://github.com/anthropics/anthropic-sdk-typescript/releases)
-- [Anthropic web search tool docs](https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool) — fetched directly
-- [Render cron jobs docs](https://render.com/docs/cronjobs)
-- [Resend pricing](https://resend.com/pricing)
-- [Resend Node.js docs](https://resend.com/docs/send-with-nodejs)
-- [node-cron npm](https://www.npmjs.com/package/node-cron)
-- [pkgpulse: node-cron vs node-schedule vs croner 2026](https://www.pkgpulse.com/blog/node-cron-vs-node-schedule-vs-croner-task-scheduling-2026)
+- TIGER SLDU directory listing (live fetch): https://www2.census.gov/geo/tiger/TIGER2024/SLDU/
+- TIGER SLDL file confirmed (live fetch): https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_25_sldl.zip
+- SLDL attribute reference: https://proximityone.com/dataresources/guide/tl_year_st_sldl.htm
+- MA candidate list archive: https://www.sec.state.ma.us/divisions/elections/research-and-statistics/candidate-list-archive.htm
+- MA election stats DB: https://electionstats.state.ma.us/
+- Cambridge city council roster: https://www.cambridgema.gov/Departments/citycouncil/members
+- Cambridge school committee: https://www.cpsd.us/school-committee/school-committee-members-subcommittees
+- Cambridge election results: https://www.cambridgema.gov/Departments/electioncommission/electionresults
+- Cambridge municipal elections: https://www.cambridgema.gov/departments/electioncommission/cambridgemunicipalelections
+- Cambridge 2025 official results: https://www.cambridgema.gov/Departments/electioncommission/news/2025/11/2025municipalelectionofficialresultsnovember14thupdate
+- Cambridge GIS senate districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_StateSenateDistricts
+- Cambridge GIS congressional districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_CongressionalDistricts
+- Cambridge legislative districts PDF: https://www.cambridgema.gov/-/media/Files/electioncommission/mapsandpollinglocations/legislativedistricts.pdf
+- Middlesex County FIPS 25017: https://www.geocod.io/geoids/massachusetts/middlesex-county-25017
+- Cambridge GEOID 2511000: https://datacommons.org/place/geoId/2511000
+- MassGIS House districts: https://www.mass.gov/info-details/massgis-data-massachusetts-house-legislative-districts-2021
+- MA House 24th Middlesex: https://malegislature.gov/Legislators/Profile/DMR1/District
+- MA House 25th Middlesex: https://malegislature.gov/Legislators/Profile/MCD1/District
+- MA House 26th Middlesex: https://malegislature.gov/Legislators/Profile/M_C1/District
+- Sal DiDomenico (Middlesex and Suffolk Senate): https://malegislature.gov/Legislators/Profile/SND0/Biography
+- Cambridge STV description: https://opavote.com/methods/cambridge-stv-rules
+- ChoicePlus Pro STV software: https://www.votingsolutions.com/Cambridge.htm
