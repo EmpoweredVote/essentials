@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 40 of 46 (MA Executives + Federal Officials) — v5.0 Location Onboarding Playbook
-Plan: 40-01 (not yet started)
-Status: Phase 39 complete — ready for Phase 40
-Last activity: 2026-05-16 — Completed 39-03: migration 152 applied; 158 MA house reps + 160 offices seeded via generator script
+Plan: 40-02 (not yet started)
+Status: In progress — 40-01 complete
+Last activity: 2026-05-16 — Completed 40-01: migration 154 applied; 6 MA executives + role_canonical column + NATIONAL_UPPER district seeded
 
 Progress: [███░░░░░░░] 30% (v5.0 — 3/10 phases complete)
 
@@ -38,6 +38,9 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Cambridge area MA Senate geo_ids: 25D26 (Middlesex and Suffolk), 25D27 (Second Middlesex), 25D28 (Suffolk and Middlesex)
 - Cambridge area MA House geo_ids: 25083 (25th Middlesex), 25084 (26th Middlesex)
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
+- role_canonical column on essentials.offices: populated only for Secretary of Commonwealth ('secretary_of_state') and Treasurer ('treasurer'); all other offices NULL
+- MA executive external_id range: -200001 through -200007 (skipping -200002 which belongs to Curren D. Price Jr., CA)
+- Back-fill UPDATE range -200010..-200001 is intentionally wide (headroom); -200002 (Curren D. Price Jr.) was incidentally back-filled — his office_id now set
 
 - computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
 - When localLensActive=true, computeDisplaySpokes uses LOCAL_LENS_TOPICS.slice(0, maxSpokes) as preferredIds regardless of selectedTopics value
