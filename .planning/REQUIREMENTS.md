@@ -91,8 +91,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLAY-01 | Phase 37 | Pending |
-| PLAY-02 | Phase 37 | Pending |
+| PLAY-01 | Phase 37 | Complete |
+| PLAY-02 | Phase 37 | Complete |
 | PLAY-03 | Phase 46 | Pending |
 | MAGEO-01 | Phase 38 | Pending |
 | MAGEO-02 | Phase 38 | Pending |
