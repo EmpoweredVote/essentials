@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 40 of 46 (MA Executives + Federal Officials) — v5.0 Location Onboarding Playbook
-Plan: 40-02 (not yet started)
-Status: In progress — 40-01 complete
-Last activity: 2026-05-16 — Completed 40-01: migration 154 applied; 6 MA executives + role_canonical column + NATIONAL_UPPER district seeded
+Plan: 40-02 complete; 40-03 is next
+Status: In progress — 40-02 complete
+Last activity: 2026-05-16 — Completed 40-02: migrations 155+156 applied; 11 MA federal officials (Warren, Markey + 9 House reps) seeded with office_ids back-filled
 
 Progress: [███░░░░░░░] 30% (v5.0 — 3/10 phases complete)
 
@@ -41,6 +41,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - role_canonical column on essentials.offices: populated only for Secretary of Commonwealth ('secretary_of_state') and Treasurer ('treasurer'); all other offices NULL
 - MA executive external_id range: -200001 through -200007 (skipping -200002 which belongs to Curren D. Price Jr., CA)
 - Back-fill UPDATE range -200010..-200001 is intentionally wide (headroom); -200002 (Curren D. Price Jr.) was incidentally back-filled — his office_id now set
+- MA federal senators share ONE NATIONAL_UPPER district — uniqueness key is (district_id, politician_id) not (district_id, chamber_id)
+- MA federal house reps each have unique NATIONAL_LOWER district — uniqueness key is (district_id, chamber_id)
+- MA federal external_id ranges: senators -200101..-200102; house reps -200201..-200209
+- 119th Congress MA House roster: all 9 seats Democrat (Neal/McGovern/Trahan/Auchincloss/Clark/Moulton/Pressley/Lynch/Keating), unchanged from 118th
 
 - computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
 - When localLensActive=true, computeDisplaySpokes uses LOCAL_LENS_TOPICS.slice(0, maxSpokes) as preferredIds regardless of selectedTopics value
