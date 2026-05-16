@@ -212,11 +212,11 @@ Plans:
   3. A Cambridge address returns the correct NATIONAL_LOWER district (MA-05 or MA-07 depending on ward)
   4. The Cambridge place boundary (GEOID 2511000) is loaded and a Cambridge address returns Cambridge city officials — not Boston or Somerville
   5. The Middlesex County G4020 boundary (FIPS 25017) is loaded for congressional intersection support
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 38-01: MA allowlist addition to load-state-tiger-boundaries.ts + run --state MA --fips 25 --layers cd,sldu,sldl,place
-- [ ] 38-02: Verify boundaries via FindMyLegislator on 4+ Cambridge addresses; fall back to MassGIS if mismatch; load Middlesex County G4020
+- [ ] 38-01-PLAN.md — Register MA in TIGER loader (allowlist + MTFCC assertion) + run all 5 layers (cd/sldu/sldl/place/county)
+- [ ] 38-02-PLAN.md — Write verify SQL + smoke test 4 Cambridge addresses; confirm Middlesex G4020 county intersection
 
 #### Phase 39: MA Government DB
 **Goal**: The Commonwealth of Massachusetts government row and all 200 state legislators are seeded in the database with correct district assignments, unblocking state-level lookups for any MA address
