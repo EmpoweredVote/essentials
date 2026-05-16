@@ -2,10 +2,12 @@
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements for v5.0 Location Onboarding Playbook
-Last activity: 2026-05-15 — Milestone v5.0 started; Cambridge, MA confirmed as proof-of-concept city
+Phase: 37 of 46 (Playbook Draft) — v5.0 Location Onboarding Playbook
+Plan: — (not yet planned)
+Status: Ready to plan — roadmap created, Phase 37 is next
+Last activity: 2026-05-15 — v5.0 roadmap created; 10 phases (37-46), 28/28 requirements mapped
+
+Progress: [░░░░░░░░░░] 0% (v5.0)
 
 ## Project Reference
 

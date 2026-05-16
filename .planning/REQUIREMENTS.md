@@ -55,10 +55,15 @@
 
 - [ ] **CAMB-13**: Compass stances researched and ingested for Cambridge City Councillors from public record (housing/zoning primary topic; one politician at a time per rate-limit policy)
 
-### Landing + Navigation
+### Landing
 
-- [ ] **LAND-01**: Cambridge entry added to Landing.jsx `COVERAGE_AREAS` with `browseGovernmentList: ['2511000']` and `browseStateAbbrev: 'MA'`
-- [ ] **LAND-02**: Cambridge shortcut added to Elections page address input (alongside Monroe County + LA County)
+- [ ] **LAND-01**: Cambridge entry added to Landing.jsx `COVERAGE_AREAS` with `browseGovernmentList: ['2511000']` and `browseStateAbbrev: 'MA'` (folded into Phase 41)
+
+### MA 2026 Elections + Challengers
+
+- [ ] **MA26-01**: November 2026 Massachusetts General Election row seeded in `essentials.elections`
+- [ ] **MA26-02**: Election races seeded for all MA state senate, MA state house, and federal (9 US House + Markey US Senate) districts — covering all 200+ seats up in 2026
+- [ ] **MA26-03**: Challenger candidates discovered and staged for MA 2026 races via discovery pipeline; Azeem's 2nd Middlesex State Senate primary (September 1, 2026) explicitly seeded as a named race with known candidates
 
 ## Future Requirements
 
@@ -77,7 +82,8 @@
 | Middlesex County officials | County government in MA is largely administrative (no elected County Council equivalent); not a voter-facing gap |
 | Other MA cities | Cambridge is the proof-of-concept; additional MA cities are v5.1+ |
 | LA-style legal evaluation data | LACBA/CJP/LA Ethics have no MA equivalent; playbook explicitly flags these as LA-specific |
-| 2026 Cambridge elections | Cambridge uses odd-year elections only; next cycle is November 2027 |
+| Cambridge Elections page shortcut | Dropped — Landing.jsx COVERAGE_AREAS entry (LAND-01) is sufficient for discoverability |
+| 2026 Cambridge city elections | Cambridge uses odd-year elections only; next city council cycle is November 2027 |
 
 ## Traceability
 
@@ -85,39 +91,41 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLAY-01 | TBD | Pending |
-| PLAY-02 | TBD | Pending |
-| PLAY-03 | TBD | Pending |
-| MAGEO-01 | TBD | Pending |
-| MAGEO-02 | TBD | Pending |
-| MAGEO-03 | TBD | Pending |
-| MAGEO-04 | TBD | Pending |
-| MADB-01 | TBD | Pending |
-| MADB-02 | TBD | Pending |
-| MADB-03 | TBD | Pending |
-| MADB-04 | TBD | Pending |
-| FED-01 | TBD | Pending |
-| FED-02 | TBD | Pending |
-| CAMB-01 | TBD | Pending |
-| CAMB-02 | TBD | Pending |
-| CAMB-03 | TBD | Pending |
-| CAMB-04 | TBD | Pending |
-| CAMB-05 | TBD | Pending |
-| CAMB-06 | TBD | Pending |
-| CAMB-07 | TBD | Pending |
-| CAMB-08 | TBD | Pending |
-| CAMB-09 | TBD | Pending |
-| CAMB-10 | TBD | Pending |
-| CAMB-11 | TBD | Pending |
-| CAMB-12 | TBD | Pending |
-| CAMB-13 | TBD | Pending |
-| LAND-01 | TBD | Pending |
-| LAND-02 | TBD | Pending |
+| PLAY-01 | Phase 37 | Pending |
+| PLAY-02 | Phase 37 | Pending |
+| PLAY-03 | Phase 46 | Pending |
+| MAGEO-01 | Phase 38 | Pending |
+| MAGEO-02 | Phase 38 | Pending |
+| MAGEO-03 | Phase 38 | Pending |
+| MAGEO-04 | Phase 38 | Pending |
+| MADB-01 | Phase 39 | Pending |
+| MADB-02 | Phase 39 | Pending |
+| MADB-03 | Phase 39 | Pending |
+| MADB-04 | Phase 40 | Pending |
+| FED-01 | Phase 40 | Pending |
+| FED-02 | Phase 40 | Pending |
+| CAMB-01 | Phase 41 | Pending |
+| CAMB-02 | Phase 41 | Pending |
+| CAMB-03 | Phase 41 | Pending |
+| CAMB-04 | Phase 41 | Pending |
+| CAMB-05 | Phase 41 | Pending |
+| CAMB-06 | Phase 41 | Pending |
+| CAMB-07 | Phase 41 | Pending |
+| CAMB-08 | Phase 42 | Pending |
+| CAMB-09 | Phase 43 | Pending |
+| CAMB-10 | Phase 43 | Pending |
+| CAMB-11 | Phase 43 | Pending |
+| CAMB-12 | Phase 43 | Pending |
+| CAMB-13 | Phase 44 | Pending |
+| LAND-01 | Phase 41 | Pending |
+| MA26-01 | Phase 45 | Pending |
+| MA26-02 | Phase 45 | Pending |
+| MA26-03 | Phase 45 | Pending |
 
 **Coverage:**
-- v5.0 requirements: 28 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 28 ⚠️
+- v5.0 requirements: 29 total (LAND-02 dropped, MA26-01/02/03 added, LAND-01 folded into Phase 41)
+- Mapped to phases: 29 (Phases 37-46)
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-15*
