@@ -216,7 +216,7 @@ Plans:
 
 Plans:
 - [x] 38-01-PLAN.md — Register MA in TIGER loader (allowlist + MTFCC assertion) + run all 5 layers (cd/sldu/sldl/place/county)
-- [ ] 38-02-PLAN.md — Write verify SQL + smoke test 4 Cambridge addresses; confirm Middlesex G4020 county intersection
+- [x] 38-02-PLAN.md — Write verify SQL + smoke test 4 Cambridge addresses; confirm Middlesex G4020 county intersection
 
 #### Phase 39: MA Government DB
 **Goal**: The Commonwealth of Massachusetts government row and all 200 state legislators are seeded in the database with correct district assignments, unblocking state-level lookups for any MA address
@@ -400,7 +400,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 35. Hover Modal — Full Compass | v4.0 ✅ | 0/TBD | Parked | - |
 | 36. Global Controls + Compass Default | v4.0 ✅ | 3/3 | Complete | 2026-05-14 |
 | 37. Playbook Draft | v5.0 | 1/1 | Complete | 2026-05-16 |
-| 38. MA Geofences | v5.0 | 1/2 | In progress | - |
+| 38. MA Geofences | v5.0 | 2/2 | Complete | 2026-05-16 |
 | 39. MA Government DB | v5.0 | 0/TBD | Not started | - |
 | 40. MA Executives + Federal Officials | v5.0 | 0/TBD | Not started | - |
 | 41. Cambridge City Structure | v5.0 | 0/TBD | Not started | - |

@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 38 of 46 (MA Geofences) — v5.0 Location Onboarding Playbook
-Plan: 38-02 of 2 (complete) — Phase 38 COMPLETE
-Status: In progress — Phase 38 complete; Phase 39 (MA politicians) is next
-Last activity: 2026-05-16 — 38-02 complete; PostGIS spot checks verified for 4 Cambridge addresses; MA-05/MA-07 split confirmed; Middlesex intersects 8 G5200 districts
+Phase: 39 of 46 (MA Government DB) — v5.0 Location Onboarding Playbook
+Plan: — (not yet planned)
+Status: Phase 38 complete — Phase 39 (MA Government DB) is next
+Last activity: 2026-05-16 — Phase 38 MA Geofences complete; 281 boundaries loaded; 5/5 verified; MAGEO-01..04 satisfied
 
-Progress: [███░░░░░░░] 30% (v5.0 — 3/10 phases; Phase 38 done)
+Progress: [██░░░░░░░░] 20% (v5.0 — 2/10 phases complete)
 
 ## Project Reference
 
@@ -251,6 +251,11 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Cambridge place boundary loaded: geo_id='2511000', name='Cambridge city', mtfcc='G4110'
 - MA geofence_boundaries: state='25' (FIPS); MA districts: state='ma' (lowercase abbrev) except NATIONAL_LOWER which uses 'MA' (uppercase — loaded via cd layer in prior run)
 - Total MA boundaries: 58 G4110 + 9 G5200 + 40 G5210 + 160 G5220 + 14 G4020 = 281 rows
+- Cambridge district routing confirmed (Phase 39 ground truth): Porter Square/Harvard Sq → MA-05 (G5200 geo_id='2505'); Kendall/Inman → MA-07 (geo_id='2507')
+- Cambridge state districts confirmed: Porter Sq/Harvard Sq → 25th Middlesex House (G5220 geo_id='25083'); Kendall/Inman → 26th Middlesex House (geo_id='25084')
+- Cambridge senate districts: Porter Sq → Second Middlesex (G5210 geo_id='25D27'); Harvard Sq → Suffolk and Middlesex (geo_id='25D28'); Kendall/Inman → Middlesex and Suffolk (geo_id='25D26')
+- Middlesex County G4020 (geo_id='25017') intersects 8 G5200 rows: MA-02 through MA-08 + NH-02 border artifact (state='33', not a routing row)
+- MA districts.state column uses lowercase 'ma' (from FIPS_TO_STATE map in loader); geofence_boundaries.state='25' (FIPS)
 - Total MA districts: 9 NATIONAL_LOWER + 40 STATE_UPPER + 160 STATE_LOWER + 14 COUNTY = 223 rows
 - Middlesex County boundary loaded: geo_id='25017' (G4020) — county intersection pattern (Phase 19) applies
 - 293 MA towns (G4040 COUSUB) deferred as future work — non-city MA addresses won't return LOCAL boundary row

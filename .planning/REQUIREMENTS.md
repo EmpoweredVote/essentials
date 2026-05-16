@@ -13,10 +13,10 @@
 
 ### Massachusetts Geofences
 
-- [ ] **MAGEO-01**: MA state legislative boundaries loaded — 40 Senate (G5210/STATE_UPPER) + 160 House (G5220/STATE_LOWER) district boundaries in `essentials.geofence_boundaries`
-- [ ] **MAGEO-02**: MA congressional boundaries loaded — all MA-01 through MA-09 districts in `essentials.geofence_boundaries`
-- [ ] **MAGEO-03**: Cambridge place boundary loaded (GEOID 2511000) — any Cambridge address returns Cambridge city officials
-- [ ] **MAGEO-04**: Middlesex County G4020 boundary loaded (FIPS 25017) — county-level intersection for US House rep lookup
+- [x] **MAGEO-01**: MA state legislative boundaries loaded — 40 Senate (G5210/STATE_UPPER) + 160 House (G5220/STATE_LOWER) district boundaries in `essentials.geofence_boundaries`
+- [x] **MAGEO-02**: MA congressional boundaries loaded — all MA-01 through MA-09 districts in `essentials.geofence_boundaries`
+- [x] **MAGEO-03**: Cambridge place boundary loaded (GEOID 2511000) — any Cambridge address returns Cambridge city officials
+- [x] **MAGEO-04**: Middlesex County G4020 boundary loaded (FIPS 25017) — county-level intersection for US House rep lookup
 
 ### Massachusetts Government DB
 
@@ -94,10 +94,10 @@
 | PLAY-01 | Phase 37 | Complete |
 | PLAY-02 | Phase 37 | Complete |
 | PLAY-03 | Phase 46 | Pending |
-| MAGEO-01 | Phase 38 | Pending |
-| MAGEO-02 | Phase 38 | Pending |
-| MAGEO-03 | Phase 38 | Pending |
-| MAGEO-04 | Phase 38 | Pending |
+| MAGEO-01 | Phase 38 | Complete |
+| MAGEO-02 | Phase 38 | Complete |
+| MAGEO-03 | Phase 38 | Complete |
+| MAGEO-04 | Phase 38 | Complete |
 | MADB-01 | Phase 39 | Pending |
 | MADB-02 | Phase 39 | Pending |
 | MADB-03 | Phase 39 | Pending |
