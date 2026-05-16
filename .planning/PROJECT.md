@@ -76,7 +76,17 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ### Active
 
-<!-- Next milestone requirements will be defined via /gsd:new-milestone -->
+<!-- v5.0 Location Onboarding Playbook — Cambridge, MA -->
+
+- [ ] LOCATION-ONBOARDING.md checklist documenting all steps to onboard a new US city from scratch (cold-start, no insider knowledge required)
+- [ ] Phase templates for each repeatable phase type (officials seed, headshots, discovery setup, compass stances)
+- [ ] Massachusetts state + federal officials — governor, state legislators, congressional reps — with geofences
+- [ ] Cambridge, MA city government structure in DB (City Council 9-seat at-large STV, School Committee, City Manager, Mayor)
+- [ ] Cambridge incumbents seeded with contact data
+- [ ] Cambridge officials headshots at 600×750
+- [ ] Cambridge discovery pipeline configured + elections seeded
+- [ ] Cambridge compass stances researched from public record
+- [ ] Playbook retrospective — checklist + templates updated from Cambridge execution learnings
 
 ### Out of Scope
 
@@ -153,5 +163,15 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Phase 35 Hover Modal parked | Spoke tooltips (Phase 34) + full-page compass navigation serve the information need; hover modal would conflict with tooltip layer | ✓ Good — v4.0 |
 | localStorage null-check auto-enable pattern | ev:compassMode absent → auto-enable; explicit 'false' suppresses re-enable on reload — canonical pattern for both Elections.jsx and Results.jsx | ✓ Good — v4.0 |
 
+## Current Milestone: v5.0 Location Onboarding Playbook
+
+**Goal:** Build a cold-start, repeatable playbook for onboarding any US city — then prove it by taking Cambridge, MA (Harvard's backyard, RCV pioneer) to Indiana/LA caliber coverage.
+
+**Target features:**
+- LOCATION-ONBOARDING.md checklist + reusable phase templates
+- Massachusetts state + federal layer (geofences, officials, executives)
+- Cambridge, MA: city structure, incumbents, headshots, discovery pipeline, compass stances
+- Playbook retrospective: checklist updated from Cambridge execution
+
 ---
-*Last updated: 2026-05-14 after v4.0 Compass Experience milestone*
+*Last updated: 2026-05-15 after v5.0 milestone start*

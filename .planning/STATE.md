@@ -2,17 +2,17 @@
 
 ## Current Position
 
-Phase: — (planning next milestone)
-Plan: Not started
-Status: v4.0 Compass Experience COMPLETE — all phases shipped; ready for /gsd:new-milestone
-Last activity: 2026-05-14 — v4.0 milestone archived; git tagged v4.0
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements for v5.0 Location Onboarding Playbook
+Last activity: 2026-05-15 — Milestone v5.0 started; Cambridge, MA confirmed as proof-of-concept city
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-14 after v4.0 milestone)
+See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Planning next milestone
+**Current focus:** v5.0 Location Onboarding Playbook — Cambridge, MA
 
 ## Accumulated Context
 
