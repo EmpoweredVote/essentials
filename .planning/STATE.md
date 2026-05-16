@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 38 of 46 (MA Geofences) — v5.0 Location Onboarding Playbook
-Plan: — (not yet planned)
-Status: Phase 37 complete — Phase 38 (MA Geofences) is next
-Last activity: 2026-05-16 — Phase 37 Playbook Draft complete; LOCATION-ONBOARDING.md + 5 templates verified 3/3; PLAY-01 + PLAY-02 satisfied
+Plan: 38-01 of 2 (complete)
+Status: In progress — 38-01 complete; 38-02 smoke test is next
+Last activity: 2026-05-16 — 38-01 complete; 5 MA TIGER layers loaded; 281 boundaries + 223 districts; Cambridge G4110 confirmed
 
-Progress: [█░░░░░░░░░] 10% (v5.0 — 1/10 phases complete)
+Progress: [██░░░░░░░░] 20% (v5.0 — 2/10 phases; 38-01 done)
 
 ## Project Reference
 
@@ -239,6 +239,18 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Apply scripts stored in C:\EV-Accounts\backend\scripts for audit trail
 - apply script path pattern: path.join(__dirname, '..', 'data', 'stance-research', filename) — use for all future apply scripts
 
+### Phase 38 Notes
+
+- MA TIGER 2024 PLACE layer has 58 G4110 incorporated cities; 293 MA towns are G4040 COUSUB (not loaded in Phase 38)
+- Cambridge place boundary loaded: geo_id='2511000', name='Cambridge city', mtfcc='G4110'
+- MA geofence_boundaries: state='25' (FIPS); MA districts: state='ma' (lowercase abbrev) except NATIONAL_LOWER which uses 'MA' (uppercase — loaded via cd layer in prior run)
+- Total MA boundaries: 58 G4110 + 9 G5200 + 40 G5210 + 160 G5220 + 14 G4020 = 281 rows
+- Total MA districts: 9 NATIONAL_LOWER + 40 STATE_UPPER + 160 STATE_LOWER + 14 COUNTY = 223 rows
+- Middlesex County boundary loaded: geo_id='25017' (G4020) — county intersection pattern (Phase 19) applies
+- 293 MA towns (G4040 COUSUB) deferred as future work — non-city MA addresses won't return LOCAL boundary row
+- MTFCC pre-flight assertion pattern established: fires before upsert pass, throws named MtfccAssertionError; catches TIGER file surprises before any DB write
+- Backend commits: 015599b (initial MA registration) + a9acb49 (place count fix 351→58)
+
 ### Phase 30 Notes
 
 - Migration 119 applied 2026-05-09: Ashouri 6 politician_answers + 6 politician_context rows; all judicial topics placed (no not-found rows)
@@ -355,9 +367,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-14 — Phase 36-02 COMPLETE (SUMMARY created); Elections.jsx compassMode refactored from pure derivation to stateful localStorage null-check auto-enable; handleCompassModeChange + auto-enable useEffect added; Compass checkbox added to filter controls row; inline 47-line controls block replaced by <CompassControlsBar />; 5/5 human checkpoint tests passed; DEFAULT-01/DEFAULT-04 satisfied; Heroicon SVG fix applied to shared CompassControlsBar.jsx (77b3d77); task commits 052fd81 + a088139; Phase 36 COMPLETE (3/3 plans)*
 *Updated: 2026-05-15 — v5.0 milestone roadmap created; 10 phases (37-46), 28/28 requirements mapped; Phase 37 Playbook Draft is first phase*
 *Updated: 2026-05-16 — Phase 37-01 COMPLETE; LOCATION-ONBOARDING.md cold-start checklist (8 steps, Cambridge annotations) + 5 phase templates in .planning/templates/ (db-foundation, officials-seed, headshots, discovery-setup, compass-stances); PLAY-01 + PLAY-02 satisfied; Phase 38 MA Geofences is next*
+*Updated: 2026-05-16 — Phase 38-01 COMPLETE; MA registered in load-state-tiger-boundaries.ts (STATE_LAYER_ALLOWLIST + STATE_CITY_ASSERTIONS + STATE_RUN_MAKEVALID); MTFCC pre-flight assertion added; all 5 layers loaded: G4020=14, G4110=58, G5200=9, G5210=40, G5220=160; Cambridge geo_id='2511000' confirmed; 0 invalid geometries; place count corrected 351→58 (MA has 58 G4110 cities; 293 towns are G4040 COUSUB); 38-02 smoke test is next*
 
 ## Session Continuity
 
 Last session: 2026-05-16
-Stopped at: Completed 37-01-PLAN.md
+Stopped at: Completed 38-01-PLAN.md (MA TIGER loader + boundary load)
 Resume file: None

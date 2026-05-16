@@ -200,7 +200,7 @@ Full details: [milestones/v4.0-ROADMAP.md](milestones/v4.0-ROADMAP.md)
 **Plans**: 1 plan
 
 Plans:
-- [ ] 37-01: LOCATION-ONBOARDING.md checklist + .planning/templates/ phase templates
+- [x] 37-01: LOCATION-ONBOARDING.md checklist + .planning/templates/ phase templates
 
 #### Phase 38: MA Geofences
 **Goal**: All Massachusetts geofence boundaries are loaded into the database so that any MA address can be routed to the correct state legislators, congressional representative, city, and county
@@ -215,7 +215,7 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 38-01-PLAN.md — Register MA in TIGER loader (allowlist + MTFCC assertion) + run all 5 layers (cd/sldu/sldl/place/county)
+- [x] 38-01-PLAN.md — Register MA in TIGER loader (allowlist + MTFCC assertion) + run all 5 layers (cd/sldu/sldl/place/county)
 - [ ] 38-02-PLAN.md — Write verify SQL + smoke test 4 Cambridge addresses; confirm Middlesex G4020 county intersection
 
 #### Phase 39: MA Government DB
@@ -400,7 +400,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 35. Hover Modal — Full Compass | v4.0 ✅ | 0/TBD | Parked | - |
 | 36. Global Controls + Compass Default | v4.0 ✅ | 3/3 | Complete | 2026-05-14 |
 | 37. Playbook Draft | v5.0 | 1/1 | Complete | 2026-05-16 |
-| 38. MA Geofences | v5.0 | 0/TBD | Not started | - |
+| 38. MA Geofences | v5.0 | 1/2 | In progress | - |
 | 39. MA Government DB | v5.0 | 0/TBD | Not started | - |
 | 40. MA Executives + Federal Officials | v5.0 | 0/TBD | Not started | - |
 | 41. Cambridge City Structure | v5.0 | 0/TBD | Not started | - |
