@@ -242,11 +242,13 @@ Plans:
   2. A Cambridge address lookup returns US Senators Warren and Markey
   3. A Cambridge address lookup returns the correct US House representative (MA-05 Clark or MA-07 Pressley depending on ward — verified against Cambridge GIS)
   4. All 6 MA executives + 2 US Senators + 9 US House reps have headshots at 600×750 in Supabase Storage
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 40-01: MA statewide executives seeded — Governor, Lt. Gov, AG, Treasurer, Auditor, Secretary of State — with chambers, offices, Wikipedia headshots
-- [ ] 40-02: MA US Senators Warren + Markey + 9 US House reps seeded (NATIONAL_UPPER/NATIONAL_LOWER) with Wikipedia headshots
+- [ ] 40-01-PLAN.md — MA executive DB: migration 154 (role_canonical column + NATIONAL_UPPER district + 6 STATE_EXEC districts + 6 chambers + 6 politicians + 6 offices + office_id back-fill)
+- [ ] 40-02-PLAN.md — MA federal officials DB: migrations 155 + 156 (Warren + Markey via NATIONAL_UPPER; 9 US House reps via NATIONAL_LOWER 2501-2509; office_id back-fill)
+- [ ] 40-03-PLAN.md — MA executive headshots: 6 portraits (MA.gov first, Wikipedia fallback) at 600x750 with per-photo approval
+- [ ] 40-04-PLAN.md — MA federal officials headshots: 11 portraits (senate.gov/house.gov/press gallery first, Wikipedia fallback) at 600x750 with per-photo approval
 
 #### Phase 41: Cambridge City Structure
 **Goal**: Cambridge's government, chambers, offices, incumbents, and contact data are fully seeded in the database — with the Mayor correctly modeled as an appointed council-internal title, not a separately elected executive; Cambridge appears on the Landing page
