@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 38 of 46 (MA Geofences) — v5.0 Location Onboarding Playbook
-Plan: 38-01 of 2 (complete)
-Status: In progress — 38-01 complete; 38-02 smoke test is next
-Last activity: 2026-05-16 — 38-01 complete; 5 MA TIGER layers loaded; 281 boundaries + 223 districts; Cambridge G4110 confirmed
+Plan: 38-02 of 2 (complete) — Phase 38 COMPLETE
+Status: In progress — Phase 38 complete; Phase 39 (MA politicians) is next
+Last activity: 2026-05-16 — 38-02 complete; PostGIS spot checks verified for 4 Cambridge addresses; MA-05/MA-07 split confirmed; Middlesex intersects 8 G5200 districts
 
-Progress: [██░░░░░░░░] 20% (v5.0 — 2/10 phases; 38-01 done)
+Progress: [███░░░░░░░] 30% (v5.0 — 3/10 phases; Phase 38 done)
 
 ## Project Reference
 
@@ -31,6 +31,12 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Migration numbering continues from 099 (highest existing is 099_collin_county_discovery_jurisdictions.sql) — next is 111
 - TX election date confirmed: 2026-05-02 (NOT May 3 as CONTEXT.md stated — all official sources confirm May 2)
 - McKinney email pattern: role-based `{role}@mckinneytexas.org` — mayor, AtLarge1, AtLarge2, District1–4
+- MA TIGER G4110=58 (not 351): 58 incorporated cities with charters; 293 MA towns are G4040 COUSUB (not loaded in Phase 38)
+- Cambridge congressional split (verified PostGIS): west/north = MA-05 geo_id='2505'; east/south/Inman = MA-07 geo_id='2507'
+- Middlesex County G4020 geo_id='25017' intersects 8 G5200 districts (MA-02 through MA-08 + NH-02 border artifact)
+- geo_id collision between G4020 (Middlesex County='25017') and G5220 (8th Bristol District='25017') is TIGER format quirk — mtfcc always disambiguates; no routing risk
+- Cambridge area MA Senate geo_ids: 25D26 (Middlesex and Suffolk), 25D27 (Second Middlesex), 25D28 (Suffolk and Middlesex)
+- Cambridge area MA House geo_ids: 25083 (25th Middlesex), 25084 (26th Middlesex)
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
 
 - computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
@@ -368,9 +374,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-15 — v5.0 milestone roadmap created; 10 phases (37-46), 28/28 requirements mapped; Phase 37 Playbook Draft is first phase*
 *Updated: 2026-05-16 — Phase 37-01 COMPLETE; LOCATION-ONBOARDING.md cold-start checklist (8 steps, Cambridge annotations) + 5 phase templates in .planning/templates/ (db-foundation, officials-seed, headshots, discovery-setup, compass-stances); PLAY-01 + PLAY-02 satisfied; Phase 38 MA Geofences is next*
 *Updated: 2026-05-16 — Phase 38-01 COMPLETE; MA registered in load-state-tiger-boundaries.ts (STATE_LAYER_ALLOWLIST + STATE_CITY_ASSERTIONS + STATE_RUN_MAKEVALID); MTFCC pre-flight assertion added; all 5 layers loaded: G4020=14, G4110=58, G5200=9, G5210=40, G5220=160; Cambridge geo_id='2511000' confirmed; 0 invalid geometries; place count corrected 351→58 (MA has 58 G4110 cities; 293 towns are G4040 COUSUB); 38-02 smoke test is next*
+*Updated: 2026-05-16 — Phase 38-02 COMPLETE; PostGIS spot checks verified for 4 Cambridge addresses; MA-05/MA-07 split confirmed (north=2505, east/south=2507); all Cambridge addresses return Cambridge city G4110=2511000 not Somerville; Middlesex intersects 8 G5200 districts; verify-ma-tiger-import.sql + smoke-ma-geofences.ts created; Phase 38 COMPLETE; Phase 39 MA politicians is next*
 
 ## Session Continuity
 
-Last session: 2026-05-16
-Stopped at: Completed 38-01-PLAN.md (MA TIGER loader + boundary load)
+Last session: 2026-05-16T15:36:05Z
+Stopped at: Completed 38-02-PLAN.md (MA geofence smoke verification — Phase 38 COMPLETE)
 Resume file: None
