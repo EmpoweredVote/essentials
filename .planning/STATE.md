@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 41 of 46 (Cambridge City Structure) — v5.0 Location Onboarding Playbook
-Plan: Not started
-Status: Phase 40 complete — Phase 41 is next
-Last activity: 2026-05-16 — Completed Phase 40: 6 MA executive + 11 MA federal headshots uploaded (17 total); all 4 plans executed; migrations 154-156 applied
+Plan: 01 of 3 complete
+Status: In progress — Plan 41-01 complete
+Last activity: 2026-05-17 — Completed 41-01-PLAN.md: migration 157 applied; Cambridge government + City Council (9 seats) + School Committee (6 seats); election_method column added to essentials.chambers
 
-Progress: [████░░░░░░] 40% (v5.0 — 4/10 phases complete)
+Progress: [████░░░░░░] 40% (v5.0 — 4/10 phases complete; Phase 41 in progress)
 
 ## Project Reference
 
@@ -252,6 +252,15 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Apply scripts stored in C:\EV-Accounts\backend\scripts for audit trail
 - apply script path pattern: path.join(__dirname, '..', 'data', 'stance-research', filename) — use for all future apply scripts
 
+### Phase 41 Notes
+
+- Migration 157 applied 2026-05-17: election_method TEXT column added to essentials.chambers; Cambridge LOCAL government (geo_id='2511000') + City Council (9 seats, stv_proportional) + School Committee (6 seats, stv_proportional) seeded
+- Cambridge government UUID: 6f7d55bc-d50c-47ff-b521-5767d1f763fb
+- City Council chamber UUID: b4b8c0a1-2658-4df4-9196-9646c99d173c (slug: cambridge-city-council)
+- School Committee chamber UUID: 41846a49-e5d5-460d-b2c2-0f4f8130b949 (slug: cambridge-school-committee)
+- essentials.governments has NO unique constraint on geo_id — WHERE NOT EXISTS pattern required for idempotent inserts (ON CONFLICT (geo_id) would fail)
+- Next migration is 158
+
 ### Phase 40 Notes
 
 - Migration 154 applied 2026-05-16: role_canonical column added to essentials.offices; 1 NATIONAL_UPPER district (state='MA', geo_id='25'); 6 STATE_EXEC districts; 6 MA executive chambers; 6 politicians (Healey/Driscoll/Campbell/Goldberg/DiZoglio/Galvin, external_ids -200001/-200003 to -200007); office_id back-fill range -200010..-200001
@@ -401,9 +410,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-16 — Phase 39-02 COMPLETE; migration 151 applied; 40 MA state senators + 40 STATE_UPPER offices seeded; 25D11 Vanna Howard vacancy confirmed*
 *Updated: 2026-05-16 — Phase 39-03 COMPLETE; migration 152 applied via generate_ma_house.ps1 generator script; 158 named MA house reps + 160 STATE_LOWER offices seeded; 2 vacancies (25042 1st Franklin, 25075 17th Middlesex); Cambridge reps Rogers/Decker/Connolly have email_addresses; idempotent; generator script pattern established for future state legislative bodies; Phase 39 COMPLETE; Phase 40 MA Executives + Federal Officials is next*
 *Updated: 2026-05-16 — Phase 40 COMPLETE (4/4 plans); migrations 154-156 applied; 6 MA executives + 11 MA federal officials seeded; 17 headshots (600×750) uploaded to Supabase Storage; Cambridge MA-05/MA-07 split verified; MADB-04/FED-01/FED-02 satisfied; next migration is 157; Phase 41 Cambridge City Structure is next*
+*Updated: 2026-05-17 — Phase 41-01 COMPLETE; migration 157 applied; election_method column added to essentials.chambers; Cambridge LOCAL government (geo_id=2511000) + City Council (9 seats, stv_proportional) + School Committee (6 seats, stv_proportional) seeded; idempotency verified (gov count=1, chamber count=2 on re-run); government UUID=6f7d55bc; City Council UUID=b4b8c0a1; School Committee UUID=41846a49; next migration is 158*
 
 ## Session Continuity
 
-Last session: 2026-05-16T15:36:05Z
-Stopped at: Completed 38-02-PLAN.md (MA geofence smoke verification — Phase 38 COMPLETE)
+Last session: 2026-05-17T02:47:03Z
+Stopped at: Completed 41-01-PLAN.md (Cambridge government + chambers — migration 157 applied)
 Resume file: None
