@@ -311,10 +311,11 @@ Plans:
   1. LOCATION-ONBOARDING.md reflects at least 3 Cambridge-specific learnings (e.g., election_method enum verification step, Mayor office modeling decision, FindMyLegislator boundary verification workflow)
   2. Phase templates in .planning/templates/ are updated with any new patterns discovered during Cambridge (e.g., stv_proportional election method, at-large seat numbering, Council-Manager structure)
   3. Checklist includes explicit pre-migration verification steps for: next election year (odd vs. even), Mayor election status, and boundary source accuracy
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 45-01: Playbook retrospective — update LOCATION-ONBOARDING.md + templates from Cambridge learnings
+- [ ] 45-01-PLAN.md — Propose + confirm Cambridge learnings (checkpoint before any files changed)
+- [ ] 45-02-PLAN.md — Write confirmed learnings into LOCATION-ONBOARDING.md + update 4 templates + create elections-seed.md
 
 #### Phase 46: Cambridge Compass Stances
 **Goal**: Cambridge City Councillors have compass stances ingested from accounts team research, making the political compass useful for the most locally-relevant issue
