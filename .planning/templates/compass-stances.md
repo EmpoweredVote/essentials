@@ -6,6 +6,21 @@ Use this template when planning a phase that researches and ingests compass stan
 
 ---
 
+## Valid election_method Values
+
+`election_method` is a TEXT column on `essentials.chambers`. Valid values (as of v5.0):
+
+| Value | Description |
+|-------|-------------|
+| `plurality` | Single vote; most votes wins; standard US municipal election |
+| `stv_proportional` | Single Transferable Vote; ranked multi-seat election |
+| `ranked_choice` | IRV (Instant Runoff Voting); single-seat ranked-choice |
+| `runoff` | Top-two runoff if no majority in first round |
+
+Compass stance research is independent of `election_method` — but when creating the election infrastructure for a new city, verify against this list before any chambers INSERT. Do not use the `pg_constraint` query to verify this field.
+
+---
+
 ## Pre-Research Checklist
 
 - [ ] All politician rows exist and are stable (officials-seed phase complete)
