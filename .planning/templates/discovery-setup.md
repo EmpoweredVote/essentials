@@ -6,6 +6,21 @@ Use this template when planning a phase that configures the candidate discovery 
 
 ---
 
+## Valid election_method Values
+
+`election_method` is a TEXT column on `essentials.chambers`. Valid values (as of v5.0):
+
+| Value | Description |
+|-------|-------------|
+| `plurality` | Single vote; most votes wins; standard US municipal election |
+| `stv_proportional` | Single Transferable Vote; ranked multi-seat election |
+| `ranked_choice` | IRV (Instant Runoff Voting); single-seat ranked-choice |
+| `runoff` | Top-two runoff if no majority in first round |
+
+Do NOT invent values. Compass stance research is independent of election_method — but when creating election infrastructure for a new city, verify against this list before any chambers INSERT.
+
+---
+
 ## Pre-Configuration Checklist
 
 - [ ] Government row exists for this city
@@ -25,7 +40,7 @@ Use this template when planning a phase that configures the candidate discovery 
 | Jurisdiction level | city / county / state |
 
 > **Cambridge example:**
-> - Election date: 2027-11-04 (next Cambridge municipal election — Massachusetts odd-year requirement means NO 2026 city election)
+> - Election date: 2027-11-02 (next Cambridge municipal election — Massachusetts odd-year requirement means NO 2026 city election; first Tuesday after first Monday in November 2027 = November 2, not November 4)
 > - Primary discovery domain: cambridgema.gov/Departments/electioncommission
 > - Active at setup: NO — mark inactive; do not activate until filing opens (approximately summer 2027)
 > - Jurisdiction level: city
@@ -34,23 +49,27 @@ Use this template when planning a phase that configures the candidate discovery 
 ## Discovery Jurisdictions Insert
 
 ```sql
+-- [GOTCHA] Unique constraint: UNIQUE (jurisdiction_geoid, election_date)
+-- Use ON CONFLICT (jurisdiction_geoid, election_date) DO NOTHING — not bare DO NOTHING
 INSERT INTO essentials.discovery_jurisdictions (
   id,
-  government_id,
+  jurisdiction_geoid,
   election_id,
+  election_date,
   domain_whitelist,
   is_active,           -- FALSE for far-future elections; activate when filing opens
-  jurisdiction_level,
+  jurisdiction_type,
   notes
 ) VALUES (
   gen_random_uuid(),
-  (SELECT id FROM essentials.governments WHERE geo_id = '[geo_id]'),
+  '[geo_id]',
   '[election_uuid]',
+  '[YYYY-MM-DD]',
   ARRAY['[domain1.gov]', '[domain2.gov]'],
   false,               -- inactive until filing period
   '[city|county|state]',
   '[notes on election cycle]'
-) ON CONFLICT DO NOTHING;
+) ON CONFLICT (jurisdiction_geoid, election_date) DO NOTHING;
 ```
 
 ## When to Activate Discovery
@@ -77,6 +96,8 @@ WHERE g.geo_id = '[geo_id]';
 - Not whitelisting the official election domain → agent finds no candidates from valid sources
 - Parallel jurisdiction processing → exhausts Claude API rate limit quota; always process jurisdictions sequentially
 - Forgetting to mark jurisdiction inactive for far-future elections → immediate false regression alerts
+- Wrong election date in Cambridge example (2027-11-04 → correct is 2027-11-02 — first Tuesday after first Monday in November 2027)
+- Using bare `ON CONFLICT DO NOTHING` without specifying `(jurisdiction_geoid, election_date)` — be explicit about the constraint target
 
 ## Post-Activation Protocol (when filing opens)
 
