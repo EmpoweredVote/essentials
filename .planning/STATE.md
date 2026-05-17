@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 42 of 46 (Cambridge Headshots) — v5.0 Location Onboarding Playbook
-Plan: 01 of 1 complete
-Status: Phase 42 COMPLETE
-Last activity: 2026-05-17 — Completed 42-01-PLAN.md: 14/16 Cambridge officials imaged at 600x750 JPEG; 2 genuine gaps documented (Yi-An Huang, Luisa de Paula Santos); human checkpoint approved
+Phase: 44 of 46 (MA 2026 Elections + Challengers) — v5.0 Location Onboarding Playbook
+Plan: 01 of 3 complete
+Status: In progress
+Last activity: 2026-05-17 — Completed 44-01-PLAN.md: migration 162 applied; 2 MA 2026 election rows + 2nd Middlesex primary race + 5 candidates (Azeem linked, Barber, Hopcroft, McLaughlin, Uyterhoeven)
 
-Progress: [█████░░░░░] 55% (v5.0 — 6/10 phases complete; Phase 43 Cambridge Elections next)
+Progress: [██████░░░░] 60% (v5.0 — 7/10 phases complete; Phase 44 plan 01 of 3 done)
 
 ## Project Reference
 
@@ -113,6 +113,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Post-election flags (May 3, 2026 TX uniform election): 7+ seats across Allen/Frisco/Murphy/Celina to update after results certified; Prosper races were uncontested cancellations (already definitive); Amy Bartley (Prosper Place 3) new term begins 2026-05-12
 - Jené Butler (Celina Place 1): é accent in full_name — UTF-8 preserved in migration 096
 - supabase CLI v2.75.0 has NO 'db query' command — use psql with DATABASE_URL from backend/.env instead
+- MA 2026 elections in DB: primary (2026-09-01), general (2026-11-03); use these for all Phase 44 race seeding
+- race_candidates has NO unique constraint on (race_id, full_name) — use WHERE NOT EXISTS guards, not ON CONFLICT DO NOTHING
+- Azeem 2nd Middlesex race: is_incumbent=false (open seat — Jehlen retiring); office_id=b1ed4e2a-4a9c-4b41-9e46-8500f608e026 (25D27)
+- Migration 162 applied 2026-05-17; version in schema_migrations: 20260517162000
 - Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
 - Fairview is legally a Town — use 'Town of Fairview' and 'Town Council' everywhere
 - Princeton has 8 council seats (Mayor + Place 1-7), confirmed
