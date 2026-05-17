@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 41 of 46 (Cambridge City Structure) — v5.0 Location Onboarding Playbook
-Plan: 03 of 3 complete
-Status: Phase 41 COMPLETE
-Last activity: 2026-05-17 — Completed 41-03-PLAN.md: migration 159 applied; 16 Cambridge incumbents seeded; Siddiqui dual-office (Mayor+Councillor); Cambridge added to Landing.jsx COVERAGE_AREAS
+Phase: 42 of 46 (Cambridge Headshots) — v5.0 Location Onboarding Playbook
+Plan: 01 of 1 complete
+Status: Phase 42 COMPLETE
+Last activity: 2026-05-17 — Completed 42-01-PLAN.md: 14/16 Cambridge officials imaged at 600x750 JPEG; 2 genuine gaps documented (Yi-An Huang, Luisa de Paula Santos); human checkpoint approved
 
-Progress: [█████░░░░░] 50% (v5.0 — 5/10 phases complete; Phase 42 next)
+Progress: [█████░░░░░] 55% (v5.0 — 6/10 phases complete; Phase 43 Cambridge Elections next)
 
 ## Project Reference
 
@@ -37,6 +37,9 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - geo_id collision between G4020 (Middlesex County='25017') and G5220 (8th Bristol District='25017') is TIGER format quirk — mtfcc always disambiguates; no routing risk
 - Cambridge area MA Senate geo_ids: 25D26 (Middlesex and Suffolk), 25D27 (Second Middlesex), 25D28 (Suffolk and Middlesex)
 - Cambridge area MA House geo_ids: 25083 (25th Middlesex), 25084 (26th Middlesex)
+- Cambridge headshot source priority: cambridgema.gov/Departments/citycouncil/members for Councillors; cpsd.us for School Committee; news/civic sites only when official source unavailable
+- Cambridge headshots photo_license='press_use' for all (cambridgema.gov + cpsd.us bio photos are press/official bio photos, not public domain government works)
+- Group photos yielding <200px per person are rejected for headshot import — document in gap section
 - email_addresses = NULL is acceptable when CloudFlare or other protection prevents email verification — bio URL (urls[]) satisfies 80% contact coverage target
 - role_canonical column on essentials.offices: populated only for Secretary of Commonwealth ('secretary_of_state') and Treasurer ('treasurer'); all other offices NULL
 - MA executive external_id range: -200001 through -200007 (skipping -200002 which belongs to Curren D. Price Jr., CA)
@@ -441,5 +444,5 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-17
-Stopped at: Phase 41 COMPLETE (verified 7/7); Phase 42 Cambridge Headshots is next
+Stopped at: Completed 42-01-PLAN.md — 14/16 Cambridge headshots at 600x750; Phase 43 Cambridge Elections is next
 Resume file: None
