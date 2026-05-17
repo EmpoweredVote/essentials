@@ -126,10 +126,13 @@ function isJudicialOfficial(pol) {
 
 // ── Sub-group key ────────────────────────────────────────────────
 
+const LOCAL_EXEC_TITLE_RE = /\b(mayor|governor)\b/i;
+
 function getSubGroupKey(pol) {
   // Use government_body_name + district_type + role segment as compound key.
   // This separates:
   //   - Mayor (LOCAL_EXEC) from council (LOCAL) via district_type
+  //   - Appointed mayors (LOCAL) from council via EXEC segment — so they sort first
   //   - Admin officers (clerk/treasurer/etc., LOCAL) from council members (LOCAL)
   //     via a third "ADMIN" vs "MEMBER" segment
   //   - JUDICIAL clerks/officials from judges via "OFFICIAL" vs "JUDGE" segment
@@ -141,7 +144,14 @@ function getSubGroupKey(pol) {
     return `${body}||${dt}||${judicialSeg}`;
   }
 
-  const roleSegment = (dt === 'LOCAL' && isAdminOfficer(pol)) ? 'ADMIN' : 'MEMBER';
+  let roleSegment;
+  if (dt === 'LOCAL' && isAdminOfficer(pol)) {
+    roleSegment = 'ADMIN';
+  } else if (dt === 'LOCAL' && LOCAL_EXEC_TITLE_RE.test(pol.office_title || '')) {
+    roleSegment = 'EXEC';
+  } else {
+    roleSegment = 'MEMBER';
+  }
   return `${body}||${dt}||${roleSegment}`;
 }
 
@@ -268,8 +278,8 @@ const LOCAL_BODY_TYPE_ORDER = ['City', 'Town', 'Township', 'School District', 'C
 const isJudiciary = (pols) => pols.some(p => p.district_type === 'JUDICIAL');
 
 const STATE_BODY_ORDER_KW = [
-  'General Assembly', 'Legislature',
   'Executive',
+  'General Assembly', 'Legislature',
   'Departments', 'Commissions',
   'Court of Appeals', 'Appeals',
   'Tax Court',
@@ -337,11 +347,22 @@ function subGroupOrderScore(label, pols) {
 
 // ── Politician sorting within sub-groups ─────────────────────────
 
+// Governor before Lt. Gov; President before VP; others below both.
+function execTitlePriority(pol) {
+  const t = (pol.office_title || '').toLowerCase();
+  if (/\bgovernor\b/.test(t) && !/lt\.?|lieutenant/.test(t)) return 0;
+  if (/\b(lt\.?\s*governor|lieutenant\s+governor)\b/.test(t)) return 1;
+  if (/\bpresident\b/.test(t) && !/vice/.test(t)) return 0;
+  if (/\bvice\s*president\b/.test(t)) return 1;
+  return 10;
+}
+
 /**
  * Sort politicians within a sub-group:
  *   - Judicial: Chief Justice first, then by appointment_date (seniority),
  *     then by division number, then alphabetical
- *   - Others: District seats before At-Large, district numbers ascending,
+ *   - Others: Executive title priority first (Gov > Lt. Gov, President > VP),
+ *     then district seats before At-Large, district numbers ascending,
  *     alphabetical by last name as tie-breaker
  */
 function sortPoliticians(pols) {
@@ -386,6 +407,11 @@ function sortPoliticians(pols) {
   }
 
   return [...pols].sort((a, b) => {
+    // Governor/Lt. Gov and President/VP sort before other members
+    const aPriority = execTitlePriority(a);
+    const bPriority = execTitlePriority(b);
+    if (aPriority !== bPriority) return aPriority - bPriority;
+
     const aId = a.district_id ?? '';
     const bId = b.district_id ?? '';
 
