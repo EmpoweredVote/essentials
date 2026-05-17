@@ -51,6 +51,10 @@ INSERT INTO essentials.politicians (
 
 ## Dual-Office Pattern
 
+> [GOTCHA] Before seeding any incumbents in a Council-Manager city: verify that the unique index on `essentials.offices.politician_id` has been dropped (it should have been dropped in the offices migration). If the index still exists, the dual-office UPDATE will succeed for the first office but fail or behave unexpectedly for a second assignment.
+> Check: `SELECT indexname, indexdef FROM pg_indexes WHERE tablename = 'offices' AND indexname LIKE '%politician_id%';`
+> A **unique** index here means the drop migration was not applied — stop and fix before seeding.
+
 When one politician holds two titles simultaneously (e.g., Cambridge Mayor who is also a City Councillor):
 
 ```sql
@@ -66,10 +70,10 @@ UPDATE essentials.offices SET politician_id = '[uuid]' WHERE title = 'Mayor' AND
 ```
 
 > **Cambridge example:**
-> - Marc C. McGovern holds the Councillor Seat AND the Mayor title simultaneously
-> - ONE politician row for McGovern; office_id = his Councillor seat
-> - The Mayor office row's politician_id = McGovern's UUID
-> - Valid_from = 2026-01-01 (post-November 2025 election seating)
+> - Sumbul Siddiqui holds the City Councillor seat AND the Mayor title simultaneously (elected Mayor by council on 2026-01-05, third consecutive term)
+> - ONE politician row for Siddiqui; office_id = her Councillor seat (primary display title)
+> - The Mayor office row's politician_id = Siddiqui's UUID
+> - Valid_from = 2026-01-06 (post-November 2025 election, Mayor elected 2026-01-05)
 > - Email: pulled from cambridgema.gov/Departments/citycouncil/members at seeding time; format varies per member (NOT always firstname@cambridgema.gov)
 
 ## Verification Queries
@@ -97,3 +101,4 @@ SELECT COUNT(*) as total, COUNT(p.email_addresses) as with_email FROM essentials
 - Using Wikipedia names that lag council changes
 - Forgetting to set is_appointed = true for City Manager and other appointed officials
 - Setting is_incumbent = false for currently serving officials
+- Not verifying the Cambridge Mayor name from official source before migrating — this template previously had "McGovern" when the incumbent was Siddiqui; always confirm from cambridgema.gov before writing migration SQL
