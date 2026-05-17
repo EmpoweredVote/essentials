@@ -65,7 +65,12 @@ function getAccordionKey(pol) {
     return getFederalAccordionKey(pol);
   }
 
-  // Local/County/School: group by government_name
+  // School bodies get their own accordion keyed by body name, not parent government
+  if (dt === 'SCHOOL') {
+    return pol.government_body_name || pol.government_name || 'Unknown';
+  }
+
+  // Local/County: group by government_name
   return pol.government_name || 'Unknown';
 }
 
