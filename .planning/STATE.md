@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 41 of 46 (Cambridge City Structure) — v5.0 Location Onboarding Playbook
-Plan: 02 of 3 complete
-Status: In progress — Plan 41-02 complete
-Last activity: 2026-05-17 — Completed 41-02-PLAN.md: migration 158 applied; 17 Cambridge offices seeded (9 City Councillor + Mayor + City Manager + 6 School Committee Member); all politician_id=NULL
+Plan: 03 of 3 complete
+Status: Phase 41 COMPLETE
+Last activity: 2026-05-17 — Completed 41-03-PLAN.md: migration 159 applied; 16 Cambridge incumbents seeded; Siddiqui dual-office (Mayor+Councillor); Cambridge added to Landing.jsx COVERAGE_AREAS
 
-Progress: [████░░░░░░] 40% (v5.0 — 4/10 phases complete; Phase 41 in progress)
+Progress: [█████░░░░░] 50% (v5.0 — 5/10 phases complete; Phase 42 next)
 
 ## Project Reference
 
@@ -263,7 +263,11 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Cambridge office count is 17 (plan docs said 16 — arithmetic error in plan; 9+1+1+6=17 is correct)
 - City Councillor double-L British spelling confirmed in DB; migration 159 WHERE clauses must use "City Councillor" (not "City Councilor")
 - generate_series(1, N) pattern established for N identical at-large office rows
-- Next migration is 159
+- Migration 159 applied 2026-05-17: 16 Cambridge incumbents seeded; unique index on offices.politician_id dropped (was blocking dual-office); Siddiqui dual-office: office_id=Mayor (primary), City Councillor office also wired; Yi-An Huang City Manager is_appointed=true; all 17 offices assigned; 0 unassigned
+- Dual-office pattern: politicians.office_id=primary display title; offices.politician_id=secondary can be same politician (bidirectional); unique index on offices.politician_id must be dropped for Council-Manager cities
+- Cambridge added to Landing.jsx COVERAGE_AREAS: browseGovernmentList=['2511000'], browseStateAbbrev='MA'
+- Phase 41 COMPLETE (3/3 plans); next migration is 160
+- offices.politician_id column has NO unique constraint after migration 159 (intentionally dropped; geofence routing unaffected)
 
 ### Phase 40 Notes
 
@@ -416,9 +420,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-16 — Phase 40 COMPLETE (4/4 plans); migrations 154-156 applied; 6 MA executives + 11 MA federal officials seeded; 17 headshots (600×750) uploaded to Supabase Storage; Cambridge MA-05/MA-07 split verified; MADB-04/FED-01/FED-02 satisfied; next migration is 157; Phase 41 Cambridge City Structure is next*
 *Updated: 2026-05-17 — Phase 41-01 COMPLETE; migration 157 applied; election_method column added to essentials.chambers; Cambridge LOCAL government (geo_id=2511000) + City Council (9 seats, stv_proportional) + School Committee (6 seats, stv_proportional) seeded; idempotency verified (gov count=1, chamber count=2 on re-run); government UUID=6f7d55bc; City Council UUID=b4b8c0a1; School Committee UUID=41846a49; next migration is 158*
 *Updated: 2026-05-17 — Phase 41-02 COMPLETE; migration 158 applied; 17 Cambridge offices seeded (9 City Councillor + 1 Mayor is_appointed=true + 1 City Manager is_appointed=true + 6 School Committee Member); all politician_id=NULL; "Councillor" double-L verified; plan docs had arithmetic error (said 16, correct count is 17); next migration is 159*
+*Updated: 2026-05-17 — Phase 41-03 COMPLETE; migration 159 applied; 16 Cambridge incumbents seeded; unique index on offices.politician_id dropped (dual-office pattern for Council-Manager cities); Siddiqui dual-office (Mayor primary, Councillor secondary); Yi-An Huang City Manager; all 17 offices assigned; Cambridge added to Landing.jsx COVERAGE_AREAS (browseGovernmentList=['2511000']); Phase 41 COMPLETE (3/3 plans); next migration is 160*
 
 ## Session Continuity
 
-Last session: 2026-05-17T02:51:30Z
-Stopped at: Completed 41-02-PLAN.md (Cambridge offices — migration 158 applied; 17 offices seeded)
+Last session: 2026-05-17T02:59:22Z
+Stopped at: Completed 41-03-PLAN.md (Cambridge incumbents — migration 159 applied; Phase 41 COMPLETE)
 Resume file: None
