@@ -245,10 +245,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 40-01-PLAN.md — MA executive DB: migration 154 (role_canonical column + NATIONAL_UPPER district + 6 STATE_EXEC districts + 6 chambers + 6 politicians + 6 offices + office_id back-fill)
-- [ ] 40-02-PLAN.md — MA federal officials DB: migrations 155 + 156 (Warren + Markey via NATIONAL_UPPER; 9 US House reps via NATIONAL_LOWER 2501-2509; office_id back-fill)
-- [ ] 40-03-PLAN.md — MA executive headshots: 6 portraits (MA.gov first, Wikipedia fallback) at 600x750 with per-photo approval
-- [ ] 40-04-PLAN.md — MA federal officials headshots: 11 portraits (senate.gov/house.gov/press gallery first, Wikipedia fallback) at 600x750 with per-photo approval
+- [x] 40-01-PLAN.md — MA executive DB: migration 154 (role_canonical column + NATIONAL_UPPER district + 6 STATE_EXEC districts + 6 chambers + 6 politicians + 6 offices + office_id back-fill)
+- [x] 40-02-PLAN.md — MA federal officials DB: migrations 155 + 156 (Warren + Markey via NATIONAL_UPPER; 9 US House reps via NATIONAL_LOWER 2501-2509; office_id back-fill)
+- [x] 40-03-PLAN.md — MA executive headshots: 6 portraits (MA.gov first, Wikipedia fallback) at 600x750 with per-photo approval
+- [x] 40-04-PLAN.md — MA federal officials headshots: 11 portraits (senate.gov/house.gov/press gallery first, Wikipedia fallback) at 600x750 with per-photo approval
 
 #### Phase 41: Cambridge City Structure
 **Goal**: Cambridge's government, chambers, offices, incumbents, and contact data are fully seeded in the database — with the Mayor correctly modeled as an appointed council-internal title, not a separately elected executive; Cambridge appears on the Landing page
@@ -404,7 +404,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 37. Playbook Draft | v5.0 | 1/1 | Complete | 2026-05-16 |
 | 38. MA Geofences | v5.0 | 2/2 | Complete | 2026-05-16 |
 | 39. MA Government DB | v5.0 | 3/3 | Complete | 2026-05-16 |
-| 40. MA Executives + Federal Officials | v5.0 | 0/TBD | Not started | - |
+| 40. MA Executives + Federal Officials | v5.0 | 4/4 | Complete | 2026-05-16 |
 | 41. Cambridge City Structure | v5.0 | 0/TBD | Not started | - |
 | 42. Cambridge Headshots | v5.0 | 0/TBD | Not started | - |
 | 43. Cambridge Elections | v5.0 | 0/TBD | Not started | - |

@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 40 of 46 (MA Executives + Federal Officials) — v5.0 Location Onboarding Playbook
-Plan: 40-02 complete; 40-03 is next
-Status: In progress — 40-02 complete
-Last activity: 2026-05-16 — Completed 40-02: migrations 155+156 applied; 11 MA federal officials (Warren, Markey + 9 House reps) seeded with office_ids back-filled
+Phase: 41 of 46 (Cambridge City Structure) — v5.0 Location Onboarding Playbook
+Plan: Not started
+Status: Phase 40 complete — Phase 41 is next
+Last activity: 2026-05-16 — Completed Phase 40: 6 MA executive + 11 MA federal headshots uploaded (17 total); all 4 plans executed; migrations 154-156 applied
 
-Progress: [███░░░░░░░] 30% (v5.0 — 3/10 phases complete)
+Progress: [████░░░░░░] 40% (v5.0 — 4/10 phases complete)
 
 ## Project Reference
 
@@ -252,6 +252,16 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Apply scripts stored in C:\EV-Accounts\backend\scripts for audit trail
 - apply script path pattern: path.join(__dirname, '..', 'data', 'stance-research', filename) — use for all future apply scripts
 
+### Phase 40 Notes
+
+- Migration 154 applied 2026-05-16: role_canonical column added to essentials.offices; 1 NATIONAL_UPPER district (state='MA', geo_id='25'); 6 STATE_EXEC districts; 6 MA executive chambers; 6 politicians (Healey/Driscoll/Campbell/Goldberg/DiZoglio/Galvin, external_ids -200001/-200003 to -200007); office_id back-fill range -200010..-200001
+- Migration 155 applied 2026-05-16: Warren (-200101) + Markey (-200102) seeded as NATIONAL_UPPER; shared US Senate chamber 7cbe07bc
+- Migration 156 applied 2026-05-16: 9 US House reps Neal-Keating (-200201..-200209); each linked to existing NATIONAL_LOWER districts 2501-2509 (Phase 38); US House chamber c2facc31
+- Headshots: 6 MA executives + 11 MA federal officials = 17 total; all 600×750 JPEG (Lanczos q90, 4:5 crop first)
+- photo_license: Healey=public_domain (MA.gov); Driscoll/Campbell/Goldberg/DiZoglio/Galvin + Lynch=cc_by_sa; Warren/Markey/Neal/McGovern/Trahan/Auchincloss/Clark/Moulton/Pressley/Keating=public_domain (congressional portraits)
+- Cambridge ground-truth: west/north (Porter/Harvard) → Clark MA-05 geo_id=2505; east/south/Inman → Pressley MA-07 geo_id=2507
+- Next migration is 157
+
 ### Phase 38 Notes
 
 - MA TIGER 2024 PLACE layer has 58 G4110 incorporated cities; 293 MA towns are G4040 COUSUB (not loaded in Phase 38)
@@ -390,6 +400,7 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-16 — Phase 39-01 COMPLETE; migration 150 applied; Commonwealth of Massachusetts government row + MA Senate + MA House of Representatives chambers seeded*
 *Updated: 2026-05-16 — Phase 39-02 COMPLETE; migration 151 applied; 40 MA state senators + 40 STATE_UPPER offices seeded; 25D11 Vanna Howard vacancy confirmed*
 *Updated: 2026-05-16 — Phase 39-03 COMPLETE; migration 152 applied via generate_ma_house.ps1 generator script; 158 named MA house reps + 160 STATE_LOWER offices seeded; 2 vacancies (25042 1st Franklin, 25075 17th Middlesex); Cambridge reps Rogers/Decker/Connolly have email_addresses; idempotent; generator script pattern established for future state legislative bodies; Phase 39 COMPLETE; Phase 40 MA Executives + Federal Officials is next*
+*Updated: 2026-05-16 — Phase 40 COMPLETE (4/4 plans); migrations 154-156 applied; 6 MA executives + 11 MA federal officials seeded; 17 headshots (600×750) uploaded to Supabase Storage; Cambridge MA-05/MA-07 split verified; MADB-04/FED-01/FED-02 satisfied; next migration is 157; Phase 41 Cambridge City Structure is next*
 
 ## Session Continuity
 

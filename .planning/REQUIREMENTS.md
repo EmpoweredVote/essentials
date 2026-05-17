@@ -20,15 +20,15 @@
 
 ### Massachusetts Government DB
 
-- [ ] **MADB-01**: Commonwealth of Massachusetts government row + MA legislative chambers (Senate + House of Representatives) seeded in `essentials.governments` and `essentials.chambers`
-- [ ] **MADB-02**: 40 MA state senators + 40 offices seeded with `district_type=STATE_UPPER`, linked to district boundaries
-- [ ] **MADB-03**: 160 MA state representatives + 160 offices seeded with `district_type=STATE_LOWER`, linked to district boundaries
-- [ ] **MADB-04**: MA statewide executives seeded — Governor Healey, Lt. Gov Driscoll, AG Campbell, Treasurer Goldberg, Auditor DiZoglio, Secretary Galvin — with chambers, offices, and Wikipedia headshots (600×750)
+- [x] **MADB-01**: Commonwealth of Massachusetts government row + MA legislative chambers (Senate + House of Representatives) seeded in `essentials.governments` and `essentials.chambers`
+- [x] **MADB-02**: 40 MA state senators + 40 offices seeded with `district_type=STATE_UPPER`, linked to district boundaries
+- [x] **MADB-03**: 160 MA state representatives + 160 offices seeded with `district_type=STATE_LOWER`, linked to district boundaries
+- [x] **MADB-04**: MA statewide executives seeded — Governor Healey, Lt. Gov Driscoll, AG Campbell, Treasurer Goldberg, Auditor DiZoglio, Secretary Galvin — with chambers, offices, and Wikipedia headshots (600×750)
 
 ### Federal Officials
 
-- [ ] **FED-01**: MA federal officials seeded — US Senators Warren + Markey (`NATIONAL_UPPER`) + all 9 MA US House representatives (`NATIONAL_LOWER`) with correct district_type and chamber assignments
-- [ ] **FED-02**: Headshots for MA US Senators + all 9 US House reps from Wikipedia at 600×750
+- [x] **FED-01**: MA federal officials seeded — US Senators Warren + Markey (`NATIONAL_UPPER`) + all 9 MA US House representatives (`NATIONAL_LOWER`) with correct district_type and chamber assignments
+- [x] **FED-02**: Headshots for MA US Senators + all 9 US House reps from Wikipedia at 600×750
 
 ### Cambridge City Structure
 
@@ -98,12 +98,12 @@
 | MAGEO-02 | Phase 38 | Complete |
 | MAGEO-03 | Phase 38 | Complete |
 | MAGEO-04 | Phase 38 | Complete |
-| MADB-01 | Phase 39 | Pending |
-| MADB-02 | Phase 39 | Pending |
-| MADB-03 | Phase 39 | Pending |
-| MADB-04 | Phase 40 | Pending |
-| FED-01 | Phase 40 | Pending |
-| FED-02 | Phase 40 | Pending |
+| MADB-01 | Phase 39 | Complete |
+| MADB-02 | Phase 39 | Complete |
+| MADB-03 | Phase 39 | Complete |
+| MADB-04 | Phase 40 | Complete |
+| FED-01 | Phase 40 | Complete |
+| FED-02 | Phase 40 | Complete |
 | CAMB-01 | Phase 41 | Pending |
 | CAMB-02 | Phase 41 | Pending |
 | CAMB-03 | Phase 41 | Pending |
