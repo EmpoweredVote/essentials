@@ -296,12 +296,12 @@ Plans:
   3. The discovery pipeline has been run (or manually seeded) for MA state senate, state house, and federal races; staged challengers are visible in the admin queue
   4. At least the congressional and senate races covering Cambridge (MA-05/MA-07, 2nd Middlesex, Middlesex + Suffolk) have candidates seeded from official MA SoS filings
   5. A 2027 Cambridge election placeholder row exists; the discovery_jurisdictions row for Cambridge is present with cambridgema.gov domain but marked inactive
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 44-01: 2026 MA election row + Azeem senate primary race + known candidates from official MA SoS filings
-- [ ] 44-02: MA discovery jurisdictions setup + discovery run for remaining 2026 MA state/federal races
-- [ ] 44-03: 2027 Cambridge election placeholder + Cambridge discovery_jurisdictions row (inactive, cambridgema.gov domain)
+- [ ] 44-01-PLAN.md — Migration 162: MA 2026 primary + general election rows, 2nd Middlesex Democratic primary race, 5 known candidates (Azeem politician_id linked, is_incumbent=false)
+- [ ] 44-02-PLAN.md — Migration 163: Markey US Senate primary + general races with challengers; Cambridge-area district general races (MA-05, MA-07, 25D26, 25D27 general, 25D28, 25083, 25084) with incumbents
+- [ ] 44-03-PLAN.md — Migration 164: MA discovery_jurisdictions rows (both election dates) + 2027 Cambridge Municipal Election placeholder + Cambridge discovery row (naturally outside 180-day cron horizon)
 
 #### Phase 45: Playbook Retrospective
 **Goal**: The LOCATION-ONBOARDING.md checklist and phase templates are updated from Cambridge execution learnings so the next city onboarding is faster and avoids the pitfalls Cambridge surfaced
@@ -397,6 +397,6 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (aft
 | 41. Cambridge City Structure | v5.0 | 3/3 | Complete | 2026-05-17 |
 | 42. Cambridge Headshots | v5.0 | 1/1 | Complete | 2026-05-17 |
 | ~~43. Cambridge Elections~~ | v5.0 | - | Folded into Phase 44 | 2026-05-17 |
-| 44. MA 2026 Elections + Challengers | v5.0 | 0/TBD | Not started | - |
+| 44. MA 2026 Elections + Challengers | v5.0 | 0/3 | In planning | - |
 | 45. Playbook Retrospective | v5.0 | 0/TBD | Not started | - |
 | 46. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |
