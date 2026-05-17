@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 44 of 46 (MA 2026 Elections + Challengers) — v5.0 Location Onboarding Playbook
-Plan: 03 of 3 complete
-Status: Phase complete
-Last activity: 2026-05-17 — Completed 44-03-PLAN.md: migration 164 applied; 2 MA state discovery_jurisdictions rows (2026-09-01 primary + 2026-11-03 general) + 2027 Cambridge Municipal Election placeholder + Cambridge discovery row; cron horizon verified
+Plan: 02 of 3 complete
+Status: In progress
+Last activity: 2026-05-17 — Completed 44-02-PLAN.md: migration 163 applied; Markey Senate primary (4 candidates) + general (3 candidates) statewide; 7 Cambridge-area district general races linked by office_id (MA-05 Clark, MA-07 Pressley, 25D26 DiDomenico, 25D27 open seat, 25D28 Brownsberger, 25th Middlesex Decker, 26th Middlesex Connolly)
 
 Progress: [██████░░░░] 63% (v5.0 — 7/10 phases complete; Phase 44 complete 3/3 plans)
 
@@ -121,6 +121,9 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - race_candidates has NO unique constraint on (race_id, full_name) — use WHERE NOT EXISTS guards, not ON CONFLICT DO NOTHING
 - Azeem 2nd Middlesex race: is_incumbent=false (open seat — Jehlen retiring); office_id=b1ed4e2a-4a9c-4b41-9e46-8500f608e026 (25D27)
 - Migration 162 applied 2026-05-17; version in schema_migrations: 20260517162000
+- Migration 163 applied 2026-05-17; Markey primary (4 candidates) + general (3 candidates) statewide (office_id=NULL); 7 Cambridge-area district general races; 2nd Middlesex general race has 0 candidates (open seat — primary winner TBD)
+- Statewide race sentinel: office_id=NULL in essentials.races + e.state='MA' in elections = appears for all MA users via statewide query path
+- Seth Moulton (primary challenger) has politician_id=NULL in race_candidates — he's a sitting US Rep (MA-06) but his politician_id was not verified pre-migration; backfill optional in 44-03
 - Prosper is legally a Town — use 'Town of Prosper' and 'Town Council' everywhere
 - Fairview is legally a Town — use 'Town of Fairview' and 'Town Council' everywhere
 - Princeton has 8 council seats (Mayor + Place 1-7), confirmed
