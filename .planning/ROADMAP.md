@@ -286,20 +286,7 @@ Plans:
 #### ~~Phase 43: Cambridge Elections~~ (Folded into Phase 45)
 **Decision**: Phase skipped — 2025 historical data won't be surfaced to users (UI shows upcoming elections only); 2027 placeholder + Cambridge discovery setup folded into Phase 45. Cambridge residents' next relevant election is the 2026 MA state/federal cycle. See `.planning/phases/43-cambridge-elections/43-CONTEXT.md` for full rationale.
 
-#### Phase 44: Cambridge Compass Stances
-**Goal**: Cambridge City Councillors have compass stances on the housing/zoning topic researched from public record, making the political compass useful for the most locally-relevant issue
-**Depends on**: Phase 41 (politician rows must exist and be linked to inform.politicians)
-**Requirements**: CAMB-13
-**Success Criteria** (what must be TRUE):
-  1. At least 5 of the 9 Cambridge City Councillors have at least one compass stance value in inform.politician_answers sourced from public record (voting record, candidate questionnaires, public statements)
-  2. Each ingested stance has a source citation; no value is inferred without explicit documentation in the politician_context row
-  3. The political compass renders on at least one Cambridge councillor's profile page (human-verified)
-**Plans**: TBD
-
-Plans:
-- [ ] 44-01: Compass stance research + ingestion for Cambridge councillors — one at a time per rate-limit policy (housing/zoning primary topic)
-
-#### Phase 45: MA 2026 Elections + Challengers
+#### Phase 44: MA 2026 Elections + Challengers
 **Goal**: All November 2026 Massachusetts state and federal races are seeded with challenger candidates, making the ballot visible to any MA resident — with Azeem's September 2026 state senate primary explicitly named; Cambridge local election infrastructure also set up here (absorbed from Phase 43)
 **Depends on**: Phase 39 (MA legislators must exist as incumbents), Phase 40 (federal incumbents must exist), Phase 41 (Cambridge government structure for Cambridge discovery setup)
 **Requirements**: MA26-01, MA26-02, MA26-03, CAMB-09 (placeholder), CAMB-11 (discovery setup)
@@ -312,13 +299,13 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 45-01: 2026 MA election row + Azeem senate primary race + known candidates from official MA SoS filings
-- [ ] 45-02: MA discovery jurisdictions setup + discovery run for remaining 2026 MA state/federal races
-- [ ] 45-03: 2027 Cambridge election placeholder + Cambridge discovery_jurisdictions row (inactive, cambridgema.gov domain)
+- [ ] 44-01: 2026 MA election row + Azeem senate primary race + known candidates from official MA SoS filings
+- [ ] 44-02: MA discovery jurisdictions setup + discovery run for remaining 2026 MA state/federal races
+- [ ] 44-03: 2027 Cambridge election placeholder + Cambridge discovery_jurisdictions row (inactive, cambridgema.gov domain)
 
-#### Phase 46: Playbook Retrospective
+#### Phase 45: Playbook Retrospective
 **Goal**: The LOCATION-ONBOARDING.md checklist and phase templates are updated from Cambridge execution learnings so the next city onboarding is faster and avoids the pitfalls Cambridge surfaced
-**Depends on**: All Cambridge phases complete (41-45); Phase 37 (original playbook draft)
+**Depends on**: Cambridge structural phases complete (41-44); Phase 37 (original playbook draft)
 **Requirements**: PLAY-03
 **Success Criteria** (what must be TRUE):
   1. LOCATION-ONBOARDING.md reflects at least 3 Cambridge-specific learnings (e.g., election_method enum verification step, Mayor office modeling decision, FindMyLegislator boundary verification workflow)
@@ -327,7 +314,20 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 46-01: Playbook retrospective — update LOCATION-ONBOARDING.md + templates from Cambridge learnings
+- [ ] 45-01: Playbook retrospective — update LOCATION-ONBOARDING.md + templates from Cambridge learnings
+
+#### Phase 46: Cambridge Compass Stances
+**Goal**: Cambridge City Councillors have compass stances ingested from accounts team research, making the political compass useful for the most locally-relevant issue
+**Depends on**: Phase 41 (politician rows must exist); accounts team delivering stance values + citations
+**Requirements**: CAMB-13
+**Success Criteria** (what must be TRUE):
+  1. At least 5 of the 9 Cambridge City Councillors have at least one compass stance value in inform.politician_answers sourced from public record (voting record, candidate questionnaires, public statements)
+  2. Each ingested stance has a source citation; no value is inferred without explicit documentation in the politician_context row
+  3. The political compass renders on at least one Cambridge councillor's profile page (human-verified)
+**Plans**: TBD
+
+Plans:
+- [ ] 46-01: Ingest Cambridge councillor stances from accounts team research (apply script + verify compass renders)
 
 ---
 
@@ -350,7 +350,7 @@ v2.2 (parked): 8 → 9 → 10 → 11
 v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 18 (after 13)
 v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29) → 32 (after 28+31)
-v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (after 41) → 43 (after 41+38) → 45 (after 41+43) → 46 (after all Cambridge phases)
+v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (after 41) → 44 (after 41+38) → 45 (after 44) → 46 (when accounts team delivers stances)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -396,7 +396,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 40. MA Executives + Federal Officials | v5.0 | 4/4 | Complete | 2026-05-16 |
 | 41. Cambridge City Structure | v5.0 | 3/3 | Complete | 2026-05-17 |
 | 42. Cambridge Headshots | v5.0 | 1/1 | Complete | 2026-05-17 |
-| ~~43. Cambridge Elections~~ | v5.0 | - | Folded into Phase 45 | 2026-05-17 |
-| 44. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |
-| 45. Landing + Navigation | v5.0 | 0/TBD | Not started | - |
-| 46. Playbook Retrospective | v5.0 | 0/TBD | Not started | - |
+| ~~43. Cambridge Elections~~ | v5.0 | - | Folded into Phase 44 | 2026-05-17 |
+| 44. MA 2026 Elections + Challengers | v5.0 | 0/TBD | Not started | - |
+| 45. Playbook Retrospective | v5.0 | 0/TBD | Not started | - |
+| 46. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |
