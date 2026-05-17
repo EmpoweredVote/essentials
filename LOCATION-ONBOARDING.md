@@ -8,6 +8,30 @@ A cold-start checklist for onboarding any US city to empowered.vote. Follows the
 
 ---
 
+## Core Principle: Citizen Experience First
+
+Honor how a city presents itself to residents, even when it creates backend complexity. Model the government as residents know it — not as it is most convenient to store.
+
+This principle drives decisions like:
+- Using "Councillor" (double-L) not "Councilor" when that is the city's official spelling
+- Using "City of Cambridge" not "Cambridge MA" as the government name
+- Keeping the Mayor as `district_type=LOCAL` (not `LOCAL_EXEC`) when the city runs Council-Manager government — because residents do not elect the Mayor as a separate executive; they elect councillors, and the council selects the Mayor from within its own body
+- Dropping the unique index on `offices.politician_id` to support a Council-Manager Mayor who simultaneously holds a council seat — schema convenience yields to accurate representation
+
+When this principle conflicts with implementation convenience, citizen experience wins.
+
+---
+
+## Cities Onboarded
+
+Check this table before starting a new city — proven patterns from prior onboardings are available to borrow.
+
+| City | State | Onboarded | Election method | Notable patterns |
+|------|-------|-----------|-----------------|-----------------|
+| Cambridge | MA | 2026-05-17 | stv_proportional | Council-Manager; odd-year (next: 2027-11-02); 17 offices (9 councillors + 1 Mayor + 1 City Manager + 6 School Committee); STV since 1941 |
+
+---
+
 ## Step 1: Government Structure Research
 
 Before touching the database, confirm how the city government is structured.
@@ -60,7 +84,7 @@ Confirm the election mechanics before seeding any election or race rows.
 ### Required questions
 
 - [ ] What is the election method? (Plurality, Ranked-Choice/IRV, STV/Proportional Ranked-Choice, Runoff, other)
-- [ ] Does your database `chambers` table have an `election_method` enum value for this method? (Run `SELECT constrname, consrc FROM pg_constraint WHERE conrelid = 'essentials.chambers'::regclass AND contype = 'c';` to verify)
+- [ ] [GOTCHA] `election_method` is a TEXT column on `essentials.chambers` — it is **NOT** enforced by a pg_constraint CHECK constraint. The `SELECT constrname, consrc FROM pg_constraint...` query returns nothing useful for this column. To verify valid values, check the [elections-seed template reference block](.planning/templates/elections-seed.md). Do not run the pg_constraint query for election_method verification.
 - [ ] Are elections held in odd-numbered years, even-numbered years, or off-cycle? (Do not assume even-year alignment with state/federal elections)
 - [ ] When was the last municipal election? When is the next?
 - [ ] Are municipal races partisan (party labels on ballot) or nonpartisan?
@@ -71,8 +95,8 @@ Confirm the election mechanics before seeding any election or race rows.
 
 | Decision | Your Answer |
 |----------|-------------|
-| election_method enum value | |
-| Does enum value exist in DB? | yes / no (add migration if no) |
+| election_method TEXT value | |
+| Is election_method value a known valid TEXT value? | yes / no — check the [elections-seed template](.planning/templates/elections-seed.md) reference block |
 | Last election date | YYYY-MM-DD |
 | Next election date | YYYY-MM-DD |
 | Partisan or nonpartisan? | |
@@ -166,7 +190,7 @@ Make these decisions before writing any SQL. Wrong answers here corrupt the sche
 ### Required questions
 
 - [ ] geo_id confirmed? (7-digit Census place code — verified against TIGER or Census Bureau, not inferred from county FIPS)
-- [ ] election_method enum value confirmed to exist in DB? (SELECT constrname, consrc FROM pg_constraint WHERE conrelid = 'essentials.chambers'::regclass)
+- [ ] [VERIFY] Check the valid election_method TEXT values list in the [elections-seed template](.planning/templates/elections-seed.md) before writing any chambers INSERT — `election_method` is a plain TEXT column, not a pg_constraint CHECK constraint; the pg_constraint query returns nothing useful
 - [ ] Mayor office modeling decided: LOCAL vs LOCAL_EXEC, is_appointed_position true/false
 - [ ] Are there any offices where the same politician holds two roles simultaneously? (e.g., Cambridge Mayor is simultaneously a City Councillor — one politician row, two office linkages)
 - [ ] What name does the city officially use for the council chamber? ("City Council" vs "Town Council" vs "Board of Aldermen" etc.)
@@ -176,13 +200,13 @@ Make these decisions before writing any SQL. Wrong answers here corrupt the sche
 
 > **Cambridge example:**
 > - geo_id: 2511000 (confirmed against US Census official GEOID documentation)
-> - election_method: stv_proportional — verify this value exists in the chambers table constraint before migrating; add it if missing
-> - Mayor modeling: is_appointed_position = true; district_type = LOCAL; politician_id on Mayor office row points to Marc C. McGovern (who also holds a Councillor office row); no election race row for Mayor
-> - Dual-office: Marc C. McGovern holds both a Councillor seat AND the Mayor title — seed ONE politician row for McGovern, then link that politician_id to BOTH office rows (the Councillor office and the Mayor office)
+> - election_method: stv_proportional — verify this value is a known valid TEXT value before migrating (see elections-seed template reference block); do NOT use the pg_constraint query
+> - Mayor modeling: is_appointed_position = true; district_type = LOCAL; politician_id on Mayor office row points to Sumbul Siddiqui (who also holds a Councillor office row); no election race row for Mayor
+> - Dual-office: Sumbul Siddiqui holds both a Councillor seat AND the Mayor title — seed ONE politician row for Siddiqui, then link that politician_id to BOTH office rows (the Councillor office and the Mayor office); requires the unique index on offices.politician_id to be dropped first (see Step 6 item 4)
 > - Council chamber name: "City Council"
 > - Member title: "Councillor" (double-l — Cambridge official spelling; do not auto-normalize to "Councilor")
 > - Government name: "City of Cambridge" (NOT "Cambridge, MA" or "Cambridge City")
-> - Migration number: run the SQL check before writing; as of planning date, next is 111
+> - Migration number: always run `SELECT MAX(version) FROM supabase_migrations.schema_migrations;` before writing — never assume from prior session notes
 
 ---
 
@@ -197,9 +221,10 @@ Always migrate in this sequence. Skipping steps or migrating out of order create
 
 2. Government row — one row in essentials.governments for this city
    → Confirm geo_id, state, name_formal before inserting
+   → [GOTCHA] `essentials.governments` has NO unique constraint on `geo_id` — use `WHERE NOT EXISTS` guard, not `ON CONFLICT (geo_id)`. `ON CONFLICT (geo_id)` will fail at runtime with "no unique constraint" error.
 
 3. Chambers — one row per legislative/school/governing body
-   → Confirm election_method enum exists before inserting
+   → [VERIFY] Confirm election_method TEXT value is valid before inserting — see [elections-seed template](.planning/templates/elections-seed.md) reference block. Do not use the pg_constraint query (election_method is TEXT, not a CHECK constraint).
    → Confirm seat counts match official charter
 
 4. Offices — one row per seat
@@ -207,16 +232,19 @@ Always migrate in this sequence. Skipping steps or migrating out of order create
    → Ward-based councils: one office per ward/district
    → Mayor (if appointed): is_appointed_position = true
    → City Manager: is_appointed_position = true
+   → [GOTCHA] For Council-Manager cities where the Mayor is a sitting council member: the unique index on `essentials.offices.politician_id` must be dropped in this migration before seeding incumbents. This index blocks the dual-office pattern (same politician_id on both the Councillor office and the Mayor office). Add DROP INDEX + CREATE INDEX (non-unique) steps to the migration.
 
 5. Incumbents (politicians) — one row per person
    → Dual-role incumbents (e.g., Mayor who is also a Councillor): ONE politician row, linked to BOTH office rows
    → is_appointed = true for appointed positions
    → email_address only if verified from official source; NULL is acceptable
+   → [PATTERN] `generate_series(1, N)` is the cleanest pattern for N identical at-large office rows — avoids copy-paste arithmetic errors (e.g., 9 councillors + 1 Mayor + 1 City Manager + 6 school committee = 17, not 16)
 
 6. Elections + race_candidates
    → Confirm election date from election commission (not assumed from state cycle)
    → For historical/completed elections: seed as completed with all race_candidates
    → For future elections: seed as upcoming placeholder; do not activate discovery until filing opens
+   → [GOTCHA] `race_candidates` has NO unique constraint on `(race_id, full_name)` — use `WHERE NOT EXISTS` guards, not `ON CONFLICT DO NOTHING`. `ON CONFLICT DO NOTHING` is a no-op without a unique constraint and does not prevent duplicate rows.
 
 7. Headshots
    → 600×750 JPEG, Lanczos resize, 4:5 ratio (crop first, then resize — never distort)
@@ -257,6 +285,11 @@ These mistakes have been made on prior cities. Check this list before writing ea
 | Discovery cron firing on far-future election | Mark discovery_jurisdictions row inactive until filing period opens |
 | slug in chamber INSERT | slug is a GENERATED column on essentials.chambers — never include in INSERT statements |
 | Partisan/nonpartisan assumption | Confirm explicitly — some US cities run partisan local races |
+| offices.politician_id unique index blocks Council-Manager dual-office | For Council-Manager cities: DROP the unique index on offices.politician_id in the migration before assigning politician_id to any office that shares a politician with the Mayor office |
+| Wrong government idempotency guard | essentials.governments has no unique constraint on geo_id — use WHERE NOT EXISTS, never ON CONFLICT (geo_id) |
+| election_method pg_constraint query returns nothing | election_method is a TEXT column, not a pg_constraint enum — use the elections-seed template reference block to verify valid values |
+| race_candidates duplicate rows | race_candidates has no unique constraint on (race_id, full_name) — WHERE NOT EXISTS required; ON CONFLICT DO NOTHING is a no-op |
+| Office count arithmetic errors | Explicitly verify: 9 councillors + 1 mayor + 1 city manager + 6 school committee = 17 (not 16); write the arithmetic as a comment in the migration |
 
 ---
 
@@ -269,6 +302,7 @@ Use these templates when writing GSD plan files for each phase type. Templates a
 - [`headshots.md`](.planning/templates/headshots.md) — Photo collection and upload
 - [`discovery-setup.md`](.planning/templates/discovery-setup.md) — Discovery pipeline configuration
 - [`compass-stances.md`](.planning/templates/compass-stances.md) — Stance research and ingestion
+- [`elections-seed.md`](.planning/templates/elections-seed.md) — Election rows, race seeding (incumbents + challengers), discovery_jurisdictions rows, placeholder elections for future cycles
 
 ---
 
@@ -276,11 +310,11 @@ Use these templates when writing GSD plan files for each phase type. Templates a
 
 Use this as your pre-execution checklist before starting any city:
 
-- [ ] Step 1 complete: Form of government confirmed; Mayor modeling decided; incumbents listed
-- [ ] Step 2 complete: Election method confirmed; next election date confirmed; partisan/nonpartisan confirmed
-- [ ] Step 3 complete: City geo_id confirmed; district counts confirmed; TIGER allowlist checked
-- [ ] Step 4 complete: Data sources mapped for officials, elections, headshots, stances
-- [ ] Step 5 complete: Schema decisions recorded; migration number confirmed; spelling confirmed
-- [ ] Step 6 complete: Migration order planned matching dependency constraints
-- [ ] Step 7 complete: Pitfall checklist reviewed
-- [ ] Step 8 complete: Phase templates selected for each planned GSD phase
+- [ ] [VERIFY] Step 1 complete: Form of government confirmed; Mayor modeling decided; incumbents listed
+- [ ] [VERIFY] Step 2 complete: Election method confirmed; next election date confirmed from election commission; partisan/nonpartisan confirmed
+- [ ] [AUTO]+[VERIFY] Step 3 complete: City geo_id confirmed; TIGER allowlist checked [AUTO]; district counts verified with FindMyLegislator [VERIFY]
+- [ ] [VERIFY] Step 4 complete: Data sources mapped for officials, elections, headshots, stances
+- [ ] [VERIFY] Step 5 complete: Schema decisions recorded; migration number confirmed; spelling confirmed; election_method TEXT value verified against elections-seed reference block
+- [ ] [AUTO]+[VERIFY] Step 6 complete: Migration order planned; [GOTCHA] items reviewed (governments WHERE NOT EXISTS, offices unique index drop, race_candidates WHERE NOT EXISTS)
+- [ ] [AUTO] Step 7 complete: Pitfall checklist reviewed
+- [ ] [AUTO] Step 8 complete: Phase templates selected for each planned GSD phase
