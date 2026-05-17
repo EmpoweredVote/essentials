@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 41 of 46 (Cambridge City Structure) — v5.0 Location Onboarding Playbook
-Plan: 01 of 3 complete
-Status: In progress — Plan 41-01 complete
-Last activity: 2026-05-17 — Completed 41-01-PLAN.md: migration 157 applied; Cambridge government + City Council (9 seats) + School Committee (6 seats); election_method column added to essentials.chambers
+Plan: 02 of 3 complete
+Status: In progress — Plan 41-02 complete
+Last activity: 2026-05-17 — Completed 41-02-PLAN.md: migration 158 applied; 17 Cambridge offices seeded (9 City Councillor + Mayor + City Manager + 6 School Committee Member); all politician_id=NULL
 
 Progress: [████░░░░░░] 40% (v5.0 — 4/10 phases complete; Phase 41 in progress)
 
@@ -259,7 +259,11 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - City Council chamber UUID: b4b8c0a1-2658-4df4-9196-9646c99d173c (slug: cambridge-city-council)
 - School Committee chamber UUID: 41846a49-e5d5-460d-b2c2-0f4f8130b949 (slug: cambridge-school-committee)
 - essentials.governments has NO unique constraint on geo_id — WHERE NOT EXISTS pattern required for idempotent inserts (ON CONFLICT (geo_id) would fail)
-- Next migration is 158
+- Migration 158 applied 2026-05-17: 17 Cambridge offices seeded — 9 City Councillor + 1 Mayor (is_appointed=true) + 1 City Manager (is_appointed=true) in City Council chamber; 6 School Committee Member in School Committee chamber; all politician_id=NULL
+- Cambridge office count is 17 (plan docs said 16 — arithmetic error in plan; 9+1+1+6=17 is correct)
+- City Councillor double-L British spelling confirmed in DB; migration 159 WHERE clauses must use "City Councillor" (not "City Councilor")
+- generate_series(1, N) pattern established for N identical at-large office rows
+- Next migration is 159
 
 ### Phase 40 Notes
 
@@ -411,9 +415,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-16 — Phase 39-03 COMPLETE; migration 152 applied via generate_ma_house.ps1 generator script; 158 named MA house reps + 160 STATE_LOWER offices seeded; 2 vacancies (25042 1st Franklin, 25075 17th Middlesex); Cambridge reps Rogers/Decker/Connolly have email_addresses; idempotent; generator script pattern established for future state legislative bodies; Phase 39 COMPLETE; Phase 40 MA Executives + Federal Officials is next*
 *Updated: 2026-05-16 — Phase 40 COMPLETE (4/4 plans); migrations 154-156 applied; 6 MA executives + 11 MA federal officials seeded; 17 headshots (600×750) uploaded to Supabase Storage; Cambridge MA-05/MA-07 split verified; MADB-04/FED-01/FED-02 satisfied; next migration is 157; Phase 41 Cambridge City Structure is next*
 *Updated: 2026-05-17 — Phase 41-01 COMPLETE; migration 157 applied; election_method column added to essentials.chambers; Cambridge LOCAL government (geo_id=2511000) + City Council (9 seats, stv_proportional) + School Committee (6 seats, stv_proportional) seeded; idempotency verified (gov count=1, chamber count=2 on re-run); government UUID=6f7d55bc; City Council UUID=b4b8c0a1; School Committee UUID=41846a49; next migration is 158*
+*Updated: 2026-05-17 — Phase 41-02 COMPLETE; migration 158 applied; 17 Cambridge offices seeded (9 City Councillor + 1 Mayor is_appointed=true + 1 City Manager is_appointed=true + 6 School Committee Member); all politician_id=NULL; "Councillor" double-L verified; plan docs had arithmetic error (said 16, correct count is 17); next migration is 159*
 
 ## Session Continuity
 
-Last session: 2026-05-17T02:47:03Z
-Stopped at: Completed 41-01-PLAN.md (Cambridge government + chambers — migration 157 applied)
+Last session: 2026-05-17T02:51:30Z
+Stopped at: Completed 41-02-PLAN.md (Cambridge offices — migration 158 applied; 17 offices seeded)
 Resume file: None
