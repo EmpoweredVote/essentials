@@ -150,10 +150,13 @@ function getSubGroupKey(pol) {
   }
 
   let roleSegment;
-  if (dt === 'LOCAL' && isAdminOfficer(pol)) {
+  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC') && LOCAL_EXEC_TITLE_RE.test(pol.office_title || '')) {
+    roleSegment = 'EXEC'; // Mayor / Governor — own sub-group, sorts first
+  } else if (dt === 'LOCAL_EXEC') {
+    // City Manager, City Administrator, etc. — unique key per title so each gets own label
+    roleSegment = `TITLE_${(pol.office_title || 'official').replace(/\W+/g, '_').toUpperCase()}`;
+  } else if (dt === 'LOCAL' && isAdminOfficer(pol)) {
     roleSegment = 'ADMIN';
-  } else if (dt === 'LOCAL' && LOCAL_EXEC_TITLE_RE.test(pol.office_title || '')) {
-    roleSegment = 'EXEC';
   } else {
     roleSegment = 'MEMBER';
   }
@@ -235,13 +238,18 @@ function getSubGroupLabel(pols, accordionTitle) {
     return body || 'Judges';
   }
 
-  // Rule 2: Use government_body_name as-is
-  // Rule 3: Replace generic words
-  if (/\bGovernment\b/i.test(body)) {
-    return body.replace(/\bGovernment\b/i, 'Officials');
+  // Rule 2/3: Use government_body_name, replacing generic words
+  if (body) {
+    return /\bGovernment\b/i.test(body)
+      ? body.replace(/\bGovernment\b/i, 'Officials')
+      : body;
   }
 
-  return body || accordionTitle;
+  // Rule 4 (no body): derive from office_title — cleaner than falling back to accordion title
+  const rawTitle = first.office_title || '';
+  // Normalize council member variants → "City Council", "Town Council", etc.
+  const cleaned = rawTitle.replace(/\bCouncill?or\b|\bCouncilm(?:an|woman)\b|\bCouncil\s+Member\b/gi, 'Council');
+  return cleaned || accordionTitle;
 }
 
 /** Get the website URL for a sub-group (from chamber_url, falling back to government_body_url) */
@@ -304,6 +312,7 @@ function bodyOrderScore(accordionKey, pols) {
 
   if (tier === 'Local') {
     if (isJudiciary(pols)) return 100; // Courts last in local
+    if (pols.some(p => p.district_type === 'SCHOOL')) return 60; // School committees after city/county
     const govType = pols[0]?.government_type || '';
     const idx = LOCAL_BODY_TYPE_ORDER.indexOf(govType);
     return idx >= 0 ? idx : 50;
@@ -435,6 +444,55 @@ function sortPoliticians(pols) {
   });
 }
 
+// ── Multi-office deduplication ───────────────────────────────────
+
+/**
+ * When the same politician holds multiple LOCAL/LOCAL_EXEC offices in the
+ * same government (e.g., Mayor + City Councillor), keep the highest-priority
+ * row and combine the office titles so one card reads "Mayor & City Council".
+ */
+function deduplicateLocalMultiOffice(politicians) {
+  const LOCAL_TYPES = new Set(['LOCAL', 'LOCAL_EXEC']);
+
+  const grouped = new Map();
+  const nonLocal = [];
+
+  for (const pol of politicians) {
+    const dt = pol.district_type || '';
+    if (!LOCAL_TYPES.has(dt)) {
+      nonLocal.push(pol);
+      continue;
+    }
+    const key = `${pol.government_name || ''}||${pol.id || pol.full_name || ''}`;
+    if (!grouped.has(key)) grouped.set(key, []);
+    grouped.get(key).push(pol);
+  }
+
+  const deduped = [];
+  for (const [, pols] of grouped) {
+    if (pols.length === 1) {
+      deduped.push(pols[0]);
+      continue;
+    }
+    // Keep highest-priority office (LOCAL_EXEC > LOCAL, then exec title priority)
+    pols.sort((a, b) => {
+      if (a.district_type !== b.district_type) {
+        if (a.district_type === 'LOCAL_EXEC') return -1;
+        if (b.district_type === 'LOCAL_EXEC') return 1;
+      }
+      return execTitlePriority(a) - execTitlePriority(b);
+    });
+    // Combine titles: "City Councillor" → "City Council" for cleaner label
+    const titles = pols.map(p =>
+      (p.office_title || '').replace(/\bCouncill?or\b|\bCouncilm(?:an|woman)\b|\bCouncil\s+Member\b/gi, 'Council')
+    );
+    const combined = [...new Set(titles)].join(' & ');
+    deduped.push({ ...pols[0], office_title: combined });
+  }
+
+  return [...deduped, ...nonLocal];
+}
+
 // ── Main grouping function ───────────────────────────────────────
 
 /**
@@ -444,6 +502,8 @@ function sortPoliticians(pols) {
  * @returns {Array<{ tier: string, bodies: Array<{ key: string, title: string, url: string, subgroups: Array<{ key: string, label: string, url: string, pols: Array }> }> }>}
  */
 export function groupIntoHierarchy(politicians) {
+  politicians = deduplicateLocalMultiOffice(politicians);
+
   // Step 1: Assign tier and accordion key to each politician
   const tierMap = {}; // tier → { accordionKey → [ pol ] }
 
