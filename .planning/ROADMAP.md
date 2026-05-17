@@ -283,21 +283,8 @@ Plans:
 Plans:
 - [x] 42-01: Headshots for all 16 Cambridge officials (9 councillors + 6 school committee + 1 city manager)
 
-#### Phase 43: Cambridge Elections
-**Goal**: The 2025 Cambridge election results are seeded as historical data, a 2027 placeholder is ready for future use, and the discovery pipeline is configured — but inactive until 2027 filing opens
-**Depends on**: Phase 41 (government structure must exist), Phase 38 (Cambridge geofence must exist)
-**Requirements**: CAMB-09, CAMB-10, CAMB-11, CAMB-12
-**Success Criteria** (what must be TRUE):
-  1. The November 4, 2025 Cambridge City Council election appears in the elections view with all 20 candidates as race_candidate rows
-  2. The November 4, 2025 Cambridge School Committee election appears with all 18 candidates as race_candidate rows
-  3. A Cambridge address lookup returns both 2025 races — the UI renders correctly at 20-candidate and 18-candidate scale (visual verification required)
-  4. A 2027 Cambridge election placeholder row exists; the discovery_jurisdictions row for Cambridge is present with cambridgema.gov domain but marked inactive
-**Plans**: TBD
-
-Plans:
-- [ ] 43-01: 2025 City Council election row + all 20 candidates as race_candidates
-- [ ] 43-02: 2025 School Committee election row + all 18 candidates as race_candidates; visual UI verification at 38-candidate total scale
-- [ ] 43-03: 2027 election placeholder + Cambridge discovery_jurisdictions row (inactive)
+#### ~~Phase 43: Cambridge Elections~~ (Folded into Phase 45)
+**Decision**: Phase skipped — 2025 historical data won't be surfaced to users (UI shows upcoming elections only); 2027 placeholder + Cambridge discovery setup folded into Phase 45. Cambridge residents' next relevant election is the 2026 MA state/federal cycle. See `.planning/phases/43-cambridge-elections/43-CONTEXT.md` for full rationale.
 
 #### Phase 44: Cambridge Compass Stances
 **Goal**: Cambridge City Councillors have compass stances on the housing/zoning topic researched from public record, making the political compass useful for the most locally-relevant issue
@@ -313,19 +300,21 @@ Plans:
 - [ ] 44-01: Compass stance research + ingestion for Cambridge councillors — one at a time per rate-limit policy (housing/zoning primary topic)
 
 #### Phase 45: MA 2026 Elections + Challengers
-**Goal**: All November 2026 Massachusetts state and federal races are seeded with challenger candidates, making the ballot visible to any MA resident — with Azeem's September 2026 state senate primary explicitly named
-**Depends on**: Phase 39 (MA legislators must exist as incumbents), Phase 40 (federal incumbents must exist)
-**Requirements**: MA26-01, MA26-02, MA26-03
+**Goal**: All November 2026 Massachusetts state and federal races are seeded with challenger candidates, making the ballot visible to any MA resident — with Azeem's September 2026 state senate primary explicitly named; Cambridge local election infrastructure also set up here (absorbed from Phase 43)
+**Depends on**: Phase 39 (MA legislators must exist as incumbents), Phase 40 (federal incumbents must exist), Phase 41 (Cambridge government structure for Cambridge discovery setup)
+**Requirements**: MA26-01, MA26-02, MA26-03, CAMB-09 (placeholder), CAMB-11 (discovery setup)
 **Success Criteria** (what must be TRUE):
   1. A November 2026 Massachusetts General Election row exists in essentials.elections
   2. Burhan Azeem's 2nd Middlesex State Senate primary (September 1, 2026) is seeded as a named race with known candidates — cross-referencing his existing Cambridge Councillor politician row
   3. The discovery pipeline has been run (or manually seeded) for MA state senate, state house, and federal races; staged challengers are visible in the admin queue
   4. At least the congressional and senate races covering Cambridge (MA-05/MA-07, 2nd Middlesex, Middlesex + Suffolk) have candidates seeded from official MA SoS filings
+  5. A 2027 Cambridge election placeholder row exists; the discovery_jurisdictions row for Cambridge is present with cambridgema.gov domain but marked inactive
 **Plans**: TBD
 
 Plans:
 - [ ] 45-01: 2026 MA election row + Azeem senate primary race + known candidates from official MA SoS filings
 - [ ] 45-02: MA discovery jurisdictions setup + discovery run for remaining 2026 MA state/federal races
+- [ ] 45-03: 2027 Cambridge election placeholder + Cambridge discovery_jurisdictions row (inactive, cambridgema.gov domain)
 
 #### Phase 46: Playbook Retrospective
 **Goal**: The LOCATION-ONBOARDING.md checklist and phase templates are updated from Cambridge execution learnings so the next city onboarding is faster and avoids the pitfalls Cambridge surfaced
@@ -407,7 +396,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 40. MA Executives + Federal Officials | v5.0 | 4/4 | Complete | 2026-05-16 |
 | 41. Cambridge City Structure | v5.0 | 3/3 | Complete | 2026-05-17 |
 | 42. Cambridge Headshots | v5.0 | 1/1 | Complete | 2026-05-17 |
-| 43. Cambridge Elections | v5.0 | 0/TBD | Not started | - |
+| ~~43. Cambridge Elections~~ | v5.0 | - | Folded into Phase 45 | 2026-05-17 |
 | 44. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |
 | 45. Landing + Navigation | v5.0 | 0/TBD | Not started | - |
 | 46. Playbook Retrospective | v5.0 | 0/TBD | Not started | - |
