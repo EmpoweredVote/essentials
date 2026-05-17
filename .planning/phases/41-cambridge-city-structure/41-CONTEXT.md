@@ -21,10 +21,11 @@ Creating Cambridge elections (2025 results, 2027 placeholder) and headshots are 
 - Offices are differentiated by `politician_id` assignment, not by title
 - Mayor office row titled "Mayor" (not "President of the City Council" — modern usage)
 
-### Mayor dual-role modeling (McGovern)
-- Mayor is the primary display title on McGovern's profile page
-- McGovern is linked to both his Councillor office (elected) and the Mayor office (appointed) in the DB
-- He appears in the City Councillor listing when users browse Cambridge officials — he still holds his elected councillor seat
+### Mayor dual-role modeling (Siddiqui)
+**CORRECTED by research (2026-05-16):** Sumbul Siddiqui is the January 2026 Mayor (unanimous council vote Jan 5, 2026 — third term). McGovern is a regular City Councillor only.
+- Mayor is the primary display title on Siddiqui's profile page
+- Siddiqui is linked to both her Councillor office (elected) and the Mayor office (appointed) in the DB
+- She appears in the City Councillor listing when users browse Cambridge officials — she still holds her elected councillor seat
 - City Manager (Yi-An Huang) appears in the Cambridge browse listing with `is_appointed_position=true`
 
 ### Contact data fallback strategy

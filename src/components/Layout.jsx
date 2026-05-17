@@ -43,7 +43,7 @@ export function Layout({ children }) {
         logoAlt="Empowered Vote"
         navItems={[]}
         secondaryAction={<ThemeToggle />}
-        onNavigate={(href) => { window.location.href = href === '/' ? 'https://alpha.empowered.vote' : href; }}
+        onNavigate={(href) => { window.location.href = href === '/' ? 'https://empowered.vote' : href; }}
         profileMenu={profileMenu}
         style={isDark ? {
           backgroundColor: '#020618',
