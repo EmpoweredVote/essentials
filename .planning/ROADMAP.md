@@ -281,7 +281,7 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 42-01: Headshots for all 16 Cambridge officials (9 councillors + 6 school committee + 1 city manager)
+- [x] 42-01: Headshots for all 16 Cambridge officials (9 councillors + 6 school committee + 1 city manager)
 
 #### Phase 43: Cambridge Elections
 **Goal**: The 2025 Cambridge election results are seeded as historical data, a 2027 placeholder is ready for future use, and the discovery pipeline is configured — but inactive until 2027 filing opens
@@ -406,7 +406,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 39. MA Government DB | v5.0 | 3/3 | Complete | 2026-05-16 |
 | 40. MA Executives + Federal Officials | v5.0 | 4/4 | Complete | 2026-05-16 |
 | 41. Cambridge City Structure | v5.0 | 3/3 | Complete | 2026-05-17 |
-| 42. Cambridge Headshots | v5.0 | 0/TBD | Not started | - |
+| 42. Cambridge Headshots | v5.0 | 1/1 | Complete | 2026-05-17 |
 | 43. Cambridge Elections | v5.0 | 0/TBD | Not started | - |
 | 44. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |
 | 45. Landing + Navigation | v5.0 | 0/TBD | Not started | - |
