@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 44 of 46 (MA 2026 Elections + Challengers) — v5.0 Location Onboarding Playbook
-Plan: 02 of 3 complete
-Status: In progress
-Last activity: 2026-05-17 — Completed 44-02-PLAN.md: migration 163 applied; Markey Senate primary (4 candidates) + general (3 candidates) statewide; 7 Cambridge-area district general races linked by office_id (MA-05 Clark, MA-07 Pressley, 25D26 DiDomenico, 25D27 open seat, 25D28 Brownsberger, 25th Middlesex Decker, 26th Middlesex Connolly)
+Plan: 03 of 3 complete
+Status: Phase 44 COMPLETE
+Last activity: 2026-05-17 — Completed all 3 plans (162/163/164 applied); MA 2026 elections + races seeded; MA discovery jurisdictions armed for 2026 cron sweeps; 2027 Cambridge placeholder set; 5/5 verification checks passed
 
-Progress: [██████░░░░] 63% (v5.0 — 7/10 phases complete; Phase 44 complete 3/3 plans)
+Progress: [███████░░░] 70% (v5.0 — 8/10 phases complete; Phase 45 Playbook Retrospective is next)
 
 ## Project Reference
 
@@ -452,8 +452,21 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - School Committee chamber UUID: 41846a49-e5d5-460d-b2c2-0f4f8130b949
 - Next migration is 160
 
+### Phase 44 Notes
+
+- Migration 162 applied 2026-05-17: 2026 MA primary (2026-09-01) + general (2026-11-03) election rows; 2nd Middlesex Democratic primary race; 5 candidates (Azeem politician_id=d2358e54, is_incumbent=false; Barber/Hopcroft/McLaughlin/Uyterhoeven); WHERE NOT EXISTS guards for idempotency
+- Azeem is NOT incumbent — open seat (Patricia Jehlen retiring); is_incumbent=false is correct
+- Migration 163 applied 2026-05-17: Markey Senate primary (Markey/Moulton/Gates/Rikleen) + general (Markey/Bech/Deaton), office_id=NULL statewide; 7 Cambridge-area district general races with correct office_ids
+- ON CONFLICT for general races uses partial index syntax: ON CONFLICT (election_id, position_name) WHERE primary_party IS NULL
+- 25D27 general race has 0 candidates — intentional (open seat, winner of Sep primary TBD)
+- Migration 164 applied 2026-05-17: 2 MA discovery_jurisdictions rows (geoid='25', 2026-09-01 + 2026-11-03, would_be_swept=true); 2027 Cambridge Municipal Election (2027-11-02, city, general); Cambridge discovery row (geoid='2511000', 2027-11-02, would_be_swept=false)
+- discovery_jurisdictions unique constraint: UNIQUE (jurisdiction_geoid, election_date)
+- Discovery cron horizon: election_date <= CURRENT_DATE + INTERVAL '180 days'; Cambridge 2027 intentionally outside
+- Next migration after 164 is 165
+- Phase 44 verified 5/5: general election exists, Azeem primary with 5 candidates + linked politician_id, MA discovery armed, Cambridge races with candidates, 2027 placeholder + discovery row
+
 ## Session Continuity
 
 Last session: 2026-05-17
-Stopped at: Completed 44-03-PLAN.md — migration 164 applied; MA discovery rows + Cambridge 2027 placeholder; Phase 44 COMPLETE
+Stopped at: Phase 44 MA 2026 Elections + Challengers — COMPLETE (3/3 plans; 5/5 verification; next is Phase 45 Playbook Retrospective)
 Resume file: None

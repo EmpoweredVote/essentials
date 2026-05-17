@@ -48,8 +48,8 @@
 
 - [ ] **CAMB-09**: 2025 Cambridge City Council election seeded (November 4, 2025) with all 20 candidates and results
 - [ ] **CAMB-10**: 2025 Cambridge School Committee election seeded (November 4, 2025) with all 18 candidates and results
-- [ ] **CAMB-11**: 2027 Cambridge election placeholder seeded; discovery pipeline marked inactive until 2027 filing window opens
-- [ ] **CAMB-12**: Cambridge jurisdiction added to `discovery_jurisdictions` with cambridgema.gov domain allowlist
+- [x] **CAMB-11**: 2027 Cambridge election placeholder seeded; discovery pipeline marked inactive until 2027 filing window opens
+- [x] **CAMB-12**: Cambridge jurisdiction added to `discovery_jurisdictions` with cambridgema.gov domain allowlist
 
 ### Cambridge Compass Stances
 
@@ -61,9 +61,9 @@
 
 ### MA 2026 Elections + Challengers
 
-- [ ] **MA26-01**: November 2026 Massachusetts General Election row seeded in `essentials.elections`
-- [ ] **MA26-02**: Election races seeded for all MA state senate, MA state house, and federal (9 US House + Markey US Senate) districts — covering all 200+ seats up in 2026
-- [ ] **MA26-03**: Challenger candidates discovered and staged for MA 2026 races via discovery pipeline; Azeem's 2nd Middlesex State Senate primary (September 1, 2026) explicitly seeded as a named race with known candidates
+- [x] **MA26-01**: November 2026 Massachusetts General Election row seeded in `essentials.elections`
+- [x] **MA26-02**: Election races seeded for all MA state senate, MA state house, and federal (9 US House + Markey US Senate) districts — covering all 200+ seats up in 2026
+- [x] **MA26-03**: Challenger candidates discovered and staged for MA 2026 races via discovery pipeline; Azeem's 2nd Middlesex State Senate primary (September 1, 2026) explicitly seeded as a named race with known candidates
 
 ## Future Requirements
 
@@ -111,16 +111,16 @@
 | CAMB-05 | Phase 41 | Complete |
 | CAMB-06 | Phase 41 | Complete |
 | CAMB-07 | Phase 41 | Complete |
-| CAMB-08 | Phase 42 | Pending |
-| CAMB-09 | Phase 43 | Pending |
-| CAMB-10 | Phase 43 | Pending |
-| CAMB-11 | Phase 43 | Pending |
-| CAMB-12 | Phase 43 | Pending |
-| CAMB-13 | Phase 44 | Pending |
+| CAMB-08 | Phase 42 | Complete |
+| CAMB-09 | Phase 43 | N/A — 2025 historical data not surfaced (UI shows upcoming only) |
+| CAMB-10 | Phase 43 | N/A — 2025 historical data not surfaced (UI shows upcoming only) |
+| CAMB-11 | Phase 44 | Complete |
+| CAMB-12 | Phase 44 | Complete |
+| CAMB-13 | Phase 46 | Pending |
 | LAND-01 | Phase 41 | Complete |
-| MA26-01 | Phase 45 | Pending |
-| MA26-02 | Phase 45 | Pending |
-| MA26-03 | Phase 45 | Pending |
+| MA26-01 | Phase 44 | Complete |
+| MA26-02 | Phase 44 | Complete |
+| MA26-03 | Phase 44 | Complete |
 
 **Coverage:**
 - v5.0 requirements: 29 total (LAND-02 dropped, MA26-01/02/03 added, LAND-01 folded into Phase 41)
