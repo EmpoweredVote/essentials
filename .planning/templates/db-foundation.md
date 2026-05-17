@@ -6,6 +6,48 @@ Use this template when planning a phase that creates a new government row, chamb
 
 ---
 
+## Valid election_method Values
+
+`election_method` is a TEXT column on `essentials.chambers`. Valid values (as of v5.0):
+
+| Value | Description |
+|-------|-------------|
+| `plurality` | Single vote; most votes wins; standard US municipal election |
+| `stv_proportional` | Single Transferable Vote; ranked multi-seat election |
+| `ranked_choice` | IRV (Instant Runoff Voting); single-seat ranked-choice |
+| `runoff` | Top-two runoff if no majority in first round |
+
+Do NOT invent new values. If the city uses a method not in this list, document it in STATE.md first and update this table before using it in a chambers INSERT.
+
+---
+
+## Council Structure Decision Tree
+
+Before writing any SQL for offices, determine the city's government form:
+
+**Strong Mayor-Council**
+- Mayor is directly elected by voters as a separate executive role
+- Mayor does NOT hold a council seat (they ARE the executive, not a council member)
+- Schema: Mayor office → `district_type=LOCAL_EXEC`, `is_appointed_position=false`
+- `offices.politician_id` unique index: keep (each politician holds at most one office)
+
+**Council-Manager** [GOTCHA — requires index drop]
+- Mayor is selected from within the council body (top vote-getter or a council vote)
+- Mayor simultaneously holds a council seat (they are still a councillor + the Mayor title)
+- Schema: Mayor office → `district_type=LOCAL`, `is_appointed_position=true`
+- City Manager office → `is_appointed_position=true`
+- Schema gotcha: one `politician_id` must point to BOTH the Councillor office AND the Mayor office
+- **REQUIRED:** DROP the unique index on `essentials.offices.politician_id` in the migration before assigning `politician_id` to Mayor/Councillor offices for the same person
+- Replace with non-unique index for join performance: `CREATE INDEX offices_politician_id_idx ON essentials.offices(politician_id)`
+- *Cambridge example: Sumbul Siddiqui holds the City Councillor seat AND the Mayor title. Migration 159 dropped the unique index to allow this.*
+
+**Commission**
+- Commissioners serve as both legislative and executive (no separate Mayor/Manager)
+- All commissioner offices: `district_type=LOCAL`, `is_appointed_position=false`
+- `offices.politician_id` unique index: keep
+
+---
+
 ## Pre-Migration Checklist
 
 Before writing any SQL:
@@ -13,7 +55,7 @@ Before writing any SQL:
 - [ ] Confirmed city geo_id (7-digit Census place code — NOT the county FIPS)
 - [ ] Confirmed government name from official documents (e.g., "City of Cambridge" not "Cambridge")
 - [ ] Confirmed all chamber names from official charter or city website
-- [ ] Confirmed election_method enum value exists in DB (`SELECT constrname, consrc FROM pg_constraint WHERE conrelid = 'essentials.chambers'::regclass AND contype = 'c';`)
+- [ ] [GOTCHA] `election_method` is a TEXT column, NOT a pg_constraint CHECK constraint. Do not run the `pg_constraint` query — it returns nothing useful. Instead, verify the value against the Valid election_method Values table above.
 - [ ] Confirmed next migration number (`SELECT MAX(version) FROM supabase_migrations.schema_migrations;`)
 - [ ] Confirmed seat counts for each chamber from official charter
 - [ ] Confirmed which offices are is_appointed_position = true
@@ -37,8 +79,10 @@ Before writing any SQL:
 
 ```sql
 -- 1. Government row
+-- [GOTCHA] essentials.governments has NO unique constraint on geo_id
+-- Use WHERE NOT EXISTS, not ON CONFLICT (geo_id) — that fails with "no unique constraint" error
 INSERT INTO essentials.governments (id, name, name_formal, geo_id, state, county_geo_id, government_type)
-VALUES (
+SELECT
   gen_random_uuid(),
   '[short name]',
   '[official full name]',
@@ -46,7 +90,7 @@ VALUES (
   '[2-letter state abbrev]',
   '[5-digit county FIPS or NULL]',
   '[city|county|state|federal]'
-) ON CONFLICT (geo_id) DO NOTHING;
+WHERE NOT EXISTS (SELECT 1 FROM essentials.governments WHERE geo_id = '[7-digit place code]');
 
 -- 2. Chambers (one per legislative/governing body)
 -- NOTE: Do NOT include slug — it is a GENERATED column
@@ -108,4 +152,6 @@ ORDER BY c.name, o.seat_number;
 - Including slug in chamber INSERT → PostgreSQL error (slug is generated)
 - Using LOCAL_EXEC for a council-manager mayor → misrepresents power structure
 - Seeding Mayor as School Committee member without confirming current charter
-- Wrong election_method → DB constraint violation; verify enum value first
+- Using `ON CONFLICT (geo_id)` for government INSERT → essentials.governments has no unique constraint on geo_id; use `WHERE NOT EXISTS`
+- Not dropping `offices.politician_id` unique index for Council-Manager cities → unique constraint violation when Mayor also holds a council seat
+- Running pg_constraint query to verify election_method → returns nothing; election_method is TEXT, check the Valid election_method Values table
