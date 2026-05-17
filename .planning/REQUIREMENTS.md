@@ -9,7 +9,7 @@
 
 - [ ] **PLAY-01**: A `LOCATION-ONBOARDING.md` checklist exists covering all steps to onboard any US city from scratch using only public sources and no local insider knowledge
 - [ ] **PLAY-02**: Phase templates exist in `.planning/templates/` for each reusable phase type (DB foundation, officials seed, headshots, discovery setup, compass stances)
-- [ ] **PLAY-03**: Checklist and templates are reviewed and updated after Cambridge completes (retrospective)
+- [x] **PLAY-03**: Checklist and templates are reviewed and updated after Cambridge completes (retrospective)
 
 ### Massachusetts Geofences
 
@@ -93,7 +93,7 @@
 |-------------|-------|--------|
 | PLAY-01 | Phase 37 | Complete |
 | PLAY-02 | Phase 37 | Complete |
-| PLAY-03 | Phase 46 | Pending |
+| PLAY-03 | Phase 45 | Complete |
 | MAGEO-01 | Phase 38 | Complete |
 | MAGEO-02 | Phase 38 | Complete |
 | MAGEO-03 | Phase 38 | Complete |

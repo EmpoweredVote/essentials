@@ -314,8 +314,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 45-01-PLAN.md — Propose + confirm Cambridge learnings (checkpoint before any files changed)
-- [ ] 45-02-PLAN.md — Write confirmed learnings into LOCATION-ONBOARDING.md + update 4 templates + create elections-seed.md
+- [x] 45-01-PLAN.md — Propose + confirm Cambridge learnings (checkpoint before any files changed)
+- [x] 45-02-PLAN.md — Write confirmed learnings into LOCATION-ONBOARDING.md + update 4 templates + create elections-seed.md
 
 #### Phase 46: Cambridge Compass Stances
 **Goal**: Cambridge City Councillors have compass stances ingested from accounts team research, making the political compass useful for the most locally-relevant issue
@@ -399,5 +399,5 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (aft
 | 42. Cambridge Headshots | v5.0 | 1/1 | Complete | 2026-05-17 |
 | ~~43. Cambridge Elections~~ | v5.0 | - | Folded into Phase 44 | 2026-05-17 |
 | 44. MA 2026 Elections + Challengers | v5.0 | 3/3 | Complete | 2026-05-17 |
-| 45. Playbook Retrospective | v5.0 | 0/TBD | Not started | - |
+| 45. Playbook Retrospective | v5.0 | 2/2 | Complete | 2026-05-17 |
 | 46. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |

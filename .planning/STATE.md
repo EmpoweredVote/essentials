@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 44 of 46 (MA 2026 Elections + Challengers) — v5.0 Location Onboarding Playbook
-Plan: 03 of 3 complete
-Status: Phase 44 COMPLETE
-Last activity: 2026-05-17 — Completed all 3 plans (162/163/164 applied); MA 2026 elections + races seeded; MA discovery jurisdictions armed for 2026 cron sweeps; 2027 Cambridge placeholder set; 5/5 verification checks passed
+Phase: 45 of 46 (Playbook Retrospective) — v5.0 Location Onboarding Playbook
+Plan: 02 of 2 complete
+Status: Phase 45 COMPLETE
+Last activity: 2026-05-17 — 13 Cambridge learnings confirmed + written; LOCATION-ONBOARDING.md updated (Core Principle, Cities Onboarded, 5 Step 6 [GOTCHA]s, 5 new Step 7 pitfall rows); db-foundation.md council decision tree + WHERE NOT EXISTS fix; officials-seed.md McGovern→Siddiqui; discovery-setup.md date fix 2027-11-04→2027-11-02; elections-seed.md created NEW; 10/10 verification checks passed
 
-Progress: [███████░░░] 70% (v5.0 — 8/10 phases complete; Phase 45 Playbook Retrospective is next)
+Progress: [████████░░] 80% (v5.0 — 9/10 phases complete; Phase 46 Cambridge Compass Stances is next — blocked on accounts team)
 
 ## Project Reference
 
