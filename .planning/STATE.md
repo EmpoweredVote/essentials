@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 44 of 46 (MA 2026 Elections + Challengers) — v5.0 Location Onboarding Playbook
-Plan: 01 of 3 complete
-Status: In progress
-Last activity: 2026-05-17 — Completed 44-01-PLAN.md: migration 162 applied; 2 MA 2026 election rows + 2nd Middlesex primary race + 5 candidates (Azeem linked, Barber, Hopcroft, McLaughlin, Uyterhoeven)
+Plan: 03 of 3 complete
+Status: Phase complete
+Last activity: 2026-05-17 — Completed 44-03-PLAN.md: migration 164 applied; 2 MA state discovery_jurisdictions rows (2026-09-01 primary + 2026-11-03 general) + 2027 Cambridge Municipal Election placeholder + Cambridge discovery row; cron horizon verified
 
-Progress: [██████░░░░] 60% (v5.0 — 7/10 phases complete; Phase 44 plan 01 of 3 done)
+Progress: [██████░░░░] 63% (v5.0 — 7/10 phases complete; Phase 44 complete 3/3 plans)
 
 ## Project Reference
 
@@ -114,6 +114,10 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - Jené Butler (Celina Place 1): é accent in full_name — UTF-8 preserved in migration 096
 - supabase CLI v2.75.0 has NO 'db query' command — use psql with DATABASE_URL from backend/.env instead
 - MA 2026 elections in DB: primary (2026-09-01), general (2026-11-03); use these for all Phase 44 race seeding
+- MA discovery_jurisdictions: 2 rows for geoid='25' (primary + general 2026); 1 row for geoid='2511000' (Cambridge 2027-11-02, outside 180-day cron horizon until ~May 2027)
+- 2027 Cambridge Municipal Election placeholder: election_date='2027-11-02' (Nov 1=Monday → Nov 2 is correct first-Tuesday-after-first-Monday); election_type='general', jurisdiction_level='city'
+- Migration 164 applied 2026-05-17; version in schema_migrations: 20260517164000
+- Phase 44 COMPLETE (3/3 plans); all MA 2026 discovery infrastructure in place
 - race_candidates has NO unique constraint on (race_id, full_name) — use WHERE NOT EXISTS guards, not ON CONFLICT DO NOTHING
 - Azeem 2nd Middlesex race: is_incumbent=false (open seat — Jehlen retiring); office_id=b1ed4e2a-4a9c-4b41-9e46-8500f608e026 (25D27)
 - Migration 162 applied 2026-05-17; version in schema_migrations: 20260517162000
@@ -448,5 +452,5 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-17
-Stopped at: Completed 42-01-PLAN.md — 14/16 Cambridge headshots at 600x750; Phase 43 Cambridge Elections is next
+Stopped at: Completed 44-03-PLAN.md — migration 164 applied; MA discovery rows + Cambridge 2027 placeholder; Phase 44 COMPLETE
 Resume file: None
