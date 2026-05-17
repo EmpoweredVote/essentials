@@ -422,8 +422,24 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 *Updated: 2026-05-17 — Phase 41-02 COMPLETE; migration 158 applied; 17 Cambridge offices seeded (9 City Councillor + 1 Mayor is_appointed=true + 1 City Manager is_appointed=true + 6 School Committee Member); all politician_id=NULL; "Councillor" double-L verified; plan docs had arithmetic error (said 16, correct count is 17); next migration is 159*
 *Updated: 2026-05-17 — Phase 41-03 COMPLETE; migration 159 applied; 16 Cambridge incumbents seeded; unique index on offices.politician_id dropped (dual-office pattern for Council-Manager cities); Siddiqui dual-office (Mayor primary, Councillor secondary); Yi-An Huang City Manager; all 17 offices assigned; Cambridge added to Landing.jsx COVERAGE_AREAS (browseGovernmentList=['2511000']); Phase 41 COMPLETE (3/3 plans); next migration is 160*
 
+### Phase 41 Notes
+
+- essentials.governments has NO unique constraint on geo_id — use WHERE NOT EXISTS guard for idempotent inserts (ON CONFLICT (geo_id) would fail)
+- election_method TEXT column added to essentials.chambers in migration 157 — first usage for Cambridge STV elections
+- Cambridge slug auto-generated: cambridge-city-council / cambridge-school-committee (GENERATED ALWAYS column — never include in INSERT)
+- Cambridge total offices = 17 (9 Councillor + 1 Mayor + 1 City Manager + 6 School Committee), NOT 16 — plan docs had arithmetic error
+- Cambridge total politicians = 16 (Siddiqui fills 2 offices but is 1 politician)
+- Cambridge Mayor is Sumbul Siddiqui (NOT McGovern — ROADMAP.md had outdated info); Siddiqui was unanimously elected Mayor by council on 2026-01-05 (third term)
+- Dual-office pattern: unique index on essentials.offices.politician_id was dropped in migration 159 to support Council-Manager structure where Mayor+Councillor can be the same person
+- Non-unique index on offices.politician_id created for join performance after unique index drop
+- Siddiqui's office_id = Mayor (primary display), City Councillor office also wired to her politician_id
+- Cambridge government UUID: 6f7d55bc-d50c-47ff-b521-5767d1f763fb
+- City Council chamber UUID: b4b8c0a1-2658-4df4-9196-9646c99d173c
+- School Committee chamber UUID: 41846a49-e5d5-460d-b2c2-0f4f8130b949
+- Next migration is 160
+
 ## Session Continuity
 
-Last session: 2026-05-17T02:59:22Z
-Stopped at: Completed 41-03-PLAN.md (Cambridge incumbents — migration 159 applied; Phase 41 COMPLETE)
+Last session: 2026-05-17
+Stopped at: Phase 41 COMPLETE (verified 7/7); Phase 42 Cambridge Headshots is next
 Resume file: None

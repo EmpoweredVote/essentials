@@ -262,12 +262,12 @@ Plans:
   5. All 9 Councillor offices and 6 School Committee offices have January 2026 incumbents (post-Nov 2025 seating)
   6. Contact data (email + website URL) is populated for all Cambridge incumbents from cambridge.ma.gov
   7. Cambridge appears as a browseable coverage area on the Landing page (COVERAGE_AREAS entry with browseGovernmentList: ['2511000'])
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 41-01: Cambridge government row + City Council + School Committee chambers
-- [ ] 41-02: 9 Councillor offices + 6 School Committee offices + Mayor office (appointed) + City Manager office (appointed)
-- [ ] 41-03: All incumbents seeded with contact data (9 councillors + 6 school committee + city manager) + Landing.jsx COVERAGE_AREAS entry
+- [x] 41-01: Cambridge government row + City Council + School Committee chambers
+- [x] 41-02: 9 Councillor offices + 6 School Committee offices + Mayor office (appointed) + City Manager office (appointed)
+- [x] 41-03: All incumbents seeded with contact data (9 councillors + 6 school committee + city manager) + Landing.jsx COVERAGE_AREAS entry
 
 #### Phase 42: Cambridge Headshots
 **Goal**: All Cambridge officials have headshots at project standard (600×750 JPEG) in Supabase Storage, making every Cambridge profile page visually complete
@@ -405,7 +405,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42+44 (
 | 38. MA Geofences | v5.0 | 2/2 | Complete | 2026-05-16 |
 | 39. MA Government DB | v5.0 | 3/3 | Complete | 2026-05-16 |
 | 40. MA Executives + Federal Officials | v5.0 | 4/4 | Complete | 2026-05-16 |
-| 41. Cambridge City Structure | v5.0 | 0/TBD | Not started | - |
+| 41. Cambridge City Structure | v5.0 | 3/3 | Complete | 2026-05-17 |
 | 42. Cambridge Headshots | v5.0 | 0/TBD | Not started | - |
 | 43. Cambridge Elections | v5.0 | 0/TBD | Not started | - |
 | 44. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |
