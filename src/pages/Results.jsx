@@ -1543,8 +1543,6 @@ export default function Results() {
               userAnswers={rawUserAnswers}
               localLensActive={localLensActive}
               toggleLocalLens={toggleLocalLens}
-              judicialLensActive={judicialLensActive}
-              toggleJudicialLens={toggleJudicialLens}
               onStanceMin={handleStanceMin}
               onStanceMax={handleStanceMax}
               isDesktop={isDesktop}

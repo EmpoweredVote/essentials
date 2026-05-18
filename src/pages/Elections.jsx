@@ -255,8 +255,6 @@ export default function Elections() {
             userAnswers={userAnswers}
             localLensActive={localLensActive}
             toggleLocalLens={toggleLocalLens}
-            judicialLensActive={judicialLensActive}
-            toggleJudicialLens={toggleJudicialLens}
             onStanceMin={handleStanceMin}
             onStanceMax={handleStanceMax}
             isDesktop={isDesktop}
