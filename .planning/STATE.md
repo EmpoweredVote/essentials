@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 46 of 46 (Cambridge Compass Stances) — v5.0 Location Onboarding Playbook
-Plan: 01 of 1 complete
-Status: Phase 46 COMPLETE — v5.0 MILESTONE COMPLETE
-Last activity: 2026-05-18 — Compass renders confirmed on Cambridge councillor profiles; all 10 Cambridge politicians fully sourced (151 stances, 151 context rows, 100% source coverage after backfill); 53 politician_context source rows backfilled across all politicians; Yi-An Huang headshot replaced (was distorted); Phase 46 verified
+Phase: 47 of 47 (v5.0 Tech Debt Cleanup)
+Plan: 01 of 1+ complete
+Status: Phase 47 Plan 01 COMPLETE — v5.0 codebase cleanup in progress
+Last activity: 2026-05-18 — Elections.jsx deleted; Cambridge shortcut added to Results.jsx; Phase 39 + Phase 42 VERIFICATION.md files written/updated
 
-Progress: [██████████] 100% (v5.0 — 10/10 phases complete)
+Progress: [██████████] v5.0 milestone complete; Phase 47 tech debt cleanup underway
 
 ## Project Reference
 
@@ -48,6 +48,9 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 - MA federal house reps each have unique NATIONAL_LOWER district — uniqueness key is (district_id, chamber_id)
 - MA federal external_id ranges: senators -200101..-200102; house reps -200201..-200209
 - 119th Congress MA House roster: all 9 seats Democrat (Neal/McGovern/Trahan/Auchincloss/Clark/Moulton/Pressley/Lynch/Keating), unchanged from 118th
+
+- Elections.jsx shortcuts (Monroe County, LA County) were intentionally retired — page was dead code; /elections Navigate-redirects to /results; shortcuts were never user-visible
+- Results.jsx SHORTCUTS pattern: module-level const array before export default function; Cambridge entry uses browse_government_list=2511000; shortcut only renders in address mode (searchMode === 'address')
 
 - computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
 - When localLensActive=true, computeDisplaySpokes uses LOCAL_LENS_TOPICS.slice(0, maxSpokes) as preferredIds regardless of selectedTopics value
@@ -467,6 +470,6 @@ See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
 
 ## Session Continuity
 
-Last session: 2026-05-17
-Stopped at: Phase 44 MA 2026 Elections + Challengers — COMPLETE (3/3 plans; 5/5 verification; next is Phase 45 Playbook Retrospective)
+Last session: 2026-05-18
+Stopped at: Phase 47 Plan 01 complete — v5.0 tech debt cleanup (Elections.jsx deleted, Cambridge shortcut in Results.jsx, 39-VERIFICATION.md created, 42-VERIFICATION.md updated)
 Resume file: None
