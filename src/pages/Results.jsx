@@ -317,6 +317,15 @@ function simplifyForBody(title, pol) {
 }
 
 
+const SHORTCUTS = [
+  {
+    label: 'Cambridge, MA',
+    browseGovernmentList: '2511000',
+    browseLabel: 'Cambridge',
+    browseState: 'MA',
+  },
+];
+
 export default function Results() {
   const { isDark } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -1457,6 +1466,29 @@ export default function Results() {
                   </button>
                 )}
               </div>
+
+              {/* Quick-access shortcuts for anonymous users */}
+              {searchMode === 'address' && SHORTCUTS.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {SHORTCUTS.map((sc) => (
+                    <button
+                      key={sc.label}
+                      type="button"
+                      onClick={() => {
+                        const params = new URLSearchParams({
+                          browse_government_list: sc.browseGovernmentList,
+                          browse_label: sc.browseLabel,
+                        });
+                        if (sc.browseState) params.set('browse_state', sc.browseState);
+                        navigate(`/results?${params}`);
+                      }}
+                      className="border border-[var(--ev-teal)] dark:border-ev-teal-light text-[var(--ev-teal)] dark:text-ev-teal-light px-3 py-1.5 rounded text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-60"
+                    >
+                      {sc.label}
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {searchMode !== 'address' && (
                 <LocationBrowser
