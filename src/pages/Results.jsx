@@ -926,6 +926,20 @@ export default function Results() {
     [representingCity, userState]
   );
 
+  // Only show the nearest upcoming election; hiding future elections avoids duplicate
+  // race sections when a primary and general are both returned for the same seat.
+  const nearestElection = useMemo(() => {
+    if (!electionsData || electionsData.length === 0) return [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const sorted = [...electionsData]
+      .filter((e) => e.election_date)
+      .sort((a, b) => new Date(a.election_date) - new Date(b.election_date));
+    const upcoming = sorted.filter((e) => new Date(e.election_date + 'T12:00:00') >= today);
+    const nearest = upcoming.length > 0 ? upcoming[0] : sorted[sorted.length - 1];
+    return nearest ? [nearest] : [];
+  }, [electionsData]);
+
   const electionsLabelSuffix = useMemo(() => {
     if (!electionsData || electionsData.length === 0) return null;
     const today = new Date();
@@ -1680,7 +1694,7 @@ export default function Results() {
           ) : (
             <div className="px-6 md:px-12 pt-6 pb-8">
               <ElectionsView
-                elections={electionsData}
+                elections={nearestElection}
                 loading={electionsLoading}
                 tierFilter={selectedFilter}
                 compassMode={compassMode}
