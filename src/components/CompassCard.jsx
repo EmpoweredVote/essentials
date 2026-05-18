@@ -35,6 +35,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     initialTopicId,
     compassLoading,
     localLensActive,
+    toggleLocalLens,
   } = useCompass();
   const location = useLocation();
 
@@ -318,8 +319,30 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     </span>
                   </div>
 
-                  {/* Chart container — position:relative so Min/Max buttons can overlay */}
+                  {/* Chart container — position:relative so overlay buttons can anchor */}
                   <div style={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
+                    {/* Local Lens toggle — top-left */}
+                    <button
+                      type="button"
+                      title={localLensActive ? 'Exit Local Lens' : 'Local Lens — 8 local questions'}
+                      onClick={toggleLocalLens}
+                      style={{
+                        position: 'absolute', top: 4, left: 4, zIndex: 10,
+                        width: 28, height: 28,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        borderRadius: 6, border: '1px solid',
+                        borderColor: localLensActive ? '#FF5740' : (isDark ? '#4b5563' : '#e2e8f0'),
+                        backgroundColor: localLensActive ? '#FF5740' : (isDark ? '#1f2937' : '#fff'),
+                        color: localLensActive ? '#fff' : (isDark ? '#d1d5db' : '#4b5563'),
+                        cursor: 'pointer',
+                        padding: 0,
+                      }}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                        <circle cx="12" cy="9" r="2.5" />
+                      </svg>
+                    </button>
                     {/* Min / Max buttons */}
                     <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 10 }}>
                       <button
@@ -414,42 +437,17 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             </div>
           </div>
           {!polLoading && missingTopicCount > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '16px',
-                padding: '14px 16px',
-                marginTop: '16px',
-                backgroundColor: '#F5F9FA',
-                borderRadius: '10px',
-                border: '1px solid #e0e6eb',
-                fontFamily: "'Manrope', sans-serif",
-                flexWrap: 'wrap',
-              }}
-            >
-              <p style={{ margin: 0, fontSize: '14px', color: '#4a5568' }}>
-                <span style={{ fontWeight: 600, color: '#2d3748' }}>{missingTopicCount} new {missingTopicCount === 1 ? 'topic' : 'topics'} available</span>
-                {' '}— {politicianName ? `${politicianName} has stances on topics added since you last calibrated.` : 'Stances on topics added since you last calibrated.'}
-              </p>
-              <a
-                href={ctaHref}
-                style={{
-                  display: 'inline-block',
-                  padding: '6px 16px',
-                  backgroundColor: '#00657c',
-                  color: '#ffffff',
-                  borderRadius: '999px',
-                  fontSize: '13px',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                Update my compass →
+            <p style={{
+              margin: '12px 0 0',
+              fontSize: '12px',
+              fontFamily: "'Manrope', sans-serif",
+              color: isDark ? '#6b7280' : '#9ca3af',
+            }}>
+              {missingTopicCount} {missingTopicCount === 1 ? 'topic' : 'topics'} not yet in your compass.{' '}
+              <a href={ctaHref} style={{ color: isDark ? '#6b7280' : '#9ca3af', textDecoration: 'underline' }}>
+                Update →
               </a>
-            </div>
+            </p>
           )}
           </>
         ) : (
