@@ -361,9 +361,11 @@ function subGroupOrderScore(label, pols) {
 
 // ── Politician sorting within sub-groups ─────────────────────────
 
-// Governor before Lt. Gov; President before VP; others below both.
+// Mayor before council members; Governor before Lt. Gov; President before VP; others below.
 function execTitlePriority(pol) {
   const t = (pol.office_title || '').toLowerCase();
+  if (/\bmayor\b/.test(t) && !/vice|deputy/.test(t)) return 0;
+  if (/\b(vice\s*mayor|deputy\s*mayor)\b/.test(t)) return 1;
   if (/\bgovernor\b/.test(t) && !/lt\.?|lieutenant/.test(t)) return 0;
   if (/\b(lt\.?\s*governor|lieutenant\s+governor)\b/.test(t)) return 1;
   if (/\bpresident\b/.test(t) && !/vice/.test(t)) return 0;
