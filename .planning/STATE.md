@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 47 of 47 (v5.0 Tech Debt Cleanup)
-Plan: 01 of 1+ complete
-Status: Phase 47 Plan 01 COMPLETE — v5.0 codebase cleanup in progress
-Last activity: 2026-05-18 — Elections.jsx deleted; Cambridge shortcut added to Results.jsx; Phase 39 + Phase 42 VERIFICATION.md files written/updated
+Phase: 47 of 47 (v5.0 Tech Debt Cleanup) — v5.0 Location Onboarding Playbook
+Plan: 01 of 1 complete
+Status: Phase 47 COMPLETE — v5.0 MILESTONE COMPLETE (all 11 phases 37-47 shipped)
+Last activity: 2026-05-18 — Elections.jsx deleted; Cambridge shortcut added to Results.jsx (browse_government_list=2511000); Phase 39 VERIFICATION.md created; Phase 42 VERIFICATION.md updated (Huang gap closed, Luisa Santos preserved as open gap); Phase 47 verified 4/4
 
-Progress: [██████████] v5.0 milestone complete; Phase 47 tech debt cleanup underway
+Progress: [██████████] 100% (v5.0 — 11/11 phases complete)
 
 ## Project Reference
 

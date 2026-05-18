@@ -9,7 +9,7 @@
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 - ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
-- ✅ **v5.0 Location Onboarding Playbook** — Phases 37-46 (shipped 2026-05-18)
+- ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18)
 
 ## Phases
 
@@ -185,7 +185,7 @@ Full details: [milestones/v4.0-ROADMAP.md](milestones/v4.0-ROADMAP.md)
 
 ---
 
-### 🚧 v5.0 Location Onboarding Playbook (In Progress)
+### ✅ v5.0 Location Onboarding Playbook (SHIPPED 2026-05-18)
 
 **Milestone Goal:** Build a cold-start, repeatable playbook for onboarding any US city — then prove it by taking Cambridge, MA to Indiana/LA caliber coverage. Every step is documented so future cities can be added without local insider knowledge.
 
@@ -341,7 +341,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 47-01: Delete Elections.jsx + add Cambridge shortcut to Results.jsx SHORTCUTS + write Phase 39 VERIFICATION.md + update Phase 42 VERIFICATION.md
+- [x] 47-01: Delete Elections.jsx + add Cambridge shortcut to Results.jsx SHORTCUTS + write Phase 39 VERIFICATION.md + update Phase 42 VERIFICATION.md
 
 ---
 
@@ -423,5 +423,5 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (aft
 | 44. MA 2026 Elections + Challengers | v5.0 | 3/3 | Complete | 2026-05-17 |
 | 45. Playbook Retrospective | v5.0 | 2/2 | Complete | 2026-05-17 |
 | 46. Cambridge Compass Stances | v5.0 | 1/1 | Complete | 2026-05-18 |
-| 47. v5.0 Tech Debt Cleanup | v5.0 | 0/1 | Not started | - |
+| 47. v5.0 Tech Debt Cleanup | v5.0 | 1/1 | Complete | 2026-05-18 |
 | 48. MA Towns (G4040 COUSUB) | v5.1+ | 0/TBD | Backlog | - |
