@@ -9,7 +9,7 @@
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 - ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
-- 🚧 **v5.0 Location Onboarding Playbook** — Phases 37-46 (in progress)
+- ✅ **v5.0 Location Onboarding Playbook** — Phases 37-46 (shipped 2026-05-18)
 
 ## Phases
 
