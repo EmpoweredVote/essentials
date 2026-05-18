@@ -41,6 +41,7 @@ export function Layout({ children }) {
       <Header
         logoSrc="/EVLogo.svg"
         logoAlt="Empowered Vote"
+        logoHref="https://empowered.vote"
         navItems={[]}
         secondaryAction={<ThemeToggle />}
         onNavigate={(href) => { window.location.href = href === '/' ? 'https://empowered.vote' : href; }}
