@@ -328,13 +328,35 @@ Plans:
 **Plans**: TBD
 
 Plans:
-- [ ] 46-01: Ingest Cambridge councillor stances from accounts team research (apply script + verify compass renders)
+- [x] 46-01: Ingest Cambridge councillor stances from accounts team research (apply script + verify compass renders)
+
+#### Phase 47: v5.0 Tech Debt Cleanup
+**Goal**: Close tech debt identified in the v5.0 milestone audit — remove Elections.jsx dead code, add a Cambridge/MA shortcut for anonymous users on the elections view, and write the missing Phase 39 VERIFICATION.md
+**Depends on**: Phase 46 (all v5.0 work complete)
+**Success Criteria** (what must be TRUE):
+  1. `Elections.jsx` is deleted; no import references remain in App.jsx or elsewhere; the redirect to Results.jsx is the sole elections entry point
+  2. A Cambridge/MA shortcut appears in Results.jsx `SHORTCUTS` so anonymous users can reach Cambridge elections without typing an address
+  3. Phase 39 VERIFICATION.md exists with verification counts (40 senators, 160 reps, government row UUID) — matching the cross-validation already in Phase 40 VERIFICATION.md
+  4. Phase 42 VERIFICATION.md reflects Yi-An Huang headshot resolution (closed in Phase 46) and Luisa de Paula Santos confirmed gap
+**Plans**: 1 plan
+
+Plans:
+- [ ] 47-01: Delete Elections.jsx + add Cambridge shortcut to Results.jsx SHORTCUTS + write Phase 39 VERIFICATION.md + update Phase 42 VERIFICATION.md
 
 ---
 
 ## Backlog
 
 These are known gaps that are not yet scoped into a milestone.
+
+### Phase 48: MA Towns (G4040 COUSUB Boundaries) — Deferred v5.1+
+**Goal**: Load G4040 COUSUB boundaries for all 293 MA towns (Lexington, Concord, Belmont, etc.) so non-city MA residents get a LOCAL boundary row and city officials routing
+**Depends on**: Phase 38 (MA TIGER loader established)
+**Note**: Cambridge (G4110) and all 57 other MA incorporated cities are already covered. This phase extends coverage to the 293 towns that use G4040 COUSUB instead of G4110 in TIGER.
+**Plans**: TBD
+
+Plans:
+- [ ] 48-01: Extend load-state-tiger-boundaries.ts to include G4040 COUSUB layer for MA; load 293 town boundaries; verify Lexington + Concord routing
 
 ### Data Gaps (accounts team backlog)
 
@@ -351,7 +373,7 @@ v2.2 (parked): 8 → 9 → 10 → 11
 v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 18 (after 13)
 v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29) → 32 (after 28+31)
-v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (after 41) → 44 (after 41+38) → 45 (after 44) → 46 (when accounts team delivers stances)
+v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (after 41) → 44 (after 41+38) → 45 (after 44) → 46 (when accounts team delivers stances) → 47 (cleanup, after 46)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -400,4 +422,6 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (aft
 | ~~43. Cambridge Elections~~ | v5.0 | - | Folded into Phase 44 | 2026-05-17 |
 | 44. MA 2026 Elections + Challengers | v5.0 | 3/3 | Complete | 2026-05-17 |
 | 45. Playbook Retrospective | v5.0 | 2/2 | Complete | 2026-05-17 |
-| 46. Cambridge Compass Stances | v5.0 | 0/TBD | Not started | - |
+| 46. Cambridge Compass Stances | v5.0 | 1/1 | Complete | 2026-05-18 |
+| 47. v5.0 Tech Debt Cleanup | v5.0 | 0/1 | Not started | - |
+| 48. MA Towns (G4040 COUSUB) | v5.1+ | 0/TBD | Backlog | - |
