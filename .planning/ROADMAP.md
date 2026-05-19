@@ -217,11 +217,11 @@ Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
 **Requirements**: GEO-01, GEO-02, GEO-03, GEO-04, GEO-05
 **Success Criteria** (what must be TRUE):
   1. All 23 Maine city G4110 PLACE boundaries, 2 congressional CD boundaries, 35 SLDU senate boundaries, 151 SLDL house boundaries, and county G4020 boundaries are loaded in essentials.geofence_boundaries with state='23'
-  2. A Portland address returns ME-02 (NATIONAL_LOWER) when queried
+  2. A Portland address returns ME-01 (NATIONAL_LOWER) when queried
   3. A Bangor address returns the correct STATE_UPPER senate district and STATE_LOWER house district
   4. A Portland address returns LOCAL city boundary row (geo_id='2360545')
   5. A rural Maine address outside any city returns the correct congressional and state legislative districts with no LOCAL row
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
 - [ ] 49-01-PLAN.md — Register Maine (FIPS 23) in STATE_LAYER_ALLOWLIST + STATE_CITY_ASSERTIONS; run loader for all 5 layers; verification SQL gates
