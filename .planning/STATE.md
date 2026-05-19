@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 52 of 56 (ME State Legislature + Headshots) — COMPLETE
-Plan: 3/3 complete for phase 52
-Status: Complete — all 3 plans executed and verified
-Last activity: 2026-05-19 — Completed 52-03-PLAN.md: 185/185 ME legislator headshots uploaded (35 senators + 150 house reps, 0 gaps); house reps upscaled from 152×202 thumbnails
+Phase: 53 of 56 (Portland City Structure + All 23 City Scaffolding + Landing) — IN PROGRESS
+Plan: 1/3 complete for phase 53
+Status: In progress — 53-01 complete (migration 177 applied); 53-02 (Portland incumbents) next
+Last activity: 2026-05-19 — Completed 53-01-PLAN.md — migration 177 applied; 23 ME cities scaffolded + 206 offices + 23 LOCAL districts
 
-Progress: v6.0 in progress — Phase 52 complete; Phase 53 next
+Progress: v6.0 in progress — Phase 52 complete; Phase 53 plan 1/3 done
 
 ## Project Reference
 
@@ -60,6 +60,13 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - ME House D29: still vacant (Kathy Javner deceased, no special election as of 2026-05-19), office_id=ddb05295-68a1-4247-8b69-476269e13840
 - ME house headshots source: /house/Repository/MemberProfiles/{uuid}_{Name}-{year}.jpg (UUID non-derivable, must visit profile per person)
 - Phase 52 headshot coverage: 35/35 senators with photos, 150/150 house reps with photos; 0 gaps; house thumbnails upscaled from 152×202 (approved by user 2026-05-19); details in 52-03-SUMMARY.md
+- essentials.offices has NO seat_label column and NO is_active column — use embedded title pattern: 'Council Member (Ward N)', 'Council Member (At-Large N)', 'Council Member (District N)'
+- essentials.districts has no short_label column — only label
+- ME 23 city governments + LOCAL districts + 206 skeletal offices seeded (migration 177 applied 2026-05-19); next migration is 178
+- ME LOCAL districts state='me' lowercase; office district_id UPDATE uses WHERE district_id IS NULL for idempotency
+- Biddeford council seats=10 (Mayor+7W+2AL), South Portland=8 (Mayor+5D+2AL), Westbrook Council=8 (Mayor+5W+2AL) — research inventory descriptions excluded Mayor from seat totals
+- Sanford/Ellsworth/Eastport mayor model = voter-elected on-council (defaulted; no council-selected evidence in research)
+- Plan 53-02 UPDATE pattern: match on (chamber_id, title) to identify office rows — no seat_label column
 
 ### Known Architecture
 
@@ -69,7 +76,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 173 (172 applied 2026-05-19: ME state senate officials — 35 senators; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 178 (177 applied 2026-05-19: ME 23-city scaffolding — 23 governments, 23 LOCAL districts, 27 chambers, 206 offices; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -87,5 +94,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed 52-02-PLAN.md — migration 173 applied; 150 named ME house reps + 1 vacant (D29); D94 Harriman seated; headshots (52-03) pending
+Stopped at: Completed 53-01-PLAN.md — migration 177 applied; 23 ME city governments + LOCAL districts + 206 skeletal offices; Plan 53-02 (Portland incumbents) is next
 Resume file: None
