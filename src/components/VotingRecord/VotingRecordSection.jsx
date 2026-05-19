@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BillDetailDrawer from './BillDetailDrawer';
 
 const API_BASE = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api`
@@ -66,6 +67,7 @@ export default function VotingRecordSection({ politicianId }) {
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
   const [filter, setFilter] = useState('ALL');
+  const [selectedFile, setSelectedFile] = useState(null);
   const LIMIT = 25;
 
   useEffect(() => {
@@ -152,7 +154,23 @@ export default function VotingRecordSection({ politicianId }) {
         {!loading && !error && filtered.length > 0 && (
           <ul className="divide-y divide-gray-100 dark:divide-gray-800">
             {filtered.map((v, i) => (
-              <li key={`${v.council_file_number}-${v.vote_date}-${i}`} className="py-3 flex items-start gap-3">
+              <li
+                key={`${v.council_file_number}-${v.vote_date}-${i}`}
+                className={`py-3 flex items-start gap-3 px-2 -mx-2 rounded-lg transition-colors ${
+                  v.council_file_number
+                    ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                    : ''
+                }`}
+                onClick={() => v.council_file_number && setSelectedFile(v.council_file_number)}
+                role={v.council_file_number ? 'button' : undefined}
+                tabIndex={v.council_file_number ? 0 : undefined}
+                onKeyDown={(e) => {
+                  if (v.council_file_number && (e.key === 'Enter' || e.key === ' ')) {
+                    e.preventDefault();
+                    setSelectedFile(v.council_file_number);
+                  }
+                }}
+              >
                 <div className="flex-shrink-0 mt-0.5">
                   <VoteBadge vote={v.vote} />
                 </div>
@@ -196,6 +214,13 @@ export default function VotingRecordSection({ politicianId }) {
             Next
           </button>
         </div>
+      )}
+
+      {selectedFile && (
+        <BillDetailDrawer
+          fileNumber={selectedFile}
+          onClose={() => setSelectedFile(null)}
+        />
       )}
     </div>
   );
