@@ -288,9 +288,9 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 53-01-PLAN.md — Migration: all 23 ME city governments + chambers + offices (Portland deep, others skeletal); election_method='rcv' on Portland City Council
-- [ ] 53-02-PLAN.md — Migration: Portland Mayor + City Council + School Board incumbents seeded
-- [ ] 53-03-PLAN.md — Headshots: Portland city officials from portlandmaine.gov; Landing.jsx Maine entry added
+- [x] 53-01-PLAN.md — Migration: all 23 ME city governments + chambers + offices (Portland deep, others skeletal); election_method='rcv' on Portland City Council
+- [x] 53-02-PLAN.md — Migration: Portland Mayor + City Council + School Board incumbents seeded
+- [x] 53-03-PLAN.md — Headshots: Portland city officials from portlandmaine.gov; Landing.jsx Maine entry added
 
 #### Phase 54: ME City Officials Tiers 2-4
 **Goal**: Lewiston, Bangor, South Portland, Auburn, and Biddeford incumbents are seeded; remaining 18 cities have documented coverage gaps
@@ -430,7 +430,7 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 50. ME Government DB Foundation | v6.0 | 1/1 | Complete | 2026-05-18 |
 | 51. ME Executives + Federal Officials + Headshots | v6.0 | 3/3 | Complete | 2026-05-19 |
 | 52. ME State Legislature + Headshots | v6.0 | 0/TBD | Not started | - |
-| 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 0/TBD | Not started | - |
+| 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 3/3 | Complete | 2026-05-19 |
 | 54. ME City Officials Tiers 2-4 | v6.0 | 0/TBD | Not started | - |
 | 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 0/TBD | Not started | - |
 | 56. ME Playbook Retrospective | v6.0 | 0/2 | Not started | - |
