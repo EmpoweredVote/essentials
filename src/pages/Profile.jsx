@@ -8,6 +8,7 @@ import CompassCard from '../components/CompassCard';
 import JudicialCompassSection from '../components/JudicialCompassSection';
 import BarEvaluationSection from '../components/BarEvaluationSection';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
+import VotingRecordSection from '../components/VotingRecord/VotingRecordSection';
 import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import { useCompass } from '../contexts/CompassContext';
@@ -242,6 +243,9 @@ function Profile() {
           {isLegalPolitician && <LegalDonorActivitySection politicianId={id} />}
           <div className="mt-6">
             <CampaignFinanceSection politicianId={id} />
+          </div>
+          <div className="mt-6">
+            <VotingRecordSection politicianId={id} />
           </div>
           </>
         )}
