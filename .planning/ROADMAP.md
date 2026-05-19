@@ -267,7 +267,7 @@ Plans:
   2. 151 STATE_LOWER offices exist in the Maine House of Representatives chamber, each linked to the correct SLDL district
   3. Any Maine address returns exactly 1 STATE_UPPER and 1 STATE_LOWER legislator
   4. Headshots for available senators and house reps are uploaded from mainelegislature.org at 600x750; coverage gaps documented
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [ ] 52-01-PLAN.md — Migration: 35 ME state senators + 35 STATE_UPPER offices; office_id back-fill
