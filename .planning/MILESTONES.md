@@ -1,5 +1,32 @@
 # Milestones
 
+## v5.0 Location Onboarding Playbook (Shipped: 2026-05-18)
+
+**Delivered:** Built a cold-start, repeatable playbook for onboarding any US city, then proved it by taking Cambridge, MA to Indiana/LA caliber coverage — geofences, government structure, incumbents, headshots, elections, discovery pipeline, and compass stances. The playbook (LOCATION-ONBOARDING.md + 6 templates) is now generalized for any US city.
+
+**Phases completed:** 37-47 (21 plans total; Phase 43 intentionally folded into Phase 44)
+
+**Key accomplishments:**
+
+- `LOCATION-ONBOARDING.md` cold-start playbook (8 steps, 6 templates, 13 Cambridge learnings with [GOTCHA] callouts) — repeatable process for onboarding any US city with no local insider knowledge; new `elections-seed.md` template captures patterns missing before v5.0
+- Massachusetts state layer — 281 geofence boundaries (58 G4110 cities + 40 Senate + 160 House + 9 congressional + 14 county); 200 MA legislators + 6 executives + 11 federal officials with 17 headshots at 600×750
+- Cambridge city structure — 9-seat at-large City Council (stv_proportional), School Committee, Mayor correctly modeled as council-internal appointed title (not a separately elected exec), City Manager, 16 incumbents with full contact data, Landing page entry
+- Cambridge headshots — 15/16 officials at 600×750 JPEG in Supabase Storage; Luisa de Paula Santos confirmed genuine unavailability (group photo ~85px/person)
+- MA 2026 elections + discovery pipeline — primary (2026-09-01) + general (2026-11-03) election rows, 10+ Cambridge-area district races, Azeem 2nd Middlesex primary explicitly seeded with politician_id linked, discovery pipeline armed (cron_active=true for geoid='25')
+- Cambridge compass stances — 162 stance values for 8/9 councillors + City Manager (10 politicians), all cited from public record; compass renders correctly on councillor profiles (human-verified)
+
+**Stats:**
+
+- 91 files changed (17,480 insertions, 1,340 deletions)
+- 10 active phases (+ 1 skipped by design), 21 plans
+- 4 days (2026-05-15 → 2026-05-18)
+
+**Git range:** `bda422b` (docs: start milestone v5.0) → `20f0d17` (docs(47): complete phase)
+
+**What's next:** Planning next milestone — `/gsd:new-milestone`
+
+---
+
 ## v4.0 Compass Experience (Shipped: 2026-05-14)
 
 **Delivered:** Turned the political compass from an opt-in checkbox into the primary experience for calibrated users — mini compasses on every candidate tile, a Local Lens preset that snaps to 8 curated local topics, synchronized global Min/Max + Lens controls, and automatic compass-default mode on the Elections and Results pages.

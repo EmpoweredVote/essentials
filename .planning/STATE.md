@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 47 of 47 (v5.0 Tech Debt Cleanup) — v5.0 Location Onboarding Playbook
-Plan: 01 of 1 complete
-Status: Phase 47 COMPLETE — v5.0 MILESTONE COMPLETE (all 11 phases 37-47 shipped)
-Last activity: 2026-05-18 — Elections.jsx deleted; Cambridge shortcut added to Results.jsx (browse_government_list=2511000); Phase 39 VERIFICATION.md created; Phase 42 VERIFICATION.md updated (Huang gap closed, Luisa Santos preserved as open gap); Phase 47 verified 4/4
+Phase: — (v5.0 milestone complete — next milestone not yet started)
+Plan: Not started
+Status: Ready to plan next milestone
+Last activity: 2026-05-18 — v5.0 milestone archived; git tag v5.0 created
 
-Progress: [██████████] 100% (v5.0 — 11/11 phases complete)
+Progress: v5.0 SHIPPED ✅ — start v6.0 with `/gsd:new-milestone`
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-15 after v5.0 milestone start)
+See: .planning/PROJECT.md (updated 2026-05-18 after v5.0 milestone)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v5.0 Location Onboarding Playbook — Cambridge, MA
+**Current focus:** Planning next milestone (`/gsd:new-milestone`)
 
 ## Accumulated Context
 

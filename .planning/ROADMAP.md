@@ -9,7 +9,7 @@
 - ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 - ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
-- ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18)
+- ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 
 ## Phases
 
@@ -185,163 +185,24 @@ Full details: [milestones/v4.0-ROADMAP.md](milestones/v4.0-ROADMAP.md)
 
 ---
 
-### ✅ v5.0 Location Onboarding Playbook (SHIPPED 2026-05-18)
+<details>
+<summary>✅ v5.0 Location Onboarding Playbook (Phases 37-47) — SHIPPED 2026-05-18</summary>
 
-**Milestone Goal:** Build a cold-start, repeatable playbook for onboarding any US city — then prove it by taking Cambridge, MA to Indiana/LA caliber coverage. Every step is documented so future cities can be added without local insider knowledge.
+- [x] Phase 37: Playbook Draft (1/1 plans) — completed 2026-05-16
+- [x] Phase 38: MA Geofences (2/2 plans) — completed 2026-05-16
+- [x] Phase 39: MA Government DB (3/3 plans) — completed 2026-05-16
+- [x] Phase 40: MA Executives + Federal Officials (4/4 plans) — completed 2026-05-16
+- [x] Phase 41: Cambridge City Structure (3/3 plans) — completed 2026-05-17
+- [x] Phase 42: Cambridge Headshots (1/1 plans) — completed 2026-05-17
+- ~~Phase 43: Cambridge Elections~~ — folded into Phase 44 (by design)
+- [x] Phase 44: MA 2026 Elections + Challengers (3/3 plans) — completed 2026-05-17
+- [x] Phase 45: Playbook Retrospective (2/2 plans) — completed 2026-05-17
+- [x] Phase 46: Cambridge Compass Stances (1/1 plans) — completed 2026-05-18
+- [x] Phase 47: v5.0 Tech Debt Cleanup (1/1 plans) — completed 2026-05-18
 
-#### Phase 37: Playbook Draft
-**Goal**: A reusable location onboarding checklist and phase templates exist before Cambridge execution begins, so that every Cambridge phase can be documented against the playbook in real time
-**Depends on**: Nothing (first phase — no Cambridge data needed)
-**Requirements**: PLAY-01, PLAY-02
-**Success Criteria** (what must be TRUE):
-  1. `LOCATION-ONBOARDING.md` exists at project root with a complete cold-start checklist covering geofences, government DB, officials seed, headshots, elections, discovery setup, and compass stances — using only public sources
-  2. Phase templates exist in `.planning/templates/` for at least: DB foundation, officials seed, headshots, discovery setup, and compass stances
-  3. Both artifacts reference Cambridge-specific decisions (Mayor is appointed, odd-year elections, STV election method, Councillor spelling) as example annotations
-**Plans**: 1 plan
+Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
 
-Plans:
-- [x] 37-01: LOCATION-ONBOARDING.md checklist + .planning/templates/ phase templates
-
-#### Phase 38: MA Geofences
-**Goal**: All Massachusetts geofence boundaries are loaded into the database so that any MA address can be routed to the correct state legislators, congressional representative, city, and county
-**Depends on**: Nothing (no blocking DB dependencies — runs in parallel with Phase 39)
-**Requirements**: MAGEO-01, MAGEO-02, MAGEO-03, MAGEO-04
-**Success Criteria** (what must be TRUE):
-  1. A Cambridge address returns the correct STATE_UPPER district (one of the confirmed MA Senate districts covering the city)
-  2. A Cambridge address returns the correct STATE_LOWER district (one of the 24th/25th/26th Middlesex districts)
-  3. A Cambridge address returns the correct NATIONAL_LOWER district (MA-05 or MA-07 depending on ward)
-  4. The Cambridge place boundary (GEOID 2511000) is loaded and a Cambridge address returns Cambridge city officials — not Boston or Somerville
-  5. The Middlesex County G4020 boundary (FIPS 25017) is loaded for congressional intersection support
-**Plans**: 2 plans
-
-Plans:
-- [x] 38-01-PLAN.md — Register MA in TIGER loader (allowlist + MTFCC assertion) + run all 5 layers (cd/sldu/sldl/place/county)
-- [x] 38-02-PLAN.md — Write verify SQL + smoke test 4 Cambridge addresses; confirm Middlesex G4020 county intersection
-
-#### Phase 39: MA Government DB
-**Goal**: The Commonwealth of Massachusetts government row and all 200 state legislators are seeded in the database with correct district assignments, unblocking state-level lookups for any MA address
-**Depends on**: Phase 38 (districts must exist before politicians link to them)
-**Requirements**: MADB-01, MADB-02, MADB-03
-**Success Criteria** (what must be TRUE):
-  1. A point query at any Cambridge address returns the correct MA State Senator by name (matched to their district geofence)
-  2. A point query at any Cambridge address returns the correct MA State Representative by name (one of Rogers/Decker/Connolly for central Cambridge addresses)
-  3. The Commonwealth of Massachusetts government row uses the correct name ("Commonwealth of Massachusetts") and both legislative chambers (Senate + House of Representatives) exist
-**Plans**: TBD
-
-Plans:
-- [x] 39-01: Commonwealth government row + MA Senate + MA House of Representatives chambers
-- [x] 39-02: 40 MA state senators + 40 offices seeded (STATE_UPPER, district-linked)
-- [x] 39-03: 160 MA state representatives + 160 offices seeded (STATE_LOWER, district-linked)
-
-#### Phase 40: MA Executives + Federal Officials
-**Goal**: MA statewide executives and all federal officials representing MA addresses are seeded with headshots, completing the full state/federal layer for any Massachusetts address lookup
-**Depends on**: Phase 38 (congressional geofences must exist), Phase 39 (government row must exist)
-**Requirements**: MADB-04, FED-01, FED-02
-**Success Criteria** (what must be TRUE):
-  1. Governor Healey's profile page renders with headshot, title, and chamber
-  2. A Cambridge address lookup returns US Senators Warren and Markey
-  3. A Cambridge address lookup returns the correct US House representative (MA-05 Clark or MA-07 Pressley depending on ward — verified against Cambridge GIS)
-  4. All 6 MA executives + 2 US Senators + 9 US House reps have headshots at 600×750 in Supabase Storage
-**Plans**: 4 plans
-
-Plans:
-- [x] 40-01-PLAN.md — MA executive DB: migration 154 (role_canonical column + NATIONAL_UPPER district + 6 STATE_EXEC districts + 6 chambers + 6 politicians + 6 offices + office_id back-fill)
-- [x] 40-02-PLAN.md — MA federal officials DB: migrations 155 + 156 (Warren + Markey via NATIONAL_UPPER; 9 US House reps via NATIONAL_LOWER 2501-2509; office_id back-fill)
-- [x] 40-03-PLAN.md — MA executive headshots: 6 portraits (MA.gov first, Wikipedia fallback) at 600x750 with per-photo approval
-- [x] 40-04-PLAN.md — MA federal officials headshots: 11 portraits (senate.gov/house.gov/press gallery first, Wikipedia fallback) at 600x750 with per-photo approval
-
-#### Phase 41: Cambridge City Structure
-**Goal**: Cambridge's government, chambers, offices, incumbents, and contact data are fully seeded in the database — with the Mayor correctly modeled as an appointed council-internal title, not a separately elected executive; Cambridge appears on the Landing page
-**Depends on**: Phase 39 (Cambridge government row needs Commonwealth as parent context)
-**Requirements**: CAMB-01, CAMB-02, CAMB-03, CAMB-04, CAMB-05, CAMB-06, CAMB-07, LAND-01
-**Success Criteria** (what must be TRUE):
-  1. Cambridge government row exists with geo_id=2511000, state=MA, correct county reference
-  2. City Council chamber exists with 9 at-large seats and election_method=stv_proportional; School Committee chamber exists with 6 elected seats
-  3. Mayor office row has is_appointed_position=true and district_type=LOCAL (not LOCAL_EXEC); no election race row exists for Mayor; McGovern is linked to both his Councillor office and the Mayor office
-  4. City Manager office row has is_appointed_position=true with Yi-An Huang seeded as incumbent
-  5. All 9 Councillor offices and 6 School Committee offices have January 2026 incumbents (post-Nov 2025 seating)
-  6. Contact data (email + website URL) is populated for all Cambridge incumbents from cambridge.ma.gov
-  7. Cambridge appears as a browseable coverage area on the Landing page (COVERAGE_AREAS entry with browseGovernmentList: ['2511000'])
-**Plans**: 3 plans
-
-Plans:
-- [x] 41-01: Cambridge government row + City Council + School Committee chambers
-- [x] 41-02: 9 Councillor offices + 6 School Committee offices + Mayor office (appointed) + City Manager office (appointed)
-- [x] 41-03: All incumbents seeded with contact data (9 councillors + 6 school committee + city manager) + Landing.jsx COVERAGE_AREAS entry
-
-#### Phase 42: Cambridge Headshots
-**Goal**: All Cambridge officials have headshots at project standard (600×750 JPEG) in Supabase Storage, making every Cambridge profile page visually complete
-**Depends on**: Phase 41 (politician rows must exist before photos can be linked)
-**Requirements**: CAMB-08
-**Success Criteria** (what must be TRUE):
-  1. All 9 City Councillors have headshots at 600×750 in Supabase Storage (source: cambridgema.gov/Departments/citycouncil/members or vote.cambridgecivic.com)
-  2. All 6 School Committee members have headshots at 600×750 in Supabase Storage
-  3. City Manager Yi-An Huang has a headshot at 600×750 in Supabase Storage
-  4. No headshot has superimposed text, banners, or graphics over the face; all are cropped to 4:5 ratio before resize
-**Plans**: TBD
-
-Plans:
-- [x] 42-01: Headshots for all 16 Cambridge officials (9 councillors + 6 school committee + 1 city manager)
-
-#### ~~Phase 43: Cambridge Elections~~ (Folded into Phase 45)
-**Decision**: Phase skipped — 2025 historical data won't be surfaced to users (UI shows upcoming elections only); 2027 placeholder + Cambridge discovery setup folded into Phase 45. Cambridge residents' next relevant election is the 2026 MA state/federal cycle. See `.planning/phases/43-cambridge-elections/43-CONTEXT.md` for full rationale.
-
-#### Phase 44: MA 2026 Elections + Challengers
-**Goal**: All November 2026 Massachusetts state and federal races are seeded with challenger candidates, making the ballot visible to any MA resident — with Azeem's September 2026 state senate primary explicitly named; Cambridge local election infrastructure also set up here (absorbed from Phase 43)
-**Depends on**: Phase 39 (MA legislators must exist as incumbents), Phase 40 (federal incumbents must exist), Phase 41 (Cambridge government structure for Cambridge discovery setup)
-**Requirements**: MA26-01, MA26-02, MA26-03, CAMB-09 (placeholder), CAMB-11 (discovery setup)
-**Success Criteria** (what must be TRUE):
-  1. A November 2026 Massachusetts General Election row exists in essentials.elections
-  2. Burhan Azeem's 2nd Middlesex State Senate primary (September 1, 2026) is seeded as a named race with known candidates — cross-referencing his existing Cambridge Councillor politician row
-  3. The discovery pipeline has been run (or manually seeded) for MA state senate, state house, and federal races; staged challengers are visible in the admin queue
-  4. At least the congressional and senate races covering Cambridge (MA-05/MA-07, 2nd Middlesex, Middlesex + Suffolk) have candidates seeded from official MA SoS filings
-  5. A 2027 Cambridge election placeholder row exists; the discovery_jurisdictions row for Cambridge is present with cambridgema.gov domain but marked inactive
-**Plans**: 3 plans
-
-Plans:
-- [x] 44-01-PLAN.md — Migration 162: MA 2026 primary + general election rows, 2nd Middlesex Democratic primary race, 5 known candidates (Azeem politician_id linked, is_incumbent=false)
-- [x] 44-02-PLAN.md — Migration 163: Markey US Senate primary + general races with challengers; Cambridge-area district general races (MA-05, MA-07, 25D26, 25D27 general, 25D28, 25083, 25084) with incumbents
-- [x] 44-03-PLAN.md — Migration 164: MA discovery_jurisdictions rows (both election dates) + 2027 Cambridge Municipal Election placeholder + Cambridge discovery row (naturally outside 180-day cron horizon)
-
-#### Phase 45: Playbook Retrospective
-**Goal**: The LOCATION-ONBOARDING.md checklist and phase templates are updated from Cambridge execution learnings so the next city onboarding is faster and avoids the pitfalls Cambridge surfaced
-**Depends on**: Cambridge structural phases complete (41-44); Phase 37 (original playbook draft)
-**Requirements**: PLAY-03
-**Success Criteria** (what must be TRUE):
-  1. LOCATION-ONBOARDING.md reflects at least 3 Cambridge-specific learnings (e.g., election_method enum verification step, Mayor office modeling decision, FindMyLegislator boundary verification workflow)
-  2. Phase templates in .planning/templates/ are updated with any new patterns discovered during Cambridge (e.g., stv_proportional election method, at-large seat numbering, Council-Manager structure)
-  3. Checklist includes explicit pre-migration verification steps for: next election year (odd vs. even), Mayor election status, and boundary source accuracy
-**Plans**: 2 plans
-
-Plans:
-- [x] 45-01-PLAN.md — Propose + confirm Cambridge learnings (checkpoint before any files changed)
-- [x] 45-02-PLAN.md — Write confirmed learnings into LOCATION-ONBOARDING.md + update 4 templates + create elections-seed.md
-
-#### Phase 46: Cambridge Compass Stances
-**Goal**: Cambridge City Councillors have compass stances ingested from accounts team research, making the political compass useful for the most locally-relevant issue
-**Depends on**: Phase 41 (politician rows must exist); accounts team delivering stance values + citations
-**Requirements**: CAMB-13
-**Success Criteria** (what must be TRUE):
-  1. At least 5 of the 9 Cambridge City Councillors have at least one compass stance value in inform.politician_answers sourced from public record (voting record, candidate questionnaires, public statements)
-  2. Each ingested stance has a source citation; no value is inferred without explicit documentation in the politician_context row
-  3. The political compass renders on at least one Cambridge councillor's profile page (human-verified)
-**Plans**: TBD
-
-Plans:
-- [x] 46-01: Ingest Cambridge councillor stances from accounts team research (apply script + verify compass renders)
-
-#### Phase 47: v5.0 Tech Debt Cleanup
-**Goal**: Close tech debt identified in the v5.0 milestone audit — remove Elections.jsx dead code, add a Cambridge/MA shortcut for anonymous users on the elections view, and write the missing Phase 39 VERIFICATION.md
-**Depends on**: Phase 46 (all v5.0 work complete)
-**Success Criteria** (what must be TRUE):
-  1. `Elections.jsx` is deleted; no import references remain in App.jsx or elsewhere; the redirect to Results.jsx is the sole elections entry point
-  2. A Cambridge/MA shortcut appears in Results.jsx `SHORTCUTS` so anonymous users can reach Cambridge elections without typing an address
-  3. Phase 39 VERIFICATION.md exists with verification counts (40 senators, 160 reps, government row UUID) — matching the cross-validation already in Phase 40 VERIFICATION.md
-  4. Phase 42 VERIFICATION.md reflects Yi-An Huang headshot resolution (closed in Phase 46) and Luisa de Paula Santos confirmed gap
-**Plans**: 1 plan
-
-Plans:
-- [x] 47-01: Delete Elections.jsx + add Cambridge shortcut to Results.jsx SHORTCUTS + write Phase 39 VERIFICATION.md + update Phase 42 VERIFICATION.md
+</details>
 
 ---
 

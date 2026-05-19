@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, and Collin County, TX. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, Collin County, TX, and Cambridge, MA. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources. A cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) documents how to onboard any US city from scratch.
 
 ## Core Value
 
@@ -73,20 +73,19 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ Mini compass wired into Elections + Representatives candidate tiles — overlay pattern, per-race scope filtering, portal tooltip, race deduplication — v4.0
 - ✓ `CompassControlsBar.jsx` shared sticky component — Min/Max (Heroicon SVGs) + Local Lens + Judicial Lens toggle; single source of truth for controls on both pages — v4.0
 - ✓ Compass-default mode — calibrated users (≥3 answers) auto-enable compass on `/elections` and Results pages; localStorage null-check; explicit `'false'` suppresses re-enable — v4.0
+- ✓ `LOCATION-ONBOARDING.md` cold-start playbook (8 steps, 6 templates, 13 Cambridge learnings with [GOTCHA] callouts) — repeatable process for onboarding any US city; `elections-seed.md` template added — v5.0
+- ✓ Massachusetts state layer — 281 geofence boundaries (58 G4110 cities + 40 Senate + 160 House + 9 congressional + 14 county); 200 MA legislators + 6 executives + 11 federal officials with headshots at 600×750 — v5.0
+- ✓ Cambridge, MA city structure — 9-seat at-large City Council (stv_proportional), School Committee, City Manager, Mayor (appointed council-internal title, not LOCAL_EXEC); 16 incumbents seeded with contact data; Landing page entry — v5.0
+- ✓ Cambridge headshots — 15/16 officials at 600×750 JPEG in Supabase Storage (Luisa de Paula Santos genuine unavailability documented) — v5.0
+- ✓ MA 2026 elections + discovery pipeline — primary (2026-09-01) + general (2026-11-03) seeded; 10+ Cambridge-area district races; Azeem 2nd Middlesex primary linked (politician_id=d2358e54); MA discovery_jurisdictions cron_active=true; Cambridge 2027 placeholder inactive — v5.0
+- ✓ Cambridge compass stances — 162 stance values for 8/9 councillors + City Manager, all cited from public record; compass renders correctly on councillor profiles (human-verified) — v5.0
+- ✓ Playbook retrospective — LOCATION-ONBOARDING.md + 6 templates updated with Cambridge execution learnings; wrong pg_constraint query removed; 7 [GOTCHA] callouts documented — v5.0
 
 ### Active
 
-<!-- v5.0 Location Onboarding Playbook — Cambridge, MA -->
+<!-- v6.0 — TBD — run /gsd:new-milestone to define next milestone -->
 
-- [ ] LOCATION-ONBOARDING.md checklist documenting all steps to onboard a new US city from scratch (cold-start, no insider knowledge required)
-- [ ] Phase templates for each repeatable phase type (officials seed, headshots, discovery setup, compass stances)
-- [ ] Massachusetts state + federal officials — governor, state legislators, congressional reps — with geofences
-- [ ] Cambridge, MA city government structure in DB (City Council 9-seat at-large STV, School Committee, City Manager, Mayor)
-- [ ] Cambridge incumbents seeded with contact data
-- [ ] Cambridge officials headshots at 600×750
-- [ ] Cambridge discovery pipeline configured + elections seeded
-- [ ] Cambridge compass stances researched from public record
-- [ ] Playbook retrospective — checklist + templates updated from Cambridge execution learnings
+(No active requirements — start next milestone with `/gsd:new-milestone`)
 
 ### Out of Scope
 
@@ -108,8 +107,9 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Shipped v3.1**: Local Compass Expansion — 4 phases, 7 plans, 25/26 requirements (2026-05-05). 10 LOCAL topics + 10 FC communities + scope filtering wired in essentials frontend.
 - **Shipped v3.2**: Legal Candidate Evaluation Framework — 7 phases, 17 plans, 15/15 active requirements (2026-05-10). Judicial compass, bar evaluation data, stance research for 3 LA City Attorney candidates, legal donor activity. 67 files, ~11k LOC delta.
 - **Shipped v4.0**: Compass Experience — 4 phases (3 active + 1 parked), 7 plans, all requirements satisfied (2026-05-12 → 2026-05-14). 32 files changed, 4,919 insertions. MiniCompass tiles, Local Lens preset, CompassControlsBar shared component, compass-default mode for calibrated users.
+- **Shipped v5.0**: Location Onboarding Playbook — Cambridge, MA proof-of-concept (10 active phases + 1 skipped, 21 plans, 4 days; 2026-05-15 → 2026-05-18). 91 files changed (17,480 insertions). MA state layer (281 geofences, 200+ legislators + executives + federal officials), Cambridge city structure + 15/16 headshots + MA 2026 elections + 162 compass stances. Cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) now available for any US city.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
-- **Database state**: 2 elections (2026 Indiana Primary May 5, 2026 LA County Primary June 2), 61 races, 124+ candidates, 7,290+ geofence boundaries (181 TX state legislative + 38 TX congressional + 1 Collin County G4020 added in v3.0). Discovery pipeline now auto-populates candidates for 23 TX cities (+ existing CA/IN jurisdictions).
+- **Database state**: 5+ elections (Indiana Primary May 5, LA County Primary June 2, MA Primary Sept 1 2026, MA General Nov 3 2026, 2027 Cambridge placeholder); 70+ races; 140+ candidates; 7,570+ geofence boundaries (+ 281 MA in v5.0: 58 G4110 cities + 40 Senate + 160 House + 9 congressional + 14 county). Discovery pipeline covers 23 TX cities + CA + IN + MA 2026 (Cambridge 2027 inactive — outside cron horizon).
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
 - **Auth**: Redirect-only flow via Auth Hub (`accounts.empowered.vote`). No direct login from Essentials.
 - **Anti-patterns enforced**: No Google Places autocomplete. No address re-entry for Connected users. Party data on races only, never on candidates.
@@ -162,16 +162,13 @@ A resident can look up who represents them — and who is on their ballot — wi
 | MINI-05/06 per-tile Lens icon superseded by CTRL-02 | Global controls bar is the sole Local Lens entry point; per-tile magnifying-glass accepted as design change 2026-05-14 | ✓ Good — v4.0 |
 | Phase 35 Hover Modal parked | Spoke tooltips (Phase 34) + full-page compass navigation serve the information need; hover modal would conflict with tooltip layer | ✓ Good — v4.0 |
 | localStorage null-check auto-enable pattern | ev:compassMode absent → auto-enable; explicit 'false' suppresses re-enable on reload — canonical pattern for both Elections.jsx and Results.jsx | ✓ Good — v4.0 |
-
-## Current Milestone: v5.0 Location Onboarding Playbook
-
-**Goal:** Build a cold-start, repeatable playbook for onboarding any US city — then prove it by taking Cambridge, MA (Harvard's backyard, RCV pioneer) to Indiana/LA caliber coverage.
-
-**Target features:**
-- LOCATION-ONBOARDING.md checklist + reusable phase templates
-- Massachusetts state + federal layer (geofences, officials, executives)
-- Cambridge, MA: city structure, incumbents, headshots, discovery pipeline, compass stances
-- Playbook retrospective: checklist updated from Cambridge execution
+| Cambridge Mayor as appointed council-internal (not LOCAL_EXEC) | Cambridge Mayor is elected by councillors annually — is_appointed_position=true, district_type=LOCAL; no separate election race row; prevents incorrect "Local Executive" routing | ✓ Good — v5.0 |
+| Unique index on offices.politician_id dropped for Council-Manager cities | Siddiqui holds both Mayor + City Councillor office; unique index blocks this valid dual-office pattern; non-unique index created for join performance | ✓ Good — v5.0 |
+| MA TIGER G4110 for 58 incorporated cities; G4040 COUSUB deferred | 58 MA cities use G4110 in TIGER; 293 towns use G4040 COUSUB — towns deferred to v5.1+ Phase 48; MTFCC pre-flight assertion pattern established | ✓ Good — v5.0 |
+| Phase 43 (2025 Cambridge elections) N/A by design | UI shows upcoming elections only; 2025 historical results have no user-facing impact; scope folded into Phase 44 | ✓ Good — v5.0 |
+| Cambridge headshot license = press_use for all | cambridgema.gov + cpsd.us official bio photos are press/government-use photos, not public domain works — attribution required | ✓ Good — v5.0 |
+| election_method is TEXT on essentials.chambers | Added via migration 157; no pg_constraint — future plans must not query pg_constraint to discover valid values | ✓ Good — v5.0 |
+| governments INSERT uses WHERE NOT EXISTS (not ON CONFLICT) | essentials.governments has no unique constraint on geo_id — ON CONFLICT (geo_id) would fail; WHERE NOT EXISTS is the only idempotent pattern | ✓ Good — v5.0 |
 
 ---
-*Last updated: 2026-05-15 after v5.0 milestone start*
+*Last updated: 2026-05-18 after v5.0 milestone*
