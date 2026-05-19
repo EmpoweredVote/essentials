@@ -74,7 +74,8 @@ export default function VotingRecordSection({ politicianId }) {
     if (!politicianId) return;
     setLoading(true);
     setError(null);
-    fetch(`${API_BASE}/campaign-finance/politician/${politicianId}/council-votes?limit=${LIMIT}&offset=${offset}`)
+    const voteParam = filter !== 'ALL' ? `&vote=${filter}` : '';
+    fetch(`${API_BASE}/campaign-finance/politician/${politicianId}/council-votes?limit=${LIMIT}&offset=${offset}${voteParam}`)
       .then(r => r.ok ? r.json() : Promise.reject(r.status))
       .then(data => {
         setVotes(data.votes ?? []);
@@ -85,12 +86,16 @@ export default function VotingRecordSection({ politicianId }) {
       })
       .catch(() => setError('Unable to load voting record.'))
       .finally(() => setLoading(false));
-  }, [politicianId, offset]);
+  }, [politicianId, offset, filter]);
 
   // Don't render at all if no data and not loading
   if (!loading && !error && total === 0) return null;
 
-  const filtered = filter === 'ALL' ? votes : votes.filter(v => v.vote === filter);
+  const filteredTotal = filter === 'ALL' ? total
+    : filter === 'YES' ? yesTotal
+    : filter === 'NO' ? noTotal
+    : filter === 'ABSENT' ? absentTotal
+    : votes.length;
 
   return (
     <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
@@ -117,7 +122,7 @@ export default function VotingRecordSection({ politicianId }) {
             <span className="text-red-600 dark:text-red-400 font-medium">{noTotal.toLocaleString()} No</span>
             <span className="text-gray-600 dark:text-gray-300 font-medium">{absentTotal.toLocaleString()} Absent</span>
             <span className="text-gray-500 dark:text-gray-400 text-xs ml-auto">
-              Showing {offset + 1}–{Math.min(offset + votes.length, total)} of {total}
+              Showing {offset + 1}–{Math.min(offset + votes.length, filteredTotal)} of {filteredTotal}
             </span>
           </div>
         )}
@@ -129,7 +134,7 @@ export default function VotingRecordSection({ politicianId }) {
           {['ALL', 'YES', 'NO', 'ABSENT', 'ABSTAIN'].map(f => (
             <button
               key={f}
-              onClick={() => setFilter(f)}
+              onClick={() => { setFilter(f); setOffset(0); }}
               className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                 filter === f
                   ? 'bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900'
@@ -148,12 +153,12 @@ export default function VotingRecordSection({ politicianId }) {
         {error && (
           <p className="text-sm text-red-500 dark:text-red-400">{error}</p>
         )}
-        {!loading && !error && filtered.length === 0 && (
+        {!loading && !error && votes.length === 0 && (
           <p className="text-sm text-gray-500 dark:text-gray-400">No votes match this filter.</p>
         )}
-        {!loading && !error && filtered.length > 0 && (
+        {!loading && !error && votes.length > 0 && (
           <ul className="divide-y divide-gray-100 dark:divide-gray-800">
-            {filtered.map((v, i) => (
+            {votes.map((v, i) => (
               <li
                 key={`${v.council_file_number}-${v.vote_date}-${i}`}
                 className={`py-3 flex items-start gap-3 px-2 -mx-2 rounded-lg transition-colors ${
@@ -194,7 +199,7 @@ export default function VotingRecordSection({ politicianId }) {
       </div>
 
       {/* Pagination */}
-      {!loading && total > LIMIT && (
+      {!loading && filteredTotal > LIMIT && (
         <div className="px-5 pb-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3">
           <button
             onClick={() => setOffset(Math.max(0, offset - LIMIT))}
@@ -204,11 +209,11 @@ export default function VotingRecordSection({ politicianId }) {
             Previous
           </button>
           <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
-            Page {Math.floor(offset / LIMIT) + 1} of {Math.ceil(total / LIMIT)}
+            Page {Math.floor(offset / LIMIT) + 1} of {Math.ceil(filteredTotal / LIMIT)}
           </span>
           <button
             onClick={() => setOffset(offset + LIMIT)}
-            disabled={offset + LIMIT >= total}
+            disabled={offset + LIMIT >= filteredTotal}
             className="px-3 py-1.5 text-xs rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 disabled:opacity-40 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             Next
