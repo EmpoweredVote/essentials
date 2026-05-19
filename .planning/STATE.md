@@ -57,7 +57,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 168 (167 applied 2026-05-18: Cambridge district_id back-fill)
+- Next migration is 169 (168 applied 2026-05-18: State of Maine government + 6 chambers)
 
 ### Pending Todos (accounts team backlog)
 

@@ -15,8 +15,8 @@
 
 ### MGOV — Maine State + Federal Government DB
 
-- [ ] **MGOV-01**: Maine state government row + legislative chambers (Senate, House of Representatives) seeded
-- [ ] **MGOV-02**: Maine executive chambers seeded (Governor, AG, Secretary of State, Treasurer)
+- [x] **MGOV-01**: Maine state government row + legislative chambers (Senate, House of Representatives) seeded
+- [x] **MGOV-02**: Maine executive chambers seeded (Governor, AG, Secretary of State, Treasurer)
 - [ ] **MGOV-03**: Governor + AG + SoS + Treasurer offices + incumbents seeded; AG/SoS/Treasurer modeled as legislature-elected (is_appointed_position=true)
 - [ ] **MGOV-04**: 2 US Senators (Susan Collins + Angus King) seeded with offices
 - [ ] **MGOV-05**: 2 US House members (ME-01: Pingree, ME-02: Golden) seeded with offices
@@ -105,8 +105,8 @@
 | GEO-03 | Phase 49 | Complete |
 | GEO-04 | Phase 49 | Complete |
 | GEO-05 | Phase 49 | Complete |
-| MGOV-01 | Phase 50 | Pending |
-| MGOV-02 | Phase 50 | Pending |
+| MGOV-01 | Phase 50 | Complete |
+| MGOV-02 | Phase 50 | Complete |
 | MGOV-03 | Phase 51 | Pending |
 | MGOV-04 | Phase 51 | Pending |
 | MGOV-05 | Phase 51 | Pending |
