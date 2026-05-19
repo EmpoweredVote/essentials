@@ -7,11 +7,11 @@
 
 ### GEO — Geofences
 
-- [ ] **GEO-01**: Maine TIGER boundaries loaded (CD congressional, SLDU senate, SLDL house, PLACE city boundaries for all 23 cities)
-- [ ] **GEO-02**: Maine county G4020 boundaries loaded for congressional intersection (York, Cumberland, etc.)
-- [ ] **GEO-03**: Any Maine address returns correct NATIONAL_LOWER representative (ME-01 or ME-02)
-- [ ] **GEO-04**: Any Maine address returns correct STATE_UPPER + STATE_LOWER legislators
-- [ ] **GEO-05**: Any Maine city address returns correct LOCAL city officials
+- [x] **GEO-01**: Maine TIGER boundaries loaded (CD congressional, SLDU senate, SLDL house, PLACE city boundaries for all 23 cities)
+- [x] **GEO-02**: Maine county G4020 boundaries loaded for congressional intersection (York, Cumberland, etc.)
+- [x] **GEO-03**: Any Maine address returns correct NATIONAL_LOWER representative (ME-01 or ME-02)
+- [x] **GEO-04**: Any Maine address returns correct STATE_UPPER + STATE_LOWER legislators
+- [x] **GEO-05**: Any Maine city address returns correct LOCAL city officials
 
 ### MGOV — Maine State + Federal Government DB
 
@@ -100,11 +100,11 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| GEO-01 | Phase 49 | Pending |
-| GEO-02 | Phase 49 | Pending |
-| GEO-03 | Phase 49 | Pending |
-| GEO-04 | Phase 49 | Pending |
-| GEO-05 | Phase 49 | Pending |
+| GEO-01 | Phase 49 | Complete |
+| GEO-02 | Phase 49 | Complete |
+| GEO-03 | Phase 49 | Complete |
+| GEO-04 | Phase 49 | Complete |
+| GEO-05 | Phase 49 | Complete |
 | MGOV-01 | Phase 50 | Pending |
 | MGOV-02 | Phase 50 | Pending |
 | MGOV-03 | Phase 51 | Pending |

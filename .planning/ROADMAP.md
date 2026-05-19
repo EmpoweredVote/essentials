@@ -224,8 +224,8 @@ Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
 **Plans**: 2 plans
 
 Plans:
-- [ ] 49-01-PLAN.md — Register Maine (FIPS 23) in STATE_LAYER_ALLOWLIST + STATE_CITY_ASSERTIONS; run loader for all 5 layers; verification SQL gates
-- [ ] 49-02-PLAN.md — Smoke test: Portland/Bangor/Augusta addresses return correct representatives; county G4020 intersection confirmed
+- [x] 49-01-PLAN.md — Register Maine (FIPS 23) in STATE_LAYER_ALLOWLIST + STATE_CITY_ASSERTIONS; run loader for all 5 layers; verification SQL gates
+- [x] 49-02-PLAN.md — Smoke test: Portland/Bangor/Augusta addresses return correct representatives; county G4020 intersection confirmed
 
 #### Phase 50: ME Government DB Foundation
 **Goal**: Maine's state government row, legislative chambers, and executive chambers exist in the database as the scaffolding all subsequent phases build on
@@ -426,7 +426,7 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 46. Cambridge Compass Stances | v5.0 | 1/1 | Complete | 2026-05-18 |
 | 47. v5.0 Tech Debt Cleanup | v5.0 | 1/1 | Complete | 2026-05-18 |
 | 48. MA Towns (G4040 COUSUB) | v5.1+ | 3/3 | Complete | 2026-05-18 |
-| 49. ME Geofences | v6.0 | 0/TBD | Not started | - |
+| 49. ME Geofences | v6.0 | 2/2 | Complete | 2026-05-18 |
 | 50. ME Government DB Foundation | v6.0 | 0/TBD | Not started | - |
 | 51. ME Executives + Federal Officials + Headshots | v6.0 | 0/TBD | Not started | - |
 | 52. ME State Legislature + Headshots | v6.0 | 0/TBD | Not started | - |
