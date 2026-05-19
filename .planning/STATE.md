@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 48-ma-cousub-towns
-Plan: 03 of 3 complete
-Status: Phase complete
-Last activity: 2026-05-18 — Completed 48-03-PLAN.md (Cambridge district_id back-fill, 17 offices now linked to G4110/MA district)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-18 — Milestone v6.0 Maine Essentials started
 
-Progress: v5.0 SHIPPED ✅ — Phase 48 complete (3/3 plans done)
+Progress: v6.0 in progress — 0 phases complete, 7 phases planned (49-55)
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-18 after v5.0 milestone)
+See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Planning next milestone (`/gsd:new-milestone`)
+**Current focus:** v6.0 Maine Essentials — Phase 49 ME Geofences is next
 
 ## Accumulated Context
 

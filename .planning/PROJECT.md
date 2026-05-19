@@ -83,9 +83,28 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ### Active
 
-<!-- v6.0 — TBD — run /gsd:new-milestone to define next milestone -->
+<!-- v6.0 Maine Essentials — geofences, government structure, incumbents, candidates, elections, discovery pipeline -->
 
-(No active requirements — start next milestone with `/gsd:new-milestone`)
+**Current Milestone: v6.0 Maine Essentials**
+
+**Goal:** Bring Maine to full Essentials coverage — geofences for all 23 incorporated cities + state legislature + federal districts, incumbents across state and city government, 2026 elections seeded, and discovery pipeline armed.
+
+**Target features:**
+- Maine TIGER geofences (congressional, state senate/house, 23 city place boundaries, county intersection)
+- Maine state government DB (Governor, AG, SoS, Treasurer, 35 senators, 151 house reps, US Senators/House)
+- All 23 Maine city government structures + incumbents (Portland deep, Tier 2-3 best-effort)
+- Headshots from maine.gov / mainelegislature.gov / portlandmaine.gov
+- 2026 Maine Primary (June 9) + General (Nov 3) elections with Governor / US Senate / Congressional candidates
+- Discovery pipeline armed for Maine 2026 elections; Portland 2027 placeholder
+- Landing.jsx Maine entry (Portland city browse + ME state browse)
+
+- [ ] GEO-01 through GEO-05 — Maine geofences
+- [ ] MGOV-01 through MGOV-07 — Maine state + federal government DB
+- [ ] MCITY-01 through MCITY-04 — 23 Maine city governments + incumbents
+- [ ] HEAD-01 through HEAD-05 — Headshots
+- [ ] ELEC-01 through ELEC-07 — 2026 elections + candidates
+- [ ] DISC-01 through DISC-03 — Discovery pipeline
+- [ ] LAND-01 — Landing page entry
 
 ### Out of Scope
 
@@ -171,4 +190,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | governments INSERT uses WHERE NOT EXISTS (not ON CONFLICT) | essentials.governments has no unique constraint on geo_id — ON CONFLICT (geo_id) would fail; WHERE NOT EXISTS is the only idempotent pattern | ✓ Good — v5.0 |
 
 ---
-*Last updated: 2026-05-18 after v5.0 milestone*
+*Last updated: 2026-05-18 after v6.0 milestone start*
