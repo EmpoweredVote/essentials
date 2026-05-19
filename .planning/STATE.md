@@ -14,7 +14,7 @@ Progress: v6.0 in progress — Phase 49 complete (2/2 plans done)
 See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v6.0 Maine Essentials — Plan Phase 49 (ME Geofences) is next
+**Current focus:** v6.0 Maine Essentials — Phase 49 complete; Phase 50 (ME Government DB Foundation) is next
 
 ## Accumulated Context
 
