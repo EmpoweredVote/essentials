@@ -284,7 +284,16 @@ export default function BillDetailDrawer({ fileNumber, onClose }) {
                   <ul className="divide-y divide-gray-100 dark:divide-gray-800">
                     {roster.map((r, i) => (
                       <li key={i} className="py-2 flex items-center justify-between">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">{r.name}</span>
+                        {r.politician_id ? (
+                          <a
+                            href={`/politician/${r.politician_id}`}
+                            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            {r.name}
+                          </a>
+                        ) : (
+                          <span className="text-sm text-gray-700 dark:text-gray-300">{r.name}</span>
+                        )}
                         <VoteBadge vote={r.vote} />
                       </li>
                     ))}
