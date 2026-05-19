@@ -3,18 +3,18 @@
 ## Current Position
 
 Phase: 51 of 56 (ME Executives + Federal Officials + Headshots)
-Plan: 01 of 03 complete
+Plan: 02 of 03 complete
 Status: In progress
-Last activity: 2026-05-19 — Completed 51-01-PLAN.md (migration 169 — 4 ME STATE_EXEC districts + 4 executive politicians/offices applied and verified)
+Last activity: 2026-05-19 — Completed 51-02-PLAN.md (migration 170 — ME NATIONAL_UPPER district + 4 federal officials: Collins R, King I, Pingree D ME-01, Golden D ME-02)
 
-Progress: v6.0 in progress — Phase 51 in progress (1/3 plans done)
+Progress: v6.0 in progress — Phase 51 in progress (2/3 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v6.0 Maine Essentials — Phase 51 in progress (Plan 01 complete); Plans 51-02 (federal officials) and 51-03 (headshots) next
+**Current focus:** v6.0 Maine Essentials — Phase 51 in progress (Plans 01+02 complete); Plan 51-03 (headshots) next
 
 ## Accumulated Context
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Jurisdictions processed sequentially (never parallel) — exhausts Claude API rate limit quota
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
-- Migration numbering: 169 applied (ME state executives); next is 170
+- Migration numbering: 170 applied (ME federal officials); next is 171
 - MA TIGER G4110=58 (not 351): 58 incorporated cities with charters; 293 MA towns are G4040 COUSUB (loaded Phase 48)
 - Cambridge congressional split (verified PostGIS): west/north = MA-05 geo_id='2505'; east/south/Inman = MA-07 geo_id='2507'
 - geo_id collision between G4020 (Middlesex County='25017') and G5220 (8th Bristol District='25017') is TIGER format quirk — mtfcc always disambiguates; no routing risk
@@ -40,6 +40,8 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - State of Maine government UUID: da88de8b-9afa-4d87-86d5-7eb83c3e9792 — use subquery by name in migrations, not hardcoded UUID
 - Maine chambers (slugs): maine-senate, maine-house-of-representatives, maine-governor, maine-attorney-general, maine-secretary-of-state, maine-treasurer
 - ME executive external_ids: -230001 (Mills/Governor), -230002 (Frey/AG), -230003 (Bellows/SoS), -230004 (Perry/Treasurer); politician UUIDs in 51-01-SUMMARY.md
+- ME federal external_ids: -230101 (Collins R, 6b817122), -230102 (King I, 4f4b2bff), -230201 (Pingree D ME-01, 1638b2c9), -230202 (Golden D ME-02, c420f946); UUIDs in 51-02-SUMMARY.md
+- Senator office uniqueness key = (district_id, politician_id) not (district_id, chamber_id) — two senators share same NATIONAL_UPPER district; chamber_id uniqueness would block 2nd senator
 - election_races (in plan docs) = essentials.races (actual table name) — verified in Phase 51-01
 - Treasurer Joseph C. Perry (Democrat, elected Dec 2024) replaced Henry Beck who left 2025-01-06
 - Maine has 23 incorporated cities (G4110 PLACE); Portland uses RCV for Mayor, Auditor, and at-large Council → election_method='rcv'
@@ -60,7 +62,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 170 (169 applied 2026-05-19: ME state executives — Mills/Frey/Bellows/Perry)
+- Next migration is 171 (170 applied 2026-05-19: ME federal officials — Collins R, King I, Pingree D ME-01, Golden D ME-02)
 
 ### Pending Todos (accounts team backlog)
 
@@ -78,5 +80,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed 51-01-PLAN.md — Migration 169 applied; 4 ME STATE_EXEC districts + 4 executive politicians/offices (Mills/Frey/Bellows/Perry); Plans 51-02 and 51-03 next
+Stopped at: Completed 51-02-PLAN.md — Migration 170 applied; ME NATIONAL_UPPER district + Collins/King/Pingree/Golden federal officials; Plan 51-03 (headshots) next
 Resume file: None
