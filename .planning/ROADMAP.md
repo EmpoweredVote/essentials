@@ -89,7 +89,7 @@ Plans:
   1. Admin can trigger a race completeness check for a given election from the admin UI
   2. The audit result lists office names that appear on the official ballot but have no matching row in essentials.races, each with a source citation
   3. Admin can view completeness audit output in the admin UI without any terminal access or SQL
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 09-01: Race audit backend — fetch authoritative ballot, diff against essentials.races, return missing offices with citations
@@ -104,7 +104,7 @@ Plans:
   2. Stance values from research files (1-5 scale) are inserted into inform.politician_answers for all covered compass topics
   3. The political compass renders correctly on politician pages for LA County and Monroe County politicians sourced via the discovery pipeline
   4. Admin can run stance ingestion for a batch of politicians from the admin UI without manual SQL or terminal access
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 10-01: Essentials-to-inform bridge — schema mapping, upsert logic for inform.politicians + inform.politician_answers
@@ -118,7 +118,7 @@ Plans:
   1. Monroe County local races (Commissioner, Clerk, Assessor, Township) appear in essentials.races with the correct May 5 2026 Indiana Primary election_id
   2. Candidates for those races appear in essentials.race_candidates with designations and source
   3. Monroe County appears in discovery_jurisdictions with the county clerk source URL so the weekly cron will keep it current
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 11-01: Monroe County local races seed + discovery_jurisdictions registration
@@ -236,7 +236,7 @@ Plans:
   2. Maine Senate and Maine House of Representatives chamber rows exist, linked to the Maine government
   3. Maine executive chamber rows exist (Governor, Attorney General, Secretary of State, Treasurer)
   4. All chamber slugs are auto-generated (not manually inserted) and unique
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 50-01-PLAN.md — Migration: Maine government row + 2 legislative chambers + 4 executive chambers; idempotency guards
@@ -251,7 +251,7 @@ Plans:
   3. Susan Collins (US Senate, NATIONAL_UPPER) and Angus King (US Senate, NATIONAL_UPPER) appear on any Maine address query
   4. Chellie Pingree (ME-01, NATIONAL_LOWER) appears on a Portland address query; Jared Golden (ME-02) appears on a Bangor address query
   5. Headshots for all 8 officials are uploaded at 600x750 (maine.gov / Wikipedia sources)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 51-01-PLAN.md — Migration: Governor/AG/SoS/Treasurer offices + incumbents (is_appointed_position=true for AG/SoS/Treasurer); external_id range TBD
@@ -267,7 +267,7 @@ Plans:
   2. 151 STATE_LOWER offices exist in the Maine House of Representatives chamber, each linked to the correct SLDL district
   3. Any Maine address returns exactly 1 STATE_UPPER and 1 STATE_LOWER legislator
   4. Headshots for available senators and house reps are uploaded from mainelegislature.org at 600x750; coverage gaps documented
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 52-01-PLAN.md — Migration: 35 ME state senators + 35 STATE_UPPER offices; office_id back-fill
@@ -285,7 +285,7 @@ Plans:
   4. A Portland address query returns Portland city officials (LOCAL boundary routes correctly through geo_id='2360545')
   5. Maine appears in Landing.jsx COVERAGE_AREAS with Portland city browse and ME state browse shortcuts
   6. Portland city official headshots are uploaded from portlandmaine.gov at 600x750
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 53-01-PLAN.md — Migration: all 23 ME city governments + chambers + offices (Portland deep, others skeletal); election_method='rcv' on Portland City Council
@@ -300,7 +300,7 @@ Plans:
   1. Lewiston, Bangor, South Portland, Auburn, and Biddeford each have Mayor and Council incumbents seeded with available contact data
   2. Remaining 18 cities have offices present in the DB; politician_id=NULL vacancies are documented as known gaps, not silent omissions
   3. Headshots for Tier 2 city officials are uploaded where available online; gaps documented with source-not-found notation
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 54-01-PLAN.md — Migration: Lewiston + Bangor + South Portland incumbents
@@ -319,7 +319,7 @@ Plans:
   5. Key competitive state legislative primary races are seeded; discovery_jurisdictions rows (geoid='23') are active for both 2026 elections
   6. Portland 2027 municipal election placeholder exists with a discovery_jurisdictions row (cron_active=false)
   7. Discovery cron sweep is confirmed to include Maine 2026 elections (test run or would_be_swept verification)
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 - [ ] 55-01-PLAN.md — Migration: 2026 ME Primary + General election rows; Governor races (open seat, 16 candidates); US Senate (Collins + challengers)
