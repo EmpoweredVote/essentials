@@ -239,7 +239,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 50-01-PLAN.md — Migration: Maine government row + 2 legislative chambers + 4 executive chambers; idempotency guards
+- [x] 50-01-PLAN.md — Migration: Maine government row + 2 legislative chambers + 4 executive chambers; idempotency guards
 
 #### Phase 51: ME Executives + Federal Officials + Headshots
 **Goal**: Maine's Governor, AG, Secretary of State, Treasurer, US Senators, and US House members are seeded with offices and headshots; legislature-elected offices are correctly modeled as appointed
@@ -427,7 +427,7 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 47. v5.0 Tech Debt Cleanup | v5.0 | 1/1 | Complete | 2026-05-18 |
 | 48. MA Towns (G4040 COUSUB) | v5.1+ | 3/3 | Complete | 2026-05-18 |
 | 49. ME Geofences | v6.0 | 2/2 | Complete | 2026-05-18 |
-| 50. ME Government DB Foundation | v6.0 | 0/TBD | Not started | - |
+| 50. ME Government DB Foundation | v6.0 | 1/1 | Complete | 2026-05-18 |
 | 51. ME Executives + Federal Officials + Headshots | v6.0 | 0/TBD | Not started | - |
 | 52. ME State Legislature + Headshots | v6.0 | 0/TBD | Not started | - |
 | 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 0/TBD | Not started | - |

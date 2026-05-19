@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 49 of 56 (ME Geofences)
-Plan: 02 of 02 complete
+Phase: 50 of 56 (ME Government DB Foundation)
+Plan: 01 of 01 complete
 Status: Phase complete
-Last activity: 2026-05-18 — Completed 49-02-PLAN.md (ME geofences smoke test — all 5 success criteria confirmed)
+Last activity: 2026-05-18 — Completed 50-01-PLAN.md (migration 168 — State of Maine government row + 6 chambers applied and verified)
 
-Progress: v6.0 in progress — Phase 49 complete (2/2 plans done)
+Progress: v6.0 in progress — Phase 50 complete (1/1 plans done)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v6.0 Maine Essentials — Phase 49 complete; Phase 50 (ME Government DB Foundation) is next
+**Current focus:** v6.0 Maine Essentials — Phase 50 complete; Phase 51 (ME Executives + Federal Officials + Headshots) and Phase 52 (ME State Legislature + Headshots) are next (parallel)
 
 ## Accumulated Context
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Jurisdictions processed sequentially (never parallel) — exhausts Claude API rate limit quota
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
-- Migration numbering continues from 167 (highest applied is 167_cambridge_district_backfill.sql) — next is 168
+- Migration numbering: 168 applied (ME government + chambers); next is 169
 - MA TIGER G4110=58 (not 351): 58 incorporated cities with charters; 293 MA towns are G4040 COUSUB (loaded Phase 48)
 - Cambridge congressional split (verified PostGIS): west/north = MA-05 geo_id='2505'; east/south/Inman = MA-07 geo_id='2507'
 - geo_id collision between G4020 (Middlesex County='25017') and G5220 (8th Bristol District='25017') is TIGER format quirk — mtfcc always disambiguates; no routing risk
@@ -37,6 +37,8 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Dual-office pattern: unique index on essentials.offices.politician_id was dropped in migration 159 — never re-add
 - computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
 - Maine FIPS: 23; Portland geo_id: 2360545; Maine AG/SoS/Treasurer are legislature-elected → is_appointed_position=true, no election race rows
+- State of Maine government UUID: da88de8b-9afa-4d87-86d5-7eb83c3e9792 — use subquery by name in migrations, not hardcoded UUID
+- Maine chambers (slugs): maine-senate, maine-house-of-representatives, maine-governor, maine-attorney-general, maine-secretary-of-state, maine-treasurer
 - Maine has 23 incorporated cities (G4110 PLACE); Portland uses RCV for Mayor, Auditor, and at-large Council → election_method='rcv'
 - ME smoke test confirmed: Augusta (state capital, Kennebec County) is in ME-02 (geo_id=2302), NOT ME-01; Bangor city geo_id=2302795; Augusta city geo_id=2302100
 - Susan Collins is up for re-election 2026; Angus King is NOT up in 2026
@@ -73,5 +75,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-18
-Stopped at: Completed 49-02-PLAN.md — Maine geofences smoke test; all 5 Phase 49 success criteria confirmed; Phase 49 complete
+Stopped at: Completed 50-01-PLAN.md — Migration 168 applied; State of Maine government row + 6 chambers; Phase 50 complete
 Resume file: None
