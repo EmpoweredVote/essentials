@@ -3,9 +3,9 @@
 ## Current Position
 
 Phase: 53 of 56 (Portland City Structure + All 23 City Scaffolding + Landing) — IN PROGRESS
-Plan: 1/3 complete for phase 53
-Status: In progress — 53-01 complete (migration 177 applied); 53-02 (Portland incumbents) next
-Last activity: 2026-05-19 — Completed 53-01-PLAN.md — migration 177 applied; 23 ME cities scaffolded + 206 offices + 23 LOCAL districts
+Plan: 2/3 complete for phase 53
+Status: In progress — 53-01 + 53-02 complete; 53-03 (headshots + Landing) next
+Last activity: 2026-05-19 — Completed 53-02-PLAN.md — migrations 178 + 179 applied; 18 Portland city officials seeded (9 Council + 9 School Board), all party=NULL
 
 Progress: v6.0 in progress — Phase 52 complete; Phase 53 plan 1/3 done
 
@@ -62,8 +62,11 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Phase 52 headshot coverage: 35/35 senators with photos, 150/150 house reps with photos; 0 gaps; house thumbnails upscaled from 152×202 (approved by user 2026-05-19); details in 52-03-SUMMARY.md
 - essentials.offices has NO seat_label column and NO is_active column — use embedded title pattern: 'Council Member (Ward N)', 'Council Member (At-Large N)', 'Council Member (District N)'
 - essentials.districts has no short_label column — only label
-- ME 23 city governments + LOCAL districts + 206 skeletal offices seeded (migration 177 applied 2026-05-19); next migration is 178
+- ME 23 city governments + LOCAL districts + 206 skeletal offices seeded (migration 177 applied 2026-05-19)
 - ME LOCAL districts state='me' lowercase; office district_id UPDATE uses WHERE district_id IS NULL for idempotency
+- Portland 18 city officials seeded (migrations 178 + 179 applied 2026-05-19); external_ids -23601001..-23601018; all party=NULL; next migration is 180
+- Portland at-large seat ordering (council): Pious Ali=AL1, April Fournier=AL2, Benjamin Grant=AL3; (school board): Maya Lena=AL1, Sarah Lentz=AL2, Usira Ali=AL3, Jayne Sawtelle=AL4
+- Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - Biddeford council seats=10 (Mayor+7W+2AL), South Portland=8 (Mayor+5D+2AL), Westbrook Council=8 (Mayor+5W+2AL) — research inventory descriptions excluded Mayor from seat totals
 - Sanford/Ellsworth/Eastport mayor model = voter-elected on-council (defaulted; no council-selected evidence in research)
 - Plan 53-02 UPDATE pattern: match on (chamber_id, title) to identify office rows — no seat_label column
@@ -76,7 +79,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 178 (177 applied 2026-05-19: ME 23-city scaffolding — 23 governments, 23 LOCAL districts, 27 chambers, 206 offices; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 180 (177 applied 2026-05-19: ME 23-city scaffolding; 178+179 applied 2026-05-19: Portland incumbents; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -94,5 +97,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed 53-01-PLAN.md — migration 177 applied; 23 ME city governments + LOCAL districts + 206 skeletal offices; Plan 53-02 (Portland incumbents) is next
+Stopped at: Completed 53-02-PLAN.md — migrations 178 + 179 applied; 18 Portland city officials seeded; Plan 53-03 (headshots + Landing) is next
 Resume file: None
