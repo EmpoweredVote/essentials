@@ -251,12 +251,12 @@ Plans:
   3. Susan Collins (US Senate, NATIONAL_UPPER) and Angus King (US Senate, NATIONAL_UPPER) appear on any Maine address query
   4. Chellie Pingree (ME-01, NATIONAL_LOWER) appears on a Portland address query; Jared Golden (ME-02) appears on a Bangor address query
   5. Headshots for all 8 officials are uploaded at 600x750 (maine.gov / Wikipedia sources)
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
-- [ ] 51-01-PLAN.md — Migration: Governor/AG/SoS/Treasurer offices + incumbents (is_appointed_position=true for AG/SoS/Treasurer); external_id range TBD
-- [ ] 51-02-PLAN.md — Migration: 2 US Senators (NATIONAL_UPPER shared district) + 2 US House members (ME-01/ME-02 NATIONAL_LOWER districts)
-- [ ] 51-03-PLAN.md — Headshots: 4 ME executives + 4 federal officials from maine.gov/Wikipedia (600x750, 4:5 crop first)
+- [ ] 51-01-PLAN.md — Migration 169: 4 STATE_EXEC districts + 4 ME executives (Mills/Frey/Bellows/Perry); is_appointed_position=true for AG/SoS/Treasurer
+- [ ] 51-02-PLAN.md — Migration 170: ME NATIONAL_UPPER district + 2 US Senators (Collins/King) + 2 US House reps (Pingree ME-01 / Golden ME-02)
+- [ ] 51-03-PLAN.md — Headshots for all 8 ME officials (4 executives + 4 federal) at 600x750 via /find-headshots per-photo approval
 
 #### Phase 52: ME State Legislature + Headshots
 **Goal**: All 35 Maine state senators and 151 house representatives are seeded with offices, linked to their geofence districts, and have headshots where available from mainelegislature.org
