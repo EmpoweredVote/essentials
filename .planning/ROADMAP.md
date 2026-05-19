@@ -10,7 +10,7 @@
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 - ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 - ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
-- 🚧 **v6.0 Maine Essentials** — Phases 49-55 (in progress)
+- 🚧 **v6.0 Maine Essentials** — Phases 49-56 (in progress)
 
 ## Phases
 
@@ -207,7 +207,7 @@ Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
 
 ---
 
-### 🚧 v6.0 Maine Essentials (Phases 49-55) — In Progress
+### 🚧 v6.0 Maine Essentials (Phases 49-56) — In Progress
 
 **Milestone Goal:** Any Maine resident can look up their congressional, state legislative, and city representatives — and see who is on their 2026 ballot — without creating an account.
 
@@ -326,6 +326,21 @@ Plans:
 - [ ] 55-02-PLAN.md — Migration: ME-01/ME-02 congressional races; key state legislative primary races; Portland 2027 municipal placeholder
 - [ ] 55-03-PLAN.md — Migration: discovery_jurisdictions rows (geoid='23', both elections + Portland 2027 inactive); cron sweep verification
 
+#### Phase 56: ME Playbook Retrospective
+**Goal**: Capture Maine-specific learnings back into LOCATION-ONBOARDING.md and phase templates so the next state onboarding starts with Maine's hard-won knowledge built in
+**Depends on**: Phases 49-55 complete
+**Requirements**: (non-functional — milestone closure artifact)
+**Success Criteria** (what must be TRUE):
+  1. LOCATION-ONBOARDING.md updated with Maine-specific [GOTCHA] callouts (RCV chamber modeling, legislature-elected appointed offices, 23-city PLACE layer vs. towns, mainelegislature.org headshot patterns)
+  2. Phase templates updated to reflect any new patterns established during Maine (e.g., multi-tier city seeding with documented gaps, RCV election_method)
+  3. Any new migration patterns or schema decisions added to STATE.md Accumulated Context
+  4. Playbook is demonstrably more useful for the next state (Alaska, SF, MO, etc.) than it was before Maine
+**Plans**: 2 plans
+
+Plans:
+- [ ] 56-01-PLAN.md — Review Maine execution learnings; author [GOTCHA] callouts for LOCATION-ONBOARDING.md; update phase templates
+- [ ] 56-02-PLAN.md — Final v6.0 verification: smoke test ME address lookups, confirm discovery sweep, sign off milestone
+
 ---
 
 ## Backlog
@@ -359,7 +374,7 @@ v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 
 v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29) → 32 (after 28+31)
 v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (after 41) → 44 (after 41+38) → 45 (after 44) → 46 (when accounts team delivers stances) → 47 (cleanup, after 46)
-v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+50) → 54 (after 53) → 55 (after 53)
+v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+50) → 54+55 (parallel, both after 53) → 56 (after all)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -418,3 +433,4 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 0/TBD | Not started | - |
 | 54. ME City Officials Tiers 2-4 | v6.0 | 0/TBD | Not started | - |
 | 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 0/TBD | Not started | - |
+| 56. ME Playbook Retrospective | v6.0 | 0/2 | Not started | - |
