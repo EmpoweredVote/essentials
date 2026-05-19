@@ -2,19 +2,19 @@
 
 ## Current Position
 
-Phase: 51 of 56 (ME Executives + Federal Officials + Headshots)
-Plan: 02 of 03 complete
-Status: In progress
-Last activity: 2026-05-19 — Completed 51-02-PLAN.md (migration 170 — ME NATIONAL_UPPER district + 4 federal officials: Collins R, King I, Pingree D ME-01, Golden D ME-02)
+Phase: 52 of 56 (ME State Legislature + Headshots)
+Plan: not started
+Status: Phase 51 complete; Phase 52 next
+Last activity: 2026-05-19 — Completed Phase 51 (3/3 plans): ME executives + federal officials (migrations 169+170) + headshots for all 8 officials; Perry headshot sourced from local file
 
-Progress: v6.0 in progress — Phase 51 in progress (2/3 plans done)
+Progress: v6.0 in progress — Phase 51 complete; Phase 52 next
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v6.0 Maine Essentials — Phase 51 in progress (Plans 01+02 complete); Plan 51-03 (headshots) next
+**Current focus:** v6.0 Maine Essentials — Phase 52 (ME State Legislature + Headshots) next; depends only on Phase 50 (complete)
 
 ## Accumulated Context
 
@@ -80,5 +80,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed 51-02-PLAN.md — Migration 170 applied; ME NATIONAL_UPPER district + Collins/King/Pingree/Golden federal officials; Plan 51-03 (headshots) next
+Stopped at: Completed Phase 51 — all 3 plans done; migrations 169+170 applied; 8 headshots uploaded (Perry from local file C:/tmp/govheadshots/JosephPerry_cropped.jpg); checkpoint approved
 Resume file: None

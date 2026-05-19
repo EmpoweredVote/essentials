@@ -254,9 +254,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 51-01-PLAN.md — Migration 169: 4 STATE_EXEC districts + 4 ME executives (Mills/Frey/Bellows/Perry); is_appointed_position=true for AG/SoS/Treasurer
-- [ ] 51-02-PLAN.md — Migration 170: ME NATIONAL_UPPER district + 2 US Senators (Collins/King) + 2 US House reps (Pingree ME-01 / Golden ME-02)
-- [ ] 51-03-PLAN.md — Headshots for all 8 ME officials (4 executives + 4 federal) at 600x750 via /find-headshots per-photo approval
+- [x] 51-01-PLAN.md — Migration 169: 4 STATE_EXEC districts + 4 ME executives (Mills/Frey/Bellows/Perry); is_appointed_position=true for AG/SoS/Treasurer
+- [x] 51-02-PLAN.md — Migration 170: ME NATIONAL_UPPER district + 2 US Senators (Collins/King) + 2 US House reps (Pingree ME-01 / Golden ME-02)
+- [x] 51-03-PLAN.md — Headshots for all 8 ME officials (4 executives + 4 federal) at 600x750 via /find-headshots per-photo approval
 
 #### Phase 52: ME State Legislature + Headshots
 **Goal**: All 35 Maine state senators and 151 house representatives are seeded with offices, linked to their geofence districts, and have headshots where available from mainelegislature.org
@@ -428,7 +428,7 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 48. MA Towns (G4040 COUSUB) | v5.1+ | 3/3 | Complete | 2026-05-18 |
 | 49. ME Geofences | v6.0 | 2/2 | Complete | 2026-05-18 |
 | 50. ME Government DB Foundation | v6.0 | 1/1 | Complete | 2026-05-18 |
-| 51. ME Executives + Federal Officials + Headshots | v6.0 | 0/TBD | Not started | - |
+| 51. ME Executives + Federal Officials + Headshots | v6.0 | 3/3 | Complete | 2026-05-19 |
 | 52. ME State Legislature + Headshots | v6.0 | 0/TBD | Not started | - |
 | 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 0/TBD | Not started | - |
 | 54. ME City Officials Tiers 2-4 | v6.0 | 0/TBD | Not started | - |
