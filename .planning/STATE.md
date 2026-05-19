@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 54 of 56 (ME City Officials Tiers 2-4) — NOT STARTED
-Plan: 0/TBD for phase 54
-Status: Phase 53 complete (verified 7/7) — Phase 54 is next
-Last activity: 2026-05-19 — Phase 53 complete: 23 ME city scaffolding (177), Portland incumbents (178+179), 18 headshots, Landing.jsx Maine entry; all verified
+Phase: 54 of 56 (ME City Officials Tiers 2-4) — IN PROGRESS
+Plan: 1/3 for phase 54
+Status: Plan 54-01 complete — Lewiston + Bangor + South Portland incumbents seeded (migration 180)
+Last activity: 2026-05-19 — Migration 180 applied: 24 politicians, 25 office rows updated, Tipton dual-office verified, 9 Bangor emails stored
 
-Progress: v6.0 in progress — Phases 49-53 complete; Phase 54 next
+Progress: v6.0 in progress — Phases 49-54 (plan 01) complete; Phase 54-02 next
 
 ## Project Reference
 
@@ -69,8 +69,13 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Phase 53 Portland headshot coverage: 18/18 officials with headshots, 0 gaps; council from portlandmaine.gov/741/Council-Bios (CivicPlus API /api/apps/me-portland/all), school board from portlandschools.org/about/board-of-education/board-members (Finalsite CDN)
 - Portland coverage area added to Landing.jsx COVERAGE_AREAS (2026-05-19, Phase 53); entry: { county: 'Portland', state: 'Maine', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' }
 - Portland nonpartisan elections confirmed (party=NULL on all 18 officials)
-- Next migration is 180 (177+178+179 applied in Phase 53)
+- Migration 180 applied 2026-05-19: Lewiston (8) + Bangor (9) + South Portland (7) incumbents — 24 politicians, 25 office rows updated, Tipton dual-office (Mayor+D5), 9 Bangor emails
+- Next migration is 181 (Auburn + Biddeford incumbents)
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
+- essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
+- Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
+- South Portland Elyse Tipton holds BOTH Mayor AND Council Member (District 5) via ONE politician row (external_id=-237191001); dual-office confirmed working in production
+- Migration 180 applied 2026-05-19: 24 politicians (Lewiston 8 + Bangor 9 + South Portland 7), 25 office rows, idempotent
 - Biddeford council seats=10 (Mayor+7W+2AL), South Portland=8 (Mayor+5D+2AL), Westbrook Council=8 (Mayor+5W+2AL) — research inventory descriptions excluded Mayor from seat totals
 - Sanford/Ellsworth/Eastport mayor model = voter-elected on-council (defaulted; no council-selected evidence in research)
 - Plan 53-02 UPDATE pattern: match on (chamber_id, title) to identify office rows — no seat_label column
@@ -83,7 +88,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 180 (177 applied 2026-05-19: ME 23-city scaffolding; 178+179 applied 2026-05-19: Portland incumbents; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 181 (177+178+179+180 applied; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -101,5 +106,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed 53-03-PLAN.md — Phase 53 complete; 18 Portland headshots uploaded (council + school board, 0 gaps); Landing.jsx updated with Maine/Portland
+Stopped at: Completed 54-01-PLAN.md — migration 180 applied; 24 Tier 2 politicians seeded (Lewiston+Bangor+South Portland); all 25 offices populated; Tipton dual-office confirmed
 Resume file: None
