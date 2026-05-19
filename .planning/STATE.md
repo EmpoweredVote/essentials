@@ -480,8 +480,21 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v5.0 milestone)
 - Next migration after 164 is 165
 - Phase 44 verified 5/5: general election exists, Azeem primary with 5 candidates + linked politician_id, MA discovery armed, Cambridge races with candidates, 2027 placeholder + discovery row
 
+### Phase 48 Notes
+
+- cousub LAYER_DISPATCH entry added to load-state-tiger-boundaries.ts: mtfcc='G4040', district_type='LOCAL', filterByStatefp=false, writeDistrictRow=false, ocd_id=null
+- FUNCSTAT='A' filter in both pre-flight assertion and upsert stream — 64 FUNCSTAT='F' city placeholders skipped
+- 293 G4040 COUSUB rows loaded 2026-05-18; idempotent (re-run: Already existed=293, Inserted=0)
+- Cambridge COUSUB (geo_id='2501711000', FUNCSTAT='F') correctly excluded from G4040
+- MA geofence picture complete: G4020=14, G4040=293, G4110=58, G5200=9, G5210=40, G5220=160
+- Lexington geo_id='2501735215', Concord geo_id='2501715060' — both confirmed in G4040 with full routing (G4020+G4040+G5200+G5210+G5220)
+- smoke-ma-towns.ts exits 0: "MA towns smoke test PASSED — all assertions met."
+- verify-ma-tiger-import.sql: 6 MACOUSUB gates added (MACOUSUB-01 through MACOUSUB-06), all passing
+- Indiana also benefits: cousub was in IN's allowlist but had no LAYER_DISPATCH entry until this phase
+- Next migration is still 165
+
 ## Session Continuity
 
 Last session: 2026-05-18
-Stopped at: Phase 48 Plan 01 complete — cousub LAYER_DISPATCH added to load-state-tiger-boundaries.ts; 293 MA G4040 COUSUB town boundaries loaded (G4020=14, G4040=293, G4110=58, G5200=9, G5210=40, G5220=160)
+Stopped at: Phase 48 COMPLETE (2/2 plans) — 293 MA G4040 COUSUB town boundaries loaded and verified; smoke test passed; MA geofence picture: G4020=14, G4040=293, G4110=58, G5200=9, G5210=40, G5220=160
 Resume file: None
