@@ -16,8 +16,9 @@ const VOTE_CONFIG = {
 function formatDate(dateStr) {
   if (!dateStr) return '';
   try {
-    // dateStr is YYYY-MM-DD — parse as UTC to avoid timezone shift
-    const [y, m, d] = dateStr.split('-').map(Number);
+    // Handle both "YYYY-MM-DD" and ISO "YYYY-MM-DDT..." formats
+    const datePart = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+    const [y, m, d] = datePart.split('-').map(Number);
     return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString('en-US', {
       month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
     });
@@ -58,6 +59,9 @@ function VoteSkeleton() {
 export default function VotingRecordSection({ politicianId }) {
   const [votes, setVotes] = useState([]);
   const [total, setTotal] = useState(0);
+  const [yesTotal, setYesTotal] = useState(0);
+  const [noTotal, setNoTotal] = useState(0);
+  const [absentTotal, setAbsentTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
@@ -73,6 +77,9 @@ export default function VotingRecordSection({ politicianId }) {
       .then(data => {
         setVotes(data.votes ?? []);
         setTotal(data.total ?? 0);
+        setYesTotal(data.yes_total ?? 0);
+        setNoTotal(data.no_total ?? 0);
+        setAbsentTotal(data.absent_total ?? 0);
       })
       .catch(() => setError('Unable to load voting record.'))
       .finally(() => setLoading(false));
@@ -82,10 +89,6 @@ export default function VotingRecordSection({ politicianId }) {
   if (!loading && !error && total === 0) return null;
 
   const filtered = filter === 'ALL' ? votes : votes.filter(v => v.vote === filter);
-
-  const yesCount  = votes.filter(v => v.vote === 'YES').length;
-  const noCount   = votes.filter(v => v.vote === 'NO').length;
-  const absentCount = votes.filter(v => v.vote === 'ABSENT').length;
 
   return (
     <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 overflow-hidden">
@@ -99,19 +102,19 @@ export default function VotingRecordSection({ politicianId }) {
             City Council Voting Record
           </h3>
           {!loading && total > 0 && (
-            <span className="text-xs text-gray-400 dark:text-gray-500">
+            <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
               {total.toLocaleString()} votes on record
             </span>
           )}
         </div>
 
-        {/* Vote summary bar */}
+        {/* Overall vote tally — counts across all votes, not just this page */}
         {!loading && total > 0 && (
           <div className="mt-3 flex items-center gap-4 text-xs">
-            <span className="text-green-700 dark:text-green-400 font-medium">{yesCount} Yes</span>
-            <span className="text-red-600 dark:text-red-400 font-medium">{noCount} No</span>
-            <span className="text-gray-500 dark:text-gray-400">{absentCount} Absent</span>
-            <span className="text-gray-400 dark:text-gray-500 text-xs ml-auto">
+            <span className="text-green-700 dark:text-green-400 font-medium">{yesTotal.toLocaleString()} Yes</span>
+            <span className="text-red-600 dark:text-red-400 font-medium">{noTotal.toLocaleString()} No</span>
+            <span className="text-gray-600 dark:text-gray-300 font-medium">{absentTotal.toLocaleString()} Absent</span>
+            <span className="text-gray-500 dark:text-gray-400 text-xs ml-auto">
               Showing {offset + 1}–{Math.min(offset + votes.length, total)} of {total}
             </span>
           </div>
@@ -144,7 +147,7 @@ export default function VotingRecordSection({ politicianId }) {
           <p className="text-sm text-red-500 dark:text-red-400">{error}</p>
         )}
         {!loading && !error && filtered.length === 0 && (
-          <p className="text-sm text-gray-400 dark:text-gray-500">No votes match this filter.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">No votes match this filter.</p>
         )}
         {!loading && !error && filtered.length > 0 && (
           <ul className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -155,9 +158,9 @@ export default function VotingRecordSection({ politicianId }) {
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-xs text-gray-400 dark:text-gray-500">{formatDate(v.vote_date)}</span>
+                    <span className="text-xs font-medium text-gray-600 dark:text-gray-300">{formatDate(v.vote_date)}</span>
                     {v.council_file_number && (
-                      <span className="text-xs text-gray-400 dark:text-gray-500 font-mono">
+                      <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">
                         CF {v.council_file_number}
                       </span>
                     )}
@@ -182,7 +185,7 @@ export default function VotingRecordSection({ politicianId }) {
           >
             Previous
           </button>
-          <span className="text-xs text-gray-400 dark:text-gray-500">
+          <span className="text-xs font-medium text-gray-600 dark:text-gray-300">
             Page {Math.floor(offset / LIMIT) + 1} of {Math.ceil(total / LIMIT)}
           </span>
           <button
