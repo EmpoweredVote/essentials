@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: — (v5.0 milestone complete — next milestone not yet started)
-Plan: Not started
-Status: Ready to plan next milestone
-Last activity: 2026-05-18 — v5.0 milestone archived; git tag v5.0 created
+Phase: 48-ma-cousub-towns
+Plan: 01 of 2 complete
+Status: In progress
+Last activity: 2026-05-18 — Completed 48-01-PLAN.md (cousub loader + 293 MA town boundaries loaded)
 
-Progress: v5.0 SHIPPED ✅ — start v6.0 with `/gsd:new-milestone`
+Progress: v5.0 SHIPPED ✅ — Phase 48 in progress (1/2 plans done)
 
 ## Project Reference
 
@@ -313,6 +313,18 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v5.0 milestone)
 - MTFCC pre-flight assertion pattern established: fires before upsert pass, throws named MtfccAssertionError; catches TIGER file surprises before any DB write
 - Backend commits: 015599b (initial MA registration) + a9acb49 (place count fix 351→58)
 
+### Phase 48 Notes
+
+- cousub layer added to LAYER_DISPATCH: G4040/LOCAL, filterByStatefp=false (per-state file), writeDistrictRow=false, ocd_id=null (follows place pattern)
+- FUNCSTAT='A' filter: only active towns loaded; FUNCSTAT='F' (64 records) are city placeholders — skipping prevents duplicate LOCAL boundaries with G4110 rows
+- 293 G4040 rows loaded 2026-05-18: essentials.geofence_boundaries state='25', mtfcc='G4040'; idempotent (ON CONFLICT (geo_id, mtfcc) DO NOTHING)
+- Cambridge (geo_id='2501711000', FUNCSTAT='F') correctly NOT loaded; Lexington (2501735215) + Concord (2501715060) both loaded
+- MA geofence_boundaries complete picture: G4020=14, G4040=293, G4110=58, G5200=9, G5210=40, G5220=160
+- STATE_RUN_MAKEVALID: 'cousub' added to MA's Set (prevents invalid geometry issues)
+- cousub:293 added to EXPECTED_MA_MTFCC pre-flight assertion; same FUNCSTAT='A' filter applied in pre-flight and upsert passes
+- Indiana already has 'cousub' in STATE_LAYER_ALLOWLIST — new LAYER_DISPATCH entry globally available for Indiana too (harmless)
+- Backend commit: abdbde6 (feat(48-01): add cousub layer dispatch and FUNCSTAT filter to TIGER loader)
+
 ### Phase 30 Notes
 
 - Migration 119 applied 2026-05-09: Ashouri 6 politician_answers + 6 politician_context rows; all judicial topics placed (no not-found rows)
@@ -471,5 +483,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v5.0 milestone)
 ## Session Continuity
 
 Last session: 2026-05-18
-Stopped at: Phase 47 Plan 01 complete — v5.0 tech debt cleanup (Elections.jsx deleted, Cambridge shortcut in Results.jsx, 39-VERIFICATION.md created, 42-VERIFICATION.md updated)
+Stopped at: Phase 48 Plan 01 complete — cousub LAYER_DISPATCH added to load-state-tiger-boundaries.ts; 293 MA G4040 COUSUB town boundaries loaded (G4020=14, G4040=293, G4110=58, G5200=9, G5210=40, G5220=160)
 Resume file: None
