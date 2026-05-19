@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 52 of 56 (ME State Legislature + Headshots)
-Plan: 1/3 complete for phase 52
-Status: In progress — 52-01 complete; 52-02 (house reps) next
-Last activity: 2026-05-19 — Completed 52-01-PLAN.md: migration 172 applied; 35 ME state senators seeded
+Plan: 2/3 complete for phase 52
+Status: In progress — 52-01 (senators) + 52-02 (house reps) complete; 52-03 (headshots) next
+Last activity: 2026-05-19 — Completed 52-02-PLAN.md: migration 173 applied; 150 named ME house reps + 1 vacant (D29 Javner); D94 Scott Harriman seated (special election 2026)
 
-Progress: v6.0 in progress — Phase 52 plan 1/3 complete
+Progress: v6.0 in progress — Phase 52 plans 1+2 of 3 complete
 
 ## Project Reference
 
@@ -55,7 +55,10 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Run TIGER loader from C:/EV-Accounts/backend (not C:/EV-Accounts) — dotenv looks for .env in cwd
 - ME senator names: use official alphabetical listing (/senate/senators/9536) not individual page nicknames ('Jeff'=Jeffrey L., 'Dick'=Richard, 'Rick'=Richard A., 'Mattie'=Matthea E. L.)
 - ME senator external_ids -231001..-231035 now OCCUPIED (migration 172 applied 2026-05-19)
-- ME house rep external_ids -232001..-232151 still FREE (pending migration 173)
+- ME house rep external_ids -232001..-232151 now OCCUPIED (migration 173 applied 2026-05-19); -232029 intentionally absent (D29 vacant); all others populated
+- ME House D94: Scott Harriman (Democrat, Lewiston) won special election 2026, external_id=-232094 — NOT vacant as research listed
+- ME House D29: still vacant (Kathy Javner deceased, no special election as of 2026-05-19), office_id=ddb05295-68a1-4247-8b69-476269e13840
+- ME house headshots source: /house/Repository/MemberProfiles/{uuid}_{Name}-{year}.jpg (UUID non-derivable, must visit profile per person)
 
 ### Known Architecture
 
@@ -83,5 +86,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed 52-01-PLAN.md — migration 172 applied; 35 ME state senators seeded; headshots and house reps pending
+Stopped at: Completed 52-02-PLAN.md — migration 173 applied; 150 named ME house reps + 1 vacant (D29); D94 Harriman seated; headshots (52-03) pending
 Resume file: None
