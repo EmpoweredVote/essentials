@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: Not started (roadmap created)
-Plan: —
-Status: Roadmap created
-Last activity: 2026-05-18 — v6.0 Maine Essentials roadmap written (Phases 49-55)
+Phase: 49 of 56 (ME Geofences)
+Plan: 01 of 02 complete
+Status: In progress
+Last activity: 2026-05-18 — Completed 49-01-PLAN.md (ME TIGER loader registration + boundary load)
 
-Progress: v6.0 in progress — 0 phases complete, 8 phases planned (49-56)
+Progress: v6.0 in progress — 1 plan complete (49-01), 49-02 next
 
 ## Project Reference
 
@@ -42,6 +42,9 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Governor Janet Mills is term-limited — 2026 Governor race is open (6D, 10R primary candidates)
 - Maine state legislature website: mainelegislature.org (headshot source for senators/reps)
 - geofence_boundaries.state = FIPS '23'; districts.state = abbreviation 'ME' (established pattern from TX/MA)
+- ME TIGER uses cd119 (not cd) — file is tl_2024_23_cd119.zip; 23 cities (G4110), 2 CD, 35 SLDU, 151 SLDL, 16 counties loaded (Phase 49-01)
+- districts.state for ME: lowercase 'me' for COUNTY/STATE_UPPER/STATE_LOWER; uppercase 'ME' for NATIONAL_LOWER (loader abbrev/abbrevUpper pattern)
+- Run TIGER loader from C:/EV-Accounts/backend (not C:/EV-Accounts) — dotenv looks for .env in cwd
 
 ### Known Architecture
 
@@ -69,5 +72,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-18
-Stopped at: v6.0 Maine Essentials roadmap created (Phases 49-55, 30/30 requirements mapped); Phase 48 MA Towns complete; ready to plan Phase 49
+Stopped at: Completed 49-01-PLAN.md — Maine TIGER boundaries loaded (227 geofence_boundaries rows, 204 districts rows); ready for 49-02
 Resume file: None
