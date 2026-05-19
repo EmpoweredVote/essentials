@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 48-ma-cousub-towns
-Plan: 01 of 2 complete
-Status: In progress
-Last activity: 2026-05-18 — Completed 48-01-PLAN.md (cousub loader + 293 MA town boundaries loaded)
+Plan: 03 of 3 complete
+Status: Phase complete
+Last activity: 2026-05-18 — Completed 48-03-PLAN.md (Cambridge district_id back-fill, 17 offices now linked to G4110/MA district)
 
-Progress: v5.0 SHIPPED ✅ — Phase 48 in progress (1/2 plans done)
+Progress: v5.0 SHIPPED ✅ — Phase 48 complete (3/3 plans done)
 
 ## Project Reference
 
@@ -492,9 +492,14 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v5.0 milestone)
 - verify-ma-tiger-import.sql: 6 MACOUSUB gates added (MACOUSUB-01 through MACOUSUB-06), all passing
 - Indiana also benefits: cousub was in IN's allowlist but had no LAYER_DISPATCH entry until this phase
 - Next migration is still 165
+- Migration 167 applied 2026-05-18: Cambridge district row (geo_id='2511000', mtfcc='G4110', district_type='LOCAL', state='MA') inserted; all 17 Cambridge offices (City Council + School Committee) re-pointed to this district
+- Root cause of Cambridge UAT gap: legacy district rows had mtfcc='', state='25' — getRepresentativesByAddress joins geofence_boundaries to districts on geo_id+mtfcc, so legacy rows never matched G4110 geofence; offices silently dropped
+- UPDATE in migration 167 must NOT filter `AND district_id IS NULL` — offices had district_id set to wrong rows; use `IS DISTINCT FROM (SELECT id FROM districts WHERE geo_id='2511000' AND mtfcc='G4110' AND state='MA')` for correct idempotency
+- Cambridge address lookup now returns 17 local officials (9 City Councillors + City Manager + Mayor + 6 School Committee members) via JOIN through G4110/MA district
+- Phase 48 COMPLETE (3/3 plans done)
 
 ## Session Continuity
 
 Last session: 2026-05-18
-Stopped at: Phase 48 COMPLETE (2/2 plans) — 293 MA G4040 COUSUB town boundaries loaded and verified; smoke test passed; MA geofence picture: G4020=14, G4040=293, G4110=58, G5200=9, G5210=40, G5220=160
+Stopped at: Phase 48 COMPLETE (3/3 plans) — Cambridge district_id back-fill applied (migration 167); 17 Cambridge offices now return via address lookup; MA geofence picture: G4020=14, G4040=293, G4110=58, G5200=9, G5210=40, G5220=160
 Resume file: None
