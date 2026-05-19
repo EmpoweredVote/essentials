@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 52 of 56 (ME State Legislature + Headshots)
-Plan: 2/3 complete for phase 52
-Status: In progress — 52-01 (senators) + 52-02 (house reps) complete; 52-03 (headshots) next
-Last activity: 2026-05-19 — Completed 52-02-PLAN.md: migration 173 applied; 150 named ME house reps + 1 vacant (D29 Javner); D94 Scott Harriman seated (special election 2026)
+Phase: 52 of 56 (ME State Legislature + Headshots) — COMPLETE
+Plan: 3/3 complete for phase 52
+Status: Complete — all 3 plans executed and verified
+Last activity: 2026-05-19 — Completed 52-03-PLAN.md: 185/185 ME legislator headshots uploaded (35 senators + 150 house reps, 0 gaps); house reps upscaled from 152×202 thumbnails
 
-Progress: v6.0 in progress — Phase 52 plans 1+2 of 3 complete
+Progress: v6.0 in progress — Phase 52 complete; Phase 53 next
 
 ## Project Reference
 
@@ -59,6 +59,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - ME House D94: Scott Harriman (Democrat, Lewiston) won special election 2026, external_id=-232094 — NOT vacant as research listed
 - ME House D29: still vacant (Kathy Javner deceased, no special election as of 2026-05-19), office_id=ddb05295-68a1-4247-8b69-476269e13840
 - ME house headshots source: /house/Repository/MemberProfiles/{uuid}_{Name}-{year}.jpg (UUID non-derivable, must visit profile per person)
+- Phase 52 headshot coverage: 35/35 senators with photos, 150/150 house reps with photos; 0 gaps; house thumbnails upscaled from 152×202 (approved by user 2026-05-19); details in 52-03-SUMMARY.md
 
 ### Known Architecture
 
