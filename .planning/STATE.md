@@ -3,11 +3,13 @@
 ## Current Position
 
 Phase: 54 of 56 (ME City Officials Tiers 2-4) — IN PROGRESS
-Plan: 1/3 for phase 54
-Status: Plan 54-01 complete — Lewiston + Bangor + South Portland incumbents seeded (migration 180)
-Last activity: 2026-05-19 — Migration 180 applied: 24 politicians, 25 office rows updated, Tipton dual-office verified, 9 Bangor emails stored
+Plan: 2/3 for phase 54
+Status: Plan 54-02 complete — Auburn + Biddeford incumbents seeded (migration 181); Tier 2 seeding complete
+Last activity: 2026-05-19 — Migration 181 applied: 18 politicians (Auburn 8 + Biddeford 10), 18 office rows updated, all office_ids back-filled; GAPS.md created
 
-Progress: v6.0 in progress — Phases 49-54 (plan 01) complete; Phase 54-02 next
+Progress: v6.0 in progress — Phases 49-54 (plans 01+02) complete; Phase 54-03 next
+
+Phase 54 — Tier 2 seeding complete: 42 politicians across 5 cities (Lewiston 8, Bangor 9, South Portland 7, Auburn 8, Biddeford 10); 17 Tier 3-4 cities documented as 'not attempted' in GAPS.md; next migration is 182
 
 ## Project Reference
 
@@ -70,7 +72,8 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Portland coverage area added to Landing.jsx COVERAGE_AREAS (2026-05-19, Phase 53); entry: { county: 'Portland', state: 'Maine', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' }
 - Portland nonpartisan elections confirmed (party=NULL on all 18 officials)
 - Migration 180 applied 2026-05-19: Lewiston (8) + Bangor (9) + South Portland (7) incumbents — 24 politicians, 25 office rows updated, Tipton dual-office (Mayor+D5), 9 Bangor emails
-- Next migration is 181 (Auburn + Biddeford incumbents)
+- Migration 181 applied 2026-05-19: Auburn (8) + Biddeford (10) incumbents — 18 politicians, 18 office rows updated; Auburn 8 emails @auburnmaine.gov; Biddeford Mayor email @biddefordmaine.org; Roger Beaupre = Ward 3 (NOT Mayor); no -230481011 row
+- Next migration is 182
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
 - Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
@@ -88,7 +91,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 181 (177+178+179+180 applied; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 182 (180 applied: Lewiston+Bangor+SouthPortland; 181 applied: Auburn+Biddeford; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -106,5 +109,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed 54-01-PLAN.md — migration 180 applied; 24 Tier 2 politicians seeded (Lewiston+Bangor+South Portland); all 25 offices populated; Tipton dual-office confirmed
+Stopped at: Completed 54-02-PLAN.md — migration 181 applied; 18 Tier 2 politicians seeded (Auburn+Biddeford); all 18 offices populated; GAPS.md created; Phase 54 Tier 2 seeding complete (42 politicians across 5 cities)
 Resume file: None
