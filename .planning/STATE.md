@@ -3,11 +3,11 @@
 ## Current Position
 
 Phase: 52 of 56 (ME State Legislature + Headshots)
-Plan: not started
-Status: Phase 51 complete; Phase 52 next
-Last activity: 2026-05-19 — Completed Phase 51 (3/3 plans): ME executives + federal officials (migrations 169+170) + headshots for all 8 officials; Perry headshot sourced from local file
+Plan: 1/3 complete for phase 52
+Status: In progress — 52-01 complete; 52-02 (house reps) next
+Last activity: 2026-05-19 — Completed 52-01-PLAN.md: migration 172 applied; 35 ME state senators seeded
 
-Progress: v6.0 in progress — Phase 51 complete; Phase 52 next
+Progress: v6.0 in progress — Phase 52 plan 1/3 complete
 
 ## Project Reference
 
@@ -53,6 +53,9 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - ME TIGER uses cd119 (not cd) — file is tl_2024_23_cd119.zip; 23 cities (G4110), 2 CD, 35 SLDU, 151 SLDL, 16 counties loaded (Phase 49-01)
 - districts.state for ME: lowercase 'me' for COUNTY/STATE_UPPER/STATE_LOWER; uppercase 'ME' for NATIONAL_LOWER (loader abbrev/abbrevUpper pattern)
 - Run TIGER loader from C:/EV-Accounts/backend (not C:/EV-Accounts) — dotenv looks for .env in cwd
+- ME senator names: use official alphabetical listing (/senate/senators/9536) not individual page nicknames ('Jeff'=Jeffrey L., 'Dick'=Richard, 'Rick'=Richard A., 'Mattie'=Matthea E. L.)
+- ME senator external_ids -231001..-231035 now OCCUPIED (migration 172 applied 2026-05-19)
+- ME house rep external_ids -232001..-232151 still FREE (pending migration 173)
 
 ### Known Architecture
 
@@ -62,7 +65,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 171 (170 applied 2026-05-19: ME federal officials — Collins R, King I, Pingree D ME-01, Golden D ME-02)
+- Next migration is 173 (172 applied 2026-05-19: ME state senate officials — 35 senators; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -80,5 +83,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-19
-Stopped at: Completed Phase 51 — all 3 plans done; migrations 169+170 applied; 8 headshots uploaded (Perry from local file C:/tmp/govheadshots/JosephPerry_cropped.jpg); checkpoint approved
+Stopped at: Completed 52-01-PLAN.md — migration 172 applied; 35 ME state senators seeded; headshots and house reps pending
 Resume file: None
