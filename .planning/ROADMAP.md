@@ -214,11 +214,12 @@ These are known gaps that are not yet scoped into a milestone.
 **Goal**: Load G4040 COUSUB boundaries for all 293 MA towns (Lexington, Concord, Belmont, etc.) so non-city MA residents get a LOCAL boundary row and city officials routing
 **Depends on**: Phase 38 (MA TIGER loader established)
 **Note**: Cambridge (G4110) and all 57 other MA incorporated cities are already covered. This phase extends coverage to the 293 towns that use G4040 COUSUB instead of G4110 in TIGER.
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
 - [x] 48-01-PLAN.md — Add cousub to loader; run load (293 MA towns)
 - [x] 48-02-PLAN.md — Verification SQL gates + Lexington/Concord smoke test
+- [x] 48-03-PLAN.md — Cambridge district_id back-fill (gap closure: address lookup now returns local officials)
 
 ### Data Gaps (accounts team backlog)
 
@@ -286,4 +287,4 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (aft
 | 45. Playbook Retrospective | v5.0 | 2/2 | Complete | 2026-05-17 |
 | 46. Cambridge Compass Stances | v5.0 | 1/1 | Complete | 2026-05-18 |
 | 47. v5.0 Tech Debt Cleanup | v5.0 | 1/1 | Complete | 2026-05-18 |
-| 48. MA Towns (G4040 COUSUB) | v5.1+ | 2/2 | Complete | 2026-05-18 |
+| 48. MA Towns (G4040 COUSUB) | v5.1+ | 3/3 | Complete | 2026-05-18 |
