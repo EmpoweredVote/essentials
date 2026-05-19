@@ -270,9 +270,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 52-01-PLAN.md — Migration: 35 ME state senators + 35 STATE_UPPER offices; office_id back-fill
-- [ ] 52-02-PLAN.md — Migration: 151 ME house reps + 151 STATE_LOWER offices; office_id back-fill (generator script pattern from Phase 39)
-- [ ] 52-03-PLAN.md — Headshots: bulk import from mainelegislature.org; document gaps
+- [x] 52-01-PLAN.md — Migration: 35 ME state senators + 35 STATE_UPPER offices; office_id back-fill
+- [x] 52-02-PLAN.md — Migration: 151 ME house reps + 151 STATE_LOWER offices; office_id back-fill (generator script pattern from Phase 39)
+- [x] 52-03-PLAN.md — Headshots: bulk import from mainelegislature.org; document gaps
 
 #### Phase 53: Portland City Structure + All 23 City Scaffolding + Landing
 **Goal**: All 23 Maine incorporated city governments are scaffolded; Portland is deeply seeded with incumbents and headshots; Maine appears in Landing.jsx
