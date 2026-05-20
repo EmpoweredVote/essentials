@@ -2,15 +2,16 @@
 
 ## Current Position
 
-Phase: 55 of 56 (ME 2026 Elections + Discovery Pipeline) — IN PROGRESS
-Plan: 2/3 for phase 55
-Status: 55-02 complete — migration 184 applied; 372 legislative race scaffold rows seeded (70 senate + 302 house)
-Last activity: 2026-05-20 — Completed 55-02-PLAN.md (ME legislative race scaffolding)
+Phase: 55 of 56 (ME 2026 Elections + Discovery Pipeline) — COMPLETE
+Plan: 3/3 for phase 55
+Status: Phase 55 complete — 380 ME race rows seeded; discovery armed for both 2026 elections; next migration is 185
+Last activity: 2026-05-20 — Phase 55 complete (55-03-PLAN.md verification approved)
 
-Progress: v6.0 in progress — Phases 49-55 (plans 01-02) complete; 55-03 next
+Progress: v6.0 in progress — Phases 49-55 complete; Phase 56 (ME Playbook Retrospective) next
 
-Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections; next migration was 184
-Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed; next migration is 185
+Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
+Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
+Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows confirmed; discovery cron IN SCOPE for both 2026 ME elections; human approved; Phase 55 closed
 
 ## Project Reference
 
@@ -76,6 +77,12 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Migration 181 applied 2026-05-19: Auburn (8) + Biddeford (10) incumbents — 18 politicians, 18 office rows updated; Auburn 8 emails @auburnmaine.gov; Biddeford Mayor email @biddefordmaine.org; Roger Beaupre = Ward 3 (NOT Mayor); no -230481011 row
 - Migration 183 applied 2026-05-20: ME 2026 elections foundation — 3 elections, 8 races, 26 candidates, 3 discovery_jurisdictions; Governor 5D+8R SOS-verified (13 total, not 9); US Senate 3 candidates (Collins+Costello+Platner; Mills excluded withdrew Apr 30; Calabrese/Smeriglio not in SOS); ME-01 3, ME-02 5 open seat candidates; discovery cron armed for Jun 9 + Nov 3 2026
 - Migration 184 applied 2026-05-20: 372 ME legislative race scaffold rows (35 senate × 2 + 151 house × 2); all 372 have non-null office_id; district-type disambiguation confirmed (Senate D1 and House D1 have distinct office_ids); PowerShell generator uses UTF-8 NoBOM via System.IO.File::WriteAllLines
+- ME 2026 elections seeded: migrations 183 (elections+statewide) + 184 (372 legislative races) applied 2026-05-20; next migration 185
+- Governor 2026 primary: 13 candidates (5D+8R) — Bellows (ext=-230003) linked; all others NULL politician_id
+- US Senate 2026: Collins (R, incumbent) + Costello (D) + Platner (D) — 3 total; Mills withdrew Apr 30
+- ME-02 open seat (Golden not running): Dunlap/Wood/Baldacci/Loud (D) + LePage (R)
+- Post-June-9 follow-up migration required: add D primary winners to US Senate general + ME-01 general + ME-02 general race rows
+- discovery_jurisdictions ME 2026-06-09 (20 days) and 2026-11-03 (167 days) are both IN SCOPE for Sunday cron; Portland 2027-11-02 OUT OF SCOPE until ~May 2027
 - Next migration is 185
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
@@ -112,5 +119,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-20
-Stopped at: Completed 55-02-PLAN.md — migration 184 applied; 372 ME legislative race scaffold rows seeded; 55-03 discovery pipeline is next
+Stopped at: Completed 55-03-PLAN.md — Phase 55 complete; 380 ME race rows verified; discovery cron armed; Phase 56 (Retrospective) is next
 Resume file: None

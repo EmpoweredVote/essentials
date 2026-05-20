@@ -322,9 +322,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 55-01-PLAN.md — Migration: 2026 ME Primary + General election rows; Governor races (open seat, 16 candidates); US Senate (Collins + challengers)
-- [ ] 55-02-PLAN.md — Migration: ME-01/ME-02 congressional races; key state legislative primary races; Portland 2027 municipal placeholder
-- [ ] 55-03-PLAN.md — Migration: discovery_jurisdictions rows (geoid='23', both elections + Portland 2027 inactive); cron sweep verification
+- [x] 55-01-PLAN.md — Migration: 2026 ME Primary + General election rows; Governor races (open seat, 16 candidates); US Senate (Collins + challengers)
+- [x] 55-02-PLAN.md — Migration: ME-01/ME-02 congressional races; key state legislative primary races; Portland 2027 municipal placeholder
+- [x] 55-03-PLAN.md — Verification: discovery_jurisdictions cron scope confirmed; human approved; Phase 55 closed
 
 #### Phase 56: ME Playbook Retrospective
 **Goal**: Capture Maine-specific learnings back into LOCATION-ONBOARDING.md and phase templates so the next state onboarding starts with Maine's hard-won knowledge built in
@@ -432,5 +432,5 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 52. ME State Legislature + Headshots | v6.0 | 0/TBD | Not started | - |
 | 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 3/3 | Complete | 2026-05-19 |
 | 54. ME City Officials Tiers 2-4 | v6.0 | 0/TBD | Not started | - |
-| 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 0/TBD | Not started | - |
+| 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 3/3 | Complete | 2026-05-20 |
 | 56. ME Playbook Retrospective | v6.0 | 0/2 | Not started | - |

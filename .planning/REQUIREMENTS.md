@@ -40,19 +40,19 @@
 
 ### ELEC — Elections + Candidates
 
-- [ ] **ELEC-01**: 2026 Maine Primary election row seeded (June 9, 2026)
-- [ ] **ELEC-02**: 2026 Maine General election row seeded (November 3, 2026)
-- [ ] **ELEC-03**: 2026 Governor primary races seeded with known candidates (6D, 10R in June primary)
-- [ ] **ELEC-04**: 2026 US Senate race seeded (Collins + primary challengers including Graham Platner)
-- [ ] **ELEC-05**: ME-01 + ME-02 congressional races seeded with known candidates
-- [ ] **ELEC-06**: Key competitive state senate + house primary races seeded; discovery pipeline handles remaining candidate discovery
-- [ ] **ELEC-07**: Portland 2027 municipal election placeholder seeded (inactive — outside cron horizon)
+- [x] **ELEC-01**: 2026 Maine Primary election row seeded (June 9, 2026)
+- [x] **ELEC-02**: 2026 Maine General election row seeded (November 3, 2026)
+- [x] **ELEC-03**: 2026 Governor primary races seeded with known candidates (5D+8R = 13 total; SOS-verified)
+- [x] **ELEC-04**: 2026 US Senate race seeded (Collins + primary challengers including Graham Platner + David Costello)
+- [x] **ELEC-05**: ME-01 + ME-02 congressional races seeded with known candidates
+- [x] **ELEC-06**: Key competitive state senate + house primary races seeded; discovery pipeline handles remaining candidate discovery
+- [x] **ELEC-07**: Portland 2027 municipal election placeholder seeded (inactive — outside cron horizon by date)
 
 ### DISC — Discovery Pipeline
 
-- [ ] **DISC-01**: Maine discovery_jurisdictions rows seeded (geoid='23', 2026-06-09 primary + 2026-11-03 general)
-- [ ] **DISC-02**: Portland 2027 discovery_jurisdictions row seeded (cron_active=false until summer 2027)
-- [ ] **DISC-03**: Discovery cron verified active and sweeping for Maine 2026 elections
+- [x] **DISC-01**: Maine discovery_jurisdictions rows seeded (geoid='23', 2026-06-09 primary + 2026-11-03 general)
+- [x] **DISC-02**: Portland 2027 discovery_jurisdictions row seeded (inactive by date — 531 days out exceeds 180-day cron window)
+- [x] **DISC-03**: Discovery cron verified active and sweeping for Maine 2026 elections
 
 ### LAND — Landing Page
 
@@ -121,16 +121,16 @@
 | HEAD-03 | Phase 52 | Pending |
 | HEAD-04 | Phase 53 | Pending |
 | HEAD-05 | Phase 54 | Complete |
-| ELEC-01 | Phase 55 | Pending |
-| ELEC-02 | Phase 55 | Pending |
-| ELEC-03 | Phase 55 | Pending |
-| ELEC-04 | Phase 55 | Pending |
-| ELEC-05 | Phase 55 | Pending |
-| ELEC-06 | Phase 55 | Pending |
-| ELEC-07 | Phase 55 | Pending |
-| DISC-01 | Phase 55 | Pending |
-| DISC-02 | Phase 55 | Pending |
-| DISC-03 | Phase 55 | Pending |
+| ELEC-01 | Phase 55 | Complete |
+| ELEC-02 | Phase 55 | Complete |
+| ELEC-03 | Phase 55 | Complete |
+| ELEC-04 | Phase 55 | Complete |
+| ELEC-05 | Phase 55 | Complete |
+| ELEC-06 | Phase 55 | Complete |
+| ELEC-07 | Phase 55 | Complete |
+| DISC-01 | Phase 55 | Complete |
+| DISC-02 | Phase 55 | Complete |
+| DISC-03 | Phase 55 | Complete |
 | LAND-01 | Phase 53 | Pending |
 
 **Coverage:**
@@ -140,4 +140,4 @@
 
 ---
 *Requirements defined: 2026-05-18*
-*Last updated: 2026-05-18 after initial definition*
+*Last updated: 2026-05-20 — ELEC-01 through ELEC-07 + DISC-01 through DISC-03 marked Complete (Phase 55)*
