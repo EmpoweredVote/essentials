@@ -27,8 +27,8 @@
 
 - [ ] **MCITY-01**: All 23 Maine city governments, chambers, and offices seeded
 - [ ] **MCITY-02**: Portland incumbents seeded (Mayor + 9 City Council + School Board); `election_method=rcv` on City Council chamber
-- [ ] **MCITY-03**: Tier 2 city incumbents seeded (Lewiston, Bangor, South Portland, Auburn, Biddeford)
-- [ ] **MCITY-04**: Remaining 18 cities seeded; sparse Tier 3+ coverage documented as known gaps
+- [x] **MCITY-03**: Tier 2 city incumbents seeded (Lewiston, Bangor, South Portland, Auburn, Biddeford)
+- [x] **MCITY-04**: Remaining 18 cities seeded; sparse Tier 3+ coverage documented as known gaps
 
 ### HEAD — Headshots
 
@@ -36,7 +36,7 @@
 - [ ] **HEAD-02**: US Senators (Collins + King) + US House (Pingree + Golden) headshots at 600×750
 - [ ] **HEAD-03**: ME state senators + house reps headshots from mainelegislature.gov where available
 - [ ] **HEAD-04**: Portland city officials headshots from portlandmaine.gov at 600×750
-- [ ] **HEAD-05**: Tier 2 city officials headshots where available online; gaps documented
+- [x] **HEAD-05**: Tier 2 city officials headshots where available online; gaps documented
 
 ### ELEC — Elections + Candidates
 
@@ -114,13 +114,13 @@
 | MGOV-07 | Phase 52 | Pending |
 | MCITY-01 | Phase 53 | Pending |
 | MCITY-02 | Phase 53 | Pending |
-| MCITY-03 | Phase 54 | Pending |
-| MCITY-04 | Phase 54 | Pending |
+| MCITY-03 | Phase 54 | Complete |
+| MCITY-04 | Phase 54 | Complete |
 | HEAD-01 | Phase 51 | Pending |
 | HEAD-02 | Phase 51 | Pending |
 | HEAD-03 | Phase 52 | Pending |
 | HEAD-04 | Phase 53 | Pending |
-| HEAD-05 | Phase 54 | Pending |
+| HEAD-05 | Phase 54 | Complete |
 | ELEC-01 | Phase 55 | Pending |
 | ELEC-02 | Phase 55 | Pending |
 | ELEC-03 | Phase 55 | Pending |

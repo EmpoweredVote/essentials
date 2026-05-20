@@ -300,12 +300,12 @@ Plans:
   1. Lewiston, Bangor, South Portland, Auburn, and Biddeford each have Mayor and Council incumbents seeded with available contact data
   2. Remaining 18 cities have offices present in the DB; politician_id=NULL vacancies are documented as known gaps, not silent omissions
   3. Headshots for Tier 2 city officials are uploaded where available online; gaps documented with source-not-found notation
-**Plans**: 1 plan
+**Plans**: 3 plans ✓
 
 Plans:
-- [ ] 54-01-PLAN.md — Migration: Lewiston + Bangor + South Portland incumbents
-- [ ] 54-02-PLAN.md — Migration: Auburn + Biddeford incumbents; remaining 18 cities gap documentation
-- [ ] 54-03-PLAN.md — Headshots: Tier 2 cities from official city websites; gap log
+- [x] 54-01-PLAN.md — Migration: Lewiston + Bangor + South Portland incumbents
+- [x] 54-02-PLAN.md — Migration: Auburn + Biddeford incumbents; remaining 18 cities gap documentation
+- [x] 54-03-PLAN.md — Headshots: Tier 2 cities from official city websites; gap log
 
 #### Phase 55: ME 2026 Elections + Discovery Pipeline
 **Goal**: Maine 2026 Primary and General election rows are seeded with known candidates, discovery_jurisdictions are armed for ongoing candidate discovery, and the cron sweep is verified active for Maine
