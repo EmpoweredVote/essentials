@@ -3,13 +3,14 @@
 ## Current Position
 
 Phase: 55 of 56 (ME 2026 Elections + Discovery Pipeline) — IN PROGRESS
-Plan: 1/3 for phase 55
-Status: 55-01 complete — migration 183 applied; 3 elections, 8 races, 26 candidates, 3 discovery_jurisdictions seeded
-Last activity: 2026-05-20 — Completed 55-01-PLAN.md (ME 2026 elections foundation)
+Plan: 2/3 for phase 55
+Status: 55-02 complete — migration 184 applied; 372 legislative race scaffold rows seeded (70 senate + 302 house)
+Last activity: 2026-05-20 — Completed 55-02-PLAN.md (ME legislative race scaffolding)
 
-Progress: v6.0 in progress — Phases 49-55 (plan 01) complete; 55-02 next
+Progress: v6.0 in progress — Phases 49-55 (plans 01-02) complete; 55-03 next
 
-Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections; next migration is 184
+Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections; next migration was 184
+Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed; next migration is 185
 
 ## Project Reference
 
@@ -74,7 +75,8 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Migration 180 applied 2026-05-19: Lewiston (8) + Bangor (9) + South Portland (7) incumbents — 24 politicians, 25 office rows updated, Tipton dual-office (Mayor+D5), 9 Bangor emails
 - Migration 181 applied 2026-05-19: Auburn (8) + Biddeford (10) incumbents — 18 politicians, 18 office rows updated; Auburn 8 emails @auburnmaine.gov; Biddeford Mayor email @biddefordmaine.org; Roger Beaupre = Ward 3 (NOT Mayor); no -230481011 row
 - Migration 183 applied 2026-05-20: ME 2026 elections foundation — 3 elections, 8 races, 26 candidates, 3 discovery_jurisdictions; Governor 5D+8R SOS-verified (13 total, not 9); US Senate 3 candidates (Collins+Costello+Platner; Mills excluded withdrew Apr 30; Calabrese/Smeriglio not in SOS); ME-01 3, ME-02 5 open seat candidates; discovery cron armed for Jun 9 + Nov 3 2026
-- Next migration is 184
+- Migration 184 applied 2026-05-20: 372 ME legislative race scaffold rows (35 senate × 2 + 151 house × 2); all 372 have non-null office_id; district-type disambiguation confirmed (Senate D1 and House D1 have distinct office_ids); PowerShell generator uses UTF-8 NoBOM via System.IO.File::WriteAllLines
+- Next migration is 185
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
 - Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
@@ -92,7 +94,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 184 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections foundation; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 185 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections foundation; 184 applied: ME 2026 legislative race scaffolding; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -110,5 +112,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-20
-Stopped at: Completed 55-01-PLAN.md — migration 183 applied; ME 2026 elections foundation seeded; 55-02 legislative scaffolding is next
+Stopped at: Completed 55-02-PLAN.md — migration 184 applied; 372 ME legislative race scaffold rows seeded; 55-03 discovery pipeline is next
 Resume file: None
