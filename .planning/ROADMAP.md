@@ -19,28 +19,28 @@
 
 ### Phase 1: Backend Left Join + Elections API
 **Goal**: Backend returns all races including those with zero filed candidates
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [x] 01-01: LEFT JOIN fix + elections-by-address endpoint
 
 ### Phase 2: Connected User Auto-Load
 **Goal**: Connected users with a stored jurisdiction see their ballot races immediately on /elections
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [x] 02-01: elections/me endpoint + Connected auto-forward on Elections page
 
 ### Phase 3: Elections Page — Full Rendering
 **Goal**: All users can see their ballot with correct race grouping, candidate ordering, and three-state race display
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [x] 03-01: ElectionsView.jsx — tier grouping, branch sort, unopposed/empty overlays
 
 ### Phase 4: Navigation + Discoverability
 **Goal**: Users can reach the Elections page from the landing page and site header
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [x] 04-01: "Upcoming Elections" landing card + "Elections" header nav item
@@ -89,7 +89,7 @@ Plans:
   1. Admin can trigger a race completeness check for a given election from the admin UI
   2. The audit result lists office names that appear on the official ballot but have no matching row in essentials.races, each with a source citation
   3. Admin can view completeness audit output in the admin UI without any terminal access or SQL
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [ ] 09-01: Race audit backend — fetch authoritative ballot, diff against essentials.races, return missing offices with citations
@@ -104,7 +104,7 @@ Plans:
   2. Stance values from research files (1-5 scale) are inserted into inform.politician_answers for all covered compass topics
   3. The political compass renders correctly on politician pages for LA County and Monroe County politicians sourced via the discovery pipeline
   4. Admin can run stance ingestion for a batch of politicians from the admin UI without manual SQL or terminal access
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [ ] 10-01: Essentials-to-inform bridge — schema mapping, upsert logic for inform.politicians + inform.politician_answers
@@ -118,7 +118,7 @@ Plans:
   1. Monroe County local races (Commissioner, Clerk, Assessor, Township) appear in essentials.races with the correct May 5 2026 Indiana Primary election_id
   2. Candidates for those races appear in essentials.race_candidates with designations and source
   3. Monroe County appears in discovery_jurisdictions with the county clerk source URL so the weekly cron will keep it current
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [ ] 11-01: Monroe County local races seed + discovery_jurisdictions registration
@@ -236,7 +236,7 @@ Plans:
   2. Maine Senate and Maine House of Representatives chamber rows exist, linked to the Maine government
   3. Maine executive chamber rows exist (Governor, Attorney General, Secretary of State, Treasurer)
   4. All chamber slugs are auto-generated (not manually inserted) and unique
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [x] 50-01-PLAN.md — Migration: Maine government row + 2 legislative chambers + 4 executive chambers; idempotency guards
@@ -285,7 +285,7 @@ Plans:
   4. A Portland address query returns Portland city officials (LOCAL boundary routes correctly through geo_id='2360545')
   5. Maine appears in Landing.jsx COVERAGE_AREAS with Portland city browse and ME state browse shortcuts
   6. Portland city official headshots are uploaded from portlandmaine.gov at 600x750
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [x] 53-01-PLAN.md — Migration: all 23 ME city governments + chambers + offices (Portland deep, others skeletal); election_method='rcv' on Portland City Council
@@ -319,7 +319,7 @@ Plans:
   5. Key competitive state legislative primary races are seeded; discovery_jurisdictions rows (geoid='23') are active for both 2026 elections
   6. Portland 2027 municipal election placeholder exists with a discovery_jurisdictions row (cron_active=false)
   7. Discovery cron sweep is confirmed to include Maine 2026 elections (test run or would_be_swept verification)
-**Plans**: 1 plan
+**Plans**: 3 plans
 
 Plans:
 - [ ] 55-01-PLAN.md — Migration: 2026 ME Primary + General election rows; Governor races (open seat, 16 candidates); US Senate (Collins + challengers)
