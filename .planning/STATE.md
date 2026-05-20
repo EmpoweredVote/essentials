@@ -2,14 +2,14 @@
 
 ## Current Position
 
-Phase: 55 of 56 (ME 2026 Elections + Discovery Pipeline) — NOT STARTED
-Plan: 0/? for phase 55
-Status: Phase 54 complete — 42 Tier 2 politicians seeded, 17 Tier 3-4 cities documented, 27 headshots uploaded; MCITY-03, MCITY-04, HEAD-05 closed
-Last activity: 2026-05-20 — Phase 54 verified 5/5; GAPS.md section 3 finalized; Phase 54 complete
+Phase: 55 of 56 (ME 2026 Elections + Discovery Pipeline) — IN PROGRESS
+Plan: 1/3 for phase 55
+Status: 55-01 complete — migration 183 applied; 3 elections, 8 races, 26 candidates, 3 discovery_jurisdictions seeded
+Last activity: 2026-05-20 — Completed 55-01-PLAN.md (ME 2026 elections foundation)
 
-Progress: v6.0 in progress — Phases 49-54 complete; Phase 55 next
+Progress: v6.0 in progress — Phases 49-55 (plan 01) complete; 55-02 next
 
-Phase 54 — Tier 2 seeding complete: 42 politicians across 5 cities (Lewiston 8, Bangor 9, South Portland 7, Auburn 8, Biddeford 10); 17 Tier 3-4 cities documented as 'not attempted' in GAPS.md; next migration is 182
+Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections; next migration is 184
 
 ## Project Reference
 
@@ -73,7 +73,8 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Portland nonpartisan elections confirmed (party=NULL on all 18 officials)
 - Migration 180 applied 2026-05-19: Lewiston (8) + Bangor (9) + South Portland (7) incumbents — 24 politicians, 25 office rows updated, Tipton dual-office (Mayor+D5), 9 Bangor emails
 - Migration 181 applied 2026-05-19: Auburn (8) + Biddeford (10) incumbents — 18 politicians, 18 office rows updated; Auburn 8 emails @auburnmaine.gov; Biddeford Mayor email @biddefordmaine.org; Roger Beaupre = Ward 3 (NOT Mayor); no -230481011 row
-- Next migration is 182
+- Migration 183 applied 2026-05-20: ME 2026 elections foundation — 3 elections, 8 races, 26 candidates, 3 discovery_jurisdictions; Governor 5D+8R SOS-verified (13 total, not 9); US Senate 3 candidates (Collins+Costello+Platner; Mills excluded withdrew Apr 30; Calabrese/Smeriglio not in SOS); ME-01 3, ME-02 5 open seat candidates; discovery cron armed for Jun 9 + Nov 3 2026
+- Next migration is 184
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
 - Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
@@ -91,7 +92,7 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 182 (180 applied: Lewiston+Bangor+SouthPortland; 181 applied: Auburn+Biddeford; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 184 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections foundation; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -108,6 +109,6 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 
 ## Session Continuity
 
-Last session: 2026-05-19
-Stopped at: Completed 54-02-PLAN.md — migration 181 applied; 18 Tier 2 politicians seeded (Auburn+Biddeford); all 18 offices populated; GAPS.md created; Phase 54 Tier 2 seeding complete (42 politicians across 5 cities)
+Last session: 2026-05-20
+Stopped at: Completed 55-01-PLAN.md — migration 183 applied; ME 2026 elections foundation seeded; 55-02 legislative scaffolding is next
 Resume file: None
