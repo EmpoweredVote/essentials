@@ -1,6 +1,6 @@
 # Phase 54: Maine City Officials — Known Gaps
 
-**Last updated:** 2026-05-19
+**Last updated:** 2026-05-20
 **Phase status:** Tier 2 (5 cities) seeded; Tier 3-4 (17 cities) intentionally deferred.
 
 ## 1. Tier 3-4 Cities — Status: Not Attempted
@@ -45,12 +45,14 @@ Auburn and Bangor are NOT in this table — their email harvests are complete (A
 
 ## 3. Tier 2 Headshot Gaps
 
-Reserved for Plan 54-03 to fill in. After 54-03 completes, update this table with actual upload counts.
+Updated by Plan 54-03 (2026-05-20). Source: official city websites only — no social media, news, or campaign sites.
 
 | City | Council Size | Headshots Uploaded | Headshots Missing | Notes |
 |------|--------------|--------------------|--------------------|-------|
-| Lewiston | 8 | (TBD by 54-03) | (TBD by 54-03) | |
-| Bangor | 9 | (TBD by 54-03) | (TBD by 54-03) | |
-| South Portland | 8 offices (7 unique politicians; Tipton counted once) | (TBD by 54-03) | (TBD by 54-03) | |
-| Auburn | 8 | (TBD by 54-03) | (TBD by 54-03) | |
-| Biddeford | 10 | (TBD by 54-03) | (TBD by 54-03) | |
+| Bangor | 9 | 9 | 0 | All 9 from bangormaine.gov/446 directory pages |
+| South Portland | 7 unique (8 office rows) | 7 | 0 | All 7 from southportland.gov; Tipton counted once |
+| Biddeford | 10 | 9 | 1 | 9 from individual biddefordmaine.org bio pages; Vadnais (At-Large 2) has no photo on her page |
+| Auburn | 8 | 1 | 7 | Mayor Harmon only (auburnmaine.gov/government/mayor.php); 7 ward/at-large councilor profile pages all return 404 on rebuilt site; annual report uses map layout (no headshots); no fallback source found |
+| Lewiston | 8 | 1 | 7 | Mayor Sheline only (lewistonmaine.gov/1182/Mayor); ward councilor pages serve circle-cropped PNGs with baked-in transparency — not suitable as rectangular headshots; rejected per project policy |
+
+**Total Phase 54 headshots: 27 uploaded, 15 source not found across 42 unique politicians.**
