@@ -17,7 +17,7 @@ Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows c
 See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v7.0 California — Phase 59: CA Government DB Foundation
+**Current focus:** v7.0 California — Phase 60: CA Executives + Federal Officials
 
 ## Accumulated Context
 
@@ -105,7 +105,10 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA government UUID**: e0f33bda-bfb5-4dd0-9816-576e6ce35fac — use subquery by name in migrations
 - **CA chamber short names** (use in WHERE clauses, not "California {Role}"): Governor, Lieutenant Governor, Attorney General, Secretary of State, Controller, Treasurer, Commissioner of Insurance, Superintendent of Public Instruction
 - **CA chamber slugs**: california-governor, california-lieutenant-governor, attorney-general-of-the-state-of-california, california-secretary-of-state, california-state-controller, california-state-treasurer, california-commissioner-of-insurance, california-superintendent-of-public-instruction
-- Next migration is 190
+- **CA constitutional officer external_ids**: Newsom=-6000101, Kounalakis=-6000102, Bonta=-6000103, Weber=-6000104, Cohen=-6000105, Ma=-6000106, Lara=-6000107, Thurmond=-6000108
+- **CA exec pre-existing seed**: all 8 CA constitutional officers were already seeded before Phase 59 with positive external_ids; Phase 59 deduped and updated to -06000xxx scheme (migration 192). 7/8 had headshots already; Lara uploaded in Phase 59-03.
+- **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
+- Next migration is 193
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
 - Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
@@ -123,7 +126,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 190 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections foundation; 184 applied: ME 2026 legislative race scaffolding; 185-188: Longview TX; 189 applied: CA government geo_id fix + 8 chambers; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 193 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections; 184 applied: ME legislative races; 185-188: Longview TX; 189 applied: CA government geo_id fix + 8 chambers; 190 applied: CA exec seed (duplicates); 191 applied: politician_sources source_type; 192 applied: CA exec dedup + external_id update; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
