@@ -10,7 +10,7 @@
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 - ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 - ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
-- ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20)
+- ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
 
 ## Phases
 
@@ -205,141 +205,21 @@ Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
 
 </details>
 
----
+<details>
+<summary>✅ v6.0 Maine Essentials (Phases 49-56) — SHIPPED 2026-05-20</summary>
 
-### ✅ v6.0 Maine Essentials (Phases 49-56) — SHIPPED 2026-05-20
+- [x] Phase 49: ME Geofences (2/2 plans) — completed 2026-05-18
+- [x] Phase 50: ME Government DB Foundation (1/1 plans) — completed 2026-05-18
+- [x] Phase 51: ME Executives + Federal Officials + Headshots (3/3 plans) — completed 2026-05-19
+- [x] Phase 52: ME State Legislature + Headshots (3/3 plans) — completed 2026-05-19
+- [x] Phase 53: Portland City Structure + All 23 Cities + Landing (3/3 plans) — completed 2026-05-19
+- [x] Phase 54: ME City Officials Tiers 2-4 (3/3 plans) — completed 2026-05-19
+- [x] Phase 55: ME 2026 Elections + Discovery Pipeline (3/3 plans) — completed 2026-05-20
+- [x] Phase 56: ME Playbook Retrospective (2/2 plans) — completed 2026-05-20
 
-**Milestone Goal:** Any Maine resident can look up their congressional, state legislative, and city representatives — and see who is on their 2026 ballot — without creating an account.
+Full details: [milestones/v6.0-ROADMAP.md](milestones/v6.0-ROADMAP.md)
 
-#### Phase 49: ME Geofences
-**Goal**: Maine TIGER boundaries are loaded and any Maine address correctly routes to federal, state, and city representatives
-**Depends on**: Phase 38 (MA TIGER loader established; add Maine FIPS 23 using same pattern)
-**Requirements**: GEO-01, GEO-02, GEO-03, GEO-04, GEO-05
-**Success Criteria** (what must be TRUE):
-  1. All 23 Maine city G4110 PLACE boundaries, 2 congressional CD boundaries, 35 SLDU senate boundaries, 151 SLDL house boundaries, and county G4020 boundaries are loaded in essentials.geofence_boundaries with state='23'
-  2. A Portland address returns ME-01 (NATIONAL_LOWER) when queried
-  3. A Bangor address returns the correct STATE_UPPER senate district and STATE_LOWER house district
-  4. A Portland address returns LOCAL city boundary row (geo_id='2360545')
-  5. A rural Maine address outside any city returns the correct congressional and state legislative districts with no LOCAL row
-**Plans**: 2 plans
-
-Plans:
-- [x] 49-01-PLAN.md — Register Maine (FIPS 23) in STATE_LAYER_ALLOWLIST + STATE_CITY_ASSERTIONS; run loader for all 5 layers; verification SQL gates
-- [x] 49-02-PLAN.md — Smoke test: Portland/Bangor/Augusta addresses return correct representatives; county G4020 intersection confirmed
-
-#### Phase 50: ME Government DB Foundation
-**Goal**: Maine's state government row, legislative chambers, and executive chambers exist in the database as the scaffolding all subsequent phases build on
-**Depends on**: Phase 49
-**Requirements**: MGOV-01, MGOV-02
-**Success Criteria** (what must be TRUE):
-  1. A `State of Maine` government row exists in essentials.governments with state='ME', geo_id='23'
-  2. Maine Senate and Maine House of Representatives chamber rows exist, linked to the Maine government
-  3. Maine executive chamber rows exist (Governor, Attorney General, Secretary of State, Treasurer)
-  4. All chamber slugs are auto-generated (not manually inserted) and unique
-**Plans**: 3 plans
-
-Plans:
-- [x] 50-01-PLAN.md — Migration: Maine government row + 2 legislative chambers + 4 executive chambers; idempotency guards
-
-#### Phase 51: ME Executives + Federal Officials + Headshots
-**Goal**: Maine's Governor, AG, Secretary of State, Treasurer, US Senators, and US House members are seeded with offices and headshots; legislature-elected offices are correctly modeled as appointed
-**Depends on**: Phase 50
-**Requirements**: MGOV-03, MGOV-04, MGOV-05, HEAD-01, HEAD-02
-**Success Criteria** (what must be TRUE):
-  1. Governor Janet Mills appears on a Statehouse address query with office title 'Governor'
-  2. AG, Secretary of State, and Treasurer offices have is_appointed_position=true; no election race rows exist for these offices
-  3. Susan Collins (US Senate, NATIONAL_UPPER) and Angus King (US Senate, NATIONAL_UPPER) appear on any Maine address query
-  4. Chellie Pingree (ME-01, NATIONAL_LOWER) appears on a Portland address query; Jared Golden (ME-02) appears on a Bangor address query
-  5. Headshots for all 8 officials are uploaded at 600x750 (maine.gov / Wikipedia sources)
-**Plans**: 3 plans
-
-Plans:
-- [x] 51-01-PLAN.md — Migration 169: 4 STATE_EXEC districts + 4 ME executives (Mills/Frey/Bellows/Perry); is_appointed_position=true for AG/SoS/Treasurer
-- [x] 51-02-PLAN.md — Migration 170: ME NATIONAL_UPPER district + 2 US Senators (Collins/King) + 2 US House reps (Pingree ME-01 / Golden ME-02)
-- [x] 51-03-PLAN.md — Headshots for all 8 ME officials (4 executives + 4 federal) at 600x750 via /find-headshots per-photo approval
-
-#### Phase 52: ME State Legislature + Headshots
-**Goal**: All 35 Maine state senators and 151 house representatives are seeded with offices, linked to their geofence districts, and have headshots where available from mainelegislature.org
-**Depends on**: Phase 50
-**Requirements**: MGOV-06, MGOV-07, HEAD-03
-**Success Criteria** (what must be TRUE):
-  1. 35 STATE_UPPER offices exist in the Maine Senate chamber, each linked to the correct SLDU district
-  2. 151 STATE_LOWER offices exist in the Maine House of Representatives chamber, each linked to the correct SLDL district
-  3. Any Maine address returns exactly 1 STATE_UPPER and 1 STATE_LOWER legislator
-  4. Headshots for available senators and house reps are uploaded from mainelegislature.org at 600x750; coverage gaps documented
-**Plans**: 3 plans
-
-Plans:
-- [x] 52-01-PLAN.md — Migration: 35 ME state senators + 35 STATE_UPPER offices; office_id back-fill
-- [x] 52-02-PLAN.md — Migration: 151 ME house reps + 151 STATE_LOWER offices; office_id back-fill (generator script pattern from Phase 39)
-- [x] 52-03-PLAN.md — Headshots: bulk import from mainelegislature.org; document gaps
-
-#### Phase 53: Portland City Structure + All 23 City Scaffolding + Landing
-**Goal**: All 23 Maine incorporated city governments are scaffolded; Portland is deeply seeded with incumbents and headshots; Maine appears in Landing.jsx
-**Depends on**: Phase 49, Phase 50
-**Requirements**: MCITY-01, MCITY-02, HEAD-04, LAND-01
-**Success Criteria** (what must be TRUE):
-  1. All 23 Maine city government rows, chambers, and offices exist in the database
-  2. Portland Mayor and all 9 City Council seats have incumbents seeded; Portland City Council chamber has election_method='rcv'
-  3. Portland School Board incumbents are seeded
-  4. A Portland address query returns Portland city officials (LOCAL boundary routes correctly through geo_id='2360545')
-  5. Maine appears in Landing.jsx COVERAGE_AREAS with Portland city browse and ME state browse shortcuts
-  6. Portland city official headshots are uploaded from portlandmaine.gov at 600x750
-**Plans**: 3 plans
-
-Plans:
-- [x] 53-01-PLAN.md — Migration: all 23 ME city governments + chambers + offices (Portland deep, others skeletal); election_method='rcv' on Portland City Council
-- [x] 53-02-PLAN.md — Migration: Portland Mayor + City Council + School Board incumbents seeded
-- [x] 53-03-PLAN.md — Headshots: Portland city officials from portlandmaine.gov; Landing.jsx Maine entry added
-
-#### Phase 54: ME City Officials Tiers 2-4
-**Goal**: Lewiston, Bangor, South Portland, Auburn, and Biddeford incumbents are seeded; remaining 18 cities have documented coverage gaps
-**Depends on**: Phase 53
-**Requirements**: MCITY-03, MCITY-04, HEAD-05
-**Success Criteria** (what must be TRUE):
-  1. Lewiston, Bangor, South Portland, Auburn, and Biddeford each have Mayor and Council incumbents seeded with available contact data
-  2. Remaining 18 cities have offices present in the DB; politician_id=NULL vacancies are documented as known gaps, not silent omissions
-  3. Headshots for Tier 2 city officials are uploaded where available online; gaps documented with source-not-found notation
-**Plans**: 3 plans ✓
-
-Plans:
-- [x] 54-01-PLAN.md — Migration: Lewiston + Bangor + South Portland incumbents
-- [x] 54-02-PLAN.md — Migration: Auburn + Biddeford incumbents; remaining 18 cities gap documentation
-- [x] 54-03-PLAN.md — Headshots: Tier 2 cities from official city websites; gap log
-
-#### Phase 55: ME 2026 Elections + Discovery Pipeline
-**Goal**: Maine 2026 Primary and General election rows are seeded with known candidates, discovery_jurisdictions are armed for ongoing candidate discovery, and the cron sweep is verified active for Maine
-**Depends on**: Phase 53
-**Requirements**: ELEC-01, ELEC-02, ELEC-03, ELEC-04, ELEC-05, ELEC-06, ELEC-07, DISC-01, DISC-02, DISC-03
-**Success Criteria** (what must be TRUE):
-  1. 2026 Maine Primary (June 9) and General (November 3) election rows exist in essentials.elections
-  2. Governor primary races show 6D and 10R candidates (open seat — Mills term-limited)
-  3. US Senate race shows Susan Collins + primary challengers including Graham Platner
-  4. ME-01 and ME-02 congressional races show Pingree and Golden as incumbents with any known primary challengers
-  5. Key competitive state legislative primary races are seeded; discovery_jurisdictions rows (geoid='23') are active for both 2026 elections
-  6. Portland 2027 municipal election placeholder exists with a discovery_jurisdictions row (cron_active=false)
-  7. Discovery cron sweep is confirmed to include Maine 2026 elections (test run or would_be_swept verification)
-**Plans**: 3 plans
-
-Plans:
-- [x] 55-01-PLAN.md — Migration: 2026 ME Primary + General election rows; Governor races (open seat, 16 candidates); US Senate (Collins + challengers)
-- [x] 55-02-PLAN.md — Migration: ME-01/ME-02 congressional races; key state legislative primary races; Portland 2027 municipal placeholder
-- [x] 55-03-PLAN.md — Verification: discovery_jurisdictions cron scope confirmed; human approved; Phase 55 closed
-
-#### Phase 56: ME Playbook Retrospective
-**Goal**: Capture Maine-specific learnings back into LOCATION-ONBOARDING.md and phase templates so the next state onboarding starts with Maine's hard-won knowledge built in
-**Depends on**: Phases 49-55 complete
-**Requirements**: (non-functional — milestone closure artifact)
-**Success Criteria** (what must be TRUE):
-  1. LOCATION-ONBOARDING.md updated with Maine-specific [GOTCHA] callouts (RCV chamber modeling, legislature-elected appointed offices, 23-city PLACE layer vs. towns, mainelegislature.org headshot patterns)
-  2. Phase templates updated to reflect any new patterns established during Maine (e.g., multi-tier city seeding with documented gaps, RCV election_method)
-  3. Any new migration patterns or schema decisions added to STATE.md Accumulated Context
-  4. Playbook is demonstrably more useful for the next state (Alaska, SF, MO, etc.) than it was before Maine
-**Plans**: 2 plans
-
-Plans:
-- [x] 56-01-PLAN.md — Review Maine execution learnings; author [GOTCHA] callouts for LOCATION-ONBOARDING.md; update phase templates
-- [x] 56-02-PLAN.md — Final v6.0 verification: smoke test ME address lookups, confirm discovery sweep, sign off milestone
+</details>
 
 ---
 

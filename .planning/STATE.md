@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 56 of 56 (ME Playbook Retrospective) — COMPLETE
-Plan: 2/2 for phase 56
-Status: Phase 56 complete — v6.0 milestone CLOSED. LOCATION-ONBOARDING.md and 5 templates updated with Maine learnings. Smoke tests passed. Discovery cron armed for both 2026 ME elections.
-Last activity: 2026-05-20 — Phase 56-02 complete (verification approved)
+Phase: —
+Plan: —
+Status: v6.0 milestone archived. Ready for next milestone — run `/gsd:new-milestone` to define v7.0 scope.
+Last activity: 2026-05-20 — v6.0 complete-milestone archival
 
-Progress: v6.0 COMPLETE (Phases 49-56) — Maine onboarding shipped. v6.1 candidates: post-June-9 D primary winners migration; ME G4040 town coverage; Compass/Treasury team contributions to playbook.
+Progress: v6.0 SHIPPED AND ARCHIVED. Next: define v7.0 scope via `/gsd:new-milestone`.
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -15,10 +15,10 @@ Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows c
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
+See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v6.0 Maine Essentials — Phase 52 (ME State Legislature + Headshots) next; depends only on Phase 50 (complete)
+**Current focus:** Planning next milestone — v7.0 scope TBD
 
 ## Accumulated Context
 
@@ -123,5 +123,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-20
-Stopped at: v6.0 milestone closed; Phase 56 complete. Next session: define v6.1 scope or pick from Pending Todos.
+Stopped at: v6.0 milestone archived (complete-milestone). Archives in milestones/v6.0-*.md. Next: `/gsd:new-milestone` to define next scope.
 Resume file: None

@@ -4,7 +4,7 @@
 
 **Delivered:** Full Maine state coverage — geofences, government structure, executives, 186 state legislators with headshots, Portland deep seed + Tier 2 city incumbents, 380 race rows for 2026 elections with discovery cron armed, and a playbook retrospective that captured 9 Maine GOTCHAs into LOCATION-ONBOARDING.md + 5 updated templates.
 
-**Phases completed:** 49-56 (14 plans total)
+**Phases completed:** 49-56 (20 plans total)
 
 **Key accomplishments:**
 

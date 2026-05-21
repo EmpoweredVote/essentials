@@ -80,31 +80,17 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ MA 2026 elections + discovery pipeline — primary (2026-09-01) + general (2026-11-03) seeded; 10+ Cambridge-area district races; Azeem 2nd Middlesex primary linked (politician_id=d2358e54); MA discovery_jurisdictions cron_active=true; Cambridge 2027 placeholder inactive — v5.0
 - ✓ Cambridge compass stances — 162 stance values for 8/9 councillors + City Manager, all cited from public record; compass renders correctly on councillor profiles (human-verified) — v5.0
 - ✓ Playbook retrospective — LOCATION-ONBOARDING.md + 6 templates updated with Cambridge execution learnings; wrong pg_constraint query removed; 7 [GOTCHA] callouts documented — v5.0
+- ✓ Maine TIGER geofences — 23 G4110 cities + 2 CD + 35 SLDU + 151 SLDL + 16 G4020 counties; any ME address routes to correct federal, state, and city representatives — v6.0
+- ✓ Maine state + federal government DB — Governor Mills, legislature-elected AG/SoS/Treasurer (is_appointed_position=true), Collins + King (NATIONAL_UPPER), Pingree (ME-01) + Golden (ME-02); 6 chambers, all with headshots at 600×750 — v6.0
+- ✓ 35 ME state senators + 151 ME house reps with offices linked to geofence districts; 185/185 headshots (senators full-res, house upscaled from 152×202 with approval) — v6.0
+- ✓ All 23 ME city governments scaffolded; Portland deep seed (18 officials, RCV chambers, headshots); 5 Tier 2 cities (Lewiston/Bangor/South Portland/Auburn/Biddeford) with incumbents; 18 skeletal cities documented as known gaps — v6.0
+- ✓ 380 ME race rows for 2026 elections — 13 Governor candidates (open seat, SOS-verified), US Senate (Collins + 2 challengers), 2 US House races, 372 legislative scaffold rows; discovery cron armed for 2026-06-09 + 2026-11-03 — v6.0
+- ✓ ME Playbook retrospective — 9 Maine GOTCHAs added to LOCATION-ONBOARDING.md; 5 templates updated (legislature headshots, multi-tier seeding, PowerShell generator, RCV chamber, legislature-elected=appointed) — v6.0
+- ✓ Landing.jsx Maine entry — Portland city browse (browseGovernmentList=['2360545']) + ME state browse (browseStateAbbrev='ME') — v6.0
 
 ### Active
 
-<!-- v6.0 Maine Essentials — geofences, government structure, incumbents, candidates, elections, discovery pipeline -->
-
-**Current Milestone: v6.0 Maine Essentials**
-
-**Goal:** Bring Maine to full Essentials coverage — geofences for all 23 incorporated cities + state legislature + federal districts, incumbents across state and city government, 2026 elections seeded, and discovery pipeline armed.
-
-**Target features:**
-- Maine TIGER geofences (congressional, state senate/house, 23 city place boundaries, county intersection)
-- Maine state government DB (Governor, AG, SoS, Treasurer, 35 senators, 151 house reps, US Senators/House)
-- All 23 Maine city government structures + incumbents (Portland deep, Tier 2-3 best-effort)
-- Headshots from maine.gov / mainelegislature.gov / portlandmaine.gov
-- 2026 Maine Primary (June 9) + General (Nov 3) elections with Governor / US Senate / Congressional candidates
-- Discovery pipeline armed for Maine 2026 elections; Portland 2027 placeholder
-- Landing.jsx Maine entry (Portland city browse + ME state browse)
-
-- [ ] GEO-01 through GEO-05 — Maine geofences
-- [ ] MGOV-01 through MGOV-07 — Maine state + federal government DB
-- [ ] MCITY-01 through MCITY-04 — 23 Maine city governments + incumbents
-- [ ] HEAD-01 through HEAD-05 — Headshots
-- [ ] ELEC-01 through ELEC-07 — 2026 elections + candidates
-- [ ] DISC-01 through DISC-03 — Discovery pipeline
-- [ ] LAND-01 — Landing page entry
+<!-- v7.0 TBD — run /gsd:new-milestone to define next milestone -->
 
 ### Out of Scope
 
@@ -127,8 +113,9 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Shipped v3.2**: Legal Candidate Evaluation Framework — 7 phases, 17 plans, 15/15 active requirements (2026-05-10). Judicial compass, bar evaluation data, stance research for 3 LA City Attorney candidates, legal donor activity. 67 files, ~11k LOC delta.
 - **Shipped v4.0**: Compass Experience — 4 phases (3 active + 1 parked), 7 plans, all requirements satisfied (2026-05-12 → 2026-05-14). 32 files changed, 4,919 insertions. MiniCompass tiles, Local Lens preset, CompassControlsBar shared component, compass-default mode for calibrated users.
 - **Shipped v5.0**: Location Onboarding Playbook — Cambridge, MA proof-of-concept (10 active phases + 1 skipped, 21 plans, 4 days; 2026-05-15 → 2026-05-18). 91 files changed (17,480 insertions). MA state layer (281 geofences, 200+ legislators + executives + federal officials), Cambridge city structure + 15/16 headshots + MA 2026 elections + 162 compass stances. Cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) now available for any US city.
+- **Shipped v6.0**: Maine Essentials — 8 phases (49-56), 20 plans, 2 days (2026-05-18 → 2026-05-20). 70 files changed (17,058 insertions). 227 ME geofences, State of Maine DB (6 chambers), 35 senators + 151 house reps + 185 headshots, Portland deep seed (18 officials), 5 Tier 2 cities, 380 race rows for 2026 elections, discovery cron armed. Playbook retrofitted with 9 Maine GOTCHAs + 5 template updates.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
-- **Database state**: 5+ elections (Indiana Primary May 5, LA County Primary June 2, MA Primary Sept 1 2026, MA General Nov 3 2026, 2027 Cambridge placeholder); 70+ races; 140+ candidates; 7,570+ geofence boundaries (+ 281 MA in v5.0: 58 G4110 cities + 40 Senate + 160 House + 9 congressional + 14 county). Discovery pipeline covers 23 TX cities + CA + IN + MA 2026 (Cambridge 2027 inactive — outside cron horizon).
+- **Database state**: 7+ elections (Indiana Primary May 5 2026, LA County Primary June 2 2026, ME Primary June 9 2026, MA Primary Sept 1 2026, MA General Nov 3 2026, ME General Nov 3 2026, Portland 2027 + Cambridge 2027 placeholders); 450+ races; 140+ candidates; 7,800+ geofence boundaries (+ 227 ME: 23 G4110 cities + 2 CD + 35 SLDU + 151 SLDL + 16 G4020 counties). Discovery pipeline covers 23 TX cities + CA + IN + MA 2026 + ME 2026.
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
 - **Auth**: Redirect-only flow via Auth Hub (`accounts.empowered.vote`). No direct login from Essentials.
 - **Anti-patterns enforced**: No Google Places autocomplete. No address re-entry for Connected users. Party data on races only, never on candidates.
@@ -188,6 +175,12 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Cambridge headshot license = press_use for all | cambridgema.gov + cpsd.us official bio photos are press/government-use photos, not public domain works — attribution required | ✓ Good — v5.0 |
 | election_method is TEXT on essentials.chambers | Added via migration 157; no pg_constraint — future plans must not query pg_constraint to discover valid values | ✓ Good — v5.0 |
 | governments INSERT uses WHERE NOT EXISTS (not ON CONFLICT) | essentials.governments has no unique constraint on geo_id — ON CONFLICT (geo_id) would fail; WHERE NOT EXISTS is the only idempotent pattern | ✓ Good — v5.0 |
+| TIGER loader key must be verified per state — `cd119` not `cd` for Maine | Loader key comes from zip filename in TIGER2024/CD/; wrong key = silent no-op; always browse census.gov directory first | ✓ Good — v6.0 |
+| `districts.state` casing: lowercase for STATE/COUNTY, UPPERCASE for NATIONAL | Casing determines which queries match; set by loader `abbrev` vs `abbrevUpper` variables; spot-check after every state load | ✓ Good — v6.0 |
+| Legislature-elected offices = `is_appointed_position=true`, zero race rows | AG/SoS/Treasurer in Maine elected by legislature, not voters — creating race rows would be incorrect; always research state constitution | ✓ Good — v6.0 |
+| NATIONAL_UPPER senator uniqueness key = `(district_id, politician_id)` | `(district_id, chamber_id)` blocks 2nd senator INSERT (both senators share one district); politician_id is the correct discriminator | ✓ Good — v6.0 |
+| House headshot thumbnails upscaled from 152×202 to 600×750 | mainelegislature.org only provides thumbnails; upscaling with Lanczos acceptable for government-style headshots; user sign-off required | ✓ Good — v6.0 |
+| Multi-tier city seeding: skeletal INSERT then UPDATE by (chamber_id, title) | No seat_label column on essentials.offices; UPDATE pattern matches on chamber+title to link politician_id to existing office rows | ✓ Good — v6.0 |
 
 ---
-*Last updated: 2026-05-18 after v6.0 milestone start*
+*Last updated: 2026-05-20 after v6.0 milestone completion*
