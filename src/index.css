@@ -231,6 +231,12 @@ body {
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
+.dark .ev-legislative-record-wrapper select {
+  color: #d1d5db !important;
+  background-color: #1a2235 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
 /* Dark mode: CommitteeTable — ev-ui uses hardcoded light-mode inline styles; override via className */
 .dark .ev-committee-table h4 {
   color: #f3f4f6 !important;
