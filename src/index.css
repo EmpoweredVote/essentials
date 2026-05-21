@@ -189,6 +189,28 @@ body {
   color: #9ca3af !important;
 }
 
+/* Dark mode: CommitteeTable — ev-ui uses hardcoded light-mode inline styles; override via className */
+.dark .ev-committee-table h4 {
+  color: #f3f4f6 !important;
+}
+
+.dark .ev-committee-table td {
+  color: #d1d5db !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .ev-committee-table a {
+  color: #d1d5db !important;
+}
+
+.dark .ev-committee-table a:hover {
+  color: #f3f4f6 !important;
+}
+
+.dark .ev-committee-table button {
+  color: #9ca3af !important;
+}
+
 /* Stance Min / Max buttons — sit beside CompassKey in the sticky bar */
 .stance-btn {
   width: 28px;
