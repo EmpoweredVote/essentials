@@ -36,6 +36,10 @@ export function usePoliticianData(query, options = {}) {
   const [error, setError] = useState(null);
   const [dataStatus, setDataStatus] = useState(null);
   const [formattedAddress, setFormattedAddress] = useState("");
+  // SCHEMA-03 (Phase 133 D-09): tribal_land surfaces from /address-search response
+  // shape (`{ on_reservation, name? }`). Undefined when backend returns legacy flat
+  // politicians array.
+  const [tribalLand, setTribalLand] = useState(null);
 
   const controllerRef = useRef(null);
 
@@ -59,6 +63,7 @@ export function usePoliticianData(query, options = {}) {
       try {
         setError(null);
         setFormattedAddress("");
+        setTribalLand(null);
         setData(initialData);
         setPhase("loading");
 
@@ -75,6 +80,8 @@ export function usePoliticianData(query, options = {}) {
         setData(Array.isArray(result.data) ? result.data : []);
         setDataStatus(result.status || "fresh");
         setFormattedAddress(result.formattedAddress || "");
+        // SCHEMA-03 (Phase 133 D-09): expose tribal_land for badge rendering.
+        setTribalLand(result.tribal_land || null);
         setPhase("fresh");
         console.log(`[usePoliticianData] #${id} complete — ${(result.data || []).length} officials`);
       } catch (err) {
@@ -96,5 +103,5 @@ export function usePoliticianData(query, options = {}) {
     };
   }, [query, enabled, key]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { data, phase, error, dataStatus, formattedAddress };
+  return { data, phase, error, dataStatus, formattedAddress, tribalLand };
 }

@@ -404,6 +404,7 @@ export default function Results() {
     phase: hookPhase,
     error,
     formattedAddress,
+    tribalLand,
   } = usePoliticianData(activeQuery, {
     enabled: !!activeQuery && !cachedResult,
     initialData: [],
@@ -1390,6 +1391,18 @@ export default function Results() {
                 <span className="text-sm text-gray-700 dark:text-gray-300 truncate" style={{ fontFamily: "'Manrope', sans-serif" }}>
                   {formattedAddress ? toAddressTitleCase(formattedAddress) : addressInput}
                 </span>
+                {/* SCHEMA-03 (Phase 133 D-09): tribal_land badge in ev-coral.
+                    Renders only when API response.tribal_land.on_reservation === true.
+                    Non-jurisdictional — federal/state/local officials still render normally. */}
+                {tribalLand?.on_reservation && (
+                  <span
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap"
+                    style={{ backgroundColor: '#ff5740', color: '#fff', fontFamily: "'Manrope', sans-serif" }}
+                    title={`On tribal land: ${tribalLand.name || 'Reservation'}`}
+                  >
+                    Tribal Land — {tribalLand.name || 'Reservation'}
+                  </span>
+                )}
                 <button
                   type="button"
                   onClick={() => setEditingSearch(true)}

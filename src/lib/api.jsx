@@ -105,7 +105,17 @@ export async function searchPoliticians(query) {
     }
 
     const data = await res.json();
-    return { status: status || "fresh", data, formattedAddress };
+    // SCHEMA-03 (Phase 133 D-09): surface tribal_land from address-search response.
+    // When backend returns the wrapped { politicians, tribal_land, ... } shape,
+    // unwrap politicians for `data` and pass tribal_land alongside. Older flat-array
+    // responses (legacy /candidates/search) leave tribal_land undefined.
+    let politicians = data;
+    let tribal_land;
+    if (data && !Array.isArray(data) && Array.isArray(data.politicians)) {
+      politicians = data.politicians;
+      tribal_land = data.tribal_land;
+    }
+    return { status: status || "fresh", data: politicians, formattedAddress, tribal_land };
   } catch (error) {
     console.error("Search error:", error);
     return { status: "error", data: [], error: error.message, formattedAddress: "" };
