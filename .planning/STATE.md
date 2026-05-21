@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 58 (in progress)
-Plan: 01 of 2
-Status: Plan 58-01 complete — 7 LAUSD board district geofences loaded
-Last activity: 2026-05-21 — Completed 58-01-PLAN.md; 7 rows in geofence_boundaries geo_id=lausd-board-district-{1..7}
-Progress: v7.0 Phase 58 in progress. G5420 CA total now 353 (346 TIGER UNSD + 7 LAUSD). Next: Phase 58-02 smoke test
+Phase: 58 (complete)
+Plan: 02 of 2
+Status: Phase 58 complete — LAUSD geofences loaded and smoke test verified
+Last activity: 2026-05-21 — Completed 58-02-PLAN.md; all 3 SC pass (7 rows, downtown LA=BD2, Pasadena=0)
+Progress: v7.0 Phase 58 complete. Ready for Phase 62 (LAUSD board officials ingestion).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -69,6 +69,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA G5420 total**: 346 TIGER UNSD + 7 LAUSD = 353; any mtfcc-level COUNT on G5420 must account for this; smoke tests must filter by geo_id LIKE 'lausd-board-district-%'
 - **ArcGIS MapServer pattern**: always add outSR=4326 — LA GeoHub MapServer layers default to CA State Plane feet (SRID 2229)
 - **Phase 62 LAUSD board members**: use district_type='SCHOOL' (not 'SCHOOL_DISTRICT') to match essentialsService.ts; geo_ids for boundaries are lausd-board-district-{1..7}
+- **Phase 58 COMPLETE (2026-05-21)**: All 3 roadmap success criteria confirmed via smoke-lausd-geofences.ts: 7 LAUSD rows (geo_id LIKE filter), downtown LA returns lausd-board-district-2, Pasadena City Hall returns 0 rows (no false positive)
 - **v7.0 CA target city geo_ids (verified 2026-05-21)**: SF=0667000, LA=0644000, SJ=0668000, SD=0666000, SAC=0664000, Fremont=0626000, Berkeley=0606000 — use for Phases 63-68
 - **San Diego Balboa Park actual routing**: CD-50 (not CD-51 as estimated) — TIGER geometry is authoritative
 - **East LA primary coordinate** (-118.1720, 34.0239) worked without fallback — G4040 geo_id=0603793155 (South Gate-East Los Angeles CCD), CD-34, State Senate D26, Assembly D52
@@ -137,5 +138,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Completed 57-02-PLAN.md — CA geofence smoke test; all 4 SC pass; 7 v7.0 target city geo_ids confirmed; Phase 57 closed.
+Stopped at: Completed 58-02-PLAN.md — LAUSD geofence smoke test; all 3 SC pass; Phase 58 closed.
 Resume file: None
