@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 57
-Plan: 01 of 3 (ca-geofences — Plan 01 complete)
-Status: In progress
-Last activity: 2026-05-21 — Completed 57-01-PLAN.md (CA county+cousub TIGER load)
-Progress: v7.0 Phase 57 begun. 57-01 complete. Next: 57-02 (CA smoke test)
+Phase: 57 (complete)
+Plan: 02 of 3 (ca-geofences — Plans 01+02 complete; 57-03 is UAT, pending if needed)
+Status: Phase 57 complete — all 4 roadmap success criteria confirmed
+Last activity: 2026-05-21 — Completed 57-02-PLAN.md (CA geofence smoke test + SC verification)
+Progress: v7.0 Phase 57 complete. All CA geofence data loaded and routing confirmed. Next: Phase 58 (LAUSD) or Phase 63+ (CA city governments)
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -62,6 +62,10 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA districts.state casing**: 3 pre-existing LA County rows with state='CA' (uppercase, pre-Phase 57); new 57 county rows landed as state='ca' (lowercase, loader abbrev). Total 60 rows, 58 distinct counties. Pre-existing data quality issue — document but do not fix in Phase 57 scope.
 - **CA city-CCD coterminous pairs**: Torrance, Santa Monica, Alameda G4110 polygons are geometrically identical to their G4040 CCD polygons in TIGER 2024. This is correct TIGER data; routing priority (G4110 > G4040) prevents routing errors.
 - **geofence_boundaries state='06' after Phase 57-01**: G4020=58, G4040=404, G4110=482, G5200=52, G5210=40, G5220=80
+- **Phase 57 COMPLETE (2026-05-21)**: All 4 roadmap success criteria confirmed via smoke-ca-geofences.ts: SF consolidated city-county (G4110+G4020 both return), East LA unincorporated (G4040 only, no G4110), all layer counts correct, no NULL names
+- **v7.0 CA target city geo_ids (verified 2026-05-21)**: SF=0667000, LA=0644000, SJ=0668000, SD=0666000, SAC=0664000, Fremont=0626000, Berkeley=0606000 — use for Phases 63-68
+- **San Diego Balboa Park actual routing**: CD-50 (not CD-51 as estimated) — TIGER geometry is authoritative
+- **East LA primary coordinate** (-118.1720, 34.0239) worked without fallback — G4040 geo_id=0603793155 (South Gate-East Los Angeles CCD), CD-34, State Senate D26, Assembly D52
 - ME senator names: use official alphabetical listing (/senate/senators/9536) not individual page nicknames ('Jeff'=Jeffrey L., 'Dick'=Richard, 'Rick'=Richard A., 'Mattie'=Matthea E. L.)
 - ME senator external_ids -231001..-231035 now OCCUPIED (migration 172 applied 2026-05-19)
 - ME house rep external_ids -232001..-232151 now OCCUPIED (migration 173 applied 2026-05-19); -232029 intentionally absent (D29 vacant); all others populated
@@ -127,5 +131,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Completed 57-01-PLAN.md — CA county+cousub TIGER load complete; verify SQL authored; all 8 gates pass.
+Stopped at: Completed 57-02-PLAN.md — CA geofence smoke test; all 4 SC pass; 7 v7.0 target city geo_ids confirmed; Phase 57 closed.
 Resume file: None
