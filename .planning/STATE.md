@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: —
+Phase: 57 (not started)
 Plan: —
-Status: v6.0 milestone archived. Ready for next milestone — run `/gsd:new-milestone` to define v7.0 scope.
-Last activity: 2026-05-20 — v6.0 complete-milestone archival
+Status: Defining roadmap — v7.0 California milestone initialized
+Last activity: 2026-05-21 — v7.0 requirements defined (24 requirements across 7 categories)
 
-Progress: v6.0 SHIPPED AND ARCHIVED. Next: define v7.0 scope via `/gsd:new-milestone`.
+Progress: v7.0 requirements written. Roadmap being created. Next: `/gsd:discuss-phase 57` after roadmap commits.
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed

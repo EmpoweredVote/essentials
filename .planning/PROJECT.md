@@ -88,9 +88,30 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ ME Playbook retrospective — 9 Maine GOTCHAs added to LOCATION-ONBOARDING.md; 5 templates updated (legislature headshots, multi-tier seeding, PowerShell generator, RCV chamber, legislature-elected=appointed) — v6.0
 - ✓ Landing.jsx Maine entry — Portland city browse (browseGovernmentList=['2360545']) + ME state browse (browseStateAbbrev='ME') — v6.0
 
+### Current Milestone: v7.0 California
+
+**Goal:** Expand coverage to California — state layer (geofences, legislature, executives, federal), LA backlog closure, and 6 city deep seeds (SF, San Jose, San Diego, Sacramento, Fremont, Berkeley) with compass stances.
+
+**Target features:**
+- CA TIGER boundaries (G4110 cities, G4040 COUSUB, SLDU/SLDL/CD/counties)
+- LAUSD sub-district geofences + officials
+- State of California government DB + constitutional officers + 120+ legislators + 54 federal reps
+- LA backlog: Governor challengers, lavote.gov election ID, LAUSD officials, LA structure gaps
+- 6 new city deep seeds at full Tier 1-4 depth with headshots
+- CA 2026 elections (Governor + 52 US House races) + discovery pipeline
+- Compass stances for CA officials and city council members
+- Playbook updated with CA-specific GOTCHAs
+
 ### Active
 
-<!-- v7.0 TBD — run /gsd:new-milestone to define next milestone -->
+- [ ] GEO-01: CA TIGER boundaries loaded (G4110, G4040, SLDU, SLDL, CD, counties)
+- [ ] GEO-02: LAUSD board district geofences
+- [ ] GOVDB-01 through GOVDB-04: State government DB + 120+ legislators + executives + federal officials
+- [ ] LA-01 through LA-04: LA backlog closure
+- [ ] CITIES-01 through CITIES-07: 6 new cities at full depth + Landing.jsx
+- [ ] ELECT-01 through ELECT-04: CA 2026 elections + discovery
+- [ ] COMPASS-01 through COMPASS-02: Stances for state + city officials
+- [ ] PLAYBOOK-01: CA GOTCHAs in playbook
 
 ### Out of Scope
 
@@ -183,4 +204,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Multi-tier city seeding: skeletal INSERT then UPDATE by (chamber_id, title) | No seat_label column on essentials.offices; UPDATE pattern matches on chamber+title to link politician_id to existing office rows | ✓ Good — v6.0 |
 
 ---
-*Last updated: 2026-05-20 after v6.0 milestone completion*
+*Last updated: 2026-05-21 after v7.0 milestone definition*
