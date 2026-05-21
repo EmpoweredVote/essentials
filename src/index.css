@@ -189,6 +189,48 @@ body {
   color: #9ca3af !important;
 }
 
+/* Dark mode: LegislativeRecord page wrapper */
+.dark .ev-legislative-record-wrapper {
+  color: #f3f4f6;
+}
+
+.dark .ev-legislative-record-wrapper h1,
+.dark .ev-legislative-record-wrapper h2,
+.dark .ev-legislative-record-wrapper h3,
+.dark .ev-legislative-record-wrapper h4 {
+  color: #f3f4f6 !important;
+}
+
+.dark .ev-legislative-record-wrapper p,
+.dark .ev-legislative-record-wrapper span,
+.dark .ev-legislative-record-wrapper td,
+.dark .ev-legislative-record-wrapper th,
+.dark .ev-legislative-record-wrapper li {
+  color: #d1d5db !important;
+}
+
+.dark .ev-legislative-record-wrapper a {
+  color: #59b0c4 !important;
+}
+
+.dark .ev-legislative-record-wrapper a:hover {
+  color: #7ec8d8 !important;
+}
+
+.dark .ev-legislative-record-wrapper [style*="border"] {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .ev-legislative-record-wrapper [style*="background"] {
+  background-color: #1a2235 !important;
+}
+
+.dark .ev-legislative-record-wrapper button {
+  color: #9ca3af !important;
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
 /* Dark mode: CommitteeTable — ev-ui uses hardcoded light-mode inline styles; override via className */
 .dark .ev-committee-table h4 {
   color: #f3f4f6 !important;

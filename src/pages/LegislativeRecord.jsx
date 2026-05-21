@@ -46,7 +46,7 @@ function LegislativeRecordPage() {
 
   return (
     <Layout>
-    <div className="min-h-screen bg-[var(--ev-bg-light)]">
+    <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
 
       <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-6xl">
         <button
@@ -60,14 +60,16 @@ function LegislativeRecordPage() {
           Legislative Record{polName ? ` \u2014 ${polName}` : ''}
         </h1>
 
-        <LegislativeRecord
-          committees={committees}
-          leadership={leadership}
-          bills={bills}
-          votes={votes}
-          loading={loading}
-          politicianName={polName}
-        />
+        <div className="ev-legislative-record-wrapper">
+          <LegislativeRecord
+            committees={committees}
+            leadership={leadership}
+            bills={bills}
+            votes={votes}
+            loading={loading}
+            politicianName={polName}
+          />
+        </div>
       </main>
     </div>
     </Layout>
