@@ -10,7 +10,7 @@
 - ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
 - ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 - ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
-- 🚧 **v6.0 Maine Essentials** — Phases 49-56 (in progress)
+- ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20)
 
 ## Phases
 
@@ -207,7 +207,7 @@ Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
 
 ---
 
-### 🚧 v6.0 Maine Essentials (Phases 49-56) — In Progress
+### ✅ v6.0 Maine Essentials (Phases 49-56) — SHIPPED 2026-05-20
 
 **Milestone Goal:** Any Maine resident can look up their congressional, state legislative, and city representatives — and see who is on their 2026 ballot — without creating an account.
 
@@ -338,8 +338,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 56-01-PLAN.md — Review Maine execution learnings; author [GOTCHA] callouts for LOCATION-ONBOARDING.md; update phase templates
-- [ ] 56-02-PLAN.md — Final v6.0 verification: smoke test ME address lookups, confirm discovery sweep, sign off milestone
+- [x] 56-01-PLAN.md — Review Maine execution learnings; author [GOTCHA] callouts for LOCATION-ONBOARDING.md; update phase templates
+- [x] 56-02-PLAN.md — Final v6.0 verification: smoke test ME address lookups, confirm discovery sweep, sign off milestone
 
 ---
 
@@ -429,8 +429,8 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 49. ME Geofences | v6.0 | 2/2 | Complete | 2026-05-18 |
 | 50. ME Government DB Foundation | v6.0 | 1/1 | Complete | 2026-05-18 |
 | 51. ME Executives + Federal Officials + Headshots | v6.0 | 3/3 | Complete | 2026-05-19 |
-| 52. ME State Legislature + Headshots | v6.0 | 0/TBD | Not started | - |
+| 52. ME State Legislature + Headshots | v6.0 | 3/3 | Complete | 2026-05-19 |
 | 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 3/3 | Complete | 2026-05-19 |
-| 54. ME City Officials Tiers 2-4 | v6.0 | 0/TBD | Not started | - |
+| 54. ME City Officials Tiers 2-4 | v6.0 | 3/3 | Complete | 2026-05-19 |
 | 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 3/3 | Complete | 2026-05-20 |
-| 56. ME Playbook Retrospective | v6.0 | 0/2 | Not started | - |
+| 56. ME Playbook Retrospective | v6.0 | 2/2 | Complete | 2026-05-20 |
