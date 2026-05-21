@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 61 (in progress)
-Plan: 01 of 3 complete
-Status: Phase 61-01 complete — CA State Senate chamber + 40 senators (SD-01..SD-40) seeded; SF routing confirmed
-Last activity: 2026-05-21 — Phase 61-01 complete; migration 194 applied; Scott Wiener (SD-11) routing verified at SF City Hall coords
-Progress: v7.0 Phase 61 IN PROGRESS. CA State Senate done. Next: 61-02 (CA Assembly dedup + offices).
+Plan: 02 of 3 complete
+Status: Phase 61-02 complete — CA Assembly chamber + 80 assembly members (AD-01..AD-80) seeded; SF routing confirmed
+Last activity: 2026-05-21 — Phase 61-02 complete; migration 195 applied; Matt Haney (AD-17) routing verified at SF City Hall coords
+Progress: v7.0 Phase 61 IN PROGRESS. CA State Senate done. CA Assembly done. Next: 61-03 (headshots).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -108,8 +108,15 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA constitutional officer external_ids**: Newsom=-6000101, Kounalakis=-6000102, Bonta=-6000103, Weber=-6000104, Cohen=-6000105, Ma=-6000106, Lara=-6000107, Thurmond=-6000108
 - **CA exec pre-existing seed**: all 8 CA constitutional officers were already seeded before Phase 59 with positive external_ids; Phase 59 deduped and updated to -06000xxx scheme (migration 192). 7/8 had headshots already; Lara uploaded in Phase 59-03.
 - **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
-- Next migration is 195
+- Next migration is 196
 - **CA State Senate senator external_ids: -6001001 (SD-01) through -6001040 (SD-40)** — migration 194 applied 2026-05-21
+- **CA Assembly member external_ids: -6002001 (AD-01) through -6002080 (AD-80)** — migration 195 applied 2026-05-21
+- **CA Assembly chamber**: name='California State Assembly', slug='california-state-assembly'; was seeded as 'Assembly' in pre-existing data — migration 195 renamed it to canonical form
+- **CA STATE_LOWER districts**: state='CA' (uppercase) — same pre-existing data pattern as STATE_UPPER; geo_id='06001'..'06080'; geofence_boundaries mtfcc='G5220'
+- **CA Assembly geo_id formula**: '06' || lpad(district_num::text, 3, '0') (e.g., AD-17 -> '06017')
+- **CA Assembly external_id formula**: -6002000 - district_num (e.g., AD-17 -> -6002017)
+- **CA Assembly headshots (Plan 61-03)**: 24 pre-existing rows have correct headshots; 12 recycled rows have NO headshots (images cleared); 44 new rows have NO headshots. Upload needed for 56 members.
+- **SF City Hall routing**: (-122.4191, 37.7792) -> Matt Haney (AD-17, geo_id='06017') — assembly routing confirmed 2026-05-21
 - **CA STATE_UPPER districts state='CA' (uppercase)** — pre-existing data loaded before TIGER loader; migration 194 uses state='CA' in WHERE clause for districts join
 - **CA districts.mtfcc is swapped**: STATE_UPPER has G5220, STATE_LOWER has G5210 (inverse of TIGER codes). Pre-existing data quality issue. Routing unaffected — essentialsService.ts joins on gb.mtfcc not d.mtfcc. Smoke tests must use the essentialsService join pattern, not raw d.mtfcc join.
 - **CA House rep external_ids use -60003xx scheme**: -6000301 (CD-01) through -6000352 (CD-52); the -100049..-100119 range is occupied by CA State Assembly members (pre-existing seed). Use -60003xx for all future CA House rep references.
@@ -157,5 +164,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Completed 61-01-PLAN.md — migration 194 applied; CA State Senate chamber + 40 senators seeded; SF → Wiener (SD-11) routing confirmed; Phase 61 Plan 01 complete.
+Stopped at: Completed 61-02-PLAN.md — migration 195 applied; CA Assembly chamber renamed + 80 assembly members (36 re-keyed + 44 inserted) + 80 office rows; SF → Matt Haney (AD-17) routing confirmed; Phase 61 Plan 02 complete.
 Resume file: None
