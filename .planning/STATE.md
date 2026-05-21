@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 60 (in progress)
-Plan: 01 of 2 complete
-Status: Phase 60 Plan 01 complete — 34 CA House reps seeded, 3 data fixes, SF routing confirmed
-Last activity: 2026-05-21 — Phase 60-01 complete; migration 193 applied; all 52 CA CDs have politicians; SF → Pelosi routing confirmed
-Progress: v7.0 Phase 60 IN PROGRESS. Migration 193 applied. 34 new House reps + senator office guards. Next: 60-02 (headshots).
+Phase: 60 (complete)
+Plan: 02 of 2 complete
+Status: Phase 60 complete — 34 CA House reps + 3 data fixes; 35 headshots all confirmed
+Last activity: 2026-05-21 — Phase 60-02 complete; 35 headshots uploaded (unitedstates/images + clerk.house.gov fallback for 5 new members); Phase 60 verified 4/4
+Progress: v7.0 Phase 60 COMPLETE. 2 CA senators + 52 House reps all seeded with offices + headshots; SF routing confirmed. Next: Phase 61 (CA State Legislature).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -110,6 +110,8 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
 - Next migration is 194
 - **CA House rep external_ids use -60003xx scheme**: -6000301 (CD-01) through -6000352 (CD-52); the -100049..-100119 range is occupied by CA State Assembly members (pre-existing seed). Use -60003xx for all future CA House rep references.
+- **CA federal headshots (Phase 60 complete 2026-05-21)**: 35 headshots uploaded; unitedstates/images (450×550, public domain) for 30 reps; clerk.house.gov fallback for 5 new 119th Congress members not yet indexed (Simon, Gray, Liccardo, Fong, Min); storage path pattern: `{politician_id}-headshot.jpg`; politician_images uses `url` + `type` columns (not storage_path/is_primary)
+- **Pete Aguilar external_id is -6000204** (not -100097 as originally planned; -100097 = Josh Lowenthal CA Assembly)
 - **All 52 CA NATIONAL_LOWER CDs have office rows confirmed** (migration 193 applied 2026-05-21); total count is 53 because CD-29 has 2 rows (Luz Rivas active + Tony Cárdenas deactivated/is_vacant=true)
 - **SF Civic Center routing confirmed**: (-122.4191, 37.7792) → geofence_boundaries 0611 → districts NATIONAL_LOWER → offices → Nancy Pelosi (CD-11); column is `geometry` not `geom`
 - **Pete Aguilar external_id is -6000204** (not -100097 as originally planned; -100097 = Josh Lowenthal CA Assembly)

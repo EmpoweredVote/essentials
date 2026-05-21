@@ -280,8 +280,8 @@ Plans:
   4. A lookup for a CA address returns the correct US Representative name matching the congressional district boundary
 
 Plans:
-- [ ] 60-01-PLAN.md — Migration: 2 CA senators + 52 US House reps + office rows linked to NATIONAL districts
-- [ ] 60-02-PLAN.md — Headshots: source + upload 600×750 for all 54 federal officials
+- [x] 60-01-PLAN.md — Migration: 2 CA senators + 52 US House reps + office rows linked to NATIONAL districts
+- [x] 60-02-PLAN.md — Headshots: source + upload 600×750 for all 54 federal officials
 
 ### Phase 61: CA State Legislature
 **Goal**: All 80 Assembly members and 40 State Senators are seeded with offices linked to the correct STATE geofence districts and have headshots
@@ -545,7 +545,7 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 57. CA Geofences | v7.0 | 2/2 | Complete | 2026-05-21 |
 | 58. LAUSD Geofences | v7.0 | 2/2 | Complete | 2026-05-21 |
 | 59. CA Government DB Foundation | v7.0 | 3/3 | Complete | 2026-05-21 |
-| 60. CA Executives + Federal Officials | v7.0 | 0/2 | Pending | - |
+| 60. CA Executives + Federal Officials | v7.0 | 2/2 | Complete | 2026-05-21 |
 | 61. CA State Legislature | v7.0 | 0/3 | Pending | - |
 | 62. LA Backlog Closure | v7.0 | 0/3 | Pending | - |
 | 63. San Francisco Deep Seed | v7.0 | 0/3 | Pending | - |
