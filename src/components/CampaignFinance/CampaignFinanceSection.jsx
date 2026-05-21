@@ -3,6 +3,7 @@ import { useCampaignFinance } from './hooks/useCampaignFinance';
 import SummaryCard from './SummaryCard';
 import ExpandedView from './ExpandedView';
 import DonorSearch from './DonorSearch';
+import OutsideSpendingSection from './OutsideSpendingSection';
 
 /**
  * LocalUnavailableBanner — shown when a local/county politician has no digital filings.
@@ -142,6 +143,9 @@ export default function CampaignFinanceSection({ politicianId }) {
           onFetchContributions={() => fetchContributions()}
           onFetchMore={fetchMoreContributions}
         />
+
+        {/* Outside Spending — IE committees / PACs that spent in this race */}
+        <OutsideSpendingSection outsideSpending={summary?.outside_spending} />
 
         {/* Donor search — lets visitors look up which politicians a donor funded */}
         <DonorSearch currentPoliticianId={politicianId} />
