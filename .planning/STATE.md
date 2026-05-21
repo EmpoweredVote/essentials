@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 60 (complete)
-Plan: 02 of 2 complete
-Status: Phase 60 complete — 34 CA House reps + 3 data fixes; 35 headshots all confirmed
-Last activity: 2026-05-21 — Phase 60-02 complete; 35 headshots uploaded (unitedstates/images + clerk.house.gov fallback for 5 new members); Phase 60 verified 4/4
-Progress: v7.0 Phase 60 COMPLETE. 2 CA senators + 52 House reps all seeded with offices + headshots; SF routing confirmed. Next: Phase 61 (CA State Legislature).
+Phase: 61 (in progress)
+Plan: 01 of 3 complete
+Status: Phase 61-01 complete — CA State Senate chamber + 40 senators (SD-01..SD-40) seeded; SF routing confirmed
+Last activity: 2026-05-21 — Phase 61-01 complete; migration 194 applied; Scott Wiener (SD-11) routing verified at SF City Hall coords
+Progress: v7.0 Phase 61 IN PROGRESS. CA State Senate done. Next: 61-02 (CA Assembly dedup + offices).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -108,7 +108,10 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA constitutional officer external_ids**: Newsom=-6000101, Kounalakis=-6000102, Bonta=-6000103, Weber=-6000104, Cohen=-6000105, Ma=-6000106, Lara=-6000107, Thurmond=-6000108
 - **CA exec pre-existing seed**: all 8 CA constitutional officers were already seeded before Phase 59 with positive external_ids; Phase 59 deduped and updated to -06000xxx scheme (migration 192). 7/8 had headshots already; Lara uploaded in Phase 59-03.
 - **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
-- Next migration is 194
+- Next migration is 195
+- **CA State Senate senator external_ids: -6001001 (SD-01) through -6001040 (SD-40)** — migration 194 applied 2026-05-21
+- **CA STATE_UPPER districts state='CA' (uppercase)** — pre-existing data loaded before TIGER loader; migration 194 uses state='CA' in WHERE clause for districts join
+- **CA districts.mtfcc is swapped**: STATE_UPPER has G5220, STATE_LOWER has G5210 (inverse of TIGER codes). Pre-existing data quality issue. Routing unaffected — essentialsService.ts joins on gb.mtfcc not d.mtfcc. Smoke tests must use the essentialsService join pattern, not raw d.mtfcc join.
 - **CA House rep external_ids use -60003xx scheme**: -6000301 (CD-01) through -6000352 (CD-52); the -100049..-100119 range is occupied by CA State Assembly members (pre-existing seed). Use -60003xx for all future CA House rep references.
 - **CA federal headshots (Phase 60 complete 2026-05-21)**: 35 headshots uploaded; unitedstates/images (450×550, public domain) for 30 reps; clerk.house.gov fallback for 5 new 119th Congress members not yet indexed (Simon, Gray, Liccardo, Fong, Min); storage path pattern: `{politician_id}-headshot.jpg`; politician_images uses `url` + `type` columns (not storage_path/is_primary)
 - **Pete Aguilar external_id is -6000204** (not -100097 as originally planned; -100097 = Josh Lowenthal CA Assembly)
@@ -154,5 +157,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Completed 60-01-PLAN.md — migration 193 applied; 34 CA House reps seeded; SF → Pelosi routing confirmed; Phase 60 Plan 01 complete.
+Stopped at: Completed 61-01-PLAN.md — migration 194 applied; CA State Senate chamber + 40 senators seeded; SF → Wiener (SD-11) routing confirmed; Phase 61 Plan 01 complete.
 Resume file: None
