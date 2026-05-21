@@ -7,7 +7,7 @@
 
 ### GEO — Geofences
 
-- [ ] **GEO-01**: CA TIGER boundaries loaded — G4110 incorporated cities, G4040 COUSUB unincorporated areas, SLDU (40 senate), SLDL (80 assembly), CD (52 congressional), G4020 counties (58); any CA address routes correctly to all tiers
+- [x] **GEO-01**: CA TIGER boundaries loaded — G4110 incorporated cities, G4040 COUSUB unincorporated areas, SLDU (40 senate), SLDL (80 assembly), CD (52 congressional), G4020 counties (58); any CA address routes correctly to all tiers
 - [ ] **GEO-02**: LAUSD board district geofence boundaries loaded and integrated with routing
 
 ### GOVDB — Government DB + Officials + Legislature

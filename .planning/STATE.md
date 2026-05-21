@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 57 (complete)
-Plan: 02 of 3 (ca-geofences — Plans 01+02 complete; 57-03 is UAT, pending if needed)
-Status: Phase 57 complete — all 4 roadmap success criteria confirmed
-Last activity: 2026-05-21 — Completed 57-02-PLAN.md (CA geofence smoke test + SC verification)
-Progress: v7.0 Phase 57 complete. All CA geofence data loaded and routing confirmed. Next: Phase 58 (LAUSD) or Phase 63+ (CA city governments)
+Plan: —
+Status: Phase 57 complete — all 4 roadmap success criteria verified
+Last activity: 2026-05-21 — Phase 57 CA Geofences complete; verification passed 4/4
+Progress: v7.0 Phase 57 complete. G4020=58, G4040=404, G4110=482, G5200=52, G5210=40, G5220=80 in geofence_boundaries. Next: Phase 58 (LAUSD Geofences)
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -17,7 +17,7 @@ Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows c
 See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v7.0 California — Phase 57: CA Geofences
+**Current focus:** v7.0 California — Phase 58: LAUSD Geofences
 
 ## Accumulated Context
 
@@ -61,7 +61,9 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA COUSUB_FUNCSTAT_STATES**: Only 'MA' in the set. CA CCDs are FUNCSTAT='S' (statistical), not FUNCSTAT='A' (active MCDs). Adding CA to this set would skip all 404 records.
 - **CA districts.state casing**: 3 pre-existing LA County rows with state='CA' (uppercase, pre-Phase 57); new 57 county rows landed as state='ca' (lowercase, loader abbrev). Total 60 rows, 58 distinct counties. Pre-existing data quality issue — document but do not fix in Phase 57 scope.
 - **CA city-CCD coterminous pairs**: Torrance, Santa Monica, Alameda G4110 polygons are geometrically identical to their G4040 CCD polygons in TIGER 2024. This is correct TIGER data; routing priority (G4110 > G4040) prevents routing errors.
-- **geofence_boundaries state='06' after Phase 57-01**: G4020=58, G4040=404, G4110=482, G5200=52, G5210=40, G5220=80
+- **geofence_boundaries state='06' after Phase 57**: G4020=58, G4040=404, G4110=482, G5200=52, G5210=40, G5220=80
+- **v7.0 target city geo_ids (G4110, confirmed Phase 57-02 smoke test)**: SF=0667000, LA=0644000, SJ=0668000, SD=0666000, SAC=0664000, Fremont=0626000, Berkeley=0606000 — use for Phases 63-68 city government seeding
+- **San Diego smoke test**: address returns CD-50 (not CD-51 as roadmap estimated) — TIGER geometry is authoritative
 - **Phase 57 COMPLETE (2026-05-21)**: All 4 roadmap success criteria confirmed via smoke-ca-geofences.ts: SF consolidated city-county (G4110+G4020 both return), East LA unincorporated (G4040 only, no G4110), all layer counts correct, no NULL names
 - **v7.0 CA target city geo_ids (verified 2026-05-21)**: SF=0667000, LA=0644000, SJ=0668000, SD=0666000, SAC=0664000, Fremont=0626000, Berkeley=0606000 — use for Phases 63-68
 - **San Diego Balboa Park actual routing**: CD-50 (not CD-51 as estimated) — TIGER geometry is authoritative
