@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 57
-Plan: —
-Status: Ready to plan Phase 57
-Last activity: 2026-05-21 — v7.0 roadmap created
-Progress: v7.0 roadmap complete. 15 phases (57-71). Next: `/gsd:discuss-phase 57`
+Plan: 01 of 3 (ca-geofences — Plan 01 complete)
+Status: In progress
+Last activity: 2026-05-21 — Completed 57-01-PLAN.md (CA county+cousub TIGER load)
+Progress: v7.0 Phase 57 begun. 57-01 complete. Next: 57-02 (CA smoke test)
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -57,6 +57,11 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **[STATE-SPECIFIC trap]** TIGER congressional shapefile naming varies by state. **Problem:** Loader key may not be `cd` — using wrong key causes silent no-op (loader runs, loads zero boundaries). **Solution:** Always browse `https://www2.census.gov/geo/tiger/TIGER2024/CD/` and check actual filename before configuring STATE_LAYER_ALLOWLIST. **Maine example:** `tl_2024_23_cd119.zip` → loader key `cd119`, not `cd`. **MA example:** uses `cd` (standard). Layers loaded for ME Phase 49-01: 23 cities (G4110), 2 CD, 35 SLDU, 151 SLDL, 16 counties.
 - **Problem:** `districts.state` casing varies by district tier — wrong casing breaks routing queries. **Solution:** Lowercase (`'me'`, `'ma'`) for COUNTY/STATE_UPPER/STATE_LOWER; UPPERCASE (`'ME'`, `'MA'`) for NATIONAL_LOWER. Casing is set by loader's `abbrev` (lowercase) and `abbrevUpper` (uppercase) variables — always verify loader config and spot-check `SELECT DISTINCT state FROM essentials.districts` after running. **Maine example:** STATE_UPPER/STATE_LOWER rows use `'me'`; NATIONAL_LOWER rows use `'ME'` (Phase 49).
 - Run TIGER loader from C:/EV-Accounts/backend (not C:/EV-Accounts) — dotenv looks for .env in cwd
+- **CA COUSUB count in TIGER 2024 = 404** (not 1,057 from TIGERweb BAS25). All 404 are FUNCSTAT='S' CCDs. Pre-flight assertion set to 404 in load-state-tiger-boundaries.ts.
+- **CA COUSUB_FUNCSTAT_STATES**: Only 'MA' in the set. CA CCDs are FUNCSTAT='S' (statistical), not FUNCSTAT='A' (active MCDs). Adding CA to this set would skip all 404 records.
+- **CA districts.state casing**: 3 pre-existing LA County rows with state='CA' (uppercase, pre-Phase 57); new 57 county rows landed as state='ca' (lowercase, loader abbrev). Total 60 rows, 58 distinct counties. Pre-existing data quality issue — document but do not fix in Phase 57 scope.
+- **CA city-CCD coterminous pairs**: Torrance, Santa Monica, Alameda G4110 polygons are geometrically identical to their G4040 CCD polygons in TIGER 2024. This is correct TIGER data; routing priority (G4110 > G4040) prevents routing errors.
+- **geofence_boundaries state='06' after Phase 57-01**: G4020=58, G4040=404, G4110=482, G5200=52, G5210=40, G5220=80
 - ME senator names: use official alphabetical listing (/senate/senators/9536) not individual page nicknames ('Jeff'=Jeffrey L., 'Dick'=Richard, 'Rick'=Richard A., 'Mattie'=Matthea E. L.)
 - ME senator external_ids -231001..-231035 now OCCUPIED (migration 172 applied 2026-05-19)
 - ME house rep external_ids -232001..-232151 now OCCUPIED (migration 173 applied 2026-05-19); -232029 intentionally absent (D29 vacant); all others populated
@@ -122,5 +127,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: v7.0 roadmap created (Phases 57-71). Ready to begin Phase 57 planning.
+Stopped at: Completed 57-01-PLAN.md — CA county+cousub TIGER load complete; verify SQL authored; all 8 gates pass.
 Resume file: None
