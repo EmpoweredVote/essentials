@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 58 (complete)
-Plan: —
-Status: Phase 58 complete — all 3 roadmap success criteria verified
-Last activity: 2026-05-21 — Phase 58 LAUSD Geofences complete; verification passed 3/3
-Progress: v7.0 Phase 58 complete. 7 LAUSD board district rows in geofence_boundaries (lausd-board-district-1 through 7), mtfcc='G5420', state='06'. CA G5420 total=692 (346 TIGER UNSD + 339 other states + 7 LAUSD). Next: Phase 59 (CA Government DB Foundation) or Phase 62 (depends on 58+59).
+Phase: 59 (in progress)
+Plan: 01 of 3 complete
+Status: Phase 59 Plan 01 complete — CA government DB foundation scaffolded
+Last activity: 2026-05-21 — Phase 59-01 complete; migration 189 applied; CA geo_id fixed to '06'; 8 chambers verified
+Progress: v7.0 Phase 59 in progress. CA government row with geo_id='06' seeded; 8 executive chambers confirmed (Governor, Lt Gov, AG, SoS, Controller, Treasurer, Insurance Commissioner, Superintendent). Next: Phase 59-02 (CA politicians + offices).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -95,13 +95,17 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - Migration 181 applied 2026-05-19: Auburn (8) + Biddeford (10) incumbents — 18 politicians, 18 office rows updated; Auburn 8 emails @auburnmaine.gov; Biddeford Mayor email @biddefordmaine.org; Roger Beaupre = Ward 3 (NOT Mayor); no -230481011 row
 - Migration 183 applied 2026-05-20: ME 2026 elections foundation — 3 elections, 8 races, 26 candidates, 3 discovery_jurisdictions; Governor 5D+8R SOS-verified (13 total, not 9); US Senate 3 candidates (Collins+Costello+Platner; Mills excluded withdrew Apr 30; Calabrese/Smeriglio not in SOS); ME-01 3, ME-02 5 open seat candidates; discovery cron armed for Jun 9 + Nov 3 2026
 - Migration 184 applied 2026-05-20: 372 ME legislative race scaffold rows (35 senate × 2 + 151 house × 2); all 372 have non-null office_id; district-type disambiguation confirmed (Senate D1 and House D1 have distinct office_ids); PowerShell generator uses UTF-8 NoBOM via System.IO.File::WriteAllLines
-- ME 2026 elections seeded: migrations 183 (elections+statewide) + 184 (372 legislative races) applied 2026-05-20; next migration 185
+- ME 2026 elections seeded: migrations 183 (elections+statewide) + 184 (372 legislative races) applied 2026-05-20
 - Governor 2026 primary: 13 candidates (5D+8R) — Bellows (ext=-230003) linked; all others NULL politician_id
 - US Senate 2026: Collins (R, incumbent) + Costello (D) + Platner (D) — 3 total; Mills withdrew Apr 30
 - ME-02 open seat (Golden not running): Dunlap/Wood/Baldacci/Loud (D) + LePage (R)
 - Post-June-9 follow-up migration required: add D primary winners to US Senate general + ME-01 general + ME-02 general race rows
 - discovery_jurisdictions ME 2026-06-09 (20 days) and 2026-11-03 (167 days) are both IN SCOPE for Sunday cron; Portland 2027-11-02 OUT OF SCOPE until ~May 2027
-- Next migration is 185
+- Migration 189 applied 2026-05-21: CA government row geo_id fixed to '06' (was NULL); 8 CA executive chambers confirmed (pre-existed with short names — no "California" prefix); next migration is 190
+- **CA government UUID**: e0f33bda-bfb5-4dd0-9816-576e6ce35fac — use subquery by name in migrations
+- **CA chamber short names** (use in WHERE clauses, not "California {Role}"): Governor, Lieutenant Governor, Attorney General, Secretary of State, Controller, Treasurer, Commissioner of Insurance, Superintendent of Public Instruction
+- **CA chamber slugs**: california-governor, california-lieutenant-governor, attorney-general-of-the-state-of-california, california-secretary-of-state, california-state-controller, california-state-treasurer, california-commissioner-of-insurance, california-superintendent-of-public-instruction
+- Next migration is 190
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
 - Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
@@ -119,7 +123,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 185 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections foundation; 184 applied: ME 2026 legislative race scaffolding; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 190 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections foundation; 184 applied: ME 2026 legislative race scaffolding; 185-188: Longview TX; 189 applied: CA government geo_id fix + 8 chambers; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -140,5 +144,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Completed 58-02-PLAN.md — LAUSD geofence smoke test; all 3 SC pass; Phase 58 closed.
+Stopped at: Completed 59-01-PLAN.md — CA government DB foundation; migration 189 applied; geo_id='06' fixed; 8 chambers verified; Phase 59 Plan 01 complete.
 Resume file: None
