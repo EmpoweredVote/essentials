@@ -11,6 +11,7 @@
 - ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 - ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 - ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
+- 🚧 **v7.0 California** — Phases 57-71 (in progress)
 
 ## Phases
 
@@ -223,6 +224,233 @@ Full details: [milestones/v6.0-ROADMAP.md](milestones/v6.0-ROADMAP.md)
 
 ---
 
+<details>
+<summary>🚧 v7.0 California (Phases 57-71) — IN PROGRESS</summary>
+
+### Phase 57: CA Geofences
+**Goal**: Any California address routes correctly to all government tiers — city, county, state legislative, and congressional
+**Depends on**: Phase 56 (established TIGER loader pattern)
+**Requirements**: GEO-01
+**Success Criteria** (what must be TRUE):
+  1. A San Francisco address returns LOCAL (G4110 city), COUNTY (G4020), STATE_UPPER (SLDU), STATE_LOWER (SLDL), and NATIONAL_LOWER (CD) boundary rows
+  2. A rural unincorporated address returns G4040 COUSUB + county + legislative + congressional boundaries (no LOCAL gap)
+  3. All 52 congressional districts, 40 senate districts, 80 assembly districts, and 58 counties have boundary rows in geofence_boundaries
+  4. Smoke test: 3 different CA addresses (urban city, suburban city, unincorporated) each return the correct district names with zero NULL tiers
+
+Plans:
+- [ ] 57-01-PLAN.md — TIGER loader config for CA; run G4110 + G4040 + SLDU + SLDL + CD + G4020; verify counts
+- [ ] 57-02-PLAN.md — Smoke test 3 CA addresses; confirm all tiers route; document any TIGER CD key quirk
+
+### Phase 58: LAUSD Geofences
+**Goal**: LA Unified School District board district boundaries are loaded so any LA address also returns the resident's LAUSD board district
+**Depends on**: Phase 57 (CA geofences foundation)
+**Requirements**: GEO-02
+**Success Criteria** (what must be TRUE):
+  1. All 7 LAUSD board district boundaries exist in geofence_boundaries with a distinct mtfcc or district_type that does not collide with city/county tiers
+  2. An LA address within LAUSD territory returns the correct board district row alongside city and county tiers
+  3. An address outside LAUSD territory (e.g. Pasadena Unified) returns no LAUSD row (no false positives)
+
+Plans:
+- [ ] 58-01-PLAN.md — Source LAUSD district shapefiles; load as distinct geofence type; verify 7 boundaries present
+- [ ] 58-02-PLAN.md — Routing integration test: LA address returns LAUSD district; Pasadena address does not
+
+### Phase 59: CA Government DB Foundation
+**Goal**: The State of California government row and all constitutional officer chambers exist with correct is_appointed_position flags, ready to receive officials
+**Depends on**: Phase 57
+**Requirements**: GOVDB-01, GOVDB-02
+**Success Criteria** (what must be TRUE):
+  1. essentials.governments has a "State of California" row with FIPS-based geo_id
+  2. All CA constitutional officer chambers exist (Governor, Lieutenant Governor, Attorney General, Secretary of State, Controller, Treasurer, Insurance Commissioner, Superintendent of Public Instruction) with correct is_appointed_position per CA constitution
+  3. Governor Newsom + all popularly-elected constitutional officers are seeded as politicians with offices linked to their chambers
+  4. All seeded executives have headshots uploaded to Supabase Storage at 600×750
+
+Plans:
+- [ ] 59-01-PLAN.md — Migration: CA government row + all chambers; research CA constitution for appointed vs. elected distinction
+- [ ] 59-02-PLAN.md — Migration: Governor Newsom + constitutional officer politicians + office rows
+- [ ] 59-03-PLAN.md — Headshots: source + upload 600×750 for all CA executives
+
+### Phase 60: CA Executives + Federal Officials
+**Goal**: California's 2 US Senators and all 52 US House representatives are seeded with offices linked to the correct NATIONAL districts and have headshots
+**Depends on**: Phase 57 (congressional boundaries loaded)
+**Requirements**: GOVDB-03
+**Success Criteria** (what must be TRUE):
+  1. Both CA US Senators (Padilla + Schiff) are seeded with offices linked to the NATIONAL_UPPER district
+  2. All 52 US House representatives are seeded with offices each linked to the correct NATIONAL_LOWER district (CD-01 through CD-52)
+  3. Every federal official has a headshot in Supabase Storage at 600×750
+  4. A lookup for a CA address returns the correct US Representative name matching the congressional district boundary
+
+Plans:
+- [ ] 60-01-PLAN.md — Migration: 2 CA senators + 52 US House reps + office rows linked to NATIONAL districts
+- [ ] 60-02-PLAN.md — Headshots: source + upload 600×750 for all 54 federal officials
+
+### Phase 61: CA State Legislature
+**Goal**: All 80 Assembly members and 40 State Senators are seeded with offices linked to the correct STATE geofence districts and have headshots
+**Depends on**: Phase 57 (SLDL + SLDU boundaries loaded), Phase 59 (chambers exist)
+**Requirements**: GOVDB-04
+**Success Criteria** (what must be TRUE):
+  1. All 80 Assembly members are seeded with offices linked to SLDL districts AD-01 through AD-80
+  2. All 40 State Senators are seeded with offices linked to SLDU districts SD-01 through SD-40
+  3. Every legislator has a headshot in Supabase Storage at 600×750
+  4. A lookup for a CA address returns the correct Assembly member and State Senator names matching the district boundaries
+
+Plans:
+- [ ] 61-01-PLAN.md — Migration: 40 CA State Senators + office rows linked to SLDU districts
+- [ ] 61-02-PLAN.md — Migration: 80 CA Assembly members + office rows linked to SLDL districts
+- [ ] 61-03-PLAN.md — Headshots: source + upload 600×750 for all 120 state legislators
+
+### Phase 62: LA Backlog Closure
+**Goal**: The existing LA seed is complete — LAUSD officials are seeded, the Governor race has all filed candidates, the lavote.gov election ID is current, and any city structure gaps are closed
+**Depends on**: Phase 58 (LAUSD geofences), Phase 59 (CA government chambers exist)
+**Requirements**: LA-01, LA-02, LA-03, LA-04
+**Success Criteria** (what must be TRUE):
+  1. The CA Governor 2026 race row has all 10 SOS-verified challenger candidates seeded as race_candidates
+  2. The lavote.gov election ID in the database matches the current election cycle (no stale ID)
+  3. All 7 LAUSD board members are seeded with offices linked to LAUSD geofence districts and have headshots at 600×750
+  4. An LA address lookup returns a complete set of local officials — no missing chambers or office gaps visible in the UI
+
+Plans:
+- [ ] 62-01-PLAN.md — Migration 171 (la_council_votes, unapplied backlog); LA city structure audit + gap-close migration
+- [ ] 62-02-PLAN.md — CA Governor challenger candidates migration; lavote.gov election ID update
+- [ ] 62-03-PLAN.md — LAUSD board member seed + office rows linked to LAUSD districts; headshots 600×750
+
+### Phase 63: San Francisco Deep Seed
+**Goal**: San Francisco is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so an SF address returns a complete local officials list
+**Depends on**: Phase 57 (SF city boundary loaded)
+**Requirements**: CITIES-01
+**Success Criteria** (what must be TRUE):
+  1. SF government row exists with chambers for Mayor, Board of Supervisors (11 districts), City Attorney, DA, and any other Tier 1 offices
+  2. All 11 District Supervisors + Mayor + City Attorney + DA are seeded as politicians with linked office rows
+  3. An SF address lookup returns the correct District Supervisor for that address
+  4. All seeded SF officials have headshots at 600×750 in Supabase Storage
+
+Plans:
+- [ ] 63-01-PLAN.md — SF government structure: government row + chambers + 11 supervisor district offices + mayor/CA/DA offices
+- [ ] 63-02-PLAN.md — SF incumbents: Mayor + 11 supervisors + City Attorney + DA politician rows + office links
+- [ ] 63-03-PLAN.md — SF headshots: source + upload 600×750 for all SF officials
+
+### Phase 64: San Jose Deep Seed
+**Goal**: San Jose is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Jose address returns a complete local officials list
+**Depends on**: Phase 57 (San Jose city boundary loaded)
+**Requirements**: CITIES-02
+**Success Criteria** (what must be TRUE):
+  1. San Jose government row exists with chambers for Mayor and City Council (10 districts)
+  2. Mayor + all 10 Council Members are seeded as politicians with linked office rows
+  3. A San Jose address lookup returns the correct Council Member for that address
+  4. All seeded San Jose officials have headshots at 600×750 in Supabase Storage
+
+Plans:
+- [ ] 64-01-PLAN.md — San Jose government structure + chambers + offices
+- [ ] 64-02-PLAN.md — San Jose incumbents: Mayor + 10 council members + office links
+- [ ] 64-03-PLAN.md — San Jose headshots: source + upload 600×750
+
+### Phase 65: San Diego Deep Seed
+**Goal**: San Diego is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Diego address returns a complete local officials list
+**Depends on**: Phase 57 (San Diego city boundary loaded)
+**Requirements**: CITIES-03
+**Success Criteria** (what must be TRUE):
+  1. San Diego government row exists with chambers for Mayor, City Council (9 districts), City Attorney, and relevant Tier 2-4 offices
+  2. Mayor + all 9 Council Members + City Attorney are seeded as politicians with linked office rows
+  3. A San Diego address lookup returns the correct Council Member for that address
+  4. All seeded San Diego officials have headshots at 600×750 in Supabase Storage
+
+Plans:
+- [ ] 65-01-PLAN.md — San Diego government structure + chambers + offices
+- [ ] 65-02-PLAN.md — San Diego incumbents + office links
+- [ ] 65-03-PLAN.md — San Diego headshots: source + upload 600×750
+
+### Phase 66: Sacramento Deep Seed
+**Goal**: Sacramento is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Sacramento address returns a complete local officials list
+**Depends on**: Phase 57 (Sacramento city boundary loaded)
+**Requirements**: CITIES-04
+**Success Criteria** (what must be TRUE):
+  1. Sacramento government row exists with chambers for Mayor and City Council (8 districts)
+  2. Mayor + all 8 Council Members are seeded as politicians with linked office rows
+  3. A Sacramento address lookup returns the correct Council Member for that address
+  4. All seeded Sacramento officials have headshots at 600×750 in Supabase Storage
+
+Plans:
+- [ ] 66-01-PLAN.md — Sacramento government structure + chambers + offices
+- [ ] 66-02-PLAN.md — Sacramento incumbents + office links
+- [ ] 66-03-PLAN.md — Sacramento headshots: source + upload 600×750
+
+### Phase 67: Fremont Deep Seed
+**Goal**: Fremont is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Fremont address returns a complete local officials list
+**Depends on**: Phase 57 (Fremont city boundary loaded)
+**Requirements**: CITIES-05
+**Success Criteria** (what must be TRUE):
+  1. Fremont government row exists with chambers for Mayor and City Council (at-large or district model confirmed)
+  2. Mayor + all Council Members are seeded as politicians with linked office rows
+  3. A Fremont address lookup returns city officials without routing errors
+  4. All seeded Fremont officials have headshots at 600×750 in Supabase Storage
+
+Plans:
+- [ ] 67-01-PLAN.md — Fremont government structure + chambers + offices
+- [ ] 67-02-PLAN.md — Fremont incumbents + office links
+- [ ] 67-03-PLAN.md — Fremont headshots: source + upload 600×750
+
+### Phase 68: Berkeley Deep Seed
+**Goal**: Berkeley is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Berkeley address returns a complete local officials list; RCV election_method flagged for Mayor
+**Depends on**: Phase 57 (Berkeley city boundary loaded)
+**Requirements**: CITIES-06
+**Success Criteria** (what must be TRUE):
+  1. Berkeley government row exists with chambers for Mayor and City Council (8 districts + at-large seats per Berkeley charter)
+  2. Mayor + all Council Members are seeded as politicians with linked office rows; Mayor office has election_method='rcv' noted for future elections
+  3. A Berkeley address lookup returns the correct District Council Member for that address
+  4. All seeded Berkeley officials have headshots at 600×750 in Supabase Storage
+
+Plans:
+- [ ] 68-01-PLAN.md — Berkeley government structure + chambers + offices; confirm RCV offices
+- [ ] 68-02-PLAN.md — Berkeley incumbents + office links
+- [ ] 68-03-PLAN.md — Berkeley headshots: source + upload 600×750
+
+### Phase 69: Landing + Elections + Discovery
+**Goal**: All 7 CA cities appear in the coverage map, CA 2026 election rows are seeded, and discovery is armed for the June 3 primary and all covered cities
+**Depends on**: Phases 62-68 (all city seeds complete)
+**Requirements**: CITIES-07, ELECT-01, ELECT-02, ELECT-03, ELECT-04
+**Success Criteria** (what must be TRUE):
+  1. Landing.jsx COVERAGE_AREAS includes all 7 CA cities (LA + SF + San Jose + San Diego + Sacramento + Fremont + Berkeley) with correct browseGovernmentList IDs
+  2. CA 2026 primary (June 3) and general (November 4) election rows exist in essentials.elections
+  3. The CA Governor 2026 open-seat race exists with all SOS-verified candidates and cron_active=true discovery armed
+  4. All 52 CA US House 2026 race rows exist (one per CD) with cron_active=true discovery armed
+  5. discovery_jurisdictions rows with cron_active=true exist for all 7 covered CA cities
+
+Plans:
+- [ ] 69-01-PLAN.md — Landing.jsx COVERAGE_AREAS update for all 7 CA cities
+- [ ] 69-02-PLAN.md — CA elections foundation: 2 election rows + Governor race + Governor candidates migration
+- [ ] 69-03-PLAN.md — CA US House 52 race rows migration + discovery_jurisdictions armed
+- [ ] 69-04-PLAN.md — City discovery_jurisdictions rows (7 cities) + smoke test all cron_active rows
+
+### Phase 70: Compass Stances
+**Goal**: Compass stances are ingested for CA constitutional officers, federal officials, and city council members across all 7 CA cities where public record exists
+**Depends on**: Phases 59-68 (all officials seeded), Phase 69 (discovery armed)
+**Requirements**: COMPASS-01, COMPASS-02
+**Success Criteria** (what must be TRUE):
+  1. Every CA constitutional officer and US Senator/Rep with a verifiable public stance record has at least one compass answer ingested
+  2. City council officials across all 7 CA cities with discoverable public stance records have compass answers ingested
+  3. All stance ingestion ran one-at-a-time (rate-limit rule honored); no bulk parallel runs
+  4. The compass renders on politician profile pages for at least one official per city without errors
+
+Plans:
+- [ ] 70-01-PLAN.md — Stance research + ingestion: CA constitutional officers + 2 US Senators (one at a time)
+- [ ] 70-02-PLAN.md — Stance research + ingestion: CA US House reps (one at a time, prioritize high-profile districts)
+- [ ] 70-03-PLAN.md — Stance research + ingestion: city council officials across all 7 CA cities (one at a time)
+
+### Phase 71: Playbook Retrospective
+**Goal**: The location onboarding playbook is updated with all CA-specific GOTCHAs discovered during v7.0 so future state onboarding is faster
+**Depends on**: Phases 57-70 (entire v7.0 complete)
+**Requirements**: PLAYBOOK-01
+**Success Criteria** (what must be TRUE):
+  1. LOCATION-ONBOARDING.md has a CA-specific GOTCHA section covering: charter vs. general law city structure differences, RCV cities (SF/Berkeley), TIGER CD key verification for CA, LAUSD sub-district geofence pattern, and lavote.gov election ID maintenance
+  2. Any trap encountered during v7.0 phases that is not already in the playbook is documented with the problem, solution, and CA example
+  3. The playbook entry is written so a future agent can onboard a new CA city without repeating any v7.0 mistakes
+
+Plans:
+- [ ] 71-01-PLAN.md — Playbook retrospective: audit v7.0 phase summaries for GOTCHAs; write CA section in LOCATION-ONBOARDING.md
+
+</details>
+
+---
+
 ## Backlog
 
 These are known gaps that are not yet scoped into a milestone.
@@ -240,9 +468,8 @@ Plans:
 
 ### Data Gaps (accounts team backlog)
 
-- CA Governor challenger candidates (10 filed, not yet seeded)
-- LAUSD sub-district geofences pending
-- lavote.gov election ID changes each cycle — mandatory manual update per election cycle
+- Migration 171 (171_la_council_votes.sql) — unapplied; folded into Phase 62
+- Migration 182 (legacy views drop) — verify applied status before Phase 62 work
 
 ---
 
@@ -255,6 +482,7 @@ v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
 v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29) → 32 (after 28+31)
 v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (after 41) → 44 (after 41+38) → 45 (after 44) → 46 (when accounts team delivers stances) → 47 (cleanup, after 46)
 v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+50) → 54+55 (parallel, both after 53) → 56 (after all)
+v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+59) → 62 (after 58+59) → 63→64→65→66→67→68 (each after 57; sequential by convention) → 69 (after 62-68) → 70 (after 69) → 71 (after 70)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -314,3 +542,18 @@ v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+
 | 54. ME City Officials Tiers 2-4 | v6.0 | 3/3 | Complete | 2026-05-19 |
 | 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 3/3 | Complete | 2026-05-20 |
 | 56. ME Playbook Retrospective | v6.0 | 2/2 | Complete | 2026-05-20 |
+| 57. CA Geofences | v7.0 | 0/2 | Pending | - |
+| 58. LAUSD Geofences | v7.0 | 0/2 | Pending | - |
+| 59. CA Government DB Foundation | v7.0 | 0/3 | Pending | - |
+| 60. CA Executives + Federal Officials | v7.0 | 0/2 | Pending | - |
+| 61. CA State Legislature | v7.0 | 0/3 | Pending | - |
+| 62. LA Backlog Closure | v7.0 | 0/3 | Pending | - |
+| 63. San Francisco Deep Seed | v7.0 | 0/3 | Pending | - |
+| 64. San Jose Deep Seed | v7.0 | 0/3 | Pending | - |
+| 65. San Diego Deep Seed | v7.0 | 0/3 | Pending | - |
+| 66. Sacramento Deep Seed | v7.0 | 0/3 | Pending | - |
+| 67. Fremont Deep Seed | v7.0 | 0/3 | Pending | - |
+| 68. Berkeley Deep Seed | v7.0 | 0/3 | Pending | - |
+| 69. Landing + Elections + Discovery | v7.0 | 0/4 | Pending | - |
+| 70. Compass Stances | v7.0 | 0/3 | Pending | - |
+| 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |

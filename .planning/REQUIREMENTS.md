@@ -71,40 +71,38 @@
 
 ## Traceability
 
-*(Populated by roadmapper)*
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| GEO-01 | — | Pending |
-| GEO-02 | — | Pending |
-| GOVDB-01 | — | Pending |
-| GOVDB-02 | — | Pending |
-| GOVDB-03 | — | Pending |
-| GOVDB-04 | — | Pending |
-| LA-01 | — | Pending |
-| LA-02 | — | Pending |
-| LA-03 | — | Pending |
-| LA-04 | — | Pending |
-| CITIES-01 | — | Pending |
-| CITIES-02 | — | Pending |
-| CITIES-03 | — | Pending |
-| CITIES-04 | — | Pending |
-| CITIES-05 | — | Pending |
-| CITIES-06 | — | Pending |
-| CITIES-07 | — | Pending |
-| ELECT-01 | — | Pending |
-| ELECT-02 | — | Pending |
-| ELECT-03 | — | Pending |
-| ELECT-04 | — | Pending |
-| COMPASS-01 | — | Pending |
-| COMPASS-02 | — | Pending |
-| PLAYBOOK-01 | — | Pending |
+| GEO-01 | Phase 57 | Pending |
+| GEO-02 | Phase 58 | Pending |
+| GOVDB-01 | Phase 59 | Pending |
+| GOVDB-02 | Phase 59 | Pending |
+| GOVDB-03 | Phase 60 | Pending |
+| GOVDB-04 | Phase 61 | Pending |
+| LA-01 | Phase 62 | Pending |
+| LA-02 | Phase 62 | Pending |
+| LA-03 | Phase 62 | Pending |
+| LA-04 | Phase 62 | Pending |
+| CITIES-01 | Phase 63 | Pending |
+| CITIES-02 | Phase 64 | Pending |
+| CITIES-03 | Phase 65 | Pending |
+| CITIES-04 | Phase 66 | Pending |
+| CITIES-05 | Phase 67 | Pending |
+| CITIES-06 | Phase 68 | Pending |
+| CITIES-07 | Phase 69 | Pending |
+| ELECT-01 | Phase 69 | Pending |
+| ELECT-02 | Phase 69 | Pending |
+| ELECT-03 | Phase 69 | Pending |
+| ELECT-04 | Phase 69 | Pending |
+| COMPASS-01 | Phase 70 | Pending |
+| COMPASS-02 | Phase 70 | Pending |
+| PLAYBOOK-01 | Phase 71 | Pending |
 
 **Coverage:**
 - v7.0 requirements: 24 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 24 ⚠️
+- Mapped to phases: 24
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-21*
-*Last updated: 2026-05-21 — initial v7.0 definition*
+*Last updated: 2026-05-21 — traceability populated by roadmapper*
