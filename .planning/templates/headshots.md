@@ -86,6 +86,44 @@ JOIN essentials.governments g ON p.government_id = g.id
 WHERE g.geo_id = '[geo_id]' AND p.headshot_url IS NULL;
 ```
 
+## State Legislature Headshot Sourcing
+
+State legislature websites typically host member photos, but URL structures vary by state and chamber.
+
+**Before any state:** Visit one senator page and one representative page, inspect the image URL, and determine whether URLs are derivable from member names or are per-person GUIDs (non-derivable).
+
+| Type | URL derivable? | Strategy |
+|------|---------------|----------|
+| Derivable (name-based) | YES | Build a batch downloader from the official member list |
+| Non-derivable (UUID per rep) | NO | Must visit each profile page individually to capture the URL |
+
+**Maine example (mainelegislature.org):**
+- **Senate:** `https://legislature.maine.gov/uploads/visual_edit/[FirstLast].jpg` — URL is derivable from the senator's name (lowercase, first+last concatenated). Phase 52-01 batch-downloaded all 35 senator photos from this pattern.
+- **House:** `https://legislature.maine.gov/house/Repository/MemberProfiles/[uuid]_[Name]-[year].jpg` — the UUID is assigned per representative and is NOT derivable from their name. Must visit each representative's profile page at `https://legislature.maine.gov/house/house/RepresentativeDistrict/[district]` to capture the URL. Phase 52-02 captured 151 house rep URLs one per profile page.
+
+**For your state:** Check both chambers before building any batch download. Saving a script for the Senate may not work for the House if the URL format differs.
+
+---
+
+## Thumbnail Upscaling (when only low-res source available)
+
+Sometimes the only available headshot source is a small thumbnail (e.g., 152×202 pixels). The question: is a soft upscale better than no photo?
+
+**Decision rule:**
+- If the source thumbnail is the ONLY available source (no campaign website, no official site photo) → upscale with Lanczos + unsharp masking is acceptable
+- Always get user sign-off before processing the full set — show 1–2 sample upscales for approval
+- Document the upscale in the SUMMARY.md: note the source resolution and approval date
+
+**Process:**
+1. Pick 2 representative samples (one person with a clear face, one with trickier lighting)
+2. Upscale to 600×750 with Lanczos filter + mild unsharp mask (e.g., PIL: `img.filter(ImageFilter.UnsharpMask(radius=2, percent=150, threshold=3))`)
+3. Show samples to user; confirm they are acceptable
+4. Process full set only after approval
+
+**Maine example:** Phase 52-03 upscaled 150 House representative thumbnails from 152×202 → 600×750 using Lanczos + unsharp masking. Samples shown to user 2026-05-19; user approved before full batch processing. Result: all 150 photos uploaded; quality is acceptable (some softness, but recognizable and usable).
+
+---
+
 ## Common Mistakes
 
 - Stretching photo to 600×750 without cropping to 4:5 first → distorted faces

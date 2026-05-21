@@ -6,6 +6,79 @@ Use this template when planning a phase that seeds incumbent politicians with of
 
 ---
 
+## Multi-Tier City Seeding Strategy
+
+When onboarding a state with many cities, use a tiered approach to manage coverage depth. The goal is visible, documented coverage — not silent omissions.
+
+| Tier | Coverage | Who gets it |
+|------|----------|-------------|
+| Tier 1 | Incumbents + emails + headshots + addresses | Largest 1–3 cities; flagship coverage |
+| Tier 2 | Incumbents + emails only (no headshots) | Next 5–10 cities by population |
+| Tier 3–4 | Skeletal office rows only (`politician_id=NULL`) | All remaining cities; offices exist but no politicians seeded |
+
+**GAPS.md requirement:** Create a `[STATE]-GAPS.md` file in the phase directory listing every Tier 3–4 city with status "not attempted." Silent omissions look identical to completed coverage — a GAPS.md makes the boundary explicit and creates a future phase backlog.
+
+**Maine example:** Phase 53 = Tier 1 (Portland, 18 officials fully seeded with headshots and emails). Phase 54 = Tiers 2–4 (Lewiston/Bangor/SouthPortland/Auburn/Biddeford as Tier 2 incumbents + 18 skeletal cities as Tier 3–4). The GAPS.md in Phase 54 lists the 17 cities with `politician_id=NULL` offices and status "not attempted."
+
+**Tier 2 external_id prefix pattern:** Use a 5-digit city-specific prefix per city to avoid collisions. Maine Tier 2 prefixes: Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx.
+
+---
+
+## PowerShell Bulk-Seed Generator Pattern
+
+For migrations with 100+ repetitive INSERT blocks (e.g., 151 House seat offices, 372 legislative race rows), hand-writing SQL invites arithmetic errors. Use a PowerShell script to generate the SQL file.
+
+**CRITICAL encoding rule:** Use `[System.IO.File]::WriteAllLines($path, $lines, [System.Text.UTF8Encoding]::new($false))` to write the output file. The `$false` argument disables BOM (Byte Order Mark). Do NOT use `Out-File` or `Set-Content` — both produce BOM/UTF-16 that PostgreSQL rejects with a parse error at apply time.
+
+```powershell
+# Pattern from Phase 55-02 (generate_me_legislative_races.ps1)
+$lines = @()
+$lines += "-- ME 2026 Legislative Race Scaffold"
+1..35 | ForEach-Object {
+    $district = $_
+    $lines += "INSERT INTO essentials.races (id, election_id, position_name, office_id, primary_party)"
+    $lines += "SELECT gen_random_uuid(),"
+    $lines += "  (SELECT id FROM essentials.elections WHERE name = '2026 ME State Primary' AND state = 'ME'),"
+    $lines += "  'ME State Senate District $district',"
+    $lines += "  (SELECT o.id FROM essentials.offices o"
+    $lines += "   JOIN essentials.districts d ON o.district_id = d.id"
+    $lines += "   WHERE d.geo_id = '23' AND d.district_type = 'STATE_UPPER' AND d.label LIKE 'Senate District $district%'),"
+    $lines += "  'Democratic'"
+    $lines += "WHERE NOT EXISTS (SELECT 1 FROM essentials.races WHERE position_name = 'ME State Senate District $district' AND primary_party = 'Democratic');"
+}
+[System.IO.File]::WriteAllLines(".\output\184_me_legislative_races.sql", $lines, [System.Text.UTF8Encoding]::new($false))
+```
+
+**Maine example:** Phase 55-02 PowerShell generator produced migration 184 (372 legislative race rows: 35 senate × 2 primaries + 151 house × 2 primaries). The generator ran in ~2 seconds; hand-writing would have been 400+ blocks prone to district numbering errors.
+
+---
+
+## essentials.offices and essentials.politicians Schema Gotchas
+
+These columns do NOT exist — do not invent them in INSERT or UPDATE statements:
+
+| Table | Column that does NOT exist | What to use instead |
+|-------|---------------------------|---------------------|
+| `essentials.offices` | `seat_label` | Embed in `title`: `'Council Member (Ward 3)'`, `'Council Member (At-Large 2)'` |
+| `essentials.offices` | `is_active` | No equivalent; use `politician_id IS NULL` to identify unoccupied seats |
+| `essentials.offices` | `email` | Emails belong on `politicians.email_addresses` (TEXT[] array) |
+| `essentials.districts` | `short_label` | Only `label` exists |
+| `essentials.politicians` | single-value `email_address` | Use `email_addresses TEXT[]`: `ARRAY['addr@domain']` in INSERT VALUES |
+
+**UPDATE pattern for adding incumbent to an existing skeletal office** (where `politician_id IS NULL`): match on `(chamber_id, title)` — there is no `seat_label` to match on.
+
+```sql
+UPDATE essentials.offices
+SET politician_id = (SELECT id FROM essentials.politicians WHERE external_id = -23387001)
+WHERE chamber_id = (SELECT id FROM essentials.chambers WHERE slug = 'lewiston-city-council')
+  AND title = 'Council Member (Ward 1)'
+  AND politician_id IS NULL;
+```
+
+**Maine example:** Phase 54 migration 180 used this exact pattern to add Lewiston incumbents to the skeletal offices seeded in migration 177.
+
+---
+
 ## Pre-Seed Checklist
 
 - [ ] Government row exists (db-foundation phase complete for this city)

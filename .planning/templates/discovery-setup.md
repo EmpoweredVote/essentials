@@ -89,6 +89,33 @@ JOIN essentials.elections e ON dj.election_id = e.id
 WHERE g.geo_id = '[geo_id]';
 ```
 
+## State-Level Discovery (geoid = state FIPS)
+
+For statewide races (Governor, US Senate, US House), `jurisdiction_geoid` = the 2-digit state FIPS code (e.g., `'23'` for Maine, `'25'` for MA), not a city or county geo_id.
+
+**One `discovery_jurisdictions` row per (state, election_date) pair.** Each pair covers all races in that state for that election date — the discovery agent sweeps all races in scope for the jurisdiction.
+
+**Maine example:** Phase 55-01 seeded 3 discovery rows for `jurisdiction_geoid='23'`: Governor primary 2026-06-09, US Senate primary 2026-06-09, and US House general 2026-11-03. All three were within the 180-day cron horizon at setup time and were seeded with `would_be_swept=true`.
+
+**FIPS reference:** State FIPS codes are 2 digits (Maine='23', MA='25', TX='48', CA='06'). Do not use the 5-digit county FIPS or the 7-digit city geo_id for statewide discovery rows.
+
+---
+
+## Discovery at Scale (states with many races)
+
+For state legislatures, the discovery agent may face 100+ races per jurisdiction. The agent processes jurisdictions **sequentially** — never in parallel (rate limit rule: parallel runs exhaust Claude API quota).
+
+**What this means for state legislatures:**
+- A state with 186 legislative seats + statewide races may take multiple cron cycles to fully sweep
+- Do not expect a single cron run to discover all 186+ races in one pass
+- Monitor the staging queue after the first few cron runs to verify the agent is returning candidates
+
+**`cron_active` column does not exist:** There is NO `cron_active` column on `essentials.discovery_jurisdictions`. The cron horizon is purely date-based (`election_date <= CURRENT_DATE + INTERVAL '180 days'`). The activation flags are `is_active` and `would_be_swept` only.
+
+**Maine example:** Phase 55 armed the cron for two ME 2026 elections (2026-06-09 and 2026-11-03) covering 380 race rows total. Discovery rows use `jurisdiction_geoid='23'` (state FIPS). Both rows set `would_be_swept=true` because both were within the 180-day horizon at setup time (2026-05-20).
+
+---
+
 ## Common Mistakes
 
 - Activating discovery before filing opens → weekly cron returns 0 candidates every run; regression alerts fire

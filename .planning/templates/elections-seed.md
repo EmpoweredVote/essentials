@@ -19,6 +19,8 @@ Use this template when planning a phase that seeds election rows, race rows, rac
 
 Do NOT invent values. If the city uses a method not listed, document it in STATE.md first and update this table before using it in a chambers INSERT.
 
+> [GOTCHA] **RCV jurisdictions: `election_method='rcv'` belongs on the CHAMBER row, not just the race.** Election method is a property of the body, not the contest. Setting it only on the race and leaving the chamber as `'plurality'` will show the wrong voting method in display logic. In Maine, Portland's Mayor, Auditor, and at-large Council chambers all require `election_method='rcv'` — set in the db-foundation phase (Phase 53), not in the elections-seed phase (Phase 53-02). Verify before seeding: is the chamber row already updated? If not, add an UPDATE to this migration.
+
 ---
 
 ## Pre-Seed Checklist
@@ -176,6 +178,36 @@ FROM essentials.discovery_jurisdictions dj
 WHERE dj.jurisdiction_geoid LIKE '[state_fips]%'
 ORDER BY dj.election_date;
 ```
+
+## Legislature-Elected Offices = No Race Rows
+
+**Pattern:** In states where the AG, SoS, or Treasurer is elected by the legislature (not by voters), these offices need `is_appointed_position=true` on the office row AND zero entries in `essentials.elections` or `essentials.races` for those chambers.
+
+- These officials still need politician rows + headshots — they are real people in real offices
+- They simply never appear in election infrastructure because they are never on a ballot
+- Research the state constitution before assuming popular election (Wikipedia state government article is sufficient)
+
+**Maine example:** Frey (AG), Bellows (SoS), Perry (Treasurer) — all have politician rows (Phase 51-01) and headshots (Phase 52) but zero race rows in `essentials.races` (verified 2026-05-20). Including them in an election migration would be incorrect.
+
+---
+
+## Scale Patterns (state legislatures with 100+ seats)
+
+For state legislatures, the race row count scales quickly: Maine = 35 senate + 151 house = 186 seats; both party primaries = 372 race rows for a primary cycle; add general election rows and the total exceeds 500.
+
+**PowerShell generator (REQUIRED at this scale):** Do not hand-write 100+ INSERT blocks. Use the PowerShell bulk-seed generator pattern documented in `officials-seed.md`. See that template for the encoding rule (`UTF8Encoding::new($false)` to disable BOM).
+
+**Verification at scale:**
+- Every race row must have a non-null `office_id` — run `SELECT COUNT(*) FROM essentials.races WHERE election_id = '[id]' AND office_id IS NULL` and confirm zero
+- District-type disambiguation matters: Senate D1 and House D1 are distinct `office_id` values; use `district_type = 'STATE_UPPER'` vs `'STATE_LOWER'` in subqueries to prevent cross-linking
+- Maine example: Phase 55-02 migration 184 — 372 race rows (70 senate + 302 house primaries); all 372 verified non-null `office_id`; district-type disambiguation confirmed working
+
+**`is_active` and `would_be_swept` flags:**
+- There is NO `cron_active` column on `discovery_jurisdictions` — the cron horizon is date-based (`election_date <= CURRENT_DATE + INTERVAL '180 days'`)
+- `is_active` and `would_be_swept` are the two activation flags; both must be correct for the cron to sweep a jurisdiction
+- Maine example: Phase 55-01 seeded `would_be_swept=true` for ME 2026-06-09 (20 days out at setup) and 2026-11-03 (167 days out) — both within 180-day horizon
+
+---
 
 ## Common Mistakes
 

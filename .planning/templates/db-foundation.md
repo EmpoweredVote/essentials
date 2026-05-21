@@ -146,6 +146,35 @@ ORDER BY c.name, o.seat_number;
 
 ---
 
+## Senator Office Uniqueness (state legislatures)
+
+**Problem:** In a US bicameral legislature, two senators share the same NATIONAL_UPPER district (e.g., Maine: Collins + King both represent Maine's single NATIONAL_UPPER district, which has `district_id = [same UUID]`). If you model the office uniqueness key as `(district_id, chamber_id)`, the second senator INSERT violates the constraint because `chamber_id` is identical for both rows.
+
+**Solution:** The uniqueness key for senator office rows must be `(district_id, politician_id)`, not `(district_id, chamber_id)`. Each senator is a distinct politician, so `politician_id` is the correct differentiator.
+
+**Maine example:** Phase 51-02 migration 170 seeded Collins (external_id=-230101, UUID 6b817122) and King (external_id=-230102, UUID 4f4b2bff) on the same NATIONAL_UPPER district_id. Both use `(district_id, politician_id)` as the effective uniqueness key — verified working in production.
+
+**For your state:** This applies to all 50 US states (each has two US senators). Also applies to state senate districts where any SLDU district is represented by more than one person (rare but possible for interim appointments).
+
+---
+
+## Legislature-Elected Offices (state-specific)
+
+**Problem:** In some states, the Attorney General, Secretary of State, or Treasurer is elected by the legislature rather than by voters. These offices appear on no ballot. If you assume popular election and create `essentials.elections` or `essentials.races` rows for these chambers, you will display a fake election that does not exist.
+
+**Solution:**
+- Set `is_appointed_position=true` on the office row
+- Create NO rows in `essentials.elections` or `essentials.races` for these chambers
+- These officials still need politician rows and headshots — they just never appear in election infrastructure
+
+**Research step:** Before assuming popular election for any state executive officer (AG, SoS, Treasurer, Comptroller), check the state constitution. Wikipedia's state government article is sufficient for this check.
+
+**Maine example:** Frey (AG), Bellows (SoS), Perry (Treasurer) — all `is_appointed_position=true`; zero race rows in `essentials.races` for these chambers (Phase 51-01, migration 169). Maine legislature elects these officers in joint session every two years.
+
+**States where this applies (non-exhaustive):** Maine, Tennessee, Virginia, New Hampshire. Always verify per state — do not assume.
+
+---
+
 ## Common Mistakes
 
 - Using county FIPS as geo_id → creates wrong government scope
