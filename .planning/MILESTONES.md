@@ -1,5 +1,32 @@
 # Milestones
 
+## v6.0 Maine Essentials (Shipped: 2026-05-20)
+
+**Delivered:** Full Maine state coverage — geofences, government structure, executives, 186 state legislators with headshots, Portland deep seed + Tier 2 city incumbents, 380 race rows for 2026 elections with discovery cron armed, and a playbook retrospective that captured 9 Maine GOTCHAs into LOCATION-ONBOARDING.md + 5 updated templates.
+
+**Phases completed:** 49-56 (14 plans total)
+
+**Key accomplishments:**
+
+- Maine TIGER boundaries loaded — 23 cities (G4110) + 2 CD + 35 SLDU + 151 SLDL + 16 counties; any ME address correctly routes to federal, state, and city representatives (Phase 49)
+- State of Maine government scaffolded — 6 chambers, 4 executive constitutional officers (Governor Mills + legislature-elected AG/SoS/Treasurer), 2 US Senators (Collins + King), 2 US House reps (Pingree ME-01 + Golden ME-02); all 8 with headshots (Phases 50-51)
+- 35 ME state senators + 151 ME house reps seeded with offices + 185 headshots (100% coverage; house thumbnails upscaled from 152×202 with user sign-off) (Phase 52)
+- Portland Tier 1 deep seed — 18 officials (Mayor + 9 Council + 4 School Board + Auditor + City Manager + City Clerk), RCV chambers, headshots, Landing.jsx entry (Phase 53)
+- Tier 2 city incumbents — Lewiston (8), Bangor (9), South Portland (7), Auburn (8), Biddeford (10); 18 skeletal cities documented as known gaps (Phase 54)
+- 380 ME race rows for 2026 — Governor (13 candidates, open seat), US Senate (3 candidates, Collins incumbent), 2 US House races, 372 legislative scaffolding rows with non-null office_id; discovery cron armed for 2026-06-09 + 2026-11-03 (Phase 55)
+- LOCATION-ONBOARDING.md retrofitted with 9 Maine GOTCHAs inline at correct steps + Maine in Cities Onboarded + Compass/Treasury stubs; 5 templates updated with state legislature headshots, multi-tier seeding, PowerShell generator, RCV chamber, legislature-elected = appointed (Phase 56)
+
+**Stats:**
+
+- 8 phases (49-56), 14 plans
+- Next migration: 185 (post-June-9 ME primary winners follow-up)
+
+**Sign-off:** Human approved Phase 56-02 verification (see .planning/phases/56-me-playbook-retrospective/56-02-VERIFICATION.md)
+
+**What's next:** v6.1 scope TBD — candidates: post-June-9 D primary winners migration, ME G4040 COUSUB town coverage, Compass/Treasury team playbook contributions
+
+---
+
 ## v5.0 Location Onboarding Playbook (Shipped: 2026-05-18)
 
 **Delivered:** Built a cold-start, repeatable playbook for onboarding any US city, then proved it by taking Cambridge, MA to Indiana/LA caliber coverage — geofences, government structure, incumbents, headshots, elections, discovery pipeline, and compass stances. The playbook (LOCATION-ONBOARDING.md + 6 templates) is now generalized for any US city.

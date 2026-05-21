@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 56 of 56 (ME Playbook Retrospective) — In Progress
-Plan: 1/2 for phase 56
-Status: Phase 56-01 complete — LOCATION-ONBOARDING.md + 5 templates updated with 9 ME GOTCHAs and Maine patterns
-Last activity: 2026-05-20 — Completed 56-01-PLAN.md
+Phase: 56 of 56 (ME Playbook Retrospective) — COMPLETE
+Plan: 2/2 for phase 56
+Status: Phase 56 complete — v6.0 milestone CLOSED. LOCATION-ONBOARDING.md and 5 templates updated with Maine learnings. Smoke tests passed. Discovery cron armed for both 2026 ME elections.
+Last activity: 2026-05-20 — Phase 56-02 complete (verification approved)
 
-Progress: v6.0 in progress — Phases 49-56 in progress; Phase 56 (ME Playbook Retrospective) Plan 1 complete
+Progress: v6.0 COMPLETE (Phases 49-56) — Maine onboarding shipped. v6.1 candidates: post-June-9 D primary winners migration; ME G4040 town coverage; Compass/Treasury team contributions to playbook.
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -123,5 +123,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-20
-Stopped at: Completed 56-01-PLAN.md — LOCATION-ONBOARDING.md + 5 templates updated; STATE.md Key Decisions promoted to problem+solution+example form; pending todos audited; Phase 56-02 (verification + readability review) is next
+Stopped at: v6.0 milestone closed; Phase 56 complete. Next session: define v6.1 scope or pick from Pending Todos.
 Resume file: None
