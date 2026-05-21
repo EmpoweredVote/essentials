@@ -2,12 +2,12 @@
 
 ## Current Position
 
-Phase: 55 of 56 (ME 2026 Elections + Discovery Pipeline) — COMPLETE
-Plan: 3/3 for phase 55
-Status: Phase 55 complete — 380 ME race rows seeded; discovery armed for both 2026 elections; next migration is 185
-Last activity: 2026-05-20 — Phase 55 complete (55-03-PLAN.md verification approved)
+Phase: 56 of 56 (ME Playbook Retrospective) — In Progress
+Plan: 1/2 for phase 56
+Status: Phase 56-01 complete — LOCATION-ONBOARDING.md + 5 templates updated with 9 ME GOTCHAs and Maine patterns
+Last activity: 2026-05-20 — Completed 56-01-PLAN.md
 
-Progress: v6.0 in progress — Phases 49-55 complete; Phase 56 (ME Playbook Retrospective) next
+Progress: v6.0 in progress — Phases 49-56 in progress; Phase 56 (ME Playbook Retrospective) Plan 1 complete
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -33,19 +33,20 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
 - Migration numbering: 170 applied (ME federal officials); next is 171
-- MA TIGER G4110=58 (not 351): 58 incorporated cities with charters; 293 MA towns are G4040 COUSUB (loaded Phase 48)
+- **Problem:** TIGER PLACE vs. COUSUB layer choice — loading only G4110 (incorporated cities) means G4040 COUSUB (towns/townships) residents get no LOCAL routing. **Solution:** Load BOTH G4110 and G4040 layers if the state has significant non-G4110 population. **Maine example:** 23 G4110 cities only loaded in Phase 49 — most ME residents live in G4040 towns NOT yet loaded. **MA example:** 58 G4110 cities + 293 G4040 COUSUB towns (Phase 48, both layers loaded).
 - Cambridge congressional split (verified PostGIS): west/north = MA-05 geo_id='2505'; east/south/Inman = MA-07 geo_id='2507'
 - geo_id collision between G4020 (Middlesex County='25017') and G5220 (8th Bristol District='25017') is TIGER format quirk — mtfcc always disambiguates; no routing risk
 - CRITICAL: slug is a GENERATED column on essentials.chambers — never include in INSERT statements
 - essentials.governments has NO unique constraint on geo_id — WHERE NOT EXISTS pattern required for idempotent inserts
 - Dual-office pattern: unique index on essentials.offices.politician_id was dropped in migration 159 — never re-add
 - computeDisplaySpokes() is the single source of truth for compass spoke selection; both CompassCard and MiniCompass must import from src/lib/compass.js — never duplicate the algorithm
-- Maine FIPS: 23; Portland geo_id: 2360545; Maine AG/SoS/Treasurer are legislature-elected → is_appointed_position=true, no election race rows
+- Maine FIPS: 23; Portland geo_id: 2360545
+- **Problem:** In some states, AG/SoS/Treasurer are elected by the legislature — not voters — and appear on no ballot. Creating race rows for them is incorrect. **Solution:** `is_appointed_position=true` on office row; NO `elections` or `races` rows. Research state constitution before assuming popular election (Wikipedia state government page is sufficient). **Maine example:** Frey (AG), Bellows (SoS), Perry (Treasurer) — all is_appointed=true; zero race rows (Phase 51-01).
 - State of Maine government UUID: da88de8b-9afa-4d87-86d5-7eb83c3e9792 — use subquery by name in migrations, not hardcoded UUID
 - Maine chambers (slugs): maine-senate, maine-house-of-representatives, maine-governor, maine-attorney-general, maine-secretary-of-state, maine-treasurer
 - ME executive external_ids: -230001 (Mills/Governor), -230002 (Frey/AG), -230003 (Bellows/SoS), -230004 (Perry/Treasurer); politician UUIDs in 51-01-SUMMARY.md
 - ME federal external_ids: -230101 (Collins R, 6b817122), -230102 (King I, 4f4b2bff), -230201 (Pingree D ME-01, 1638b2c9), -230202 (Golden D ME-02, c420f946); UUIDs in 51-02-SUMMARY.md
-- Senator office uniqueness key = (district_id, politician_id) not (district_id, chamber_id) — two senators share same NATIONAL_UPPER district; chamber_id uniqueness would block 2nd senator
+- **Problem:** NATIONAL_UPPER districts have 2 senators sharing one district_id — using `(district_id, chamber_id)` as uniqueness key blocks the 2nd senator INSERT. **Solution:** Office uniqueness key for senator rows is `(district_id, politician_id)` — each senator is a distinct politician. **Maine example:** Collins (R, ext=-230101) + King (I, ext=-230102) on same NATIONAL_UPPER district_id (verified Phase 51-02, migration 170).
 - election_races (in plan docs) = essentials.races (actual table name) — verified in Phase 51-01
 - Treasurer Joseph C. Perry (Democrat, elected Dec 2024) replaced Henry Beck who left 2025-01-06
 - Maine has 23 incorporated cities (G4110 PLACE); Portland uses RCV for Mayor, Auditor, and at-large Council → election_method='rcv'
@@ -54,8 +55,8 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 - Governor Janet Mills is term-limited — 2026 Governor race is open (6D, 10R primary candidates)
 - Maine state legislature website: mainelegislature.org (headshot source for senators/reps)
 - geofence_boundaries.state = FIPS '23'; districts.state = abbreviation 'ME' (established pattern from TX/MA)
-- ME TIGER uses cd119 (not cd) — file is tl_2024_23_cd119.zip; 23 cities (G4110), 2 CD, 35 SLDU, 151 SLDL, 16 counties loaded (Phase 49-01)
-- districts.state for ME: lowercase 'me' for COUNTY/STATE_UPPER/STATE_LOWER; uppercase 'ME' for NATIONAL_LOWER (loader abbrev/abbrevUpper pattern)
+- **[STATE-SPECIFIC trap]** TIGER congressional shapefile naming varies by state. **Problem:** Loader key may not be `cd` — using wrong key causes silent no-op (loader runs, loads zero boundaries). **Solution:** Always browse `https://www2.census.gov/geo/tiger/TIGER2024/CD/` and check actual filename before configuring STATE_LAYER_ALLOWLIST. **Maine example:** `tl_2024_23_cd119.zip` → loader key `cd119`, not `cd`. **MA example:** uses `cd` (standard). Layers loaded for ME Phase 49-01: 23 cities (G4110), 2 CD, 35 SLDU, 151 SLDL, 16 counties.
+- **Problem:** `districts.state` casing varies by district tier — wrong casing breaks routing queries. **Solution:** Lowercase (`'me'`, `'ma'`) for COUNTY/STATE_UPPER/STATE_LOWER; UPPERCASE (`'ME'`, `'MA'`) for NATIONAL_LOWER. Casing is set by loader's `abbrev` (lowercase) and `abbrevUpper` (uppercase) variables — always verify loader config and spot-check `SELECT DISTINCT state FROM essentials.districts` after running. **Maine example:** STATE_UPPER/STATE_LOWER rows use `'me'`; NATIONAL_LOWER rows use `'ME'` (Phase 49).
 - Run TIGER loader from C:/EV-Accounts/backend (not C:/EV-Accounts) — dotenv looks for .env in cwd
 - ME senator names: use official alphabetical listing (/senate/senators/9536) not individual page nicknames ('Jeff'=Jeffrey L., 'Dick'=Richard, 'Rick'=Richard A., 'Mattie'=Matthea E. L.)
 - ME senator external_ids -231001..-231035 now OCCUPIED (migration 172 applied 2026-05-19)
@@ -105,9 +106,12 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 
 ### Pending Todos (accounts team backlog)
 
-- CA Governor challenger candidates (10 filed, not yet seeded)
-- LAUSD sub-district geofences pending
-- lavote.gov election ID changes each cycle — mandatory manual update per election cycle
+- **[ME — TIME-SENSITIVE]** Post-2026-06-09 follow-up: After ME primary results (target: week of June 9, 2026), write migration 185 to add D primary winners to US Senate general + ME-01 general + ME-02 general `race_candidates` rows. Also add R general candidates from statewide results.
+- **[LA backlog]** Migration 171 (171_la_council_votes.sql) — unapplied; predates ME phases; LA-specific council voting records; apply when LA work resumes.
+- **[DB — pending verification]** Migration 182 (legacy views drop) — STATE.md notes this as unapplied; verify via `SELECT version FROM supabase_migrations.schema_migrations WHERE version='182'` before applying. DATABASE_URL was unavailable during Phase 56-01 audit (2026-05-20); check manually.
+- **[CA backlog]** CA Governor challenger candidates (10 filed, not yet seeded)
+- **[CA backlog]** LAUSD sub-district geofences pending
+- **[CA operational note]** lavote.gov election ID changes each cycle — mandatory manual update per election cycle
 
 ### Parked from v2.2 (backlog — resume after v3.0)
 
@@ -119,5 +123,5 @@ See: .planning/PROJECT.md (updated 2026-05-18 after v6.0 milestone start)
 ## Session Continuity
 
 Last session: 2026-05-20
-Stopped at: Completed 55-03-PLAN.md — Phase 55 complete; 380 ME race rows verified; discovery cron armed; Phase 56 (Retrospective) is next
+Stopped at: Completed 56-01-PLAN.md — LOCATION-ONBOARDING.md + 5 templates updated; STATE.md Key Decisions promoted to problem+solution+example form; pending todos audited; Phase 56-02 (verification + readability review) is next
 Resume file: None
