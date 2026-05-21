@@ -238,8 +238,8 @@ Full details: [milestones/v6.0-ROADMAP.md](milestones/v6.0-ROADMAP.md)
   4. Smoke test: 3 different CA addresses (urban city, suburban city, unincorporated) each return the correct district names with zero NULL tiers
 
 Plans:
-- [ ] 57-01-PLAN.md — TIGER loader config for CA; run G4110 + G4040 + SLDU + SLDL + CD + G4020; verify counts
-- [ ] 57-02-PLAN.md — Smoke test 3 CA addresses; confirm all tiers route; document any TIGER CD key quirk
+- [ ] 57-01-PLAN.md — Patch TIGER loader for CA (add county+cousub layers, state-conditional FUNCSTAT, fipsArg=06 pre-flight); load G4020 (58) + G4040 (1057); SQL gates pass
+- [ ] 57-02-PLAN.md — Smoke test 3 CA addresses (SF consolidated, San Diego, East LA unincorporated); document v7.0 target city geo_ids for Phases 63-68
 
 ### Phase 58: LAUSD Geofences
 **Goal**: LA Unified School District board district boundaries are loaded so any LA address also returns the resident's LAUSD board district
