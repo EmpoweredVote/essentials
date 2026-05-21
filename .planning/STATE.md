@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 58 (complete)
-Plan: 02 of 2
-Status: Phase 58 complete — LAUSD geofences loaded and smoke test verified
-Last activity: 2026-05-21 — Completed 58-02-PLAN.md; all 3 SC pass (7 rows, downtown LA=BD2, Pasadena=0)
-Progress: v7.0 Phase 58 complete. Ready for Phase 62 (LAUSD board officials ingestion).
+Plan: —
+Status: Phase 58 complete — all 3 roadmap success criteria verified
+Last activity: 2026-05-21 — Phase 58 LAUSD Geofences complete; verification passed 3/3
+Progress: v7.0 Phase 58 complete. 7 LAUSD board district rows in geofence_boundaries (lausd-board-district-1 through 7), mtfcc='G5420', state='06'. CA G5420 total=692 (346 TIGER UNSD + 339 other states + 7 LAUSD). Next: Phase 59 (CA Government DB Foundation) or Phase 62 (depends on 58+59).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -17,7 +17,7 @@ Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows c
 See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v7.0 California — Phase 58: LAUSD Geofences
+**Current focus:** v7.0 California — Phase 59: CA Government DB Foundation
 
 ## Accumulated Context
 
@@ -71,6 +71,8 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **Phase 62 LAUSD board members**: use district_type='SCHOOL' (not 'SCHOOL_DISTRICT') to match essentialsService.ts; geo_ids for boundaries are lausd-board-district-{1..7}
 - **Phase 58 COMPLETE (2026-05-21)**: All 3 roadmap success criteria confirmed via smoke-lausd-geofences.ts: 7 LAUSD rows (geo_id LIKE filter), downtown LA returns lausd-board-district-2, Pasadena City Hall returns 0 rows (no false positive)
 - **v7.0 CA target city geo_ids (verified 2026-05-21)**: SF=0667000, LA=0644000, SJ=0668000, SD=0666000, SAC=0664000, Fremont=0626000, Berkeley=0606000 — use for Phases 63-68
+- **LAUSD geofences (Phase 58 complete 2026-05-21)**: 7 rows in geofence_boundaries, geo_id='lausd-board-district-{1-7}', mtfcc='G5420', state='06', source='lausd_geohub_board_districts_2024'. Loader: load-lausd-board-boundaries.ts (C:/EV-Accounts/backend/scripts). CRITICAL: CA G5420 total is now 692 (346 TIGER UNSD CA + other states + 7 LAUSD) — always filter by geo_id LIKE 'lausd-board-district-%', never raw mtfcc count. Downtown LA (-118.2437, 34.0522) → Board District 2. Pasadena → 0 rows.
+- **Phase 62 LAUSD note**: when creating districts rows for LAUSD board members, use district_type='SCHOOL' (not 'SCHOOL_DISTRICT') to match essentialsService.ts
 - **San Diego Balboa Park actual routing**: CD-50 (not CD-51 as estimated) — TIGER geometry is authoritative
 - **East LA primary coordinate** (-118.1720, 34.0239) worked without fallback — G4040 geo_id=0603793155 (South Gate-East Los Angeles CCD), CD-34, State Senate D26, Assembly D52
 - ME senator names: use official alphabetical listing (/senate/senators/9536) not individual page nicknames ('Jeff'=Jeffrey L., 'Dick'=Richard, 'Rick'=Richard A., 'Mattie'=Matthea E. L.)

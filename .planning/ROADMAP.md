@@ -251,8 +251,8 @@ Plans:
   3. An address outside LAUSD territory (e.g. Pasadena Unified) returns no LAUSD row (no false positives)
 
 Plans:
-- [ ] 58-01-PLAN.md — Source LAUSD district shapefiles; load as distinct geofence type; verify 7 boundaries present
-- [ ] 58-02-PLAN.md — Routing integration test: LA address returns LAUSD district; Pasadena address does not
+- [x] 58-01-PLAN.md — Source LAUSD district shapefiles; load as distinct geofence type; verify 7 boundaries present
+- [x] 58-02-PLAN.md — Routing integration test: LA address returns LAUSD district; Pasadena address does not
 
 ### Phase 59: CA Government DB Foundation
 **Goal**: The State of California government row and all constitutional officer chambers exist with correct is_appointed_position flags, ready to receive officials
@@ -543,7 +543,7 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 3/3 | Complete | 2026-05-20 |
 | 56. ME Playbook Retrospective | v6.0 | 2/2 | Complete | 2026-05-20 |
 | 57. CA Geofences | v7.0 | 2/2 | Complete | 2026-05-21 |
-| 58. LAUSD Geofences | v7.0 | 0/2 | Pending | - |
+| 58. LAUSD Geofences | v7.0 | 2/2 | Complete | 2026-05-21 |
 | 59. CA Government DB Foundation | v7.0 | 0/3 | Pending | - |
 | 60. CA Executives + Federal Officials | v7.0 | 0/2 | Pending | - |
 | 61. CA State Legislature | v7.0 | 0/3 | Pending | - |
