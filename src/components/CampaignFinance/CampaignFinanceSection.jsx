@@ -93,13 +93,18 @@ export default function CampaignFinanceSection({ politicianId }) {
   if (!loading && !summary && error) return null;
 
   // Coverage gap banner for local offices with no digital data
+  // Still render OutsideSpendingSection if IE/PAC committees exist for this race
   if (!loading && summary?.coverage_status === 'local_unavailable') {
+    const hasOutsideSpending = summary?.outside_spending?.committees?.length > 0;
     return (
       <section className="mt-8" aria-label="Campaign Finance">
         <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
           Transparent Motivations
         </h2>
         <LocalUnavailableBanner />
+        {hasOutsideSpending && (
+          <OutsideSpendingSection outsideSpending={summary.outside_spending} />
+        )}
       </section>
     );
   }
