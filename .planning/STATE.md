@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 59 (complete)
-Plan: 03 of 3 complete
-Status: Phase 59 complete — CA government DB foundation, 8 executives, 8 headshots all confirmed
-Last activity: 2026-05-21 — Phase 59-03 complete; Ricardo Lara headshot uploaded; all 8 CA officers have headshots
-Progress: v7.0 Phase 59 COMPLETE. CA government row, 8 chambers, 8 exec politicians+offices, 8 headshots all seeded. Next: Phase 62 (LAUSD board officials).
+Phase: 60 (in progress)
+Plan: 01 of 2 complete
+Status: Phase 60 Plan 01 complete — 34 CA House reps seeded, 3 data fixes, SF routing confirmed
+Last activity: 2026-05-21 — Phase 60-01 complete; migration 193 applied; all 52 CA CDs have politicians; SF → Pelosi routing confirmed
+Progress: v7.0 Phase 60 IN PROGRESS. Migration 193 applied. 34 new House reps + senator office guards. Next: 60-02 (headshots).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -108,7 +108,12 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA constitutional officer external_ids**: Newsom=-6000101, Kounalakis=-6000102, Bonta=-6000103, Weber=-6000104, Cohen=-6000105, Ma=-6000106, Lara=-6000107, Thurmond=-6000108
 - **CA exec pre-existing seed**: all 8 CA constitutional officers were already seeded before Phase 59 with positive external_ids; Phase 59 deduped and updated to -06000xxx scheme (migration 192). 7/8 had headshots already; Lara uploaded in Phase 59-03.
 - **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
-- Next migration is 193
+- Next migration is 194
+- **CA House rep external_ids use -60003xx scheme**: -6000301 (CD-01) through -6000352 (CD-52); the -100049..-100119 range is occupied by CA State Assembly members (pre-existing seed). Use -60003xx for all future CA House rep references.
+- **All 52 CA NATIONAL_LOWER CDs have office rows confirmed** (migration 193 applied 2026-05-21); total count is 53 because CD-29 has 2 rows (Luz Rivas active + Tony Cárdenas deactivated/is_vacant=true)
+- **SF Civic Center routing confirmed**: (-122.4191, 37.7792) → geofence_boundaries 0611 → districts NATIONAL_LOWER → offices → Nancy Pelosi (CD-11); column is `geometry` not `geom`
+- **Pete Aguilar external_id is -6000204** (not -100097 as originally planned; -100097 = Josh Lowenthal CA Assembly)
+- **Tony Cárdenas external_id is -6000203**; his CD-29 office row is_vacant=true; real CD-29 rep is Luz Maria Rivas (-100021)
 - Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
 - essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
 - Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
@@ -126,7 +131,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 193 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections; 184 applied: ME legislative races; 185-188: Longview TX; 189 applied: CA government geo_id fix + 8 chambers; 190 applied: CA exec seed (duplicates); 191 applied: politician_sources source_type; 192 applied: CA exec dedup + external_id update; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 194 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections; 184 applied: ME legislative races; 185-188: Longview TX; 189 applied: CA government geo_id fix + 8 chambers; 190 applied: CA exec seed (duplicates); 191 applied: politician_sources source_type; 192 applied: CA exec dedup + external_id update; 193 applied: CA federal officials 34 House reps + 3 data fixes; 171 is 171_la_council_votes.sql unapplied)
 
 ### Pending Todos (accounts team backlog)
 
@@ -147,5 +152,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Completed 59-03-PLAN.md — Ricardo Lara headshot uploaded; all 8 CA officers confirmed with headshots; Phase 59 complete.
+Stopped at: Completed 60-01-PLAN.md — migration 193 applied; 34 CA House reps seeded; SF → Pelosi routing confirmed; Phase 60 Plan 01 complete.
 Resume file: None
