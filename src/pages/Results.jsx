@@ -657,11 +657,7 @@ export default function Results() {
     sessionStorage.removeItem('ev:scrollTop');
     // Wait a tick for the DOM to render cached results
     requestAnimationFrame(() => {
-      if (isDesktop && mainRef.current) {
-        mainRef.current.scrollTop = scrollTop;
-      } else {
-        window.scrollTo(0, scrollTop);
-      }
+      window.scrollTo(0, scrollTop);
     });
   }, [cachedResult, isDesktop]);
 
@@ -1084,7 +1080,7 @@ export default function Results() {
         }
       },
       {
-        root: isDesktop ? mainRef.current : null,
+        root: null,
         rootMargin: '-40% 0px -60% 0px',
         threshold: 0,
       }
@@ -1097,10 +1093,7 @@ export default function Results() {
 
   const handlePoliticianClick = (id) => {
     // Save scroll position before navigating to profile
-    const scrollTop = isDesktop
-      ? mainRef.current?.scrollTop ?? 0
-      : window.scrollY;
-    sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+    sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
     sessionStorage.setItem('ev:fromView', 'representatives');
     navigate(`/politician/${id}`);
   };
@@ -1195,8 +1188,7 @@ export default function Results() {
 
     const imgData = getImageData(pol);
     const handleCardClick = () => {
-      const scrollTop = isDesktop ? mainRef.current?.scrollTop ?? 0 : window.scrollY;
-      sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+      sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
       if (isCandidate) navigate(`/candidate/${pol.id}`);
       else handlePoliticianClick(pol.id);
     };
@@ -1296,19 +1288,14 @@ export default function Results() {
     <Layout>
     <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
 
-      {/* Page body: two-panel layout filling viewport below SiteHeader */}
-      <div
-        style={{ height: 'calc(100vh - 75px)' }}
-        className={isDesktop ? 'flex overflow-hidden' : 'flex flex-col'}
-      >
-        {/* Main Content — independently scrollable on desktop. Inner content
-            capped at 1808px (3 × 560 cards + gaps + side padding) and centered
-            so the workspace doesn't sprawl across ultrawide monitors. */}
+      {/* Page body */}
+      <div className={isDesktop ? 'flex' : 'flex flex-col'}>
+        {/* Main Content — capped at 1808px (3 × 560 cards + gaps + side padding)
+            and centered so the workspace doesn't sprawl across ultrawide monitors. */}
         <main
           ref={mainRef}
           className="flex-1"
           style={{
-            ...(isDesktop ? { overflowY: 'auto', minWidth: 0 } : { overflowY: 'auto' }),
             maxWidth: 1808,
             marginInline: 'auto',
             width: '100%',
@@ -1743,10 +1730,7 @@ export default function Results() {
                 compassMode={compassMode}
                 isDark={isDark}
                 onCandidateClick={(id) => {
-                  const scrollTop = isDesktop
-                    ? mainRef.current?.scrollTop ?? 0
-                    : window.scrollY;
-                  sessionStorage.setItem('ev:scrollTop', String(scrollTop));
+                  sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
                   sessionStorage.setItem('ev:fromView', 'elections');
                   navigate(`/candidate/${id}`);
                 }}
