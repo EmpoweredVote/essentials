@@ -392,9 +392,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [x] 67-01-PLAN.md � Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
-- [x] 67-02-PLAN.md � 7 officials seed (Mayor + 6 council) + section-split check + migration 211
-- [x] 67-03-PLAN.md � Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
+- [x] 67-01-PLAN.md � Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
+- [x] 67-02-PLAN.md � 7 officials seed (Mayor + 6 council) + section-split check + migration 211
+- [x] 67-03-PLAN.md � Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
 
 **Completed: 2026-05-22** — All 4 success criteria met; 7/7 headshots uploaded; Fremont City Hall (-121.9886, 37.5483) → fremont-council-district-3 → Kathy Kimberlin (D3); Mayor Raj Salwan linked via LOCAL_EXEC district
 
@@ -408,10 +408,12 @@ Plans:
   3. A Berkeley address lookup returns the correct District Council Member for that address
   4. All seeded Berkeley officials have headshots at 600×750 in Supabase Storage
 
+**Plans:** 3 plans
+
 Plans:
-- [ ] 68-01-PLAN.md — Berkeley government structure + chambers + offices; confirm RCV offices
-- [ ] 68-02-PLAN.md — Berkeley incumbents + office links
-- [ ] 68-03-PLAN.md — Berkeley headshots: source + upload 600×750
+- [ ] 68-01-PLAN.md — Socrata loader (X0009) + government structure (3 chambers: Mayor/Council/Auditor, all RCV-flagged) + migration 213 + smoke test
+- [ ] 68-02-PLAN.md — 10 officials seed (Mayor + 8 council + Auditor) + section-split check + routing verify + migration 214
+- [ ] 68-03-PLAN.md — Headshots: berkeleyca.gov direct URLs (403 User-Agent workaround if needed) + audit-only migration 215
 
 ### Phase 69: Landing + Elections + Discovery
 **Goal**: All 7 CA cities appear in the coverage map, CA 2026 election rows are seeded, and discovery is armed for the June 3 primary and all covered cities
