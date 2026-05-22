@@ -347,7 +347,7 @@ Plans:
 - [ ] 64-02-PLAN.md — San Jose incumbents: Mayor + 10 council members + office links
 - [ ] 64-03-PLAN.md — San Jose headshots: source + upload 600×750
 
-### Phase 65: San Diego Deep Seed
+### ✅ Phase 65: San Diego Deep Seed — COMPLETE (2026-05-22)
 **Goal**: San Diego is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Diego address returns a complete local officials list
 **Depends on**: Phase 57 (San Diego city boundary loaded)
 **Requirements**: CITIES-03
@@ -358,9 +358,11 @@ Plans:
   4. All seeded San Diego officials have headshots at 600×750 in Supabase Storage
 
 Plans:
-- [ ] 65-01-PLAN.md — San Diego government structure + chambers + offices
-- [ ] 65-02-PLAN.md — San Diego incumbents + office links
-- [ ] 65-03-PLAN.md — San Diego headshots: source + upload 600×750
+- [x] 65-01-PLAN.md — San Diego government structure + chambers + offices
+- [x] 65-02-PLAN.md — San Diego incumbents + office links
+- [x] 65-03-PLAN.md — San Diego headshots: source + upload 600×750
+
+**Completed: 2026-05-22** — All 4 success criteria met; 11/11 headshots uploaded; SD City Hall lookup returns Stephen Whitburn (District 3) + citywide officials (Mayor Gloria + City Attorney Ferbert)
 
 ### Phase 66: Sacramento Deep Seed
 **Goal**: Sacramento is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Sacramento address returns a complete local officials list
@@ -554,7 +556,7 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 62. LA Backlog Closure | v7.0 | 0/3 | Pending | - |
 | 63. San Francisco Deep Seed | v7.0 | 0/3 | Pending | - |
 | 64. San Jose Deep Seed | v7.0 | 0/3 | Pending | - |
-| 65. San Diego Deep Seed | v7.0 | 0/3 | Pending | - |
+| 65. San Diego Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 66. Sacramento Deep Seed | v7.0 | 0/3 | Pending | - |
 | 67. Fremont Deep Seed | v7.0 | 0/3 | Pending | - |
 | 68. Berkeley Deep Seed | v7.0 | 0/3 | Pending | - |
