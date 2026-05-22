@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 61 (in progress)
-Plan: 02 of 3 complete
-Status: Phase 61-02 complete — CA Assembly chamber + 80 assembly members (AD-01..AD-80) seeded; SF routing confirmed
-Last activity: 2026-05-21 — Phase 61-02 complete; migration 195 applied; Matt Haney (AD-17) routing verified at SF City Hall coords
-Progress: v7.0 Phase 61 IN PROGRESS. CA State Senate done. CA Assembly done. Next: 61-03 (headshots).
+Phase: 61 (COMPLETE)
+Plan: 03 of 3 complete
+Status: Phase 61 COMPLETE — 120 CA legislators (80 Assembly + 40 Senate) all seeded with canonical external_ids, offices, and 600x750 headshots
+Last activity: 2026-05-21 — Phase 61-03 complete; 120/120 headshots verified; Assembly from webapi.assembly.ca.gov; Senate from senate.ca.gov/senators
+Progress: v7.0 Phase 61 COMPLETE. Next: Phase 62 (LAUSD board members) or Phase 63+ (city governments).
 
 Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
 Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
@@ -143,7 +143,9 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- Next migration is 194 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections; 184 applied: ME legislative races; 185-188: Longview TX; 189 applied: CA government geo_id fix + 8 chambers; 190 applied: CA exec seed (duplicates); 191 applied: politician_sources source_type; 192 applied: CA exec dedup + external_id update; 193 applied: CA federal officials 34 House reps + 3 data fixes; 171 is 171_la_council_votes.sql unapplied)
+- Next migration is 196 (182 is unapplied legacy views drop; 183 applied: ME 2026 elections; 184 applied: ME legislative races; 185-188: Longview TX; 189 applied: CA government geo_id fix + 8 chambers; 190 applied: CA exec seed (duplicates); 191 applied: politician_sources source_type; 192 applied: CA exec dedup + external_id update; 193 applied: CA federal officials 34 House reps + 3 data fixes; 194 applied: CA Senate 40 politicians + offices; 195 applied: CA Assembly 80 members re-keyed + offices; 171 is 171_la_council_votes.sql unapplied)
+- **SCHEMA**: essentials.politician_images columns are: id, politician_id, url, type, photo_license, focal_point — NO photo_origin_url column; plan docs that reference photo_origin_url are incorrect
+- **CA headshots complete (Phase 61-03 2026-05-21)**: 80 Assembly from webapi.assembly.ca.gov/district-media/assets/members/assembly_member_NN.jpg; 40 Senate from www.senate.ca.gov/senators (data-src lazy-load, double-encoded %25xx paths must be used verbatim); all 120 are 600x750 JPEG in Storage at {politician_id}-headshot.jpg
 
 ### Pending Todos (accounts team backlog)
 
@@ -164,5 +166,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-21
-Stopped at: Completed 61-02-PLAN.md — migration 195 applied; CA Assembly chamber renamed + 80 assembly members (36 re-keyed + 44 inserted) + 80 office rows; SF → Matt Haney (AD-17) routing confirmed; Phase 61 Plan 02 complete.
+Stopped at: Completed 61-03-PLAN.md — 120/120 CA legislators have 600x750 headshots; Phase 61 COMPLETE; next is Phase 62 (LAUSD board members) or Phase 63+ (city governments).
 Resume file: None
