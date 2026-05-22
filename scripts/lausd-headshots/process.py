@@ -152,26 +152,26 @@ def upload_to_storage(jpg_bytes, politician_id):
 def insert_politician_image(conn, politician_id, url, photo_license):
     """Insert a row into essentials.politician_images."""
     with conn.cursor() as cur:
-        # Check if row already exists for this politician
+        # Check if row already exists for this politician (check both 'default' and 'headshot' for idempotency)
         cur.execute(
-            "SELECT id FROM essentials.politician_images WHERE politician_id = %s AND type = 'headshot'",
+            "SELECT id FROM essentials.politician_images WHERE politician_id = %s AND type IN ('default', 'headshot')",
             (politician_id,)
         )
         existing = cur.fetchone()
         if existing:
-            # Update existing row
+            # Update existing row — ensure type='default' (UI filters on type='default')
             cur.execute(
-                "UPDATE essentials.politician_images SET url = %s, photo_license = %s WHERE politician_id = %s AND type = 'headshot'",
+                "UPDATE essentials.politician_images SET url = %s, photo_license = %s, type = 'default' WHERE politician_id = %s AND type IN ('default', 'headshot')",
                 (url, photo_license, politician_id)
             )
-            print(f"    Updated existing politician_images row")
+            print(f"    Updated existing politician_images row (type set to 'default')")
         else:
-            # Insert new row
+            # Insert new row — type='default' so UI can display it
             img_id = str(uuid.uuid4())
             cur.execute(
                 """INSERT INTO essentials.politician_images
                    (id, politician_id, url, type, photo_license)
-                   VALUES (%s, %s, %s, 'headshot', %s)""",
+                   VALUES (%s, %s, %s, 'default', %s)""",
                 (img_id, politician_id, url, photo_license)
             )
             print(f"    Inserted politician_images row id={img_id}")
