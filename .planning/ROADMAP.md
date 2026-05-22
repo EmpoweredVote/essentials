@@ -389,10 +389,12 @@ Plans:
   3. A Fremont address lookup returns city officials without routing errors
   4. All seeded Fremont officials have headshots at 600×750 in Supabase Storage
 
+**Plans:** 3 plans
+
 Plans:
-- [ ] 67-01-PLAN.md — Fremont government structure + chambers + offices
-- [ ] 67-02-PLAN.md — Fremont incumbents + office links
-- [ ] 67-03-PLAN.md — Fremont headshots: source + upload 600×750
+- [ ] 67-01-PLAN.md � Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
+- [ ] 67-02-PLAN.md � 7 officials seed (Mayor + 6 council) + section-split check + migration 211
+- [ ] 67-03-PLAN.md � Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
 
 ### Phase 68: Berkeley Deep Seed
 **Goal**: Berkeley is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Berkeley address returns a complete local officials list; RCV election_method flagged for Mayor
