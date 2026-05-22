@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 68 (IN PROGRESS)
-Plan: 02 of 3 complete
-Status: Phase 68-02 COMPLETE — 10 Berkeley officials seeded (Mayor Ishii, Auditor Wong, council D1-D8); migration 214 applied; all routing verified
-Last activity: 2026-05-22 — Completed 68-02-PLAN.md; 10 politicians + 10 offices + office_id back-fill; section-split=0; end-to-end routing confirmed
-Progress: v7.0 Phase 68 in progress. Berkeley officials seeded. Next: 68-03 headshots.
+Phase: 68 (COMPLETE)
+Plan: 03 of 3 complete
+Status: Phase 68 COMPLETE — 10 Berkeley officials seeded + headshots uploaded; migrations 213-214 applied; 215 audit-only; end-to-end routing confirmed; profile pages show headshots
+Last activity: 2026-05-22 — Completed 68-03-PLAN.md; 10 headshots uploaded to Supabase Storage (600x750 JPEG); berkeleyca.gov no 403 workaround needed; Phase 68 fully complete
+Progress: v7.0 Phase 68 complete. Berkeley deep seed done (geofences + officials + headshots). Next: Phase 69 Landing + Elections + Discovery.
 
 Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
 

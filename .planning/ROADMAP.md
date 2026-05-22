@@ -411,9 +411,11 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 68-01-PLAN.md — Socrata loader (X0009) + government structure (3 chambers: Mayor/Council/Auditor, all RCV-flagged) + migration 213 + smoke test
-- [ ] 68-02-PLAN.md — 10 officials seed (Mayor + 8 council + Auditor) + section-split check + routing verify + migration 214
-- [ ] 68-03-PLAN.md — Headshots: berkeleyca.gov direct URLs (403 User-Agent workaround if needed) + audit-only migration 215
+- [x] 68-01-PLAN.md — Socrata loader (X0009) + government structure (3 chambers: Mayor/Council/Auditor, all RCV-flagged) + migration 213 + smoke test
+- [x] 68-02-PLAN.md — 10 officials seed (Mayor + 8 council + Auditor) + section-split check + routing verify + migration 214
+- [x] 68-03-PLAN.md — Headshots: berkeleyca.gov direct URLs (403 User-Agent workaround if needed) + audit-only migration 215
+
+**Completed: 2026-05-22** — All 4 success criteria met; 10/10 headshots uploaded; Berkeley City Hall lookup returns Igor Tregub (District 4) + Mayor Ishii + Auditor Wong; all 3 chambers RCV-flagged for Phase 69
 
 ### Phase 69: Landing + Elections + Discovery
 **Goal**: All 7 CA cities appear in the coverage map, CA 2026 election rows are seeded, and discovery is armed for the June 3 primary and all covered cities
@@ -565,7 +567,7 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 65. San Diego Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 66. Sacramento Deep Seed | v7.0 | 0/3 | Pending | - |
 | 67. Fremont Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 68. Berkeley Deep Seed | v7.0 | 0/3 | Pending | - |
+| 68. Berkeley Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 69. Landing + Elections + Discovery | v7.0 | 0/4 | Pending | - |
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |

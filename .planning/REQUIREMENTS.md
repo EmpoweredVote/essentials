@@ -88,7 +88,7 @@
 | CITIES-03 | Phase 65 | Pending |
 | CITIES-04 | Phase 66 | Pending |
 | CITIES-05 | Phase 67 | Pending |
-| CITIES-06 | Phase 68 | Pending |
+| CITIES-06 | Phase 68 | Complete |
 | CITIES-07 | Phase 69 | Pending |
 | ELECT-01 | Phase 69 | Pending |
 | ELECT-02 | Phase 69 | Pending |
