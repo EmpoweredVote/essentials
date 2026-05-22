@@ -157,7 +157,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
 - **Next migration is 197** (196 applied 2026-05-22: la_council_votes backfill no-op; migration history: 182=fix_security_invoker_public_views applied; 183=ME 2026 elections; 184=ME legislative races; 185-188=Longview TX; 189=CA government geo_id fix + 8 chambers; 190=CA exec seed; 191=politician_sources source_type; 192=CA exec dedup; 193=CA federal officials; 194=CA Senate; 195=CA Assembly; 196=la_council_votes backfill no-op 2026-05-22)
 - **LAUSD CRITICAL (Phase 62-03)**: essentials.districts LAUSD board members are attached to geo_id='0622710' (whole LAUSD district); all 7 return for any LA address; Plan 03 must create 7 districts rows for lausd-board-district-{1-7} (district_type='SCHOOL') and link offices there
-- **LA County Supervisor geofence gap**: ocd-division county:los_angeles council_district 1-5 have 0 geofence_boundaries rows; supervisor routing broken; needs dedicated shapefile load
+- **LA County Supervisor geofences (loaded 2026-05-21)**: 5 rows in geofence_boundaries, geo_id='ocd-division/country:us/state:ca/county:los_angeles/council_district:{1-5}', mtfcc='X0005', state='06', source='la_county_geohub_supervisor_districts_2024'. Loader: load-la-county-supervisor-boundaries.ts (C:/EV-Accounts/backend/scripts). X0005 hits the X% fallback in essentialsService.ts → district_type IN ('LOCAL','COUNTY'). Downtown LA (-118.2437, 34.0522) → District 1 (Solis) confirmed.
 - **SCHEMA**: essentials.politician_images columns are: id, politician_id, url, type, photo_license, focal_point — NO photo_origin_url column; plan docs that reference photo_origin_url are incorrect
 - **CA headshots complete (Phase 61-03 2026-05-21)**: 80 Assembly from webapi.assembly.ca.gov/district-media/assets/members/assembly_member_NN.jpg; 40 Senate from www.senate.ca.gov/senators (data-src lazy-load, double-encoded %25xx paths must be used verbatim); all 120 are 600x750 JPEG in Storage at {politician_id}-headshot.jpg
 
@@ -166,7 +166,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **[ME — TIME-SENSITIVE]** Post-2026-06-09 follow-up: After ME primary results (target: week of June 9, 2026), write migration 185 to add D primary winners to US Senate general + ME-01 general + ME-02 general `race_candidates` rows. Also add R general candidates from statewide results.
 - **[LA backlog — RESOLVED 2026-05-22]** Migration 171 (meetings.la_council_votes + la_council_agenda_items) — was already applied outside ledger; migration 196 applied as no-op audit trail (version='196' in ledger).
 - **[DB — RESOLVED 2026-05-22]** Migration 182 (fix_security_invoker_public_views) — confirmed applied as ledger version '20260520191454'.
-- **[LA gap — Phase 62+]** LA County Supervisor sub-districts have 0 geofence_boundaries rows; 5 ocd-division geo_ids with no geofences = Supervisor routing broken for all LA addresses; requires dedicated geofence loading plan.
+- **[LA gap — RESOLVED 2026-05-21]** LA County Supervisor sub-districts — 5 geofence_boundaries rows loaded (mtfcc='X0005'); routing now live. Loader: load-la-county-supervisor-boundaries.ts.
 - **[LA gap — Phase 62-03]** LAUSD board members attached to whole-district geofence (geo_id=0622710, label='Los Angeles Unified Board'); Plan 03 must create 7 essentials.districts rows for lausd-board-district-{1-7} and link offices to those sub-district ids.
 - **[CA backlog — RESOLVED 2026-05-22 Phase 62-02]** CA Governor challenger candidates — 8 challengers assigned -6003001..-6003008; all 9 Calmatters race_candidates linked; lavote.gov discovery row inserted
 - **[CA backlog — Phase 62-03]** LAUSD sub-district geofences (Phase 58) + board officials (Phase 62)
@@ -181,6 +181,6 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 ## Session Continuity
 
-Last session: 2026-05-22
-Stopped at: Completed 62-02-PLAN.md — migration 197 applied; 8 CA Governor challengers assigned -6003001..-6003008; lavote.gov discovery row inserted; Phase 62 Plan 02 COMPLETE; next is 62-03 (LAUSD board officials).
+Last session: 2026-05-21
+Stopped at: Loaded LA County Supervisor district boundaries (5 rows, mtfcc=X0005) — routing gap closed. Next: Phase 63 (San Francisco deep seed).
 Resume file: None
