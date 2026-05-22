@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 65 (In progress)
-Plan: 01 of 2 complete
-Status: Phase 65-01 COMPLETE — 9 SD council district geofences (X0007) loaded; migration 207 applied (SD government + 3 chambers + 10 districts); smoke test 3/3 gates pass; City Hall -> District 3
-Last activity: 2026-05-22 — Completed 65-01-PLAN.md; SD geofences + government structure
-Progress: v7.0 Phase 65 in progress. SD structural foundation ready; 65-02 seeds politicians.
+Plan: 02 of 2 complete
+Status: Phase 65-02 COMPLETE — 11 SD officials seeded (Mayor Gloria + City Attorney Ferbert + 9 Council Members); migration 208 applied; all 9 verification queries passed; ST_Covers routing confirmed Whitburn/D3
+Last activity: 2026-05-22 — Completed 65-02-PLAN.md; SD officials seed + office_id back-fill
+Progress: v7.0 Phase 65 in progress. SD officials live; 65-03 headshots remaining.
 
 Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
 
@@ -110,7 +110,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA constitutional officer external_ids**: Newsom=-6000101, Kounalakis=-6000102, Bonta=-6000103, Weber=-6000104, Cohen=-6000105, Ma=-6000106, Lara=-6000107, Thurmond=-6000108
 - **CA exec pre-existing seed**: all 8 CA constitutional officers were already seeded before Phase 59 with positive external_ids; Phase 59 deduped and updated to -06000xxx scheme (migration 192). 7/8 had headshots already; Lara uploaded in Phase 59-03.
 - **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
-- **Next migration is 208** (207 applied 2026-05-22: SD government structure — 1 government, 3 chambers, 10 districts; 206 applied 2026-05-22: SF officials seed — 20 politicians + 20 offices; 205 applied 2026-05-22: SF government structure — 1 government, 10 chambers, 12 districts; 200 applied 2026-05-22: SF headshots audit-only — 20 politician_images INSERTs; 198_lausd_board_seed.sql exists in supabase/migrations but was never applied — skip it)
+- **Next migration is 209** (208 applied 2026-05-22: SD officials seed — 11 politicians + 11 offices + office_id back-fill; 207 applied 2026-05-22: SD government structure — 1 government, 3 chambers, 10 districts; 206 applied 2026-05-22: SF officials seed — 20 politicians + 20 offices; 205 applied 2026-05-22: SF government structure — 1 government, 10 chambers, 12 districts; 200 applied 2026-05-22: SF headshots audit-only — 20 politician_images INSERTs; 198_lausd_board_seed.sql exists in supabase/migrations but was never applied — skip it)
 - **SD council district geofences (Phase 65-01 complete 2026-05-22)**: 9 rows in geofence_boundaries, geo_id='sd-council-district-{1-9}', mtfcc='X0007', state='06', source='sd_city_council_districts_2022'. Loader: load-sd-council-boundaries.ts (C:/EV-Accounts/backend/scripts). CRITICAL: outSR=4326 required — webmaps.sandiego.gov uses State Plane WKID 2230 (feet). DISTRICT integer field used for name (NOT NAME field — holds council member name, changes with elections).
 - **SD government UUID**: 7efdfa12-88b2-482d-9379-84a7341bebc5 — use subquery by name in migrations, not hardcoded UUID
 - **SD chambers created**: City Council (name='City Council', name_formal='San Diego City Council'), Mayor (name='Mayor', name_formal='Mayor of San Diego'), City Attorney (name='City Attorney', name_formal='San Diego City Attorney') — all under SD government
@@ -118,6 +118,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **SD City Hall routing confirmed**: (-117.1546, 32.7157) -> sd-council-district-3 (District 3 — Stephen Whitburn); use in 65-02 routing verification
 - **X0007 MTFCC**: claimed for SD council districts (X0005=LA County supervisors, X0006=SF supervisors, X0007=SD council)
 - **SD external_id range -651000..-650000**: confirmed clear (0 rows pre-flight 2026-05-22) — reserved for 65-02 SD officials seed
+- **SD officials seeded (Phase 65-02 complete 2026-05-22)**: 11 politicians; external_ids -650001 (Mayor Gloria), -650002 (City Attorney Ferbert), -650010..-650018 (council D1-D9); all 11 have office_id back-filled; all offices is_appointed_position=false; titles: Mayor/City Attorney/Council Member (9x); SD City Hall routing confirmed: ST_Covers (-117.1546, 32.7157) → sd-council-district-3 → Stephen Whitburn (end-to-end); section-split detector 0 rows; next migration is 209
 - **SF officials seeded (Phase 63-02)**: 11 supervisors (ext -630001..-630011) + 7 citywide elected (ext -630020..-630026) + 2 appointed (ext -630027..-630028 Controller=Wagner, CityAdmin=Chu); is_appointed_position=true ONLY on Wagner+Chu; Mandelman has 1 office only (D8 Supervisor, no separate Board President row); next available ext is -630029
 - **SF headshots complete (Phase 63-03 2026-05-22)**: 20/20 officials; supervisors from sf.gov circular _profile.png (RGBA alpha=0 corners are outside 4:5 center crop -- no artifact); Miyamoto from Wikimedia Commons official SFSO portrait (public domain, 650x867); all other officials from media.api.sf.gov; sftreasurer.org for Cisneros; all 600x750 JPEG in Storage at {politician_id}-headshot.jpg; 200_sf_headshots.sql written as audit-only
 - **SF City Hall routing confirmed twice**: (-122.4194, 37.7793) → sf-supervisor-district-5 → Bilal Mahmood (D5 incumbent)
@@ -197,5 +198,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-22
-Stopped at: Completed 65-01-PLAN.md — SD geofences (9 X0007 rows) + migration 207 (SD government structure) + smoke test 3/3 pass.
+Stopped at: Completed 65-02-PLAN.md — SD officials seed (11 politicians, migration 208) + all 9 verification queries passed.
 Resume file: None
