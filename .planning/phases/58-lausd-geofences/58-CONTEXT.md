@@ -14,30 +14,29 @@ Load the 7 LAUSD board district boundaries into `geofence_boundaries` as a disti
 ## Implementation Decisions
 
 ### Geofence type identity
-- `district_type = 'SCHOOL_DISTRICT'` (uppercase, matches existing convention; generalizes to future school districts)
 - `mtfcc = 'G5420'` (TIGER unified school district code; semantically correct even though source is not TIGER)
 - Load 7 rows only — one per board sub-district; no overall LAUSD boundary row
-- API returns SCHOOL_DISTRICT rows alongside other tiers (no deferred surfacing); frontend handles unknown tiers gracefully
+- **Note (post-research):** `geofence_boundaries` has NO `district_type` column — that column belongs to `essentials.districts`. Phase 58 inserts only into `geofence_boundaries` (no `districts` row). When Phase 62 creates the `districts` row, use `district_type = 'SCHOOL'` (matching `essentialsService.ts` and `resolve_user_jurisdiction`), NOT `'SCHOOL_DISTRICT'`.
 
 ### Shapefile source
-- Primary source: LAUSD GIS portal (authoritative; LAUSD publishes their own board district shapefiles)
+- Primary source: LA GeoHub ArcGIS REST API — `https://maps.lacity.org/lahub/rest/services/LAUSD_Schools/MapServer/7` (publicly accessible, no auth)
 - Use a standalone TypeScript loader script — not the TIGER loader, not direct SQL import
 - Loader must be repeatable (upsert on re-run) to handle future redistricting
-- Upsert key: composite of `name` + `state` + `district_type` (e.g. name='Board District 1', state='06', district_type='SCHOOL_DISTRICT')
+- Upsert key: `ON CONFLICT (geo_id, mtfcc) DO NOTHING` — the existing unique constraint on `geofence_boundaries` is `(geo_id, mtfcc)`; there is no `district_type` column to use as a key
 
 ### Routing edge cases
-- Non-LAUSD addresses: API returns nothing for SCHOOL_DISTRICT tier — spatial lookup finds no polygon, no row returned
-- Partial-coverage cities (e.g. addresses in cities that have both LAUSD overlap and their own district): trust geometry — return LAUSD row if point is inside polygon; no city-exclusion list
-- Unincorporated LA County: same spatial lookup as city addresses; no distinction; geography is authoritative
+- Non-LAUSD addresses: spatial lookup finds no polygon → no row returned for LAUSD tier
+- Partial-coverage cities: trust geometry — return LAUSD row if point is inside polygon; no city-exclusion list
+- Unincorporated LA County: same spatial lookup as city addresses; geography is authoritative
 
 ### Claude's Discretion
-- Handling of edge-case cities where LAUSD polygon overlaps another district's territory (verify actual overlap in research before deciding)
+- Handling of edge-case cities where LAUSD polygon overlaps another district's territory: trust geometry (confirmed by research — Beverly Hills/Santa Monica/Culver City are correctly excluded from LAUSD polygons)
 
 ### Smoke test design
 - TypeScript smoke test script (same pattern as `smoke-ca-geofences.ts` from Phase 57)
-- SQL gate inside the script: assert `COUNT=7` in `geofence_boundaries WHERE district_type='SCHOOL_DISTRICT'`
-- Positive test: 1 address inside LAUSD territory (downtown LA, ~-118.2437, 34.0522) → asserts SCHOOL_DISTRICT row returned
-- Negative test: 1 Pasadena address → asserts no SCHOOL_DISTRICT row returned
+- SQL gate: `COUNT=7` filtering by `geo_id LIKE 'lausd-board-district-%' AND mtfcc='G5420' AND state='06'` — NOT raw `mtfcc='G5420'` count (which would return 353, including 346 existing TIGER UNSD rows)
+- Positive test: downtown LA (lon=-118.2437, lat=34.0522) → asserts at least 1 LAUSD row returned (do not hard-code district number)
+- Negative test: Pasadena City Hall (lon=-118.1437, lat=34.1478) → asserts 0 LAUSD rows
 
 </decisions>
 

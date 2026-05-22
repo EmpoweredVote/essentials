@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 48-ma-cousub-towns
 source: 48-01-SUMMARY.md, 48-02-SUMMARY.md
 started: 2026-05-18T00:00:00Z
@@ -43,7 +43,13 @@ skipped: 0
   reason: "User reported: No, failed. I'm certain we have local information, but no local rep data is available for this area."
   severity: major
   test: 3
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "Cambridge offices have district_id=NULL (never set in migrations 158/159). getRepresentativesByAddress in essentialsService.ts line 579 uses INNER JOIN offices o ON o.district_id = d.id — NULL district_id silently drops all Cambridge officials. Browse mode works because getPoliticiansByGovernmentList joins governments→chambers→offices directly without needing district_id."
+  artifacts:
+    - path: "C:/EV-Accounts/backend/migrations/158_cambridge_offices.sql"
+      issue: "17 Cambridge office rows inserted with no district_id set"
+    - path: "C:/EV-Accounts/backend/src/lib/essentialsService.ts"
+      issue: "line 579 INNER JOIN on district_id silently drops NULL-district_id offices"
+  missing:
+    - "INSERT row into essentials.districts for geo_id='2511000' (LOCAL, G4110, Cambridge)"
+    - "UPDATE all Cambridge offices SET district_id = <new_uuid>"
+  debug_session: ".planning/debug/cambridge-locals-missing.md"

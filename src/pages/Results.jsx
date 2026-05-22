@@ -317,14 +317,7 @@ function simplifyForBody(title, pol) {
 }
 
 
-const SHORTCUTS = [
-  {
-    label: 'Cambridge, MA',
-    browseGovernmentList: '2511000',
-    browseLabel: 'Cambridge',
-    browseState: 'MA',
-  },
-];
+const SHORTCUTS = [];
 
 export default function Results() {
   const { isDark } = useTheme();

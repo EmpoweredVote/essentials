@@ -107,7 +107,7 @@ function getFederalAccordionKey(pol) {
     return 'U.S. Executive';
   if (FEDERAL_CABINET_TITLES.some(kw => title.includes(kw)))
     return 'U.S. Cabinet';
-  return 'U.S. Cabinet-Level Officials';
+  return 'U.S. Senior Executive Officials';
 }
 
 // ── Admin officer detection ──────────────────────────────────────
@@ -276,7 +276,7 @@ function getAccordionUrl(pols, accordionKey) {
     'U.S. Congress': 'https://www.congress.gov/',
     'U.S. Executive': 'https://www.whitehouse.gov/',
     'U.S. Cabinet': 'https://www.whitehouse.gov/administration/cabinet/',
-    'U.S. Cabinet-Level Officials': 'https://www.whitehouse.gov/administration/cabinet/',
+    'U.S. Senior Executive Officials': 'https://www.whitehouse.gov/administration/cabinet/',
   };
   if (FEDERAL_URLS[accordionKey]) return FEDERAL_URLS[accordionKey];
 
@@ -317,7 +317,7 @@ const FEDERAL_BODY_ORDER = {
   'U.S. Executive': 0,
   'U.S. Congress': 1,
   'U.S. Cabinet': 2,
-  'U.S. Cabinet-Level Officials': 3,
+  'U.S. Senior Executive Officials': 3,
   'U.S. Supreme Court': 4,
 };
 

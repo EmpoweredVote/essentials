@@ -24,7 +24,7 @@ Seed all 35 Maine state senators (131st Legislature) and 151 house representativ
 - mainelegislature.org is the sole data source for all 186 legislators
 - External ID pattern: senators `-231001` through `-231035`; reps `-232001` through `-232151` (continues established ME `-23XXXX` convention)
 - Party stored in DB for internal use (consistent with all other legislators); never displayed — antipartisan design
-- Target session: 131st Maine Legislature (current incumbents — who is serving NOW)
+- Target session: 132nd Maine Legislature (current incumbents — started January 2025; researcher confirmed 131st was stale)
 
 ### Gap handling
 - Missing headshots: note in migration + update STATE.md with coverage count and list of missing names
