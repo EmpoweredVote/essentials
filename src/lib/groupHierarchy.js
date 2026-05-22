@@ -249,6 +249,17 @@ function getSubGroupLabel(pols, accordionTitle) {
     return body || 'Judges';
   }
 
+  // Rule 1.5: Exec-titled officials (Mayor/Governor) whose chamber is a legislative body
+  // (e.g., Cambridge MA — Mayor is elected from City Council, chamber='Cambridge City Council').
+  // Use the office_title directly rather than the chamber name as the sub-group label.
+  if (
+    (dt === 'LOCAL' || dt === 'LOCAL_EXEC') &&
+    pols.every(p => LOCAL_EXEC_TITLE_RE.test(p.office_title || ''))
+  ) {
+    const title = first.office_title || '';
+    return title.replace(/^(City|Town|Village|County)\s+/i, '').replace(/\s+-\s+.*$/, '') || title;
+  }
+
   // Rule 2/3: Use government_body_name, replacing generic words
   if (body) {
     return /\bGovernment\b/i.test(body)
