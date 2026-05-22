@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 62 (In progress)
-Plan: 01 of 3 complete
-Status: Phase 62-01 COMPLETE — migration 171 confirmed present, migration 182 confirmed applied, migration 196 applied (no-op), 6-tier smoke test run
-Last activity: 2026-05-22 — Phase 62-01 complete; smoke test surfaced 2 structural gaps (County Supervisor no geofences, LAUSD whole-vs-sub-district)
-Progress: v7.0 Phase 62 In Progress (Plan 01 done). Next: 62-02 (CA Governor candidates) + 62-03 (LAUSD board officials).
+Plan: 02 of 3 complete
+Status: Phase 62-02 complete — 8 CA Governor challengers assigned -6003001..-6003008 external_ids; all 9 Calmatters candidates confirmed linked; lavote.gov discovery row inserted
+Last activity: 2026-05-22 — Completed 62-02-PLAN.md; migration 197 applied
+Progress: v7.0 Phase 62 in progress (62-01 and 62-02 complete). Next: 62-03 (LAUSD board officials).
 
 Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
 
@@ -110,7 +110,13 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA constitutional officer external_ids**: Newsom=-6000101, Kounalakis=-6000102, Bonta=-6000103, Weber=-6000104, Cohen=-6000105, Ma=-6000106, Lara=-6000107, Thurmond=-6000108
 - **CA exec pre-existing seed**: all 8 CA constitutional officers were already seeded before Phase 59 with positive external_ids; Phase 59 deduped and updated to -06000xxx scheme (migration 192). 7/8 had headshots already; Lara uploaded in Phase 59-03.
 - **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
-- **Next migration is 197** (196 applied 2026-05-22 as la_council_votes no-op backfill)
+- **Next migration is 198** (197 applied 2026-05-22: CA Governor challengers external_ids + lavote.gov discovery row)
+- **CA Governor challengers external_ids**: Becerra=-6003001, Bianco=-6003002, Hilton=-6003003, Mahan=-6003004, Porter=-6003005, Steyer=-6003006, Villaraigosa=-6003007, Yee=-6003008; slots -6003009..-6003013 reserved
+- **CA Governor race_candidates**: 43+ linked (all 9 Calmatters-sourced confirmed linked with correct external_ids as of migration 197)
+- **lavote.gov discovery row (migration 197)**: id=9fd492a8-895e-4bd7-91e7-81f9bfa2b3e2, jurisdiction_geoid='06037', election_date=2026-06-03, source_url contains ?id=4338; post-June-3 follow-up required for November general
+- **[GOTCHA] discovery agent creates politician rows with external_id=NULL** — before writing INSERT migrations for politicians, pre-check if rows already exist; use UPDATE to assign external_id, not INSERT
+- **[GOTCHA] discovery_jurisdictions requires junction_geoid (NOT NULL) and election_date (NOT NULL)** — always include both in INSERTs
+- **[POST-JUNE BACKLOG]** lavote.gov source_url needs new election ID for November 2026 general — update discovery_jurisdictions row id=9fd492a8
 - **CA State Senate senator external_ids: -6001001 (SD-01) through -6001040 (SD-40)** — migration 194 applied 2026-05-21
 - **CA Assembly member external_ids: -6002001 (AD-01) through -6002080 (AD-80)** — migration 195 applied 2026-05-21
 - **CA Assembly chamber**: name='California State Assembly', slug='california-state-assembly'; was seeded as 'Assembly' in pre-existing data — migration 195 renamed it to canonical form
@@ -162,9 +168,9 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **[DB — RESOLVED 2026-05-22]** Migration 182 (fix_security_invoker_public_views) — confirmed applied as ledger version '20260520191454'.
 - **[LA gap — Phase 62+]** LA County Supervisor sub-districts have 0 geofence_boundaries rows; 5 ocd-division geo_ids with no geofences = Supervisor routing broken for all LA addresses; requires dedicated geofence loading plan.
 - **[LA gap — Phase 62-03]** LAUSD board members attached to whole-district geofence (geo_id=0622710, label='Los Angeles Unified Board'); Plan 03 must create 7 essentials.districts rows for lausd-board-district-{1-7} and link offices to those sub-district ids.
-- **[CA backlog — Phase 62]** CA Governor challenger candidates (10 filed, not yet seeded)
-- **[CA backlog — Phase 62]** LAUSD sub-district geofences (Phase 58) + board officials (Phase 62)
-- **[CA operational note]** lavote.gov election ID changes each cycle — mandatory manual update in Phase 62
+- **[CA backlog — RESOLVED 2026-05-22 Phase 62-02]** CA Governor challenger candidates — 8 challengers assigned -6003001..-6003008; all 9 Calmatters race_candidates linked; lavote.gov discovery row inserted
+- **[CA backlog — Phase 62-03]** LAUSD sub-district geofences (Phase 58) + board officials (Phase 62)
+- **[CA operational note — POST-JUNE]** lavote.gov election ID changes each cycle — update discovery_jurisdictions row id=9fd492a8 after June 3 primary for November general
 
 ### Parked from v2.2 (backlog — resume after v3.0)
 
@@ -176,5 +182,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-22
-Stopped at: Completed 62-01-PLAN.md — migration 196 applied (no-op), smoke test done, 2 structural gaps documented; Phase 62 Plan 01 COMPLETE; next is 62-02 (CA Governor candidates) + 62-03 (LAUSD board officials).
+Stopped at: Completed 62-02-PLAN.md — migration 197 applied; 8 CA Governor challengers assigned -6003001..-6003008; lavote.gov discovery row inserted; Phase 62 Plan 02 COMPLETE; next is 62-03 (LAUSD board officials).
 Resume file: None
