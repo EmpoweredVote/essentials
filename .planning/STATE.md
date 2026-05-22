@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 63 (In progress)
-Plan: 01 of 3 complete
-Status: Phase 63-01 complete — 11 SF supervisor district geofences loaded (X0006); migration 205 applied (SF government + 10 chambers + 12 districts); smoke test passes (City Hall → District 5)
-Last activity: 2026-05-22 — Completed 63-01-PLAN.md; migration 205 applied
-Progress: v7.0 Phase 63 in progress (63-01 complete). Next: 63-02 (SF incumbents seed).
+Plan: 02 of 3 complete
+Status: Phase 63-02 complete — 20 SF officials seeded (11 supervisors + 7 citywide elected + 2 appointed); migration 206 applied; all 7 verification queries pass; section-split=0; SF City Hall routes to District 5 (Bilal Mahmood)
+Last activity: 2026-05-22 — Completed 63-02-PLAN.md; migration 206 applied
+Progress: v7.0 Phase 63 in progress (63-01+63-02 complete). Next: 63-03 (SF headshots).
 
 Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
 
@@ -110,7 +110,9 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA constitutional officer external_ids**: Newsom=-6000101, Kounalakis=-6000102, Bonta=-6000103, Weber=-6000104, Cohen=-6000105, Ma=-6000106, Lara=-6000107, Thurmond=-6000108
 - **CA exec pre-existing seed**: all 8 CA constitutional officers were already seeded before Phase 59 with positive external_ids; Phase 59 deduped and updated to -06000xxx scheme (migration 192). 7/8 had headshots already; Lara uploaded in Phase 59-03.
 - **[GOTCHA] CA gov pre-existing rows**: before writing migrations for any CA state-level entity, always pre-check whether it already exists — CA had a government row, chambers, and all 8 exec politicians seeded from prior work.
-- **Next migration is 206** (205 applied 2026-05-22: SF government structure — 1 government, 10 chambers, 12 districts; 198_lausd_board_seed.sql exists in supabase/migrations but was never applied — skip it; use 206 next)
+- **Next migration is 207** (206 applied 2026-05-22: SF officials seed — 20 politicians + 20 offices; 205 applied 2026-05-22: SF government structure — 1 government, 10 chambers, 12 districts; 198_lausd_board_seed.sql exists in supabase/migrations but was never applied — skip it)
+- **SF officials seeded (Phase 63-02)**: 11 supervisors (ext -630001..-630011) + 7 citywide elected (ext -630020..-630026) + 2 appointed (ext -630027..-630028 Controller=Wagner, CityAdmin=Chu); is_appointed_position=true ONLY on Wagner+Chu; Mandelman has 1 office only (D8 Supervisor, no separate Board President row); next available ext is -630029
+- **SF City Hall routing confirmed twice**: (-122.4194, 37.7793) → sf-supervisor-district-5 → Bilal Mahmood (D5 incumbent)
 - **SF government UUID**: bc3d780d-941e-475b-b07f-bc8dbcd300d3 — use subquery by name in migrations
 - **SF City Hall routing**: (-122.4194, 37.7793) → sf-supervisor-district-5 (District 5, Matt Dorsey territory — Civic Center/Hayes Valley)
 - **SF X0006 MTFCC**: claimed for SF supervisor districts (non-colliding with X0005=LA County)
@@ -187,5 +189,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-22
-Stopped at: Completed 63-01-PLAN.md — SF supervisor geofences (11 rows X0006) + migration 205 applied + smoke test passes (City Hall → District 5).
+Stopped at: Completed 63-02-PLAN.md — SF officials seed (20 politicians + 20 offices) + migration 206 applied + all 7 verification queries pass.
 Resume file: None
