@@ -323,10 +323,12 @@ Plans:
   3. An SF address lookup returns the correct District Supervisor for that address
   4. All seeded SF officials have headshots at 600×750 in Supabase Storage
 
+**Plans**: 3 plans
+
 Plans:
-- [ ] 63-01-PLAN.md — SF government structure: government row + chambers + 11 supervisor district offices + mayor/CA/DA offices
-- [ ] 63-02-PLAN.md — SF incumbents: Mayor + 11 supervisors + City Attorney + DA politician rows + office links
-- [ ] 63-03-PLAN.md — SF headshots: source + upload 600×750 for all SF officials
+- [ ] 63-01-PLAN.md — SF supervisor geofences (DataSF) + SF government scaffolding (1 government + 10 chambers + 12 districts) + smoke test
+- [ ] 63-02-PLAN.md — SF incumbents: 11 supervisors + 7 elected citywide + 2 appointed = 20 politicians and offices (migration 199)
+- [ ] 63-03-PLAN.md — SF headshots: source + 600×750 upload for all 20 SF officials (migration 200 captures DB changes)
 
 ### Phase 64: San Jose Deep Seed
 **Goal**: San Jose is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Jose address returns a complete local officials list
