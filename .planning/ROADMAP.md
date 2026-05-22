@@ -379,7 +379,7 @@ Plans:
 - [ ] 66-02-PLAN.md — Sacramento incumbents + office links
 - [ ] 66-03-PLAN.md — Sacramento headshots: source + upload 600×750
 
-### Phase 67: Fremont Deep Seed
+### ✅ Phase 67: Fremont Deep Seed — COMPLETE (2026-05-22)
 **Goal**: Fremont is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Fremont address returns a complete local officials list
 **Depends on**: Phase 57 (Fremont city boundary loaded)
 **Requirements**: CITIES-05
@@ -392,9 +392,11 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 67-01-PLAN.md � Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
-- [ ] 67-02-PLAN.md � 7 officials seed (Mayor + 6 council) + section-split check + migration 211
-- [ ] 67-03-PLAN.md � Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
+- [x] 67-01-PLAN.md � Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
+- [x] 67-02-PLAN.md � 7 officials seed (Mayor + 6 council) + section-split check + migration 211
+- [x] 67-03-PLAN.md � Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
+
+**Completed: 2026-05-22** — All 4 success criteria met; 7/7 headshots uploaded; Fremont City Hall (-121.9886, 37.5483) → fremont-council-district-3 → Kathy Kimberlin (D3); Mayor Raj Salwan linked via LOCAL_EXEC district
 
 ### Phase 68: Berkeley Deep Seed
 **Goal**: Berkeley is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Berkeley address returns a complete local officials list; RCV election_method flagged for Mayor
@@ -560,7 +562,7 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 64. San Jose Deep Seed | v7.0 | 0/3 | Pending | - |
 | 65. San Diego Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 66. Sacramento Deep Seed | v7.0 | 0/3 | Pending | - |
-| 67. Fremont Deep Seed | v7.0 | 0/3 | Pending | - |
+| 67. Fremont Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 68. Berkeley Deep Seed | v7.0 | 0/3 | Pending | - |
 | 69. Landing + Elections + Discovery | v7.0 | 0/4 | Pending | - |
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
