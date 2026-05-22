@@ -283,7 +283,7 @@ Plans:
 - [x] 60-01-PLAN.md — Migration: 2 CA senators + 52 US House reps + office rows linked to NATIONAL districts
 - [x] 60-02-PLAN.md — Headshots: source + upload 600×750 for all 54 federal officials
 
-### Phase 61: CA State Legislature
+### ✅ Phase 61: CA State Legislature — COMPLETE (2026-05-21)
 **Goal**: All 80 Assembly members and 40 State Senators are seeded with offices linked to the correct STATE geofence districts and have headshots
 **Depends on**: Phase 57 (SLDL + SLDU boundaries loaded), Phase 59 (chambers exist)
 **Requirements**: GOVDB-04
@@ -294,9 +294,9 @@ Plans:
   4. A lookup for a CA address returns the correct Assembly member and State Senator names matching the district boundaries
 
 Plans:
-- [ ] 61-01-PLAN.md — Migration: 40 CA State Senators + office rows linked to SLDU districts
-- [ ] 61-02-PLAN.md — Migration: 80 CA Assembly members + office rows linked to SLDL districts
-- [ ] 61-03-PLAN.md — Headshots: source + upload 600×750 for all 120 state legislators
+- [x] 61-01-PLAN.md — Migration 194: 40 CA State Senators + office rows linked to SLDU districts
+- [x] 61-02-PLAN.md — Migration 195: 80 CA Assembly members + office rows linked to SLDL districts
+- [x] 61-03-PLAN.md — Headshots: 120 state legislators at 600×750 uploaded to Supabase Storage
 
 ### Phase 62: LA Backlog Closure
 **Goal**: The existing LA seed is complete — LAUSD officials are seeded, the Governor race has all filed candidates, the lavote.gov election ID is current, and any city structure gaps are closed

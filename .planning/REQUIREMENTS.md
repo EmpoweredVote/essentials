@@ -15,7 +15,7 @@
 - [ ] **GOVDB-01**: State of California government row + all constitutional officer chambers seeded, with is_appointed_position determined per CA constitution
 - [ ] **GOVDB-02**: CA executives seeded — Governor Newsom + applicable constitutional officers with headshots at 600×750
 - [ ] **GOVDB-03**: 2 CA US Senators + 52 US House reps seeded with offices linked to NATIONAL districts + headshots at 600×750
-- [ ] **GOVDB-04**: 80 CA Assembly members + 40 CA Senators seeded with offices linked to STATE geofence districts + headshots at 600×750
+- [x] **GOVDB-04**: 80 CA Assembly members + 40 CA Senators seeded with offices linked to STATE geofence districts + headshots at 600×750
 
 ### LA — LA Backlog Closure
 
@@ -78,7 +78,7 @@
 | GOVDB-01 | Phase 59 | Pending |
 | GOVDB-02 | Phase 59 | Pending |
 | GOVDB-03 | Phase 60 | Pending |
-| GOVDB-04 | Phase 61 | Pending |
+| GOVDB-04 | Phase 61 | Complete |
 | LA-01 | Phase 62 | Pending |
 | LA-02 | Phase 62 | Pending |
 | LA-03 | Phase 62 | Pending |

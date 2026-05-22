@@ -115,7 +115,11 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **CA STATE_LOWER districts**: state='CA' (uppercase) — same pre-existing data pattern as STATE_UPPER; geo_id='06001'..'06080'; geofence_boundaries mtfcc='G5220'
 - **CA Assembly geo_id formula**: '06' || lpad(district_num::text, 3, '0') (e.g., AD-17 -> '06017')
 - **CA Assembly external_id formula**: -6002000 - district_num (e.g., AD-17 -> -6002017)
-- **CA Assembly headshots (Plan 61-03)**: 24 pre-existing rows have correct headshots; 12 recycled rows have NO headshots (images cleared); 44 new rows have NO headshots. Upload needed for 56 members.
+- **Phase 61 COMPLETE (2026-05-21)**: 40 senators (-6001001..-6001040) + 80 assembly members (-6002001..-6002080) seeded; 120 headshots uploaded; SF routing verified (Wiener SD-11, Haney AD-17); 12/12 must-haves pass
+- **politician_images schema**: columns are id, politician_id, url, type, photo_license, focal_point — NO photo_origin_url column (plan docs were wrong; never use photo_origin_url)
+- **senate.ca.gov headshot source**: www.senate.ca.gov/senators page has all 40 senator headshots in data-src lazy-load attributes; use %25xx paths verbatim (double-encoded; do NOT decode); img.src contains 1x1 GIF placeholder
+- **SD-37 (Steven Choi) senate page**: sd37.senate.ca.gov redirects to senate.ca.gov — use centralized senators page instead
+- **CA Assembly headshots**: sourced from webapi.assembly.ca.gov/district-media/assets/members/assembly_member_NN.jpg (500×500 square, crop center to 400×500 then resize to 600×750)
 - **SF City Hall routing**: (-122.4191, 37.7792) -> Matt Haney (AD-17, geo_id='06017') — assembly routing confirmed 2026-05-21
 - **CA STATE_UPPER districts state='CA' (uppercase)** — pre-existing data loaded before TIGER loader; migration 194 uses state='CA' in WHERE clause for districts join
 - **CA districts.mtfcc is swapped**: STATE_UPPER has G5220, STATE_LOWER has G5210 (inverse of TIGER codes). Pre-existing data quality issue. Routing unaffected — essentialsService.ts joins on gb.mtfcc not d.mtfcc. Smoke tests must use the essentialsService join pattern, not raw d.mtfcc join.
