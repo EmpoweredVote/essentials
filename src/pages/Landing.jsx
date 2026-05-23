@@ -309,9 +309,9 @@ export default function Landing() {
                               )}
                               <div className="min-w-0">
                                 <div className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light truncate">{pol.full_name}</div>
-                                {(pol.office_title || pol.representing_state) && (
+                                {(pol.office_title || pol.government_name || pol.representing_state) && (
                                   <div className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                                    {[pol.office_title, pol.representing_state].filter(Boolean).join(' — ')}
+                                    {[pol.office_title, (pol.government_name?.replace(/, US$/, '') || pol.representing_state)].filter(Boolean).join(' · ')}
                                   </div>
                                 )}
                               </div>
