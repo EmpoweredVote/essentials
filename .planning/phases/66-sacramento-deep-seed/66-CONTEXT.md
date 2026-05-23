@@ -14,17 +14,17 @@ Fully seed Sacramento's city government: council district geofences, government 
 ## Implementation Decisions
 
 ### Charter scope
-- Include ALL popularly elected Sacramento offices — not just Mayor + 8 Council
-- 6 chambers total: Mayor, City Council (8 districts), City Attorney, City Auditor, City Treasurer, City Clerk
-- Estimated 13 politicians: Mayor + 8 Council Members + City Attorney + City Auditor + City Treasurer + City Clerk
-- **Researcher must verify the full Sacramento charter** to confirm no other popularly elected offices are missing before planning
-- City Attorney, Auditor, Treasurer, and Clerk are citywide offices — they share the single LOCAL_EXEC district (geo_id='0664000'), same pattern as Mayor
+- **CORRECTED (research + user confirmed 2026-05-23):** 2 chambers only — Mayor and City Council
+- City Attorney, City Auditor, City Treasurer, and City Clerk are ALL **APPOINTED** by City Council — confirmed by appointment records (Ahrary Oct 2024, Martinez Feb 2026)
+- **9 politicians total:** Mayor Kevin McCarty + 8 Council Members (D1-D8)
+- Original discussion assumed 6 chambers / 13 politicians — this was wrong; corrected before planning
 
 ### RCV election method
-- Sacramento adopted ranked-choice voting (Measure L, 2022) system-wide, effective 2024 elections
-- All 6 chambers get a TODO comment in the migration: `TODO Phase 69: set election_method='rcv'`
-- Matches the Berkeley pattern — flag now, set in Phase 69 when elections are seeded
-- Applies to all elected offices (Mayor, all Council, Attorney, Auditor, Treasurer, Clerk)
+- **CORRECTED (research + user confirmed 2026-05-23):** Sacramento has NOT adopted RCV
+- Sacramento uses a two-round runoff system (June primary + November runoff)
+- "Measure L, 2022" in original discussion was the Children's Fund — not an RCV measure
+- Better Ballot Sacramento RCV initiative was still collecting signatures as of May 2026
+- Migrations note Sacramento uses two-round runoff; conditional comment only if RCV passes in future
 
 ### Council geofences
 - MTFCC: X0011 (next available; sequential pattern: X0005=LA County, X0006=SF, X0007=SD, X0008=Fremont, X0009=Berkeley, X0010=SJ, X0011=Sacramento)
