@@ -3,10 +3,10 @@
 ## Current Position
 
 Phase: 64 (In progress)
-Plan: 01 of 3 complete
-Status: Phase 64-01 COMPLETE — SJ council district geofences (X0010, 10 rows) + migration 217 applied (govt + 2 chambers + 11 districts); smoke test SC1/SC2/SC3 all PASS
-Last activity: 2026-05-23 — Completed 64-01; all success criteria met
-Progress: v7.0 Phase 64 in progress. Plans 64-02 (officials) + 64-03 (headshots) remain. Then Phase 66 (Sacramento). Then Phase 69 (Landing + Elections + Discovery).
+Plan: 02 of 3 complete
+Status: Phase 64-02 COMPLETE — migration 218 applied; 11 SJ politicians + 11 offices + office_id back-fill; SJ City Hall → Tordillos (D3) PASS; Mayor → Mahan PASS; section-split 0 rows
+Last activity: 2026-05-23 — Completed 64-02; all success criteria met
+Progress: v7.0 Phase 64 in progress. Plan 64-03 (headshots) remains. Then Phase 66 (Sacramento). Then Phase 69 (Landing + Elections + Discovery).
 
 Phase 68 (COMPLETE) — 10 Berkeley officials seeded + headshots uploaded; migrations 213-214 applied; end-to-end routing confirmed; profile pages show headshots
 Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
@@ -134,6 +134,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - **SJ government structure (migration 217 applied 2026-05-23)**: 1 government (name='City of San Jose', state='CA', geo_id='0668000'), 2 chambers ONLY (Mayor + City Council — City Attorney AND City Auditor are APPOINTED per SJ Charter, no chambers for either), 10 LOCAL districts (sj-council-district-{1-10}), 1 LOCAL_EXEC district (geo_id='0668000', label='San Jose (Citywide)'). TODO Phase 69: set election_method='RCV' on both chambers (SJ uses RCV)
 - **SJ external_id range**: Mayor=-640001, Council D1-D10=-640010..-640019; confirmed clear pre-flight (64-RESEARCH.md 2026-05-22)
 - **SJ ArcGIS endpoint**: geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/120 — returns DISTRICTINT + COUNCILMEMBER fields; 10 features; outSR=4326 required
+- **SJ officials seeded (Phase 64-02 complete 2026-05-23)**: 11 politicians; external_ids -640001 (Mayor Mahan), -640010..-640019 (council D1-D10: Kamei/Campos/Tordillos/Cohen/Ortiz/Mulcahy/Doan/Candelas/Foley/Casey); all 11 have office_id back-filled; all offices is_appointed_position=false; council titles 'Council Member (District N)'; Mayor linked to geo_id='0668000' LOCAL_EXEC; SJ City Hall routing confirmed: ST_Covers (-121.88, 37.335) → sj-council-district-3 → Anthony Tordillos; Mayor routing confirmed: Matt Mahan via geo_id=0668000; section-split detector 0 rows; NO City Attorney/Auditor (both appointed per SJ Charter); CRITICAL: geofence_boundaries.state='06' does NOT match districts.state='CA' — routing join must be on geo_id only, not state
 - **Fremont City Attorney Rafael E. Alvarado Jr. is APPOINTED** by City Council — do NOT create City Attorney chamber or office row in any Fremont migration
 - **SD headshots complete (Phase 65-03 2026-05-22)**: 11/11 officials; all from official sandiego.gov (public_domain); all 600x750 JPEG; D4 Foster headshot confirmed correct despite cd7-henry-foster-iii.png CMS filename anomaly; Storage path {politician_id}-headshot.jpg; 209_sd_headshots.sql is AUDIT-ONLY (mirrors 200_sf_headshots.sql pattern); next applied Supabase migration is 210
 - **politician_images URLs for SD**: kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/{politician_id}-headshot.jpg
@@ -189,7 +190,7 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- **Next migration is 218** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 209/212/200/215 are audit-only headshots sql)
+- **Next migration is 219** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 209/212/200/215 are audit-only headshots sql)
 - **LAUSD RESOLVED (Phase 62-03 complete 2026-05-22)**: Migration 198 applied; LAUSD Board of Education chamber + 7 SCHOOL districts (lausd-board-district-{1-7}) + 7 politicians (-6004001..-6004007) + 7 offices correctly linked; D2=Rivas, D3=Schmerelson; 7 headshots 600x750 with type='default' in politician_images
 - **[CRITICAL PATTERN] politician_images.type must be 'default'**: UI (Profile.jsx, Results.jsx) filters with `.find(img => img.type === 'default')`. Using type='headshot' causes silent invisibility. Always use type='default'.
 - **LA County Supervisor geofences (loaded 2026-05-21)**: 5 rows in geofence_boundaries, geo_id='ocd-division/country:us/state:ca/county:los_angeles/council_district:{1-5}', mtfcc='X0005', state='06', source='la_county_geohub_supervisor_districts_2024'. Loader: load-la-county-supervisor-boundaries.ts (C:/EV-Accounts/backend/scripts). X0005 hits the X% fallback in essentialsService.ts → district_type IN ('LOCAL','COUNTY'). Downtown LA (-118.2437, 34.0522) → District 1 (Solis) confirmed.
@@ -217,5 +218,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-23
-Stopped at: Completed 64-01-PLAN.md; SJ geofences (X0010) + migration 217 applied. Next: 64-02 SJ officials.
+Stopped at: Completed 64-02-PLAN.md; migration 218 applied (11 SJ officials + offices + office_id back-fill). Next: 64-03 SJ headshots.
 Resume file: None
