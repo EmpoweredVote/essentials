@@ -334,7 +334,7 @@ Plans:
 
 **Completed: 2026-05-22** — All 4 success criteria met; 20/20 headshots uploaded; SF address lookup returns correct District Supervisor + all citywide officials
 
-### Phase 64: San Jose Deep Seed
+### ✅ Phase 64: San Jose Deep Seed — COMPLETE (2026-05-23)
 **Goal**: San Jose is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Jose address returns a complete local officials list
 **Depends on**: Phase 57 (San Jose city boundary loaded)
 **Requirements**: CITIES-02
@@ -345,9 +345,11 @@ Plans:
   4. All seeded San Jose officials have headshots at 600×750 in Supabase Storage
 
 Plans:
-- [ ] 64-01-PLAN.md — San Jose government structure + chambers + offices
-- [ ] 64-02-PLAN.md — San Jose incumbents: Mayor + 10 council members + office links
-- [ ] 64-03-PLAN.md — San Jose headshots: source + upload 600×750
+- [x] 64-01-PLAN.md — San Jose government structure + chambers + offices
+- [x] 64-02-PLAN.md — San Jose incumbents: Mayor + 10 council members + office links
+- [x] 64-03-PLAN.md — San Jose headshots: source + upload 600×750
+
+**Completed: 2026-05-23** — All 4 success criteria met; 11/11 headshots uploaded; SJ City Hall lookup returns Anthony Tordillos (District 3) + Matt Mahan (Mayor); Mahan Phase 62 duplicate row merged
 
 ### ✅ Phase 65: San Diego Deep Seed — COMPLETE (2026-05-22)
 **Goal**: San Diego is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Diego address returns a complete local officials list

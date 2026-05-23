@@ -84,7 +84,7 @@
 | LA-03 | Phase 62 | Complete |
 | LA-04 | Phase 62 | Complete |
 | CITIES-01 | Phase 63 | Pending |
-| CITIES-02 | Phase 64 | Pending |
+| CITIES-02 | Phase 64 | Complete |
 | CITIES-03 | Phase 65 | Pending |
 | CITIES-04 | Phase 66 | Pending |
 | CITIES-05 | Phase 67 | Pending |
