@@ -79,10 +79,10 @@
 | GOVDB-02 | Phase 59 | Pending |
 | GOVDB-03 | Phase 60 | Pending |
 | GOVDB-04 | Phase 61 | Complete |
-| LA-01 | Phase 62 | Pending |
-| LA-02 | Phase 62 | Pending |
-| LA-03 | Phase 62 | Pending |
-| LA-04 | Phase 62 | Pending |
+| LA-01 | Phase 62 | Complete |
+| LA-02 | Phase 62 | Complete |
+| LA-03 | Phase 62 | Complete |
+| LA-04 | Phase 62 | Complete |
 | CITIES-01 | Phase 63 | Pending |
 | CITIES-02 | Phase 64 | Pending |
 | CITIES-03 | Phase 65 | Pending |
