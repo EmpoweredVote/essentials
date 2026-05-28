@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant } from '../lib/classify';
@@ -328,6 +329,7 @@ export default function Results() {
   const { isDark } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const posthog = usePostHog();
   const queryFromUrl = searchParams.get('q') || '';
   const activeView = searchParams.get('view') || 'representatives';
 
@@ -1093,6 +1095,16 @@ export default function Results() {
     // Save scroll position before navigating to profile
     sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
     sessionStorage.setItem('ev:fromView', 'representatives');
+    const pol = filteredPols?.find((p) => p.id === id);
+    if (pol) {
+      const dt = pol.district_type || '';
+      const level = dt.startsWith('NATIONAL') ? 'federal' : dt.startsWith('STATE') ? 'state' : 'local';
+      posthog?.capture('politician_viewed', {
+        level,
+        district_type: pol.district_type,
+        office_title: pol.office_title,
+      });
+    }
     navigate(`/politician/${id}`);
   };
 
