@@ -12,6 +12,7 @@
 - ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 - ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
 - 🚧 **v7.0 California** — Phases 57-71 (in progress)
+- 🚧 **v8.0 Oregon** — Phases 72+ (in progress)
 
 ## Phases
 
@@ -539,6 +540,24 @@ Plans:
 
 </details>
 
+<details>
+<summary>🚧 v8.0 Oregon (Phases 72+) — IN PROGRESS</summary>
+
+### Phase 72: Portland, OR
+
+**Goal**: TBD — scoped during discuss-phase
+**Depends on**: Phase 71 (CA Playbook Retro) for milestone clean-up; Oregon TIGER boundaries + state layer may be prerequisite depending on scope decision
+**Requirements**: TBD
+**Success Criteria** (what must be TRUE):
+
+  1. TBD — defined during discuss-phase
+
+Plans:
+
+- [ ] TBD
+
+</details>
+
 ---
 
 ## Backlog
@@ -649,3 +668,4 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete    | 2026-05-28 |
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
+| 72. Portland, OR | v8.0 | 0/TBD | Pending | - |
