@@ -244,12 +244,17 @@ function normalizeDistrictSubtitle(raw) {
  * Only used when a card is NOT inside a government_body_name section.
  */
 function qualifyLocalTitle(baseTitle, pol) {
-  if (!pol.government_name || !baseTitle) return baseTitle;
+  if (!baseTitle) return baseTitle;
 
   const dt = pol.district_type || '';
   if (!dt.startsWith('LOCAL') && dt !== 'COUNTY') return baseTitle;
 
-  const gov = pol.government_name.split(',')[0].trim();
+  // Use government_name if set; fall back to representing_city for loaders that
+  // don't create a chamber→government record (e.g. Utah at-large city councils).
+  const govRaw = pol.government_name || pol.representing_city || '';
+  if (!govRaw) return baseTitle;
+
+  const gov = govRaw.split(',')[0].trim();
   const govCore = gov
     .replace(/^(City|Town|Village)\s+of\s+/i, '')
     .replace(/\s+(Township|County)$/i, '')
