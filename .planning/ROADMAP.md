@@ -494,7 +494,8 @@ Plans:
   3. The CA Governor 2026 open-seat race exists with all SOS-verified candidates and cron_active=true discovery armed
   4. All 52 CA US House 2026 race rows exist (one per CD) with cron_active=true discovery armed
   5. discovery_jurisdictions rows with cron_active=true exist for all 7 covered CA cities
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 69-01-PLAN.md — Landing.jsx COVERAGE_AREAS update for all 7 CA cities
@@ -543,18 +544,26 @@ Plans:
 <details>
 <summary>🚧 v8.0 Oregon (Phases 72+) — IN PROGRESS</summary>
 
-### Phase 72: Portland, OR
+### Phase 72: Portland, OR (OR Geofences)
 
-**Goal**: TBD — scoped during discuss-phase
-**Depends on**: Phase 71 (CA Playbook Retro) for milestone clean-up; Oregon TIGER boundaries + state layer may be prerequisite depending on scope decision
-**Requirements**: TBD
+**Goal**: Load Oregon (FIPS 41) TIGER 2024 boundaries into PostGIS so any OR address routes to the correct federal, state, and local representatives
+**Depends on**: Phase 57 (established TIGER loader pattern)
+**Requirements**: GEO-OR-01, GEO-OR-02, GEO-OR-03, GEO-OR-04, GEO-OR-05, GEO-OR-06
 **Success Criteria** (what must be TRUE):
 
-  1. TBD — defined during discuss-phase
+  1. 242 G4110 incorporated city boundaries loaded for state='41' (count confirmed by dry-run)
+  2. 36 county (G4020), 30 SLDU senate, 60 SLDL house, 6 CD congressional (cd119 key) boundaries loaded
+  3. A Portland OR address returns G4110 Portland city + G4020 Multnomah County + G5200 OR congressional + G5210 house + G5220 senate
+  4. A rural OR address (Bend) returns no G4110 row; smoke test exits 0 with ALL ASSERTIONS PASSED
+  5. Section-split check returns 0 rows (no orphaned geofence_boundaries without districts rows)
+  6. All 7 SQL verification gates pass; districts.state='or' (lowercase) for all 132 OR district rows
+
+**Plans**: 2 plans
 
 Plans:
 
-- [ ] TBD
+- [ ] 72-01-PLAN.md — Register OR in TIGER loader (4 config additions) + create verify SQL + smoke test + run all 5 layers
+- [ ] 72-02-PLAN.md — Run 7 SQL gates + smoke test; confirm Portland/Multnomah geo_ids; document in SUMMARY
 
 </details>
 
@@ -668,4 +677,4 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete    | 2026-05-28 |
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
-| 72. Portland, OR | v8.0 | 0/TBD | Pending | - |
+| 72. Portland, OR (OR Geofences) | v8.0 | 0/2 | Pending | - |
