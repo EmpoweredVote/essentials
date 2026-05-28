@@ -138,3 +138,12 @@ No new network endpoints, auth paths, or schema changes introduced. TIGER downlo
 ---
 *Phase: 72-portland-or*
 *Completed: 2026-05-28*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/phases/72-portland-or/72-01-SUMMARY.md
+- FOUND: C:/EV-Accounts/backend/scripts/verify-or-tiger-import.sql
+- FOUND: C:/EV-Accounts/backend/scripts/smoke-or-geofences.ts
+- FOUND: task1 commit fcd77ac (feat: register Oregon in TIGER loader config structures)
+- FOUND: task2 commit be16e17 (feat: create verify-or-tiger-import.sql and smoke-or-geofences.ts)
+- FOUND: task3 commit c0b4658 (feat: dry-run confirms 241 G4110 places; run all 5 OR TIGER layers)
