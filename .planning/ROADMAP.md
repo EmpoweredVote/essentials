@@ -646,6 +646,6 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 66. Sacramento Deep Seed | v7.0 | 0/3 | Pending | - |
 | 67. Fremont Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 68. Berkeley Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete   | 2026-05-28 |
+| 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete    | 2026-05-28 |
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
