@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { usePostHog } from "posthog-js/react";
 import Landing from "./pages/Landing";
 import Results from "./pages/Results";
 import Profile from "./pages/Profile";
@@ -18,6 +19,15 @@ extractHashToken();
 
 // One-time cleanup of legacy localStorage keys from pre-refactor code (Oct 2025)
 localStorage.removeItem('lastZip');
+
+function PostHogPageview() {
+  const location = useLocation();
+  const posthog = usePostHog();
+  useEffect(() => {
+    posthog?.capture('$pageview');
+  }, [location.pathname]);
+  return null;
+}
 
 function RequireAuth({ children }) {
   if (!getToken()) {
@@ -47,6 +57,7 @@ function App() {
 
   return (
     <CompassProvider compassEnabled={localStorage.getItem('ev:compassMode') === 'true'}>
+      <PostHogPageview />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/results" element={<Results />} />
