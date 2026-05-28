@@ -566,7 +566,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 72-02-PLAN.md — Run 7 SQL gates + smoke test; confirm Portland/Multnomah geo_ids; document in SUMMARY
+- [x] 72-02-PLAN.md — Run 7 SQL gates + smoke test; confirm Portland/Multnomah geo_ids; document in SUMMARY
 
 </details>
 
@@ -680,4 +680,4 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete    | 2026-05-28 |
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
-| 72. Portland, OR (OR Geofences) | v8.0 | 1/2 | In Progress|  |
+| 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete   | 2026-05-28 |
