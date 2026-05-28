@@ -568,6 +568,89 @@ Plans:
 
 - [x] 72-02-PLAN.md — Run 7 SQL gates + smoke test; confirm Portland/Multnomah geo_ids; document in SUMMARY
 
+### Phase 73: OR Government DB Foundation
+
+**Goal**: All OR state government chambers exist and are ready to receive officials
+**Depends on**: Phase 72 (OR geofences loaded; geo_id='41' government row pre-seeded)
+**Success Criteria** (what must be TRUE):
+
+  1. 7 chamber rows exist under State of Oregon: Governor, Oregon Senate, Oregon House of Representatives, Attorney General, Secretary of State, State Treasurer, Labor Commissioner
+  2. All 7 chambers have is_appointed_position=false (all voter-elected in Oregon)
+  3. Migration is idempotent and verifiable with a count gate
+
+**Plans**:
+
+- [ ] 73-01-PLAN.md — Migration: 7 OR chambers under existing State of Oregon government row
+
+### Phase 74: OR Executives + Federal Officials
+
+**Goal**: Oregon's 5 constitutional officers and all 8 federal officials (2 senators + 6 US House reps) are seeded with headshots
+**Depends on**: Phase 73 (OR chambers exist), Phase 72 (NATIONAL_LOWER districts loaded for OR CDs 1-6)
+**Success Criteria** (what must be TRUE):
+
+  1. 5 OR constitutional officers seeded: Governor (Kotek), AG (Rayfield), SoS (Griffin-Valade), Treasurer (Steiner), Labor Commissioner (Stephenson)
+  2. Both OR US Senators (Wyden + Merkley) seeded with offices linked to NATIONAL_UPPER district
+  3. All 6 OR US House reps seeded with offices linked to NATIONAL_LOWER districts CD-01 through CD-06
+  4. All 13 officials have headshots in Supabase Storage at 600×750
+  5. An OR address lookup returns the correct US Representative name matching the congressional district boundary
+
+**Plans**:
+
+- [ ] 74-01-PLAN.md — Migration: 5 OR STATE_EXEC districts + 5 executive politicians + offices
+- [ ] 74-02-PLAN.md — Migration: 2 OR US Senators + 6 US House reps + offices linked to NATIONAL districts
+- [ ] 74-03-PLAN.md — Headshots: source + upload 600×750 for all 13 OR federal + executive officials
+
+### Phase 75: OR State Legislature
+
+**Goal**: All 30 OR State Senators and 60 OR House Representatives are seeded with offices linked to correct STATE districts and have headshots
+**Depends on**: Phase 73 (OR Senate + House chambers exist), Phase 72 (STATE_UPPER/LOWER districts loaded)
+**Success Criteria** (what must be TRUE):
+
+  1. All 30 OR state senators seeded with offices linked to STATE_UPPER districts SD-01 through SD-30
+  2. All 60 OR house reps seeded with offices linked to STATE_LOWER districts HD-01 through HD-60
+  3. All 90 legislators have headshots in Supabase Storage at 600×750
+  4. An OR address lookup returns the correct state senator and house rep for that address
+
+**Plans**:
+
+- [ ] 75-01-PLAN.md — Migration: 30 OR State Senators + offices linked to STATE_UPPER districts
+- [ ] 75-02-PLAN.md — Migration: 60 OR House Reps + offices linked to STATE_LOWER districts
+- [ ] 75-03-PLAN.md — Headshots: oregonlegislature.gov source + upload 600×750 for all 90 legislators
+
+### Phase 76: Portland City Council District Geofences
+
+**Goal**: Portland's 4 new city council districts (2025 charter reform) are loaded as geofences so Portland addresses route to the correct council district
+**Depends on**: Phase 72 (Portland city boundary geo_id='4159000' confirmed)
+**Note**: Portland's 2024 charter reform created 4 multi-member council districts (3 seats each) effective January 2025; these districts are NOT in TIGER and must be sourced from Portland Maps / Socrata ArcGIS
+**Success Criteria** (what must be TRUE):
+
+  1. 4 Portland council district geofences loaded and linked to districts rows under geo_id='4159000'
+  2. A Portland address returns the correct council district (D1-D4)
+  3. Section-split check returns 0 rows
+  4. All 4 district geo_ids confirmed from DB
+
+**Plans**:
+
+- [ ] 76-01-PLAN.md — Source Portland council district GeoJSON (Socrata/PortlandMaps ArcGIS) + load as LOCAL_LOWER geofences + smoke test
+
+### Phase 77: Portland City Structure + Officials
+
+**Goal**: Portland is fully seeded — government structure, Mayor, all 12 city council members, City Attorney, City Administrator, and headshots — so a Portland address returns a complete local officials list
+**Depends on**: Phase 76 (Portland council district geofences loaded), Phase 73 (OR government DB exists)
+**Note**: Portland uses 1 chamber for City Council with 12 offices across 4 multi-member districts (3 seats per district, RCV). City Administrator is is_appointed_position=true.
+**Success Criteria** (what must be TRUE):
+
+  1. Portland government row exists with chambers for Mayor, City Council (12 offices across 4 districts), City Attorney, City Administrator
+  2. Mayor Keith Wilson + all 12 council members (from Districts 1-4) + elected City Attorney + appointed City Administrator seeded with offices
+  3. A Portland address lookup returns all 3 council members for the matched district plus Mayor
+  4. All elected Portland officials have headshots at 600×750 in Supabase Storage
+
+**Plans**:
+
+- [ ] 77-01-PLAN.md — Portland government scaffold: government row + chambers + offices structure
+- [ ] 77-02-PLAN.md — Portland incumbents: Mayor + 12 council members + City Attorney + City Administrator
+- [ ] 77-03-PLAN.md — Portland headshots: source + upload 600×750 for all elected officials
+
 </details>
 
 ---
@@ -681,3 +764,8 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
 | 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete    | 2026-05-28 |
+| 73. OR Government DB Foundation | v8.0 | 0/1 | Pending | - |
+| 74. OR Executives + Federal Officials | v8.0 | 0/3 | Pending | - |
+| 75. OR State Legislature | v8.0 | 0/3 | Pending | - |
+| 76. Portland City Council District Geofences | v8.0 | 0/1 | Pending | - |
+| 77. Portland City Structure + Officials | v8.0 | 0/3 | Pending | - |
