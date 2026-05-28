@@ -2,11 +2,11 @@
 
 ## Current Position
 
-Phase: 66 (In progress)
-Plan: 01 of 3 complete
-Status: Phase 66-01 COMPLETE — 8 Sacramento council district geofences loaded (X0011), migration 219 applied (1 government, 2 chambers, 9 districts)
-Last activity: 2026-05-23 — Completed 66-01 Sacramento geofences + government structure
-Progress: v7.0 Phase 66 in progress (1/3 plans done). Next: Phase 66-02 (Sacramento officials seed). Then 66-03 (headshots). Then Phase 69.
+Phase: 66 (COMPLETE)
+Plan: 3 of 3 complete
+Status: Phase 66 FULLY COMPLETE — 9 Sacramento officials + headshots; migrations 219+220 applied; 9 politician_images rows; sac_headshots.sql written
+Last activity: 2026-05-28 — Completed 66-03 Sacramento headshots
+Progress: v7.0 Phase 66 complete. Next: Phase 69 (per roadmap).
 
 Phase 68 (COMPLETE) — 10 Berkeley officials seeded + headshots uploaded; migrations 213-214 applied; end-to-end routing confirmed; profile pages show headshots
 Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
@@ -197,7 +197,10 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 - Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
 - Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
 - TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
-- **Next migration is 220** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 219=Sacramento government structure; 209/212/200/215/sj_headshots.sql are audit-only headshots sql)
+- **Next migration is 221** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 219=Sacramento government structure; 220=Sacramento officials; 209/212/200/215/sj_headshots.sql are audit-only headshots sql)
+- **Sacramento officials seeded (migration 220, 2026-05-23)**: 9 politicians — Mayor Kevin McCarty (-660001), Council Members Lisa Kaplan (-660010, D1), Roger Dickinson (-660011, D2), Karina Talamantes (-660012, D3), Phil Pluckebaum (-660013, D4), Caity Maple (-660014, D5), Eric Guerra (-660015, D6), Rick Jennings II (-660016, D7), Mai Vang (-660017, D8); all 9 office_ids non-null; City Hall (-121.4944, 38.5816) routes to Phil Pluckebaum (D4); Mayor routes via LOCAL_EXEC district (geo_id='0664000'); Rick Jennings II: last_name='Jennings II' (generational suffix in both fields)
+- **Sacramento external_id range CONFIRMED**: Mayor=-660001, Council D1-D8=-660010..-660017 (migration 220 applied)
+- **Sacramento headshots complete (Phase 66-03 complete 2026-05-28)**: 9/9 officials; all from cityofsacramento.gov (public_domain); CSS background-image pattern (AEM/CQ5 CMS — WebFetch can't extract; raw curl+grep required); square sources (McCarty/Pluckebaum/Jennings 514x514, Talamantes/Guerra/Vang 500x500) center-cropped to 4:5; tall sources top-cropped; all 600x750 JPEG q90; sac_headshots.sql is AUDIT-ONLY
   - **[GOTCHA] When seeding city officials, pre-check for name collisions with existing race_candidates rows**: ON CONFLICT on external_id does NOT catch same-person rows seeded under different external_ids. Run: SELECT full_name, COUNT(*) FROM essentials.politicians WHERE full_name IN (...new names...) GROUP BY full_name HAVING COUNT(*) > 1 -- Matt Mahan example: Phase 62 seeded -6003004/bb642e24 (CA Gov challenger); Phase 64 seeded -640001/41949a2b (SJ Mayor); required manual merge (race_candidates re-pointed + stale row deleted).
 - **LAUSD RESOLVED (Phase 62-03 complete 2026-05-22)**: Migration 198 applied; LAUSD Board of Education chamber + 7 SCHOOL districts (lausd-board-district-{1-7}) + 7 politicians (-6004001..-6004007) + 7 offices correctly linked; D2=Rivas, D3=Schmerelson; 7 headshots 600x750 with type='default' in politician_images
 - **[CRITICAL PATTERN] politician_images.type must be 'default'**: UI (Profile.jsx, Results.jsx) filters with `.find(img => img.type === 'default')`. Using type='headshot' causes silent invisibility. Always use type='default'.
@@ -225,6 +228,6 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 ## Session Continuity
 
-Last session: 2026-05-23
-Stopped at: Completed 66-01-PLAN.md; Sacramento geofences (X0011, 8 districts) + migration 219 (government structure) applied. Next: Phase 66-02 Sacramento officials seed.
+Last session: 2026-05-28
+Stopped at: Phase 66 fully complete — geofences (66-01), officials (66-02, migration 220), headshots (66-03, 9 politician_images). Human verification pending. Next: Phase 69.
 Resume file: None
