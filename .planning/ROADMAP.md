@@ -496,8 +496,8 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 69-01-PLAN.md — Landing.jsx COVERAGE_AREAS update for all 7 CA cities
-- [ ] 69-02-PLAN.md — CA elections foundation: 2 election rows + Governor race + Governor candidates migration
+- [x] 69-01-PLAN.md — Landing.jsx COVERAGE_AREAS update for all 7 CA cities
+- [x] 69-02-PLAN.md — CA elections foundation: 2 election rows + Governor race + Governor candidates migration
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -646,6 +646,6 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 66. Sacramento Deep Seed | v7.0 | 0/3 | Pending | - |
 | 67. Fremont Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 68. Berkeley Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 69. Landing + Elections + Discovery | v7.0 | 0/4 | Pending | - |
+| 69. Landing + Elections + Discovery | v7.0 | 2/4 | In Progress|  |
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
