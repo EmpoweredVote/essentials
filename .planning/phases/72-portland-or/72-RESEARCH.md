@@ -427,14 +427,14 @@ cd C:/EV-Accounts && npx tsc --noEmit
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Exact G4110 place count for OR TIGER 2024**
+1. **Exact G4110 place count for OR TIGER 2024** — RESOLVED BY PLAN DESIGN: dry-run step built into 72-01 Task 3 confirms actual count before locking pre-flight assertion.
    - What we know: Census 2020 lists 242 incorporated places (233 cities + 9 towns); all G4110 in TIGER
    - What's unclear: TIGER 2024 may differ slightly from Census 2020 count if any places incorporated/disincorporated between 2020-2024
    - Recommendation: Run `--dry-run` on the place layer before setting the pre-flight count. The planner should include a dry-run sub-task before the live assertion is locked.
 
-2. **OR election discovery source URL**
+2. **OR election discovery source URL** — OUT OF SCOPE for Phase 72 (elections phase is a future phase in v8.0).
    - What we know: D-14 defers this to research; Oregon Secretary of State (sos.oregon.gov) runs elections
    - What's unclear: Exact URL for the 2026 OR election results / candidate filing source
    - Recommendation: Phase 72 does not need this URL (it's for a future elections phase). Note: `https://sos.oregon.gov/elections/` is the canonical Oregon elections portal.

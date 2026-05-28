@@ -18,24 +18,24 @@ Portland's custom 12-district council boundaries (from the 2024 charter reform) 
 ### Phase 72 TIGER Scope
 - **D-01:** OR TIGER layers: G4110 (incorporated cities), G4020 (counties), SLDU (30 senate districts), SLDL (60 house districts), CD (6 congressional districts). Same layer set as Phase 49 (ME) and Phase 57 (CA).
 - **D-02:** OR FIPS = 41. Multnomah County FIPS = 41051.
-- **D-03:** Portland custom council district geofences (12 districts, new 2024 charter) → Portland city phase (future). Do NOT include in Phase 72.
-- **D-04:** Multnomah County commission district boundaries (custom, not TIGER) → separate phase after Phase 72 government DB work. Do NOT include in Phase 72.
+- **D-03:** [informational] Portland custom council district geofences (12 districts, new 2024 charter) → Portland city phase (future). Do NOT include in Phase 72.
+- **D-04:** [informational] Multnomah County commission district boundaries (custom, not TIGER) → separate phase after Phase 72 government DB work. Do NOT include in Phase 72.
 - **D-05:** OR TIGER CD key must be verified by browsing `https://www2.census.gov/geo/tiger/TIGER2024/CD/` before configuring STATE_LAYER_ALLOWLIST. ME used `cd119` (not `cd`) — apply the same pre-flight check for OR.
 
 ### v8.0 Oregon Milestone Structure (captured for planning purposes)
-- **D-06:** Full v8.0 playbook pattern — same multi-phase approach as v6.0 ME and v7.0 CA. Phase 72 is the first phase; multiple phases follow for government DB, state legislature, executives, federal officials, Portland city deep seed, elections, etc.
-- **D-07:** Multnomah County officials (5 elected commissioners) ARE in scope for v8.0. Only Multnomah — Washington County and Clackamas County are deferred to v8.1+.
-- **D-08:** Multnomah County custom commission boundaries will require a custom loader script (like LA County supervisor loader in Phase 62). This loader work goes in a post-Phase-72 phase.
+- **D-06:** [informational] Full v8.0 playbook pattern — same multi-phase approach as v6.0 ME and v7.0 CA. Phase 72 is the first phase; multiple phases follow for government DB, state legislature, executives, federal officials, Portland city deep seed, elections, etc.
+- **D-07:** [informational] Multnomah County officials (5 elected commissioners) ARE in scope for v8.0. Only Multnomah — Washington County and Clackamas County are deferred to v8.1+.
+- **D-08:** [informational] Multnomah County custom commission boundaries will require a custom loader script (like LA County supervisor loader in Phase 62). This loader work goes in a post-Phase-72 phase.
 
 ### Portland City Structure (locked now, used by the Portland city phase)
-- **D-09:** Portland adopted a new Strong Mayor + 12-district council system in January 2025 (2022 Measure 26-228). This replaced the old 5-member commission form of government. Every future Portland city plan must use this new structure.
-- **D-10:** City council title format: `"Councilor (District N, Seat A/B/C)"` — 12 districts × 3 seats each = 36 total council titles. Matches Portland's official seat naming.
-- **D-11:** 3 separate chambers for Portland: Mayor, City Council, City Auditor. City Auditor is an independently elected oversight officer — NOT folded into the Mayor's LOCAL_EXEC chamber (matches Berkeley's Auditor pattern).
-- **D-12:** Election method: `election_method = 'stv'` on both City Council and Mayor chambers. STV = Single Transferable Vote, Portland's official term for their multi-winner ranked-choice system.
+- **D-09:** [informational] Portland adopted a new Strong Mayor + 12-district council system in January 2025 (2022 Measure 26-228). This replaced the old 5-member commission form of government. Every future Portland city plan must use this new structure.
+- **D-10:** [informational] City council title format: `"Councilor (District N, Seat A/B/C)"` — 12 districts × 3 seats each = 36 total council titles. Matches Portland's official seat naming.
+- **D-11:** [informational] 3 separate chambers for Portland: Mayor, City Council, City Auditor. City Auditor is an independently elected oversight officer — NOT folded into the Mayor's LOCAL_EXEC chamber (matches Berkeley's Auditor pattern).
+- **D-12:** [informational] Election method: `election_method = 'stv'` on both City Council and Mayor chambers. STV = Single Transferable Vote, Portland's official term for their multi-winner ranked-choice system.
 
 ### Elections + Discovery (locked now, used by the Portland elections phase)
-- **D-13:** Portland's 3-seat STV district races → 3 separate race rows per district per seat (one race per Seat A/B/C). No schema migration needed. 36 total council races + 1 Mayor + 1 Auditor = 38 races per Portland election cycle.
-- **D-14:** OR election discovery source — researcher finds the correct OR Secretary of State URL during the Phase 72 research phase. Do NOT hardcode a source URL here.
+- **D-13:** [informational] Portland's 3-seat STV district races → 3 separate race rows per district per seat (one race per Seat A/B/C). No schema migration needed. 36 total council races + 1 Mayor + 1 Auditor = 38 races per Portland election cycle.
+- **D-14:** [informational] OR election discovery source — Oregon Secretary of State (sos.oregon.gov/elections/) is the canonical elections portal. Do NOT hardcode a source URL in Phase 72 plans.
 
 ### Claude's Discretion
 - Exact TIGER layer counts for OR (number of G4110 cities, COUSUB count if any)

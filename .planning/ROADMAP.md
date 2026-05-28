@@ -559,10 +559,13 @@ Plans:
   6. All 7 SQL verification gates pass; districts.state='or' (lowercase) for all 132 OR district rows
 
 **Plans**: 2 plans
-
-Plans:
+Plans:
+**Wave 1**
 
 - [ ] 72-01-PLAN.md — Register OR in TIGER loader (4 config additions) + create verify SQL + smoke test + run all 5 layers
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 72-02-PLAN.md — Run 7 SQL gates + smoke test; confirm Portland/Multnomah geo_ids; document in SUMMARY
 
 </details>
