@@ -23,37 +23,37 @@ Phase 73 creates the 7 Oregon state government chamber rows under the pre-existi
 - **D-04:** GENERATED ALWAYS slug on chambers — never include in INSERT column list (established pattern from Phase 50).
 - **D-05:** Next migration number: **221** (verify before writing — Phase 72 introduced no DB migration so 221 is the expected next; confirmed in Phase 72 SUMMARY).
 
-### Phase 74 — OR Executives + Federal Officials
+### Phase 74 — OR Executives + Federal Officials [informational]
 
-- **D-06:** 5 OR constitutional officers to seed: Governor Tina Kotek, AG Dan Rayfield, SoS LaVonne Griffin-Valade, Treasurer Elizabeth Steiner, Labor Commissioner Christina Stephenson.
-- **D-07:** Include the Oregon Labor Commissioner as a seeded official — it is a statewide voter-elected race unique to OR (no ME/CA analog but consistent with "seed all elected officials" rule).
-- **D-08:** External ID scheme follows OR FIPS prefix: `-41xxxxx` range (e.g., -410001 for Kotek). Check ME pattern (-230001) for exact convention before writing migration.
-- **D-09:** Headshots for executives land in Phase 74 (same phase as federal officials). Phase 73 is scaffolding only.
-- **D-10:** STATE_EXEC districts for OR use geo_id='41' (state FIPS), district_id='', mtfcc='' — same pattern as ME (geo_id='23') from Phase 51.
-- **D-11:** 6 OR congressional districts already loaded (Phase 72 TIGER): CD-01 through CD-06. Portland is Congressional District 1 (geo_id=4101, confirmed by Phase 72 smoke test).
-- **D-12:** US Senators: Ron Wyden + Jeff Merkley. Both link to NATIONAL_UPPER district.
+- **D-06** [informational]: 5 OR constitutional officers to seed: Governor Tina Kotek, AG Dan Rayfield, SoS LaVonne Griffin-Valade, Treasurer Elizabeth Steiner, Labor Commissioner Christina Stephenson.
+- **D-07** [informational]: Include the Oregon Labor Commissioner as a seeded official — it is a statewide voter-elected race unique to OR (no ME/CA analog but consistent with "seed all elected officials" rule).
+- **D-08** [informational]: External ID scheme follows OR FIPS prefix: `-41xxxxx` range (e.g., -410001 for Kotek). Check ME pattern (-230001) for exact convention before writing migration.
+- **D-09** [informational]: Headshots for executives land in Phase 74 (same phase as federal officials). Phase 73 is scaffolding only.
+- **D-10** [informational]: STATE_EXEC districts for OR use geo_id='41' (state FIPS), district_id='', mtfcc='' — same pattern as ME (geo_id='23') from Phase 51.
+- **D-11** [informational]: 6 OR congressional districts already loaded (Phase 72 TIGER): CD-01 through CD-06. Portland is Congressional District 1 (geo_id=4101, confirmed by Phase 72 smoke test).
+- **D-12** [informational]: US Senators: Ron Wyden + Jeff Merkley. Both link to NATIONAL_UPPER district.
 
-### Phase 75 — OR State Legislature
+### Phase 75 — OR State Legislature [informational]
 
-- **D-13:** 30 OR State Senators → offices linked to STATE_UPPER districts (30 rows, state='or' lowercase).
-- **D-14:** 60 OR House Reps → offices linked to STATE_LOWER districts (60 rows, state='or' lowercase).
-- **D-15:** Headshot source: oregonlegislature.gov (researcher to confirm direct URL patterns).
-- **D-16:** districts.state casing for loader-inserted rows is 'or' (lowercase) — confirmed in Phase 72 SUMMARY. NATIONAL_LOWER/NATIONAL_UPPER use 'OR' uppercase (pre-seeded, pre-existing pattern).
+- **D-13** [informational]: 30 OR State Senators → offices linked to STATE_UPPER districts (30 rows, state='or' lowercase).
+- **D-14** [informational]: 60 OR House Reps → offices linked to STATE_LOWER districts (60 rows, state='or' lowercase).
+- **D-15** [informational]: Headshot source: oregonlegislature.gov (researcher to confirm direct URL patterns).
+- **D-16** [informational]: districts.state casing for loader-inserted rows is 'or' (lowercase) — confirmed in Phase 72 SUMMARY. NATIONAL_LOWER/NATIONAL_UPPER use 'OR' uppercase (pre-seeded, pre-existing pattern).
 
-### Phase 76 — Portland City Council District Geofences
+### Phase 76 — Portland City Council District Geofences [informational]
 
-- **D-17:** Phase 76 (geofences) ships BEFORE Phase 77 (city seed) — council members cannot be linked to working districts until geofences exist.
-- **D-18:** Portland's 4 council districts are from the 2024 charter reform (effective Jan 2025) — they are NOT in TIGER. Source from Portland Maps / Socrata ArcGIS (same pattern as Berkeley X0009 ArcGIS FeatureServer).
-- **D-19:** Portland city boundary geo_id='4159000' (confirmed by Phase 72 smoke test). Multnomah County geo_id='41051'.
+- **D-17** [informational]: Phase 76 (geofences) ships BEFORE Phase 77 (city seed) — council members cannot be linked to working districts until geofences exist.
+- **D-18** [informational]: Portland's 4 council districts are from the 2024 charter reform (effective Jan 2025) — they are NOT in TIGER. Source from Portland Maps / Socrata ArcGIS (same pattern as Berkeley X0009 ArcGIS FeatureServer).
+- **D-19** [informational]: Portland city boundary geo_id='4159000' (confirmed by Phase 72 smoke test). Multnomah County geo_id='41051'.
 
-### Phase 77 — Portland City Structure + Officials
+### Phase 77 — Portland City Structure + Officials [informational]
 
-- **D-20:** Portland's 2025 charter: 12 council members across 4 multi-member districts (3 seats per district, elected by RCV). Use **1 Portland City Council chamber with 12 offices** — 3 office rows per district all linked to the same district geofence. Routing returns all 3 reps for the matched district naturally.
-- **D-21:** Do NOT use 4 sub-chambers (one per district) — no prior analog; overly complex.
-- **D-22:** Mayor Keith Wilson (citywide RCV, elected Nov 2024).
-- **D-23:** City Administrator (Michael Jordan, appointed) seeded as `is_appointed_position=true`.
-- **D-24:** City Attorney included — elected office in Portland (not appointed), same as SF pattern.
-- **D-25:** Incumbents (all elected Nov 2024, took office Jan 2025):
+- **D-20** [informational]: Portland's 2025 charter: 12 council members across 4 multi-member districts (3 seats per district, elected by RCV). Use **1 Portland City Council chamber with 12 offices** — 3 office rows per district all linked to the same district geofence. Routing returns all 3 reps for the matched district naturally.
+- **D-21** [informational]: Do NOT use 4 sub-chambers (one per district) — no prior analog; overly complex.
+- **D-22** [informational]: Mayor Keith Wilson (citywide RCV, elected Nov 2024).
+- **D-23** [informational]: City Administrator (Michael Jordan, appointed) seeded as `is_appointed_position=true`.
+- **D-24** [informational]: City Attorney included — elected office in Portland (not appointed), same as SF pattern.
+- **D-25** [informational]: Incumbents (all elected Nov 2024, took office Jan 2025):
   - District 1: Timur Ataseven, Loretta Smith, Tiffany Kachima
   - District 2: Candace Avalos, Maxine Dexter, Eric Zimmerman
   - District 3: Steve Novick, Angelita Morillo, Chris Carey
