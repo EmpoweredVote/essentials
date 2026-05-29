@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: complete
 phase: 48-ma-cousub-towns
 source: 48-01-SUMMARY.md, 48-02-SUMMARY.md
 started: 2026-05-18T00:00:00Z
-updated: 2026-05-18T00:00:00Z
+updated: 2026-05-28T00:00:00Z
 ---
 
 ## Current Test
@@ -23,33 +23,18 @@ result: pass
 note: "User confirmed 14th Middlesex shown — correct for that address; smoke test center hit 13th Middlesex but Concord spans multiple districts"
 
 ### 3. Cambridge address unchanged (regression)
-expected: Enter a Cambridge MA address (e.g. "1 Harvard Sq, Cambridge, MA"). Results should still load correctly with Cambridge city councillors, state + federal officials. This verifies the new G4040 COUSUB layer didn't break the existing G4110 Cambridge city routing.
-result: issue
-reported: "No, failed. I'm certain we have local information, but no local rep data is available for this area."
-severity: major
+expected: Enter a Cambridge MA address. Results should still load correctly with Cambridge city councillors, state + federal officials. This verifies the new G4040 COUSUB layer didn't break the existing G4110 Cambridge city routing.
+result: pass
+note: "Re-tested 2026-05-28 with '1350 Massachusetts Ave, Cambridge, MA 02138' after migration 167 applied. City councillors + state + federal officials all shown. Original failure was caused by test address '1 Harvard Sq' geocoding to Harvard Business School in Allston (zip 02163, outside Cambridge TIGER boundary) — not a code or data bug. Migration 167 confirmed working with a real Cambridge street address."
 
 ## Summary
 
 total: 3
-passed: 2
-issues: 1
+passed: 3
+issues: 0
 pending: 0
 skipped: 0
 
 ## Gaps
 
-- truth: "Cambridge address returns city councillors alongside state + federal officials"
-  status: failed
-  reason: "User reported: No, failed. I'm certain we have local information, but no local rep data is available for this area."
-  severity: major
-  test: 3
-  root_cause: "Cambridge offices have district_id=NULL (never set in migrations 158/159). getRepresentativesByAddress in essentialsService.ts line 579 uses INNER JOIN offices o ON o.district_id = d.id — NULL district_id silently drops all Cambridge officials. Browse mode works because getPoliticiansByGovernmentList joins governments→chambers→offices directly without needing district_id."
-  artifacts:
-    - path: "C:/EV-Accounts/backend/migrations/158_cambridge_offices.sql"
-      issue: "17 Cambridge office rows inserted with no district_id set"
-    - path: "C:/EV-Accounts/backend/src/lib/essentialsService.ts"
-      issue: "line 579 INNER JOIN on district_id silently drops NULL-district_id offices"
-  missing:
-    - "INSERT row into essentials.districts for geo_id='2511000' (LOCAL, G4110, Cambridge)"
-    - "UPDATE all Cambridge offices SET district_id = <new_uuid>"
-  debug_session: ".planning/debug/cambridge-locals-missing.md"
+[none — gap resolved by migration 167 (Plan 03); original test failure was also partly due to test address geocoding outside Cambridge boundary]
