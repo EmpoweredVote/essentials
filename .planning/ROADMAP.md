@@ -778,5 +778,5 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 73. OR Government DB Foundation | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 74. OR Executives + Federal Officials | v8.0 | 3/3 | Complete    | 2026-05-29 |
 | 75. OR State Legislature | v8.0 | 0/3 | Pending | - |
-| 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete   | 2026-05-29 |
+| 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 0/3 | Pending | - |
