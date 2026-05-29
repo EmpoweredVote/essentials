@@ -202,6 +202,8 @@ A resident can look up who represents them — and who is on their ballot — wi
 | NATIONAL_UPPER senator uniqueness key = `(district_id, politician_id)` | `(district_id, chamber_id)` blocks 2nd senator INSERT (both senators share one district); politician_id is the correct discriminator | ✓ Good — v6.0 |
 | House headshot thumbnails upscaled from 152×202 to 600×750 | mainelegislature.org only provides thumbnails; upscaling with Lanczos acceptable for government-style headshots; user sign-off required | ✓ Good — v6.0 |
 | Multi-tier city seeding: skeletal INSERT then UPDATE by (chamber_id, title) | No seat_label column on essentials.offices; UPDATE pattern matches on chamber+title to link politician_id to existing office rows | ✓ Good — v6.0 |
+| STATE_EXEC `districts.state` must be uppercase 'OR' not 'or' | Casing rule: STATE/COUNTY tiers use lowercase in TIGER loader but STATE_EXEC is manually inserted — must match uppercase postal code that backend queries use; lowercase causes silent exclusion | ✓ Good — v7.0 (Phase 74 lesson) |
+| STATE_EXEC `district_id` should be empty string for shared multi-position districts | OR STATE_EXEC initially used 'Oregon (Statewide)' as district_id; MA/ME/TX multi-position pattern uses ''; corrected in migration 223a | ✓ Good — v7.0 (Phase 74 lesson) |
 
 ---
-*Last updated: 2026-05-28 — Phase 73 complete: 7 OR chamber scaffolds seeded under State of Oregon government (migration 222 applied)*
+*Last updated: 2026-05-29 — Phase 74 complete: 5 OR constitutional officers + 8 OR federal officials seeded with headshots; migrations 223/224 applied; state casing fix 223a applied*
