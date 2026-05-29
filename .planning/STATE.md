@@ -3,15 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Data Depth & Admin Tooling
 status: executing
-stopped_at: Phase 75 complete
-last_updated: "2026-05-29"
-last_activity: 2026-05-29 -- Phase 75 complete; 30 OR senators + 60 OR house reps seeded with offices + 90/90 headshots
+last_updated: "2026-05-29T21:09:54.453Z"
+last_activity: 2026-05-29 -- Phase 76 planning complete
 progress:
-  total_phases: 8
-  completed_phases: 5
-  total_plans: 13
-  completed_plans: 13
-  percent: 63
+  total_phases: 51
+  completed_phases: 45
+  total_plans: 118
+  completed_plans: 116
+  percent: 88
 ---
 
 # State
@@ -20,8 +19,8 @@ progress:
 
 Phase: 75 (COMPLETE)
 Plan: All 3 plans complete
-Status: Complete
-Last activity: 2026-05-29 -- Phase 75 complete; 30 OR senators (migration 226) + 60 OR house reps (migration 227) seeded; 90/90 headshots uploaded (audit migration 228)
+Status: Ready to execute
+Last activity: 2026-05-29 -- Phase 76 planning complete
 
 Phase 75 (COMPLETE) — 30 OR senators + 60 OR house reps seeded; migrations 226+227 applied; 90/90 headshots from oregonlegislature.gov; Portland City Hall → Lisa Reynolds (SD-17) + Shannon Isadore (HD-33) confirmed end-to-end
 Phase 68 (COMPLETE) — 10 Berkeley officials seeded + headshots uploaded; migrations 213-214 applied; end-to-end routing confirmed; profile pages show headshots

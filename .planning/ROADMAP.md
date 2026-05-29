@@ -642,7 +642,7 @@ Plans:
 
 **Plans**:
 
-- [ ] 76-01-PLAN.md — Source Portland council district GeoJSON (Socrata/PortlandMaps ArcGIS) + load as LOCAL_LOWER geofences + smoke test
+- [ ] 76-01-PLAN.md — PortlandMaps ArcGIS MapServer Layer 17 per-OBJECTID load (4 districts, X0012, mtfcc) + migration 229 (4 LOCAL districts rows, state=or) + 4-gate smoke test
 
 ### Phase 77: Portland City Structure + Officials
 
