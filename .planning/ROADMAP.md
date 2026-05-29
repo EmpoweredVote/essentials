@@ -764,7 +764,7 @@ v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+
 | 70. Compass Stances | v7.0 | 0/3 | Pending | - |
 | 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
 | 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete    | 2026-05-28 |
-| 73. OR Government DB Foundation | v8.0 | 1/1 | Complete   | 2026-05-29 |
+| 73. OR Government DB Foundation | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 74. OR Executives + Federal Officials | v8.0 | 0/3 | Pending | - |
 | 75. OR State Legislature | v8.0 | 0/3 | Pending | - |
 | 76. Portland City Council District Geofences | v8.0 | 0/1 | Pending | - |
