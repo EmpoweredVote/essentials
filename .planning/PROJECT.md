@@ -204,4 +204,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Multi-tier city seeding: skeletal INSERT then UPDATE by (chamber_id, title) | No seat_label column on essentials.offices; UPDATE pattern matches on chamber+title to link politician_id to existing office rows | ✓ Good — v6.0 |
 
 ---
-*Last updated: 2026-05-21 after v7.0 milestone definition*
+*Last updated: 2026-05-28 — Phase 73 complete: 7 OR chamber scaffolds seeded under State of Oregon government (migration 222 applied)*
