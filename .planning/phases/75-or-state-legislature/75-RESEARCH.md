@@ -656,7 +656,7 @@ This phase inserts data rows only (politicians, offices, politician_images). No 
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should the executor scrape img src from the roster pages rather than deriving filenames?**
    - What we know: ~85% of filenames follow simple `{lastname}.jpg` pattern; ~15% have disambiguation

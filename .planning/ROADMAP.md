@@ -612,10 +612,21 @@ Plans:
   4. An OR address lookup returns the correct state senator and house rep for that address
 
 **Plans**:
+**Wave 1**
 
-- [ ] 75-01-PLAN.md — Migration: 30 OR State Senators + offices linked to STATE_UPPER districts
-- [ ] 75-02-PLAN.md — Migration: 60 OR House Reps + offices linked to STATE_LOWER districts
-- [ ] 75-03-PLAN.md — Headshots: oregonlegislature.gov source + upload 600×750 for all 90 legislators
+- [x] 75-01-PLAN.md — Migration: 30 OR State Senators + offices linked to STATE_UPPER districts
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 75-02-PLAN.md — Migration: 60 OR House Reps + offices linked to STATE_LOWER districts
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [x] 75-03-PLAN.md — Headshots: oregonlegislature.gov source + upload 600×750 for all 90 legislators
+
+**Cross-cutting constraints:**
+
+- Migration is idempotent — re-running inserts 0 additional politicians/offices and the UPDATE returns 0
 
 ### Phase 76: Portland City Council District Geofences
 
