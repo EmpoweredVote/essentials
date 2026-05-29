@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Data Depth & Admin Tooling
-status: ready_to_plan
-last_updated: 2026-05-29T14:51:55.341Z
-last_activity: 2026-05-29 -- Phase 74 execution started
+status: planning
+last_updated: "2026-05-29T16:40:23.088Z"
+last_activity: 2026-05-29
 progress:
   total_phases: 51
   completed_phases: 45
   total_plans: 118
-  completed_plans: 166
+  completed_plans: 116
   percent: 88
-stopped_at: Phase 74 complete (3/3) — ready to discuss Phase 75
 ---
 
 # State
@@ -244,6 +243,6 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 ## Session Continuity
 
-Last session: 2026-05-28T17:47:28.977Z
-Stopped at: Phase 72 context gathered
-Resume file: .planning/phases/72-portland-or/72-CONTEXT.md
+Last session: 2026-05-29T16:40:23.062Z
+Stopped at: Phase 75 context gathered
+Resume file: .planning/phases/75-or-state-legislature/75-CONTEXT.md
