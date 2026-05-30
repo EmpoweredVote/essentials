@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
-import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import { searchPoliticiansByName } from '../lib/api';
 
 const COVERAGE_AREAS = [
@@ -32,13 +31,6 @@ export default function Landing() {
   const searchRef = useRef(null);
   const navigate = useNavigate();
   const { isLoggedIn, userName, myRepresentatives, myLocationNotSet, compassLoading } = useCompass();
-
-  useGooglePlacesAutocomplete(addressInputRef, {
-    onPlaceSelected: (addr) => {
-      setAddressInput(addr);
-      navigate(`/results?q=${encodeURIComponent(addr)}`);
-    },
-  });
 
   // Auto-redirect Connected users who have representatives data
   useEffect(() => {
@@ -194,7 +186,7 @@ export default function Landing() {
               <div className="flex flex-col gap-3 mb-3">
                 {COVERAGE_AREAS.map((area) => (
                   <button
-                    key={area.county}
+                    key={`${area.county}-${area.state}`}
                     onClick={() => handleCountyClick(area)}
                     className="w-full text-left px-5 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
                   >
