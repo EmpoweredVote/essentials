@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Data Depth & Admin Tooling
 status: ready_to_plan
-stopped_at: Phase 75 complete (3/3) — ready to discuss Phase 76
+stopped_at: Phase 76 complete (1/1) — ready to discuss Phase 79
 last_updated: 2026-05-30T07:24:02.270Z
-last_activity: 2026-05-29 -- Phase 78 complete; v7.0 California milestone shipped
+last_activity: 2026-05-30 -- Phase 76 already complete (verified 2026-05-29, passed 9/9); v8.0 Oregon milestone complete through Phase 77
 progress:
   total_phases: 18
-  completed_phases: 14
-  total_plans: 38
-  completed_plans: 175
-  percent: 78
+  completed_phases: 15
+  total_plans: 39
+  completed_plans: 176
+  percent: 83
 ---
 
 # State
@@ -19,10 +19,11 @@ progress:
 ## Current Position
 
 Phase: 76
-Plan: Not started
-Status: Ready to plan
+Plan: All complete
+Status: Complete (verified 2026-05-29, 9/9 must-haves passed)
 Last activity: 2026-05-30
 
+Phase 76 (COMPLETE) — 4 Portland OR council district geofences loaded; ArcGIS per-OBJECTID fetch; migration 229 applied (4 LOCAL districts rows, state=or); 4-gate smoke test passed; Portland City Hall → portland-or-council-district-4 confirmed
 Phase 75 (COMPLETE) — 30 OR senators + 60 OR house reps seeded; migrations 226+227 applied; 90/90 headshots from oregonlegislature.gov; Portland City Hall → Lisa Reynolds (SD-17) + Shannon Isadore (HD-33) confirmed end-to-end
 Phase 68 (COMPLETE) — 10 Berkeley officials seeded + headshots uploaded; migrations 213-214 applied; end-to-end routing confirmed; profile pages show headshots
 Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
@@ -36,7 +37,7 @@ Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows c
 See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 76 — portland council geofences
+**Current focus:** Phase 76 complete — v8.0 OR milestone through Phase 77 complete; next phase TBD
 
 ## Accumulated Context
 
