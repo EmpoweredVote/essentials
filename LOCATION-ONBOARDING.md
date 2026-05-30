@@ -53,7 +53,7 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Trap | See Step | One-Line Summary |
 |------|----------|-----------------|
 | Pre-existing CA seed | Step 1, Step 5 | CA govt row + 8 chambers + 8 politicians pre-existed; always pre-check before writing any CA state-level INSERT |
-| districts.state casing | Step 3, Step 6 | Pre-existing CA districts use state='CA' (uppercase); lowercase 'ca' returns 0 rows |
+| districts.state casing | Step 3 | Pre-existing CA districts use state='CA' (uppercase); lowercase 'ca' returns 0 rows |
 | mtfcc swap | Step 3 | CA STATE_UPPER=G5220, STATE_LOWER=G5210 (inverse); do NOT join on d.mtfcc — routing uses gb.mtfcc |
 | External ID range collision | Step 5 | -1000xx range occupied by CA Assembly; CA House reps use -60003xx; always pre-check range |
 | DataSF vs ArcGIS (outSR) | Step 3 | SF/Berkeley use Socrata (native WGS84, no outSR); LA/Sacramento/SD/Fremont/SJ use ArcGIS (must add outSR=4326) |
