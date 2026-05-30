@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Data Depth & Admin Tooling
-status: ready_to_plan
-last_updated: 2026-05-30T19:07:36.595Z
-last_activity: 2026-05-30 -- Phase 79 execution started
+status: planning
+last_updated: "2026-05-30T19:28:06.370Z"
+last_activity: 2026-05-30
 progress:
   total_phases: 60
   completed_phases: 54
   total_plans: 142
-  completed_plans: 181
+  completed_plans: 140
   percent: 90
-stopped_at: Phase 79 complete (5/5) — ready to discuss Phase 80
 ---
 
 # State
@@ -252,6 +251,6 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 
 ## Session Continuity
 
-Last session: 2026-05-30T16:23:22.854Z
-Stopped at: Phase 79 context gathered
-Resume file: .planning/phases/79-or-landing-elections-discovery/79-CONTEXT.md
+Last session: 2026-05-30T19:28:06.354Z
+Stopped at: Phase 80 context gathered
+Resume file: .planning/phases/80-or-compass-stances/80-CONTEXT.md
