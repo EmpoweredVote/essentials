@@ -865,6 +865,6 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
-| 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete   | 2026-05-30 |
+| 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete    | 2026-05-30 |
 | 80. OR Compass Stances | v8.0 | 0/TBD | Pending | - |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 0/TBD | Pending | - |
