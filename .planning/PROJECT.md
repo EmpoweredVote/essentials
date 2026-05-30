@@ -210,4 +210,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | STATE_EXEC `district_id` should be empty string for shared multi-position districts | OR STATE_EXEC initially used 'Oregon (Statewide)' as district_id; MA/ME/TX multi-position pattern uses ''; corrected in migration 223a | ✓ Good — v7.0 (Phase 74 lesson) |
 
 ---
-*Last updated: 2026-05-29 — Phase 77 complete: Portland OR city government scaffold + 16 officials (Mayor Wilson, City Auditor Rede, 12 council, City Administrator Lee III, City Attorney Taylor) + 14 elected headshots; migrations 230/231 applied; audit-only 232 (headshots)*
+*Last updated: 2026-05-30 — Phase 78 complete: CA Playbook Retrospective — 11 CA-specific GOTCHAs + California Quick Reference added to LOCATION-ONBOARDING.md; v7.0 California milestone closed; PLAYBOOK-01 validated*

@@ -48,7 +48,7 @@
 
 ### PLAYBOOK
 
-- [ ] **PLAYBOOK-01**: LOCATION-ONBOARDING.md updated with CA-specific GOTCHAs (charter vs. general law cities, RCV jurisdictions like SF/Berkeley, TIGER CD key verification for CA, LAUSD sub-district geofence pattern, lavote.gov election ID maintenance)
+- [x] **PLAYBOOK-01**: LOCATION-ONBOARDING.md updated with CA-specific GOTCHAs (charter vs. general law cities, RCV jurisdictions like SF/Berkeley, TIGER CD key verification for CA, LAUSD sub-district geofence pattern, lavote.gov election ID maintenance) — Validated in Phase 78
 
 ---
 
@@ -96,7 +96,7 @@
 | ELECT-04 | Phase 69 | Pending |
 | COMPASS-01 | Phase 70 | Pending |
 | COMPASS-02 | Phase 70 | Pending |
-| PLAYBOOK-01 | Phase 71 | Pending |
+| PLAYBOOK-01 | Phase 78 | Complete |
 
 **Coverage:**
 - v7.0 requirements: 24 total
