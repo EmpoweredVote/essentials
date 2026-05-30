@@ -2,27 +2,28 @@
 gsd_state_version: 1.0
 milestone: v2.2
 milestone_name: Data Depth & Admin Tooling
-status: ready_to_plan
-stopped_at: Phase 76 complete (1/1) — ready to discuss Phase 79
-last_updated: 2026-05-30T07:24:02.270Z
-last_activity: 2026-05-30 -- Phase 76 already complete (verified 2026-05-29, passed 9/9); v8.0 Oregon milestone complete through Phase 77
+status: executing
+last_updated: "2026-05-30T08:24:24.895Z"
+last_activity: 2026-05-30 -- Phase 77.1 planning complete
 progress:
-  total_phases: 18
-  completed_phases: 15
-  total_plans: 39
-  completed_plans: 176
-  percent: 83
+  total_phases: 60
+  completed_phases: 54
+  total_plans: 142
+  completed_plans: 140
+  percent: 90
 ---
 
 # State
 
 ## Current Position
 
-Phase: 76
-Plan: All complete
-Status: Complete (verified 2026-05-29, 9/9 must-haves passed)
-Last activity: 2026-05-30
+Phase: 77.1
+Plan: Not planned yet
+Status: Ready to execute
+Last activity: 2026-05-30 -- Phase 77.1 planning complete
+Next recommended run: /gsd-plan-phase 77.1
 
+Phase 77 (COMPLETE) — Portland city structure + 16 officials seeded; migrations 230-232 applied; Mayor Wilson + 12 council + City Auditor Rede + City Administrator Lee III + City Attorney Taylor
 Phase 76 (COMPLETE) — 4 Portland OR council district geofences loaded; ArcGIS per-OBJECTID fetch; migration 229 applied (4 LOCAL districts rows, state=or); 4-gate smoke test passed; Portland City Hall → portland-or-council-district-4 confirmed
 Phase 75 (COMPLETE) — 30 OR senators + 60 OR house reps seeded; migrations 226+227 applied; 90/90 headshots from oregonlegislature.gov; Portland City Hall → Lisa Reynolds (SD-17) + Shannon Isadore (HD-33) confirmed end-to-end
 Phase 68 (COMPLETE) — 10 Berkeley officials seeded + headshots uploaded; migrations 213-214 applied; end-to-end routing confirmed; profile pages show headshots
@@ -40,6 +41,10 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 **Current focus:** Phase 76 complete — v8.0 OR milestone through Phase 77 complete; next phase TBD
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 77.1 inserted after Phase 77: Fix Phase 77 data: set politicians.is_appointed=true for Lee III and Taylor (URGENT)
 
 ### Key Decisions (carry forward)
 

@@ -542,7 +542,8 @@ Plans:
   2. Any trap encountered during v7.0 phases not already in the playbook is documented with problem + solution + CA example
   3. The playbook entry is written so a future agent can onboard a new CA city without repeating any v7.0 mistakes
   4. v7.0 milestone is marked shipped in ROADMAP.md
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 78-01-PLAN.md — Playbook update: 7 Cities Onboarded rows + California Quick Reference + 11 CA-specific GOTCHAs inline + 5 Step 7 pitfall rows
@@ -674,6 +675,20 @@ Plans:
 - [x] 077-01-PLAN.md — Portland government scaffold: 1 government row + 5 chambers (Mayor, City Council, City Auditor, City Administrator, City Attorney) + 1 LOCAL_EXEC district (migration 230)
 - [x] 077-02-PLAN.md — Portland incumbents: 16 politicians + 16 offices — Mayor Wilson + 12 council (corrected roster) + City Auditor Rede + appointed City Administrator Lee III + appointed City Attorney Taylor (migration 231)
 - [x] 077-03-PLAN.md — Portland headshots: 14 elected officials (Mayor + 12 council + City Auditor) at 600×750 from portland.gov; audit-only migration 232
+
+### Phase 77.1: Fix Phase 77 data: set politicians.is_appointed=true for Lee III and Taylor (INSERTED)
+
+**Goal**: Raymond C. Lee III (City Administrator) and Robert L. Taylor (City Attorney) have `is_appointed=true` set in the politicians table — was omitted during Phase 77 migration
+**Depends on**: Phase 77 (Portland officials seeded)
+**Plans:** 1 plan
+**Success Criteria** (what must be TRUE):
+
+  1. `politicians.is_appointed = true` for Raymond C. Lee III
+  2. `politicians.is_appointed = true` for Robert L. Taylor
+
+Plans:
+
+- [ ] 77.1-01-PLAN.md — Write migration 235 (UPDATE essentials.politicians SET is_appointed=true WHERE external_id IN (-690003, -690004) + ledger entry); apply to Supabase; verify both gates + offices spot-check + idempotency
 
 </details>
 
