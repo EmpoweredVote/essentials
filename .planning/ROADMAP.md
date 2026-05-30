@@ -535,6 +535,7 @@ Plans:
 **Goal**: The location onboarding playbook is updated with all CA-specific GOTCHAs discovered during v7.0 so future state onboarding is faster; v7.0 milestone is closed
 **Depends on**: Phases 57-70 (entire v7.0 complete)
 **Requirements**: PLAYBOOK-CA-01
+**Plans**: 2 plans
 **Success Criteria** (what must be TRUE):
 
   1. LOCATION-ONBOARDING.md has a CA-specific GOTCHA section covering: charter vs. general law city structure differences, RCV cities (SF/Berkeley), TIGER CD key verification for CA, LAUSD sub-district geofence pattern, lavote.gov election ID maintenance, and AEM/CQ5 CMS headshot pattern (Sacramento)
@@ -544,7 +545,8 @@ Plans:
 
 Plans:
 
-- [ ] 78-01-PLAN.md — Playbook retrospective: audit all v7.0 phase summaries for GOTCHAs; write CA section in LOCATION-ONBOARDING.md; close v7.0 milestone
+- [ ] 78-01-PLAN.md — Playbook update: 7 Cities Onboarded rows + California Quick Reference + 11 CA-specific GOTCHAs inline + 5 Step 7 pitfall rows
+- [ ] 78-02-PLAN.md — Close v7.0 California milestone across ROADMAP.md, STATE.md, PROJECT.md
 
 </details>
 
@@ -566,7 +568,8 @@ Plans:
   6. All 7 SQL verification gates pass; districts.state='or' (lowercase) for all 132 OR district rows
 
 **Plans**: 2 plans
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 72-01-PLAN.md — Register OR in TIGER loader (4 config additions) + create verify SQL + smoke test + run all 5 layers
