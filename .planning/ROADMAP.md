@@ -12,7 +12,7 @@
 - âœ… **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 - âœ… **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
 - âœ… **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29)
-- ðŸš§ **v8.0 Oregon** — Phases 72+ (in progress)
+- ðŸš§ **v8.0 Oregon** — Phases 72-81 (in progress)
 
 ## Phases
 
@@ -555,7 +555,7 @@ Plans:
 </details>
 
 <details>
-<summary>ðŸš§ v8.0 Oregon (Phases 72+) — IN PROGRESS</summary>
+<summary>ðŸš§ v8.0 Oregon (Phases 72-81) — IN PROGRESS</summary>
 
 ### Phase 72: Portland, OR (OR Geofences)
 
@@ -690,6 +690,46 @@ Plans:
 
 - [x] 77.1-01-PLAN.md — Write migration 235 (UPDATE essentials.politicians SET is_appointed=true WHERE external_id IN (-690003, -690004) + ledger entry); apply to Supabase; verify both gates + offices spot-check + idempotency
 
+### Phase 79: OR Landing + Elections + Discovery
+
+**Goal**: Portland appears on the coverage map, OR 2026 election rows are seeded, and discovery is armed for Portland city races and OR state/federal races
+**Depends on**: Phases 72-77 (all OR officials seeded)
+**Success Criteria** (what must be TRUE):
+
+  1. Landing.jsx COVERAGE_AREAS includes Portland, OR with correct browseGovernmentList ID (geo_id='4159000')
+  2. OR 2026 primary (May 19) and general (November 3) election rows exist in essentials.elections
+  3. OR Governor 2026 race exists with SOS-verified candidates and discovery armed
+  4. OR US House 2026 race rows exist for all 6 CDs with discovery armed
+  5. Portland city council 2026 race rows exist (if any seats are up) with discovery armed
+  6. discovery_jurisdictions rows exist for Portland with cron_active=true
+
+**Plans**: TBD
+
+### Phase 80: OR Compass Stances
+
+**Goal**: Compass stances are ingested for OR constitutional officers, federal officials, and Portland city council members where public record exists
+**Depends on**: Phases 72-79 (all OR officials seeded + discovery armed)
+**Success Criteria** (what must be TRUE):
+
+  1. Every OR constitutional officer and US Senator/Rep with a verifiable public stance record has at least one compass answer ingested
+  2. Portland city council officials with discoverable public stance records have compass answers ingested
+  3. All stance ingestion ran one-at-a-time (rate-limit rule honored); no bulk parallel runs
+  4. The compass renders on politician profile pages for at least one OR official without errors
+
+**Plans**: TBD
+
+### Phase 81: OR Playbook Retrospective + v8.0 Close
+
+**Goal**: The location onboarding playbook is updated with all OR-specific GOTCHAs discovered during v8.0 so future state onboarding is faster; v8.0 milestone is closed
+**Depends on**: Phases 72-80 (entire v8.0 complete)
+**Success Criteria** (what must be TRUE):
+
+  1. LOCATION-ONBOARDING.md has an OR-specific GOTCHA section covering: Portland charter reform 4-district council structure, RCV multi-member districts, Portland council district source (ArcGIS MapServer not TIGER), PowerShell Unicode encoding trap (wrong codepoint for Nguyễn)
+  2. Any trap encountered during v8.0 phases not already in the playbook is documented with problem + solution + OR example
+  3. v8.0 milestone is marked shipped in ROADMAP.md, STATE.md, and PROJECT.md
+
+**Plans**: TBD
+
 </details>
 
 ---
@@ -809,3 +849,6 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
+| 79. OR Landing + Elections + Discovery | v8.0 | 0/TBD | Pending | - |
+| 80. OR Compass Stances | v8.0 | 0/TBD | Pending | - |
+| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 0/TBD | Pending | - |
