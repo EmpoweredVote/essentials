@@ -644,7 +644,7 @@ Plans:
 
 - [x] 76-01-PLAN.md — PortlandMaps ArcGIS MapServer Layer 17 per-OBJECTID load (4 districts, X0012, mtfcc) + migration 229 (4 LOCAL districts rows, state=or) + 4-gate smoke test
 
-### Phase 77: Portland City Structure + Officials
+### ✅ Phase 77: Portland City Structure + Officials — COMPLETE 2026-05-29
 
 **Goal**: Portland is fully seeded — government structure, Mayor, all 12 city council members, City Attorney, City Administrator, and headshots — so a Portland address returns a complete local officials list
 **Depends on**: Phase 76 (Portland council district geofences loaded), Phase 73 (OR government DB exists)
@@ -658,9 +658,9 @@ Plans:
 
 **Plans**:
 
-- [ ] 077-01-PLAN.md — Portland government scaffold: 1 government row + 5 chambers (Mayor, City Council, City Auditor, City Administrator, City Attorney) + 1 LOCAL_EXEC district (migration 230)
-- [ ] 077-02-PLAN.md — Portland incumbents: 16 politicians + 16 offices — Mayor Wilson + 12 council (corrected roster) + City Auditor Rede + appointed City Administrator Lee III + appointed City Attorney Taylor (migration 231)
-- [ ] 077-03-PLAN.md — Portland headshots: 14 elected officials (Mayor + 12 council + City Auditor) at 600×750 from portland.gov; audit-only migration 232
+- [x] 077-01-PLAN.md — Portland government scaffold: 1 government row + 5 chambers (Mayor, City Council, City Auditor, City Administrator, City Attorney) + 1 LOCAL_EXEC district (migration 230)
+- [x] 077-02-PLAN.md — Portland incumbents: 16 politicians + 16 offices — Mayor Wilson + 12 council (corrected roster) + City Auditor Rede + appointed City Administrator Lee III + appointed City Attorney Taylor (migration 231)
+- [x] 077-03-PLAN.md — Portland headshots: 14 elected officials (Mayor + 12 council + City Auditor) at 600×750 from portland.gov; audit-only migration 232
 
 </details>
 
