@@ -542,10 +542,13 @@ Plans:
   2. Any trap encountered during v7.0 phases not already in the playbook is documented with problem + solution + CA example
   3. The playbook entry is written so a future agent can onboard a new CA city without repeating any v7.0 mistakes
   4. v7.0 milestone is marked shipped in ROADMAP.md
-
-Plans:
+Plans:
+**Wave 1**
 
 - [ ] 78-01-PLAN.md — Playbook update: 7 Cities Onboarded rows + California Quick Reference + 11 CA-specific GOTCHAs inline + 5 Step 7 pitfall rows
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 78-02-PLAN.md — Close v7.0 California milestone across ROADMAP.md, STATE.md, PROJECT.md
 
 </details>
