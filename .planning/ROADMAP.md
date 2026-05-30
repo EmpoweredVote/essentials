@@ -1,4 +1,4 @@
-# Roadmap: Essentials — Empowered Vote
+﻿# Roadmap: Essentials — Empowered Vote
 
 ## Milestones
 
@@ -11,7 +11,7 @@
 - âœ… **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 - âœ… **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 - âœ… **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
-- ðŸš§ **v7.0 California** — Phases 57-70, 78 (in progress)
+- âœ… **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29)
 - ðŸš§ **v8.0 Oregon** — Phases 72+ (in progress)
 
 ## Phases
@@ -250,7 +250,7 @@ Full details: [milestones/v6.0-ROADMAP.md](milestones/v6.0-ROADMAP.md)
 ---
 
 <details>
-<summary>ðŸš§ v7.0 California (Phases 57-70, 78) — IN PROGRESS</summary>
+<summary>âœ… v7.0 California (Phases 57-70, 78) — SHIPPED 2026-05-29</summary>
 
 ### Phase 57: CA Geofences
 
@@ -545,11 +545,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 78-01-PLAN.md — Playbook update: 7 Cities Onboarded rows + California Quick Reference + 11 CA-specific GOTCHAs inline + 5 Step 7 pitfall rows
+- [x] 78-01-PLAN.md — Playbook update: 7 Cities Onboarded rows + California Quick Reference + 11 CA-specific GOTCHAs inline + 5 Step 7 pitfall rows
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 78-02-PLAN.md — Close v7.0 California milestone across ROADMAP.md, STATE.md, PROJECT.md
+- [x] 78-02-PLAN.md — Close v7.0 California milestone across ROADMAP.md, STATE.md, PROJECT.md
 
 </details>
 
@@ -793,4 +793,4 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 75. OR State Legislature | v8.0 | 0/3 | Pending | - |
 | 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
-| 78. CA Playbook Retrospective | v7.0 | 0/1 | Pending | - |
+| 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete | 2026-05-29 |

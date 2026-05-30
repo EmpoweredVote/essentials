@@ -87,31 +87,35 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ 380 ME race rows for 2026 elections — 13 Governor candidates (open seat, SOS-verified), US Senate (Collins + 2 challengers), 2 US House races, 372 legislative scaffold rows; discovery cron armed for 2026-06-09 + 2026-11-03 — v6.0
 - ✓ ME Playbook retrospective — 9 Maine GOTCHAs added to LOCATION-ONBOARDING.md; 5 templates updated (legislature headshots, multi-tier seeding, PowerShell generator, RCV chamber, legislature-elected=appointed) — v6.0
 - ✓ Landing.jsx Maine entry — Portland city browse (browseGovernmentList=['2360545']) + ME state browse (browseStateAbbrev='ME') — v6.0
+- ✓ CA TIGER geofences — 482 G4110 cities + 404 G4040 CCDs + 80 SLDU + 40 SLDL + 52 CD + 58 G4020 counties; SF consolidated city-county (G4110+G4020 both returned); any CA address routes to correct tiers — v7.0
+- ✓ LAUSD board district geofences (7 districts, mtfcc=G5420) + 7 LAUSD board member officials with offices linked to sub-district boundaries; LA address returns correct LAUSD board member — v7.0
+- ✓ State of California government DB — 8 constitutional officers (pre-existing seed fixed: NULL geo_id updated to '06'); 120 CA state legislators (40 senators + 80 assembly); 54 federal officials (2 senators + 52 US House reps) — all with headshots at 600×750 — v7.0
+- ✓ LA backlog closure — CA Governor 2026 race with all SOS-verified challenger candidates; lavote.gov election ID current (id=4338); LAUSD officials seeded; LA city structure gaps closed — v7.0
+- ✓ 6 CA city deep seeds at full Tier 1 depth — SF (20 officials, 10 chambers, RCV, DataSF Socrata loader), San Jose (11 officials, RCV, ArcGIS DISTRICTINT), San Diego (11 officials, ArcGIS WKID 2230), Sacramento (9 officials, AEM/CQ5 curl+grep headshots), Fremont (7 officials, fremont.gov 403 workaround), Berkeley (10 officials, RCV, Socrata 'district' field) — v7.0
+- ✓ CA 2026 elections — Governor race + 52 US House races + discovery pipeline armed (cron_active=true); lavote.gov discovery row; 7 CA city discovery_jurisdictions rows — v7.0
+- ✓ 965 compass stances across 68 CA officials — SF 366, San Diego 164, Berkeley 126, San Jose 133, Sacramento 120, Fremont 56; all cited from public record — v7.0
+- ✓ CA Playbook retrospective — 11 CA-specific GOTCHAs added to LOCATION-ONBOARDING.md; California Quick Reference block added; 7 new rows in Cities Onboarded table; v7.0 milestone closed — v7.0
 
-### Current Milestone: v7.0 California
+### Current Milestone: v8.0 Oregon
 
-**Goal:** Expand coverage to California — state layer (geofences, legislature, executives, federal), LA backlog closure, and 6 city deep seeds (SF, San Jose, San Diego, Sacramento, Fremont, Berkeley) with compass stances.
+**Goal:** Expand coverage to Oregon — state layer (geofences, legislature, executives, federal) and Portland deep seed. Continues the location onboarding playbook pattern.
 
 **Target features:**
-- CA TIGER boundaries (G4110 cities, G4040 COUSUB, SLDU/SLDL/CD/counties)
-- LAUSD sub-district geofences + officials
-- State of California government DB + constitutional officers + 120+ legislators + 54 federal reps
-- LA backlog: Governor challengers, lavote.gov election ID, LAUSD officials, LA structure gaps
-- 6 new city deep seeds at full Tier 1-4 depth with headshots
-- CA 2026 elections (Governor + 52 US House races) + discovery pipeline
-- Compass stances for CA officials and city council members
-- Playbook updated with CA-specific GOTCHAs
+- OR TIGER boundaries (G4110, SLDU/SLDL/CD/counties)
+- State of Oregon government DB + constitutional officers + 90 state legislators + 13 federal officials
+- Portland city structure (4 multi-member council districts, RCV) + officials + headshots
+- OR 2026 elections + discovery pipeline
+- Compass stances for OR officials (deferred to v8.1+)
+- Playbook updated with OR-specific GOTCHAs (deferred to v8.0 retrospective phase)
 
 ### Active
 
-- [ ] GEO-01: CA TIGER boundaries loaded (G4110, G4040, SLDU, SLDL, CD, counties)
-- [ ] GEO-02: LAUSD board district geofences
-- [ ] GOVDB-01 through GOVDB-04: State government DB + 120+ legislators + executives + federal officials
-- [ ] LA-01 through LA-04: LA backlog closure
-- [ ] CITIES-01 through CITIES-07: 6 new cities at full depth + Landing.jsx
-- [ ] ELECT-01 through ELECT-04: CA 2026 elections + discovery
-- [ ] COMPASS-01 through COMPASS-02: Stances for state + city officials
-- [ ] PLAYBOOK-01: CA GOTCHAs in playbook
+- [x] Phase 72: OR Geofences
+- [x] Phase 73: OR Government DB Foundation
+- [x] Phase 74: OR Executives + Federal Officials
+- [ ] Phase 75: OR State Legislature
+- [x] Phase 76: Portland City Council District Geofences
+- [x] Phase 77: Portland City Structure + Officials
 
 ### Out of Scope
 
