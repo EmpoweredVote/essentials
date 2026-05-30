@@ -793,4 +793,4 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 75. OR State Legislature | v8.0 | 0/3 | Pending | - |
 | 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
-| 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete | 2026-05-29 |
+| 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
