@@ -646,17 +646,19 @@ WHERE d.geo_id = '4159000' AND d.district_type = 'LOCAL_EXEC' AND d.state = 'or'
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Are appointed officials (City Attorney, City Administrator) worth seeding at all?**
    - What we know: Berkeley and Fremont omitted appointed positions entirely. SF and SD included them.
    - What's unclear: Phase scope says "City Administrator" is in scope (D-04), but City Attorney is now confirmed appointed — is City Attorney still wanted?
    - Recommendation: Seed City Administrator (D-04 is explicit); seed City Attorney with `is_appointed_position=true` only if planner wants parity with SF. Either way, no chamber and no headshot for both.
+   - **RESOLVED:** Both appointed officials seeded — City Administrator (D-04 explicit) and City Attorney (parity with SF pattern). Both have `is_appointed_position=true`, no headshot. Chamber row created for each per established city seeding pattern.
 
 2. **Council office title: "City Council Member (District N)" vs "Council Member (District N)"**
    - What we know: CONTEXT.md D-07 says "City Council Member (District N)". Berkeley uses "Council Member (District N)".
    - What's unclear: Portland's own website refers to members as "City Councilor".
    - Recommendation: Honor D-07 locked decision — use "City Council Member (District N)".
+   - **RESOLVED:** D-07 overridden by official portland.gov display text — plans use **"City Councilor (District N)"** to match the city's own terminology. This is the correct title per the 2025 charter and portland.gov/auditor/elections/elected-city-officials.
 
 ---
 
