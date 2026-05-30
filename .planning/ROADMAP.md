@@ -1,4 +1,4 @@
-﻿# Roadmap: Essentials — Empowered Vote
+# Roadmap: Essentials — Empowered Vote
 
 ## Milestones
 
@@ -694,6 +694,7 @@ Plans:
 
 **Goal**: Portland appears on the coverage map, OR 2026 election rows are seeded, and discovery is armed for Portland city races and OR state/federal races
 **Depends on**: Phases 72-77 (all OR officials seeded)
+**Plans**: 5 plans
 **Success Criteria** (what must be TRUE):
 
   1. Landing.jsx COVERAGE_AREAS includes Portland, OR with correct browseGovernmentList ID (geo_id='4159000')
@@ -701,9 +702,24 @@ Plans:
   3. OR Governor 2026 race exists with SOS-verified candidates and discovery armed
   4. OR US House 2026 race rows exist for all 6 CDs with discovery armed
   5. Portland city council 2026 race rows exist (if any seats are up) with discovery armed
-  6. discovery_jurisdictions rows exist for Portland with cron_active=true
+  6. discovery_jurisdictions rows exist for Portland with cron_active=true (per RESEARCH.md: column does not exist; armed via election_date 180-day cron window)
+Plans:
+**Wave 1**
 
-**Plans**: TBD
+- [ ] 79-01-PLAN.md - Landing.jsx Portland OR entry + migration 237 (OR 2026 Primary + General election rows)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 79-02-PLAN.md - Migration 238: 8 OR statewide race rows (Governor + Senate Merkley + 6 US House CDs)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 79-03-PLAN.md - PowerShell generator + migration 239: 90 OR legislative race rows (30 Senate + 60 House)
+- [ ] 79-04-PLAN.md - Migration 240: 7 Portland city race rows (D3x3 + D4x3 + Auditor per RESEARCH.md correction of D-07)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 79-05-PLAN.md - Migration 241: 2 OR discovery_jurisdictions rows (Portland + statewide) + final phase verification
 
 ### Phase 80: OR Compass Stances
 
@@ -849,6 +865,6 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
-| 79. OR Landing + Elections + Discovery | v8.0 | 0/TBD | Pending | - |
+| 79. OR Landing + Elections + Discovery | v8.0 | 0/5 | Pending | - |
 | 80. OR Compass Stances | v8.0 | 0/TBD | Pending | - |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 0/TBD | Pending | - |
