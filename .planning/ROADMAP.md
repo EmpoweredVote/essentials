@@ -790,7 +790,7 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete    | 2026-05-28 |
 | 73. OR Government DB Foundation | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 74. OR Executives + Federal Officials | v8.0 | 3/3 | Complete    | 2026-05-29 |
-| 75. OR State Legislature | v8.0 | 0/3 | Pending | - |
+| 75. OR State Legislature | v8.0 | 3/3 | Complete    | 2026-05-30 |
 | 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
