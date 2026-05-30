@@ -474,7 +474,7 @@ Expected: 25 rows (11 OR exec/federal + 14 Portland, minus 2 done senators + 2 a
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Portland council D4 seat count**
    - What we know: 14 Portland officials listed in CONTEXT.md (Mayor + 12 council + Auditor = 14); 4 districts × 3 seats = 12 council members

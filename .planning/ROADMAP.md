@@ -732,7 +732,24 @@ Plans:
   3. All stance ingestion ran one-at-a-time (rate-limit rule honored); no bulk parallel runs
   4. The compass renders on politician profile pages for at least one OR official without errors
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 80-01-PLAN.md - OR constitutional officers (5): Kotek, Rayfield, Read, Steiner, Stephenson - one-at-a-time research + ingest
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 80-02-PLAN.md - OR US House reps (6): Bonamici, Bentz, Dexter, Hoyle, Bynum, Salinas - one-at-a-time research + ingest
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 80-03-PLAN.md - Portland Mayor + Auditor + 11 council (13 officials) - one-at-a-time research + ingest; D-04/D-03 accept-zero allowed
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 80-04-PLAN.md - Verification: coverage SQL gates + value-range integrity + Kotek compass render check + phase close
 
 ### Phase 81: OR Playbook Retrospective + v8.0 Close
 
@@ -866,5 +883,5 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
 | 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete    | 2026-05-30 |
-| 80. OR Compass Stances | v8.0 | 0/TBD | Pending | - |
+| 80. OR Compass Stances | v8.0 | 0/4 | Planning | - |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 0/TBD | Pending | - |
