@@ -11,7 +11,7 @@
 - âœ… **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 - âœ… **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 - âœ… **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
-- ðŸš§ **v7.0 California** — Phases 57-71 (in progress)
+- ðŸš§ **v7.0 California** — Phases 57-70, 78 (in progress)
 - ðŸš§ **v8.0 Oregon** — Phases 72+ (in progress)
 
 ## Phases
@@ -250,7 +250,7 @@ Full details: [milestones/v6.0-ROADMAP.md](milestones/v6.0-ROADMAP.md)
 ---
 
 <details>
-<summary>ðŸš§ v7.0 California (Phases 57-71) — IN PROGRESS</summary>
+<summary>ðŸš§ v7.0 California (Phases 57-70, 78) — IN PROGRESS</summary>
 
 ### Phase 57: CA Geofences
 
@@ -420,7 +420,7 @@ Plans:
 
 **Completed: 2026-05-22** — All 4 success criteria met; 11/11 headshots uploaded; SD City Hall lookup returns Stephen Whitburn (District 3) + citywide officials (Mayor Gloria + City Attorney Ferbert)
 
-### Phase 66: Sacramento Deep Seed
+### âœ… Phase 66: Sacramento Deep Seed — COMPLETE (2026-05-28)
 
 **Goal**: Sacramento is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Sacramento address returns a complete local officials list
 **Depends on**: Phase 57 (Sacramento city boundary loaded)
@@ -434,9 +434,11 @@ Plans:
 
 Plans:
 
-- [ ] 66-01-PLAN.md — Sacramento government structure + chambers + offices
-- [ ] 66-02-PLAN.md — Sacramento incumbents + office links
-- [ ] 66-03-PLAN.md — Sacramento headshots: source + upload 600Ã—750
+- [x] 66-01-PLAN.md — Sacramento government structure + chambers + offices
+- [x] 66-02-PLAN.md — Sacramento incumbents + office links
+- [x] 66-03-PLAN.md — Sacramento headshots: source + upload 600Ã—750
+
+**Completed: 2026-05-28** — All 4 success criteria met; 9 officials seeded; Sacramento address lookup returns correct District Council Member
 
 ### âœ… Phase 67: Fremont Deep Seed — COMPLETE (2026-05-22)
 
@@ -506,7 +508,7 @@ Plans:
 - [x] 69-03-PLAN.md — CA US House 52 race rows migration + discovery_jurisdictions armed
 - [x] 69-04-PLAN.md — City discovery_jurisdictions rows (7 cities) + smoke test all cron_active rows
 
-### Phase 70: Compass Stances
+### âœ… Phase 70: Compass Stances — COMPLETE (2026-05-29)
 
 **Goal**: Compass stances are ingested for CA constitutional officers, federal officials, and city council members across all 7 CA cities where public record exists
 **Depends on**: Phases 59-68 (all officials seeded), Phase 69 (discovery armed)
@@ -520,24 +522,29 @@ Plans:
 
 Plans:
 
-- [ ] 70-01-PLAN.md — Stance research + ingestion: CA constitutional officers + 2 US Senators (one at a time)
-- [ ] 70-02-PLAN.md — Stance research + ingestion: CA US House reps (one at a time, prioritize high-profile districts)
-- [ ] 70-03-PLAN.md — Stance research + ingestion: city council officials across all 7 CA cities (one at a time)
+- [x] 70-01-PLAN.md — Stance research + ingestion: CA constitutional officers + 2 US Senators (one at a time)
+- [x] 70-02-PLAN.md — Stance research + ingestion: CA US House reps (one at a time, prioritize high-profile districts)
+- [x] 70-03-PLAN.md — Stance research + ingestion: city council officials across all 7 CA cities (one at a time)
 
-### Phase 71: Playbook Retrospective
+**Completed: 2026-05-29** — 965 stances across 68 officials (SF 366, San Diego 164, Berkeley 126, San Jose 133, Sacramento 120, Fremont 56); stored in inform.politician_answers + inform.politician_context; 2 appointed officials (Jenny Wong/Berkeley, Greg Wagner/SF) have 0 stances by design (no public policy record)
 
-**Goal**: The location onboarding playbook is updated with all CA-specific GOTCHAs discovered during v7.0 so future state onboarding is faster
+### ~~Phase 71: Playbook Retrospective~~ — Folded into Phase 78
+
+### Phase 78: CA Playbook Retrospective
+
+**Goal**: The location onboarding playbook is updated with all CA-specific GOTCHAs discovered during v7.0 so future state onboarding is faster; v7.0 milestone is closed
 **Depends on**: Phases 57-70 (entire v7.0 complete)
-**Requirements**: PLAYBOOK-01
+**Requirements**: PLAYBOOK-CA-01
 **Success Criteria** (what must be TRUE):
 
-  1. LOCATION-ONBOARDING.md has a CA-specific GOTCHA section covering: charter vs. general law city structure differences, RCV cities (SF/Berkeley), TIGER CD key verification for CA, LAUSD sub-district geofence pattern, and lavote.gov election ID maintenance
-  2. Any trap encountered during v7.0 phases that is not already in the playbook is documented with the problem, solution, and CA example
+  1. LOCATION-ONBOARDING.md has a CA-specific GOTCHA section covering: charter vs. general law city structure differences, RCV cities (SF/Berkeley), TIGER CD key verification for CA, LAUSD sub-district geofence pattern, lavote.gov election ID maintenance, and AEM/CQ5 CMS headshot pattern (Sacramento)
+  2. Any trap encountered during v7.0 phases not already in the playbook is documented with problem + solution + CA example
   3. The playbook entry is written so a future agent can onboard a new CA city without repeating any v7.0 mistakes
+  4. v7.0 milestone is marked shipped in ROADMAP.md
 
 Plans:
 
-- [ ] 71-01-PLAN.md — Playbook retrospective: audit v7.0 phase summaries for GOTCHAs; write CA section in LOCATION-ONBOARDING.md
+- [ ] 78-01-PLAN.md — Playbook retrospective: audit all v7.0 phase summaries for GOTCHAs; write CA section in LOCATION-ONBOARDING.md; close v7.0 milestone
 
 </details>
 
@@ -699,7 +706,7 @@ v3.1: 22 â†’ 23 â†’ 24 â†’ 25 (25 gated on 22 retirement decision
 v3.2: 26 â†’ 27 â†’ 28 (after 27) â†’ 29 (after 27) â†’ 30 (after 27) â†’ 31 (after 29) â†’ 32 (after 28+31)
 v5.0: 37 â†’ 38+39 (parallel) â†’ 40 (after 38+39) â†’ 41 (after 39) â†’ 42 (after 41) â†’ 44 (after 41+38) â†’ 45 (after 44) â†’ 46 (when accounts team delivers stances) â†’ 47 (cleanup, after 46)
 v6.0: 49 â†’ 50 (after 49) â†’ 51+52 (parallel, both after 50) â†’ 53 (after 49+50) â†’ 54+55 (parallel, both after 53) â†’ 56 (after all)
-v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†’ 61 (after 57+59) â†’ 62 (after 58+59) â†’ 63â†’64â†’65â†’66â†’67â†’68 (each after 57; sequential by convention) â†’ 69 (after 62-68) â†’ 70 (after 69) â†’ 71 (after 70)
+v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†’ 61 (after 57+59) â†’ 62 (after 58+59) â†’ 63â†’64â†’65â†’66â†’67â†’68 (each after 57; sequential by convention) â†’ 69 (after 62-68) â†’ 70 (after 69) â†’ 78 (after 70; replaces 71)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -766,17 +773,18 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 61. CA State Legislature | v7.0 | 3/3 | Complete | 2026-05-21 |
 | 62. LA Backlog Closure | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 63. San Francisco Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 64. San Jose Deep Seed | v7.0 | 0/3 | Pending | - |
+| 64. San Jose Deep Seed | v7.0 | 3/3 | Complete | 2026-05-23 |
 | 65. San Diego Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 66. Sacramento Deep Seed | v7.0 | 0/3 | Pending | - |
+| 66. Sacramento Deep Seed | v7.0 | 3/3 | Complete | 2026-05-28 |
 | 67. Fremont Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 68. Berkeley Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete    | 2026-05-28 |
-| 70. Compass Stances | v7.0 | 0/3 | Pending | - |
-| 71. Playbook Retrospective | v7.0 | 0/1 | Pending | - |
+| 70. Compass Stances | v7.0 | 3/3 | Complete | 2026-05-29 |
+| ~~71. Playbook Retrospective~~ | v7.0 | - | Folded into Phase 78 | 2026-05-29 |
 | 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete    | 2026-05-28 |
 | 73. OR Government DB Foundation | v8.0 | 1/1 | Complete    | 2026-05-29 |
 | 74. OR Executives + Federal Officials | v8.0 | 3/3 | Complete    | 2026-05-29 |
 | 75. OR State Legislature | v8.0 | 0/3 | Pending | - |
 | 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
-| 77. Portland City Structure + Officials | v8.0 | 0/3 | Pending | - |
+| 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
+| 78. CA Playbook Retrospective | v7.0 | 0/1 | Pending | - |
