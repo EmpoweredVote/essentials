@@ -680,7 +680,7 @@ Plans:
 
 **Goal**: Raymond C. Lee III (City Administrator) and Robert L. Taylor (City Attorney) have `is_appointed=true` set in the politicians table — was omitted during Phase 77 migration
 **Depends on**: Phase 77 (Portland officials seeded)
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 **Success Criteria** (what must be TRUE):
 
   1. `politicians.is_appointed = true` for Raymond C. Lee III
@@ -688,7 +688,7 @@ Plans:
 
 Plans:
 
-- [ ] 77.1-01-PLAN.md — Write migration 235 (UPDATE essentials.politicians SET is_appointed=true WHERE external_id IN (-690003, -690004) + ledger entry); apply to Supabase; verify both gates + offices spot-check + idempotency
+- [x] 77.1-01-PLAN.md — Write migration 235 (UPDATE essentials.politicians SET is_appointed=true WHERE external_id IN (-690003, -690004) + ledger entry); apply to Supabase; verify both gates + offices spot-check + idempotency
 
 </details>
 
