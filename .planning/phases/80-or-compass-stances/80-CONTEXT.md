@@ -37,6 +37,7 @@ Ingest compass stances (1–5 scale values) for OR constitutional officers, fede
 - **D-05:** ONE-AT-A-TIME rule: each stance research agent must run sequentially. NEVER run parallel research agents. This is a hard rate-limit constraint established in Phase 18/46/70 and locked in success criterion #3.
 - **D-06:** Evidence-only: no stances without a verifiable, citable public record. No interpolation, no assumption from party affiliation.
 - **D-07:** Value scale: 1=progressive, 5=conservative, integer values 1–5. Half-steps (0.5, 5.5) reserved for extreme edge cases only.
+- **D-08:** Research ALL compass topics — not just LOCAL-scope ones. When research is scoped to local topics only, the result is 6-7 stances per politician. Researching across all topics (national, judicial where applicable, local) can yield 18-21+ stances per politician. Always attempt full topic coverage; record only what has evidence. Missing = no row; never fabricate to fill gaps.
 
 ### Claude's Discretion
 - Plan structure (2 vs. 3 plans — e.g., executives+federal in one plan, Portland council in another) is left to the planner to decide based on Phase 70 precedent.
