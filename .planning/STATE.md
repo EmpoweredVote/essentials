@@ -4,7 +4,7 @@ milestone: v2.2
 milestone_name: Data Depth & Admin Tooling
 status: executing
 last_updated: "2026-05-31T06:55:32.883Z"
-last_activity: 2026-05-30 -- Phase 81 Plan 01 complete (OR playbook retrospective LOCATION-ONBOARDING.md update)
+last_activity: 2026-05-31 -- Phase 81 complete — OR Playbook Retrospective; v8.0 Oregon milestone shipped
 progress:
   total_phases: 60
   completed_phases: 54
@@ -18,10 +18,10 @@ progress:
 ## Current Position
 
 Phase: 81
-Plan: 01 complete, 02 pending
-Status: Executing — Plan 01 done, Plan 02 (milestone close) next
-Last activity: 2026-05-30 — Phase 81 Plan 01 complete
-Next recommended run: /gsd-execute-phase 81
+Plan: All complete
+Status: Complete
+Last activity: 2026-05-31 -- Phase 81 complete; v8.0 Oregon milestone shipped
+Next recommended run: /gsd-discuss-phase (next milestone — see ROADMAP.md backlog)
 
 Phase 77 (COMPLETE) — Portland city structure + 16 officials seeded; migrations 230-232 applied; Mayor Wilson + 12 council + City Auditor Rede + City Administrator Lee III + City Attorney Taylor
 Phase 76 (COMPLETE) — 4 Portland OR council district geofences loaded; ArcGIS per-OBJECTID fetch; migration 229 applied (4 LOCAL districts rows, state=or); 4-gate smoke test passed; Portland City Hall → portland-or-council-district-4 confirmed
@@ -252,5 +252,5 @@ See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
 ## Session Continuity
 
 Last session: 2026-05-31T06:55:32.865Z
-Stopped at: Phase 80 context gathered
+Stopped at: Phase 81 complete (2/2) — v8.0 Oregon shipped
 Resume file: None
