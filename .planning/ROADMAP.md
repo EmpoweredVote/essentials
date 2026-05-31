@@ -799,7 +799,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 82-02-PLAN.md — Stance research + ingestion: all 60 OR house reps (HD-01 through HD-60), one-at-a-time; document not-found legislators; produce migration 243
+- [x] 82-02-PLAN.md — Stance research + ingestion: all 60 OR house reps (HD-01 through HD-60), one-at-a-time; document not-found legislators; produce migration 243
 
 **Wave 3** *(blocked on Wave 2 completion)*
 

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v9.0
 milestone_name: Data Depth & Admin Tooling
 status: executing
-last_updated: "2026-05-31T17:16:46.270Z"
-last_activity: 2026-05-31 -- Phase 82 execution started
+last_updated: "2026-05-31T21:30:00.000Z"
+last_activity: 2026-05-31 -- Plan 82-02 complete (321 stances, 60 house reps, migration 243 applied)
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 82 — OR State Legislature Compass Stances
-Plan: 82-02 (next)
-Status: Wave 1 (senators) complete — 82-01 done; ready for 82-02 (house reps)
-Last activity: 2026-05-31 -- Plan 82-01 complete (215 stances, 30 senators, migration 242 applied)
+Plan: 82-03 (next)
+Status: Wave 2 (house reps) complete — 82-02 done; ready for 82-03 (verification)
+Last activity: 2026-05-31 -- Plan 82-02 complete (321 stances, 60 house reps, migration 243 applied)
 
 ## Project Reference
 
@@ -155,6 +155,8 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - **SCHEMA**: essentials.politician_images columns are: id, politician_id, url, type, photo_license, focal_point — NO photo_origin_url column; plan docs that reference photo_origin_url are incorrect
 - **CA headshots complete (Phase 61-03 2026-05-21)**: 80 Assembly from webapi.assembly.ca.gov/district-media/assets/members/assembly_member_NN.jpg; 40 Senate from www.senate.ca.gov/senators (data-src lazy-load, double-encoded %25xx paths must be used verbatim); all 120 are 600x750 JPEG in Storage at {politician_id}-headshot.jpg
 - **Phase 75 headshot coverage (2026-05-29)**: 30/30 senators with photos, 60/60 house reps with photos; 0 documented gaps; oregonlegislature.gov MemberPhotos source; all 600x750 LANCZOS q90 upscale from ~115x130 (per D-05/D-06); non-obvious filename overrides: smithdb.jpg (SD-01), robinsonn.jpg (SD-02), andersond.jpg (SD-05), gelser.jpg (SD-08), starrb.jpg (SD-12), neron.jpg (SD-13), levye.jpg (HD-53 Emerson Levy), nguyend.jpg (HD-38 Daniel Nguyễn)
+- **Phase 82 Plan 82-01 (senators) complete (2026-05-31)**: 215 stances for 30 OR senators (SD-01..SD-30); migration 242 applied; all 30 senators have >= 3 stances; HIGH evidence senators (Sara Gelser Blouin, Rob Wagner, Lew Frederick, Christine Drazan) reached 10-12 stances
+- **Phase 82 Plan 82-02 (house reps) complete (2026-05-31)**: 321 stances for 60 OR house reps (HD-01..HD-60); migration 243 applied; all 60 house reps have >= 3 stances; HIGH evidence reps (Mark Gamba=9, Rob Nosse=9, Tawna Sanchez=9, Julie Fahey=10); Eastern OR members (HD-55..HD-60) capped at 3 per D-10 guidance; NO not-found CSVs — OLIS floor votes provided minimum evidence for all; Oregon is first state with full legislature-wide compass coverage (90 legislators, 536 stances combined)
 
 ### Pending Todos (accounts team backlog)
 
@@ -185,6 +187,6 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 
 ## Session Continuity
 
-Last session: 2026-05-31T17:16:46.260Z
-Stopped at: Phase 82 context gathered
+Last session: 2026-05-31T21:30:00.000Z
+Stopped at: Plan 82-02 complete — ready for Plan 82-03 (Wave 3: verification)
 Resume file: None
