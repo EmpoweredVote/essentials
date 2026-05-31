@@ -201,6 +201,37 @@ export default function Landing() {
                 />
               </div>
               {nameSearchResults}
+
+              {/* Address search — button 2/3, thin input 1/3, same height */}
+              <div className="flex gap-2 mt-3">
+                <button
+                  onClick={handleSearch}
+                  disabled={!addressInput.trim()}
+                  className="flex-[2] py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Search
+                </button>
+                <input
+                  ref={addressInputRef}
+                  type="text"
+                  value={addressInput}
+                  onChange={(e) => setAddressInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                  placeholder="If you reside in an Alpha Community, enter your full street address"
+                  className="flex-1 min-w-0 px-3 py-4 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 shadow-sm"
+                />
+              </div>
+              {!compassLoading && isLoggedIn && myLocationNotSet && (
+                <div className="mt-3 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">
+                  <a
+                    href="https://app.empowered.vote/settings/location"
+                    className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline"
+                  >
+                    Set your home location in your profile
+                  </a>
+                  {' '}<span className="text-gray-700 dark:text-gray-300">to get taken straight to your elected leaders on every visit.</span>
+                </div>
+              )}
             </div>
 
             {/* Right: step cards */}
@@ -241,7 +272,7 @@ export default function Landing() {
         <p className="text-base text-gray-500 dark:text-gray-400 mb-8">
           Each one is a preview of the full Essentials experience.
         </p>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
           {/* Counties */}
           <div className="flex flex-col gap-2">
@@ -273,46 +304,14 @@ export default function Landing() {
             ))}
           </div>
 
-          {/* Address */}
-          <div className="flex flex-col gap-3">
-            <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">By Address</p>
-            <input
-              ref={addressInputRef}
-              type="text"
-              value={addressInput}
-              onChange={(e) => setAddressInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              placeholder="If you reside in an Alpha Community, enter your full street address"
-              className="w-full px-4 py-3 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
-            />
-            <button
-              onClick={handleSearch}
-              disabled={!addressInput.trim()}
-              className="w-full py-3 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Search
-            </button>
-            {!compassLoading && isLoggedIn && myLocationNotSet && (
-              <div className="px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">
-                <a
-                  href="https://app.empowered.vote/settings/location"
-                  className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline"
-                >
-                  Set your home location in your profile
-                </a>
-                {' '}<span className="text-gray-700 dark:text-gray-300">to get taken straight to your elected leaders on every visit.</span>
-              </div>
-            )}
-            <button
-              onClick={() => navigate('/results?mode=browse')}
-              className="text-sm text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline cursor-pointer bg-transparent border-none text-left"
-              style={{ fontFamily: "'Manrope', sans-serif" }}
-            >
-              Browse by location →
-            </button>
-          </div>
-
         </div>
+        <button
+          onClick={() => navigate('/results?mode=browse')}
+          className="mt-6 text-sm text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline cursor-pointer bg-transparent border-none"
+          style={{ fontFamily: "'Manrope', sans-serif" }}
+        >
+          Browse by location →
+        </button>
       </section>
 
     </Layout>
