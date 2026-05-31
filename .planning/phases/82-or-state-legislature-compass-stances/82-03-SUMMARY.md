@@ -321,17 +321,18 @@ GROUP BY p.id, p.full_name, p.external_id;
 
 ## Human Compass Render Check
 
-**Status: PENDING** — Task 2 checkpoint returned to orchestrator. Human verification of compass widget on 6 profile pages required before Task 3 can proceed.
+**Status: PASS** — Human verified 2026-05-31. All 6 profiles render compass widget correctly.
 
-Profile URLs for human verification:
-- Sara Gelser Blouin (SD-08): `/politician/1ca1abf1-9523-499c-b644-0b32c61257c6`
-- Christine Drazan (SD-26): `/politician/402a00be-71c3-4584-b29f-bf493365bffb`
-- Lew Frederick (SD-22): `/politician/ae4b1163-e9a7-4529-a8f2-5610f6c93cbd`
-- Julie Fahey (HD-14): `/politician/24398310-8e0c-487e-a11c-253e3060f77c`
-- Rob Nosse (HD-42): `/politician/c5c49832-aa2d-477e-b44e-d6059a98d426`
-- Tawna D. Sanchez (HD-43): `/politician/051b4e9a-6966-45b3-9b65-e23ad4672364`
+| Profile | Role | Stances in DB | Result |
+|---|---|---|---|
+| Sara Gelser Blouin | SD-08 Senator | 12 | PASS |
+| Christine Drazan | SD-26 Senator | 10 | PASS |
+| Lew Frederick | SD-22 Senator | 12 | PASS |
+| Julie Fahey | HD-14 Rep | 10 | PASS |
+| Rob Nosse | HD-42 Rep | 9 | PASS |
+| Tawna D. Sanchez | HD-43 Rep | 9 | PASS |
 
-Result will be recorded here once Task 2 is approved and Task 3 executes.
+**STANCE-04: PASS** — Compass renders on ≥3 senators + ≥3 house reps confirmed by human verification.
 
 ---
 
@@ -359,3 +360,82 @@ None — no new network endpoints, auth paths, or schema changes introduced. Thi
 - Query E: versions '242' and '243' in ledger
 - Query F: 0 retired topic rows (6 retired UUIDs confirmed at query time)
 - Query G: 6 HIGH-evidence targets with stances ranging 9-12
+
+---
+
+## QUALITY-02 Process Audit
+
+**Rule (D-11):** All stance research agents must run sequentially, one-at-a-time — never in parallel.
+
+**Evidence from Plan 82-01 SUMMARY (30 senators):**
+- Sub-batch A (SD-01..SD-10): Completed sequentially. Committed at git hash 62f1b00.
+- Sub-batch B (SD-11..SD-20): Started only after sub-batch A fully complete. Committed at git hash 7713da5.
+- Sub-batch C (SD-21..SD-30): Started only after sub-batch B fully complete. Committed at git hash 13d8b40.
+- Migration (Task 4): Started only after sub-batch C fully complete.
+- Decision field confirms: "Sequential one-at-a-time execution enforced (D-11) — all 30 senators processed without parallel agents"
+
+**Evidence from Plan 82-02 SUMMARY (60 house reps):**
+- Sub-batch A (HD-01..HD-10): Completed sequentially. Committed at git hash 6fe322b.
+- Sub-batch B (HD-11..HD-20): Started only after sub-batch A fully complete. Committed at git hash 5ccb544.
+- Sub-batch C (HD-21..HD-30): Started only after sub-batch B fully complete. Committed at git hash 4e136e3.
+- Sub-batch D (HD-31..HD-40): Started only after sub-batch C fully complete. Committed at git hash 5c24544.
+- Sub-batch E (HD-41..HD-50): Started only after sub-batch D fully complete. Committed at git hash ac3e6f3.
+- Sub-batch F (HD-51..HD-60): Started only after sub-batch E fully complete. Committed at git hash 7042f05.
+- Migration (Task 7): Started only after sub-batch F fully complete.
+- Decision field confirms: "Sequential one-at-a-time execution enforced (D-11) — all 60 house reps processed without parallel agents"
+
+**Total sequential research runs across Phase 82:** 90 (30 senators + 60 house reps)
+**Target:** 90
+
+**QUALITY-02: PASS** — All 90 legislators processed one-at-a-time in order; 10 sub-batches documented with distinct git hashes; no parallel agents spawned during Phase 82.
+
+---
+
+## QUALITY-03 Not-Found Audit
+
+**Rule (D-04):** Legislators with no discoverable public stance record must be documented as not-found; zero stances is acceptable and explicitly not a failure.
+
+**Evidence from Query A (30 senators):** 0 senators with stance_count = 0. Minimum stance_count = 3 (SD-01, SD-02, SD-05, SD-28, SD-29 — LOW evidence Eastern OR members per D-10). No senators documented as not-found.
+
+**Evidence from Query B (60 house reps):** 0 house reps with stance_count = 0. Minimum stance_count = 3 (HD-01 through HD-03, HD-09, HD-11, HD-12, etc. — LOW evidence Eastern OR members per D-10). No house reps documented as not-found.
+
+**Evidence from Plan 82-02 SUMMARY decision field:** "No not-found (header-only) CSVs needed — OLIS floor vote records provided citable evidence for all 60 reps"
+
+**Not-found count:** 0 senators + 0 house reps = **0 total not-found legislators** across Phase 82.
+
+**QUALITY-03: PASS** — Zero legislators have zero stances; OLIS floor vote records provided minimum citable evidence for all 90 OR legislators. Not-found documentation rule is satisfied: no legislators meet the not-found criteria, so no documentation entries are required.
+
+---
+
+## Requirements Final Status
+
+| ID | Criterion | Status | Evidence |
+|----|-----------|--------|----------|
+| STANCE-01 | All 30 OR senators have stances ingested or not-found documented | **PASS** | Query A: 30 rows, all stance_count >= 3 |
+| STANCE-02 | All 60 OR house reps have stances ingested or not-found documented | **PASS** | Query B: 60 rows, all stance_count >= 3 |
+| STANCE-03 | Migrations 242 + 243 applied to production | **PASS** | Query E: versions '242' and '243' in schema_migrations |
+| STANCE-04 | Compass renders on ≥3 senator + ≥3 house rep profiles | **PASS** | Task 2 human-verify: all 6 profiles PASS (3 senators + 3 house reps) |
+| QUALITY-01 | Every stance has a citation in politician_context | **PASS** | Query D: 0 uncited answers |
+| QUALITY-02 | All research ran sequentially | **PASS** | Process audit: 90 sequential runs, 10 sub-batches with distinct git hashes |
+| QUALITY-03 | Not-found legislators documented | **PASS** | 0 legislators with stance_count=0; OLIS provided minimum evidence for all |
+
+**All 7 requirements: PASS**
+
+---
+
+## v9.0 Milestone Closure
+
+**Milestone:** v9.0 Oregon Legislature Stances — **SHIPPED 2026-05-31**
+
+**Phase 82 Final Statistics:**
+- Total legislators covered: **90** (30 senators + 60 house reps)
+- Total stance rows ingested: **536** (215 senators + 321 house reps)
+- Total citation rows (politician_context): **536** (100% citation parity)
+- Migrations applied: **242** (OR senators) + **243** (OR house reps)
+- Not-found legislators: **0**
+- Sequential research runs: **90**
+
+**Historical significance:** Oregon is the first state with full legislature-wide compass coverage — every seated legislator (senators + house representatives) has at least one verified compass stance on record.
+
+**Plans closed:** 82-01 ✅, 82-02 ✅, 82-03 ✅
+**Phase 82 status:** Complete

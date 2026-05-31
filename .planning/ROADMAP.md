@@ -13,7 +13,7 @@
 - ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
 - ✅ **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29) — [archive](milestones/v7.0-ROADMAP.md)
 - ✅ **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31) — [archive](milestones/v8.0-ROADMAP.md)
-- 🔄 **v9.0 Oregon Legislature Stances** — Phase 82 (active)
+- ✅ **v9.0 Oregon Legislature Stances** — Phase 82 (shipped 2026-05-31)
 
 ## Phases
 
@@ -790,7 +790,7 @@ Plans:
   4. The compass renders correctly on profile pages for at least 3 senator and 3 house rep profiles without errors (human-verified spot-check)
   5. All stance research agents ran sequentially one-at-a-time; no parallel agent runs occurred during this phase
 
-**Plans**: 3 plans
+**Plans**: 3 plans complete
 
 Plans:
 **Wave 1**
@@ -803,7 +803,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 82-03-PLAN.md — Verification: SQL coverage gates (senator count, house count, value-range 1-5, citation NOT NULL) + spot-check compass render on 3 senator + 3 house rep profiles + phase close
+- [x] 82-03-PLAN.md — Verification: SQL coverage gates (senator count, house count, value-range 1-5, citation NOT NULL) + spot-check compass render on 3 senator + 3 house rep profiles + phase close
 
 ## Backlog
 
@@ -924,4 +924,4 @@ v9.0: 82-01 → 82-02 (after 82-01) → 82-03 (after 82-02)
 | 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete | 2026-05-30 |
 | 80. OR Compass Stances | v8.0 | 4/4 | Complete | 2026-05-31 |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
-| 82. OR State Legislature Compass Stances | v9.0 | 1/3 | In Progress|  |
+| 82. OR State Legislature Compass Stances | v9.0 | 3/3 | Complete | 2026-05-31 |

@@ -1,26 +1,27 @@
 ---
 gsd_state_version: 1.0
 milestone: v9.0
-milestone_name: Data Depth & Admin Tooling
-status: executing
-last_updated: "2026-05-31T21:30:00.000Z"
-last_activity: 2026-05-31 -- Plan 82-02 complete (321 stances, 60 house reps, migration 243 applied)
+milestone_name: milestone
+status: complete
+stopped_at: Phase 82 complete; v9.0 shipped 2026-05-31
+last_updated: "2026-05-31T21:00:00.000Z"
+last_activity: 2026-05-31 -- Phase 82 closed; v9.0 shipped (536 stances, 90 OR legislators, migrations 242+243)
 progress:
-  total_phases: 5
-  completed_phases: 0
+  total_phases: 1
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
-  percent: 0
+  completed_plans: 3
+  percent: 100
 ---
 
 # State
 
 ## Current Position
 
-Phase: 82 — OR State Legislature Compass Stances
-Plan: 82-03 (next)
-Status: Wave 2 (house reps) complete — 82-02 done; ready for 82-03 (verification)
-Last activity: 2026-05-31 -- Plan 82-02 complete (321 stances, 60 house reps, migration 243 applied)
+Phase: 82 — OR State Legislature Compass Stances — **COMPLETE**
+Plan: 82-03 — all 3 plans complete
+Status: v9.0 shipped — ready for next milestone
+Last activity: 2026-05-31 -- Phase 82 closed; all 7 requirements PASS; 536 stances for 90 OR legislators
 
 ## Project Reference
 
@@ -36,6 +37,18 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - Phase 77.1 inserted after Phase 77: Fix Phase 77 data: set politicians.is_appointed=true for Lee III and Taylor (URGENT)
 - Phase 82 added: OR State Legislature Compass Stances
 - Phase 82 fleshed out (2026-05-31): 3 plans, wave structure (Wave 1 = senators, Wave 2 = house reps, Wave 3 = verification)
+- Phase 82 COMPLETE (2026-05-31): all 7 requirements PASS; v9.0 shipped
+
+### v9.0 Phase 82 Key Outcomes
+
+- **Total legislators covered:** 90 (30 senators + 60 house reps)
+- **Total stance rows ingested:** 536 (215 senators via migration 242 + 321 house reps via migration 243)
+- **Citation parity:** 536/536 (100% — 0 uncited answers; QUALITY-01 PASS)
+- **Not-found legislators:** 0 — OLIS floor vote records provided minimum evidence for all 90
+- **Sequential research runs:** 90 (10 sub-batches; QUALITY-02 PASS)
+- **Compass render spot-check:** 6/6 profiles PASS (3 senators + 3 house reps; STANCE-04 PASS)
+- **Oregon is the first US state with full legislature-wide compass coverage**
+- **Migrations:** 242 (OR senate) + 243 (OR house) applied to production
 
 ### v9.0 Phase 82 Key Facts
 
@@ -187,6 +200,6 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 
 ## Session Continuity
 
-Last session: 2026-05-31T21:30:00.000Z
-Stopped at: Plan 82-02 complete — ready for Plan 82-03 (Wave 3: verification)
+Last session: 2026-05-31T21:00:00.000Z
+Stopped at: Phase 82 closed; v9.0 shipped; ready for next milestone
 Resume file: None

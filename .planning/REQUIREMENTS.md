@@ -2,7 +2,7 @@
 
 **Milestone:** v9.0  
 **Goal:** Research and ingest compass stance values for all 90 OR state legislators (30 senators + 60 house reps), making Oregon the first state with full legislature-wide compass coverage.  
-**Status:** Active
+**Status:** Complete
 
 ---
 
@@ -11,9 +11,9 @@
 ### Stance Ingestion
 
 - [x] **STANCE-01**: All 30 OR state senators have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
-- [ ] **STANCE-02**: All 60 OR house reps have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
+- [x] **STANCE-02**: All 60 OR house reps have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
 - [x] **STANCE-03**: All ingested stance values are written to production via a numbered SQL migration (starting at migration 242)
-- [ ] **STANCE-04**: The compass renders correctly on at least 3 senator and 3 house rep profile pages without errors (human-verified spot-check)
+- [x] **STANCE-04**: The compass renders correctly on at least 3 senator and 3 house rep profile pages without errors (human-verified spot-check)
 
 ### Quality Standards
 
@@ -50,9 +50,9 @@ These are known needs deferred to subsequent milestones:
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | STANCE-01 | Phase 82: OR State Legislature Compass Stances | Complete |
-| STANCE-02 | Phase 82: OR State Legislature Compass Stances | Pending |
+| STANCE-02 | Phase 82: OR State Legislature Compass Stances | Complete |
 | STANCE-03 | Phase 82: OR State Legislature Compass Stances | Complete |
-| STANCE-04 | Phase 82: OR State Legislature Compass Stances | Pending |
+| STANCE-04 | Phase 82: OR State Legislature Compass Stances | Complete |
 | QUALITY-01 | Phase 82: OR State Legislature Compass Stances | Complete |
 | QUALITY-02 | Phase 82: OR State Legislature Compass Stances | Complete |
 | QUALITY-03 | Phase 82: OR State Legislature Compass Stances | Complete |
@@ -62,4 +62,4 @@ These are known needs deferred to subsequent milestones:
 ---
 
 *Created: 2026-05-31 — v9.0 Oregon Legislature Stances*
-*Traceability updated: 2026-05-31 — Phase 82 roadmap defined*
+*Traceability updated: 2026-05-31 — Phase 82 complete; all 7 requirements verified*
