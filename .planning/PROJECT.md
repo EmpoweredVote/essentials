@@ -95,27 +95,20 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ CA 2026 elections — Governor race + 52 US House races + discovery pipeline armed (cron_active=true); lavote.gov discovery row; 7 CA city discovery_jurisdictions rows — v7.0
 - ✓ 965 compass stances across 68 CA officials — SF 366, San Diego 164, Berkeley 126, San Jose 133, Sacramento 120, Fremont 56; all cited from public record — v7.0
 - ✓ CA Playbook retrospective — 11 CA-specific GOTCHAs added to LOCATION-ONBOARDING.md; California Quick Reference block added; 7 new rows in Cities Onboarded table; v7.0 milestone closed — v7.0
+- ✓ Oregon TIGER geofences — 241 G4110 cities + 30 SLDU + 60 SLDL + 6 CD + 36 G4020 counties; Portland geo_id=4159000; any OR address routes to correct federal, state, and local representatives; cd119 TIGER key — v8.0
+- ✓ Oregon state government DB — 5 voter-elected constitutional officers (Kotek/Rayfield/Read/Steiner/Stephenson) + 30 state senators + 60 house reps + 2 US Senators + 6 US House reps; all 90 legislators from oregonlegislature.gov with headshots at 600×750 — v8.0
+- ✓ Portland deep seed — 2024 charter reform: 4-district × 3-seat RCV council (12 officials) + Mayor + City Auditor + 2 appointed (City Administrator, City Attorney); council district boundaries from PortlandMaps ArcGIS (not TIGER); 14 elected officials with headshots from portland.gov 1_1_320w style URLs — v8.0
+- ✓ OR 2026 elections + discovery pipeline — 105 race rows (1 Governor + 1 US Senate + 6 US House + 30 OR Senate + 60 OR House + 7 Portland City); discovery_jurisdictions for OR statewide + Portland; armed via election_date 180-day cron window — v8.0
+- ✓ 321 compass stances across 24 OR officials — Kotek 31, Rayfield 24, Bonamici 24, Bentz 21, Hoyle 20, Steiner 13, Salinas 18, Bynum 13, Read 12, Dexter 12, Stephenson 10, Wilson 10; all cited; compass renders on Kotek profile — v8.0
+- ✓ OR Playbook retrospective — 9 OR-specific GOTCHAs added to LOCATION-ONBOARDING.md; Oregon Quick Reference block; 2 new Cities Onboarded rows (Oregon state + Portland); v8.0 milestone closed — v8.0
 
-### Current Milestone: v8.0 Oregon
+### Current Milestone: Between Milestones
 
-**Goal:** Expand coverage to Oregon — state layer (geofences, legislature, executives, federal) and Portland deep seed. Continues the location onboarding playbook pattern.
-
-**Target features:**
-- OR TIGER boundaries (G4110, SLDU/SLDL/CD/counties)
-- State of Oregon government DB + constitutional officers + 90 state legislators + 13 federal officials
-- Portland city structure (4 multi-member council districts, RCV) + officials + headshots
-- OR 2026 elections + discovery pipeline
-- Compass stances for OR officials (deferred to v8.1+)
-- Playbook updated with OR-specific GOTCHAs (deferred to v8.0 retrospective phase)
+**Goal:** v8.0 Oregon shipped 2026-05-31. Next milestone (v9.0+) is pending discussion — see ROADMAP.md backlog and the parked v2.2 milestone (Phases 8-11) for candidate next steps.
 
 ### Active
 
-- [x] Phase 72: OR Geofences
-- [x] Phase 73: OR Government DB Foundation
-- [x] Phase 74: OR Executives + Federal Officials
-- [ ] Phase 75: OR State Legislature
-- [x] Phase 76: Portland City Council District Geofences
-- [x] Phase 77: Portland City Structure + Officials
+(No phases currently in flight — awaiting next milestone scope decision.)
 
 ### Out of Scope
 
