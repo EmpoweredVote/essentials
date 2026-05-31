@@ -10,16 +10,16 @@
 
 ### Stance Ingestion
 
-- [ ] **STANCE-01**: All 30 OR state senators have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
+- [x] **STANCE-01**: All 30 OR state senators have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
 - [ ] **STANCE-02**: All 60 OR house reps have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
-- [ ] **STANCE-03**: All ingested stance values are written to production via a numbered SQL migration (starting at migration 242)
+- [x] **STANCE-03**: All ingested stance values are written to production via a numbered SQL migration (starting at migration 242)
 - [ ] **STANCE-04**: The compass renders correctly on at least 3 senator and 3 house rep profile pages without errors (human-verified spot-check)
 
 ### Quality Standards
 
-- [ ] **QUALITY-01**: Every ingested stance includes a verifiable citation URL from public record — no stance ingested without evidence
-- [ ] **QUALITY-02**: Stance research agents run sequentially (one at a time) — never in parallel — per API rate limit enforcement
-- [ ] **QUALITY-03**: Legislators with no discoverable public stance record are documented as not-found; zero stances is acceptable and explicitly not a failure
+- [x] **QUALITY-01**: Every ingested stance includes a verifiable citation URL from public record — no stance ingested without evidence
+- [x] **QUALITY-02**: Stance research agents run sequentially (one at a time) — never in parallel — per API rate limit enforcement
+- [x] **QUALITY-03**: Legislators with no discoverable public stance record are documented as not-found; zero stances is acceptable and explicitly not a failure
 
 ---
 
@@ -49,13 +49,13 @@ These are known needs deferred to subsequent milestones:
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STANCE-01 | Phase 82: OR State Legislature Compass Stances | Pending |
+| STANCE-01 | Phase 82: OR State Legislature Compass Stances | Complete |
 | STANCE-02 | Phase 82: OR State Legislature Compass Stances | Pending |
-| STANCE-03 | Phase 82: OR State Legislature Compass Stances | Pending |
+| STANCE-03 | Phase 82: OR State Legislature Compass Stances | Complete |
 | STANCE-04 | Phase 82: OR State Legislature Compass Stances | Pending |
-| QUALITY-01 | Phase 82: OR State Legislature Compass Stances | Pending |
-| QUALITY-02 | Phase 82: OR State Legislature Compass Stances | Pending |
-| QUALITY-03 | Phase 82: OR State Legislature Compass Stances | Pending |
+| QUALITY-01 | Phase 82: OR State Legislature Compass Stances | Complete |
+| QUALITY-02 | Phase 82: OR State Legislature Compass Stances | Complete |
+| QUALITY-03 | Phase 82: OR State Legislature Compass Stances | Complete |
 
 **Coverage:** 7/7 requirements mapped — 100%
 

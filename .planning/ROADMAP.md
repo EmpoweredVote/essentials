@@ -795,7 +795,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 82-01-PLAN.md — Stance research + ingestion: all 30 OR state senators (SD-01 through SD-30), one-at-a-time; document not-found legislators; produce migration 242
+- [x] 82-01-PLAN.md — Stance research + ingestion: all 30 OR state senators (SD-01 through SD-30), one-at-a-time; document not-found legislators; produce migration 242
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -924,4 +924,4 @@ v9.0: 82-01 → 82-02 (after 82-01) → 82-03 (after 82-02)
 | 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete | 2026-05-30 |
 | 80. OR Compass Stances | v8.0 | 4/4 | Complete | 2026-05-31 |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
-| 82. OR State Legislature Compass Stances | v9.0 | 0/3 | Not started | - |
+| 82. OR State Legislature Compass Stances | v9.0 | 1/3 | In Progress|  |
