@@ -11,8 +11,8 @@
 - âœ… **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
 - âœ… **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 - âœ… **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
-- âœ… **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29)
-- âœ… **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31)
+- âœ… **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29) — [archive](milestones/v7.0-ROADMAP.md)
+- âœ… **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31) — [archive](milestones/v8.0-ROADMAP.md)
 
 ## Phases
 
@@ -775,6 +775,16 @@ Plans:
 </details>
 
 ---
+
+### Phase 82: OR State Legislature Compass Stances
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 81
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 82 to break down)
 
 ## Backlog
 

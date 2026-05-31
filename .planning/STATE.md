@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.2
-milestone_name: Data Depth & Admin Tooling
+milestone: v8.0
+milestone_name: Oregon
 status: milestone_complete
-last_updated: 2026-05-31T07:13:13.948Z
-last_activity: 2026-05-31 -- Phase 81 complete — OR Playbook Retrospective; v8.0 Oregon milestone shipped
+last_updated: 2026-05-31T00:00:00Z
+last_activity: 2026-05-31 -- v7.0 + v8.0 archived; REQUIREMENTS.md deleted; next milestone TBD
 progress:
-  total_phases: 60
-  completed_phases: 54
-  total_plans: 142
-  completed_plans: 187
-  percent: 90
-stopped_at: Milestone complete (Phase 81 was final phase)
+  total_phases: 81
+  completed_phases: 81
+  total_plans: 67
+  completed_plans: 67
+  percent: 100
+stopped_at: Both v7.0 and v8.0 milestones archived — between milestones
 ---
 
 # State
@@ -36,16 +36,17 @@ Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows c
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-20 after v6.0 milestone completion)
+See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Milestone complete
+**Current focus:** Between milestones — v7.0 California + v8.0 Oregon archived; next milestone scope TBD
 
 ## Accumulated Context
 
 ### Roadmap Evolution
 
 - Phase 77.1 inserted after Phase 77: Fix Phase 77 data: set politicians.is_appointed=true for Lee III and Taylor (URGENT)
+- Phase 82 added: OR State Legislature Compass Stances
 
 ### Key Decisions (carry forward)
 
