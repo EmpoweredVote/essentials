@@ -305,13 +305,6 @@ export default function Landing() {
           </div>
 
         </div>
-        <button
-          onClick={() => navigate('/results?mode=browse')}
-          className="mt-6 text-sm text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline cursor-pointer bg-transparent border-none"
-          style={{ fontFamily: "'Manrope', sans-serif" }}
-        >
-          Browse by location →
-        </button>
       </section>
 
     </Layout>
