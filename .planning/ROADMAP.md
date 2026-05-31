@@ -761,7 +761,16 @@ Plans:
   2. Any trap encountered during v8.0 phases not already in the playbook is documented with problem + solution + OR example
   3. v8.0 milestone is marked shipped in ROADMAP.md, STATE.md, and PROJECT.md
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 81-01-PLAN.md — Playbook update: 2 Cities Onboarded rows (Oregon state + Portland) + Oregon Quick Reference + 9 OR-specific GOTCHAs inline + 4+ Step 7 pitfall rows
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 81-02-PLAN.md — Close v8.0 Oregon milestone across ROADMAP.md, STATE.md, PROJECT.md
 
 </details>
 
