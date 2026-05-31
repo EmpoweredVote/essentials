@@ -1,65 +1,136 @@
-# Requirements: v9.0 Oregon Legislature Stances
+# Requirements: Essentials — Empowered Vote
 
-**Milestone:** v9.0  
-**Goal:** Research and ingest compass stance values for all 90 OR state legislators (30 senators + 60 house reps), making Oregon the first state with full legislature-wide compass coverage.  
-**Status:** Complete
+**Defined:** 2026-05-31
+**Core Value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 
----
+## v10.0 Requirements
 
-## Requirements
+### County Government
 
-### Stance Ingestion
+- [ ] **COUNTY-01**: Multnomah County Board of Commissioners government body created (geo_id=41051)
+- [ ] **COUNTY-02**: 5 commissioners + chair seeded as officials with offices linked to county geo_id
+- [ ] **COUNTY-03**: Commissioner headshots at 600×750 in Supabase Storage
 
-- [x] **STANCE-01**: All 30 OR state senators have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
-- [x] **STANCE-02**: All 60 OR house reps have compass stance research completed and values ingested into inform.politician_answers (evidence-only, public record citations required)
-- [x] **STANCE-03**: All ingested stance values are written to production via a numbered SQL migration (starting at migration 242)
-- [x] **STANCE-04**: The compass renders correctly on at least 3 senator and 3 house rep profile pages without errors (human-verified spot-check)
+### Multnomah Cities
 
-### Quality Standards
+- [ ] **CITIES-01**: Gresham city council government body + elected officials seeded
+- [ ] **CITIES-02**: Troutdale city council government body + elected officials seeded
+- [ ] **CITIES-03**: Fairview city council government body + elected officials seeded
+- [ ] **CITIES-04**: Wood Village city council government body + elected officials seeded
+- [ ] **CITIES-05**: Maywood Park city council government body + elected officials seeded
+- [ ] **CITIES-06**: Headshots for smaller city officials where available online
 
-- [x] **QUALITY-01**: Every ingested stance includes a verifiable citation URL from public record — no stance ingested without evidence
-- [x] **QUALITY-02**: Stance research agents run sequentially (one at a time) — never in parallel — per API rate limit enforcement
-- [x] **QUALITY-03**: Legislators with no discoverable public stance record are documented as not-found; zero stances is acceptable and explicitly not a failure
+### Routing
 
----
+- [ ] **ROUTING-01**: Users at unincorporated Multnomah County addresses see county → state → federal representatives with no empty LOCAL city section
 
-## Future Requirements (Deferred)
+### Elections
 
-These are known needs deferred to subsequent milestones:
+- [ ] **ELECTIONS-01**: Multnomah County commissioner 2026 race rows seeded
+- [ ] **ELECTIONS-02**: 2026 race rows seeded for each of the 5 smaller incorporated cities
+- [ ] **ELECTIONS-03**: discovery_jurisdictions row(s) created and cron armed for Multnomah County area
 
-- CA state legislature stances (40 senators + 80 assembly members) — v10.0+
-- ME state legislature stances (35 senators + 151 house reps) — v10.0+
-- TX state legislature stances (31 senators + 150 reps) — future
-- Post-June-9 ME primary winners migration (add D primary winners to US Senate / ME-01 / ME-02 general race rows) — handle as a standalone migration when SOS results publish
+### OR School Boards — Multnomah County
 
----
+- [ ] **OR-SCHOOL-01**: G5420 geofences loaded for all 6 Multnomah County school districts (Portland Public Schools, Parkrose, Reynolds, Centennial, David Douglas, Riverdale)
+- [ ] **OR-SCHOOL-02**: School board government bodies seeded for all 6 districts (district_type='SCHOOL')
+- [ ] **OR-SCHOOL-03**: Board member officials + offices seeded for all 6 districts
+- [ ] **OR-SCHOOL-04**: Board member headshots at 600×750 where available online
+
+### CA City School Boards
+
+- [ ] **CA-SCHOOL-01**: San Francisco Unified School District — G5420 geofence + 7-member board seeded
+- [ ] **CA-SCHOOL-02**: San Diego Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-03**: Sacramento City Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-04**: San Jose Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-05**: Fremont Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-06**: Berkeley Unified School District — G5420 geofence + board seeded
+
+### TX School Boards — Collin County
+
+- [ ] **TX-SCHOOL-01**: Plano ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-02**: McKinney ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-03**: Allen ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-04**: Frisco ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-05**: Richardson ISD — G5420 geofence + board seeded
+
+### IN School Board Completion
+
+- [ ] **IN-SCHOOL-01**: IPS D3 + D6 government bodies added; officials seeded for all 7 IPS seats (D1–D6 + At Large)
+- [ ] **IN-SCHOOL-02**: Monroe County Community School Corporation board officials seeded for all 7 districts
+
+### ME Tier 2 City School Boards
+
+- [ ] **ME-SCHOOL-01**: Lewiston school board seeded (geofence + officials)
+- [ ] **ME-SCHOOL-02**: Bangor school board seeded (geofence + officials)
+- [ ] **ME-SCHOOL-03**: South Portland, Auburn, and Biddeford school boards seeded (geofences + officials)
+
+## Future Requirements
+
+### Additional OR Cities
+- **OR-CITIES-01**: Gresham, Troutdale, Fairview, Wood Village, Maywood Park compass stances (post-seeding)
+- **OR-CITIES-02**: OR G4040 COUSUB towns (unincorporated communities) geofences
+
+### Additional School Coverage
+- **SCHOOL-FUTURE-01**: Remaining Collin County TX ISDs beyond the 5 major ones
+- **SCHOOL-FUTURE-02**: Remaining MA cities beyond Cambridge
+- **SCHOOL-FUTURE-03**: ME Tier 3+ skeletal city school boards
 
 ## Out of Scope
 
-- New state geofences or government seeding — strictly a stances milestone
-- City council stances for OR cities (Portland council stances completed in v8.0 Phase 80)
-- OR state executive stances (Kotek, Rayfield, etc. completed in v8.0 Phase 80)
-- Oregon US Senate / US House stances (Wyden, Merkley, Bonamici, etc. completed in v8.0 Phase 80)
-- Any frontend UI changes — stance data surfaces automatically on existing profile pages
-- ME primary winners migration — explicitly deferred by user on 2026-05-31
-
----
+| Feature | Reason |
+|---------|--------|
+| Cambridge School Committee | Already seeded — complete |
+| Portland ME School Board | Already seeded in Phase 53 — complete |
+| OR G4040 COUSUB towns | Significant scope; defer to future milestone |
+| School board elections discovery | Manual seeding sufficient for v10.0; auto-discovery for school races is v11+ |
+| School compass stances for board members | Data depth phase; excluded from structural seeding milestone |
 
 ## Traceability
 
+*(Populated by roadmapper)*
+
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| STANCE-01 | Phase 82: OR State Legislature Compass Stances | Complete |
-| STANCE-02 | Phase 82: OR State Legislature Compass Stances | Complete |
-| STANCE-03 | Phase 82: OR State Legislature Compass Stances | Complete |
-| STANCE-04 | Phase 82: OR State Legislature Compass Stances | Complete |
-| QUALITY-01 | Phase 82: OR State Legislature Compass Stances | Complete |
-| QUALITY-02 | Phase 82: OR State Legislature Compass Stances | Complete |
-| QUALITY-03 | Phase 82: OR State Legislature Compass Stances | Complete |
+| COUNTY-01 | — | Pending |
+| COUNTY-02 | — | Pending |
+| COUNTY-03 | — | Pending |
+| CITIES-01 | — | Pending |
+| CITIES-02 | — | Pending |
+| CITIES-03 | — | Pending |
+| CITIES-04 | — | Pending |
+| CITIES-05 | — | Pending |
+| CITIES-06 | — | Pending |
+| ROUTING-01 | — | Pending |
+| ELECTIONS-01 | — | Pending |
+| ELECTIONS-02 | — | Pending |
+| ELECTIONS-03 | — | Pending |
+| OR-SCHOOL-01 | — | Pending |
+| OR-SCHOOL-02 | — | Pending |
+| OR-SCHOOL-03 | — | Pending |
+| OR-SCHOOL-04 | — | Pending |
+| CA-SCHOOL-01 | — | Pending |
+| CA-SCHOOL-02 | — | Pending |
+| CA-SCHOOL-03 | — | Pending |
+| CA-SCHOOL-04 | — | Pending |
+| CA-SCHOOL-05 | — | Pending |
+| CA-SCHOOL-06 | — | Pending |
+| TX-SCHOOL-01 | — | Pending |
+| TX-SCHOOL-02 | — | Pending |
+| TX-SCHOOL-03 | — | Pending |
+| TX-SCHOOL-04 | — | Pending |
+| TX-SCHOOL-05 | — | Pending |
+| IN-SCHOOL-01 | — | Pending |
+| IN-SCHOOL-02 | — | Pending |
+| ME-SCHOOL-01 | — | Pending |
+| ME-SCHOOL-02 | — | Pending |
+| ME-SCHOOL-03 | — | Pending |
 
-**Coverage:** 7/7 requirements mapped — 100%
+**Coverage:**
+- v10.0 requirements: 33 total
+- Mapped to phases: 0 (roadmap pending)
+- Unmapped: 33 ⚠️
 
 ---
-
-*Created: 2026-05-31 — v9.0 Oregon Legislature Stances*
-*Traceability updated: 2026-05-31 — Phase 82 complete; all 7 requirements verified*
+*Requirements defined: 2026-05-31*
+*Last updated: 2026-05-31 after initial definition*
