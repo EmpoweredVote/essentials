@@ -395,6 +395,12 @@ These mistakes have been made on prior cities. Check this list before writing ea
 | ArcGIS outSR=4326 omitted for CA city boundaries | CA State Plane feet (SRID 2229) looks valid to PostGIS but ST_Covers returns 0 rows for all addresses — always add outSR=4326 to ArcGIS MapServer queries for CA cities |
 | AEM/CQ5 CMS headshots not extractable by WebFetch | Sacramento cityofsacramento.gov uses CSS background-image — use curl+grep pattern |
 | CA external_id range collision | Before assigning any CA external_id, run `SELECT external_id FROM essentials.politicians WHERE external_id BETWEEN -N AND -M`; known occupied ranges include -1000xx (Assembly), -60030xx (House reps), -60031xx (challengers); always query — do not rely on range list |
+| Portland council district boundaries not in TIGER | Source from PortlandMaps ArcGIS MapServer Layer 17 per-OBJECTID; always add outSR=4326 and ST_MakeValid |
+| Portland council structure seeded from pre-2025 charter | 2024 charter reform: 4 districts × 3 seats = 12 council seats; official roster from portland.gov/auditor/elections/elected-city-officials not Wikipedia |
+| portland.gov headshots not downloadable from /public/ direct paths | Use Drupal 1_1_320w style CDN URLs (extract itok token from profile page HTML); photo_origin_url records canonical path |
+| PowerShell Unicode encoding: non-ASCII names mangled in PS 5.1 scripts | Use [char]0xNNNN escape sequences for all diacritical characters in .ps1 roster hashtables |
+| OR constitutional officers modeled as appointed (Maine pattern) | All 5 OR officers are voter-elected; is_appointed_position=false and race rows required for all 5 |
+| Portland 2026 races include all 12 council seats | Staggered terms: D3+D4+Auditor on 2026 ballot; Mayor+D1+D2 on 2028 ballot (4-year terms from 2025 charter reform) |
 
 ---
 
