@@ -741,7 +741,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 80-02-PLAN.md - OR US House reps (6): Bonamici, Bentz, Dexter, Hoyle, Bynum, Salinas - one-at-a-time research + ingest
+- [x] 80-02-PLAN.md - OR US House reps (6): Bonamici, Bentz, Dexter, Hoyle, Bynum, Salinas - one-at-a-time research + ingest
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -883,5 +883,5 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
 | 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete    | 2026-05-30 |
-| 80. OR Compass Stances | v8.0 | 1/4 | In Progress|  |
+| 80. OR Compass Stances | v8.0 | 2/4 | In Progress|  |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 0/TBD | Pending | - |
