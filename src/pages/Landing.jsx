@@ -297,9 +297,9 @@ export default function Landing() {
                 <button
                   key={`${area.label}-${area.state}`}
                   onClick={() => handleAreaClick(area)}
-                  className="w-full text-left px-4 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                  className="w-full text-left px-4 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal-dark)] dark:border-[var(--ev-teal)] rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal-dark)] focus:ring-offset-2"
                 >
-                  <div className="text-sm font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight">{area.label}</div>
+                  <div className="text-sm font-semibold text-[var(--ev-teal-dark)] dark:text-[var(--ev-teal)] leading-tight">{area.label}</div>
                   <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
                 </button>
               ))}
