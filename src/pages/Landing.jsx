@@ -189,37 +189,40 @@ export default function Landing() {
               <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-6">
                 Our Alpha Communities show exactly where we're headed: your full government, from city hall to Congress, all in one place.
               </p>
-              <div className="relative">
-                <SearchIcon />
-                <input
-                  type="text"
-                  value={nameQuery}
-                  onChange={(e) => setNameQuery(e.target.value)}
-                  placeholder="Search candidates by name…"
-                  aria-label="Search candidates by name"
-                  className="w-full pl-12 pr-4 py-4 text-lg border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
-                />
-              </div>
-              {nameSearchResults}
+              {/* width constrained so right edge aligns with Berkeley column below */}
+              <div className="lg:max-w-[calc(50vw-5rem)]">
+                <div className="relative">
+                  <SearchIcon />
+                  <input
+                    type="text"
+                    value={nameQuery}
+                    onChange={(e) => setNameQuery(e.target.value)}
+                    placeholder="Search candidates by name…"
+                    aria-label="Search candidates by name"
+                    className="w-full pl-12 pr-4 py-4 text-lg border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
+                  />
+                </div>
+                {nameSearchResults}
 
-              {/* Address search — long input left, compact Search button right */}
-              <div className="flex gap-2 mt-3">
-                <input
-                  ref={addressInputRef}
-                  type="text"
-                  value={addressInput}
-                  onChange={(e) => setAddressInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                  placeholder="If you reside in an Alpha Community, enter your full street address"
-                  className="flex-1 min-w-0 px-3 py-4 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 shadow-sm"
-                />
-                <button
-                  onClick={handleSearch}
-                  disabled={!addressInput.trim()}
-                  className="px-5 py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
-                >
-                  Search
-                </button>
+                {/* Address search — long input left, compact Search button right */}
+                <div className="flex gap-2 mt-3">
+                  <input
+                    ref={addressInputRef}
+                    type="text"
+                    value={addressInput}
+                    onChange={(e) => setAddressInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    placeholder="If you reside in an Alpha Community, enter your full street address"
+                    className="flex-1 min-w-0 px-3 py-4 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 shadow-sm"
+                  />
+                  <button
+                    onClick={handleSearch}
+                    disabled={!addressInput.trim()}
+                    className="px-5 py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+                  >
+                    Search
+                  </button>
+                </div>
               </div>
               {!compassLoading && isLoggedIn && myLocationNotSet && (
                 <div className="mt-3 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">
@@ -267,7 +270,7 @@ export default function Landing() {
       {/* ── Area + Address Section ── */}
       <section className="w-full px-8 sm:px-12 lg:px-24 py-16">
         <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
-          Choose an Alpha Area
+          Choose an Alpha Community
         </h2>
         <p className="text-base text-gray-500 dark:text-gray-400 mb-8">
           Each one is a preview of the full Essentials experience.
