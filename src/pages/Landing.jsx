@@ -202,15 +202,8 @@ export default function Landing() {
               </div>
               {nameSearchResults}
 
-              {/* Address search — button 2/3, thin input 1/3, same height */}
+              {/* Address search — long input left, compact Search button right */}
               <div className="flex gap-2 mt-3">
-                <button
-                  onClick={handleSearch}
-                  disabled={!addressInput.trim()}
-                  className="flex-[2] py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  Search
-                </button>
                 <input
                   ref={addressInputRef}
                   type="text"
@@ -220,6 +213,13 @@ export default function Landing() {
                   placeholder="If you reside in an Alpha Community, enter your full street address"
                   className="flex-1 min-w-0 px-3 py-4 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 shadow-sm"
                 />
+                <button
+                  onClick={handleSearch}
+                  disabled={!addressInput.trim()}
+                  className="px-5 py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+                >
+                  Search
+                </button>
               </div>
               {!compassLoading && isLoggedIn && myLocationNotSet && (
                 <div className="mt-3 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">
