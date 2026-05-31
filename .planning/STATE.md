@@ -1,38 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v8.0
-milestone_name: Oregon
-status: milestone_complete
-last_updated: 2026-05-31T00:00:00Z
-last_activity: 2026-05-31 -- v7.0 + v8.0 archived; REQUIREMENTS.md deleted; next milestone TBD
+milestone: v9.0
+milestone_name: Oregon Legislature Stances
+status: planning
+last_updated: "2026-05-31T14:35:29.461Z"
+last_activity: 2026-05-31
 progress:
-  total_phases: 81
-  completed_phases: 81
-  total_plans: 67
-  completed_plans: 67
-  percent: 100
-stopped_at: Both v7.0 and v8.0 milestones archived — between milestones
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 81
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-05-31
-Next recommended run: /gsd-discuss-phase (next milestone — see ROADMAP.md backlog)
-
-Phase 77 (COMPLETE) — Portland city structure + 16 officials seeded; migrations 230-232 applied; Mayor Wilson + 12 council + City Auditor Rede + City Administrator Lee III + City Attorney Taylor
-Phase 76 (COMPLETE) — 4 Portland OR council district geofences loaded; ArcGIS per-OBJECTID fetch; migration 229 applied (4 LOCAL districts rows, state=or); 4-gate smoke test passed; Portland City Hall → portland-or-council-district-4 confirmed
-Phase 75 (COMPLETE) — 30 OR senators + 60 OR house reps seeded; migrations 226+227 applied; 90/90 headshots from oregonlegislature.gov; Portland City Hall → Lisa Reynolds (SD-17) + Shannon Isadore (HD-33) confirmed end-to-end
-Phase 68 (COMPLETE) — 10 Berkeley officials seeded + headshots uploaded; migrations 213-214 applied; end-to-end routing confirmed; profile pages show headshots
-Phase 62-01 — Pre-flight complete: migration 196 applied (no-op, 171 already present); migration 182 confirmed applied; 6-tier smoke test surfaced 2 gaps: (1) LA County Supervisor districts have 0 geofence_boundaries rows — supervisor routing broken for all LA addresses; (2) LAUSD board members attached to whole-district geofence 0622710, not sub-district lausd-board-district-N — Plan 03 must create essentials.districts rows for lausd-board-district-{1-7}
-
-Phase 55-01 — Elections foundation complete: migration 183 applied; Governor 5D+8R SOS-verified, Senate 3 candidates (Mills excluded), ME-01 3 candidates, ME-02 5 candidates (open seat); discovery cron armed for both 2026 ME elections
-Phase 55-02 — Legislative scaffolding complete: migration 184 applied; 372 race rows (70 senate + 302 house) all with non-null office_id; district-type disambiguation confirmed
-Phase 55-03 — Verification complete: all 5 SQL queries passed; 380 race rows confirmed; discovery cron IN SCOPE for both 2026 ME elections; human approved; Phase 55 closed
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-31 — Milestone v9.0 started
 
 ## Project Reference
 
@@ -253,6 +241,6 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 
 ## Session Continuity
 
-Last session: 2026-05-31T06:55:32.865Z
-Stopped at: Phase 81 complete (2/2) — v8.0 Oregon shipped
+Last session: 2026-05-31T14:25:54.841Z
+Stopped at: context exhaustion at 75% (2026-05-31)
 Resume file: None

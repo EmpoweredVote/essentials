@@ -102,13 +102,18 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ 321 compass stances across 24 OR officials — Kotek 31, Rayfield 24, Bonamici 24, Bentz 21, Hoyle 20, Steiner 13, Salinas 18, Bynum 13, Read 12, Dexter 12, Stephenson 10, Wilson 10; all cited; compass renders on Kotek profile — v8.0
 - ✓ OR Playbook retrospective — 9 OR-specific GOTCHAs added to LOCATION-ONBOARDING.md; Oregon Quick Reference block; 2 new Cities Onboarded rows (Oregon state + Portland); v8.0 milestone closed — v8.0
 
-### Current Milestone: Between Milestones
+### Current Milestone: v9.0 Oregon Legislature Stances
 
-**Goal:** v8.0 Oregon shipped 2026-05-31. Next milestone (v9.0+) is pending discussion — see ROADMAP.md backlog and the parked v2.2 milestone (Phases 8-11) for candidate next steps.
+**Goal:** Research and ingest compass stance values for all 90 OR state legislators (30 senators + 60 house reps), making Oregon the first state with full legislature-wide compass coverage.
+
+**Target features:**
+- Compass stances for 30 OR state senators (evidence-only, all applicable compass topics)
+- Compass stances for 60 OR house reps (evidence-only, sequential agent processing)
+- Stance values written to inform.politician_answers via migration; compass renders on all legislator profiles
 
 ### Active
 
-(No phases currently in flight — awaiting next milestone scope decision.)
+(v9.0 starting — defining roadmap)
 
 ### Out of Scope
 
@@ -205,4 +210,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | STATE_EXEC `district_id` should be empty string for shared multi-position districts | OR STATE_EXEC initially used 'Oregon (Statewide)' as district_id; MA/ME/TX multi-position pattern uses ''; corrected in migration 223a | ✓ Good — v7.0 (Phase 74 lesson) |
 
 ---
-*Last updated: 2026-05-31 after v7.0 + v8.0 milestone archival*
+*Last updated: 2026-05-31 — v9.0 Oregon Legislature Stances started*
