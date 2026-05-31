@@ -1,27 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v9.0
-milestone_name: milestone
-status: complete
-stopped_at: Phase 82 complete; v9.0 shipped 2026-05-31
-last_updated: "2026-05-31T21:00:00.000Z"
-last_activity: 2026-05-31 -- Phase 82 closed; v9.0 shipped (536 stances, 90 OR legislators, migrations 242+243)
+milestone: v10.0
+milestone_name: Multnomah County & School Boards
+status: planning
+last_updated: "2026-05-31T23:26:02.529Z"
+last_activity: 2026-05-31
 progress:
-  total_phases: 1
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 82 — OR State Legislature Compass Stances — **COMPLETE**
-Plan: 82-03 — all 3 plans complete
-Status: v9.0 shipped — ready for next milestone
-Last activity: 2026-05-31 -- Phase 82 closed; all 7 requirements PASS; 536 stances for 90 OR legislators
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-31 — Milestone v10.0 started
 
 ## Project Reference
 
