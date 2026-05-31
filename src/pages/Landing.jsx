@@ -272,16 +272,16 @@ export default function Landing() {
         <p className="text-base text-gray-500 dark:text-gray-400 mb-8">
           Each one is a preview of the full Essentials experience.
         </p>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-8 items-start">
 
-          {/* Counties */}
+          {/* Counties — 1/4 width */}
           <div className="flex flex-col gap-2">
             <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">Counties</p>
             {COVERAGE_COUNTIES.map((area) => (
               <button
                 key={`${area.label}-${area.state}`}
                 onClick={() => handleAreaClick(area)}
-                className="w-full text-left px-4 py-3 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                className="w-full text-left px-4 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
               >
                 <div className="text-sm font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight">{area.label}</div>
                 <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
@@ -289,19 +289,21 @@ export default function Landing() {
             ))}
           </div>
 
-          {/* Cities */}
-          <div className="flex flex-col gap-2">
-            <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">Cities</p>
-            {COVERAGE_CITIES.map((area) => (
-              <button
-                key={`${area.label}-${area.state}`}
-                onClick={() => handleAreaClick(area)}
-                className="w-full text-left px-4 py-3 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
-              >
-                <div className="text-sm font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight">{area.label}</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
-              </button>
-            ))}
+          {/* Cities — 3 columns, alphabetized horizontally then vertically */}
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Cities</p>
+            <div className="grid grid-cols-3 gap-2">
+              {COVERAGE_CITIES.map((area) => (
+                <button
+                  key={`${area.label}-${area.state}`}
+                  onClick={() => handleAreaClick(area)}
+                  className="w-full text-left px-4 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                >
+                  <div className="text-sm font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight">{area.label}</div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
+                </button>
+              ))}
+            </div>
           </div>
 
         </div>
