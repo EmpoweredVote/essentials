@@ -182,21 +182,43 @@ GROUP BY p.full_name;
 
 ## Human Compass Render Check
 
-**SC-4 — Status: PENDING human verification**
+**SC-4 — Status: PASSED** (human-verified 2026-05-30)
 
-Task 2 is a blocking human-verify checkpoint. See checkpoint instructions below.
+User confirmed: `approved — kotek compass renders`
+
+Tina Kotek's profile at `/politician/66c3bd97-94d1-4287-b1b8-86605a38cb97` renders the CompassCard widget with stance data from `inform.politician_answers` (31 stances). The `politicianIdsWithStances` set from `GET /compass/politicians` includes Kotek's UUID. No console errors reported.
+
+SC-4 satisfied: compass renders on at least one OR official profile without errors.
 
 ---
 
 ## SC-3 Process Audit
 
-*(To be completed in Task 3 after Task 2 approval)*
+**Source:** 80-01-SUMMARY.md, 80-02-SUMMARY.md, 80-03-SUMMARY.md
+
+| Plan | Officials | Sequential Runs | One-At-A-Time Confirmed |
+|------|-----------|-----------------|------------------------|
+| 01 (OR Constitutional Officers) | 5 | 5 (Kotek → Rayfield → Read → Steiner → Stephenson) | ✓ "No parallel research agents were used. SC-3 compliance confirmed." |
+| 02 (OR US House Reps) | 6 | 6 (Bonamici → Bentz → Dexter → Hoyle → Bynum → Salinas) | ✓ "No parallel research agents were used. SC-3 compliance confirmed." |
+| 03 (Portland officials) | 13 | 13 (Wilson → Ryan → Smith → Novick → Avalos → Dunphy → Pirtle-Guiney → Kanal → Morillo → Koyama Lane → Zimmerman → Green → Rede) | ✓ "No parallel research agents were used. SC-3 compliance confirmed." |
+| **Total** | **24** | **24** | **PASS** |
+
+Note: Senators Wyden and Merkley (2 OR US Senators) were pre-completed before Phase 80 — they were not researched in Phase 80. Total Phase 80 sequential runs = 24.
+
+**SC-3: PASS** — All 24 research runs executed one-at-a-time; no parallel agent execution across all three plans.
 
 ---
 
 ## Success Criteria Final Status
 
-*(To be completed in Task 3 after Task 2 approval)*
+| ID | Criterion | Status | Evidence |
+|----|-----------|--------|----------|
+| SC-1 | OR constitutional officers + federal officials with verifiable record have ≥1 stance | **PASS** | Query A: Kotek=31, Rayfield=24, Read=12, Steiner=13, Stephenson=10 (all execs > 0); Bonamici=24, Bentz=21, Dexter=12, Hoyle=20, Bynum=13, Salinas=18 (all House reps > 0) |
+| SC-2 | Portland council officials with discoverable record have stances | **PASS** | Query A: 12 of 13 Portland > 0 (only Rede=0 by design per D-04, financial oversight role). Gate: ≥9 of 13 required → 12 actual |
+| SC-3 | All ingestion ran one-at-a-time | **PASS** | 24 sequential runs across Plans 01–03; all three SUMMARYs confirm no parallel execution |
+| SC-4 | Compass renders for ≥1 OR official | **PASS** | User-verified: Tina Kotek profile renders CompassCard; 31 stances visible |
+
+**All 4 success criteria PASS. Phase 80 is complete.**
 
 ---
 *Phase: 80-or-compass-stances*

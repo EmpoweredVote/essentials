@@ -749,7 +749,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 80-04-PLAN.md - Verification: coverage SQL gates + value-range integrity + Kotek compass render check + phase close
+- [x] 80-04-PLAN.md - Verification: coverage SQL gates + value-range integrity + Kotek compass render check + phase close
 
 ### Phase 81: OR Playbook Retrospective + v8.0 Close
 
@@ -883,5 +883,5 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
 | 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete    | 2026-05-30 |
-| 80. OR Compass Stances | v8.0 | 3/4 | In Progress|  |
+| 80. OR Compass Stances | v8.0 | 4/4 | Complete    | 2026-05-31 |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 0/TBD | Pending | - |
