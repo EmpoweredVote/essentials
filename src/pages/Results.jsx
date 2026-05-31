@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant } from '../lib/classify';
@@ -239,17 +240,42 @@ function normalizeDistrictSubtitle(raw) {
 }
 
 /**
+ * Derive a card subtitle from the seat designation embedded in the office title,
+ * scoped to local offices. Returns "Ward N" | "District N" | "At-Large" | null.
+ * Keeps each jurisdiction's own term (e.g. SLC councils say "Ward", Ogden says
+ * "District") rather than normalizing, and surfaces at-large seats that carry the
+ * marker in their title (e.g. "Council At-Large Seat A") regardless of district_id.
+ * Mirror of deriveSeatSubtitle() in ev-ui/src/PoliticianProfile.jsx — keep in sync.
+ */
+function deriveSeatSubtitle(pol, cleanTitle) {
+  const dt = pol.district_type || '';
+  if (!dt.startsWith('LOCAL') && dt !== 'COUNTY') return null;
+  const t = cleanTitle || '';
+  if (/\bat[- ]large\b/i.test(t)) return 'At-Large';
+  let m = t.match(/\bward\s+(\d+)/i);
+  if (m) return `Ward ${m[1]}`;
+  m = t.match(/\bdistrict\s+(\d+)/i);
+  if (m) return `District ${m[1]}`;
+  return null;
+}
+
+/**
  * Qualify a generic local title with the jurisdiction name.
  * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"
  * Only used when a card is NOT inside a government_body_name section.
  */
 function qualifyLocalTitle(baseTitle, pol) {
-  if (!pol.government_name || !baseTitle) return baseTitle;
+  if (!baseTitle) return baseTitle;
 
   const dt = pol.district_type || '';
   if (!dt.startsWith('LOCAL') && dt !== 'COUNTY') return baseTitle;
 
-  const gov = pol.government_name.split(',')[0].trim();
+  // Use government_name if set; fall back to representing_city for loaders that
+  // don't create a chamber→government record (e.g. Utah at-large city councils).
+  const govRaw = pol.government_name || pol.representing_city || '';
+  if (!govRaw) return baseTitle;
+
+  const gov = govRaw.split(',')[0].trim();
   const govCore = gov
     .replace(/^(City|Town|Village)\s+of\s+/i, '')
     .replace(/\s+(Township|County)$/i, '')
@@ -323,6 +349,7 @@ export default function Results() {
   const { isDark } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const posthog = usePostHog();
   const queryFromUrl = searchParams.get('q') || '';
   const activeView = searchParams.get('view') || 'representatives';
 
@@ -1088,6 +1115,16 @@ export default function Results() {
     // Save scroll position before navigating to profile
     sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
     sessionStorage.setItem('ev:fromView', 'representatives');
+    const pol = filteredPols?.find((p) => p.id === id);
+    if (pol) {
+      const dt = pol.district_type || '';
+      const level = dt.startsWith('NATIONAL') ? 'federal' : dt.startsWith('STATE') ? 'state' : 'local';
+      posthog?.capture('politician_viewed', {
+        level,
+        district_type: pol.district_type,
+        office_title: pol.office_title,
+      });
+    }
     navigate(`/politician/${id}`);
   };
 
@@ -1142,10 +1179,15 @@ export default function Results() {
     })();
 
     const subtitle = (() => {
+      // Seat designation embedded in the office title takes priority for local offices,
+      // so each jurisdiction's own term wins (SLC "Ward 3", Ogden "District 2", at-large
+      // seats "At-Large") even when district_id is null or shared across seats.
+      const seatFromTitle = deriveSeatSubtitle(pol, cleanTitle);
       let base;
       if (dashIdx > 0) base = normalizeDistrictSubtitle(cleanTitle.slice(dashIdx + 3));
       // NATIONAL_JUDICIAL: show role (e.g. "Chief Justice", "Associate Justice")
       else if (pol.district_type === 'NATIONAL_JUDICIAL') base = cleanTitle;
+      else if (seatFromTitle) base = seatFromTitle;
       else if (pol.district_id && /^[1-9]\d*$/.test(pol.district_id))
         base = `District ${pol.district_id}`;
       else if (pol.district_id === '0' && !/(_EXEC)$/.test(pol.district_type))

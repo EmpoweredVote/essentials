@@ -14,7 +14,14 @@ export function getOfficeDescription(positionName) {
     return 'The President is the chief executive of the federal government — commanding the armed forces, directing foreign policy, and signing or vetoing acts of Congress.';
   if (/vice president/.test(t))
     return 'The Vice President presides over the US Senate, casts tie-breaking votes, and assumes the presidency if the President is unable to serve.';
-  if (/us sen(ator|ate)\b|united states sen(ator|ate)/.test(t))
+  // Match "US Senator", "U.S. Senate - <State>", "United States Senator", etc.
+  // Allow optional periods/spaces in "U.S." so titles like "U.S. Senate - Utah"
+  // match; exclude "Candidate for U.S. Senate" so candidate rows don't get the
+  // sitting-senator description.
+  if (
+    (/\bu\.?\s*s\.?\s+sen(ator|ate)\b/.test(t) || /\bunited states sen(ator|ate)\b/.test(t)) &&
+    !/\bcandidate\b/.test(t)
+  )
     return 'US Senators represent their entire state in the upper chamber of Congress. They confirm federal appointments, ratify international treaties, and pass federal legislation.';
   if (/us representative|united states representative/.test(t))
     return 'US Representatives represent a congressional district in the lower chamber of Congress. All tax and spending bills originate in the House.';

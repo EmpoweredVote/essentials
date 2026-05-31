@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { usePostHog } from 'posthog-js/react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
@@ -31,6 +32,7 @@ export default function Landing() {
   const searchRef = useRef(null);
   const navigate = useNavigate();
   const { isLoggedIn, userName, myRepresentatives, myLocationNotSet, compassLoading } = useCompass();
+  const posthog = usePostHog();
 
   // Auto-redirect Connected users who have representatives data
   useEffect(() => {
@@ -51,6 +53,7 @@ export default function Landing() {
 
   const handleSearch = () => {
     if (!addressInput.trim()) return;
+    posthog?.capture('address_searched', { method: 'manual' });
     navigate(`/results?q=${encodeURIComponent(addressInput.trim())}`);
   };
 
