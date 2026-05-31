@@ -2,22 +2,23 @@
 
 ## Milestones
 
-- âœ… **v2.0 Elections Page** - Phases 1-4 (shipped 2026-04-13)
-- âœ… **v2.1 Claude Candidate Discovery** — Phases 5-7 (shipped 2026-04-25) — [archive](milestones/v2.1-ROADMAP.md)
-- ðŸš§ **v2.2 Data Depth & Admin Tooling** — Phases 8-11 (parked)
-- âœ… **v3.0 Collin County, TX Coverage** — Phases 12-21 (shipped 2026-05-12)
-- âœ… **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
-- âœ… **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
-- âœ… **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
-- âœ… **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
-- âœ… **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
-- âœ… **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29) — [archive](milestones/v7.0-ROADMAP.md)
-- âœ… **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31) — [archive](milestones/v8.0-ROADMAP.md)
+- ✅ **v2.0 Elections Page** - Phases 1-4 (shipped 2026-04-13)
+- ✅ **v2.1 Claude Candidate Discovery** — Phases 5-7 (shipped 2026-04-25) — [archive](milestones/v2.1-ROADMAP.md)
+- 🚧 **v2.2 Data Depth & Admin Tooling** — Phases 8-11 (parked)
+- ✅ **v3.0 Collin County, TX Coverage** — Phases 12-21 (shipped 2026-05-12)
+- ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
+- ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
+- ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
+- ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
+- ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
+- ✅ **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29) — [archive](milestones/v7.0-ROADMAP.md)
+- ✅ **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31) — [archive](milestones/v8.0-ROADMAP.md)
+- 🔄 **v9.0 Oregon Legislature Stances** — Phase 82 (active)
 
 ## Phases
 
 <details>
-<summary>âœ… v2.0 Elections Page (Phases 1-4) - SHIPPED 2026-04-13</summary>
+<summary>✅ v2.0 Elections Page (Phases 1-4) - SHIPPED 2026-04-13</summary>
 
 ### Phase 1: Backend Left Join + Elections API
 
@@ -58,7 +59,7 @@ Plans:
 </details>
 
 <details>
-<summary>âœ… v2.1 Claude Candidate Discovery (Phases 5-7) — SHIPPED 2026-04-25</summary>
+<summary>✅ v2.1 Claude Candidate Discovery (Phases 5-7) — SHIPPED 2026-04-25</summary>
 
 - [x] Phase 5: DB Foundation + Agent Core (4/4 plans) — completed 2026-04-24
 - [x] Phase 6: Admin Review UI + Email + Per-Race Trigger (3/3 plans) — completed 2026-04-25
@@ -70,7 +71,7 @@ Full details: [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md)
 
 ---
 
-### ðŸš§ v2.2 Data Depth & Admin Tooling (Parked — resume after v3.0)
+### 🚧 v2.2 Data Depth & Admin Tooling (Parked — resume after v3.0)
 
 **Milestone Goal:** Surface data gaps proactively, make compass work for local politicians, and give admins the tools to manage discovery without touching the terminal.
 
@@ -152,7 +153,7 @@ Plans:
 ---
 
 <details>
-<summary>âœ… v3.0 Collin County, TX Coverage (Phases 12-21) — SHIPPED 2026-05-12</summary>
+<summary>✅ v3.0 Collin County, TX Coverage (Phases 12-21) — SHIPPED 2026-05-12</summary>
 
 - [x] Phase 12: TX DB Foundation (4/4 plans) — completed 2026-04-30
 - [x] Phase 13: Tier 1 Officials — Plano + McKinney (2/2 plans) — completed 2026-05-01
@@ -170,7 +171,7 @@ Full details: [milestones/v3.0-ROADMAP.md](milestones/v3.0-ROADMAP.md)
 </details>
 
 <details>
-<summary>âœ… v3.1 Local Compass Expansion (Phases 22-25) — SHIPPED 2026-05-05</summary>
+<summary>✅ v3.1 Local Compass Expansion (Phases 22-25) — SHIPPED 2026-05-05</summary>
 
 - [x] Phase 22: Compass Schema Audit (1/1 plans) — completed 2026-05-04
 - [x] Phase 23: New LOCAL Compass Topics (2/2 plans) — completed 2026-05-05
@@ -182,7 +183,7 @@ Full details: [milestones/v3.1-ROADMAP.md](milestones/v3.1-ROADMAP.md)
 </details>
 
 <details>
-<summary>âœ… v3.2 Legal Candidate Evaluation Framework (Phases 26-32) — SHIPPED 2026-05-10</summary>
+<summary>✅ v3.2 Legal Candidate Evaluation Framework (Phases 26-32) — SHIPPED 2026-05-10</summary>
 
 - [x] Phase 26: Campaign Finance Gap Closure (1/1 plans) — completed 2026-05-07
 - [x] Phase 27: Judicial Compass DB (3/3 plans) — completed 2026-05-06
@@ -199,7 +200,7 @@ Full details: [milestones/v3.2-ROADMAP.md](milestones/v3.2-ROADMAP.md)
 ---
 
 <details>
-<summary>âœ… v4.0 Compass Experience (Phases 33-36) — SHIPPED 2026-05-14</summary>
+<summary>✅ v4.0 Compass Experience (Phases 33-36) — SHIPPED 2026-05-14</summary>
 
 - [x] Phase 33: Local Lens State System (1/1 plans) — completed 2026-05-12
 - [x] Phase 34: Mini Compass Tile Component (3/3 plans) — completed 2026-05-13
@@ -213,7 +214,7 @@ Full details: [milestones/v4.0-ROADMAP.md](milestones/v4.0-ROADMAP.md)
 ---
 
 <details>
-<summary>âœ… v5.0 Location Onboarding Playbook (Phases 37-47) — SHIPPED 2026-05-18</summary>
+<summary>✅ v5.0 Location Onboarding Playbook (Phases 37-47) — SHIPPED 2026-05-18</summary>
 
 - [x] Phase 37: Playbook Draft (1/1 plans) — completed 2026-05-16
 - [x] Phase 38: MA Geofences (2/2 plans) — completed 2026-05-16
@@ -232,7 +233,7 @@ Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
 </details>
 
 <details>
-<summary>âœ… v6.0 Maine Essentials (Phases 49-56) — SHIPPED 2026-05-20</summary>
+<summary>✅ v6.0 Maine Essentials (Phases 49-56) — SHIPPED 2026-05-20</summary>
 
 - [x] Phase 49: ME Geofences (2/2 plans) — completed 2026-05-18
 - [x] Phase 50: ME Government DB Foundation (1/1 plans) — completed 2026-05-18
@@ -250,7 +251,7 @@ Full details: [milestones/v6.0-ROADMAP.md](milestones/v6.0-ROADMAP.md)
 ---
 
 <details>
-<summary>âœ… v7.0 California (Phases 57-70, 78) — SHIPPED 2026-05-29</summary>
+<summary>✅ v7.0 California (Phases 57-70, 78) — SHIPPED 2026-05-29</summary>
 
 ### Phase 57: CA Geofences
 
@@ -295,13 +296,13 @@ Plans:
   1. essentials.governments has a "State of California" row with FIPS-based geo_id
   2. All CA constitutional officer chambers exist (Governor, Lieutenant Governor, Attorney General, Secretary of State, Controller, Treasurer, Insurance Commissioner, Superintendent of Public Instruction) with correct is_appointed_position per CA constitution
   3. Governor Newsom + all popularly-elected constitutional officers are seeded as politicians with offices linked to their chambers
-  4. All seeded executives have headshots uploaded to Supabase Storage at 600Ã—750
+  4. All seeded executives have headshots uploaded to Supabase Storage at 600×750
 
 Plans:
 
 - [ ] 59-01-PLAN.md — Migration: CA government row + all chambers; research CA constitution for appointed vs. elected distinction
 - [ ] 59-02-PLAN.md — Migration: Governor Newsom + constitutional officer politicians + office rows
-- [ ] 59-03-PLAN.md — Headshots: source + upload 600Ã—750 for all CA executives
+- [ ] 59-03-PLAN.md — Headshots: source + upload 600×750 for all CA executives
 
 ### Phase 60: CA Executives + Federal Officials
 
@@ -312,15 +313,15 @@ Plans:
 
   1. Both CA US Senators (Padilla + Schiff) are seeded with offices linked to the NATIONAL_UPPER district
   2. All 52 US House representatives are seeded with offices each linked to the correct NATIONAL_LOWER district (CD-01 through CD-52)
-  3. Every federal official has a headshot in Supabase Storage at 600Ã—750
+  3. Every federal official has a headshot in Supabase Storage at 600×750
   4. A lookup for a CA address returns the correct US Representative name matching the congressional district boundary
 
 Plans:
 
 - [x] 60-01-PLAN.md — Migration: 2 CA senators + 52 US House reps + office rows linked to NATIONAL districts
-- [x] 60-02-PLAN.md — Headshots: source + upload 600Ã—750 for all 54 federal officials
+- [x] 60-02-PLAN.md — Headshots: source + upload 600×750 for all 54 federal officials
 
-### âœ… Phase 61: CA State Legislature — COMPLETE (2026-05-21)
+### ✅ Phase 61: CA State Legislature — COMPLETE (2026-05-21)
 
 **Goal**: All 80 Assembly members and 40 State Senators are seeded with offices linked to the correct STATE geofence districts and have headshots
 **Depends on**: Phase 57 (SLDL + SLDU boundaries loaded), Phase 59 (chambers exist)
@@ -329,14 +330,14 @@ Plans:
 
   1. All 80 Assembly members are seeded with offices linked to SLDL districts AD-01 through AD-80
   2. All 40 State Senators are seeded with offices linked to SLDU districts SD-01 through SD-40
-  3. Every legislator has a headshot in Supabase Storage at 600Ã—750
+  3. Every legislator has a headshot in Supabase Storage at 600×750
   4. A lookup for a CA address returns the correct Assembly member and State Senator names matching the district boundaries
 
 Plans:
 
 - [x] 61-01-PLAN.md — Migration 194: 40 CA State Senators + office rows linked to SLDU districts
 - [x] 61-02-PLAN.md — Migration 195: 80 CA Assembly members + office rows linked to SLDL districts
-- [x] 61-03-PLAN.md — Headshots: 120 state legislators at 600Ã—750 uploaded to Supabase Storage
+- [x] 61-03-PLAN.md — Headshots: 120 state legislators at 600×750 uploaded to Supabase Storage
 
 ### Phase 62: LA Backlog Closure
 
@@ -347,14 +348,14 @@ Plans:
 
   1. The CA Governor 2026 race row has all 10 SOS-verified challenger candidates seeded as race_candidates
   2. The lavote.gov election ID in the database matches the current election cycle (no stale ID)
-  3. All 7 LAUSD board members are seeded with offices linked to LAUSD geofence districts and have headshots at 600Ã—750
+  3. All 7 LAUSD board members are seeded with offices linked to LAUSD geofence districts and have headshots at 600×750
   4. An LA address lookup returns a complete set of local officials — no missing chambers or office gaps visible in the UI
 
 Plans:
 
 - [x] 62-01-PLAN.md — Migration 171 (la_council_votes, unapplied backlog); LA city structure audit + gap-close migration
 - [x] 62-02-PLAN.md — CA Governor challenger candidates migration; lavote.gov election ID update
-- [x] 62-03-PLAN.md — LAUSD board member seed + office rows linked to LAUSD districts; headshots 600Ã—750
+- [x] 62-03-PLAN.md — LAUSD board member seed + office rows linked to LAUSD districts; headshots 600×750
 
 **Completed: 2026-05-22** — All 4 success criteria met; 7/7 LAUSD board headshots uploaded; LAUSD Board Member (District N) titles; D2=Rivas/D3=Schmerelson data fix applied; lavote.gov election ID current
 
@@ -368,7 +369,7 @@ Plans:
   1. SF government row exists with chambers for Mayor, Board of Supervisors (11 districts), City Attorney, DA, and any other Tier 1 offices
   2. All 11 District Supervisors + Mayor + City Attorney + DA are seeded as politicians with linked office rows
   3. An SF address lookup returns the correct District Supervisor for that address
-  4. All seeded SF officials have headshots at 600Ã—750 in Supabase Storage
+  4. All seeded SF officials have headshots at 600×750 in Supabase Storage
 
 **Plans**: 3 plans
 
@@ -376,11 +377,11 @@ Plans:
 
 - [x] 63-01-PLAN.md — SF supervisor geofences (DataSF) + SF government scaffolding (1 government + 10 chambers + 12 districts) + smoke test
 - [x] 63-02-PLAN.md — SF incumbents: 11 supervisors + 7 elected citywide + 2 appointed = 20 politicians and offices (migration 199)
-- [x] 63-03-PLAN.md — SF headshots: source + 600Ã—750 upload for all 20 SF officials (migration 200 captures DB changes)
+- [x] 63-03-PLAN.md — SF headshots: source + 600×750 upload for all 20 SF officials (migration 200 captures DB changes)
 
 **Completed: 2026-05-22** — All 4 success criteria met; 20/20 headshots uploaded; SF address lookup returns correct District Supervisor + all citywide officials
 
-### âœ… Phase 64: San Jose Deep Seed — COMPLETE (2026-05-23)
+### ✅ Phase 64: San Jose Deep Seed — COMPLETE (2026-05-23)
 
 **Goal**: San Jose is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Jose address returns a complete local officials list
 **Depends on**: Phase 57 (San Jose city boundary loaded)
@@ -390,17 +391,17 @@ Plans:
   1. San Jose government row exists with chambers for Mayor and City Council (10 districts)
   2. Mayor + all 10 Council Members are seeded as politicians with linked office rows
   3. A San Jose address lookup returns the correct Council Member for that address
-  4. All seeded San Jose officials have headshots at 600Ã—750 in Supabase Storage
+  4. All seeded San Jose officials have headshots at 600×750 in Supabase Storage
 
 Plans:
 
 - [x] 64-01-PLAN.md — San Jose government structure + chambers + offices
 - [x] 64-02-PLAN.md — San Jose incumbents: Mayor + 10 council members + office links
-- [x] 64-03-PLAN.md — San Jose headshots: source + upload 600Ã—750
+- [x] 64-03-PLAN.md — San Jose headshots: source + upload 600×750
 
 **Completed: 2026-05-23** — All 4 success criteria met; 11/11 headshots uploaded; SJ City Hall lookup returns Anthony Tordillos (District 3) + Matt Mahan (Mayor); Mahan Phase 62 duplicate row merged
 
-### âœ… Phase 65: San Diego Deep Seed — COMPLETE (2026-05-22)
+### ✅ Phase 65: San Diego Deep Seed — COMPLETE (2026-05-22)
 
 **Goal**: San Diego is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Diego address returns a complete local officials list
 **Depends on**: Phase 57 (San Diego city boundary loaded)
@@ -410,17 +411,17 @@ Plans:
   1. San Diego government row exists with chambers for Mayor, City Council (9 districts), City Attorney, and relevant Tier 2-4 offices
   2. Mayor + all 9 Council Members + City Attorney are seeded as politicians with linked office rows
   3. A San Diego address lookup returns the correct Council Member for that address
-  4. All seeded San Diego officials have headshots at 600Ã—750 in Supabase Storage
+  4. All seeded San Diego officials have headshots at 600×750 in Supabase Storage
 
 Plans:
 
 - [x] 65-01-PLAN.md — San Diego government structure + chambers + offices
 - [x] 65-02-PLAN.md — San Diego incumbents + office links
-- [x] 65-03-PLAN.md — San Diego headshots: source + upload 600Ã—750
+- [x] 65-03-PLAN.md — San Diego headshots: source + upload 600×750
 
 **Completed: 2026-05-22** — All 4 success criteria met; 11/11 headshots uploaded; SD City Hall lookup returns Stephen Whitburn (District 3) + citywide officials (Mayor Gloria + City Attorney Ferbert)
 
-### âœ… Phase 66: Sacramento Deep Seed — COMPLETE (2026-05-28)
+### ✅ Phase 66: Sacramento Deep Seed — COMPLETE (2026-05-28)
 
 **Goal**: Sacramento is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Sacramento address returns a complete local officials list
 **Depends on**: Phase 57 (Sacramento city boundary loaded)
@@ -430,17 +431,17 @@ Plans:
   1. Sacramento government row exists with chambers for Mayor and City Council (8 districts)
   2. Mayor + all 8 Council Members are seeded as politicians with linked office rows
   3. A Sacramento address lookup returns the correct Council Member for that address
-  4. All seeded Sacramento officials have headshots at 600Ã—750 in Supabase Storage
+  4. All seeded Sacramento officials have headshots at 600×750 in Supabase Storage
 
 Plans:
 
 - [x] 66-01-PLAN.md — Sacramento government structure + chambers + offices
 - [x] 66-02-PLAN.md — Sacramento incumbents + office links
-- [x] 66-03-PLAN.md — Sacramento headshots: source + upload 600Ã—750
+- [x] 66-03-PLAN.md — Sacramento headshots: source + upload 600×750
 
 **Completed: 2026-05-28** — All 4 success criteria met; 9 officials seeded; Sacramento address lookup returns correct District Council Member
 
-### âœ… Phase 67: Fremont Deep Seed — COMPLETE (2026-05-22)
+### ✅ Phase 67: Fremont Deep Seed — COMPLETE (2026-05-22)
 
 **Goal**: Fremont is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Fremont address returns a complete local officials list
 **Depends on**: Phase 57 (Fremont city boundary loaded)
@@ -450,17 +451,17 @@ Plans:
   1. Fremont government row exists with chambers for Mayor and City Council (at-large or district model confirmed)
   2. Mayor + all Council Members are seeded as politicians with linked office rows
   3. A Fremont address lookup returns city officials without routing errors
-  4. All seeded Fremont officials have headshots at 600Ã—750 in Supabase Storage
+  4. All seeded Fremont officials have headshots at 600×750 in Supabase Storage
 
 **Plans:** 3 plans
 
 Plans:
 
-- [x] 67-01-PLAN.md ï¿½ Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
-- [x] 67-02-PLAN.md ï¿½ 7 officials seed (Mayor + 6 council) + section-split check + migration 211
-- [x] 67-03-PLAN.md ï¿½ Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
+- [x] 67-01-PLAN.md — Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
+- [x] 67-02-PLAN.md — 7 officials seed (Mayor + 6 council) + section-split check + migration 211
+- [x] 67-03-PLAN.md — Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
 
-**Completed: 2026-05-22** — All 4 success criteria met; 7/7 headshots uploaded; Fremont City Hall (-121.9886, 37.5483) â†’ fremont-council-district-3 â†’ Kathy Kimberlin (D3); Mayor Raj Salwan linked via LOCAL_EXEC district
+**Completed: 2026-05-22** — All 4 success criteria met; 7/7 headshots uploaded; Fremont City Hall (-121.9886, 37.5483) → fremont-council-district-3 → Kathy Kimberlin (D3); Mayor Raj Salwan linked via LOCAL_EXEC district
 
 ### Phase 68: Berkeley Deep Seed
 
@@ -472,7 +473,7 @@ Plans:
   1. Berkeley government row exists with chambers for Mayor and City Council (8 districts + at-large seats per Berkeley charter)
   2. Mayor + all Council Members are seeded as politicians with linked office rows; Mayor office has election_method='rcv' noted for future elections
   3. A Berkeley address lookup returns the correct District Council Member for that address
-  4. All seeded Berkeley officials have headshots at 600Ã—750 in Supabase Storage
+  4. All seeded Berkeley officials have headshots at 600×750 in Supabase Storage
 
 **Plans:** 3 plans
 
@@ -508,7 +509,7 @@ Plans:
 - [x] 69-03-PLAN.md — CA US House 52 race rows migration + discovery_jurisdictions armed
 - [x] 69-04-PLAN.md — City discovery_jurisdictions rows (7 cities) + smoke test all cron_active rows
 
-### âœ… Phase 70: Compass Stances — COMPLETE (2026-05-29)
+### ✅ Phase 70: Compass Stances — COMPLETE (2026-05-29)
 
 **Goal**: Compass stances are ingested for CA constitutional officers, federal officials, and city council members across all 7 CA cities where public record exists
 **Depends on**: Phases 59-68 (all officials seeded), Phase 69 (discovery armed)
@@ -555,7 +556,7 @@ Plans:
 </details>
 
 <details>
-<summary>âœ… v8.0 Oregon (Phases 72-81) — SHIPPED 2026-05-31</summary>
+<summary>✅ v8.0 Oregon (Phases 72-81) — SHIPPED 2026-05-31</summary>
 
 ### Phase 72: Portland, OR (OR Geofences)
 
@@ -605,14 +606,14 @@ Plans:
   1. 5 OR constitutional officers seeded: Governor (Kotek), AG (Rayfield), SoS (Griffin-Valade), Treasurer (Steiner), Labor Commissioner (Stephenson)
   2. Both OR US Senators (Wyden + Merkley) seeded with offices linked to NATIONAL_UPPER district
   3. All 6 OR US House reps seeded with offices linked to NATIONAL_LOWER districts CD-01 through CD-06
-  4. All 13 officials have headshots in Supabase Storage at 600Ã—750
+  4. All 13 officials have headshots in Supabase Storage at 600×750
   5. An OR address lookup returns the correct US Representative name matching the congressional district boundary
 
 **Plans**:
 
 - [x] 74-01-PLAN.md — Migration: 5 OR STATE_EXEC districts + 5 executive politicians + offices
 - [x] 74-02-PLAN.md — Migration: 2 OR US Senators + 6 US House reps + offices linked to NATIONAL districts
-- [x] 74-03-PLAN.md — Headshots: source + upload 600Ã—750 for all 13 OR federal + executive officials
+- [x] 74-03-PLAN.md — Headshots: source + upload 600×750 for all 13 OR federal + executive officials
 
 ### Phase 75: OR State Legislature
 
@@ -622,7 +623,7 @@ Plans:
 
   1. All 30 OR state senators seeded with offices linked to STATE_UPPER districts SD-01 through SD-30
   2. All 60 OR house reps seeded with offices linked to STATE_LOWER districts HD-01 through HD-60
-  3. All 90 legislators have headshots in Supabase Storage at 600Ã—750
+  3. All 90 legislators have headshots in Supabase Storage at 600×750
   4. An OR address lookup returns the correct state senator and house rep for that address
 
 **Plans**:
@@ -636,7 +637,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [x] 75-03-PLAN.md — Headshots: oregonlegislature.gov source + upload 600Ã—750 for all 90 legislators
+- [x] 75-03-PLAN.md — Headshots: oregonlegislature.gov source + upload 600×750 for all 90 legislators
 
 **Cross-cutting constraints:**
 
@@ -668,7 +669,7 @@ Plans:
   1. Portland government row exists with chambers for Mayor, City Council (12 offices across 4 districts), City Attorney, City Auditor, City Administrator
   2. Mayor Keith Wilson + all 12 council members (from Districts 1-4) + appointed City Attorney (Robert L. Taylor) + City Auditor (Simone Rede) + appointed City Administrator (Raymond C. Lee III) seeded with offices
   3. A Portland address lookup returns all 3 council members for the matched district plus Mayor
-  4. All elected Portland officials have headshots at 600Ã—750 in Supabase Storage
+  4. All elected Portland officials have headshots at 600×750 in Supabase Storage
 
 **Plans**:
 
@@ -703,7 +704,7 @@ Plans:
   4. OR US House 2026 race rows exist for all 6 CDs with discovery armed
   5. Portland city council 2026 race rows exist (if any seats are up) with discovery armed
   6. discovery_jurisdictions rows exist for Portland with cron_active=true (per RESEARCH.md: column does not exist; armed via election_date 180-day cron window)
-Plans:
+Plans:
 **Wave 1**
 
 - [x] 79-01-PLAN.md - Landing.jsx Portland OR entry + migration 237 (OR 2026 Primary + General election rows)
@@ -778,19 +779,37 @@ Plans:
 
 ### Phase 82: OR State Legislature Compass Stances
 
-**Goal:** [To be planned]
-**Requirements**: TBD
-**Depends on:** Phase 81
-**Plans:** 0 plans
+**Goal**: Compass stances are researched and ingested for all 90 OR state legislators (30 senators + 60 house reps), making Oregon the first state with full legislature-wide compass coverage
+**Depends on**: Phase 81 (all 90 OR legislators seeded with politician_ids; OR 2026 elections armed)
+**Requirements**: STANCE-01, STANCE-02, STANCE-03, STANCE-04, QUALITY-01, QUALITY-02, QUALITY-03
+**Success Criteria** (what must be TRUE):
+
+  1. At least one compass answer exists in inform.politician_answers for every OR state senator or house rep who has a verifiable public stance on any applicable compass topic — legislators with no discoverable stance record are documented as not-found
+  2. All ingested stance values are integers 1-5 and every row includes a citation URL from public record — no uncited stance values exist in the database for any OR legislator
+  3. A numbered SQL migration (starting at migration 242) applies all stance values to production; the migration is idempotent and includes a ledger entry
+  4. The compass renders correctly on profile pages for at least 3 senator and 3 house rep profiles without errors (human-verified spot-check)
+  5. All stance research agents ran sequentially one-at-a-time; no parallel agent runs occurred during this phase
+
+**Plans**: 3 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 82 to break down)
+**Wave 1**
+
+- [ ] 82-01-PLAN.md — Stance research + ingestion: all 30 OR state senators (SD-01 through SD-30), one-at-a-time; document not-found legislators; produce migration 242
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 82-02-PLAN.md — Stance research + ingestion: all 60 OR house reps (HD-01 through HD-60), one-at-a-time; document not-found legislators; produce migration 243
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 82-03-PLAN.md — Verification: SQL coverage gates (senator count, house count, value-range 1-5, citation NOT NULL) + spot-check compass render on 3 senator + 3 house rep profiles + phase close
 
 ## Backlog
 
 These are known gaps that are not yet scoped into a milestone.
 
-### âœ… Phase 48: MA Towns (G4040 COUSUB Boundaries) — COMPLETE 2026-05-18
+### ✅ Phase 48: MA Towns (G4040 COUSUB Boundaries) — COMPLETE 2026-05-18
 
 **Goal**: Load G4040 COUSUB boundaries for all 293 MA towns (Lexington, Concord, Belmont, etc.) so non-city MA residents get a LOCAL boundary row and city officials routing
 **Depends on**: Phase 38 (MA TIGER loader established)
@@ -813,13 +832,14 @@ Plans:
 ## Progress
 
 **Execution Order:**
-v2.2 (parked): 8 â†’ 9 â†’ 10 â†’ 11
-v3.0: 12 â†’ 13 â†’ 14 â†’ 15 (and 12 â†’ 16 in parallel) â†’ 17 (after 14) â†’ 18 (after 13)
-v3.1: 22 â†’ 23 â†’ 24 â†’ 25 (25 gated on 22 retirement decision)
-v3.2: 26 â†’ 27 â†’ 28 (after 27) â†’ 29 (after 27) â†’ 30 (after 27) â†’ 31 (after 29) â†’ 32 (after 28+31)
-v5.0: 37 â†’ 38+39 (parallel) â†’ 40 (after 38+39) â†’ 41 (after 39) â†’ 42 (after 41) â†’ 44 (after 41+38) â†’ 45 (after 44) â†’ 46 (when accounts team delivers stances) â†’ 47 (cleanup, after 46)
-v6.0: 49 â†’ 50 (after 49) â†’ 51+52 (parallel, both after 50) â†’ 53 (after 49+50) â†’ 54+55 (parallel, both after 53) â†’ 56 (after all)
-v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†’ 61 (after 57+59) â†’ 62 (after 58+59) â†’ 63â†’64â†’65â†’66â†’67â†’68 (each after 57; sequential by convention) â†’ 69 (after 62-68) â†’ 70 (after 69) â†’ 78 (after 70; replaces 71)
+v2.2 (parked): 8 → 9 → 10 → 11
+v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 18 (after 13)
+v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
+v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29) → 32 (after 28+31)
+v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (after 41) → 44 (after 41+38) → 45 (after 44) → 46 (when accounts team delivers stances) → 47 (cleanup, after 46)
+v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+50) → 54+55 (parallel, both after 53) → 56 (after all)
+v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+59) → 62 (after 58+59) → 63→64→65→66→67→68 (each after 57; sequential by convention) → 69 (after 62-68) → 70 (after 69) → 78 (after 70; replaces 71)
+v9.0: 82-01 → 82-02 (after 82-01) → 82-03 (after 82-02)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -848,17 +868,17 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 23. New LOCAL Compass Topics | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
 | 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 26. Campaign Finance Gap Closure | v3.2 âœ… | 1/1 | Complete | 2026-05-07 |
-| 27. Judicial Compass DB | v3.2 âœ… | 3/3 | Complete | 2026-05-06 |
-| 28. Judicial Compass Frontend + Communities | v3.2 âœ… | 2/2 | Complete | 2026-05-07 |
-| 29. Bar Evaluation Data | v3.2 âœ… | 3/3 | Complete | 2026-05-09 |
-| 30. Legal Candidate Stance Research | v3.2 âœ… | 3/3 | Complete | 2026-05-09 |
-| 31. Legal Donor Activity | v3.2 âœ… | 4/4 | Complete | 2026-05-09 |
-| 32. Legal Profile Page Fixes | v3.2 âœ… | 1/1 | Complete | 2026-05-10 |
-| 33. Local Lens State System | v4.0 âœ… | 1/1 | Complete | 2026-05-12 |
-| 34. Mini Compass Tile Component | v4.0 âœ… | 3/3 | Complete | 2026-05-13 |
-| 35. Hover Modal — Full Compass | v4.0 âœ… | 0/TBD | Parked | - |
-| 36. Global Controls + Compass Default | v4.0 âœ… | 3/3 | Complete | 2026-05-14 |
+| 26. Campaign Finance Gap Closure | v3.2 ✅ | 1/1 | Complete | 2026-05-07 |
+| 27. Judicial Compass DB | v3.2 ✅ | 3/3 | Complete | 2026-05-06 |
+| 28. Judicial Compass Frontend + Communities | v3.2 ✅ | 2/2 | Complete | 2026-05-07 |
+| 29. Bar Evaluation Data | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
+| 30. Legal Candidate Stance Research | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
+| 31. Legal Donor Activity | v3.2 ✅ | 4/4 | Complete | 2026-05-09 |
+| 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
+| 33. Local Lens State System | v4.0 ✅ | 1/1 | Complete | 2026-05-12 |
+| 34. Mini Compass Tile Component | v4.0 ✅ | 3/3 | Complete | 2026-05-13 |
+| 35. Hover Modal — Full Compass | v4.0 ✅ | 0/TBD | Parked | - |
+| 36. Global Controls + Compass Default | v4.0 ✅ | 3/3 | Complete | 2026-05-14 |
 | 37. Playbook Draft | v5.0 | 1/1 | Complete | 2026-05-16 |
 | 38. MA Geofences | v5.0 | 2/2 | Complete | 2026-05-16 |
 | 39. MA Government DB | v5.0 | 3/3 | Complete | 2026-05-16 |
@@ -891,16 +911,17 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 66. Sacramento Deep Seed | v7.0 | 3/3 | Complete | 2026-05-28 |
 | 67. Fremont Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
 | 68. Berkeley Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete    | 2026-05-28 |
+| 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete | 2026-05-28 |
 | 70. Compass Stances | v7.0 | 3/3 | Complete | 2026-05-29 |
 | ~~71. Playbook Retrospective~~ | v7.0 | - | Folded into Phase 78 | 2026-05-29 |
-| 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete    | 2026-05-28 |
-| 73. OR Government DB Foundation | v8.0 | 1/1 | Complete    | 2026-05-29 |
-| 74. OR Executives + Federal Officials | v8.0 | 3/3 | Complete    | 2026-05-29 |
-| 75. OR State Legislature | v8.0 | 3/3 | Complete    | 2026-05-30 |
-| 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete    | 2026-05-29 |
+| 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete | 2026-05-28 |
+| 73. OR Government DB Foundation | v8.0 | 1/1 | Complete | 2026-05-29 |
+| 74. OR Executives + Federal Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
+| 75. OR State Legislature | v8.0 | 3/3 | Complete | 2026-05-30 |
+| 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete | 2026-05-29 |
 | 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
-| 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
-| 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete    | 2026-05-30 |
-| 80. OR Compass Stances | v8.0 | 4/4 | Complete    | 2026-05-31 |
-| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete    | 2026-05-31 |
+| 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete | 2026-05-30 |
+| 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete | 2026-05-30 |
+| 80. OR Compass Stances | v8.0 | 4/4 | Complete | 2026-05-31 |
+| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
+| 82. OR State Legislature Compass Stances | v9.0 | 0/3 | Not started | - |

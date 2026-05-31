@@ -47,10 +47,19 @@ These are known needs deferred to subsequent milestones:
 
 ## Traceability
 
-| Phase | Requirements |
-|-------|-------------|
-| 82: OR State Legislature Compass Stances | STANCE-01, STANCE-02, STANCE-03, STANCE-04, QUALITY-01, QUALITY-02, QUALITY-03 |
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| STANCE-01 | Phase 82: OR State Legislature Compass Stances | Pending |
+| STANCE-02 | Phase 82: OR State Legislature Compass Stances | Pending |
+| STANCE-03 | Phase 82: OR State Legislature Compass Stances | Pending |
+| STANCE-04 | Phase 82: OR State Legislature Compass Stances | Pending |
+| QUALITY-01 | Phase 82: OR State Legislature Compass Stances | Pending |
+| QUALITY-02 | Phase 82: OR State Legislature Compass Stances | Pending |
+| QUALITY-03 | Phase 82: OR State Legislature Compass Stances | Pending |
+
+**Coverage:** 7/7 requirements mapped — 100%
 
 ---
 
 *Created: 2026-05-31 — v9.0 Oregon Legislature Stances*
+*Traceability updated: 2026-05-31 — Phase 82 roadmap defined*

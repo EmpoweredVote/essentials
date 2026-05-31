@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v9.0
 milestone_name: Oregon Legislature Stances
-status: planning
-last_updated: "2026-05-31T14:35:29.461Z"
+status: active
+last_updated: "2026-05-31"
 last_activity: 2026-05-31
 progress:
-  total_phases: 0
+  total_phases: 1
   completed_phases: 0
-  total_plans: 0
+  total_plans: 3
   completed_plans: 0
   percent: 0
 ---
@@ -17,17 +17,17 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 82 — OR State Legislature Compass Stances
 Plan: —
-Status: Defining requirements
-Last activity: 2026-05-31 — Milestone v9.0 started
+Status: Roadmap defined — ready to plan Phase 82
+Last activity: 2026-05-31 — v9.0 roadmap created; Phase 82 fleshed out with 3-plan wave structure
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Between milestones — v7.0 California + v8.0 Oregon archived; next milestone scope TBD
+**Current focus:** v9.0 Oregon Legislature Stances — research and ingest compass stances for all 90 OR state legislators
 
 ## Accumulated Context
 
@@ -35,6 +35,22 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 
 - Phase 77.1 inserted after Phase 77: Fix Phase 77 data: set politicians.is_appointed=true for Lee III and Taylor (URGENT)
 - Phase 82 added: OR State Legislature Compass Stances
+- Phase 82 fleshed out (2026-05-31): 3 plans, wave structure (Wave 1 = senators, Wave 2 = house reps, Wave 3 = verification)
+
+### v9.0 Phase 82 Key Facts
+
+- 90 legislators already seeded in DB from Phase 75 (30 senators + 60 house reps); all have politician_ids
+- External_id ranges: OR senators seeded in migration 226; OR house reps seeded in migration 227
+- Next migration number: 242 (migration 241 = last OR discovery_jurisdictions migration from Phase 79)
+- Stance values are integers 1-5, written to inform.politician_answers
+- Evidence-only standard: every stance requires a citation URL from public record
+- Agents run ONE AT A TIME — never parallel (hard project constraint; rate limit enforcement)
+- Legislators with zero discoverable stances are documented as not-found — this is acceptable
+- Wave 1: 30 senators (82-01-PLAN.md) — migration 242
+- Wave 2: 60 house reps (82-02-PLAN.md) — migration 243
+- Wave 3: verification + spot-check (82-03-PLAN.md)
+- Prior comparable phases: Phase 80 (24 OR officials, 4 plans, 321 stances); Phase 70 (68 CA officials, 3 plans, 965 stances)
+- oregonlegislature.gov is the authoritative source for legislator bios and policy records
 
 ### Key Decisions (carry forward)
 
@@ -128,87 +144,6 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - **Berkeley government structure (migration 213 applied 2026-05-22)**: 1 government (name='City of Berkeley', state='CA', geo_id='0606000'), 3 chambers (Mayor + City Council + City Auditor — ALL with Phase 69 RCV TODO comment), 8 LOCAL districts (berkeley-council-district-{1-8}), 1 LOCAL_EXEC district (geo_id='0606000'). NO City Attorney chamber (appointed). BOTH Mayor and Auditor share the single LOCAL_EXEC district.
 - **Berkeley officials seeded (Phase 68-02 complete 2026-05-22)**: 10 politicians; external_ids -680001 (Mayor Ishii), -680002 (Auditor Jenny Wong — NOT Hogan), -680010..-680017 (council D1-D8: Kesarwani/Taplin/Bartlett/Tregub/O'Keefe/Blackaby/Lunaparra/Humbert); all 10 have office_id back-filled; all offices is_appointed_position=false; council titles 'Council Member (District N)'; Mayor+Auditor linked to geo_id='0606000' LOCAL_EXEC; Berkeley City Hall routing confirmed: ST_Covers (-122.2726, 37.8709) → berkeley-council-district-4 → Igor Tregub; section-split detector 0 rows; NO City Attorney (appointed, not elected)
 - **Berkeley -680xxx external_id range**: pre-flight confirmed clear (0 rows 2026-05-22) — reserved for 68-02 officials seed (-680001=Mayor, -680002=Auditor, -680010..-680017=council D1-D8)
-- **Next migration is 215** (214 applied 2026-05-22: Berkeley officials seed — 10 politicians + 10 offices + office_id back-fill; 213 applied 2026-05-22: Berkeley govt structure; 212_fremont_headshots.sql is AUDIT-ONLY, not in ledger sequence; 211 applied 2026-05-22: Fremont officials seed — 7 politicians + 7 offices + office_id back-fill; 210 applied 2026-05-22: Fremont government structure — 1 government, 2 chambers, 6 LOCAL districts + 1 LOCAL_EXEC district; 209_sd_headshots.sql is AUDIT-ONLY, not in ledger sequence; 208 applied 2026-05-22: SD officials seed — 11 politicians + 11 offices + office_id back-fill; 207 applied 2026-05-22: SD government structure — 1 government, 3 chambers, 10 districts; 206 applied 2026-05-22: SF officials seed — 20 politicians + 20 offices; 205 applied 2026-05-22: SF government structure — 1 government, 10 chambers, 12 districts; 200 applied 2026-05-22: SF headshots audit-only — 20 politician_images INSERTs; 198_lausd_board_seed.sql exists in supabase/migrations but was never applied — skip it)
-- **SD council district geofences (Phase 65-01 complete 2026-05-22)**: 9 rows in geofence_boundaries, geo_id='sd-council-district-{1-9}', mtfcc='X0007', state='06', source='sd_city_council_districts_2022'. Loader: load-sd-council-boundaries.ts (C:/EV-Accounts/backend/scripts). CRITICAL: outSR=4326 required — webmaps.sandiego.gov uses State Plane WKID 2230 (feet). DISTRICT integer field used for name (NOT NAME field — holds council member name, changes with elections).
-- **SD government UUID**: 7efdfa12-88b2-482d-9379-84a7341bebc5 — use subquery by name in migrations, not hardcoded UUID
-- **SD chambers created**: City Council (name='City Council', name_formal='San Diego City Council'), Mayor (name='Mayor', name_formal='Mayor of San Diego'), City Attorney (name='City Attorney', name_formal='San Diego City Attorney') — all under SD government
-- **SD districts created**: 9 LOCAL (sd-council-district-1 through 9, state='CA') + 1 LOCAL_EXEC (geo_id='0666000', label='San Diego (Citywide)', state='CA') for Mayor + City Attorney offices
-- **SD City Hall routing confirmed**: (-117.1546, 32.7157) -> sd-council-district-3 (District 3 — Stephen Whitburn); use in 65-02 routing verification
-- **X0007 MTFCC**: claimed for SD council districts (X0005=LA County supervisors, X0006=SF supervisors, X0007=SD council)
-- **SD external_id range -651000..-650000**: confirmed clear (0 rows pre-flight 2026-05-22) — reserved for 65-02 SD officials seed
-- **SD officials seeded (Phase 65-02 complete 2026-05-22)**: 11 politicians; external_ids -650001 (Mayor Gloria), -650002 (City Attorney Ferbert), -650010..-650018 (council D1-D9); all 11 have office_id back-filled; all offices is_appointed_position=false; titles: Mayor/City Attorney/Council Member (9x); SD City Hall routing confirmed: ST_Covers (-117.1546, 32.7157) → sd-council-district-3 → Stephen Whitburn (end-to-end); section-split detector 0 rows; next migration is 209
-- **Fremont geofences (Phase 67-01 complete 2026-05-22)**: 6 rows in geofence_boundaries, geo_id='fremont-council-district-{1-6}', mtfcc='X0008', state='06', source='fremont_city_council_districts_2022'. Loader: load-fremont-council-boundaries.ts (C:/EV-Accounts/backend/scripts). CRITICAL: outSR=4326 required — Fremont ArcGIS uses State Plane CA Zone 3 (WKID 102643). DISTRICT integer field used (NOT MAP_LABEL — holds council member name, changes with elections). Fremont City Hall (-121.9886, 37.5483) → fremont-council-district-3.
-- **Fremont government structure (migration 210 applied 2026-05-22)**: 1 government (name='City of Fremont', state='CA', geo_id='0626000'), 2 chambers (City Council + Mayor — NO City Attorney, appointed position), 6 LOCAL districts (fremont-council-district-{1-6}), 1 LOCAL_EXEC district (geo_id='0626000'). Next migration is 212.
-- **Fremont officials seeded (Phase 67-02 complete 2026-05-22)**: 7 politicians; external_ids -670001 (Mayor Salwan), -670010..-670015 (council D1-D6: Keng/Campbell/Kimberlin/Shao/Zhang/Liu); all 7 have office_id back-filled; all offices is_appointed_position=false; titles: Mayor/Council Member (6x); Fremont City Hall routing confirmed: ST_Covers (-121.9886, 37.5483) → fremont-council-district-3 → Kathy Kimberlin (end-to-end); section-split detector 0 rows
-- **Fremont headshots complete (Phase 67-03 complete 2026-05-22)**: 7/7 officials; all from fremont.gov (public_domain); fremont.gov 403 bypassed via Node.js browser User-Agent + Referer header — extracted /home/showpublishedimage/{id}/{timestamp} CDN paths, confirmed downloadable; source originals 400x600 (2:3), cropped from top to 400x500 (4:5), resized to 600x750 Lanczos q90; Raj Salwan Wikipedia CC0 verified but fremont.gov portrait used; Storage path {politician_id}-headshot.jpg; 212_fremont_headshots.sql is AUDIT-ONLY; next applied Supabase migration is 213; Phase 67 fully complete
-- **X0008 MTFCC**: claimed for Fremont council districts (X0005=LA County supervisors, X0006=SF supervisors, X0007=SD council, X0008=Fremont council)
-- **X0010 MTFCC**: claimed for SJ council districts; geo_ids='sj-council-district-{1-10}'; state='06'; source='sj_city_council_districts_2022'; ArcGIS field is DISTRICTINT (integer 1-10, not DISTRICT); outSR=4326 required (WKID 102643 native); SJ City Hall (-121.88, 37.335) → sj-council-district-3; Oakland → 0 rows (Phase 64-01 complete 2026-05-23)
-- **SJ government structure (migration 217 applied 2026-05-23)**: 1 government (name='City of San Jose', state='CA', geo_id='0668000'), 2 chambers ONLY (Mayor + City Council — City Attorney AND City Auditor are APPOINTED per SJ Charter, no chambers for either), 10 LOCAL districts (sj-council-district-{1-10}), 1 LOCAL_EXEC district (geo_id='0668000', label='San Jose (Citywide)'). TODO Phase 69: set election_method='RCV' on both chambers (SJ uses RCV)
-- **SJ external_id range**: Mayor=-640001, Council D1-D10=-640010..-640019; confirmed clear pre-flight (64-RESEARCH.md 2026-05-22)
-- **SJ ArcGIS endpoint**: geo.sanjoseca.gov/server/rest/services/OPN/OPN_OpenDataService/MapServer/120 — returns DISTRICTINT + COUNCILMEMBER fields; 10 features; outSR=4326 required
-- **SJ officials seeded (Phase 64-02 complete 2026-05-23)**: 11 politicians; external_ids -640001 (Mayor Mahan), -640010..-640019 (council D1-D10: Kamei/Campos/Tordillos/Cohen/Ortiz/Mulcahy/Doan/Candelas/Foley/Casey); all 11 have office_id back-filled; all offices is_appointed_position=false; council titles 'Council Member (District N)'; Mayor linked to geo_id='0668000' LOCAL_EXEC; SJ City Hall routing confirmed: ST_Covers (-121.88, 37.335) → sj-council-district-3 → Anthony Tordillos; Mayor routing confirmed: Matt Mahan via geo_id=0668000; section-split detector 0 rows; NO City Attorney/Auditor (both appointed per SJ Charter); CRITICAL: geofence_boundaries.state='06' does NOT match districts.state='CA' — routing join must be on geo_id only, not state
-- **SJ government UUID**: 47c9ce0a-401e-46d8-ae63-89266584b39a ΓÇö use subquery by name in migrations, not hardcoded UUID
-- **Sacramento council district geofences (Phase 66-01 complete 2026-05-23)**: 8 rows in geofence_boundaries, geo_id='sacramento-council-district-{1-8}', mtfcc='X0011', state='06', source='sacramento_city_council_districts_2021'. Loader: load-sacramento-council-boundaries.ts (C:/EV-Accounts/backend/scripts). CRITICAL: outSR=4326 required — saccounty.net ArcGIS uses State Plane CA Zone II (WKID 102642, feet). Field is DISTNUM (integer 1-8, not DISTRICTINT like SJ). Sacramento City Hall (-121.4944, 38.5816) → sacramento-council-district-4.
-- **X0011 MTFCC**: claimed for Sacramento council districts (X0005=LA County, X0006=SF, X0007=SD, X0008=Fremont, X0009=Berkeley, X0010=SJ, X0011=Sacramento)
-- **Sacramento ArcGIS source**: mapservices.gis.saccounty.net/arcgis/rest/services/CITY_of_SACRAMENTO/MapServer/5 — returns DISTNUM + COUNCIL fields; 8 features; outSR=4326 required
-- **Sacramento government structure (migration 219 applied 2026-05-23)**: 1 government (name='City of Sacramento', state='CA', geo_id='0664000'), 2 chambers ONLY (Mayor + City Council — City Attorney, Auditor, Treasurer, Clerk all APPOINTED per Sacramento City Charter, confirmed by appointment records), 8 LOCAL districts (sacramento-council-district-{1-8}), 1 LOCAL_EXEC district (geo_id='0664000', label='Sacramento (Citywide)'). Sacramento uses two-round runoff — NO RCV TODO (Better Ballot Sacramento initiative collecting signatures, not yet on ballot as of 2026-05-23)
-- **Sacramento external_id range plan**: Mayor=-660001, Council D1-D8=-660010..-660017 (to be confirmed in 66-02 plan)
-- **SJ headshots complete (Phase 64-03 complete 2026-05-23)**: 11/11 officials; Mayor Mahan from Wikimedia Commons (cc-by-sa-4.0); D1 Kamei + D6 Mulcahy from sanjoseca.gov (public_domain); D2 Campos from sjdistrict2.org (public_domain); D3 Tordillos from runonclimate.org (cc-by-sa-4.0, replaced post-upload); D4 Cohen from sanjosedistrict4.com (public_domain); D5 Ortiz + D7 Doan + D8 Candelas + D9 Foley from Wikimedia Commons (public_domain); D10 Casey from sjdistrict10.org (public_domain); all 600x750 JPEG q90 in Storage at {politician_id}-headshot.jpg; sj_headshots.sql written as audit-only; Matt Mahan duplicate (bb642e24 from Phase 62 CA Gov challenger) deleted + race_candidates re-pointed to canonical 41949a2b; Phase 64 FULLY COMPLETE
-- **Fremont City Attorney Rafael E. Alvarado Jr. is APPOINTED** by City Council — do NOT create City Attorney chamber or office row in any Fremont migration
-- **SD headshots complete (Phase 65-03 2026-05-22)**: 11/11 officials; all from official sandiego.gov (public_domain); all 600x750 JPEG; D4 Foster headshot confirmed correct despite cd7-henry-foster-iii.png CMS filename anomaly; Storage path {politician_id}-headshot.jpg; 209_sd_headshots.sql is AUDIT-ONLY (mirrors 200_sf_headshots.sql pattern); next applied Supabase migration is 210
-- **politician_images URLs for SD**: kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/{politician_id}-headshot.jpg
-- **SF officials seeded (Phase 63-02)**: 11 supervisors (ext -630001..-630011) + 7 citywide elected (ext -630020..-630026) + 2 appointed (ext -630027..-630028 Controller=Wagner, CityAdmin=Chu); is_appointed_position=true ONLY on Wagner+Chu; Mandelman has 1 office only (D8 Supervisor, no separate Board President row); next available ext is -630029
-- **SF headshots complete (Phase 63-03 2026-05-22)**: 20/20 officials; supervisors from sf.gov circular _profile.png (RGBA alpha=0 corners are outside 4:5 center crop -- no artifact); Miyamoto from Wikimedia Commons official SFSO portrait (public domain, 650x867); all other officials from media.api.sf.gov; sftreasurer.org for Cisneros; all 600x750 JPEG in Storage at {politician_id}-headshot.jpg; 200_sf_headshots.sql written as audit-only
-- **SF City Hall routing confirmed twice**: (-122.4194, 37.7793) → sf-supervisor-district-5 → Bilal Mahmood (D5 incumbent)
-- **SF government UUID**: bc3d780d-941e-475b-b07f-bc8dbcd300d3 — use subquery by name in migrations
-- **SF City Hall routing**: (-122.4194, 37.7793) → sf-supervisor-district-5 (District 5, Matt Dorsey territory — Civic Center/Hayes Valley)
-- **SF X0006 MTFCC**: claimed for SF supervisor districts (non-colliding with X0005=LA County)
-- **DataSF Socrata pattern confirmed**: no outSR=4326; sup_dist_num returns float (11.0); parseInt(String()) handles correctly
-- **essentials.districts confirmed schema**: column is 'label' not 'name'; no unique constraint on (geo_id, district_type) — use WHERE NOT EXISTS guards
-- **CA Governor challengers external_ids**: Becerra=-6003001, Bianco=-6003002, Hilton=-6003003, Mahan=-6003004, Porter=-6003005, Steyer=-6003006, Villaraigosa=-6003007, Yee=-6003008; slots -6003009..-6003013 reserved
-- **CA Governor race_candidates**: 43+ linked (all 9 Calmatters-sourced confirmed linked with correct external_ids as of migration 197)
-- **lavote.gov discovery row (migration 197)**: id=9fd492a8-895e-4bd7-91e7-81f9bfa2b3e2, jurisdiction_geoid='06037', election_date=2026-06-03, source_url contains ?id=4338; post-June-3 follow-up required for November general
-- **[GOTCHA] discovery agent creates politician rows with external_id=NULL** — before writing INSERT migrations for politicians, pre-check if rows already exist; use UPDATE to assign external_id, not INSERT
-- **[GOTCHA] discovery_jurisdictions requires junction_geoid (NOT NULL) and election_date (NOT NULL)** — always include both in INSERTs
-- **[POST-JUNE BACKLOG]** lavote.gov source_url needs new election ID for November 2026 general — update discovery_jurisdictions row id=9fd492a8
-- **CA State Senate senator external_ids: -6001001 (SD-01) through -6001040 (SD-40)** — migration 194 applied 2026-05-21
-- **CA Assembly member external_ids: -6002001 (AD-01) through -6002080 (AD-80)** — migration 195 applied 2026-05-21
-- **CA Assembly chamber**: name='California State Assembly', slug='california-state-assembly'; was seeded as 'Assembly' in pre-existing data — migration 195 renamed it to canonical form
-- **CA STATE_LOWER districts**: state='CA' (uppercase) — same pre-existing data pattern as STATE_UPPER; geo_id='06001'..'06080'; geofence_boundaries mtfcc='G5220'
-- **CA Assembly geo_id formula**: '06' || lpad(district_num::text, 3, '0') (e.g., AD-17 -> '06017')
-- **CA Assembly external_id formula**: -6002000 - district_num (e.g., AD-17 -> -6002017)
-- **Phase 61 COMPLETE (2026-05-21)**: 40 senators (-6001001..-6001040) + 80 assembly members (-6002001..-6002080) seeded; 120 headshots uploaded; SF routing verified (Wiener SD-11, Haney AD-17); 12/12 must-haves pass
-- **politician_images schema**: columns are id, politician_id, url, type, photo_license, focal_point — NO photo_origin_url column (plan docs were wrong; never use photo_origin_url)
-- **senate.ca.gov headshot source**: www.senate.ca.gov/senators page has all 40 senator headshots in data-src lazy-load attributes; use %25xx paths verbatim (double-encoded; do NOT decode); img.src contains 1x1 GIF placeholder
-- **SD-37 (Steven Choi) senate page**: sd37.senate.ca.gov redirects to senate.ca.gov — use centralized senators page instead
-- **CA Assembly headshots**: sourced from webapi.assembly.ca.gov/district-media/assets/members/assembly_member_NN.jpg (500×500 square, crop center to 400×500 then resize to 600×750)
-- **SF City Hall routing**: (-122.4191, 37.7792) -> Matt Haney (AD-17, geo_id='06017') — assembly routing confirmed 2026-05-21
-- **CA STATE_UPPER districts state='CA' (uppercase)** — pre-existing data loaded before TIGER loader; migration 194 uses state='CA' in WHERE clause for districts join
-- **CA districts.mtfcc is swapped**: STATE_UPPER has G5220, STATE_LOWER has G5210 (inverse of TIGER codes). Pre-existing data quality issue. Routing unaffected — essentialsService.ts joins on gb.mtfcc not d.mtfcc. Smoke tests must use the essentialsService join pattern, not raw d.mtfcc join.
-- **CA House rep external_ids use -60003xx scheme**: -6000301 (CD-01) through -6000352 (CD-52); the -100049..-100119 range is occupied by CA State Assembly members (pre-existing seed). Use -60003xx for all future CA House rep references.
-- **CA federal headshots (Phase 60 complete 2026-05-21)**: 35 headshots uploaded; unitedstates/images (450×550, public domain) for 30 reps; clerk.house.gov fallback for 5 new 119th Congress members not yet indexed (Simon, Gray, Liccardo, Fong, Min); storage path pattern: `{politician_id}-headshot.jpg`; politician_images uses `url` + `type` columns (not storage_path/is_primary)
-- **Pete Aguilar external_id is -6000204** (not -100097 as originally planned; -100097 = Josh Lowenthal CA Assembly)
-- **All 52 CA NATIONAL_LOWER CDs have office rows confirmed** (migration 193 applied 2026-05-21); total count is 53 because CD-29 has 2 rows (Luz Rivas active + Tony Cárdenas deactivated/is_vacant=true)
-- **SF Civic Center routing confirmed**: (-122.4191, 37.7792) → geofence_boundaries 0611 → districts NATIONAL_LOWER → offices → Nancy Pelosi (CD-11); column is `geometry` not `geom`
-- **Pete Aguilar external_id is -6000204** (not -100097 as originally planned; -100097 = Josh Lowenthal CA Assembly)
-- **Tony Cárdenas external_id is -6000203**; his CD-29 office row is_vacant=true; real CD-29 rep is Luz Maria Rivas (-100021)
-- Anna Bullett (Portland D4) CONFIRMED via Wikipedia Portland City Council (Maine) page 2026-05-19
-- essentials.offices has NO email column; individual emails stored on politicians.email_addresses (TEXT[] array) as ARRAY['addr@domain'] in INSERT VALUES
-- Tier 2 city external_id prefixes (5-digit): Lewiston=-23387xxxx, Bangor=-23027xxxx, SouthPortland=-23719xxxx, Auburn=-23020xxxx, Biddeford=-23048xxxx
-- South Portland Elyse Tipton holds BOTH Mayor AND Council Member (District 5) via ONE politician row (external_id=-237191001); dual-office confirmed working in production
-- Migration 180 applied 2026-05-19: 24 politicians (Lewiston 8 + Bangor 9 + South Portland 7), 25 office rows, idempotent
-- Biddeford council seats=10 (Mayor+7W+2AL), South Portland=8 (Mayor+5D+2AL), Westbrook Council=8 (Mayor+5W+2AL) — research inventory descriptions excluded Mayor from seat totals
-- Sanford/Ellsworth/Eastport mayor model = voter-elected on-council (defaulted; no council-selected evidence in research)
-- Plan 53-02 UPDATE pattern: match on (chamber_id, title) to identify office rows — no seat_label column
-
-### Known Architecture
-
-- Frontend: React 19/JSX + Vite + Tailwind CSS 4, deployed to Render
-- Backend: Express TypeScript at `C:\EV-Accounts`, deployed via Render push to `master`
-- Discovery files: lib/discoveryService.ts, lib/discoveryAgentRunner.ts, lib/discoveryCron.ts, cron/discoverySweep.ts, routes/essentialsDiscovery.ts, routes/stagingQueueAdmin.ts
-- Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
-- Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
-- TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
 - **Next migration is 229** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 219=Sacramento government structure; 220=Sacramento officials; 221=SJ stances; 222=OR government chambers; 223a=OR executive district fix; 223=OR executive officials; 224=OR federal officials; 225=OR executive headshots AUDIT-ONLY; 226=OR state senators (30); 227=OR state house (60); 228=OR legislature headshots AUDIT-ONLY; 209/212/200/215/225/228 are audit-only headshot sql)
 - **Sacramento officials seeded (migration 220, 2026-05-23)**: 9 politicians — Mayor Kevin McCarty (-660001), Council Members Lisa Kaplan (-660010, D1), Roger Dickinson (-660011, D2), Karina Talamantes (-660012, D3), Phil Pluckebaum (-660013, D4), Caity Maple (-660014, D5), Eric Guerra (-660015, D6), Rick Jennings II (-660016, D7), Mai Vang (-660017, D8); all 9 office_ids non-null; City Hall (-121.4944, 38.5816) routes to Phil Pluckebaum (D4); Mayor routes via LOCAL_EXEC district (geo_id='0664000'); Rick Jennings II: last_name='Jennings II' (generational suffix in both fields)
 - **Sacramento external_id range CONFIRMED**: Mayor=-660001, Council D1-D8=-660010..-660017 (migration 220 applied)
@@ -239,8 +174,17 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - Phase 10: Compass Stances Integration (CA/IN local politicians)
 - Phase 11: Indiana Local Races (Monroe County Commissioner, Clerk, Assessor, Township)
 
+### Known Architecture
+
+- Frontend: React 19/JSX + Vite + Tailwind CSS 4, deployed to Render
+- Backend: Express TypeScript at `C:\EV-Accounts`, deployed via Render push to `master`
+- Discovery files: lib/discoveryService.ts, lib/discoveryAgentRunner.ts, lib/discoveryCron.ts, cron/discoverySweep.ts, routes/essentialsDiscovery.ts, routes/stagingQueueAdmin.ts
+- Discovery routes mounted BEFORE adminRouter in index.ts (JWT interception prevention)
+- Cron schedule: Sunday 02:00 UTC (one hour before districtStaleness at 03:00 UTC)
+- TIGER loader: load-state-tiger-boundaries.ts — add Maine to STATE_LAYER_ALLOWLIST exactly as MA was added in Phase 38
+
 ## Session Continuity
 
-Last session: 2026-05-31T14:25:54.841Z
-Stopped at: context exhaustion at 75% (2026-05-31)
+Last session: 2026-05-31
+Stopped at: v9.0 roadmap created
 Resume file: None
