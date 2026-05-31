@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v10.0
 milestone_name: Multnomah County & School Boards
 status: planning
-last_updated: "2026-05-31T23:26:02.529Z"
+last_updated: "2026-05-31T23:59:00.000Z"
 last_activity: 2026-05-31
 progress:
-  total_phases: 0
+  total_phases: 7
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,17 +17,17 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Roadmap created — ready for Phase 83
 Plan: —
-Status: Defining requirements
-Last activity: 2026-05-31 — Milestone v10.0 started
+Status: Roadmap complete; planning Phase 83
+Last activity: 2026-05-31 — v10.0 roadmap created (phases 83–89, 33 requirements mapped)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v9.0 Oregon Legislature Stances — research and ingest compass stances for all 90 OR state legislators
+**Current focus:** v10.0 Multnomah County & School Boards — Phase 83: Multnomah County Government + Routing
 
 ## Accumulated Context
 
@@ -37,6 +37,19 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - Phase 82 added: OR State Legislature Compass Stances
 - Phase 82 fleshed out (2026-05-31): 3 plans, wave structure (Wave 1 = senators, Wave 2 = house reps, Wave 3 = verification)
 - Phase 82 COMPLETE (2026-05-31): all 7 requirements PASS; v9.0 shipped
+- Phases 83–89 roadmapped (2026-05-31): 7 phases, 33 requirements mapped, v10.0 roadmap complete
+
+### v10.0 Roadmap Summary
+
+| Phase | Name | Requirements | Goal |
+|-------|------|--------------|------|
+| 83 | Multnomah County Government + Routing | COUNTY-01..03, ROUTING-01 | County government body + 6 commissioners seeded; unincorporated routing clean |
+| 84 | Multnomah Smaller Cities | CITIES-01..06 | 5 city governments (Gresham/Troutdale/Fairview/Wood Village/Maywood Park) seeded |
+| 85 | Multnomah Elections + Discovery | ELECTIONS-01..03 | County + city 2026 race rows + discovery pipeline armed |
+| 86 | Multnomah County School Districts | OR-SCHOOL-01..04 | 6 school district G5420 geofences + board members seeded |
+| 87 | CA City School Boards | CA-SCHOOL-01..06 | 6 CA city school board G5420 geofences + board members seeded |
+| 88 | TX Collin County School Boards | TX-SCHOOL-01..05 | 5 Collin County ISD G5420 geofences + board members seeded |
+| 89 | IN + ME School Board Completion | IN-SCHOOL-01..02, ME-SCHOOL-01..03 | IPS 7 seats + Monroe County + 5 ME city school boards seeded |
 
 ### v9.0 Phase 82 Key Outcomes
 
@@ -53,7 +66,7 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 
 - 90 legislators already seeded in DB from Phase 75 (30 senators + 60 house reps); all have politician_ids
 - External_id ranges: OR senators seeded in migration 226; OR house reps seeded in migration 227
-- Next migration number: 242 (migration 241 = last OR discovery_jurisdictions migration from Phase 79)
+- Next migration number: 244 (migrations 242 + 243 consumed by Phase 82)
 - Stance values are integers 1-5, written to inform.politician_answers
 - Evidence-only standard: every stance requires a citation URL from public record
 - Agents run ONE AT A TIME — never parallel (hard project constraint; rate limit enforcement)
@@ -74,7 +87,7 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - Jurisdictions processed sequentially (never parallel) — exhausts Claude API rate limit quota
 - Citation required for every staged candidate — no citation = no staging entry (hallucination prevention)
 - Discovery agent uses claude-sonnet-4-6 (~$0.017/run); forced tool_choice=report_candidates for typed output
-- Migration numbering: 170 applied (ME federal officials); next is 185
+- Migration numbering: next is 244 (242=OR senators, 243=OR house reps applied in Phase 82)
 - **Problem:** TIGER PLACE vs. COUSUB layer choice — loading only G4110 (incorporated cities) means G4040 COUSUB (towns/townships) residents get no LOCAL routing. **Solution:** Load BOTH G4110 and G4040 layers if the state has significant non-G4110 population. **Maine example:** 23 G4110 cities only loaded in Phase 49 — most ME residents live in G4040 towns NOT yet loaded. **MA example:** 58 G4110 cities + 293 G4040 COUSUB towns (Phase 48, both layers loaded).
 - Cambridge congressional split (verified PostGIS): west/north = MA-05 geo_id='2505'; east/south/Inman = MA-07 geo_id='2507'
 - geo_id collision between G4020 (Middlesex County='25017') and G5220 (8th Bristol District='25017') is TIGER format quirk — mtfcc always disambiguates; no routing risk
@@ -156,7 +169,7 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - **Berkeley government structure (migration 213 applied 2026-05-22)**: 1 government (name='City of Berkeley', state='CA', geo_id='0606000'), 3 chambers (Mayor + City Council + City Auditor — ALL with Phase 69 RCV TODO comment), 8 LOCAL districts (berkeley-council-district-{1-8}), 1 LOCAL_EXEC district (geo_id='0606000'). NO City Attorney chamber (appointed). BOTH Mayor and Auditor share the single LOCAL_EXEC district.
 - **Berkeley officials seeded (Phase 68-02 complete 2026-05-22)**: 10 politicians; external_ids -680001 (Mayor Ishii), -680002 (Auditor Jenny Wong — NOT Hogan), -680010..-680017 (council D1-D8: Kesarwani/Taplin/Bartlett/Tregub/O'Keefe/Blackaby/Lunaparra/Humbert); all 10 have office_id back-filled; all offices is_appointed_position=false; council titles 'Council Member (District N)'; Mayor+Auditor linked to geo_id='0606000' LOCAL_EXEC; Berkeley City Hall routing confirmed: ST_Covers (-122.2726, 37.8709) → berkeley-council-district-4 → Igor Tregub; section-split detector 0 rows; NO City Attorney (appointed, not elected)
 - **Berkeley -680xxx external_id range**: pre-flight confirmed clear (0 rows 2026-05-22) — reserved for 68-02 officials seed (-680001=Mayor, -680002=Auditor, -680010..-680017=council D1-D8)
-- **Next migration is 229** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 219=Sacramento government structure; 220=Sacramento officials; 221=SJ stances; 222=OR government chambers; 223a=OR executive district fix; 223=OR executive officials; 224=OR federal officials; 225=OR executive headshots AUDIT-ONLY; 226=OR state senators (30); 227=OR state house (60); 228=OR legislature headshots AUDIT-ONLY; 209/212/200/215/225/228 are audit-only headshot sql)
+- **Next migration is 244** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 219=Sacramento government structure; 220=Sacramento officials; 221=SJ stances; 222=OR government chambers; 223a=OR executive district fix; 223=OR executive officials; 224=OR federal officials; 225=OR executive headshots AUDIT-ONLY; 226=OR state senators (30); 227=OR state house (60); 228=OR legislature headshots AUDIT-ONLY; 209/212/200/215/225/228 are audit-only headshot sql; 242=OR senate stances; 243=OR house stances)
 - **Sacramento officials seeded (migration 220, 2026-05-23)**: 9 politicians — Mayor Kevin McCarty (-660001), Council Members Lisa Kaplan (-660010, D1), Roger Dickinson (-660011, D2), Karina Talamantes (-660012, D3), Phil Pluckebaum (-660013, D4), Caity Maple (-660014, D5), Eric Guerra (-660015, D6), Rick Jennings II (-660016, D7), Mai Vang (-660017, D8); all 9 office_ids non-null; City Hall (-121.4944, 38.5816) routes to Phil Pluckebaum (D4); Mayor routes via LOCAL_EXEC district (geo_id='0664000'); Rick Jennings II: last_name='Jennings II' (generational suffix in both fields)
 - **Sacramento external_id range CONFIRMED**: Mayor=-660001, Council D1-D8=-660010..-660017 (migration 220 applied)
 - **Sacramento headshots complete (Phase 66-03 complete 2026-05-28)**: 9/9 officials; all from cityofsacramento.gov (public_domain); CSS background-image pattern (AEM/CQ5 CMS — WebFetch can't extract; raw curl+grep required); square sources (McCarty/Pluckebaum/Jennings 514x514, Talamantes/Guerra/Vang 500x500) center-cropped to 4:5; tall sources top-cropped; all 600x750 JPEG q90; sac_headshots.sql is AUDIT-ONLY
@@ -169,6 +182,16 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - **Phase 75 headshot coverage (2026-05-29)**: 30/30 senators with photos, 60/60 house reps with photos; 0 documented gaps; oregonlegislature.gov MemberPhotos source; all 600x750 LANCZOS q90 upscale from ~115x130 (per D-05/D-06); non-obvious filename overrides: smithdb.jpg (SD-01), robinsonn.jpg (SD-02), andersond.jpg (SD-05), gelser.jpg (SD-08), starrb.jpg (SD-12), neron.jpg (SD-13), levye.jpg (HD-53 Emerson Levy), nguyend.jpg (HD-38 Daniel Nguyễn)
 - **Phase 82 Plan 82-01 (senators) complete (2026-05-31)**: 215 stances for 30 OR senators (SD-01..SD-30); migration 242 applied; all 30 senators have >= 3 stances; HIGH evidence senators (Sara Gelser Blouin, Rob Wagner, Lew Frederick, Christine Drazan) reached 10-12 stances
 - **Phase 82 Plan 82-02 (house reps) complete (2026-05-31)**: 321 stances for 60 OR house reps (HD-01..HD-60); migration 243 applied; all 60 house reps have >= 3 stances; HIGH evidence reps (Mark Gamba=9, Rob Nosse=9, Tawna Sanchez=9, Julie Fahey=10); Eastern OR members (HD-55..HD-60) capped at 3 per D-10 guidance; NO not-found CSVs — OLIS floor votes provided minimum evidence for all; Oregon is first state with full legislature-wide compass coverage (90 legislators, 536 stances combined)
+
+### v10.0 Starting Context
+
+- **Multnomah County geo_id**: 41051 (confirmed from OR TIGER load Phase 72-02)
+- **Portland geo_id**: 4159000 (G4110, confirmed Phase 72-02)
+- **OR TIGER already loaded** (Phase 72): all OR G4110 cities including Gresham (geo_id=4129850), Troutdale (4174950), Fairview (4123700), Wood Village (4183650), Maywood Park (4146100) — verify exact geo_ids via DB query before Phase 84 migrations
+- **district_type='SCHOOL'** is the correct value for school board districts (confirmed Phase 62-03 LAUSD pattern; essentialsService.ts uses this value)
+- **G5420 mtfcc** is the school district geofence type in TIGER UNSD files; TIGER UNSD = Unified School Districts shapefile; separate download from TIGER place/county/legislative files
+- **LAUSD pattern** (Phase 58/62): source shapefiles → load as distinct mtfcc (G5420) → create districts rows (district_type='SCHOOL') → create chamber + offices → link offices to district rows; same pattern applies to all v10.0 school boards
+- **Next migration**: 244
 
 ### Pending Todos (accounts team backlog)
 
@@ -199,6 +222,6 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 
 ## Session Continuity
 
-Last session: 2026-05-31T21:00:00.000Z
-Stopped at: Phase 82 closed; v9.0 shipped; ready for next milestone
+Last session: 2026-05-31T23:59:00.000Z
+Stopped at: v10.0 roadmap created; phases 83–89 defined; ready to begin Phase 83
 Resume file: None

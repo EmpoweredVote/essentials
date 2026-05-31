@@ -88,49 +88,48 @@
 
 ## Traceability
 
-*(Populated by roadmapper)*
+*(Populated by roadmapper — 2026-05-31)*
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COUNTY-01 | — | Pending |
-| COUNTY-02 | — | Pending |
-| COUNTY-03 | — | Pending |
-| CITIES-01 | — | Pending |
-| CITIES-02 | — | Pending |
-| CITIES-03 | — | Pending |
-| CITIES-04 | — | Pending |
-| CITIES-05 | — | Pending |
-| CITIES-06 | — | Pending |
-| ROUTING-01 | — | Pending |
-| ELECTIONS-01 | — | Pending |
-| ELECTIONS-02 | — | Pending |
-| ELECTIONS-03 | — | Pending |
-| OR-SCHOOL-01 | — | Pending |
-| OR-SCHOOL-02 | — | Pending |
-| OR-SCHOOL-03 | — | Pending |
-| OR-SCHOOL-04 | — | Pending |
-| CA-SCHOOL-01 | — | Pending |
-| CA-SCHOOL-02 | — | Pending |
-| CA-SCHOOL-03 | — | Pending |
-| CA-SCHOOL-04 | — | Pending |
-| CA-SCHOOL-05 | — | Pending |
-| CA-SCHOOL-06 | — | Pending |
-| TX-SCHOOL-01 | — | Pending |
-| TX-SCHOOL-02 | — | Pending |
-| TX-SCHOOL-03 | — | Pending |
-| TX-SCHOOL-04 | — | Pending |
-| TX-SCHOOL-05 | — | Pending |
-| IN-SCHOOL-01 | — | Pending |
-| IN-SCHOOL-02 | — | Pending |
-| ME-SCHOOL-01 | — | Pending |
-| ME-SCHOOL-02 | — | Pending |
-| ME-SCHOOL-03 | — | Pending |
+| COUNTY-01 | Phase 83 | Pending |
+| COUNTY-02 | Phase 83 | Pending |
+| COUNTY-03 | Phase 83 | Pending |
+| CITIES-01 | Phase 84 | Pending |
+| CITIES-02 | Phase 84 | Pending |
+| CITIES-03 | Phase 84 | Pending |
+| CITIES-04 | Phase 84 | Pending |
+| CITIES-05 | Phase 84 | Pending |
+| CITIES-06 | Phase 84 | Pending |
+| ROUTING-01 | Phase 83 | Pending |
+| ELECTIONS-01 | Phase 85 | Pending |
+| ELECTIONS-02 | Phase 85 | Pending |
+| ELECTIONS-03 | Phase 85 | Pending |
+| OR-SCHOOL-01 | Phase 86 | Pending |
+| OR-SCHOOL-02 | Phase 86 | Pending |
+| OR-SCHOOL-03 | Phase 86 | Pending |
+| OR-SCHOOL-04 | Phase 86 | Pending |
+| CA-SCHOOL-01 | Phase 87 | Pending |
+| CA-SCHOOL-02 | Phase 87 | Pending |
+| CA-SCHOOL-03 | Phase 87 | Pending |
+| CA-SCHOOL-04 | Phase 87 | Pending |
+| CA-SCHOOL-05 | Phase 87 | Pending |
+| CA-SCHOOL-06 | Phase 87 | Pending |
+| TX-SCHOOL-01 | Phase 88 | Pending |
+| TX-SCHOOL-02 | Phase 88 | Pending |
+| TX-SCHOOL-03 | Phase 88 | Pending |
+| TX-SCHOOL-04 | Phase 88 | Pending |
+| TX-SCHOOL-05 | Phase 88 | Pending |
+| IN-SCHOOL-01 | Phase 89 | Pending |
+| IN-SCHOOL-02 | Phase 89 | Pending |
+| ME-SCHOOL-01 | Phase 89 | Pending |
+| ME-SCHOOL-02 | Phase 89 | Pending |
+| ME-SCHOOL-03 | Phase 89 | Pending |
 
 **Coverage:**
 - v10.0 requirements: 33 total
-- Mapped to phases: 0 (roadmap pending)
-- Unmapped: 33 ⚠️
+- Mapped to phases: 33, Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-31*
-*Last updated: 2026-05-31 after initial definition*
+*Last updated: 2026-05-31 — roadmap created (phases 83–89)*

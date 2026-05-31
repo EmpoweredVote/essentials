@@ -14,6 +14,7 @@
 - ✅ **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29) — [archive](milestones/v7.0-ROADMAP.md)
 - ✅ **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31) — [archive](milestones/v8.0-ROADMAP.md)
 - ✅ **v9.0 Oregon Legislature Stances** — Phase 82 (shipped 2026-05-31)
+- 🚧 **v10.0 Multnomah County & School Boards** — Phases 83–89
 
 ## Phases
 
@@ -805,6 +806,112 @@ Plans:
 
 - [x] 82-03-PLAN.md — Verification: SQL coverage gates (senator count, house count, value-range 1-5, citation NOT NULL) + spot-check compass render on 3 senator + 3 house rep profiles + phase close
 
+---
+
+<details>
+<summary>🚧 v10.0 Multnomah County & School Boards (Phases 83–89) — IN PROGRESS</summary>
+
+### Phase 83: Multnomah County Government + Routing
+
+**Goal**: Multnomah County has a government body with commissioners seeded and users at unincorporated addresses see county-level representatives without empty LOCAL sections
+**Depends on**: Phase 72 (OR geofences; Multnomah County geo_id=41051 confirmed)
+**Requirements**: COUNTY-01, COUNTY-02, COUNTY-03, ROUTING-01
+**Success Criteria** (what must be TRUE):
+
+  1. Multnomah County government row exists with a Board of Commissioners chamber (5 commissioners + chair = 6 seats); all 6 officials seeded with offices linked to county geo_id
+  2. All 6 commissioner headshots are uploaded to Supabase Storage at 600×750
+  3. A Portland address lookup returns Multnomah County commissioners alongside city council members with no empty LOCAL section
+  4. A user at an unincorporated Multnomah County address (outside any G4110 city boundary) sees county commissioners in their results with no empty LOCAL city section and no routing error
+
+**Plans**: TBD
+
+### Phase 84: Multnomah Smaller Cities
+
+**Goal**: All 5 incorporated cities in Multnomah County outside Portland have government bodies and elected officials seeded so residents see their local representatives
+**Depends on**: Phase 83 (Multnomah County government exists; OR geofences confirm G4110 boundaries for each city)
+**Requirements**: CITIES-01, CITIES-02, CITIES-03, CITIES-04, CITIES-05, CITIES-06
+**Success Criteria** (what must be TRUE):
+
+  1. Government bodies exist for all 5 cities: Gresham, Troutdale, Fairview, Wood Village, and Maywood Park — each with at least a City Council chamber and correct officials seeded
+  2. A Gresham address lookup returns Gresham city officials (Mayor + council members) and Multnomah County commissioners — no empty LOCAL section
+  3. A Troutdale, Fairview, Wood Village, or Maywood Park address returns that city's officials without routing errors
+  4. Headshots at 600×750 are uploaded for all officials where a public online source exists
+
+**Plans**: TBD
+
+### Phase 85: Multnomah Elections + Discovery
+
+**Goal**: Multnomah County commissioner races and races for all 5 smaller cities are seeded for 2026, and the discovery pipeline is armed to find candidates
+**Depends on**: Phase 83 (Multnomah County government exists), Phase 84 (smaller city governments exist)
+**Requirements**: ELECTIONS-01, ELECTIONS-02, ELECTIONS-03
+**Success Criteria** (what must be TRUE):
+
+  1. Multnomah County 2026 commissioner race rows exist in essentials.races linked to the correct election_id
+  2. 2026 race rows exist for each of the 5 smaller cities (Gresham, Troutdale, Fairview, Wood Village, Maywood Park) with correct office_ids
+  3. At least one discovery_jurisdictions row for the Multnomah County area exists with cron_active=true (or armed via election_date 180-day window) so the weekly cron will find candidates automatically
+  4. Visiting the Elections page with a Multnomah County address returns the seeded races — no empty elections view for county residents
+
+**Plans**: TBD
+
+### Phase 86: Multnomah County School Districts
+
+**Goal**: All 6 Multnomah County school districts have G5420 geofences loaded and school board government bodies + officials seeded so a resident sees their school board members alongside other local officials
+**Depends on**: Phase 83 (Multnomah County routing established)
+**Requirements**: OR-SCHOOL-01, OR-SCHOOL-02, OR-SCHOOL-03, OR-SCHOOL-04
+**Success Criteria** (what must be TRUE):
+
+  1. G5420 geofences exist in geofence_boundaries for all 6 districts: Portland Public Schools, Parkrose, Reynolds, Centennial, David Douglas, and Riverdale
+  2. School board government bodies (district_type='SCHOOL') exist for all 6 districts with board member officials seeded and offices linked to their G5420 geofence districts
+  3. A Portland address within PPS territory returns Portland Public Schools board members in the address lookup result alongside city council and county commissioners
+  4. Board member headshots at 600×750 are uploaded for all members where a public online source exists; documented gaps noted
+
+**Plans**: TBD
+
+### Phase 87: CA City School Boards
+
+**Goal**: All 6 covered CA cities have school board government bodies with G5420 geofences and board officials seeded so a resident sees their school board alongside city council and county officials
+**Depends on**: Phases 63-68 (all 6 CA city deep seeds complete)
+**Requirements**: CA-SCHOOL-01, CA-SCHOOL-02, CA-SCHOOL-03, CA-SCHOOL-04, CA-SCHOOL-05, CA-SCHOOL-06
+**Success Criteria** (what must be TRUE):
+
+  1. G5420 geofences exist for all 6 school districts: San Francisco Unified, San Diego Unified, Sacramento City Unified, San Jose Unified, Fremont Unified, and Berkeley Unified
+  2. School board government bodies (district_type='SCHOOL') exist for all 6 districts with board member officials seeded and offices linked to their G5420 geofence districts
+  3. An SF address returns San Francisco Unified School District board members alongside city supervisors and state officials — no empty SCHOOL section
+  4. A San Diego, Sacramento, San Jose, Fremont, or Berkeley address returns that city's school board members without routing errors
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 88: TX Collin County School Boards
+
+**Goal**: All 5 major Collin County ISDs have G5420 geofences and school board government bodies + officials seeded so TX residents see their school board alongside city council
+**Depends on**: Phase 12 (TX DB Foundation; Collin County government structure established)
+**Requirements**: TX-SCHOOL-01, TX-SCHOOL-02, TX-SCHOOL-03, TX-SCHOOL-04, TX-SCHOOL-05
+**Success Criteria** (what must be TRUE):
+
+  1. G5420 geofences exist for all 5 ISDs: Plano ISD, McKinney ISD, Allen ISD, Frisco ISD, and Richardson ISD
+  2. School board government bodies (district_type='SCHOOL') exist for all 5 ISDs with board member officials seeded and offices linked to their G5420 geofence districts
+  3. A Plano address returns Plano ISD board members alongside Plano City Council in the address lookup
+  4. A McKinney, Allen, Frisco, or Richardson address returns that ISD's board members without routing errors
+
+**Plans**: TBD
+
+### Phase 89: IN + ME School Board Completion
+
+**Goal**: Indiana and Maine school board coverage is completed — IPS D3/D6 government bodies are added, all 7 IPS seats seeded, Monroe County school board seeded, and ME Tier 2 city school boards seeded
+**Depends on**: Phase 12 (TX DB pattern established for school board seeding)
+**Requirements**: IN-SCHOOL-01, IN-SCHOOL-02, ME-SCHOOL-01, ME-SCHOOL-02, ME-SCHOOL-03
+**Success Criteria** (what must be TRUE):
+
+  1. Indianapolis Public Schools has all 7 board seats seeded (D1–D6 + At Large) with correct officials and offices; a Bloomington/Monroe County address returns Monroe County Community School Corporation board members
+  2. Lewiston and Bangor school board government bodies exist with board member officials seeded and G5420 geofences loaded
+  3. South Portland, Auburn, and Biddeford school board government bodies exist with board member officials seeded and G5420 geofences loaded
+  4. An Indianapolis address within IPS territory returns school board members alongside city council; a Lewiston address returns Lewiston school board members alongside city officials
+
+**Plans**: TBD
+
+</details>
+
 ## Backlog
 
 These are known gaps that are not yet scoped into a milestone.
@@ -840,6 +947,7 @@ v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (aft
 v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+50) → 54+55 (parallel, both after 53) → 56 (after all)
 v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+59) → 62 (after 58+59) → 63→64→65→66→67→68 (each after 57; sequential by convention) → 69 (after 62-68) → 70 (after 69) → 78 (after 70; replaces 71)
 v9.0: 82-01 → 82-02 (after 82-01) → 82-03 (after 82-02)
+v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after 63-68) → 88 (after 12) → 89 (independent)
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -925,3 +1033,10 @@ v9.0: 82-01 → 82-02 (after 82-01) → 82-03 (after 82-02)
 | 80. OR Compass Stances | v8.0 | 4/4 | Complete | 2026-05-31 |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
 | 82. OR State Legislature Compass Stances | v9.0 | 3/3 | Complete | 2026-05-31 |
+| 83. Multnomah County Government + Routing | v10.0 | 0/TBD | Not started | - |
+| 84. Multnomah Smaller Cities | v10.0 | 0/TBD | Not started | - |
+| 85. Multnomah Elections + Discovery | v10.0 | 0/TBD | Not started | - |
+| 86. Multnomah County School Districts | v10.0 | 0/TBD | Not started | - |
+| 87. CA City School Boards | v10.0 | 0/TBD | Not started | - |
+| 88. TX Collin County School Boards | v10.0 | 0/TBD | Not started | - |
+| 89. IN + ME School Board Completion | v10.0 | 0/TBD | Not started | - |
