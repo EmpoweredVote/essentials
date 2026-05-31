@@ -766,7 +766,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 81-01-PLAN.md — Playbook update: 2 Cities Onboarded rows (Oregon state + Portland) + Oregon Quick Reference + 9 OR-specific GOTCHAs inline + 4+ Step 7 pitfall rows
+- [x] 81-01-PLAN.md — Playbook update: 2 Cities Onboarded rows (Oregon state + Portland) + Oregon Quick Reference + 9 OR-specific GOTCHAs inline + 4+ Step 7 pitfall rows
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -893,4 +893,4 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
 | 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete    | 2026-05-30 |
 | 80. OR Compass Stances | v8.0 | 4/4 | Complete    | 2026-05-31 |
-| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 0/TBD | Pending | - |
+| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 1/2 | In Progress|  |
