@@ -5,23 +5,26 @@ import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
 
-const COVERAGE_AREAS = [
-  { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
-  { county: 'Los Angeles County', state: 'California', browseGovernmentList: ['0644000', '06037', '0622710'], browseStateAbbrev: 'CA', browseCountyGeoId: '06037' },
-  { county: 'San Diego', state: 'California', browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA' },
-  { county: 'Fremont', state: 'California', browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA' },
-  { county: 'San Francisco', state: 'California', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA' },
-  { county: 'San Jose', state: 'California', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA' },
-  { county: 'Sacramento', state: 'California', browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA' },
-  { county: 'Berkeley', state: 'California', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA' },
-  { county: 'Collin County', state: 'Texas', browseStateAbbrev: 'TX', browseCountyGeoId: '48085', browseGovernmentList: ['4801924','4803300','4808872','4813684','4825224','4825488','4827684','4838068','4841800','4844308','4845012','4845744','4847496','4850100','4850760','4855152','4863000','4863276','4863432','4863500','4864220','4875960','4877740'] },
-  { county: 'Cambridge', state: 'Massachusetts', browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA' },
-  { county: 'Portland', state: 'Maine', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
-  { county: 'Portland', state: 'Oregon', browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR' },
+const COVERAGE_COUNTIES = [
+  { label: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
+  { label: 'Los Angeles County', state: 'California', browseGovernmentList: ['0644000', '06037', '0622710'], browseStateAbbrev: 'CA', browseCountyGeoId: '06037' },
+  { label: 'Collin County', state: 'Texas', browseStateAbbrev: 'TX', browseCountyGeoId: '48085', browseGovernmentList: ['4801924','4803300','4808872','4813684','4825224','4825488','4827684','4838068','4841800','4844308','4845012','4845744','4847496','4850100','4850760','4855152','4863000','4863276','4863432','4863500','4864220','4875960','4877740'] },
+];
+
+const COVERAGE_CITIES = [
+  { label: 'San Diego', state: 'California', browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA' },
+  { label: 'Fremont', state: 'California', browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA' },
+  { label: 'San Francisco', state: 'California', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA' },
+  { label: 'San Jose', state: 'California', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA' },
+  { label: 'Sacramento', state: 'California', browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA' },
+  { label: 'Berkeley', state: 'California', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA' },
+  { label: 'Cambridge', state: 'Massachusetts', browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA' },
+  { label: 'Portland', state: 'Maine', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
+  { label: 'Portland', state: 'Oregon', browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR' },
 ];
 
 const STEPS = [
-  { n: '01', heading: 'Choose Your Area', body: 'Pick an Alpha County or enter your address — we\'ll find everyone who represents you.', active: true },
+  { n: '01', heading: 'Choose Your Area', body: 'Pick an Alpha Area or enter your address — we\'ll find everyone who represents you.', active: true },
   { n: '02', heading: 'See Their Stances', body: 'Browse each official\'s verified positions on the issues that shape your community.' },
   { n: '03', heading: 'Vote with Confidence', body: 'Know every name on your ballot before you step into the booth.' },
 ];
@@ -64,11 +67,11 @@ export default function Landing() {
     window.scrollTo({ top: y, behavior: 'smooth' });
   };
 
-  const handleCountyClick = (area) => {
+  const handleAreaClick = (area) => {
     if (area.browseGovernmentList) {
       const params = new URLSearchParams({
         browse_government_list: area.browseGovernmentList.join(','),
-        browse_label: area.county,
+        browse_label: area.label,
       });
       if (area.browseStateAbbrev) params.set('browse_state', area.browseStateAbbrev);
       if (area.browseCountyGeoId) params.set('browse_county_geo_id', area.browseCountyGeoId);
@@ -77,7 +80,7 @@ export default function Landing() {
       const params = new URLSearchParams({
         browse_geo_id: area.browseGeoId,
         browse_mtfcc: area.browseMtfcc,
-        browse_label: area.county,
+        browse_label: area.label,
       });
       if (area.browseCityFilter) params.set('browse_city_filter', area.browseCityFilter);
       if (area.browseSchoolFilter) params.set('browse_school_filter', area.browseSchoolFilter);
@@ -114,8 +117,8 @@ export default function Landing() {
     <Layout>
 
       {/* ── Hero ── */}
-      <section className="bg-[var(--ev-bg-light)] dark:bg-ev-navy min-h-[calc(100vh-73px)] flex items-center">
-        <div className="w-full px-12 sm:px-16 lg:px-24 py-16">
+      <section className="bg-[var(--ev-bg-light)] dark:bg-ev-navy flex items-center">
+        <div className="w-full px-12 sm:px-16 lg:px-24 py-10">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 lg:gap-24 items-center">
 
             {/* Left: headline + copy + CTA */}
@@ -133,7 +136,7 @@ export default function Landing() {
                 Most voters can't name half the people on their ballot — let alone where they stand on the issues.
               </p>
               <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-10">
-                Our Alpha Counties show exactly where we're headed: your full government, from city hall to Congress, all in one place.
+                Our Alpha Communities show exactly where we're headed: your full government, from city hall to Congress, all in one place.
               </p>
               <button
                 onClick={scrollToSearch}
@@ -178,25 +181,43 @@ export default function Landing() {
         <section className="w-full px-8 sm:px-12 lg:px-24 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
 
-            {/* Left: Alpha County chooser */}
+            {/* Left: Alpha area chooser */}
             <div>
               <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
-                Choose an Alpha County
+                Choose an Alpha Area
               </h2>
               <p className="text-base text-gray-500 dark:text-gray-400 mb-6">
                 Each one is a preview of the full Essentials experience.
               </p>
-              <div className="flex flex-col gap-3 mb-3">
-                {COVERAGE_AREAS.map((area) => (
-                  <button
-                    key={`${area.county}-${area.state}`}
-                    onClick={() => handleCountyClick(area)}
-                    className="w-full text-left px-5 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
-                  >
-                    <div className="text-base font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light">{area.county}</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">{area.state}</div>
-                  </button>
-                ))}
+              <div className="grid grid-cols-2 gap-4 mb-3">
+                {/* Counties column */}
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">Counties</p>
+                  {COVERAGE_COUNTIES.map((area) => (
+                    <button
+                      key={`${area.label}-${area.state}`}
+                      onClick={() => handleAreaClick(area)}
+                      className="w-full text-left px-3 py-3 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                    >
+                      <div className="text-sm font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight">{area.label}</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
+                    </button>
+                  ))}
+                </div>
+                {/* Cities column */}
+                <div className="flex flex-col gap-2">
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">Cities</p>
+                  {COVERAGE_CITIES.map((area) => (
+                    <button
+                      key={`${area.label}-${area.state}`}
+                      onClick={() => handleAreaClick(area)}
+                      className="w-full text-left px-3 py-3 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+                    >
+                      <div className="text-sm font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight">{area.label}</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
+                    </button>
+                  ))}
+                </div>
               </div>
               <button
                 onClick={() => navigate('/results?mode=browse')}
@@ -237,7 +258,7 @@ export default function Landing() {
                     onChange={(e) => setAddressInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     placeholder="Enter your full street address"
-                    className="flex-1 min-w-0 px-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
+                    className="flex-1 min-w-0 px-4 py-3 text-lg border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
                   />
                   <button
                     onClick={handleSearch}
@@ -275,7 +296,7 @@ export default function Landing() {
                     onChange={(e) => setNameQuery(e.target.value)}
                     placeholder="Search candidates by name…"
                     aria-label="Search candidates by name"
-                    className="w-full pl-12 pr-4 py-3 text-lg border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
+                    className="w-full pl-12 pr-4 py-3 text-lg border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500 shadow-sm"
                   />
                 </div>
 
