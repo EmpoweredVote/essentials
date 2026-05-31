@@ -12,7 +12,7 @@
 - âœ… **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
 - âœ… **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
 - âœ… **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29)
-- ðŸš§ **v8.0 Oregon** — Phases 72-81 (in progress)
+- âœ… **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31)
 
 ## Phases
 
@@ -555,7 +555,7 @@ Plans:
 </details>
 
 <details>
-<summary>ðŸš§ v8.0 Oregon (Phases 72-81) — IN PROGRESS</summary>
+<summary>âœ… v8.0 Oregon (Phases 72-81) — SHIPPED 2026-05-31</summary>
 
 ### Phase 72: Portland, OR (OR Geofences)
 
@@ -770,7 +770,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 81-02-PLAN.md — Close v8.0 Oregon milestone across ROADMAP.md, STATE.md, PROJECT.md
+- [x] 81-02-PLAN.md — Close v8.0 Oregon milestone across ROADMAP.md, STATE.md, PROJECT.md
 
 </details>
 
@@ -893,4 +893,4 @@ v7.0: 57 â†’ 58 (after 57) â†’ 59+60 (parallel, both after 57) â†�
 | 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete    | 2026-05-30 |
 | 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete    | 2026-05-30 |
 | 80. OR Compass Stances | v8.0 | 4/4 | Complete    | 2026-05-31 |
-| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 1/2 | In Progress|  |
+| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
