@@ -43,6 +43,8 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Sacramento | CA | 2026-05-28 | plurality (no RCV yet) | AEM/CQ5 CMS headshots: CSS background-image, curl+grep required (WebFetch cannot extract); ArcGIS DISTNUM field; outSR=4326 required; City Attorney/Auditor/Treasurer/Clerk all APPOINTED; geo_id=0664000; ext_ids -660001, -660010..-660017 |
 | Fremont | CA | 2026-05-22 | plurality | ArcGIS outSR=4326 required (WKID 102643 native); fremont.gov 403 workaround (Node.js browser UA + Referer header); City Attorney APPOINTED per charter; geo_id=0626000; ext_ids -670001, -670010..-670015 |
 | Berkeley | CA | 2026-05-22 | rcv (Mayor, City Council, City Auditor) | Socrata loader (NO outSR, field='district' lowercase string); City Attorney APPOINTED; both Mayor and Auditor share single LOCAL_EXEC district; geo_id=0606000; ext_ids -680001..-680017 |
+| Oregon (state) | OR | 2026-05-30 | plurality (state + federal); rcv (Portland City Council, Auditor) | All 5 constitutional officers voter-elected (unlike ME); cd119 TIGER key; sos.oregon.gov Blue Book headshot source (500×623, crop to 4:5); external_ids: exec -4100001..-4100005, US Senators -4101001/-4101002, House -4102001..-4102006, State Senate -4110001..-4110030, House -4120001..-4120060; 241 G4110 cities; oregonlegislature.gov MemberPhotos headshot source (non-obvious filenames with disambiguation suffixes) |
+| Portland | OR | 2026-05-30 | rcv (City Council 12 seats, City Auditor) | 2024 charter reform: 4 districts × 3 seats (RCV); boundaries from PortlandMaps ArcGIS MapServer Layer 17 (NOT TIGER), mtfcc=X0012, outSR=4326+ST_MakeValid required; portland.gov WAF blocks /public/ — use Drupal 1_1_320w style URLs for headshots; gov name 'City of Portland, Oregon, US' (disambiguates from Portland ME); D3+D4+Auditor on 2026 ballot; Mayor+D1+D2 on 2028 ballot; ext_ids -690001..-690004 (citywide) + -690010..-690021 (council D1-D4) |
 
 ---
 
@@ -63,6 +65,23 @@ Check this table before starting a new city — proven patterns from prior onboa
 | RCV at seed time | Step 2, Step 6 | Set election_method='rcv' on chamber row during structure migration — not as a follow-up TODO |
 | AEM/CQ5 headshots (Sacramento) | Step 4 | cityofsacramento.gov embeds headshots in CSS background-image — use curl+grep, not WebFetch |
 | lavote.gov election ID | Step 2 | ID changes per cycle (June + November); update discovery_jurisdictions row manually after each election |
+
+---
+
+## Oregon Quick Reference
+
+**Read this before starting any OR city or state work.** These traps are OR-specific — general playbook guidance above does not warn for them.
+
+| Trap | See Step | One-Line Summary |
+|------|----------|-----------------|
+| Portland council NOT in TIGER | Step 3 | Source from PortlandMaps ArcGIS MapServer Layer 17 per-OBJECTID; always use outSR=4326 + ST_MakeValid |
+| Portland 2024 charter reform | Step 1, 2 | 4 districts × 3 seats (12 total) elected by RCV; authoritative roster from portland.gov/auditor/elections/elected-city-officials |
+| All OR constitutional officers voter-elected | Step 1, 5 | Unlike Maine: all 5 officers (Gov, AG, SoS, Treasurer, Labor) are elected; is_appointed_position=false; race rows required |
+| portland.gov WAF blocks headshots | Step 4, 7 | Use Drupal 1_1_320w style CDN URLs; photo_license=public_domain; extract itok token from profile page HTML |
+| PowerShell Unicode mangling | Step 6 | Use [char]0xNNNN for all diacriticals (HD-38 Nguyễn, HD-45 Thuy Tran, HD-22 Munoz) in .ps1 generators |
+| Federal officials may pre-exist | Step 5 | Pre-flight SELECT before INSERT; OR senators Wyden+Merkley pre-existed under -400065/-400066; UPDATE external_id, not INSERT |
+| Portland 2026 ballot: D3/D4/Auditor only | Step 2, 6 | Mayor+D1+D2 have 4-year terms; only D3+D4+Auditor (7 races) are on the November 2026 ballot |
+| G4110 count needs dry-run confirmation | Step 3 | OR actual count is 241 (not 242); always dry-run place layer; update count in loader + verify SQL + smoke test |
 
 ---
 
