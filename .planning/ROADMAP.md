@@ -823,7 +823,16 @@ Plans:
   3. A Portland address lookup returns Multnomah County commissioners alongside city council members with no empty LOCAL section
   4. A user at an unincorporated Multnomah County address (outside any G4110 city boundary) sees county commissioners in their results with no empty LOCAL city section and no routing error
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 83-01-PLAN.md — Migration 244: Multnomah County government + Board of Commissioners chamber + COUNTY district + 5 officials + offices + routing smoke test
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 83-02-PLAN.md — Headshots: source + crop + upload 5 commissioner headshots at 600×750 + audit-only migration 245
 
 ### Phase 84: Multnomah Smaller Cities
 
@@ -1033,7 +1042,7 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 80. OR Compass Stances | v8.0 | 4/4 | Complete | 2026-05-31 |
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
 | 82. OR State Legislature Compass Stances | v9.0 | 3/3 | Complete | 2026-05-31 |
-| 83. Multnomah County Government + Routing | v10.0 | 0/TBD | Not started | - |
+| 83. Multnomah County Government + Routing | v10.0 | 0/2 | Not started | - |
 | 84. Multnomah Smaller Cities | v10.0 | 0/TBD | Not started | - |
 | 85. Multnomah Elections + Discovery | v10.0 | 0/TBD | Not started | - |
 | 86. Multnomah County School Districts | v10.0 | 0/TBD | Not started | - |
