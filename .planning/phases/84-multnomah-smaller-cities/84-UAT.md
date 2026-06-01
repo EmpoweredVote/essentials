@@ -62,10 +62,11 @@ skipped: 0
 ## Gaps
 
 - truth: "Load a Gresham, OR address — LOCAL section with 7 officials and headshots should appear"
-  status: failed
-  reason: "User reported: No, it says we couldn't find that address. No results found."
+  status: not_a_bug
+  reason: "Bad test address — '200 NE Russell St' does not exist in Census TIGER/Line database. Use '1333 NW Eastman Pkwy, Gresham, OR 97030' (City Hall). No code fix needed."
   severity: major
   test: 2
+  root_cause: "Census TIGER has no record for that specific street address. Geocoder correctly returns ADDRESS_NOT_FOUND."
   artifacts: []
   missing: []
 - truth: "Wood Village LOCAL section should show Mayor (LOCAL_EXEC) first, then council members (LOCAL)"
@@ -73,19 +74,26 @@ skipped: 0
   reason: "User reported: Mayor came after the Wood Village City Council, not before."
   severity: major
   test: 4
-  artifacts: []
-  missing: []
+  root_cause: "groupHierarchy.js line 382: 'Council President' title contains 'president' (an EXECUTIVE_KW keyword), scoring the council sub-group at 10 — equal to Mayor's score. Alphabetical tiebreaker 'C' < 'M' puts council first. Fix: guard EXECUTIVE_KW check against LOCAL district_type so LOCAL sub-groups always score 20 even when a title contains 'president'."
+  artifacts:
+    - "src/lib/groupHierarchy.js:382"
+  missing:
+    - "district_type guard in subGroupOrderScore to prevent LOCAL council from scoring as executive"
 - truth: "Load a Fairview, OR address — LOCAL section with 7 officials should appear (placeholder avatars, no headshots)"
-  status: failed
-  reason: "User reported: This one did not work. User observed both failing addresses (Gresham, Fairview) had 'NE' directional prefix in the street address."
+  status: not_a_bug
+  reason: "Bad test address — '1300 NE Main Ave' doesn't exist in Census TIGER. Fairview's street is 'Main St' (no directional, 'St' not 'Ave'). Use '300 Main St, Fairview, OR 97024'. No code fix needed."
   severity: major
   test: 5
+  root_cause: "Census TIGER stores Fairview's main street as 'MAIN ST' with no directional prefix. The 'NE' and 'Ave' suffix are wrong."
   artifacts: []
   missing: []
 - truth: "Load a Maywood Park, OR address — LOCAL section with 5 Maywood Park officials should appear"
   status: failed
-  reason: "Geocoder autocorrected 'Maywood Park, OR' to 'Portland, OR 97220' and returned Portland leadership instead. Maywood Park is a tiny enclave city (~750 residents) entirely surrounded by Portland — geocoder does not recognize it as a distinct city, so coordinates land outside the Maywood Park G4110 geofence."
+  reason: "Geocoder autocorrects 'Maywood Park, OR' to 'Portland, OR 97220' and returns Portland officials. Genuine enclave-city problem."
   severity: major
   test: 6
-  artifacts: []
-  missing: []
+  root_cause: "Census TIGER stores all Maywood Park streets as city='PORTLAND' (USPS city name). Geocoded coordinates may fall outside Maywood Park's 0.34 sq mi G4110 polygon → PostGIS returns Portland officials instead. Fix: add enclave-city alias map in essentialsService.ts — when input address contains 'Maywood Park' and geocoded city is 'Portland', substitute Maywood Park G4110 centroid (lat: 45.5525170, lng: -122.5617782)."
+  artifacts:
+    - "C:/EV-Accounts/backend/src/lib/essentialsService.ts (getRepresentativesByAddress)"
+  missing:
+    - "Enclave-city alias/centroid fallback for Maywood Park (and future enclave cities)"
