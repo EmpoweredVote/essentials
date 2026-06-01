@@ -855,7 +855,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 84-02-PLAN.md — Headshots: live upload (Gresham 7/7, Troutdale 7/7, Wood Village 5/5, Fairview/Maywood Park documented as no-photo) + audit-only migration 247
+- [x] 84-02-PLAN.md — Headshots: live upload (Gresham 7/7, Troutdale 7/7, Wood Village 5/5, Fairview/Maywood Park documented as no-photo) + audit-only migration 247
 
 ### Phase 85: Multnomah Elections + Discovery
 
@@ -1052,7 +1052,7 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
 | 82. OR State Legislature Compass Stances | v9.0 | 3/3 | Complete | 2026-05-31 |
 | 83. Multnomah County Government + Routing | v10.0 | 2/2 | Complete | 2026-05-31 |
-| 84. Multnomah Smaller Cities | v10.0 | 1/2 | In Progress|  |
+| 84. Multnomah Smaller Cities | v10.0 | 2/2 | Complete   | 2026-06-01 |
 | 85. Multnomah Elections + Discovery | v10.0 | 0/TBD | Not started | - |
 | 86. Multnomah County School Districts | v10.0 | 0/TBD | Not started | - |
 | 87. CA City School Boards | v10.0 | 0/TBD | Not started | - |
