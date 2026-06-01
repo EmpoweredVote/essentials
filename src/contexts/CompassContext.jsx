@@ -45,7 +45,11 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   const [myRepresentativesAddress, setMyRepresentativesAddress] = useState(null);
   const [myLocationNotSet, setMyLocationNotSet] = useState(false);
   const [suggestedSaveAddress, setSuggestedSaveAddress] = useState(null);
-  // Tracks whether the live-sync subscriber should be active
+  // Tracks whether compass answers + topics have finished loading (independent of compassLoading).
+  // compassLoading gates auth/location UI; compassDataLoaded gates the compass chart/calibrate CTA.
+  // For logged-in users, compassLoading can become false before loadCompassData() finishes
+  // (they run concurrently). CompassCard reads compassDataLoaded to avoid prematurely showing
+  // the "Calibrate your compass" prompt while the API fetch is still in flight.
   const [compassDataLoaded, setCompassDataLoaded] = useState(false);
 
   // Refs so compass load can access auth state without stale closures
@@ -331,6 +335,11 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
               }).catch(() => {});
             }
           }
+        } else {
+          // Guest path: load compass answers from ev-context / localStorage / fragment
+          // so profile pages show the radar chart without requiring the user to visit
+          // the Results page and toggle compass mode first.
+          loadCompassData();
         }
       // Always fetch topics + politician stances — needed to render CompassCard on profile
       // pages regardless of whether the user ever enables compass mode on the Results page.
@@ -469,6 +478,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       initialTopicId,
       politicianIdsWithStances,
       compassLoading,
+      compassDataLoaded,
       myRepresentatives,
       myRepresentativesAddress,
       myLocationNotSet,
@@ -496,6 +506,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       initialTopicId,
       politicianIdsWithStances,
       compassLoading,
+      compassDataLoaded,
       myRepresentatives,
       myRepresentativesAddress,
       myLocationNotSet,

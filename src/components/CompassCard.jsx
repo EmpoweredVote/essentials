@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { RadarChartCore, StanceAccordion } from '@empoweredvote/ev-ui';
+import { RadarChartCore, StanceAccordion, PlaceholderRadar } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
@@ -24,6 +24,7 @@ const MAX_SPOKES = 8;
 export default function CompassCard({ politicianId, politicianName, politicianTitle, districtScope }) {
   const { isDark } = useTheme();
   const {
+    isLoggedIn,
     politicianIdsWithStances,
     userAnswers,
     selectedTopics,
@@ -34,6 +35,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     verdicts,
     initialTopicId,
     compassLoading,
+    compassDataLoaded,
     localLensActive,
     toggleLocalLens,
   } = useCompass();
@@ -139,6 +141,11 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
   // Plan C: count topics the politician has stances on that the user hasn't answered
   const userAnsweredIds = new Set((userAnswers ?? []).map((a) => String(a.topic_id)));
+
+  // Map of the viewer's own answers (topic_id -> value) so the StanceAccordion
+  // can place the "You" dot on the stance spectrum alongside the politician's.
+  const userAnswerMap = {};
+  (userAnswers ?? []).forEach((a) => { userAnswerMap[String(a.topic_id)] = a.value; });
   const missingTopicCount = allPolTopics.filter(
     (t) => !userAnsweredIds.has(String(t.id))
   ).length;
@@ -177,11 +184,22 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     batchInvertSpokes(next);
   }
 
-  // Build legend name: "[Position] [Last Name]"
-  const lastName = politicianName ? politicianName.split(' ').pop() : '';
-  const legendLabel = politicianTitle
-    ? `${politicianTitle} ${lastName}`
-    : politicianName || '';
+  // Legend pairs "You" with the politician. Use their name only — the title is
+  // already shown in the profile header, and prepending long office titles (e.g.
+  // "City Common Council - At Large Flaherty") reads awkwardly. Mirrors the
+  // compass feature's ComparePanel, which labels the dot with the name alone.
+  const legendLabel = politicianName || politicianTitle || 'Them';
+
+  // Spinner used in both loading states below
+  const spinnerTrack = isDark ? '#374151' : '#e2e8f0';
+  const spinnerStyle = {
+    width: '32px',
+    height: '32px',
+    border: `3px solid ${spinnerTrack}`,
+    borderTopColor: '#00657c',
+    borderRadius: '50%',
+    animation: 'ev-spin 0.8s linear infinite',
+  };
 
   return (
     <section className="mt-8">
@@ -192,12 +210,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         Compass &amp; Issues
       </h2>
 
-      <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6">
+      <div className="bg-white dark:bg-ev-navy-card rounded-2xl border border-neutral-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm p-6">
         {hasUserCompass ? (
           <>
-          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8">
-            {/* Left zone: radar chart */}
-            <div className="flex flex-col items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(360px,500px)_minmax(0,1fr)] gap-6">
+            {/* Left zone: radar chart. Centered when the card collapses to a single
+                column (below lg); fills the radar-width column when two-up. */}
+            <div className="flex flex-col items-center lg:items-start">
               {polLoading && (
                 <div
                   style={{
@@ -207,59 +226,20 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     height: '300px',
                   }}
                 >
-                  <div
-                    style={{
-                      width: '32px',
-                      height: '32px',
-                      border: '3px solid #e2e8f0',
-                      borderTopColor: '#00657c',
-                      borderRadius: '50%',
-                      animation: 'ev-spin 0.8s linear infinite',
-                    }}
-                  />
+                  <div style={spinnerStyle} />
                   <style>{`@keyframes ev-spin { to { transform: rotate(360deg); } }`}</style>
                 </div>
               )}
 
               {!polLoading && !hasData && (
-                <div className="flex flex-col items-center py-8 px-4">
-                  <svg
-                    width="64"
-                    height="64"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    style={{ opacity: 0.25, marginBottom: '16px' }}
-                  >
-                    <polygon
-                      points="12,1 21.5,6.5 21.5,17.5 12,23 2.5,17.5 2.5,6.5"
-                      fill="none"
-                      stroke="#00657c"
-                      strokeWidth="1.5"
-                      strokeLinejoin="round"
-                    />
-                    <line x1="12" y1="12" x2="12" y2="1" stroke="#00657c" strokeWidth="1" />
-                    <line x1="12" y1="12" x2="21.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
-                    <line x1="12" y1="12" x2="21.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
-                    <line x1="12" y1="12" x2="12" y2="23" stroke="#00657c" strokeWidth="1" />
-                    <line x1="12" y1="12" x2="2.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
-                    <line x1="12" y1="12" x2="2.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
-                    <polygon
-                      points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
-                      fill="#00657c"
-                      opacity="0.35"
-                    />
-                    <polygon
-                      points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
-                      fill="none"
-                      stroke="#00657c"
-                      strokeWidth="1.5"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                <div className="flex flex-col items-center py-8 px-4 w-full">
+                  <div style={{ opacity: 0.85, marginBottom: '20px' }}>
+                    <PlaceholderRadar size={260} name={politicianName} darkMode={isDark} />
+                  </div>
 
                   <p
-                    className="text-gray-500 text-center mb-6"
-                    style={{ fontSize: '15px', lineHeight: 1.6 }}
+                    className="text-center mb-6"
+                    style={{ fontSize: '15px', lineHeight: 1.6, color: isDark ? '#9ca3af' : '#6b7280', maxWidth: '22rem' }}
                   >
                     {!hasEnoughSpokes
                       ? 'Not enough shared topics to display a comparison compass.'
@@ -269,7 +249,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   {hasEnoughSpokes && (
                     <a
                       href={ctaHref}
-                      className="inline-block px-6 py-2.5 text-white font-semibold rounded-lg text-sm transition-colors"
+                      className="inline-block px-6 py-2.5 text-white font-semibold rounded-full text-sm transition-colors"
                       style={{ backgroundColor: '#00657c' }}
                       onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
@@ -312,7 +292,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                           width: '8px',
                           height: '8px',
                           borderRadius: '50%',
-                          backgroundColor: '#5A9A6E',
+                          backgroundColor: isDark ? '#6DD28C' : '#5A9A6E',
                         }}
                       />
                       <span className="font-semibold text-gray-600 dark:text-gray-300" style={{ fontSize: '15px', fontFamily: "'Manrope', sans-serif" }}>{legendLabel}</span>
@@ -320,7 +300,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   </div>
 
                   {/* Chart container — position:relative so overlay buttons can anchor */}
-                  <div style={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
+                  <div style={{ width: '100%', maxWidth: '500px', overflow: 'hidden', position: 'relative' }}>
                     {/* Local Lens toggle — top-left */}
                     <button
                       type="button"
@@ -415,7 +395,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     style={{
                       width: '24px',
                       height: '24px',
-                      border: '2px solid #e2e8f0',
+                      border: `2px solid ${spinnerTrack}`,
                       borderTopColor: '#00657c',
                       borderRadius: '50%',
                       animation: 'ev-spin 0.8s linear infinite',
@@ -426,9 +406,11 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                 <StanceAccordion
                   topics={topicsFiltered.length > 0 ? topicsFiltered : allPolTopics}
                   polAnswers={polAnswers}
+                  userAnswerMap={userAnswerMap}
                   politicianId={politicianId}
                   allTopics={scopedTopics}
                   expandedTopics={topicsFiltered.length > 0 ? allPolTopics : undefined}
+                  darkMode={isDark}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
@@ -441,64 +423,50 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               margin: '12px 0 0',
               fontSize: '12px',
               fontFamily: "'Manrope', sans-serif",
-              color: isDark ? '#6b7280' : '#9ca3af',
+              color: isDark ? '#9ca3af' : '#6b7280',
             }}>
               {missingTopicCount} {missingTopicCount === 1 ? 'topic' : 'topics'} not yet in your compass.{' '}
-              <a href={ctaHref} style={{ color: isDark ? '#6b7280' : '#9ca3af', textDecoration: 'underline' }}>
+              <a href={ctaHref} style={{ color: isDark ? '#59b0c4' : '#00657c', textDecoration: 'underline' }}>
                 Update →
               </a>
             </p>
           )}
           </>
+        ) : isLoggedIn && !compassDataLoaded ? (
+          /* Logged-in user: answers are still being fetched from the API.
+             compassLoading (auth+stances) cleared before loadCompassData() finishes
+             because they run concurrently. Show a spinner so the user never sees the
+             "Calibrate your compass" CTA while their data is still in flight. */
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '120px',
+            }}
+          >
+            <div style={spinnerStyle} />
+            <style>{`@keyframes ev-spin { to { transform: rotate(360deg); } }`}</style>
+          </div>
         ) : (
-          /* Guest fallback — 2-column: CTA left, accordion right */
-          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-8">
-            {/* Left zone: CTA with compass icon */}
-            <div className="flex flex-col items-center py-8 px-4">
-              <svg
-                width="64"
-                height="64"
-                viewBox="0 0 24 24"
-                fill="none"
-                style={{ opacity: 0.25, marginBottom: '16px' }}
-              >
-                <polygon
-                  points="12,1 21.5,6.5 21.5,17.5 12,23 2.5,17.5 2.5,6.5"
-                  fill="none"
-                  stroke="#00657c"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-                <line x1="12" y1="12" x2="12" y2="1" stroke="#00657c" strokeWidth="1" />
-                <line x1="12" y1="12" x2="21.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
-                <line x1="12" y1="12" x2="21.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
-                <line x1="12" y1="12" x2="12" y2="23" stroke="#00657c" strokeWidth="1" />
-                <line x1="12" y1="12" x2="2.5" y2="17.5" stroke="#00657c" strokeWidth="1" />
-                <line x1="12" y1="12" x2="2.5" y2="6.5" stroke="#00657c" strokeWidth="1" />
-                <polygon
-                  points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
-                  fill="#00657c"
-                  opacity="0.35"
-                />
-                <polygon
-                  points="12,4 18,7.5 18,16 12,19.5 7,15 5,8"
-                  fill="none"
-                  stroke="#00657c"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-              </svg>
+          /* Guest (or logged-in with genuinely no answers) — 2-column: CTA left, accordion right */
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(360px,500px)_minmax(0,1fr)] gap-6">
+            {/* Left zone: CTA with ghost radar */}
+            <div className="flex flex-col items-center justify-center py-8 px-4">
+              <div style={{ opacity: 0.85, marginBottom: '20px' }}>
+                <PlaceholderRadar size={220} name={politicianName} darkMode={isDark} />
+              </div>
 
               <p
-                className="text-gray-500 text-center mb-6"
-                style={{ fontSize: '15px', lineHeight: 1.6 }}
+                className="text-center mb-6"
+                style={{ fontSize: '15px', lineHeight: 1.6, color: isDark ? '#9ca3af' : '#6b7280', maxWidth: '22rem' }}
               >
                 Calibrate your compass to see how you align with {politicianName}
               </p>
 
               <a
                 href={ctaHref}
-                className="inline-block px-6 py-2.5 text-white font-semibold rounded-lg text-sm transition-colors"
+                className="inline-block px-6 py-2.5 text-white font-semibold rounded-full text-sm transition-colors"
                 style={{ backgroundColor: '#00657c' }}
                 onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
@@ -515,7 +483,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     style={{
                       width: '24px',
                       height: '24px',
-                      border: '2px solid #e2e8f0',
+                      border: `2px solid ${spinnerTrack}`,
                       borderTopColor: '#00657c',
                       borderRadius: '50%',
                       animation: 'ev-spin 0.8s linear infinite',
@@ -526,9 +494,11 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                 <StanceAccordion
                   topics={allPolTopics.slice(0, 4)}
                   polAnswers={polAnswers}
+                  userAnswerMap={userAnswerMap}
                   politicianId={politicianId}
                   allTopics={scopedTopics}
                   expandedTopics={allPolTopics.length > 4 ? allPolTopics : undefined}
+                  darkMode={isDark}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
