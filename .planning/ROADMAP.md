@@ -874,11 +874,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 85-01-PLAN.md — Migration 251: 18 race rows (2 county + 4 Gresham + 3 Troutdale + 4 Fairview + 2 Wood Village + 3 Maywood Park) for OR 2026 General + apply script + post-verify
+- [x] 85-01-PLAN.md — Migration 251: 18 race rows (2 county + 4 Gresham + 3 Troutdale + 4 Fairview + 2 Wood Village + 3 Maywood Park) for OR 2026 General + apply script + post-verify
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 85-02-PLAN.md — Migration 252: Multnomah County discovery_jurisdictions row (geo_id=41051) + apply script + smoke-multnomah-elections.ts (verifies ELECTIONS-01/02/03 + D-14 Corbett unincorporated address)
+- [x] 85-02-PLAN.md — Migration 252: Multnomah County discovery_jurisdictions row (geo_id=41051) + apply script + smoke-multnomah-elections.ts (verifies ELECTIONS-01/02/03 + D-14 Corbett unincorporated address)
 
 ### Phase 86: Multnomah County School Districts
 
@@ -1062,7 +1062,7 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 82. OR State Legislature Compass Stances | v9.0 | 3/3 | Complete | 2026-05-31 |
 | 83. Multnomah County Government + Routing | v10.0 | 2/2 | Complete | 2026-05-31 |
 | 84. Multnomah Smaller Cities | v10.0 | 3/3 | Complete    | 2026-06-01 |
-| 85. Multnomah Elections + Discovery | v10.0 | 0/2 | Planned | - |
+| 85. Multnomah Elections + Discovery | v10.0 | 2/2 | Complete    | 2026-06-01 |
 | 86. Multnomah County School Districts | v10.0 | 0/TBD | Not started | - |
 | 87. CA City School Boards | v10.0 | 0/TBD | Not started | - |
 | 88. TX Collin County School Boards | v10.0 | 0/TBD | Not started | - |

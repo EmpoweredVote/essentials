@@ -26,9 +26,9 @@
 
 ### Elections
 
-- [ ] **ELECTIONS-01**: Multnomah County commissioner 2026 race rows seeded
-- [ ] **ELECTIONS-02**: 2026 race rows seeded for each of the 5 smaller incorporated cities
-- [ ] **ELECTIONS-03**: discovery_jurisdictions row(s) created and cron armed for Multnomah County area
+- [x] **ELECTIONS-01**: Multnomah County commissioner 2026 race rows seeded
+- [x] **ELECTIONS-02**: 2026 race rows seeded for each of the 5 smaller incorporated cities
+- [x] **ELECTIONS-03**: discovery_jurisdictions row(s) created and cron armed for Multnomah County area
 
 ### OR School Boards — Multnomah County
 
@@ -102,9 +102,9 @@
 | CITIES-05 | Phase 84 | Complete |
 | CITIES-06 | Phase 84 | Complete |
 | ROUTING-01 | Phase 83 | Pending |
-| ELECTIONS-01 | Phase 85 | Pending |
-| ELECTIONS-02 | Phase 85 | Pending |
-| ELECTIONS-03 | Phase 85 | Pending |
+| ELECTIONS-01 | Phase 85 | Complete |
+| ELECTIONS-02 | Phase 85 | Complete |
+| ELECTIONS-03 | Phase 85 | Complete |
 | OR-SCHOOL-01 | Phase 86 | Pending |
 | OR-SCHOOL-02 | Phase 86 | Pending |
 | OR-SCHOOL-03 | Phase 86 | Pending |
