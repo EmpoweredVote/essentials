@@ -1279,9 +1279,13 @@ export default function Results() {
           title={cardTitle}
           subtitle={subtitle}
           imageFocalPoint={imgData.focalPoint || 'center 20%'}
-          style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
+          style={{
+            ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}),
+            ...(showCompassOverlay ? { minHeight: 185 } : {}),
+          }}
           onClick={handleCardClick}
           variant="horizontal"
+          imageWidth={showCompassOverlay ? '137px' : undefined}
           footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
         />
         {showCompassOverlay && (
@@ -1290,6 +1294,8 @@ export default function Results() {
             style={{
               position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
+              paddingRight: 14, // nudge compass left so the widest axis label clears the card edge
+              boxSizing: 'border-box',
               background: gradientBg,
               borderRadius: '0 10px 10px 0',
               cursor: 'pointer', zIndex: 1,

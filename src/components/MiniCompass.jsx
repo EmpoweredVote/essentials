@@ -160,6 +160,7 @@ export default function MiniCompass({
         onReplaceTopic={() => {}}
         size={INNER_SVG_SIZE}
         labelFontSize={0}
+        maxLabelLines={3}
         padding={10}
         labelOffset={8}
         tightFit={true}

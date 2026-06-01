@@ -706,7 +706,8 @@ export default function ElectionsView({
                                         subtitle={cardSubtitle}
                                         onClick={() => onCandidateClick(candidate.candidate_id)}
                                         variant="horizontal"
-                                        style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
+                                        imageWidth="137px"
+                                        style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a', minHeight: 185 } : { minHeight: 185 }}
                                         footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                       />
                                       {candidate.candidate_status === 'withdrawn' && (
@@ -724,6 +725,8 @@ export default function ElectionsView({
                                         style={{
                                           position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
                                           display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          paddingRight: 14, // nudge compass left so the widest axis label clears the card edge
+                                          boxSizing: 'border-box',
                                           background: isDark
                                             ? 'linear-gradient(to right, transparent, #1a2235 35%)'
                                             : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)',
