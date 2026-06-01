@@ -213,4 +213,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | STATE_EXEC `district_id` should be empty string for shared multi-position districts | OR STATE_EXEC initially used 'Oregon (Statewide)' as district_id; MA/ME/TX multi-position pattern uses ''; corrected in migration 223a | ✓ Good — v7.0 (Phase 74 lesson) |
 
 ---
-*Last updated: 2026-06-01 — Phase 84 complete — 5 Multnomah smaller-city governments seeded (Gresham/Troutdale/Fairview/Wood Village/Maywood Park); Mayor ordering + Maywood Park enclave routing fixed*
+*Last updated: 2026-06-01 — Phase 85 complete — 18 OR 2026 General race rows seeded for Multnomah County (Chair + Commissioner D2) and 5 smaller cities (Gresham 4 + Troutdale 3 + Fairview 4 + Wood Village 2 + Maywood Park 3); discovery_jurisdictions row armed for geo_id='41051'; smoke test ALL ASSERTIONS PASSED*
