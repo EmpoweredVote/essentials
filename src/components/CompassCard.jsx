@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
+import { usePostHog } from 'posthog-js/react';
 import { RadarChartCore, StanceAccordion, PlaceholderRadar } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
@@ -23,6 +24,7 @@ const MAX_SPOKES = 8;
  */
 export default function CompassCard({ politicianId, politicianName, politicianTitle, districtScope }) {
   const { isDark } = useTheme();
+  const posthog = usePostHog();
   const {
     isLoggedIn,
     politicianIdsWithStances,
@@ -155,6 +157,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // Min/Max batch handlers — operate on what the user currently *sees* (display value),
   // not the raw stored value, so they work correctly on already-inverted spokes.
   function handleStanceMax() {
+    posthog?.capture('compass_stance_alignment_set', { alignment: 'max', context: 'profile' });
     const next = { ...invertedSpokes };
     for (const topic of topicsFiltered) {
       const val = userData[topic.short_title];
@@ -170,6 +173,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   }
 
   function handleStanceMin() {
+    posthog?.capture('compass_stance_alignment_set', { alignment: 'min', context: 'profile' });
     const next = { ...invertedSpokes };
     for (const topic of topicsFiltered) {
       const val = userData[topic.short_title];
@@ -305,7 +309,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     <button
                       type="button"
                       title={localLensActive ? 'Exit Local Lens' : 'Local Lens — 8 local questions'}
-                      onClick={toggleLocalLens}
+                      onClick={() => { posthog?.capture('compass_local_lens_toggled', { active: !localLensActive }); toggleLocalLens(); }}
                       style={{
                         position: 'absolute', top: 4, left: 4, zIndex: 10,
                         width: 28, height: 28,
