@@ -482,6 +482,7 @@ export default function Results() {
     try { return localStorage.getItem('ev:compassMode') === 'true'; } catch { return false; }
   });
   const handleCompassModeChange = (val) => {
+    posthog?.capture('compass_mode_toggled', { enabled: val });
     setCompassMode(val);
     try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
     if (val) enableCompass();
@@ -528,12 +529,14 @@ export default function Results() {
 
   const handleStanceMax = () => {
     if (!rawUserAnswers || !allTopics) return;
+    posthog?.capture('stance_alignment_set', { alignment: 'max' });
     const newMap = computeStanceSpokes('max', rawUserAnswers, allTopics, invertedSpokes || {});
     batchInvertSpokes(newMap);
   };
 
   const handleStanceMin = () => {
     if (!rawUserAnswers || !allTopics) return;
+    posthog?.capture('stance_alignment_set', { alignment: 'min' });
     const newMap = computeStanceSpokes('min', rawUserAnswers, allTopics, invertedSpokes || {});
     batchInvertSpokes(newMap);
   };
@@ -817,6 +820,7 @@ export default function Results() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const switchView = (view) => {
+    posthog?.capture('tab_switched', { from: activeView, to: view });
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       if (view === 'representatives') {
@@ -853,6 +857,7 @@ export default function Results() {
   const addressInputRef = useRef(null);
   useGooglePlacesAutocomplete(addressInputRef, {
     onPlaceSelected: (addr) => {
+      posthog?.capture('address_searched', { method: 'autocomplete' });
       setAddressInput(addr);
       handleAddressSearch(addr);
     },
@@ -1597,9 +1602,9 @@ export default function Results() {
               <div className="flex-1 min-w-0 flex justify-end py-2 sm:pl-4 w-full sm:w-auto">
                 <FilterBar
                   selectedFilter={selectedFilter}
-                  onFilterChange={setSelectedFilter}
+                  onFilterChange={(v) => { posthog?.capture('filter_changed', { filter_type: 'tier', value: v }); setSelectedFilter(v); }}
                   appointedFilter={appointedFilter}
-                  onAppointedFilterChange={setAppointedFilter}
+                  onAppointedFilterChange={(v) => { posthog?.capture('filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
                   searchQuery={searchQuery}
                   onSearchChange={setSearchQuery}
                   compassMode={compassMode}
@@ -1771,6 +1776,7 @@ export default function Results() {
                 compassMode={compassMode}
                 isDark={isDark}
                 onCandidateClick={(id) => {
+                  posthog?.capture('candidate_clicked', { candidate_id: id });
                   sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
                   sessionStorage.setItem('ev:fromView', 'elections');
                   navigate(`/candidate/${id}`);

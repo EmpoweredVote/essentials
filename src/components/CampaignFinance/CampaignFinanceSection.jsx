@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { usePostHog } from 'posthog-js/react';
 import { useCampaignFinance } from './hooks/useCampaignFinance';
 import SummaryCard from './SummaryCard';
 import ExpandedView from './ExpandedView';
@@ -64,6 +65,7 @@ function DataPendingBanner() {
  *   politicianId — politician UUID string
  */
 export default function CampaignFinanceSection({ politicianId }) {
+  const posthog = usePostHog();
   const currentYear = new Date().getFullYear();
   const defaultCycle = String(currentYear % 2 === 0 ? currentYear : currentYear - 1);
   const [cycle, setCycle] = useState(defaultCycle);
@@ -86,6 +88,7 @@ export default function CampaignFinanceSection({ politicianId }) {
   }, [summary, cycle]);
 
   function handleCycleChange(newCycle) {
+    posthog?.capture('campaign_finance_cycle_changed', { cycle: newCycle });
     setCycle(newCycle);
   }
 

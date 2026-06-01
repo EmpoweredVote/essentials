@@ -70,6 +70,12 @@ export default function Landing() {
   };
 
   const handleAreaClick = (area) => {
+    const areaType = area.browseGovernmentList ? 'government_list' : area.browseGeoId ? 'geo' : 'address';
+    posthog?.capture('browse_area_clicked', {
+      label: area.label,
+      type: areaType,
+      state: area.browseStateAbbrev || area.state || null,
+    });
     if (area.browseGovernmentList) {
       const params = new URLSearchParams({
         browse_government_list: area.browseGovernmentList.join(','),
