@@ -308,7 +308,7 @@ function getAccordionUrl(pols, accordionKey) {
 
 const TIER_ORDER = ['Local', 'State', 'Federal'];
 
-const LOCAL_BODY_TYPE_ORDER = ['City', 'Town', 'Township', 'School District', 'County'];
+const LOCAL_BODY_TYPE_ORDER = ['LOCAL', 'City', 'Town', 'Township', 'School District', 'County'];
 // Judiciary bodies sorted last within local
 const isJudiciary = (pols) => pols.some(p => p.district_type === 'JUDICIAL');
 
@@ -395,6 +395,7 @@ function execTitlePriority(pol) {
   if (/\b(lt\.?\s*governor|lieutenant\s+governor)\b/.test(t)) return 1;
   if (/\bpresident\b/.test(t) && !/vice/.test(t)) return 0;
   if (/\bvice\s*president\b/.test(t)) return 1;
+  if (/\bchair\b/.test(t) && !/vice|deputy/.test(t)) return 0;
   return 10;
 }
 
@@ -465,6 +466,12 @@ function sortPoliticians(pols) {
     const aNum = parseInt(aId, 10);
     const bNum = parseInt(bId, 10);
     if (!isNaN(aNum) && !isNaN(bNum) && aNum !== bNum) return aNum - bNum;
+
+    // Extract district number from office_title when district_id is unavailable
+    // e.g. "Commissioner (District 3)" → 3
+    const aTitleNum = parseInt((a.office_title || '').match(/(?:district|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
+    const bTitleNum = parseInt((b.office_title || '').match(/(?:district|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
+    if (!isNaN(aTitleNum) && !isNaN(bTitleNum) && aTitleNum !== bTitleNum) return aTitleNum - bTitleNum;
 
     // Alphabetical fallback
     return (a.last_name || '').localeCompare(b.last_name || '');
