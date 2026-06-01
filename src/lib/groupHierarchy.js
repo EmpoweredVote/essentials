@@ -379,7 +379,12 @@ function subGroupOrderScore(label, pols) {
   if (lower.includes('house') || lower.includes('assembly')) return 0;
   if (lower.includes('senate')) return 1;
 
-  if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 10;
+  if (
+    pols.length > 0 &&
+    pols.every(p => p.district_type === 'LOCAL_EXEC') &&
+    EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))
+  ) return 10;
+  if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 20;
   if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 20;
   return 30; // Other (officials, etc.)
 }
