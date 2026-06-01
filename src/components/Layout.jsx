@@ -1,4 +1,4 @@
-import { Header } from "@empoweredvote/ev-ui";
+import { Header, evAppLinks } from "@empoweredvote/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { ThemeToggle } from "./ThemeToggle";
@@ -42,7 +42,8 @@ export function Layout({ children }) {
         logoSrc="/EVLogo.svg"
         logoAlt="Empowered Vote"
         logoHref="https://empowered.vote"
-        navItems={[]}
+        navItems={evAppLinks}
+        darkMode={isDark}
         secondaryAction={<ThemeToggle />}
         onNavigate={(href) => { window.location.href = href === '/' ? 'https://empowered.vote' : href; }}
         profileMenu={profileMenu}

@@ -144,18 +144,21 @@ body {
   color: #9ca3af !important;
 }
 
-/* Dark mode: contact info links and values inside ev-ui PoliticianProfile */
-.dark .ev-politician-profile a {
+/* Dark mode: contact info links and values inside ev-ui PoliticianProfile.
+   The StanceAccordion (.ev-stance-panel) is theme-aware via its own `darkMode`
+   prop, so it is excluded from these blanket !important overrides — otherwise
+   they would flatten its title/pill/link color hierarchy in dark mode. */
+.dark .ev-politician-profile a:not(.ev-stance-panel *) {
   color: #59b0c4 !important;
 }
 
-.dark .ev-politician-profile a:hover {
+.dark .ev-politician-profile a:not(.ev-stance-panel *):hover {
   color: #7ec8d8 !important;
 }
 
-.dark .ev-politician-profile span,
-.dark .ev-politician-profile li,
-.dark .ev-politician-profile address {
+.dark .ev-politician-profile span:not(.ev-stance-panel *),
+.dark .ev-politician-profile li:not(.ev-stance-panel *),
+.dark .ev-politician-profile address:not(.ev-stance-panel *) {
   color: #d1d5db !important;
 }
 

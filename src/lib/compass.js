@@ -2,10 +2,10 @@
 import { apiFetch, publicFetch } from './auth';
 
 // All topics (full topic objects: { id, short_title, stances, ... })
+// Uses publicFetch — topics are public and must not redirect unauthenticated guests.
 export async function fetchTopics() {
-  const res = await apiFetch('/compass/topics');
-  if (!res) throw new Error('fetchTopics failed: Unauthorized');
-  if (!res.ok) throw new Error(`fetchTopics failed: ${res.status}`);
+  const res = await publicFetch('/compass/topics');
+  if (!res || !res.ok) throw new Error(`fetchTopics failed: ${res?.status ?? 'network error'}`);
   return res.json();
 }
 // Politician answers: [{ topic_id, value }, ...]
