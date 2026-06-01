@@ -13,12 +13,12 @@
 
 ### Multnomah Cities
 
-- [ ] **CITIES-01**: Gresham city council government body + elected officials seeded
-- [ ] **CITIES-02**: Troutdale city council government body + elected officials seeded
-- [ ] **CITIES-03**: Fairview city council government body + elected officials seeded
-- [ ] **CITIES-04**: Wood Village city council government body + elected officials seeded
-- [ ] **CITIES-05**: Maywood Park city council government body + elected officials seeded
-- [ ] **CITIES-06**: Headshots for smaller city officials where available online
+- [x] **CITIES-01**: Gresham city council government body + elected officials seeded
+- [x] **CITIES-02**: Troutdale city council government body + elected officials seeded
+- [x] **CITIES-03**: Fairview city council government body + elected officials seeded
+- [x] **CITIES-04**: Wood Village city council government body + elected officials seeded
+- [x] **CITIES-05**: Maywood Park city council government body + elected officials seeded
+- [x] **CITIES-06**: Headshots for smaller city officials where available online
 
 ### Routing
 
@@ -95,12 +95,12 @@
 | COUNTY-01 | Phase 83 | Pending |
 | COUNTY-02 | Phase 83 | Pending |
 | COUNTY-03 | Phase 83 | Pending |
-| CITIES-01 | Phase 84 | Pending |
-| CITIES-02 | Phase 84 | Pending |
-| CITIES-03 | Phase 84 | Pending |
-| CITIES-04 | Phase 84 | Pending |
-| CITIES-05 | Phase 84 | Pending |
-| CITIES-06 | Phase 84 | Pending |
+| CITIES-01 | Phase 84 | Complete |
+| CITIES-02 | Phase 84 | Complete |
+| CITIES-03 | Phase 84 | Complete |
+| CITIES-04 | Phase 84 | Complete |
+| CITIES-05 | Phase 84 | Complete |
+| CITIES-06 | Phase 84 | Complete |
 | ROUTING-01 | Phase 83 | Pending |
 | ELECTIONS-01 | Phase 85 | Pending |
 | ELECTIONS-02 | Phase 85 | Pending |
