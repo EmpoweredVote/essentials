@@ -1,108 +1,135 @@
-# Requirements: Essentials — v7.0 California
+# Requirements: Essentials — Empowered Vote
 
-**Defined:** 2026-05-21
+**Defined:** 2026-05-31
 **Core Value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## v7.0 Requirements
+## v10.0 Requirements
 
-### GEO — Geofences
+### County Government
 
-- [x] **GEO-01**: CA TIGER boundaries loaded — G4110 incorporated cities, G4040 COUSUB unincorporated areas, SLDU (40 senate), SLDL (80 assembly), CD (52 congressional), G4020 counties (58); any CA address routes correctly to all tiers
-- [x] **GEO-02**: LAUSD board district geofence boundaries loaded and integrated with routing
+- [ ] **COUNTY-01**: Multnomah County Board of Commissioners government body created (geo_id=41051)
+- [ ] **COUNTY-02**: 5 commissioners + chair seeded as officials with offices linked to county geo_id
+- [ ] **COUNTY-03**: Commissioner headshots at 600×750 in Supabase Storage
 
-### GOVDB — Government DB + Officials + Legislature
+### Multnomah Cities
 
-- [ ] **GOVDB-01**: State of California government row + all constitutional officer chambers seeded, with is_appointed_position determined per CA constitution
-- [ ] **GOVDB-02**: CA executives seeded — Governor Newsom + applicable constitutional officers with headshots at 600×750
-- [ ] **GOVDB-03**: 2 CA US Senators + 52 US House reps seeded with offices linked to NATIONAL districts + headshots at 600×750
-- [x] **GOVDB-04**: 80 CA Assembly members + 40 CA Senators seeded with offices linked to STATE geofence districts + headshots at 600×750
+- [ ] **CITIES-01**: Gresham city council government body + elected officials seeded
+- [ ] **CITIES-02**: Troutdale city council government body + elected officials seeded
+- [ ] **CITIES-03**: Fairview city council government body + elected officials seeded
+- [ ] **CITIES-04**: Wood Village city council government body + elected officials seeded
+- [ ] **CITIES-05**: Maywood Park city council government body + elected officials seeded
+- [ ] **CITIES-06**: Headshots for smaller city officials where available online
 
-### LA — LA Backlog Closure
+### Routing
 
-- [ ] **LA-01**: CA Governor challenger candidates (10 filed per SOS) seeded to the Governor race row
-- [ ] **LA-02**: lavote.gov election ID updated for the current cycle (mandatory manual step per backlog)
-- [ ] **LA-03**: LAUSD board district officials seeded with offices linked to LAUSD geofences + headshots at 600×750
-- [ ] **LA-04**: LA city structure gaps closed — any missing chambers, offices, or incumbents from the partial existing seed
+- [ ] **ROUTING-01**: Users at unincorporated Multnomah County addresses see county → state → federal representatives with no empty LOCAL city section
 
-### CITIES — New City Deep Seeds
+### Elections
 
-- [ ] **CITIES-01**: San Francisco government structure (charter city, Board of Supervisors 11 districts, Mayor, City Attorney, DA) + Tier 1-4 incumbents + headshots at 600×750
-- [ ] **CITIES-02**: San Jose government structure + Tier 1-4 incumbents + headshots at 600×750
-- [ ] **CITIES-03**: San Diego government structure + Tier 1-4 incumbents + headshots at 600×750
-- [ ] **CITIES-04**: Sacramento government structure + Tier 1-4 incumbents + headshots at 600×750
-- [ ] **CITIES-05**: Fremont government structure + Tier 1-4 incumbents + headshots at 600×750
-- [ ] **CITIES-06**: Berkeley government structure + Tier 1-4 incumbents + headshots at 600×750
-- [ ] **CITIES-07**: All 6 new cities + LA updated/confirmed in Landing.jsx COVERAGE_AREAS
+- [ ] **ELECTIONS-01**: Multnomah County commissioner 2026 race rows seeded
+- [ ] **ELECTIONS-02**: 2026 race rows seeded for each of the 5 smaller incorporated cities
+- [ ] **ELECTIONS-03**: discovery_jurisdictions row(s) created and cron armed for Multnomah County area
 
-### ELECT — Elections + Discovery
+### OR School Boards — Multnomah County
 
-- [ ] **ELECT-01**: CA 2026 primary (June 3) + general (November 4) election rows seeded
-- [ ] **ELECT-02**: CA Governor 2026 open-seat race seeded with all SOS-verified candidates and discovery pipeline armed
-- [ ] **ELECT-03**: CA US House 2026 races seeded for all 52 districts with discovery pipeline armed
-- [ ] **ELECT-04**: Discovery jurisdictions armed (cron_active=true) for all covered CA cities
+- [ ] **OR-SCHOOL-01**: G5420 geofences loaded for all 6 Multnomah County school districts (Portland Public Schools, Parkrose, Reynolds, Centennial, David Douglas, Riverdale)
+- [ ] **OR-SCHOOL-02**: School board government bodies seeded for all 6 districts (district_type='SCHOOL')
+- [ ] **OR-SCHOOL-03**: Board member officials + offices seeded for all 6 districts
+- [ ] **OR-SCHOOL-04**: Board member headshots at 600×750 where available online
 
-### COMPASS — Compass Stances
+### CA City School Boards
 
-- [ ] **COMPASS-01**: Compass stances researched + ingested for CA constitutional officers and US senators/reps where public record exists (one-at-a-time per rate-limit rule)
-- [ ] **COMPASS-02**: Compass stances researched + ingested for city council officials across all 7 CA cities (LA + 6 new) where public record exists (one-at-a-time)
+- [ ] **CA-SCHOOL-01**: San Francisco Unified School District — G5420 geofence + 7-member board seeded
+- [ ] **CA-SCHOOL-02**: San Diego Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-03**: Sacramento City Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-04**: San Jose Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-05**: Fremont Unified School District — G5420 geofence + board seeded
+- [ ] **CA-SCHOOL-06**: Berkeley Unified School District — G5420 geofence + board seeded
 
-### PLAYBOOK
+### TX School Boards — Collin County
 
-- [ ] **PLAYBOOK-01**: LOCATION-ONBOARDING.md updated with CA-specific GOTCHAs (charter vs. general law cities, RCV jurisdictions like SF/Berkeley, TIGER CD key verification for CA, LAUSD sub-district geofence pattern, lavote.gov election ID maintenance)
+- [ ] **TX-SCHOOL-01**: Plano ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-02**: McKinney ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-03**: Allen ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-04**: Frisco ISD — G5420 geofence + board seeded
+- [ ] **TX-SCHOOL-05**: Richardson ISD — G5420 geofence + board seeded
 
----
+### IN School Board Completion
 
-## Future Requirements (v7.1+)
+- [ ] **IN-SCHOOL-01**: IPS D3 + D6 government bodies added; officials seeded for all 7 IPS seats (D1–D6 + At Large)
+- [ ] **IN-SCHOOL-02**: Monroe County Community School Corporation board officials seeded for all 7 districts
 
-- Additional CA city deep seeds (Oakland, Long Beach, Anaheim, etc.)
-- CA G4040 COUSUB town coverage verification (unincorporated county areas)
-- CA campaign finance ingestion (FPPC Form 460 pattern)
-- STV/RCV round-by-round results display for SF/Berkeley elections
-- CA judicial candidates (Superior Court elections per county)
+### ME Tier 2 City School Boards
+
+- [ ] **ME-SCHOOL-01**: Lewiston school board seeded (geofence + officials)
+- [ ] **ME-SCHOOL-02**: Bangor school board seeded (geofence + officials)
+- [ ] **ME-SCHOOL-03**: South Portland, Auburn, and Biddeford school boards seeded (geofences + officials)
+
+## Future Requirements
+
+### Additional OR Cities
+- **OR-CITIES-01**: Gresham, Troutdale, Fairview, Wood Village, Maywood Park compass stances (post-seeding)
+- **OR-CITIES-02**: OR G4040 COUSUB towns (unincorporated communities) geofences
+
+### Additional School Coverage
+- **SCHOOL-FUTURE-01**: Remaining Collin County TX ISDs beyond the 5 major ones
+- **SCHOOL-FUTURE-02**: Remaining MA cities beyond Cambridge
+- **SCHOOL-FUTURE-03**: ME Tier 3+ skeletal city school boards
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| All 482 CA incorporated cities deep-seeded | 6 cities at full depth is ambitious for one milestone; remainder in v7.1+ |
-| CA campaign finance ingestion | FPPC Form 460 is a different format from LA Ethics Commission; separate research needed |
-| SF/Berkeley STV round-by-round results UI | High UI complexity, no precedent in codebase; post-v7.0 |
-| CA judicial elections | 58 counties × multiple Superior Court races; scope warrants its own milestone |
+| Cambridge School Committee | Already seeded — complete |
+| Portland ME School Board | Already seeded in Phase 53 — complete |
+| OR G4040 COUSUB towns | Significant scope; defer to future milestone |
+| School board elections discovery | Manual seeding sufficient for v10.0; auto-discovery for school races is v11+ |
+| School compass stances for board members | Data depth phase; excluded from structural seeding milestone |
 
 ## Traceability
 
+*(Populated by roadmapper — 2026-05-31)*
+
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| GEO-01 | Phase 57 | Pending |
-| GEO-02 | Phase 58 | Complete |
-| GOVDB-01 | Phase 59 | Pending |
-| GOVDB-02 | Phase 59 | Pending |
-| GOVDB-03 | Phase 60 | Pending |
-| GOVDB-04 | Phase 61 | Complete |
-| LA-01 | Phase 62 | Complete |
-| LA-02 | Phase 62 | Complete |
-| LA-03 | Phase 62 | Complete |
-| LA-04 | Phase 62 | Complete |
-| CITIES-01 | Phase 63 | Pending |
-| CITIES-02 | Phase 64 | Pending |
-| CITIES-03 | Phase 65 | Pending |
-| CITIES-04 | Phase 66 | Pending |
-| CITIES-05 | Phase 67 | Pending |
-| CITIES-06 | Phase 68 | Complete |
-| CITIES-07 | Phase 69 | Pending |
-| ELECT-01 | Phase 69 | Pending |
-| ELECT-02 | Phase 69 | Pending |
-| ELECT-03 | Phase 69 | Pending |
-| ELECT-04 | Phase 69 | Pending |
-| COMPASS-01 | Phase 70 | Pending |
-| COMPASS-02 | Phase 70 | Pending |
-| PLAYBOOK-01 | Phase 71 | Pending |
+| COUNTY-01 | Phase 83 | Pending |
+| COUNTY-02 | Phase 83 | Pending |
+| COUNTY-03 | Phase 83 | Pending |
+| CITIES-01 | Phase 84 | Pending |
+| CITIES-02 | Phase 84 | Pending |
+| CITIES-03 | Phase 84 | Pending |
+| CITIES-04 | Phase 84 | Pending |
+| CITIES-05 | Phase 84 | Pending |
+| CITIES-06 | Phase 84 | Pending |
+| ROUTING-01 | Phase 83 | Pending |
+| ELECTIONS-01 | Phase 85 | Pending |
+| ELECTIONS-02 | Phase 85 | Pending |
+| ELECTIONS-03 | Phase 85 | Pending |
+| OR-SCHOOL-01 | Phase 86 | Pending |
+| OR-SCHOOL-02 | Phase 86 | Pending |
+| OR-SCHOOL-03 | Phase 86 | Pending |
+| OR-SCHOOL-04 | Phase 86 | Pending |
+| CA-SCHOOL-01 | Phase 87 | Pending |
+| CA-SCHOOL-02 | Phase 87 | Pending |
+| CA-SCHOOL-03 | Phase 87 | Pending |
+| CA-SCHOOL-04 | Phase 87 | Pending |
+| CA-SCHOOL-05 | Phase 87 | Pending |
+| CA-SCHOOL-06 | Phase 87 | Pending |
+| TX-SCHOOL-01 | Phase 88 | Pending |
+| TX-SCHOOL-02 | Phase 88 | Pending |
+| TX-SCHOOL-03 | Phase 88 | Pending |
+| TX-SCHOOL-04 | Phase 88 | Pending |
+| TX-SCHOOL-05 | Phase 88 | Pending |
+| IN-SCHOOL-01 | Phase 89 | Pending |
+| IN-SCHOOL-02 | Phase 89 | Pending |
+| ME-SCHOOL-01 | Phase 89 | Pending |
+| ME-SCHOOL-02 | Phase 89 | Pending |
+| ME-SCHOOL-03 | Phase 89 | Pending |
 
 **Coverage:**
-- v7.0 requirements: 24 total
-- Mapped to phases: 24
-- Unmapped: 0 ✓
+- v10.0 requirements: 33 total
+- Mapped to phases: 33, Unmapped: 0 ✓
 
 ---
-*Requirements defined: 2026-05-21*
-*Last updated: 2026-05-21 — traceability populated by roadmapper*
+*Requirements defined: 2026-05-31*
+*Last updated: 2026-05-31 — roadmap created (phases 83–89)*

@@ -1,5 +1,59 @@
 # Milestones
 
+## v8.0 Oregon (Shipped: 2026-05-31)
+
+**Delivered:** Full Oregon state coverage — TIGER geofences, government structure with 5 voter-elected constitutional officers, 90 state legislators with headshots from oregonlegislature.gov, Portland deep seed (2024 charter reform: 4-district × 3-seat RCV council), OR 2026 elections + discovery pipeline (105 race rows), 321 compass stances across 24 OR officials, and OR-specific GOTCHAs documented in the playbook.
+
+**Phases completed:** 72-81 + 77.1 inserted (25 plans total)
+
+**Key accomplishments:**
+
+- Oregon TIGER boundaries loaded — 241 G4110 cities + 6 CD (cd119 key) + 30 SLDU + 60 SLDL + 36 G4020 counties; Portland geo_id=4159000 confirmed; any OR address routes to correct federal, state, and local representatives (Phase 72)
+- OR state government scaffolded — 5 voter-elected constitutional officers (Kotek, Rayfield, Read, Steiner, Stephenson), 2 US Senators (Wyden + Merkley), 6 US House reps; all 13 with headshots (Phases 73-74)
+- 30 OR state senators + 60 OR house reps seeded with offices linked to STATE districts; 90/90 headshots from oregonlegislature.gov; Portland City Hall → Lisa Reynolds (SD-17) + Shannon Isadore (HD-33) end-to-end (Phase 75)
+- Portland deep seed — 2024 charter reform: 4 multi-member council districts (3 seats each, RCV), Mayor Wilson + 12 council + City Auditor Rede + 2 appointed officials; council district boundaries from PortlandMaps ArcGIS (not TIGER); 14 headshots from portland.gov 1_1_320w URLs; Phase 77.1 fixed is_appointed=true omission (Phases 76-77, 77.1)
+- OR 2026 elections + discovery pipeline — 105 race rows (Governor + Senate + 6 US House + 30 OR Senate + 60 OR House + 7 Portland City); discovery_jurisdictions for OR statewide + Portland (Phases 79)
+- 321 compass stances across 24 OR officials — Kotek 31, Rayfield 24, Bonamici 24, Bentz 21, Hoyle 20; all cited from public record; compass renders on Kotek profile (Phase 80)
+- OR Playbook retrospective — 9 OR-specific GOTCHAs (Portland charter reform, per-OBJECTID ArcGIS load, PowerShell Unicode encoding), Oregon Quick Reference block, 2 new Cities Onboarded rows (Phase 81)
+
+**Stats:**
+
+- 10 phases (+ 1 inserted: 77.1), 25 plans
+- 9 days (2026-05-28 → 2026-05-31) active; geofences prepared 2026-05-28
+- Next migration: 242
+
+**Acknowledged at close:** Phase 75 audit trail gap (6-profile visual spot-check not formally recorded; DB state verified correct). GAP-1 (is_appointed=false on Lee III/Taylor) resolved by Phase 77.1 before close.
+
+**Archive:** [milestones/v8.0-ROADMAP.md](milestones/v8.0-ROADMAP.md) | Audit: [milestones/v8.0-MILESTONE-AUDIT.md](milestones/v8.0-MILESTONE-AUDIT.md)
+
+---
+
+## v7.0 California (Shipped: 2026-05-29)
+
+**Delivered:** Full California state coverage — TIGER geofences for all tiers + LAUSD school board, State of California government DB (8 constitutional officers + 120 state legislators + 54 federal officials), LA backlog closure, 6 CA city deep seeds at full Tier 1 depth (SF/SJ/SD/SAC/Fremont/Berkeley), CA 2026 elections + discovery pipeline armed, 965 compass stances across 68 CA officials, and CA-specific GOTCHAs documented in the playbook.
+
+**Phases completed:** 57-70, 78 (~~71 folded into 78~~) — 42 plans total
+
+**Key accomplishments:**
+
+- California TIGER boundaries loaded — 482 G4110 cities + 404 G4040 CCDs + 80 SLDU + 40 SLDL + 52 CD + 58 G4020 counties; SF consolidated city-county + East LA unincorporated routing confirmed; LAUSD 7 board district geofences (mtfcc=G5420) (Phases 57-58)
+- State of California government DB — 8 constitutional officers (deduped from pre-existing seed), 40 CA senators + 80 assembly members with offices linked to STATE districts, 2 US Senators + 52 US House reps; all 174 officials with headshots at 600×750 (Phases 59-61)
+- LA backlog closed — CA Governor 2026 race (all SOS-verified challenger candidates), lavote.gov election ID current, 7 LAUSD board members seeded with headshots, LA city structure gaps resolved (Phase 62)
+- 6 CA city deep seeds — SF (20 officials, DataSF Socrata, RCV), San Jose (11 officials, ArcGIS DISTRICTINT, RCV), San Diego (11 officials, WKID 2230), Sacramento (9 officials, AEM/CQ5 curl+grep), Fremont (7 officials, 403 workaround), Berkeley (10 officials, Socrata, RCV); all cities with council district geofences + headshots (Phases 63-68)
+- CA 2026 elections + discovery — 2 election rows, Governor race + 52 US House races, lavote.gov discovery row, 7 city discovery_jurisdictions rows; all cron_active (Phase 69)
+- 965 compass stances across 68 CA officials — SF 366, San Diego 164, Berkeley 126, San Jose 133, Sacramento 120, Fremont 56; all cited from public record (Phase 70)
+- CA Playbook retrospective — 11 CA-specific GOTCHAs (charter vs general law cities, RCV jurisdictions, AEM/CQ5 headshot pattern, lavote.gov election ID cycle, LAUSD sub-district pattern), California Quick Reference block, 7 new Cities Onboarded rows (Phase 78)
+
+**Stats:**
+
+- 14 active phases (+ 1 folded: 71), 42 plans
+- 8 days active (2026-05-21 → 2026-05-29)
+- Next migration: 242 (v8.0 started immediately after)
+
+**Archive:** [milestones/v7.0-ROADMAP.md](milestones/v7.0-ROADMAP.md) | Requirements: [milestones/v7.0-REQUIREMENTS.md](milestones/v7.0-REQUIREMENTS.md)
+
+---
+
 ## v6.0 Maine Essentials (Shipped: 2026-05-20)
 
 **Delivered:** Full Maine state coverage — geofences, government structure, executives, 186 state legislators with headshots, Portland deep seed + Tier 2 city incumbents, 380 race rows for 2026 elections with discovery cron armed, and a playbook retrospective that captured 9 Maine GOTCHAs into LOCATION-ONBOARDING.md + 5 updated templates.

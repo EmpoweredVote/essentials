@@ -87,31 +87,36 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ 380 ME race rows for 2026 elections — 13 Governor candidates (open seat, SOS-verified), US Senate (Collins + 2 challengers), 2 US House races, 372 legislative scaffold rows; discovery cron armed for 2026-06-09 + 2026-11-03 — v6.0
 - ✓ ME Playbook retrospective — 9 Maine GOTCHAs added to LOCATION-ONBOARDING.md; 5 templates updated (legislature headshots, multi-tier seeding, PowerShell generator, RCV chamber, legislature-elected=appointed) — v6.0
 - ✓ Landing.jsx Maine entry — Portland city browse (browseGovernmentList=['2360545']) + ME state browse (browseStateAbbrev='ME') — v6.0
+- ✓ CA TIGER geofences — 482 G4110 cities + 404 G4040 CCDs + 80 SLDU + 40 SLDL + 52 CD + 58 G4020 counties; SF consolidated city-county (G4110+G4020 both returned); any CA address routes to correct tiers — v7.0
+- ✓ LAUSD board district geofences (7 districts, mtfcc=G5420) + 7 LAUSD board member officials with offices linked to sub-district boundaries; LA address returns correct LAUSD board member — v7.0
+- ✓ State of California government DB — 8 constitutional officers (pre-existing seed fixed: NULL geo_id updated to '06'); 120 CA state legislators (40 senators + 80 assembly); 54 federal officials (2 senators + 52 US House reps) — all with headshots at 600×750 — v7.0
+- ✓ LA backlog closure — CA Governor 2026 race with all SOS-verified challenger candidates; lavote.gov election ID current (id=4338); LAUSD officials seeded; LA city structure gaps closed — v7.0
+- ✓ 6 CA city deep seeds at full Tier 1 depth — SF (20 officials, 10 chambers, RCV, DataSF Socrata loader), San Jose (11 officials, RCV, ArcGIS DISTRICTINT), San Diego (11 officials, ArcGIS WKID 2230), Sacramento (9 officials, AEM/CQ5 curl+grep headshots), Fremont (7 officials, fremont.gov 403 workaround), Berkeley (10 officials, RCV, Socrata 'district' field) — v7.0
+- ✓ CA 2026 elections — Governor race + 52 US House races + discovery pipeline armed (cron_active=true); lavote.gov discovery row; 7 CA city discovery_jurisdictions rows — v7.0
+- ✓ 965 compass stances across 68 CA officials — SF 366, San Diego 164, Berkeley 126, San Jose 133, Sacramento 120, Fremont 56; all cited from public record — v7.0
+- ✓ CA Playbook retrospective — 11 CA-specific GOTCHAs added to LOCATION-ONBOARDING.md; California Quick Reference block added; 7 new rows in Cities Onboarded table; v7.0 milestone closed — v7.0
+- ✓ Oregon TIGER geofences — 241 G4110 cities + 30 SLDU + 60 SLDL + 6 CD + 36 G4020 counties; Portland geo_id=4159000; any OR address routes to correct federal, state, and local representatives; cd119 TIGER key — v8.0
+- ✓ Oregon state government DB — 5 voter-elected constitutional officers (Kotek/Rayfield/Read/Steiner/Stephenson) + 30 state senators + 60 house reps + 2 US Senators + 6 US House reps; all 90 legislators from oregonlegislature.gov with headshots at 600×750 — v8.0
+- ✓ Portland deep seed — 2024 charter reform: 4-district × 3-seat RCV council (12 officials) + Mayor + City Auditor + 2 appointed (City Administrator, City Attorney); council district boundaries from PortlandMaps ArcGIS (not TIGER); 14 elected officials with headshots from portland.gov 1_1_320w style URLs — v8.0
+- ✓ OR 2026 elections + discovery pipeline — 105 race rows (1 Governor + 1 US Senate + 6 US House + 30 OR Senate + 60 OR House + 7 Portland City); discovery_jurisdictions for OR statewide + Portland; armed via election_date 180-day cron window — v8.0
+- ✓ 321 compass stances across 24 OR officials — Kotek 31, Rayfield 24, Bonamici 24, Bentz 21, Hoyle 20, Steiner 13, Salinas 18, Bynum 13, Read 12, Dexter 12, Stephenson 10, Wilson 10; all cited; compass renders on Kotek profile — v8.0
+- ✓ OR Playbook retrospective — 9 OR-specific GOTCHAs added to LOCATION-ONBOARDING.md; Oregon Quick Reference block; 2 new Cities Onboarded rows (Oregon state + Portland); v8.0 milestone closed — v8.0
 
-### Current Milestone: v7.0 California
+### Current Milestone: v10.0 Multnomah County & School Boards
 
-**Goal:** Expand coverage to California — state layer (geofences, legislature, executives, federal), LA backlog closure, and 6 city deep seeds (SF, San Jose, San Diego, Sacramento, Fremont, Berkeley) with compass stances.
+**Goal:** Expand Portland coverage to the full Multnomah County area and add elected school board coverage across all currently-covered cities.
 
 **Target features:**
-- CA TIGER boundaries (G4110 cities, G4040 COUSUB, SLDU/SLDL/CD/counties)
-- LAUSD sub-district geofences + officials
-- State of California government DB + constitutional officers + 120+ legislators + 54 federal reps
-- LA backlog: Governor challengers, lavote.gov election ID, LAUSD officials, LA structure gaps
-- 6 new city deep seeds at full Tier 1-4 depth with headshots
-- CA 2026 elections (Governor + 52 US House races) + discovery pipeline
-- Compass stances for CA officials and city council members
-- Playbook updated with CA-specific GOTCHAs
+- Multnomah County Board of Commissioners — county government body, 5 commissioners + chair, seeded
+- Smaller incorporated cities in Multnomah County — Gresham, Troutdale, Fairview, Wood Village, Maywood Park — city council government bodies + officials seeded
+- Unincorporated area routing — users matched to county geofence but no city geofence skip city layer and see county → state → federal only
+- Elections data — Multnomah County commissioner races + races for the 5 smaller cities, discovery pipeline armed
+- Multnomah County school boards — 6 school districts (PPS, Parkrose, Reynolds, Centennial, David Douglas, Riverdale): G5420 geofences + board members seeded
+- School boards for all other covered areas — IN, MA, TX, CA cities, ME: G5420 geofences + board member seeding (LAUSD already done; remaining cities to complete)
 
 ### Active
 
-- [ ] GEO-01: CA TIGER boundaries loaded (G4110, G4040, SLDU, SLDL, CD, counties)
-- [ ] GEO-02: LAUSD board district geofences
-- [ ] GOVDB-01 through GOVDB-04: State government DB + 120+ legislators + executives + federal officials
-- [ ] LA-01 through LA-04: LA backlog closure
-- [ ] CITIES-01 through CITIES-07: 6 new cities at full depth + Landing.jsx
-- [ ] ELECT-01 through ELECT-04: CA 2026 elections + discovery
-- [ ] COMPASS-01 through COMPASS-02: Stances for state + city officials
-- [ ] PLAYBOOK-01: CA GOTCHAs in playbook
+(v10.0 starting — defining roadmap)
 
 ### Out of Scope
 
@@ -135,6 +140,8 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Shipped v4.0**: Compass Experience — 4 phases (3 active + 1 parked), 7 plans, all requirements satisfied (2026-05-12 → 2026-05-14). 32 files changed, 4,919 insertions. MiniCompass tiles, Local Lens preset, CompassControlsBar shared component, compass-default mode for calibrated users.
 - **Shipped v5.0**: Location Onboarding Playbook — Cambridge, MA proof-of-concept (10 active phases + 1 skipped, 21 plans, 4 days; 2026-05-15 → 2026-05-18). 91 files changed (17,480 insertions). MA state layer (281 geofences, 200+ legislators + executives + federal officials), Cambridge city structure + 15/16 headshots + MA 2026 elections + 162 compass stances. Cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) now available for any US city.
 - **Shipped v6.0**: Maine Essentials — 8 phases (49-56), 20 plans, 2 days (2026-05-18 → 2026-05-20). 70 files changed (17,058 insertions). 227 ME geofences, State of Maine DB (6 chambers), 35 senators + 151 house reps + 185 headshots, Portland deep seed (18 officials), 5 Tier 2 cities, 380 race rows for 2026 elections, discovery cron armed. Playbook retrofitted with 9 Maine GOTCHAs + 5 template updates.
+- **Shipped v7.0**: California — 14 active phases (57-70, 78), 42 plans, 8 days (2026-05-21 → 2026-05-29). CA TIGER geofences (482 G4110 + 404 G4040 + 52 CD + 80 SLDU + 40 SLDL + 58 counties); LAUSD board district geofences; State of CA government DB (8 constitutional officers + 120 state legislators + 54 federal officials); LA backlog closed; 6 CA city deep seeds (SF/SJ/SD/SAC/Fremont/Berkeley) with council district geofences; CA 2026 elections + discovery armed; 965 compass stances across 68 CA officials. Playbook updated with 11 CA-specific GOTCHAs + California Quick Reference.
+- **Shipped v8.0**: Oregon — 10 phases + 1 inserted (72-81, 77.1), 25 plans, 9 days (2026-05-28 → 2026-05-31). OR TIGER geofences (241 G4110 + 6 CD + 30 SLDU + 60 SLDL + 36 counties; cd119 key); 5 OR constitutional officers + 90 legislators + 8 federal officials; Portland deep seed (2024 charter reform: 4-district × 3-seat RCV council, ArcGIS-sourced geofences, 14 headshots); 105 OR 2026 race rows + discovery pipeline; 321 compass stances across 24 OR officials. Playbook updated with 9 OR-specific GOTCHAs + Oregon Quick Reference.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
 - **Database state**: 7+ elections (Indiana Primary May 5 2026, LA County Primary June 2 2026, ME Primary June 9 2026, MA Primary Sept 1 2026, MA General Nov 3 2026, ME General Nov 3 2026, Portland 2027 + Cambridge 2027 placeholders); 450+ races; 140+ candidates; 7,800+ geofence boundaries (+ 227 ME: 23 G4110 cities + 2 CD + 35 SLDU + 151 SLDL + 16 G4020 counties). Discovery pipeline covers 23 TX cities + CA + IN + MA 2026 + ME 2026.
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
@@ -202,6 +209,8 @@ A resident can look up who represents them — and who is on their ballot — wi
 | NATIONAL_UPPER senator uniqueness key = `(district_id, politician_id)` | `(district_id, chamber_id)` blocks 2nd senator INSERT (both senators share one district); politician_id is the correct discriminator | ✓ Good — v6.0 |
 | House headshot thumbnails upscaled from 152×202 to 600×750 | mainelegislature.org only provides thumbnails; upscaling with Lanczos acceptable for government-style headshots; user sign-off required | ✓ Good — v6.0 |
 | Multi-tier city seeding: skeletal INSERT then UPDATE by (chamber_id, title) | No seat_label column on essentials.offices; UPDATE pattern matches on chamber+title to link politician_id to existing office rows | ✓ Good — v6.0 |
+| STATE_EXEC `districts.state` must be uppercase 'OR' not 'or' | Casing rule: STATE/COUNTY tiers use lowercase in TIGER loader but STATE_EXEC is manually inserted — must match uppercase postal code that backend queries use; lowercase causes silent exclusion | ✓ Good — v7.0 (Phase 74 lesson) |
+| STATE_EXEC `district_id` should be empty string for shared multi-position districts | OR STATE_EXEC initially used 'Oregon (Statewide)' as district_id; MA/ME/TX multi-position pattern uses ''; corrected in migration 223a | ✓ Good — v7.0 (Phase 74 lesson) |
 
 ---
-*Last updated: 2026-05-21 after v7.0 milestone definition*
+*Last updated: 2026-05-31 — v10.0 Multnomah County & School Boards started*
