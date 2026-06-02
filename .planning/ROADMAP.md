@@ -915,8 +915,16 @@ Plans:
   3. An SF address returns San Francisco Unified School District board members alongside city supervisors and state officials — no empty SCHOOL section
   4. A San Diego, Sacramento, San Jose, Fremont, or Berkeley address returns that city's school board members without routing errors
 
-**Plans**: TBD
-**UI hint**: yes
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [x] 87-01-PLAN.md - migration 257 (6 governments + chambers + SCHOOL districts + 34 officials + offices + smoke test)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 87-02-PLAN.md - FUSD browser check + headshot upload + audit-only migration 258
 
 ### Phase 88: TX Collin County School Boards
 
@@ -1073,6 +1081,6 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 84. Multnomah Smaller Cities | v10.0 | 3/3 | Complete    | 2026-06-01 |
 | 85. Multnomah Elections + Discovery | v10.0 | 2/2 | Complete    | 2026-06-01 |
 | 86. Multnomah County School Districts | v10.0 | 2/2 | Complete   | 2026-06-02 |
-| 87. CA City School Boards | v10.0 | 0/TBD | Not started | - |
+| 87. CA City School Boards | v10.0 | 1/1 | Complete   | 2026-06-02 |
 | 88. TX Collin County School Boards | v10.0 | 0/TBD | Not started | - |
 | 89. IN + ME School Board Completion | v10.0 | 0/TBD | Not started | - |
