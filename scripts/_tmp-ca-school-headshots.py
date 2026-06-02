@@ -130,6 +130,8 @@ def crop_and_resize(img: Image.Image) -> Image.Image:
         new_h = int(w / target_ratio)
         img = img.crop((0, 0, w, new_h))
 
+    if img.mode in ('L', 'LA'):
+        raise ValueError(f"Greyscale image rejected (mode={img.mode}) — find a color source photo")
     if img.mode != 'RGB':
         img = img.convert('RGB')
     return img.resize((TARGET_W, TARGET_H), Image.LANCZOS)

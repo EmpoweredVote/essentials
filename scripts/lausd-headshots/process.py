@@ -112,12 +112,13 @@ def process_image(raw_path):
     """Crop to 4:5, resize to 600x750 Lanczos, return JPEG bytes at quality 90."""
     with Image.open(raw_path) as img:
         # Convert to RGB (handles PNG with alpha, palette modes, etc.)
-        if img.mode in ('RGBA', 'LA', 'P'):
+        if img.mode in ('L', 'LA'):
+            raise ValueError(f"Greyscale image rejected (mode={img.mode}) — find a color source photo")
+        if img.mode in ('RGBA', 'P'):
             bg = Image.new('RGB', img.size, (255, 255, 255))
             if img.mode == 'P':
                 img = img.convert('RGBA')
-            if img.mode in ('RGBA', 'LA'):
-                bg.paste(img, mask=img.split()[-1])
+            bg.paste(img, mask=img.split()[-1])
             img = bg
         elif img.mode != 'RGB':
             img = img.convert('RGB')

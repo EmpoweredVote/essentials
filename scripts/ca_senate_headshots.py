@@ -119,6 +119,8 @@ SENATOR_PHOTO_MAP = {
 def crop_and_resize(img_bytes):
     """Crop to 4:5 aspect ratio (center/top crop) then resize to 600x750."""
     img = Image.open(io.BytesIO(img_bytes))
+    if img.mode in ('L', 'LA'):
+        raise ValueError(f"Greyscale image rejected (mode={img.mode}) — find a color source photo")
     if img.mode != 'RGB':
         img = img.convert('RGB')
 
