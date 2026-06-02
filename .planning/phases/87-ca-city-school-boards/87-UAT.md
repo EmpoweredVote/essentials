@@ -44,8 +44,8 @@ severity: major
 ### 6. FUSD SCHOOL section
 expected: Entering an address inside the Fremont Unified SD boundary shows a SCHOOL section with 5 officials titled "Board Member (Area 1)" through "Board Member (Area 5)".
 result: issue
-reported: "No data returned for Fremont addresses — 'couldn't find any information'. FUSD officials are seeded but SCHOOL section never appears. Possible geofence routing failure for FUSD G5420 district."
-severity: blocker
+reported: "FUSD routing confirmed working (5 officials appear). Bad test address caused initial false alarm. Title bug confirmed: shows district name instead of 'Board Member (Area N)'. Tile size bug also present."
+severity: major
 
 ### 7. BUSD SCHOOL section
 expected: Entering an address inside the Berkeley Unified SD boundary shows a SCHOOL section with 5 officials titled "Director" — using Berkeley's official term, not "Board Member".
@@ -111,7 +111,7 @@ skipped: 1
     - "Find color replacement photos for 7 SFUSD officials (sfusd.edu only serves B&W — need LinkedIn, news, or external sources)"
 
 - truth: "FUSD SCHOOL section appears for Fremont addresses"
-  status: not_a_bug
+  status: confirmed_ok
   reason: "User got 'couldn't find that address' for Fremont. Debug agent confirmed FUSD geofence and routing are fully functional."
   severity: blocker
   test: 6
