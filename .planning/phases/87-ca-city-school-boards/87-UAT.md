@@ -1,14 +1,24 @@
 ---
-status: diagnosed
+status: complete
 phase: 87-ca-city-school-boards
-source: [87-01-SUMMARY.md, 87-02-SUMMARY.md]
+source: [87-01-SUMMARY.md, 87-02-SUMMARY.md, 87-03-SUMMARY.md, 87-04-SUMMARY.md, 87-05-SUMMARY.md]
 started: 2026-06-02T16:00:00Z
-updated: 2026-06-02T16:30:00Z
+updated: 2026-06-02T20:30:00Z
 ---
 
 ## Current Test
 
-[testing complete]
+**Re-verification COMPLETE** — all 3 re-test criteria PASS (2026-06-02).
+
+### Re-test 1: SFUSD card titles + tile size + color headshots
+Open an SF address (e.g. **"375 7th Ave, San Francisco, CA"**) → Reps tab → scroll to SCHOOL section.
+
+Check all three fixed items:
+1. Card titles show **"Commissioner"** (not "San Francisco Unified School District Board of Education") — **PASS**
+2. Tiles are the **same visual height** as nearby council tiles — **PASS** (all cards 130px, verified via offsetHeight)
+3. The 7 commissioner headshots are **color** — **PASS** (3 real photos + 4 Mission Local illustrated portraits, all RGB 600×750)
+
+**Bug found and fixed during re-test:** 4 of 7 SFUSD commissioners (Huling, Alexander, Gupta, Ray) had Storage files but missing `politician_images` rows — post-87-05 replacement scripts only upserted Storage without inserting DB rows. Fixed by direct SQL insert (migration 260 audit-only).
 
 ## Tests
 
