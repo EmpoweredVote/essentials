@@ -39,12 +39,12 @@
 
 ### CA City School Boards
 
-- [ ] **CA-SCHOOL-01**: San Francisco Unified School District — G5420 geofence + 7-member board seeded
-- [ ] **CA-SCHOOL-02**: San Diego Unified School District — G5420 geofence + board seeded
-- [ ] **CA-SCHOOL-03**: Sacramento City Unified School District — G5420 geofence + board seeded
-- [ ] **CA-SCHOOL-04**: San Jose Unified School District — G5420 geofence + board seeded
-- [ ] **CA-SCHOOL-05**: Fremont Unified School District — G5420 geofence + board seeded
-- [ ] **CA-SCHOOL-06**: Berkeley Unified School District — G5420 geofence + board seeded
+- [x] **CA-SCHOOL-01**: San Francisco Unified School District — G5420 geofence + 7-member board seeded
+- [x] **CA-SCHOOL-02**: San Diego Unified School District — G5420 geofence + board seeded
+- [x] **CA-SCHOOL-03**: Sacramento City Unified School District — G5420 geofence + board seeded
+- [x] **CA-SCHOOL-04**: San Jose Unified School District — G5420 geofence + board seeded
+- [x] **CA-SCHOOL-05**: Fremont Unified School District — G5420 geofence + board seeded
+- [x] **CA-SCHOOL-06**: Berkeley Unified School District — G5420 geofence + board seeded
 
 ### TX School Boards — Collin County
 
@@ -109,12 +109,12 @@
 | OR-SCHOOL-02 | Phase 86 | Complete |
 | OR-SCHOOL-03 | Phase 86 | Complete |
 | OR-SCHOOL-04 | Phase 86 | Complete |
-| CA-SCHOOL-01 | Phase 87 | Pending |
-| CA-SCHOOL-02 | Phase 87 | Pending |
-| CA-SCHOOL-03 | Phase 87 | Pending |
-| CA-SCHOOL-04 | Phase 87 | Pending |
-| CA-SCHOOL-05 | Phase 87 | Pending |
-| CA-SCHOOL-06 | Phase 87 | Pending |
+| CA-SCHOOL-01 | Phase 87 | Complete |
+| CA-SCHOOL-02 | Phase 87 | Complete |
+| CA-SCHOOL-03 | Phase 87 | Complete |
+| CA-SCHOOL-04 | Phase 87 | Complete |
+| CA-SCHOOL-05 | Phase 87 | Complete |
+| CA-SCHOOL-06 | Phase 87 | Complete |
 | TX-SCHOOL-01 | Phase 88 | Pending |
 | TX-SCHOOL-02 | Phase 88 | Pending |
 | TX-SCHOOL-03 | Phase 88 | Pending |
