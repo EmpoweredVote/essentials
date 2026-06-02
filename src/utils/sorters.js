@@ -99,6 +99,13 @@ export const atLargeFirstKey = (pol) => (pol.district_id === '0' ? 0 : 1);
 // Alphabetical sort by district label (for non-numbered districts like townships)
 export const districtLabelKey = (pol) => lower(pol.district_label || '');
 
+// School board seat sort: extracts parenthetical from office_title
+// "Board Member (District A)" → "district a", "Commissioner" → "commissioner"
+export const schoolSeatKey = (pol) => {
+  const m = (pol.office_title || '').match(/\((.+?)\)/);
+  return m ? lower(m[1]) : lower(pol.office_title || '');
+};
+
 // Chief Justice/Chief Judge sorts before other justices/judges
 export const chiefJusticeFirstKey = (pol) => {
   const title = lower(pol.office_title || '');
@@ -416,14 +423,14 @@ export const GROUP_SORT_OPTIONS = {
       cmp: (dir) => makeComparator(atLargeFirstKey, dir),
     },
     {
+      id: "seat",
+      label: "Seat/District",
+      cmp: (dir) => makeComparator(schoolSeatKey, dir),
+    },
+    {
       id: "district",
       label: "District Number",
       cmp: (dir) => makeComparator(districtNumberKey, dir),
-    },
-    {
-      id: "district_label",
-      label: "District/Township",
-      cmp: (dir) => makeComparator(districtLabelKey, dir),
     },
     {
       id: "name",
