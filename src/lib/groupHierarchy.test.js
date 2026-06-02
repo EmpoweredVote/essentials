@@ -6,9 +6,20 @@
 import { describe, it, expect } from 'vitest';
 import { groupIntoHierarchy } from './groupHierarchy.js';
 
+// Each fabricated politician needs a distinct identity. groupIntoHierarchy()
+// runs deduplicateLocalMultiOffice() first, which keys politicians by
+// `${government_name}||${id || full_name || ''}` to merge one person holding
+// multiple offices in the same government. Real API records always carry a
+// unique `id`; without one, every LOCAL/LOCAL_EXEC fixture sharing a
+// government_name collides on the empty-string key and silently collapses into
+// a single card — which is exactly what made Tests A/C/E fail (and let Test B
+// pass for the wrong reason). A monotonic counter gives each fixture a unique id.
+let _polIdCounter = 0;
+
 // Helper to build a minimal politician record
 function makePol(overrides) {
   return {
+    id: `pol-${_polIdCounter++}`,
     district_type: 'LOCAL',
     government_name: 'City of Bloomington, Indiana, US',
     government_body_name: 'Bloomington Common Council',
@@ -179,6 +190,7 @@ describe('Admin officer sub-group splitting', () => {
 
 function makeJudicialPol(overrides) {
   return {
+    id: `pol-${_polIdCounter++}`,
     district_type: 'JUDICIAL',
     government_name: 'Monroe County, Indiana, US',
     government_body_name: 'Monroe Circuit Court',
