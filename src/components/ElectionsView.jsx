@@ -251,7 +251,7 @@ export default function ElectionsView({
   onCandidateClick,
   isDark = false,
 }) {
-  const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances, localLensActive, selectedTopics } = useCompass();
+  const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances, getEffectiveLens, selectedTopics } = useCompass();
   const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
     if (a.topic?.short_title) return a;
     const topic = allTopics.find(t => t.id === a.topic_id);
@@ -694,7 +694,14 @@ export default function ElectionsView({
                                         return t ? { topic_id: t.id, value } : null;
                                       }).filter(Boolean)
                                     : null;
-                                  const scopedTopicsForRace = deriveScopedTopics(allTopics, race.districtType);
+                                  const raceUpper = String(race.districtType || '').toUpperCase();
+                                  const raceLensActive = getEffectiveLens(
+                                    (raceUpper === 'LOCAL' || raceUpper === 'LOCAL_EXEC' || raceUpper === 'COUNTY') ? 'local' : 'state'
+                                  );
+                                  // Lens ON → local-scoped topics; OFF → full compass (no tier lock).
+                                  const scopedTopicsForRace = raceLensActive
+                                    ? allTopics.filter((t) => t.applies_local !== false)
+                                    : allTopics;
                                   return (
                                     <div key={candidate.candidate_id} style={{ position: 'relative' }}>
                                       <PoliticianCard
@@ -740,7 +747,7 @@ export default function ElectionsView({
                                           selectedTopics={selectedTopics}
                                           scopedTopics={scopedTopicsForRace}
                                           invertedSpokes={invertedSpokes}
-                                          localLensActive={localLensActive}
+                                          localLensActive={raceLensActive}
                                           isDark={isDark}
                                           size={190}
                                         />

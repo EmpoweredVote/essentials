@@ -3,7 +3,7 @@ import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant } from '../lib/classify';
-import { fetchPoliticianAnswers, computeStanceSpokes } from '../lib/compass';
+import { fetchPoliticianAnswers, computeStanceSpokes, LOCAL_LENS_TOPICS } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -44,6 +44,13 @@ function deriveScopedTopics(allTopics, districtType) {
             : null;
   if (!key) return allTopics;
   return allTopics.filter((t) => t[key] !== false);
+}
+
+// Whether an office is a "local" office for Local Lens default purposes.
+// Mirrors the local-tier mapping in Profile.jsx's districtScope.
+function isLocalDistrict(districtType) {
+  const upper = String(districtType || '').toUpperCase();
+  return upper === 'LOCAL' || upper === 'LOCAL_EXEC' || upper === 'COUNTY';
 }
 
 function getImageData(pol) {
@@ -499,7 +506,7 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, localLensActive, toggleLocalLens, judicialLensActive, toggleJudicialLens, enableCompass } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, localLensActive, toggleLocalLens, getEffectiveLens, enableCompass } = useCompass();
 
   // Auto-enable compass for calibrated users who haven't set an explicit preference
   useEffect(() => {
@@ -1259,16 +1266,31 @@ export default function Results() {
           return t ? { topic_id: t.id, value } : null;
         }).filter(Boolean)
       : null;
-    const scopedTopicsForPol = deriveScopedTopics(allTopics, pol.district_type);
+    // Local offices default to the Local Lens; others to the user's regular compass.
+    const polLensActive = getEffectiveLens(isLocalDistrict(pol.district_type) ? 'local' : 'state');
+    // Lens ON → local-scoped topics; lens OFF → full compass (no tier lock), matching CompassCard.
+    const scopedTopicsForPol = polLensActive
+      ? allTopics.filter((t) => t.applies_local !== false)
+      : allTopics;
 
-    // Pre-check: only show overlay when there are likely ≥3 bilateral answers.
-    // MiniCompass does the authoritative check internally — this just avoids rendering
-    // a gradient fade for politicians where the compass would silently return null.
+    // Pre-check: only show the overlay when MiniCompass will actually draw ≥3 spokes.
+    // Mirrors computeDisplaySpokes exactly: the chosen topic set is the Local Lens (on)
+    // or the user's selected compass (off); a spoke needs both sides answered + in scope.
     const userAnsweredIds = new Set((rawUserAnswers || []).map((a) => String(a.topic_id)));
-    const bilateralCount = (polAnswersForMini || []).filter(
-      (a) => a.value > 0 && userAnsweredIds.has(String(a.topic_id))
-    ).length;
-    const showCompassOverlay = bilateralCount >= 3;
+    const polAnsweredIds = new Set((polAnswersForMini || []).filter((a) => a.value > 0).map((a) => String(a.topic_id)));
+    const scopedIdsForPol = new Set((scopedTopicsForPol || []).map((t) => String(t.id)));
+    const preferredForPol = polLensActive ? LOCAL_LENS_TOPICS : (selectedTopics || []);
+    let matchCount;
+    if (preferredForPol.length > 0) {
+      matchCount = preferredForPol.filter(
+        (id) => scopedIdsForPol.has(String(id)) && userAnsweredIds.has(String(id)) && polAnsweredIds.has(String(id))
+      ).length;
+    } else {
+      matchCount = (scopedTopicsForPol || []).filter(
+        (t) => userAnsweredIds.has(String(t.id)) && polAnsweredIds.has(String(t.id))
+      ).length;
+    }
+    const showCompassOverlay = matchCount >= 3;
 
     const gradientBg = isDark
       ? 'linear-gradient(to right, transparent, #1a2235 35%)'
@@ -1312,7 +1334,7 @@ export default function Results() {
               selectedTopics={selectedTopics}
               scopedTopics={scopedTopicsForPol}
               invertedSpokes={invertedSpokes}
-              localLensActive={localLensActive}
+              localLensActive={polLensActive}
               isDark={isDark}
               size={190}
             />

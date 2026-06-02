@@ -472,55 +472,54 @@ export function computeDisplaySpokes({
   const polAnsweredSet = new Set(polAnswers.filter((a) => a.value > 0).map((a) => String(a.topic_id)));
   const userAnsweredSet = new Set(userAnswers.map((a) => String(a.topic_id)));
 
-  let displayTopicIds = [];
+  const displayTopicIds = [];
+  // No auto-substitution: spokes are driven strictly by the chosen topic set
+  // (Local Lens topics when the lens is on, or the user's selected compass when off).
+  // replacedSpokes is kept in the return shape for API compatibility but stays empty.
   const replacedSpokes = {};
 
-  // Determine preferred IDs (lens-aware)
+  const inScope = new Set(scopedTopics.map((t) => String(t.id)));
+
+  // The preferred set defines exactly which topics to compare on:
+  //   • Local Lens ON  → the curated local-issue topics.
+  //   • Local Lens OFF → the user's own selected/regular compass topics.
+  // Each candidate is shown only when BOTH the user and the politician answered it
+  // and it's within the provided scope. When too few overlap, the caller renders the
+  // "not enough shared topics" state — that is the intended, honest outcome.
   let preferredIds = null;
   if (localLensActive) {
     preferredIds = LOCAL_LENS_TOPICS.slice(0, maxSpokes);
   } else if (selectedTopics && selectedTopics.length > 0) {
-    // Cap at maxSpokes — post-calibration bug can set all 36 topics as selected,
-    // which would empty the replacement pool. This guard must never be removed.
+    // Cap at maxSpokes — post-calibration bug can set all 36 topics as selected.
     preferredIds = selectedTopics.slice(0, maxSpokes);
   }
 
+  const chosen = new Set();
+
   if (preferredIds !== null) {
-    const topicById = new Map(scopedTopics.map((t) => [String(t.id), t]));
-    const preferredSet = new Set(preferredIds.map(String));
-
-    // Replacement pool: scoped topics not in preferred set where both sides have answered
-    const replacementPool = scopedTopics.filter(
-      (t) =>
-        !preferredSet.has(String(t.id)) &&
-        userAnsweredSet.has(String(t.id)) &&
-        polAnsweredSet.has(String(t.id))
-    );
-    let ri = 0;
-
     for (const id of preferredIds) {
-      if (!topicById.get(String(id))) continue; // topic not in scoped set — skip
-
-      if (userAnsweredSet.has(String(id)) && polAnsweredSet.has(String(id))) {
-        displayTopicIds.push(String(id));
-      } else if (ri < replacementPool.length) {
-        // Either side is missing an answer — substitute with a topic both have covered
-        const sub = replacementPool[ri++];
-        displayTopicIds.push(String(sub.id));
-        replacedSpokes[sub.short_title] = true;
+      const sid = String(id);
+      if (
+        !chosen.has(sid) &&
+        inScope.has(sid) &&
+        userAnsweredSet.has(sid) &&
+        polAnsweredSet.has(sid)
+      ) {
+        chosen.add(sid);
+        displayTopicIds.push(sid);
       }
-      // else: no replacement available — spoke dropped
+      if (displayTopicIds.length >= maxSpokes) break;
     }
   } else {
-    // Fallback: no selectedTopics and not Lens — bilateral overlap
-    displayTopicIds = scopedTopics
-      .filter((t) => userAnsweredSet.has(String(t.id)) && polAnsweredSet.has(String(t.id)))
-      .map((t) => String(t.id));
-  }
-
-  // Cap at maxSpokes
-  if (displayTopicIds.length > maxSpokes) {
-    displayTopicIds = displayTopicIds.slice(0, maxSpokes);
+    // No preferred set at all (e.g. lens off and the user has no selected topics):
+    // fall back to every bilaterally-answered in-scope topic so something renders.
+    for (const t of scopedTopics) {
+      const sid = String(t.id);
+      if (userAnsweredSet.has(sid) && polAnsweredSet.has(sid)) {
+        displayTopicIds.push(sid);
+      }
+      if (displayTopicIds.length >= maxSpokes) break;
+    }
   }
 
   const hasEnoughSpokes = displayTopicIds.length >= 3;
