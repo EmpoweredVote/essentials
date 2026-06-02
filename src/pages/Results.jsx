@@ -256,13 +256,19 @@ function normalizeDistrictSubtitle(raw) {
  */
 function deriveSeatSubtitle(pol, cleanTitle) {
   const dt = pol.district_type || '';
-  if (!dt.startsWith('LOCAL') && dt !== 'COUNTY') return null;
+  if (!dt.startsWith('LOCAL') && dt !== 'COUNTY' && dt !== 'SCHOOL') return null;
   const t = cleanTitle || '';
   if (/\bat[- ]large\b/i.test(t)) return 'At-Large';
   let m = t.match(/\bward\s+(\d+)/i);
   if (m) return `Ward ${m[1]}`;
   m = t.match(/\bdistrict\s+(\d+)/i);
   if (m) return `District ${m[1]}`;
+  // SCHOOL: extract parenthetical area label e.g. "Board Member (Area 1)" → "Area 1"
+  // ev-ui Profile.jsx mirror does not need updating (separate rendering path)
+  if (dt === 'SCHOOL') {
+    const pm = t.match(/\((.+?)\)/);
+    return pm ? pm[1].trim() : null;
+  }
   return null;
 }
 
@@ -1173,12 +1179,9 @@ export default function Results() {
         const roleMatch = cleanTitle.match(/((?:Chief\s+)?(?:Justice|Judge))\b/i);
         return roleMatch ? roleMatch[1] : cleanTitle;
       }
-      // SCHOOL: prepend school district name (e.g. "Los Angeles Unified Board of Education")
-      if (pol.district_type === 'SCHOOL' && pol.government_name) {
-        const schoolName = pol.government_name.split(',')[0];
-        const raw = cleanChamber ? `${schoolName} ${cleanChamber}` : schoolName;
-        return pol.government_body_name ? simplifyForBody(raw, pol) : raw;
-      }
+      // SCHOOL: use office_title (e.g. "Board Member", "Trustee")
+      if (pol.district_type === 'SCHOOL')
+        return qualify(cleanTitle, pol);
       // Executive/officer positions: prefer office_title (e.g. "Mayor", "Governor", "Sheriff")
       if (/(_EXEC)$/.test(pol.district_type) || pol.district_type === 'COUNTY')
         return qualify(cleanTitle || cleanChamber, pol);
