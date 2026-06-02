@@ -11,6 +11,7 @@ Processing:
 5. Insert politician_images row
 """
 
+import os
 import psycopg2
 import requests
 from PIL import Image
@@ -20,7 +21,10 @@ import time
 
 DATABASE_URL = "postgresql://postgres.kxsdzaojfaibhuzmclfq:TriviaProd2026@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
 SUPABASE_URL = "https://kxsdzaojfaibhuzmclfq.supabase.co"
-SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4c2R6YW9qZmFpYmh1em1jbGZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MDM2NTEwMywiZXhwIjoyMDY1OTQxMTAzfQ.6cZBx-L-pFiNOf3r6c9xolq2RHZT3pBsVdZxsVqYnYo"
+SUPABASE_SERVICE_KEY = os.environ.get('SUPABASE_SECRET_KEY') or os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '')
+if not SUPABASE_SERVICE_KEY:
+    print("ERROR: set SUPABASE_SECRET_KEY (or SUPABASE_SERVICE_ROLE_KEY) in your environment")
+    sys.exit(1)
 SENATE_BASE_URL = "https://www.senate.ca.gov"
 ORIGIN_URL = "https://www.senate.ca.gov/senators"
 

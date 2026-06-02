@@ -10,6 +10,7 @@ Total: 28 photos uploaded
 
 import io
 import json
+import os
 import sys
 import urllib.request
 import urllib.error
@@ -26,7 +27,10 @@ except ImportError:
 # Configuration
 # ============================================================
 SUPABASE_URL = "https://kxsdzaojfaibhuzmclfq.supabase.co"
-SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4c2R6YW9qZmFpYmh1em1jbGZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MDM2NTEwMywiZXhwIjoyMDY1OTQxMTAzfQ.6cZBx-L-pFiNOf3r6c9xolq2RHZT3pBsVdZxsVqYnYo"
+SERVICE_KEY = os.environ.get('SUPABASE_SECRET_KEY') or os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '')
+if not SERVICE_KEY:
+    print("ERROR: set SUPABASE_SECRET_KEY (or SUPABASE_SERVICE_ROLE_KEY) in your environment")
+    sys.exit(1)
 BUCKET = "politician_photos"
 STORAGE_BASE = f"https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/{BUCKET}/"
 TMP_DIR = Path("C:/Transparent Motivations/essentials/scripts/tmp_ca_school_headshots")

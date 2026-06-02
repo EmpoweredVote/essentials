@@ -2,11 +2,15 @@
 CA Legislature Headshot Skip Check
 Queries which politicians already have headshots vs which still need them.
 """
+import os
 import requests
 import json
 
 SUPABASE_URL = "https://kxsdzaojfaibhuzmclfq.supabase.co"
-SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4c2R6YW9qZmFpYmh1em1jbGZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MDM2NTEwMywiZXhwIjoyMDY1OTQxMTAzfQ.6cZBx-L-pFiNOf3r6c9xolq2RHZT3pBsVdZxsVqYnYo"
+SUPABASE_SERVICE_KEY = os.environ.get('SUPABASE_SECRET_KEY') or os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '')
+if not SUPABASE_SERVICE_KEY:
+    print("ERROR: set SUPABASE_SECRET_KEY (or SUPABASE_SERVICE_ROLE_KEY) in your environment")
+    exit(1)
 
 HEADERS = {
     "apikey": SUPABASE_SERVICE_KEY,
