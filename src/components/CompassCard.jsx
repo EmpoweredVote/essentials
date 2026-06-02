@@ -38,20 +38,26 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     initialTopicId,
     compassLoading,
     compassDataLoaded,
-    localLensActive,
-    toggleLocalLens,
+    getEffectiveLens,
+    toggleLens,
   } = useCompass();
   const location = useLocation();
 
-  // Derive scope-filtered topics. If districtScope is not provided, use all topics (no filter).
+  // Lens default is derived from this office's scope: local offices show the Local
+  // Lens by default, everything else shows the user's regular compass. An explicit
+  // session toggle overrides this (see CompassContext.getEffectiveLens).
+  const localLensActive = getEffectiveLens(districtScope);
+
+  // Topic pool for the comparison + stance breakdown:
+  //   • Local Lens ON  → local-scoped topics (the lens is about local issues).
+  //   • Local Lens OFF → all topics, so the comparison uses the user's full
+  //     default/regular compass (selectedTopics) regardless of the office tier,
+  //     and the stance breakdown surfaces every topic this official answered.
   const scopedTopics = useMemo(() => {
-    if (!districtScope || allTopics.length === 0) return allTopics;
-    const key = districtScope === 'local'    ? 'applies_local'
-              : districtScope === 'state'    ? 'applies_state'
-              : districtScope === 'judicial' ? 'applies_judicial'
-              : 'applies_federal';
-    return allTopics.filter((t) => t[key] !== false);
-  }, [allTopics, districtScope]);
+    if (allTopics.length === 0) return allTopics;
+    if (localLensActive) return allTopics.filter((t) => t.applies_local !== false);
+    return allTopics;
+  }, [allTopics, localLensActive]);
 
   const [polAnswers, setPolAnswers] = useState(null);
   const [polLoading, setPolLoading] = useState(true);
@@ -207,12 +213,40 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
   return (
     <section className="mt-8">
-      <h2
-        className="text-2xl font-bold mb-4"
-        style={{ fontFamily: "'Manrope', sans-serif" }}
-      >
-        Compass &amp; Issues
-      </h2>
+      <div className="flex items-center justify-between mb-4 gap-3">
+        <h2
+          className="text-2xl font-bold"
+          style={{ fontFamily: "'Manrope', sans-serif" }}
+        >
+          Compass &amp; Issues
+        </h2>
+        {/* Local Lens toggle — always visible (loading, empty, and data states) so
+            users can switch comparison topics even when the default view is sparse. */}
+        {hasUserCompass && (
+          <button
+            type="button"
+            title={localLensActive ? 'Exit Local Lens' : 'Local Lens — focus on local issues'}
+            aria-pressed={localLensActive}
+            onClick={() => { posthog?.capture('compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              height: 32, padding: '0 12px',
+              borderRadius: 16, border: '1px solid',
+              fontSize: 13, fontWeight: 600, fontFamily: "'Manrope', sans-serif",
+              borderColor: localLensActive ? '#FF5740' : (isDark ? '#4b5563' : '#e2e8f0'),
+              backgroundColor: localLensActive ? '#FF5740' : (isDark ? '#1f2937' : '#fff'),
+              color: localLensActive ? '#fff' : (isDark ? '#d1d5db' : '#4b5563'),
+              cursor: 'pointer', flexShrink: 0,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+              <circle cx="12" cy="9" r="2.5" />
+            </svg>
+            Local Lens
+          </button>
+        )}
+      </div>
 
       <div className="bg-white dark:bg-ev-navy-card rounded-2xl border border-neutral-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm p-6">
         {hasUserCompass ? (
@@ -305,28 +339,6 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
                   {/* Chart container — position:relative so overlay buttons can anchor */}
                   <div style={{ width: '100%', maxWidth: '500px', overflow: 'hidden', position: 'relative' }}>
-                    {/* Local Lens toggle — top-left */}
-                    <button
-                      type="button"
-                      title={localLensActive ? 'Exit Local Lens' : 'Local Lens — 8 local questions'}
-                      onClick={() => { posthog?.capture('compass_local_lens_toggled', { active: !localLensActive }); toggleLocalLens(); }}
-                      style={{
-                        position: 'absolute', top: 4, left: 4, zIndex: 10,
-                        width: 28, height: 28,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        borderRadius: 6, border: '1px solid',
-                        borderColor: localLensActive ? '#FF5740' : (isDark ? '#4b5563' : '#e2e8f0'),
-                        backgroundColor: localLensActive ? '#FF5740' : (isDark ? '#1f2937' : '#fff'),
-                        color: localLensActive ? '#fff' : (isDark ? '#d1d5db' : '#4b5563'),
-                        cursor: 'pointer',
-                        padding: 0,
-                      }}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                        <circle cx="12" cy="9" r="2.5" />
-                      </svg>
-                    </button>
                     {/* Min / Max buttons */}
                     <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 10 }}>
                       <button
