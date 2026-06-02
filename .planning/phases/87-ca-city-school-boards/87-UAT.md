@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 87-ca-city-school-boards
 source: [87-01-SUMMARY.md, 87-02-SUMMARY.md]
 started: 2026-06-02T16:00:00Z
@@ -69,42 +69,65 @@ skipped: 1
 
 ## Gaps
 
-- truth: "School board official tiles display at normal size matching other rep sections"
-  status: failed
-  reason: "User reported: tiles are smaller than other sections, cascading layout effects. Confirmed CSS/layout bug — SJUSD tiles are small even with NO headshots, ruling out image dimensions as the cause. Affects all districts."
-  severity: major
-  test: 2
-  artifacts: []
-  missing: []
-
-- truth: "FUSD SCHOOL section appears for Fremont addresses"
-  status: failed
-  reason: "User reported: 'couldn't find any information' for multiple Fremont addresses. FUSD officials are seeded but SCHOOL routing never resolves — likely FUSD G5420 geofence not loaded or not matching."
-  severity: blocker
-  test: 6
-  artifacts: []
-  missing: []
-
-- truth: "City name spelling is consistent across sections (San Jose)"
-  status: failed
-  reason: "User reported: SJUSD section header/category shows 'San José' (with accent) while San Jose City Council shows 'San Jose' (no accent). Seeded government name uses the accent per SJUSD's official name."
-  severity: cosmetic
-  test: 5
-  artifacts: []
-  missing: []
-
 - truth: "School board officials show their office title (e.g. 'Commissioner', 'Board Member (District A)')"
-  status: failed
-  reason: "User reported: title shows chamber/government name ('San Francisco Unified School District Board of Education') instead of the office title. Affects SFUSD and SDUSD."
+  status: diagnosed
+  reason: "Title shows chamber/government name ('San Francisco Unified School District Board of Education') instead of office title. Affects all 6 districts."
   severity: major
   test: 2
-  artifacts: []
-  missing: []
+  root_cause: "Results.jsx renderPoliticianCard has a hardcoded SCHOOL branch (lines ~1165-1169) that constructs card title from government_name+chamber_name, completely ignoring office_title. The cleanTitle variable holds the correct value ('Commissioner') but the SCHOOL branch never uses it."
+  artifacts:
+    - path: "src/pages/Results.jsx"
+      issue: "SCHOOL branch of cardTitle uses government_name+chamber_name instead of cleanTitle (office_title)"
+  missing:
+    - "In SCHOOL cardTitle branch, return qualify(cleanTitle, pol) instead of concatenating government_name+chamber_name"
+
+- truth: "School board official tiles display at normal size matching other rep sections"
+  status: diagnosed
+  reason: "Tiles are smaller/sparser than other sections. Confirmed not image-driven — SJUSD tiles are small with zero headshots."
+  severity: major
+  test: 2
+  root_cause: "deriveSeatSubtitle() in Results.jsx returns null immediately for district_type !== 'LOCAL' and !== 'COUNTY', so SCHOOL cards get no subtitle line. Council cards get a subtitle ('District N') making them visually fuller. Both hit minHeight:130px but council cards have more content."
+  artifacts:
+    - path: "src/pages/Results.jsx"
+      issue: "deriveSeatSubtitle line ~254: early return null for SCHOOL type — no subtitle derived"
+  missing:
+    - "Add SCHOOL to allowed types in deriveSeatSubtitle, extracting seat label from office_title parenthetical (e.g. 'Board Member (Area 1)' → 'Area 1')"
 
 - truth: "Headshot upload pipeline rejects greyscale images — only color photos accepted"
-  status: failed
-  reason: "User reported: SFUSD headshots are greyscale (B&W source photos uploaded without validation). A boundary/check should prevent greyscale uploads — it was not enforced. SDUSD also affected."
+  status: diagnosed
+  reason: "7 SFUSD headshots uploaded as greyscale — source photos at sfusd.edu are explicitly B&W (filenames contain 'B&W', 'bw')."
   severity: major
   test: 2
+  root_cause: "crop_and_resize() does 'if img.mode != RGB: img.convert(RGB)' — silently converts greyscale (mode L) to RGB without rejecting it. Same vulnerability in ca_senate_headshots.py and lausd-headshots/process.py. No check for img.mode == 'L' exists in any script."
+  artifacts:
+    - path: "scripts/_tmp-ca-school-headshots.py"
+      issue: "Line 133: silent mode=L to RGB conversion, no rejection guard"
+    - path: "scripts/ca_senate_headshots.py"
+      issue: "Same silent greyscale conversion pattern"
+    - path: "scripts/lausd-headshots/process.py"
+      issue: "Same silent greyscale conversion pattern"
+  missing:
+    - "Add guard: if img.mode in ('L', 'LA'): skip with warning — apply to all headshot scripts"
+    - "Find color replacement photos for 7 SFUSD officials (sfusd.edu only serves B&W — need LinkedIn, news, or external sources)"
+
+- truth: "FUSD SCHOOL section appears for Fremont addresses"
+  status: not_a_bug
+  reason: "User got 'couldn't find that address' for Fremont. Debug agent confirmed FUSD geofence and routing are fully functional."
+  severity: blocker
+  test: 6
+  root_cause: "Bad test address: '3300 Capitol Ave, Fremont, CA 94538' — Capitol Ave does not exist in Fremont's street network. Census geocoder returns ADDRESS_NOT_FOUND. FUSD G5420 geofence IS loaded; district row IS present; routing returns all 5 FUSD officials at valid coords."
   artifacts: []
-  missing: []
+  missing:
+    - "Re-test with valid address: '39001 Fremont Blvd, Fremont, CA 94538'"
+
+- truth: "City name spelling is consistent across sections (San Jose)"
+  status: diagnosed
+  reason: "SJUSD section header shows 'San José' (with accent); San Jose City Council shows 'San Jose' (no accent)."
+  severity: cosmetic
+  test: 5
+  root_cause: "migration 257 seeded government_name as 'San José Unified School District, California, US' with accent. getAccordionKey returns government_name verbatim for SCHOOL type (no government_bodies row to override). City of San Jose uses no accent."
+  artifacts:
+    - path: "C:/EV-Accounts/backend/migrations/257_ca_city_school_boards.sql"
+      issue: "government_name seeded with 'San José' — inconsistent with city name 'San Jose'"
+  missing:
+    - "Follow-on migration to normalize government_name to 'San Jose Unified School District, California, US'"
