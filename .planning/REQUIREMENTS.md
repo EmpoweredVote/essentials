@@ -35,7 +35,7 @@
 - [ ] **OR-SCHOOL-01**: G5420 geofences loaded for all 6 Multnomah County school districts (Portland Public Schools, Parkrose, Reynolds, Centennial, David Douglas, Riverdale)
 - [ ] **OR-SCHOOL-02**: School board government bodies seeded for all 6 districts (district_type='SCHOOL')
 - [ ] **OR-SCHOOL-03**: Board member officials + offices seeded for all 6 districts
-- [ ] **OR-SCHOOL-04**: Board member headshots at 600×750 where available online
+- [x] **OR-SCHOOL-04**: Board member headshots at 600×750 where available online
 
 ### CA City School Boards
 
@@ -108,7 +108,7 @@
 | OR-SCHOOL-01 | Phase 86 | Pending |
 | OR-SCHOOL-02 | Phase 86 | Pending |
 | OR-SCHOOL-03 | Phase 86 | Pending |
-| OR-SCHOOL-04 | Phase 86 | Pending |
+| OR-SCHOOL-04 | Phase 86 | Complete |
 | CA-SCHOOL-01 | Phase 87 | Pending |
 | CA-SCHOOL-02 | Phase 87 | Pending |
 | CA-SCHOOL-03 | Phase 87 | Pending |

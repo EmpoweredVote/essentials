@@ -897,11 +897,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 86-01-PLAN.md - load-or-school-boundaries.ts + smoke-phase86.ts + migration 254 (6 governments + chambers + SCHOOL districts + 38 officials + offices + routing smoke test)
+- [x] 86-01-PLAN.md - load-or-school-boundaries.ts + smoke-phase86.ts + migration 254 (6 governments + chambers + SCHOOL districts + 38 officials + offices + routing smoke test)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 86-02-PLAN.md - _tmp-or-school-headshots.py (live 600x750 upload for 38 board members) + audit-only migration 255
+- [x] 86-02-PLAN.md - _tmp-or-school-headshots.py (live 600x750 upload for 38 board members) + audit-only migration 255
 
 ### Phase 87: CA City School Boards
 
@@ -1072,7 +1072,7 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 83. Multnomah County Government + Routing | v10.0 | 2/2 | Complete | 2026-05-31 |
 | 84. Multnomah Smaller Cities | v10.0 | 3/3 | Complete    | 2026-06-01 |
 | 85. Multnomah Elections + Discovery | v10.0 | 2/2 | Complete    | 2026-06-01 |
-| 86. Multnomah County School Districts | v10.0 | 0/2 | Planning | - |
+| 86. Multnomah County School Districts | v10.0 | 2/2 | Complete   | 2026-06-02 |
 | 87. CA City School Boards | v10.0 | 0/TBD | Not started | - |
 | 88. TX Collin County School Boards | v10.0 | 0/TBD | Not started | - |
 | 89. IN + ME School Board Completion | v10.0 | 0/TBD | Not started | - |
