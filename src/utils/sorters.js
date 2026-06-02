@@ -413,24 +413,14 @@ export const GROUP_SORT_OPTIONS = {
   ],
   "School Board": [
     {
+      id: "seat",
+      label: "Seat/District",
+      cmp: (dir) => chainComparators(makeComparator(schoolSeatKey, dir), makeComparator(lastNameKey, dir)),
+    },
+    {
       id: "jurisdiction",
       label: "School District",
       cmp: (dir) => makeComparator((p) => lower(p.government_name), dir),
-    },
-    {
-      id: "at_large",
-      label: "At-Large First",
-      cmp: (dir) => makeComparator(atLargeFirstKey, dir),
-    },
-    {
-      id: "seat",
-      label: "Seat/District",
-      cmp: (dir) => makeComparator(schoolSeatKey, dir),
-    },
-    {
-      id: "district",
-      label: "District Number",
-      cmp: (dir) => makeComparator(districtNumberKey, dir),
     },
     {
       id: "name",
