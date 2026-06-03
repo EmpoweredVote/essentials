@@ -48,11 +48,11 @@
 
 ### TX School Boards — Collin County
 
-- [ ] **TX-SCHOOL-01**: Plano ISD — G5420 geofence + board seeded
-- [ ] **TX-SCHOOL-02**: McKinney ISD — G5420 geofence + board seeded
-- [ ] **TX-SCHOOL-03**: Allen ISD — G5420 geofence + board seeded
-- [ ] **TX-SCHOOL-04**: Frisco ISD — G5420 geofence + board seeded
-- [ ] **TX-SCHOOL-05**: Richardson ISD — G5420 geofence + board seeded
+- [x] **TX-SCHOOL-01**: Plano ISD — G5420 geofence + board seeded
+- [x] **TX-SCHOOL-02**: McKinney ISD — G5420 geofence + board seeded
+- [x] **TX-SCHOOL-03**: Allen ISD — G5420 geofence + board seeded
+- [x] **TX-SCHOOL-04**: Frisco ISD — G5420 geofence + board seeded
+- [x] **TX-SCHOOL-05**: Richardson ISD — G5420 geofence + board seeded
 
 ### IN School Board Completion
 
@@ -115,11 +115,11 @@
 | CA-SCHOOL-04 | Phase 87 | Complete |
 | CA-SCHOOL-05 | Phase 87 | Complete |
 | CA-SCHOOL-06 | Phase 87 | Complete |
-| TX-SCHOOL-01 | Phase 88 | Pending |
-| TX-SCHOOL-02 | Phase 88 | Pending |
-| TX-SCHOOL-03 | Phase 88 | Pending |
-| TX-SCHOOL-04 | Phase 88 | Pending |
-| TX-SCHOOL-05 | Phase 88 | Pending |
+| TX-SCHOOL-01 | Phase 88 Plan 01 | Complete 2026-06-03 |
+| TX-SCHOOL-02 | Phase 88 Plan 01 | Complete 2026-06-03 |
+| TX-SCHOOL-03 | Phase 88 Plan 01 | Complete 2026-06-03 |
+| TX-SCHOOL-04 | Phase 88 Plan 01 | Complete 2026-06-03 |
+| TX-SCHOOL-05 | Phase 88 Plan 01 | Complete 2026-06-03 |
 | IN-SCHOOL-01 | Phase 89 | Pending |
 | IN-SCHOOL-02 | Phase 89 | Pending |
 | ME-SCHOOL-01 | Phase 89 | Pending |

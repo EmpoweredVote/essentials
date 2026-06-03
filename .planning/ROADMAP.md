@@ -938,7 +938,11 @@ Plans:
   3. A Plano address returns Plano ISD board members alongside Plano City Council in the address lookup
   4. A McKinney, Allen, Frisco, or Richardson address returns that ISD's board members without routing errors
 
-**Plans**: TBD
+**Plans**: 2 plans (01 complete, 02 pending headshots audit)
+
+Plans:
+- [x] 88-01-PLAN.md - TIGER UNSD loader + migration 261 (5 ISDs, 35 board members) — COMPLETE 2026-06-03
+- [ ] 88-02-PLAN.md - Headshots audit migration 262 (SQL-only, no apply)
 
 ### Phase 89: IN + ME School Board Completion
 
