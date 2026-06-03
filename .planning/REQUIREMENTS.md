@@ -56,7 +56,7 @@
 
 ### IN School Board Completion
 
-- [ ] **IN-SCHOOL-01**: IPS D3 + D6 government bodies added; officials seeded for all 7 IPS seats (D1–D6 + At Large)
+- [ ] **IN-SCHOOL-01**: IPS D3 government body added (IPS structure: D1–D5 + 2 At-Large = 7 seats, no D6); officials seeded for all 7 IPS seats; SCHOOL districts rows wired for routing
 - [ ] **IN-SCHOOL-02**: Monroe County Community School Corporation board officials seeded for all 7 districts
 
 ### ME Tier 2 City School Boards

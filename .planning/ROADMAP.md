@@ -946,17 +946,30 @@ Plans:
 
 ### Phase 89: IN + ME School Board Completion
 
-**Goal**: Indiana and Maine school board coverage is completed — IPS D3/D6 government bodies are added, all 7 IPS seats seeded, Monroe County school board seeded, and ME Tier 2 city school boards seeded
+**Goal**: Indiana and Maine school board coverage is completed — IPS D3 government body added (IPS has D1–D5 + 2 At-Large = 7 seats; no D6 exists), Monroe County school board routing wired, and ME Tier 2 city school boards seeded
 **Depends on**: Phase 12 (TX DB pattern established for school board seeding)
 **Requirements**: IN-SCHOOL-01, IN-SCHOOL-02, ME-SCHOOL-01, ME-SCHOOL-02, ME-SCHOOL-03
 **Success Criteria** (what must be TRUE):
 
-  1. Indianapolis Public Schools has all 7 board seats seeded (D1–D6 + At Large) with correct officials and offices; a Bloomington/Monroe County address returns Monroe County Community School Corporation board members
+  1. Indianapolis Public Schools has all 7 board seats seeded (D1–D5 + 2 At-Large; IPS has no D6) with correct officials and offices; a Bloomington/Monroe County address returns Monroe County Community School Corporation board members
   2. Lewiston and Bangor school board government bodies exist with board member officials seeded and G5420 geofences loaded
   3. South Portland, Auburn, and Biddeford school board government bodies exist with board member officials seeded and G5420 geofences loaded
   4. An Indianapolis address within IPS territory returns school board members alongside city council; a Lewiston address returns Lewiston school board members alongside city officials
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 89-01-PLAN.md - IN loader (tl_2024_18_unsd.zip) + migration 264 (IPS D3 INSERT + D2 UPDATE + MCCSC D7 UPDATE + 2 SCHOOL districts + office back-fill) + smoke-phase89-in.ts
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 89-02-PLAN.md - ME loader (tl_2024_23_unsd.zip) + migration 265 (5 governments + 5 chambers + 5 SCHOOL districts + 37 politicians + 37 offices) + smoke-phase89-me.ts
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 89-03-PLAN.md - Headshots: _tmp-in-me-school-headshots.py live upload for all 40 Phase 89 officials + audit-only migration 266 (no apply)
 
 </details>
 
@@ -1087,4 +1100,4 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 86. Multnomah County School Districts | v10.0 | 2/2 | Complete   | 2026-06-02 |
 | 87. CA City School Boards | v10.0 | 5/4 | Complete    | 2026-06-02 |
 | 88. TX Collin County School Boards | v10.0 | 0/TBD | Not started | - |
-| 89. IN + ME School Board Completion | v10.0 | 0/TBD | Not started | - |
+| 89. IN + ME School Board Completion | v10.0 | 0/3 | Not started | - |
