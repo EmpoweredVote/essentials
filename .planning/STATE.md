@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v10.0
 milestone_name: Multnomah County & School Boards
 status: executing
-last_updated: "2026-06-03T03:45:39.698Z"
-last_activity: 2026-06-03 -- Phase 88 planning complete
+last_updated: "2026-06-03T04:30:00.000Z"
+last_activity: 2026-06-03 -- Phase 88 Plan 01 complete — 5 TX ISD geofences + 35 board members seeded
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 15
-  completed_plans: 14
-  percent: 71
+  completed_plans: 15
+  percent: 75
 ---
 
 # State
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 88
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-03 -- Phase 88 planning complete
+Plan: 01 complete
+Status: Executing — Plan 02 pending (headshots audit)
+Last activity: 2026-06-03 -- Phase 88 Plan 01 complete
 
 ## Project Reference
 
@@ -169,6 +169,7 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - **Berkeley government structure (migration 213 applied 2026-05-22)**: 1 government (name='City of Berkeley', state='CA', geo_id='0606000'), 3 chambers (Mayor + City Council + City Auditor — ALL with Phase 69 RCV TODO comment), 8 LOCAL districts (berkeley-council-district-{1-8}), 1 LOCAL_EXEC district (geo_id='0606000'). NO City Attorney chamber (appointed). BOTH Mayor and Auditor share the single LOCAL_EXEC district.
 - **Berkeley officials seeded (Phase 68-02 complete 2026-05-22)**: 10 politicians; external_ids -680001 (Mayor Ishii), -680002 (Auditor Jenny Wong — NOT Hogan), -680010..-680017 (council D1-D8: Kesarwani/Taplin/Bartlett/Tregub/O'Keefe/Blackaby/Lunaparra/Humbert); all 10 have office_id back-filled; all offices is_appointed_position=false; council titles 'Council Member (District N)'; Mayor+Auditor linked to geo_id='0606000' LOCAL_EXEC; Berkeley City Hall routing confirmed: ST_Covers (-122.2726, 37.8709) → berkeley-council-district-4 → Igor Tregub; section-split detector 0 rows; NO City Attorney (appointed, not elected)
 - **Berkeley -680xxx external_id range**: pre-flight confirmed clear (0 rows 2026-05-22) — reserved for 68-02 officials seed (-680001=Mayor, -680002=Auditor, -680010..-680017=council D1-D8)
+- **Phase 88 Plan 01 complete (2026-06-03)**: 5 Collin County TX ISDs seeded — Plano/McKinney/Allen/Frisco/Richardson. Loader: load-tx-school-boundaries.ts (TIGER UNSD tl_2024_48_unsd.zip). GEOIDs: 4835100/4829850/4807890/4820010/4837020. migration 261 applied: 5 govs + 5 chambers + 5 SCHOOL districts + 35 politicians + 35 offices. Richardson ISD hybrid: Districts 1-5 ('Board Member, District [N]') + At-Large Places 6-7 ('Board Member, Place [N]'). external_id range -880001..-880035 now OCCUPIED. All 7 verification gates PASS. All 5 PostGIS smoke queries PASS. Next migration: 262 (headshots audit-only, Plan 02).
 - **Next migration is 244** (migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 219=Sacramento government structure; 220=Sacramento officials; 221=SJ stances; 222=OR government chambers; 223a=OR executive district fix; 223=OR executive officials; 224=OR federal officials; 225=OR executive headshots AUDIT-ONLY; 226=OR state senators (30); 227=OR state house (60); 228=OR legislature headshots AUDIT-ONLY; 209/212/200/215/225/228 are audit-only headshot sql; 242=OR senate stances; 243=OR house stances)
 - **Sacramento officials seeded (migration 220, 2026-05-23)**: 9 politicians — Mayor Kevin McCarty (-660001), Council Members Lisa Kaplan (-660010, D1), Roger Dickinson (-660011, D2), Karina Talamantes (-660012, D3), Phil Pluckebaum (-660013, D4), Caity Maple (-660014, D5), Eric Guerra (-660015, D6), Rick Jennings II (-660016, D7), Mai Vang (-660017, D8); all 9 office_ids non-null; City Hall (-121.4944, 38.5816) routes to Phil Pluckebaum (D4); Mayor routes via LOCAL_EXEC district (geo_id='0664000'); Rick Jennings II: last_name='Jennings II' (generational suffix in both fields)
 - **Sacramento external_id range CONFIRMED**: Mayor=-660001, Council D1-D8=-660010..-660017 (migration 220 applied)
@@ -222,6 +223,6 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 
 ## Session Continuity
 
-Last session: 2026-06-03T01:01:46.024Z
-Stopped at: Phase 88 context gathered
-Resume file: .planning/phases/88-tx-collin-county-school-boards/88-CONTEXT.md
+Last session: 2026-06-03T04:30:00.000Z
+Stopped at: Phase 88 Plan 01 complete — 5 ISD G5420 geofences + 35 board members + migration 261 applied
+Resume file: .planning/phases/88-tx-collin-county-school-boards/88-01-SUMMARY.md
