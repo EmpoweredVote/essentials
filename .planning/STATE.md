@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v10.0
 milestone_name: Multnomah County & School Boards
 status: executing
-last_updated: "2026-06-03T20:30:00.000Z"
-last_activity: 2026-06-03 -- Phase 89 Plan 02 complete (ME school board seed)
+last_updated: "2026-06-03T19:30:00.000Z"
+last_activity: "2026-06-03 -- Phase 89 Plan 03 complete (headshots: 0/40 uploaded — all ME/IN districts CMS-blocked; migration 266 audit-only written; checkpoint Task 3 pending human UI verify)"
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 18
-  completed_plans: 18
-  percent: 89
+  completed_plans: 19
+  percent: 100
 ---
 
 # State
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 89 IN + ME School Board Completion
-Plan: 89-01 COMPLETE, 89-02 COMPLETE — executing 89-03
-Status: Ready to execute
-Last activity: 2026-06-03 -- Phase 89 Plan 02 complete (ME school board seed: 5 govs + 37 politicians, migration 265 applied)
+Plan: 89-01 COMPLETE, 89-02 COMPLETE, 89-03 CHECKPOINT (Task 3 — human UI verify pending)
+Status: Awaiting human verification (Task 3 checkpoint)
+Last activity: 2026-06-03 -- Phase 89 Plan 03: 0/40 headshots uploaded (all CMS-blocked); migration 266 audit-only written; awaiting human UI verify for all 7 districts
 
 ## Project Reference
 
@@ -171,6 +171,7 @@ See: .planning/PROJECT.md (updated 2026-05-31 after v7.0 + v8.0 milestone archiv
 - **Berkeley -680xxx external_id range**: pre-flight confirmed clear (0 rows 2026-05-22) — reserved for 68-02 officials seed (-680001=Mayor, -680002=Auditor, -680010..-680017=council D1-D8)
 - **Phase 89 Plan 01 complete (2026-06-03)**: IN school routing fix — migration 264 applied. IPS geo_id=1804770 + MCCSC geo_id=1800630. Hope Duke Star (ext=-890001) INSERTed as IPS D3. Hasaan Rashid updated IPS D2 (was Gayle Cosby). Aja Jester updated MCCSC D7 (was Brandon Shurr). 2 SCHOOL districts rows (state='in'). All 7 IPS + 7 MCCSC offices wired to whole-district rows. IPS per-seat chamber structure: 'Indianapolis Public School Board - District N'. Smoke test ALL ASSERTIONS PASSED. Migration 265 is next (ME school boards).
 - **Phase 88 Plan 01 complete (2026-06-03)**: 5 Collin County TX ISDs seeded — Plano/McKinney/Allen/Frisco/Richardson. Loader: load-tx-school-boundaries.ts (TIGER UNSD tl_2024_48_unsd.zip). GEOIDs: 4835100/4829850/4807890/4820010/4837020. migration 261 applied: 5 govs + 5 chambers + 5 SCHOOL districts + 35 politicians + 35 offices. Richardson ISD hybrid: Districts 1-5 ('Board Member, District [N]') + At-Large Places 6-7 ('Board Member, Place [N]'). external_id range -880001..-880035 now OCCUPIED. All 7 verification gates PASS. All 5 PostGIS smoke queries PASS. Next migration: 262 (headshots audit-only, Plan 02).
+- **Phase 89 Plan 03 checkpoint (2026-06-03)**: Headshots attempted for all 40 Phase 89 officials. Result: 0/40 uploaded — every ME + IN district website uses a JavaScript-only CMS (Schoolblocks/Thrillshare/SmartSites/Cloudflare) that blocks server-side HTTP fetches. IPS confirmed: myips.org returns 403 + transparent GIF placeholders. Migration 266 audit-only SQL written documenting all 40 officials with specific CMS blocker reason. Task 3 checkpoint: human must verify all 7 districts render correctly in ev-ui before plan marked complete.
 - **Phase 89 Plan 02 complete (2026-06-03)**: ME school board seed — migration 265 applied. 5 ME school districts (Lewiston/Bangor/South Portland/Auburn/Biddeford). load-me-school-boundaries.ts loaded 5 G5420 rows (state='23', source='tiger_unsd_me_2024'). 37 politicians external_ids -890011..-890057. Lewiston Ward 5 VACANT (Osman resigned; unfilled Jan 2026). South Portland D5 VACANT (Dowling resigned April 2026). Sara Luciano confirmed still on Bangor SC. South Portland smoke test coordinate corrected to centroid. ALL ASSERTIONS PASSED. Next: migration 266 (headshots audit-only, Plan 03).
 - **Next migration is 266** (265=ME school board seed applied 2026-06-03; prior: 264=IN school routing fix applied 2026-06-03; migration history: 196=la_council_votes backfill no-op; 197=CA Governor challengers; 198=LAUSD board seed (chamber+7 districts+7 politicians+7 offices); 199=LAUSD dedup old at-large chamber; 200=LA County DA/Sheriff chambers; 201=remove stale CA Senate; 202-203=CA grouping fixes; 204=districtless orphan office fix; 205=SF government structure; 206=SF officials; 207=SD government structure; 208=SD officials; 210=Fremont government structure; 211=Fremont officials; 213=Berkeley government structure; 214=Berkeley officials; 215=Berkeley headshots AUDIT-ONLY; 216=SF officials stances; 217=SJ government structure; 218=SJ officials; 219=Sacramento government structure; 220=Sacramento officials; 221=SJ stances; 222=OR government chambers; 223a=OR executive district fix; 223=OR executive officials; 224=OR federal officials; 225=OR executive headshots AUDIT-ONLY; 226=OR state senators (30); 227=OR state house (60); 228=OR legislature headshots AUDIT-ONLY; 209/212/200/215/225/228 are audit-only headshot sql; 242=OR senate stances; 243=OR house stances)
 - **Sacramento officials seeded (migration 220, 2026-05-23)**: 9 politicians — Mayor Kevin McCarty (-660001), Council Members Lisa Kaplan (-660010, D1), Roger Dickinson (-660011, D2), Karina Talamantes (-660012, D3), Phil Pluckebaum (-660013, D4), Caity Maple (-660014, D5), Eric Guerra (-660015, D6), Rick Jennings II (-660016, D7), Mai Vang (-660017, D8); all 9 office_ids non-null; City Hall (-121.4944, 38.5816) routes to Phil Pluckebaum (D4); Mayor routes via LOCAL_EXEC district (geo_id='0664000'); Rick Jennings II: last_name='Jennings II' (generational suffix in both fields)

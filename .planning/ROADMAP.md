@@ -961,15 +961,15 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 89-01-PLAN.md - IN loader (tl_2024_18_unsd.zip) + migration 264 (IPS D3 INSERT + D2 UPDATE + MCCSC D7 UPDATE + 2 SCHOOL districts + office back-fill) + smoke-phase89-in.ts
+- [x] 89-01-PLAN.md - IN loader (tl_2024_18_unsd.zip) + migration 264 (IPS D3 INSERT + D2 UPDATE + MCCSC D7 UPDATE + 2 SCHOOL districts + office back-fill) + smoke-phase89-in.ts
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 89-02-PLAN.md - ME loader (tl_2024_23_unsd.zip) + migration 265 (5 governments + 5 chambers + 5 SCHOOL districts + 37 politicians + 37 offices) + smoke-phase89-me.ts
+- [x] 89-02-PLAN.md - ME loader (tl_2024_23_unsd.zip) + migration 265 (5 governments + 5 chambers + 5 SCHOOL districts + 37 politicians + 37 offices) + smoke-phase89-me.ts
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 89-03-PLAN.md - Headshots: _tmp-in-me-school-headshots.py live upload for all 40 Phase 89 officials + audit-only migration 266 (no apply)
+- [x] 89-03-PLAN.md - Headshots: _tmp-in-me-school-headshots.py live upload for all 40 Phase 89 officials + audit-only migration 266 (no apply) (completed 2026-06-03)
 
 </details>
 
@@ -1100,4 +1100,4 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 86. Multnomah County School Districts | v10.0 | 2/2 | Complete   | 2026-06-02 |
 | 87. CA City School Boards | v10.0 | 5/4 | Complete    | 2026-06-02 |
 | 88. TX Collin County School Boards | v10.0 | 0/TBD | Not started | - |
-| 89. IN + ME School Board Completion | v10.0 | 0/3 | Not started | - |
+| 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |

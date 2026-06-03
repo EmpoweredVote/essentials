@@ -56,14 +56,14 @@
 
 ### IN School Board Completion
 
-- [ ] **IN-SCHOOL-01**: IPS D3 government body added (IPS structure: D1–D5 + 2 At-Large = 7 seats, no D6); officials seeded for all 7 IPS seats; SCHOOL districts rows wired for routing
-- [ ] **IN-SCHOOL-02**: Monroe County Community School Corporation board officials seeded for all 7 districts
+- [x] **IN-SCHOOL-01**: IPS D3 government body added (IPS structure: D1–D5 + 2 At-Large = 7 seats, no D6); officials seeded for all 7 IPS seats; SCHOOL districts rows wired for routing
+- [x] **IN-SCHOOL-02**: Monroe County Community School Corporation board officials seeded for all 7 districts
 
 ### ME Tier 2 City School Boards
 
-- [ ] **ME-SCHOOL-01**: Lewiston school board seeded (geofence + officials)
-- [ ] **ME-SCHOOL-02**: Bangor school board seeded (geofence + officials)
-- [ ] **ME-SCHOOL-03**: South Portland, Auburn, and Biddeford school boards seeded (geofences + officials)
+- [x] **ME-SCHOOL-01**: Lewiston school board seeded (geofence + officials)
+- [x] **ME-SCHOOL-02**: Bangor school board seeded (geofence + officials)
+- [x] **ME-SCHOOL-03**: South Portland, Auburn, and Biddeford school boards seeded (geofences + officials)
 
 ## Future Requirements
 
@@ -120,11 +120,11 @@
 | TX-SCHOOL-03 | Phase 88 Plan 01 | Complete 2026-06-03 |
 | TX-SCHOOL-04 | Phase 88 Plan 01 | Complete 2026-06-03 |
 | TX-SCHOOL-05 | Phase 88 Plan 01 | Complete 2026-06-03 |
-| IN-SCHOOL-01 | Phase 89 | Pending |
-| IN-SCHOOL-02 | Phase 89 | Pending |
-| ME-SCHOOL-01 | Phase 89 | Pending |
-| ME-SCHOOL-02 | Phase 89 | Pending |
-| ME-SCHOOL-03 | Phase 89 | Pending |
+| IN-SCHOOL-01 | Phase 89 | Complete |
+| IN-SCHOOL-02 | Phase 89 | Complete |
+| ME-SCHOOL-01 | Phase 89 | Complete |
+| ME-SCHOOL-02 | Phase 89 | Complete |
+| ME-SCHOOL-03 | Phase 89 | Complete |
 
 **Coverage:**
 - v10.0 requirements: 33 total
