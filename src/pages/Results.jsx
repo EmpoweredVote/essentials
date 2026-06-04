@@ -1295,11 +1295,8 @@ export default function Results() {
     }
     const showCompassOverlay = matchCount >= 3;
 
-    const gradientBg = isDark
-      ? 'linear-gradient(to right, transparent, #1a2235 35%)'
-      : isCandidate
-        ? 'linear-gradient(to right, transparent, rgba(255,254,245,0.97) 30%)'
-        : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)';
+    const compassOverlayWidth = 190;
+    const compassBg = isDark ? '#1a2235' : isCandidate ? '#fffef5' : '#fff';
     return (
       <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative' }}>
         <PoliticianCard
@@ -1311,22 +1308,21 @@ export default function Results() {
           imageFocalPoint={imgData.focalPoint || 'center 20%'}
           style={{
             ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}),
-            ...(showCompassOverlay ? { minHeight: 185 } : {}),
           }}
+          contentStyle={showCompassOverlay ? { marginRight: compassOverlayWidth } : undefined}
           onClick={handleCardClick}
           variant="horizontal"
-          imageWidth={showCompassOverlay ? '137px' : undefined}
+          imageWidth={showCompassOverlay ? '120px' : undefined}
           footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
         />
         {showCompassOverlay && (
           <div
             onClick={handleCardClick}
             style={{
-              position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
+              position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              paddingRight: 14, // nudge compass left so the widest axis label clears the card edge
-              boxSizing: 'border-box',
-              background: gradientBg,
+              backgroundColor: compassBg,
+              borderLeft: `1px solid ${isDark ? '#2d3f5a' : 'rgba(0,0,0,0.06)'}`,
               borderRadius: '0 10px 10px 0',
               cursor: 'pointer', zIndex: 1,
             }}
@@ -1339,7 +1335,7 @@ export default function Results() {
               invertedSpokes={invertedSpokes}
               localLensActive={polLensActive}
               isDark={isDark}
-              size={190}
+              size={175}
             />
           </div>
         )}
