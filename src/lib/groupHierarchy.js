@@ -381,8 +381,9 @@ function subGroupOrderScore(label, pols) {
 
   if (
     pols.length > 0 &&
-    pols.every(p => p.district_type === 'LOCAL_EXEC') &&
-    EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))
+    (pols.every(p => p.district_type === 'LOCAL_EXEC') ||
+      (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw)) &&
+       pols.every(p => LOCAL_EXEC_TITLE_RE.test(p.office_title || ''))))
   ) return 10;
   if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 20;
   if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 20;
