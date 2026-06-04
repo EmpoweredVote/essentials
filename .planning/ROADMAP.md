@@ -838,8 +838,18 @@ Full details: [milestones/v10.0-ROADMAP.md](milestones/v10.0-ROADMAP.md)
   2. The lavote.gov discovery_jurisdictions row has the updated election ID for the CA November 2026 general cycle
   3. MiniCompass chart circles are visually ~50% smaller than before — the radar chart fits comfortably inside a candidate tile tooltip without overflow
   4. No spoke labels, chart title text, or surrounding label elements appear around the MiniCompass in the tooltip overlay
-**Plans**: TBD
+**Plans**: 3 plans
 **UI hint**: yes
+
+Plans:
+**Wave 1**
+
+- [ ] 90-01-PLAN.md - ev-ui RadarChartCore: add dotRadius prop + publish patch (UI-01 library work)
+- [ ] 90-03-PLAN.md - Migration 268: ME June 9 primary winners + lavote November 2026 election ID UPDATE (POST-ELECTION-01/02)
+
+**Wave 2** *(blocked on Wave 1 ev-ui publish)*
+
+- [ ] 90-02-PLAN.md - Install new ev-ui + MiniCompass.jsx showLabels=false + dotRadius=2.5 + human-verify (UI-01/02 integration)
 
 #### Phase 91: MD TIGER Geofences
 
