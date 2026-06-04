@@ -62,8 +62,39 @@ function TopicSection({ topic }) {
         </p>
       )}
 
-      {/* Stance indicator */}
-      {topic.has_stance ? (
+      {/* Stance breakdown */}
+      {(topic.all_stances || []).length > 0 ? (
+        <div className="mb-4">
+          {topic.has_stance ? (
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#59b0c4] inline-block flex-shrink-0" />
+              <span className="text-xs text-gray-500 dark:text-gray-400 font-[Manrope]">Their position</span>
+            </div>
+          ) : (
+            <span className="text-xs font-[Manrope] text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded inline-block mb-2">
+              Position under review
+            </span>
+          )}
+          <div className="space-y-1.5">
+            {topic.all_stances.map((s) => {
+              const isTheirStance = topic.has_stance && Number(s.value) === Number(topic.stance_value);
+              return (
+                <div
+                  key={s.value}
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-[Manrope] ${
+                    isTheirStance
+                      ? 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 font-semibold ring-1 ring-[#59b0c4]'
+                      : 'text-gray-500 dark:text-gray-500'
+                  }`}
+                >
+                  <span className={`w-2 h-2 rounded-full flex-shrink-0 ${isTheirStance ? 'bg-[#59b0c4]' : 'bg-transparent'}`} />
+                  {s.text}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : topic.has_stance ? (
         <div className="rounded-lg px-4 py-3 mb-4 bg-[#f0f4f8] dark:bg-gray-800">
           <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 font-[Manrope]">
             {topic.stance_text}
