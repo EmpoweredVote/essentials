@@ -1,0 +1,113 @@
+# Requirements: Essentials — Empowered Vote
+
+**Defined:** 2026-06-04
+**Core Value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
+
+## v11.0 Requirements — Maryland Essentials
+
+### UI — MiniCompass
+
+- [ ] **UI-01**: MiniCompass chart circles reduced by ~50% so the chart fits naturally as a tooltip overlay on candidate tiles
+- [ ] **UI-02**: Titles/labels removed from around MiniCompass display (no spoke labels, no chart title text visible)
+
+### MD Geofences (MD-GEO)
+
+- [ ] **MD-GEO-01**: MD TIGER G4110 incorporated cities loaded into geofence_boundaries (state='24')
+- [ ] **MD-GEO-02**: MD TIGER G4020 counties loaded (24 counties, state='24')
+- [ ] **MD-GEO-03**: MD TIGER SLDU loaded (47 state senate districts)
+- [ ] **MD-GEO-04**: MD TIGER SLDL loaded (141 house delegate sub-district boundaries)
+- [ ] **MD-GEO-05**: MD TIGER CD loaded (8 congressional districts)
+- [ ] **MD-GEO-06**: Any MD address returns correct federal, state, county, and local tiers via PostGIS routing
+
+### MD State Government (MD-GOV)
+
+- [ ] **MD-GOV-01**: MD state government row + 4 constitutional officer chambers seeded (Governor, LG, AG, Comptroller); State Treasurer marked is_appointed_position=true
+- [ ] **MD-GOV-02**: Governor Wes Moore + LG Aruna Miller + AG Anthony Brown + Comptroller Brooke Lierman seeded with offices + headshots at 600×750
+- [ ] **MD-GOV-03**: MD State Senate chamber + 47 senators seeded with offices linked to SLDU district boundaries
+- [ ] **MD-GOV-04**: MD House of Delegates chamber + 141 delegates seeded with offices linked to SLDL district boundaries; multi-member district structure handled
+- [ ] **MD-GOV-05**: 2 US senators (Van Hollen + Alsobrooks) + 8 US House reps seeded with correct NATIONAL_UPPER/NATIONAL_LOWER districts
+- [ ] **MD-GOV-06**: All MD officials have headshots at 600×750 in Supabase Storage
+
+### Leonardtown / St. Mary's County Deep Seed (MD-DEEP)
+
+- [ ] **MD-DEEP-01**: St. Mary's County government + Board of County Commissioners chamber seeded; county boundary linked
+- [ ] **MD-DEEP-02**: Active St. Mary's County Commissioners seeded with offices + available headshots
+- [ ] **MD-DEEP-03**: Town of Leonardtown government + town officials seeded with available headshots
+
+### MD 2026 Elections (MD-ELECTIONS)
+
+- [ ] **MD-ELECTIONS-01**: MD 2026 elections seeded — Governor race + 1 US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 141 house delegate scaffold rows
+- [ ] **MD-ELECTIONS-02**: discovery_jurisdictions row created for MD statewide, cron_active=true, armed for 2026 election cycle
+- [ ] **MD-ELECTIONS-03**: Landing.jsx updated with MD entry — Leonardtown city browse + MD state browse
+
+### MD Compass Stances (MD-STANCES)
+
+- [ ] **MD-STANCES-01**: Compass stances for Governor Moore + 3 constitutional officers, cited from public record
+- [ ] **MD-STANCES-02**: Compass stances for all 47 MD state senators, one agent at a time, evidence-only
+- [ ] **MD-STANCES-03**: Compass stances for all 141 MD house delegates, one agent at a time, evidence-only
+- [ ] **MD-STANCES-04**: Compass renders correctly on spot-checked MD official profiles (human-verified)
+
+### Post-Election Follow-up (POST-ELECTION)
+
+- [ ] **POST-ELECTION-01**: ME June 9 primary winners added to US Senate general + ME-01 general + ME-02 general race_candidates rows
+- [ ] **POST-ELECTION-02**: lavote.gov election ID updated in discovery_jurisdictions for CA November general
+
+## Future Requirements (v12.0+)
+
+- MA COUSUB towns layer (293 G4040 towns deferred from v5.0 Phase 48)
+- ME G4040 towns layer — most ME residents live in G4040 towns not yet loaded
+- Indiana local races — Monroe County Commissioner, Clerk, Assessor, Township (parked from v2.2)
+- Race Completeness Audit — verify every loaded geofence has at least one race row (parked from v2.2)
+- Headshots for 40 ME + IN school board officials (CMS-blocked; requires browser automation)
+- MD COUSUB layer if MD has significant town population not covered by G4110
+
+## Out of Scope
+
+| Feature | Reason |
+|---------|--------|
+| MD town/COUSUB layer | Verify if needed; MD may be primarily G4110 cities |
+| MD compass stances for federal officials (senators/House) | Federal officials have no LOCAL/STATE scope; judicial/legal compass not applicable |
+| OR post-June general candidate additions | Separate post-election task, not v11.0 scope |
+| Browser automation for CMS-blocked headshots | Requires Playwright; separate tooling effort |
+
+## Traceability
+
+*Populated by roadmapper during roadmap creation.*
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| UI-01 | — | Pending |
+| UI-02 | — | Pending |
+| MD-GEO-01 | — | Pending |
+| MD-GEO-02 | — | Pending |
+| MD-GEO-03 | — | Pending |
+| MD-GEO-04 | — | Pending |
+| MD-GEO-05 | — | Pending |
+| MD-GEO-06 | — | Pending |
+| MD-GOV-01 | — | Pending |
+| MD-GOV-02 | — | Pending |
+| MD-GOV-03 | — | Pending |
+| MD-GOV-04 | — | Pending |
+| MD-GOV-05 | — | Pending |
+| MD-GOV-06 | — | Pending |
+| MD-DEEP-01 | — | Pending |
+| MD-DEEP-02 | — | Pending |
+| MD-DEEP-03 | — | Pending |
+| MD-ELECTIONS-01 | — | Pending |
+| MD-ELECTIONS-02 | — | Pending |
+| MD-ELECTIONS-03 | — | Pending |
+| MD-STANCES-01 | — | Pending |
+| MD-STANCES-02 | — | Pending |
+| MD-STANCES-03 | — | Pending |
+| MD-STANCES-04 | — | Pending |
+| POST-ELECTION-01 | — | Pending |
+| POST-ELECTION-02 | — | Pending |
+
+**Coverage:**
+- v11.0 requirements: 26 total
+- Mapped to phases: 0 (pending roadmap)
+- Unmapped: 26 ⚠️
+
+---
+*Requirements defined: 2026-06-04*
+*Last updated: 2026-06-04 after initial definition*
