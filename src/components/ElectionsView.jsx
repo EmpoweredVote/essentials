@@ -703,8 +703,22 @@ export default function ElectionsView({
                                     ? allTopics.filter((t) => t.applies_local !== false)
                                     : allTopics;
                                   const compassOverlayWidth = 190;
+                                  const wrapperBorderColor = isDark ? 'rgba(255,255,255,0.08)' : '#E2EBEF';
                                   return (
-                                    <div key={candidate.candidate_id} style={{ position: 'relative' }}>
+                                    <div
+                                      key={candidate.candidate_id}
+                                      style={{
+                                        position: 'relative',
+                                        border: `1px solid ${wrapperBorderColor}`,
+                                        borderRadius: 10,
+                                        overflow: 'hidden',
+                                        cursor: 'pointer',
+                                        transition: 'box-shadow 0.2s ease, transform 0.2s ease',
+                                      }}
+                                      onClick={() => onCandidateClick(candidate.candidate_id)}
+                                      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                                      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}
+                                    >
                                       <PoliticianCard
                                         id={candidate.candidate_id}
                                         imageSrc={candidate.photo_url || undefined}
@@ -712,10 +726,10 @@ export default function ElectionsView({
                                         name={candidate.full_name}
                                         title={cardTitle}
                                         subtitle={cardSubtitle}
-                                        onClick={() => onCandidateClick(candidate.candidate_id)}
+                                        onClick={null}
                                         variant="horizontal"
-                                        imageWidth="120px"
-                                        style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
+                                        imageWidth="95px"
+                                        style={{ ...(isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}), border: 'none', borderRadius: 0, cursor: 'pointer' }}
                                         contentStyle={{ marginRight: compassOverlayWidth }}
                                         footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                       />
@@ -730,14 +744,10 @@ export default function ElectionsView({
                                         </div>
                                       )}
                                       <div
-                                        onClick={(e) => { e.stopPropagation(); onCandidateClick(candidate.candidate_id); }}
                                         style={{
                                           position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
                                           display: 'flex', alignItems: 'center', justifyContent: 'center',
                                           backgroundColor: isDark ? '#1a2235' : '#fff',
-                                          borderLeft: `1px solid ${isDark ? '#2d3f5a' : 'rgba(0,0,0,0.06)'}`,
-                                          borderRadius: '0 10px 10px 0',
-                                          cursor: 'pointer', zIndex: 1,
                                         }}
                                       >
                                         <MiniCompass
@@ -748,7 +758,7 @@ export default function ElectionsView({
                                           invertedSpokes={invertedSpokes}
                                           localLensActive={raceLensActive}
                                           isDark={isDark}
-                                          size={175}
+                                          size={190}
                                         />
                                       </div>
                                     </div>

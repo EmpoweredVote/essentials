@@ -1297,8 +1297,25 @@ export default function Results() {
 
     const compassOverlayWidth = 190;
     const compassBg = isDark ? '#1a2235' : isCandidate ? '#fffef5' : '#fff';
+    const wrapperBorderColor = isDark ? 'rgba(255,255,255,0.08)' : '#E2EBEF';
     return (
-      <div key={pol.id} data-pol-id={pol.id} style={{ position: 'relative' }}>
+      <div
+        key={pol.id}
+        data-pol-id={pol.id}
+        style={{
+          position: 'relative',
+          ...(showCompassOverlay ? {
+            border: `1px solid ${wrapperBorderColor}`,
+            borderRadius: 10,
+            overflow: 'hidden',
+            cursor: 'pointer',
+            transition: 'box-shadow 0.2s ease, transform 0.2s ease',
+          } : {}),
+        }}
+        onClick={showCompassOverlay ? handleCardClick : undefined}
+        onMouseEnter={showCompassOverlay ? (e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; } : undefined}
+        onMouseLeave={showCompassOverlay ? (e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; } : undefined}
+      >
         <PoliticianCard
           id={pol.id}
           imageSrc={imgData.url}
@@ -1308,23 +1325,20 @@ export default function Results() {
           imageFocalPoint={imgData.focalPoint || 'center 20%'}
           style={{
             ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}),
+            ...(showCompassOverlay ? { border: 'none', borderRadius: 0, cursor: 'pointer' } : {}),
           }}
           contentStyle={showCompassOverlay ? { marginRight: compassOverlayWidth } : undefined}
-          onClick={handleCardClick}
+          onClick={showCompassOverlay ? null : handleCardClick}
           variant="horizontal"
-          imageWidth={showCompassOverlay ? '120px' : undefined}
+          imageWidth={showCompassOverlay ? '95px' : undefined}
           footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
         />
         {showCompassOverlay && (
           <div
-            onClick={handleCardClick}
             style={{
               position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               backgroundColor: compassBg,
-              borderLeft: `1px solid ${isDark ? '#2d3f5a' : 'rgba(0,0,0,0.06)'}`,
-              borderRadius: '0 10px 10px 0',
-              cursor: 'pointer', zIndex: 1,
             }}
           >
             <MiniCompass
@@ -1335,7 +1349,7 @@ export default function Results() {
               invertedSpokes={invertedSpokes}
               localLensActive={polLensActive}
               isDark={isDark}
-              size={175}
+              size={190}
             />
           </div>
         )}

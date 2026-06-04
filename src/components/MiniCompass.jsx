@@ -139,7 +139,7 @@ export default function MiniCompass({
       ref={containerRef}
       style={{
         width: size,
-        height: size,
+        height: 'auto',
         flexShrink: 0,
         display: 'flex',
         alignItems: 'center',
