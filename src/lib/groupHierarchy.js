@@ -473,9 +473,9 @@ function sortPoliticians(pols) {
     if (!isNaN(aNum) && !isNaN(bNum) && aNum !== bNum) return aNum - bNum;
 
     // Extract district number from office_title when district_id is unavailable
-    // e.g. "Commissioner (District 3)" → 3
-    const aTitleNum = parseInt((a.office_title || '').match(/(?:district|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
-    const bTitleNum = parseInt((b.office_title || '').match(/(?:district|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
+    // e.g. "Commissioner (District 3)" → 3, "Board Member, Place 1" → 1
+    const aTitleNum = parseInt((a.office_title || '').match(/(?:district|place|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
+    const bTitleNum = parseInt((b.office_title || '').match(/(?:district|place|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
     if (!isNaN(aTitleNum) && !isNaN(bTitleNum) && aTitleNum !== bTitleNum) return aTitleNum - bTitleNum;
 
     // Alphabetical fallback
