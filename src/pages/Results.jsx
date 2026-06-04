@@ -1304,17 +1304,15 @@ export default function Results() {
         data-pol-id={pol.id}
         style={{
           position: 'relative',
-          ...(showCompassOverlay ? {
-            border: `1px solid ${wrapperBorderColor}`,
-            borderRadius: 10,
-            overflow: 'hidden',
-            cursor: 'pointer',
-            transition: 'box-shadow 0.2s ease, transform 0.2s ease',
-          } : {}),
+          border: `1px solid ${wrapperBorderColor}`,
+          borderRadius: 10,
+          overflow: 'hidden',
+          cursor: 'pointer',
+          transition: 'box-shadow 0.2s ease, transform 0.2s ease',
         }}
-        onClick={showCompassOverlay ? handleCardClick : undefined}
-        onMouseEnter={showCompassOverlay ? (e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; } : undefined}
-        onMouseLeave={showCompassOverlay ? (e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; } : undefined}
+        onClick={handleCardClick}
+        onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}
       >
         <PoliticianCard
           id={pol.id}
@@ -1325,10 +1323,12 @@ export default function Results() {
           imageFocalPoint={imgData.focalPoint || 'center 20%'}
           style={{
             ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}),
-            ...(showCompassOverlay ? { border: 'none', borderRadius: 0, cursor: 'pointer' } : {}),
+            border: 'none',
+            borderRadius: 0,
+            cursor: 'pointer',
           }}
           contentStyle={showCompassOverlay ? { marginRight: compassOverlayWidth } : undefined}
-          onClick={showCompassOverlay ? null : handleCardClick}
+          onClick={null}
           variant="horizontal"
           imageWidth={showCompassOverlay ? '95px' : undefined}
           footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
