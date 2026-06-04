@@ -1,4 +1,4 @@
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord } from '../lib/api';
 import { apiFetch } from '../lib/auth';
@@ -185,6 +185,12 @@ function Profile() {
             onNavigateToRecord={(href) => navigate(href)}
             darkMode={isDark}
           />
+
+          <div className="mt-3 mb-1">
+            <Link to={`/politician/${id}/citations`} className="text-sm text-[var(--ev-teal)] hover:underline">
+              View sources &amp; evidence &rarr;
+            </Link>
+          </div>
 
           {(() => {
             // Plan C: explicit treatment for offices where compass doesn't apply

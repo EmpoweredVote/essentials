@@ -7,6 +7,7 @@ import Results from "./pages/Results";
 import Profile from "./pages/Profile";
 import LegislativeRecord from "./pages/LegislativeRecord";
 import JudicialRecord from "./pages/JudicialRecord";
+import Citations from "./pages/Citations";
 import CandidateProfile from "./pages/CandidateProfile";
 import UnresolvedQueue from "./pages/admin/UnresolvedQueue";
 import StagingQueue from "./pages/admin/StagingQueue";
@@ -65,6 +66,7 @@ function App() {
         <Route path="/politician/:id" element={<Profile />} />
         <Route path="/politician/:id/record" element={<LegislativeRecord />} />
         <Route path="/politician/:id/judicial-record" element={<JudicialRecord />} />
+        <Route path="/politician/:id/citations" element={<Citations />} />
         <Route path="/candidate/:id" element={<CandidateProfile />} />
         <Route path="/admin/unresolved" element={<RequireAuth><UnresolvedQueue /></RequireAuth>} />
         <Route path="/admin/staging" element={<RequireAuth><StagingQueue /></RequireAuth>} />

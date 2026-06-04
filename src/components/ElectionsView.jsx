@@ -702,6 +702,7 @@ export default function ElectionsView({
                                   const scopedTopicsForRace = raceLensActive
                                     ? allTopics.filter((t) => t.applies_local !== false)
                                     : allTopics;
+                                  const compassOverlayWidth = 190;
                                   return (
                                     <div key={candidate.candidate_id} style={{ position: 'relative' }}>
                                       <PoliticianCard
@@ -713,8 +714,9 @@ export default function ElectionsView({
                                         subtitle={cardSubtitle}
                                         onClick={() => onCandidateClick(candidate.candidate_id)}
                                         variant="horizontal"
-                                        imageWidth="137px"
-                                        style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a', minHeight: 185 } : { minHeight: 185 }}
+                                        imageWidth="120px"
+                                        style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
+                                        contentStyle={{ marginRight: compassOverlayWidth }}
                                         footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                       />
                                       {candidate.candidate_status === 'withdrawn' && (
@@ -730,13 +732,10 @@ export default function ElectionsView({
                                       <div
                                         onClick={(e) => { e.stopPropagation(); onCandidateClick(candidate.candidate_id); }}
                                         style={{
-                                          position: 'absolute', right: 0, top: 0, bottom: 0, width: 220,
+                                          position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
                                           display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                          paddingRight: 14, // nudge compass left so the widest axis label clears the card edge
-                                          boxSizing: 'border-box',
-                                          background: isDark
-                                            ? 'linear-gradient(to right, transparent, #1a2235 35%)'
-                                            : 'linear-gradient(to right, transparent, rgba(255,255,255,0.97) 30%)',
+                                          backgroundColor: isDark ? '#1a2235' : '#fff',
+                                          borderLeft: `1px solid ${isDark ? '#2d3f5a' : 'rgba(0,0,0,0.06)'}`,
                                           borderRadius: '0 10px 10px 0',
                                           cursor: 'pointer', zIndex: 1,
                                         }}
@@ -749,7 +748,7 @@ export default function ElectionsView({
                                           invertedSpokes={invertedSpokes}
                                           localLensActive={raceLensActive}
                                           isDark={isDark}
-                                          size={190}
+                                          size={175}
                                         />
                                       </div>
                                     </div>
