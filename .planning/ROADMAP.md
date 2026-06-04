@@ -943,9 +943,9 @@ Plans:
 Plans:
 - [x] 88-01-PLAN.md - TIGER UNSD loader + migration 261 (5 ISDs, 35 board members) — COMPLETE 2026-06-03
 - [x] 88-02-PLAN.md - Headshots audit migration 262 (SQL-only, no apply)
-- [ ] 88-03-PLAN.md - [GAP] groupHierarchy.js: place sort + mayor-first + chamber label (code only)
-- [ ] 88-04-PLAN.md - [GAP] Migration 267: Allen Mayor office re-point to Chris Schulmeister
-- [ ] 88-05-PLAN.md - [GAP] Richardson ISD headshot replacement (re-source rectangular photos)
+- [x] 88-03-PLAN.md - [GAP] groupHierarchy.js: place sort + mayor-first + chamber label (code only)
+- [x] 88-04-PLAN.md - [GAP] Migration 267: Allen Mayor office re-point to Chris Schulmeister
+- [x] 88-05-PLAN.md - [GAP] Richardson ISD headshot replacement (re-source rectangular photos)
 
 ### Phase 89: IN + ME School Board Completion
 
@@ -1103,5 +1103,5 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 85. Multnomah Elections + Discovery | v10.0 | 2/2 | Complete    | 2026-06-01 |
 | 86. Multnomah County School Districts | v10.0 | 2/2 | Complete   | 2026-06-02 |
 | 87. CA City School Boards | v10.0 | 5/4 | Complete    | 2026-06-02 |
-| 88. TX Collin County School Boards | v10.0 | 0/TBD | Not started | - |
+| 88. TX Collin County School Boards | v10.0 | 5/5 | Complete   | 2026-06-04 |
 | 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |
