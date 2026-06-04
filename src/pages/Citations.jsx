@@ -64,10 +64,7 @@ function TopicSection({ topic }) {
 
       {/* Stance indicator */}
       {topic.has_stance ? (
-        <div
-          className="rounded-lg px-4 py-3 mb-4"
-          style={{ backgroundColor: 'var(--ev-bg-card, #f0f4f8)' }}
-        >
+        <div className="rounded-lg px-4 py-3 mb-4 bg-[#f0f4f8] dark:bg-gray-800">
           <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 font-[Manrope]">
             {topic.stance_text}
           </p>
