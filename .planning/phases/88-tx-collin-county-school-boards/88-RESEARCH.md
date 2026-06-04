@@ -1,4 +1,4 @@
-# Phase 88: TX Collin County School Boards - Research
+﻿# Phase 88: TX Collin County School Boards - Research
 
 **Researched:** 2026-06-02
 **Domain:** TX ISD geofence loading (TIGER UNSD), school board seeding (SQL migration), board member roster
@@ -661,24 +661,26 @@ END $$;
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Plano ISD individual profile page photos**
+1. **Plano ISD individual profile page photos** -- [RESOLVED in Plan 02]
    - What we know: Finalsite CMS; individual profile page URLs exist
    - What's unclear: Exact photo CDN URL and whether photos are headshots vs. group photos
    - Recommendation: Implementer visits each of 7 profile pages at pisd.edu/about-our-district/board-of-trustees/trustee-profiles/[name]-profile to extract photo URLs
+   - **Resolution (Plan 02):** All 7 Plano ISD profile pages at pisd.edu had rectangular headshot photos via Finalsite CDN. All 7 uploaded successfully (external_ids -880001..-880007).
 
-2. **McKinney ISD Place 4 trustee name**
+2. **McKinney ISD Place 4 trustee name** -- [RESOLVED in Plan 02]
    - What we know: Board had a May 2025 election for Places 1, 2, 3, 7; Place 4 not up for election; name "Roxane Morrison" from secondary sources only
    - What's unclear: Confirmed name for Place 4
    - Recommendation: Implementer must visit mckinneyisd.net/page/board-of-trustees and read the full board member listing before writing the Place 4 SQL block
+   - **Resolution (Plan 02):** Roxane Morrison confirmed as Place 4 on official mckinneyisd.net page. Migration 261 name is correct. Morrison had no photo on the official board page; she is the one McKinney no-photo official (external_id -880011, documented in migration 262 audit).
 
-3. **Frisco ISD board composition after May 2026 election**
+3. **Frisco ISD board composition after May 2026 election** -- [RESOLVED in Plan 01]
    - What we know: Suresh Manduva, Renee Sample, Stephanie Elad won Places 1, 2, 3 in May 2026; the meet-the-board page was confirmed from friscoisd.org
    - What's unclear: Whether Misty Wamhoff is still listed (she appeared in pre-election sources for Place 5) vs. Mark Hill
    - Recommendation: Confirm on friscoisd.org/about/board-of-trustees/meet-the-board at implementation time (implementation is post-May 2026 election)
+   - **Resolution (Plan 01):** Mark Hill confirmed as Board Secretary, Place 5 on the current friscoisd.org meet-the-board page. Misty Wamhoff is no longer listed. The 7-member roster in migration 261 is current.
 
----
 
 ## Environment Availability
 
