@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: resolved
 phase: 88-tx-collin-county-school-boards
 source: 88-01-SUMMARY.md, 88-02-SUMMARY.md
 started: 2026-06-03T00:00:00Z
-updated: 2026-06-03T01:00:00Z
+updated: 2026-06-04T00:00:00Z
 ---
 
 ## Current Test
@@ -64,7 +64,7 @@ blocked: 0
 ## Gaps
 
 - truth: "School board members ordered by place/district number (Place 1, Place 2, ... Place 7)"
-  status: failed
+  status: resolved
   reason: "User reported: The Plano Independent school district people are all there, but they should be ordered by their place name Place 1, Place 2, Place 3, etc. Not by alphabetical."
   severity: major
   test: 2
@@ -77,7 +77,7 @@ blocked: 0
   debug_session: ""
 
 - truth: "Mayor appears first in city government section"
-  status: failed
+  status: resolved
   reason: "User reported: The Mayor, John Muns, should also be first (Plano/McKinney/Frisco/Richardson). Mayor is not first in any Collin County TX city."
   severity: major
   test: 2
@@ -93,7 +93,7 @@ blocked: 0
   debug_session: ""
 
 - truth: "Allen TX address returns city mayor in Representatives tab"
-  status: failed
+  status: resolved
   reason: "User reported: I don't even see a mayor at all for Allen."
   severity: major
   test: 4
@@ -111,7 +111,7 @@ blocked: 0
   debug_session: ".planning/debug/allen-tx-city-council-missing.md"
 
 - truth: "Frisco city council section labeled 'Frisco City Council'"
-  status: failed
+  status: resolved
   reason: "User reported: Frisco City Council is called 'Council Place 3' instead of 'Frisco City Council'."
   severity: major
   test: 5
@@ -127,7 +127,7 @@ blocked: 0
   debug_session: ".planning/debug/frisco-council-label-bug.md"
 
 - truth: "Richardson ISD board member headshots display as clean rectangular photos"
-  status: failed
+  status: resolved
   reason: "User reported: all of the pictures for the board members have a circle crop - white corner edges. None of these pictures work - no crops."
   severity: major
   test: 6
