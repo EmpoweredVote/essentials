@@ -28,7 +28,7 @@ function CitationItem({ citation }) {
         )}
       </div>
       {citation.snippet && (
-        <blockquote className="border-l-4 border-[#59b0c4] pl-4 my-2 text-sm text-gray-700 dark:text-gray-300 italic font-[Manrope] leading-relaxed">
+        <blockquote cite={citation.source_url} className="border-l-4 border-[#59b0c4] pl-4 my-2 text-sm text-gray-700 dark:text-gray-300 italic font-[Manrope] leading-relaxed">
           {citation.snippet}
         </blockquote>
       )}
@@ -36,6 +36,7 @@ function CitationItem({ citation }) {
         href={citation.source_url}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label={`View source at ${citation.domain}`}
         className="text-xs font-[Manrope] underline break-all"
         style={{ color: '#00657c' }}
       >
@@ -95,7 +96,7 @@ function TopicSection({ topic }) {
       {primaryCitations.length > 0 && (
         <div>
           {primaryCitations.map((c, i) => (
-            <CitationItem key={i} citation={c} />
+            <CitationItem key={c.source_url ?? i} citation={c} />
           ))}
         </div>
       )}
@@ -111,7 +112,7 @@ function TopicSection({ topic }) {
             <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
           </div>
           {secondaryCitations.map((c, i) => (
-            <CitationItem key={`secondary-${i}`} citation={c} />
+            <CitationItem key={`secondary-${c.source_url ?? i}`} citation={c} />
           ))}
         </>
       )}
@@ -129,30 +130,32 @@ function Citations() {
 
   useEffect(() => {
     if (!id) return;
-    setLoading(true);
-    setError(null);
+    let cancelled = false;
 
     (async () => {
+      setLoading(true);
+      setError(null);
       try {
         const [result, citRes] = await Promise.all([
           fetchPolitician(id),
           apiFetch(`/compass/politicians/${id}/citations`),
         ]);
-
+        if (cancelled) return;
         setPol(result);
-
-        if (!citRes || !citRes.ok) {
-          throw new Error(`Failed to load citations: ${citRes?.status ?? 'network error'}`);
-        }
+        if (!citRes || !citRes.ok) throw new Error(`Failed to load citations`);
         const citData = await citRes.json();
+        if (cancelled) return;
         setCitations(Array.isArray(citData) ? citData : []);
       } catch (err) {
+        if (cancelled) return;
         console.error('Citations fetch error:', err);
         setError(err.message || 'Failed to load citations');
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     })();
+
+    return () => { cancelled = true; };
   }, [id]);
 
   const polName = pol
