@@ -1,10 +1,9 @@
 ---
 gsd_state_version: 1.0
 milestone: v11.0
-milestone_name: TBD
-status: milestone_complete
-stopped_at: v10.0 shipped 2026-06-04
-last_updated: "2026-06-04T00:00:00.000Z"
+milestone_name: Maryland Essentials
+status: planning
+last_updated: "2026-06-04T21:57:21.090Z"
 last_activity: 2026-06-04
 progress:
   total_phases: 0
@@ -18,9 +17,10 @@ progress:
 
 ## Current Position
 
-Milestone: v10.0 SHIPPED 2026-06-04
-Next: v11.0 — run /gsd-new-milestone to define scope
-Last activity: 2026-06-04
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-06-04 — Milestone v11.0 started
 
 ## Project Reference
 

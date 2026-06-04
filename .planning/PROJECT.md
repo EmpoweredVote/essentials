@@ -110,13 +110,27 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ 5 Collin County TX ISDs seeded — Plano/McKinney/Allen/Frisco/Richardson (35 board members); Richardson hybrid Place ordering; groupHierarchy.js mayor-first + seat-label sort fixes — v10.0
 - ✓ IPS all 7 seats wired + MCCSC D7 updated; 5 ME city school boards seeded — Lewiston/Bangor/South Portland/Auburn/Biddeford (37 officials) — v10.0
 
-### Current State: v10.0 Shipped — Planning v11.0
+### Current State: v11.0 Active
 
 **v10.0 Shipped 2026-06-04:** Multnomah County & School Boards — 7 phases, 22 plans, 33/33 requirements. Multnomah County Board of Commissioners seeded, 5 smaller cities seeded, 6 OR school districts + 6 CA school boards + 5 TX ISDs + IN/ME school boards seeded. G5420 TIGER UNSD school board pattern now established across 4 states.
 
+### Current Milestone: v11.0 Maryland Essentials
+
+**Goal:** Onboard Maryland at full depth (geofences → government → stances), add a MiniCompass UI improvement, and close post-election follow-ups for ME and CA.
+
+**Target features:**
+- MiniCompass UI — remove titles/labels around the mini-compass; shrink the chart circles by ~50%; optimized for use as a tooltip overlay on candidate tiles
+- MD TIGER geofences — G4110 cities, G4020 counties, SLDU (47 senate), SLDL (141 house), CD (8 congressional)
+- MD state government DB — Governor Moore + LG Miller + AG Brown + Comptroller Lierman + 47 senators + 141 delegates + 2 US senators + 8 US House reps + headshots at 600×750
+- Leonardtown / St. Mary's County deep seed — county commission + town government + officials + available headshots
+- MD 2026 elections — race rows + discovery_jurisdictions armed for cron
+- Compass stances — all MD state officials (sequential, evidence-only, v9.0 OR pattern)
+- Post-election follow-up — ME June 9 primary winners + lavote.gov CA election ID update
+- Landing.jsx MD entry
+
 ### Active
 
-(Starting v11.0 — run `/gsd-new-milestone` to define scope)
+- v11.0 Maryland Essentials (in progress)
 
 ### Out of Scope
 
@@ -217,4 +231,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-04 after v10.0 milestone — Multnomah County & School Boards*
+*Last updated: 2026-06-04 after v11.0 milestone start — Maryland Essentials*
