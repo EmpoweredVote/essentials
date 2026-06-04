@@ -267,6 +267,13 @@ function getSubGroupLabel(pols, accordionTitle) {
       : body;
   }
 
+  // Rule 3.5 (no body, LOCAL district): use chamber_name_formal or chamber_name as the label.
+  // This covers TX cities whose government_bodies rows don't exist yet but whose chamber
+  // has a clean name like "Plano City Council" stored in ch.name_formal / ch.name.
+  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC') && (first.chamber_name_formal || first.chamber_name)) {
+    return first.chamber_name_formal || first.chamber_name;
+  }
+
   // Rule 4 (no body): derive from office_title — cleaner than falling back to accordion title
   const rawTitle = first.office_title || '';
   // Normalize council member variants → "City Council", "Town Council", etc.
