@@ -1763,7 +1763,7 @@ export default function Results() {
                             {body.subgroups.map((sg) => {
                               const maxCols = isWideForThree ? 3 : isWideForVertical ? 2 : 1;
                               const cols = Math.min(maxCols, sg.pols.length || 1);
-                              const gridCols = cols === 1 ? 'minmax(0, 560px)' : `repeat(${cols}, minmax(0, 560px))`;
+                              const gridCols = `repeat(${cols}, minmax(0, 450px))`;
                               return (
                                 <SubGroupSection
                                   key={sg.key}
