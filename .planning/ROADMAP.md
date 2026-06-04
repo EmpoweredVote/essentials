@@ -938,11 +938,14 @@ Plans:
   3. A Plano address returns Plano ISD board members alongside Plano City Council in the address lookup
   4. A McKinney, Allen, Frisco, or Richardson address returns that ISD's board members without routing errors
 
-**Plans**: 2 plans (01 complete, 02 pending headshots audit)
+**Plans**: 5 plans (01+02 complete, 03-05 gap closure)
 
 Plans:
 - [x] 88-01-PLAN.md - TIGER UNSD loader + migration 261 (5 ISDs, 35 board members) — COMPLETE 2026-06-03
-- [ ] 88-02-PLAN.md - Headshots audit migration 262 (SQL-only, no apply)
+- [x] 88-02-PLAN.md - Headshots audit migration 262 (SQL-only, no apply)
+- [ ] 88-03-PLAN.md - [GAP] groupHierarchy.js: place sort + mayor-first + chamber label (code only)
+- [ ] 88-04-PLAN.md - [GAP] Migration 267: Allen Mayor office re-point to Chris Schulmeister
+- [ ] 88-05-PLAN.md - [GAP] Richardson ISD headshot replacement (re-source rectangular photos)
 
 ### Phase 89: IN + ME School Board Completion
 
@@ -969,7 +972,8 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [x] 89-03-PLAN.md - Headshots: _tmp-in-me-school-headshots.py live upload for all 40 Phase 89 officials + audit-only migration 266 (no apply) (completed 2026-06-03)
+- [x] 89-03-PLAN.md - Headshots: _tmp-in-me-school-headshots.py live upload for all 40 Phase 89 officials + audit-only migration 266 (no apply)
+ (completed 2026-06-03)
 
 </details>
 
