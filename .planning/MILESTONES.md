@@ -1,5 +1,59 @@
 # Milestones
 
+## v10.0 Multnomah County & School Boards (Shipped: 2026-06-04)
+
+**Delivered:** Expanded Portland coverage to the full Multnomah County area and added elected school board coverage across all currently-covered cities (OR, CA, TX, IN, ME). Established the G5420 TIGER UNSD school board seeding pattern across 4 states — 22 school districts, 109+ board members seeded, 4 state-specific boundary loaders created.
+
+**Phases completed:** 83–89 (22 plans total)
+
+**Key accomplishments:**
+
+- Multnomah County Board of Commissioners government body seeded — 5 commissioners + Chair Vega Pederson with headshots; unincorporated OR address routing fixed (no empty LOCAL section) (Phase 83)
+- 5 smaller Multnomah cities seeded — Gresham (7 officials, 7 headshots), Troutdale (7/7), Fairview (7, no-photo), Wood Village (5/5), Maywood Park (5, no-photo); ENCLAVE_CITY_ALIASES deployed for Maywood Park routing; groupHierarchy.js mayor-first fix (Phase 84)
+- 18 Multnomah 2026 race rows seeded + discovery_jurisdictions armed for geo_id=41051 (Phase 85)
+- 6 Multnomah County school district G5420 geofences (load-or-school-boundaries.ts, TIGER UNSD) + 38 board members seeded — PPS, Parkrose, Reynolds, Centennial, David Douglas, Riverdale (Phase 86)
+- 6 CA city school boards seeded — SFUSD/SDUSD/SCUSD/SJUSD/FUSD/BUSD, 34 officials, office titles per district (Commissioner/Director/Trustee); groupHierarchy.js seat-label sort fix (Phase 87)
+- 5 Collin County TX ISDs seeded — Plano/McKinney/Allen/Frisco/Richardson, 35 board members, Richardson hybrid Place ordering (Districts 1-5 + Places 6-7); Allen Mayor re-pointed via migration 267 (Phase 88)
+- IPS all 7 seats wired (D3 inserted + D2/D7 updated), MCCSC D7 updated; 5 ME city school boards seeded — Lewiston/Bangor/South Portland/Auburn/Biddeford, 37 officials; all 40 Phase 89 CMS-blocked (no-photo documented) (Phase 89)
+
+**Stats:**
+
+- 7 phases (83-89), 22 plans
+- 4 days (2026-05-31 → 2026-06-04)
+- 113 commits; 749 files changed, 27,907 insertions
+- Next migration: 268
+
+**Tech debt carried forward:**
+- 40/40 Phase 89 officials (ME + IN school boards) have no headshots — CMS platforms block server-side fetches; browser automation required
+- South Portland D1 (Rauscher) + At-Large (Ryan) names assumed from JS-only source
+- Fairview + Maywood Park + Allen ISD + Whitehurst-Payne: confirmed online headshot unavailability
+
+**Archive:** [milestones/v10.0-ROADMAP.md](milestones/v10.0-ROADMAP.md) | Requirements: [milestones/v10.0-REQUIREMENTS.md](milestones/v10.0-REQUIREMENTS.md) | Audit: [milestones/v10.0-MILESTONE-AUDIT.md](milestones/v10.0-MILESTONE-AUDIT.md)
+
+---
+
+## v9.0 Oregon Legislature Stances (Shipped: 2026-05-31)
+
+**Delivered:** Full legislature-wide compass coverage for Oregon — 536 stance values for all 90 state legislators (30 senators + 60 house reps), 100% citation rate, making Oregon the first US state with complete compass coverage. All stances from oregonlegislature.gov OLIS floor vote records + public record sources. 90 sequential research runs (no parallel); zero not-found legislators.
+
+**Phases completed:** 82 (3 plans total)
+
+**Key accomplishments:**
+
+- 215 stances for all 30 OR senators (SD-01..SD-30); HIGH evidence senators reached 10-12 stances (Gelser Blouin, Wagner, Frederick, Drazan) — migration 242 applied (Phase 82 Wave 1)
+- 321 stances for all 60 OR house reps (HD-01..HD-60); no not-found legislators — OLIS floor votes provided minimum evidence for all; Eastern OR members capped at 3 per rate-limit guidance — migration 243 applied (Phase 82 Wave 2)
+- Verification: 536/536 citation parity (100% — zero uncited answers); compass spot-check 6/6 profiles PASS (3 senators + 3 house reps) (Phase 82 Wave 3)
+
+**Stats:**
+
+- 1 phase (82), 3 plans
+- Shipped same day as v8.0 close (2026-05-31)
+- 536 total stances; 90 sequential research runs; next migration: 244
+
+**Archive:** No separate roadmap archive (single-phase milestone). Requirements: see REQUIREMENTS.md archival.
+
+---
+
 ## v8.0 Oregon (Shipped: 2026-05-31)
 
 **Delivered:** Full Oregon state coverage — TIGER geofences, government structure with 5 voter-elected constitutional officers, 90 state legislators with headshots from oregonlegislature.gov, Portland deep seed (2024 charter reform: 4-district × 3-seat RCV council), OR 2026 elections + discovery pipeline (105 race rows), 321 compass stances across 24 OR officials, and OR-specific GOTCHAs documented in the playbook.
