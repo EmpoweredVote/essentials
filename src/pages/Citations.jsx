@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician } from '../lib/api';
 import { apiFetch } from '../lib/auth';
@@ -121,7 +121,6 @@ function TopicSection({ topic }) {
 
 function Citations() {
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const [pol, setPol] = useState(null);
   const [citations, setCitations] = useState([]);
@@ -166,17 +165,22 @@ function Citations() {
         <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 max-w-4xl">
 
           {/* Back link */}
-          <button
-            onClick={() => navigate(`/politician/${id}`)}
+          <Link
+            to={`/politician/${id}`}
             className="mb-4 flex items-center gap-1 text-sm text-[var(--ev-teal)] hover:underline font-[Manrope]"
           >
-            &larr; Back to {polName || 'Profile'}
-          </button>
+            &larr; Back to profile
+          </Link>
 
           {/* Page header */}
           <h1 className="text-2xl font-bold text-[var(--ev-teal)] mb-1 font-[Manrope]">
-            Sourced Positions{polName ? ` — ${polName}` : ''}
+            {polName || 'Sourced Positions'}
           </h1>
+          {pol?.office_title && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-[Manrope] mb-1">
+              {pol.office_title}
+            </p>
+          )}
           {polName && (
             <p className="text-sm text-gray-500 dark:text-gray-400 font-[Manrope] mb-8">
               Sourced positions — every verified citation for {polName}
