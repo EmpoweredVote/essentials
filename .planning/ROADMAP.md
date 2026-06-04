@@ -1103,5 +1103,5 @@ v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after
 | 85. Multnomah Elections + Discovery | v10.0 | 2/2 | Complete    | 2026-06-01 |
 | 86. Multnomah County School Districts | v10.0 | 2/2 | Complete   | 2026-06-02 |
 | 87. CA City School Boards | v10.0 | 5/4 | Complete    | 2026-06-02 |
-| 88. TX Collin County School Boards | v10.0 | 5/5 | Complete   | 2026-06-04 |
+| 88. TX Collin County School Boards | v10.0 | 5/5 | Complete    | 2026-06-04 |
 | 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |
