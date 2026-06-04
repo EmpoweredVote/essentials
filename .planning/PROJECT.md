@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, Collin County, TX, and Cambridge, MA. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources. A cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) documents how to onboard any US city from scratch.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, Collin County, TX, Cambridge MA, all of Maine, all of California (7 deep-seeded cities), all of Oregon (Portland deep seed), and Multnomah County, OR including 22 school districts across 4 states. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources. A cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) documents how to onboard any US city from scratch.
 
 ## Core Value
 
@@ -101,22 +101,22 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ OR 2026 elections + discovery pipeline — 105 race rows (1 Governor + 1 US Senate + 6 US House + 30 OR Senate + 60 OR House + 7 Portland City); discovery_jurisdictions for OR statewide + Portland; armed via election_date 180-day cron window — v8.0
 - ✓ 321 compass stances across 24 OR officials — Kotek 31, Rayfield 24, Bonamici 24, Bentz 21, Hoyle 20, Steiner 13, Salinas 18, Bynum 13, Read 12, Dexter 12, Stephenson 10, Wilson 10; all cited; compass renders on Kotek profile — v8.0
 - ✓ OR Playbook retrospective — 9 OR-specific GOTCHAs added to LOCATION-ONBOARDING.md; Oregon Quick Reference block; 2 new Cities Onboarded rows (Oregon state + Portland); v8.0 milestone closed — v8.0
+- ✓ 536 compass stances for all 90 OR state legislators (30 senators + 60 house reps); 100% citation rate (536/536); Oregon first US state with full legislature-wide compass coverage — v9.0
+- ✓ Multnomah County Board of Commissioners government body + 5 commissioners + Chair seeded with headshots; unincorporated OR address routing fixed (no empty LOCAL city section) — v10.0
+- ✓ 5 smaller Multnomah cities seeded — Gresham/Troutdale/Fairview/Wood Village/Maywood Park with officials + available headshots; ENCLAVE_CITY_ALIASES deployed for Maywood Park routing — v10.0
+- ✓ 18 Multnomah 2026 race rows + discovery_jurisdictions armed for Multnomah County (geo_id=41051) — v10.0
+- ✓ 6 Multnomah County school district G5420 geofences + 38 board members seeded (PPS/Parkrose/Reynolds/Centennial/David Douglas/Riverdale); TIGER UNSD G5420 school board pattern established — v10.0
+- ✓ 6 CA city school boards seeded — SFUSD/SDUSD/SCUSD/SJUSD/FUSD/BUSD (34 officials); office titles per district convention (Commissioner/Director/Trustee) — v10.0
+- ✓ 5 Collin County TX ISDs seeded — Plano/McKinney/Allen/Frisco/Richardson (35 board members); Richardson hybrid Place ordering; groupHierarchy.js mayor-first + seat-label sort fixes — v10.0
+- ✓ IPS all 7 seats wired + MCCSC D7 updated; 5 ME city school boards seeded — Lewiston/Bangor/South Portland/Auburn/Biddeford (37 officials) — v10.0
 
-### Current Milestone: v10.0 Multnomah County & School Boards
+### Current State: v10.0 Shipped — Planning v11.0
 
-**Goal:** Expand Portland coverage to the full Multnomah County area and add elected school board coverage across all currently-covered cities.
-
-**Target features:**
-- Multnomah County Board of Commissioners — county government body, 5 commissioners + chair, seeded
-- Smaller incorporated cities in Multnomah County — Gresham, Troutdale, Fairview, Wood Village, Maywood Park — city council government bodies + officials seeded
-- Unincorporated area routing — users matched to county geofence but no city geofence skip city layer and see county → state → federal only
-- Elections data — Multnomah County commissioner races + races for the 5 smaller cities, discovery pipeline armed
-- Multnomah County school boards — 6 school districts (PPS, Parkrose, Reynolds, Centennial, David Douglas, Riverdale): G5420 geofences + board members seeded
-- School boards for all other covered areas — IN, MA, TX, CA cities, ME: G5420 geofences + board member seeding (LAUSD already done; remaining cities to complete)
+**v10.0 Shipped 2026-06-04:** Multnomah County & School Boards — 7 phases, 22 plans, 33/33 requirements. Multnomah County Board of Commissioners seeded, 5 smaller cities seeded, 6 OR school districts + 6 CA school boards + 5 TX ISDs + IN/ME school boards seeded. G5420 TIGER UNSD school board pattern now established across 4 states.
 
 ### Active
 
-(v10.0 starting — defining roadmap)
+(Starting v11.0 — run `/gsd-new-milestone` to define scope)
 
 ### Out of Scope
 
@@ -143,7 +143,7 @@ A resident can look up who represents them — and who is on their ballot — wi
 - **Shipped v7.0**: California — 14 active phases (57-70, 78), 42 plans, 8 days (2026-05-21 → 2026-05-29). CA TIGER geofences (482 G4110 + 404 G4040 + 52 CD + 80 SLDU + 40 SLDL + 58 counties); LAUSD board district geofences; State of CA government DB (8 constitutional officers + 120 state legislators + 54 federal officials); LA backlog closed; 6 CA city deep seeds (SF/SJ/SD/SAC/Fremont/Berkeley) with council district geofences; CA 2026 elections + discovery armed; 965 compass stances across 68 CA officials. Playbook updated with 11 CA-specific GOTCHAs + California Quick Reference.
 - **Shipped v8.0**: Oregon — 10 phases + 1 inserted (72-81, 77.1), 25 plans, 9 days (2026-05-28 → 2026-05-31). OR TIGER geofences (241 G4110 + 6 CD + 30 SLDU + 60 SLDL + 36 counties; cd119 key); 5 OR constitutional officers + 90 legislators + 8 federal officials; Portland deep seed (2024 charter reform: 4-district × 3-seat RCV council, ArcGIS-sourced geofences, 14 headshots); 105 OR 2026 race rows + discovery pipeline; 321 compass stances across 24 OR officials. Playbook updated with 9 OR-specific GOTCHAs + Oregon Quick Reference.
 - **Discovery cost**: ~$0.017/run with claude-sonnet-4-6; $20 API credits loaded 2026-04-24.
-- **Database state**: 7+ elections (Indiana Primary May 5 2026, LA County Primary June 2 2026, ME Primary June 9 2026, MA Primary Sept 1 2026, MA General Nov 3 2026, ME General Nov 3 2026, Portland 2027 + Cambridge 2027 placeholders); 450+ races; 140+ candidates; 7,800+ geofence boundaries (+ 227 ME: 23 G4110 cities + 2 CD + 35 SLDU + 151 SLDL + 16 G4020 counties). Discovery pipeline covers 23 TX cities + CA + IN + MA 2026 + ME 2026.
+- **Database state (v10.0)**: 7+ elections; 450+ races; 140+ candidates; 8,000+ geofence boundaries. 22 school districts seeded across OR/CA/TX/IN/ME (G5420 TIGER UNSD pattern). Discovery pipeline covers 23 TX cities + CA + OR + IN + MA 2026 + ME 2026. Next migration: 268.
 - **Data gaps (accounts team backlog)**: CA Governor challenger candidates (10 filed, not seeded); LAUSD sub-district geofences pending; lavote.gov election ID changes each cycle (mandatory manual update).
 - **Auth**: Redirect-only flow via Auth Hub (`accounts.empowered.vote`). No direct login from Essentials.
 - **Anti-patterns enforced**: No Google Places autocomplete. No address re-entry for Connected users. Party data on races only, never on candidates.
@@ -211,6 +211,10 @@ A resident can look up who represents them — and who is on their ballot — wi
 | Multi-tier city seeding: skeletal INSERT then UPDATE by (chamber_id, title) | No seat_label column on essentials.offices; UPDATE pattern matches on chamber+title to link politician_id to existing office rows | ✓ Good — v6.0 |
 | STATE_EXEC `districts.state` must be uppercase 'OR' not 'or' | Casing rule: STATE/COUNTY tiers use lowercase in TIGER loader but STATE_EXEC is manually inserted — must match uppercase postal code that backend queries use; lowercase causes silent exclusion | ✓ Good — v7.0 (Phase 74 lesson) |
 | STATE_EXEC `district_id` should be empty string for shared multi-position districts | OR STATE_EXEC initially used 'Oregon (Statewide)' as district_id; MA/ME/TX multi-position pattern uses ''; corrected in migration 223a | ✓ Good — v7.0 (Phase 74 lesson) |
+| groupHierarchy.js Rule 3.5: chamber_name fallback in getSubGroupLabel() | School board cards rendered with no subtitle when qualifyLocalTitle() returns empty; fallback ensures chamber label always appears | ✓ Good — v10.0 (Phase 88 gap) |
+| SFUSD office title 'Commissioner'; BUSD office title 'Director' | Each school board uses its own official term; never assume 'Board Member' — always verify from official district page | ✓ Good — v10.0 (Phase 87) |
+| ENCLAVE_CITY_ALIASES backend env var for Maywood Park | Small enclave cities surrounded by Portland (TIGER G4110 boundary exists) need explicit alias to override larger-city geofence match | ✓ Good — v10.0 (Phase 84) |
+| G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-01 — Phase 85 complete — 18 OR 2026 General race rows seeded for Multnomah County (Chair + Commissioner D2) and 5 smaller cities (Gresham 4 + Troutdale 3 + Fairview 4 + Wood Village 2 + Maywood Park 3); discovery_jurisdictions row armed for geo_id='41051'; smoke test ALL ASSERTIONS PASSED*
+*Last updated: 2026-06-04 after v10.0 milestone — Multnomah County & School Boards*
