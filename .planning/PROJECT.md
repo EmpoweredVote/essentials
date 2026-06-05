@@ -110,10 +110,13 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ 5 Collin County TX ISDs seeded — Plano/McKinney/Allen/Frisco/Richardson (35 board members); Richardson hybrid Place ordering; groupHierarchy.js mayor-first + seat-label sort fixes — v10.0
 - ✓ IPS all 7 seats wired + MCCSC D7 updated; 5 ME city school boards seeded — Lewiston/Bangor/South Portland/Auburn/Biddeford (37 officials) — v10.0
 - ✓ MD TIGER geofences — 307 geofence_boundaries rows for state='24': 157 G4110 cities, 24 G4020 counties, 8 G5200 CDs, 47 G5210 senate, 71 G5220 SLDL sub-districts; Baltimore City dual-tier (G4110=2404000 + G4020=24510); any MD address routes to correct tiers; St. Mary's County geo_id=24037 (Phase 95 prerequisite) — v11.0
+- ✓ MD state government foundation — State of Maryland government row asserted (migration 174); 5 constitutional officer chambers (Governor, LG, AG, Comptroller, State Treasurer); 5 executive officials (Wes Moore, Aruna Miller, Anthony G. Brown, Brooke Lierman, Dereck E. Davis) with STATE_EXEC districts, offices, office_id back-fill, and headshots at 600×750; Davis is_appointed=true (D-03); LG has standalone chamber + district (D-01) — v11.0
 
 ### Current State: v11.0 Active
 
 **v10.0 Shipped 2026-06-04:** Multnomah County & School Boards — 7 phases, 22 plans, 33/33 requirements. Multnomah County Board of Commissioners seeded, 5 smaller cities seeded, 6 OR school districts + 6 CA school boards + 5 TX ISDs + IN/ME school boards seeded. G5420 TIGER UNSD school board pattern now established across 4 states.
+
+**Phase 92 complete 2026-06-05:** MD state government foundation seeded — 5 chambers, 5 executives, headshots, migrations 269/270/271.
 
 ### Current Milestone: v11.0 Maryland Essentials
 
