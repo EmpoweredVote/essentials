@@ -21,12 +21,12 @@
 
 ### MD State Government (MD-GOV)
 
-- [ ] **MD-GOV-01**: MD state government row + 4 constitutional officer chambers seeded (Governor, LG, AG, Comptroller); State Treasurer marked is_appointed_position=true
-- [ ] **MD-GOV-02**: Governor Wes Moore + LG Aruna Miller + AG Anthony Brown + Comptroller Brooke Lierman seeded with offices + headshots at 600×750
+- [x] **MD-GOV-01**: MD state government row + 4 constitutional officer chambers seeded (Governor, LG, AG, Comptroller); State Treasurer marked is_appointed_position=true
+- [x] **MD-GOV-02**: Governor Wes Moore + LG Aruna Miller + AG Anthony Brown + Comptroller Brooke Lierman seeded with offices + headshots at 600×750
 - [ ] **MD-GOV-03**: MD State Senate chamber + 47 senators seeded with offices linked to SLDU district boundaries
 - [ ] **MD-GOV-04**: MD House of Delegates chamber + 141 delegates seeded with offices linked to SLDL district boundaries; multi-member district structure handled
 - [ ] **MD-GOV-05**: 2 US senators (Van Hollen + Alsobrooks) + 8 US House reps seeded with correct NATIONAL_UPPER/NATIONAL_LOWER districts
-- [ ] **MD-GOV-06**: All MD officials have headshots at 600×750 in Supabase Storage
+- [x] **MD-GOV-06**: All MD officials have headshots at 600×750 in Supabase Storage
 
 ### Leonardtown / St. Mary's County Deep Seed (MD-DEEP)
 
@@ -84,12 +84,12 @@
 | MD-GEO-04 | Phase 91 | Complete |
 | MD-GEO-05 | Phase 91 | Complete |
 | MD-GEO-06 | Phase 91 | Complete |
-| MD-GOV-01 | Phase 92 | Pending |
-| MD-GOV-02 | Phase 92 | Pending |
+| MD-GOV-01 | Phase 92 | Complete |
+| MD-GOV-02 | Phase 92 | Complete |
 | MD-GOV-03 | Phase 93 | Pending |
 | MD-GOV-04 | Phase 93 | Pending |
 | MD-GOV-05 | Phase 93 | Pending |
-| MD-GOV-06 | Phase 94 | Pending |
+| MD-GOV-06 | Phase 94 | Complete |
 | MD-DEEP-01 | Phase 95 | Pending |
 | MD-DEEP-02 | Phase 95 | Pending |
 | MD-DEEP-03 | Phase 95 | Pending |

@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: executing
-last_updated: "2026-06-05T17:53:45.548Z"
+status: ready_to_plan
+last_updated: 2026-06-05T18:45:29.283Z
 last_activity: 2026-06-05 -- Phase 92 execution started
 progress:
   total_phases: 10
   completed_phases: 1
   total_plans: 9
-  completed_plans: 6
+  completed_plans: 8
   percent: 10
+stopped_at: Phase 92 complete (2/2) — ready to discuss Phase 93
 ---
 
 # State
 
 ## Current Position
 
-Phase: 92 (md-state-government-db) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 92
-Last activity: 2026-06-05 -- Phase 92 execution started
+Phase: 93
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-05
 
 Progress: [█████████░] 86%
 
@@ -29,7 +30,7 @@ Progress: [█████████░] 86%
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 92 — md-state-government-db
+**Current focus:** Phase 93 — md legislature + federal officials
 
 ## v11.0 Roadmap Summary
 

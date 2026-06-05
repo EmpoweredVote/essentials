@@ -1140,7 +1140,7 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |
 | 90. Post-Election Follow-up + MiniCompass UI | v11.0 | 2/3 | In Progress|  |
 | 91. MD TIGER Geofences | v11.0 | 4/4 | Complete    | 2026-06-05 |
-| 92. MD State Government DB | v11.0 | 2/2 | Complete   | 2026-06-05 |
+| 92. MD State Government DB | v11.0 | 2/2 | Complete    | 2026-06-05 |
 | 93. MD Legislature + Federal Officials | v11.0 | 0/TBD | Not started | - |
 | 94. MD Headshots | v11.0 | 0/TBD | Not started | - |
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 0/TBD | Not started | - |
