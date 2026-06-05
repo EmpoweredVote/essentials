@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: ready_to_plan
-last_updated: 2026-06-05T17:01:59.918Z
+status: planning
+last_updated: "2026-06-05T17:15:57.243Z"
 last_activity: 2026-06-05
 progress:
   total_phases: 10
@@ -11,7 +11,6 @@ progress:
   total_plans: 7
   completed_plans: 6
   percent: 10
-stopped_at: Phase 91 complete (4/4) — ready to discuss Phase 92
 ---
 
 # State
@@ -88,9 +87,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T16:51:23.079Z
-Stopped at: Phase 91 Plan 03 complete — MD TIGER live-load verified; 307 rows in geofence_boundaries
-Resume file: None
+Last session: 2026-06-05T17:15:57.232Z
+Stopped at: Phase 92 context gathered
+Resume file: .planning/phases/92-md-state-government-db/92-CONTEXT.md
 
 ## Performance Metrics
 
