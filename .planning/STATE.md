@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: ready_to_plan
-last_updated: 2026-06-05T18:45:29.283Z
-last_activity: 2026-06-05 -- Phase 92 execution started
+status: planning
+last_updated: "2026-06-05T20:37:01.672Z"
+last_activity: 2026-06-05
 progress:
   total_phases: 10
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 9
   completed_plans: 8
-  percent: 10
-stopped_at: Phase 92 complete (2/2) — ready to discuss Phase 93
+  percent: 20
 ---
 
 # State
@@ -55,7 +54,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Constitutional officers (voter-elected): Governor, LG, AG, Comptroller
 - State Treasurer: elected by General Assembly → is_appointed_position=true (ME/OR pattern)
 - Stances research scope: 4 exec + 47 senators + 141 delegates = 192 officials
-- Next migration: 268
+- Next migration: 272
 
 ## Accumulated Context
 
@@ -88,9 +87,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T17:15:57.232Z
-Stopped at: Phase 92 context gathered
-Resume file: .planning/phases/92-md-state-government-db/92-CONTEXT.md
+Last session: 2026-06-05T20:37:01.657Z
+Stopped at: Phase 93 context gathered
+Resume file: .planning/phases/93-md-legislature-federal-officials/93-CONTEXT.md
 
 ## Performance Metrics
 
