@@ -658,36 +658,7 @@ export default function ElectionsView({
                                   const polIdKey = candidate.politician_id ? String(candidate.politician_id) : null;
                                   const candHasStances = polIdKey ? politicianIdsWithStances.has(polIdKey) : false;
 
-                                  if (!compassMode) {
-                                    return (
-                                      <div key={candidate.candidate_id} style={{ position: 'relative' }}>
-                                        <PoliticianCard
-                                          id={candidate.candidate_id}
-                                          imageSrc={candidate.photo_url || undefined}
-                                          imageFocalPoint={candidate.focal_point || 'center 20%'}
-                                          name={candidate.full_name}
-                                          title={cardTitle}
-                                          subtitle={cardSubtitle}
-                                          onClick={() => onCandidateClick(candidate.candidate_id)}
-                                          variant="horizontal"
-                                          style={isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}}
-                                          footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
-                                        />
-                                        {candidate.candidate_status === 'withdrawn' && (
-                                          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(120,0,0,0.78)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
-                                            Withdrawn
-                                          </div>
-                                        )}
-                                        {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
-                                          <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
-                                            {seats > 1 ? `${seats} seats` : 'Unopposed'}
-                                          </div>
-                                        )}
-                                      </div>
-                                    );
-                                  }
-
-                                  // Compass mode: horizontal PoliticianCard with MiniCompass in the right-side space
+                                  // Always use the large-card layout; MiniCompass panel shown only when compassMode is on
                                   const polAnswersForMini = (polIdKey && stancesByPolId[polIdKey])
                                     ? Object.entries(stancesByPolId[polIdKey]).map(([short_title, value]) => {
                                         const t = allTopics.find((x) => x.short_title === short_title);
@@ -730,7 +701,7 @@ export default function ElectionsView({
                                         variant="horizontal"
                                         imageWidth="95px"
                                         style={{ ...(isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}), border: 'none', borderRadius: 0, cursor: 'pointer' }}
-                                        contentStyle={{ marginRight: compassOverlayWidth }}
+                                        contentStyle={compassMode ? { marginRight: compassOverlayWidth } : undefined}
                                         footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                       />
                                       {candidate.candidate_status === 'withdrawn' && (
@@ -743,24 +714,26 @@ export default function ElectionsView({
                                           {seats > 1 ? `${seats} seats` : 'Unopposed'}
                                         </div>
                                       )}
-                                      <div
-                                        style={{
-                                          position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
-                                          display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                          backgroundColor: isDark ? '#1a2235' : '#fff',
-                                        }}
-                                      >
-                                        <MiniCompass
-                                          userAnswers={userAnswers}
-                                          polAnswers={polAnswersForMini}
-                                          selectedTopics={selectedTopics}
-                                          scopedTopics={scopedTopicsForRace}
-                                          invertedSpokes={invertedSpokes}
-                                          localLensActive={raceLensActive}
-                                          isDark={isDark}
-                                          size={190}
-                                        />
-                                      </div>
+                                      {compassMode && (
+                                        <div
+                                          style={{
+                                            position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            backgroundColor: isDark ? '#1a2235' : '#fff',
+                                          }}
+                                        >
+                                          <MiniCompass
+                                            userAnswers={userAnswers}
+                                            polAnswers={polAnswersForMini}
+                                            selectedTopics={selectedTopics}
+                                            scopedTopics={scopedTopicsForRace}
+                                            invertedSpokes={invertedSpokes}
+                                            localLensActive={raceLensActive}
+                                            isDark={isDark}
+                                            size={190}
+                                          />
+                                        </div>
+                                      )}
                                     </div>
                                   );
                                 })

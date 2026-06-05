@@ -1243,25 +1243,6 @@ export default function Results() {
       else handlePoliticianClick(pol.id);
     };
 
-    if (!compassMode) {
-      return (
-        <div key={pol.id} data-pol-id={pol.id}>
-          <PoliticianCard
-            id={pol.id}
-            imageSrc={imgData.url}
-            name={`${pol.first_name} ${pol.last_name}`}
-            title={cardTitle}
-            subtitle={subtitle}
-            imageFocalPoint={imgData.focalPoint || 'center 20%'}
-            style={isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : {}}
-            onClick={handleCardClick}
-            variant="horizontal"
-            footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
-          />
-        </div>
-      );
-    }
-
     const stanceData = stancesByPolId[pol.id];
     const polAnswersForMini = stanceData
       ? Object.entries(stanceData).map(([short_title, value]) => {
@@ -1330,7 +1311,7 @@ export default function Results() {
           contentStyle={showCompassOverlay ? { marginRight: compassOverlayWidth } : undefined}
           onClick={null}
           variant="horizontal"
-          imageWidth={showCompassOverlay ? '95px' : undefined}
+          imageWidth="95px"
           footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
         />
         {showCompassOverlay && (
