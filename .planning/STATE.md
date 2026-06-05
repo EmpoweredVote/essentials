@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: executing
-last_updated: "2026-06-05T16:33:24.794Z"
+status: verifying
+last_updated: "2026-06-05T16:41:36.739Z"
 last_activity: 2026-06-05
 progress:
   total_phases: 10
   completed_phases: 0
   total_plans: 7
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -19,10 +19,10 @@ progress:
 
 Phase: 91 (MD TIGER Geofences) — EXECUTING
 Plan: 4 of 4
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-05
 
-Progress: [██████░░░░] 57%
+Progress: [███████░░░] 71%
 
 ## Project Reference
 
@@ -60,8 +60,10 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 ### Key Decisions (carry forward)
 
-- MD TIGER loader scaffold complete: STATE_LAYER_ALLOWLIST/STATE_CITY_ASSERTIONS/STATE_RUN_MAKEVALID all have MD entry; EXPECTED_MD_MTFCC block has cd119=8/sldu=47/county=24 confirmed; sldl=0/place=0 are dry-run sentinels for Plan 02
-- Baltimore City dual-tier (D-01): geo_id='2404000' (G4110 incorporated place) AND geo_id='24510' (G4020 independent city-county) — smoke test asserts both
+- MD TIGER loader scaffold complete: STATE_LAYER_ALLOWLIST/STATE_CITY_ASSERTIONS/STATE_RUN_MAKEVALID all have MD entry; EXPECTED_MD_MTFCC confirmed: cd119=8, sldu=47, sldl=71, place=157, county=24
+- MD geofence_boundaries loaded (Plan 02/03 complete): 307 rows total — G4020=24, G4110=157, G5200=8, G5210=47, G5220=71
+- Baltimore City dual-tier (D-01): geo_id='2404000' (G4110 incorporated place) AND geo_id='24510' (G4020 independent city-county) — CONFIRMED present in production DB
+- districts.state casing confirmed per D-07: md/COUNTY=24, md/STATE_LOWER=71, md/STATE_UPPER=47, MD/NATIONAL_LOWER=8
 - Candidate ordering is seeded-random per session (sessionStorage key `ev:election-seed`), never alphabetical
 - Party data lives on races (`primary_party`), never on individual candidates — antipartisan design
 - Connected users must never see address input if `me.jurisdiction` is non-null (EDOC-01)
@@ -85,8 +87,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T16:33:24.783Z
-Stopped at: Phase 91 Plan 01 complete
+Last session: 2026-06-05T16:41:36.729Z
+Stopped at: Phase 91 Plan 03 complete — MD TIGER live-load verified; 307 rows in geofence_boundaries
 Resume file: None
 
 ## Performance Metrics
@@ -94,3 +96,4 @@ Resume file: None
 | Phase | Plan | Duration | Notes |
 |-------|------|----------|-------|
 | Phase 91 P02 | 45m | 2 tasks | 2 files |
+| Phase 91 P03 | 20m | 2 tasks | 0 files (DB-only) |

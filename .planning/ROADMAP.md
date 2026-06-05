@@ -879,7 +879,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 91-03-PLAN.md — Live-load all 5 MD TIGER layers; spot-check Baltimore City dual-tier + districts.state casing
+- [x] 91-03-PLAN.md — Live-load all 5 MD TIGER layers; spot-check Baltimore City dual-tier + districts.state casing
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -1130,7 +1130,7 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 88. TX Collin County School Boards | v10.0 | 5/5 | Complete    | 2026-06-04 |
 | 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |
 | 90. Post-Election Follow-up + MiniCompass UI | v11.0 | 2/3 | In Progress|  |
-| 91. MD TIGER Geofences | v11.0 | 2/4 | In Progress|  |
+| 91. MD TIGER Geofences | v11.0 | 3/4 | In Progress|  |
 | 92. MD State Government DB | v11.0 | 0/TBD | Not started | - |
 | 93. MD Legislature + Federal Officials | v11.0 | 0/TBD | Not started | - |
 | 94. MD Headshots | v11.0 | 0/TBD | Not started | - |
