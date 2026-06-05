@@ -1,6 +1,7 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { loadUserAddressFromContext } from "./lib/compass";
 import { usePostHog } from "posthog-js/react";
 import Landing from "./pages/Landing";
 import Results from "./pages/Results";
@@ -39,6 +40,24 @@ function RequireAuth({ children }) {
   return children;
 }
 
+function ElectionsRedirect() {
+  const [to, setTo] = useState(null);
+  useEffect(() => {
+    let cancelled = false;
+    loadUserAddressFromContext().then((stored) => {
+      if (cancelled) return;
+      if (stored?.addr) {
+        setTo(`/results?prefilled=true&view=elections&q=${encodeURIComponent(stored.addr)}`);
+      } else {
+        setTo('/results?prefilled=true&view=elections');
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
+  if (to === null) return null;
+  return <Navigate to={to} replace />;
+}
+
 function App() {
   // Cross-app logout sync — detect ev_session cookie cleared by another app
   useEffect(() => {
@@ -71,7 +90,7 @@ function App() {
         <Route path="/admin/unresolved" element={<RequireAuth><UnresolvedQueue /></RequireAuth>} />
         <Route path="/admin/staging" element={<RequireAuth><StagingQueue /></RequireAuth>} />
         <Route path="/admin/discovery" element={<RequireAuth><DiscoveryDashboard /></RequireAuth>} />
-        <Route path="/elections" element={<Navigate to="/results?prefilled=true&view=elections" replace />} />
+        <Route path="/elections" element={<ElectionsRedirect />} />
       </Routes>
     </CompassProvider>
   );

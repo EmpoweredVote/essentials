@@ -358,7 +358,7 @@ export default function ElectionsView({
         const { body, subgroup } = deriveBodyAndSubGroup(cleaned, race.district_type);
         const party = isPrimary && race.primary_party ? race.primary_party : null;
         const subgroupKey = party ? `${subgroup}||${party}` : subgroup;
-        const subgroupLabel = party ? `${subgroup} — ${party} Primary` : subgroup;
+        const subgroupLabel = subgroup;
 
         if (!tierMap[tier]) tierMap[tier] = {};
         if (!tierMap[tier][body]) tierMap[tier][body] = { races: [] };
