@@ -923,6 +923,7 @@ Plans:
 
 **Plans**:
 - [x] 93-01-PLAN.md — Migration 272: Maryland Senate + Maryland House of Delegates chambers under State of Maryland government; dual pre-flight assertions (D-07/D-08); idempotent WHERE NOT EXISTS guards; chambers-only (D-02 confirmed no parent STATE_LOWER rows needed)
+- [x] 93-02-PLAN.md — Migration 273: 47 MD state senators + 47 offices linked to STATE_UPPER SLDU districts; office_id back-filled; generate_md_senate.ps1 generator with full 47-entry roster; idempotent
 
 #### Phase 94: MD Headshots
 

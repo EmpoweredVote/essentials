@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-05T21:38:00Z"
-last_activity: 2026-06-05 -- Plan 93-01 complete: MD legislative chambers migration 272 applied
+last_updated: "2026-06-05T22:05:00Z"
+last_activity: 2026-06-05 -- Plan 93-02 complete: Migration 273 applied — 47 MD state senators seeded
 progress:
   total_phases: 10
   completed_phases: 2
   total_plans: 15
-  completed_plans: 8
+  completed_plans: 9
   percent: 20
 ---
 
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 93 (md-legislature-federal-officials) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Executing Phase 93
-Last activity: 2026-06-05 -- Plan 93-01 complete: MD legislative chambers migration 272 applied
+Last activity: 2026-06-05 -- Plan 93-02 complete: Migration 273 applied — 47 MD state senators seeded
 
 Progress: [█████████░] 86%
 
@@ -54,7 +54,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Constitutional officers (voter-elected): Governor, LG, AG, Comptroller
 - State Treasurer: elected by General Assembly → is_appointed_position=true (ME/OR pattern)
 - Stances research scope: 4 exec + 47 senators + 141 delegates = 192 officials
-- Next migration: 273
+- Next migration: 274
 
 ## Accumulated Context
 
@@ -90,9 +90,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T21:38:00Z
-Stopped at: Plan 93-01 complete — migration 272 applied, 2 MD legislative chambers seeded
-Resume file: .planning/phases/93-md-legislature-federal-officials/93-01-SUMMARY.md
+Last session: 2026-06-05T22:05:00Z
+Stopped at: Plan 93-02 complete — migration 273 applied, 47 MD state senators seeded
+Resume file: .planning/phases/93-md-legislature-federal-officials/93-02-SUMMARY.md
 
 ## Performance Metrics
 
@@ -102,3 +102,4 @@ Resume file: .planning/phases/93-md-legislature-federal-officials/93-01-SUMMARY.
 | Phase 91 P03 | 20m | 2 tasks | 0 files (DB-only) |
 | Phase 91 P04 | 15m | 2 tasks | 0 files (verification-only) |
 | Phase 93 P01 | 7m | 1 task | 1 file (272_md_legislative_chambers.sql) |
+| Phase 93 P02 | 18m | 2 tasks | 3 files (generate_md_senate.ps1, 273_md_state_senators.sql, _apply-migration-273.ts) |
