@@ -163,6 +163,7 @@ export default function MiniCompass({
         tightFit={true}
         ringColor="transparent"
         darkMode={!!isDark}
+        dotRadius={2.5}
       />
       {/* Transparent overlay captures mouse events — suppresses built-in RadarChartCore SVG tooltip */}
       <div
