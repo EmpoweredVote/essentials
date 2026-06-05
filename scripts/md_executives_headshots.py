@@ -28,7 +28,6 @@ Usage:
 import io
 import json
 import os
-import subprocess
 import sys
 import urllib.request
 import urllib.error
@@ -39,6 +38,12 @@ try:
     from PIL import Image
 except ImportError:
     print("ERROR: Pillow not installed. Run: python3 -m pip install Pillow")
+    sys.exit(1)
+
+try:
+    import psycopg2
+except ImportError:
+    print("ERROR: psycopg2 not installed. Run: python3 -m pip install psycopg2-binary")
     sys.exit(1)
 
 # ============================================================
@@ -91,7 +96,7 @@ OFFICIALS = [
         -240003,
         "60329719-1d5b-4bb4-8295-38ea18f6f378",
         "Anthony G. Brown",
-        # Maryland Office of the Attorney General — JPEG 512x512 square; center-crop to 4:5
+        # Maryland Office of the Attorney General — JPEG 192x240 (already 4:5); no crop needed
         "https://oag.maryland.gov/our-office/PublishingImages/AttorneyGeneral.jpg",
     ),
     (
@@ -222,7 +227,11 @@ def get_db_url() -> str:
         with open(env_path) as f:
             for line in f:
                 if line.startswith("DATABASE_URL="):
-                    return line.split("=", 1)[1].strip()
+                    val = line.split("=", 1)[1].strip()
+                    # Strip surrounding quotes (single or double) if present
+                    if len(val) >= 2 and val[0] == val[-1] and val[0] in ('"', "'"):
+                        val = val[1:-1]
+                    return val
     except FileNotFoundError:
         pass
     # Fallback to environment variable
@@ -230,47 +239,43 @@ def get_db_url() -> str:
 
 
 def check_image_exists(politician_id: str, db_url: str) -> bool:
-    """Check if a politician_images row already exists for this politician_id via psql."""
-    sql = f"SELECT COUNT(*) FROM essentials.politician_images WHERE politician_id = '{politician_id}' AND type = 'default';"
-    result = subprocess.run(
-        ["psql", db_url, "-t", "-c", sql],
-        capture_output=True, text=True, timeout=30
-    )
-    if result.returncode == 0:
-        count = result.stdout.strip()
-        try:
-            return int(count) > 0
-        except ValueError:
-            return False
-    return False
+    """Check if a politician_images row already exists for this politician_id via psycopg2."""
+    conn = psycopg2.connect(db_url)
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT COUNT(*) FROM essentials.politician_images"
+                " WHERE politician_id = %s::uuid AND type = 'default'",
+                (politician_id,)
+            )
+            row = cur.fetchone()
+            return (row[0] > 0) if row else False
+    finally:
+        conn.close()
 
 
 def insert_politician_image(politician_id: str, url: str, name: str, db_url: str) -> None:
-    """Insert row into essentials.politician_images via psql (essentials schema not in REST API)."""
-    sql = f"""
+    """Insert row into essentials.politician_images via psycopg2 (essentials schema not in REST API)."""
+    conn = psycopg2.connect(db_url)
+    try:
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
 INSERT INTO essentials.politician_images (id, politician_id, url, type, photo_license)
-SELECT gen_random_uuid(),
-       '{politician_id}',
-       '{url}',
-       'default', 'public_domain'
+SELECT gen_random_uuid(), %s::uuid, %s, 'default', 'public_domain'
 WHERE NOT EXISTS (
-  SELECT 1 FROM essentials.politician_images
-  WHERE politician_id = '{politician_id}'
-);
-"""
-    result = subprocess.run(
-        ["psql", db_url, "-c", sql],
-        capture_output=True, text=True, timeout=30
-    )
-    if result.returncode != 0:
-        raise RuntimeError(f"psql insert failed for {name}: {result.stderr}")
-    output = result.stdout.strip()
-    if "INSERT 0 0" in output:
-        print(f"  Row already exists (idempotent skip)")
-    else:
-        print(f"  Inserted politician_images row via psql")
-
-
+  SELECT 1 FROM essentials.politician_images WHERE politician_id = %s::uuid
+)
+""",
+                    (politician_id, url, politician_id)
+                )
+                if cur.rowcount == 0:
+                    print(f"  Row already exists (idempotent skip)")
+                else:
+                    print(f"  Inserted politician_images row")
+    finally:
+        conn.close()
 # ============================================================
 # Main
 # ============================================================
