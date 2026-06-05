@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 93 (md-legislature-federal-officials) — EXECUTING
-Plan: 4 of 6
+Plan: 5 of 6
 Status: Executing Phase 93
-Last activity: 2026-06-05 -- Plan 93-03 complete: Migration 274 applied (out-of-seq after 275) — 141 MD delegates seeded
+Last activity: 2026-06-05 -- Plan 93-05 complete: 47 MD senator headshots ingested at 600x750 into Supabase Storage
 
 Progress: [█████████░] 86%
 
@@ -82,6 +82,9 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Migration 274 applied out-of-sequence (after 275): 141 MD delegates seeded; Supabase tracks by name; STATE.md counter (276) remains correct
 - District 42A confirmed vacant (2026-06-05); seeded with is_vacant=true placeholder
 - Joseline Pena-Melnyk (HD-21, Speaker) has n-tilde encoded as [char]0x00F1 in generator
+- MD headshots use politician_photos bucket (NOT 'politician-headshots') + {politician_id}-headshot.jpg path — project standard
+- mgaleg headshot URL discovery: always scrape roster page HTML for img src; HEAD probing alone misses higher suffixes (jackson04, watson04, harris03, young04)
+- Compound last names on mgaleg: Lewis Young→young04, Fry Hester→hester01 (uses final word of compound name)
 
 ### Pending Todos
 
@@ -94,9 +97,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T23:20:00Z
-Stopped at: Plan 93-03 complete — migration 274 applied out-of-sequence, 141 MD delegates seeded
-Resume file: .planning/phases/93-md-legislature-federal-officials/93-03-SUMMARY.md
+Last session: 2026-06-05T22:28:47Z
+Stopped at: Plan 93-05 complete — 47 MD senator headshots ingested (47/47 processed, 0 gaps)
+Resume file: .planning/phases/93-md-legislature-federal-officials/93-05-SUMMARY.md
 
 ## Performance Metrics
 
@@ -109,3 +112,4 @@ Resume file: .planning/phases/93-md-legislature-federal-officials/93-03-SUMMARY.
 | Phase 93 P02 | 18m | 2 tasks | 3 files (generate_md_senate.ps1, 273_md_state_senators.sql, _apply-migration-273.ts) |
 | Phase 93 P03 | 45m | 3 tasks | 3 files (generate_md_house.ps1, 274_md_delegates.sql, _apply-migration-274.ts) |
 | Phase 93 P04 | 20m | 1 task | 1 file (275_md_federal_officials.sql) |
+| Phase 93 P05 | 35m | 3 tasks | 1 file (scripts/md_senators_headshots.py) |
