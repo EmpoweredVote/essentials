@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-05T00:24:41.079Z"
+last_updated: "2026-06-05T14:52:39.300Z"
 last_activity: 2026-06-05 -- Phase 90 execution started
 progress:
   total_phases: 10
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
+  completed_plans: 2
   percent: 0
 ---
 
@@ -83,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-04T22:41:11.649Z
-Stopped at: Phase 90 context gathered
-Resume file: .planning/phases/90-post-election-follow-up-minicompass-ui/90-CONTEXT.md
+Last session: 2026-06-05T14:52:39.290Z
+Stopped at: Phase 91 context gathered
+Resume file: .planning/phases/91-md-tiger-geofences/91-CONTEXT.md
