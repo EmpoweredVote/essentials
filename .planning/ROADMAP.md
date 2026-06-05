@@ -906,7 +906,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 92-02-PLAN.md — Migration 270: 5 STATE_EXEC districts + 5 politicians (Moore/Miller/Brown/Lierman/Davis, external_ids -240001..-240005) + 5 offices + office_id back-fill; headshot processing (Pillow 600x750 q90) + Supabase Storage upload + 5 politician_images rows + audit-only migration 271
+- [x] 92-02-PLAN.md — Migration 270: 5 STATE_EXEC districts + 5 politicians (Moore/Miller/Brown/Lierman/Davis, external_ids -240001..-240005) + 5 offices + office_id back-fill; headshot processing (Pillow 600x750 q90) + Supabase Storage upload + 5 politician_images rows + audit-only migration 271
 
 #### Phase 93: MD Legislature + Federal Officials
 
@@ -1140,7 +1140,7 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |
 | 90. Post-Election Follow-up + MiniCompass UI | v11.0 | 2/3 | In Progress|  |
 | 91. MD TIGER Geofences | v11.0 | 4/4 | Complete    | 2026-06-05 |
-| 92. MD State Government DB | v11.0 | 1/2 | In Progress|  |
+| 92. MD State Government DB | v11.0 | 2/2 | Complete   | 2026-06-05 |
 | 93. MD Legislature + Federal Officials | v11.0 | 0/TBD | Not started | - |
 | 94. MD Headshots | v11.0 | 0/TBD | Not started | - |
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 0/TBD | Not started | - |
