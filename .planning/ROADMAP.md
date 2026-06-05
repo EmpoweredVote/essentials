@@ -871,7 +871,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 91-01-PLAN.md — Add MD to TIGER loader (4 config additions + EXPECTED_MD_MTFCC block) + create verify-md-tiger-import.sql + smoke-md-geofences.ts
+- [x] 91-01-PLAN.md — Add MD to TIGER loader (4 config additions + EXPECTED_MD_MTFCC block) + create verify-md-tiger-import.sql + smoke-md-geofences.ts
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

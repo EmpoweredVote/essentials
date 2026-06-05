@@ -3,33 +3,33 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-05T16:08:31.261Z"
-last_activity: 2026-06-05 -- Phase 91 planning complete
+last_updated: "2026-06-05T18:00:00.000Z"
+last_activity: 2026-06-05 -- Phase 91 Plan 01 complete
 progress:
   total_phases: 10
   completed_phases: 0
   total_plans: 7
-  completed_plans: 2
-  percent: 0
+  completed_plans: 3
+  percent: 4
 ---
 
 # State
 
 ## Current Position
 
-Phase: 90 (Post-Election Follow-up + MiniCompass UI) — EXECUTING
-Plan: 1 of 3
-Status: Ready to execute
-Last activity: 2026-06-05 -- Phase 91 planning complete
+Phase: 91 (MD TIGER Geofences) — EXECUTING
+Plan: 2 of 4
+Status: Executing Phase 91 — Plan 01 complete
+Last activity: 2026-06-05 -- Phase 91 Plan 01 complete (MD loader scaffold + verify SQL + smoke test)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [█░░░░░░░░░] 4%
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 90 — Post-Election Follow-up + MiniCompass UI
+**Current focus:** Phase 91 — MD TIGER Geofences
 
 ## v11.0 Roadmap Summary
 
@@ -60,6 +60,8 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 ### Key Decisions (carry forward)
 
+- MD TIGER loader scaffold complete: STATE_LAYER_ALLOWLIST/STATE_CITY_ASSERTIONS/STATE_RUN_MAKEVALID all have MD entry; EXPECTED_MD_MTFCC block has cd119=8/sldu=47/county=24 confirmed; sldl=0/place=0 are dry-run sentinels for Plan 02
+- Baltimore City dual-tier (D-01): geo_id='2404000' (G4110 incorporated place) AND geo_id='24510' (G4020 independent city-county) — smoke test asserts both
 - Candidate ordering is seeded-random per session (sessionStorage key `ev:election-seed`), never alphabetical
 - Party data lives on races (`primary_party`), never on individual candidates — antipartisan design
 - Connected users must never see address input if `me.jurisdiction` is non-null (EDOC-01)
@@ -83,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T14:52:39.290Z
-Stopped at: Phase 91 context gathered
-Resume file: .planning/phases/91-md-tiger-geofences/91-CONTEXT.md
+Last session: 2026-06-05T18:00:00.000Z
+Stopped at: Phase 91 Plan 01 complete
+Resume file: .planning/phases/91-md-tiger-geofences/91-02-PLAN.md
