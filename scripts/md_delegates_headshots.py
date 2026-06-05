@@ -1242,7 +1242,7 @@ def insert_politician_image(politician_id: str, url: str, name: str, db_url: str
 INSERT INTO essentials.politician_images (id, politician_id, url, type, photo_license)
 SELECT gen_random_uuid(), %s::uuid, %s, 'default', 'public_domain'
 WHERE NOT EXISTS (
-  SELECT 1 FROM essentials.politician_images WHERE politician_id = %s::uuid
+  SELECT 1 FROM essentials.politician_images WHERE politician_id = %s::uuid AND type = 'default'
 )
 """,
                     (politician_id, url, politician_id)
