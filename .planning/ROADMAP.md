@@ -895,9 +895,18 @@ Plans:
   1. essentials.governments has a State of Maryland row with FIPS-based geo_id ('24')
   2. Constitutional officer chambers exist: Governor, Lieutenant Governor, Attorney General, Comptroller; State Treasurer chamber has is_appointed_position=true
   3. Governor Wes Moore + LG Aruna Miller + AG Anthony Brown + Comptroller Brooke Lierman are seeded as politicians with offices linked to their chambers
-  4. All 4 executives have headshots uploaded to Supabase Storage at 600x750
+  4. All 4 voter-elected executives (Moore, Miller, Brown, Lierman) + 1 legislature-elected executive (Davis) have headshots uploaded to Supabase Storage at 600x750 (D-01 expanded scope from 4 to 5 officials; D-02 seeds State Treasurer in this phase)
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 92-01-PLAN.md — Migration 269: pre-flight assert State of Maryland row + 5 chambers (Governor, Lieutenant Governor standalone per D-01, Attorney General, Comptroller, State Treasurer)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 92-02-PLAN.md — Migration 270: 5 STATE_EXEC districts + 5 politicians (Moore/Miller/Brown/Lierman/Davis, external_ids -240001..-240005) + 5 offices + office_id back-fill; headshot processing (Pillow 600x750 q90) + Supabase Storage upload + 5 politician_images rows + audit-only migration 271
 
 #### Phase 93: MD Legislature + Federal Officials
 
