@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-05T23:20:00Z"
-last_activity: 2026-06-05 -- Plan 93-03 complete: Migration 274 applied out-of-seq — 141 MD delegates seeded
+last_updated: "2026-06-05T22:58:16.212Z"
+last_activity: 2026-06-05 -- Plan 93-06 complete: 140 MD delegate headshots ingested (140/140 processed, 0 gaps)
 progress:
   total_phases: 10
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 15
-  completed_plans: 10
-  percent: 67
+  completed_plans: 14
+  percent: 93
 ---
 
 # State
@@ -18,11 +18,11 @@ progress:
 ## Current Position
 
 Phase: 93 (md-legislature-federal-officials) — EXECUTING
-Plan: 5 of 6
-Status: Executing Phase 93
-Last activity: 2026-06-05 -- Plan 93-05 complete: 47 MD senator headshots ingested at 600x750 into Supabase Storage
+Plan: 6 of 6 (COMPLETE)
+Status: Phase 93 complete — all 6 plans executed
+Last activity: 2026-06-05 -- Plan 93-06 complete: 140 MD delegate headshots ingested
 
-Progress: [█████████░] 86%
+Progress: [█████████░] 93%
 
 ## Project Reference
 
@@ -85,6 +85,8 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - MD headshots use politician_photos bucket (NOT 'politician-headshots') + {politician_id}-headshot.jpg path — project standard
 - mgaleg headshot URL discovery: always scrape roster page HTML for img src; HEAD probing alone misses higher suffixes (jackson04, watson04, harris03, young04)
 - Compound last names on mgaleg: Lewis Young→young04, Fry Hester→hester01 (uses final word of compound name)
+- Delegate headshots complete: 140/140 ingested (0 gaps); jacobs j.jpg has space (URL-encode as %20); pena.jpg for Peña-Melnyk
+- mgaleg compound last name pattern varies: White Holland→white01 (first word), Harrison→harrison01 (last word), Palakovich Carr→palakovich01 (first word), Fraser-Hidalgo→fraser01 (first word)
 
 ### Pending Todos
 
@@ -97,9 +99,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T22:28:47Z
-Stopped at: Plan 93-05 complete — 47 MD senator headshots ingested (47/47 processed, 0 gaps)
-Resume file: .planning/phases/93-md-legislature-federal-officials/93-05-SUMMARY.md
+Last session: 2026-06-05T24:20:00Z
+Stopped at: Plan 93-06 complete — 140 MD delegate headshots ingested (140/140 processed, 0 gaps); Phase 93 complete
+Resume file: .planning/phases/93-md-legislature-federal-officials/93-06-SUMMARY.md
 
 ## Performance Metrics
 
@@ -113,3 +115,4 @@ Resume file: .planning/phases/93-md-legislature-federal-officials/93-05-SUMMARY.
 | Phase 93 P03 | 45m | 3 tasks | 3 files (generate_md_house.ps1, 274_md_delegates.sql, _apply-migration-274.ts) |
 | Phase 93 P04 | 20m | 1 task | 1 file (275_md_federal_officials.sql) |
 | Phase 93 P05 | 35m | 3 tasks | 1 file (scripts/md_senators_headshots.py) |
+| Phase 93 P06 | 60min | 3 tasks | 1 files |
