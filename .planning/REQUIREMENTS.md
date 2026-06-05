@@ -17,7 +17,7 @@
 - [x] **MD-GEO-03**: MD TIGER SLDU loaded (47 state senate districts)
 - [x] **MD-GEO-04**: MD TIGER SLDL loaded (141 house delegate sub-district boundaries)
 - [x] **MD-GEO-05**: MD TIGER CD loaded (8 congressional districts)
-- [ ] **MD-GEO-06**: Any MD address returns correct federal, state, county, and local tiers via PostGIS routing
+- [x] **MD-GEO-06**: Any MD address returns correct federal, state, county, and local tiers via PostGIS routing
 
 ### MD State Government (MD-GOV)
 
@@ -83,7 +83,7 @@
 | MD-GEO-03 | Phase 91 | Complete |
 | MD-GEO-04 | Phase 91 | Complete |
 | MD-GEO-05 | Phase 91 | Complete |
-| MD-GEO-06 | Phase 91 | Pending |
+| MD-GEO-06 | Phase 91 | Complete |
 | MD-GOV-01 | Phase 92 | Pending |
 | MD-GOV-02 | Phase 92 | Pending |
 | MD-GOV-03 | Phase 93 | Pending |
