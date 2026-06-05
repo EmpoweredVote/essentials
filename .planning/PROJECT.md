@@ -109,6 +109,7 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ 6 CA city school boards seeded — SFUSD/SDUSD/SCUSD/SJUSD/FUSD/BUSD (34 officials); office titles per district convention (Commissioner/Director/Trustee) — v10.0
 - ✓ 5 Collin County TX ISDs seeded — Plano/McKinney/Allen/Frisco/Richardson (35 board members); Richardson hybrid Place ordering; groupHierarchy.js mayor-first + seat-label sort fixes — v10.0
 - ✓ IPS all 7 seats wired + MCCSC D7 updated; 5 ME city school boards seeded — Lewiston/Bangor/South Portland/Auburn/Biddeford (37 officials) — v10.0
+- ✓ MD TIGER geofences — 307 geofence_boundaries rows for state='24': 157 G4110 cities, 24 G4020 counties, 8 G5200 CDs, 47 G5210 senate, 71 G5220 SLDL sub-districts; Baltimore City dual-tier (G4110=2404000 + G4020=24510); any MD address routes to correct tiers; St. Mary's County geo_id=24037 (Phase 95 prerequisite) — v11.0
 
 ### Current State: v11.0 Active
 
