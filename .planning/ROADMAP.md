@@ -924,6 +924,7 @@ Plans:
 **Plans**:
 - [x] 93-01-PLAN.md — Migration 272: Maryland Senate + Maryland House of Delegates chambers under State of Maryland government; dual pre-flight assertions (D-07/D-08); idempotent WHERE NOT EXISTS guards; chambers-only (D-02 confirmed no parent STATE_LOWER rows needed)
 - [x] 93-02-PLAN.md — Migration 273: 47 MD state senators + 47 offices linked to STATE_UPPER SLDU districts; office_id back-filled; generate_md_senate.ps1 generator with full 47-entry roster; idempotent
+- [x] 93-03-PLAN.md — Migration 274: 141 MD delegates + 141 offices (140 active + 1 vacant District 42A); generate_md_house.ps1 multi-member generator with NOT EXISTS guard (district_id, politician_id); all 3 integrity gates pass (29 whole × 3 + 6 ABC × 3 + 12 AB × 3 = 141); applied out-of-sequence after 275 (Supabase by name); Joseline Peña-Melnyk ñ encoded correctly; idempotent 2026-06-05
 - [x] 93-04-PLAN.md — Migration 275: 8 MD US House reps (ext -2440001..-2440008) + 8 offices linked to NATIONAL_LOWER districts CD-01..CD-08; pre-flight assertions on MD NATIONAL_UPPER and pre-existing senators (-400033/-400034); office_id back-filled; idempotent; Hoyer MD-05 incumbency confirmed 2026-06-05
 
 #### Phase 94: MD Headshots

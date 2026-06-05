@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-05T22:05:00Z"
-last_activity: 2026-06-05 -- Plan 93-02 complete: Migration 273 applied — 47 MD state senators seeded
+last_updated: "2026-06-05T23:20:00Z"
+last_activity: 2026-06-05 -- Plan 93-03 complete: Migration 274 applied out-of-seq — 141 MD delegates seeded
 progress:
   total_phases: 10
   completed_phases: 2
   total_plans: 15
-  completed_plans: 9
-  percent: 20
+  completed_plans: 10
+  percent: 67
 ---
 
 # State
@@ -20,7 +20,7 @@ progress:
 Phase: 93 (md-legislature-federal-officials) — EXECUTING
 Plan: 4 of 6
 Status: Executing Phase 93
-Last activity: 2026-06-05 -- Plan 93-04 complete: Migration 275 applied — 8 MD US House reps seeded
+Last activity: 2026-06-05 -- Plan 93-03 complete: Migration 274 applied (out-of-seq after 275) — 141 MD delegates seeded
 
 Progress: [█████████░] 86%
 
@@ -78,6 +78,10 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 - Maryland Senate chamber name_formal='Maryland State Senate'; House of Delegates name_formal='Maryland House of Delegates' (self-qualifying, OR House precedent)
 - Migration 272 applied: 2 MD legislative chambers seeded under government_id 85973301-a859-45c8-9b58-4a14ab7b44ab
+- Multi-member NOT EXISTS guard for delegates: (district_id, politician_id) NOT (district_id, chamber_id) — critical for 3-office-per-whole-district model
+- Migration 274 applied out-of-sequence (after 275): 141 MD delegates seeded; Supabase tracks by name; STATE.md counter (276) remains correct
+- District 42A confirmed vacant (2026-06-05); seeded with is_vacant=true placeholder
+- Joseline Pena-Melnyk (HD-21, Speaker) has n-tilde encoded as [char]0x00F1 in generator
 
 ### Pending Todos
 
@@ -90,9 +94,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T22:30:00Z
-Stopped at: Plan 93-04 complete — migration 275 applied, 8 MD US House reps seeded
-Resume file: .planning/phases/93-md-legislature-federal-officials/93-04-SUMMARY.md
+Last session: 2026-06-05T23:20:00Z
+Stopped at: Plan 93-03 complete — migration 274 applied out-of-sequence, 141 MD delegates seeded
+Resume file: .planning/phases/93-md-legislature-federal-officials/93-03-SUMMARY.md
 
 ## Performance Metrics
 
@@ -103,4 +107,5 @@ Resume file: .planning/phases/93-md-legislature-federal-officials/93-04-SUMMARY.
 | Phase 91 P04 | 15m | 2 tasks | 0 files (verification-only) |
 | Phase 93 P01 | 7m | 1 task | 1 file (272_md_legislative_chambers.sql) |
 | Phase 93 P02 | 18m | 2 tasks | 3 files (generate_md_senate.ps1, 273_md_state_senators.sql, _apply-migration-273.ts) |
+| Phase 93 P03 | 45m | 3 tasks | 3 files (generate_md_house.ps1, 274_md_delegates.sql, _apply-migration-274.ts) |
 | Phase 93 P04 | 20m | 1 task | 1 file (275_md_federal_officials.sql) |
