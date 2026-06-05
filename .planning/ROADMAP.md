@@ -706,6 +706,7 @@ Plans:
   4. OR US House 2026 race rows exist for all 6 CDs with discovery armed
   5. Portland city council 2026 race rows exist (if any seats are up) with discovery armed
   6. discovery_jurisdictions rows exist for Portland with cron_active=true (per RESEARCH.md: column does not exist; armed via election_date 180-day cron window)
+
 Plans:
 **Wave 1**
 
@@ -834,10 +835,12 @@ Full details: [milestones/v10.0-ROADMAP.md](milestones/v10.0-ROADMAP.md)
 **Depends on**: Phase 89 (prior milestone complete)
 **Requirements**: POST-ELECTION-01, POST-ELECTION-02, UI-01, UI-02
 **Success Criteria** (what must be TRUE):
+
   1. ME June 9 primary winners appear as race_candidates in the US Senate general, ME-01 general, and ME-02 general race rows (verifiable via DB query)
   2. The lavote.gov discovery_jurisdictions row has the updated election ID for the CA November 2026 general cycle
   3. MiniCompass chart circles are visually ~50% smaller than before — the radar chart fits comfortably inside a candidate tile tooltip without overflow
   4. No spoke labels, chart title text, or surrounding label elements appear around the MiniCompass in the tooltip overlay
+
 **Plans**: 3 plans
 **UI hint**: yes
 
@@ -857,17 +860,29 @@ Plans:
 **Depends on**: Phase 90
 **Requirements**: MD-GEO-01, MD-GEO-02, MD-GEO-03, MD-GEO-04, MD-GEO-05, MD-GEO-06
 **Success Criteria** (what must be TRUE):
+
   1. MD G4110 incorporated city boundaries, G4020 counties (24), SLDU (47 senate), SLDL (141 house), and CD (8 congressional) are loaded into geofence_boundaries with state='24'
   2. A Baltimore address returns LOCAL (G4110 city) + COUNTY (G4020) + STATE_UPPER (SLDU) + STATE_LOWER (SLDL) + NATIONAL_LOWER (CD) boundary rows
   3. A rural unincorporated MD address returns county + legislative + congressional tiers without a LOCAL gap
   4. Section-split check returns 0 rows; districts.state lowercase for COUNTY/STATE tiers, uppercase for NATIONAL tiers
   5. All layer counts match expected TIGER 2024 totals (pre-flight assertions pass)
-**Plans**: 4 plans
 
-Plans:
+**Plans**: 4 plans
+Plans:
+**Wave 1**
+
 - [ ] 91-01-PLAN.md — Add MD to TIGER loader (4 config additions + EXPECTED_MD_MTFCC block) + create verify-md-tiger-import.sql + smoke-md-geofences.ts
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 91-02-PLAN.md — Dry-run sldl/place layers to confirm actual counts; update TBD sentinels in loader + smoke test
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 91-03-PLAN.md — Live-load all 5 MD TIGER layers; spot-check Baltimore City dual-tier + districts.state casing
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 91-04-PLAN.md — Run 7-gate SQL verification + smoke test; confirm all Phase 91 success criteria
 
 #### Phase 92: MD State Government DB
@@ -876,10 +891,12 @@ Plans:
 **Depends on**: Phase 91 (MD geofences loaded)
 **Requirements**: MD-GOV-01, MD-GOV-02, MD-GOV-06 (executives portion)
 **Success Criteria** (what must be TRUE):
+
   1. essentials.governments has a State of Maryland row with FIPS-based geo_id ('24')
   2. Constitutional officer chambers exist: Governor, Lieutenant Governor, Attorney General, Comptroller; State Treasurer chamber has is_appointed_position=true
   3. Governor Wes Moore + LG Aruna Miller + AG Anthony Brown + Comptroller Brooke Lierman are seeded as politicians with offices linked to their chambers
   4. All 4 executives have headshots uploaded to Supabase Storage at 600x750
+
 **Plans**: TBD
 
 #### Phase 93: MD Legislature + Federal Officials
@@ -888,11 +905,13 @@ Plans:
 **Depends on**: Phase 92 (MD chambers exist), Phase 91 (SLDU/SLDL/CD boundaries loaded)
 **Requirements**: MD-GOV-03, MD-GOV-04, MD-GOV-05, MD-GOV-06 (legislature + federal portion)
 **Success Criteria** (what must be TRUE):
+
   1. All 47 MD state senators are seeded with offices linked to STATE_UPPER SLDU districts
   2. All 141 MD house delegates are seeded with offices linked to STATE_LOWER SLDL districts; multi-member district structure (typically 3 delegates per district, some A/B subdistricts) is correctly modeled
   3. US Senators Van Hollen + Alsobrooks seeded with NATIONAL_UPPER district; 8 US House reps seeded with NATIONAL_LOWER districts CD-01 through CD-08
   4. An MD address lookup returns the correct state senator, house delegate(s), and US representative for that address
   5. All 192 legislators and federal officials have headshots in Supabase Storage at 600x750
+
 **Plans**: TBD
 
 #### Phase 94: MD Headshots
@@ -902,9 +921,11 @@ Plans:
 **Requirements**: MD-GOV-06
 **Note**: Headshots are sourced during Phases 92 and 93 as part of seeding. This phase is a verification + gap-fill sweep to confirm 100% coverage across all 196 officials.
 **Success Criteria** (what must be TRUE):
+
   1. Every politician row seeded in Phases 92-93 has a corresponding politician_images row with type='default' and a resolvable Supabase Storage URL
   2. All headshots are 600x750 JPEG at q90 (no raw originals, no distortion, no text overlays on faces)
   3. A spot-check of 5+ politician profile pages in the UI renders headshots without browser artifacts
+
 **Plans**: TBD
 
 #### Phase 95: Leonardtown / St. Mary's County Deep Seed
@@ -913,10 +934,12 @@ Plans:
 **Depends on**: Phase 91 (MD county boundary loaded for St. Mary's)
 **Requirements**: MD-DEEP-01, MD-DEEP-02, MD-DEEP-03
 **Success Criteria** (what must be TRUE):
+
   1. St. Mary's County government row + Board of County Commissioners chamber exist with the county boundary linked
   2. Active St. Mary's County Commissioners are seeded as politicians with offices; available headshots at 600x750 in Supabase Storage
   3. Town of Leonardtown government row + town officials seeded; available headshots uploaded
   4. A St. Mary's County address lookup returns the County Commissioners for that address without empty-section errors
+
 **Plans**: TBD
 
 #### Phase 96: MD 2026 Elections + Discovery Pipeline + Landing
@@ -925,10 +948,12 @@ Plans:
 **Depends on**: Phases 92-93 (MD officials seeded so office_id references are valid)
 **Requirements**: MD-ELECTIONS-01, MD-ELECTIONS-02, MD-ELECTIONS-03
 **Success Criteria** (what must be TRUE):
+
   1. MD 2026 primary and general election rows exist in essentials.elections
   2. Governor race + US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 141 house delegate scaffold race rows exist (198 total race rows)
   3. discovery_jurisdictions row exists for MD statewide with cron_active=true, armed for the 2026 election cycle
   4. Landing.jsx COVERAGE_AREAS includes a Maryland entry — Leonardtown city browse + MD state browse
+
 **Plans**: TBD
 
 #### Phase 97: MD Compass Stances — Executives + Senators (Wave 1)
@@ -937,10 +962,12 @@ Plans:
 **Depends on**: Phase 93 (all 47 senators seeded with politician_ids)
 **Requirements**: MD-STANCES-01, MD-STANCES-02
 **Success Criteria** (what must be TRUE):
+
   1. Compass stances exist for Governor Moore + LG Miller + AG Brown + Comptroller Lierman — each with at least one cited answer from verifiable public record
   2. At least one compass answer exists for every MD state senator who has a discoverable public stance; senators with no public record are documented as not-found
   3. All ingested stance values are integers 1-5; every row includes a non-null citation URL
   4. All stance research agents ran sequentially one-at-a-time; no parallel runs
+
 **Plans**: TBD
 
 #### Phase 98: MD Compass Stances — House Delegates (Wave 2)
@@ -949,10 +976,12 @@ Plans:
 **Depends on**: Phase 97 (Wave 1 senators complete; confirms wave pattern + ingestion procedure working)
 **Requirements**: MD-STANCES-03, MD-STANCES-04
 **Success Criteria** (what must be TRUE):
+
   1. At least one compass answer exists for every MD house delegate who has a discoverable public stance; delegates with no public record are documented as not-found
   2. All ingested stance values are integers 1-5; every row includes a non-null citation URL
   3. A numbered SQL migration applies all Wave 2 delegate stance values to production; migration is idempotent
   4. The compass renders correctly on spot-checked MD official profiles — at least 3 senators + 3 delegates verified in the UI (MD-STANCES-04 satisfied)
+
 **Plans**: TBD
 
 #### Phase 99: MD Verification + Playbook Retrospective
@@ -961,12 +990,13 @@ Plans:
 **Depends on**: Phases 90-98 (all v11.0 work complete)
 **Requirements**: (cross-cutting verification — all 26 v11.0 requirements pass final gate here)
 **Success Criteria** (what must be TRUE):
+
   1. All 26 v11.0 requirements pass a final verification query or UI spot-check; zero open gaps
   2. LOCATION-ONBOARDING.md is updated with MD-specific GOTCHAs (multi-member delegate districts, A/B subdistrict handling, State Treasurer appointed-by-General-Assembly pattern, MD headshot source patterns)
   3. Maryland Quick Reference block added to the playbook (FIPS 24, legislature URLs, headshot sources, 47/141 district counts)
   4. v11.0 milestone is marked shipped in ROADMAP.md, STATE.md, and PROJECT.md
-**Plans**: TBD
 
+**Plans**: TBD
 
 ---
 
