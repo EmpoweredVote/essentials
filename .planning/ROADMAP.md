@@ -844,12 +844,12 @@ Full details: [milestones/v10.0-ROADMAP.md](milestones/v10.0-ROADMAP.md)
 Plans:
 **Wave 1**
 
-- [ ] 90-01-PLAN.md - ev-ui RadarChartCore: add dotRadius prop + publish patch (UI-01 library work)
+- [x] 90-01-PLAN.md - ev-ui RadarChartCore: add dotRadius prop + publish patch (UI-01 library work)
 - [ ] 90-03-PLAN.md - Migration 268: ME June 9 primary winners + lavote November 2026 election ID UPDATE (POST-ELECTION-01/02)
 
 **Wave 2** *(blocked on Wave 1 ev-ui publish)*
 
-- [ ] 90-02-PLAN.md - Install new ev-ui + MiniCompass.jsx showLabels=false + dotRadius=2.5 + human-verify (UI-01/02 integration)
+- [x] 90-02-PLAN.md - Install new ev-ui + MiniCompass.jsx showLabels=false + dotRadius=2.5 + human-verify (UI-01/02 integration)
 
 #### Phase 91: MD TIGER Geofences
 
@@ -862,7 +862,13 @@ Plans:
   3. A rural unincorporated MD address returns county + legislative + congressional tiers without a LOCAL gap
   4. Section-split check returns 0 rows; districts.state lowercase for COUNTY/STATE tiers, uppercase for NATIONAL tiers
   5. All layer counts match expected TIGER 2024 totals (pre-flight assertions pass)
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 91-01-PLAN.md — Add MD to TIGER loader (4 config additions + EXPECTED_MD_MTFCC block) + create verify-md-tiger-import.sql + smoke-md-geofences.ts
+- [ ] 91-02-PLAN.md — Dry-run sldl/place layers to confirm actual counts; update TBD sentinels in loader + smoke test
+- [ ] 91-03-PLAN.md — Live-load all 5 MD TIGER layers; spot-check Baltimore City dual-tier + districts.state casing
+- [ ] 91-04-PLAN.md — Run 7-gate SQL verification + smoke test; confirm all Phase 91 success criteria
 
 #### Phase 92: MD State Government DB
 
@@ -1093,8 +1099,8 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 87. CA City School Boards | v10.0 | 5/4 | Complete    | 2026-06-02 |
 | 88. TX Collin County School Boards | v10.0 | 5/5 | Complete    | 2026-06-04 |
 | 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |
-| 90. Post-Election Follow-up + MiniCompass UI | v11.0 | 0/TBD | Not started | - |
-| 91. MD TIGER Geofences | v11.0 | 0/TBD | Not started | - |
+| 90. Post-Election Follow-up + MiniCompass UI | v11.0 | 2/3 | In Progress|  |
+| 91. MD TIGER Geofences | v11.0 | 0/4 | Not started | - |
 | 92. MD State Government DB | v11.0 | 0/TBD | Not started | - |
 | 93. MD Legislature + Federal Officials | v11.0 | 0/TBD | Not started | - |
 | 94. MD Headshots | v11.0 | 0/TBD | Not started | - |
