@@ -647,19 +647,19 @@ Note on A3: Steny Hoyer (MD-05) has served since 1981. Verify he has not announc
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Steny Hoyer MD-05 retirement status**
+1. **Steny Hoyer MD-05 retirement status** (RESOLVED: Verified at Plan 93-04 Task 1 execution via WebFetch before seeding; seeding deferred until confirmed at runtime.)
    - What we know: Hoyer re-elected 2024 per NBC results; currently serving.
    - What's unclear: Hoyer announced in late 2024 he would not seek re-election in 2026, but has not vacated mid-term. He should still be the current incumbent as of June 2026.
    - Recommendation: Confirm via house.gov/hoyer or news search before writing migration 275. If he has vacated mid-term (unlikely but possible), identify the replacement.
 
-2. **District 42A vacant seat — named replacement?**
+2. **District 42A vacant seat — named replacement?** (RESOLVED: Verified at Plan 93-03 Task 1 execution via mgaleg.maryland.gov roster check.)
    - What we know: District 42A shows as vacant on mgaleg.maryland.gov (as of 2026-06-02).
    - What's unclear: Whether a special election or appointment has since filled the seat.
    - Recommendation: Check mgaleg.maryland.gov at migration execution time (not research time). If still vacant, seed with `is_vacant=true` placeholder.
 
-3. **Senator/Delegate external_id assignment ordering for delegates**
+3. **Senator/Delegate external_id assignment ordering for delegates** (RESOLVED: Order by district number ascending, then subdistrict letter, then alphabetically by name.)
    - What we know: CONTEXT.md says -2420001 through -2420141.
    - What's unclear: Whether to assign sequentially by district number (1A, 1B, 1C, 2A, 2B, 3, 3, 3...) or alphabetically by name.
    - Recommendation: Assign by district number ascending, then by subdistrict letter, then by name for multiple delegates in same whole district. This ensures stable ordering independent of name changes.

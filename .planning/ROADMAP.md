@@ -919,7 +919,7 @@ Plans:
   2. All 141 MD house delegates are seeded with offices linked to STATE_LOWER SLDL districts; multi-member district structure (typically 3 delegates per district, some A/B subdistricts) is correctly modeled
   3. US Senators Van Hollen + Alsobrooks seeded with NATIONAL_UPPER district; 8 US House reps seeded with NATIONAL_LOWER districts CD-01 through CD-08
   4. An MD address lookup returns the correct state senator, house delegate(s), and US representative for that address
-  5. All 192 legislators and federal officials have headshots in Supabase Storage at 600x750
+  5. Best-effort headshot ingestion attempted for all 192 MD officials (senators + delegates + federal); Phase 94 enforces 100% coverage at 600x750
 
 **Plans**: TBD
 
