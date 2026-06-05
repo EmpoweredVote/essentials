@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: verifying
-last_updated: "2026-06-05T16:51:23.091Z"
+status: ready_to_plan
+last_updated: 2026-06-05T17:01:59.918Z
 last_activity: 2026-06-05
 progress:
   total_phases: 10
@@ -11,15 +11,16 @@ progress:
   total_plans: 7
   completed_plans: 6
   percent: 10
+stopped_at: Phase 91 complete (4/4) — ready to discuss Phase 92
 ---
 
 # State
 
 ## Current Position
 
-Phase: 91 (MD TIGER Geofences) — EXECUTING
-Plan: 4 of 4
-Status: Phase complete — ready for verification
+Phase: 92
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-05
 
 Progress: [█████████░] 86%
@@ -29,7 +30,7 @@ Progress: [█████████░] 86%
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 91 — MD TIGER Geofences
+**Current focus:** Phase 92 — md state government db
 
 ## v11.0 Roadmap Summary
 
