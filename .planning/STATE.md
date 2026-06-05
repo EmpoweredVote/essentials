@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-05T21:25:59.219Z"
-last_activity: 2026-06-05 -- Phase 93 planning complete
+last_updated: "2026-06-05T21:38:00Z"
+last_activity: 2026-06-05 -- Plan 93-01 complete: MD legislative chambers migration 272 applied
 progress:
   total_phases: 10
   completed_phases: 2
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 93
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-05 -- Phase 93 planning complete
+Phase: 93 (md-legislature-federal-officials) — EXECUTING
+Plan: 2 of 6
+Status: Executing Phase 93
+Last activity: 2026-06-05 -- Plan 93-01 complete: MD legislative chambers migration 272 applied
 
 Progress: [█████████░] 86%
 
@@ -29,7 +29,7 @@ Progress: [█████████░] 86%
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 93 — md legislature + federal officials
+**Current focus:** Phase 93 — md-legislature-federal-officials
 
 ## v11.0 Roadmap Summary
 
@@ -54,7 +54,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Constitutional officers (voter-elected): Governor, LG, AG, Comptroller
 - State Treasurer: elected by General Assembly → is_appointed_position=true (ME/OR pattern)
 - Stances research scope: 4 exec + 47 senators + 141 delegates = 192 officials
-- Next migration: 272
+- Next migration: 273
 
 ## Accumulated Context
 
@@ -76,6 +76,9 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - STATE_EXEC district_id should be empty string (not named string) for multi-position districts (OR lesson)
 - TIGER congressional shapefile key: always browse census.gov directory first; key may be 'cd119' not 'cd'
 
+- Maryland Senate chamber name_formal='Maryland State Senate'; House of Delegates name_formal='Maryland House of Delegates' (self-qualifying, OR House precedent)
+- Migration 272 applied: 2 MD legislative chambers seeded under government_id 85973301-a859-45c8-9b58-4a14ab7b44ab
+
 ### Pending Todos
 
 - **[ME — TIME-SENSITIVE]** Phase 90 Plan 01: After ME June 9 primary results, write migration adding D primary winners to US Senate general + ME-01 general + ME-02 general race_candidates rows
@@ -87,9 +90,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T20:37:01.657Z
-Stopped at: Phase 93 context gathered
-Resume file: .planning/phases/93-md-legislature-federal-officials/93-CONTEXT.md
+Last session: 2026-06-05T21:38:00Z
+Stopped at: Plan 93-01 complete — migration 272 applied, 2 MD legislative chambers seeded
+Resume file: .planning/phases/93-md-legislature-federal-officials/93-01-SUMMARY.md
 
 ## Performance Metrics
 
@@ -98,3 +101,4 @@ Resume file: .planning/phases/93-md-legislature-federal-officials/93-CONTEXT.md
 | Phase 91 P02 | 45m | 2 tasks | 2 files |
 | Phase 91 P03 | 20m | 2 tasks | 0 files (DB-only) |
 | Phase 91 P04 | 15m | 2 tasks | 0 files (verification-only) |
+| Phase 93 P01 | 7m | 1 task | 1 file (272_md_legislative_chambers.sql) |

@@ -921,7 +921,8 @@ Plans:
   4. An MD address lookup returns the correct state senator, house delegate(s), and US representative for that address
   5. Best-effort headshot ingestion attempted for all 192 MD officials (senators + delegates + federal); Phase 94 enforces 100% coverage at 600x750
 
-**Plans**: TBD
+**Plans**:
+- [x] 93-01-PLAN.md — Migration 272: Maryland Senate + Maryland House of Delegates chambers under State of Maryland government; dual pre-flight assertions (D-07/D-08); idempotent WHERE NOT EXISTS guards; chambers-only (D-02 confirmed no parent STATE_LOWER rows needed)
 
 #### Phase 94: MD Headshots
 
