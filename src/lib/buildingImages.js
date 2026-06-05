@@ -125,14 +125,27 @@ export function getBuildingImages(representingCity, stateAbbrev) {
  * @param {string} address
  * @returns {string|null} Two-letter abbreviation or null
  */
+// Valid 2-letter codes (50 states + DC) — used to validate abbreviation matches
+// so we don't pick up street/unit abbreviations that happen to precede digits.
+const VALID_STATE_ABBREVS = new Set([...Object.keys(STATE_CAPITOLS), 'DC']);
+
 export function parseStateFromAddress(address) {
-  const addr = address || '';
+  const addr = (address || '').trim();
 
-  // Pattern 1: two-letter abbreviation before a ZIP code (e.g., "Orem, UT 84057")
-  const zipMatch = addr.match(/\b([A-Z]{2})\s+\d{5}\b/);
-  if (zipMatch) return zipMatch[1];
+  // Pattern 1: two-letter abbreviation before a ZIP, with a comma OR space
+  // separator. Handles "Orem, UT 84057", the Census-normalized "Denver, CO,
+  // 80202", and Google's "…, CO 80202, USA".
+  const zipMatch = addr.match(/\b([A-Z]{2})\b,?\s+\d{5}(?:-\d{4})?\b/);
+  if (zipMatch && VALID_STATE_ABBREVS.has(zipMatch[1])) return zipMatch[1];
 
-  // Pattern 2: full state name before ", USA" at the end
+  // Pattern 2: trailing two-letter abbreviation with no ZIP (e.g. "Denver, CO"
+  // or "Denver, CO, USA").
+  const trailMatch = addr.match(/,\s*([A-Za-z]{2})\s*(?:,\s*USA)?\s*$/i);
+  if (trailMatch && VALID_STATE_ABBREVS.has(trailMatch[1].toUpperCase())) {
+    return trailMatch[1].toUpperCase();
+  }
+
+  // Pattern 3: full state name before ", USA" at the end
   // Handles both "South Dakota, USA" and "Pierre, South Dakota, USA"
   const suffixMatch = addr.match(/(?:^|,)\s*([^,]+?)\s*,\s*USA\s*$/i);
   if (suffixMatch) {

@@ -14,7 +14,7 @@ import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, fetchVoterInfo } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
@@ -23,6 +23,7 @@ import MiniCompass from '../components/MiniCompass';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
+import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
 import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug } from '../lib/treasury';
 
@@ -506,6 +507,8 @@ export default function Results() {
   // Elections tab data
   const [electionsData, setElectionsData] = useState(null);
   const [electionsLoading, setElectionsLoading] = useState(false);
+  const [voterInfo, setVoterInfo] = useState(null);
+  const [voterInfoLoading, setVoterInfoLoading] = useState(false);
 
   // Treasury CTA — one-shot fetch of available municipalities on mount
   const [treasuryCities, setTreasuryCities] = useState([]);
@@ -1011,6 +1014,27 @@ export default function Results() {
     if (!parts && !dateStr) return null;
     return `${parts} · ${dateStr}`;
   }, [electionsData, userState]);
+
+  // Fetch voting locations + official sample-ballot links for the searched
+  // address (any US state). The Civic proxy returns nothing off-cycle, and the
+  // card self-hides when there's no useful content.
+  useEffect(() => {
+    if (searchMode !== 'address' || !activeQuery) {
+      setVoterInfo(null);
+      return;
+    }
+    let cancelled = false;
+    setVoterInfoLoading(true);
+    fetchVoterInfo(decodeURIComponent(activeQuery))
+      .then(({ voterInfo: vi }) => {
+        if (!cancelled) {
+          setVoterInfo(vi);
+          setVoterInfoLoading(false);
+        }
+      })
+      .catch(() => { if (!cancelled) setVoterInfoLoading(false); });
+    return () => { cancelled = true; };
+  }, [searchMode, activeQuery]);
 
   const electionsDaysAway = useMemo(() => {
     if (!electionsData || electionsData.length === 0) return null;
@@ -1785,6 +1809,14 @@ export default function Results() {
           </>
           ) : (
             <div className="px-6 md:px-12 pt-6 pb-8">
+              {searchMode === 'address' && activeQuery && (
+                <VoterResourcesCard
+                  voterInfo={voterInfo}
+                  loading={voterInfoLoading}
+                  stateName={userState ? (STATE_NAMES[userState] || null) : null}
+                  stateCode={userState || null}
+                />
+              )}
               <ElectionsView
                 elections={nearestElection}
                 loading={electionsLoading}

@@ -365,6 +365,20 @@ export async function fetchElectionsByAddress(address) {
   }
 }
 
+export async function fetchVoterInfo(address) {
+  try {
+    const res = await publicFetch(
+      `/essentials/voter-info?address=${encodeURIComponent(address)}`
+    );
+    if (!res || !res.ok) return { voterInfo: null, error: `${res?.status ?? 'unknown'}` };
+    const data = await res.json();
+    return { voterInfo: data, error: null };
+  } catch (err) {
+    console.error('fetchVoterInfo error:', err);
+    return { voterInfo: null, error: err.message };
+  }
+}
+
 export async function fetchElectionsByArea(geoId, mtfcc) {
   try {
     const res = await publicFetch('/essentials/browse/elections-by-area', {
