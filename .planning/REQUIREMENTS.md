@@ -12,11 +12,11 @@
 
 ### MD Geofences (MD-GEO)
 
-- [ ] **MD-GEO-01**: MD TIGER G4110 incorporated cities loaded into geofence_boundaries (state='24')
-- [ ] **MD-GEO-02**: MD TIGER G4020 counties loaded (24 counties, state='24')
-- [ ] **MD-GEO-03**: MD TIGER SLDU loaded (47 state senate districts)
-- [ ] **MD-GEO-04**: MD TIGER SLDL loaded (141 house delegate sub-district boundaries)
-- [ ] **MD-GEO-05**: MD TIGER CD loaded (8 congressional districts)
+- [x] **MD-GEO-01**: MD TIGER G4110 incorporated cities loaded into geofence_boundaries (state='24')
+- [x] **MD-GEO-02**: MD TIGER G4020 counties loaded (24 counties, state='24')
+- [x] **MD-GEO-03**: MD TIGER SLDU loaded (47 state senate districts)
+- [x] **MD-GEO-04**: MD TIGER SLDL loaded (141 house delegate sub-district boundaries)
+- [x] **MD-GEO-05**: MD TIGER CD loaded (8 congressional districts)
 - [ ] **MD-GEO-06**: Any MD address returns correct federal, state, county, and local tiers via PostGIS routing
 
 ### MD State Government (MD-GOV)
@@ -78,11 +78,11 @@
 |-------------|-------|--------|
 | UI-01 | Phase 90 | Pending |
 | UI-02 | Phase 90 | Pending |
-| MD-GEO-01 | Phase 91 | Pending |
-| MD-GEO-02 | Phase 91 | Pending |
-| MD-GEO-03 | Phase 91 | Pending |
-| MD-GEO-04 | Phase 91 | Pending |
-| MD-GEO-05 | Phase 91 | Pending |
+| MD-GEO-01 | Phase 91 | Complete |
+| MD-GEO-02 | Phase 91 | Complete |
+| MD-GEO-03 | Phase 91 | Complete |
+| MD-GEO-04 | Phase 91 | Complete |
+| MD-GEO-05 | Phase 91 | Complete |
 | MD-GEO-06 | Phase 91 | Pending |
 | MD-GOV-01 | Phase 92 | Pending |
 | MD-GOV-02 | Phase 92 | Pending |
