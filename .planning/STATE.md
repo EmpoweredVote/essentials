@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: executing
-last_updated: "2026-06-05T22:58:16.212Z"
-last_activity: 2026-06-05 -- Plan 93-06 complete: 140 MD delegate headshots ingested (140/140 processed, 0 gaps)
+status: ready_to_plan
+stopped_at: Phase 93 complete (6/6) — ready to discuss Phase 94
+last_updated: 2026-06-05T23:54:25.446Z
+last_activity: "2026-06-05 -- Plan 93-06 complete: 140 MD delegate headshots ingested"
 progress:
-  total_phases: 10
+  total_phases: 15
   completed_phases: 3
   total_plans: 15
   completed_plans: 14
-  percent: 93
+  percent: 20
 ---
 
 # State
 
 ## Current Position
 
-Phase: 93 (md-legislature-federal-officials) — EXECUTING
-Plan: 6 of 6 (COMPLETE)
-Status: Phase 93 complete — all 6 plans executed
-Last activity: 2026-06-05 -- Plan 93-06 complete: 140 MD delegate headshots ingested
+Phase: 94
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-05
 
 Progress: [█████████░] 93%
 
@@ -29,7 +30,7 @@ Progress: [█████████░] 93%
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 93 — md-legislature-federal-officials
+**Current focus:** Phase 94 — md headshots
 
 ## v11.0 Roadmap Summary
 
@@ -99,9 +100,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T24:20:00Z
-Stopped at: Plan 93-06 complete — 140 MD delegate headshots ingested (140/140 processed, 0 gaps); Phase 93 complete
-Resume file: .planning/phases/93-md-legislature-federal-officials/93-06-SUMMARY.md
+Last session: 2026-06-05T23:53:55.800Z
+Stopped at: context exhaustion at 75% (2026-06-05)
+Resume file: None
 
 ## Performance Metrics
 
