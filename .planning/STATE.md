@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: executing
-last_updated: "2026-06-06T01:27:40.254Z"
+status: ready_to_plan
+last_updated: 2026-06-06T02:36:51.989Z
 last_activity: 2026-06-06 -- Phase 94 execution started
 progress:
   total_phases: 10
   completed_phases: 3
   total_plans: 17
-  completed_plans: 14
+  completed_plans: 16
   percent: 30
+stopped_at: Phase 94 complete (2/2) — ready to discuss Phase 95
 ---
 
 # State
 
 ## Current Position
 
-Phase: 94 (md-headshots) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 94
-Last activity: 2026-06-06 -- Phase 94 execution started
+Phase: 95
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-06
 
 Progress: [█████████░] 93%
 
@@ -29,7 +30,7 @@ Progress: [█████████░] 93%
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 94 — md-headshots
+**Current focus:** Phase 95 — leonardtown / st. mary's county deep seed
 
 ## v11.0 Roadmap Summary
 
