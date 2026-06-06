@@ -118,6 +118,8 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Phase 92 complete 2026-06-05:** MD state government foundation seeded — 5 chambers, 5 executives, headshots, migrations 269/270/271.
 
+**Phase 94 complete 2026-06-06:** 100% MD headshot coverage verified — 202/202 non-vacant MD officials have type='default' headshots (5 exec + 47 senate + 140 house + 2 US senators + 8 US House reps). MD-GOV-06 complete.
+
 ### Current Milestone: v11.0 Maryland Essentials
 
 **Goal:** Onboard Maryland at full depth (geofences → government → stances), add a MiniCompass UI improvement, and close post-election follow-ups for ME and CA.
@@ -235,4 +237,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-04 after v11.0 milestone start — Maryland Essentials*
+*Last updated: 2026-06-06 after Phase 94 (MD Headshots) complete — Maryland Essentials*
