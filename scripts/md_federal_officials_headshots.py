@@ -94,13 +94,15 @@ _SOURCE_PAIRS = [
         -400033,
         "Chris Van Hollen",
         "https://www.congress.gov/img/member/v000128_200.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Chris_Van_Hollen_official_portrait_117th_Congress.jpg/440px-Chris_Van_Hollen_official_portrait_117th_Congress.jpg",
+        # Corrected 2026-06-05: use 115th Congress portrait (500px canonical per pageimages API)
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Chris_Van_Hollen_official_portrait_115th_Congress.jpg/500px-Chris_Van_Hollen_official_portrait_115th_Congress.jpg",
     ),
     (
         -400034,
         "Angela Alsobrooks",
         "https://www.congress.gov/img/member/a000391_200.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Angela_Alsobrooks_official_portrait_119th_Congress.jpg/440px-Angela_Alsobrooks_official_portrait_119th_Congress.jpg",
+        # Corrected 2026-06-05: official Senate photo URL from Wikipedia pageimages API
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Sen._Angela_Alsobrooks_official_Senate_photo%2C_119th_Congress.jpg/500px-Sen._Angela_Alsobrooks_official_Senate_photo%2C_119th_Congress.jpg",
     ),
     (
         -2440001,
@@ -112,7 +114,9 @@ _SOURCE_PAIRS = [
         -2440002,
         "Johnny Olszewski",
         "https://www.congress.gov/img/member/o000200_200.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Johnny_Olszewski_official_portrait_119th_Congress.jpg/440px-Johnny_Olszewski_official_portrait_119th_Congress.jpg",
+        # Corrected 2026-06-05: original file name not found on Commons;
+        # Wikipedia pageimages API confirmed: Johnny_Olszewski_119th_congress.jpg
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Johnny_Olszewski_119th_congress.jpg/500px-Johnny_Olszewski_119th_congress.jpg",
     ),
     (
         -2440003,
@@ -136,7 +140,9 @@ _SOURCE_PAIRS = [
         -2440006,
         "April McClain Delaney",
         "https://www.congress.gov/img/member/m001231_200.jpg",
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/April_McClain_Delaney_official_portrait_119th_Congress.jpg/440px-April_McClain_Delaney_official_portrait_119th_Congress.jpg",
+        # Corrected 2026-06-05: original file name not found on Commons;
+        # Wikipedia pageimages API confirmed: Rep._April_McClain_Delaney_Official_Portrait.jpg
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Rep._April_McClain_Delaney_Official_Portrait.jpg/500px-Rep._April_McClain_Delaney_Official_Portrait.jpg",
     ),
     (
         -2440007,
