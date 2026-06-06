@@ -992,12 +992,12 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 96-01-PLAN.md - Migration 278: 2 MD election rows (primary 2026-06-23 + general 2026-11-03)
+- [x] 96-01-PLAN.md - Migration 278: 2 MD election rows (primary 2026-06-23 + general 2026-11-03) — **Complete 2026-06-06**
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 96-02-PLAN.md - Migrations 279 + 280: 12 statewide race rows + 118 legislative scaffold race rows (47 senate + 71 SLDL house) = 130 total MD race rows (ROADMAP-estimate deviation: 130 not 198, see plan)
-- [ ] 96-03-PLAN.md - Migration 281 + Landing.jsx: 2 discovery_jurisdictions rows (no cron_active column - date-based) + Maryland COVERAGE_CITIES entry (Leonardtown + St. Marys County bundled)
+- [x] 96-02-PLAN.md - Migrations 279 + 280: 12 statewide race rows + 118 legislative scaffold race rows (47 senate + 71 SLDL house) = 130 total MD race rows (ROADMAP-estimate deviation: 130 not 198, see plan) — **Complete 2026-06-06**
+- [x] 96-03-PLAN.md - Migration 281 + Landing.jsx: 2 discovery_jurisdictions rows (no cron_active column - date-based) + Maryland COVERAGE_CITIES entry (Leonardtown + St. Marys County bundled) — **Complete 2026-06-06**
 
 #### Phase 97: MD Compass Stances — Executives + Senators (Wave 1)
 
@@ -1178,7 +1178,7 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 93. MD Legislature + Federal Officials | v11.0 | 6/6 | Complete    | 2026-06-05 |
 | 94. MD Headshots | v11.0 | 2/2 | Complete    | 2026-06-06 |
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 1/2 | In Progress|  |
-| 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 0/TBD | Not started | - |
+| 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 0/TBD | Not started | - |
 | 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 0/TBD | Not started | - |
 | 99. MD Verification + Playbook Retrospective | v11.0 | 0/TBD | Not started | - |

@@ -4,12 +4,12 @@ milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
 last_updated: "2026-06-06T16:26:39.623Z"
-last_activity: 2026-06-06 -- Phase 96 planning complete
+last_activity: 2026-06-06 -- Phase 96 complete
 progress:
   total_phases: 9
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 20
-  completed_plans: 16
+  completed_plans: 19
   percent: 44
 ---
 
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 96
-Plan: context gathered
-Status: Ready to execute
-Last activity: 2026-06-06 -- Phase 96 planning complete
+Plan: 96-03 complete
+Status: Phase complete — all 3 plans done
+Last activity: 2026-06-06 -- Phase 96 complete
 
 Progress: [█████████░] 89%
 
@@ -29,7 +29,7 @@ Progress: [█████████░] 89%
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 95 — leonardtown / st. mary's county deep seed
+**Current focus:** Phase 96 complete — MD 2026 elections + discovery + landing seeded
 
 ## v11.0 Roadmap Summary
 
