@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-06T06:03:11.886Z"
+last_updated: "2026-06-06T06:42:59.069Z"
 last_activity: 2026-06-06 -- Phase 95 planning complete
 progress:
   total_phases: 10
   completed_phases: 4
   total_plans: 19
-  completed_plans: 16
+  completed_plans: 17
   percent: 40
 ---
 
@@ -18,11 +18,11 @@ progress:
 ## Current Position
 
 Phase: 95
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-06 -- Phase 95 planning complete
+Plan: 01 COMPLETE
+Status: Executing (Plan 02 next)
+Last activity: 2026-06-06 -- Phase 95 Plan 01 complete — St. Mary's County + Leonardtown seeded
 
-Progress: [█████████░] 93%
+Progress: [█████████░] 89%
 
 ## Project Reference
 
@@ -54,7 +54,11 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Constitutional officers (voter-elected): Governor, LG, AG, Comptroller
 - State Treasurer: elected by General Assembly → is_appointed_position=true (ME/OR pattern)
 - Stances research scope: 4 exec + 47 senators + 141 delegates = 192 officials
-- Next migration: 276
+- Next migration: 278
+- St. Mary's County geo_id='24037' CONFIRMED; Leonardtown geo_id='2446475' CONFIRMED
+- Migrations 276 (St. Mary's County) + 277 (Leonardtown) applied; MD-DEEP-01 and MD-DEEP-03 data side complete
+- Leonardtown: LOCAL_EXEC for Mayor + LOCAL for 5 council members; mtfcc=NULL on both district rows (migration 246 pattern)
+- D-05 confirmed Option A: all 5 St. Mary's commissioners share one COUNTY district (county-wide election model)
 
 ## Accumulated Context
 
@@ -99,9 +103,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T00:00:00.000Z
+Last session: 2026-06-06T06:42:59.042Z
 Stopped at: Phase 95 context gathered
-Resume file: .planning/phases/95-leonardtown-st-mary-s-county-deep-seed/95-CONTEXT.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -116,3 +120,4 @@ Resume file: .planning/phases/95-leonardtown-st-mary-s-county-deep-seed/95-CONTE
 | Phase 93 P04 | 20m | 1 task | 1 file (275_md_federal_officials.sql) |
 | Phase 93 P05 | 35m | 3 tasks | 1 file (scripts/md_senators_headshots.py) |
 | Phase 93 P06 | 60min | 3 tasks | 1 files |
+| Phase 95 P01 | 25m | 3 tasks | 4 files |

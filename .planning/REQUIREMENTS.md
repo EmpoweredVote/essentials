@@ -30,9 +30,9 @@
 
 ### Leonardtown / St. Mary's County Deep Seed (MD-DEEP)
 
-- [ ] **MD-DEEP-01**: St. Mary's County government + Board of County Commissioners chamber seeded; county boundary linked
+- [x] **MD-DEEP-01**: St. Mary's County government + Board of County Commissioners chamber seeded; county boundary linked
 - [ ] **MD-DEEP-02**: Active St. Mary's County Commissioners seeded with offices + available headshots
-- [ ] **MD-DEEP-03**: Town of Leonardtown government + town officials seeded with available headshots
+- [x] **MD-DEEP-03**: Town of Leonardtown government + town officials seeded with available headshots
 
 ### MD 2026 Elections (MD-ELECTIONS)
 
@@ -90,9 +90,9 @@
 | MD-GOV-04 | Phase 93 | Complete |
 | MD-GOV-05 | Phase 93 | Complete |
 | MD-GOV-06 | Phase 94 | Complete |
-| MD-DEEP-01 | Phase 95 | Pending |
+| MD-DEEP-01 | Phase 95 | Complete |
 | MD-DEEP-02 | Phase 95 | Pending |
-| MD-DEEP-03 | Phase 95 | Pending |
+| MD-DEEP-03 | Phase 95 | Complete |
 | MD-ELECTIONS-01 | Phase 96 | Pending |
 | MD-ELECTIONS-02 | Phase 96 | Pending |
 | MD-ELECTIONS-03 | Phase 96 | Pending |
