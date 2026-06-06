@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: ready_to_plan
-last_updated: 2026-06-06T02:36:51.989Z
-last_activity: 2026-06-06 -- Phase 94 execution started
+status: executing
+last_updated: "2026-06-06T06:03:11.886Z"
+last_activity: 2026-06-06 -- Phase 95 planning complete
 progress:
   total_phases: 10
-  completed_phases: 3
-  total_plans: 17
+  completed_phases: 4
+  total_plans: 19
   completed_plans: 16
-  percent: 30
-stopped_at: Phase 94 complete (2/2) — ready to discuss Phase 95
+  percent: 40
 ---
 
 # State
@@ -20,8 +19,8 @@ stopped_at: Phase 94 complete (2/2) — ready to discuss Phase 95
 
 Phase: 95
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-06-06
+Status: Ready to execute
+Last activity: 2026-06-06 -- Phase 95 planning complete
 
 Progress: [█████████░] 93%
 

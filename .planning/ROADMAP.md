@@ -964,7 +964,16 @@ Plans:
   3. Town of Leonardtown government row + town officials seeded; available headshots uploaded
   4. A St. Mary's County address lookup returns the County Commissioners for that address without empty-section errors
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 95-01-PLAN.md â€” Migrations 276 + 277: St. Mary's County (5 commissioners) + Town of Leonardtown (Mayor + 5 council) â€” government rows, chambers, districts, politicians, offices, office_id back-fill, post-verification DO blocks
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 95-02-PLAN.md â€” scripts/md_local_headshots.py: 11 headshots at 600x750 (5 stmaryscountymd.gov + 6 leonardtown.somd.com with Referer); 11 politician_images rows; human-verify checkpoint on 3+ profile pages + address-lookup spot check
 
 #### Phase 96: MD 2026 Elections + Discovery Pipeline + Landing
 
@@ -1158,7 +1167,7 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 92. MD State Government DB | v11.0 | 2/2 | Complete    | 2026-06-05 |
 | 93. MD Legislature + Federal Officials | v11.0 | 6/6 | Complete    | 2026-06-05 |
 | 94. MD Headshots | v11.0 | 2/2 | Complete    | 2026-06-06 |
-| 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 0/TBD | Not started | - |
+| 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 0/2 | Not started | - |
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 0/TBD | Not started | - |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 0/TBD | Not started | - |
 | 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 0/TBD | Not started | - |
