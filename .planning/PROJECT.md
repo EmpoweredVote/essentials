@@ -122,6 +122,8 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Phase 95 complete 2026-06-06:** St. Mary's County (geo_id=24037) + Town of Leonardtown (geo_id=2446475) fully seeded via migrations 276+277. 5 BOCC commissioners + 6 Leonardtown officials (Mayor + 5 council), all with 600×750 headshots. Address lookup verified: `41770 Baldridge St, Leonardtown MD 20650` returns COUNTY + LOCAL sections with correct officials and headshots. MD-DEEP-01, MD-DEEP-02, MD-DEEP-03 all complete.
 
+**Phase 96 complete 2026-06-06:** MD 2026 election cycle fully armed — 2 election rows (primary 2026-06-23, general 2026-11-03) via migration 278; 130 race rows (12 statewide + 47 senate + 71 SLDL house, zero NULL office_ids) via migrations 279+280; 2 discovery_jurisdictions rows arming the cron agent via migration 281; Landing.jsx COVERAGE_CITIES entry added (Leonardtown + St. Mary's County bundled). MD-ELECTIONS-01, MD-ELECTIONS-02, MD-ELECTIONS-03 all complete.
+
 ### Current Milestone: v11.0 Maryland Essentials
 
 **Goal:** Onboard Maryland at full depth (geofences → government → stances), add a MiniCompass UI improvement, and close post-election follow-ups for ME and CA.
@@ -239,4 +241,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-06 after Phase 95 (Leonardtown / St. Mary's County Deep Seed) complete — Maryland Essentials*
+*Last updated: 2026-06-06 after Phase 96 (MD 2026 Elections + Discovery + Landing) complete — Maryland Essentials*
