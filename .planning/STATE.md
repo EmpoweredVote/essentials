@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: ready_to_plan
-stopped_at: Phase 93 complete (6/6) — ready to discuss Phase 94
-last_updated: 2026-06-05T23:54:25.446Z
-last_activity: "2026-06-05 -- Plan 93-06 complete: 140 MD delegate headshots ingested"
+status: planning
+last_updated: "2026-06-06T00:10:55.364Z"
+last_activity: 2026-06-05
 progress:
-  total_phases: 15
+  total_phases: 10
   completed_phases: 3
   total_plans: 15
   completed_plans: 14
-  percent: 20
+  percent: 30
 ---
 
 # State
@@ -100,9 +99,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T23:53:55.800Z
-Stopped at: context exhaustion at 75% (2026-06-05)
-Resume file: None
+Last session: 2026-06-06T00:10:55.352Z
+Stopped at: Phase 94 context gathered
+Resume file: .planning/phases/94-md-headshots/94-CONTEXT.md
 
 ## Performance Metrics
 
