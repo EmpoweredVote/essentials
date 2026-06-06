@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-06T06:42:59.069Z"
-last_activity: 2026-06-06 -- Phase 95 complete — migrations 276+277 applied, 11 headshots uploaded, human spot-check approved
+last_updated: "2026-06-06T07:30:00.000Z"
+last_activity: 2026-06-06 -- Phase 96 context gathered
 progress:
   total_phases: 10
   completed_phases: 4
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 95
-Plan: 02 COMPLETE
-Status: Complete
-Last activity: 2026-06-06 -- Phase 95 Plan 02 complete — 11 headshots uploaded, human spot-check approved
+Phase: 96
+Plan: context gathered
+Status: Ready for planning
+Last activity: 2026-06-06 -- Phase 96 context gathered — delegate race structure + Landing entry decisions captured
 
 Progress: [█████████░] 89%
 
