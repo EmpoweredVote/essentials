@@ -100,9 +100,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-06T00:10:55.352Z
-Stopped at: Phase 94 context gathered
-Resume file: .planning/phases/94-md-headshots/94-CONTEXT.md
+Last session: 2026-06-05T00:00:00.000Z
+Stopped at: Phase 95 context gathered
+Resume file: .planning/phases/95-leonardtown-st-mary-s-county-deep-seed/95-CONTEXT.md
 
 ## Performance Metrics
 
