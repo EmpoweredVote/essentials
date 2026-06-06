@@ -4,7 +4,7 @@ milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
 last_updated: "2026-06-06T06:42:59.069Z"
-last_activity: 2026-06-06 -- Phase 95 planning complete
+last_activity: 2026-06-06 -- Phase 95 complete — migrations 276+277 applied, 11 headshots uploaded, human spot-check approved
 progress:
   total_phases: 10
   completed_phases: 4
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 95
-Plan: 01 COMPLETE
-Status: Executing (Plan 02 next)
-Last activity: 2026-06-06 -- Phase 95 Plan 01 complete — St. Mary's County + Leonardtown seeded
+Plan: 02 COMPLETE
+Status: Complete
+Last activity: 2026-06-06 -- Phase 95 Plan 02 complete — 11 headshots uploaded, human spot-check approved
 
 Progress: [█████████░] 89%
 

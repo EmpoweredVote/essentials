@@ -952,7 +952,7 @@ Plans:
 
 - [x] 94-02-PLAN.md — Gap-check query across all 202 non-vacant MD officials + per-chamber sanity-count + human UI spot-check of 5 profile pages (1 per category)
 
-#### Phase 95: Leonardtown / St. Mary's County Deep Seed
+#### ✅ Phase 95: Leonardtown / St. Mary's County Deep Seed — completed 2026-06-06
 
 **Goal**: St. Mary's County and the Town of Leonardtown are fully seeded so a resident there gets a complete local officials list
 **Depends on**: Phase 91 (MD county boundary loaded for St. Mary's)
@@ -973,7 +973,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 95-02-PLAN.md â€” scripts/md_local_headshots.py: 11 headshots at 600x750 (5 stmaryscountymd.gov + 6 leonardtown.somd.com with Referer); 11 politician_images rows; human-verify checkpoint on 3+ profile pages + address-lookup spot check
+- [x] 95-02-PLAN.md â€” scripts/md_local_headshots.py: 11 headshots at 600x750 (5 stmaryscountymd.gov + 6 leonardtown.somd.com with Referer); 11 politician_images rows; human-verify checkpoint on 3+ profile pages + address-lookup spot check
 
 #### Phase 96: MD 2026 Elections + Discovery Pipeline + Landing
 
