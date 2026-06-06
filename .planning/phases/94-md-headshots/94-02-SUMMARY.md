@@ -18,15 +18,15 @@ decisions:
   - Gap-check must use external_id ranges (not representing_state — column does not exist on essentials.politicians)
   - US senators use external_ids -400033 (Van Hollen) / -400034 (Alsobrooks), NOT -2430001/-2430002 as noted in CONTEXT.md
 metrics:
-  duration: "~5 minutes (Task 1)"
-  completed: "2026-06-06 (partial — awaiting Task 2 human verify)"
-  tasks_completed: 1
+  duration: "~10 minutes (Task 1 + Task 2 human verify)"
+  completed: "2026-06-06"
+  tasks_completed: 2
   files_changed: 1
 ---
 
 # Phase 94 Plan 02: MD Headshot Verification Summary
 
-VERIFICATION: Gap-check query returned 0 rows. All 202 non-vacant MD officials confirmed to have `type='default'` headshot images in Supabase Storage. Task 2 (human UI spot-check) pending approval.
+VERIFICATION COMPLETE: Gap-check query returned 0 rows (202/202 active non-vacant MD officials have default images). Human UI spot-check approved 2026-06-06 — all 5 sampled politicians render headshots cleanly. Phase 94 all success criteria met. MD-GOV-06 satisfied.
 
 ## Task 1: Gap-Check Query Results
 
@@ -95,27 +95,31 @@ Output: `PASS: 0 gaps across all non-vacant MD officials (202 total with default
 
 ## Task 2: Human UI Spot-Check
 
-**Status: PENDING — awaiting user approval**
+**Status: APPROVED — 2026-06-06**
 
-Dev server started at `http://localhost:5175`.
+Dev server started at `http://localhost:5175`. User reviewed all 5 politician profile pages and confirmed headshots render cleanly with no broken images, no distortion, no overlays, and no artifacts.
 
 | Politician | Category | Result |
 |------------|----------|--------|
-| Wes Moore (Governor) | EXECUTIVE | _pending_ |
-| Bill Ferguson (Senate President, SD-46) | STATE SENATE | _pending_ |
-| Joseline Pena-Melnyk (Speaker, HD-21) | STATE HOUSE | _pending_ |
-| Chris Van Hollen | US SENATE | _pending_ |
-| Jamie Raskin (MD-08) | US HOUSE | _pending_ |
+| Wes Moore (Governor) | EXECUTIVE | PASS |
+| Bill Ferguson (Senate President, SD-46) | STATE SENATE | PASS |
+| Joseline Pena-Melnyk (Speaker, HD-21) | STATE HOUSE | PASS |
+| Chris Van Hollen | US SENATE | PASS |
+| Jamie Raskin (MD-08) | US HOUSE | PASS |
+
+**Approval:** "headshots approved" (user, 2026-06-06)
 
 ## Phase 94 Success Criteria Status
 
 1. Every non-vacant MD politician has a `politician_images` row with `type='default'` and resolvable Supabase Storage URL — **SATISFIED** (Task 1: 0 gaps, 202/202 verified)
 2. All headshots are 600x750 JPEG at q90 (crop 4:5 first, never stretched) — **SATISFIED** (guaranteed by shared processing pipeline in all md_*_headshots.py scripts)
-3. Spot-check of 5+ politician profile pages renders headshots without browser artifacts — **PENDING** (Task 2 human-verify)
+3. Spot-check of 5+ politician profile pages renders headshots without browser artifacts — **SATISFIED** (Task 2: all 5 approved 2026-06-06)
+
+All 3 Phase 94 success criteria are met.
 
 ## MD-GOV-06 Status
 
-**Partially complete — waiting on Task 2 human approval to mark fully satisfied.**
+**COMPLETE** — All 202 non-vacant Maryland officials (EXEC/STATE SENATE/STATE HOUSE/US SENATE/US HOUSE) have verified headshots. Human spot-check approved 2026-06-06. Phase 94 fully satisfied.
 
 ## Known Stubs
 
@@ -125,11 +129,13 @@ None.
 
 None — no new endpoints, auth paths, file access patterns, or schema changes.
 
-## Self-Check: PARTIAL (Task 1 PASSED, Task 2 PENDING)
+## Self-Check: PASSED
 
 - [x] Gap-check query returns 0 rows (202/202 active non-vacant MD officials have default images)
 - [x] Sanity-count matches expected 5/47/140/2/8 = 202
 - [x] District 42A vacant is excluded by is_vacant IS NOT TRUE
 - [x] Automated assertion PASS confirmed
 - [x] Dev server started at localhost:5175
-- [ ] Task 2 human spot-check approved (pending)
+- [x] Task 2 human spot-check approved: all 5 politicians PASS (2026-06-06)
+- [x] All 3 Phase 94 success criteria satisfied
+- [x] MD-GOV-06 marked COMPLETE
