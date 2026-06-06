@@ -120,6 +120,8 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Phase 94 complete 2026-06-06:** 100% MD headshot coverage verified — 202/202 non-vacant MD officials have type='default' headshots (5 exec + 47 senate + 140 house + 2 US senators + 8 US House reps). MD-GOV-06 complete.
 
+**Phase 95 complete 2026-06-06:** St. Mary's County (geo_id=24037) + Town of Leonardtown (geo_id=2446475) fully seeded via migrations 276+277. 5 BOCC commissioners + 6 Leonardtown officials (Mayor + 5 council), all with 600×750 headshots. Address lookup verified: `41770 Baldridge St, Leonardtown MD 20650` returns COUNTY + LOCAL sections with correct officials and headshots. MD-DEEP-01, MD-DEEP-02, MD-DEEP-03 all complete.
+
 ### Current Milestone: v11.0 Maryland Essentials
 
 **Goal:** Onboard Maryland at full depth (geofences → government → stances), add a MiniCompass UI improvement, and close post-election follow-ups for ME and CA.
@@ -237,4 +239,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-06 after Phase 94 (MD Headshots) complete — Maryland Essentials*
+*Last updated: 2026-06-06 after Phase 95 (Leonardtown / St. Mary's County Deep Seed) complete — Maryland Essentials*
