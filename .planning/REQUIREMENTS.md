@@ -36,7 +36,7 @@
 
 ### MD 2026 Elections (MD-ELECTIONS)
 
-- [ ] **MD-ELECTIONS-01**: MD 2026 elections seeded — Governor race + 1 US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 141 house delegate scaffold rows
+- [ ] **MD-ELECTIONS-01**: MD 2026 elections seeded — Governor race + 1 US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 71 SLDL house district scaffold rows (one row per geo_id, seats=N per D-01; 130 total race rows)
 - [ ] **MD-ELECTIONS-02**: discovery_jurisdictions row created for MD statewide, cron_active=true, armed for 2026 election cycle
 - [ ] **MD-ELECTIONS-03**: Landing.jsx updated with MD entry — Leonardtown city browse + MD state browse
 

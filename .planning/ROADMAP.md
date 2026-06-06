@@ -983,11 +983,21 @@ Plans:
 **Success Criteria** (what must be TRUE):
 
   1. MD 2026 primary and general election rows exist in essentials.elections
-  2. Governor race + US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 141 house delegate scaffold race rows exist (198 total race rows)
+  2. Governor race + US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 71 SLDL house district scaffold race rows exist (130 total race rows — one row per geo_id, seats=N per D-01; ROADMAP estimate of 198 was one-row-per-seat model superseded by unique constraint)
   3. discovery_jurisdictions row exists for MD statewide with cron_active=true, armed for the 2026 election cycle
   4. Landing.jsx COVERAGE_AREAS includes a Maryland entry — Leonardtown city browse + MD state browse
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 96-01-PLAN.md - Migration 278: 2 MD election rows (primary 2026-06-23 + general 2026-11-03)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 96-02-PLAN.md - Migrations 279 + 280: 12 statewide race rows + 118 legislative scaffold race rows (47 senate + 71 SLDL house) = 130 total MD race rows (ROADMAP-estimate deviation: 130 not 198, see plan)
+- [ ] 96-03-PLAN.md - Migration 281 + Landing.jsx: 2 discovery_jurisdictions rows (no cron_active column - date-based) + Maryland COVERAGE_CITIES entry (Leonardtown + St. Marys County bundled)
 
 #### Phase 97: MD Compass Stances — Executives + Senators (Wave 1)
 
