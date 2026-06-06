@@ -868,7 +868,8 @@ Plans:
   5. All layer counts match expected TIGER 2024 totals (pre-flight assertions pass)
 
 **Plans**: 4 plans
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 91-01-PLAN.md — Add MD to TIGER loader (4 config additions + EXPECTED_MD_MTFCC block) + create verify-md-tiger-import.sql + smoke-md-geofences.ts
@@ -940,7 +941,16 @@ Plans:
   2. All headshots are 600x750 JPEG at q90 (no raw originals, no distortion, no text overlays on faces)
   3. A spot-check of 5+ politician profile pages in the UI renders headshots without browser artifacts
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [x] 94-01-PLAN.md — Write & run scripts/md_federal_officials_headshots.py for 10 MD federal officials (Van Hollen + Alsobrooks + 8 House reps); congress.gov primary + Wikimedia fallback; idempotent
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 94-02-PLAN.md — Gap-check query across all 202 non-vacant MD officials + per-chamber sanity-count + human UI spot-check of 5 profile pages (1 per category)
 
 #### Phase 95: Leonardtown / St. Mary's County Deep Seed
 
@@ -1147,7 +1157,7 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 91. MD TIGER Geofences | v11.0 | 4/4 | Complete    | 2026-06-05 |
 | 92. MD State Government DB | v11.0 | 2/2 | Complete    | 2026-06-05 |
 | 93. MD Legislature + Federal Officials | v11.0 | 6/6 | Complete    | 2026-06-05 |
-| 94. MD Headshots | v11.0 | 0/TBD | Not started | - |
+| 94. MD Headshots | v11.0 | 1/2 | In Progress|  |
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 0/TBD | Not started | - |
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 0/TBD | Not started | - |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 0/TBD | Not started | - |
