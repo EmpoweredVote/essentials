@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician } from '../lib/api';
-import { apiFetch } from '../lib/auth';
+import { publicFetch } from '../lib/auth';
 import { Layout } from '../components/Layout';
 
 function formatVerifiedDate(isoString) {
@@ -166,7 +166,7 @@ function Citations() {
       try {
         const [result, citRes] = await Promise.all([
           fetchPolitician(id),
-          apiFetch(`/compass/politicians/${id}/citations`),
+          publicFetch(`/compass/politicians/${id}/citations`),
         ]);
         if (cancelled) return;
         setPol(result);
