@@ -1059,7 +1059,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 98-04-PLAN.md — Migration 289: MD Delegates Batch D (HD-21 through HD-27C, 21 delegates incl. Peña-Melnyk ñ-encoding); sequential research (MD-STANCES-03)
+- [x] 98-04-PLAN.md — Migration 289: MD Delegates Batch D (HD-21 through HD-27C, 21 delegates incl. Peña-Melnyk ñ-encoding); sequential research (MD-STANCES-03)
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
@@ -1226,5 +1226,5 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 1/2 | In Progress|  |
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 4/4 | Complete   | 2026-06-07 |
-| 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 3/7 | In Progress|  |
+| 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 4/7 | In Progress|  |
 | 99. MD Verification + Playbook Retrospective | v11.0 | 0/TBD | Not started | - |
