@@ -1011,7 +1011,24 @@ Plans:
   3. All ingested stance values are integers 1-5; every row includes a non-null citation URL
   4. All stance research agents ran sequentially one-at-a-time; no parallel runs
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 97-01-PLAN.md — Migration 282: 5 MD execs (Moore + Miller + Brown + Lierman + Davis per D-01); Wave 0 creates compass-topics-reference.md + extends gen_migration.py; sequential research one agent per exec (MD-STANCES-01)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 97-02-PLAN.md — Migration 283: MD Senators Batch A (SD-01..SD-15, 15 senators); sequential research one agent per senator (MD-STANCES-02)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 97-03-PLAN.md — Migration 284: MD Senators Batch B (SD-16..SD-31, 16 senators); sequential research one agent per senator (MD-STANCES-02)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 97-04-PLAN.md — Migration 285: MD Senators Batch C (SD-32..SD-47, 16 senators); sequential research one agent per senator; full-phase verification SELECTs (MD-STANCES-02)
 
 #### Phase 98: MD Compass Stances — House Delegates (Wave 2)
 
