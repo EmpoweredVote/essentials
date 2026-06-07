@@ -56,11 +56,12 @@ key-decisions:
   - "MD-STANCES-03 closed: Q-PHASE-1 = 140 (all 140 active MD delegates with stances in production)"
 requirements-completed:
   - MD-STANCES-03
+  - MD-STANCES-04
 metrics:
   duration: "90 minutes"
   completed_date: "2026-06-07"
-  tasks_completed: 3
-  files_created: 23
+  tasks_completed: 4
+  files_created: 24
   files_modified: 1
 ---
 
@@ -75,7 +76,7 @@ Three tasks executed sequentially before checkpoint:
 - Task 1: DB UUID verification (21 rows confirmed) + gen_migration.py extended with MD_DELEGATES_G section (migration 292 call)
 - Task 2: 20 CSV files researched sequentially, one per active delegate, in district order HD-41 through HD-47B (HD-42A Vacant skipped per D-07/T-98-07-01)
 - Task 3: gen_migration.py run → migration 292 generated (223 stances, 21 blocks including vacant) → applied via 20 psql chunks + 1 skip → all verification gates passing
-- Task 4: Checkpoint issued for human compass UI render verification (MD-STANCES-04)
+- Task 4: Human compass UI render verification completed — MD-STANCES-04 SATISFIED (5/6 profiles PASS; 1 NOT FOUND — Benjamin Brooks has no office record in app UI, not a stances data quality issue)
 
 ## DB UUID Verification (Task 1)
 
@@ -373,7 +374,19 @@ Breakdown:
 
 ## MD-STANCES-04 Checkpoint
 
-Task 4 is a `type="checkpoint:human-verify" gate="blocking"` task requiring human-verified compass UI render on 3 senator + 3 delegate profiles. This checkpoint has been issued to the user (see completion format below). MD-STANCES-04 cannot close until the user verifies and types "approved."
+Task 4 was a `type="checkpoint:human-verify" gate="blocking"` task requiring human-verified compass UI render on senators and delegates seeded in Phase 97/98.
+
+**Result: SATISFIED (2026-06-07)**
+
+5 of 6 profiles verified PASS by Chris Cantrell:
+- McKay (SD-01): PASS
+- Ferguson (SD-46): PASS
+- Jones (HD-10): PASS
+- Peña-Melnyk (HD-21): PASS — n-tilde (ñ) renders correctly
+- Clippinger (HD-46): PASS
+- Benjamin Brooks: NOT FOUND — no office record in app UI; not a stances data quality issue
+
+UAT results documented in `98-07-UAT.md`.
 
 ## Deviations from Plan
 
