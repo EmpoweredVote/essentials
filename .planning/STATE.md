@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
-status: executing
-last_updated: "2026-06-06T16:26:39.623Z"
+status: completed
+last_updated: "2026-06-07T05:46:55.532Z"
 last_activity: 2026-06-06 -- Phase 96 complete
 progress:
   total_phases: 9
   completed_phases: 5
   total_plans: 20
   completed_plans: 19
-  percent: 44
+  percent: 56
 ---
 
 # State
@@ -103,9 +103,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-06T06:42:59.042Z
-Stopped at: Phase 95 context gathered
-Resume file: None
+Last session: 2026-06-07T05:46:55.508Z
+Stopped at: Phase 97 context gathered
+Resume file: .planning/phases/97-md-compass-stances-executives-senators-wave-1/97-CONTEXT.md
 
 ## Performance Metrics
 
