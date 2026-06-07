@@ -42,7 +42,7 @@
 
 ### MD Compass Stances (MD-STANCES)
 
-- [ ] **MD-STANCES-01**: Compass stances for Governor Moore + 3 constitutional officers, cited from public record
+- [x] **MD-STANCES-01**: Compass stances for Governor Moore + 3 constitutional officers, cited from public record
 - [ ] **MD-STANCES-02**: Compass stances for all 47 MD state senators, one agent at a time, evidence-only
 - [ ] **MD-STANCES-03**: Compass stances for all 141 MD house delegates, one agent at a time, evidence-only
 - [ ] **MD-STANCES-04**: Compass renders correctly on spot-checked MD official profiles (human-verified)
@@ -96,7 +96,7 @@
 | MD-ELECTIONS-01 | Phase 96 | Pending |
 | MD-ELECTIONS-02 | Phase 96 | Pending |
 | MD-ELECTIONS-03 | Phase 96 | Pending |
-| MD-STANCES-01 | Phase 97 | Pending |
+| MD-STANCES-01 | Phase 97 | Complete |
 | MD-STANCES-02 | Phase 97 | Pending |
 | MD-STANCES-03 | Phase 98 | Pending |
 | MD-STANCES-04 | Phase 98 | Pending |

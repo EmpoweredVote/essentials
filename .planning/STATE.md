@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-07T07:33:21.684Z"
+last_updated: "2026-06-07T08:05:46.716Z"
 last_activity: 2026-06-07 -- Phase 97 planning complete
 progress:
   total_phases: 9
   completed_phases: 5
   total_plans: 24
-  completed_plans: 19
+  completed_plans: 20
   percent: 56
 ---
 
@@ -91,6 +91,9 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Compound last names on mgaleg: Lewis Young→young04, Fry Hester→hester01 (uses final word of compound name)
 - Delegate headshots complete: 140/140 ingested (0 gaps); jacobs j.jpg has space (URL-encode as %20); pena.jpg for Peña-Melnyk
 - mgaleg compound last name pattern varies: White Holland→white01 (first word), Harrison→harrison01 (last word), Palakovich Carr→palakovich01 (first word), Fraser-Hidalgo→fraser01 (first word)
+- gen_migration.py generate_migration() groups by name-only (not (name, pid) tuple) — simplified CSV format for MD batches has no politician_id column
+- MD exec UUIDs: Moore=21e534c8, Miller=ea9fc2d6, Brown=60329719, Lierman=b26fb5d2, Davis=75378a96
+- Migration 282 applied: 5 MD execs, 74 total stances in production (Moore=21, Brown=17, Lierman=16, Miller=15, Davis=5)
 
 ### Pending Todos
 
@@ -103,9 +106,9 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-07T05:46:55.508Z
-Stopped at: Phase 97 context gathered
-Resume file: .planning/phases/97-md-compass-stances-executives-senators-wave-1/97-CONTEXT.md
+Last session: 2026-06-07T08:35:00Z
+Stopped at: Completed 97-01-PLAN.md — 5 MD exec stances, migration 282 applied
+Resume file: None
 
 ## Performance Metrics
 
@@ -121,3 +124,4 @@ Resume file: .planning/phases/97-md-compass-stances-executives-senators-wave-1/9
 | Phase 93 P05 | 35m | 3 tasks | 1 file (scripts/md_senators_headshots.py) |
 | Phase 93 P06 | 60min | 3 tasks | 1 files |
 | Phase 95 P01 | 25m | 3 tasks | 4 files |
+| Phase 97 P01 | 45m | 3 tasks | 7 files (compass-topics-reference.md, 5 CSVs, 282_md_exec_stances.sql) |
