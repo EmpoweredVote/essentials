@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-07T15:59:47.828Z"
+last_updated: "2026-06-07T16:19:40.794Z"
 last_activity: 2026-06-07 -- Phase 97 planning complete
 progress:
   total_phases: 9
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 24
-  completed_plans: 22
-  percent: 56
+  completed_plans: 23
+  percent: 67
 ---
 
 # State
@@ -22,7 +22,7 @@ Plan: 96-03 complete
 Status: Ready to execute
 Last activity: 2026-06-07 -- Phase 97 planning complete
 
-Progress: [█████████░] 92%
+Progress: [██████████] 96%
 
 ## Project Reference
 
@@ -97,6 +97,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Migration 283 applied: 15 MD senators Batch A (SD-01 through SD-15), 177 stances in production
 - Migration 284 applied: 16 MD senators Batch B (SD-16 through SD-31), 258 stances in production; Q2=0 Q3=0 evidence-only=0
 - Batch B senator UUIDs confirmed from DB; Smith Jr. CSV quoting fix (comma in name requires quoted field)
+- Migration 285 applied: 16 MD senators Batch C (SD-32 through SD-47), 220 stances in production; Q2-C=0 Q3-C=0; Q-PHASE-1=52 rows Q-PHASE-2=0 Q-PHASE-3=0; Phase 97 complete (MD-STANCES-01 + MD-STANCES-02 satisfied); Phase 98 unblocked
 
 ### Pending Todos
 
@@ -109,7 +110,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-07T15:59:47.815Z
+Last session: 2026-06-07T16:19:40.779Z
 Stopped at: context exhaustion at 76% (2026-06-07)
 Resume file: None
 
@@ -129,3 +130,4 @@ Resume file: None
 | Phase 95 P01 | 25m | 3 tasks | 4 files |
 | Phase 97 P01 | 45m | 3 tasks | 7 files (compass-topics-reference.md, 5 CSVs, 282_md_exec_stances.sql) |
 | Phase 97 P03 | 60m | 3 tasks | 17 files (16 CSVs + 284_md_senators_batch_b.sql); 258 stances for SD-16 through SD-31 |
+| Phase 97 P04 | 60m | 3 tasks | 17 files |
