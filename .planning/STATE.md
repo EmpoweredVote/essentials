@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v11.0
 milestone_name: Maryland Essentials
 status: executing
-last_updated: "2026-06-07T08:05:46.716Z"
+last_updated: "2026-06-07T15:59:47.828Z"
 last_activity: 2026-06-07 -- Phase 97 planning complete
 progress:
   total_phases: 9
   completed_phases: 5
   total_plans: 24
-  completed_plans: 20
+  completed_plans: 22
   percent: 56
 ---
 
@@ -22,7 +22,7 @@ Plan: 96-03 complete
 Status: Ready to execute
 Last activity: 2026-06-07 -- Phase 97 planning complete
 
-Progress: [█████████░] 89%
+Progress: [█████████░] 92%
 
 ## Project Reference
 
@@ -94,6 +94,9 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - gen_migration.py generate_migration() groups by name-only (not (name, pid) tuple) — simplified CSV format for MD batches has no politician_id column
 - MD exec UUIDs: Moore=21e534c8, Miller=ea9fc2d6, Brown=60329719, Lierman=b26fb5d2, Davis=75378a96
 - Migration 282 applied: 5 MD execs, 74 total stances in production (Moore=21, Brown=17, Lierman=16, Miller=15, Davis=5)
+- Migration 283 applied: 15 MD senators Batch A (SD-01 through SD-15), 177 stances in production
+- Migration 284 applied: 16 MD senators Batch B (SD-16 through SD-31), 258 stances in production; Q2=0 Q3=0 evidence-only=0
+- Batch B senator UUIDs confirmed from DB; Smith Jr. CSV quoting fix (comma in name requires quoted field)
 
 ### Pending Todos
 
@@ -106,8 +109,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-07T08:35:00Z
-Stopped at: Completed 97-01-PLAN.md — 5 MD exec stances, migration 282 applied
+Last session: 2026-06-07T15:59:47.815Z
+Stopped at: context exhaustion at 76% (2026-06-07)
 Resume file: None
 
 ## Performance Metrics
@@ -125,3 +128,4 @@ Resume file: None
 | Phase 93 P06 | 60min | 3 tasks | 1 files |
 | Phase 95 P01 | 25m | 3 tasks | 4 files |
 | Phase 97 P01 | 45m | 3 tasks | 7 files (compass-topics-reference.md, 5 CSVs, 282_md_exec_stances.sql) |
+| Phase 97 P03 | 60m | 3 tasks | 17 files (16 CSVs + 284_md_senators_batch_b.sql); 258 stances for SD-16 through SD-31 |

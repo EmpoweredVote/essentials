@@ -1020,11 +1020,11 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 97-02-PLAN.md — Migration 283: MD Senators Batch A (SD-01..SD-15, 15 senators); sequential research one agent per senator (MD-STANCES-02)
+- [x] 97-02-PLAN.md — Migration 283: MD Senators Batch A (SD-01..SD-15, 15 senators); sequential research one agent per senator (MD-STANCES-02)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 97-03-PLAN.md — Migration 284: MD Senators Batch B (SD-16..SD-31, 16 senators); sequential research one agent per senator (MD-STANCES-02)
+- [x] 97-03-PLAN.md — Migration 284: MD Senators Batch B (SD-16..SD-31, 16 senators); sequential research one agent per senator (MD-STANCES-02)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -1196,6 +1196,6 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 94. MD Headshots | v11.0 | 2/2 | Complete    | 2026-06-06 |
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 1/2 | In Progress|  |
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
-| 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 1/4 | In Progress|  |
+| 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 3/4 | In Progress|  |
 | 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 0/TBD | Not started | - |
 | 99. MD Verification + Playbook Retrospective | v11.0 | 0/TBD | Not started | - |
