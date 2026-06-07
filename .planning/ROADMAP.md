@@ -1042,7 +1042,36 @@ Plans:
   3. A numbered SQL migration applies all Wave 2 delegate stance values to production; migration is idempotent
   4. The compass renders correctly on spot-checked MD official profiles — at least 3 senators + 3 delegates verified in the UI (MD-STANCES-04 satisfied)
 
-**Plans**: TBD
+**Plans**: 7 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 98-01-PLAN.md — Migration 286: MD Delegates Batch A (HD-1 through HD-7, 21 delegates); sequential research one agent per delegate (MD-STANCES-03)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 98-02-PLAN.md — Migration 287: MD Delegates Batch B (HD-8 through HD-13, 18 delegates incl. Speaker Adrienne A. Jones); sequential research (MD-STANCES-03)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 98-03-PLAN.md — Migration 288: MD Delegates Batch C (HD-14 through HD-20, 21 Montgomery County delegates); sequential research (MD-STANCES-03)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 98-04-PLAN.md — Migration 289: MD Delegates Batch D (HD-21 through HD-27C, 21 delegates incl. Peña-Melnyk ñ-encoding); sequential research (MD-STANCES-03)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
+- [ ] 98-05-PLAN.md — Migration 290: MD Delegates Batch E (HD-28 through HD-33C, 18 delegates incl. Morgan disambiguation); sequential research (MD-STANCES-03)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
+- [ ] 98-06-PLAN.md — Migration 291: MD Delegates Batch F (HD-34 through HD-40, 21 delegates incl. Johnson disambiguation); sequential research (MD-STANCES-03)
+
+**Wave 7** *(blocked on Wave 6 completion)*
+
+- [ ] 98-07-PLAN.md — Migration 292: MD Delegates Batch G (HD-41 through HD-47B, 20 active + 1 vacant placeholder); sequential research + full-phase verification SELECTs + human-verified compass render on 3 senators + 3 delegates (MD-STANCES-03 + MD-STANCES-04)
 
 #### Phase 99: MD Verification + Playbook Retrospective
 
@@ -1197,5 +1226,5 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 1/2 | In Progress|  |
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 4/4 | Complete   | 2026-06-07 |
-| 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 0/TBD | Not started | - |
+| 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 0/7 | In Progress|  |
 | 99. MD Verification + Playbook Retrospective | v11.0 | 0/TBD | Not started | - |
