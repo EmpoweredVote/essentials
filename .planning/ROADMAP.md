@@ -1071,7 +1071,7 @@ Plans:
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
-- [ ] 98-07-PLAN.md — Migration 292: MD Delegates Batch G (HD-41 through HD-47B, 20 active + 1 vacant placeholder); sequential research + full-phase verification SELECTs + human-verified compass render on 3 senators + 3 delegates (MD-STANCES-03 + MD-STANCES-04)
+- [x] 98-07-PLAN.md — Migration 292: MD Delegates Batch G (HD-41 through HD-47B, 20 active + 1 vacant placeholder); sequential research + full-phase verification SELECTs + human-verified compass render on 3 senators + 3 delegates (MD-STANCES-03 + MD-STANCES-04)
 
 #### Phase 99: MD Verification + Playbook Retrospective
 
@@ -1226,5 +1226,5 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 1/2 | In Progress|  |
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 4/4 | Complete   | 2026-06-07 |
-| 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 6/7 | In Progress|  |
+| 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 7/7 | Complete   | 2026-06-07 |
 | 99. MD Verification + Playbook Retrospective | v11.0 | 0/TBD | Not started | - |
