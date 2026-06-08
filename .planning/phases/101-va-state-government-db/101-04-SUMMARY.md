@@ -199,3 +199,18 @@ None - migration applied to production Supabase directly via pg.Pool.
 ---
 *Phase: 101-va-state-government-db*
 *Completed: 2026-06-08*
+
+## Self-Check: PASSED
+
+| Check | Result |
+|-------|--------|
+| SUMMARY.md exists | FOUND |
+| generate_va_house.ps1 exists | FOUND |
+| 308_va_delegates.sql exists | FOUND |
+| _apply-migration-308.ts exists | FOUND |
+| politicians count = 100 | 100 |
+| offices count = 100 | 100 |
+| NULL office_id count = 0 | 0 |
+| HD-20 vacancy verified | Vacant/true/false |
+| Section-split phase gate = 0 rows | 0 |
+| Commit 50e33b7 exists | VERIFIED |
