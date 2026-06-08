@@ -93,15 +93,15 @@ Check this table before starting a new city — proven patterns from prior onboa
 
 | Trap | See Step | One-Line Summary |
 |------|----------|-----------------|
-| Multi-member delegate districts | Step 5, 6 | 47 TIGER SLDL polygons cover 141 delegates; 3 per whole-district polygon; NOT EXISTS guard uses (district_id, politician_id) |
+| Multi-member delegate districts | Step 1, 5 | 47 TIGER SLDL polygons cover 141 delegates; 3 per whole-district polygon; NOT EXISTS guard uses (district_id, politician_id) |
 | A/B subdistrict polygons | Step 5 | Districts with A/B/C suffix have separate polygons; 71 total TIGER polygons (not 47 or 141) |
 | State Treasurer appointed by GA | Step 5 | Treasurer is legislature-elected: is_appointed_position=true, zero race rows; AG/Gov/LG/Comptroller ARE voter-elected |
 | mgaleg headshot URL discovery | Step 4 | Scrape roster page HTML for img src — HEAD probing misses higher suffix numbers (jackson04, young04, harris03) |
 | Compound last-name mgaleg keys | Step 4 | Lewis Young→young04, White Holland→white01, Fraser-Hidalgo→fraser01 — pattern varies; always scrape to confirm |
 | Baltimore City dual-tier | Step 3 | Like SF: returns G4110 (2404000) AND G4020 (24510) — assert BOTH in smoke tests |
-| politician_photos bucket | Step 7 | Upload to 'politician_photos' bucket (NOT 'politician-headshots' — that bucket does not exist); path: {politician_id}-headshot.jpg |
+| politician_photos bucket | Step 4 | Upload to 'politician_photos' bucket (NOT 'politician-headshots' — that bucket does not exist); path: {politician_id}-headshot.jpg |
 | Peña-Melnyk headshot filename | Step 4 | mgaleg uses pena.jpg (strips Melnyk suffix and tilde); Jacobs J. filename has space → URL-encode |
-| MD-GOV-04 NOT EXISTS guard | Step 6 | Multi-member district INSERT must guard on (district_id, politician_id) NOT (district_id, chamber_id) |
+| MD-GOV-04 NOT EXISTS guard | Step 5 | Multi-member district INSERT must guard on (district_id, politician_id) NOT (district_id, chamber_id) |
 | discovery_jurisdictions cron_active | Step 6 | MD discovery_jurisdictions has no cron_active column; date-based eligibility is the correct mechanism |
 
 **Maryland Key Facts:**
