@@ -115,6 +115,8 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ St. Mary's County + Leonardtown deep seed: county commission + town council seeded with headshots — v11.0
 - ✓ MiniCompass compact overlay: dotRadius=2.5 + showLabels=false — v11.0
 
+- ✓ VA TIGER geofences — 511 geofence_boundaries rows for state='51': 227 G4110 cities, 133 G4020 counties/independent cities, 11 G5200 CDs, 40 G5210 senate, 100 G5220 SLDL; Alexandria dual-tier (G4110=5101000 + G4020=51510); Fairfax County + Fairfax city separate G4020 rows; any VA address routes to correct tiers; Gate 7 section-split clean — v12.0
+
 ### Current State: v11.0 Shipped
 
 **v11.0 Shipped 2026-06-08:** Maryland Essentials — 10 phases, 34 plans (24 PASS + 2 DEFER from Phase 90 Plan 03 pending). MD TIGER geofences (307 rows), state government DB (47 senators + 141 delegates + 10 federal officials + 5 execs), 202 headshots, 1516+ compass stances, 130 race rows, discovery pipeline, Leonardtown/St. Mary's County deep seed, MiniCompass compact overlay.
