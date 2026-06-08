@@ -1085,7 +1085,16 @@ Plans:
   3. Maryland Quick Reference block added to the playbook (FIPS 24, legislature URLs, headshot sources, 47/141 district counts)
   4. v11.0 milestone is marked shipped in ROADMAP.md, STATE.md, and PROJECT.md
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 99-01-PLAN.md - Verification sweep + REQUIREMENTS.md cleanup + STATE.md migration counter fix
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 99-02-PLAN.md - LOCATION-ONBOARDING.md MD content + v11.0 milestone close across ROADMAP/STATE/PROJECT
 
 ---
 

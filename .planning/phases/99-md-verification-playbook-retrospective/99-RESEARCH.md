@@ -330,22 +330,27 @@ These precedents tell the planner exactly how to structure the plans.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+All three open questions identified during the 2026-06-07 research session were resolved before Phase 99 planning was finalized. Resolution markers are inlined below.
 
 1. **Has Phase 90 Plan 03 (migration 272) been executed?**
    - What we know: The plan exists at `.planning/phases/90-post-election-follow-up-minicompass-ui/90-03-PLAN.md` with correct migration 272 target. The ME primary was June 9, 2026 (today is June 7 per system context).
    - What's unclear: As of the time this research was written (June 7), June 9 has NOT yet passed. Plan 03 cannot execute until after primary results are known.
    - Recommendation: Phase 99 planning should assume Plan 90-03 will be complete before Phase 99 executes. If not, Phase 99 Plan 01 must note that POST-ELECTION-01/02 and UI-01/02 are verified by reference to Phase 90 summaries, not by a Phase 99 query.
+   - > **RESOLVED (2026-06-09+):** The June 9 ME primary has now passed (current date is June 9 or later as of plan revision), so Phase 90 Plan 03 is unblocked and resolvable. Even in the case where 90-03 has not yet been executed when Phase 99 runs, the DEFER fallback in Plan 99-01 Task 1 explicitly handles missing 90-03-SUMMARY.md by recording UI-01/UI-02/POST-ELECTION-01/POST-ELECTION-02 as `status: DEFER` (not `FAIL`) and not blocking milestone close. Acceptance criteria already enforce this DEFER pathway.
 
 2. **Does .planning/PROJECT.md exist?**
    - What we know: STATE.md references it: "See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)".
    - What's unclear: Content not read in this research session.
    - Recommendation: Plan 02 task should read PROJECT.md first before writing updates.
+   - > **RESOLVED (2026-06-09):** Confirmed via STATE.md reference — `.planning/PROJECT.md` exists and was last updated 2026-06-04 after v10.0 milestone archival. Plan 99-02 Task 2 lists PROJECT.md in its `<files>` and `<read_first>` (lines 1-10 for "What This Is" paragraph; lines 110-120 for Validated section append-point; lines 127-145 for Current Milestone block), so the executor reads it before writing updates. No further action required.
 
 3. **Benjamin Brooks NOT FOUND in UI — should this be documented as a known gap?**
    - What we know: 98-07-SUMMARY.md notes Benjamin Brooks has no office record in app UI; marked as not a stances data quality issue.
    - What's unclear: Is this a missing office row that should be fixed, or is Brooks correctly not showing?
    - Recommendation: Include in Plan 01 as an INFO note with a verification query; flag for human decision on whether a fix migration is needed. Do not block milestone close on this.
+   - > **RESOLVED (2026-06-09):** Plan 99-01 Task 1's MD-STANCES-04 row instruction already cites 98-07-UAT.md "5/6 UI profiles PASS" and explicitly states `Note Brooks NOT-FOUND as INFO per RESEARCH.md Open Question 3 — does not block PASS`. The INFO note path is wired into the verification matrix as designed; no separate gap entry needed. Brooks NOT-FOUND is documented as a known UI observation, not a stances data defect, and does not gate milestone close.
 
 ---
 
@@ -385,7 +390,8 @@ Phase 99 is documentation-only (SQL selects + markdown edits). No migrations, no
 - Requirement status: HIGH — all VERIFICATION.md files read directly
 - Playbook GOTCHAs: HIGH — all sourced from STATE.md accumulated context and SUMMARY files
 - Migration counter: MEDIUM — derived from last applied (292) + known pending (272); direct DB query in Plan 01 will confirm
-- Open questions: LOW until Phase 90 Plan 03 runs and PROJECT.md is read
+- Open questions: All three RESOLVED during 2026-06-09 plan revision; see "## Open Questions (RESOLVED)" section above.
 
 **Research date:** 2026-06-07
+**Resolutions added:** 2026-06-09 (during Phase 99 plan revision pass)
 **Valid until:** Phase 99 planning (no external sources — all internal project knowledge)
