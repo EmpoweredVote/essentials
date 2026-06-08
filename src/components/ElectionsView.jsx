@@ -100,7 +100,9 @@ function deriveCardTitleSubtitle(positionName, districtType) {
     const circuit = circuitMatch ? `${circuitMatch[1]}th Circuit` : '';
     const division = divMatch ? `Division ${divMatch[1]}` : '';
     const subtitle = [circuit, division].filter(Boolean).join(', ');
-    return { title: 'Indiana Circuit Court Judge', subtitle: subtitle || undefined };
+    const courtMatch = pos.match(/^(?:Judge of the\s+)?(.+?Court)/i);
+    const courtTitle = courtMatch ? `${courtMatch[1]} Judge` : 'Circuit Court Judge';
+    return { title: courtTitle, subtitle: subtitle || undefined };
   }
 
   // Positions with comma-separated district: "State Representative, District 60"

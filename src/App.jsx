@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { loadUserAddressFromContext } from "./lib/compass";
 import { usePostHog } from "posthog-js/react";
 import Landing from "./pages/Landing";
@@ -51,6 +51,8 @@ function ElectionsRedirect() {
       } else {
         setTo('/results?prefilled=true&view=elections');
       }
+    }).catch(() => {
+      if (!cancelled) setTo('/results?prefilled=true&view=elections');
     });
     return () => { cancelled = true; };
   }, []);
