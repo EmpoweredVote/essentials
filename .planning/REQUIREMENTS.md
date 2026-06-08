@@ -11,9 +11,9 @@
 
 ### VA-GEO — Virginia Geofences
 
-- [ ] **VA-GEO-01**: VA TIGER geofences loaded — G4110 incorporated places, G4020 counties + independent cities, G5200 CD×11, G5210 SLDU×40, G5220 SLDL×100; state='51' in geofence_boundaries
-- [ ] **VA-GEO-02**: Alexandria independent city dual-tier — geo_id=`5101000` (G4110 place) AND geo_id=`51510` (G4020 county-equivalent) both present; address in Alexandria routes to LOCAL + STATE + NATIONAL tiers correctly
-- [ ] **VA-GEO-03**: Any VA address returns correct federal, state, and city representatives via PostGIS routing (verified end-to-end)
+- [x] **VA-GEO-01**: VA TIGER geofences loaded — G4110 incorporated places, G4020 counties + independent cities, G5200 CD×11, G5210 SLDU×40, G5220 SLDL×100; state='51' in geofence_boundaries
+- [x] **VA-GEO-02**: Alexandria independent city dual-tier — geo_id=`5101000` (G4110 place) AND geo_id=`51510` (G4020 county-equivalent) both present; address in Alexandria routes to LOCAL + STATE + NATIONAL tiers correctly
+- [x] **VA-GEO-03**: Any VA address returns correct federal, state, and city representatives via PostGIS routing (verified end-to-end)
 
 ### VA-GOV — VA State Government
 
