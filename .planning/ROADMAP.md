@@ -1228,8 +1228,8 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 92. MD State Government DB | v11.0 | 2/2 | Complete    | 2026-06-05 |
 | 93. MD Legislature + Federal Officials | v11.0 | 6/6 | Complete    | 2026-06-05 |
 | 94. MD Headshots | v11.0 | 2/2 | Complete    | 2026-06-06 |
-| 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 1/2 | In Progress|  |
+| 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 2/2 | Complete   | 2026-06-06 |
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 4/4 | Complete   | 2026-06-07 |
 | 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 7/7 | Complete    | 2026-06-08 |
-| 99. MD Verification + Playbook Retrospective | v11.0 | 2/2 | Complete | 2026-06-08 |
+| 99. MD Verification + Playbook Retrospective | v11.0 | 2/2 | Complete    | 2026-06-08 |
