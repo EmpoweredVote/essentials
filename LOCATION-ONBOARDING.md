@@ -45,6 +45,8 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Berkeley | CA | 2026-05-22 | rcv (Mayor, City Council, City Auditor) | Socrata loader (NO outSR, field='district' lowercase string); City Attorney APPOINTED; both Mayor and Auditor share single LOCAL_EXEC district; geo_id=0606000; ext_ids -680001..-680017 |
 | Oregon (state) | OR | 2026-05-30 | plurality (state + federal); rcv (Portland City Council, Auditor) | All 5 constitutional officers voter-elected (unlike ME); cd119 TIGER key; sos.oregon.gov Blue Book headshot source (500×623, crop to 4:5); external_ids: exec -4100001..-4100005, US Senators -4101001/-4101002, House -4102001..-4102006, State Senate -4110001..-4110030, House -4120001..-4120060; 241 G4110 cities; oregonlegislature.gov MemberPhotos headshot source (non-obvious filenames with disambiguation suffixes) |
 | Portland | OR | 2026-05-30 | rcv (City Council 12 seats, City Auditor) | 2024 charter reform: 4 districts × 3 seats (RCV); boundaries from PortlandMaps ArcGIS MapServer Layer 17 (NOT TIGER), mtfcc=X0012, outSR=4326+ST_MakeValid required; portland.gov WAF blocks /public/ — use Drupal 1_1_320w style URLs for headshots; gov name 'City of Portland, Oregon, US' (disambiguates from Portland ME); D3+D4+Auditor on 2026 ballot; Mayor+D1+D2 on 2028 ballot; ext_ids -690001..-690004 (citywide) + -690010..-690021 (council D1-D4) |
+| Maryland (state) | MD | 2026-06-08 | plurality | State legislature: 47 Senate + 141 Delegates; 71 SLDL polygons (not 47 or 141 — sub-districts); legislature-elected Treasurer (is_appointed=true); mgaleg.maryland.gov headshot discovery (scrape HTML, not HEAD probe); Baltimore City dual-tier (G4110 + G4020); external_ids exec -240001..-240005, senators -2410001..-2410047, delegates -2420001..-2420141 |
+| Leonardtown | MD | 2026-06-08 | plurality | Tier 1 deep seed (migration 277); Mayor=LOCAL_EXEC + 5 council=LOCAL; mtfcc=NULL on district rows (migration 246 pattern); ext_ids under St. Mary's County government |
 
 ---
 
@@ -85,6 +87,40 @@ Check this table before starting a new city — proven patterns from prior onboa
 
 ---
 
+## Maryland Quick Reference
+
+**Read this before starting any MD city or state work.** These traps are MD-specific — general playbook guidance above does not warn for them.
+
+| Trap | See Step | One-Line Summary |
+|------|----------|-----------------|
+| Multi-member delegate districts | Step 5, 6 | 47 TIGER SLDL polygons cover 141 delegates; 3 per whole-district polygon; NOT EXISTS guard uses (district_id, politician_id) |
+| A/B subdistrict polygons | Step 5 | Districts with A/B/C suffix have separate polygons; 71 total TIGER polygons (not 47 or 141) |
+| State Treasurer appointed by GA | Step 5 | Treasurer is legislature-elected: is_appointed_position=true, zero race rows; AG/Gov/LG/Comptroller ARE voter-elected |
+| mgaleg headshot URL discovery | Step 4 | Scrape roster page HTML for img src — HEAD probing misses higher suffix numbers (jackson04, young04, harris03) |
+| Compound last-name mgaleg keys | Step 4 | Lewis Young→young04, White Holland→white01, Fraser-Hidalgo→fraser01 — pattern varies; always scrape to confirm |
+| Baltimore City dual-tier | Step 3 | Like SF: returns G4110 (2404000) AND G4020 (24510) — assert BOTH in smoke tests |
+| politician_photos bucket | Step 7 | Upload to 'politician_photos' bucket (NOT 'politician-headshots' — that bucket does not exist); path: {politician_id}-headshot.jpg |
+| Peña-Melnyk headshot filename | Step 4 | mgaleg uses pena.jpg (strips Melnyk suffix and tilde); Jacobs J. filename has space → URL-encode |
+| MD-GOV-04 NOT EXISTS guard | Step 6 | Multi-member district INSERT must guard on (district_id, politician_id) NOT (district_id, chamber_id) |
+| discovery_jurisdictions cron_active | Step 6 | MD discovery_jurisdictions has no cron_active column; date-based eligibility is the correct mechanism |
+
+**Maryland Key Facts:**
+- FIPS: 24 (state='24' in geofence_boundaries; districts.state='md' for STATE/COUNTY tiers, 'MD' for NATIONAL)
+- TIGER SLDL: 71 polygons (not 47 or 141 — sub-districts create extra polygons)
+- TIGER SLDU: 47 polygons (1 per senate district)
+- Legislature: 47 senators + 141 delegates (3 per whole district, split for A/B/C sub-districts)
+- Constitutional officers (voter-elected): Governor, LG, AG, Comptroller
+- State Treasurer: General Assembly-elected (is_appointed_position=true; NO race rows)
+- Legislature headshots: mgaleg.maryland.gov/mgaleg-sys/images/officials/{year}/{lastname}{NN}.jpg
+- Executive headshots: governor.maryland.gov official portraits (600x750 standard)
+- Federal headshots: congress.gov primary + Wikimedia Commons fallback
+- External ID scheme: exec -240001..-240005, senators -2410001..-2410047, delegates -2420001..-2420141, US House -2440001..-2440008
+- US senators pre-existed under -400033 (Van Hollen) / -400034 (Alsobrooks)
+- Elections site: elections.maryland.gov
+- Legislature site: mgaleg.maryland.gov
+
+---
+
 ## Step 1: Government Structure Research
 
 Before touching the database, confirm how the city government is structured.
@@ -103,6 +139,8 @@ Before touching the database, confirm how the city government is structured.
 > [GOTCHA] **[STATE-SPECIFIC: CA] CA government row + 8 chambers + 8 politicians may already exist in production:** The State of California government row, all 8 executive chambers, and all 8 executive politicians were seeded before v7.0. Before writing any CA state-level government migration, run: `SELECT id, geo_id FROM essentials.governments WHERE name = 'State of California'`. If it returns a row with `geo_id=NULL`, apply an UPDATE — do not INSERT. CA chamber names use short form ('Governor', not 'California Governor'). CA constitutional officer politician rows also pre-existed under positive external_ids; do not assume the -06000xxx range is empty. Phase 59 migration 189 was written entirely as WHERE NOT EXISTS + UPDATE guards — use this as the CA state-level migration template.
 
 > [GOTCHA] **[STATE-SPECIFIC: OR] Portland 4-district RCV multi-member council structure:** Portland's November 2024 charter reform (effective January 2025) replaced the old 5-seat at-large council with 4 geographic districts × 3 seats each (12 total council seats) elected by RCV. An agent using pre-reform Wikipedia data would model Portland as a 5-seat at-large body with plurality voting — completely wrong. The authoritative roster must come from `portland.gov/auditor/elections/elected-city-officials` (the CONTEXT.md D-06 roster had 9 wrong names). Article 2-201 of the 2024 charter lists only 3 elective offices: Mayor, Auditor, and 12 Councilors. Government name must be `'City of Portland, Oregon, US'` to distinguish from `'City of Portland, Maine, US'` already in DB. Phase 77 confirmed this structure.
+
+> [GOTCHA] **[STATE-SPECIFIC: MD] State Treasurer is elected by the General Assembly — not by voters — AND the delegate count is 141 across 47 districts (3 per polygon):** Maryland's State Treasurer (Dereck Davis) is elected by the General Assembly, not by voters. Modeling this office as voter-elected and creating race rows would display a fake election that does not exist. Set `is_appointed_position=true` on the State Treasurer office row and create zero race rows for that chamber. Maryland Governor, LG, AG, and Comptroller ARE voter-elected — only the Treasurer is legislature-elected; do not copy Maine's pattern of treating the AG as appointed. Separately: the MD House of Delegates has 141 positions across 47 geographic districts — most districts have 3 delegates sharing a single TIGER SLDL polygon. TIGER loads 71 SLDL polygons (whole districts = 1 polygon, A/B/C sub-districts = separate polygons). The NOT EXISTS guard for delegate INSERTs must check `(district_id, politician_id)` — NOT `(district_id, chamber_id)`, which blocks all but the first delegate per district. Phase 92 + Phase 93 confirmed.
 
 ### Schema decisions to record before migrating
 
@@ -233,6 +271,8 @@ Identify what boundary data you need and where to get it.
 
 > [GOTCHA] **[STATE-SPECIFIC: OR] Portland City Hall routes to District 4, not District 1 — always use confirmed DB routing, never assume:** The Portland City Hall coordinate (-122.6794, 45.5231) routes to `portland-or-council-district-4` (District 4). An agent assuming "City Hall = District 1" (e.g., from its proximity to the historic core) would write an incorrect smoke test gate that silently fails. Always commit the confirmed routing result as the smoke test assertion, not a derived assumption. Smoke gate: `ST_Covers(geometry, ST_SetSRID(ST_MakePoint(-122.6794, 45.5231), 4326))` → `portland-or-council-district-4`. Phases 76 and 77 confirmed this value.
 
+> [GOTCHA] **[STATE-SPECIFIC: MD] Baltimore City is a dual-tier entry (G4110 + G4020) — AND the SLDL polygon count is 71, not 47 or 141:** Baltimore City is both a G4110 incorporated place (geo_id=`2404000`) AND a G4020 independent city-county (geo_id=`24510`). Any Baltimore City address lookup returns BOTH rows — similar to SF's consolidated city-county. An assertion of "exactly one local row" or "no G4020 row" for a Baltimore City address will fail incorrectly. Correct assertion: assert BOTH `geo_id='2404000'` (G4110) AND `geo_id='24510'` (G4020) are present for any Baltimore City address. Additionally: the MD House of Delegates has 141 positions but TIGER loads only 71 SLDL polygons. The discrepancy is correct — whole-numbered districts (e.g., District 3, District 8) have one polygon covering all 3 delegates; sub-districts (42A, 42B, 43A, 43B) each get their own polygon. Do not treat the 71/141 mismatch as a data error. Phase 91 confirmed both facts.
+
 **Warning:** Do not assume the city falls in a single house district. Dense urban cities are frequently carved across 4–6 districts.
 
 ---
@@ -266,6 +306,8 @@ Map out where you will get each type of data before starting any migration.
 
 > [GOTCHA] **[STATE-SPECIFIC: OR] portland.gov WAF blocks direct file downloads — use Drupal 1_1_320w style CDN URLs:** Portland official headshots are on portland.gov but direct file paths at `/sites/default/files/public/{year}/{filename}` return HTTP 404. The WAF blocks all direct access to the `/public/` file tree. Standard WebFetch or curl to the `/public/` path fails silently. Use Drupal image style derivative URLs: `/sites/default/files/styles/1_1_320w/public/{year}/{filename}?h=XXXXXXXX&itok=XXXXXXXX`. These CDN URLs return HTTP 200 and provide 320×320 WebP images. Extract the `itok` token from each official's profile page HTML. Record the canonical `/public/` path in `photo_origin_url` for audit trail. Processing: center-crop 320×320 to 256×320 (4:5), then resize to 600×750 Lanczos q90 JPEG. Example: Wilson headshot downloaded from `portland.gov/sites/default/files/styles/1_1_320w/public/2024/Wilson-Blue-Background_0.png?h=...&itok=...`. All 14 Portland elected officials sourced from portland.gov with photo_license='public_domain'. Phase 77-03 confirmed.
 
+> [GOTCHA] **[STATE-SPECIFIC: MD] mgaleg.maryland.gov headshot URL discovery requires HTML scraping — HEAD probing misses delegates with high suffix numbers — AND the headshot bucket is 'politician_photos' (not 'politician-headshots'):** The Maryland General Assembly website hosts official portraits at `https://mgaleg.maryland.gov/mgaleg-sys/images/officials/{year}/{lastname}{NN}.jpg`. The suffix number (e.g., `01`, `03`, `04`) is NOT guessable — HEAD probing misses delegates with higher suffixes (e.g., `jackson04`, `watson04`, `harris03`, `young04`). Always scrape the roster page HTML for the chamber to find actual `img src` values before attempting any download. Compound last-name pattern is inconsistent: Lewis Young→`young04` (final word), White Holland→`white01` (first word), Fraser-Hidalgo→`fraser01` (first word), Palakovich Carr→`palakovich01` (first word), Fry Hester→`hester01` (final word) — always scrape to confirm. Special cases: Joseline Peña-Melnyk → file is `pena.jpg` (strips Melnyk and tilde); Jacobs J. filename has a literal space → URL-encode as `jacobs%20j.jpg`. Headshots upload to the `politician_photos` bucket (NOT `politician-headshots` — that bucket does not exist in this project). Path pattern: `{politician_id}-headshot.jpg`. Phase 93-05 and Phase 94-01 confirmed all patterns.
+
 **Reminder:** LA data richness (LACBA attorney ratings, CJP judicial database, Ethics Commission campaign finance API) is an outlier, not a baseline. Do not plan phases around finding LA-equivalent sources for other cities.
 
 ---
@@ -292,6 +334,8 @@ Make these decisions before writing any SQL. Wrong answers here corrupt the sche
 > [GOTCHA] **[STATE-SPECIFIC: OR] Federal officials may pre-exist under non-canonical external_ids — pre-flight before INSERT:** Ron Wyden (external_id=-400065) and Jeff Merkley (external_id=-400066) already existed in the DB with correct office rows before Phase 74. A standard INSERT migration targeting the canonical -4101001/-4101002 range would silently skip them (NOT EXISTS guard) and leave the canonical external_ids absent. Before any federal officials migration, run: `SELECT external_id, full_name FROM essentials.politicians WHERE full_name IN ('Ron Wyden', 'Jeff Merkley')` (or your state's senators) to detect pre-existing rows. If they pre-exist under different external_ids with correct offices, use UPDATE to reassign external_ids to the canonical scheme rather than INSERT+new office rows. Phase 74-02 confirmed: `UPDATE essentials.politicians SET external_id=-4101001 WHERE external_id=-400065` (Wyden). General rule: pre-flight by senator name before any federal officials migration.
 
 > [GOTCHA] **[STATE-SPECIFIC: CA] CA external_id range -1000xx is occupied by CA Assembly — use -60003xx for CA House reps:** The planned external_id range for CA US House representatives (-100049..-100119) was already occupied by pre-existing CA State Assembly members seeded before v7.0. This caused a duplicate key constraint error on the first migration attempt (Phase 60). Established CA external_id scheme: executive constitutional officers (-6000101 through -6000108); US Senators (-6000201, -6000202); CA House reps (-6000301 through -6000352); CA State Senators (-6001001 through -6001040); CA Assembly members (-6002001 through -6002080); LAUSD board members (-6004001 through -6004007). Pre-flight rule: before assigning any CA external_id range, run `SELECT external_id FROM essentials.politicians WHERE external_id BETWEEN -N AND -M` to confirm the range is clear.
+
+> [GOTCHA] **[STATE-SPECIFIC: MD] Multi-member delegate INSERT NOT EXISTS guard must use (district_id, politician_id) — NOT (district_id, chamber_id):** In the MD House of Delegates, most geographic districts have 3 delegates who all share the same SLDL polygon and thus the same district_id. If the WHERE NOT EXISTS guard checks `(district_id, chamber_id)`, the 2nd and 3rd delegate INSERTs for the same district will be silently blocked — all three delegates share the same chamber_id. The correct guard is `(district_id, politician_id)`, which allows multiple delegates per district but prevents duplicating the same individual. This is identical to the US Senate two-senators-per-district pattern documented elsewhere in this playbook. Example: District 3 has delegates Lafferty (external_id=-2420007), Boafo (-2420008), and Nazarian (-2420009) — all three link to the same district_id. Phase 93-03 confirmed; wrong guard caused all sub-threshold delegates to be silently skipped.
 
 > **Cambridge example:**
 > - geo_id: 2511000 (confirmed against US Census official GEOID documentation)
@@ -345,6 +389,8 @@ Always migrate in this sequence. Skipping steps or migrating out of order create
    → For historical/completed elections: seed as completed with all race_candidates
    → For future elections: seed as upcoming placeholder; do not activate discovery until filing opens
    → [GOTCHA] `race_candidates` has NO unique constraint on `(race_id, full_name)` — use `WHERE NOT EXISTS` guards, not `ON CONFLICT DO NOTHING`. `ON CONFLICT DO NOTHING` is a no-op without a unique constraint and does not prevent duplicate rows.
+
+> [GOTCHA] **[STATE-SPECIFIC: MD] discovery_jurisdictions has NO cron_active column — date-based eligibility is the correct mechanism:** Some states' discovery_jurisdictions rows use `cron_active=true` to arm the discovery cron. Maryland's discovery_jurisdictions rows do NOT have this column — it was never added to the MD rows. The cron fires based on date proximity to the election_date field alone. If you attempt to INSERT or UPDATE a `cron_active` column for MD discovery rows, the query will fail with an unknown column error. Note: REQUIREMENTS.md MD-ELECTIONS-02 text says "cron_active=true" — this wording is stale; the actual MD rows rely on date-based eligibility, not a cron_active flag. Phase 96-03 confirmed via migration 281 (no cron_active column in INSERT).
 
 7. Headshots
    → 600×750 JPEG, Lanczos resize, 4:5 ratio (crop first, then resize — never distort)
@@ -402,6 +448,12 @@ These mistakes have been made on prior cities. Check this list before writing ea
 | OR constitutional officers modeled as appointed (Maine pattern) | All 5 OR officers are voter-elected; is_appointed_position=false and race rows required for all 5 |
 | Portland 2026 races include all 12 council seats | Staggered terms: D3+D4+Auditor on 2026 ballot; Mayor+D1+D2 on 2028 ballot (4-year terms from 2024 charter reform) |
 | OR federal senators pre-exist in DB under legacy external_ids | Pre-flight SELECT by senator name before INSERT; OR senators Wyden (-400065) + Merkley (-400066) already loaded — UPDATE external_id, do not duplicate INSERT |
+| MD multi-member delegate INSERT blocks on 2nd/3rd delegate | Use NOT EXISTS on (district_id, politician_id) NOT (district_id, chamber_id); chamber_id as discriminator blocks all but the first delegate per district |
+| mgaleg headshot suffix not guessable | Scrape roster HTML for actual img src; HEAD probing misses delegates with suffix >01 (e.g., jackson04, young04, harris03) |
+| Baltimore City dual-tier missed in smoke test | Assert BOTH geo_id='2404000' (G4110) AND geo_id='24510' (G4020) for any Baltimore City address; "exactly one local row" assertion fails incorrectly |
+| MD State Treasurer modeled as voter-elected | Treasurer is elected by General Assembly: is_appointed_position=true, zero race rows, no discovery_jurisdictions entry; AG/Gov/LG/Comptroller ARE voter-elected |
+| Upload to wrong MD headshot bucket | Use 'politician_photos' bucket (NOT 'politician-headshots' — that bucket does not exist); path pattern: {politician_id}-headshot.jpg |
+| discovery_jurisdictions cron_active column assumed | MD discovery_jurisdictions has no cron_active column; date-based eligibility is the correct mechanism; REQUIREMENTS.md MD-ELECTIONS-02 text is stale on this point |
 
 ---
 
