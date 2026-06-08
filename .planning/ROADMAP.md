@@ -1090,7 +1090,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 99-01-PLAN.md - Verification sweep + REQUIREMENTS.md cleanup + STATE.md migration counter fix
+- [x] 99-01-PLAN.md - Verification sweep + REQUIREMENTS.md cleanup + STATE.md migration counter fix
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -1236,4 +1236,4 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 4/4 | Complete   | 2026-06-07 |
 | 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 7/7 | Complete    | 2026-06-08 |
-| 99. MD Verification + Playbook Retrospective | v11.0 | 0/TBD | Not started | - |
+| 99. MD Verification + Playbook Retrospective | v11.0 | 1/2 | In Progress|  |
