@@ -131,23 +131,22 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ### v11.0 Shipped 2026-06-08: Maryland Essentials
 
-### Current Milestone: v11.0 Maryland Essentials (Complete)
+### Current Milestone: v12.0 Virginia Essentials
 
-**Goal:** Onboard Maryland at full depth (geofences → government → stances), add a MiniCompass UI improvement, and close post-election follow-ups for ME and CA.
+**Goal:** Onboard Virginia at full depth (geofences → state government → Alexandria deep seed → elections → stances), completing the DC/MD/VA trifecta.
 
 **Target features:**
-- MiniCompass UI — remove titles/labels around the mini-compass; shrink the chart circles by ~50%; optimized for use as a tooltip overlay on candidate tiles
-- MD TIGER geofences — G4110 cities, G4020 counties, SLDU (47 senate), SLDL (141 house), CD (8 congressional)
-- MD state government DB — Governor Moore + LG Miller + AG Brown + Comptroller Lierman + 47 senators + 141 delegates + 2 US senators + 8 US House reps + headshots at 600×750
-- Leonardtown / St. Mary's County deep seed — county commission + town government + officials + available headshots
-- MD 2026 elections — race rows + discovery_jurisdictions armed for cron
-- Compass stances — all MD state officials (sequential, evidence-only, v9.0 OR pattern)
-- Post-election follow-up — ME June 9 primary winners + lavote.gov CA election ID update
-- Landing.jsx MD entry
+- VA TIGER geofences — G4110 cities, G4020 counties/independent cities, SLDU×40, SLDL×100, CD×11; Alexandria independent city dual-tier treatment
+- VA state government DB — Governor Youngkin + LG Earle-Sears + AG Miyares + VA Senate (40) + House of Delegates (100)
+- VA federal officials — Warner + Kaine + 11 US House reps with headshots at 600×750
+- Alexandria deep seed — Mayor Wilson + 6 City Council + ACPS school board (9 members) with headshots
+- Headshots — 600×750 for all officials
+- VA 2026 elections — Governor's race (open seat, Youngkin term-limited) + legislative races + discovery pipeline
+- Compass stances — execs + state officials + Alexandria officials (evidence-only, sequential)
 
 ### Active
 
-- v11.0 Maryland Essentials (in progress)
+- v12.0 Virginia Essentials (in progress)
 
 ### Out of Scope
 
@@ -248,4 +247,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-09 after Phase 99 complete — v11.0 Maryland Essentials shipped*
+*Last updated: 2026-06-08 — v12.0 Virginia Essentials milestone started*

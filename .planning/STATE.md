@@ -1,29 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v11.0
-milestone_name: Maryland Essentials
-status: milestone_complete
-last_updated: 2026-06-08T05:56:51.585Z
-last_activity: 2026-06-09 -- Phase 99 complete; v11.0 Maryland Essentials shipped
+milestone: v12.0
+milestone_name: Virginia Essentials
+status: planning
+last_updated: "2026-06-08T16:11:36.272Z"
+last_activity: 2026-06-08
 progress:
-  total_phases: 10
-  completed_phases: 10
-  total_plans: 34
-  completed_plans: 34
-  percent: 100
-stopped_at: Milestone complete (Phase 99 was final phase)
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 99
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-06-08
-
-Progress: [█████████] 100%
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-06-08 — Milestone v12.0 started
 
 ## Project Reference
 
