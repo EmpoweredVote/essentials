@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, Collin County, TX, Cambridge MA, all of Maine, all of California (7 deep-seeded cities), all of Oregon (Portland deep seed), and Multnomah County, OR including 22 school districts across 4 states. It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources. A cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) documents how to onboard any US city from scratch.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, Collin County, TX, Cambridge MA, all of Maine, all of California (7 deep-seeded cities), all of Oregon (Portland deep seed), Multnomah County, OR including 22 school districts across 4 states, and all of Maryland (St. Mary's County + Leonardtown deep seed). It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources. A cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) documents how to onboard any US city from scratch.
 
 ## Core Value
 
@@ -111,8 +111,13 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ IPS all 7 seats wired + MCCSC D7 updated; 5 ME city school boards seeded — Lewiston/Bangor/South Portland/Auburn/Biddeford (37 officials) — v10.0
 - ✓ MD TIGER geofences — 307 geofence_boundaries rows for state='24': 157 G4110 cities, 24 G4020 counties, 8 G5200 CDs, 47 G5210 senate, 71 G5220 SLDL sub-districts; Baltimore City dual-tier (G4110=2404000 + G4020=24510); any MD address routes to correct tiers; St. Mary's County geo_id=24037 (Phase 95 prerequisite) — v11.0
 - ✓ MD state government foundation — State of Maryland government row asserted (migration 174); 5 constitutional officer chambers (Governor, LG, AG, Comptroller, State Treasurer); 5 executive officials (Wes Moore, Aruna Miller, Anthony G. Brown, Brooke Lierman, Dereck E. Davis) with STATE_EXEC districts, offices, office_id back-fill, and headshots at 600×750; Davis is_appointed=true (D-03); LG has standalone chamber + district (D-01) — v11.0
+- ✓ Maryland state coverage: 307 geofence boundaries; 47 senators + 141 delegates + 10 federal officials; 202 officials with headshots; 1516+ compass stances; 130 race rows + discovery pipeline — v11.0
+- ✓ St. Mary's County + Leonardtown deep seed: county commission + town council seeded with headshots — v11.0
+- ✓ MiniCompass compact overlay: dotRadius=2.5 + showLabels=false — v11.0
 
-### Current State: v11.0 Active
+### Current State: v11.0 Shipped
+
+**v11.0 Shipped 2026-06-08:** Maryland Essentials — 10 phases, 34 plans (24 PASS + 2 DEFER from Phase 90 Plan 03 pending). MD TIGER geofences (307 rows), state government DB (47 senators + 141 delegates + 10 federal officials + 5 execs), 202 headshots, 1516+ compass stances, 130 race rows, discovery pipeline, Leonardtown/St. Mary's County deep seed, MiniCompass compact overlay.
 
 **v10.0 Shipped 2026-06-04:** Multnomah County & School Boards — 7 phases, 22 plans, 33/33 requirements. Multnomah County Board of Commissioners seeded, 5 smaller cities seeded, 6 OR school districts + 6 CA school boards + 5 TX ISDs + IN/ME school boards seeded. G5420 TIGER UNSD school board pattern now established across 4 states.
 
@@ -124,7 +129,9 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Phase 96 complete 2026-06-06:** MD 2026 election cycle fully armed — 2 election rows (primary 2026-06-23, general 2026-11-03) via migration 278; 130 race rows (12 statewide + 47 senate + 71 SLDL house, zero NULL office_ids) via migrations 279+280; 2 discovery_jurisdictions rows arming the cron agent via migration 281; Landing.jsx COVERAGE_CITIES entry added (Leonardtown + St. Mary's County bundled). MD-ELECTIONS-01, MD-ELECTIONS-02, MD-ELECTIONS-03 all complete.
 
-### Current Milestone: v11.0 Maryland Essentials
+### v11.0 Shipped 2026-06-08: Maryland Essentials
+
+### Current Milestone: v11.0 Maryland Essentials (Complete)
 
 **Goal:** Onboard Maryland at full depth (geofences → government → stances), add a MiniCompass UI improvement, and close post-election follow-ups for ME and CA.
 
@@ -241,4 +248,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-06 after Phase 96 (MD 2026 Elections + Discovery + Landing) complete — Maryland Essentials*
+*Last updated: 2026-06-09 after Phase 99 complete — v11.0 Maryland Essentials shipped*

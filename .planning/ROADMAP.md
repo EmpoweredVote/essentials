@@ -15,7 +15,7 @@
 - ✅ **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31) — [archive](milestones/v8.0-ROADMAP.md)
 - ✅ **v9.0 Oregon Legislature Stances** — Phase 82 (shipped 2026-05-31)
 - ✅ **v10.0 Multnomah County & School Boards** — Phases 83–89 (shipped 2026-06-04) — [archive](milestones/v10.0-ROADMAP.md)
-- 🚧 **v11.0 Maryland Essentials** — Phases 90-99 (in progress)
+- ✅ **v11.0 Maryland Essentials** — Phases 90-99 (shipped 2026-06-08) — [archive](milestones/v11.0-ROADMAP.md)
 
 ## Phases
 
@@ -1088,13 +1088,9 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-**Wave 1**
 
-- [x] 99-01-PLAN.md - Verification sweep + REQUIREMENTS.md cleanup + STATE.md migration counter fix
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [ ] 99-02-PLAN.md - LOCATION-ONBOARDING.md MD content + v11.0 milestone close across ROADMAP/STATE/PROJECT
+- [x] 99-01-PLAN.md — Verification sweep + REQUIREMENTS.md cleanup + STATE.md migration counter fix
+- [x] 99-02-PLAN.md — LOCATION-ONBOARDING.md MD content + v11.0 milestone close across ROADMAP/STATE/PROJECT
 
 ---
 
@@ -1236,4 +1232,4 @@ v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92
 | 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
 | 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 4/4 | Complete   | 2026-06-07 |
 | 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 7/7 | Complete    | 2026-06-08 |
-| 99. MD Verification + Playbook Retrospective | v11.0 | 1/2 | In Progress|  |
+| 99. MD Verification + Playbook Retrospective | v11.0 | 2/2 | Complete | 2026-06-08 |
