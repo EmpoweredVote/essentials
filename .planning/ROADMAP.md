@@ -31,7 +31,7 @@
 | # | Phase | Requirements | Goal |
 |---|-------|-------------|------|
 | 100 | 2/2 | Complete    | 2026-06-08 |
-| 101 | VA State Government DB | VA-GOV-01..05 | Spanberger/Hashmi/Jones + 40 senators + 100 delegates seeded |
+| 101 | 4/4 | Complete    | 2026-06-08 |
 | 102 | VA Federal Officials | VA-FED-01, VA-FED-02 | Warner + Kaine + 11 House reps seeded |
 | 103 | Alexandria Deep Seed | VA-DEEP-01..03 | Mayor + Council + ACPS board seeded with headshots |
 | 104 | VA Headshots | VA-GOV-06 | 100% headshot coverage for all VA officials |
