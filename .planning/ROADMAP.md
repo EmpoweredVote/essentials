@@ -30,7 +30,7 @@
 
 | # | Phase | Requirements | Goal |
 |---|-------|-------------|------|
-| 100 | VA TIGER Geofences | VA-GEO-01, VA-GEO-02, VA-GEO-03 | Any VA address routes to correct federal, state, city tiers |
+| 100 | 1/2 | In Progress|  |
 | 101 | VA State Government DB | VA-GOV-01..05 | Spanberger/Hashmi/Jones + 40 senators + 100 delegates seeded |
 | 102 | VA Federal Officials | VA-FED-01, VA-FED-02 | Warner + Kaine + 11 House reps seeded |
 | 103 | Alexandria Deep Seed | VA-DEEP-01..03 | Mayor + Council + ACPS board seeded with headshots |
