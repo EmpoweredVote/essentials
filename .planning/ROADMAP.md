@@ -32,7 +32,7 @@
 |---|-------|-------------|------|
 | 100 | 2/2 | Complete    | 2026-06-08 |
 | 101 | 4/4 | Complete    | 2026-06-08 |
-| 102 | VA Federal Officials | VA-FED-01, VA-FED-02 | Warner + Kaine + 11 House reps seeded |
+| 102 | 1/1 | Complete    | 2026-06-08 |
 | 103 | Alexandria Deep Seed | VA-DEEP-01..03 | Mayor + Council + ACPS board seeded with headshots |
 | 104 | VA Headshots | VA-GOV-06 | 100% headshot coverage for all VA officials |
 | 105 | VA 2026 Elections + Discovery | VA-ELECTIONS-01..03 | Warner Senate + 11 House races + discovery armed |
@@ -110,7 +110,7 @@
 **Plans:** 1 plan
 Plans:
 
-- [ ] 102-01-PLAN.md — Seed 11 VA US House reps via migration 311; assert Warner/Kaine pre-seeded
+- [x] 102-01-PLAN.md — Seed 11 VA US House reps via migration 311; assert Warner/Kaine pre-seeded
 
 ---
 
