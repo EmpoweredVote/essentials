@@ -41,17 +41,20 @@
 ## Phase Details
 
 ### Phase 100: VA TIGER Geofences
+
 **Goal:** Load all Virginia geofence tiers so any VA address routes correctly.
 
 **Requirements:** VA-GEO-01, VA-GEO-02, VA-GEO-03
 
 **Key facts:**
+
 - FIPS 51; verify TIGER loader key at census.gov (likely `cd119` as with OR/MD)
 - Expected: G5200×11, G5210×40, G5220×100, G4110 ~180 cities, G4020 ~133 (95 counties + 38 independent cities)
 - Alexandria dual-tier: geo_id=`5101000` (G4110) + geo_id=`51510` (G4020) — same pattern as Baltimore City
 - districts.state casing: lowercase `va` for STATE/COUNTY, uppercase `VA` for NATIONAL
 
 **Success criteria:**
+
 1. geofence_boundaries rows loaded for all 5 MTFCC types
 2. Alexandria appears twice: 5101000 (G4110) AND 51510 (G4020)
 3. Richmond VA address returns STATE_UPPER + STATE_LOWER + NATIONAL tiers
@@ -60,11 +63,13 @@
 ---
 
 ### Phase 101: VA State Government DB
+
 **Goal:** Seed State of Virginia government — 5 chambers, 3 executives, 40 senators, 100 delegates.
 
 **Requirements:** VA-GOV-01, VA-GOV-02, VA-GOV-03, VA-GOV-04, VA-GOV-05
 
 **Key facts:**
+
 - All 3 executives are voter-elected (no legislature-elected officials) — is_appointed_position=false for all
 - Governor: Abigail Spanberger (D, took office Jan 17 2026)
 - LG: Ghazala Hashmi (D); AG: Jay Jones (D)
@@ -73,6 +78,7 @@
 - STATE_EXEC district_id = empty string (multi-position statewide districts)
 
 **Success criteria:**
+
 1. essentials.governments row for Virginia asserted
 2. 5 chambers seeded
 3. 3 executives with STATE_EXEC districts, is_appointed_position=false
@@ -83,29 +89,39 @@
 ---
 
 ### Phase 102: VA Federal Officials
+
 **Goal:** Seed Warner + Kaine + 11 US House reps.
 
 **Requirements:** VA-FED-01, VA-FED-02
 
 **Key facts:**
+
 - Warner (D) up for re-election Nov 2026; Kaine (D) term ends 2030
 - 11 reps: Wittman (VA-1 R), Kiggans (VA-2 R), Scott (VA-3 D), McClellan (VA-4 D), Cline (VA-5 R), Griffith (VA-6 R), Vindman (VA-7 D), Beyer (VA-8 D), McGuire (VA-9 R), Subramanyam (VA-10 D), Walkinshaw (VA-11 D)
 - Alexandria is in VA-8 (Don Beyer's district)
 - NATIONAL_UPPER uniqueness: (district_id, politician_id) — not (district_id, chamber_id)
 
 **Success criteria:**
+
 1. Warner + Kaine seeded as NATIONAL_UPPER
 2. 11 House reps seeded as NATIONAL_LOWER linked to CD geofences
 3. Alexandria address returns Beyer (VA-8) as US House rep
 
+**Plans:** 1 plan
+Plans:
+
+- [ ] 102-01-PLAN.md — Seed 11 VA US House reps via migration 311; assert Warner/Kaine pre-seeded
+
 ---
 
 ### Phase 103: Alexandria Deep Seed
+
 **Goal:** Seed Alexandria city government and ACPS school board.
 
 **Requirements:** VA-DEEP-01, VA-DEEP-02, VA-DEEP-03
 
 **Key facts:**
+
 - Alexandria is an independent city — no county layer above it
 - Mayor: Alyia Gaskins (LOCAL_EXEC); 6 at-large council (LOCAL): Bagley, Aguirre, Chapman, Elnoubi, Greene, Marks
 - ACPS: 9 board members across 3 school districts; G5420 TIGER UNSD pattern (v10.0)
@@ -113,6 +129,7 @@
 - Headshot sources: alexandriava.gov (council), acps.k12.va.us/school-board/members-of-the-school-board (ACPS)
 
 **Success criteria:**
+
 1. Mayor + 6 council seeded under geo_id=5101000
 2. ACPS 9 board members seeded with SCHOOL district_type
 3. Alexandria address returns LOCAL section with all 7 city officials
@@ -121,34 +138,40 @@
 ---
 
 ### Phase 104: VA Headshots
+
 **Goal:** 100% headshot coverage for all VA state officials.
 
 **Requirements:** VA-GOV-06
 
 **Key facts:**
+
 - House delegates: `https://vga.virginia.gov/delegate_photos/{H0000}.jpg` — clean bulk-fetchable pattern
 - Senate: `https://apps.senate.virginia.gov/Senator/images/member_photos/{LastName}{district}` — no file extension, verify at phase time
 - politician_images.type must be 'default' (not 'headshot')
 - Crop 4:5 first, then resize to 600×750 — never stretch
 
 **Success criteria:**
+
 1. 3 exec + 40 senators + 100 delegates + 2 US senators + 11 House reps = 156 officials with type='default' headshots
 2. Zero missing non-vacant officials on headshot verification query
 
 ---
 
 ### Phase 105: VA 2026 Elections + Discovery
+
 **Goal:** Seed 2026 election rows, Warner Senate + 11 House races, arm discovery, add Landing entry.
 
 **Requirements:** VA-ELECTIONS-01, VA-ELECTIONS-02, VA-ELECTIONS-03
 
 **Key facts:**
+
 - Primary: 2026-08-04; General: 2026-11-03
 - 12 races: 1 US Senate (Warner) + 11 US House (all VA districts)
 - NO state legislature races in 2026 (HoD was Nov 2025, Senate is 2027)
 - Landing.jsx: Alexandria + VA state browse entries
 
 **Success criteria:**
+
 1. 2 election rows in essentials.elections
 2. 12 race rows, all with non-null office_ids
 3. discovery_jurisdictions row active for VA
@@ -157,11 +180,13 @@
 ---
 
 ### Phase 106: VA Compass Stances
+
 **Goal:** Evidence-only compass stances for VA executives, US Senators, Alexandria officials.
 
 **Requirements:** VA-STANCES-01, VA-STANCES-02, VA-STANCES-03
 
 **Key facts:**
+
 - Run ONE politician at a time — never parallel
 - No default values — blank spoke = no evidence found (never Neutral/Likely as fallback)
 - Priority: Spanberger → Hashmi → Jones → Warner → Kaine → Alexandria council
@@ -169,6 +194,7 @@
 - Warner has 18 years Senate record
 
 **Success criteria:**
+
 1. ≥15 stances for Spanberger; ≥10 each for Hashmi and Jones
 2. ≥15 stances each for Warner and Kaine
 3. Best-effort for Alexandria council (skip with no public record = acceptable)
