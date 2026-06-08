@@ -3,1233 +3,203 @@
 ## Milestones
 
 - ✅ **v2.0 Elections Page** - Phases 1-4 (shipped 2026-04-13)
-- ✅ **v2.1 Claude Candidate Discovery** — Phases 5-7 (shipped 2026-04-25) — [archive](milestones/v2.1-ROADMAP.md)
-- 🚧 **v2.2 Data Depth & Admin Tooling** — Phases 8-11 (parked)
-- ✅ **v3.0 Collin County, TX Coverage** — Phases 12-21 (shipped 2026-05-12)
-- ✅ **v3.1 Local Compass Expansion** — Phases 22-25 (shipped 2026-05-05) — [archive](milestones/v3.1-ROADMAP.md)
-- ✅ **v3.2 Legal Candidate Evaluation Framework** — Phases 26-32 (shipped 2026-05-10) — [archive](milestones/v3.2-ROADMAP.md)
-- ✅ **v4.0 Compass Experience** — Phases 33-36 (shipped 2026-05-14) — [archive](milestones/v4.0-ROADMAP.md)
-- ✅ **v5.0 Location Onboarding Playbook** — Phases 37-47 (shipped 2026-05-18) — [archive](milestones/v5.0-ROADMAP.md)
-- ✅ **v6.0 Maine Essentials** — Phases 49-56 (shipped 2026-05-20) — [archive](milestones/v6.0-ROADMAP.md)
-- ✅ **v7.0 California** — Phases 57-70, 78 (shipped 2026-05-29) — [archive](milestones/v7.0-ROADMAP.md)
-- ✅ **v8.0 Oregon** — Phases 72-81 (shipped 2026-05-31) — [archive](milestones/v8.0-ROADMAP.md)
-- ✅ **v9.0 Oregon Legislature Stances** — Phase 82 (shipped 2026-05-31)
-- ✅ **v10.0 Multnomah County & School Boards** — Phases 83–89 (shipped 2026-06-04) — [archive](milestones/v10.0-ROADMAP.md)
-- ✅ **v11.0 Maryland Essentials** — Phases 90-99 (shipped 2026-06-08) — [archive](milestones/v11.0-ROADMAP.md)
-
-## Phases
-
-<details>
-<summary>✅ v2.0 Elections Page (Phases 1-4) - SHIPPED 2026-04-13</summary>
-
-### Phase 1: Backend Left Join + Elections API
-
-**Goal**: Backend returns all races including those with zero filed candidates
-**Plans**: 3 plans
-
-Plans:
-
-- [x] 01-01: LEFT JOIN fix + elections-by-address endpoint
-
-### Phase 2: Connected User Auto-Load
-
-**Goal**: Connected users with a stored jurisdiction see their ballot races immediately on /elections
-**Plans**: 3 plans
-
-Plans:
-
-- [x] 02-01: elections/me endpoint + Connected auto-forward on Elections page
-
-### Phase 3: Elections Page — Full Rendering
-
-**Goal**: All users can see their ballot with correct race grouping, candidate ordering, and three-state race display
-**Plans**: 3 plans
-
-Plans:
-
-- [x] 03-01: ElectionsView.jsx — tier grouping, branch sort, unopposed/empty overlays
-
-### Phase 4: Navigation + Discoverability
-
-**Goal**: Users can reach the Elections page from the landing page and site header
-**Plans**: 3 plans
-
-Plans:
-
-- [x] 04-01: "Upcoming Elections" landing card + "Elections" header nav item
-
-</details>
-
-<details>
-<summary>✅ v2.1 Claude Candidate Discovery (Phases 5-7) — SHIPPED 2026-04-25</summary>
-
-- [x] Phase 5: DB Foundation + Agent Core (4/4 plans) — completed 2026-04-24
-- [x] Phase 6: Admin Review UI + Email + Per-Race Trigger (3/3 plans) — completed 2026-04-25
-- [x] Phase 7: Cron Automation + Auto-Upsert (2/2 plans) — completed 2026-04-25
-
-Full details: [milestones/v2.1-ROADMAP.md](milestones/v2.1-ROADMAP.md)
-
-</details>
+- ✅ **v2.1 Claude Candidate Discovery** - Phases 5-7 (shipped 2026-04-25)
+- ✅ **v3.0 Collin County TX** - Phases 12-21 (shipped 2026-05-12)
+- ✅ **v3.1 Local Compass Expansion** - Phases 22-25 (shipped 2026-05-05)
+- ✅ **v3.2 Legal Candidate Evaluation** - Phases 26-32 (shipped 2026-05-10)
+- ✅ **v4.0 Compass Experience** - Phases 33-36 (shipped 2026-05-14)
+- ✅ **v5.0 Location Onboarding Playbook** - Phases 37-47 (shipped 2026-05-18)
+- ✅ **v6.0 Maine Essentials** - Phases 49-56 (shipped 2026-05-20)
+- ✅ **v7.0 California** - Phases 57-70, 78 (shipped 2026-05-29)
+- ✅ **v8.0 Oregon** - Phases 72-81 (shipped 2026-05-31)
+- ✅ **v9.0 Oregon Legislature Stances** - Phase 82 (shipped 2026-05-31)
+- ✅ **v10.0 Multnomah County & School Boards** - Phases 83-89 (shipped 2026-06-04)
+- ✅ **v11.0 Maryland Essentials** - Phases 90-99 (shipped 2026-06-08)
+- 🔄 **v12.0 Virginia Essentials** - Phases 100-106 (in progress)
 
 ---
 
-### 🚧 v2.2 Data Depth & Admin Tooling (Parked — resume after v3.0)
+# v12.0 Virginia Essentials
 
-**Milestone Goal:** Surface data gaps proactively, make compass work for local politicians, and give admins the tools to manage discovery without touching the terminal.
+**Goal:** Onboard Virginia at full depth — geofences, state government, federal officials, Alexandria deep seed with school board, elections, and compass stances. Completes the DC/MD/VA trifecta.  
+**Phases:** 100–106 (7 phases)  
+**Requirements:** 19  
+**Next migration:** 293
 
-#### Phase 8: Admin Discovery UI + Dashboard
+## Phase Summary
 
-**Goal**: Admins can manage discovery runs and monitor coverage health entirely from the admin UI — no curl, no terminal
-**Depends on**: Phase 7
-**Requirements**: ADMUI-01, ADMUI-02, ADMUI-03, DASH-01, DASH-02, DASH-03
-**Success Criteria** (what must be TRUE):
+| # | Phase | Requirements | Goal |
+|---|-------|-------------|------|
+| 100 | VA TIGER Geofences | VA-GEO-01, VA-GEO-02, VA-GEO-03 | Any VA address routes to correct federal, state, city tiers |
+| 101 | VA State Government DB | VA-GOV-01..05 | Spanberger/Hashmi/Jones + 40 senators + 100 delegates seeded |
+| 102 | VA Federal Officials | VA-FED-01, VA-FED-02 | Warner + Kaine + 11 House reps seeded |
+| 103 | Alexandria Deep Seed | VA-DEEP-01..03 | Mayor + Council + ACPS board seeded with headshots |
+| 104 | VA Headshots | VA-GOV-06 | 100% headshot coverage for all VA officials |
+| 105 | VA 2026 Elections + Discovery | VA-ELECTIONS-01..03 | Warner Senate + 11 House races + discovery armed |
+| 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
 
-  1. Admin can see all discovery_jurisdictions rows in the UI with name, election date, last run status, and last run timestamp
-  2. Admin can trigger a discovery run for any jurisdiction by clicking Run Discovery and sees a spinner while the run is in progress
-  3. Admin can view the full discovery run history with per-run stats (jurisdiction, date/time, candidates found, staged, auto-upserted, status)
-  4. Admin can see per-jurisdiction coverage health showing total races, races with candidates, and races with zero candidates
+## Phase Details
 
-**Plans**: 4 plans
+### Phase 100: VA TIGER Geofences
+**Goal:** Load all Virginia geofence tiers so any VA address routes correctly.
 
-Plans:
+**Requirements:** VA-GEO-01, VA-GEO-02, VA-GEO-03
 
-- [ ] 08-01-PLAN.md — Migration 083 + persist autoUpserted in discoveryService.ts
-- [ ] 08-02-PLAN.md — Backend GET endpoints (jurisdictions, runs, coverage) on JWT-gated router
-- [ ] 08-03-PLAN.md — DiscoveryDashboard.jsx page + adminApi helpers + /admin/discovery route
-- [ ] 08-04-PLAN.md — Human-verify checkpoint for end-to-end UI flow
+**Key facts:**
+- FIPS 51; verify TIGER loader key at census.gov (likely `cd119` as with OR/MD)
+- Expected: G5200×11, G5210×40, G5220×100, G4110 ~180 cities, G4020 ~133 (95 counties + 38 independent cities)
+- Alexandria dual-tier: geo_id=`5101000` (G4110) + geo_id=`51510` (G4020) — same pattern as Baltimore City
+- districts.state casing: lowercase `va` for STATE/COUNTY, uppercase `VA` for NATIONAL
 
-#### Phase 9: Race Completeness Audit
-
-**Goal**: Admins can detect races that exist on the official ballot but are missing from the database, without writing SQL
-**Depends on**: Phase 8
-**Requirements**: AUDIT-01, AUDIT-02, AUDIT-03
-**Success Criteria** (what must be TRUE):
-
-  1. Admin can trigger a race completeness check for a given election from the admin UI
-  2. The audit result lists office names that appear on the official ballot but have no matching row in essentials.races, each with a source citation
-  3. Admin can view completeness audit output in the admin UI without any terminal access or SQL
-
-**Plans**: 3 plans
-
-Plans:
-
-- [ ] 09-01: Race audit backend — fetch authoritative ballot, diff against essentials.races, return missing offices with citations
-- [ ] 09-02: Race audit admin UI — trigger + results display
-
-#### Phase 10: Compass Stances Integration
-
-**Goal**: The political compass renders correctly for local politicians (LA County + Monroe County) whose stances come from research files rather than pre-existing inform.politicians records
-**Depends on**: Phase 8
-**Requirements**: STANCE-01, STANCE-02, STANCE-03, STANCE-04
-**Success Criteria** (what must be TRUE):
-
-  1. Each essentials.politicians record with a stance research file is linked to an inform.politicians record (created if not exists)
-  2. Stance values from research files (1-5 scale) are inserted into inform.politician_answers for all covered compass topics
-  3. The political compass renders correctly on politician pages for LA County and Monroe County politicians sourced via the discovery pipeline
-  4. Admin can run stance ingestion for a batch of politicians from the admin UI without manual SQL or terminal access
-
-**Plans**: 3 plans
-
-Plans:
-
-- [ ] 10-01: Essentials-to-inform bridge — schema mapping, upsert logic for inform.politicians + inform.politician_answers
-- [ ] 10-02: Stance file ingestion — convert research file values, batch ingest ~25 politicians, admin trigger UI
-
-#### Phase 11: Indiana Local Races
-
-**Goal**: Monroe County local races (Commissioner, Clerk, Assessor, Township) are seeded and kept current by the discovery pipeline
-**Depends on**: Phase 10
-**Requirements**: INDIANA-01, INDIANA-02, INDIANA-03
-**Success Criteria** (what must be TRUE):
-
-  1. Monroe County local races (Commissioner, Clerk, Assessor, Township) appear in essentials.races with the correct May 5 2026 Indiana Primary election_id
-  2. Candidates for those races appear in essentials.race_candidates with designations and source
-  3. Monroe County appears in discovery_jurisdictions with the county clerk source URL so the weekly cron will keep it current
-
-**Plans**: 3 plans
-
-Plans:
-
-- [ ] 11-01: Monroe County local races seed + discovery_jurisdictions registration
+**Success criteria:**
+1. geofence_boundaries rows loaded for all 5 MTFCC types
+2. Alexandria appears twice: 5101000 (G4110) AND 51510 (G4020)
+3. Richmond VA address returns STATE_UPPER + STATE_LOWER + NATIONAL tiers
+4. Alexandria address returns LOCAL + STATE + NATIONAL tiers
 
 ---
 
-<details>
-<summary>✅ v3.0 Collin County, TX Coverage (Phases 12-21) — SHIPPED 2026-05-12</summary>
+### Phase 101: VA State Government DB
+**Goal:** Seed State of Virginia government — 5 chambers, 3 executives, 40 senators, 100 delegates.
 
-- [x] Phase 12: TX DB Foundation (4/4 plans) — completed 2026-04-30
-- [x] Phase 13: Tier 1 Officials — Plano + McKinney (2/2 plans) — completed 2026-05-01
-- [x] Phase 14: Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson (3/3 plans) — completed 2026-05-01
-- [x] Phase 15: Tier 3-4 Officials — Remaining 16 Cities (2/2 plans) — completed 2026-05-01
-- [x] Phase 16: Discovery Jurisdiction Setup (2/2 plans) — completed 2026-05-01
-- [x] Phase 17: Headshots (4/4 plans) — completed 2026-05-10
-- [x] Phase 18: Compass Stances (4/4 plans) — completed 2026-05-12
-- [x] Phase 19: TX Congressional Seats + Geofences (5/5 plans) — completed 2026-05-03
-- [x] Phase 20: TX State + Federal Officials — Offices and Headshots (2/2 plans) — completed 2026-05-04
-- [x] Phase 21: TX State Legislature — Boundaries + Officials (5/5 plans) — completed 2026-05-04
+**Requirements:** VA-GOV-01, VA-GOV-02, VA-GOV-03, VA-GOV-04, VA-GOV-05
 
-Full details: [milestones/v3.0-ROADMAP.md](milestones/v3.0-ROADMAP.md)
+**Key facts:**
+- All 3 executives are voter-elected (no legislature-elected officials) — is_appointed_position=false for all
+- Governor: Abigail Spanberger (D, took office Jan 17 2026)
+- LG: Ghazala Hashmi (D); AG: Jay Jones (D)
+- VA Senate: 40 members elected Nov 2023, terms end 2027
+- VA House of Delegates: 100 members elected Nov 2025, 64-36 D majority
+- STATE_EXEC district_id = empty string (multi-position statewide districts)
 
-</details>
-
-<details>
-<summary>✅ v3.1 Local Compass Expansion (Phases 22-25) — SHIPPED 2026-05-05</summary>
-
-- [x] Phase 22: Compass Schema Audit (1/1 plans) — completed 2026-05-04
-- [x] Phase 23: New LOCAL Compass Topics (2/2 plans) — completed 2026-05-05
-- [x] Phase 24: Companion Focused Communities (2/2 plans) — completed 2026-05-05
-- [x] Phase 25: Scope Audit + Retirement (2/2 plans) — completed 2026-05-05
-
-Full details: [milestones/v3.1-ROADMAP.md](milestones/v3.1-ROADMAP.md)
-
-</details>
-
-<details>
-<summary>✅ v3.2 Legal Candidate Evaluation Framework (Phases 26-32) — SHIPPED 2026-05-10</summary>
-
-- [x] Phase 26: Campaign Finance Gap Closure (1/1 plans) — completed 2026-05-07
-- [x] Phase 27: Judicial Compass DB (3/3 plans) — completed 2026-05-06
-- [x] Phase 28: Judicial Compass Frontend + Communities (2/2 plans) — completed 2026-05-07
-- [x] Phase 29: Bar Evaluation Data (3/3 plans) — completed 2026-05-09
-- [x] Phase 30: Legal Candidate Stance Research (3/3 plans) — completed 2026-05-09
-- [x] Phase 31: Legal Donor Activity (4/4 plans) — completed 2026-05-09
-- [x] Phase 32: Legal Profile Page Fixes (1/1 plans) — completed 2026-05-10
-
-Full details: [milestones/v3.2-ROADMAP.md](milestones/v3.2-ROADMAP.md)
-
-</details>
+**Success criteria:**
+1. essentials.governments row for Virginia asserted
+2. 5 chambers seeded
+3. 3 executives with STATE_EXEC districts, is_appointed_position=false
+4. 40 VA senators linked to SLDU districts
+5. 100 VA delegates linked to SLDL districts
+6. Section-split check returns 0 rows
 
 ---
 
-<details>
-<summary>✅ v4.0 Compass Experience (Phases 33-36) — SHIPPED 2026-05-14</summary>
+### Phase 102: VA Federal Officials
+**Goal:** Seed Warner + Kaine + 11 US House reps.
 
-- [x] Phase 33: Local Lens State System (1/1 plans) — completed 2026-05-12
-- [x] Phase 34: Mini Compass Tile Component (3/3 plans) — completed 2026-05-13
-- [ ] Phase 35: Hover Modal (0/TBD) — PARKED (design superseded by spoke tooltips)
-- [x] Phase 36: Global Controls Bar + Compass-Default Mode (3/3 plans) — completed 2026-05-14
+**Requirements:** VA-FED-01, VA-FED-02
 
-Full details: [milestones/v4.0-ROADMAP.md](milestones/v4.0-ROADMAP.md)
+**Key facts:**
+- Warner (D) up for re-election Nov 2026; Kaine (D) term ends 2030
+- 11 reps: Wittman (VA-1 R), Kiggans (VA-2 R), Scott (VA-3 D), McClellan (VA-4 D), Cline (VA-5 R), Griffith (VA-6 R), Vindman (VA-7 D), Beyer (VA-8 D), McGuire (VA-9 R), Subramanyam (VA-10 D), Walkinshaw (VA-11 D)
+- Alexandria is in VA-8 (Don Beyer's district)
+- NATIONAL_UPPER uniqueness: (district_id, politician_id) — not (district_id, chamber_id)
 
-</details>
-
----
-
-<details>
-<summary>✅ v5.0 Location Onboarding Playbook (Phases 37-47) — SHIPPED 2026-05-18</summary>
-
-- [x] Phase 37: Playbook Draft (1/1 plans) — completed 2026-05-16
-- [x] Phase 38: MA Geofences (2/2 plans) — completed 2026-05-16
-- [x] Phase 39: MA Government DB (3/3 plans) — completed 2026-05-16
-- [x] Phase 40: MA Executives + Federal Officials (4/4 plans) — completed 2026-05-16
-- [x] Phase 41: Cambridge City Structure (3/3 plans) — completed 2026-05-17
-- [x] Phase 42: Cambridge Headshots (1/1 plans) — completed 2026-05-17
-- ~~Phase 43: Cambridge Elections~~ — folded into Phase 44 (by design)
-- [x] Phase 44: MA 2026 Elections + Challengers (3/3 plans) — completed 2026-05-17
-- [x] Phase 45: Playbook Retrospective (2/2 plans) — completed 2026-05-17
-- [x] Phase 46: Cambridge Compass Stances (1/1 plans) — completed 2026-05-18
-- [x] Phase 47: v5.0 Tech Debt Cleanup (1/1 plans) — completed 2026-05-18
-
-Full details: [milestones/v5.0-ROADMAP.md](milestones/v5.0-ROADMAP.md)
-
-</details>
-
-<details>
-<summary>✅ v6.0 Maine Essentials (Phases 49-56) — SHIPPED 2026-05-20</summary>
-
-- [x] Phase 49: ME Geofences (2/2 plans) — completed 2026-05-18
-- [x] Phase 50: ME Government DB Foundation (1/1 plans) — completed 2026-05-18
-- [x] Phase 51: ME Executives + Federal Officials + Headshots (3/3 plans) — completed 2026-05-19
-- [x] Phase 52: ME State Legislature + Headshots (3/3 plans) — completed 2026-05-19
-- [x] Phase 53: Portland City Structure + All 23 Cities + Landing (3/3 plans) — completed 2026-05-19
-- [x] Phase 54: ME City Officials Tiers 2-4 (3/3 plans) — completed 2026-05-19
-- [x] Phase 55: ME 2026 Elections + Discovery Pipeline (3/3 plans) — completed 2026-05-20
-- [x] Phase 56: ME Playbook Retrospective (2/2 plans) — completed 2026-05-20
-
-Full details: [milestones/v6.0-ROADMAP.md](milestones/v6.0-ROADMAP.md)
-
-</details>
+**Success criteria:**
+1. Warner + Kaine seeded as NATIONAL_UPPER
+2. 11 House reps seeded as NATIONAL_LOWER linked to CD geofences
+3. Alexandria address returns Beyer (VA-8) as US House rep
 
 ---
 
-<details>
-<summary>✅ v7.0 California (Phases 57-70, 78) — SHIPPED 2026-05-29</summary>
-
-### Phase 57: CA Geofences
-
-**Goal**: Any California address routes correctly to all government tiers — city, county, state legislative, and congressional
-**Depends on**: Phase 56 (established TIGER loader pattern)
-**Requirements**: GEO-01
-**Success Criteria** (what must be TRUE):
-
-  1. A San Francisco address returns LOCAL (G4110 city), COUNTY (G4020), STATE_UPPER (SLDU), STATE_LOWER (SLDL), and NATIONAL_LOWER (CD) boundary rows
-  2. A rural unincorporated address returns G4040 COUSUB + county + legislative + congressional boundaries (no LOCAL gap)
-  3. All 52 congressional districts, 40 senate districts, 80 assembly districts, and 58 counties have boundary rows in geofence_boundaries
-  4. Smoke test: 3 different CA addresses (urban city, suburban city, unincorporated) each return the correct district names with zero NULL tiers
-
-Plans:
-
-- [x] 57-01-PLAN.md — Patch TIGER loader for CA (add county+cousub layers, state-conditional FUNCSTAT, fipsArg=06 pre-flight); load G4020 (58) + G4040 (404 CCDs); SQL gates pass
-- [x] 57-02-PLAN.md — Smoke test 3 CA addresses (SF consolidated, San Diego, East LA unincorporated); document v7.0 target city geo_ids for Phases 63-68
-
-### Phase 58: LAUSD Geofences
-
-**Goal**: LA Unified School District board district boundaries are loaded so any LA address also returns the resident's LAUSD board district
-**Depends on**: Phase 57 (CA geofences foundation)
-**Requirements**: GEO-02
-**Success Criteria** (what must be TRUE):
-
-  1. All 7 LAUSD board district boundaries exist in geofence_boundaries with a distinct mtfcc or district_type that does not collide with city/county tiers
-  2. An LA address within LAUSD territory returns the correct board district row alongside city and county tiers
-  3. An address outside LAUSD territory (e.g. Pasadena Unified) returns no LAUSD row (no false positives)
-
-Plans:
-
-- [x] 58-01-PLAN.md — Source LAUSD district shapefiles; load as distinct geofence type; verify 7 boundaries present
-- [x] 58-02-PLAN.md — Routing integration test: LA address returns LAUSD district; Pasadena address does not
-
-### Phase 59: CA Government DB Foundation
-
-**Goal**: The State of California government row and all constitutional officer chambers exist with correct is_appointed_position flags, ready to receive officials
-**Depends on**: Phase 57
-**Requirements**: GOVDB-01, GOVDB-02
-**Success Criteria** (what must be TRUE):
-
-  1. essentials.governments has a "State of California" row with FIPS-based geo_id
-  2. All CA constitutional officer chambers exist (Governor, Lieutenant Governor, Attorney General, Secretary of State, Controller, Treasurer, Insurance Commissioner, Superintendent of Public Instruction) with correct is_appointed_position per CA constitution
-  3. Governor Newsom + all popularly-elected constitutional officers are seeded as politicians with offices linked to their chambers
-  4. All seeded executives have headshots uploaded to Supabase Storage at 600×750
-
-Plans:
-
-- [ ] 59-01-PLAN.md — Migration: CA government row + all chambers; research CA constitution for appointed vs. elected distinction
-- [ ] 59-02-PLAN.md — Migration: Governor Newsom + constitutional officer politicians + office rows
-- [ ] 59-03-PLAN.md — Headshots: source + upload 600×750 for all CA executives
-
-### Phase 60: CA Executives + Federal Officials
-
-**Goal**: California's 2 US Senators and all 52 US House representatives are seeded with offices linked to the correct NATIONAL districts and have headshots
-**Depends on**: Phase 57 (congressional boundaries loaded)
-**Requirements**: GOVDB-03
-**Success Criteria** (what must be TRUE):
-
-  1. Both CA US Senators (Padilla + Schiff) are seeded with offices linked to the NATIONAL_UPPER district
-  2. All 52 US House representatives are seeded with offices each linked to the correct NATIONAL_LOWER district (CD-01 through CD-52)
-  3. Every federal official has a headshot in Supabase Storage at 600×750
-  4. A lookup for a CA address returns the correct US Representative name matching the congressional district boundary
-
-Plans:
-
-- [x] 60-01-PLAN.md — Migration: 2 CA senators + 52 US House reps + office rows linked to NATIONAL districts
-- [x] 60-02-PLAN.md — Headshots: source + upload 600×750 for all 54 federal officials
-
-### ✅ Phase 61: CA State Legislature — COMPLETE (2026-05-21)
-
-**Goal**: All 80 Assembly members and 40 State Senators are seeded with offices linked to the correct STATE geofence districts and have headshots
-**Depends on**: Phase 57 (SLDL + SLDU boundaries loaded), Phase 59 (chambers exist)
-**Requirements**: GOVDB-04
-**Success Criteria** (what must be TRUE):
-
-  1. All 80 Assembly members are seeded with offices linked to SLDL districts AD-01 through AD-80
-  2. All 40 State Senators are seeded with offices linked to SLDU districts SD-01 through SD-40
-  3. Every legislator has a headshot in Supabase Storage at 600×750
-  4. A lookup for a CA address returns the correct Assembly member and State Senator names matching the district boundaries
-
-Plans:
-
-- [x] 61-01-PLAN.md — Migration 194: 40 CA State Senators + office rows linked to SLDU districts
-- [x] 61-02-PLAN.md — Migration 195: 80 CA Assembly members + office rows linked to SLDL districts
-- [x] 61-03-PLAN.md — Headshots: 120 state legislators at 600×750 uploaded to Supabase Storage
-
-### Phase 62: LA Backlog Closure
-
-**Goal**: The existing LA seed is complete — LAUSD officials are seeded, the Governor race has all filed candidates, the lavote.gov election ID is current, and any city structure gaps are closed
-**Depends on**: Phase 58 (LAUSD geofences), Phase 59 (CA government chambers exist)
-**Requirements**: LA-01, LA-02, LA-03, LA-04
-**Success Criteria** (what must be TRUE):
-
-  1. The CA Governor 2026 race row has all 10 SOS-verified challenger candidates seeded as race_candidates
-  2. The lavote.gov election ID in the database matches the current election cycle (no stale ID)
-  3. All 7 LAUSD board members are seeded with offices linked to LAUSD geofence districts and have headshots at 600×750
-  4. An LA address lookup returns a complete set of local officials — no missing chambers or office gaps visible in the UI
-
-Plans:
-
-- [x] 62-01-PLAN.md — Migration 171 (la_council_votes, unapplied backlog); LA city structure audit + gap-close migration
-- [x] 62-02-PLAN.md — CA Governor challenger candidates migration; lavote.gov election ID update
-- [x] 62-03-PLAN.md — LAUSD board member seed + office rows linked to LAUSD districts; headshots 600×750
-
-**Completed: 2026-05-22** — All 4 success criteria met; 7/7 LAUSD board headshots uploaded; LAUSD Board Member (District N) titles; D2=Rivas/D3=Schmerelson data fix applied; lavote.gov election ID current
-
-### Phase 63: San Francisco Deep Seed
-
-**Goal**: San Francisco is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so an SF address returns a complete local officials list
-**Depends on**: Phase 57 (SF city boundary loaded)
-**Requirements**: CITIES-01
-**Success Criteria** (what must be TRUE):
-
-  1. SF government row exists with chambers for Mayor, Board of Supervisors (11 districts), City Attorney, DA, and any other Tier 1 offices
-  2. All 11 District Supervisors + Mayor + City Attorney + DA are seeded as politicians with linked office rows
-  3. An SF address lookup returns the correct District Supervisor for that address
-  4. All seeded SF officials have headshots at 600×750 in Supabase Storage
-
-**Plans**: 3 plans
-
-Plans:
-
-- [x] 63-01-PLAN.md — SF supervisor geofences (DataSF) + SF government scaffolding (1 government + 10 chambers + 12 districts) + smoke test
-- [x] 63-02-PLAN.md — SF incumbents: 11 supervisors + 7 elected citywide + 2 appointed = 20 politicians and offices (migration 199)
-- [x] 63-03-PLAN.md — SF headshots: source + 600×750 upload for all 20 SF officials (migration 200 captures DB changes)
-
-**Completed: 2026-05-22** — All 4 success criteria met; 20/20 headshots uploaded; SF address lookup returns correct District Supervisor + all citywide officials
-
-### ✅ Phase 64: San Jose Deep Seed — COMPLETE (2026-05-23)
-
-**Goal**: San Jose is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Jose address returns a complete local officials list
-**Depends on**: Phase 57 (San Jose city boundary loaded)
-**Requirements**: CITIES-02
-**Success Criteria** (what must be TRUE):
-
-  1. San Jose government row exists with chambers for Mayor and City Council (10 districts)
-  2. Mayor + all 10 Council Members are seeded as politicians with linked office rows
-  3. A San Jose address lookup returns the correct Council Member for that address
-  4. All seeded San Jose officials have headshots at 600×750 in Supabase Storage
-
-Plans:
-
-- [x] 64-01-PLAN.md — San Jose government structure + chambers + offices
-- [x] 64-02-PLAN.md — San Jose incumbents: Mayor + 10 council members + office links
-- [x] 64-03-PLAN.md — San Jose headshots: source + upload 600×750
-
-**Completed: 2026-05-23** — All 4 success criteria met; 11/11 headshots uploaded; SJ City Hall lookup returns Anthony Tordillos (District 3) + Matt Mahan (Mayor); Mahan Phase 62 duplicate row merged
-
-### ✅ Phase 65: San Diego Deep Seed — COMPLETE (2026-05-22)
-
-**Goal**: San Diego is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a San Diego address returns a complete local officials list
-**Depends on**: Phase 57 (San Diego city boundary loaded)
-**Requirements**: CITIES-03
-**Success Criteria** (what must be TRUE):
-
-  1. San Diego government row exists with chambers for Mayor, City Council (9 districts), City Attorney, and relevant Tier 2-4 offices
-  2. Mayor + all 9 Council Members + City Attorney are seeded as politicians with linked office rows
-  3. A San Diego address lookup returns the correct Council Member for that address
-  4. All seeded San Diego officials have headshots at 600×750 in Supabase Storage
-
-Plans:
-
-- [x] 65-01-PLAN.md — San Diego government structure + chambers + offices
-- [x] 65-02-PLAN.md — San Diego incumbents + office links
-- [x] 65-03-PLAN.md — San Diego headshots: source + upload 600×750
-
-**Completed: 2026-05-22** — All 4 success criteria met; 11/11 headshots uploaded; SD City Hall lookup returns Stephen Whitburn (District 3) + citywide officials (Mayor Gloria + City Attorney Ferbert)
-
-### ✅ Phase 66: Sacramento Deep Seed — COMPLETE (2026-05-28)
-
-**Goal**: Sacramento is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Sacramento address returns a complete local officials list
-**Depends on**: Phase 57 (Sacramento city boundary loaded)
-**Requirements**: CITIES-04
-**Success Criteria** (what must be TRUE):
-
-  1. Sacramento government row exists with chambers for Mayor and City Council (8 districts)
-  2. Mayor + all 8 Council Members are seeded as politicians with linked office rows
-  3. A Sacramento address lookup returns the correct Council Member for that address
-  4. All seeded Sacramento officials have headshots at 600×750 in Supabase Storage
-
-Plans:
-
-- [x] 66-01-PLAN.md — Sacramento government structure + chambers + offices
-- [x] 66-02-PLAN.md — Sacramento incumbents + office links
-- [x] 66-03-PLAN.md — Sacramento headshots: source + upload 600×750
-
-**Completed: 2026-05-28** — All 4 success criteria met; 9 officials seeded; Sacramento address lookup returns correct District Council Member
-
-### ✅ Phase 67: Fremont Deep Seed — COMPLETE (2026-05-22)
-
-**Goal**: Fremont is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Fremont address returns a complete local officials list
-**Depends on**: Phase 57 (Fremont city boundary loaded)
-**Requirements**: CITIES-05
-**Success Criteria** (what must be TRUE):
-
-  1. Fremont government row exists with chambers for Mayor and City Council (at-large or district model confirmed)
-  2. Mayor + all Council Members are seeded as politicians with linked office rows
-  3. A Fremont address lookup returns city officials without routing errors
-  4. All seeded Fremont officials have headshots at 600×750 in Supabase Storage
-
-**Plans:** 3 plans
-
-Plans:
-
-- [x] 67-01-PLAN.md — Council district geofences (X0008, ArcGIS FeatureServer) + government structure + migration 210
-- [x] 67-02-PLAN.md — 7 officials seed (Mayor + 6 council) + section-split check + migration 211
-- [x] 67-03-PLAN.md — Headshots: fremont.gov 403 workaround + Wikipedia fallback (Mayor) + audit-only migration 212
-
-**Completed: 2026-05-22** — All 4 success criteria met; 7/7 headshots uploaded; Fremont City Hall (-121.9886, 37.5483) → fremont-council-district-3 → Kathy Kimberlin (D3); Mayor Raj Salwan linked via LOCAL_EXEC district
-
-### Phase 68: Berkeley Deep Seed
-
-**Goal**: Berkeley is fully seeded — government structure, all Tier 1-4 incumbents, and headshots — so a Berkeley address returns a complete local officials list; RCV election_method flagged for Mayor
-**Depends on**: Phase 57 (Berkeley city boundary loaded)
-**Requirements**: CITIES-06
-**Success Criteria** (what must be TRUE):
-
-  1. Berkeley government row exists with chambers for Mayor and City Council (8 districts + at-large seats per Berkeley charter)
-  2. Mayor + all Council Members are seeded as politicians with linked office rows; Mayor office has election_method='rcv' noted for future elections
-  3. A Berkeley address lookup returns the correct District Council Member for that address
-  4. All seeded Berkeley officials have headshots at 600×750 in Supabase Storage
-
-**Plans:** 3 plans
-
-Plans:
-
-- [x] 68-01-PLAN.md — Socrata loader (X0009) + government structure (3 chambers: Mayor/Council/Auditor, all RCV-flagged) + migration 213 + smoke test
-- [x] 68-02-PLAN.md — 10 officials seed (Mayor + 8 council + Auditor) + section-split check + routing verify + migration 214
-- [x] 68-03-PLAN.md — Headshots: berkeleyca.gov direct URLs (403 User-Agent workaround if needed) + audit-only migration 215
-
-**Completed: 2026-05-22** — All 4 success criteria met; 10/10 headshots uploaded; Berkeley City Hall lookup returns Igor Tregub (District 4) + Mayor Ishii + Auditor Wong; all 3 chambers RCV-flagged for Phase 69
-
-### Phase 69: Landing + Elections + Discovery
-
-**Goal**: All 7 CA cities appear in the coverage map, CA 2026 election rows are seeded, and discovery is armed for the June 3 primary and all covered cities
-**Depends on**: Phases 62-68 (all city seeds complete)
-**Requirements**: CITIES-07, ELECT-01, ELECT-02, ELECT-03, ELECT-04
-**Success Criteria** (what must be TRUE):
-
-  1. Landing.jsx COVERAGE_AREAS includes all 7 CA cities (LA + SF + San Jose + San Diego + Sacramento + Fremont + Berkeley) with correct browseGovernmentList IDs
-  2. CA 2026 primary (June 3) and general (November 4) election rows exist in essentials.elections
-  3. The CA Governor 2026 open-seat race exists with all SOS-verified candidates and cron_active=true discovery armed
-  4. All 52 CA US House 2026 race rows exist (one per CD) with cron_active=true discovery armed
-  5. discovery_jurisdictions rows with cron_active=true exist for all 7 covered CA cities
-
-Plans:
-**Wave 1**
-
-- [x] 69-01-PLAN.md — Landing.jsx COVERAGE_AREAS update for all 7 CA cities
-- [x] 69-02-PLAN.md — CA elections foundation: 2 election rows + Governor race + Governor candidates migration
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 69-03-PLAN.md — CA US House 52 race rows migration + discovery_jurisdictions armed
-- [x] 69-04-PLAN.md — City discovery_jurisdictions rows (7 cities) + smoke test all cron_active rows
-
-### ✅ Phase 70: Compass Stances — COMPLETE (2026-05-29)
-
-**Goal**: Compass stances are ingested for CA constitutional officers, federal officials, and city council members across all 7 CA cities where public record exists
-**Depends on**: Phases 59-68 (all officials seeded), Phase 69 (discovery armed)
-**Requirements**: COMPASS-01, COMPASS-02
-**Success Criteria** (what must be TRUE):
-
-  1. Every CA constitutional officer and US Senator/Rep with a verifiable public stance record has at least one compass answer ingested
-  2. City council officials across all 7 CA cities with discoverable public stance records have compass answers ingested
-  3. All stance ingestion ran one-at-a-time (rate-limit rule honored); no bulk parallel runs
-  4. The compass renders on politician profile pages for at least one official per city without errors
-
-Plans:
-
-- [x] 70-01-PLAN.md — Stance research + ingestion: CA constitutional officers + 2 US Senators (one at a time)
-- [x] 70-02-PLAN.md — Stance research + ingestion: CA US House reps (one at a time, prioritize high-profile districts)
-- [x] 70-03-PLAN.md — Stance research + ingestion: city council officials across all 7 CA cities (one at a time)
-
-**Completed: 2026-05-29** — 965 stances across 68 officials (SF 366, San Diego 164, Berkeley 126, San Jose 133, Sacramento 120, Fremont 56); stored in inform.politician_answers + inform.politician_context; 2 appointed officials (Jenny Wong/Berkeley, Greg Wagner/SF) have 0 stances by design (no public policy record)
-
-### ~~Phase 71: Playbook Retrospective~~ — Folded into Phase 78
-
-### Phase 78: CA Playbook Retrospective
-
-**Goal**: The location onboarding playbook is updated with all CA-specific GOTCHAs discovered during v7.0 so future state onboarding is faster; v7.0 milestone is closed
-**Depends on**: Phases 57-70 (entire v7.0 complete)
-**Requirements**: PLAYBOOK-CA-01
-**Plans**: 2 plans
-**Success Criteria** (what must be TRUE):
-
-  1. LOCATION-ONBOARDING.md has a CA-specific GOTCHA section covering: charter vs. general law city structure differences, RCV cities (SF/Berkeley), TIGER CD key verification for CA, LAUSD sub-district geofence pattern, lavote.gov election ID maintenance, and AEM/CQ5 CMS headshot pattern (Sacramento)
-  2. Any trap encountered during v7.0 phases not already in the playbook is documented with problem + solution + CA example
-  3. The playbook entry is written so a future agent can onboard a new CA city without repeating any v7.0 mistakes
-  4. v7.0 milestone is marked shipped in ROADMAP.md
-
-Plans:
-**Wave 1**
-
-- [x] 78-01-PLAN.md — Playbook update: 7 Cities Onboarded rows + California Quick Reference + 11 CA-specific GOTCHAs inline + 5 Step 7 pitfall rows
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 78-02-PLAN.md — Close v7.0 California milestone across ROADMAP.md, STATE.md, PROJECT.md
-
-</details>
-
-<details>
-<summary>✅ v8.0 Oregon (Phases 72-81) — SHIPPED 2026-05-31</summary>
-
-### Phase 72: Portland, OR (OR Geofences)
-
-**Goal**: Load Oregon (FIPS 41) TIGER 2024 boundaries into PostGIS so any OR address routes to the correct federal, state, and local representatives
-**Depends on**: Phase 57 (established TIGER loader pattern)
-**Requirements**: GEO-OR-01, GEO-OR-02, GEO-OR-03, GEO-OR-04, GEO-OR-05, GEO-OR-06
-**Success Criteria** (what must be TRUE):
-
-  1. 242 G4110 incorporated city boundaries loaded for state='41' (count confirmed by dry-run)
-  2. 36 county (G4020), 30 SLDU senate, 60 SLDL house, 6 CD congressional (cd119 key) boundaries loaded
-  3. A Portland OR address returns G4110 Portland city + G4020 Multnomah County + G5200 OR congressional + G5210 house + G5220 senate
-  4. A rural OR address (Bend) returns no G4110 row; smoke test exits 0 with ALL ASSERTIONS PASSED
-  5. Section-split check returns 0 rows (no orphaned geofence_boundaries without districts rows)
-  6. All 7 SQL verification gates pass; districts.state='or' (lowercase) for all 132 OR district rows
-
-**Plans**: 2 plans
-
-Plans:
-**Wave 1**
-
-- [x] 72-01-PLAN.md — Register OR in TIGER loader (4 config additions) + create verify SQL + smoke test + run all 5 layers
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 72-02-PLAN.md — Run 7 SQL gates + smoke test; confirm Portland/Multnomah geo_ids; document in SUMMARY
-
-### Phase 73: OR Government DB Foundation
-
-**Goal**: All OR state government chambers exist and are ready to receive officials
-**Depends on**: Phase 72 (OR geofences loaded; geo_id='41' government row pre-seeded)
-**Success Criteria** (what must be TRUE):
-
-  1. 7 chamber rows exist under State of Oregon: Governor, Oregon Senate, Oregon House of Representatives, Attorney General, Secretary of State, State Treasurer, Labor Commissioner
-  2. All 7 chambers have is_appointed_position=false (all voter-elected in Oregon)
-  3. Migration is idempotent and verifiable with a count gate
-
-**Plans**:
-
-- [x] 73-01-PLAN.md — Migration: 7 OR chambers under existing State of Oregon government row
-
-### Phase 74: OR Executives + Federal Officials
-
-**Goal**: Oregon's 5 constitutional officers and all 8 federal officials (2 senators + 6 US House reps) are seeded with headshots
-**Depends on**: Phase 73 (OR chambers exist), Phase 72 (NATIONAL_LOWER districts loaded for OR CDs 1-6)
-**Success Criteria** (what must be TRUE):
-
-  1. 5 OR constitutional officers seeded: Governor (Kotek), AG (Rayfield), SoS (Griffin-Valade), Treasurer (Steiner), Labor Commissioner (Stephenson)
-  2. Both OR US Senators (Wyden + Merkley) seeded with offices linked to NATIONAL_UPPER district
-  3. All 6 OR US House reps seeded with offices linked to NATIONAL_LOWER districts CD-01 through CD-06
-  4. All 13 officials have headshots in Supabase Storage at 600×750
-  5. An OR address lookup returns the correct US Representative name matching the congressional district boundary
-
-**Plans**:
-
-- [x] 74-01-PLAN.md — Migration: 5 OR STATE_EXEC districts + 5 executive politicians + offices
-- [x] 74-02-PLAN.md — Migration: 2 OR US Senators + 6 US House reps + offices linked to NATIONAL districts
-- [x] 74-03-PLAN.md — Headshots: source + upload 600×750 for all 13 OR federal + executive officials
-
-### Phase 75: OR State Legislature
-
-**Goal**: All 30 OR State Senators and 60 OR House Representatives are seeded with offices linked to correct STATE districts and have headshots
-**Depends on**: Phase 73 (OR Senate + House chambers exist), Phase 72 (STATE_UPPER/LOWER districts loaded)
-**Success Criteria** (what must be TRUE):
-
-  1. All 30 OR state senators seeded with offices linked to STATE_UPPER districts SD-01 through SD-30
-  2. All 60 OR house reps seeded with offices linked to STATE_LOWER districts HD-01 through HD-60
-  3. All 90 legislators have headshots in Supabase Storage at 600×750
-  4. An OR address lookup returns the correct state senator and house rep for that address
-
-**Plans**:
-**Wave 1**
-
-- [x] 75-01-PLAN.md — Migration: 30 OR State Senators + offices linked to STATE_UPPER districts
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 75-02-PLAN.md — Migration: 60 OR House Reps + offices linked to STATE_LOWER districts
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [x] 75-03-PLAN.md — Headshots: oregonlegislature.gov source + upload 600×750 for all 90 legislators
-
-**Cross-cutting constraints:**
-
-- Migration is idempotent — re-running inserts 0 additional politicians/offices and the UPDATE returns 0
-
-### ✅ Phase 76: Portland City Council District Geofences — COMPLETE 2026-05-29
-
-**Goal**: Portland's 4 new city council districts (2025 charter reform) are loaded as geofences so Portland addresses route to the correct council district
-**Depends on**: Phase 72 (Portland city boundary geo_id='4159000' confirmed)
-**Note**: Portland's 2024 charter reform created 4 multi-member council districts (3 seats each) effective January 2025; these districts are NOT in TIGER and must be sourced from Portland Maps / Socrata ArcGIS
-**Success Criteria** (what must be TRUE):
-
-  1. 4 Portland council district geofences loaded and linked to districts rows under geo_id='4159000'
-  2. A Portland address returns the correct council district (D1-D4)
-  3. Section-split check returns 0 rows
-  4. All 4 district geo_ids confirmed from DB
-
-**Plans**:
-
-- [x] 76-01-PLAN.md — PortlandMaps ArcGIS MapServer Layer 17 per-OBJECTID load (4 districts, X0012, mtfcc) + migration 229 (4 LOCAL districts rows, state=or) + 4-gate smoke test
-
-### ✅ Phase 77: Portland City Structure + Officials — COMPLETE 2026-05-29
-
-**Goal**: Portland is fully seeded — government structure, Mayor, all 12 city council members, City Attorney, City Administrator, and headshots — so a Portland address returns a complete local officials list
-**Depends on**: Phase 76 (Portland council district geofences loaded), Phase 73 (OR government DB exists)
-**Note**: Portland uses 1 chamber for City Council with 12 offices across 4 multi-member districts (3 seats per district, RCV). City Administrator is is_appointed_position=true.
-**Success Criteria** (what must be TRUE):
-
-  1. Portland government row exists with chambers for Mayor, City Council (12 offices across 4 districts), City Attorney, City Auditor, City Administrator
-  2. Mayor Keith Wilson + all 12 council members (from Districts 1-4) + appointed City Attorney (Robert L. Taylor) + City Auditor (Simone Rede) + appointed City Administrator (Raymond C. Lee III) seeded with offices
-  3. A Portland address lookup returns all 3 council members for the matched district plus Mayor
-  4. All elected Portland officials have headshots at 600×750 in Supabase Storage
-
-**Plans**:
-
-- [x] 077-01-PLAN.md — Portland government scaffold: 1 government row + 5 chambers (Mayor, City Council, City Auditor, City Administrator, City Attorney) + 1 LOCAL_EXEC district (migration 230)
-- [x] 077-02-PLAN.md — Portland incumbents: 16 politicians + 16 offices — Mayor Wilson + 12 council (corrected roster) + City Auditor Rede + appointed City Administrator Lee III + appointed City Attorney Taylor (migration 231)
-- [x] 077-03-PLAN.md — Portland headshots: 14 elected officials (Mayor + 12 council + City Auditor) at 600×750 from portland.gov; audit-only migration 232
-
-### Phase 77.1: Fix Phase 77 data: set politicians.is_appointed=true for Lee III and Taylor (INSERTED)
-
-**Goal**: Raymond C. Lee III (City Administrator) and Robert L. Taylor (City Attorney) have `is_appointed=true` set in the politicians table — was omitted during Phase 77 migration
-**Depends on**: Phase 77 (Portland officials seeded)
-**Plans:** 1/1 plans complete
-**Success Criteria** (what must be TRUE):
-
-  1. `politicians.is_appointed = true` for Raymond C. Lee III
-  2. `politicians.is_appointed = true` for Robert L. Taylor
-
-Plans:
-
-- [x] 77.1-01-PLAN.md — Write migration 235 (UPDATE essentials.politicians SET is_appointed=true WHERE external_id IN (-690003, -690004) + ledger entry); apply to Supabase; verify both gates + offices spot-check + idempotency
-
-### Phase 79: OR Landing + Elections + Discovery
-
-**Goal**: Portland appears on the coverage map, OR 2026 election rows are seeded, and discovery is armed for Portland city races and OR state/federal races
-**Depends on**: Phases 72-77 (all OR officials seeded)
-**Plans**: 5 plans
-**Success Criteria** (what must be TRUE):
-
-  1. Landing.jsx COVERAGE_AREAS includes Portland, OR with correct browseGovernmentList ID (geo_id='4159000')
-  2. OR 2026 primary (May 19) and general (November 3) election rows exist in essentials.elections
-  3. OR Governor 2026 race exists with SOS-verified candidates and discovery armed
-  4. OR US House 2026 race rows exist for all 6 CDs with discovery armed
-  5. Portland city council 2026 race rows exist (if any seats are up) with discovery armed
-  6. discovery_jurisdictions rows exist for Portland with cron_active=true (per RESEARCH.md: column does not exist; armed via election_date 180-day cron window)
-
-Plans:
-**Wave 1**
-
-- [x] 79-01-PLAN.md - Landing.jsx Portland OR entry + migration 237 (OR 2026 Primary + General election rows)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 79-02-PLAN.md - Migration 238: 8 OR statewide race rows (Governor + Senate Merkley + 6 US House CDs)
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [x] 79-03-PLAN.md - PowerShell generator + migration 239: 90 OR legislative race rows (30 Senate + 60 House)
-- [x] 79-04-PLAN.md - Migration 240: 7 Portland city race rows (D3x3 + D4x3 + Auditor per RESEARCH.md correction of D-07)
-
-**Wave 4** *(blocked on Wave 3 completion)*
-
-- [x] 79-05-PLAN.md - Migration 241: 2 OR discovery_jurisdictions rows (Portland + statewide) + final phase verification
-
-### Phase 80: OR Compass Stances
-
-**Goal**: Compass stances are ingested for OR constitutional officers, federal officials, and Portland city council members where public record exists
-**Depends on**: Phases 72-79 (all OR officials seeded + discovery armed)
-**Success Criteria** (what must be TRUE):
-
-  1. Every OR constitutional officer and US Senator/Rep with a verifiable public stance record has at least one compass answer ingested
-  2. Portland city council officials with discoverable public stance records have compass answers ingested
-  3. All stance ingestion ran one-at-a-time (rate-limit rule honored); no bulk parallel runs
-  4. The compass renders on politician profile pages for at least one OR official without errors
-
-**Plans**: 4 plans
-
-Plans:
-**Wave 1**
-
-- [x] 80-01-PLAN.md - OR constitutional officers (5): Kotek, Rayfield, Read, Steiner, Stephenson - one-at-a-time research + ingest
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 80-02-PLAN.md - OR US House reps (6): Bonamici, Bentz, Dexter, Hoyle, Bynum, Salinas - one-at-a-time research + ingest
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [x] 80-03-PLAN.md - Portland Mayor + Auditor + 11 council (13 officials) - one-at-a-time research + ingest; D-04/D-03 accept-zero allowed
-
-**Wave 4** *(blocked on Wave 3 completion)*
-
-- [x] 80-04-PLAN.md - Verification: coverage SQL gates + value-range integrity + Kotek compass render check + phase close
-
-### Phase 81: OR Playbook Retrospective + v8.0 Close
-
-**Goal**: The location onboarding playbook is updated with all OR-specific GOTCHAs discovered during v8.0 so future state onboarding is faster; v8.0 milestone is closed
-**Depends on**: Phases 72-80 (entire v8.0 complete)
-**Success Criteria** (what must be TRUE):
-
-  1. LOCATION-ONBOARDING.md has an OR-specific GOTCHA section covering: Portland charter reform 4-district council structure, RCV multi-member districts, Portland council district source (ArcGIS MapServer not TIGER), PowerShell Unicode encoding trap (wrong codepoint for Nguyễn)
-  2. Any trap encountered during v8.0 phases not already in the playbook is documented with problem + solution + OR example
-  3. v8.0 milestone is marked shipped in ROADMAP.md, STATE.md, and PROJECT.md
-
-**Plans**: 2 plans
-
-Plans:
-**Wave 1**
-
-- [x] 81-01-PLAN.md — Playbook update: 2 Cities Onboarded rows (Oregon state + Portland) + Oregon Quick Reference + 9 OR-specific GOTCHAs inline + 4+ Step 7 pitfall rows
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 81-02-PLAN.md — Close v8.0 Oregon milestone across ROADMAP.md, STATE.md, PROJECT.md
-
-</details>
+### Phase 103: Alexandria Deep Seed
+**Goal:** Seed Alexandria city government and ACPS school board.
+
+**Requirements:** VA-DEEP-01, VA-DEEP-02, VA-DEEP-03
+
+**Key facts:**
+- Alexandria is an independent city — no county layer above it
+- Mayor: Alyia Gaskins (LOCAL_EXEC); 6 at-large council (LOCAL): Bagley, Aguirre, Chapman, Elnoubi, Greene, Marks
+- ACPS: 9 board members across 3 school districts; G5420 TIGER UNSD pattern (v10.0)
+- Board Chair: Michelle Rief; VC: Christopher Harris; members: Abdalla, Beaty, Carmichael Booz, Kenley, Reyna, Scioscia, Simpson Baird
+- Headshot sources: alexandriava.gov (council), acps.k12.va.us/school-board/members-of-the-school-board (ACPS)
+
+**Success criteria:**
+1. Mayor + 6 council seeded under geo_id=5101000
+2. ACPS 9 board members seeded with SCHOOL district_type
+3. Alexandria address returns LOCAL section with all 7 city officials
+4. Council headshots at 600×750; ACPS best-effort
 
 ---
 
-### Phase 82: OR State Legislature Compass Stances
+### Phase 104: VA Headshots
+**Goal:** 100% headshot coverage for all VA state officials.
 
-**Goal**: Compass stances are researched and ingested for all 90 OR state legislators (30 senators + 60 house reps), making Oregon the first state with full legislature-wide compass coverage
-**Depends on**: Phase 81 (all 90 OR legislators seeded with politician_ids; OR 2026 elections armed)
-**Requirements**: STANCE-01, STANCE-02, STANCE-03, STANCE-04, QUALITY-01, QUALITY-02, QUALITY-03
-**Success Criteria** (what must be TRUE):
+**Requirements:** VA-GOV-06
 
-  1. At least one compass answer exists in inform.politician_answers for every OR state senator or house rep who has a verifiable public stance on any applicable compass topic — legislators with no discoverable stance record are documented as not-found
-  2. All ingested stance values are integers 1-5 and every row includes a citation URL from public record — no uncited stance values exist in the database for any OR legislator
-  3. A numbered SQL migration (starting at migration 242) applies all stance values to production; the migration is idempotent and includes a ledger entry
-  4. The compass renders correctly on profile pages for at least 3 senator and 3 house rep profiles without errors (human-verified spot-check)
-  5. All stance research agents ran sequentially one-at-a-time; no parallel agent runs occurred during this phase
+**Key facts:**
+- House delegates: `https://vga.virginia.gov/delegate_photos/{H0000}.jpg` — clean bulk-fetchable pattern
+- Senate: `https://apps.senate.virginia.gov/Senator/images/member_photos/{LastName}{district}` — no file extension, verify at phase time
+- politician_images.type must be 'default' (not 'headshot')
+- Crop 4:5 first, then resize to 600×750 — never stretch
 
-**Plans**: 3 plans complete
-
-Plans:
-**Wave 1**
-
-- [x] 82-01-PLAN.md — Stance research + ingestion: all 30 OR state senators (SD-01 through SD-30), one-at-a-time; document not-found legislators; produce migration 242
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 82-02-PLAN.md — Stance research + ingestion: all 60 OR house reps (HD-01 through HD-60), one-at-a-time; document not-found legislators; produce migration 243
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [x] 82-03-PLAN.md — Verification: SQL coverage gates (senator count, house count, value-range 1-5, citation NOT NULL) + spot-check compass render on 3 senator + 3 house rep profiles + phase close
+**Success criteria:**
+1. 3 exec + 40 senators + 100 delegates + 2 US senators + 11 House reps = 156 officials with type='default' headshots
+2. Zero missing non-vacant officials on headshot verification query
 
 ---
 
-<details>
-<summary>✅ v10.0 Multnomah County & School Boards (Phases 83–89) — SHIPPED 2026-06-04</summary>
+### Phase 105: VA 2026 Elections + Discovery
+**Goal:** Seed 2026 election rows, Warner Senate + 11 House races, arm discovery, add Landing entry.
 
-- [x] Phase 83: Multnomah County Government + Routing (2/2 plans) — completed 2026-05-31
-- [x] Phase 84: Multnomah Smaller Cities (3/3 plans) — completed 2026-06-01
-- [x] Phase 85: Multnomah Elections + Discovery (2/2 plans) — completed 2026-06-01
-- [x] Phase 86: Multnomah County School Districts (2/2 plans) — completed 2026-06-02
-- [x] Phase 87: CA City School Boards (5/5 plans) — completed 2026-06-02
-- [x] Phase 88: TX Collin County School Boards (5/5 plans) — completed 2026-06-04
-- [x] Phase 89: IN + ME School Board Completion (3/3 plans) — completed 2026-06-03
+**Requirements:** VA-ELECTIONS-01, VA-ELECTIONS-02, VA-ELECTIONS-03
 
-Full details: [milestones/v10.0-ROADMAP.md](milestones/v10.0-ROADMAP.md)
+**Key facts:**
+- Primary: 2026-08-04; General: 2026-11-03
+- 12 races: 1 US Senate (Warner) + 11 US House (all VA districts)
+- NO state legislature races in 2026 (HoD was Nov 2025, Senate is 2027)
+- Landing.jsx: Alexandria + VA state browse entries
 
-</details>
+**Success criteria:**
+1. 2 election rows in essentials.elections
+2. 12 race rows, all with non-null office_ids
+3. discovery_jurisdictions row active for VA
+4. Landing.jsx shows Virginia entry
 
 ---
 
-### v11.0 Maryland Essentials (Phases 90-99) — IN PROGRESS
-
-#### Phase 90: Post-Election Follow-up + MiniCompass UI
-
-**Goal**: Time-sensitive ME primary follow-up is complete and MiniCompass displays as a clean compact overlay without titles or oversized chart circles
-**Depends on**: Phase 89 (prior milestone complete)
-**Requirements**: POST-ELECTION-01, POST-ELECTION-02, UI-01, UI-02
-**Success Criteria** (what must be TRUE):
-
-  1. ME June 9 primary winners appear as race_candidates in the US Senate general, ME-01 general, and ME-02 general race rows (verifiable via DB query)
-  2. The lavote.gov discovery_jurisdictions row has the updated election ID for the CA November 2026 general cycle
-  3. MiniCompass chart circles are visually ~50% smaller than before — the radar chart fits comfortably inside a candidate tile tooltip without overflow
-  4. No spoke labels, chart title text, or surrounding label elements appear around the MiniCompass in the tooltip overlay
-
-**Plans**: 3 plans
-**UI hint**: yes
-
-Plans:
-**Wave 1**
-
-- [x] 90-01-PLAN.md - ev-ui RadarChartCore: add dotRadius prop + publish patch (UI-01 library work)
-- [ ] 90-03-PLAN.md - Migration 268: ME June 9 primary winners + lavote November 2026 election ID UPDATE (POST-ELECTION-01/02)
-
-**Wave 2** *(blocked on Wave 1 ev-ui publish)*
-
-- [x] 90-02-PLAN.md - Install new ev-ui + MiniCompass.jsx showLabels=false + dotRadius=2.5 + human-verify (UI-01/02 integration)
-
-#### Phase 91: MD TIGER Geofences
-
-**Goal**: Any Maryland address routes correctly to all government tiers — city, county, state legislative, and congressional
-**Depends on**: Phase 90
-**Requirements**: MD-GEO-01, MD-GEO-02, MD-GEO-03, MD-GEO-04, MD-GEO-05, MD-GEO-06
-**Success Criteria** (what must be TRUE):
-
-  1. MD G4110 incorporated city boundaries, G4020 counties (24), SLDU (47 senate), SLDL (141 house), and CD (8 congressional) are loaded into geofence_boundaries with state='24'
-  2. A Baltimore address returns LOCAL (G4110 city) + COUNTY (G4020) + STATE_UPPER (SLDU) + STATE_LOWER (SLDL) + NATIONAL_LOWER (CD) boundary rows
-  3. A rural unincorporated MD address returns county + legislative + congressional tiers without a LOCAL gap
-  4. Section-split check returns 0 rows; districts.state lowercase for COUNTY/STATE tiers, uppercase for NATIONAL tiers
-  5. All layer counts match expected TIGER 2024 totals (pre-flight assertions pass)
-
-**Plans**: 4 plans
-
-Plans:
-**Wave 1**
-
-- [x] 91-01-PLAN.md — Add MD to TIGER loader (4 config additions + EXPECTED_MD_MTFCC block) + create verify-md-tiger-import.sql + smoke-md-geofences.ts
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 91-02-PLAN.md — Dry-run sldl/place layers to confirm actual counts; update TBD sentinels in loader + smoke test
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [x] 91-03-PLAN.md — Live-load all 5 MD TIGER layers; spot-check Baltimore City dual-tier + districts.state casing
-
-**Wave 4** *(blocked on Wave 3 completion)*
-
-- [x] 91-04-PLAN.md — Run 7-gate SQL verification + smoke test; confirm all Phase 91 success criteria (completed 2026-06-05)
-
-#### Phase 92: MD State Government DB
-
-**Goal**: Maryland's state government row, all constitutional officer chambers, State Treasurer (appointed), and 4 elected constitutional officers are seeded with headshots
-**Depends on**: Phase 91 (MD geofences loaded)
-**Requirements**: MD-GOV-01, MD-GOV-02, MD-GOV-06 (executives portion)
-**Success Criteria** (what must be TRUE):
-
-  1. essentials.governments has a State of Maryland row with FIPS-based geo_id ('24')
-  2. Constitutional officer chambers exist: Governor, Lieutenant Governor, Attorney General, Comptroller; State Treasurer chamber has is_appointed_position=true
-  3. Governor Wes Moore + LG Aruna Miller + AG Anthony Brown + Comptroller Brooke Lierman are seeded as politicians with offices linked to their chambers
-  4. All 4 voter-elected executives (Moore, Miller, Brown, Lierman) + 1 legislature-elected executive (Davis) have headshots uploaded to Supabase Storage at 600x750 (D-01 expanded scope from 4 to 5 officials; D-02 seeds State Treasurer in this phase)
-
-**Plans**: 2 plans
-
-Plans:
-**Wave 1**
-
-- [x] 92-01-PLAN.md — Migration 269: pre-flight assert State of Maryland row + 5 chambers (Governor, Lieutenant Governor standalone per D-01, Attorney General, Comptroller, State Treasurer)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 92-02-PLAN.md — Migration 270: 5 STATE_EXEC districts + 5 politicians (Moore/Miller/Brown/Lierman/Davis, external_ids -240001..-240005) + 5 offices + office_id back-fill; headshot processing (Pillow 600x750 q90) + Supabase Storage upload + 5 politician_images rows + audit-only migration 271
-
-#### Phase 93: MD Legislature + Federal Officials
-
-**Goal**: All 47 MD state senators, 141 House delegates, 2 US senators, and 8 US House reps are seeded with offices linked to correct districts and have headshots
-**Depends on**: Phase 92 (MD chambers exist), Phase 91 (SLDU/SLDL/CD boundaries loaded)
-**Requirements**: MD-GOV-03, MD-GOV-04, MD-GOV-05, MD-GOV-06 (legislature + federal portion)
-**Success Criteria** (what must be TRUE):
-
-  1. All 47 MD state senators are seeded with offices linked to STATE_UPPER SLDU districts
-  2. All 141 MD house delegates are seeded with offices linked to STATE_LOWER SLDL districts; multi-member district structure (typically 3 delegates per district, some A/B subdistricts) is correctly modeled
-  3. US Senators Van Hollen + Alsobrooks seeded with NATIONAL_UPPER district; 8 US House reps seeded with NATIONAL_LOWER districts CD-01 through CD-08
-  4. An MD address lookup returns the correct state senator, house delegate(s), and US representative for that address
-  5. Best-effort headshot ingestion attempted for all 192 MD officials (senators + delegates + federal); Phase 94 enforces 100% coverage at 600x750
-
-**Plans**:
-- [x] 93-01-PLAN.md — Migration 272: Maryland Senate + Maryland House of Delegates chambers under State of Maryland government; dual pre-flight assertions (D-07/D-08); idempotent WHERE NOT EXISTS guards; chambers-only (D-02 confirmed no parent STATE_LOWER rows needed)
-- [x] 93-02-PLAN.md — Migration 273: 47 MD state senators + 47 offices linked to STATE_UPPER SLDU districts; office_id back-filled; generate_md_senate.ps1 generator with full 47-entry roster; idempotent
-- [x] 93-03-PLAN.md — Migration 274: 141 MD delegates + 141 offices (140 active + 1 vacant District 42A); generate_md_house.ps1 multi-member generator with NOT EXISTS guard (district_id, politician_id); all 3 integrity gates pass (29 whole × 3 + 6 ABC × 3 + 12 AB × 3 = 141); applied out-of-sequence after 275 (Supabase by name); Joseline Peña-Melnyk ñ encoded correctly; idempotent 2026-06-05
-- [x] 93-04-PLAN.md — Migration 275: 8 MD US House reps (ext -2440001..-2440008) + 8 offices linked to NATIONAL_LOWER districts CD-01..CD-08; pre-flight assertions on MD NATIONAL_UPPER and pre-existing senators (-400033/-400034); office_id back-filled; idempotent; Hoyer MD-05 incumbency confirmed 2026-06-05
-- [x] 93-05-PLAN.md — 47 MD senator headshots ingested (47/47, 0 gaps); all 600x750 Lanczos q90 from mgaleg.maryland.gov official portraits; politician_photos bucket; bucket deviation fixed (plan spec 'politician-headshots' does not exist); roster page scrape for authoritative URLs; idempotent
-
-#### Phase 94: MD Headshots
-
-**Goal**: All MD officials (executives + legislature + federal) have headshots at 600x750 in Supabase Storage — verified and gap-filled
-**Depends on**: Phase 93 (all MD officials seeded)
-**Requirements**: MD-GOV-06
-**Note**: Headshots are sourced during Phases 92 and 93 as part of seeding. This phase is a verification + gap-fill sweep to confirm 100% coverage across all 196 officials.
-**Success Criteria** (what must be TRUE):
-
-  1. Every politician row seeded in Phases 92-93 has a corresponding politician_images row with type='default' and a resolvable Supabase Storage URL
-  2. All headshots are 600x750 JPEG at q90 (no raw originals, no distortion, no text overlays on faces)
-  3. A spot-check of 5+ politician profile pages in the UI renders headshots without browser artifacts
-
-**Plans**: 2 plans
-
-Plans:
-**Wave 1**
-
-- [x] 94-01-PLAN.md — Write & run scripts/md_federal_officials_headshots.py for 10 MD federal officials (Van Hollen + Alsobrooks + 8 House reps); congress.gov primary + Wikimedia fallback; idempotent
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 94-02-PLAN.md — Gap-check query across all 202 non-vacant MD officials + per-chamber sanity-count + human UI spot-check of 5 profile pages (1 per category)
-
-#### ✅ Phase 95: Leonardtown / St. Mary's County Deep Seed — completed 2026-06-06
-
-**Goal**: St. Mary's County and the Town of Leonardtown are fully seeded so a resident there gets a complete local officials list
-**Depends on**: Phase 91 (MD county boundary loaded for St. Mary's)
-**Requirements**: MD-DEEP-01, MD-DEEP-02, MD-DEEP-03
-**Success Criteria** (what must be TRUE):
-
-  1. St. Mary's County government row + Board of County Commissioners chamber exist with the county boundary linked
-  2. Active St. Mary's County Commissioners are seeded as politicians with offices; available headshots at 600x750 in Supabase Storage
-  3. Town of Leonardtown government row + town officials seeded; available headshots uploaded
-  4. A St. Mary's County address lookup returns the County Commissioners for that address without empty-section errors
-
-**Plans**: 2 plans
-
-Plans:
-**Wave 1**
-
-- [x] 95-01-PLAN.md â€” Migrations 276 + 277: St. Mary's County (5 commissioners) + Town of Leonardtown (Mayor + 5 council) â€” government rows, chambers, districts, politicians, offices, office_id back-fill, post-verification DO blocks
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 95-02-PLAN.md â€” scripts/md_local_headshots.py: 11 headshots at 600x750 (5 stmaryscountymd.gov + 6 leonardtown.somd.com with Referer); 11 politician_images rows; human-verify checkpoint on 3+ profile pages + address-lookup spot check
-
-#### Phase 96: MD 2026 Elections + Discovery Pipeline + Landing
-
-**Goal**: Maryland 2026 election rows are seeded, the discovery pipeline is armed for the election cycle, and MD appears on the Landing page
-**Depends on**: Phases 92-93 (MD officials seeded so office_id references are valid)
-**Requirements**: MD-ELECTIONS-01, MD-ELECTIONS-02, MD-ELECTIONS-03
-**Success Criteria** (what must be TRUE):
-
-  1. MD 2026 primary and general election rows exist in essentials.elections
-  2. Governor race + US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 71 SLDL house district scaffold race rows exist (130 total race rows — one row per geo_id, seats=N per D-01; ROADMAP estimate of 198 was one-row-per-seat model superseded by unique constraint)
-  3. discovery_jurisdictions row exists for MD statewide with cron_active=true, armed for the 2026 election cycle
-  4. Landing.jsx COVERAGE_AREAS includes a Maryland entry — Leonardtown city browse + MD state browse
-
-**Plans**: 3 plans
-
-Plans:
-**Wave 1**
-
-- [x] 96-01-PLAN.md - Migration 278: 2 MD election rows (primary 2026-06-23 + general 2026-11-03) — **Complete 2026-06-06**
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 96-02-PLAN.md - Migrations 279 + 280: 12 statewide race rows + 118 legislative scaffold race rows (47 senate + 71 SLDL house) = 130 total MD race rows (ROADMAP-estimate deviation: 130 not 198, see plan) — **Complete 2026-06-06**
-- [x] 96-03-PLAN.md - Migration 281 + Landing.jsx: 2 discovery_jurisdictions rows (no cron_active column - date-based) + Maryland COVERAGE_CITIES entry (Leonardtown + St. Marys County bundled) — **Complete 2026-06-06**
-
-#### Phase 97: MD Compass Stances — Executives + Senators (Wave 1)
-
-**Goal**: Compass stances are researched and ingested for MD constitutional officers and all 47 state senators, one agent at a time, all from public record
-**Depends on**: Phase 93 (all 47 senators seeded with politician_ids)
-**Requirements**: MD-STANCES-01, MD-STANCES-02
-**Success Criteria** (what must be TRUE):
-
-  1. Compass stances exist for Governor Moore + LG Miller + AG Brown + Comptroller Lierman — each with at least one cited answer from verifiable public record
-  2. At least one compass answer exists for every MD state senator who has a discoverable public stance; senators with no public record are documented as not-found
-  3. All ingested stance values are integers 1-5; every row includes a non-null citation URL
-  4. All stance research agents ran sequentially one-at-a-time; no parallel runs
-
-**Plans**: 4 plans
-
-Plans:
-**Wave 1**
-
-- [x] 97-01-PLAN.md — Migration 282: 5 MD execs (Moore + Miller + Brown + Lierman + Davis per D-01); Wave 0 creates compass-topics-reference.md + extends gen_migration.py; sequential research one agent per exec (MD-STANCES-01)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 97-02-PLAN.md — Migration 283: MD Senators Batch A (SD-01..SD-15, 15 senators); sequential research one agent per senator (MD-STANCES-02)
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [x] 97-03-PLAN.md — Migration 284: MD Senators Batch B (SD-16..SD-31, 16 senators); sequential research one agent per senator (MD-STANCES-02)
-
-**Wave 4** *(blocked on Wave 3 completion)*
-
-- [x] 97-04-PLAN.md — Migration 285: MD Senators Batch C (SD-32..SD-47, 16 senators); sequential research one agent per senator; full-phase verification SELECTs (MD-STANCES-02)
-
-#### Phase 98: MD Compass Stances — House Delegates (Wave 2)
-
-**Goal**: Compass stances are researched and ingested for all 141 MD house delegates, one agent at a time, all from public record
-**Depends on**: Phase 97 (Wave 1 senators complete; confirms wave pattern + ingestion procedure working)
-**Requirements**: MD-STANCES-03, MD-STANCES-04
-**Success Criteria** (what must be TRUE):
-
-  1. At least one compass answer exists for every MD house delegate who has a discoverable public stance; delegates with no public record are documented as not-found
-  2. All ingested stance values are integers 1-5; every row includes a non-null citation URL
-  3. A numbered SQL migration applies all Wave 2 delegate stance values to production; migration is idempotent
-  4. The compass renders correctly on spot-checked MD official profiles — at least 3 senators + 3 delegates verified in the UI (MD-STANCES-04 satisfied)
-
-**Plans**: 7 plans
-
-Plans:
-**Wave 1**
-
-- [x] 98-01-PLAN.md — Migration 286: MD Delegates Batch A (HD-1 through HD-7, 21 delegates); sequential research one agent per delegate (MD-STANCES-03)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [x] 98-02-PLAN.md — Migration 287: MD Delegates Batch B (HD-8 through HD-13, 18 delegates incl. Speaker Adrienne A. Jones); sequential research (MD-STANCES-03)
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [x] 98-03-PLAN.md — Migration 288: MD Delegates Batch C (HD-14 through HD-20, 21 Montgomery County delegates); sequential research (MD-STANCES-03)
-
-**Wave 4** *(blocked on Wave 3 completion)*
-
-- [x] 98-04-PLAN.md — Migration 289: MD Delegates Batch D (HD-21 through HD-27C, 21 delegates incl. Peña-Melnyk ñ-encoding); sequential research (MD-STANCES-03)
-
-**Wave 5** *(blocked on Wave 4 completion)*
-
-- [x] 98-05-PLAN.md — Migration 290: MD Delegates Batch E (HD-28 through HD-33C, 18 delegates incl. Morgan disambiguation); sequential research (MD-STANCES-03)
-
-**Wave 6** *(blocked on Wave 5 completion)*
-
-- [x] 98-06-PLAN.md — Migration 291: MD Delegates Batch F (HD-34 through HD-40, 21 delegates incl. Johnson disambiguation); sequential research (MD-STANCES-03)
-
-**Wave 7** *(blocked on Wave 6 completion)*
-
-- [x] 98-07-PLAN.md — Migration 292: MD Delegates Batch G (HD-41 through HD-47B, 20 active + 1 vacant placeholder); sequential research + full-phase verification SELECTs + human-verified compass render on 3 senators + 3 delegates (MD-STANCES-03 + MD-STANCES-04)
-
-#### Phase 99: MD Verification + Playbook Retrospective
-
-**Goal**: v11.0 is verified end-to-end, the playbook is updated with MD-specific GOTCHAs, and the milestone is closed
-**Depends on**: Phases 90-98 (all v11.0 work complete)
-**Requirements**: (cross-cutting verification — all 26 v11.0 requirements pass final gate here)
-**Success Criteria** (what must be TRUE):
-
-  1. All 26 v11.0 requirements pass a final verification query or UI spot-check; zero open gaps
-  2. LOCATION-ONBOARDING.md is updated with MD-specific GOTCHAs (multi-member delegate districts, A/B subdistrict handling, State Treasurer appointed-by-General-Assembly pattern, MD headshot source patterns)
-  3. Maryland Quick Reference block added to the playbook (FIPS 24, legislature URLs, headshot sources, 47/141 district counts)
-  4. v11.0 milestone is marked shipped in ROADMAP.md, STATE.md, and PROJECT.md
-
-**Plans**: 2 plans
-
-Plans:
-
-- [x] 99-01-PLAN.md — Verification sweep + REQUIREMENTS.md cleanup + STATE.md migration counter fix
-- [x] 99-02-PLAN.md — LOCATION-ONBOARDING.md MD content + v11.0 milestone close across ROADMAP/STATE/PROJECT
+### Phase 106: VA Compass Stances
+**Goal:** Evidence-only compass stances for VA executives, US Senators, Alexandria officials.
+
+**Requirements:** VA-STANCES-01, VA-STANCES-02, VA-STANCES-03
+
+**Key facts:**
+- Run ONE politician at a time — never parallel
+- No default values — blank spoke = no evidence found (never Neutral/Likely as fallback)
+- Priority: Spanberger → Hashmi → Jones → Warner → Kaine → Alexandria council
+- Spanberger has rich record (former US House rep VA-7, 2019-2025)
+- Warner has 18 years Senate record
+
+**Success criteria:**
+1. ≥15 stances for Spanberger; ≥10 each for Hashmi and Jones
+2. ≥15 stances each for Warner and Kaine
+3. Best-effort for Alexandria council (skip with no public record = acceptable)
+4. 100% citation rate — zero uncited stance values
+5. Compass renders on Spanberger profile
 
 ---
 
-## Backlog
+## Coverage Matrix
 
-These are known gaps that are not yet scoped into a milestone.
+| Req | Phase |
+|-----|-------|
+| VA-GEO-01 | 100 |
+| VA-GEO-02 | 100 |
+| VA-GEO-03 | 100 |
+| VA-GOV-01 | 101 |
+| VA-GOV-02 | 101 |
+| VA-GOV-03 | 101 |
+| VA-GOV-04 | 101 |
+| VA-GOV-05 | 101 |
+| VA-FED-01 | 102 |
+| VA-FED-02 | 102 |
+| VA-GOV-06 | 104 |
+| VA-DEEP-01 | 103 |
+| VA-DEEP-02 | 103 |
+| VA-DEEP-03 | 103 |
+| VA-ELECTIONS-01 | 105 |
+| VA-ELECTIONS-02 | 105 |
+| VA-ELECTIONS-03 | 105 |
+| VA-STANCES-01 | 106 |
+| VA-STANCES-02 | 106 |
+| VA-STANCES-03 | 106 |
 
-### ✅ Phase 48: MA Towns (G4040 COUSUB Boundaries) — COMPLETE 2026-05-18
-
-**Goal**: Load G4040 COUSUB boundaries for all 293 MA towns (Lexington, Concord, Belmont, etc.) so non-city MA residents get a LOCAL boundary row and city officials routing
-**Depends on**: Phase 38 (MA TIGER loader established)
-**Note**: Cambridge (G4110) and all 57 other MA incorporated cities are already covered. This phase extends coverage to the 293 towns that use G4040 COUSUB instead of G4110 in TIGER.
-**Plans**: 3 plans
-
-Plans:
-
-- [x] 48-01-PLAN.md — Add cousub to loader; run load (293 MA towns)
-- [x] 48-02-PLAN.md — Verification SQL gates + Lexington/Concord smoke test
-- [x] 48-03-PLAN.md — Cambridge district_id back-fill (gap closure: address lookup now returns local officials)
-
-### Data Gaps (accounts team backlog)
-
-- Migration 171 (171_la_council_votes.sql) — unapplied; folded into Phase 62
-- Migration 182 (legacy views drop) — verify applied status before Phase 62 work
-
----
-
-## Progress
-
-**Execution Order:**
-v2.2 (parked): 8 → 9 → 10 → 11
-v3.0: 12 → 13 → 14 → 15 (and 12 → 16 in parallel) → 17 (after 14) → 18 (after 13)
-v3.1: 22 → 23 → 24 → 25 (25 gated on 22 retirement decision)
-v3.2: 26 → 27 → 28 (after 27) → 29 (after 27) → 30 (after 27) → 31 (after 29) → 32 (after 28+31)
-v5.0: 37 → 38+39 (parallel) → 40 (after 38+39) → 41 (after 39) → 42 (after 41) → 44 (after 41+38) → 45 (after 44) → 46 (when accounts team delivers stances) → 47 (cleanup, after 46)
-v6.0: 49 → 50 (after 49) → 51+52 (parallel, both after 50) → 53 (after 49+50) → 54+55 (parallel, both after 53) → 56 (after all)
-v7.0: 57 → 58 (after 57) → 59+60 (parallel, both after 57) → 61 (after 57+59) → 62 (after 58+59) → 63→64→65→66→67→68 (each after 57; sequential by convention) → 69 (after 62-68) → 70 (after 69) → 78 (after 70; replaces 71)
-v9.0: 82-01 → 82-02 (after 82-01) → 82-03 (after 82-02)
-v10.0: 83 → 84 (after 83) → 85 (after 83+84) → 86 (after 83) → 87 (after 63-68) → 88 (after 12) → 89 (independent)
-v11.0: 90 → 91 (after 90) → 92+95 (parallel, both after 91) → 93 (after 92) → 94 (after 93) → 96 (after 93+95) → 97 (after 93) → 98 (after 97) → 99 (after all)
-
-| Phase | Milestone | Plans Complete | Status | Completed |
-|-------|-----------|----------------|--------|-----------|
-| 1. Backend Left Join + Elections API | v2.0 | 1/1 | Complete | 2026-04-13 |
-| 2. Connected User Auto-Load | v2.0 | 1/1 | Complete | 2026-04-13 |
-| 3. Elections Page — Full Rendering | v2.0 | 1/1 | Complete | 2026-04-13 |
-| 4. Navigation + Discoverability | v2.0 | 1/1 | Complete | 2026-04-13 |
-| 5. DB Foundation + Agent Core | v2.1 | 4/4 | Complete | 2026-04-24 |
-| 6. Admin Review UI + Email + Per-Race Trigger | v2.1 | 3/3 | Complete | 2026-04-25 |
-| 7. Cron Automation + Auto-Upsert | v2.1 | 2/2 | Complete | 2026-04-25 |
-| 8. Admin Discovery UI + Dashboard | v2.2 | 0/4 | Parked | - |
-| 9. Race Completeness Audit | v2.2 | 0/2 | Parked | - |
-| 10. Compass Stances Integration | v2.2 | 0/2 | Parked | - |
-| 11. Indiana Local Races | v2.2 | 0/1 | Parked | - |
-| 12. TX DB Foundation | v3.0 | 4/4 | Complete | 2026-04-30 |
-| 13. Tier 1 Officials — Plano + McKinney | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 14. Tier 2 Officials — Allen, Frisco, Murphy, Celina, Prosper, Richardson | v3.0 | 3/3 | Complete | 2026-05-01 |
-| 15. Tier 3-4 Officials — Remaining 16 Cities | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 16. Discovery Jurisdiction Setup | v3.0 | 2/2 | Complete | 2026-05-01 |
-| 17. Headshots | v3.0 | 4/4 | Complete | 2026-05-10 |
-| 18. Compass Stances | v3.0 | 4/4 | Complete | 2026-05-12 |
-| 19. TX Congressional Seats + Geofences | v3.0 | 5/5 | Complete | 2026-05-03 |
-| 20. TX State + Federal Officials — Offices and Headshots | v3.0 | 2/2 | Complete | 2026-05-04 |
-| 21. TX State Legislature — Boundaries + Officials | v3.0 | 5/5 | Complete | 2026-05-04 |
-| 22. Compass Schema Audit | v3.1 | 1/1 | Complete | 2026-05-04 |
-| 23. New LOCAL Compass Topics | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 24. Companion Focused Communities | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 25. Scope Audit + Retirement | v3.1 | 2/2 | Complete | 2026-05-05 |
-| 26. Campaign Finance Gap Closure | v3.2 ✅ | 1/1 | Complete | 2026-05-07 |
-| 27. Judicial Compass DB | v3.2 ✅ | 3/3 | Complete | 2026-05-06 |
-| 28. Judicial Compass Frontend + Communities | v3.2 ✅ | 2/2 | Complete | 2026-05-07 |
-| 29. Bar Evaluation Data | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
-| 30. Legal Candidate Stance Research | v3.2 ✅ | 3/3 | Complete | 2026-05-09 |
-| 31. Legal Donor Activity | v3.2 ✅ | 4/4 | Complete | 2026-05-09 |
-| 32. Legal Profile Page Fixes | v3.2 ✅ | 1/1 | Complete | 2026-05-10 |
-| 33. Local Lens State System | v4.0 ✅ | 1/1 | Complete | 2026-05-12 |
-| 34. Mini Compass Tile Component | v4.0 ✅ | 3/3 | Complete | 2026-05-13 |
-| 35. Hover Modal — Full Compass | v4.0 ✅ | 0/TBD | Parked | - |
-| 36. Global Controls + Compass Default | v4.0 ✅ | 3/3 | Complete | 2026-05-14 |
-| 37. Playbook Draft | v5.0 | 1/1 | Complete | 2026-05-16 |
-| 38. MA Geofences | v5.0 | 2/2 | Complete | 2026-05-16 |
-| 39. MA Government DB | v5.0 | 3/3 | Complete | 2026-05-16 |
-| 40. MA Executives + Federal Officials | v5.0 | 4/4 | Complete | 2026-05-16 |
-| 41. Cambridge City Structure | v5.0 | 3/3 | Complete | 2026-05-17 |
-| 42. Cambridge Headshots | v5.0 | 1/1 | Complete | 2026-05-17 |
-| ~~43. Cambridge Elections~~ | v5.0 | - | Folded into Phase 44 | 2026-05-17 |
-| 44. MA 2026 Elections + Challengers | v5.0 | 3/3 | Complete | 2026-05-17 |
-| 45. Playbook Retrospective | v5.0 | 2/2 | Complete | 2026-05-17 |
-| 46. Cambridge Compass Stances | v5.0 | 1/1 | Complete | 2026-05-18 |
-| 47. v5.0 Tech Debt Cleanup | v5.0 | 1/1 | Complete | 2026-05-18 |
-| 48. MA Towns (G4040 COUSUB) | v5.1+ | 3/3 | Complete | 2026-05-18 |
-| 49. ME Geofences | v6.0 | 2/2 | Complete | 2026-05-18 |
-| 50. ME Government DB Foundation | v6.0 | 1/1 | Complete | 2026-05-18 |
-| 51. ME Executives + Federal Officials + Headshots | v6.0 | 3/3 | Complete | 2026-05-19 |
-| 52. ME State Legislature + Headshots | v6.0 | 3/3 | Complete | 2026-05-19 |
-| 53. Portland City Structure + All 23 Cities + Landing | v6.0 | 3/3 | Complete | 2026-05-19 |
-| 54. ME City Officials Tiers 2-4 | v6.0 | 3/3 | Complete | 2026-05-19 |
-| 55. ME 2026 Elections + Discovery Pipeline | v6.0 | 3/3 | Complete | 2026-05-20 |
-| 56. ME Playbook Retrospective | v6.0 | 2/2 | Complete | 2026-05-20 |
-| 57. CA Geofences | v7.0 | 2/2 | Complete | 2026-05-21 |
-| 58. LAUSD Geofences | v7.0 | 2/2 | Complete | 2026-05-21 |
-| 59. CA Government DB Foundation | v7.0 | 3/3 | Complete | 2026-05-21 |
-| 60. CA Executives + Federal Officials | v7.0 | 2/2 | Complete | 2026-05-21 |
-| 61. CA State Legislature | v7.0 | 3/3 | Complete | 2026-05-21 |
-| 62. LA Backlog Closure | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 63. San Francisco Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 64. San Jose Deep Seed | v7.0 | 3/3 | Complete | 2026-05-23 |
-| 65. San Diego Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 66. Sacramento Deep Seed | v7.0 | 3/3 | Complete | 2026-05-28 |
-| 67. Fremont Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 68. Berkeley Deep Seed | v7.0 | 3/3 | Complete | 2026-05-22 |
-| 69. Landing + Elections + Discovery | v7.0 | 4/4 | Complete | 2026-05-28 |
-| 70. Compass Stances | v7.0 | 3/3 | Complete | 2026-05-29 |
-| ~~71. Playbook Retrospective~~ | v7.0 | - | Folded into Phase 78 | 2026-05-29 |
-| 72. Portland, OR (OR Geofences) | v8.0 | 2/2 | Complete | 2026-05-28 |
-| 73. OR Government DB Foundation | v8.0 | 1/1 | Complete | 2026-05-29 |
-| 74. OR Executives + Federal Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
-| 75. OR State Legislature | v8.0 | 3/3 | Complete | 2026-05-30 |
-| 76. Portland City Council District Geofences | v8.0 | 1/1 | Complete | 2026-05-29 |
-| 77. Portland City Structure + Officials | v8.0 | 3/3 | Complete | 2026-05-29 |
-| 78. CA Playbook Retrospective | v7.0 | 2/2 | Complete | 2026-05-30 |
-| 79. OR Landing + Elections + Discovery | v8.0 | 5/5 | Complete | 2026-05-30 |
-| 80. OR Compass Stances | v8.0 | 4/4 | Complete | 2026-05-31 |
-| 81. OR Playbook Retrospective + v8.0 Close | v8.0 | 2/2 | Complete | 2026-05-31 |
-| 82. OR State Legislature Compass Stances | v9.0 | 3/3 | Complete | 2026-05-31 |
-| 83. Multnomah County Government + Routing | v10.0 | 2/2 | Complete | 2026-05-31 |
-| 84. Multnomah Smaller Cities | v10.0 | 3/3 | Complete    | 2026-06-01 |
-| 85. Multnomah Elections + Discovery | v10.0 | 2/2 | Complete    | 2026-06-01 |
-| 86. Multnomah County School Districts | v10.0 | 2/2 | Complete   | 2026-06-02 |
-| 87. CA City School Boards | v10.0 | 5/4 | Complete    | 2026-06-02 |
-| 88. TX Collin County School Boards | v10.0 | 5/5 | Complete    | 2026-06-04 |
-| 89. IN + ME School Board Completion | v10.0 | 3/3 | Complete   | 2026-06-03 |
-| 90. Post-Election Follow-up + MiniCompass UI | v11.0 | 2/3 | In Progress|  |
-| 91. MD TIGER Geofences | v11.0 | 4/4 | Complete    | 2026-06-05 |
-| 92. MD State Government DB | v11.0 | 2/2 | Complete    | 2026-06-05 |
-| 93. MD Legislature + Federal Officials | v11.0 | 6/6 | Complete    | 2026-06-05 |
-| 94. MD Headshots | v11.0 | 2/2 | Complete    | 2026-06-06 |
-| 95. Leonardtown / St. Mary's County Deep Seed | v11.0 | 2/2 | Complete   | 2026-06-06 |
-| 96. MD 2026 Elections + Discovery Pipeline + Landing | v11.0 | 3/3 | Complete    | 2026-06-06 |
-| 97. MD Compass Stances — Executives + Senators (Wave 1) | v11.0 | 4/4 | Complete   | 2026-06-07 |
-| 98. MD Compass Stances — House Delegates (Wave 2) | v11.0 | 7/7 | Complete    | 2026-06-08 |
-| 99. MD Verification + Playbook Retrospective | v11.0 | 2/2 | Complete    | 2026-06-08 |
+All 19 requirements covered ✓

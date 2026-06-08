@@ -3,111 +3,81 @@
 **Defined:** 2026-06-04
 **Core Value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## v11.0 Requirements — Maryland Essentials
+---
 
-### UI — MiniCompass
+## v12.0 Virginia Essentials (Active)
 
-- [x] **UI-01**: MiniCompass chart circles reduced by ~50% so the chart fits naturally as a tooltip overlay on candidate tiles
-- [x] **UI-02**: Titles/labels removed from around MiniCompass display (no spoke labels, no chart title text visible)
+**Goal:** Onboard Virginia at full depth — geofences, state government, federal officials, Alexandria deep seed with school board, elections, and compass stances. Completes the DC/MD/VA trifecta.
 
-### MD Geofences (MD-GEO)
+### VA-GEO — Virginia Geofences
 
-- [x] **MD-GEO-01**: MD TIGER G4110 incorporated cities loaded into geofence_boundaries (state='24')
-- [x] **MD-GEO-02**: MD TIGER G4020 counties loaded (24 counties, state='24')
-- [x] **MD-GEO-03**: MD TIGER SLDU loaded (47 state senate districts)
-- [x] **MD-GEO-04**: MD TIGER SLDL loaded (141 house delegate sub-district boundaries)
-- [x] **MD-GEO-05**: MD TIGER CD loaded (8 congressional districts)
-- [x] **MD-GEO-06**: Any MD address returns correct federal, state, county, and local tiers via PostGIS routing
+- [ ] **VA-GEO-01**: VA TIGER geofences loaded — G4110 incorporated places, G4020 counties + independent cities, G5200 CD×11, G5210 SLDU×40, G5220 SLDL×100; state='51' in geofence_boundaries
+- [ ] **VA-GEO-02**: Alexandria independent city dual-tier — geo_id=`5101000` (G4110 place) AND geo_id=`51510` (G4020 county-equivalent) both present; address in Alexandria routes to LOCAL + STATE + NATIONAL tiers correctly
+- [ ] **VA-GEO-03**: Any VA address returns correct federal, state, and city representatives via PostGIS routing (verified end-to-end)
 
-### MD State Government (MD-GOV)
+### VA-GOV — VA State Government
 
-- [x] **MD-GOV-01**: MD state government row + 4 constitutional officer chambers seeded (Governor, LG, AG, Comptroller); State Treasurer marked is_appointed_position=true
-- [x] **MD-GOV-02**: Governor Wes Moore + LG Aruna Miller + AG Anthony Brown + Comptroller Brooke Lierman seeded with offices + headshots at 600×750
-- [x] **MD-GOV-03**: MD State Senate chamber + 47 senators seeded with offices linked to SLDU district boundaries
-- [x] **MD-GOV-04**: MD House of Delegates chamber + 141 delegates seeded with offices linked to SLDL district boundaries; multi-member district structure handled
-- [x] **MD-GOV-05**: 2 US senators (Van Hollen + Alsobrooks) + 8 US House reps seeded with correct NATIONAL_UPPER/NATIONAL_LOWER districts
-- [x] **MD-GOV-06**: All MD officials have headshots at 600×750 in Supabase Storage
+- [ ] **VA-GOV-01**: State of Virginia government row asserted; 5 chambers seeded — Governor, Lt. Governor, AG, VA Senate, House of Delegates
+- [ ] **VA-GOV-02**: 3 executive officials seeded — Spanberger (Governor), Hashmi (LG), Jones (AG) with STATE_EXEC districts and offices; all voter-elected (is_appointed_position=false)
+- [ ] **VA-GOV-03**: 40 VA state senators seeded with offices linked to SLDU geofence districts
+- [ ] **VA-GOV-04**: 100 VA House of Delegates members seeded with offices linked to SLDL geofence districts
+- [ ] **VA-GOV-05**: Virginia constitutional structure modeled correctly — all 3 executives are voter-elected (no legislature-elected officials like ME/OR AG pattern)
 
-### Leonardtown / St. Mary's County Deep Seed (MD-DEEP)
+### VA-FED — Federal Officials
 
-- [x] **MD-DEEP-01**: St. Mary's County government + Board of County Commissioners chamber seeded; county boundary linked
-- [x] **MD-DEEP-02**: Active St. Mary's County Commissioners seeded with offices + available headshots
-- [x] **MD-DEEP-03**: Town of Leonardtown government + town officials seeded with available headshots
+- [ ] **VA-FED-01**: 2 US Senators seeded — Mark Warner + Tim Kaine with NATIONAL_UPPER districts
+- [ ] **VA-FED-02**: 11 US House reps seeded — Wittman/Kiggans/Scott/McClellan/Cline/Griffith/Vindman/Beyer/McGuire/Subramanyam/Walkinshaw with NATIONAL_LOWER districts linked to VA CD geofences
 
-### MD 2026 Elections (MD-ELECTIONS)
+### VA-GOV-06 — Headshots
 
-- [x] **MD-ELECTIONS-01**: MD 2026 elections seeded — Governor race + 1 US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 71 SLDL house district scaffold rows (one row per geo_id, seats=N per D-01; 130 total race rows)
-- [x] **MD-ELECTIONS-02**: discovery_jurisdictions row created for MD statewide, cron_active=true, armed for 2026 election cycle
-- [x] **MD-ELECTIONS-03**: Landing.jsx updated with MD entry — Leonardtown city browse + MD state browse
+- [ ] **VA-GOV-06**: 100% headshot coverage for all VA officials at 600×750 JPEG — delegates via vga.virginia.gov/delegate_photos/, senators via apps.senate.virginia.gov pattern, executives and federal from official sources
 
-### MD Compass Stances (MD-STANCES)
+### VA-DEEP — Alexandria Deep Seed
 
-- [x] **MD-STANCES-01**: Compass stances for Governor Moore + 3 constitutional officers, cited from public record
-- [x] **MD-STANCES-02**: Compass stances for all 47 MD state senators, one agent at a time, evidence-only
-- [x] **MD-STANCES-03**: Compass stances for all 141 MD house delegates, one agent at a time, evidence-only
-- [x] **MD-STANCES-04**: Compass renders correctly on spot-checked MD official profiles (human-verified)
+- [ ] **VA-DEEP-01**: Alexandria city government seeded — Mayor Gaskins + 6 at-large council members (Bagley/Aguirre/Chapman/Elnoubi/Greene/Marks) with LOCAL_EXEC/LOCAL offices linked to geo_id=`5101000`
+- [ ] **VA-DEEP-02**: ACPS school board seeded — 9 members across 3 school districts using G5420 TIGER UNSD pattern; SCHOOL district_type
+- [ ] **VA-DEEP-03**: Alexandria officials headshots at 600×750; ACPS board headshots best-effort from acps.k12.va.us
 
-### Post-Election Follow-up (POST-ELECTION)
+### VA-ELECTIONS — Elections & Discovery
 
-- [ ] **POST-ELECTION-01**: ME June 9 primary winners added to US Senate general + ME-01 general + ME-02 general race_candidates rows (deferred — Phase 90 Plan 03 not yet executed)
-- [ ] **POST-ELECTION-02**: lavote.gov election ID updated in discovery_jurisdictions for CA November general (deferred — Phase 90 Plan 03 not yet executed)
+- [ ] **VA-ELECTIONS-01**: 2 election rows — primary 2026-08-04 and general 2026-11-03
+- [ ] **VA-ELECTIONS-02**: Race rows seeded — Mark Warner US Senate re-election + 11 US House races (no VA state legislature races in 2026; House was Nov 2025, Senate not until 2027)
+- [ ] **VA-ELECTIONS-03**: discovery_jurisdictions row armed for VA federal cron; Landing.jsx VA entry added
 
-## Future Requirements (v12.0+)
+### VA-STANCES — Compass Stances
 
-- MA COUSUB towns layer (293 G4040 towns deferred from v5.0 Phase 48)
-- ME G4040 towns layer — most ME residents live in G4040 towns not yet loaded
-- Indiana local races — Monroe County Commissioner, Clerk, Assessor, Township (parked from v2.2)
-- Race Completeness Audit — verify every loaded geofence has at least one race row (parked from v2.2)
-- Headshots for 40 ME + IN school board officials (CMS-blocked; requires browser automation)
-- MD COUSUB layer if MD has significant town population not covered by G4110
+- [ ] **VA-STANCES-01**: Compass stances for 3 VA executives (Spanberger, Hashmi, Jones) — evidence-only, sequential, no default values
+- [ ] **VA-STANCES-02**: Compass stances for VA US Senators (Warner + Kaine) — evidence-only, public record only
+- [ ] **VA-STANCES-03**: Compass stances for Alexandria council + ACPS board — best-effort, evidence-only; blank if no public record
 
-## Out of Scope
-
-| Feature | Reason |
-|---------|--------|
-| MD town/COUSUB layer | Verify if needed; MD may be primarily G4110 cities |
-| MD compass stances for federal officials (senators/House) | Federal officials have no LOCAL/STATE scope; judicial/legal compass not applicable |
-| OR post-June general candidate additions | Separate post-election task, not v11.0 scope |
-| Browser automation for CMS-blocked headshots | Requires Playwright; separate tooling effort |
+---
 
 ## Traceability
 
-*Populated by roadmapper during roadmap creation.*
-
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| UI-01 | Phase 90 | Complete |
-| UI-02 | Phase 90 | Complete |
-| MD-GEO-01 | Phase 91 | Complete |
-| MD-GEO-02 | Phase 91 | Complete |
-| MD-GEO-03 | Phase 91 | Complete |
-| MD-GEO-04 | Phase 91 | Complete |
-| MD-GEO-05 | Phase 91 | Complete |
-| MD-GEO-06 | Phase 91 | Complete |
-| MD-GOV-01 | Phase 92 | Complete |
-| MD-GOV-02 | Phase 92 | Complete |
-| MD-GOV-03 | Phase 93 | Complete |
-| MD-GOV-04 | Phase 93 | Complete |
-| MD-GOV-05 | Phase 93 | Complete |
-| MD-GOV-06 | Phase 94 | Complete |
-| MD-DEEP-01 | Phase 95 | Complete |
-| MD-DEEP-02 | Phase 95 | Complete |
-| MD-DEEP-03 | Phase 95 | Complete |
-| MD-ELECTIONS-01 | Phase 96 | Complete |
-| MD-ELECTIONS-02 | Phase 96 | Complete |
-| MD-ELECTIONS-03 | Phase 96 | Complete |
-| MD-STANCES-01 | Phase 97 | Complete |
-| MD-STANCES-02 | Phase 97 | Complete |
-| MD-STANCES-03 | Phase 98 | Complete |
-| MD-STANCES-04 | Phase 98 | Complete |
-| POST-ELECTION-01 | Phase 90 | Pending |
-| POST-ELECTION-02 | Phase 90 | Pending |
-
-**Coverage:**
-- v11.0 requirements: 26 total
-- Mapped to phases: 26 (roadmap complete)
-- Unmapped: 0 ✓
+| Req ID | Phase |
+|--------|-------|
+| VA-GEO-01..03 | Phase 100 |
+| VA-GOV-01..05 | Phase 101 |
+| VA-FED-01..02 | Phase 102 |
+| VA-DEEP-01..03 | Phase 103 |
+| VA-GOV-06 | Phase 104 |
+| VA-ELECTIONS-01..03 | Phase 105 |
+| VA-STANCES-01..03 | Phase 106 |
 
 ---
-*Requirements defined: 2026-06-04*
-*Last updated: 2026-06-09 after Phase 99 verification sweep (24/26 confirmed; 2 POST-ELECTION items deferred pending 90-03 execution)*
+
+## Future Requirements (Deferred)
+
+- VA House of Delegates stances (140 officials — post v12.0, same as OR v9.0 pattern)
+- VA Senate stances (40 senators — post v12.0)
+- Richmond, VA deep seed
+- Virginia Beach / Norfolk deep seed
+- VA county-level officials (95 counties + remaining independent cities)
+- Las Vegas, NV coverage (v13.0)
+- Tucson, AZ coverage (v14.0)
+
+## Out of Scope
+
+- VA G4040 COUSUB (county subdivisions) — not needed for Virginia's structure (uses independent cities, not townships)
+- VA state legislature 2026 elections — House was Nov 2025, Senate not until 2027; no 2026 state races exist
+- Compass stances for all 140 delegates / 40 senators — deferred to post-v12.0 (scope would balloon milestone)
