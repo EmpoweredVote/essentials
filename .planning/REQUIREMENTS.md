@@ -7,8 +7,8 @@
 
 ### UI — MiniCompass
 
-- [ ] **UI-01**: MiniCompass chart circles reduced by ~50% so the chart fits naturally as a tooltip overlay on candidate tiles
-- [ ] **UI-02**: Titles/labels removed from around MiniCompass display (no spoke labels, no chart title text visible)
+- [x] **UI-01**: MiniCompass chart circles reduced by ~50% so the chart fits naturally as a tooltip overlay on candidate tiles
+- [x] **UI-02**: Titles/labels removed from around MiniCompass display (no spoke labels, no chart title text visible)
 
 ### MD Geofences (MD-GEO)
 
@@ -36,9 +36,9 @@
 
 ### MD 2026 Elections (MD-ELECTIONS)
 
-- [ ] **MD-ELECTIONS-01**: MD 2026 elections seeded — Governor race + 1 US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 71 SLDL house district scaffold rows (one row per geo_id, seats=N per D-01; 130 total race rows)
-- [ ] **MD-ELECTIONS-02**: discovery_jurisdictions row created for MD statewide, cron_active=true, armed for 2026 election cycle
-- [ ] **MD-ELECTIONS-03**: Landing.jsx updated with MD entry — Leonardtown city browse + MD state browse
+- [x] **MD-ELECTIONS-01**: MD 2026 elections seeded — Governor race + 1 US Senate (Van Hollen) + 8 US House + 47 senate scaffold + 71 SLDL house district scaffold rows (one row per geo_id, seats=N per D-01; 130 total race rows)
+- [x] **MD-ELECTIONS-02**: discovery_jurisdictions row created for MD statewide, cron_active=true, armed for 2026 election cycle
+- [x] **MD-ELECTIONS-03**: Landing.jsx updated with MD entry — Leonardtown city browse + MD state browse
 
 ### MD Compass Stances (MD-STANCES)
 
@@ -49,8 +49,8 @@
 
 ### Post-Election Follow-up (POST-ELECTION)
 
-- [ ] **POST-ELECTION-01**: ME June 9 primary winners added to US Senate general + ME-01 general + ME-02 general race_candidates rows
-- [ ] **POST-ELECTION-02**: lavote.gov election ID updated in discovery_jurisdictions for CA November general
+- [ ] **POST-ELECTION-01**: ME June 9 primary winners added to US Senate general + ME-01 general + ME-02 general race_candidates rows (deferred — Phase 90 Plan 03 not yet executed)
+- [ ] **POST-ELECTION-02**: lavote.gov election ID updated in discovery_jurisdictions for CA November general (deferred — Phase 90 Plan 03 not yet executed)
 
 ## Future Requirements (v12.0+)
 
@@ -76,8 +76,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| UI-01 | Phase 90 | Pending |
-| UI-02 | Phase 90 | Pending |
+| UI-01 | Phase 90 | Complete |
+| UI-02 | Phase 90 | Complete |
 | MD-GEO-01 | Phase 91 | Complete |
 | MD-GEO-02 | Phase 91 | Complete |
 | MD-GEO-03 | Phase 91 | Complete |
@@ -93,9 +93,9 @@
 | MD-DEEP-01 | Phase 95 | Complete |
 | MD-DEEP-02 | Phase 95 | Complete |
 | MD-DEEP-03 | Phase 95 | Complete |
-| MD-ELECTIONS-01 | Phase 96 | Pending |
-| MD-ELECTIONS-02 | Phase 96 | Pending |
-| MD-ELECTIONS-03 | Phase 96 | Pending |
+| MD-ELECTIONS-01 | Phase 96 | Complete |
+| MD-ELECTIONS-02 | Phase 96 | Complete |
+| MD-ELECTIONS-03 | Phase 96 | Complete |
 | MD-STANCES-01 | Phase 97 | Complete |
 | MD-STANCES-02 | Phase 97 | Complete |
 | MD-STANCES-03 | Phase 98 | Complete |
@@ -110,4 +110,4 @@
 
 ---
 *Requirements defined: 2026-06-04*
-*Last updated: 2026-06-04 after roadmap creation (v11.0 phases 90-99 mapped)*
+*Last updated: 2026-06-08 after Phase 99 verification sweep (22/26 confirmed; 4 Phase 90 items deferred pending 90-03 execution)*
