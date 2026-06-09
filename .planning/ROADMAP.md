@@ -34,7 +34,7 @@
 | 101 | 4/4 | Complete    | 2026-06-08 |
 | 102 | 1/1 | Complete    | 2026-06-08 |
 | 103 | 3/3 | Complete   | 2026-06-09 |
-| 104 | VA Headshots | VA-GOV-06 | 100% headshot coverage for all VA officials |
+| 104 | 4/5 | In Progress|  |
 | 105 | VA 2026 Elections + Discovery | VA-ELECTIONS-01..03 | Warner Senate + 11 House races + discovery armed |
 | 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
 
@@ -170,14 +170,14 @@ Plans:
 2. Zero missing non-vacant officials on headshot verification query
 3. HD-20 (external_id -5120020) confirmed absent from politician_images
 
-**Plans:** 5 plans
+**Plans:** 4/5 plans executed
 Plans:
 **Wave 1** *(all 4 scripts run in parallel — distinct source domains, distinct rosters, distinct files)*
 
-- [ ] 104-01-PLAN.md — VA execs headshots (3 officials: Spanberger, Hashmi, Jones) via `_tmp-va-execs-headshots.py`
-- [ ] 104-02-PLAN.md — VA state senators headshots (40 officials) via `_tmp-va-senators-headshots.py`
-- [ ] 104-03-PLAN.md — VA House delegates headshots (99 officials, HD-20 skip) via `_tmp-va-delegates-headshots.py`
-- [ ] 104-04-PLAN.md — VA federal officials headshots (13 officials) via `_tmp-va-federal-headshots.py`
+- [x] 104-01-PLAN.md — VA execs headshots (3 officials: Spanberger, Hashmi, Jones) via `_tmp-va-execs-headshots.py`
+- [x] 104-02-PLAN.md — VA state senators headshots (40 officials) via `_tmp-va-senators-headshots.py`
+- [x] 104-03-PLAN.md — VA House delegates headshots (99 officials, HD-20 skip) via `_tmp-va-delegates-headshots.py`
+- [x] 104-04-PLAN.md — VA federal officials headshots (13 officials) via `_tmp-va-federal-headshots.py`
 
 **Wave 2** *(blocked on all of Wave 1 completing)*
 
