@@ -229,19 +229,56 @@ Plans:
 
 **Key facts:**
 
-- Run ONE politician at a time — never parallel
+- Run ONE politician at a time — never parallel (D-08)
 - No default values — blank spoke = no evidence found (never Neutral/Likely as fallback)
-- Priority: Spanberger → Hashmi → Jones → Warner → Kaine → Alexandria council
+- Priority: Spanberger → Hashmi → Jones → Warner → Kaine → Alexandria council → ACPS board
 - Spanberger has rich record (former US House rep VA-7, 2019-2025)
 - Warner has 18 years Senate record
+- Per-individual migration files starting at 326; apply immediately per-person (D-06)
+- 5-minute sliding cap for Alexandria/ACPS members (D-03/D-04)
+- 100% citation rate required (D-10)
 
 **Success criteria:**
 
 1. ≥15 stances for Spanberger; ≥10 each for Hashmi and Jones
 2. ≥15 stances each for Warner and Kaine
-3. Best-effort for Alexandria council (skip with no public record = acceptable)
+3. Best-effort for Alexandria council + ACPS board (skip with no public record = acceptable)
 4. 100% citation rate — zero uncited stance values
 5. Compass renders on Spanberger profile
+
+**Plans:** 8 plans
+Plans:
+**Wave 1**
+
+- [ ] 106-01-PLAN.md — Spanberger stances (migration 326): research + write + apply + verify
+
+**Wave 2** *(blocked on Wave 1 completion — D-08 sequential)*
+
+- [ ] 106-02-PLAN.md — Hashmi stances (migration 327)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 106-03-PLAN.md — Jones stances (migration 328) + close VA-STANCES-01
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 106-04-PLAN.md — Warner stances (migration 329)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 106-05-PLAN.md — Kaine stances (migration 330) + close VA-STANCES-02
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [ ] 106-06-PLAN.md — Alexandria council batch (migrations 331-337, 7 members, 5-min sliding cap each)
+
+**Wave 7** *(blocked on Wave 6)*
+
+- [ ] 106-07-PLAN.md — ACPS board batch (migrations 338-346, 9 members, 5-min sliding cap each) + close VA-STANCES-03
+
+**Wave 8** *(blocked on Wave 7)*
+
+- [ ] 106-08-PLAN.md — Phase-wide closure verification + compass render checkpoint + final SUMMARY
 
 ---
 
