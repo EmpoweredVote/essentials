@@ -592,7 +592,7 @@ FEDERAL_ROSTER = [
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Are politician UUIDs for VA officials pre-known or must they be queried at plan time?**
    - What we know: Migration files (306, 307, 308, 311) use `gen_random_uuid()` — UUIDs were generated at insert time and are now in the production DB.

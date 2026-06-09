@@ -156,15 +156,32 @@ Plans:
 
 **Key facts:**
 
-- House delegates: `https://vga.virginia.gov/delegate_photos/{H0000}.jpg` — clean bulk-fetchable pattern
-- Senate: `https://apps.senate.virginia.gov/Senator/images/member_photos/{LastName}{district}` — no file extension, verify at phase time
+- House delegates: `https://house.vga.virginia.gov/delegate_photos/{H####}.jpg` (H#### is the VGA internal member ID per HD→H-ID table in 104-RESEARCH.md; NOT the district number)
+- Senate: `https://apps.senate.virginia.gov/Senator/images/member_photos/{TitleCaseLastName}{district}.jpg` (no zero-padding, case-sensitive, special-case keys for Mulchi9/Williams Graves21/Carroll Foy33/etc.)
+- Federal: `https://unitedstates.github.io/images/congress/original/{bioguide}.jpg` for 12 of 13 (congress.gov blocks programmatic access); Walkinshaw via walkinshaw.house.gov
+- HD-20 is vacant (-5120020) — skipped entirely
 - politician_images.type must be 'default' (not 'headshot')
-- Crop 4:5 first, then resize to 600×750 — never stretch
+- Crop 4:5 first, then resize to 600×750 Lanczos q90 — never stretch
+- Migration 315 is AUDIT-ONLY (applied via psql, NOT via Supabase MCP)
 
 **Success criteria:**
 
-1. 3 exec + 40 senators + 100 delegates + 2 US senators + 11 House reps = 156 officials with type='default' headshots
+1. 3 exec + 40 senators + 99 delegates (HD-20 vacant) + 2 US senators + 11 House reps = 155 officials with type='default' headshots
 2. Zero missing non-vacant officials on headshot verification query
+3. HD-20 (external_id -5120020) confirmed absent from politician_images
+
+**Plans:** 5 plans
+Plans:
+**Wave 1** *(all 4 scripts run in parallel — distinct source domains, distinct rosters, distinct files)*
+
+- [ ] 104-01-PLAN.md — VA execs headshots (3 officials: Spanberger, Hashmi, Jones) via `_tmp-va-execs-headshots.py`
+- [ ] 104-02-PLAN.md — VA state senators headshots (40 officials) via `_tmp-va-senators-headshots.py`
+- [ ] 104-03-PLAN.md — VA House delegates headshots (99 officials, HD-20 skip) via `_tmp-va-delegates-headshots.py`
+- [ ] 104-04-PLAN.md — VA federal officials headshots (13 officials) via `_tmp-va-federal-headshots.py`
+
+**Wave 2** *(blocked on all of Wave 1 completing)*
+
+- [ ] 104-05-PLAN.md — AUDIT-ONLY migration 315_va_headshots.sql + apply via psql + final 155-row verification
 
 ---
 
