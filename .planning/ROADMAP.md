@@ -135,6 +135,17 @@ Plans:
 3. Alexandria address returns LOCAL section with all 7 city officials
 4. Council headshots at 600×750; ACPS best-effort
 
+**Plans:** 3 plans
+Plans:
+**Wave 1**
+
+- [ ] 103-01-PLAN.md — Alexandria city government (Mayor Gaskins + 6 council) via migration 312
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 103-02-PLAN.md — ACPS school board (9 members + G5420 geofence) via migration 313
+- [ ] 103-03-PLAN.md — Alexandria + ACPS headshots via migration 314
+
 ---
 
 ### Phase 104: VA Headshots
