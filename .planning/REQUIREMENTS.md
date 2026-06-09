@@ -40,9 +40,9 @@
 
 ### VA-ELECTIONS — Elections & Discovery
 
-- [ ] **VA-ELECTIONS-01**: 2 election rows — primary 2026-08-04 and general 2026-11-03
-- [ ] **VA-ELECTIONS-02**: Race rows seeded — Mark Warner US Senate re-election + 11 US House races (no VA state legislature races in 2026; House was Nov 2025, Senate not until 2027)
-- [ ] **VA-ELECTIONS-03**: discovery_jurisdictions row armed for VA federal cron; Landing.jsx VA entry added
+- [x] **VA-ELECTIONS-01**: 2 election rows — primary 2026-08-04 and general 2026-11-03
+- [x] **VA-ELECTIONS-02**: Race rows seeded — Mark Warner US Senate re-election + 11 US House races (no VA state legislature races in 2026; House was Nov 2025, Senate not until 2027)
+- [x] **VA-ELECTIONS-03**: discovery_jurisdictions row armed for VA federal cron; Landing.jsx VA entry added
 
 ### VA-STANCES — Compass Stances
 
