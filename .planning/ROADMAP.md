@@ -35,7 +35,7 @@
 | 102 | 1/1 | Complete    | 2026-06-08 |
 | 103 | 3/3 | Complete   | 2026-06-09 |
 | 104 | 5/5 | Complete    | 2026-06-09 |
-| 105 | 3/3 | Complete   | 2026-06-09 |
+| 105 | 3/3 | Complete    | 2026-06-09 |
 | 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
 
 ## Phase Details
