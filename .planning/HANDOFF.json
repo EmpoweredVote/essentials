@@ -1,39 +1,53 @@
 {
   "version": "1.0",
-  "timestamp": "2026-06-02T15:21:32Z",
-  "phase": "87",
-  "phase_name": "ca-city-school-boards",
-  "phase_dir": ".planning/phases/87-ca-city-school-boards",
+  "timestamp": "2026-06-09T19:28:38.894Z",
+  "phase": "106",
+  "phase_name": "va-compass-stances",
+  "phase_dir": ".planning/phases/106-va-compass-stances",
   "plan": 2,
-  "task": "post-execution",
+  "task": 1,
+  "total_tasks": 3,
   "status": "paused",
   "completed_tasks": [
-    {"id": "87-01", "name": "Migration 257 — CA school board seed", "status": "done", "commit": "34af51e"},
-    {"id": "87-02", "name": "Headshots — 28/34 uploaded, migration 258 written", "status": "done", "commit": "6cc4bc5"},
-    {"id": "key-fix", "name": "supabase.ts + env.ts migrated to SUPABASE_SECRET_KEY", "status": "done", "commit": "not-committed (EV-Accounts has no git)"}
+    {
+      "id": "106-01",
+      "name": "Spanberger stances — migration 326 (32 stances)",
+      "status": "done",
+      "commit": "2a8055b",
+      "notes": "32 stances applied. Sources corrected post-commit: all politician press-release URL slugs stripped (were hallucinated), ontheissues.org path fixed /House/→/VA/. DB updated via MCP execute_sql. Migration file also corrected on disk."
+    }
   ],
   "remaining_tasks": [
-    {"id": "render-update", "name": "Add SUPABASE_SECRET_KEY to Render env vars", "status": "not_started"},
-    {"id": "notify-chris", "name": "Tell Chris Andrews new env var name + value", "status": "not_started"},
-    {"id": "patch-scripts", "name": "Patch 6 hardcoded-key scripts to load from env", "status": "not_started"},
-    {"id": "verify", "name": "Run /gsd-verify-work 87", "status": "not_started"}
+    {"id": "106-02", "name": "Hashmi stances — migration 327 (≥10)", "status": "not_started"},
+    {"id": "106-03", "name": "Jay Jones stances — migration 328 (≥10)", "status": "not_started"},
+    {"id": "106-04", "name": "Mark Warner stances — migration 329 (≥15)", "status": "not_started"},
+    {"id": "106-05", "name": "Tim Kaine stances — migration 330 (≥15)", "status": "not_started"},
+    {"id": "106-06", "name": "Alexandria council 7 members — migrations 331-337 (5-min cap)", "status": "not_started"},
+    {"id": "106-07", "name": "ACPS school board 9 members — migrations 338-346 (5-min cap)", "status": "not_started"},
+    {"id": "106-08", "name": "Phase-wide quality gate + compass render verification (checkpoint)", "status": "not_started"}
   ],
-  "blockers": [
-    {"description": "Render env var not yet updated", "type": "human_action", "workaround": "Backend still works on current deploy; only breaks on next redeploy"},
-    {"description": "Chris Andrews not yet notified of new key", "type": "human_action", "workaround": "His local backend still works with old service_role key until he redeploys"}
-  ],
-  "human_actions_pending": [
-    {"action": "Update Render dashboard: add SUPABASE_SECRET_KEY env var for ev-accounts-api", "context": "Backend reads this on startup via env.ts — will fail to start without it after next deploy", "blocking": true},
-    {"action": "Notify Chris Andrews: SUPABASE_SECRET_KEY new var name + value via secure channel", "context": "His local .env needs updating; old service_role key still works short-term", "blocking": false}
-  ],
+  "blockers": [],
+  "human_actions_pending": [],
   "decisions": [
-    {"decision": "Migrate to Supabase new key model (sbsec_) rather than rotate legacy JWT", "rationale": "Project already has publishable/secret keys in dashboard; cleaner long-term", "phase": "87"},
-    {"decision": "SUPABASE_SERVICE_ROLE_KEY kept optional during transition", "rationale": "Avoids breaking existing deploys before Render is updated", "phase": "87"}
+    {
+      "decision": "Source URLs restricted to aggregation indexes only — no politician press-release slugs",
+      "rationale": "AI research agents fabricate plausible press-release URL slugs from knowledge of the politician record + URL pattern. They look real but are hallucinated. Discovered when checking Spanberger migration post-execution.",
+      "phase": "106"
+    },
+    {
+      "decision": "OnTheIssues path for Virginia politicians: use /VA/ not /House/",
+      "rationale": "/House/Abigail_Spanberger.htm returns 404. /VA/Abigail_Spanberger.htm verified live. Apply same logic for other VA officials who have left their prior chamber role.",
+      "phase": "106"
+    },
+    {
+      "decision": "VPAP candidate IDs unverified — omit from future plans",
+      "rationale": "VPAP returned 403, couldn't confirm ID 75011 is Spanberger. Removed from remaining plans pending manual browser verification.",
+      "phase": "106"
+    }
   ],
   "uncommitted_files": [
-    "C:/EV-Accounts/backend/src/lib/env.ts",
-    "C:/EV-Accounts/backend/src/lib/supabase.ts"
+    "C:/EV-Accounts/backend/migrations/326_spanberger_stances.sql — source correction (no git in EV-Accounts)"
   ],
-  "next_action": "Update Render env var, notify Chris Andrews, then run /gsd-verify-work 87",
-  "context_notes": "Phase 87 execution fully complete. Pivoted mid-session to fix hardcoded Supabase service-role JWT found in code review. Migration path chosen: new key model. Verifier not yet run."
+  "next_action": "Spawn Wave 2 executor for Plan 106-02 (Hashmi). Pass source restriction constraint: aggregation indexes only (ballotpedia.org, ontheissues.org with correct path, congress.gov for bill numbers, real news with date-based paths). No politician.gov/press-releases/ slugs.",
+  "context_notes": "Plan 01 stance values and reasoning are accurate — AI correctly knew Spanberger's congressional record. The problem was specifically with citation URLs: press-release slugs are pattern-generated, not fetched. The correction is clean. Plans 02-05 (state/federal officials) should yield rich records. Plans 06-07 (Alexandria council/ACPS) have D-03/D-04 5-minute sliding cap — expect fewer stances per person."
 }
