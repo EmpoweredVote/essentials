@@ -35,7 +35,7 @@
 | 102 | 1/1 | Complete    | 2026-06-08 |
 | 103 | 3/3 | Complete   | 2026-06-09 |
 | 104 | 5/5 | Complete    | 2026-06-09 |
-| 105 | VA 2026 Elections + Discovery | VA-ELECTIONS-01..03 | Warner Senate + 11 House races + discovery armed |
+| 105 | 1/3 | In Progress|  |
 | 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
 
 ## Phase Details
@@ -205,11 +205,11 @@ Plans:
 3. discovery_jurisdictions row active for VA
 4. Landing.jsx shows Virginia entry
 
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 105-01-PLAN.md — VA 2026 elections seed (migration 322: 2 rows)
+- [x] 105-01-PLAN.md — VA 2026 elections seed (migration 322: 2 rows)
 
 **Wave 2** *(blocked on Wave 1 completion — apply requires migration 322 election rows)*
 
