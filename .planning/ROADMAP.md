@@ -36,7 +36,7 @@
 | 103 | 3/3 | Complete   | 2026-06-09 |
 | 104 | 5/5 | Complete    | 2026-06-09 |
 | 105 | 3/3 | Complete    | 2026-06-09 |
-| 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
+| 106 | 1/8 | In Progress|  |
 
 ## Phase Details
 
@@ -246,11 +246,11 @@ Plans:
 4. 100% citation rate — zero uncited stance values
 5. Compass renders on Spanberger profile
 
-**Plans:** 8 plans
+**Plans:** 1/8 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 106-01-PLAN.md — Spanberger stances (migration 326): research + write + apply + verify
+- [x] 106-01-PLAN.md — Spanberger stances (migration 326): research + write + apply + verify
 
 **Wave 2** *(blocked on Wave 1 completion — D-08 sequential)*
 
