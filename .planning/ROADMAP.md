@@ -33,7 +33,7 @@
 | 100 | 2/2 | Complete    | 2026-06-08 |
 | 101 | 4/4 | Complete    | 2026-06-08 |
 | 102 | 1/1 | Complete    | 2026-06-08 |
-| 103 | 1/3 | In Progress|  |
+| 103 | 2/3 | In Progress|  |
 | 104 | VA Headshots | VA-GOV-06 | 100% headshot coverage for all VA officials |
 | 105 | VA 2026 Elections + Discovery | VA-ELECTIONS-01..03 | Warner Senate + 11 House races + discovery armed |
 | 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
@@ -135,7 +135,7 @@ Plans:
 3. Alexandria address returns LOCAL section with all 7 city officials
 4. Council headshots at 600×750; ACPS best-effort
 
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 Plans:
 **Wave 1**
 
@@ -143,7 +143,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 103-02-PLAN.md — ACPS school board (9 members + G5420 geofence) via migration 313
+- [x] 103-02-PLAN.md — ACPS school board (9 members + G5420 geofence) via migration 313
 - [ ] 103-03-PLAN.md — Alexandria + ACPS headshots via migration 314
 
 ---
