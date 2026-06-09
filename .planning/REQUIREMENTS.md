@@ -36,7 +36,7 @@
 
 - [x] **VA-DEEP-01**: Alexandria city government seeded — Mayor Gaskins + 6 at-large council members (Bagley/Aguirre/Chapman/Elnoubi/Greene/Marks) with LOCAL_EXEC/LOCAL offices linked to geo_id=`5101000`
 - [x] **VA-DEEP-02**: ACPS school board seeded — 9 members across 3 school districts using G5420 TIGER UNSD pattern; SCHOOL district_type
-- [ ] **VA-DEEP-03**: Alexandria officials headshots at 600×750; ACPS board headshots best-effort from acps.k12.va.us
+- [x] **VA-DEEP-03**: Alexandria officials headshots at 600×750; ACPS board headshots best-effort from acps.k12.va.us
 
 ### VA-ELECTIONS — Elections & Discovery
 
