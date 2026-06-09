@@ -35,7 +35,7 @@
 | 102 | 1/1 | Complete    | 2026-06-08 |
 | 103 | 3/3 | Complete   | 2026-06-09 |
 | 104 | 5/5 | Complete    | 2026-06-09 |
-| 105 | 1/3 | In Progress|  |
+| 105 | 2/3 | In Progress|  |
 | 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
 
 ## Phase Details
@@ -205,7 +205,7 @@ Plans:
 3. discovery_jurisdictions row active for VA
 4. Landing.jsx shows Virginia entry
 
-**Plans:** 1/3 plans executed
+**Plans:** 2/3 plans executed
 Plans:
 **Wave 1**
 
@@ -213,7 +213,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion — apply requires migration 322 election rows)*
 
-- [ ] 105-02-PLAN.md — VA 2026 race rows (migration 324: 1 Senate + 11 House, 12 rows)
+- [x] 105-02-PLAN.md — VA 2026 race rows (migration 324: 1 Senate + 11 House, 12 rows)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
