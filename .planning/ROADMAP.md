@@ -34,7 +34,7 @@
 | 101 | 4/4 | Complete    | 2026-06-08 |
 | 102 | 1/1 | Complete    | 2026-06-08 |
 | 103 | 3/3 | Complete   | 2026-06-09 |
-| 104 | 4/5 | In Progress|  |
+| 104 | 5/5 | Complete    | 2026-06-09 |
 | 105 | VA 2026 Elections + Discovery | VA-ELECTIONS-01..03 | Warner Senate + 11 House races + discovery armed |
 | 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
 
@@ -181,7 +181,7 @@ Plans:
 
 **Wave 2** *(blocked on all of Wave 1 completing)*
 
-- [ ] 104-05-PLAN.md — AUDIT-ONLY migration 315_va_headshots.sql + apply via psql + final 155-row verification
+- [x] 104-05-PLAN.md — AUDIT-ONLY migration 315_va_headshots.sql + apply via psql + final 155-row verification
 
 ---
 
@@ -204,6 +204,20 @@ Plans:
 2. 12 race rows, all with non-null office_ids
 3. discovery_jurisdictions row active for VA
 4. Landing.jsx shows Virginia entry
+
+**Plans:** 3 plans
+Plans:
+**Wave 1**
+
+- [ ] 105-01-PLAN.md — VA 2026 elections seed (migration 322: 2 rows)
+
+**Wave 2** *(blocked on Wave 1 completion — apply requires migration 322 election rows)*
+
+- [ ] 105-02-PLAN.md — VA 2026 race rows (migration 324: 1 Senate + 11 House, 12 rows)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 105-03-PLAN.md — VA discovery_jurisdictions (migration 325) + Landing.jsx Alexandria entry
 
 ---
 
