@@ -52,7 +52,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Constitutional officers (voter-elected): Governor, LG, AG, Comptroller
 - State Treasurer: elected by General Assembly → is_appointed_position=true (ME/OR pattern)
 - Stances research scope: 4 exec + 47 senators + 141 delegates = 192 officials
-- Next migration: 314 (313=ACPS school board applied 2026-06-09)
+- Next migration: 315 (314=Alexandria+ACPS headshots applied 2026-06-09)
 - St. Mary's County geo_id='24037' CONFIRMED; Leonardtown geo_id='2446475' CONFIRMED
 - Migrations 276 (St. Mary's County) + 277 (Leonardtown) applied; MD-DEEP-01 and MD-DEEP-03 data side complete
 - Leonardtown: LOCAL_EXEC for Mayor + LOCAL for 5 council members; mtfcc=NULL on both district rows (migration 246 pattern)
@@ -99,6 +99,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - Phase 99 verification sweep confirmed all 22 non-Phase-90 v11.0 requirements PASS against production; Phase 90 items deferred pending Phase 90 Plan 03 execution (see 99-01-VERIFICATION.md)
 - Migration 312 applied: Alexandria city government (Mayor Gaskins + 6 council); 7 offices linked to geo_id=5101000
 - Migration 313 applied: ACPS school board (9 members under SCHOOL district geo_id=5100090); G5420 geofence inserted directly per D-03
+- Migration 314 applied: 7 Alexandria + 9 ACPS headshots in politician_photos bucket; VA-DEEP-03 satisfied; Sandy Marks sourced from alxnow.com (no official portrait yet on city website)
 
 ### Pending Todos
 
