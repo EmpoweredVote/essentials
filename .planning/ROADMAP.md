@@ -35,7 +35,7 @@
 | 102 | 1/1 | Complete    | 2026-06-08 |
 | 103 | 3/3 | Complete   | 2026-06-09 |
 | 104 | 5/5 | Complete    | 2026-06-09 |
-| 105 | 2/3 | In Progress|  |
+| 105 | 3/3 | Complete   | 2026-06-09 |
 | 106 | VA Compass Stances | VA-STANCES-01..03 | Execs + US Senators + Alexandria officials stances |
 
 ## Phase Details
@@ -205,7 +205,7 @@ Plans:
 3. discovery_jurisdictions row active for VA
 4. Landing.jsx shows Virginia entry
 
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 **Wave 1**
 
@@ -217,7 +217,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 105-03-PLAN.md — VA discovery_jurisdictions (migration 325) + Landing.jsx Alexandria entry
+- [x] 105-03-PLAN.md — VA discovery_jurisdictions (migration 325) + Landing.jsx Alexandria entry
 
 ---
 
