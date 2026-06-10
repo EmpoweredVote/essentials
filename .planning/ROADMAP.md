@@ -324,7 +324,7 @@ All 19 requirements covered ✓
 | # | Phase | Requirements | Goal |
 |---|-------|-------------|------|
 | 107 | 1/1 | Complete   | 2026-06-10 |
-| 108 | MA-DEEP-01, MA-DEEP-02, MA-DEEP-03 | Not started | Seed Boston city officials + School Committee with headshots |
+| 108 | MA-DEEP-01, MA-DEEP-02, MA-DEEP-03 | Planned (3 plans) | Seed Boston city officials + School Committee with headshots |
 | 109 | MA-TIER2-01, MA-TIER2-02 | Not started | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
 | 111 | MA-STANCES-01, MA-STANCES-02 | Not started | Evidence-only stances: 6 execs + 11 federal officials (17 total, sequential) |
@@ -360,7 +360,8 @@ All 19 requirements covered ✓
 4. Section-split check returns 0 rows after load
 
 **Plans:** 1/1 plans complete
-Plans:
+
+Plans:
 
 - [x] 107-01-PLAN.md — Verify 293 G4040 town geofences, PIP routing, section-split; close MA-GEO-01 + MA-GEO-02 (verification-only; rows already loaded v5.0)
 
@@ -376,21 +377,33 @@ All 19 requirements covered ✓
 
 - Boston geo_id='2507000' (G4110, already in geofences from v5.0)
 - Mayor: Michelle Wu (LOCAL_EXEC)
-- City Council: 13 at-large councillors (Boston uses at-large model, no district seats)
-- Boston School Committee: 13 elected members since November 2024 ballot measure (previously appointed); district_type=SCHOOL
-- Boston School Committee G5420 geofence: follow TIGER UNSD pattern established in v10.0
-- Headshot sources: boston.gov/city-council (council), bostonschoolcommittee.org or bps.boston.gov (school committee)
+- City Council: **9 single-member district seats + 4 at-large seats** (NOT all at-large — research corrected CONTEXT.md D-07). 9 district geofences loaded from ArcGIS FeatureServer (mtfcc='X0013', geo_id='boston-ma-council-district-{N}'); 4 at-large + Mayor link to geo_id='2507000'
+- District council election_method='fptp'; at-large='plurality_at_large'; Boston RCV bill passed May 2025 but NOT yet in effect
+- Boston School Committee: **7 APPOINTED members** (NOT 13 elected — the Nov 2024 ballot-measure claim is false; appointed model since 1991; is_appointed=true override of D-16). district_type=SCHOOL, BPS geo_id='2502790' (NCES LEAID 02790)
+- Boston School Committee G5420 geofence: direct INSERT in Plan 02 migration (no MA G5420 loader); external IDs -2502790001..-2502790007
+- Do NOT seed Mah Noor (non-voting student rep) or Lena Parvex (staff)
+- Migrations: 347=city government + council loader, 348=school committee, 349=headshots
+- Headshot sources: boston.gov/departments/city-council (council, 14 verified URLs), bostonpublicschools.org (school committee, best-effort)
 - Headshots: 600×750, Lanczos, q90; crop 4:5 first — never stretch
 - politician_images.type must be 'default'
 
 **Success criteria:**
 
-1. Mayor Wu + 13 City Councillors seeded with offices linked to geo_id='2507000'
-2. Boston School Committee 13 members seeded with SCHOOL district_type
-3. A Boston address returns a LOCAL section listing Mayor Wu + all 13 councillors
+1. Mayor Wu + 13 City Councillors (4 at-large + 9 district) seeded; at-large + Mayor link to geo_id='2507000', district councillors link to boston-ma-council-district-{N}
+2. Boston School Committee 7 appointed members seeded with SCHOOL district_type (geo_id='2502790', is_appointed=true)
+3. A Boston address returns a LOCAL section listing Mayor Wu + the resident's district councillor + 4 at-large councillors
 4. All available officials have headshots at 600×750 in politician_photos bucket
 
-**Plans:** TBD
+**Plans:** 3 plans
+Plans:
+**Wave 1** *(no file overlap — run in parallel)*
+
+- [ ] 108-01-PLAN.md — Boston city government: ArcGIS council district geofence loader (X0013) + migration 347 (Mayor Wu + 4 at-large + 9 district councillors, 11 districts, City Council chamber)
+- [ ] 108-02-PLAN.md — Boston School Committee: migration 348 (7 appointed members, SCHOOL district geo_id='2502790', G5420 geofence)
+
+**Wave 2** *(blocked on both Wave 1 plans — needs seeded politicians)*
+
+- [ ] 108-03-PLAN.md — Boston headshots: migration 349 (14 council + best-effort SC, 600×750, type='default')
 **UI hint**: no
 
 ---
