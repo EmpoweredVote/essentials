@@ -36,7 +36,7 @@
 | 103 | 3/3 | Complete   | 2026-06-09 |
 | 104 | 5/5 | Complete    | 2026-06-09 |
 | 105 | 3/3 | Complete    | 2026-06-09 |
-| 106 | 7/8 | In Progress|  |
+| 106 | 8/8 | Complete   | 2026-06-10 |
 
 ## Phase Details
 
@@ -246,7 +246,7 @@ Plans:
 4. 100% citation rate — zero uncited stance values
 5. Compass renders on Spanberger profile
 
-**Plans:** 7/8 plans executed
+**Plans:** 8/8 plans complete
 Plans:
 **Wave 1**
 
@@ -278,7 +278,7 @@ Plans:
 
 **Wave 8** *(blocked on Wave 7)*
 
-- [ ] 106-08-PLAN.md — Phase-wide closure verification + compass render checkpoint + final SUMMARY
+- [x] 106-08-PLAN.md — Phase-wide closure verification + compass render checkpoint + final SUMMARY
 
 ---
 
