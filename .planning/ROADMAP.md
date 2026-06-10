@@ -416,11 +416,11 @@ Plans:
 
 **Key facts:**
 
-- Worcester (#2): Mayor Joseph Petty + City Council (11 members); geo_id TBD from TIGER G4110 place
-- Springfield (#3): Mayor Domenic Sarno + City Council; geo_id TBD
-- Lowell (#4): City Manager + City Council (city-manager model — similar to Cambridge); geo_id TBD
-- Brockton (#5): Mayor Robert Sullivan + City Council; geo_id TBD
-- Quincy (#6): Mayor Thomas Koch + City Council; geo_id TBD
+- Worcester (#2): Mayor Joseph Petty + City Council (11 members); geo_id 2582000
+- Springfield (#3): Mayor Domenic Sarno + City Council (14 officials); geo_id 2567000
+- Lowell (#4): City Manager Golden + council-elected Mayor Gitschier + City Council (Plan E council-manager — no LOCAL_EXEC); geo_id 2537000
+- Brockton (#5): Mayor Moises M. Rodrigues (NOT Robert Sullivan — Sullivan lost Nov 2025; Rodrigues inaugurated 2026-01-05) + City Council; geo_id 2509000
+- Quincy (#6): Mayor Thomas Koch + City Council (all-new Jan 2026 roster); geo_id 2555745
 - All 5 cities are G4110 places already in geofence_boundaries from v5.0 — assert geo_ids before seeding
 - Headshots: best-effort from official city websites; 600×750 where available
 - Multi-tier INSERT then UPDATE by (chamber_id, title) pattern (v6.0 Maine lesson)
@@ -431,7 +431,20 @@ Plans:
 2. Springfield, Lowell, Brockton, and Quincy each return LOCAL sections with Mayor + council incumbents
 3. Best-effort headshots uploaded; gaps for unavailable photos documented
 
-**Plans:** TBD
+**Plans:** 6 plans
+
+Plans:
+**Wave 1** *(no file overlap — 5 independent city migrations run in parallel)*
+
+- [ ] 109-01-PLAN.md — Worcester government (migration 351: Mayor Petty + 11-member council)
+- [ ] 109-02-PLAN.md — Springfield government (migration 352: Mayor Sarno + 13 councillors)
+- [ ] 109-03-PLAN.md — Lowell government (migration 353: Plan E council-manager — City Manager + Mayor + 10 councillors, no LOCAL_EXEC)
+- [ ] 109-04-PLAN.md — Brockton government (migration 354: Mayor Rodrigues + 11 councillors)
+- [ ] 109-05-PLAN.md — Quincy government (migration 355: Mayor Koch + 9 councillors)
+
+**Wave 2** *(blocked on all 5 city migrations — needs seeded politician_ids)*
+
+- [ ] 109-06-PLAN.md — MA Tier 2 headshots (script + migration 356: best-effort 600x750 across all 5 cities)
 
 ---
 
