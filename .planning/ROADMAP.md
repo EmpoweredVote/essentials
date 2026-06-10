@@ -360,8 +360,8 @@ All 19 requirements covered ✓
 4. Section-split check returns 0 rows after load
 
 **Plans:** 1 plan
+Plans:
 
-Plans:
 - [ ] 107-01-PLAN.md — Verify 293 G4040 town geofences, PIP routing, section-split; close MA-GEO-01 + MA-GEO-02 (verification-only; rows already loaded v5.0)
 
 ---
