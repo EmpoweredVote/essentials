@@ -605,7 +605,7 @@ Expected: 56 before Phase 109 → 51 after all 5 cities seeded.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Worcester Mayor: one office or two?**
    - What we know: Petty is Mayor AND Councilor-at-Large; two functional roles but one person
