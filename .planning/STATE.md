@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-06-10T08:22:01.412Z"
 last_activity: 2026-06-10
 progress:
-  total_phases: 0
+  total_phases: 9
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,46 +17,43 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Not started (roadmap defined, ready to execute Phase 107)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-06-10 — Milestone v13.0 started
+Status: Ready — Phase 107 is next
+Last activity: 2026-06-10 — v13.0 roadmap written (Phases 107–115)
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Milestone complete
+**Current focus:** v13.0 Massachusetts Expanded — Phase 107: MA Town Geofences
 
-## v11.0 Roadmap Summary
+## v13.0 Roadmap Summary
 
 | Phase | Name | Requirements | Goal |
 |-------|------|--------------|------|
-| 90 | Post-Election Follow-up + MiniCompass UI | POST-ELECTION-01/02, UI-01/02 | ME primary winners + CA election ID + MiniCompass compact overlay |
-| 91 | MD TIGER Geofences | MD-GEO-01..06 | All MD address tiers routable via PostGIS |
-| 92 | MD State Government DB | MD-GOV-01/02, MD-GOV-06 (execs) | State of Maryland row + 4 exec chambers + officials + headshots |
-| 93 | MD Legislature + Federal Officials | MD-GOV-03/04/05, MD-GOV-06 (legislature) | 47 senators + 141 delegates + 10 federal officials seeded |
-| 94 | MD Headshots | MD-GOV-06 | 100% headshot coverage verified + gap-filled |
-| 95 | Leonardtown / St. Mary's County Deep Seed | MD-DEEP-01..03 | County commission + Leonardtown town officials seeded |
-| 96 | MD 2026 Elections + Discovery + Landing | MD-ELECTIONS-01..03 | 198 race rows + discovery armed + Landing.jsx entry |
-| 97 | MD Compass Stances — Executives + Senators | MD-STANCES-01/02 | 4 exec + 47 senator stances (Wave 1) |
-| 98 | MD Compass Stances — House Delegates | MD-STANCES-03/04 | 141 delegate stances (Wave 2) + compass render verified |
-| 99 | MD Verification + Playbook Retrospective | (cross-cutting all 26) | All 26 reqs verified + playbook updated + v11.0 closed |
+| 107 | MA Town Geofences | MA-GEO-01, MA-GEO-02 | Load 293 G4040 COUSUB town boundaries so any MA address routes |
+| 108 | Boston Deep Seed | MA-DEEP-01, MA-DEEP-02, MA-DEEP-03 | Seed Boston city officials + School Committee with headshots |
+| 109 | MA Tier 2 Cities | MA-TIER2-01, MA-TIER2-02 | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
+| 110 | MA 2026 Elections + Discovery | MA-ELECTIONS-01..04 | Seed MA 2026 elections, 200+ race rows, arm discovery |
+| 111 | MA Stances — Execs + Federal | MA-STANCES-01, MA-STANCES-02 | Evidence-only stances: 6 execs + 11 federal (17 total, sequential) |
+| 112 | MA Stances — State Senate | MA-STANCES-03 | Evidence-only stances: 40 MA state senators (sequential) |
+| 113 | MA Stances — House Wave 1 | MA-STANCES-04 (Wave 1) | Evidence-only stances: MA House reps HD-01 through HD-80 |
+| 114 | MA Stances — House Wave 2 | MA-STANCES-04 (Wave 2) | Evidence-only stances: MA House reps HD-81 through HD-160 — closes MA-STANCES-04 |
+| 115 | MA Playbook Retrospective | MA-RETRO-01 | COUSUB GOTCHAs + Boston patterns + Cities Onboarded + v13.0 close |
 
-## Key MD Facts (carry into plans)
+## Key MA Facts (carry into plans)
 
-- FIPS code: 24 (state='24' in geofence_boundaries; districts.state='md' for STATE tiers, 'MD' for NATIONAL)
-- 47 SLDU senate districts (1 senator each); 141 SLDL house delegate positions across 47 districts (multi-member, typically 3; some A/B subdistricts)
-- 24 G4020 counties; 8 congressional districts
-- Constitutional officers (voter-elected): Governor, LG, AG, Comptroller
-- State Treasurer: elected by General Assembly → is_appointed_position=true (ME/OR pattern)
-- Stances research scope: 4 exec + 47 senators + 141 delegates = 192 officials
-- Next migration: 322 (315=VA headshots applied 2026-06-09; 316-319=VA file renames only, no new data; 320=VA delegates committed by EV-Accounts; 321=tiger_geoid backfill applied+committed by EV-Accounts 2026-06-09; 322=Essentials VA elections; 323=EV-Accounts photo_origin_url for 130 VA officials)
-- St. Mary's County geo_id='24037' CONFIRMED; Leonardtown geo_id='2446475' CONFIRMED
-- Migrations 276 (St. Mary's County) + 277 (Leonardtown) applied; MD-DEEP-01 and MD-DEEP-03 data side complete
-- Leonardtown: LOCAL_EXEC for Mayor + LOCAL for 5 council members; mtfcc=NULL on both district rows (migration 246 pattern)
-- D-05 confirmed Option A: all 5 St. Mary's commissioners share one COUNTY district (county-wide election model)
+- FIPS code: 25 (state='25' in geofence_boundaries; districts.state='ma' for STATE/COUNTY tiers, 'MA' for NATIONAL)
+- 58 G4110 cities already loaded (v5.0) — assert, do not reload
+- 293 G4040 COUSUB towns to add in Phase 107
+- Boston geo_id='2507000' (G4110, already in geofences)
+- MA legislature: 40 senators (40 SLDU districts) + 160 house reps (160 SLDL districts) — all seeded with offices in v5.0
+- MA 2026: primary 2026-09-02, general 2026-11-03
+- Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
+- Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
+- Next migration: 347 (last v12.0 migration was 346 — ACPS stances batch)
 
 ## Accumulated Context
 
@@ -113,7 +110,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-06-10T07:40:48.604Z
-Stopped at: context exhaustion at 75% (2026-06-09)
+Stopped at: v13.0 roadmap defined (Phases 107–115); Phase 107 ready to execute
 Resume file: None
 
 ## Performance Metrics

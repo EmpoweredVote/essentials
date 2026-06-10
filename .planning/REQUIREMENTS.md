@@ -33,6 +33,10 @@
 - [ ] **MA-STANCES-03:** Compass shows stance data for all 40 MA state senators — evidence-only, sequential, 100% citation rate
 - [ ] **MA-STANCES-04:** Compass shows stance data for all 160 MA house representatives — evidence-only, sequential, 100% citation rate
 
+## MA-STANCES — Boston City Officials
+
+- [ ] **MA-STANCES-05:** Compass shows stance data for Mayor Wu + all 13 Boston City Councillors — evidence-only, sequential research, 100% citation rate; Boston School Committee best-effort
+
 ## MA-RETRO — Playbook Retrospective
 
 - [ ] **MA-RETRO-01:** LOCATION-ONBOARDING.md updated with MA town/COUSUB routing pattern GOTCHAs + Boston deep seed patterns; Massachusetts + Boston entries added to Cities Onboarded table
@@ -56,19 +60,20 @@
 
 | Requirement | Phase |
 |-------------|-------|
-| MA-GEO-01 | TBD |
-| MA-GEO-02 | TBD |
-| MA-DEEP-01 | TBD |
-| MA-DEEP-02 | TBD |
-| MA-DEEP-03 | TBD |
-| MA-ELECTIONS-01 | TBD |
-| MA-ELECTIONS-02 | TBD |
-| MA-ELECTIONS-03 | TBD |
-| MA-ELECTIONS-04 | TBD |
-| MA-TIER2-01 | TBD |
-| MA-TIER2-02 | TBD |
-| MA-STANCES-01 | TBD |
-| MA-STANCES-02 | TBD |
-| MA-STANCES-03 | TBD |
-| MA-STANCES-04 | TBD |
-| MA-RETRO-01 | TBD |
+| MA-GEO-01 | 107 |
+| MA-GEO-02 | 107 |
+| MA-DEEP-01 | 108 |
+| MA-DEEP-02 | 108 |
+| MA-DEEP-03 | 108 |
+| MA-ELECTIONS-01 | 110 |
+| MA-ELECTIONS-02 | 110 |
+| MA-ELECTIONS-03 | 110 |
+| MA-ELECTIONS-04 | 110 |
+| MA-TIER2-01 | 109 |
+| MA-TIER2-02 | 109 |
+| MA-STANCES-01 | 111 |
+| MA-STANCES-02 | 111 |
+| MA-STANCES-03 | 112 |
+| MA-STANCES-04 | 113 |
+| MA-STANCES-05 | 115 |
+| MA-RETRO-01 | 116 |

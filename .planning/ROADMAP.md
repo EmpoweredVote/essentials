@@ -16,7 +16,7 @@
 - ✅ **v10.0 Multnomah County & School Boards** - Phases 83-89 (shipped 2026-06-04)
 - ✅ **v11.0 Maryland Essentials** - Phases 90-99 (shipped 2026-06-08)
 - ✅ **v12.0 Virginia Essentials** - Phases 100-106 (shipped 2026-06-10)
-- 🔄 **v13.0 Massachusetts Expanded** - Phases 107+ (in progress)
+- 🔄 **v13.0 Massachusetts Expanded** - Phases 107-116 (in progress)
 
 ---
 
@@ -309,3 +309,320 @@ Plans:
 | VA-STANCES-03 | 106 |
 
 All 19 requirements covered ✓
+
+---
+
+# v13.0 Massachusetts Expanded
+
+**Goal:** Complete Massachusetts to full depth — fill the town routing gap (293 G4040 COUSUB boundaries), stances for all 217+ officials across 5 sequential batches (including Boston city officials), Boston deep seed, MA 2026 elections, and Tier 2 city incumbents.  
+**Phases:** 107–116 (10 phases)  
+**Requirements:** 17  
+**Next migration:** 347
+
+## Phase Summary
+
+| # | Phase | Requirements | Goal |
+|---|-------|-------------|------|
+| 107 | MA-GEO-01, MA-GEO-02 | Not started | Load 293 G4040 COUSUB town boundaries so any MA address routes |
+| 108 | MA-DEEP-01, MA-DEEP-02, MA-DEEP-03 | Not started | Seed Boston city officials + School Committee with headshots |
+| 109 | MA-TIER2-01, MA-TIER2-02 | Not started | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
+| 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
+| 111 | MA-STANCES-01, MA-STANCES-02 | Not started | Evidence-only stances: 6 execs + 11 federal officials (17 total, sequential) |
+| 112 | MA-STANCES-03 | Not started | Evidence-only stances: all 40 MA state senators (sequential) |
+| 113 | MA-STANCES-04 (Wave 1) | Not started | Evidence-only stances: MA House reps SD-01 through SD-80 (~80 officials, sequential) |
+| 114 | MA-STANCES-04 (Wave 2) | Not started | Evidence-only stances: MA House reps HD-81 through HD-160 (~80 officials, sequential) — closes MA-STANCES-04 |
+| 115 | MA-STANCES-05 | Not started | Evidence-only stances: Mayor Wu + 13 Boston City Councillors + School Committee best-effort |
+| 116 | MA-RETRO-01 | Not started | Playbook retrospective: MA town/COUSUB GOTCHAs + Boston patterns + Cities Onboarded entries |
+
+## Phase Details
+
+### Phase 107: MA Town Geofences
+
+**Goal:** Load 293 G4040 COUSUB town boundaries so any Massachusetts address — whether in a city or a town — routes to correct state and federal representatives via PostGIS.
+
+**Requirements:** MA-GEO-01, MA-GEO-02
+
+**Key facts:**
+
+- FIPS 25; geofence_boundaries.state='25'
+- 58 G4110 cities already loaded in v5.0 — do NOT reload, assert only
+- 293 new G4040 COUSUB town rows (previously deferred, v5.0 decision documented in Key Decisions table)
+- Boston geo_id='2507000' is already present (G4110) — town loader must skip it
+- districts.state casing: lowercase `ma` for STATE/COUNTY tiers; uppercase `MA` for NATIONAL tiers (same pattern as OR/MD/VA)
+- MTFCC pre-flight assertion: confirm G4040 rows are absent before loading (zero-row guard)
+- After load: run section-split check (zero rows = clean)
+
+**Success criteria:**
+
+1. 293 new G4040 COUSUB rows inserted into geofence_boundaries (state='25', mtfcc='G4040')
+2. A town address (e.g. Concord, MA or Brookline, MA) returns correct STATE_UPPER + STATE_LOWER + NATIONAL tiers
+3. Boston address still routes correctly (G4110 row unchanged)
+4. Section-split check returns 0 rows after load
+
+**Plans:** TBD
+
+---
+
+### Phase 108: Boston Deep Seed
+
+**Goal:** Seed Boston city government (Mayor + 13 City Councillors + School Committee) with headshots so a Boston address shows a complete LOCAL section.
+
+**Requirements:** MA-DEEP-01, MA-DEEP-02, MA-DEEP-03
+
+**Key facts:**
+
+- Boston geo_id='2507000' (G4110, already in geofences from v5.0)
+- Mayor: Michelle Wu (LOCAL_EXEC)
+- City Council: 13 at-large councillors (Boston uses at-large model, no district seats)
+- Boston School Committee: 13 elected members since November 2024 ballot measure (previously appointed); district_type=SCHOOL
+- Boston School Committee G5420 geofence: follow TIGER UNSD pattern established in v10.0
+- Headshot sources: boston.gov/city-council (council), bostonschoolcommittee.org or bps.boston.gov (school committee)
+- Headshots: 600×750, Lanczos, q90; crop 4:5 first — never stretch
+- politician_images.type must be 'default'
+
+**Success criteria:**
+
+1. Mayor Wu + 13 City Councillors seeded with offices linked to geo_id='2507000'
+2. Boston School Committee 13 members seeded with SCHOOL district_type
+3. A Boston address returns a LOCAL section listing Mayor Wu + all 13 councillors
+4. All available officials have headshots at 600×750 in politician_photos bucket
+
+**Plans:** TBD
+**UI hint**: no
+
+---
+
+### Phase 109: MA Tier 2 Cities
+
+**Goal:** Seed incumbents for Worcester (#2) and four other Tier 2 cities so those city addresses return a populated LOCAL section.
+
+**Requirements:** MA-TIER2-01, MA-TIER2-02
+
+**Key facts:**
+
+- Worcester (#2): Mayor Joseph Petty + City Council (11 members); geo_id TBD from TIGER G4110 place
+- Springfield (#3): Mayor Domenic Sarno + City Council; geo_id TBD
+- Lowell (#4): City Manager + City Council (city-manager model — similar to Cambridge); geo_id TBD
+- Brockton (#5): Mayor Robert Sullivan + City Council; geo_id TBD
+- Quincy (#6): Mayor Thomas Koch + City Council; geo_id TBD
+- All 5 cities are G4110 places already in geofence_boundaries from v5.0 — assert geo_ids before seeding
+- Headshots: best-effort from official city websites; 600×750 where available
+- Multi-tier INSERT then UPDATE by (chamber_id, title) pattern (v6.0 Maine lesson)
+
+**Success criteria:**
+
+1. A Worcester address returns a LOCAL section with Mayor Petty + city councillors
+2. Springfield, Lowell, Brockton, and Quincy each return LOCAL sections with Mayor + council incumbents
+3. Best-effort headshots uploaded; gaps for unavailable photos documented
+
+**Plans:** TBD
+
+---
+
+### Phase 110: MA 2026 Elections + Discovery
+
+**Goal:** Seed MA 2026 election rows, 200+ legislative race scaffold, Governor + US Senate races with known candidates, and arm the discovery pipeline.
+
+**Requirements:** MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04
+
+**Key facts:**
+
+- Primary: 2026-09-02; General: 2026-11-03
+- Governor: Maura Healey (seeking re-election, open filed); US Senate: Ed Markey (seeking re-election)
+- All 200 legislative races (40 Senate + 160 House) need scaffold race rows with non-null office_ids
+- MA legislature already has offices linked to districts from v5.0 — office_id JOIN is available
+- discovery_jurisdictions row for MA statewide (geo_id='25'): cron_active=true; election authority is sec.state.ma.us
+- Landing.jsx: Boston city browse entry + MA state browse entry (if not already present from v5.0)
+- Race rows must use existing MA election_ids; do not create duplicate election rows if v5.0 already seeded elections
+
+**Success criteria:**
+
+1. 2 election rows exist in essentials.elections (primary 2026-09-02 + general 2026-11-03); assert or insert
+2. Governor + US Senate race rows exist with Healey/Markey as incumbent candidates
+3. All 200 legislative race rows (40 Senate + 160 House) present with non-null office_ids
+4. discovery_jurisdictions row active for MA (geo_id='25', cron_active=true)
+
+**Plans:** TBD
+
+---
+
+### Phase 111: MA Stances — Executives + Federal Officials
+
+**Goal:** Evidence-only compass stances for all 6 MA executives and all 11 MA federal officials (17 total), researched and applied one at a time.
+
+**Requirements:** MA-STANCES-01, MA-STANCES-02
+
+**Key facts:**
+
+- Run ONE politician at a time — never parallel (project constraint, D-08 equivalent)
+- No default values — blank spoke = no evidence; never Neutral/Likely as fallback
+- 6 executives: Governor Healey, LG Kim Driscoll, AG Andrea Campbell, Treasurer Goldberg, Auditor DiZoglio, SoS Galvin
+- 11 federal: Senators Markey + Warren + 9 US House reps (MA-01 through MA-09)
+- Healey and Warren have rich public records; Markey has 40+ year Congressional record
+- Per-individual migration files starting at 347; apply immediately after each research session
+- 100% citation rate required — zero uncited values
+- Migration numbering: 347 = first exec; continues sequentially through all 17
+
+**Success criteria:**
+
+1. ≥15 stances each for Healey, Warren, and Markey (high-public-record officials)
+2. ≥8 stances each for remaining executives and federal reps
+3. 100% citation rate across all 17 officials
+4. Compass renders correctly on Healey profile (human-verified)
+
+**Plans:** TBD
+
+---
+
+### Phase 112: MA Stances — State Senate
+
+**Goal:** Evidence-only compass stances for all 40 MA state senators, applied sequentially one at a time.
+
+**Requirements:** MA-STANCES-03
+
+**Key facts:**
+
+- 40 senators across 40 SLDU districts; all seeded with offices in v5.0
+- Sequential research: one senator at a time — never parallel
+- Batch into 2-3 plan files (e.g. SD-01 through SD-20, SD-21 through SD-40) to keep plan files manageable
+- 100% citation rate required; blank spoke acceptable for senators with no public record
+- Migration numbering continues from Phase 111's last migration
+- Apply each migration immediately after research — do not accumulate
+
+**Success criteria:**
+
+1. politician_answers rows present for all 40 MA senators
+2. 100% citation rate — zero uncited stance values
+3. Compass renders on at least one senator profile (human-verified)
+4. SD with no public evidence has blank spokes (not defaulted values)
+
+**Plans:** TBD
+
+---
+
+### Phase 113: MA Stances — House Wave 1
+
+**Goal:** Evidence-only compass stances for MA House representatives districts 1–80, applied sequentially.
+
+**Requirements:** MA-STANCES-04
+
+**Key facts:**
+
+- MA House has 160 representatives across 160 SLDL districts; Wave 1 = first 80
+- Sequential research: one rep at a time — never parallel
+- House reps typically have shorter public records than senators; blank spokes expected for newer/rural members
+- Batch into 2-4 plan files (e.g. HD-01 through HD-40, HD-41 through HD-80)
+- 100% citation rate required for values present; absence of values is acceptable
+- Migration numbering continues from Phase 112's last migration
+
+**Success criteria:**
+
+1. politician_answers rows attempted for all 80 House reps in Wave 1
+2. 100% citation rate on all values written (no uncited stance values)
+3. Blank spokes for reps with no public evidence documented as expected outcome
+
+**Plans:** TBD
+
+---
+
+### Phase 114: MA Stances — House Wave 2
+
+**Goal:** Evidence-only compass stances for MA House representatives districts 81–160, closing MA-STANCES-04.
+
+**Requirements:** MA-STANCES-04 (Wave 2 — closes requirement)
+
+**Key facts:**
+
+- Wave 2 = house districts 81–160 (~80 reps)
+- Same sequential-one-at-a-time constraint as Wave 1
+- Batch into 2-4 plan files
+- After final rep: run full MA stance count verification (SELECT COUNT(*) ... WHERE politician_id IN (MA house reps))
+- MA-STANCES-04 closes when Wave 2 is complete and verified
+- Migration numbering continues from Phase 113's last migration
+
+**Success criteria:**
+
+1. politician_answers rows attempted for all 80 House reps in Wave 2
+2. 100% citation rate on all values written
+3. Total MA politician_answers count verified after Wave 2 completes
+4. Compass renders on at least one House rep profile (human-verified)
+
+**Plans:** TBD
+
+---
+
+### Phase 115: Boston Stances
+
+**Goal:** Evidence-only compass stances for Mayor Wu + all 13 Boston City Councillors; best-effort for Boston School Committee members.
+
+**Requirements:** MA-STANCES-05
+
+**Key facts:**
+
+- Must run AFTER Phase 108 (Boston deep seed) — politician_ids must exist in DB first
+- Run ONE politician at a time — never parallel
+- Mayor Wu: very public record (former City Councillor + Mayor since 2022); expect 10+ stances
+- 13 City Councillors: varying public records; several well-known (Janey, Flynn, Murphy); blank spokes acceptable for newer members
+- Boston School Committee: 13 members elected November 2024 — most will have thin records; treat as best-effort (5-minute cap per member)
+- 100% citation rate required on all values written; no uncited values
+- Migration numbering continues from Phase 114's last migration
+
+**Success criteria:**
+
+1. ≥10 stances for Mayor Wu; ≥3 stances each for councillors with public record
+2. 100% citation rate on all values written
+3. Blank spokes for officials with no findable public record (documented as expected)
+4. Compass renders on Mayor Wu profile (human-verified)
+
+**Plans:** TBD
+
+---
+
+### Phase 116: MA Playbook Retrospective
+
+**Goal:** Update LOCATION-ONBOARDING.md with MA town/COUSUB routing patterns and Boston deep seed learnings; close v13.0.
+
+**Requirements:** MA-RETRO-01
+
+**Key facts:**
+
+- Primary GOTCHAs to document: G4040 COUSUB load sequence (skip already-loaded G4110 places), COUSUB vs. city dual-tier behavior, Boston at-large council model (no district seats — differs from Cambridge)
+- Boston School Committee elected-since-2024 pattern (was appointed before ballot measure)
+- Massachusetts Quick Reference block: FIPS 25, primary date, key geo_ids, headshot sources
+- Cities Onboarded table: add rows for Massachusetts (state) and Boston (city)
+- 6 LOCATION-ONBOARDING.md templates: update any that need MA-specific callouts
+
+**Success criteria:**
+
+1. LOCATION-ONBOARDING.md contains at least 3 new MA-specific [GOTCHA] callouts
+2. Massachusetts Quick Reference block added (FIPS, dates, key URLs, geo_ids)
+3. Cities Onboarded table has new rows for Massachusetts state + Boston
+4. v13.0 milestone marked complete in STATE.md and ROADMAP.md
+
+**Plans:** TBD
+
+---
+
+## Coverage Matrix
+
+| Req | Phase |
+|-----|-------|
+| MA-GEO-01 | 107 |
+| MA-GEO-02 | 107 |
+| MA-DEEP-01 | 108 |
+| MA-DEEP-02 | 108 |
+| MA-DEEP-03 | 108 |
+| MA-ELECTIONS-01 | 110 |
+| MA-ELECTIONS-02 | 110 |
+| MA-ELECTIONS-03 | 110 |
+| MA-ELECTIONS-04 | 110 |
+| MA-TIER2-01 | 109 |
+| MA-TIER2-02 | 109 |
+| MA-STANCES-01 | 111 |
+| MA-STANCES-02 | 111 |
+| MA-STANCES-03 | 112 |
+| MA-STANCES-04 | 113 |
+| MA-STANCES-05 | 115 |
+| MA-RETRO-01 | 116 |
+
+All 17 requirements covered ✓
