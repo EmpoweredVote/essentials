@@ -8,7 +8,7 @@ progress:
   total_phases: 10
   completed_phases: 2
   total_plans: 10
-  completed_plans: 4
+  completed_plans: 9
   percent: 20
 ---
 
@@ -16,9 +16,9 @@ progress:
 
 ## Current Position
 
-Phase: 109 (ma-tier2-cities) — NEXT
+Phase: 109 (ma-tier2-cities) — IN PROGRESS (Wave 2 pending)
 Last completed: Phase 108 (boston-deep-seed) — COMPLETE 2026-06-10
-Status: Ready to execute
+Status: Wave 1 complete (5/6 plans); Wave 2 (headshots) starting
 
 ## Project Reference
 

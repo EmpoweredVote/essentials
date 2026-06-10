@@ -325,7 +325,7 @@ All 19 requirements covered ✓
 |---|-------|-------------|------|
 | 107 | 1/1 | Complete   | 2026-06-10 |
 | 108 | 3/3 | Complete   | 2026-06-10 |
-| 109 | MA-TIER2-01, MA-TIER2-02 | Not started | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
+| 109 | MA-TIER2-01, MA-TIER2-02 | In progress (5/6 plans) | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
 | 111 | MA-STANCES-01, MA-STANCES-02 | Not started | Evidence-only stances: 6 execs + 11 federal officials (17 total, sequential) |
 | 112 | MA-STANCES-03 | Not started | Evidence-only stances: all 40 MA state senators (sequential) |
@@ -436,11 +436,11 @@ Plans:
 Plans:
 **Wave 1** *(no file overlap — 5 independent city migrations run in parallel)*
 
-- [ ] 109-01-PLAN.md — Worcester government (migration 351: Mayor Petty + 11-member council)
-- [ ] 109-02-PLAN.md — Springfield government (migration 352: Mayor Sarno + 13 councillors)
-- [ ] 109-03-PLAN.md — Lowell government (migration 353: Plan E council-manager — City Manager + Mayor + 10 councillors, no LOCAL_EXEC)
-- [ ] 109-04-PLAN.md — Brockton government (migration 354: Mayor Rodrigues + 11 councillors)
-- [ ] 109-05-PLAN.md — Quincy government (migration 355: Mayor Koch + 9 councillors)
+- [x] 109-01-PLAN.md — Worcester government (migration 351: Mayor Petty + 11-member council)
+- [x] 109-02-PLAN.md — Springfield government (migration 352: Mayor Sarno + 13 councillors)
+- [x] 109-03-PLAN.md — Lowell government (migration 353: Plan E council-manager — City Manager + Mayor + 10 councillors, no LOCAL_EXEC)
+- [x] 109-04-PLAN.md — Brockton government (migration 354: Mayor Rodrigues + 11 councillors)
+- [x] 109-05-PLAN.md — Quincy government (migration 355: Mayor Koch + 9 councillors)
 
 **Wave 2** *(blocked on all 5 city migrations — needs seeded politician_ids)*
 
