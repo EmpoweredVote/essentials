@@ -324,7 +324,7 @@ All 19 requirements covered ✓
 | # | Phase | Requirements | Goal |
 |---|-------|-------------|------|
 | 107 | 1/1 | Complete   | 2026-06-10 |
-| 108 | 2/3 | In Progress|  |
+| 108 | 3/3 | Complete   | 2026-06-10 |
 | 109 | MA-TIER2-01, MA-TIER2-02 | Not started | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
 | 111 | MA-STANCES-01, MA-STANCES-02 | Not started | Evidence-only stances: 6 execs + 11 federal officials (17 total, sequential) |
@@ -394,7 +394,7 @@ Plans:
 3. A Boston address returns a LOCAL section listing Mayor Wu + the resident's district councillor + 4 at-large councillors
 4. All available officials have headshots at 600×750 in politician_photos bucket
 
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 Plans:
 **Wave 1** *(no file overlap — run in parallel)*
 
@@ -403,7 +403,7 @@ Plans:
 
 **Wave 2** *(blocked on both Wave 1 plans — needs seeded politicians)*
 
-- [ ] 108-03-PLAN.md — Boston headshots: migration 349 (14 council + best-effort SC, 600×750, type='default')
+- [x] 108-03-PLAN.md — Boston headshots: migration 349 (14 council + best-effort SC, 600×750, type='default')
 **UI hint**: no
 
 ---
