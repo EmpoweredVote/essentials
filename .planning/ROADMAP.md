@@ -324,7 +324,7 @@ All 19 requirements covered ✓
 | # | Phase | Requirements | Goal |
 |---|-------|-------------|------|
 | 107 | 1/1 | Complete   | 2026-06-10 |
-| 108 | MA-DEEP-01, MA-DEEP-02, MA-DEEP-03 | Planned (3 plans) | Seed Boston city officials + School Committee with headshots |
+| 108 | 2/3 | In Progress|  |
 | 109 | MA-TIER2-01, MA-TIER2-02 | Not started | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
 | 111 | MA-STANCES-01, MA-STANCES-02 | Not started | Evidence-only stances: 6 execs + 11 federal officials (17 total, sequential) |
@@ -394,12 +394,12 @@ Plans:
 3. A Boston address returns a LOCAL section listing Mayor Wu + the resident's district councillor + 4 at-large councillors
 4. All available officials have headshots at 600×750 in politician_photos bucket
 
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 Plans:
 **Wave 1** *(no file overlap — run in parallel)*
 
-- [ ] 108-01-PLAN.md — Boston city government: ArcGIS council district geofence loader (X0013) + migration 347 (Mayor Wu + 4 at-large + 9 district councillors, 11 districts, City Council chamber)
-- [ ] 108-02-PLAN.md — Boston School Committee: migration 348 (7 appointed members, SCHOOL district geo_id='2502790', G5420 geofence)
+- [x] 108-01-PLAN.md — Boston city government: ArcGIS council district geofence loader (X0013) + migration 347 (Mayor Wu + 4 at-large + 9 district councillors, 11 districts, City Council chamber)
+- [x] 108-02-PLAN.md — Boston School Committee: migration 348 (7 appointed members, SCHOOL district geo_id='2502790', G5420 geofence)
 
 **Wave 2** *(blocked on both Wave 1 plans — needs seeded politicians)*
 
