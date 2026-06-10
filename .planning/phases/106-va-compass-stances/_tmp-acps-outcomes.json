@@ -1,0 +1,93 @@
+{
+  "processed": "2026-06-10",
+  "results": [
+    {
+      "external_id": -5100090001,
+      "full_name": "Michelle Rief",
+      "migration": 338,
+      "outcome": "applied",
+      "stance_count": 2,
+      "topics": ["taxes", "civil-rights"],
+      "sources": ["alxnow.com/2026/03/16/...", "alxnow.com/2026/05/06/...", "alxnow.com/2026/05/21/..."]
+    },
+    {
+      "external_id": -5100090002,
+      "full_name": "Christopher Harris",
+      "migration": 339,
+      "outcome": "applied",
+      "stance_count": 1,
+      "topics": ["civil-rights"],
+      "sources": ["alxnow.com/2025/07/10/..."]
+    },
+    {
+      "external_id": -5100090003,
+      "full_name": "Abdulahi Abdalla",
+      "migration": 340,
+      "outcome": "applied",
+      "stance_count": 1,
+      "topics": ["civil-rights"],
+      "sources": ["alxnow.com/2025/05/02/..."]
+    },
+    {
+      "external_id": -5100090004,
+      "full_name": "Tim Beaty",
+      "migration": 341,
+      "outcome": "applied",
+      "stance_count": 1,
+      "topics": ["civil-rights"],
+      "sources": ["alxnow.com/2025/05/02/..."]
+    },
+    {
+      "external_id": -5100090005,
+      "full_name": "Kelly Carmichael Booz",
+      "migration": 342,
+      "outcome": "applied",
+      "stance_count": 1,
+      "topics": ["local-immigration"],
+      "sources": ["alxnow.com/2026/02/20/..."]
+    },
+    {
+      "external_id": -5100090006,
+      "full_name": "Donna Kenley",
+      "migration": 343,
+      "outcome": "applied",
+      "stance_count": 1,
+      "topics": ["civil-rights"],
+      "sources": ["alxnow.com/2025/06/14/..."]
+    },
+    {
+      "external_id": -5100090007,
+      "full_name": "Ryan Reyna",
+      "migration": 344,
+      "outcome": "applied",
+      "stance_count": 2,
+      "topics": ["civil-rights", "childcare"],
+      "sources": ["ryanreyna.com/issues", "alxnow.com/2026/03/30/..."]
+    },
+    {
+      "external_id": -5100090008,
+      "full_name": "Alexander Crider Scioscia",
+      "migration": null,
+      "outcome": "no_public_record",
+      "stance_count": 0,
+      "topics": [],
+      "sources": []
+    },
+    {
+      "external_id": -5100090009,
+      "full_name": "Ashley Simpson Baird",
+      "migration": 346,
+      "outcome": "applied",
+      "stance_count": 1,
+      "topics": ["civil-rights"],
+      "sources": ["alxnow.com/2025/05/02/..."]
+    }
+  ],
+  "summary": {
+    "applied": 8,
+    "no_public_record": 1,
+    "total_stances": 10,
+    "migrations_created": [338, 339, 340, 341, 342, 343, 344, 346],
+    "migrations_skipped": [345]
+  }
+}
