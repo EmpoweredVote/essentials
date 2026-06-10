@@ -323,7 +323,7 @@ All 19 requirements covered ✓
 
 | # | Phase | Requirements | Goal |
 |---|-------|-------------|------|
-| 107 | MA-GEO-01, MA-GEO-02 | Not started | Load 293 G4040 COUSUB town boundaries so any MA address routes |
+| 107 | 1/1 | Complete   | 2026-06-10 |
 | 108 | MA-DEEP-01, MA-DEEP-02, MA-DEEP-03 | Not started | Seed Boston city officials + School Committee with headshots |
 | 109 | MA-TIER2-01, MA-TIER2-02 | Not started | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
@@ -359,10 +359,10 @@ All 19 requirements covered ✓
 3. Boston address still routes correctly (G4110 row unchanged)
 4. Section-split check returns 0 rows after load
 
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 Plans:
 
-- [ ] 107-01-PLAN.md — Verify 293 G4040 town geofences, PIP routing, section-split; close MA-GEO-01 + MA-GEO-02 (verification-only; rows already loaded v5.0)
+- [x] 107-01-PLAN.md — Verify 293 G4040 town geofences, PIP routing, section-split; close MA-GEO-01 + MA-GEO-02 (verification-only; rows already loaded v5.0)
 
 ---
 

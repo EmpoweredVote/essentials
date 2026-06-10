@@ -3,24 +3,24 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: Massachusetts Expanded
 status: executing
-last_updated: "2026-06-10T15:37:40.129Z"
+last_updated: "2026-06-10T16:01:54.358Z"
 last_activity: 2026-06-10 -- Phase 107 planning complete
 progress:
   total_phases: 10
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 1
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 10
 ---
 
 # State
 
 ## Current Position
 
-Phase: Not started (roadmap defined, ready to execute Phase 107)
-Plan: —
-Status: Ready to execute
-Last activity: 2026-06-10 -- Phase 107 planning complete
+Phase: 107 complete — Phase 108 (Boston Deep Seed) is next
+Plan: 107-01 complete
+Status: Phase 107 closed; v13.0 in progress
+Last activity: 2026-06-10 -- Phase 107 Plan 01 complete (verification-only; MA-GEO-01 + MA-GEO-02 closed)
 
 ## Project Reference
 
@@ -109,8 +109,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-10T07:40:48.604Z
-Stopped at: v13.0 roadmap defined (Phases 107–115); Phase 107 ready to execute
+Last session: 2026-06-10T16:05:00Z
+Stopped at: Phase 107 Plan 01 complete; Phase 108 (Boston Deep Seed) is next
 Resume file: None
 
 ## Performance Metrics
@@ -135,7 +135,11 @@ Resume file: None
 | Phase 103 P03 | 50m | 2 tasks | 2 files |
 | Phase 106-va-compass-stances P07 | 35 | 3 tasks | 8 files |
 | Phase 106 P08 | 2 days | 3 tasks | 20 files |
+| Phase 107 P01 | 25m | 3 tasks | 1 file (107-01-VERIFICATION.md) |
 
 ## Decisions
 
 - [Phase ?]: Scioscia (migration 345) had no public record — skipped per D-03/D-04; blank spoke is honest
+- [Phase 107]: Verification-only: 293 G4040 rows were loaded in v5.0 (2026-05-19); re-running loader would silently skip via ON CONFLICT DO NOTHING; assert-not-reload is the correct pattern for idempotent TIGER loads
+- [Phase 107]: Section-split direction: geofence NOT IN districts is the PASS signal (0 rows); reverse direction yields ~7 expected rows for statewide districts with no polygon (NOT a failure)
+- [Phase 107]: G4040 districts join must be state-scoped; global join returns 54 rows from Indiana CCDs (G4040 mtfcc); MA-scoped join confirms 0 rows (writeDistrictRow=false for COUSUB)

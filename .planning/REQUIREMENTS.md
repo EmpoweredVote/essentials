@@ -5,8 +5,8 @@
 
 ## MA-GEO — Town Geofences
 
-- [ ] **MA-GEO-01:** A resident of any MA town (not just the 58 G4110 cities already loaded) can enter their address and get routed to their correct state + federal representatives via PostGIS geofence matching
-- [ ] **MA-GEO-02:** Any MA address returns a non-empty LOCAL section where the town has seeded officials (dependent on MA-TIER2 / MA-DEEP completion for those towns)
+- [x] **MA-GEO-01:** A resident of any MA town (not just the 58 G4110 cities already loaded) can enter their address and get routed to their correct state + federal representatives via PostGIS geofence matching
+- [x] **MA-GEO-02:** Any MA address returns a non-empty LOCAL section where the town has seeded officials (dependent on MA-TIER2 / MA-DEEP completion for those towns)
 
 ## MA-DEEP — Boston Deep Seed
 
