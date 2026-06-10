@@ -1,27 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v12.0
-milestone_name: Virginia Essentials
-status: milestone_complete
-last_updated: 2026-06-10T07:49:21.927Z
+milestone: v13.0
+milestone_name: Massachusetts Expanded
+status: planning
+last_updated: "2026-06-10T08:22:01.412Z"
 last_activity: 2026-06-10
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 26
-  completed_plans: 60
-  percent: 100
-stopped_at: Milestone complete (Phase 106 was final phase)
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 106
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-06-10
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-06-10 — Milestone v13.0 started
 
 ## Project Reference
 

@@ -15,7 +15,8 @@
 - ✅ **v9.0 Oregon Legislature Stances** - Phase 82 (shipped 2026-05-31)
 - ✅ **v10.0 Multnomah County & School Boards** - Phases 83-89 (shipped 2026-06-04)
 - ✅ **v11.0 Maryland Essentials** - Phases 90-99 (shipped 2026-06-08)
-- 🔄 **v12.0 Virginia Essentials** - Phases 100-106 (in progress)
+- ✅ **v12.0 Virginia Essentials** - Phases 100-106 (shipped 2026-06-10)
+- 🔄 **v13.0 Massachusetts Expanded** - Phases 107+ (in progress)
 
 ---
 

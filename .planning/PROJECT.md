@@ -117,38 +117,25 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 - ✓ VA TIGER geofences — 511 geofence_boundaries rows for state='51': 227 G4110 cities, 133 G4020 counties/independent cities, 11 G5200 CDs, 40 G5210 senate, 100 G5220 SLDL; Alexandria dual-tier (G4110=5101000 + G4020=51510); Fairfax County + Fairfax city separate G4020 rows; any VA address routes to correct tiers; Gate 7 section-split clean — v12.0
 
-### Current State: v11.0 Shipped
+### v12.0 Virginia Essentials (Shipped: 2026-06-10)
 
-**v11.0 Shipped 2026-06-08:** Maryland Essentials — 10 phases, 34 plans (24 PASS + 2 DEFER from Phase 90 Plan 03 pending). MD TIGER geofences (307 rows), state government DB (47 senators + 141 delegates + 10 federal officials + 5 execs), 202 headshots, 1516+ compass stances, 130 race rows, discovery pipeline, Leonardtown/St. Mary's County deep seed, MiniCompass compact overlay.
+**Delivered:** VA TIGER geofences (511 geofence_boundaries rows across 5 MTFCC types), state government DB (3 executives + 40 senators + 100 delegates), VA federal officials (Warner + Kaine + 11 US House reps), Alexandria deep seed (Mayor + 6 city council + ACPS 9 board members with headshots), VA 2026 elections (12 race rows + discovery), compass stances for 3 execs + 2 US Senators + 7 Alexandria council + 8 ACPS board members.
 
-**v10.0 Shipped 2026-06-04:** Multnomah County & School Boards — 7 phases, 22 plans, 33/33 requirements. Multnomah County Board of Commissioners seeded, 5 smaller cities seeded, 6 OR school districts + 6 CA school boards + 5 TX ISDs + IN/ME school boards seeded. G5420 TIGER UNSD school board pattern now established across 4 states.
+### Current Milestone: v13.0 Massachusetts Expanded
 
-**Phase 92 complete 2026-06-05:** MD state government foundation seeded — 5 chambers, 5 executives, headshots, migrations 269/270/271.
-
-**Phase 94 complete 2026-06-06:** 100% MD headshot coverage verified — 202/202 non-vacant MD officials have type='default' headshots (5 exec + 47 senate + 140 house + 2 US senators + 8 US House reps). MD-GOV-06 complete.
-
-**Phase 95 complete 2026-06-06:** St. Mary's County (geo_id=24037) + Town of Leonardtown (geo_id=2446475) fully seeded via migrations 276+277. 5 BOCC commissioners + 6 Leonardtown officials (Mayor + 5 council), all with 600×750 headshots. Address lookup verified: `41770 Baldridge St, Leonardtown MD 20650` returns COUNTY + LOCAL sections with correct officials and headshots. MD-DEEP-01, MD-DEEP-02, MD-DEEP-03 all complete.
-
-**Phase 96 complete 2026-06-06:** MD 2026 election cycle fully armed — 2 election rows (primary 2026-06-23, general 2026-11-03) via migration 278; 130 race rows (12 statewide + 47 senate + 71 SLDL house, zero NULL office_ids) via migrations 279+280; 2 discovery_jurisdictions rows arming the cron agent via migration 281; Landing.jsx COVERAGE_CITIES entry added (Leonardtown + St. Mary's County bundled). MD-ELECTIONS-01, MD-ELECTIONS-02, MD-ELECTIONS-03 all complete.
-
-### v11.0 Shipped 2026-06-08: Maryland Essentials
-
-### Current Milestone: v12.0 Virginia Essentials
-
-**Goal:** Onboard Virginia at full depth (geofences → state government → Alexandria deep seed → elections → stances), completing the DC/MD/VA trifecta.
+**Goal:** Complete Massachusetts to full depth — fill the town routing gap (293 G4040 COUSUB boundaries), stances for all 217 state/federal officials, Boston deep seed, MA 2026 elections across all 240 races, and Tier 2 city incumbents.
 
 **Target features:**
-- VA TIGER geofences — G4110 cities, G4020 counties/independent cities, SLDU×40, SLDL×100, CD×11; Alexandria independent city dual-tier treatment
-- VA state government DB — Governor Youngkin + LG Earle-Sears + AG Miyares + VA Senate (40) + House of Delegates (100)
-- VA federal officials — Warner + Kaine + 11 US House reps with headshots at 600×750
-- Alexandria deep seed — Mayor Wilson + 6 City Council + ACPS school board (9 members) with headshots
-- Headshots — 600×750 for all officials
-- VA 2026 elections — Governor's race (open seat, Youngkin term-limited) + legislative races + discovery pipeline
-- Compass stances — execs + state officials + Alexandria officials (evidence-only, sequential)
+- MA town geofences — load 293 G4040 COUSUB boundaries so any MA town address routes correctly
+- Compass stances — 6 execs + 11 federal officials + 200 legislators (sequential, evidence-only, ~217 total)
+- Boston deep seed — Mayor Wu + 13 City Councillors + School Committee with headshots at 600×750
+- MA 2026 elections — Governor's race + US Senate + all 160 House + 40 Senate race rows + discovery armed
+- MA Tier 2 cities — Worcester, Springfield, Lowell, Brockton, Quincy (incumbents + best-effort headshots)
+- Playbook retrospective — MA town/COUSUB GOTCHAs + Boston quick reference block
 
 ### Active
 
-- v12.0 Virginia Essentials (in progress)
+- v13.0 Massachusetts Expanded (in progress)
 
 ### Out of Scope
 
@@ -249,4 +236,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-08 — v12.0 Virginia Essentials milestone started*
+*Last updated: 2026-06-10 — v13.0 Massachusetts Expanded milestone started*
