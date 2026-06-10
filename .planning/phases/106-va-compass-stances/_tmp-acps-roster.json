@@ -1,0 +1,14 @@
+{
+  "resolved": "2026-06-10",
+  "members": [
+    { "external_id": -5100090001, "full_name": "Michelle Rief", "title": "Chair", "id": "b40e4216-08aa-4b4f-a6e1-0ca75331d05f", "migration": 338, "filename": "338_rief_stances.sql" },
+    { "external_id": -5100090002, "full_name": "Christopher Harris", "title": "Vice Chair", "id": "0cd3dd1e-34ab-4380-a476-b935d6ff1a2d", "migration": 339, "filename": "339_harris_stances.sql" },
+    { "external_id": -5100090003, "full_name": "Abdulahi Abdalla", "title": "Member", "id": "d2a8a3c6-4383-4764-a009-d3c72f340d88", "migration": 340, "filename": "340_abdalla_stances.sql" },
+    { "external_id": -5100090004, "full_name": "Tim Beaty", "title": "Member", "id": "3ce0d684-b942-4a13-844f-720220d37de8", "migration": 341, "filename": "341_beaty_stances.sql" },
+    { "external_id": -5100090005, "full_name": "Kelly Carmichael Booz", "title": "Member", "id": "c81b3c02-aac0-440b-90d3-4dd33a326af3", "migration": 342, "filename": "342_carmichael_booz_stances.sql" },
+    { "external_id": -5100090006, "full_name": "Donna Kenley", "title": "Member", "id": "24088e84-a138-4374-9117-1e136669890e", "migration": 343, "filename": "343_kenley_stances.sql" },
+    { "external_id": -5100090007, "full_name": "Ryan Reyna", "title": "Member", "id": "ee18fc57-9d65-4f6a-a376-035539ff3e79", "migration": 344, "filename": "344_reyna_stances.sql" },
+    { "external_id": -5100090008, "full_name": "Alexander Crider Scioscia", "title": "Member", "id": "4fc3ad7a-5aa7-4394-8654-0e79c6c2f671", "migration": 345, "filename": "345_scioscia_stances.sql" },
+    { "external_id": -5100090009, "full_name": "Ashley Simpson Baird", "title": "Member", "id": "6025b714-c80e-4613-9da8-f5e6b66c4384", "migration": 346, "filename": "346_simpson_baird_stances.sql" }
+  ]
+}
