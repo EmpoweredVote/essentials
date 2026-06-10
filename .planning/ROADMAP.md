@@ -36,7 +36,7 @@
 | 103 | 3/3 | Complete   | 2026-06-09 |
 | 104 | 5/5 | Complete    | 2026-06-09 |
 | 105 | 3/3 | Complete    | 2026-06-09 |
-| 106 | 1/8 | In Progress|  |
+| 106 | 7/8 | In Progress|  |
 
 ## Phase Details
 
@@ -246,7 +246,7 @@ Plans:
 4. 100% citation rate — zero uncited stance values
 5. Compass renders on Spanberger profile
 
-**Plans:** 1/8 plans executed
+**Plans:** 7/8 plans executed
 Plans:
 **Wave 1**
 
@@ -254,27 +254,27 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion — D-08 sequential)*
 
-- [ ] 106-02-PLAN.md — Hashmi stances (migration 327)
+- [x] 106-02-PLAN.md — Hashmi stances (migration 327)
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 106-03-PLAN.md — Jones stances (migration 328) + close VA-STANCES-01
+- [x] 106-03-PLAN.md — Jones stances (migration 328) + close VA-STANCES-01
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 106-04-PLAN.md — Warner stances (migration 329)
+- [x] 106-04-PLAN.md — Warner stances (migration 329)
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 106-05-PLAN.md — Kaine stances (migration 330) + close VA-STANCES-02
+- [x] 106-05-PLAN.md — Kaine stances (migration 330) + close VA-STANCES-02
 
 **Wave 6** *(blocked on Wave 5)*
 
-- [ ] 106-06-PLAN.md — Alexandria council batch (migrations 331-337, 7 members, 5-min sliding cap each)
+- [x] 106-06-PLAN.md — Alexandria council batch (migrations 331-337, 7 members, 5-min sliding cap each)
 
 **Wave 7** *(blocked on Wave 6)*
 
-- [ ] 106-07-PLAN.md — ACPS board batch (migrations 338-346, 9 members, 5-min sliding cap each) + close VA-STANCES-03
+- [x] 106-07-PLAN.md — ACPS board batch (migrations 338-346, 9 members, 5-min sliding cap each) + close VA-STANCES-03
 
 **Wave 8** *(blocked on Wave 7)*
 

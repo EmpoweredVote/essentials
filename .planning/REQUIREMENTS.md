@@ -48,7 +48,7 @@
 
 - [ ] **VA-STANCES-01**: Compass stances for 3 VA executives (Spanberger, Hashmi, Jones) — evidence-only, sequential, no default values
 - [ ] **VA-STANCES-02**: Compass stances for VA US Senators (Warner + Kaine) — evidence-only, public record only
-- [ ] **VA-STANCES-03**: Compass stances for Alexandria council + ACPS board — best-effort, evidence-only; blank if no public record
+- [x] **VA-STANCES-03**: Compass stances for Alexandria council + ACPS board — best-effort, evidence-only; blank if no public record
 
 ---
 
