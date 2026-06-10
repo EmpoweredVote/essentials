@@ -116,6 +116,7 @@ A resident can look up who represents them — and who is on their ballot — wi
 - ✓ MiniCompass compact overlay: dotRadius=2.5 + showLabels=false — v11.0
 
 - ✓ VA TIGER geofences — 511 geofence_boundaries rows for state='51': 227 G4110 cities, 133 G4020 counties/independent cities, 11 G5200 CDs, 40 G5210 senate, 100 G5220 SLDL; Alexandria dual-tier (G4110=5101000 + G4020=51510); Fairfax County + Fairfax city separate G4020 rows; any VA address routes to correct tiers; Gate 7 section-split clean — v12.0
+- ✓ MA town geofences — 293 G4040 COUSUB boundaries confirmed in production (state='25'); Concord/Brookline/Lexington PIP routing verified (G4040+G5200+G5210+G5220 tier chain); Boston FUNCSTAT exclusion intact (routes via G4110 only); section-split clean (0 rows); MA-GEO-01 + MA-GEO-02 closed — v13.0 Phase 107
 
 ### v12.0 Virginia Essentials (Shipped: 2026-06-10)
 
