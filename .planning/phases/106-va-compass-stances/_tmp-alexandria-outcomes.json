@@ -1,0 +1,73 @@
+[
+  {
+    "external_id": -5101000001,
+    "name": "Alyia Gaskins",
+    "outcome": "applied",
+    "migration": 331,
+    "stance_count": 8,
+    "topics_with_evidence": ["housing", "residential-zoning", "homelessness-response", "local-immigration", "public-safety-approach", "redistricting", "taxes", "transportation-priorities"],
+    "research_start": "2026-06-10T03:15:30Z",
+    "sources": ["alxnow.com (tag/alyia-gaskins, multiple articles 2025-2026)"]
+  },
+  {
+    "external_id": -5101000002,
+    "name": "Canek Aguirre",
+    "outcome": "applied",
+    "migration": 332,
+    "stance_count": 3,
+    "topics_with_evidence": ["transportation-priorities", "homelessness-response", "local-immigration"],
+    "research_start": "2026-06-10T03:28:17Z",
+    "sources": ["alxnow.com (tag/canek-aguirre, multiple articles 2025-2026)"]
+  },
+  {
+    "external_id": -5101000003,
+    "name": "Sarah Bagley",
+    "outcome": "applied",
+    "migration": 333,
+    "stance_count": 4,
+    "topics_with_evidence": ["public-safety-approach", "jail-capacity", "homelessness-response", "housing"],
+    "research_start": "2026-06-10T03:32:27Z",
+    "sources": ["alxnow.com (tag/sarah-bagley, multiple articles 2025-2026)"]
+  },
+  {
+    "external_id": -5101000004,
+    "name": "John Chapman",
+    "outcome": "applied",
+    "migration": 334,
+    "stance_count": 2,
+    "topics_with_evidence": ["taxes", "housing"],
+    "research_start": "2026-06-10T03:35:08Z",
+    "sources": ["alxnow.com (tag/john-taylor-chapman, multiple articles 2025-2026)"]
+  },
+  {
+    "external_id": -5101000005,
+    "name": "Abdel-Rahman Elnoubi",
+    "outcome": "applied",
+    "migration": 335,
+    "stance_count": 4,
+    "topics_with_evidence": ["civil-rights", "local-immigration", "jail-capacity", "homelessness-response"],
+    "research_start": "2026-06-10T03:38:10Z",
+    "sources": ["alxnow.com (tag/abdel-elnoubi, multiple articles 2025-2026)"]
+  },
+  {
+    "external_id": -5101000006,
+    "name": "Jacinta E. Greene",
+    "outcome": "applied",
+    "migration": 336,
+    "stance_count": 3,
+    "topics_with_evidence": ["school-vouchers", "local-environment", "local-immigration"],
+    "research_start": "2026-06-10T03:41:25Z",
+    "sources": ["alxnow.com (tag/jacinta-greene, multiple articles 2024-2026)"]
+  },
+  {
+    "external_id": -5101000007,
+    "name": "Sandy Marks",
+    "outcome": "applied",
+    "migration": 337,
+    "stance_count": 2,
+    "topics_with_evidence": ["housing", "redistricting"],
+    "research_start": "2026-06-10T03:44:32Z",
+    "notes": "newly sworn in May 2026 — very short public record as council member; campaign positions used",
+    "sources": ["alxnow.com (tag/sandy-marks, multiple articles 2026)"]
+  }
+]
