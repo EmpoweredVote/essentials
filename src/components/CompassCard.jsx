@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { usePostHog } from 'posthog-js/react';
 import { RadarChartCore, StanceAccordion, PlaceholderRadar } from '@empoweredvote/ev-ui';
@@ -8,6 +9,28 @@ import { useTheme } from '../hooks/useTheme';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
+
+// Mirrors RadarChartCore internals for dot hit-testing
+const CARD_SIZE = 500;
+const CARD_PADDING = 110;
+const CARD_RADAR_RADIUS = CARD_SIZE / 2 - CARD_PADDING; // 140
+const CARD_CENTER = CARD_SIZE / 2;                      // 250
+const CARD_HIT_RADIUS_SVG = 24;
+
+function adjustedValue(value, shortTitle, invertedSpokes, topics) {
+  if (!value || Number(value) === 0) return 0;
+  const topic = topics.find((t) => t.short_title === shortTitle);
+  const max = topic?.stances?.length || 10;
+  const pct = Number(value) / max * 10;
+  return invertedSpokes[shortTitle] ? (max + 1) * 10 / max - pct : pct;
+}
+
+function stanceLabel(shortTitle, value, topics) {
+  const topic = topics.find((t) => t.short_title === shortTitle);
+  const stances = topic?.stances || [];
+  const idx = Math.round(Number(value)) - 1;
+  return (idx >= 0 && idx < stances.length) ? (stances[idx].text || shortTitle) : shortTitle;
+}
 
 /**
  * CompassCard — profile page section showing compass comparison data.
@@ -61,6 +84,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
   const [polAnswers, setPolAnswers] = useState(null);
   const [polLoading, setPolLoading] = useState(true);
+  const [tooltip, setTooltip] = useState(null);
+  const containerRef = useRef(null);
 
   // Fetch politician answers (hook must be called unconditionally)
   useEffect(() => {
@@ -159,6 +184,52 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   ).length;
 
   const hasData = hasEnoughSpokes && topicsFiltered.length > 0;
+
+  // Dot positions for tooltip hit-testing — mirrors RadarChartCore's point math
+  const dotPositions = useMemo(() => {
+    if (!hasEnoughSpokes) return [];
+    const spokes = Object.entries(userData);
+    const numSpokes = spokes.length;
+    const dots = [];
+    spokes.forEach(([shortTitle, userVal], i) => {
+      const angle = 2 * Math.PI * i / numSpokes;
+      if (userVal && Number(userVal) !== 0) {
+        const adj = adjustedValue(userVal, shortTitle, invertedSpokes, topicsFiltered);
+        const r = adj / 10 * CARD_RADAR_RADIUS;
+        dots.push({ shortTitle, cx: CARD_CENTER + r * Math.sin(angle), cy: CARD_CENTER - r * Math.cos(angle), stanceText: stanceLabel(shortTitle, userVal, topicsFiltered) });
+      }
+      const polVal = polData[shortTitle];
+      if (polVal && Number(polVal) !== 0) {
+        const adj = adjustedValue(polVal, shortTitle, invertedSpokes, topicsFiltered);
+        const r = adj / 10 * CARD_RADAR_RADIUS;
+        dots.push({ shortTitle, cx: CARD_CENTER + r * Math.sin(angle), cy: CARD_CENTER - r * Math.cos(angle), stanceText: stanceLabel(shortTitle, polVal, topicsFiltered) });
+      }
+    });
+    return dots;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasEnoughSpokes, userData, polData, invertedSpokes, topicsFiltered]);
+
+  const handleMouseMove = useCallback((e) => {
+    const svg = containerRef.current?.querySelector('svg');
+    if (!svg || dotPositions.length === 0) return;
+    try {
+      const ctm = svg.getScreenCTM();
+      if (!ctm) return;
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const { x: svgX, y: svgY } = pt.matrixTransform(ctm.inverse());
+      let nearest = null;
+      let nearestDist = CARD_HIT_RADIUS_SVG;
+      for (const dot of dotPositions) {
+        const d = Math.hypot(svgX - dot.cx, svgY - dot.cy);
+        if (d < nearestDist) { nearestDist = d; nearest = dot; }
+      }
+      setTooltip(nearest ? { x: e.clientX, y: e.clientY, ...nearest } : null);
+    } catch {
+      setTooltip(null);
+    }
+  }, [dotPositions]);
 
   // Min/Max batch handlers — operate on what the user currently *sees* (display value),
   // not the raw stored value, so they work correctly on already-inverted spokes.
@@ -338,7 +409,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   </div>
 
                   {/* Chart container — position:relative so overlay buttons can anchor */}
-                  <div style={{ width: '100%', maxWidth: '500px', overflow: 'hidden', position: 'relative' }}>
+                  <div ref={containerRef} style={{ width: '100%', maxWidth: '500px', overflow: 'hidden', position: 'relative' }}>
                     {/* Min / Max buttons */}
                     <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 10 }}>
                       <button
@@ -394,10 +465,40 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                       onToggleInversion={toggleInversion}
                       darkMode={isDark}
                       size={500}
-                      labelFontSize={14}
-                      padding={90}
-                      labelOffset={18}
+                      labelFontSize={28}
+                      padding={CARD_PADDING}
+                      labelOffset={22}
                     />
+                    {/* Transparent overlay captures mouse for tooltip — suppresses built-in SVG tooltip */}
+                    <div
+                      style={{ position: 'absolute', inset: 0, zIndex: 10 }}
+                      onMouseMove={handleMouseMove}
+                      onMouseLeave={() => setTooltip(null)}
+                    />
+                    {tooltip && createPortal(
+                      <div style={{
+                        position: 'fixed',
+                        left: tooltip.x + 14,
+                        top: tooltip.y - 14,
+                        background: isDark ? '#2a3347' : '#ffffff',
+                        border: isDark ? '1px solid #59B0C4' : '1px solid #d1d5db',
+                        borderRadius: 8,
+                        padding: '6px 11px',
+                        lineHeight: 1.45,
+                        color: isDark ? '#EBEDEF' : '#111',
+                        boxShadow: isDark ? '0 2px 12px rgba(0,0,0,0.5)' : '0 2px 8px rgba(0,0,0,0.12)',
+                        maxWidth: 220,
+                        zIndex: 9999,
+                        pointerEvents: 'none',
+                        fontFamily: 'Manrope, sans-serif',
+                      }}>
+                        <div style={{ fontSize: 12, fontWeight: 700, textDecoration: 'underline', marginBottom: 2, textTransform: 'capitalize' }}>
+                          {tooltip.shortTitle}
+                        </div>
+                        <div style={{ fontSize: 13 }}>{tooltip.stanceText}</div>
+                      </div>,
+                      document.body
+                    )}
                   </div>
                 </>
               )}
