@@ -513,13 +513,13 @@ Plans:
 
 **Plans:** 7 plans
 **Wave 1**
-- [ ] 111-01-PLAN.md — Governor Healey stances (migration 359)
+- [x] 111-01-PLAN.md — Governor Healey stances (migration 359)
 
 **Wave 2** *(blocked on Wave 1 — D-08 sequential)*
 - [x] 111-02-PLAN.md — Driscoll + Campbell + Goldberg + DiZoglio + Galvin stances (migrations 360-364)
 
 **Wave 3** *(blocked on Wave 2)*
-- [ ] 111-03-PLAN.md — Warren stances (migration 365)
+- [x] 111-03-PLAN.md — Warren stances (migration 365)
 
 **Wave 4** *(blocked on Wave 3)*
 - [ ] 111-04-PLAN.md — Markey stances (migration 366)
