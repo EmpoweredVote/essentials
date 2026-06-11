@@ -130,6 +130,13 @@ None — all 200 race rows have real office_ids derived from the actual MA legis
 - MA 2026 discovery pipeline now fully armed: all races scaffolded for candidate attachment
 - Total MA 2026 general election races: 16 statewide/federal + 200 legislative = 216 rows
 
+## Self-Check: PASSED
+
+- `C:/EV-Accounts/backend/migrations/358_ma_2026_legislative_races.sql` — FOUND
+- `C:/EV-Accounts/backend/scripts/_apply-migration-358.ts` — FOUND
+- `.planning/phases/110-ma-2026-elections/110-02-SUMMARY.md` — FOUND
+- Commit eebe7d2 — FOUND
+
 ---
 *Phase: 110-ma-2026-elections*
 *Completed: 2026-06-11*
