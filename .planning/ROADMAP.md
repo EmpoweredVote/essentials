@@ -325,7 +325,7 @@ All 19 requirements covered ✓
 |---|-------|-------------|------|
 | 107 | 1/1 | Complete   | 2026-06-10 |
 | 108 | 3/3 | Complete   | 2026-06-10 |
-| 109 | MA-TIER2-01, MA-TIER2-02 | In progress (5/6 plans) | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
+| 109 | 6/6 | Complete   | 2026-06-11 |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
 | 111 | MA-STANCES-01, MA-STANCES-02 | Not started | Evidence-only stances: 6 execs + 11 federal officials (17 total, sequential) |
 | 112 | MA-STANCES-03 | Not started | Evidence-only stances: all 40 MA state senators (sequential) |
@@ -431,7 +431,7 @@ Plans:
 2. Springfield, Lowell, Brockton, and Quincy each return LOCAL sections with Mayor + council incumbents
 3. Best-effort headshots uploaded; gaps for unavailable photos documented
 
-**Plans:** 6 plans
+**Plans:** 6/6 plans complete
 
 Plans:
 **Wave 1** *(no file overlap — 5 independent city migrations run in parallel)*
@@ -444,7 +444,7 @@ Plans:
 
 **Wave 2** *(blocked on all 5 city migrations — needs seeded politician_ids)*
 
-- [ ] 109-06-PLAN.md — MA Tier 2 headshots (script + migration 356: best-effort 600x750 across all 5 cities)
+- [x] 109-06-PLAN.md — MA Tier 2 headshots (script + migration 356: best-effort 600x750 across all 5 cities)
 
 ---
 
