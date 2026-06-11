@@ -2,23 +2,23 @@
 gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: Massachusetts Expanded
-status: completed
-last_updated: "2026-06-11T00:05:37.712Z"
+status: in_progress
+last_updated: "2026-06-11T00:00:00.000Z"
 progress:
   total_phases: 10
-  completed_phases: 3
-  total_plans: 10
-  completed_plans: 10
-  percent: 30
+  completed_phases: 4
+  total_plans: 13
+  completed_plans: 13
+  percent: 40
 ---
 
 # State
 
 ## Current Position
 
-Phase: 110 (ma-2026-elections) — COMPLETE (3/3 plans complete)
-Last completed: Plan 110-03 — Boston added to COVERAGE_CITIES in Landing.jsx; human checkpoint approved
-Status: All waves complete; phase verified
+Phase: 111 (ma-stances-execs-federal) — NEXT
+Last completed: Phase 110 (ma-2026-elections) — COMPLETE 2026-06-11 (3/3 plans; migrations 357+358 applied; Boston on Landing)
+Status: Phase 110 all 3 plans complete and verified; Phase 111 queued
 
 ## Project Reference
 
