@@ -20,6 +20,7 @@ const COVERAGE_CITIES = [
   { label: 'San Jose', state: 'California', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA' },
   { label: 'Portland', state: 'Maine', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
   { label: 'Cambridge', state: 'Massachusetts', browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA' },
+  { label: 'Boston', state: 'Massachusetts', browseGovernmentList: ['2507000'], browseStateAbbrev: 'MA' },
   { label: 'Portland', state: 'Oregon', browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR' },
   { label: 'Leonardtown', state: 'Maryland', browseGovernmentList: ['2446475', '24037'], browseStateAbbrev: 'MD' },
   { label: 'Alexandria', state: 'Virginia', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA' },
