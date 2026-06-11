@@ -471,7 +471,19 @@ Plans:
 3. All 200 legislative race rows (40 Senate + 160 House) present with non-null office_ids
 4. discovery_jurisdictions row active for MA (geo_id='25', cron_active=true)
 
-**Plans:** TBD
+**Plans:** 3 plans
+Plans:
+**Wave 1**
+
+- [ ] 110-01-PLAN.md — Assert MA elections + discovery rows; fix NULL office_id on 2 Senate races; seed Governor + 7 US House races (migration 357)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 110-02-PLAN.md — Seed 200 MA legislative races via CTE-JOIN (40 Senate + 160 House, migration 358)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 110-03-PLAN.md — Add Boston city entry to COVERAGE_CITIES in Landing.jsx (no migration)
 
 ---
 
