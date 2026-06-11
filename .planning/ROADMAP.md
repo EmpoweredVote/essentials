@@ -483,7 +483,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 110-03-PLAN.md — Add Boston city entry to COVERAGE_CITIES in Landing.jsx (no migration)
+- [x] 110-03-PLAN.md — Add Boston city entry to COVERAGE_CITIES in Landing.jsx (no migration)
 
 ---
 
