@@ -475,7 +475,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 110-01-PLAN.md — Assert MA elections + discovery rows; fix NULL office_id on 2 Senate races; seed Governor + 7 US House races (migration 357)
+- [x] 110-01-PLAN.md — Assert MA elections + discovery rows; fix NULL office_id on 2 Senate races; seed Governor + 7 US House races (migration 357)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
