@@ -16,9 +16,9 @@ progress:
 
 ## Current Position
 
-Phase: 110 (ma-2026-elections) — IN PROGRESS (1/3 plans complete)
-Last completed: Plan 110-01 — migration 357 applied; 11 MA statewide/federal races seeded
-Status: Wave 1 complete; Wave 2 queued
+Phase: 110 (ma-2026-elections) — IN PROGRESS (2/3 plans complete)
+Last completed: Plan 110-02 — migration 358 applied; 200 MA legislative races seeded (40 Senate + 160 House)
+Status: Waves 1+2 complete; Wave 3 queued (Landing.jsx Boston entry + human checkpoint)
 
 ## Project Reference
 

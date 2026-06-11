@@ -479,7 +479,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 110-02-PLAN.md — Seed 200 MA legislative races via CTE-JOIN (40 Senate + 160 House, migration 358)
+- [x] 110-02-PLAN.md — Seed 200 MA legislative races via CTE-JOIN (40 Senate + 160 House, migration 358)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
