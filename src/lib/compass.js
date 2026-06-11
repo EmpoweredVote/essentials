@@ -9,9 +9,9 @@ export async function fetchTopics() {
   return res.json();
 }
 // Politician answers: [{ topic_id, value }, ...]
+// Uses publicFetch — politician stances are public and must not redirect unauthenticated guests.
 export async function fetchPoliticianAnswers(politicianId) {
-  const res = await apiFetch(`/compass/politicians/${politicianId}/answers`);
-  if (!res) throw new Error('fetchPoliticianAnswers failed: Unauthorized');
+  const res = await publicFetch(`/compass/politicians/${politicianId}/answers`);
   if (!res.ok) throw new Error(`fetchPoliticianAnswers failed: ${res.status}`);
   return res.json();
 }

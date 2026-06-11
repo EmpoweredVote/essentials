@@ -114,12 +114,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     return () => { cancelled = true; };
   }, [politicianId, compassLoading, politicianIdsWithStances]);
 
-  // Gate: wait for compass data to load
-  if (compassLoading) return null;
-
-  // Gate: only show for politicians with stance data
-  if (!politicianIdsWithStances.has(politicianId)) return null;
-
+  // Compute chart data — must happen before early returns so hooks below are
+  // always called in the same order (Rules of Hooks).
   const hasUserCompass = userAnswers && userAnswers.length > 0;
   const returnUrl = window.location.origin + location.pathname + location.search;
   const ctaHref = `${COMPASS_URL}?return=${encodeURIComponent(returnUrl)}`;
@@ -185,7 +181,9 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
   const hasData = hasEnoughSpokes && topicsFiltered.length > 0;
 
-  // Dot positions for tooltip hit-testing — mirrors RadarChartCore's point math
+  // Dot positions for tooltip hit-testing — mirrors RadarChartCore's point math.
+  // useMemo and useCallback must be here (before the early returns below) so that
+  // React sees the same hooks every render regardless of gate outcomes.
   const dotPositions = useMemo(() => {
     if (!hasEnoughSpokes) return [];
     const spokes = Object.entries(userData);
@@ -230,6 +228,12 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       setTooltip(null);
     }
   }, [dotPositions]);
+
+  // Gate: wait for compass data to load
+  if (compassLoading) return null;
+
+  // Gate: only show for politicians with stance data
+  if (!politicianIdsWithStances.has(politicianId)) return null;
 
   // Min/Max batch handlers — operate on what the user currently *sees* (display value),
   // not the raw stored value, so they work correctly on already-inverted spokes.
