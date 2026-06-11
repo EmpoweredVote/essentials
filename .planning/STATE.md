@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: Massachusetts Expanded
 status: completed
-last_updated: "2026-06-11T07:35:47.281Z"
+last_updated: "2026-06-11T07:53:23.084Z"
 progress:
   total_phases: 10
   completed_phases: 4
   total_plans: 20
-  completed_plans: 16
+  completed_plans: 17
   percent: 40
 ---
 
@@ -16,9 +16,9 @@ progress:
 
 ## Current Position
 
-Phase: 111 (ma-stances-execs-federal) — IN PROGRESS (plan 03/07 complete)
-Last completed: Phase 111 Plan 03 — Warren stances migration 365 applied; 43 stances, 100% citation (2026-06-11)
-Status: Plan 111-01 (Healey) + 111-02 (remaining execs) + 111-03 (Warren) complete; 111-04 (Markey) next
+Phase: 111 (ma-stances-execs-federal) — IN PROGRESS (plan 04/07 complete)
+Last completed: Phase 111 Plan 04 — Markey stances migration 366 applied; 43 stances, 100% citation (2026-06-11)
+Status: Plan 111-01 (Healey) + 111-02 (remaining execs) + 111-03 (Warren) + 111-04 (Markey) complete; 111-05 (MA House reps Neal/McGovern/Trahan/Auchincloss/Clark) next
 
 ## Project Reference
 
@@ -107,8 +107,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-11T(plan 111-03 complete)
-Stopped at: Plan 111-03 complete — Warren supplemental migration 365 applied; 43 stances, unpaired=0, uncited=0
+Last session: 2026-06-11T07:53:23.074Z
+Stopped at: Plan 111-04 complete — Markey supplemental migration 366 applied; 43 stances, unpaired=0, uncited=0
 Resume file: None
 
 ## Performance Metrics
@@ -136,6 +136,7 @@ Resume file: None
 | Phase 107 P01 | 25m | 3 tasks | 1 file (107-01-VERIFICATION.md) |
 | Phase 109 P06 | 60m | 2 tasks | 2 files (_tmp-ma-tier2-headshots.py, 356_ma_tier2_headshots.sql); 47/59 uploaded |
 | Phase 111 P03 | 45m | 3 tasks | 1 file (365_warren_stances.sql); Warren 43 stances applied |
+| Phase 111 P04 | 35m | 3 tasks | 1 file (366_markey_stances.sql); Markey 43 stances applied |
 
 ## Decisions
 
@@ -145,3 +146,4 @@ Resume file: None
 - [Phase 107]: G4040 districts join must be state-scoped; global join returns 54 rows from Indiana CCDs (G4040 mtfcc); MA-scoped join confirms 0 rows (writeDistrictRow=false for COUSUB)
 - [Phase 109 P06]: Quincy all-GAP — quincyma.gov (Revize CMS) has no headshot images; Lowell City Manager Golden GAP (text-only CM page); Brockton Lally GAP (HTTP 403); Springfield TYPO3 _processed_ URLs accepted; 47/59 total uploaded; migration 356 applied
 - [Phase 111 P03]: Warren had 30 stances pre-existing in production (prior session); migration 365 re-upserts all 30 + adds 13 new topics; same supplemental pattern as Galvin (Plan 111-02); total 43 stances, city-sanitation omitted (no federal record)
+- [Phase 111 P04]: Markey had 30 stances pre-existing in production (prior session); migration 366 re-upserts all 30 (3 value corrections: climate-change/campaign-finance/social-security) + 13 new topics; total 43 stances, city-sanitation omitted (no federal record)
