@@ -1,0 +1,10 @@
+{
+  "queried": "2026-06-11",
+  "politicians": [
+    { "external_id": -200206, "full_name": "Seth Moulton", "district": "MA-06", "migration": 372, "id": "77f162cd-6ca0-4073-84e1-1c8ab87eb1e0", "existing_stances": 25 },
+    { "external_id": -200207, "full_name": "Ayanna Pressley", "district": "MA-07", "migration": 373, "id": "c61baf45-dc2a-4d78-b4b7-21b1e9d79464", "existing_stances": 25 },
+    { "external_id": -200208, "full_name": "Stephen Lynch", "district": "MA-08", "migration": 374, "id": "62b453da-3dea-4177-82ba-9e4b78eb7691", "existing_stances": 14 },
+    { "external_id": -200209, "full_name": "Bill Keating", "district": "MA-09", "migration": 375, "id": "0d97085c-eca6-4530-9fc7-512ca05487b9", "existing_stances": 19 }
+  ],
+  "active_topics": 44
+}
