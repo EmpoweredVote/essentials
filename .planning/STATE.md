@@ -3,22 +3,22 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: Massachusetts Expanded
 status: executing
-last_updated: "2026-06-11T20:52:01.090Z"
+last_updated: "2026-06-11T22:30:00.000Z"
 progress:
   total_phases: 10
   completed_phases: 5
   total_plans: 23
-  completed_plans: 21
-  percent: 50
+  completed_plans: 23
+  percent: 52
 ---
 
 # State
 
 ## Current Position
 
-Phase: 112 (ma-stances-state-senate) — Plan 1/3 COMPLETE
-Last completed: Phase 112 Plan 01 — MA State Senate Stances (20 senators 25D01-25D20, migrations 376-395, 100% citation rate, 0 unpaired, 2026-06-11)
-Next migration: 396
+Phase: 112 (ma-stances-state-senate) — Plan 2/3 COMPLETE
+Last completed: Phase 112 Plan 02 — MA State Senate Stances (20 senators 25D21-25D40, migrations 396-415, 100% citation rate, 0 unpaired, 2026-06-11)
+Next migration: 416
 
 ## Project Reference
 
@@ -107,8 +107,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-11T20:52:01.082Z
-Stopped at: Completed Phase 112 Plan 01 (2026-06-11)
+Last session: 2026-06-11T22:30:00.000Z
+Stopped at: Completed Phase 112 Plan 02 (2026-06-11)
 Resume file: None
 
 ## Performance Metrics
@@ -139,6 +139,7 @@ Resume file: None
 | Phase 111 P04 | 35m | 3 tasks | 1 file (366_markey_stances.sql); Markey 43 stances applied |
 | Phase 111 P05 | ~4h | 3 tasks | 5 files (367-371 stances SQLs); 5 reps x 43 stances; multi-session |
 | Phase 112 P01 | ~6h | 21 tasks | 20 files (376-395 stances SQLs); 20 senators 25D01-25D20; multi-session; 0 unpaired, 0 uncited |
+| Phase 112 P02 | ~4h | 21 tasks | 20 files (396-415 stances SQLs); 20 senators 25D21-25D40; 0 unpaired, 0 uncited |
 
 ## Decisions
 
@@ -152,3 +153,4 @@ Resume file: None
 - [Phase 111 P05]: All 5 House reps (Neal/McGovern/Trahan/Auchincloss/Clark) had 23-30 pre-existing stances; supplemental pattern used; data-centers topic (UUID 4559b513) discovered active in DB but missing from 111-PATTERNS.md — added to all 5; each rep reached 43 total
 - [Phase 111 P05]: Neal abortion=4.0 evidence-only from Catholic background; Auchincloss tariffs=1.0 explicit free-trader (outlier for MA delegation); Clark childcare=1.0 signature issue (DNC 2024)
 - [Phase 112 P01]: Durant (R, SD-06) + Fattman (R, SD-05) received conservative values 4.0-5.0 with evidence; cannabis-policy topic does NOT exist in inform.compass_topics — removed from Finegold migration; state senate stances applied one-at-a-time per feedback rule
+- [Phase 112 P02]: Tarr (R), O'Connor (R), Dooner (R) received conservative values with evidence; Brownsberger authored 2018 MA CJ reform (judicial-criminal-justice=1.0, judicial-bail-pretrial=1.0); Rodrigues = South Coast Rail champion + Ways & Means Chair; Montigny co-authored 2006 MA healthcare reform; 20 senators 25D21-25D40 complete; MA-STANCES-03 fully satisfied

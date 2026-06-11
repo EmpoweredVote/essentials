@@ -30,7 +30,7 @@
 
 - [ ] **MA-STANCES-01:** Compass shows stance data for all 6 MA executives (Governor Healey, LG Kim Driscoll, AG Andrea Campbell, Treasurer Goldberg, Auditor DiZoglio, SoS Galvin) — evidence-only, sequential research, 100% citation rate
 - [ ] **MA-STANCES-02:** Compass shows stance data for all 11 MA federal officials (Senators Markey + Warren + 9 US House reps) — evidence-only, sequential, 100% citation rate
-- [ ] **MA-STANCES-03:** Compass shows stance data for all 40 MA state senators — evidence-only, sequential, 100% citation rate
+- [x] **MA-STANCES-03:** Compass shows stance data for all 40 MA state senators — evidence-only, sequential, 100% citation rate
 - [ ] **MA-STANCES-04:** Compass shows stance data for all 160 MA house representatives — evidence-only, sequential, 100% citation rate
 
 ## MA-STANCES — Boston City Officials
