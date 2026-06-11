@@ -327,7 +327,7 @@ All 19 requirements covered ✓
 | 108 | 3/3 | Complete   | 2026-06-10 |
 | 109 | 6/6 | Complete   | 2026-06-11 |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
-| 111 | 5/7 | In Progress|  |
+| 111 | 7/7 | Complete   | 2026-06-11 |
 | 112 | MA-STANCES-03 | Not started | Evidence-only stances: all 40 MA state senators (sequential) |
 | 113 | MA-STANCES-04 (Wave 1) | Not started | Evidence-only stances: MA House reps SD-01 through SD-80 (~80 officials, sequential) |
 | 114 | MA-STANCES-04 (Wave 2) | Not started | Evidence-only stances: MA House reps HD-81 through HD-160 (~80 officials, sequential) — closes MA-STANCES-04 |
@@ -511,7 +511,7 @@ Plans:
 3. 100% citation rate across all 17 officials
 4. Compass renders correctly on Healey profile (human-verified)
 
-**Plans:** 5/7 plans executed
+**Plans:** 7/7 plans executed
 **Wave 1**
 - [x] 111-01-PLAN.md — Governor Healey stances (migration 359)
 
@@ -528,10 +528,10 @@ Plans:
 - [x] 111-05-PLAN.md — MA House reps MA-01 through MA-05 (migrations 367-371)
 
 **Wave 6** *(blocked on Wave 5)*
-- [ ] 111-06-PLAN.md — MA House reps MA-06 through MA-09 (migrations 372-375) + close MA-STANCES-02
+- [x] 111-06-PLAN.md — MA House reps MA-06 through MA-09 (migrations 372-375) + close MA-STANCES-02
 
 **Wave 7** *(blocked on Wave 6)*
-- [ ] 111-07-PLAN.md — Phase-wide verification + compass render checkpoint + close MA-STANCES-01 + MA-STANCES-02
+- [x] 111-07-PLAN.md — Phase-wide verification + compass render checkpoint + close MA-STANCES-01 + MA-STANCES-02
 
 ---
 

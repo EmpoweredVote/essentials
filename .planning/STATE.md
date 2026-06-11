@@ -1,24 +1,24 @@
 ---
 gsd_state_version: 1.0
 milestone: v13.0
-milestone_name: Massachusetts Expanded
-status: completed
-last_updated: "2026-06-11T08:38:33.999Z"
+milestone_name: milestone
+status: executing
+last_updated: "2026-06-11T00:00:00Z"
 progress:
-  total_phases: 10
-  completed_phases: 4
-  total_plans: 20
-  completed_plans: 18
-  percent: 40
+  total_phases: 17
+  completed_phases: 12
+  total_plans: 53
+  completed_plans: 52
+  percent: 71
 ---
 
 # State
 
 ## Current Position
 
-Phase: 111 (ma-stances-execs-federal) — IN PROGRESS (plan 05/07 complete)
-Last completed: Phase 111 Plan 05 — MA House reps migrations 367-371 applied; 5 reps x 43 stances each, 100% citation (2026-06-11)
-Status: Plan 111-01 (Healey) + 111-02 (remaining execs) + 111-03 (Warren) + 111-04 (Markey) + 111-05 (House MA-01 to MA-05) complete; 111-06 (House MA-06 to MA-09) next
+Phase: 112 (ma-stances-state-senate) — NOT STARTED
+Last completed: Phase 111 — MA Stances Execs + Federal COMPLETE (7/7 plans, migrations 359-375, 17 officials, 100% citation rate, 2026-06-11)
+Next migration: 376
 
 ## Project Reference
 
@@ -51,7 +51,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - MA 2026: primary 2026-09-02, general 2026-11-03
 - Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
-- Next migration: 347 (last v12.0 migration was 346 — ACPS stances batch)
+- Next migration: 376 (last Phase 111 migration was 375 — Keating stances)
 
 ## Accumulated Context
 
@@ -107,8 +107,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-11T08:37:31Z
-Stopped at: Plan 111-05 complete — MA House reps 1-5 migrations 367-371 applied; all 5 reps at 43 stances, unpaired=0, uncited=0
+Last session: 2026-06-11T16:45:31.172Z
+Stopped at: context exhaustion at 76% (2026-06-11)
 Resume file: None
 
 ## Performance Metrics
