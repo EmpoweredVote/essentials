@@ -1,0 +1,46 @@
+{
+  "resolved_at": "2026-06-11T07:58:00Z",
+  "politicians": [
+    {
+      "external_id": -200201,
+      "full_name": "Richard Neal",
+      "district": "MA-01",
+      "migration": 367,
+      "id": "a0cb697c-3158-4680-8e70-c154c3a15cc4",
+      "pre_existing_stances": 23
+    },
+    {
+      "external_id": -200202,
+      "full_name": "Jim McGovern",
+      "district": "MA-02",
+      "migration": 368,
+      "id": "ee4081d5-fc3e-4a8c-b39e-481ae20135d5",
+      "pre_existing_stances": 30
+    },
+    {
+      "external_id": -200203,
+      "full_name": "Lori Trahan",
+      "district": "MA-03",
+      "migration": 369,
+      "id": "b96758c6-2ea0-4698-8886-d574d34e366d",
+      "pre_existing_stances": 25
+    },
+    {
+      "external_id": -200204,
+      "full_name": "Jake Auchincloss",
+      "district": "MA-04",
+      "migration": 370,
+      "id": "41945b74-325e-4fa2-9cc9-edd11ead9ed3",
+      "pre_existing_stances": 25
+    },
+    {
+      "external_id": -200205,
+      "full_name": "Katherine Clark",
+      "district": "MA-05",
+      "migration": 371,
+      "id": "7bf73fb2-1b31-412e-913d-835bfd3e326d",
+      "pre_existing_stances": 28
+    }
+  ],
+  "note": "All 5 have pre-existing stances (same pattern as Warren/Markey/Galvin). Migrations 367-371 will be supplemental (re-upsert all + add new topics)."
+}
