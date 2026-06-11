@@ -328,7 +328,7 @@ All 19 requirements covered ✓
 | 109 | 6/6 | Complete   | 2026-06-11 |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
 | 111 | 7/7 | Complete   | 2026-06-11 |
-| 112 | MA-STANCES-03 | Not started | Evidence-only stances: all 40 MA state senators (sequential) |
+| 112 | 1/3 | In Progress|  |
 | 113 | MA-STANCES-04 (Wave 1) | Not started | Evidence-only stances: MA House reps SD-01 through SD-80 (~80 officials, sequential) |
 | 114 | MA-STANCES-04 (Wave 2) | Not started | Evidence-only stances: MA House reps HD-81 through HD-160 (~80 officials, sequential) — closes MA-STANCES-04 |
 | 115 | MA-STANCES-05 | Not started | Evidence-only stances: Mayor Wu + 13 Boston City Councillors + School Committee best-effort |
@@ -557,7 +557,7 @@ Plans:
 3. Compass renders on at least one senator profile (human-verified)
 4. SD with no public evidence has blank spokes (not defaulted values)
 
-**Plans:** TBD
+**Plans:** 1/3 plans executed
 
 ---
 

@@ -1,24 +1,24 @@
 ---
 gsd_state_version: 1.0
 milestone: v13.0
-milestone_name: milestone
+milestone_name: Massachusetts Expanded
 status: executing
-last_updated: "2026-06-11T00:00:00Z"
+last_updated: "2026-06-11T20:52:01.090Z"
 progress:
-  total_phases: 17
-  completed_phases: 12
-  total_plans: 53
-  completed_plans: 52
-  percent: 71
+  total_phases: 10
+  completed_phases: 5
+  total_plans: 23
+  completed_plans: 21
+  percent: 50
 ---
 
 # State
 
 ## Current Position
 
-Phase: 112 (ma-stances-state-senate) — NOT STARTED
-Last completed: Phase 111 — MA Stances Execs + Federal COMPLETE (7/7 plans, migrations 359-375, 17 officials, 100% citation rate, 2026-06-11)
-Next migration: 376
+Phase: 112 (ma-stances-state-senate) — Plan 1/3 COMPLETE
+Last completed: Phase 112 Plan 01 — MA State Senate Stances (20 senators 25D01-25D20, migrations 376-395, 100% citation rate, 0 unpaired, 2026-06-11)
+Next migration: 396
 
 ## Project Reference
 
@@ -107,8 +107,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-11T16:45:31.172Z
-Stopped at: context exhaustion at 76% (2026-06-11)
+Last session: 2026-06-11T20:52:01.082Z
+Stopped at: Completed Phase 112 Plan 01 (2026-06-11)
 Resume file: None
 
 ## Performance Metrics
@@ -138,6 +138,7 @@ Resume file: None
 | Phase 111 P03 | 45m | 3 tasks | 1 file (365_warren_stances.sql); Warren 43 stances applied |
 | Phase 111 P04 | 35m | 3 tasks | 1 file (366_markey_stances.sql); Markey 43 stances applied |
 | Phase 111 P05 | ~4h | 3 tasks | 5 files (367-371 stances SQLs); 5 reps x 43 stances; multi-session |
+| Phase 112 P01 | ~6h | 21 tasks | 20 files (376-395 stances SQLs); 20 senators 25D01-25D20; multi-session; 0 unpaired, 0 uncited |
 
 ## Decisions
 
@@ -150,3 +151,4 @@ Resume file: None
 - [Phase 111 P04]: Markey had 30 stances pre-existing in production (prior session); migration 366 re-upserts all 30 (3 value corrections: climate-change/campaign-finance/social-security) + 13 new topics; total 43 stances, city-sanitation omitted (no federal record)
 - [Phase 111 P05]: All 5 House reps (Neal/McGovern/Trahan/Auchincloss/Clark) had 23-30 pre-existing stances; supplemental pattern used; data-centers topic (UUID 4559b513) discovered active in DB but missing from 111-PATTERNS.md — added to all 5; each rep reached 43 total
 - [Phase 111 P05]: Neal abortion=4.0 evidence-only from Catholic background; Auchincloss tariffs=1.0 explicit free-trader (outlier for MA delegation); Clark childcare=1.0 signature issue (DNC 2024)
+- [Phase 112 P01]: Durant (R, SD-06) + Fattman (R, SD-05) received conservative values 4.0-5.0 with evidence; cannabis-policy topic does NOT exist in inform.compass_topics — removed from Finegold migration; state senate stances applied one-at-a-time per feedback rule
