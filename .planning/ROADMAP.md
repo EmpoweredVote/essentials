@@ -511,7 +511,27 @@ Plans:
 3. 100% citation rate across all 17 officials
 4. Compass renders correctly on Healey profile (human-verified)
 
-**Plans:** TBD
+**Plans:** 7 plans
+**Wave 1**
+- [ ] 111-01-PLAN.md — Governor Healey stances (migration 359)
+
+**Wave 2** *(blocked on Wave 1 — D-08 sequential)*
+- [x] 111-02-PLAN.md — Driscoll + Campbell + Goldberg + DiZoglio + Galvin stances (migrations 360-364)
+
+**Wave 3** *(blocked on Wave 2)*
+- [ ] 111-03-PLAN.md — Warren stances (migration 365)
+
+**Wave 4** *(blocked on Wave 3)*
+- [ ] 111-04-PLAN.md — Markey stances (migration 366)
+
+**Wave 5** *(blocked on Wave 4)*
+- [ ] 111-05-PLAN.md — MA House reps MA-01 through MA-05 (migrations 367-371)
+
+**Wave 6** *(blocked on Wave 5)*
+- [ ] 111-06-PLAN.md — MA House reps MA-06 through MA-09 (migrations 372-375) + close MA-STANCES-02
+
+**Wave 7** *(blocked on Wave 6)*
+- [ ] 111-07-PLAN.md — Phase-wide verification + compass render checkpoint + close MA-STANCES-01 + MA-STANCES-02
 
 ---
 
