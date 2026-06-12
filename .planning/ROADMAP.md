@@ -582,7 +582,12 @@ Plans:
 2. 100% citation rate on all values written (no uncited stance values)
 3. Blank spokes for reps with no public evidence documented as expected outcome
 
-**Plans:** TBD
+**Plans:** 5 plans
+- [ ] 113-01-PLAN.md — Stances for HD-01 through HD-20 (migrations 416-435)
+- [ ] 113-02-PLAN.md — Stances for HD-21 through HD-40 (migrations 436-455)
+- [ ] 113-03-PLAN.md — Stances for HD-41 through HD-60 (migrations 456-475)
+- [ ] 113-04-PLAN.md — Stances for HD-61 through HD-80 (migrations 476-495)
+- [ ] 113-05-PLAN.md — Phase-wide closure verification + MA-STANCES-04 closure
 
 ---
 
