@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: Massachusetts Expanded
 status: Ready to execute
-last_updated: "2026-06-12T20:27:31.326Z"
+last_updated: "2026-06-12T21:31:28.949Z"
 progress:
   total_phases: 10
   completed_phases: 7
   total_plans: 33
-  completed_plans: 31
+  completed_plans: 32
   percent: 70
 ---
 
@@ -16,9 +16,9 @@ progress:
 
 ## Current Position
 
-Phase: 114 (ma-stances-house-wave-2) — IN PROGRESS (3/5 plans complete)
-Last completed: Phase 114 Plan 03 — MA House Wave 2 HD-121–HD-140 COMPLETE (migrations 536-555, 20 reps, 321 total DB rows, uncited=0 unpaired=0, 2026-06-12)
-Next migration: 556
+Phase: 114 (ma-stances-house-wave-2) — IN PROGRESS (4/5 plans complete)
+Last completed: Phase 114 Plan 04 — MA House Wave 2 HD-141–HD-158 COMPLETE (migrations 556-573, 18 reps, 182 total DB rows, uncited=0 unpaired=0, 2026-06-12)
+Next migration: 574
 
 ## Project Reference
 
@@ -108,7 +108,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-06-12T00:00:00.000Z
-Stopped at: Completed 114-03-PLAN.md (20 reps HD-121–HD-140, migrations 536-555)
+Stopped at: Completed 114-04-PLAN.md (18 reps HD-141–HD-158, migrations 556-573)
 Resume file: None
 
 ## Performance Metrics
@@ -142,6 +142,7 @@ Resume file: None
 | Phase 112 P02 | ~4h | 21 tasks | 20 files (396-415 stances SQLs); 20 senators 25D21-25D40; 0 unpaired, 0 uncited |
 | Phase 114 P01 | ~3h | 21 tasks | 20 files (496-515 stances SQLs); 20 reps HD-81–HD-100; 289 stances; 0 unpaired, 0 uncited |
 | Phase 114 P02 | ~4h | 21 tasks | 20 files (516-535 stances SQLs); 20 reps HD-101–HD-120; 138 DB rows; 0 unpaired, 0 uncited |
+| Phase 114 P04 | ~2h | 18 tasks | 18 files (556-573 stances SQLs); 18 reps HD-141–HD-158; 182 DB rows; 0 unpaired, 0 uncited |
 
 ## Decisions
 
@@ -158,3 +159,4 @@ Resume file: None
 - [Phase 112 P02]: Tarr (R), O'Connor (R), Dooner (R) received conservative values with evidence; Brownsberger authored 2018 MA CJ reform (judicial-criminal-justice=1.0, judicial-bail-pretrial=1.0); Rodrigues = South Coast Rail champion + Ways & Means Chair; Montigny co-authored 2006 MA healthcare reform; 20 senators 25D21-25D40 complete; MA-STANCES-03 fully satisfied
 - [Phase 114 P01]: HD-81–HD-100 complete; progressive Camberville reps (Decker/Connolly/Uyterhoeven/Barber) 25-28 stances each; Speaker Mariano (HD-96) 19 stances reflecting centrist-pragmatic leadership positions; 6 reps had pre-existing rows from prior sessions — upserted correctly; pre-existing 3.0 neutral-default rows deferred to cleanup phase
 - [Phase 114 P02]: HD-101–HD-120 complete; mix of Norfolk/Plymouth districts; 5 Republican reps (Vaughn, Gaskey, DeCoste, Sweezey, Sullivan-Almeida) received conservative values with evidence; 8 reps had pre-existing rows upserted correctly; malegislature.gov bill sponsorships as sole evidence source; healthcare was most common topic (14/20 reps)
+- [Phase 114 P04]: HD-141–HD-158 complete; all-Worcester County batch; 6 Republican reps received conservative values 4.0-5.0 (Berthiaume, Marsi, Frost, Soter, Muradian, McKenna); Hannah Kane treated as moderate R with 3.0 values; 7 reps had pre-existing rows upserted; migration 556 re-applied (existed on disk, 0 DB rows on resume)
