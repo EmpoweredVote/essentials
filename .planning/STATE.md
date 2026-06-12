@@ -16,8 +16,8 @@ progress:
 
 ## Current Position
 
-Phase: 114 (ma-stances-house-wave-2) — IN PROGRESS (4/5 plans complete)
-Last completed: Phase 114 Plan 04 — MA House Wave 2 HD-141–HD-158 COMPLETE (migrations 556-573, 18 reps, 182 total DB rows, uncited=0 unpaired=0, 2026-06-12)
+Phase: 114 (ma-stances-house-wave-2) — AWAITING HUMAN CHECKPOINT (4.5/5 plans complete; Task 1 done, Task 2 compass render verification pending)
+Last completed: Phase 114 Plan 05 Task 1 — Q1/Q2/Q3 all pass (78 reps, uncited=0, unpaired=0, combined 1778 stances, 2026-06-12)
 Next migration: 574
 
 ## Project Reference
