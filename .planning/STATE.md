@@ -1,25 +1,24 @@
 ---
 gsd_state_version: 1.0
 milestone: v13.0
-milestone_name: milestone
+milestone_name: Massachusetts Expanded
 status: Ready to execute
-stopped_at: ""
-last_updated: "2026-06-12T06:00:00.000Z"
+last_updated: "2026-06-12T18:28:58.178Z"
 progress:
-  total_phases: 17
-  completed_phases: 14
-  total_plans: 54
-  completed_plans: 54
-  percent: 82
+  total_phases: 10
+  completed_phases: 7
+  total_plans: 33
+  completed_plans: 29
+  percent: 70
 ---
 
 # State
 
 ## Current Position
 
-Phase: 113 (ma-stances-house-wave-1) — COMPLETE (5/5 plans)
-Last completed: Phase 113 — MA House Wave 1 COMPLETE (5/5 plans, migrations 416-495, 80 reps HD-01–HD-80, uncited=0 unpaired=0, 2026-06-12)
-Next migration: 496
+Phase: 114 (ma-stances-house-wave-2) — IN PROGRESS (1/5 plans complete)
+Last completed: Phase 114 Plan 01 — MA House Wave 2 HD-81–HD-100 COMPLETE (migrations 496-515, 20 reps, 289 stances, uncited=0 unpaired=0, 2026-06-12)
+Next migration: 516
 
 ## Project Reference
 
@@ -108,8 +107,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-12T01:20:17.445Z
-Stopped at: context exhaustion at 79% (2026-06-12)
+Last session: 2026-06-12T00:00:00.000Z
+Stopped at: Completed 114-01-PLAN.md (20 reps HD-81–HD-100, migrations 496-515)
 Resume file: None
 
 ## Performance Metrics
@@ -141,6 +140,7 @@ Resume file: None
 | Phase 111 P05 | ~4h | 3 tasks | 5 files (367-371 stances SQLs); 5 reps x 43 stances; multi-session |
 | Phase 112 P01 | ~6h | 21 tasks | 20 files (376-395 stances SQLs); 20 senators 25D01-25D20; multi-session; 0 unpaired, 0 uncited |
 | Phase 112 P02 | ~4h | 21 tasks | 20 files (396-415 stances SQLs); 20 senators 25D21-25D40; 0 unpaired, 0 uncited |
+| Phase 114 P01 | ~3h | 21 tasks | 20 files (496-515 stances SQLs); 20 reps HD-81–HD-100; 289 stances; 0 unpaired, 0 uncited |
 
 ## Decisions
 
@@ -155,3 +155,4 @@ Resume file: None
 - [Phase 111 P05]: Neal abortion=4.0 evidence-only from Catholic background; Auchincloss tariffs=1.0 explicit free-trader (outlier for MA delegation); Clark childcare=1.0 signature issue (DNC 2024)
 - [Phase 112 P01]: Durant (R, SD-06) + Fattman (R, SD-05) received conservative values 4.0-5.0 with evidence; cannabis-policy topic does NOT exist in inform.compass_topics — removed from Finegold migration; state senate stances applied one-at-a-time per feedback rule
 - [Phase 112 P02]: Tarr (R), O'Connor (R), Dooner (R) received conservative values with evidence; Brownsberger authored 2018 MA CJ reform (judicial-criminal-justice=1.0, judicial-bail-pretrial=1.0); Rodrigues = South Coast Rail champion + Ways & Means Chair; Montigny co-authored 2006 MA healthcare reform; 20 senators 25D21-25D40 complete; MA-STANCES-03 fully satisfied
+- [Phase 114 P01]: HD-81–HD-100 complete; progressive Camberville reps (Decker/Connolly/Uyterhoeven/Barber) 25-28 stances each; Speaker Mariano (HD-96) 19 stances reflecting centrist-pragmatic leadership positions; 6 reps had pre-existing rows from prior sessions — upserted correctly; pre-existing 3.0 neutral-default rows deferred to cleanup phase
