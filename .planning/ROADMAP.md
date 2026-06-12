@@ -328,8 +328,8 @@ All 19 requirements covered ✓
 | 109 | 6/6 | Complete   | 2026-06-11 |
 | 110 | MA-ELECTIONS-01, MA-ELECTIONS-02, MA-ELECTIONS-03, MA-ELECTIONS-04 | Not started | Seed MA 2026 elections, 200+ race rows, arm discovery |
 | 111 | 7/7 | Complete   | 2026-06-11 |
-| 112 | 2/3 | In Progress|  |
-| 113 | MA-STANCES-04 (Wave 1) | Not started | Evidence-only stances: MA House reps SD-01 through SD-80 (~80 officials, sequential) |
+| 112 | 3/3 | Complete   | 2026-06-11 |
+| 113 | 5/5 | Complete   | 2026-06-12 |
 | 114 | MA-STANCES-04 (Wave 2) | Not started | Evidence-only stances: MA House reps HD-81 through HD-160 (~80 officials, sequential) — closes MA-STANCES-04 |
 | 115 | MA-STANCES-05 | Not started | Evidence-only stances: Mayor Wu + 13 Boston City Councillors + School Committee best-effort |
 | 116 | MA-RETRO-01 | Not started | Playbook retrospective: MA town/COUSUB GOTCHAs + Boston patterns + Cities Onboarded entries |
@@ -582,12 +582,12 @@ Plans:
 2. 100% citation rate on all values written (no uncited stance values)
 3. Blank spokes for reps with no public evidence documented as expected outcome
 
-**Plans:** 5 plans
-- [ ] 113-01-PLAN.md — Stances for HD-01 through HD-20 (migrations 416-435)
-- [ ] 113-02-PLAN.md — Stances for HD-21 through HD-40 (migrations 436-455)
-- [ ] 113-03-PLAN.md — Stances for HD-41 through HD-60 (migrations 456-475)
-- [ ] 113-04-PLAN.md — Stances for HD-61 through HD-80 (migrations 476-495)
-- [ ] 113-05-PLAN.md — Phase-wide closure verification + MA-STANCES-04 closure
+**Plans:** 5/5 complete
+- [x] 113-01-PLAN.md — Stances for HD-01 through HD-20 (migrations 416-435)
+- [x] 113-02-PLAN.md — Stances for HD-21 through HD-40 (migrations 436-455)
+- [x] 113-03-PLAN.md — Stances for HD-41 through HD-60 (migrations 456-475)
+- [x] 113-04-PLAN.md — Stances for HD-61 through HD-80 (migrations 476-495)
+- [x] 113-05-PLAN.md — Phase-wide closure verification + MA-STANCES-04 closure
 
 ---
 
