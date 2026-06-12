@@ -330,7 +330,7 @@ All 19 requirements covered ✓
 | 111 | 7/7 | Complete   | 2026-06-11 |
 | 112 | 3/3 | Complete   | 2026-06-11 |
 | 113 | 5/5 | Complete   | 2026-06-12 |
-| 114 | 1/5 | In Progress | 2026-06-12 (HD-81–HD-100 complete, migrations 496-515) |
+| 114 | 3/5 | In Progress|  |
 | 115 | MA-STANCES-05 | Not started | Evidence-only stances: Mayor Wu + 13 Boston City Councillors + School Committee best-effort |
 | 116 | MA-RETRO-01 | Not started | Playbook retrospective: MA town/COUSUB GOTCHAs + Boston patterns + Cities Onboarded entries |
 
@@ -616,8 +616,8 @@ Plans:
 **Plans:**
 
 - [x] 114-01-PLAN.md — HD-81–HD-100 (20 reps, migrations 496-515, 289 stances, 2026-06-12)
-- [ ] 114-02-PLAN.md — HD-101–HD-120 (20 reps, migrations 516+)
-- [ ] 114-03-PLAN.md — HD-121–HD-140 (20 reps)
+- [x] 114-02-PLAN.md — HD-101–HD-120 (20 reps, migrations 516+)
+- [x] 114-03-PLAN.md — HD-121–HD-140 (20 reps)
 - [ ] 114-04-PLAN.md — HD-141–HD-160 (20 reps, closes MA-STANCES-04)
 - [ ] 114-05-PLAN.md — Phase-wide verification + MA-STANCES-04 closure
 

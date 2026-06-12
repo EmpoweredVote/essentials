@@ -3,22 +3,22 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: Massachusetts Expanded
 status: Ready to execute
-last_updated: "2026-06-12T19:40:56.813Z"
+last_updated: "2026-06-12T20:27:31.326Z"
 progress:
   total_phases: 10
   completed_phases: 7
   total_plans: 33
   completed_plans: 31
-  percent: 73
+  percent: 70
 ---
 
 # State
 
 ## Current Position
 
-Phase: 114 (ma-stances-house-wave-2) — IN PROGRESS (2/5 plans complete)
-Last completed: Phase 114 Plan 02 — MA House Wave 2 HD-101–HD-120 COMPLETE (migrations 516-535, 20 reps, ~71 new stances, uncited=0 unpaired=0, 2026-06-12)
-Next migration: 536
+Phase: 114 (ma-stances-house-wave-2) — IN PROGRESS (3/5 plans complete)
+Last completed: Phase 114 Plan 03 — MA House Wave 2 HD-121–HD-140 COMPLETE (migrations 536-555, 20 reps, 321 total DB rows, uncited=0 unpaired=0, 2026-06-12)
+Next migration: 556
 
 ## Project Reference
 
@@ -108,7 +108,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-06-12T00:00:00.000Z
-Stopped at: Completed 114-02-PLAN.md (20 reps HD-101–HD-120, migrations 516-535)
+Stopped at: Completed 114-03-PLAN.md (20 reps HD-121–HD-140, migrations 536-555)
 Resume file: None
 
 ## Performance Metrics
