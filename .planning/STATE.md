@@ -3,21 +3,21 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: Massachusetts Expanded
 status: Ready to execute
-last_updated: "2026-06-12T21:31:28.949Z"
+last_updated: "2026-06-12T00:00:00.000Z"
 progress:
   total_phases: 10
   completed_phases: 7
   total_plans: 33
-  completed_plans: 32
-  percent: 70
+  completed_plans: 33
+  percent: 73
 ---
 
 # State
 
 ## Current Position
 
-Phase: 114 (ma-stances-house-wave-2) — AWAITING HUMAN CHECKPOINT (4.5/5 plans complete; Task 1 done, Task 2 compass render verification pending)
-Last completed: Phase 114 Plan 05 Task 1 — Q1/Q2/Q3 all pass (78 reps, uncited=0, unpaired=0, combined 1778 stances, 2026-06-12)
+Phase: 115 (ma-stances-boston) — READY TO EXECUTE
+Last completed: Phase 114 Plan 05 — phase-wide verification passed; compass render APPROVED on Marjorie Decker (HD-81); MA-STANCES-04 FULLY CLOSED (2026-06-12)
 Next migration: 574
 
 ## Project Reference
@@ -51,7 +51,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - MA 2026: primary 2026-09-02, general 2026-11-03
 - Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
-- Next migration: 496 (last Phase 113 migration was 495 — Rogers stances)
+- Next migration: 574 (last Phase 114 migration was 573 — Donaghue stances)
 
 ## Accumulated Context
 
@@ -108,7 +108,7 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-06-12T00:00:00.000Z
-Stopped at: Completed 114-04-PLAN.md (18 reps HD-141–HD-158, migrations 556-573)
+Stopped at: Completed 114-05-PLAN.md (phase-wide verification + MA-STANCES-04 closure)
 Resume file: None
 
 ## Performance Metrics
@@ -143,6 +143,7 @@ Resume file: None
 | Phase 114 P01 | ~3h | 21 tasks | 20 files (496-515 stances SQLs); 20 reps HD-81–HD-100; 289 stances; 0 unpaired, 0 uncited |
 | Phase 114 P02 | ~4h | 21 tasks | 20 files (516-535 stances SQLs); 20 reps HD-101–HD-120; 138 DB rows; 0 unpaired, 0 uncited |
 | Phase 114 P04 | ~2h | 18 tasks | 18 files (556-573 stances SQLs); 18 reps HD-141–HD-158; 182 DB rows; 0 unpaired, 0 uncited |
+| Phase 114 P05 | 35m | 3 tasks | 1 file (114-05-SUMMARY.md); Q1=78 Q2=0 Q3=0; 1778 combined stances; compass APPROVED on Decker HD-81 |
 
 ## Decisions
 
@@ -160,3 +161,4 @@ Resume file: None
 - [Phase 114 P01]: HD-81–HD-100 complete; progressive Camberville reps (Decker/Connolly/Uyterhoeven/Barber) 25-28 stances each; Speaker Mariano (HD-96) 19 stances reflecting centrist-pragmatic leadership positions; 6 reps had pre-existing rows from prior sessions — upserted correctly; pre-existing 3.0 neutral-default rows deferred to cleanup phase
 - [Phase 114 P02]: HD-101–HD-120 complete; mix of Norfolk/Plymouth districts; 5 Republican reps (Vaughn, Gaskey, DeCoste, Sweezey, Sullivan-Almeida) received conservative values with evidence; 8 reps had pre-existing rows upserted correctly; malegislature.gov bill sponsorships as sole evidence source; healthcare was most common topic (14/20 reps)
 - [Phase 114 P04]: HD-141–HD-158 complete; all-Worcester County batch; 6 Republican reps received conservative values 4.0-5.0 (Berthiaume, Marsi, Frost, Soter, Muradian, McKenna); Hannah Kane treated as moderate R with 3.0 values; 7 reps had pre-existing rows upserted; migration 556 re-applied (existed on disk, 0 DB rows on resume)
+- [Phase 114 P05]: Phase-wide verification PASSED; Q1=78 rows, Q2=0 uncited, Q3=0 unpaired, Q4=1778 combined stances; compass render APPROVED on Marjorie Decker HD-81; MA-STANCES-04 FULLY CLOSED (Wave 1 HD-01–HD-80 Phase 113 + Wave 2 HD-81–HD-158 Phase 114)

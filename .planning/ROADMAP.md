@@ -619,7 +619,7 @@ Plans:
 - [x] 114-02-PLAN.md — HD-101–HD-120 (20 reps, migrations 516+)
 - [x] 114-03-PLAN.md — HD-121–HD-140 (20 reps)
 - [x] 114-04-PLAN.md — HD-141–HD-160 (20 reps, closes MA-STANCES-04)
-- [ ] 114-05-PLAN.md — Phase-wide verification + MA-STANCES-04 closure
+- [x] 114-05-PLAN.md — Phase-wide verification + MA-STANCES-04 closure (compass APPROVED, 1778 stances, 2026-06-12)
 
 ---
 
