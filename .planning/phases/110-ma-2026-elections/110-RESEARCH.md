@@ -433,27 +433,19 @@ Note: The 212 total is the MA 2026 general election universe. Some races may als
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Massachusetts state-level Landing entry pattern**
-   - What we know: ROADMAP says "MA state browse entry"; existing COVERAGE_CITIES entries are all cities/counties
-   - What's unclear: Should a "Massachusetts" state entry have `browseGovernmentList` pointing to state govt geo_id '25', or no browseGovernmentList (address-only)?
-   - Recommendation: Look at whether Maine or Oregon have a state-level Landing entry. If not, follow the "address-only" pattern with just browseStateAbbrev. Alternatively, skip the state entry and only add Boston — the planner should confirm with ROADMAP language.
+   - RESOLVED: Boston city entry only (`browseGovernmentList: ['2507000']`). A pure state-level entry has no routing handler in Landing.jsx (no path for `browseStateAbbrev`-only entries without a city). Deferring state-level entry — Plan 03 adds Boston only.
 
 2. **Governor race — primary election row needed?**
-   - What we know: MD and VA patterns only seed races in the general election. The Cambridge pre-seeded races include 1 race in the primary.
-   - What's unclear: Should Phase 110 seed Governor/US House races in the primary as well?
-   - Recommendation: Seed in general election only (matching MD/VA pattern). Primary races for incumbents are not always contested. The discovery agent handles primary candidates.
+   - RESOLVED: General election only, matching MD/VA pattern. Primary races for incumbents are not always contested; discovery agent handles primary candidates. No primary race row for Governor/US House will be seeded.
 
 3. **Seth Moulton office anomaly**
-   - What we know: There is a "Candidate for U.S. Senate — Massachusetts" office (id=442e3394) for Seth Moulton with NATIONAL_UPPER district_type. This is a candidate-specific office, not the Senate seat.
-   - What's unclear: Does Moulton have a separate office from the incumbent seat?
-   - Recommendation: Use Markey's office (215e8e94) for the US Senate MA race. Do not reference Moulton's candidate office.
+   - RESOLVED: Use Markey's office_id (`215e8e94-ab07-4ca8-b7a1-ccf7aec0c4f4`) for US Senate MA races. Moulton's "Candidate for U.S. Senate" office (`442e3394`) is a candidate-specific office, not the incumbent seat — ignore it.
 
 4. **race_candidates schema**
-   - What we know: Columns include race_id, politician_id, is_incumbent, is_official_candidate (inferred from pattern)
-   - What's unclear: Exact column names — must query before writing
-   - Recommendation: Plan 01 executor must query `information_schema.columns` for race_candidates before writing.
+   - RESOLVED: Plan 01 Task 1 action step (c) queries `information_schema.columns` for exact column names before writing the INSERT. Executor verifies schema at runtime before inserting Healey.
 
 ---
 
