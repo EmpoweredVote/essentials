@@ -326,7 +326,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       <div className="bg-white dark:bg-ev-navy-card rounded-2xl border border-neutral-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm p-6">
         {hasUserCompass ? (
           <>
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(360px,500px)_minmax(0,1fr)] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(440px,600px)_minmax(0,1fr)] gap-6">
             {/* Left zone: radar chart. Centered when the card collapses to a single
                 column (below lg); fills the radar-width column when two-up. */}
             <div className="flex flex-col items-center lg:items-start">
@@ -412,10 +412,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     </span>
                   </div>
 
-                  {/* Chart container — position:relative so overlay buttons can anchor */}
-                  <div ref={containerRef} style={{ width: '100%', maxWidth: '500px', overflow: 'hidden', position: 'relative' }}>
+                  {/* Chart container — mouse handlers here so the overlay doesn't block spoke clicks */}
+                  <div ref={containerRef} style={{ width: '100%', maxWidth: '600px', overflow: 'hidden', position: 'relative' }}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={() => setTooltip(null)}
+                  >
                     {/* Min / Max buttons */}
-                    <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 10 }}>
+                    <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 11 }}>
                       <button
                         type="button"
                         title="Stance Max — flip any spoke showing 1–2 to its strong side (4–5)"
@@ -472,12 +475,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                       labelFontSize={28}
                       padding={CARD_PADDING}
                       labelOffset={22}
-                    />
-                    {/* Transparent overlay captures mouse for tooltip — suppresses built-in SVG tooltip */}
-                    <div
-                      style={{ position: 'absolute', inset: 0, zIndex: 10 }}
-                      onMouseMove={handleMouseMove}
-                      onMouseLeave={() => setTooltip(null)}
+                      maxLabelLines={3}
                     />
                     {tooltip && createPortal(
                       <div style={{
@@ -571,7 +569,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
           </div>
         ) : (
           /* Guest (or logged-in with genuinely no answers) — 2-column: CTA left, accordion right */
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(360px,500px)_minmax(0,1fr)] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(440px,600px)_minmax(0,1fr)] gap-6">
             {/* Left zone: CTA with ghost radar */}
             <div className="flex flex-col items-center justify-center py-8 px-4">
               <div style={{ opacity: 0.85, marginBottom: '20px' }}>
