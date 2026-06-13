@@ -10,19 +10,8 @@ import { useTheme } from '../hooks/useTheme';
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
 
-// Mirrors RadarChartCore internals for dot position matching
-const CARD_SIZE = 500;
 const CARD_PADDING = 110;
-const CARD_RADAR_RADIUS = CARD_SIZE / 2 - CARD_PADDING; // 140
-const CARD_CENTER = CARD_SIZE / 2;                      // 250
-
-function adjustedValue(value, shortTitle, invertedSpokes, topics) {
-  if (!value || Number(value) === 0) return 0;
-  const topic = topics.find((t) => t.short_title === shortTitle);
-  const max = topic?.stances?.length || 10;
-  const pct = Math.min(Number(value) / max * 10, 10);
-  return invertedSpokes[shortTitle] ? 11 - pct : pct;
-}
+const CARD_CENTER = 250; // size/2 for RadarChartCore size=500
 
 function stanceLabel(shortTitle, value, topics) {
   const topic = topics.find((t) => t.short_title === shortTitle);
@@ -180,37 +169,12 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
   const hasData = hasEnoughSpokes && topicsFiltered.length > 0;
 
-  // Dot positions for tooltip hit-testing — mirrors RadarChartCore's point math.
-  // useMemo and useCallback must be here (before the early returns below) so that
-  // React sees the same hooks every render regardless of gate outcomes.
-  const dotPositions = useMemo(() => {
-    if (!hasEnoughSpokes) return [];
-    const spokes = Object.entries(userData);
-    const numSpokes = spokes.length;
-    const dots = [];
-    spokes.forEach(([shortTitle, userVal], i) => {
-      const angle = 2 * Math.PI * i / numSpokes;
-      if (userVal && Number(userVal) !== 0) {
-        const adj = adjustedValue(userVal, shortTitle, invertedSpokes, topicsFiltered);
-        const r = adj / 10 * CARD_RADAR_RADIUS;
-        dots.push({ shortTitle, cx: CARD_CENTER + r * Math.sin(angle), cy: CARD_CENTER - r * Math.cos(angle), stanceText: stanceLabel(shortTitle, userVal, topicsFiltered) });
-      }
-      const polVal = polData[shortTitle];
-      if (polVal && Number(polVal) !== 0) {
-        const adj = adjustedValue(polVal, shortTitle, invertedSpokes, topicsFiltered);
-        const r = adj / 10 * CARD_RADAR_RADIUS;
-        dots.push({ shortTitle, cx: CARD_CENTER + r * Math.sin(angle), cy: CARD_CENTER - r * Math.cos(angle), stanceText: stanceLabel(shortTitle, polVal, topicsFiltered) });
-      }
-    });
-    return dots;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hasEnoughSpokes, userData, polData, invertedSpokes, topicsFiltered]);
-
-  // Check distance in screen space against actual circle DOM positions.
-  // Querying circles each move is cheap (~8 elements); avoids SVG coordinate math entirely.
+  // Find nearest circle in screen space, then identify its spoke by angle from chart center
+  // (not by radius), and its owner (user vs pol) by fill color. This avoids any radius
+  // math that could mismatch due to max-stance differences.
   const HIT_PX = 20;
   const handleMouseMove = useCallback((e) => {
-    if (!containerRef.current || dotPositions.length === 0) { setTooltip(null); return; }
+    if (!containerRef.current || topicsFiltered.length === 0) { setTooltip(null); return; }
     const circles = Array.from(containerRef.current.querySelectorAll('svg circle'));
     let nearest = null;
     let nearestDist = HIT_PX;
@@ -220,21 +184,32 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       if (d < nearestDist) { nearestDist = d; nearest = circle; }
     }
     if (!nearest) { setTooltip(null); return; }
+
+    // Identify spoke by angle — angle is purely a function of spoke index, not value.
     const svgCx = parseFloat(nearest.getAttribute('cx') ?? '0');
     const svgCy = parseFloat(nearest.getAttribute('cy') ?? '0');
-    let closestDot = null;
-    let minDist = Infinity;
-    for (const dot of dotPositions) {
-      const d = Math.hypot(svgCx - dot.cx, svgCy - dot.cy);
-      if (d < minDist) { minDist = d; closestDot = dot; }
+    const spokes = Object.keys(userData);
+    const numSpokes = spokes.length;
+    const rawAngle = Math.atan2(svgCx - CARD_CENTER, -(svgCy - CARD_CENTER));
+    const normAngle = ((rawAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    let shortTitle = null;
+    let minDiff = Infinity;
+    for (let i = 0; i < numSpokes; i++) {
+      const sa = 2 * Math.PI * i / numSpokes;
+      const diff = Math.min(Math.abs(normAngle - sa), 2 * Math.PI - Math.abs(normAngle - sa));
+      if (diff < minDiff) { minDiff = diff; shortTitle = spokes[i]; }
     }
-    if (closestDot && minDist < 40) {
-      const rect = nearest.getBoundingClientRect();
-      setTooltip({ x: rect.left + rect.width / 2, y: rect.top, shortTitle: closestDot.shortTitle, stanceText: closestDot.stanceText });
-    } else {
-      setTooltip(null);
-    }
-  }, [dotPositions]);
+    if (!shortTitle) { setTooltip(null); return; }
+
+    // Fill color tells us whether this is a user dot (#7C6B9E) or pol dot (#5A9A6E).
+    // Yellow (#fed12e) means they match — use pol data (same value either way).
+    const fill = (nearest.getAttribute('fill') || '').toLowerCase();
+    const val = fill === '#5a9a6e' || fill === '#fed12e' ? polData[shortTitle] : userData[shortTitle];
+    if (!val || Number(val) === 0) { setTooltip(null); return; }
+    const stanceText = stanceLabel(shortTitle, val, topicsFiltered);
+    const rect = nearest.getBoundingClientRect();
+    setTooltip({ x: rect.left + rect.width / 2, y: rect.top, shortTitle, stanceText });
+  }, [userData, polData, topicsFiltered]);
 
   // Gate: wait for compass data to load
   if (compassLoading) return null;
