@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: context exhaustion at 80% (2026-06-13)
-last_updated: "2026-06-13T00:05:06.559Z"
+stopped_at: migration 574 applied — ME post-primary + CA statewide discovery update (2026-06-13)
+last_updated: "2026-06-13T00:00:00.000Z"
 progress:
   total_phases: 17
   completed_phases: 15
@@ -19,7 +19,7 @@ progress:
 
 Phase: 115 (ma-stances-boston) — READY TO EXECUTE
 Last completed: Phase 114 Plan 05 — phase-wide verification passed; compass render APPROVED on Marjorie Decker (HD-81); MA-STANCES-04 FULLY CLOSED (2026-06-12)
-Next migration: 574
+Next migration: 575
 
 ## Project Reference
 
@@ -52,7 +52,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - MA 2026: primary 2026-09-02, general 2026-11-03
 - Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
-- Next migration: 574 (last Phase 114 migration was 573 — Donaghue stances)
+- Next migration: 575 (last Phase 114 migration was 573 — Donaghue stances)
 
 ## Accumulated Context
 
@@ -99,8 +99,9 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 ### Pending Todos
 
-- **[ME — TIME-SENSITIVE]** Phase 90 Plan 01: After ME June 9 primary results, write migration adding D primary winners to US Senate general + ME-01 general + ME-02 general race_candidates rows
-- **[CA operational note]** Phase 90 Plan 02: Update lavote.gov discovery_jurisdictions election ID for CA November 2026 general
+- **[ME — RCV PENDING]** Phase 90: ME-02 D nominee not yet declared — RCV tabulation ongoing as of 2026-06-13; frontrunner Joe Baldacci (state senator, Bangor, ~31.5% first-round). Add to ME-02 general race_candidates once AP/official call issued. migration 574 already applied Collins+Platner (Senate) and LePage (ME-02 R).
+- **[CA — JULY]** Phase 90: lavote.gov November 2026 general election CandidateList ID not yet published; filing opens mid-to-late July 2026. Update discovery_jurisdictions id=9fd492a8 source_url to new ?id=XXXX at that time.
+- **[ME-01 R]** ME-01 Republican primary (Pietrowicz vs Russell) still TBD — add winner to ME-01 general race once called.
 
 ### Blockers/Concerns
 
@@ -108,8 +109,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13T00:05:06.545Z
-Stopped at: context exhaustion at 80% (2026-06-13)
+Last session: 2026-06-13 (session 2)
+Stopped at: Compass UI fixes pushed to production — awaiting Netlify deploy + visual verification. Next: execute Phase 115 (MA Playbook Retrospective).
 Resume file: None
 
 ## Performance Metrics
