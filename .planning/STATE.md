@@ -17,9 +17,9 @@ progress:
 
 ## Current Position
 
-Phase: 115 (boston-stances) — PLANNED (5 plans, ready to execute)
-Last completed: Phase 114 Plan 05 — phase-wide verification passed; compass render APPROVED on Marjorie Decker (HD-81); MA-STANCES-04 FULLY CLOSED (2026-06-12)
-Next migration: 577
+Phase: 116 — pending
+Last completed: Phase 115 Plan 05 — phase-wide QA passed (Q1=21 rows, Q2=0 uncited, Q3=0 unpaired); compass APPROVED on Wu (21 topics); MA-STANCES-05 FULLY CLOSED (2026-06-13)
+Next migration: 578
 
 ## Project Reference
 
@@ -164,3 +164,4 @@ Resume file: None
 - [Phase 114 P02]: HD-101–HD-120 complete; mix of Norfolk/Plymouth districts; 5 Republican reps (Vaughn, Gaskey, DeCoste, Sweezey, Sullivan-Almeida) received conservative values with evidence; 8 reps had pre-existing rows upserted correctly; malegislature.gov bill sponsorships as sole evidence source; healthcare was most common topic (14/20 reps)
 - [Phase 114 P04]: HD-141–HD-158 complete; all-Worcester County batch; 6 Republican reps received conservative values 4.0-5.0 (Berthiaume, Marsi, Frost, Soter, Muradian, McKenna); Hannah Kane treated as moderate R with 3.0 values; 7 reps had pre-existing rows upserted; migration 556 re-applied (existed on disk, 0 DB rows on resume)
 - [Phase 114 P05]: Phase-wide verification PASSED; Q1=78 rows, Q2=0 uncited, Q3=0 unpaired, Q4=1778 combined stances; compass render APPROVED on Marjorie Decker HD-81; MA-STANCES-04 FULLY CLOSED (Wave 1 HD-01–HD-80 Phase 113 + Wave 2 HD-81–HD-158 Phase 114)
+- [Phase 115]: Boston stances complete; 21 officials attempted (Mayor Wu 27 stances + 13 councillors + 7 SC blank per D-01); stances from bulk migration 574 (prior session) + Wu supplemental 577; Q1=21 rows, Q2=0 uncited, Q3=0 unpaired, Q4=162 total stances; compass APPROVED on Wu (21 topics); MA-STANCES-05 FULLY CLOSED; next migration=578
