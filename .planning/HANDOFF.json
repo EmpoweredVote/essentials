@@ -1,53 +1,35 @@
 {
   "version": "1.0",
-  "timestamp": "2026-06-09T19:28:38.894Z",
-  "phase": "106",
-  "phase_name": "va-compass-stances",
-  "phase_dir": ".planning/phases/106-va-compass-stances",
-  "plan": 2,
-  "task": 1,
+  "timestamp": "2026-06-12T17:49:13Z",
+  "phase": "114",
+  "phase_name": "ma-stances-house-wave-2",
+  "phase_dir": ".planning/phases/114-ma-stances-house-wave-2",
+  "plan": 5,
+  "task": 3,
   "total_tasks": 3,
   "status": "paused",
+  "context": "between-phases",
   "completed_tasks": [
-    {
-      "id": "106-01",
-      "name": "Spanberger stances — migration 326 (32 stances)",
-      "status": "done",
-      "commit": "2a8055b",
-      "notes": "32 stances applied. Sources corrected post-commit: all politician press-release URL slugs stripped (were hallucinated), ontheissues.org path fixed /House/→/VA/. DB updated via MCP execute_sql. Migration file also corrected on disk."
-    }
+    {"id": 1, "name": "Phase 114 — MA House Wave 2 (all 5 plans)", "status": "done", "commit": "bb3ff5b"},
+    {"id": 2, "name": "Compass UI fix — overlay blocking clicks + label truncation + narrow layout", "status": "done", "commit": "89cd742"}
   ],
   "remaining_tasks": [
-    {"id": "106-02", "name": "Hashmi stances — migration 327 (≥10)", "status": "not_started"},
-    {"id": "106-03", "name": "Jay Jones stances — migration 328 (≥10)", "status": "not_started"},
-    {"id": "106-04", "name": "Mark Warner stances — migration 329 (≥15)", "status": "not_started"},
-    {"id": "106-05", "name": "Tim Kaine stances — migration 330 (≥15)", "status": "not_started"},
-    {"id": "106-06", "name": "Alexandria council 7 members — migrations 331-337 (5-min cap)", "status": "not_started"},
-    {"id": "106-07", "name": "ACPS school board 9 members — migrations 338-346 (5-min cap)", "status": "not_started"},
-    {"id": "106-08", "name": "Phase-wide quality gate + compass render verification (checkpoint)", "status": "not_started"}
+    {"id": 3, "name": "Visual browser test of compass UI fix at essentials.empowered.vote", "status": "not_started"},
+    {"id": 4, "name": "Phase 115 — MA Playbook Retrospective (MA-RETRO-01)", "status": "not_started"}
   ],
   "blockers": [],
-  "human_actions_pending": [],
-  "decisions": [
+  "human_actions_pending": [
     {
-      "decision": "Source URLs restricted to aggregation indexes only — no politician press-release slugs",
-      "rationale": "AI research agents fabricate plausible press-release URL slugs from knowledge of the politician record + URL pattern. They look real but are hallucinated. Discovered when checking Spanberger migration post-execution.",
-      "phase": "106"
-    },
-    {
-      "decision": "OnTheIssues path for Virginia politicians: use /VA/ not /House/",
-      "rationale": "/House/Abigail_Spanberger.htm returns 404. /VA/Abigail_Spanberger.htm verified live. Apply same logic for other VA officials who have left their prior chamber role.",
-      "phase": "106"
-    },
-    {
-      "decision": "VPAP candidate IDs unverified — omit from future plans",
-      "rationale": "VPAP returned 403, couldn't confirm ID 75011 is Spanberger. Removed from remaining plans pending manual browser verification.",
-      "phase": "106"
+      "action": "Browser-test compass UI at essentials.empowered.vote on a MA house rep profile (e.g. Marjorie Decker HD-81)",
+      "context": "Three compass bugs fixed in CompassCard.jsx (commit 89cd742): transparent overlay removed, layout widened, 3-line labels enabled. Changes are committed but NOT visually confirmed. Test: spoke inversion on click, min/max buttons, no label truncation on 'Economic Development Incentives' or 'Local Immigration Enforcement'.",
+      "blocking": false
     }
   ],
-  "uncommitted_files": [
-    "C:/EV-Accounts/backend/migrations/326_spanberger_stances.sql — source correction (no git in EV-Accounts)"
+  "decisions": [
+    {"decision": "Removed transparent overlay div from CompassCard.jsx rather than raising its z-index", "rationale": "Overlay was absorbing all mouse clicks; moving handlers to container div is cleaner and removes the z-index war", "phase": "114"},
+    {"decision": "maxLabelLines={3} in RadarChartCore", "rationale": "2-line wrapping produced 24-char line → estimatedWidth 403px > 220px maxPadding cap → SVG clipped label; 3-line splits longest to ~11 chars → 185px, within cap", "phase": "114"}
   ],
-  "next_action": "Spawn Wave 2 executor for Plan 106-02 (Hashmi). Pass source restriction constraint: aggregation indexes only (ballotpedia.org, ontheissues.org with correct path, congress.gov for bill numbers, real news with date-based paths). No politician.gov/press-releases/ slugs.",
-  "context_notes": "Plan 01 stance values and reasoning are accurate — AI correctly knew Spanberger's congressional record. The problem was specifically with citation URLs: press-release slugs are pattern-generated, not fetched. The correction is clean. Plans 02-05 (state/federal officials) should yield rich records. Plans 06-07 (Alexandria council/ACPS) have D-03/D-04 5-minute sliding cap — expect fewer stances per person."
+  "uncommitted_files": [],
+  "next_action": "Run /gsd-execute-phase 115 to execute the MA Playbook Retrospective. Optionally browser-test the compass UI fix first.",
+  "context_notes": "Phase 114 (MA-STANCES-04) is fully closed. Compass UI fix committed (89cd742) to src/components/CompassCard.jsx: overlay removed, layout widened, 3-line labels. Needs browser validation."
 }
