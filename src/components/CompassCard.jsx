@@ -326,7 +326,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       <div className="bg-white dark:bg-ev-navy-card rounded-2xl border border-neutral-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm p-6">
         {hasUserCompass ? (
           <>
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(440px,600px)_minmax(0,1fr)] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6">
             {/* Left zone: radar chart. Centered when the card collapses to a single
                 column (below lg); fills the radar-width column when two-up. */}
             <div className="flex flex-col items-center lg:items-start">
@@ -413,7 +413,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   </div>
 
                   {/* Chart container — mouse handlers here so the overlay doesn't block spoke clicks */}
-                  <div ref={containerRef} style={{ width: '100%', maxWidth: '600px', overflow: 'hidden', position: 'relative' }}
+                  <div ref={containerRef} style={{ width: '100%', maxWidth: '700px', overflow: 'hidden', position: 'relative' }}
                     onMouseMove={handleMouseMove}
                     onMouseLeave={() => setTooltip(null)}
                   >
@@ -569,7 +569,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
           </div>
         ) : (
           /* Guest (or logged-in with genuinely no answers) — 2-column: CTA left, accordion right */
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(440px,600px)_minmax(0,1fr)] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6">
             {/* Left zone: CTA with ghost radar */}
             <div className="flex flex-col items-center justify-center py-8 px-4">
               <div style={{ opacity: 0.85, marginBottom: '20px' }}>
