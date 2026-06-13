@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { usePostHog } from 'posthog-js/react';
@@ -10,19 +10,18 @@ import { useTheme } from '../hooks/useTheme';
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
 
-// Mirrors RadarChartCore internals for dot hit-testing
+// Mirrors RadarChartCore internals for dot position matching
 const CARD_SIZE = 500;
 const CARD_PADDING = 110;
 const CARD_RADAR_RADIUS = CARD_SIZE / 2 - CARD_PADDING; // 140
 const CARD_CENTER = CARD_SIZE / 2;                      // 250
-const CARD_HIT_RADIUS_SVG = 24;
 
 function adjustedValue(value, shortTitle, invertedSpokes, topics) {
   if (!value || Number(value) === 0) return 0;
   const topic = topics.find((t) => t.short_title === shortTitle);
   const max = topic?.stances?.length || 10;
-  const pct = Number(value) / max * 10;
-  return invertedSpokes[shortTitle] ? (max + 1) * 10 / max - pct : pct;
+  const pct = Math.min(Number(value) / max * 10, 10);
+  return invertedSpokes[shortTitle] ? 11 - pct : pct;
 }
 
 function stanceLabel(shortTitle, value, topics) {
@@ -207,27 +206,43 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasEnoughSpokes, userData, polData, invertedSpokes, topicsFiltered]);
 
-  const handleMouseMove = useCallback((e) => {
-    const svg = containerRef.current?.querySelector('svg');
-    if (!svg || dotPositions.length === 0) return;
-    try {
-      const ctm = svg.getScreenCTM();
-      if (!ctm) return;
-      const pt = svg.createSVGPoint();
-      pt.x = e.clientX;
-      pt.y = e.clientY;
-      const { x: svgX, y: svgY } = pt.matrixTransform(ctm.inverse());
-      let nearest = null;
-      let nearestDist = CARD_HIT_RADIUS_SVG;
+  // Attach mouseenter/mouseleave directly to SVG circles after each render.
+  // Avoids fragile coordinate-space math; reads cx/cy from DOM and matches to dotPositions.
+  useEffect(() => {
+    if (!hasData || !containerRef.current || dotPositions.length === 0) return;
+    const circles = Array.from(containerRef.current.querySelectorAll('svg circle'));
+    if (circles.length === 0) return;
+
+    const handleLeave = () => setTooltip(null);
+    const attached = [];
+
+    for (const circle of circles) {
+      const cx = parseFloat(circle.getAttribute('cx') ?? '0');
+      const cy = parseFloat(circle.getAttribute('cy') ?? '0');
+      let closest = null;
+      let minDist = Infinity;
       for (const dot of dotPositions) {
-        const d = Math.hypot(svgX - dot.cx, svgY - dot.cy);
-        if (d < nearestDist) { nearestDist = d; nearest = dot; }
+        const d = Math.hypot(cx - dot.cx, cy - dot.cy);
+        if (d < minDist) { minDist = d; closest = dot; }
       }
-      setTooltip(nearest ? { x: e.clientX, y: e.clientY, ...nearest } : null);
-    } catch {
-      setTooltip(null);
+      if (!closest || minDist > 40) continue;
+      const dot = closest;
+      const handleEnter = () => {
+        const rect = circle.getBoundingClientRect();
+        setTooltip({ x: rect.left + rect.width / 2, y: rect.top, shortTitle: dot.shortTitle, stanceText: dot.stanceText });
+      };
+      circle.addEventListener('mouseenter', handleEnter);
+      circle.addEventListener('mouseleave', handleLeave);
+      attached.push({ circle, handleEnter });
     }
-  }, [dotPositions]);
+
+    return () => {
+      for (const { circle, handleEnter } of attached) {
+        circle.removeEventListener('mouseenter', handleEnter);
+        circle.removeEventListener('mouseleave', handleLeave);
+      }
+    };
+  }, [dotPositions, hasData]);
 
   // Gate: wait for compass data to load
   if (compassLoading) return null;
@@ -413,10 +428,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   </div>
 
                   {/* Chart container — mouse handlers here so the overlay doesn't block spoke clicks */}
-                  <div ref={containerRef} style={{ width: '100%', maxWidth: '700px', overflow: 'hidden', position: 'relative' }}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={() => setTooltip(null)}
-                  >
+                  <div ref={containerRef} style={{ width: '100%', maxWidth: '700px', overflow: 'hidden', position: 'relative' }}>
                     {/* Min / Max buttons */}
                     <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 11 }}>
                       <button
@@ -480,8 +492,9 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     {tooltip && createPortal(
                       <div style={{
                         position: 'fixed',
-                        left: tooltip.x + 14,
-                        top: tooltip.y - 14,
+                        left: tooltip.x,
+                        top: tooltip.y - 8,
+                        transform: 'translateX(-50%)',
                         background: isDark ? '#2a3347' : '#ffffff',
                         border: isDark ? '1px solid #59B0C4' : '1px solid #d1d5db',
                         borderRadius: 8,
