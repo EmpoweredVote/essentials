@@ -671,7 +671,15 @@ Plans:
 3. Cities Onboarded table has new rows for Massachusetts state + Boston
 4. v13.0 milestone marked complete in STATE.md and ROADMAP.md
 
-**Plans:** TBD
+**Plans:** 2 plans
+Plans:
+**Wave 1**
+
+- [ ] 116-01-PLAN.md — MA Quick Reference + Cities Onboarded + [GOTCHA] callouts (LOCATION-ONBOARDING.md)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 116-02-PLAN.md — v13.0 milestone close (STATE.md + ROADMAP.md)
 
 ---
 
