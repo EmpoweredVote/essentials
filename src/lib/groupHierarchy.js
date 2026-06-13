@@ -18,6 +18,7 @@ function getTier(pol) {
       return 'State';
     return 'Local';
   }
+  if (dt === 'SCHOOL') return 'School';
   return 'Local';
 }
 
@@ -313,7 +314,7 @@ function getAccordionUrl(pols, accordionKey) {
 
 // ── Ordering ─────────────────────────────────────────────────────
 
-const TIER_ORDER = ['Local', 'State', 'Federal'];
+const TIER_ORDER = ['Local', 'School', 'State', 'Federal'];
 
 const LOCAL_BODY_TYPE_ORDER = ['LOCAL', 'City', 'Town', 'Township', 'School District', 'County'];
 // Judiciary bodies sorted last within local
@@ -344,8 +345,7 @@ function bodyOrderScore(accordionKey, pols) {
 
   if (tier === 'Local') {
     if (isJudiciary(pols)) return 100; // Courts last in local
-    if (pols.some(p => p.district_type === 'SCHOOL')) return 60; // School committees after city/county
-    const govType = pols[0]?.government_type || '';
+const govType = pols[0]?.government_type || '';
     const idx = LOCAL_BODY_TYPE_ORDER.indexOf(govType);
     return idx >= 0 ? idx : 50;
   }

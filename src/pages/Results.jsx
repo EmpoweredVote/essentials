@@ -1692,7 +1692,7 @@ export default function Results() {
           {phase !== 'loading' && (
               <div className="px-6 md:px-12 pt-6 pb-8">
                 {/* Empty states for tiers with no data */}
-                {phase !== 'loading' && activeQuery && ['Local', 'State'].map((tier) => {
+                {phase !== 'loading' && activeQuery && ['Local', 'School', 'State'].map((tier) => {
                   const tierKey = tier.toLowerCase();
                   const tierStyle = tierColors[tierKey];
                   const hasTier = filteredHierarchy.some(h => h.tier === tier);
@@ -1725,7 +1725,7 @@ export default function Results() {
 
                 {filteredHierarchy.map(({ tier, bodies }) => {
                   const tierKey = tier.toLowerCase();
-                  const tierStyle = tierColors[tierKey];
+                  const tierStyle = tierColors[tierKey] ?? tierColors['local'];
                   if (!tierStyle) return null;
 
                   return (
