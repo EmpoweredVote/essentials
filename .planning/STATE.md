@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v13.0
 milestone_name: milestone
 status: Ready to execute
-stopped_at: migration 574 applied — ME post-primary + CA statewide discovery update (2026-06-13)
-last_updated: "2026-06-13T00:00:00.000Z"
+stopped_at: context exhaustion at 75% (2026-06-13)
+last_updated: "2026-06-13T21:38:09.706Z"
 progress:
   total_phases: 17
   completed_phases: 15
-  total_plans: 59
+  total_plans: 64
   completed_plans: 59
   percent: 88
 ---
@@ -17,9 +17,9 @@ progress:
 
 ## Current Position
 
-Phase: 115 (ma-stances-boston) — READY TO EXECUTE
+Phase: 115 (boston-stances) — PLANNED (5 plans, ready to execute)
 Last completed: Phase 114 Plan 05 — phase-wide verification passed; compass render APPROVED on Marjorie Decker (HD-81); MA-STANCES-04 FULLY CLOSED (2026-06-12)
-Next migration: 575
+Next migration: 577
 
 ## Project Reference
 
@@ -52,7 +52,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - MA 2026: primary 2026-09-02, general 2026-11-03
 - Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
-- Next migration: 575 (last Phase 114 migration was 573 — Donaghue stances)
+- Next migration: 577 (last Phase 114 migration was 573 — Donaghue stances; 574 Boston stances; 575 Cambridge stances; 576 Cambridge School Committee district_type fix)
 
 ## Accumulated Context
 
@@ -109,8 +109,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13 (session 2)
-Stopped at: Compass UI fixes pushed to production — awaiting Netlify deploy + visual verification. Next: execute Phase 115 (MA Playbook Retrospective).
+Last session: 2026-06-13T21:38:09.695Z
+Stopped at: context exhaustion at 75% (2026-06-13)
 Resume file: None
 
 ## Performance Metrics
