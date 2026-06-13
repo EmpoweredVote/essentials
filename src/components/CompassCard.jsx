@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { usePostHog } from 'posthog-js/react';
@@ -206,43 +206,35 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasEnoughSpokes, userData, polData, invertedSpokes, topicsFiltered]);
 
-  // Attach mouseenter/mouseleave directly to SVG circles after each render.
-  // Avoids fragile coordinate-space math; reads cx/cy from DOM and matches to dotPositions.
-  useEffect(() => {
-    if (!hasData || !containerRef.current || dotPositions.length === 0) return;
+  // Check distance in screen space against actual circle DOM positions.
+  // Querying circles each move is cheap (~8 elements); avoids SVG coordinate math entirely.
+  const HIT_PX = 20;
+  const handleMouseMove = useCallback((e) => {
+    if (!containerRef.current || dotPositions.length === 0) { setTooltip(null); return; }
     const circles = Array.from(containerRef.current.querySelectorAll('svg circle'));
-    if (circles.length === 0) return;
-
-    const handleLeave = () => setTooltip(null);
-    const attached = [];
-
+    let nearest = null;
+    let nearestDist = HIT_PX;
     for (const circle of circles) {
-      const cx = parseFloat(circle.getAttribute('cx') ?? '0');
-      const cy = parseFloat(circle.getAttribute('cy') ?? '0');
-      let closest = null;
-      let minDist = Infinity;
-      for (const dot of dotPositions) {
-        const d = Math.hypot(cx - dot.cx, cy - dot.cy);
-        if (d < minDist) { minDist = d; closest = dot; }
-      }
-      if (!closest || minDist > 40) continue;
-      const dot = closest;
-      const handleEnter = () => {
-        const rect = circle.getBoundingClientRect();
-        setTooltip({ x: rect.left + rect.width / 2, y: rect.top, shortTitle: dot.shortTitle, stanceText: dot.stanceText });
-      };
-      circle.addEventListener('mouseenter', handleEnter);
-      circle.addEventListener('mouseleave', handleLeave);
-      attached.push({ circle, handleEnter });
+      const rect = circle.getBoundingClientRect();
+      const d = Math.hypot(e.clientX - (rect.left + rect.width / 2), e.clientY - (rect.top + rect.height / 2));
+      if (d < nearestDist) { nearestDist = d; nearest = circle; }
     }
-
-    return () => {
-      for (const { circle, handleEnter } of attached) {
-        circle.removeEventListener('mouseenter', handleEnter);
-        circle.removeEventListener('mouseleave', handleLeave);
-      }
-    };
-  }, [dotPositions, hasData]);
+    if (!nearest) { setTooltip(null); return; }
+    const svgCx = parseFloat(nearest.getAttribute('cx') ?? '0');
+    const svgCy = parseFloat(nearest.getAttribute('cy') ?? '0');
+    let closestDot = null;
+    let minDist = Infinity;
+    for (const dot of dotPositions) {
+      const d = Math.hypot(svgCx - dot.cx, svgCy - dot.cy);
+      if (d < minDist) { minDist = d; closestDot = dot; }
+    }
+    if (closestDot && minDist < 40) {
+      const rect = nearest.getBoundingClientRect();
+      setTooltip({ x: rect.left + rect.width / 2, y: rect.top, shortTitle: closestDot.shortTitle, stanceText: closestDot.stanceText });
+    } else {
+      setTooltip(null);
+    }
+  }, [dotPositions]);
 
   // Gate: wait for compass data to load
   if (compassLoading) return null;
@@ -428,7 +420,10 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   </div>
 
                   {/* Chart container — mouse handlers here so the overlay doesn't block spoke clicks */}
-                  <div ref={containerRef} style={{ width: '100%', maxWidth: '700px', overflow: 'hidden', position: 'relative' }}>
+                  <div ref={containerRef} style={{ width: '100%', maxWidth: '700px', overflow: 'hidden', position: 'relative' }}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={() => setTooltip(null)}
+                  >
                     {/* Min / Max buttons */}
                     <div style={{ position: 'absolute', top: 4, right: 4, display: 'flex', gap: '4px', zIndex: 11 }}>
                       <button
