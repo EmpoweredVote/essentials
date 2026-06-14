@@ -832,7 +832,19 @@ Plans:
 3. Section-split check returns 0 rows after seeding
 4. geo_id=2537490 asserted present in geofence_boundaries before any INSERT
 
-**Plans:** TBD
+**Plans:** 3 plans
+
+**Wave 1**
+
+- [ ] 119-01-PLAN.md — Lynn city government (migration 584: Mayor Nicholson + 11 City Councilors)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 119-02-PLAN.md — Lynn School Committee (migration 585: 6 elected members + Mayor ex-officio, LEAID=2507110)
+
+**Wave 3** *(blocked on Waves 1+2 completion)*
+
+- [ ] 119-03-PLAN.md — Lynn headshots (Python script + migration 586: 12 city uploads + 6 SC gaps)
 
 ---
 
@@ -1039,7 +1051,7 @@ All 22 requirements covered ✓
 |-------|----------------|--------|-----------|
 | 117. Newton Deep Seed | 3/3 | Complete | 2026-06-14 |
 | 118. Somerville Deep Seed | 3/3 | Complete | 2026-06-14 |
-| 119. Lynn Deep Seed | 0/TBD | Not started | - |
+| 119. Lynn Deep Seed | 0/3 | Planned | - |
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/TBD | Not started | - |
 | 122. MA Tier 3 Stances Wave 1 | 0/TBD | Not started | - |
