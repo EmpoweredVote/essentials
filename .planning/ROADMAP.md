@@ -802,7 +802,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 118-02-PLAN.md -- Somerville school committee (migration 582: 7 elected + Mayor ex-officio + Council President ex-officio)
+- [x] 118-02-PLAN.md -- Somerville school committee (migration 582: 7 elected + Mayor ex-officio + Council President ex-officio)
 
 **Wave 3** *(blocked on Waves 1+2 completion)*
 
@@ -1038,7 +1038,7 @@ All 22 requirements covered ✓
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 117. Newton Deep Seed | 3/3 | Complete | 2026-06-14 |
-| 118. Somerville Deep Seed | 0/TBD | Not started | - |
+| 118. Somerville Deep Seed | 2/3 | In progress | - |
 | 119. Lynn Deep Seed | 0/TBD | Not started | - |
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/TBD | Not started | - |

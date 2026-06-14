@@ -17,10 +17,10 @@ progress:
 ## Current Position
 
 Phase: 118 — Somerville Deep Seed
-Plan: 01 complete
-Status: Plan 118-01 complete; Plans 118-02 and 118-03 pending
-Last activity: 2026-06-14 — Migration 581 applied: Somerville city government seeded (Mayor Jake Wilson + 11 City Councillors; 12 politicians, 12 offices, 2 districts, 1 chamber, 1 government row; all 7 post-verification gates passed)
-Next migration: 582
+Plan: 02 complete
+Status: Plan 118-02 complete; Plan 118-03 (headshots) pending
+Last activity: 2026-06-14 — Migration 582 applied: Somerville School Committee seeded (7 elected SC members + Mayor Wilson ex-officio + Council President Davis ex-officio = 9 total SCHOOL offices; G5420 geofence inserted; all 10 post-verification gates passed; both city office_ids confirmed intact)
+Next migration: 583
 
 ## Project Reference
 
@@ -114,8 +114,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-14T14:51:00Z
-Stopped at: Completed 118-01-PLAN.md
+Last session: 2026-06-14T15:17:00Z
+Stopped at: Completed 118-02-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -153,6 +153,7 @@ Resume file: None
 | Phase 114 P05 | 35m | 3 tasks | 1 file (114-05-SUMMARY.md); Q1=78 Q2=0 Q3=0; 1778 combined stances; compass APPROVED on Decker HD-81 |
 | Phase 116-ma-playbook-retrospective P01 | 4m | 2 tasks | 1 files |
 | Phase 118 P01 | 20m | 1 task | 1 file (581_somerville_city_government.sql) |
+| Phase 118 P02 | 6m | 1 task | 1 file (582_somerville_school_committee.sql) |
 
 ## Decisions
 
@@ -175,3 +176,4 @@ Resume file: None
 - [Phase ?]: [Phase 116-01]: MA-RETRO-01 closed: LOCATION-ONBOARDING.md updated with MA Quick Reference block, 2 Cities Onboarded rows (MA state + Boston), and 5 STATE-SPECIFIC MA GOTCHA callouts
 - [Phase 118-01]: Somerville city government seeded — migration 581 applied; Mayor Jake Wilson + 11 City Councillors; Jake Wilson public name used (not 'Jacob D. Wilson'); Davis title='City Councilor (Ward 6)' (Council President is internal officer role only); external IDs in ward-number order
 - [Phase 116]: v13.0 Massachusetts Expanded closed 2026-06-13; LOCATION-ONBOARDING.md updated with MA Quick Reference, 5 MA-specific GOTCHAs, and Cities Onboarded rows for Massachusetts state + Boston; MA-RETRO-01 satisfied
+- [Phase 118-02]: Somerville School Committee seeded — migration 582 applied; TWO ex-officio pattern (Mayor Wilson + Council President Davis) established; back-fill range -2510890001..-2510890007 excludes both city ex-officio external_ids; all 10 post-verification gates passed including Gates (i)+(j) confirming city office_ids intact

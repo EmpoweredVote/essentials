@@ -11,7 +11,7 @@
 
 ## SOMERVILLE — Somerville Deep Seed
 
-- [ ] **SOMERVILLE-01:** A Somerville address returns a LOCAL section showing Mayor + City Council + School Committee members with correct offices linked to geo_id=2562535
+- [x] **SOMERVILLE-01:** A Somerville address returns a LOCAL section showing Mayor + City Council + School Committee members with correct offices linked to geo_id=2562535
 - [ ] **SOMERVILLE-02:** All Somerville elected officials have headshots at 600×750 in Supabase Storage; best-effort where official photos unavailable online
 - [ ] **SOMERVILLE-03:** Compass shows evidence-only stance data for Somerville Mayor + City Councillors; sequential research, 100% citation rate
 
@@ -76,7 +76,7 @@
 | NEWTON-01 | 117 | ⬜ |
 | NEWTON-02 | 117 | ⬜ |
 | NEWTON-03 | 122 | ⬜ |
-| SOMERVILLE-01 | 118 | ⬜ |
+| SOMERVILLE-01 | 118 | ✅ |
 | SOMERVILLE-02 | 118 | ⬜ |
 | SOMERVILLE-03 | 122 | ⬜ |
 | LYNN-01 | 119 | ⬜ |
