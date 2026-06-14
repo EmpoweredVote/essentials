@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
-status: completed
-last_updated: "2026-06-14T16:42:18.028Z"
-last_activity: 2026-06-14 — Phase 118 Somerville Deep Seed complete (12/12 must-haves verified; SOMERVILLE-01 + SOMERVILLE-02 satisfied; 9 headshots uploaded; 10 gaps documented)
+status: in_progress
+last_updated: "2026-06-14T17:00:00.000Z"
+last_activity: 2026-06-14 — Phase 119 Lynn Deep Seed planned (3 plans in 3 waves; LYNN-01 + LYNN-02 covered)
 progress:
   total_phases: 9
   completed_phases: 2
-  total_plans: 6
+  total_plans: 9
   completed_plans: 6
   percent: 22
 ---
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 119 — Lynn Deep Seed
-Plan: —
-Status: Phase 118 complete; Phase 119 not started
-Last activity: 2026-06-14 — Phase 118 Somerville Deep Seed complete (12/12 must-haves verified; SOMERVILLE-01 + SOMERVILLE-02 satisfied; 9 headshots uploaded; 10 gaps documented)
+Plan: Ready to execute (3 plans)
+Status: Phase 119 planned; ready for execution
+Last activity: 2026-06-14 — Phase 119 planned (3 plans; LYNN-01 + LYNN-02 covered; verification passed)
 Next migration: 584
 
 ## Project Reference
@@ -36,7 +36,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 |-------|------|--------------|--------|
 | 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Planned (3 plans) |
 | 118 — Somerville Deep Seed | Mayor + City Council + School Committee officials + headshots | SOMERVILLE-01, SOMERVILLE-02 | Not started |
-| 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Not started |
+| 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Planned (3 plans) |
 | 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Not started |
 | 121 — Fall River + Medford + Waltham Deep Seeds | Officials + headshots for three smaller Tier 3 cities | FALLRIV-01/02, MEDFORD-01/02, WALTHAM-01/02 | Not started |
 | 122 — MA Tier 3 Stances Wave 1 | Evidence-only stances: Newton + Somerville | NEWTON-03, SOMERVILLE-03 | Not started |
