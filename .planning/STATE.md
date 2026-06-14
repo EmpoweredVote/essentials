@@ -8,8 +8,8 @@ progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
-  percent: 14
+  completed_plans: 5
+  percent: 20
 ---
 
 # State
@@ -17,10 +17,10 @@ progress:
 ## Current Position
 
 Phase: 118 — Somerville Deep Seed
-Plan: 02 complete
-Status: Plan 118-02 complete; Plan 118-03 (headshots) pending
-Last activity: 2026-06-14 — Migration 582 applied: Somerville School Committee seeded (7 elected SC members + Mayor Wilson ex-officio + Council President Davis ex-officio = 9 total SCHOOL offices; G5420 geofence inserted; all 10 post-verification gates passed; both city office_ids confirmed intact)
-Next migration: 583
+Plan: 03 complete — Phase 118 DONE
+Status: All 3 plans complete; Phase 118 Somerville Deep Seed closed; SOMERVILLE-01 + SOMERVILLE-02 satisfied
+Last activity: 2026-06-14 — Migration 583 applied: Somerville headshots uploaded (9/12 city officials from somervillema.gov; 10 gap officials documented: 3 newly-elected city + 7 SC no online source); SOMERVILLE-02 closed at best-effort (75% city + 0% SC)
+Next migration: 584
 
 ## Project Reference
 
@@ -114,8 +114,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-14T15:17:00Z
-Stopped at: Completed 118-02-PLAN.md
+Last session: 2026-06-14T15:09:58Z
+Stopped at: Completed 118-03-PLAN.md — Phase 118 Somerville Deep Seed DONE
 Resume file: None
 
 ## Performance Metrics
@@ -154,6 +154,7 @@ Resume file: None
 | Phase 116-ma-playbook-retrospective P01 | 4m | 2 tasks | 1 files |
 | Phase 118 P01 | 20m | 1 task | 1 file (581_somerville_city_government.sql) |
 | Phase 118 P02 | 6m | 1 task | 1 file (582_somerville_school_committee.sql) |
+| Phase 118 P03 | 25m | 2 tasks | 2 files (_tmp-somerville-headshots.py, 583_somerville_headshots.sql); 9/12 uploaded |
 
 ## Decisions
 
@@ -177,3 +178,4 @@ Resume file: None
 - [Phase 118-01]: Somerville city government seeded — migration 581 applied; Mayor Jake Wilson + 11 City Councillors; Jake Wilson public name used (not 'Jacob D. Wilson'); Davis title='City Councilor (Ward 6)' (Council President is internal officer role only); external IDs in ward-number order
 - [Phase 116]: v13.0 Massachusetts Expanded closed 2026-06-13; LOCATION-ONBOARDING.md updated with MA Quick Reference, 5 MA-specific GOTCHAs, and Cities Onboarded rows for Massachusetts state + Boston; MA-RETRO-01 satisfied
 - [Phase 118-02]: Somerville School Committee seeded — migration 582 applied; TWO ex-officio pattern (Mayor Wilson + Council President Davis) established; back-fill range -2510890001..-2510890007 excludes both city ex-officio external_ids; all 10 post-verification gates passed including Gates (i)+(j) confirming city office_ids intact
+- [Phase 118-03]: Somerville headshots complete — migration 583 applied; 9/12 city officials uploaded from somervillema.gov (S3 + /sites/default/files/-2022.jpg patterns); 3 city gaps (Link/Wheeler/Hardt newly-elected Nov 2025); all 7 SC members gap (no individual headshots on SPS site); Pitfall 3 avoided (Emily Hardt stale URL not attempted); SOMERVILLE-01 + SOMERVILLE-02 satisfied; Phase 118 CLOSED

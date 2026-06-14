@@ -720,7 +720,7 @@ All 17 requirements covered ✓
 ## Phases
 
 - [x] **Phase 117: Newton Deep Seed** - Mayor + Board of Aldermen + School Committee officials and headshots
-- [ ] **Phase 118: Somerville Deep Seed** - Mayor + City Council + School Committee officials and headshots
+- [x] **Phase 118: Somerville Deep Seed** - Mayor + City Council + School Committee officials and headshots
 - [ ] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
 - [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
 - [ ] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
@@ -806,7 +806,7 @@ Plans:
 
 **Wave 3** *(blocked on Waves 1+2 completion)*
 
-- [ ] 118-03-PLAN.md -- Somerville headshots (Python script + migration 583: best-effort coverage)
+- [x] 118-03-PLAN.md -- Somerville headshots (Python script + migration 583: 9/12 city uploaded; 10 gaps documented)
 
 ---
 
