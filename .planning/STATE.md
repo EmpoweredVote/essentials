@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
 status: in_progress
-last_updated: "2026-06-14T18:00:00.000Z"
-last_activity: 2026-06-14 — Phase 119-01 complete — migration 584 applied; 12 Lynn city officials seeded
+last_updated: "2026-06-14T19:00:00.000Z"
+last_activity: 2026-06-14 — Phase 119-02 complete — migration 585 applied; 6 Lynn SC members + Mayor ex-officio; LYNN-01 satisfied
 progress:
   total_phases: 9
   completed_phases: 2
   total_plans: 9
-  completed_plans: 7
-  percent: 28
+  completed_plans: 8
+  percent: 33
 ---
 
 # State
@@ -18,10 +18,10 @@ progress:
 ## Current Position
 
 Phase: 119 — Lynn Deep Seed
-Plan: 119-01 complete; 119-02 next
+Plan: 119-02 complete; 119-03 next
 Status: Phase 119 executing
-Last activity: 2026-06-14 — 119-01 complete: migration 584 applied; 12 Lynn city officials seeded (Mayor + 4 at-large + 7 ward)
-Next migration: 585
+Last activity: 2026-06-14 — 119-02 complete: migration 585 applied; 6 Lynn SC members + Mayor ex-officio seeded; LYNN-01 satisfied
+Next migration: 586
 
 ## Project Reference
 
