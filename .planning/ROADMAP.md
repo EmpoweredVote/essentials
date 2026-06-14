@@ -332,7 +332,7 @@ All 19 requirements covered ✓
 | 113 | 5/5 | Complete   | 2026-06-12 |
 | 114 | 4/5 | In Progress|  |
 | 115 | MA-STANCES-05 | Not started | Evidence-only stances: Mayor Wu + 13 Boston City Councillors + School Committee best-effort |
-| 116 | 2/2 | Complete   | 2026-06-13 |
+| 116 | 2/2 | Complete   | 2026-06-14 |
 
 ## Phase Details
 
