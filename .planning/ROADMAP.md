@@ -16,7 +16,7 @@
 - ✅ **v10.0 Multnomah County & School Boards** - Phases 83-89 (shipped 2026-06-04)
 - ✅ **v11.0 Maryland Essentials** - Phases 90-99 (shipped 2026-06-08)
 - ✅ **v12.0 Virginia Essentials** - Phases 100-106 (shipped 2026-06-10)
-- 🔄 **v13.0 Massachusetts Expanded** - Phases 107-116 (in progress)
+- ✅ **v13.0 Massachusetts Expanded** - Phases 107-116 (shipped 2026-06-13)
 
 ---
 
@@ -317,7 +317,7 @@ All 19 requirements covered ✓
 **Goal:** Complete Massachusetts to full depth — fill the town routing gap (293 G4040 COUSUB boundaries), stances for all 217+ officials across 5 sequential batches (including Boston city officials), Boston deep seed, MA 2026 elections, and Tier 2 city incumbents.  
 **Phases:** 107–116 (10 phases)  
 **Requirements:** 17  
-**Next migration:** 347
+**Next migration:** 578
 
 ## Phase Summary
 
@@ -332,7 +332,7 @@ All 19 requirements covered ✓
 | 113 | 5/5 | Complete   | 2026-06-12 |
 | 114 | 4/5 | In Progress|  |
 | 115 | MA-STANCES-05 | Not started | Evidence-only stances: Mayor Wu + 13 Boston City Councillors + School Committee best-effort |
-| 116 | 1/2 | In Progress|  |
+| 116 | 2/2 | Complete   | 2026-06-13 |
 
 ## Phase Details
 
@@ -671,7 +671,7 @@ Plans:
 3. Cities Onboarded table has new rows for Massachusetts state + Boston
 4. v13.0 milestone marked complete in STATE.md and ROADMAP.md
 
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 **Wave 1**
 
@@ -679,7 +679,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 116-02-PLAN.md — v13.0 milestone close (STATE.md + ROADMAP.md)
+- [x] 116-02-PLAN.md — v13.0 milestone close (STATE.md + ROADMAP.md)
 
 ---
 
