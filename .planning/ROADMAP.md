@@ -332,7 +332,7 @@ All 19 requirements covered ✓
 | 113 | 5/5 | Complete   | 2026-06-12 |
 | 114 | 4/5 | In Progress|  |
 | 115 | MA-STANCES-05 | Not started | Evidence-only stances: Mayor Wu + 13 Boston City Councillors + School Committee best-effort |
-| 116 | MA-RETRO-01 | Not started | Playbook retrospective: MA town/COUSUB GOTCHAs + Boston patterns + Cities Onboarded entries |
+| 116 | 1/2 | In Progress|  |
 
 ## Phase Details
 
@@ -671,11 +671,11 @@ Plans:
 3. Cities Onboarded table has new rows for Massachusetts state + Boston
 4. v13.0 milestone marked complete in STATE.md and ROADMAP.md
 
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 116-01-PLAN.md — MA Quick Reference + Cities Onboarded + [GOTCHA] callouts (LOCATION-ONBOARDING.md)
+- [x] 116-01-PLAN.md — MA Quick Reference + Cities Onboarded + [GOTCHA] callouts (LOCATION-ONBOARDING.md)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

@@ -1,16 +1,15 @@
 ---
 gsd_state_version: 1.0
 milestone: v13.0
-milestone_name: milestone
+milestone_name: Massachusetts Expanded
 status: Ready to execute
-stopped_at: context exhaustion at 78% (2026-06-13)
-last_updated: "2026-06-13T23:57:43.516Z"
+last_updated: "2026-06-14T05:52:46.931Z"
 progress:
-  total_phases: 17
-  completed_phases: 16
-  total_plans: 66
-  completed_plans: 64
-  percent: 94
+  total_phases: 10
+  completed_phases: 9
+  total_plans: 40
+  completed_plans: 39
+  percent: 90
 ---
 
 # State
@@ -109,8 +108,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-13T23:57:43.504Z
-Stopped at: context exhaustion at 78% (2026-06-13)
+Last session: 2026-06-14T05:52:46.921Z
+Stopped at: Completed 116-01-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -146,6 +145,7 @@ Resume file: None
 | Phase 114 P02 | ~4h | 21 tasks | 20 files (516-535 stances SQLs); 20 reps HD-101–HD-120; 138 DB rows; 0 unpaired, 0 uncited |
 | Phase 114 P04 | ~2h | 18 tasks | 18 files (556-573 stances SQLs); 18 reps HD-141–HD-158; 182 DB rows; 0 unpaired, 0 uncited |
 | Phase 114 P05 | 35m | 3 tasks | 1 file (114-05-SUMMARY.md); Q1=78 Q2=0 Q3=0; 1778 combined stances; compass APPROVED on Decker HD-81 |
+| Phase 116-ma-playbook-retrospective P01 | 4m | 2 tasks | 1 files |
 
 ## Decisions
 
@@ -165,3 +165,4 @@ Resume file: None
 - [Phase 114 P04]: HD-141–HD-158 complete; all-Worcester County batch; 6 Republican reps received conservative values 4.0-5.0 (Berthiaume, Marsi, Frost, Soter, Muradian, McKenna); Hannah Kane treated as moderate R with 3.0 values; 7 reps had pre-existing rows upserted; migration 556 re-applied (existed on disk, 0 DB rows on resume)
 - [Phase 114 P05]: Phase-wide verification PASSED; Q1=78 rows, Q2=0 uncited, Q3=0 unpaired, Q4=1778 combined stances; compass render APPROVED on Marjorie Decker HD-81; MA-STANCES-04 FULLY CLOSED (Wave 1 HD-01–HD-80 Phase 113 + Wave 2 HD-81–HD-158 Phase 114)
 - [Phase 115]: Boston stances complete; 21 officials attempted (Mayor Wu 27 stances + 13 councillors + 7 SC blank per D-01); stances from bulk migration 574 (prior session) + Wu supplemental 577; Q1=21 rows, Q2=0 uncited, Q3=0 unpaired, Q4=162 total stances; compass APPROVED on Wu (21 topics); MA-STANCES-05 FULLY CLOSED; next migration=578
+- [Phase ?]: [Phase 116-01]: MA-RETRO-01 closed: LOCATION-ONBOARDING.md updated with MA Quick Reference block, 2 Cities Onboarded rows (MA state + Boston), and 5 STATE-SPECIFIC MA GOTCHA callouts
