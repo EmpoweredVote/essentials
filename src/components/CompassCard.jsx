@@ -454,7 +454,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                       onToggleInversion={toggleInversion}
                       darkMode={isDark}
                       size={500}
-                      labelFontSize={28}
+                      labelFontSize={16}
                       padding={CARD_PADDING}
                       labelOffset={22}
                       maxLabelLines={3}

@@ -98,6 +98,8 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 ### Pending Todos
 
+- **[MA — v14.0]** Seed Newton (geo_id=2545560, ~90k pop), Somerville (geo_id=2562535, ~80k), and Lynn (geo_id=2537490, ~100k) — officials + headshots + stances. Largest unloaded MA cities. Same deep-seed pattern as Boston (Phase 108).
+
 - **[ME — RCV PENDING]** Phase 90: ME-02 D nominee not yet declared — RCV tabulation ongoing as of 2026-06-13; frontrunner Joe Baldacci (state senator, Bangor, ~31.5% first-round). Add to ME-02 general race_candidates once AP/official call issued. migration 574 already applied Collins+Platner (Senate) and LePage (ME-02 R).
 - **[CA — JULY]** Phase 90: lavote.gov November 2026 general election CandidateList ID not yet published; filing opens mid-to-late July 2026. Update discovery_jurisdictions id=9fd492a8 source_url to new ?id=XXXX at that time.
 - **[ME-01 R]** ME-01 Republican primary (Pietrowicz vs Russell) still TBD — add winner to ME-01 general race once called.
