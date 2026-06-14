@@ -1,16 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v14.0
-milestone_name: MA Tier 3 City Coverage
-status: in_progress
-last_updated: "2026-06-14T21:00:00.000Z"
-last_activity: 2026-06-14 — Phase 119 Lynn Deep Seed COMPLETE — 12/12 verification PASS; LYNN-01 + LYNN-02 satisfied; next: Phase 120 New Bedford
+milestone_name: milestone
+status: executing
+stopped_at: context exhaustion at 75% (2026-06-14)
+last_updated: "2026-06-14T19:53:13.361Z"
+last_activity: 2026-06-14 — Phase 120 planned; geo_id=2545000; Mayor Mitchell + 11 City Councilors; migrations 587+588
 progress:
-  total_phases: 9
-  completed_phases: 3
-  total_plans: 9
-  completed_plans: 9
-  percent: 33
+  total_phases: 26
+  completed_phases: 20
+  total_plans: 77
+  completed_plans: 76
+  percent: 77
 ---
 
 # State
@@ -18,10 +19,10 @@ progress:
 ## Current Position
 
 Phase: 120 — New Bedford Deep Seed
-Plan: Phase 120 planned (2 plans, 2 waves)
-Status: Phase 120 PLANNED — ready to execute
-Last activity: 2026-06-14 — Phase 120 planned; geo_id=2545000; Mayor Mitchell + 11 City Councilors; migrations 587+588
-Next migration: 587
+Plan: Phase 120 COMPLETE (2/2 plans done)
+Status: Phase 120 COMPLETE — NEWBED-01 + NEWBED-02 satisfied; next: Phase 121
+Last activity: 2026-06-14 — Phase 120 complete; migrations 587+588 applied; 12 officials seeded; 1/12 headshots (Mayor Mitchell via Wikipedia Commons; 11 gaps Cloudflare-blocked)
+Next migration: 589
 
 ## Project Reference
 
@@ -115,9 +116,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-14T16:42:18.015Z
-Stopped at: Phase 119 context gathered
-Resume file: .planning/phases/119-lynn-deep-seed/119-CONTEXT.md
+Last session: 2026-06-14T19:53:13.350Z
+Stopped at: context exhaustion at 75% (2026-06-14)
+Resume file: None
 
 ## Performance Metrics
 
