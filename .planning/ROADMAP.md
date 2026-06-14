@@ -1,4 +1,4 @@
-# Roadmap: Essentials — Empowered Vote
+﻿# Roadmap: Essentials — Empowered Vote
 
 ## Milestones
 
@@ -755,7 +755,19 @@ All 17 requirements covered ✓
 3. Section-split check returns 0 rows after seeding
 4. geo_id=2545560 asserted present in geofence_boundaries before any INSERT
 
-**Plans:** TBD
+**Plans:** 3 plans
+Plans:
+**Wave 1**
+
+- [ ] 117-01-PLAN.md -- Newton city government (migration 578: Mayor Laredo + 24 City Councillors)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 117-02-PLAN.md -- Newton school committee (migration 579: 8 elected SC members + Mayor ex-officio linkage)
+
+**Wave 3** *(blocked on Waves 1+2 completion)*
+
+- [ ] 117-03-PLAN.md -- Newton headshots (Python script + migration 580: best-effort 600x750 across 33 officials)
 
 ---
 
