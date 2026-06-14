@@ -6,20 +6,20 @@ status: in_progress
 last_updated: "2026-06-14T00:00:00.000Z"
 progress:
   total_phases: 9
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 5
-  percent: 20
+  completed_plans: 6
+  percent: 22
 ---
 
 # State
 
 ## Current Position
 
-Phase: 118 — Somerville Deep Seed
-Plan: 03 complete — Phase 118 DONE
-Status: All 3 plans complete; Phase 118 Somerville Deep Seed closed; SOMERVILLE-01 + SOMERVILLE-02 satisfied
-Last activity: 2026-06-14 — Migration 583 applied: Somerville headshots uploaded (9/12 city officials from somervillema.gov; 10 gap officials documented: 3 newly-elected city + 7 SC no online source); SOMERVILLE-02 closed at best-effort (75% city + 0% SC)
+Phase: 119 — Lynn Deep Seed
+Plan: —
+Status: Phase 118 complete; Phase 119 not started
+Last activity: 2026-06-14 — Phase 118 Somerville Deep Seed complete (12/12 must-haves verified; SOMERVILLE-01 + SOMERVILLE-02 satisfied; 9 headshots uploaded; 10 gaps documented)
 Next migration: 584
 
 ## Project Reference
