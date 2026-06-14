@@ -715,13 +715,13 @@ All 17 requirements covered ✓
 **Goal:** Bring 7 more Massachusetts cities to full Tier 1 depth — elected officials seeded with correct geofence linkage, headshots at 600×750, and evidence-only compass stances. All city geofences are already present as G4110 rows from v5.0 — no new TIGER load required.  
 **Phases:** 117–125 (9 phases)  
 **Requirements:** 22  
-**Next migration:** 581
+**Next migration:** 587
 
 ## Phases
 
 - [x] **Phase 117: Newton Deep Seed** - Mayor + Board of Aldermen + School Committee officials and headshots
 - [x] **Phase 118: Somerville Deep Seed** - Mayor + City Council + School Committee officials and headshots
-- [ ] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
+- [x] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
 - [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
 - [ ] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
 - [ ] **Phase 122: MA Tier 3 Stances Wave 1** - Evidence-only stances for Newton + Somerville officials
@@ -832,19 +832,19 @@ Plans:
 3. Section-split check returns 0 rows after seeding
 4. geo_id=2537490 asserted present in geofence_boundaries before any INSERT
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 **Wave 1**
 
-- [ ] 119-01-PLAN.md — Lynn city government (migration 584: Mayor Nicholson + 11 City Councilors)
+- [x] 119-01-PLAN.md — Lynn city government (migration 584: Mayor Nicholson + 11 City Councilors)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 119-02-PLAN.md — Lynn School Committee (migration 585: 6 elected members + Mayor ex-officio, LEAID=2507110)
+- [x] 119-02-PLAN.md — Lynn School Committee (migration 585: 6 elected members + Mayor ex-officio, LEAID=2507110)
 
 **Wave 3** *(blocked on Waves 1+2 completion)*
 
-- [ ] 119-03-PLAN.md — Lynn headshots (Python script + migration 586: 12 city uploads + 6 SC gaps)
+- [x] 119-03-PLAN.md — Lynn headshots (Python script + migration 586: 12 city uploads + 6 SC gaps)
 
 ---
 
