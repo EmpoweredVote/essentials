@@ -798,7 +798,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 118-01-PLAN.md -- Somerville city government (migration 581: Mayor Jake Wilson + 11 City Councillors)
+- [x] 118-01-PLAN.md -- Somerville city government (migration 581: Mayor Jake Wilson + 11 City Councillors)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

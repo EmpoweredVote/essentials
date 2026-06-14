@@ -8,8 +8,8 @@ progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
-  percent: 11
+  completed_plans: 4
+  percent: 14
 ---
 
 # State
@@ -17,10 +17,10 @@ progress:
 ## Current Position
 
 Phase: 118 — Somerville Deep Seed
-Plan: —
-Status: Phase 118 planned — ready to execute
-Last activity: 2026-06-14 — Phase 118 planned (3 plans: 581 city gov, 582 school committee, 583 headshots; Mayor Jake Wilson confirmed; two ex-officio SC pattern; LEAID=2510890)
-Next migration: 581
+Plan: 01 complete
+Status: Plan 118-01 complete; Plans 118-02 and 118-03 pending
+Last activity: 2026-06-14 — Migration 581 applied: Somerville city government seeded (Mayor Jake Wilson + 11 City Councillors; 12 politicians, 12 offices, 2 districts, 1 chamber, 1 government row; all 7 post-verification gates passed)
+Next migration: 582
 
 ## Project Reference
 
@@ -114,8 +114,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-14T05:58:18.092Z
-Stopped at: Completed 116-01-PLAN.md
+Last session: 2026-06-14T14:51:00Z
+Stopped at: Completed 118-01-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -152,6 +152,7 @@ Resume file: None
 | Phase 114 P04 | ~2h | 18 tasks | 18 files (556-573 stances SQLs); 18 reps HD-141–HD-158; 182 DB rows; 0 unpaired, 0 uncited |
 | Phase 114 P05 | 35m | 3 tasks | 1 file (114-05-SUMMARY.md); Q1=78 Q2=0 Q3=0; 1778 combined stances; compass APPROVED on Decker HD-81 |
 | Phase 116-ma-playbook-retrospective P01 | 4m | 2 tasks | 1 files |
+| Phase 118 P01 | 20m | 1 task | 1 file (581_somerville_city_government.sql) |
 
 ## Decisions
 
@@ -172,4 +173,5 @@ Resume file: None
 - [Phase 114 P05]: Phase-wide verification PASSED; Q1=78 rows, Q2=0 uncited, Q3=0 unpaired, Q4=1778 combined stances; compass render APPROVED on Marjorie Decker HD-81; MA-STANCES-04 FULLY CLOSED (Wave 1 HD-01–HD-80 Phase 113 + Wave 2 HD-81–HD-158 Phase 114)
 - [Phase 115]: Boston stances complete; 21 officials attempted (Mayor Wu 27 stances + 13 councillors + 7 SC blank per D-01); stances from bulk migration 574 (prior session) + Wu supplemental 577; Q1=21 rows, Q2=0 uncited, Q3=0 unpaired, Q4=162 total stances; compass APPROVED on Wu (21 topics); MA-STANCES-05 FULLY CLOSED; next migration=578
 - [Phase ?]: [Phase 116-01]: MA-RETRO-01 closed: LOCATION-ONBOARDING.md updated with MA Quick Reference block, 2 Cities Onboarded rows (MA state + Boston), and 5 STATE-SPECIFIC MA GOTCHA callouts
+- [Phase 118-01]: Somerville city government seeded — migration 581 applied; Mayor Jake Wilson + 11 City Councillors; Jake Wilson public name used (not 'Jacob D. Wilson'); Davis title='City Councilor (Ward 6)' (Council President is internal officer role only); external IDs in ward-number order
 - [Phase 116]: v13.0 Massachusetts Expanded closed 2026-06-13; LOCATION-ONBOARDING.md updated with MA Quick Reference, 5 MA-specific GOTCHAs, and Cities Onboarded rows for Massachusetts state + Boston; MA-RETRO-01 satisfied
