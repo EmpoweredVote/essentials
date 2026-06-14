@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
 status: in_progress
-last_updated: "2026-06-14T20:00:00.000Z"
-last_activity: 2026-06-14 — Phase 119 complete — migrations 584/585/586 applied; 12 city + 6 SC seeded; 12 headshots uploaded; LYNN-01 + LYNN-02 satisfied
+last_updated: "2026-06-14T21:00:00.000Z"
+last_activity: 2026-06-14 — Phase 119 Lynn Deep Seed COMPLETE — 12/12 verification PASS; LYNN-01 + LYNN-02 satisfied; next: Phase 120 New Bedford
 progress:
   total_phases: 9
   completed_phases: 3
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 119 — Lynn Deep Seed
-Plan: All 3 plans complete
-Status: Phase 119 complete — pending verification
-Last activity: 2026-06-14 — 119-03 complete: 12 headshots uploaded, migration 586 applied; LYNN-01 + LYNN-02 satisfied
+Plan: Phase 119 complete
+Status: Phase 119 COMPLETE — verified; ready for Phase 120
+Last activity: 2026-06-14 — Phase 119 verified 12/12 PASS; LYNN-01 + LYNN-02 closed; 12 city officials + 6 SC + 12 headshots
 Next migration: 587
 
 ## Project Reference
@@ -180,3 +180,6 @@ Resume file: .planning/phases/119-lynn-deep-seed/119-CONTEXT.md
 - [Phase 116]: v13.0 Massachusetts Expanded closed 2026-06-13; LOCATION-ONBOARDING.md updated with MA Quick Reference, 5 MA-specific GOTCHAs, and Cities Onboarded rows for Massachusetts state + Boston; MA-RETRO-01 satisfied
 - [Phase 118-02]: Somerville School Committee seeded — migration 582 applied; TWO ex-officio pattern (Mayor Wilson + Council President Davis) established; back-fill range -2510890001..-2510890007 excludes both city ex-officio external_ids; all 10 post-verification gates passed including Gates (i)+(j) confirming city office_ids intact
 - [Phase 118-03]: Somerville headshots complete — migration 583 applied; 9/12 city officials uploaded from somervillema.gov (S3 + /sites/default/files/-2022.jpg patterns); 3 city gaps (Link/Wheeler/Hardt newly-elected Nov 2025); all 7 SC members gap (no individual headshots on SPS site); Pitfall 3 avoided (Emily Hardt stale URL not attempted); SOMERVILLE-01 + SOMERVILLE-02 satisfied; Phase 118 CLOSED
+- [Phase 119-01]: Lynn city government seeded — migration 584 applied; Mayor Nicholson + 4 at-large + 7 ward councilors; Alinsug title='City Councilor (Ward 3)' (not Council President); Dr. honorific excluded from Meaney first_name per DB convention; file naming conflict with pre-existing 584_lowell_stances.sql resolved by renaming Lynn file to 584_lynn_city_government.sql
+- [Phase 119-02]: Lynn School Committee seeded — migration 585 applied; 6 elected SC members (Ortiz McGrath no hyphen in name; Peña with ñ character); Mayor Nicholson ex-officio via CROSS JOIN pattern; Gate (i) confirmed Mayor LOCAL_EXEC office_id preserved; autocommit pattern (no BEGIN/COMMIT) per Newton 579 analog
+- [Phase 119-03]: Lynn headshots complete — migration 586 applied; 12/12 city officials uploaded (11 CivicLive CDN + Mayor from Wikipedia Commons); Wikipedia required WIKIMEDIA_HEADERS descriptive UA (Chrome UA returned 429); MegieMaddrey.png CDN filename confirmed (no hyphen despite DB last_name='Megie-Maddrey'); 6 SC gaps documented per D-01 (SchoolMessenger text-only pages); LYNN-01 + LYNN-02 satisfied; Phase 119 CLOSED
