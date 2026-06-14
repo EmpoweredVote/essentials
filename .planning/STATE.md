@@ -1,23 +1,23 @@
 ---
 gsd_state_version: 1.0
-milestone: v13.0
-milestone_name: Massachusetts Expanded
-status: Ready to execute
-last_updated: "2026-06-14T05:52:46.931Z"
+milestone: v14.0
+milestone_name: Next Milestone
+status: v13.0 complete — ready for v14.0 planning
+last_updated: "2026-06-13T00:00:00.000Z"
 progress:
   total_phases: 10
-  completed_phases: 9
+  completed_phases: 10
   total_plans: 40
-  completed_plans: 39
-  percent: 90
+  completed_plans: 40
+  percent: 100
 ---
 
 # State
 
 ## Current Position
 
-Phase: 116 — pending
-Last completed: Phase 115 Plan 05 — phase-wide QA passed (Q1=21 rows, Q2=0 uncited, Q3=0 unpaired); compass APPROVED on Wu (21 topics); MA-STANCES-05 FULLY CLOSED (2026-06-13)
+Phase: 116 — complete
+Last completed: Phase 116 Plan 02 — v13.0 milestone closed; MA-RETRO-01 satisfied (2026-06-13)
 Next migration: 578
 
 ## Project Reference
@@ -39,7 +39,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 | 112 | MA Stances — State Senate | MA-STANCES-03 | Evidence-only stances: 40 MA state senators (sequential) |
 | 113 | MA Stances — House Wave 1 | MA-STANCES-04 (Wave 1) | Evidence-only stances: MA House reps HD-01 through HD-80 |
 | 114 | MA Stances — House Wave 2 | MA-STANCES-04 (Wave 2) | Evidence-only stances: MA House reps HD-81 through HD-160 — closes MA-STANCES-04 |
-| 115 | MA Playbook Retrospective | MA-RETRO-01 | COUSUB GOTCHAs + Boston patterns + Cities Onboarded + v13.0 close |
+| 116 | MA Playbook Retrospective | MA-RETRO-01 | Complete |
 
 ## Key MA Facts (carry into plans)
 
@@ -51,7 +51,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - MA 2026: primary 2026-09-02, general 2026-11-03
 - Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
-- Next migration: 577 (last Phase 114 migration was 573 — Donaghue stances; 574 Boston stances; 575 Cambridge stances; 576 Cambridge School Committee district_type fix)
+- Next migration: 578 (last Phase 115 migration was 577 — Wu supplemental stances)
 
 ## Accumulated Context
 
@@ -104,7 +104,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 ### Blockers/Concerns
 
-None yet.
+None — v13.0 complete.
 
 ## Session Continuity
 
@@ -166,3 +166,4 @@ Resume file: None
 - [Phase 114 P05]: Phase-wide verification PASSED; Q1=78 rows, Q2=0 uncited, Q3=0 unpaired, Q4=1778 combined stances; compass render APPROVED on Marjorie Decker HD-81; MA-STANCES-04 FULLY CLOSED (Wave 1 HD-01–HD-80 Phase 113 + Wave 2 HD-81–HD-158 Phase 114)
 - [Phase 115]: Boston stances complete; 21 officials attempted (Mayor Wu 27 stances + 13 councillors + 7 SC blank per D-01); stances from bulk migration 574 (prior session) + Wu supplemental 577; Q1=21 rows, Q2=0 uncited, Q3=0 unpaired, Q4=162 total stances; compass APPROVED on Wu (21 topics); MA-STANCES-05 FULLY CLOSED; next migration=578
 - [Phase ?]: [Phase 116-01]: MA-RETRO-01 closed: LOCATION-ONBOARDING.md updated with MA Quick Reference block, 2 Cities Onboarded rows (MA state + Boston), and 5 STATE-SPECIFIC MA GOTCHA callouts
+- [Phase 116]: v13.0 Massachusetts Expanded closed 2026-06-13; LOCATION-ONBOARDING.md updated with MA Quick Reference, 5 MA-specific GOTCHAs, and Cities Onboarded rows for Massachusetts state + Boston; MA-RETRO-01 satisfied
