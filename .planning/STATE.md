@@ -5,7 +5,7 @@ milestone_name: MA Tier 3 City Coverage
 status: planning
 last_updated: "2026-06-14T00:00:00.000Z"
 progress:
-  total_phases: 0
+  total_phases: 9
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -16,10 +16,10 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Not started (roadmap defined)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-06-14 — Milestone v14.0 started
+Status: Ready to execute Phase 117
+Last activity: 2026-06-14 — v14.0 roadmap created
 Next migration: 578
 
 ## Project Reference
@@ -31,7 +31,17 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 ## v14.0 Roadmap Summary
 
-(Phases TBD — roadmapper running)
+| Phase | Goal | Requirements | Status |
+|-------|------|--------------|--------|
+| 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Not started |
+| 118 — Somerville Deep Seed | Mayor + City Council + School Committee officials + headshots | SOMERVILLE-01, SOMERVILLE-02 | Not started |
+| 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Not started |
+| 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Not started |
+| 121 — Fall River + Medford + Waltham Deep Seeds | Officials + headshots for three smaller Tier 3 cities | FALLRIV-01/02, MEDFORD-01/02, WALTHAM-01/02 | Not started |
+| 122 — MA Tier 3 Stances Wave 1 | Evidence-only stances: Newton + Somerville | NEWTON-03, SOMERVILLE-03 | Not started |
+| 123 — MA Tier 3 Stances Wave 2 | Evidence-only stances: Lynn + New Bedford | LYNN-03, NEWBED-03 | Not started |
+| 124 — MA Tier 3 Stances Wave 3 | Evidence-only stances: Fall River + Medford + Waltham | FALLRIV-03, MEDFORD-03, WALTHAM-03 | Not started |
+| 125 — MA Tier 3 Playbook Retrospective | LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows | MA-RETRO-02 | Not started |
 
 ## Key MA Facts (carry into plans)
 
@@ -39,6 +49,8 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - 58 G4110 cities already loaded (v5.0) — assert, do not reload; 293 COUSUB towns loaded (v13.0 Phase 107)
 - Boston geo_id='2507000' (G4110); Cambridge geo_id='2511000'; Worcester geo_id='2582000'
 - All 7 Tier 3 cities are G4110 and already in geofences (no new TIGER load needed)
+- Newton geo_id=2545560; Somerville geo_id=2562535; Lynn geo_id=2537490
+- New Bedford, Fall River, Medford, Waltham: verify geo_ids from DB before seeding
 - MA legislature: 40 senators + 160 house reps — all seeded with offices in v5.0; all 217 have stances (v13.0)
 - MA 2026: primary 2026-09-08, general 2026-11-03
 - MA city elections: typically odd-year (2025, 2027) — no city-level race rows needed for most Tier 3 cities
@@ -98,7 +110,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 ### Blockers/Concerns
 
-None — v13.0 complete.
+None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 

@@ -17,6 +17,7 @@
 - ✅ **v11.0 Maryland Essentials** - Phases 90-99 (shipped 2026-06-08)
 - ✅ **v12.0 Virginia Essentials** - Phases 100-106 (shipped 2026-06-10)
 - ✅ **v13.0 Massachusetts Expanded** - Phases 107-116 (shipped 2026-06-13)
+- 🔄 **v14.0 MA Tier 3 City Coverage** - Phases 117-125 (in progress)
 
 ---
 
@@ -706,3 +707,318 @@ Plans:
 | MA-RETRO-01 | 116 |
 
 All 17 requirements covered ✓
+
+---
+
+# v14.0 MA Tier 3 City Coverage
+
+**Goal:** Bring 7 more Massachusetts cities to full Tier 1 depth — elected officials seeded with correct geofence linkage, headshots at 600×750, and evidence-only compass stances. All city geofences are already present as G4110 rows from v5.0 — no new TIGER load required.  
+**Phases:** 117–125 (9 phases)  
+**Requirements:** 22  
+**Next migration:** 578
+
+## Phases
+
+- [ ] **Phase 117: Newton Deep Seed** - Mayor + Board of Aldermen + School Committee officials and headshots
+- [ ] **Phase 118: Somerville Deep Seed** - Mayor + City Council + School Committee officials and headshots
+- [ ] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
+- [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
+- [ ] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
+- [ ] **Phase 122: MA Tier 3 Stances Wave 1** - Evidence-only stances for Newton + Somerville officials
+- [ ] **Phase 123: MA Tier 3 Stances Wave 2** - Evidence-only stances for Lynn + New Bedford officials
+- [ ] **Phase 124: MA Tier 3 Stances Wave 3** - Evidence-only stances for Fall River + Medford + Waltham officials
+- [ ] **Phase 125: MA Tier 3 Playbook Retrospective** - LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows
+
+## Phase Details
+
+### Phase 117: Newton Deep Seed
+
+**Goal:** A Newton address returns a populated LOCAL section with Mayor + council + school committee officials and headshots.
+
+**Depends on:** Phase 116 (v13.0 closed; next migration established as 578)
+
+**Requirements:** NEWTON-01, NEWTON-02
+
+**Key facts:**
+
+- geo_id=2545560 (G4110, already in geofence_boundaries from v5.0 — assert before seeding)
+- Newton uses a Mayor-Council form; council may be Board of Aldermen or renamed City Council — verify current structure
+- School Committee: verify seat count and whether elected or appointed
+- Headshots: newton.gov official bio pages; best-effort where unavailable
+- politician_images.type must be 'default'; crop 4:5 first then resize 600×750 Lanczos q90
+- Multi-tier INSERT then UPDATE by (chamber_id, title) pattern for multi-member chambers
+
+**Success criteria:**
+
+1. A Newton, MA address returns a LOCAL section listing Mayor + all council members + school committee members
+2. All seeded officials have headshots at 600×750 in the politician_photos bucket (best-effort; gaps documented)
+3. Section-split check returns 0 rows after seeding
+4. geo_id=2545560 asserted present in geofence_boundaries before any INSERT
+
+**Plans:** TBD
+
+---
+
+### Phase 118: Somerville Deep Seed
+
+**Goal:** A Somerville address returns a populated LOCAL section with Mayor + City Council + School Committee officials and headshots.
+
+**Depends on:** Phase 116
+
+**Requirements:** SOMERVILLE-01, SOMERVILLE-02
+
+**Key facts:**
+
+- geo_id=2562535 (G4110, already in geofence_boundaries from v5.0 — assert before seeding)
+- Somerville uses a strong-Mayor form with an at-large + ward council mix — verify current structure
+- School Committee: verify seat count and election model
+- Headshots: somervillema.gov official pages; best-effort
+- politician_images.type must be 'default'; crop 4:5 first then resize 600×750 Lanczos q90
+
+**Success criteria:**
+
+1. A Somerville, MA address returns a LOCAL section listing Mayor + all City Councillors + School Committee members
+2. All seeded officials have headshots at 600×750 in the politician_photos bucket (best-effort; gaps documented)
+3. Section-split check returns 0 rows after seeding
+4. geo_id=2562535 asserted present in geofence_boundaries before any INSERT
+
+**Plans:** TBD
+
+---
+
+### Phase 119: Lynn Deep Seed
+
+**Goal:** A Lynn address returns a populated LOCAL section with Mayor + City Council officials and headshots.
+
+**Depends on:** Phase 116
+
+**Requirements:** LYNN-01, LYNN-02
+
+**Key facts:**
+
+- geo_id=2537490 (G4110, already in geofence_boundaries from v5.0 — assert before seeding)
+- Lynn uses a Mayor-Council form — verify current council seat count and structure
+- Headshots: lynnma.gov official pages; best-effort
+- politician_images.type must be 'default'; crop 4:5 first then resize 600×750 Lanczos q90
+
+**Success criteria:**
+
+1. A Lynn, MA address returns a LOCAL section listing Mayor + all City Council members
+2. All seeded officials have headshots at 600×750 in the politician_photos bucket (best-effort; gaps documented)
+3. Section-split check returns 0 rows after seeding
+4. geo_id=2537490 asserted present in geofence_boundaries before any INSERT
+
+**Plans:** TBD
+
+---
+
+### Phase 120: New Bedford Deep Seed
+
+**Goal:** A New Bedford address returns a populated LOCAL section with Mayor + City Council officials and headshots.
+
+**Depends on:** Phase 116
+
+**Requirements:** NEWBED-01, NEWBED-02
+
+**Key facts:**
+
+- New Bedford is a G4110 place; verify geo_id from geofence_boundaries (assert before seeding)
+- New Bedford uses a Mayor-Council form — verify current council seat count and structure
+- Headshots: newbedford-ma.gov official pages; best-effort
+- politician_images.type must be 'default'; crop 4:5 first then resize 600×750 Lanczos q90
+
+**Success criteria:**
+
+1. A New Bedford, MA address returns a LOCAL section listing Mayor + all City Council members
+2. All seeded officials have headshots at 600×750 in the politician_photos bucket (best-effort; gaps documented)
+3. Section-split check returns 0 rows after seeding
+4. New Bedford geo_id asserted present in geofence_boundaries before any INSERT
+
+**Plans:** TBD
+
+---
+
+### Phase 121: Fall River + Medford + Waltham Deep Seeds
+
+**Goal:** Three smaller Tier 3 cities each return a populated LOCAL section with Mayor + council officials and headshots.
+
+**Depends on:** Phase 116
+
+**Requirements:** FALLRIV-01, FALLRIV-02, MEDFORD-01, MEDFORD-02, WALTHAM-01, WALTHAM-02
+
+**Key facts:**
+
+- All three are G4110 places; verify geo_ids from geofence_boundaries before seeding
+- Fall River: Mayor-Council form; verify council seat count
+- Medford: Mayor + Board of Aldermen or City Council — verify current structure; School Committee also elected
+- Waltham: Mayor-Council form; verify council seat count
+- Headshots: each city's official .gov site; best-effort; document gaps
+- Run 3 independent city migrations (can be parallelized in Wave 1); headshots in Wave 2
+- politician_images.type must be 'default'; crop 4:5 first then resize 600×750 Lanczos q90
+
+**Success criteria:**
+
+1. A Fall River, MA address returns a LOCAL section listing Mayor + all City Council members
+2. A Medford, MA address returns a LOCAL section listing Mayor + all Aldermen/Council members + School Committee members (if elected)
+3. A Waltham, MA address returns a LOCAL section listing Mayor + all City Council members
+4. All seeded officials have best-effort headshots at 600×750; gaps documented
+5. Section-split check returns 0 rows after all three cities are seeded
+
+**Plans:** TBD
+
+---
+
+### Phase 122: MA Tier 3 Stances Wave 1
+
+**Goal:** Evidence-only compass stances for Newton Mayor + council members and Somerville Mayor + City Councillors, applied sequentially one at a time.
+
+**Depends on:** Phase 117 (Newton seeded), Phase 118 (Somerville seeded)
+
+**Requirements:** NEWTON-03, SOMERVILLE-03
+
+**Key facts:**
+
+- Run ONE politician at a time — never parallel (project constraint)
+- No default values — blank spoke = no evidence found; never Neutral/Likely as fallback
+- 100% citation rate required on all values written
+- Per-individual migration files; apply each immediately after research
+- Newton Mayor and senior councillors likely have the richest public records; newer members may have blank spokes
+- Somerville Mayor has strong public record (progressive city, many policy positions on record)
+- Migration numbering continues from the last migration used in Phase 120/121
+
+**Success criteria:**
+
+1. politician_answers rows attempted for all Newton Mayor + council members
+2. politician_answers rows attempted for all Somerville Mayor + City Councillors
+3. 100% citation rate — zero uncited stance values across both cities
+4. Compass renders correctly on at least one Newton and one Somerville profile (human-verified)
+
+**Plans:** TBD
+
+---
+
+### Phase 123: MA Tier 3 Stances Wave 2
+
+**Goal:** Evidence-only compass stances for Lynn Mayor + council and New Bedford Mayor + council, applied sequentially one at a time.
+
+**Depends on:** Phase 119 (Lynn seeded), Phase 120 (New Bedford seeded), Phase 122 (Wave 1 complete — rate limit cadence)
+
+**Requirements:** LYNN-03, NEWBED-03
+
+**Key facts:**
+
+- Run ONE politician at a time — never parallel (project constraint)
+- No default values — blank spoke = no evidence found; never Neutral/Likely as fallback
+- 100% citation rate required on all values written
+- Lynn and New Bedford are larger cities (~100k pop) — Mayors likely have public records; council members may have thinner records
+- Per-individual migration files; apply each immediately after research
+- Migration numbering continues from Phase 122's last migration
+
+**Success criteria:**
+
+1. politician_answers rows attempted for all Lynn Mayor + City Council members
+2. politician_answers rows attempted for all New Bedford Mayor + City Council members
+3. 100% citation rate — zero uncited stance values across both cities
+4. Blank spokes for officials with no findable public record (documented as expected outcome)
+
+**Plans:** TBD
+
+---
+
+### Phase 124: MA Tier 3 Stances Wave 3
+
+**Goal:** Evidence-only compass stances for Fall River Mayor + council, Medford Mayor + Aldermen/council, and Waltham Mayor + council, applied sequentially one at a time.
+
+**Depends on:** Phase 121 (Fall River + Medford + Waltham seeded), Phase 123 (Wave 2 complete — rate limit cadence)
+
+**Requirements:** FALLRIV-03, MEDFORD-03, WALTHAM-03
+
+**Key facts:**
+
+- Run ONE politician at a time — never parallel (project constraint)
+- No default values — blank spoke = no evidence found; never Neutral/Likely as fallback
+- 100% citation rate required on all values written
+- Three smaller cities (~60-90k pop) — expect thinner public records than larger cities; blank spokes acceptable
+- Per-individual migration files; apply each immediately after research
+- Migration numbering continues from Phase 123's last migration
+
+**Success criteria:**
+
+1. politician_answers rows attempted for all Fall River Mayor + council members
+2. politician_answers rows attempted for all Medford Mayor + Aldermen/council members
+3. politician_answers rows attempted for all Waltham Mayor + council members
+4. 100% citation rate — zero uncited stance values across all three cities
+5. Blank spokes for officials with no findable public record (documented as expected outcome)
+
+**Plans:** TBD
+
+---
+
+### Phase 125: MA Tier 3 Playbook Retrospective
+
+**Goal:** Update LOCATION-ONBOARDING.md with MA Tier 3 city GOTCHAs and close v14.0.
+
+**Depends on:** Phase 124 (all stances complete)
+
+**Requirements:** MA-RETRO-02
+
+**Key facts:**
+
+- Document Tier 3 city patterns: smaller city headshot sources, council structure variations (Board of Aldermen vs. City Council naming), school committee inclusion decisions
+- Massachusetts Quick Reference block: add 7 new city rows (Newton/Somerville/Lynn/New Bedford/Fall River/Medford/Waltham) to Cities Onboarded table
+- If any MA Tier 3 GOTCHA applies broadly to other states, add it to the main GOTCHA list (not just MA section)
+- v14.0 milestone close: update STATE.md + ROADMAP.md milestones checklist
+
+**Success criteria:**
+
+1. LOCATION-ONBOARDING.md has at least 3 new MA Tier 3 [GOTCHA] callouts (smaller city patterns, headshot sources, government structure variations)
+2. 7 new rows added to Cities Onboarded table (one per city)
+3. v14.0 milestone marked complete in STATE.md and ROADMAP.md
+4. No orphaned requirements in REQUIREMENTS.md (all 22 v14.0 reqs marked complete)
+
+**Plans:** TBD
+
+---
+
+## Coverage Matrix
+
+| Req | Phase |
+|-----|-------|
+| NEWTON-01 | 117 |
+| NEWTON-02 | 117 |
+| NEWTON-03 | 122 |
+| SOMERVILLE-01 | 118 |
+| SOMERVILLE-02 | 118 |
+| SOMERVILLE-03 | 122 |
+| LYNN-01 | 119 |
+| LYNN-02 | 119 |
+| LYNN-03 | 123 |
+| NEWBED-01 | 120 |
+| NEWBED-02 | 120 |
+| NEWBED-03 | 123 |
+| FALLRIV-01 | 121 |
+| FALLRIV-02 | 121 |
+| FALLRIV-03 | 124 |
+| MEDFORD-01 | 121 |
+| MEDFORD-02 | 121 |
+| MEDFORD-03 | 124 |
+| WALTHAM-01 | 121 |
+| WALTHAM-02 | 121 |
+| WALTHAM-03 | 124 |
+| MA-RETRO-02 | 125 |
+
+All 22 requirements covered ✓
+
+## Progress Table
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 117. Newton Deep Seed | 0/TBD | Not started | - |
+| 118. Somerville Deep Seed | 0/TBD | Not started | - |
+| 119. Lynn Deep Seed | 0/TBD | Not started | - |
+| 120. New Bedford Deep Seed | 0/TBD | Not started | - |
+| 121. Fall River + Medford + Waltham Deep Seeds | 0/TBD | Not started | - |
+| 122. MA Tier 3 Stances Wave 1 | 0/TBD | Not started | - |
+| 123. MA Tier 3 Stances Wave 2 | 0/TBD | Not started | - |
+| 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
+| 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |
