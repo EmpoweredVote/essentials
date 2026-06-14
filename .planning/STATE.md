@@ -1,57 +1,49 @@
 ---
 gsd_state_version: 1.0
 milestone: v14.0
-milestone_name: Next Milestone
-status: v13.0 complete — ready for v14.0 planning
-last_updated: "2026-06-14T05:58:18.104Z"
+milestone_name: MA Tier 3 City Coverage
+status: planning
+last_updated: "2026-06-14T00:00:00.000Z"
 progress:
-  total_phases: 17
-  completed_phases: 17
-  total_plans: 66
-  completed_plans: 66
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 116 — complete
-Last completed: Phase 116 Plan 02 — v13.0 milestone closed; MA-RETRO-01 satisfied (2026-06-13)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-06-14 — Milestone v14.0 started
 Next migration: 578
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
+See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 108 — boston-deep-seed
+**Current focus:** v14.0 — MA Tier 3 City Coverage
 
-## v13.0 Roadmap Summary
+## v14.0 Roadmap Summary
 
-| Phase | Name | Requirements | Goal |
-|-------|------|--------------|------|
-| 107 | MA Town Geofences | MA-GEO-01, MA-GEO-02 | Load 293 G4040 COUSUB town boundaries so any MA address routes |
-| 108 | Boston Deep Seed | MA-DEEP-01, MA-DEEP-02, MA-DEEP-03 | Seed Boston city officials + School Committee with headshots |
-| 109 | MA Tier 2 Cities | MA-TIER2-01, MA-TIER2-02 | Seed Worcester + 4 Tier 2 city incumbents with best-effort headshots |
-| 110 | MA 2026 Elections + Discovery | MA-ELECTIONS-01..04 | Seed MA 2026 elections, 200+ race rows, arm discovery |
-| 111 | MA Stances — Execs + Federal | MA-STANCES-01, MA-STANCES-02 | Evidence-only stances: 6 execs + 11 federal (17 total, sequential) |
-| 112 | MA Stances — State Senate | MA-STANCES-03 | Evidence-only stances: 40 MA state senators (sequential) |
-| 113 | MA Stances — House Wave 1 | MA-STANCES-04 (Wave 1) | Evidence-only stances: MA House reps HD-01 through HD-80 |
-| 114 | MA Stances — House Wave 2 | MA-STANCES-04 (Wave 2) | Evidence-only stances: MA House reps HD-81 through HD-160 — closes MA-STANCES-04 |
-| 116 | MA Playbook Retrospective | MA-RETRO-01 | Complete |
+(Phases TBD — roadmapper running)
 
 ## Key MA Facts (carry into plans)
 
 - FIPS code: 25 (state='25' in geofence_boundaries; districts.state='ma' for STATE/COUNTY tiers, 'MA' for NATIONAL)
-- 58 G4110 cities already loaded (v5.0) — assert, do not reload
-- 293 G4040 COUSUB towns to add in Phase 107
-- Boston geo_id='2507000' (G4110, already in geofences)
-- MA legislature: 40 senators (40 SLDU districts) + 160 house reps (160 SLDL districts) — all seeded with offices in v5.0
+- 58 G4110 cities already loaded (v5.0) — assert, do not reload; 293 COUSUB towns loaded (v13.0 Phase 107)
+- Boston geo_id='2507000' (G4110); Cambridge geo_id='2511000'; Worcester geo_id='2582000'
+- All 7 Tier 3 cities are G4110 and already in geofences (no new TIGER load needed)
+- MA legislature: 40 senators + 160 house reps — all seeded with offices in v5.0; all 217 have stances (v13.0)
 - MA 2026: primary 2026-09-08, general 2026-11-03
-- Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
+- MA city elections: typically odd-year (2025, 2027) — no city-level race rows needed for most Tier 3 cities
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
-- Next migration: 578 (last Phase 115 migration was 577 — Wu supplemental stances)
+- Next migration: 578
 
 ## Accumulated Context
 
@@ -98,7 +90,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 
 ### Pending Todos
 
-- **[MA — v14.0]** Seed Newton (geo_id=2545560, ~90k pop), Somerville (geo_id=2562535, ~80k), and Lynn (geo_id=2537490, ~100k) — officials + headshots + stances. Largest unloaded MA cities. Same deep-seed pattern as Boston (Phase 108).
+- **[MA — active]** v14.0 scope: Newton / Somerville / Lynn / New Bedford / Fall River / Medford / Waltham — all at full Tier 1 depth (officials + headshots + stances). See REQUIREMENTS.md.
 
 - **[ME — RCV PENDING]** Phase 90: ME-02 D nominee not yet declared — RCV tabulation ongoing as of 2026-06-13; frontrunner Joe Baldacci (state senator, Bangor, ~31.5% first-round). Add to ME-02 general race_candidates once AP/official call issued. migration 574 already applied Collins+Platner (Senate) and LePage (ME-02 R).
 - **[CA — JULY]** Phase 90: lavote.gov November 2026 general election CandidateList ID not yet published; filing opens mid-to-late July 2026. Update discovery_jurisdictions id=9fd492a8 source_url to new ?id=XXXX at that time.

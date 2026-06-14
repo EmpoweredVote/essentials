@@ -122,21 +122,27 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Delivered:** VA TIGER geofences (511 geofence_boundaries rows across 5 MTFCC types), state government DB (3 executives + 40 senators + 100 delegates), VA federal officials (Warner + Kaine + 11 US House reps), Alexandria deep seed (Mayor + 6 city council + ACPS 9 board members with headshots), VA 2026 elections (12 race rows + discovery), compass stances for 3 execs + 2 US Senators + 7 Alexandria council + 8 ACPS board members.
 
-### Current Milestone: v13.0 Massachusetts Expanded
+### v13.0 Massachusetts Expanded (Shipped: 2026-06-13)
 
-**Goal:** Complete Massachusetts to full depth — fill the town routing gap (293 G4040 COUSUB boundaries), stances for all 217 state/federal officials, Boston deep seed, MA 2026 elections across all 240 races, and Tier 2 city incumbents.
+**Delivered:** MA town geofences (293 G4040 COUSUB boundaries), Boston deep seed (Mayor Wu + 13 City Councillors + School Committee with headshots), MA Tier 2 cities (Worcester + Springfield + Lowell + Brockton + Quincy), MA 2026 elections (240+ race rows + discovery armed), compass stances for all 217 MA officials (6 execs + 11 federal + 40 senators + 160 house reps), and MA playbook retrospective.
 
-**Target features:**
-- MA town geofences — load 293 G4040 COUSUB boundaries so any MA town address routes correctly
-- Compass stances — 6 execs + 11 federal officials + 200 legislators (sequential, evidence-only, ~217 total)
-- Boston deep seed — Mayor Wu + 13 City Councillors + School Committee with headshots at 600×750
-- MA 2026 elections — Governor's race + US Senate + all 160 House + 40 Senate race rows + discovery armed
-- MA Tier 2 cities — Worcester, Springfield, Lowell, Brockton, Quincy (incumbents + best-effort headshots)
-- Playbook retrospective — MA town/COUSUB GOTCHAs + Boston quick reference block
+### Current Milestone: v14.0 MA Tier 3 City Coverage
+
+**Goal:** Bring 7 more Massachusetts cities to full Tier 1 depth — elected officials, headshots at 600×750, evidence-only compass stances, and discovery pipeline armed for each.
+
+**Target cities:**
+- Newton (~90k pop, geo_id=2545560) — officials + headshots + stances
+- Somerville (~80k pop, geo_id=2562535) — officials + headshots + stances
+- Lynn (~100k pop, geo_id=2537490) — officials + headshots + stances
+- New Bedford (~100k pop) — officials + headshots + stances
+- Fall River (~90k pop) — officials + headshots + stances
+- Medford (~60k pop) — officials + headshots + stances
+- Waltham (~65k pop) — officials + headshots + stances
+- Playbook retrospective — MA Tier 3 GOTCHAs + 7 Cities Onboarded rows
 
 ### Active
 
-- v13.0 Massachusetts Expanded (in progress)
+- v14.0 MA Tier 3 City Coverage (in progress)
 
 ### Out of Scope
 
@@ -237,4 +243,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-10 — v13.0 Massachusetts Expanded milestone started*
+*Last updated: 2026-06-14 — v14.0 MA Tier 3 City Coverage milestone started*
