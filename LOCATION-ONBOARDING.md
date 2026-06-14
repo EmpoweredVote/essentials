@@ -47,8 +47,8 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Portland | OR | 2026-05-30 | rcv (City Council 12 seats, City Auditor) | 2024 charter reform: 4 districts × 3 seats (RCV); boundaries from PortlandMaps ArcGIS MapServer Layer 17 (NOT TIGER), mtfcc=X0012, outSR=4326+ST_MakeValid required; portland.gov WAF blocks /public/ — use Drupal 1_1_320w style URLs for headshots; gov name 'City of Portland, Oregon, US' (disambiguates from Portland ME); D3+D4+Auditor on 2026 ballot; Mayor+D1+D2 on 2028 ballot; ext_ids -690001..-690004 (citywide) + -690010..-690021 (council D1-D4) |
 | Maryland (state) | MD | 2026-06-08 | plurality | State legislature: 47 Senate + 141 Delegates; 71 SLDL polygons (not 47 or 141 — sub-districts); legislature-elected Treasurer (is_appointed=true); mgaleg.maryland.gov headshot discovery (scrape HTML, not HEAD probe); Baltimore City dual-tier (G4110 + G4020); external_ids exec -240001..-240005, senators -2410001..-2410047, delegates -2420001..-2420141 |
 | Leonardtown | MD | 2026-06-08 | plurality | Tier 1 deep seed (migration 277); Mayor=LOCAL_EXEC + 5 council=LOCAL; mtfcc=NULL on district rows (migration 246 pattern); ext_ids under St. Mary's County government |
-| Massachusetts (state) | MA | 2026-06-13 | plurality | State legislature: 40 Senate + 160 House; municipal elections odd-year for most cities; G4110 cities (58) loaded v5.0 + G4040 COUSUB towns (293) loaded v5.0 — BOTH layers required for full MA resident routing; malegislature.gov HTML scrape for headshots; primary 2026-09-02, general 2026-11-03 |
-| Boston | MA | 2026-06-10 | plurality (fptp for district seats; plurality_at_large for at-large seats) | Hybrid council: 9 single-member district seats (geo_ids boston-ma-council-district-{1-9}, mtfcc=X0013) + 4 at-large seats (geo_id=2507000); Mayor Wu is LOCAL_EXEC (directly elected — NOT council-selected); School Committee 7 APPOINTED (is_appointed=true, no election_method); ArcGIS FeatureServer bulk fetch for district boundaries (no TIGER); ext_ids -2507000001..-2507000014 (council) + -2502790001..-2502790007 (SC); boston.gov for headshots |
+| Massachusetts (state) | MA | 2026-06-13 | plurality | State legislature: 40 Senate + 160 House; municipal elections odd-year for most cities; G4110 cities (58) loaded v5.0 + G4040 COUSUB towns (293) loaded v5.0 — BOTH layers required for full MA resident routing; malegislature.gov HTML scrape for headshots; primary 2026-09-08, general 2026-11-03 |
+| Boston | MA | 2026-06-10 | plurality (fptp for district seats; plurality_at_large for at-large seats) | Hybrid council: 9 single-member district seats (geo_ids boston-ma-council-district-{1-9}, mtfcc=X0013) + 4 at-large seats (geo_id=2507000); Mayor Wu is LOCAL_EXEC (directly elected — NOT council-selected); School Committee 7 APPOINTED (is_appointed=true, no election_method); ArcGIS FeatureServer bulk fetch for district boundaries (no TIGER); ext_ids -2507000001..-2507000014 (Mayor + council) + -2502790001..-2502790007 (SC); boston.gov for headshots |
 
 ---
 
@@ -125,7 +125,7 @@ Check this table before starting a new city — proven patterns from prior onboa
 
 ## Massachusetts Quick Reference
 
-Read this before starting any MA city or state work. These traps are MA-specific — general playbook guidance above does not warn for them.
+**Read this before starting any MA city or state work. These traps are MA-specific — general playbook guidance above does not warn for them.**
 
 | Trap | See Step | One-Line Summary |
 |------|----------|-----------------|
@@ -148,9 +148,9 @@ Read this before starting any MA city or state work. These traps are MA-specific
 - Boston headshots: boston.gov/departments/city-council (direct official JPEG; no WAF issues)
 - Boston School Committee headshots: bostonpublicschools.org (best-effort; low coverage expected)
 - Elections site: sec.state.ma.us (Secretary of State — authoritative for all MA elections)
-- Primary 2026: 2026-09-02
+- Primary 2026: 2026-09-08
 - General 2026: 2026-11-03
-- External ID scheme: Boston council -2507000001..-2507000014, Boston SC -2502790001..-2502790007
+- External ID scheme: Boston (Mayor + council) -2507000001..-2507000014, Boston SC -2502790001..-2502790007
 - Next migration (end of v13.0): 578
 
 ---

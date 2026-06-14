@@ -48,7 +48,7 @@ See: .planning/PROJECT.md (updated 2026-06-04 after v10.0 milestone archival)
 - 293 G4040 COUSUB towns to add in Phase 107
 - Boston geo_id='2507000' (G4110, already in geofences)
 - MA legislature: 40 senators (40 SLDU districts) + 160 house reps (160 SLDL districts) — all seeded with offices in v5.0
-- MA 2026: primary 2026-09-02, general 2026-11-03
+- MA 2026: primary 2026-09-08, general 2026-11-03
 - Stances scope: 6 execs + 11 federal + 40 senators + 160 house = 217 total; split across Phases 111–114
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
 - Next migration: 578 (last Phase 115 migration was 577 — Wu supplemental stances)
