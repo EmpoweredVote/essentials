@@ -2,25 +2,25 @@
 gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
-status: planning
+status: in_progress
 last_updated: "2026-06-14T00:00:00.000Z"
 progress:
   total_phases: 9
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  completed_phases: 1
+  total_plans: 3
+  completed_plans: 3
+  percent: 11
 ---
 
 # State
 
 ## Current Position
 
-Phase: Not started (roadmap defined)
+Phase: 118 — Somerville Deep Seed
 Plan: —
-Status: Ready to execute Phase 117
-Last activity: 2026-06-14 — v14.0 roadmap created
-Next migration: 578
+Status: Phase 117 complete — ready for Phase 118
+Last activity: 2026-06-14 — Phase 117 complete (migrations 578/579/580 applied; Newton LOCAL+SCHOOL seeded; 0/33 headshots uploaded due to newtonma.gov CivicEngage block)
+Next migration: 581
 
 ## Project Reference
 
@@ -33,7 +33,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
-| 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Not started |
+| 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Planned (3 plans) |
 | 118 — Somerville Deep Seed | Mayor + City Council + School Committee officials + headshots | SOMERVILLE-01, SOMERVILLE-02 | Not started |
 | 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Not started |
 | 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Not started |

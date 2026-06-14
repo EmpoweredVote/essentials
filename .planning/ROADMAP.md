@@ -715,11 +715,11 @@ All 17 requirements covered ✓
 **Goal:** Bring 7 more Massachusetts cities to full Tier 1 depth — elected officials seeded with correct geofence linkage, headshots at 600×750, and evidence-only compass stances. All city geofences are already present as G4110 rows from v5.0 — no new TIGER load required.  
 **Phases:** 117–125 (9 phases)  
 **Requirements:** 22  
-**Next migration:** 578
+**Next migration:** 581
 
 ## Phases
 
-- [ ] **Phase 117: Newton Deep Seed** - Mayor + Board of Aldermen + School Committee officials and headshots
+- [x] **Phase 117: Newton Deep Seed** - Mayor + Board of Aldermen + School Committee officials and headshots
 - [ ] **Phase 118: Somerville Deep Seed** - Mayor + City Council + School Committee officials and headshots
 - [ ] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
 - [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
@@ -755,19 +755,19 @@ All 17 requirements covered ✓
 3. Section-split check returns 0 rows after seeding
 4. geo_id=2545560 asserted present in geofence_boundaries before any INSERT
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 Plans:
 **Wave 1**
 
-- [ ] 117-01-PLAN.md -- Newton city government (migration 578: Mayor Laredo + 24 City Councillors)
+- [x] 117-01-PLAN.md -- Newton city government (migration 578: Mayor Laredo + 24 City Councillors)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 117-02-PLAN.md -- Newton school committee (migration 579: 8 elected SC members + Mayor ex-officio linkage)
+- [x] 117-02-PLAN.md -- Newton school committee (migration 579: 8 elected SC members + Mayor ex-officio linkage)
 
 **Wave 3** *(blocked on Waves 1+2 completion)*
 
-- [ ] 117-03-PLAN.md -- Newton headshots (Python script + migration 580: best-effort 600x750 across 33 officials)
+- [x] 117-03-PLAN.md -- Newton headshots (Python script + migration 580: 0/33 uploaded — newtonma.gov CivicEngage block; gaps documented)
 
 ---
 
@@ -1025,7 +1025,7 @@ All 22 requirements covered ✓
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 117. Newton Deep Seed | 0/TBD | Not started | - |
+| 117. Newton Deep Seed | 3/3 | Complete | 2026-06-14 |
 | 118. Somerville Deep Seed | 0/TBD | Not started | - |
 | 119. Lynn Deep Seed | 0/TBD | Not started | - |
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
