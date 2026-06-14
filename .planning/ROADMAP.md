@@ -870,7 +870,15 @@ Plans:
 3. Section-split check returns 0 rows after seeding
 4. New Bedford geo_id asserted present in geofence_boundaries before any INSERT
 
-**Plans:** TBD
+**Plans:** 2/2 plans ready
+
+**Wave 1**
+
+- [ ] 120-01-PLAN.md — New Bedford city government (migration 587: Mayor Mitchell + 11 City Councilors)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 120-02-PLAN.md — New Bedford headshots (Python script + migration 588: best-effort, newbedford-ma.gov Cloudflare-blocked; alternative sources)
 
 ---
 

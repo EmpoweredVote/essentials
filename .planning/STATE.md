@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 119 — Lynn Deep Seed
-Plan: Phase 119 complete
-Status: Phase 119 COMPLETE — verified; ready for Phase 120
-Last activity: 2026-06-14 — Phase 119 verified 12/12 PASS; LYNN-01 + LYNN-02 closed; 12 city officials + 6 SC + 12 headshots
+Phase: 120 — New Bedford Deep Seed
+Plan: Phase 120 planned (2 plans, 2 waves)
+Status: Phase 120 PLANNED — ready to execute
+Last activity: 2026-06-14 — Phase 120 planned; geo_id=2545000; Mayor Mitchell + 11 City Councilors; migrations 587+588
 Next migration: 587
 
 ## Project Reference
@@ -37,7 +37,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 | 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Planned (3 plans) |
 | 118 — Somerville Deep Seed | Mayor + City Council + School Committee officials + headshots | SOMERVILLE-01, SOMERVILLE-02 | Not started |
 | 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Planned (3 plans) |
-| 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Not started |
+| 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Planned (2 plans) |
 | 121 — Fall River + Medford + Waltham Deep Seeds | Officials + headshots for three smaller Tier 3 cities | FALLRIV-01/02, MEDFORD-01/02, WALTHAM-01/02 | Not started |
 | 122 — MA Tier 3 Stances Wave 1 | Evidence-only stances: Newton + Somerville | NEWTON-03, SOMERVILLE-03 | Not started |
 | 123 — MA Tier 3 Stances Wave 2 | Evidence-only stances: Lynn + New Bedford | LYNN-03, NEWBED-03 | Not started |
