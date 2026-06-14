@@ -7,7 +7,7 @@ last_updated: "2026-06-14T00:00:00.000Z"
 progress:
   total_phases: 9
   completed_phases: 1
-  total_plans: 3
+  total_plans: 6
   completed_plans: 3
   percent: 11
 ---
@@ -18,8 +18,8 @@ progress:
 
 Phase: 118 — Somerville Deep Seed
 Plan: —
-Status: Phase 117 complete — ready for Phase 118
-Last activity: 2026-06-14 — Phase 117 complete (migrations 578/579/580 applied; Newton LOCAL+SCHOOL seeded; 0/33 headshots uploaded due to newtonma.gov CivicEngage block)
+Status: Phase 118 planned — ready to execute
+Last activity: 2026-06-14 — Phase 118 planned (3 plans: 581 city gov, 582 school committee, 583 headshots; Mayor Jake Wilson confirmed; two ex-officio SC pattern; LEAID=2510890)
 Next migration: 581
 
 ## Project Reference

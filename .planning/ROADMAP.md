@@ -794,7 +794,19 @@ Plans:
 3. Section-split check returns 0 rows after seeding
 4. geo_id=2562535 asserted present in geofence_boundaries before any INSERT
 
-**Plans:** TBD
+**Plans:** 3 plans
+
+**Wave 1**
+
+- [ ] 118-01-PLAN.md -- Somerville city government (migration 581: Mayor Jake Wilson + 11 City Councillors)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 118-02-PLAN.md -- Somerville school committee (migration 582: 7 elected + Mayor ex-officio + Council President ex-officio)
+
+**Wave 3** *(blocked on Waves 1+2 completion)*
+
+- [ ] 118-03-PLAN.md -- Somerville headshots (Python script + migration 583: best-effort coverage)
 
 ---
 
