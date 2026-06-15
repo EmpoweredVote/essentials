@@ -4,13 +4,13 @@ milestone: v14.0
 milestone_name: milestone
 status: Ready
 stopped_at: ""
-last_updated: "2026-06-16T00:10:00.000Z"
-last_activity: 2026-06-15 -- Phase 124 Plan 03 Task 2 done; Waltham at-large stances; King(686)=2, LeBlanc(687)=2, Tzioumis(688)=blank, Vidal(689)=blank; Q-uncited=0 Q-unpaired=0; 10 total stances across 7 officials (5 with stances, 2 blank); next migration 690
+last_updated: "2026-06-16T00:15:00.000Z"
+last_activity: 2026-06-15 -- Phase 124 Plan 03 complete; WALTHAM-03 partial (at-large batch); 7 at-large officials done; 10 stance rows (Donahue=3, Brasco=2, King=2, LeBlanc=2, Bradley-MacArthur=1; Tzioumis+Vidal=blank); migrations 683-689 applied; Q-uncited=0 Q-unpaired=0; next migration 690
 progress:
   total_phases: 26
   completed_phases: 24
   total_plans: 97
-  completed_plans: 94
+  completed_plans: 95
   percent: 94
 ---
 
@@ -19,10 +19,10 @@ progress:
 ## Current Position
 
 Phase: 124 — MA Tier 3 Stances Wave 3
-Plan: 03 (Plans 01-02 complete)
+Plan: 04 (Plans 01-03 complete)
 Status: Ready
-Last activity: 2026-06-15 -- Plan 02 complete; MEDFORD-03 closed; 40 stance rows for 8 Medford officials (LungoKoehn=15, Bears=9, Callahan=5, Lazzaro=4, Scarpelli=3, Leming=2, Tseng=2; Mullane blank); migrations 675-682 applied; Q-phase=0 uncited; next migration 683
-Next migration: 683
+Last activity: 2026-06-15 -- Plan 03 complete; WALTHAM-03 partial (at-large); 7 at-large officials done; 10 stances (Donahue=3, Brasco=2, King=2, LeBlanc=2, Bradley-MacArthur=1; Tzioumis+Vidal=blank); migrations 683-689 applied; Q-uncited=0 Q-unpaired=0; next migration 690
+Next migration: 690
 
 ## Project Reference
 
@@ -167,6 +167,7 @@ Resume file: None
 | Phase 123 P05 | ~10m | 2 tasks | 3 files (REQUIREMENTS.md, ROADMAP.md, STATE.md); Q1=0 Q2=0 Q3=0 Q4=0; 57 total stance rows; LYNN-03+NEWBED-03 closed |
 | Phase 124 P01 | ~75m | 4 tasks | 10 files (665-674 stances SQLs); 17 stances for 10 Fall River officials; 5 blank-spoke; 0 uncited; FALLRIV-03 closed |
 | Phase 124 P02 | ~60m | 3 tasks | 8 files (675-682 stances SQLs); 40 stances for 8 Medford officials; 1 blank-spoke (Mullane); 0 uncited; MEDFORD-03 closed |
+| Phase 124 P03 | ~25m | 2 tasks | 7 files (683-689 stances SQLs); 10 stances for 7 Waltham at-large officials; 2 blank-spoke (Tzioumis+Vidal); 0 uncited; WALTHAM-03 partial (at-large batch) |
 
 ## Decisions
 
@@ -204,3 +205,4 @@ Resume file: None
 - [Phase 123-05]: Phase 123 CLOSED — 24 officials (12 Lynn + 12 New Bedford); Q1=0 Q2=0 Q3=0 Q4=0; 41 Lynn stance rows + 16 New Bedford stance rows = 57 total; 14 blank-spoke officials (correct per evidence-only rule); LYNN-03 + NEWBED-03 satisfied; next migration=659
 - [Phase 124-01]: Migrations 659-664 pre-occupied by MA Tier 2 geofencing (Boston council backfill, Worcester/Springfield/Lowell/Brockton/Quincy district geofencing); Fall River stances used 665-674 instead; 10 officials done; Coogan(R, Mayor) richest record (9 stances); 5 blank-spoke at-large councillors; FALLRIV-03 closed; Linda Pereira (Fall River, migration 670) confirmed distinct from Ryan Pereira (New Bedford, migration 658)
 - [Phase 124-02]: Migrations 669-676 specified in plan pre-occupied by Fall River Plan 01; Medford stances used 675-682 instead; 8 officials done; LungoKoehn(Mayor) richest record (15 stances, former MA state rep); Bears(CP) 9 stances from MA House record; Mullane blank-spoke (no individual evidence); Scarpelli documented as fiscal conservative and law-and-order outlier; MEDFORD-03 closed; Isaac Bears searched under public name "Zac Bears"
+- [Phase 124-03]: Migrations 677-683 specified in plan pre-occupied by Medford Plan 02; Waltham at-large stances used 683-689 instead; 7 officials done; Donahue(Mayor) 3 stances (MBTA compliance + Route 128); Tzioumis+Vidal blank-spoke (newer members, no individual evidence); MBTA Communities Act compliance vote primary evidence for 5 of 7 officials; city.waltham.ma.us Cloudflare-blocked; all 16 Waltham UUIDs captured for Plan 04
