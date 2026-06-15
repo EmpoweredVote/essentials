@@ -951,7 +951,7 @@ Plans:
 3. 100% citation rate — zero uncited stance values across both cities
 4. Compass renders correctly on at least one Newton and one Somerville profile (human-verified)
 
-**Plans:** 2/5 plans executed
+**Plans:** 3/5 plans executed
 Plans:
 **Wave 1**
 
@@ -963,7 +963,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 122-03-PLAN.md — Newton councillors Silber-Micley; closes Newton roster (migrations 613-622)
+- [x] 122-03-PLAN.md — Newton councillors Silber-Micley; closes Newton roster (migrations 613-622; 34 stances; all 25 Newton officials complete — 112 total Newton stance rows)
 
 **Wave 4** *(blocked on Wave 3)*
 
