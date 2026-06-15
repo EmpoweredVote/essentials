@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
 status: executing
-last_updated: "2026-06-15T05:55:40.451Z"
-last_activity: 2026-06-15 -- Phase 122 planning complete
+last_updated: "2026-06-15T08:00:00.000Z"
+last_activity: 2026-06-15 -- Phase 123 planning complete
 progress:
   total_phases: 9
   completed_phases: 5
-  total_plans: 21
+  total_plans: 26
   completed_plans: 19
   percent: 56
 ---
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 122 — MA Tier 3 Stances Wave 1
-Plan: Complete (5/5 plans done)
-Status: Complete
-Last activity: 2026-06-15 -- Phase 122 complete; NEWTON-03 + SOMERVILLE-03 closed
+Phase: 123 — MA Tier 3 Stances Wave 2
+Plan: Planned (5 plans ready)
+Status: Ready to execute
+Last activity: 2026-06-15 -- Phase 123 planning complete (5 plans, 24 officials: Lynn + New Bedford)
 Next migration: 635
 
 ## Project Reference
@@ -40,7 +40,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 | 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Planned (2 plans) |
 | 121 — Fall River + Medford + Waltham Deep Seeds | Officials + headshots for three smaller Tier 3 cities | FALLRIV-01/02, MEDFORD-01/02, WALTHAM-01/02 | Not started |
 | 122 — MA Tier 3 Stances Wave 1 | Evidence-only stances: Newton + Somerville | NEWTON-03, SOMERVILLE-03 | Not started |
-| 123 — MA Tier 3 Stances Wave 2 | Evidence-only stances: Lynn + New Bedford | LYNN-03, NEWBED-03 | Not started |
+| 123 — MA Tier 3 Stances Wave 2 | Evidence-only stances: Lynn + New Bedford | LYNN-03, NEWBED-03 | Planned (5 plans) |
 | 124 — MA Tier 3 Stances Wave 3 | Evidence-only stances: Fall River + Medford + Waltham | FALLRIV-03, MEDFORD-03, WALTHAM-03 | Not started |
 | 125 — MA Tier 3 Playbook Retrospective | LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows | MA-RETRO-02 | Not started |
 
