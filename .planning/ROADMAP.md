@@ -723,7 +723,7 @@ All 17 requirements covered ✓
 - [x] **Phase 118: Somerville Deep Seed** - Mayor + City Council + School Committee officials and headshots
 - [x] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
 - [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
-- [ ] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
+- [x] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
 - [ ] **Phase 122: MA Tier 3 Stances Wave 1** - Evidence-only stances for Newton + Somerville officials
 - [ ] **Phase 123: MA Tier 3 Stances Wave 2** - Evidence-only stances for Lynn + New Bedford officials
 - [ ] **Phase 124: MA Tier 3 Stances Wave 3** - Evidence-only stances for Fall River + Medford + Waltham officials
