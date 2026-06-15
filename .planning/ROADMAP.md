@@ -908,7 +908,21 @@ Plans:
 4. All seeded officials have best-effort headshots at 600×750; gaps documented
 5. Section-split check returns 0 rows after all three cities are seeded
 
-**Plans:** TBD
+**Plans:** 5 plans
+
+**Wave 1** *(3 independent city migrations — no file overlap, run in parallel)*
+
+- [ ] 121-01-PLAN.md — Fall River city government (migration 590: Mayor Coogan + City Councilors)
+- [ ] 121-02-PLAN.md — Medford city government (migration 591: Mayor Lungo-Koehn + City Council)
+- [ ] 121-03-PLAN.md — Waltham city government (migration 592: Mayor Donahue + City Council)
+
+**Wave 2** *(blocked on 121-02 — Medford SC needs Mayor's politician_id)*
+
+- [ ] 121-04-PLAN.md — Medford School Committee (migration 593: elected SC members + Mayor ex-officio + G5420 geofence)
+
+**Wave 3** *(blocked on all Wave 1 + Wave 2 — headshots need all seeded politician_ids)*
+
+- [ ] 121-05-PLAN.md — All three cities headshots (migrations 594 FR + 595 Medford + 596 Waltham; phase-wide section-split verification)
 
 ---
 
@@ -1061,7 +1075,7 @@ All 22 requirements covered ✓
 | 118. Somerville Deep Seed | 3/3 | Complete | 2026-06-14 |
 | 119. Lynn Deep Seed | 0/3 | Planned | - |
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
-| 121. Fall River + Medford + Waltham Deep Seeds | 0/TBD | Not started | - |
+| 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
 | 122. MA Tier 3 Stances Wave 1 | 0/TBD | Not started | - |
 | 123. MA Tier 3 Stances Wave 2 | 0/TBD | Not started | - |
 | 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
