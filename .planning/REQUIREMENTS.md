@@ -25,7 +25,7 @@
 
 - [ ] **NEWBED-01:** A New Bedford address returns a LOCAL section showing Mayor + City Council members with correct offices linked to New Bedford's geo_id
 - [ ] **NEWBED-02:** New Bedford elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [ ] **NEWBED-03:** Compass shows evidence-only stance data for New Bedford Mayor + Council; sequential research, 100% citation rate
+- [x] **NEWBED-03:** Compass shows evidence-only stance data for New Bedford Mayor + Council; sequential research, 100% citation rate
 
 ## FALLRIV — Fall River Deep Seed
 
@@ -84,7 +84,7 @@
 | LYNN-03 | 123 | ⬜ |
 | NEWBED-01 | 120 | ⬜ |
 | NEWBED-02 | 120 | ⬜ |
-| NEWBED-03 | 123 | ⬜ |
+| NEWBED-03 | 123 | ✅ |
 | FALLRIV-01 | 121 | ⬜ |
 | FALLRIV-02 | 121 | ⬜ |
 | FALLRIV-03 | 124 | ⬜ |

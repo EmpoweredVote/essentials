@@ -1015,7 +1015,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 123-04-PLAN.md — New Bedford Ward councillors Choquette, Pemberton, Oliver, Baptiste, Lopes, Pereira (migrations 653-658)
+- [x] 123-04-PLAN.md — New Bedford Ward councillors Choquette, Pemberton, Oliver, Baptiste, Lopes, Pereira (migrations 653-658) — COMPLETE: 3 stance rows (Choquette+Oliver immigration=4.0, Pereira economic-dev=2.0; 3 blank-spoke officials); 16 total NB stance rows across all 12 officials; NEWBED-03 satisfied
 
 **Wave 5** *(blocked on Wave 4)*
 
