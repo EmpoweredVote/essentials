@@ -43,7 +43,7 @@
 
 - [ ] **WALTHAM-01:** A Waltham address returns a LOCAL section showing Mayor + City Council members with correct offices linked to Waltham's geo_id
 - [ ] **WALTHAM-02:** Waltham elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [ ] **WALTHAM-03:** Compass shows evidence-only stance data for Waltham Mayor + Council; sequential research, 100% citation rate
+- [x] **WALTHAM-03:** Compass shows evidence-only stance data for Waltham Mayor + Council; sequential research, 100% citation rate
 
 ## MA-RETRO — Playbook Retrospective
 
@@ -93,5 +93,5 @@
 | MEDFORD-03 | 124 | ✅ |
 | WALTHAM-01 | 121 | ⬜ |
 | WALTHAM-02 | 121 | ⬜ |
-| WALTHAM-03 | 124 | ⬜ |
+| WALTHAM-03 | 124 | ✅ |
 | MA-RETRO-02 | 125 | ⬜ |
