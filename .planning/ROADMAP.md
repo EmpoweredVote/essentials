@@ -951,15 +951,15 @@ Plans:
 3. 100% citation rate — zero uncited stance values across both cities
 4. Compass renders correctly on at least one Newton and one Somerville profile (human-verified)
 
-**Plans:** 5 plans
+**Plans:** 2/5 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 122-01-PLAN.md — Wave 0 pre-flight + Newton Mayor Laredo + 6 councillors (migrations 598-604)
+- [x] 122-01-PLAN.md — Wave 0 pre-flight + Newton Mayor Laredo + 6 councillors (migrations 598-604)
 
 **Wave 2** *(blocked on Wave 1 — sequential research cadence)*
 
-- [ ] 122-02-PLAN.md — Newton councillors Grossman-Roche (migrations 605-612)
+- [x] 122-02-PLAN.md — Newton councillors Grossman-Roche (migrations 605-612)
 
 **Wave 3** *(blocked on Wave 2)*
 
@@ -1096,7 +1096,7 @@ All 22 requirements covered ✓
 | 119. Lynn Deep Seed | 0/3 | Planned | - |
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
-| 122. MA Tier 3 Stances Wave 1 | 0/5 | Planned | - |
+| 122. MA Tier 3 Stances Wave 1 | 2/5 | In Progress|  |
 | 123. MA Tier 3 Stances Wave 2 | 0/TBD | Not started | - |
 | 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
 | 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |
