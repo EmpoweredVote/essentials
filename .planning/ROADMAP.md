@@ -999,7 +999,27 @@ Plans:
 3. 100% citation rate — zero uncited stance values across both cities
 4. Blank spokes for officials with no findable public record (documented as expected outcome)
 
-**Plans:** TBD
+**Plans:** 5 plans
+Plans:
+**Wave 1**
+
+- [ ] 123-01-PLAN.md — Wave 0 pre-flight + Lynn Mayor Nicholson + At-Large councillors Field, LaPierre, McClain, Net (migrations 635-639)
+
+**Wave 2** *(blocked on Wave 1 — sequential research cadence)*
+
+- [ ] 123-02-PLAN.md — Lynn Ward councillors Meaney, Matul, Alinsug, Megie-Maddrey, Paez, Hogan, Avery (migrations 640-646)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 123-03-PLAN.md — New Bedford Mayor Mitchell + At-Large councillors Abreu, Burgo, Carney, Gomes, Roy (migrations 647-652)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 123-04-PLAN.md — New Bedford Ward councillors Choquette, Pemberton, Oliver, Baptiste, Lopes, Pereira (migrations 653-658)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 123-05-PLAN.md — Phase-wide closure verification + close LYNN-03 + NEWBED-03
 
 ---
 
