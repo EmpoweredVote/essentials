@@ -3,13 +3,12 @@ gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: milestone
 status: executing
-stopped_at: context exhaustion at 75% (2026-06-14)
-last_updated: "2026-06-14T19:53:13.361Z"
-last_activity: 2026-06-14 — Phase 120 planned; geo_id=2545000; Mayor Mitchell + 11 City Councilors; migrations 587+588
+last_updated: "2026-06-14T20:30:00.000Z"
+last_activity: 2026-06-14 — Phase 121 planned; 5 plans (migrations 590-596); Fall River + Medford + Waltham
 progress:
   total_phases: 26
   completed_phases: 20
-  total_plans: 77
+  total_plans: 82
   completed_plans: 76
   percent: 77
 ---
@@ -18,11 +17,11 @@ progress:
 
 ## Current Position
 
-Phase: 120 — New Bedford Deep Seed
-Plan: Phase 120 COMPLETE (2/2 plans done)
-Status: Phase 120 COMPLETE — NEWBED-01 + NEWBED-02 satisfied; next: Phase 121
-Last activity: 2026-06-14 — Phase 120 complete; migrations 587+588 applied; 12 officials seeded; 1/12 headshots (Mayor Mitchell via Wikipedia Commons; 11 gaps Cloudflare-blocked)
-Next migration: 589
+Phase: 121 — Fall River + Medford + Waltham Deep Seeds
+Plan: Ready to execute (0/5 plans done)
+Status: Phase 121 PLANNED — 5 plans ready; migrations 590-596; FALLRIV-01/02 + MEDFORD-01/02 + WALTHAM-01/02
+Last activity: 2026-06-14 — Phase 121 planned; Wave 1 (3 city govs) + Wave 2 (Medford SC) + Wave 3 (headshots)
+Next migration: 590
 
 ## Project Reference
 
