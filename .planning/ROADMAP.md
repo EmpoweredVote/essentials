@@ -951,7 +951,7 @@ Plans:
 3. 100% citation rate — zero uncited stance values across both cities
 4. Compass renders correctly on at least one Newton and one Somerville profile (human-verified)
 
-**Plans:** 3/5 plans executed
+**Plans:** 4/5 plans executed
 Plans:
 **Wave 1**
 
@@ -967,7 +967,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 122-04-PLAN.md — Somerville Mayor Wilson + 11 City Councillors (migrations 623-634)
+- [x] 122-04-PLAN.md — Somerville Mayor Wilson + 11 City Councillors (migrations 623-634; 85 stances; all 12 Somerville officials complete)
 
 **Wave 5** *(blocked on Wave 4)*
 
@@ -1096,7 +1096,7 @@ All 22 requirements covered ✓
 | 119. Lynn Deep Seed | 0/3 | Planned | - |
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
-| 122. MA Tier 3 Stances Wave 1 | 2/5 | In Progress|  |
+| 122. MA Tier 3 Stances Wave 1 | 4/5 | In Progress|  |
 | 123. MA Tier 3 Stances Wave 2 | 0/TBD | Not started | - |
 | 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
 | 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |
