@@ -4,8 +4,8 @@ milestone: v14.0
 milestone_name: milestone
 status: Ready
 stopped_at: ""
-last_updated: "2026-06-15T23:52:00.000Z"
-last_activity: 2026-06-15 -- Phase 124 Plan 03 Task 1 in progress; Waltham at-large stances; Wave 0 pre-flight done (MAX=682, next=683, 16 UUIDs confirmed, 44 topics); Donahue(683)=3 stances, Bradley-MacArthur(684)=1, Brasco(685)=2; all verified 0 unpaired/uncited
+last_updated: "2026-06-16T00:10:00.000Z"
+last_activity: 2026-06-15 -- Phase 124 Plan 03 Task 2 done; Waltham at-large stances; King(686)=2, LeBlanc(687)=2, Tzioumis(688)=blank, Vidal(689)=blank; Q-uncited=0 Q-unpaired=0; 10 total stances across 7 officials (5 with stances, 2 blank); next migration 690
 progress:
   total_phases: 26
   completed_phases: 24
