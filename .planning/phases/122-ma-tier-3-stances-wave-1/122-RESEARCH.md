@@ -583,22 +583,13 @@ This phase writes only to `inform.politician_answers` and `inform.politician_con
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Migration 597 applied or only on disk?**
-   - What we know: File exists at `C:/EV-Accounts/backend/migrations/597_quincy_stances.sql`; Phase 121 SUMMARY only references 590–596
-   - What's unclear: Whether 597 was applied to production before this phase
-   - Recommendation: Planner's Wave 0 task should verify with `SELECT version FROM supabase_migrations.schema_migrations WHERE version IN ('596', '597')` and pick next number accordingly
+1. **Migration 597 applied or only on disk?** — RESOLVED by Plan 01 Task 1 (Wave 0 pre-flight): executor runs `SELECT version FROM supabase_migrations.schema_migrations WHERE version IN ('596', '597')` to confirm applied status before writing any migration.
 
-2. **Active compass topic count changed?**
-   - What we know: Last verified count was 44 topics (106-PATTERNS.md); project memory notes retired IDs
-   - What's unclear: Whether any topics were added or retired between Phase 115 and Phase 122
-   - Recommendation: First task of Wave 0 should run `SELECT COUNT(*) FROM inform.compass_topics WHERE is_active = true` and `SELECT slug, id FROM inform.compass_topics WHERE is_active = true ORDER BY slug` to confirm the topic UUID reference block is current
+2. **Active compass topic count changed?** — RESOLVED by Plan 01 Task 1 (Wave 0 pre-flight): executor runs `SELECT COUNT(*) FROM inform.compass_topics WHERE is_active = true` and uses the live list if count differs from expected 44.
 
-3. **Pre-existing stance rows for Newton/Somerville officials?**
-   - What we know: Earlier sessions sometimes pre-seeded partial rows (Boston councillors had pre-existing rows; Brockton was partly pre-done)
-   - What's unclear: Whether any Newton or Somerville stances were written during v13.0 sessions
-   - Recommendation: Planner's Wave 0 task should run `SELECT COUNT(*) FROM inform.politician_answers WHERE politician_id IN (SELECT id FROM essentials.politicians WHERE external_id BETWEEN -2562535012 AND -2545560001)` to detect pre-existing rows; upsert pattern handles them correctly either way
+3. **Pre-existing stance rows for Newton/Somerville officials?** — RESOLVED by Plan 01 Task 1 (Wave 0 pre-flight): executor runs pre-check query; upsert (`ON CONFLICT DO UPDATE`) handles pre-existing rows correctly either way.
 
 ---
 
