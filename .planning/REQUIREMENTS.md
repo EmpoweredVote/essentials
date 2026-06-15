@@ -7,13 +7,13 @@
 
 - [ ] **NEWTON-01:** A Newton address returns a LOCAL section showing Mayor + Board of Aldermen (or City Council) + School Committee members with correct offices linked to geo_id=2545560
 - [ ] **NEWTON-02:** All Newton elected officials (Mayor + council + school committee) have headshots at 600×750 in Supabase Storage (politician_photos bucket); best-effort where official photos unavailable online
-- [ ] **NEWTON-03:** Compass shows evidence-only stance data for Newton Mayor + council members; sequential research, 100% citation rate, no blank-default values
+- [x] **NEWTON-03:** Compass shows evidence-only stance data for Newton Mayor + council members; sequential research, 100% citation rate, no blank-default values
 
 ## SOMERVILLE — Somerville Deep Seed
 
 - [x] **SOMERVILLE-01:** A Somerville address returns a LOCAL section showing Mayor + City Council + School Committee members with correct offices linked to geo_id=2562535
 - [x] **SOMERVILLE-02:** All Somerville elected officials have headshots at 600×750 in Supabase Storage; best-effort where official photos unavailable online
-- [ ] **SOMERVILLE-03:** Compass shows evidence-only stance data for Somerville Mayor + City Councillors; sequential research, 100% citation rate
+- [x] **SOMERVILLE-03:** Compass shows evidence-only stance data for Somerville Mayor + City Councillors; sequential research, 100% citation rate
 
 ## LYNN — Lynn Deep Seed
 
@@ -75,10 +75,10 @@
 |-------------|-------|--------|
 | NEWTON-01 | 117 | ⬜ |
 | NEWTON-02 | 117 | ⬜ |
-| NEWTON-03 | 122 | ⬜ |
+| NEWTON-03 | 122 | ✅ |
 | SOMERVILLE-01 | 118 | ✅ |
 | SOMERVILLE-02 | 118 | ✅ |
-| SOMERVILLE-03 | 122 | ⬜ |
+| SOMERVILLE-03 | 122 | ✅ |
 | LYNN-01 | 119 | ⬜ |
 | LYNN-02 | 119 | ⬜ |
 | LYNN-03 | 123 | ⬜ |

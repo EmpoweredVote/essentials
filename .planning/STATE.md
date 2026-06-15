@@ -17,11 +17,11 @@ progress:
 
 ## Current Position
 
-Phase: 121 — Fall River + Medford + Waltham Deep Seeds
-Plan: Ready to execute (0/5 plans done)
-Status: Ready to execute
-Last activity: 2026-06-15 -- Phase 122 planning complete
-Next migration: 590
+Phase: 122 — MA Tier 3 Stances Wave 1
+Plan: Complete (5/5 plans done)
+Status: Complete
+Last activity: 2026-06-15 -- Phase 122 complete; NEWTON-03 + SOMERVILLE-03 closed
+Next migration: 635
 
 ## Project Reference
 
@@ -186,5 +186,6 @@ Resume file: None
 - [Phase 119-01]: Lynn city government seeded — migration 584 applied; Mayor Nicholson + 4 at-large + 7 ward councilors; Alinsug title='City Councilor (Ward 3)' (not Council President); Dr. honorific excluded from Meaney first_name per DB convention; file naming conflict with pre-existing 584_lowell_stances.sql resolved by renaming Lynn file to 584_lynn_city_government.sql
 - [Phase 119-02]: Lynn School Committee seeded — migration 585 applied; 6 elected SC members (Ortiz McGrath no hyphen in name; Peña with ñ character); Mayor Nicholson ex-officio via CROSS JOIN pattern; Gate (i) confirmed Mayor LOCAL_EXEC office_id preserved; autocommit pattern (no BEGIN/COMMIT) per Newton 579 analog
 - [Phase 122-03]: Newton Wave 3 complete — all 25 Newton officials attempted; Baker (7 stances) richest record from Suffolk Law professor role; 6 thin-record officials (Silber/Block/Farrell/Irish/Malakie/Micley) each received 2 stances (MBTA vote evidence only); 112 total Newton stance rows; 0 unpaired, 0 uncited; psql CLI used for DB access (Supabase MCP not available in restricted executor context)
+- [Phase 122-05]: Phase 122 CLOSED — 37 officials (25 Newton + 12 Somerville); 197 total stance rows (migrations 598-634); Q2=0 uncited, Q3=0 unpaired; 14 blank-spoke officials (thin record, correct per evidence-only rule); compass approved on Mayor Laredo (7 stances) + Mayor Wilson (18 DB / 13 displayed — display cap under investigation); NEWTON-03 + SOMERVILLE-03 satisfied; next migration=635
 - [Phase 122-04]: Somerville Wave 1 complete — all 12 Somerville officials attempted; Wilson (18 stances) richest record from MA State Rep tenure; Ewen-Campen (12) second richest from council resolution authorship; Hardt (2) thin record as Nov 2025 newcomer; 85 total Somerville stance rows; 0 unpaired, 0 uncited; A3 UUID mapping confirmed before any write
 - [Phase 119-03]: Lynn headshots complete — migration 586 applied; 12/12 city officials uploaded (11 CivicLive CDN + Mayor from Wikipedia Commons); Wikipedia required WIKIMEDIA_HEADERS descriptive UA (Chrome UA returned 429); MegieMaddrey.png CDN filename confirmed (no hyphen despite DB last_name='Megie-Maddrey'); 6 SC gaps documented per D-01 (SchoolMessenger text-only pages); LYNN-01 + LYNN-02 satisfied; Phase 119 CLOSED

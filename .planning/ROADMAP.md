@@ -724,7 +724,7 @@ All 17 requirements covered ✓
 - [x] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
 - [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
 - [x] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
-- [ ] **Phase 122: MA Tier 3 Stances Wave 1** - Evidence-only stances for Newton + Somerville officials
+- [x] **Phase 122: MA Tier 3 Stances Wave 1** - Evidence-only stances for Newton + Somerville officials
 - [ ] **Phase 123: MA Tier 3 Stances Wave 2** - Evidence-only stances for Lynn + New Bedford officials
 - [ ] **Phase 124: MA Tier 3 Stances Wave 3** - Evidence-only stances for Fall River + Medford + Waltham officials
 - [ ] **Phase 125: MA Tier 3 Playbook Retrospective** - LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows
@@ -971,7 +971,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 122-05-PLAN.md — Phase-wide closure verification + compass render checkpoint + close NEWTON-03 + SOMERVILLE-03
+- [x] 122-05-PLAN.md — Phase-wide closure verification + compass render checkpoint + close NEWTON-03 + SOMERVILLE-03 (Q2=0, Q3=0, 197 total rows; compass approved on Laredo + Wilson)
 
 ---
 
@@ -1096,7 +1096,7 @@ All 22 requirements covered ✓
 | 119. Lynn Deep Seed | 0/3 | Planned | - |
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
-| 122. MA Tier 3 Stances Wave 1 | 4/5 | In Progress|  |
+| 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
 | 123. MA Tier 3 Stances Wave 2 | 0/TBD | Not started | - |
 | 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
 | 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |
