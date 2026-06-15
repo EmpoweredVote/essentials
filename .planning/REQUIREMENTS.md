@@ -31,7 +31,7 @@
 
 - [ ] **FALLRIV-01:** A Fall River address returns a LOCAL section showing Mayor + City Council members with correct offices linked to Fall River's geo_id
 - [ ] **FALLRIV-02:** Fall River elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [ ] **FALLRIV-03:** Compass shows evidence-only stance data for Fall River Mayor + Council; sequential research, 100% citation rate
+- [x] **FALLRIV-03:** Compass shows evidence-only stance data for Fall River Mayor + Council; sequential research, 100% citation rate
 
 ## MEDFORD — Medford Deep Seed
 
@@ -87,7 +87,7 @@
 | NEWBED-03 | 123 | ✅ |
 | FALLRIV-01 | 121 | ⬜ |
 | FALLRIV-02 | 121 | ⬜ |
-| FALLRIV-03 | 124 | ⬜ |
+| FALLRIV-03 | 124 | ✅ |
 | MEDFORD-01 | 121 | ⬜ |
 | MEDFORD-02 | 121 | ⬜ |
 | MEDFORD-03 | 124 | ✅ |

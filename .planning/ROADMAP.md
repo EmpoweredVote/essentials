@@ -1035,14 +1035,13 @@ Plans:
 4. 100% citation rate — zero uncited stance values across all three cities
 5. Blank spokes for officials with no findable public record (documented as expected outcome)
 
-**Plans:** 4/4 complete (2026-06-15)
-
-| Plan | Status | Description |
-|------|--------|-------------|
-| 01 | Complete | Fall River 10 officials (665-674); 17 stances; FALLRIV-03 closed |
-| 02 | Complete | Medford 8 officials (675-682); 40 stances; MEDFORD-03 closed |
-| 03 | Complete | Waltham at-large 7 officials (683-689); 10 stances; WALTHAM-03 partial |
-| 04 | Complete | Waltham ward 9 officials (690-698); 9 stances; WALTHAM-03 fully closed |
+**Plans:** 5/5 complete (2026-06-15)
+Plans:
+- [x] 124-01-PLAN.md — Wave 0 pre-flight + Fall River Mayor Coogan + all 9 at-large councillors (migrations 665-674)
+- [x] 124-02-PLAN.md — Medford Mayor Lungo-Koehn + 7 at-large City Councilors (migrations 675-682)
+- [x] 124-03-PLAN.md — Waltham Mayor Donahue + 6 at-large City Councillors (migrations 683-689)
+- [x] 124-04-PLAN.md — Waltham Ward 1-9 City Councillors (migrations 690-698)
+- [x] 124-05-PLAN.md — Phase-wide closure verification + close FALLRIV-03 + MEDFORD-03 + WALTHAM-03
 
 Total Phase 124: 34 officials; 76 stances; 0 uncited; 0 unpaired; FALLRIV-03+MEDFORD-03+WALTHAM-03 all satisfied.
 
