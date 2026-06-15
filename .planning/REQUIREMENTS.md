@@ -37,7 +37,7 @@
 
 - [ ] **MEDFORD-01:** A Medford address returns a LOCAL section showing Mayor + Board of Aldermen (or City Council) + School Committee members with correct offices linked to Medford's geo_id
 - [ ] **MEDFORD-02:** Medford elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [ ] **MEDFORD-03:** Compass shows evidence-only stance data for Medford Mayor + Aldermen/Council; sequential research, 100% citation rate
+- [x] **MEDFORD-03:** Compass shows evidence-only stance data for Medford Mayor + Aldermen/Council; sequential research, 100% citation rate
 
 ## WALTHAM — Waltham Deep Seed
 
@@ -90,7 +90,7 @@
 | FALLRIV-03 | 124 | ⬜ |
 | MEDFORD-01 | 121 | ⬜ |
 | MEDFORD-02 | 121 | ⬜ |
-| MEDFORD-03 | 124 | ⬜ |
+| MEDFORD-03 | 124 | ✅ |
 | WALTHAM-01 | 121 | ⬜ |
 | WALTHAM-02 | 121 | ⬜ |
 | WALTHAM-03 | 124 | ⬜ |
