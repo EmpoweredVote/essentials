@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: milestone
-status: In Progress
+status: Ready
 stopped_at: ""
-last_updated: "2026-06-15T22:10:00.000Z"
-last_activity: 2026-06-15 -- Phase 124 Plan 01 complete; all 10 Fall River officials done; Raposo(0)+Cadime(1)+Canuel(0)+Peckham(2) applied; 17 total stances; 5 blank-spoke; Q-phase=0; next migration 675
+last_updated: "2026-06-15T22:30:00.000Z"
+last_activity: 2026-06-15 -- Phase 124 Plan 01 complete; FALLRIV-03 closed; 10 Fall River officials done; 17 stance rows (Coogan=9, Ponte=2, Dionne=2, Camara=1, Cadime=1, Peckham=2; 4 blank-spoke); migrations 665-674 applied; Q-phase=0 uncited; next migration 675
 progress:
   total_phases: 26
   completed_phases: 24
   total_plans: 97
-  completed_plans: 92
-  percent: 92
+  completed_plans: 93
+  percent: 93
 ---
 
 # State
@@ -19,10 +19,10 @@ progress:
 ## Current Position
 
 Phase: 124 — MA Tier 3 Stances Wave 3
-Plan: Not started
+Plan: 02 (Plan 01 complete)
 Status: Ready
-Last activity: 2026-06-15 -- Phase 123 complete; LYNN-03 + NEWBED-03 closed; Q1=0 Q2=0 Q3=0 Q4=0; 41 Lynn + 16 New Bedford = 57 total stance rows across 24 officials; next migration 659
-Next migration: 659
+Last activity: 2026-06-15 -- Plan 01 complete; FALLRIV-03 closed; 17 stance rows for 10 Fall River officials; migrations 665-674 applied; Q-phase=0 uncited; next migration 675
+Next migration: 675
 
 ## Project Reference
 
@@ -165,6 +165,7 @@ Resume file: None
 | Phase 123 P03 | ~90m | 2 tasks | 6 files (647-652 Mayor+At-Large NB); 13 stance rows; 0 unpaired, 0 uncited |
 | Phase 123 P04 | ~60m | 2 tasks | 6 files (653-658 Ward councillors NB); 3 stance rows; Choquette+Oliver immigration=4.0; Pereira economic-development=2.0; 3 blank-spoke officials |
 | Phase 123 P05 | ~10m | 2 tasks | 3 files (REQUIREMENTS.md, ROADMAP.md, STATE.md); Q1=0 Q2=0 Q3=0 Q4=0; 57 total stance rows; LYNN-03+NEWBED-03 closed |
+| Phase 124 P01 | ~75m | 4 tasks | 10 files (665-674 stances SQLs); 17 stances for 10 Fall River officials; 5 blank-spoke; 0 uncited; FALLRIV-03 closed |
 
 ## Decisions
 
@@ -200,3 +201,4 @@ Resume file: None
 - [Phase 123-03]: NB is NOT a sanctuary city (no council immigration resolution; police cooperate with ICE per WBSM) — contrast with Lynn which passed 2025 ICE resolution; no local-immigration row for NB at-large councillors; Mitchell public-safety-approach=4.0 from former AUSA (Whitey Bulger task force) background; Burgo proposed rent stabilization ballot question 2023 (direct individual evidence → rent-regulation=2.0); Gomes voted to override Mitchell veto on rent stabilization ballot question; Choquette+Oliver (ward councillors) switched to Republican Party per WBSM — relevant for Plan 04
 - [Phase 123-04]: Choquette(W1) + Oliver(W3) both received immigration=4.0 from documented non-citizen police ballot question ("Hiring non-citizens as NBPD officers is not responsible government" — Choquette WBSM quote); Pereira(W6/President) received economic-development=2.0 from renaming Labor&Industry→Economic Development Committee + creating Special Permits & Licensing to cut business wait times; Pemberton(W2) zero-INSERT (new member Nov 2025, <6 months); Baptiste(W4)+Lopes(W5) zero-INSERT (votes documented but no individual attributed policy quotes); NEWBED-03 satisfied; all 12 NB officials complete; 16 total NB stance rows
 - [Phase 123-05]: Phase 123 CLOSED — 24 officials (12 Lynn + 12 New Bedford); Q1=0 Q2=0 Q3=0 Q4=0; 41 Lynn stance rows + 16 New Bedford stance rows = 57 total; 14 blank-spoke officials (correct per evidence-only rule); LYNN-03 + NEWBED-03 satisfied; next migration=659
+- [Phase 124-01]: Migrations 659-664 pre-occupied by MA Tier 2 geofencing (Boston council backfill, Worcester/Springfield/Lowell/Brockton/Quincy district geofencing); Fall River stances used 665-674 instead; 10 officials done; Coogan(R, Mayor) richest record (9 stances); 5 blank-spoke at-large councillors; FALLRIV-03 closed; Linda Pereira (Fall River, migration 670) confirmed distinct from Ryan Pereira (New Bedford, migration 658)

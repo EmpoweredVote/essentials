@@ -1105,5 +1105,5 @@ All 22 requirements covered ✓
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
 | 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
 | 123. MA Tier 3 Stances Wave 2 | 5/5 | Complete | 2026-06-15 |
-| 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
+| 124. MA Tier 3 Stances Wave 3 | 1/5 | In Progress | - |
 | 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |
