@@ -5,7 +5,7 @@ milestone_name: milestone
 status: In Progress
 stopped_at: ""
 last_updated: "2026-06-15T22:10:00.000Z"
-last_activity: 2026-06-15 -- Phase 124 Plan 01 in progress; Hart(0)+Camara(1)+L.Pereira(0) applied; 14 stances total so far; next migration 671
+last_activity: 2026-06-15 -- Phase 124 Plan 01 complete; all 10 Fall River officials done; Raposo(0)+Cadime(1)+Canuel(0)+Peckham(2) applied; 17 total stances; 5 blank-spoke; Q-phase=0; next migration 675
 progress:
   total_phases: 26
   completed_phases: 24
