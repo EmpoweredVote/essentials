@@ -999,7 +999,7 @@ Plans:
 3. 100% citation rate — zero uncited stance values across both cities
 4. Blank spokes for officials with no findable public record (documented as expected outcome)
 
-**Plans:** 5 plans
+**Plans:** 2/5 plans executed
 Plans:
 **Wave 1**
 
@@ -1007,7 +1007,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 — sequential research cadence)*
 
-- [ ] 123-02-PLAN.md — Lynn Ward councillors Meaney, Matul, Alinsug, Megie-Maddrey, Paez, Hogan, Avery (migrations 640-646)
+- [x] 123-02-PLAN.md — Lynn Ward councillors Meaney, Matul, Alinsug, Megie-Maddrey, Paez, Hogan, Avery (migrations 640-646)
 
 **Wave 3** *(blocked on Wave 2)*
 
@@ -1117,6 +1117,6 @@ All 22 requirements covered ✓
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
 | 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
-| 123. MA Tier 3 Stances Wave 2 | 1/5 | In progress | Plan 01 complete — Mayor + 4 At-Large (27 stances) |
+| 123. MA Tier 3 Stances Wave 2 | 2/5 | In Progress|  |
 | 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
 | 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |
