@@ -725,7 +725,7 @@ All 17 requirements covered ✓
 - [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
 - [x] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
 - [x] **Phase 122: MA Tier 3 Stances Wave 1** - Evidence-only stances for Newton + Somerville officials
-- [ ] **Phase 123: MA Tier 3 Stances Wave 2** - Evidence-only stances for Lynn + New Bedford officials
+- [x] **Phase 123: MA Tier 3 Stances Wave 2** - Evidence-only stances for Lynn + New Bedford officials
 - [ ] **Phase 124: MA Tier 3 Stances Wave 3** - Evidence-only stances for Fall River + Medford + Waltham officials
 - [ ] **Phase 125: MA Tier 3 Playbook Retrospective** - LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows
 
@@ -999,27 +999,14 @@ Plans:
 3. 100% citation rate — zero uncited stance values across both cities
 4. Blank spokes for officials with no findable public record (documented as expected outcome)
 
-**Plans:** 3/5 plans executed
+**Plans:** 5/5 plans complete
 Plans:
-**Wave 1**
 
-- [x] 123-01-PLAN.md — Wave 0 pre-flight + Lynn Mayor Nicholson + At-Large councillors Field, LaPierre, McClain, Net (migrations 635-639) — COMPLETE: 27 stance rows, 0 unpaired, 0 uncited
-
-**Wave 2** *(blocked on Wave 1 — sequential research cadence)*
-
+- [x] 123-01-PLAN.md — Wave 0 pre-flight + Lynn Mayor Nicholson + At-Large councillors Field, LaPierre, McClain, Net (migrations 635-639)
 - [x] 123-02-PLAN.md — Lynn Ward councillors Meaney, Matul, Alinsug, Megie-Maddrey, Paez, Hogan, Avery (migrations 640-646)
-
-**Wave 3** *(blocked on Wave 2)*
-
-- [x] 123-03-PLAN.md — New Bedford Mayor Mitchell + At-Large councillors Abreu, Burgo, Carney, Gomes, Roy (migrations 647-652) — COMPLETE: 13 stance rows, 0 unpaired, 0 uncited
-
-**Wave 4** *(blocked on Wave 3)*
-
-- [x] 123-04-PLAN.md — New Bedford Ward councillors Choquette, Pemberton, Oliver, Baptiste, Lopes, Pereira (migrations 653-658) — COMPLETE: 3 stance rows (Choquette+Oliver immigration=4.0, Pereira economic-dev=2.0; 3 blank-spoke officials); 16 total NB stance rows across all 12 officials; NEWBED-03 satisfied
-
-**Wave 5** *(blocked on Wave 4)*
-
-- [ ] 123-05-PLAN.md — Phase-wide closure verification + close LYNN-03 + NEWBED-03
+- [x] 123-03-PLAN.md — New Bedford Mayor Mitchell + At-Large councillors Abreu, Burgo, Carney, Gomes, Roy (migrations 647-652)
+- [x] 123-04-PLAN.md — New Bedford Ward councillors Choquette, Pemberton, Oliver, Baptiste, Lopes, Pereira (migrations 653-658)
+- [x] 123-05-PLAN.md — Phase-wide closure verification + close LYNN-03 + NEWBED-03
 
 ---
 
@@ -1117,6 +1104,6 @@ All 22 requirements covered ✓
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
 | 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
-| 123. MA Tier 3 Stances Wave 2 | 2/5 | In Progress|  |
+| 123. MA Tier 3 Stances Wave 2 | 5/5 | Complete | 2026-06-15 |
 | 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
 | 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |

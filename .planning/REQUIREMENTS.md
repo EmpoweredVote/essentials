@@ -19,7 +19,7 @@
 
 - [ ] **LYNN-01:** A Lynn address returns a LOCAL section showing Mayor + City Council members with correct offices linked to geo_id=2537490
 - [ ] **LYNN-02:** Lynn elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [ ] **LYNN-03:** Compass shows evidence-only stance data for Lynn Mayor + Council; sequential research, 100% citation rate
+- [x] **LYNN-03:** Compass shows evidence-only stance data for Lynn Mayor + Council; sequential research, 100% citation rate
 
 ## NEWBED — New Bedford Deep Seed
 
@@ -81,7 +81,7 @@
 | SOMERVILLE-03 | 122 | ✅ |
 | LYNN-01 | 119 | ⬜ |
 | LYNN-02 | 119 | ⬜ |
-| LYNN-03 | 123 | ⬜ |
+| LYNN-03 | 123 | ✅ |
 | NEWBED-01 | 120 | ⬜ |
 | NEWBED-02 | 120 | ⬜ |
 | NEWBED-03 | 123 | ✅ |
