@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
 status: executing
-last_updated: "2026-06-15T08:00:00.000Z"
-last_activity: 2026-06-15 -- Phase 123 planning complete
+last_updated: "2026-06-15T10:30:00.000Z"
+last_activity: 2026-06-15 -- Phase 123 Plan 01 complete
 progress:
   total_phases: 9
   completed_phases: 5
   total_plans: 26
-  completed_plans: 19
-  percent: 56
+  completed_plans: 20
+  percent: 58
 ---
 
 # State
@@ -18,10 +18,10 @@ progress:
 ## Current Position
 
 Phase: 123 — MA Tier 3 Stances Wave 2
-Plan: Planned (5 plans ready)
-Status: Ready to execute
-Last activity: 2026-06-15 -- Phase 123 planning complete (5 plans, 24 officials: Lynn + New Bedford)
-Next migration: 635
+Plan: 02 (next)
+Status: Executing — Plan 01 complete
+Last activity: 2026-06-15 -- Phase 123 Plan 01 complete — Mayor Nicholson + 4 At-Large councillors (migrations 635-639); 27 stance rows; 0 unpaired, 0 uncited
+Next migration: 640
 
 ## Project Reference
 
@@ -115,8 +115,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-15T07:30:00Z
-Stopped at: Phase 122 Plan 04 complete — Somerville Wave 1 (all 12 officials) stances applied; Mayor Wilson + 11 City Councillors; 85 total Somerville stance rows; 0 unpaired, 0 uncited
+Last session: 2026-06-15T10:30:00Z
+Stopped at: Phase 123 Plan 01 complete — Mayor Nicholson (9) + Field (5) + LaPierre (4) + McClain (6) + Net (3); 27 total stance rows; 0 unpaired, 0 uncited; next is Plan 02 (Ward councillors Meaney-Avery, migrations 640-646)
 Resume file: None
 
 ## Performance Metrics
@@ -159,6 +159,7 @@ Resume file: None
 | Phase 122 P02 | 35m | 2 tasks | 8 files |
 | Phase 122 P03 | 22m | 2 tasks | 10 files |
 | Phase 122 P04 | ~90m | 3 tasks | 12 files |
+| Phase 123 P01 | ~45m | 3 tasks | 2 files (638_mcclain_stances.sql, 639_net_stances.sql); 635-637 verified from prior session; 27 stance rows total |
 
 ## Decisions
 
@@ -187,5 +188,6 @@ Resume file: None
 - [Phase 119-02]: Lynn School Committee seeded — migration 585 applied; 6 elected SC members (Ortiz McGrath no hyphen in name; Peña with ñ character); Mayor Nicholson ex-officio via CROSS JOIN pattern; Gate (i) confirmed Mayor LOCAL_EXEC office_id preserved; autocommit pattern (no BEGIN/COMMIT) per Newton 579 analog
 - [Phase 122-03]: Newton Wave 3 complete — all 25 Newton officials attempted; Baker (7 stances) richest record from Suffolk Law professor role; 6 thin-record officials (Silber/Block/Farrell/Irish/Malakie/Micley) each received 2 stances (MBTA vote evidence only); 112 total Newton stance rows; 0 unpaired, 0 uncited; psql CLI used for DB access (Supabase MCP not available in restricted executor context)
 - [Phase 122-05]: Phase 122 CLOSED — 37 officials (25 Newton + 12 Somerville); 197 total stance rows (migrations 598-634); Q2=0 uncited, Q3=0 unpaired; 14 blank-spoke officials (thin record, correct per evidence-only rule); compass approved on Mayor Laredo (7 stances) + Mayor Wilson (18 DB / 13 displayed — display cap under investigation); NEWTON-03 + SOMERVILLE-03 satisfied; next migration=635
+- [Phase 123-01]: Lynn At-Large stances complete — 27 rows for 5 officials (Mayor + 4 At-Large); Net (3 stances) thin record per evidence-only rule; LaPierre public-safety-approach=3.0 (center, combined enforcement+services); all 12 Lynn UUIDs recorded in 123-01-SUMMARY.md for Plans 02-05
 - [Phase 122-04]: Somerville Wave 1 complete — all 12 Somerville officials attempted; Wilson (18 stances) richest record from MA State Rep tenure; Ewen-Campen (12) second richest from council resolution authorship; Hardt (2) thin record as Nov 2025 newcomer; 85 total Somerville stance rows; 0 unpaired, 0 uncited; A3 UUID mapping confirmed before any write
 - [Phase 119-03]: Lynn headshots complete — migration 586 applied; 12/12 city officials uploaded (11 CivicLive CDN + Mayor from Wikipedia Commons); Wikipedia required WIKIMEDIA_HEADERS descriptive UA (Chrome UA returned 429); MegieMaddrey.png CDN filename confirmed (no hyphen despite DB last_name='Megie-Maddrey'); 6 SC gaps documented per D-01 (SchoolMessenger text-only pages); LYNN-01 + LYNN-02 satisfied; Phase 119 CLOSED

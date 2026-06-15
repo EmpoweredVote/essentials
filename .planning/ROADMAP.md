@@ -1003,7 +1003,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 123-01-PLAN.md — Wave 0 pre-flight + Lynn Mayor Nicholson + At-Large councillors Field, LaPierre, McClain, Net (migrations 635-639)
+- [x] 123-01-PLAN.md — Wave 0 pre-flight + Lynn Mayor Nicholson + At-Large councillors Field, LaPierre, McClain, Net (migrations 635-639) — COMPLETE: 27 stance rows, 0 unpaired, 0 uncited
 
 **Wave 2** *(blocked on Wave 1 — sequential research cadence)*
 
@@ -1117,6 +1117,6 @@ All 22 requirements covered ✓
 | 120. New Bedford Deep Seed | 0/TBD | Not started | - |
 | 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
 | 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
-| 123. MA Tier 3 Stances Wave 2 | 0/TBD | Not started | - |
+| 123. MA Tier 3 Stances Wave 2 | 1/5 | In progress | Plan 01 complete — Mayor + 4 At-Large (27 stances) |
 | 124. MA Tier 3 Stances Wave 3 | 0/TBD | Not started | - |
 | 125. MA Tier 3 Playbook Retrospective | 0/TBD | Not started | - |
