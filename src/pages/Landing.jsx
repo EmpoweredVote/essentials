@@ -388,7 +388,7 @@ export default function Landing() {
         <p className="text-base text-gray-500 dark:text-gray-400 mb-8">
           Each one is a preview of the full Essentials experience. Click a state to browse its covered areas.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start">
           {COVERAGE_STATES.map((state) => {
             const isExpanded = expandedStates.has(state.abbrev);
             return (
