@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
-status: executing
-last_updated: "2026-06-16T00:30:00.000Z"
-last_activity: 2026-06-16 -- Phase 125 Plan 01 complete; LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows + 6 MA GOTCHAs; MA-RETRO-02 partially satisfied (Plan 02 will flip checkbox); next migration 699
+status: v14.0 complete — MA Tier 3 City Coverage milestone closed
+last_updated: "2026-06-15T00:00:00.000Z"
+last_activity: 2026-06-15 -- Phase 125 complete; v14.0 MA Tier 3 City Coverage milestone closed; MA-RETRO-02 satisfied; LOCATION-ONBOARDING.md updated with 7 Cities Onboarded rows + MA Tier 3 GOTCHAs; next migration 699
 progress:
   total_phases: 9
-  completed_phases: 8
+  completed_phases: 9
   total_plans: 33
-  completed_plans: 32
-  percent: 89
+  completed_plans: 33
+  percent: 100
 ---
 
 # State
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 125 — MA Tier 3 Playbook Retrospective
-Plan: 01 complete; 02 pending
-Status: Executing
-Last activity: 2026-06-16 -- Phase 125 Plan 01 complete; LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows + 6 MA GOTCHAs (11 total STATE-SPECIFIC: MA callouts)
+Plan: 02 complete (phase closed)
+Status: Complete
+Last activity: 2026-06-15 -- Phase 125 complete; v14.0 MA Tier 3 City Coverage milestone closed; MA-RETRO-02 satisfied; LOCATION-ONBOARDING.md updated with 7 Cities Onboarded rows + MA Tier 3 GOTCHAs; next migration 699
 Next migration: 699
 
 ## Project Reference
@@ -34,15 +34,15 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
-| 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Planned (3 plans) |
-| 118 — Somerville Deep Seed | Mayor + City Council + School Committee officials + headshots | SOMERVILLE-01, SOMERVILLE-02 | Not started |
-| 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Planned (3 plans) |
-| 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Planned (2 plans) |
-| 121 — Fall River + Medford + Waltham Deep Seeds | Officials + headshots for three smaller Tier 3 cities | FALLRIV-01/02, MEDFORD-01/02, WALTHAM-01/02 | Not started |
-| 122 — MA Tier 3 Stances Wave 1 | Evidence-only stances: Newton + Somerville | NEWTON-03, SOMERVILLE-03 | Not started |
-| 123 — MA Tier 3 Stances Wave 2 | Evidence-only stances: Lynn + New Bedford | LYNN-03, NEWBED-03 | Planned (5 plans) |
+| 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Complete (3 plans) |
+| 118 — Somerville Deep Seed | Mayor + City Council + School Committee officials + headshots | SOMERVILLE-01, SOMERVILLE-02 | Complete (3 plans) |
+| 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Complete (3 plans) |
+| 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Complete (2 plans) |
+| 121 — Fall River + Medford + Waltham Deep Seeds | Officials + headshots for three smaller Tier 3 cities | FALLRIV-01/02, MEDFORD-01/02, WALTHAM-01/02 | Complete (5 plans) |
+| 122 — MA Tier 3 Stances Wave 1 | Evidence-only stances: Newton + Somerville | NEWTON-03, SOMERVILLE-03 | Complete (5 plans) |
+| 123 — MA Tier 3 Stances Wave 2 | Evidence-only stances: Lynn + New Bedford | LYNN-03, NEWBED-03 | Complete (5 plans) |
 | 124 — MA Tier 3 Stances Wave 3 | Evidence-only stances: Fall River + Medford + Waltham | FALLRIV-03, MEDFORD-03, WALTHAM-03 | Complete (5 plans) |
-| 125 — MA Tier 3 Playbook Retrospective | LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows | MA-RETRO-02 | Not started |
+| 125 — MA Tier 3 Playbook Retrospective | LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows | MA-RETRO-02 | Complete (2 plans) |
 
 ## Key MA Facts (carry into plans)
 
@@ -56,7 +56,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - MA 2026: primary 2026-09-08, general 2026-11-03
 - MA city elections: typically odd-year (2025, 2027) — no city-level race rows needed for most Tier 3 cities
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
-- Next migration: 659
+- Next migration: 699
 
 ## Accumulated Context
 
@@ -211,3 +211,4 @@ Resume file: None
 - [Phase 124-04]: Migrations 684-692 specified in plan pre-occupied by Plan 03 at-large files (683-689); ward stances used 690-698 instead; all 9 ward councillors received housing=2.0 (MBTA compliance vote only available evidence); no blank-spoke officials; Logan(CP) searched specifically but no additional statements found; total Waltham 19 stance rows; WALTHAM-03 fully closed; Phase 124 COMPLETE
 - [Phase 124-05]: Phase 124 CLOSED — 34 officials (10 Fall River + 8 Medford + 16 Waltham); Q1=0 Q2=0 Q3=0 Q4=0 Q5=0 Q6=0; 17 Fall River + 40 Medford + 19 Waltham = 76 total stances; 8 blank-spoke officials (correct per evidence-only rule); FALLRIV-03+MEDFORD-03+WALTHAM-03 satisfied; next migration=699
 - [Phase 125-01]: LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows (Newton/Somerville/Lynn/New Bedford/Fall River/Medford/Waltham) + 4 MA Quick Reference trap rows + 7 Key Facts bullets + 6 new STATE-SPECIFIC: MA GOTCHAs (11 total); Medford geo_id DB-verified as 2539835 (estimate 2540115 wrong; external_id prefix -2540115xxx already seeded from wrong estimate — perpetual discrepancy documented); all 7 geo_ids confirmed from geofence_boundaries query; New Bedford 2545000 reconfirmed from migration 587
+- [Phase 125-02]: All 22 v14.0 requirements marked complete in REQUIREMENTS.md; traceability table all ✅; STATE.md + ROADMAP.md milestone close applied; v14.0 MA Tier 3 City Coverage milestone formally closed 2026-06-15; next migration 699
