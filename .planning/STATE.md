@@ -3,32 +3,32 @@ gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
 status: executing
-last_updated: "2026-06-17T01:30:00.000Z"
-last_activity: 2026-06-16 — Phase 135 South Gate Stances complete; SOUTHGATE-01 closed; 8 total stance rows across 5 council members (Hurtado 3, Rios 2, Avalos 2, Davila 1, Barron 0-ledger); rotational mayor (none excluded); thin-record small city; next migration 764
+last_updated: "2026-06-17T02:30:00.000Z"
+last_activity: 2026-06-16 — Phase 136 West Hollywood Stances complete; WEHO-01 closed; 21 total stance rows across 5 council members (Byers 5, Erickson 5, Hang 4, Meister 4, Heilman 3); rotational mayor (none excluded); uniformly progressive (Meister cross-cut growth 4.0); next migration 769
 progress:
   total_phases: 13
-  completed_phases: 10
-  total_plans: 16
-  completed_plans: 16
-  percent: 77
+  completed_phases: 11
+  total_plans: 17
+  completed_plans: 17
+  percent: 85
 ---
 
 # State
 
 ## Current Position
 
-Phase: 136 — West Hollywood Stances (not yet started)
+Phase: 137 — Whittier Stances (not yet started)
 Plan: —
 Status: Not started
-Last activity: 2026-06-16 — Phase 135 South Gate Stances complete; SOUTHGATE-01 closed; 8 total stance rows across 5 council members; rotational mayor (none excluded)
-Next migration: 764
+Last activity: 2026-06-16 — Phase 136 West Hollywood Stances complete; WEHO-01 closed; 21 total stance rows across 5 council members; rotational mayor (none excluded)
+Next migration: 769
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 136 — West Hollywood Stances
+**Current focus:** Phase 137 — Whittier Stances
 
 ## v15.0 Roadmap Summary
 
@@ -44,7 +44,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 | 133 — Hawthorne Stances | Evidence-only stances for Mayor + 4 council | HAWTHORNE-01 | Complete (2026-06-16) |
 | 134 — Santa Monica Stances | Evidence-only stances for 10 council members | SANTAMONICA-01 | Complete (2026-06-16) |
 | 135 — South Gate Stances | Evidence-only stances for 5 council members | SOUTHGATE-01 | Complete (2026-06-16) |
-| 136 — West Hollywood Stances | Evidence-only stances for 5 council members | WEHO-01 | Not started |
+| 136 — West Hollywood Stances | Evidence-only stances for 5 council members | WEHO-01 | Complete (2026-06-16) |
 | 137 — Whittier Stances | Evidence-only stances for Mayor + 4 council | WHITTIER-01 | Not started |
 | 138 — LA Tier 1 Retrospective | LOCATION-ONBOARDING.md 12 city rows + milestone close | LA-RETRO-01 | Not started |
 
@@ -59,7 +59,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - CSV format: politician_id,topic_id,topic_key,value,notes — no commas or quotes in notes
 - Values are 1–5 directly (1=most progressive, 5=most conservative)
 - Apply scripts use `npx tsx` via Bash (PowerShell blocked by execution policy)
-- Next migration: 764
+- Next migration: 769
 
 ## Accumulated Context
 
@@ -118,8 +118,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-17T01:30:00.000Z
-Stopped at: Phase 135 complete — SOUTHGATE-01 closed; 8 stance rows (migrations 759-763); next migration 764
+Last session: 2026-06-17T02:30:00.000Z
+Stopped at: Phase 136 complete — WEHO-01 closed; 21 stance rows (migrations 764-768); next migration 769
 Resume file: None
 
 ## Performance Metrics
@@ -226,6 +226,7 @@ Resume file: None
 - [Phase 127-02]: Mirisch (longest-serving BH council member) 11 stances including progressive outliers campaign-finance=2.0 (documented op-ed advocacy for local contribution limits) and climate-change=2.0 (documented environmental concern); residential-zoning=5.0 (most protective on council); migration 716 applied. Nazarian 7 stances including civil-rights=2.0 (documented anti-discrimination/hate crime advocacy — progressive outlier); all other topics 4.0 reflecting council consensus; migration 717 applied. Wells 8 stances all 4.0 reflecting council consensus on housing/zoning/homelessness/safety/immigration/taxes/development/transportation; migration 718 applied. 26 total rows; 0 unpaired, 0 uncited; all 5 BH officials complete; next migration=719
 - [Phase 127-03]: Phase 127 Beverly Hills Stances CLOSED — Q1=5 rows (all 5 officials with stances), Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics, Q5=0 (Fisher exclusion confirmed). Per-official counts: Friedman (Mayor, directly elected)=9, Corman=7, Mirisch=11, Nazarian=7, Wells=8; total 42 stance rows (migrations 714-718); 0 blank-spoke officials; Fisher (City Treasurer, external_id -700011, UUID 7f162e20) excluded throughout — zero rows across all plans; BEVHILLS-01 FULLY CLOSED; next migration=719
 - [Phase 128-01]: Carson Wave 0 confirmed NNN=719 (MAX applied=718; 716+717+718 all present); 44 active topics; all 7 Carson UUIDs resolved. Davis-Holmes (Mayor, directly elected LOCAL_EXEC) 9 stances: homelessness-response=3.0, housing=2.0, public-safety-approach=3.0, economic-development=2.0, local-environment=2.0, growth-and-development=2.0, taxes=2.0, transportation-priorities=2.0, local-immigration=2.0; migration 719 applied. Hilton (D1) 5 stances: housing=2.0, homelessness-response=3.0, public-safety-approach=3.0, local-environment=2.0, local-immigration=2.0; migration 720 applied. 14 total rows; 0 unpaired, 0 uncited; Bradshaw(-700305, 8523d499) + Cooper(-700306, 702d8439) excluded (0 rows); next migration=721
+- [Phase 136-01]: Phase 136 West Hollywood Stances CLOSED — 5 council members (Byers 5, Erickson 5, Hang 4, Meister 4, Heilman 3); 21 total stance rows (migrations 764-768); 0 unpaired, 0 uncited, 0 inactive. Rotational mayor (none excluded). Uniformly progressive city (rent control/LGBTQ+ founding): Heilman rent-regulation+housing+civil-rights all 1.0; Erickson abortion 1.0 (former PPLA VP); Meister cross-cut (rent-regulation 1.0 but growth-and-development 4.0 neighborhood-preservation). Applied via psql -f. WEHO-01 FULLY CLOSED; next migration=769
 - [Phase 135-01]: Phase 135 South Gate Stances CLOSED — 5 council members (Hurtado 3, Rios 2, Avalos 2, Davila 1, Barron 0); 8 total stance rows (migrations 759-763); 0 unpaired, 0 uncited, 0 inactive. Rotational mayor (none excluded). Thin-record small working-class city — Barron (Mayor, elected 2022) zero-INSERT ledger (no findable directional positions); Davila 1 (Housing Authority chair). Hurtado public-safety 4.0 (POA endorsement); Avalos healthcare 2.0 (mental-health funding); Rios transportation 2.0 (light rail). Honest blank spokes, no defaulting. Applied via psql -f. SOUTHGATE-01 FULLY CLOSED; next migration=764
 - [Phase 134-01]: Phase 134 Santa Monica Stances CLOSED — 10 council members; 41 total stance rows (migrations 749-758); 0 unpaired, 0 uncited, 0 inactive. Rotational mayor (none excluded). SEED COHORT NOTE: DB includes both 2020-24 cohort (de la Torre, Parra) and Dec-2024 incoming (Hall, Raskin, Snell, Zernitskaya) = 10 seeded (live council is 7 seats); all 10 given evidence-based stances per milestone scope; flag for Phase 138 retrospective. Strong factional spread: SMRR/pro-housing progressives (Torosis rent-reg 1.0 + housing 1.0; Zwick/Hall/Raskin housing 1.0 + transportation 1.0; Zernitskaya housing 1.0; de la Torre police-accountability 2.0 + voting-rights 2.0) vs moderate Change bloc (Brock/Negrete/Parra/Snell public-safety 4.0; Brock+Parra growth 4.0; Snell residential-zoning 4.0 from SB 79 delay vote). Per-member: Zwick/Hall/Raskin 6, Brock/Parra/Zernitskaya 4, Negrete/Snell/de la Torre 3, Torosis 2. Applied via psql -f. SANTAMONICA-01 FULLY CLOSED; next migration=759
 - [Phase 133-01]: Phase 133 Hawthorne Stances CLOSED — Mayor + 4 council (Vargas 4, Manning 2, Monteiro 3, English 4, Johnson 4); 17 total stance rows (migrations 744-748); 0 unpaired, 0 uncited, 0 inactive. Directly elected Mayor Vargas (none excluded). SpaceX/Tesla/Boring economic-development heavy city → economic-development 2.0 common; public-safety 4.0 cluster (Monteiro/English) + Vargas 3.0 (crime + youth prevention); Johnson distinctive homelessness-response 3.0 ("Treatment First, Housing Second"). Applied via psql -f from disk artifacts. HAWTHORNE-01 FULLY CLOSED; next migration=749
