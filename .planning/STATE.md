@@ -4,12 +4,12 @@ milestone: v15.0
 milestone_name: LA City Stances
 status: executing
 last_updated: "2026-06-16T09:00:00.000Z"
-last_activity: 2026-06-16 -- Phase 127 Plan 01 complete (Friedman 9 + Corman 7 stances; migrations 714-715)
+last_activity: 2026-06-16 -- Phase 127 Plan 02 complete (Mirisch 11 + Nazarian 7 + Wells 8 stances; migrations 716-718)
 progress:
   total_phases: 13
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
   percent: 10
 ---
 
@@ -18,10 +18,10 @@ progress:
 ## Current Position
 
 Phase: 127 (Beverly Hills Stances) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Executing Phase 127
-Last activity: 2026-06-16 -- Phase 127 Plan 01 complete (Friedman 9 + Corman 7 stances; migrations 714-715)
-Next migration: 716
+Last activity: 2026-06-16 -- Phase 127 Plan 02 complete (Mirisch 11 + Nazarian 7 + Wells 8 stances; migrations 716-718)
+Next migration: 719
 
 ## Project Reference
 
@@ -118,8 +118,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-16T09:00:00.000Z
-Stopped at: Phase 127 Plan 01 complete — Friedman + Corman stances applied (migrations 714-715)
+Last session: 2026-06-16T10:00:00.000Z
+Stopped at: Phase 127 Plan 02 complete — Mirisch + Nazarian + Wells stances applied (migrations 716-718)
 Resume file: None
 
 ## Performance Metrics
@@ -176,6 +176,7 @@ Resume file: None
 | Phase 126 P01 | ~50m | 3 tasks | 3 files (703-705 stances SQLs); 15 stance rows for Lee/Maza/Maloney; 0 unpaired, 0 uncited; all 5 Alhambra UUIDs resolved |
 | Phase 126 P02 | ~25m | 2 tasks | 2 files (706-707 stances SQLs); 11 stance rows for Wang/Andrade-Stadler; 0 unpaired, 0 uncited; all 5 Alhambra officials complete (26 total) |
 | Phase 127 P01 | ~45m | 3 tasks | 2 files (714-715 stances SQLs); 16 stance rows for Friedman(9)+Corman(7); 0 unpaired, 0 uncited; 713 applied as deviation |
+| Phase 127 P02 | ~30m | 3 tasks | 3 files (716-718 stances SQLs); 26 stance rows for Mirisch(11)+Nazarian(7)+Wells(8); 0 unpaired, 0 uncited; all 5 BH officials complete |
 
 ## Decisions
 
@@ -222,3 +223,4 @@ Resume file: None
 - [Phase 126-02]: Alhambra stances Wave 2 — Wang(7)+Andrade-Stadler(4)=11 rows; migrations 706-707; Wang rotational Mayor pitfall avoided (no Mayor office created; all reasoning uses Council Member Wang or rotational Mayor qualifier); Andrade-Stadler 4 stances from unanimous votes; all 5 Alhambra officials complete (26 total rows); next migration=708
 - [Phase 126-03]: Phase 126 CLOSED — 5 officials (Lee D1=7, Maza D2=4, Maloney D3=4, Wang D4=7, Andrade-Stadler D5=4); Q1=5 rows, Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics; 26 total stance rows across migrations 703-707; 0 blank-spoke officials; Wang rotational Mayor handled correctly (Council Member context only); ALHAMBRA-01 FULLY CLOSED; next migration=708
 - [Phase 127-01]: Beverly Hills Wave 0 revealed 713_alhambra_dedup.sql existed on disk but was NOT applied to DB (MAX applied = 712); applied and registered 713 first; NNN confirmed = 714. Friedman (directly-elected Mayor) 9 stances: housing 4.0, residential-zoning 5.0, homelessness-response 5.0, public-safety-approach 4.0, local-immigration 5.0, transportation-priorities 4.0, taxes 4.0, growth-and-development 4.0, local-environment 3.0; migration 714 applied. Corman 7 stances: housing 4.0, residential-zoning 4.0, homelessness-response 4.0, public-safety-approach 4.0, local-immigration 4.0, transportation-priorities 4.0, taxes 4.0; migration 715 applied. 16 total rows; 0 unpaired, 0 uncited; next migration=716
+- [Phase 127-02]: Mirisch (longest-serving BH council member) 11 stances including progressive outliers campaign-finance=2.0 (documented op-ed advocacy for local contribution limits) and climate-change=2.0 (documented environmental concern); residential-zoning=5.0 (most protective on council); migration 716 applied. Nazarian 7 stances including civil-rights=2.0 (documented anti-discrimination/hate crime advocacy — progressive outlier); all other topics 4.0 reflecting council consensus; migration 717 applied. Wells 8 stances all 4.0 reflecting council consensus on housing/zoning/homelessness/safety/immigration/taxes/development/transportation; migration 718 applied. 26 total rows; 0 unpaired, 0 uncited; all 5 BH officials complete; next migration=719

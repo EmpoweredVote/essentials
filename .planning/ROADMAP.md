@@ -1481,7 +1481,7 @@ All 13 requirements covered ✓
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 126. Alhambra Stances | 3/3 | Complete | 2026-06-15 |
-| 127. Beverly Hills Stances | 1/3 | Executing | — |
+| 127. Beverly Hills Stances | 2/3 | Executing | — |
 | 128. Carson Stances | 0/? | Not started | — |
 | 129. Compton Stances | 0/? | Not started | — |
 | 130. Culver City Stances | 0/? | Not started | — |
