@@ -1152,7 +1152,7 @@ All 22 requirements covered ✓
 - [x] **Phase 129: Compton Stances** — Mayor + 4 council (no clerk/treasurer seeded — none excluded); 20 stance rows across 5 officials; migrations 724–728; COMPTON-01 closed 2026-06-16
 - [x] **Phase 130: Culver City Stances** — 5 council members (rotational mayor; none excluded); 29 stance rows; migrations 729–733; CULVERCITY-01 closed 2026-06-16
 - [x] **Phase 131: El Segundo Stances** — 5 council members (rotational mayor; none excluded); 15 stance rows; migrations 734–738; ELSEGUNDO-01 closed 2026-06-16
-- [ ] **Phase 132: Gardena Stances** — Mayor + 4 council
+- [x] **Phase 132: Gardena Stances** — Mayor + 4 council (directly elected mayor; none excluded); 19 stance rows; migrations 739–743; GARDENA-01 closed 2026-06-16
 - [ ] **Phase 133: Hawthorne Stances** — Mayor + 4 council
 - [ ] **Phase 134: Santa Monica Stances** — 10 council members
 - [ ] **Phase 135: South Gate Stances** — 5 council members
@@ -1480,7 +1480,7 @@ All 13 requirements covered ✓
 | 129. Compton Stances | 1/1 | Complete | 2026-06-16 |
 | 130. Culver City Stances | 1/1 | Complete | 2026-06-16 |
 | 131. El Segundo Stances | 1/1 | Complete | 2026-06-16 |
-| 132. Gardena Stances | 0/? | Not started | — |
+| 132. Gardena Stances | 1/1 | Complete | 2026-06-16 |
 | 133. Hawthorne Stances | 0/? | Not started | — |
 | 134. Santa Monica Stances | 0/? | Not started | — |
 | 135. South Gate Stances | 0/? | Not started | — |
