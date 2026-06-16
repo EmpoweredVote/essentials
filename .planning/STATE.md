@@ -3,32 +3,32 @@ gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
 status: executing
-last_updated: "2026-06-16T08:01:31.169Z"
-last_activity: 2026-06-16 -- Phase 127 planning complete
+last_updated: "2026-06-16T09:00:00.000Z"
+last_activity: 2026-06-16 -- Phase 127 Plan 01 complete (Friedman 9 + Corman 7 stances; migrations 714-715)
 progress:
   total_phases: 13
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
-  percent: 8
+  completed_plans: 4
+  percent: 10
 ---
 
 # State
 
 ## Current Position
 
-Phase: 127 — Beverly Hills Stances (not yet started)
-Plan: —
-Status: Ready to execute
-Last activity: 2026-06-16 -- Phase 127 planning complete
-Next migration: 714
+Phase: 127 (Beverly Hills Stances) — EXECUTING
+Plan: 2 of 3
+Status: Executing Phase 127
+Last activity: 2026-06-16 -- Phase 127 Plan 01 complete (Friedman 9 + Corman 7 stances; migrations 714-715)
+Next migration: 716
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** v14.0 — MA Tier 3 City Coverage
+**Current focus:** Phase 127 — Beverly Hills Stances
 
 ## v15.0 Roadmap Summary
 
@@ -118,8 +118,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-16T07:11:14.906Z
-Stopped at: context exhaustion at 75% (2026-06-16)
+Last session: 2026-06-16T09:00:00.000Z
+Stopped at: Phase 127 Plan 01 complete — Friedman + Corman stances applied (migrations 714-715)
 Resume file: None
 
 ## Performance Metrics
@@ -175,6 +175,7 @@ Resume file: None
 | Phase 125 P01 | ~9m | 3 tasks | 1 file (LOCATION-ONBOARDING.md); 7 Cities Onboarded rows; 4 MA trap rows; 7 Key Facts bullets; 6 new MA GOTCHAs (11 total) |
 | Phase 126 P01 | ~50m | 3 tasks | 3 files (703-705 stances SQLs); 15 stance rows for Lee/Maza/Maloney; 0 unpaired, 0 uncited; all 5 Alhambra UUIDs resolved |
 | Phase 126 P02 | ~25m | 2 tasks | 2 files (706-707 stances SQLs); 11 stance rows for Wang/Andrade-Stadler; 0 unpaired, 0 uncited; all 5 Alhambra officials complete (26 total) |
+| Phase 127 P01 | ~45m | 3 tasks | 2 files (714-715 stances SQLs); 16 stance rows for Friedman(9)+Corman(7); 0 unpaired, 0 uncited; 713 applied as deviation |
 
 ## Decisions
 
@@ -220,3 +221,4 @@ Resume file: None
 - [Phase 126-01]: Alhambra stances Wave 1 — Lee(7)+Maza(4)+Maloney(4)=15 rows; migrations 703-705; actual starting migration 703 (699-702 were applied; STATE.md 699 was stale); 5 Alhambra UUIDs resolved (Lee=f22187bb, Maza=27441d13, Maloney=e4df4fce, Wang=abad7f66, Andrade-Stadler=f6d52199); 2019 Welcoming City resolution unanimous vote = local-immigration evidence for Lee+Maloney; next migration=706
 - [Phase 126-02]: Alhambra stances Wave 2 — Wang(7)+Andrade-Stadler(4)=11 rows; migrations 706-707; Wang rotational Mayor pitfall avoided (no Mayor office created; all reasoning uses Council Member Wang or rotational Mayor qualifier); Andrade-Stadler 4 stances from unanimous votes; all 5 Alhambra officials complete (26 total rows); next migration=708
 - [Phase 126-03]: Phase 126 CLOSED — 5 officials (Lee D1=7, Maza D2=4, Maloney D3=4, Wang D4=7, Andrade-Stadler D5=4); Q1=5 rows, Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics; 26 total stance rows across migrations 703-707; 0 blank-spoke officials; Wang rotational Mayor handled correctly (Council Member context only); ALHAMBRA-01 FULLY CLOSED; next migration=708
+- [Phase 127-01]: Beverly Hills Wave 0 revealed 713_alhambra_dedup.sql existed on disk but was NOT applied to DB (MAX applied = 712); applied and registered 713 first; NNN confirmed = 714. Friedman (directly-elected Mayor) 9 stances: housing 4.0, residential-zoning 5.0, homelessness-response 5.0, public-safety-approach 4.0, local-immigration 5.0, transportation-priorities 4.0, taxes 4.0, growth-and-development 4.0, local-environment 3.0; migration 714 applied. Corman 7 stances: housing 4.0, residential-zoning 4.0, homelessness-response 4.0, public-safety-approach 4.0, local-immigration 4.0, transportation-priorities 4.0, taxes 4.0; migration 715 applied. 16 total rows; 0 unpaired, 0 uncited; next migration=716
