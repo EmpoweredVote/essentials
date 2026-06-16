@@ -5,107 +5,118 @@ import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
 
+// hasContext: true = city has compass stances seeded (rendered as purple chip)
 const COVERAGE_STATES = [
   {
-    name: 'California', abbrev: 'CA', statewide: true, compass: true,
+    name: 'California', abbrev: 'CA',
     areas: [
-      { label: 'LA County', browseGovernmentList: ['0644000', '06037', '0622710'], browseStateAbbrev: 'CA', browseCountyGeoId: '06037' },
-      { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA' },
-      { label: 'Fremont', browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA' },
-      { label: 'Sacramento', browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA' },
-      { label: 'San Diego', browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA' },
-      { label: 'San Francisco', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA' },
-      { label: 'San Jose', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA' },
+      { label: 'Alhambra',      browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA' },
+      { label: 'Berkeley',      browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA' },
+      { label: 'Carson',        browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA' },
+      { label: 'Compton',       browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA' },
+      { label: 'Culver City',   browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA' },
+      { label: 'El Segundo',    browseGovernmentList: ['0622412'], browseStateAbbrev: 'CA' },
+      { label: 'Fremont',       browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Gardena',       browseGovernmentList: ['0628168'], browseStateAbbrev: 'CA' },
+      { label: 'Hawthorne',     browseGovernmentList: ['0632548'], browseStateAbbrev: 'CA' },
+      { label: 'Los Angeles',   browseGovernmentList: ['0644000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Sacramento',    browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Diego',     browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Francisco', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Jose',      browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Santa Monica',  browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA' },
+      { label: 'South Gate',    browseGovernmentList: ['0673080'], browseStateAbbrev: 'CA' },
+      { label: 'West Hollywood',browseGovernmentList: ['0684410'], browseStateAbbrev: 'CA' },
+      { label: 'Whittier',      browseGovernmentList: ['0685292'], browseStateAbbrev: 'CA' },
     ],
   },
   {
-    name: 'Indiana', abbrev: 'IN', statewide: false, compass: false,
+    name: 'Indiana', abbrev: 'IN',
     areas: [
       { label: 'Monroe County', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
     ],
   },
   {
-    name: 'Maine', abbrev: 'ME', statewide: true, compass: true,
+    name: 'Maine', abbrev: 'ME',
     areas: [
-      { label: 'Auburn', browseGovernmentList: ['2302060'], browseStateAbbrev: 'ME' },
-      { label: 'Bangor', browseGovernmentList: ['2302795'], browseStateAbbrev: 'ME' },
-      { label: 'Biddeford', browseGovernmentList: ['2304860'], browseStateAbbrev: 'ME' },
-      { label: 'Lewiston', browseGovernmentList: ['2338740'], browseStateAbbrev: 'ME' },
-      { label: 'Portland', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
-      { label: 'South Portland', browseGovernmentList: ['2371990'], browseStateAbbrev: 'ME' },
+      { label: 'Auburn',        browseGovernmentList: ['2302060'], browseStateAbbrev: 'ME' },
+      { label: 'Bangor',        browseGovernmentList: ['2302795'], browseStateAbbrev: 'ME' },
+      { label: 'Biddeford',     browseGovernmentList: ['2304860'], browseStateAbbrev: 'ME' },
+      { label: 'Lewiston',      browseGovernmentList: ['2338740'], browseStateAbbrev: 'ME' },
+      { label: 'Portland',      browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
+      { label: 'South Portland',browseGovernmentList: ['2371990'], browseStateAbbrev: 'ME' },
     ],
   },
   {
-    name: 'Maryland', abbrev: 'MD', statewide: true, compass: true,
+    name: 'Maryland', abbrev: 'MD',
     areas: [
-      { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
-      { label: 'Leonardtown', browseGovernmentList: ['2446475'], browseStateAbbrev: 'MD' },
+      { label: 'Leonardtown',      browseGovernmentList: ['2446475'], browseStateAbbrev: 'MD' },
+      { label: "St. Mary's County",browseGovernmentList: ['24037'],   browseStateAbbrev: 'MD', hasContext: true },
     ],
   },
   {
-    name: 'Massachusetts', abbrev: 'MA', statewide: true, compass: true,
+    name: 'Massachusetts', abbrev: 'MA',
     areas: [
-      { label: 'Boston', browseGovernmentList: ['2507000'], browseStateAbbrev: 'MA' },
-      { label: 'Brockton', browseGovernmentList: ['2509000'], browseStateAbbrev: 'MA' },
-      { label: 'Cambridge', browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA' },
-      { label: 'Fall River', browseGovernmentList: ['2523000'], browseStateAbbrev: 'MA' },
-      { label: 'Lowell', browseGovernmentList: ['2537000'], browseStateAbbrev: 'MA' },
-      { label: 'Lynn', browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA' },
-      { label: 'Medford', browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA' },
-      { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA' },
-      { label: 'Newton', browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA' },
-      { label: 'Quincy', browseGovernmentList: ['2555745'], browseStateAbbrev: 'MA' },
-      { label: 'Somerville', browseGovernmentList: ['2562535'], browseStateAbbrev: 'MA' },
-      { label: 'Springfield', browseGovernmentList: ['2567000'], browseStateAbbrev: 'MA' },
-      { label: 'Waltham', browseGovernmentList: ['2572600'], browseStateAbbrev: 'MA' },
-      { label: 'Worcester', browseGovernmentList: ['2582000'], browseStateAbbrev: 'MA' },
+      { label: 'Boston',      browseGovernmentList: ['2507000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Brockton',    browseGovernmentList: ['2509000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Cambridge',   browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Fall River',  browseGovernmentList: ['2523000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Lowell',      browseGovernmentList: ['2537000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Lynn',        browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Medford',     browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Newton',      browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Quincy',      browseGovernmentList: ['2555745'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Somerville',  browseGovernmentList: ['2562535'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Springfield', browseGovernmentList: ['2567000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Waltham',     browseGovernmentList: ['2572600'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Worcester',   browseGovernmentList: ['2582000'], browseStateAbbrev: 'MA', hasContext: true },
     ],
   },
   {
-    name: 'Oregon', abbrev: 'OR', statewide: true, compass: true,
+    name: 'Oregon', abbrev: 'OR',
     areas: [
-      { label: 'Multnomah County', browseGovernmentList: ['41051'], browseStateAbbrev: 'OR' },
-      { label: 'Fairview', browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
-      { label: 'Gresham', browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
-      { label: 'Maywood Park', browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
-      { label: 'Portland', browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR' },
-      { label: 'Troutdale', browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
-      { label: 'Wood Village', browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
+      { label: 'Fairview',    browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
+      { label: 'Gresham',     browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
+      { label: 'Maywood Park',browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
+      { label: 'Portland',    browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Troutdale',   browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
+      { label: 'Wood Village',browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
     ],
   },
   {
-    name: 'Texas', abbrev: 'TX', statewide: true, compass: false,
+    name: 'Texas', abbrev: 'TX',
     areas: [
-      { label: 'Collin County', browseStateAbbrev: 'TX', browseCountyGeoId: '48085', browseGovernmentList: ['4801924','4803300','4808872','4813684','4825224','4825488','4827684','4838068','4841800','4844308','4845012','4845744','4847496','4850100','4850760','4855152','4863000','4863276','4863432','4863500','4864220','4875960','4877740'] },
-      { label: 'Allen', browseGovernmentList: ['4801924'], browseStateAbbrev: 'TX' },
-      { label: 'Anna', browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX' },
-      { label: 'Blue Ridge', browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
-      { label: 'Celina', browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX' },
-      { label: 'Fairview', browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX' },
-      { label: 'Farmersville', browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX' },
-      { label: 'Frisco', browseGovernmentList: ['4827684'], browseStateAbbrev: 'TX' },
-      { label: 'Josephine', browseGovernmentList: ['4838068'], browseStateAbbrev: 'TX' },
-      { label: 'Lavon', browseGovernmentList: ['4841800'], browseStateAbbrev: 'TX' },
-      { label: 'Lowry Crossing', browseGovernmentList: ['4844308'], browseStateAbbrev: 'TX' },
-      { label: 'Lucas', browseGovernmentList: ['4845012'], browseStateAbbrev: 'TX' },
-      { label: 'McKinney', browseGovernmentList: ['4845744'], browseStateAbbrev: 'TX' },
-      { label: 'Melissa', browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX' },
-      { label: 'Murphy', browseGovernmentList: ['4850100'], browseStateAbbrev: 'TX' },
-      { label: 'Nevada', browseGovernmentList: ['4850760'], browseStateAbbrev: 'TX' },
-      { label: 'Parker', browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX' },
-      { label: 'Plano', browseGovernmentList: ['4858016'], browseStateAbbrev: 'TX' },
-      { label: 'Princeton', browseGovernmentList: ['4859576'], browseStateAbbrev: 'TX' },
-      { label: 'Prosper', browseGovernmentList: ['4859696'], browseStateAbbrev: 'TX' },
-      { label: 'Richardson', browseGovernmentList: ['4861796'], browseStateAbbrev: 'TX' },
-      { label: 'Saint Paul', browseGovernmentList: ['4864220'], browseStateAbbrev: 'TX' },
-      { label: 'Van Alstyne', browseGovernmentList: ['4874924'], browseStateAbbrev: 'TX' },
-      { label: 'Weston', browseGovernmentList: ['4877740'], browseStateAbbrev: 'TX' },
+      { label: 'Allen',         browseGovernmentList: ['4801924'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Anna',          browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Blue Ridge',    browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
+      { label: 'Celina',        browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Fairview',      browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX' },
+      { label: 'Farmersville',  browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX' },
+      { label: 'Frisco',        browseGovernmentList: ['4827684'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Josephine',     browseGovernmentList: ['4838068'], browseStateAbbrev: 'TX' },
+      { label: 'Lavon',         browseGovernmentList: ['4841800'], browseStateAbbrev: 'TX' },
+      { label: 'Lowry Crossing',browseGovernmentList: ['4844308'], browseStateAbbrev: 'TX' },
+      { label: 'Lucas',         browseGovernmentList: ['4845012'], browseStateAbbrev: 'TX' },
+      { label: 'McKinney',      browseGovernmentList: ['4845744'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Melissa',       browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Murphy',        browseGovernmentList: ['4850100'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Nevada',        browseGovernmentList: ['4850760'], browseStateAbbrev: 'TX' },
+      { label: 'Parker',        browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX' },
+      { label: 'Plano',         browseGovernmentList: ['4858016'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Princeton',     browseGovernmentList: ['4859576'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Prosper',       browseGovernmentList: ['4859696'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Richardson',    browseGovernmentList: ['4861796'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Saint Paul',    browseGovernmentList: ['4864220'], browseStateAbbrev: 'TX' },
+      { label: 'Van Alstyne',   browseGovernmentList: ['4874924'], browseStateAbbrev: 'TX' },
+      { label: 'Weston',        browseGovernmentList: ['4877740'], browseStateAbbrev: 'TX' },
     ],
   },
   {
-    name: 'Virginia', abbrev: 'VA', statewide: true, compass: true,
+    name: 'Virginia', abbrev: 'VA',
     areas: [
-      { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA' },
+      { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA', hasContext: true },
     ],
   },
 ];
@@ -399,18 +410,6 @@ export default function Landing() {
                     <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                       {state.areas.length} {state.areas.length === 1 ? 'area' : 'areas'}
                     </div>
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {state.statewide && (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--ev-teal)]/10 dark:bg-ev-teal-light/15 text-[var(--ev-teal)] dark:text-ev-teal-light font-medium">
-                          Statewide
-                        </span>
-                      )}
-                      {state.compass && (
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium">
-                          Compass
-                        </span>
-                      )}
-                    </div>
                   </div>
                   {/* Chevron */}
                   <svg
@@ -429,7 +428,11 @@ export default function Landing() {
                       <button
                         key={area.label}
                         onClick={() => handleAreaClick(area)}
-                        className="text-xs px-3 py-1.5 rounded-full bg-[var(--ev-teal)]/10 hover:bg-[var(--ev-teal)]/20 dark:bg-ev-teal-light/15 dark:hover:bg-ev-teal-light/25 text-[var(--ev-teal)] dark:text-ev-teal-light font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-1"
+                        className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+                          area.hasContext
+                            ? 'bg-purple-100 hover:bg-purple-200 dark:bg-purple-900/30 dark:hover:bg-purple-800/40 text-purple-700 dark:text-purple-300 focus:ring-purple-400'
+                            : 'bg-[var(--ev-teal)]/10 hover:bg-[var(--ev-teal)]/20 dark:bg-ev-teal-light/15 dark:hover:bg-ev-teal-light/25 text-[var(--ev-teal)] dark:text-ev-teal-light focus:ring-[var(--ev-teal)]'
+                        }`}
                       >
                         {area.label}
                       </button>
