@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
 status: in_progress
-stopped_at: 126-01 complete 2026-06-16
-last_updated: "2026-06-16T04:30:22Z"
-last_activity: 2026-06-16 -- Phase 126 Plan 01 complete; Lee(7)+Maza(4)+Maloney(4)=15 stance rows; migrations 703-705 applied; next migration 706
+stopped_at: 126-02 complete 2026-06-16
+last_updated: "2026-06-16T04:58:00Z"
+last_activity: 2026-06-16 -- Phase 126 Plan 02 complete; Wang(7)+Andrade-Stadler(4)=11 stance rows; migrations 706-707 applied; all 5 Alhambra officials done (26 total); next migration 708
 progress:
   total_phases: 13
   completed_phases: 0
@@ -19,10 +19,10 @@ progress:
 ## Current Position
 
 Phase: 126 — Alhambra Stances (in progress)
-Plan: 126-02 (Wave 2 of 3)
+Plan: 126-03 (Wave 3 of 3)
 Status: Ready to execute
-Last activity: 2026-06-16 -- 126-01 complete; Lee(7)+Maza(4)+Maloney(4)=15 stance rows; migrations 703-705 applied and verified; next migration 706
-Next migration: 706
+Last activity: 2026-06-16 -- 126-02 complete; Wang(7)+Andrade-Stadler(4)=11 stance rows; migrations 706-707 applied and verified; all 5 officials done (26 total); next migration 708
+Next migration: 708
 
 ## Project Reference
 
@@ -119,8 +119,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-16T04:30:22Z
-Stopped at: 126-01 complete — 15 stance rows (Lee/Maza/Maloney), migrations 703-705 applied; resume with 126-02
+Last session: 2026-06-16T04:58:00Z
+Stopped at: 126-02 complete — Wang(7)+Andrade-Stadler(4)=11 stance rows, migrations 706-707 applied; all 5 Alhambra officials done; resume with 126-03
 Resume file: None
 
 ## Performance Metrics
@@ -175,6 +175,7 @@ Resume file: None
 | Phase 124 P05 | ~15m | 2 tasks | 3 files (REQUIREMENTS.md, ROADMAP.md, STATE.md); Q1-Q6=0; 76 total stances across 34 officials; FALLRIV-03+MEDFORD-03+WALTHAM-03 closed |
 | Phase 125 P01 | ~9m | 3 tasks | 1 file (LOCATION-ONBOARDING.md); 7 Cities Onboarded rows; 4 MA trap rows; 7 Key Facts bullets; 6 new MA GOTCHAs (11 total) |
 | Phase 126 P01 | ~50m | 3 tasks | 3 files (703-705 stances SQLs); 15 stance rows for Lee/Maza/Maloney; 0 unpaired, 0 uncited; all 5 Alhambra UUIDs resolved |
+| Phase 126 P02 | ~25m | 2 tasks | 2 files (706-707 stances SQLs); 11 stance rows for Wang/Andrade-Stadler; 0 unpaired, 0 uncited; all 5 Alhambra officials complete (26 total) |
 
 ## Decisions
 
@@ -218,3 +219,4 @@ Resume file: None
 - [Phase 125-01]: LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows (Newton/Somerville/Lynn/New Bedford/Fall River/Medford/Waltham) + 4 MA Quick Reference trap rows + 7 Key Facts bullets + 6 new STATE-SPECIFIC: MA GOTCHAs (11 total); Medford geo_id DB-verified as 2539835 (estimate 2540115 wrong; external_id prefix -2540115xxx already seeded from wrong estimate — perpetual discrepancy documented); all 7 geo_ids confirmed from geofence_boundaries query; New Bedford 2545000 reconfirmed from migration 587
 - [Phase 125-02]: All 22 v14.0 requirements marked complete in REQUIREMENTS.md; traceability table all ✅; STATE.md + ROADMAP.md milestone close applied; v14.0 MA Tier 3 City Coverage milestone formally closed 2026-06-15; next migration 699
 - [Phase 126-01]: Alhambra stances Wave 1 — Lee(7)+Maza(4)+Maloney(4)=15 rows; migrations 703-705; actual starting migration 703 (699-702 were applied; STATE.md 699 was stale); 5 Alhambra UUIDs resolved (Lee=f22187bb, Maza=27441d13, Maloney=e4df4fce, Wang=abad7f66, Andrade-Stadler=f6d52199); 2019 Welcoming City resolution unanimous vote = local-immigration evidence for Lee+Maloney; next migration=706
+- [Phase 126-02]: Alhambra stances Wave 2 — Wang(7)+Andrade-Stadler(4)=11 rows; migrations 706-707; Wang rotational Mayor pitfall avoided (no Mayor office created; all reasoning uses Council Member Wang or rotational Mayor qualifier); Andrade-Stadler 4 stances from unanimous votes; all 5 Alhambra officials complete (26 total rows); next migration=708

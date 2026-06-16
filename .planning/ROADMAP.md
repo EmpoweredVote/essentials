@@ -1446,7 +1446,7 @@ All 13 requirements covered ✓
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 126. Alhambra Stances | 0/? | Not started | — |
+| 126. Alhambra Stances | 2/3 | In progress | Plans 01-02 complete (26 stance rows / 5 officials); Plan 03 closure pending |
 | 127. Beverly Hills Stances | 0/? | Not started | — |
 | 128. Carson Stances | 0/? | Not started | — |
 | 129. Compton Stances | 0/? | Not started | — |
