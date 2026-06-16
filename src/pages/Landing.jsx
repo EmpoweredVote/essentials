@@ -34,7 +34,7 @@ const COVERAGE_STATES = [
   {
     name: 'Indiana', abbrev: 'IN',
     areas: [
-      { label: 'Monroe County', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
+      { label: 'Bloomington', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
     ],
   },
   {
