@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
-status: executing
-last_updated: "2026-06-16T09:00:00.000Z"
-last_activity: 2026-06-16 -- Phase 127 Beverly Hills Stances complete (BEVHILLS-01 closed; 42 total stance rows)
+status: Not started
+last_updated: "2026-06-16T08:40:55.878Z"
+last_activity: 2026-06-16 — Phase 127 Beverly Hills Stances complete; BEVHILLS-01 closed; 42 total stance rows across 5 officials; Fisher excluded (0 rows)
 progress:
   total_phases: 13
   completed_phases: 2
