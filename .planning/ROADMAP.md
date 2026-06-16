@@ -1148,7 +1148,7 @@ All 22 requirements covered ✓
 
 - [x] **Phase 126: Alhambra Stances** — 5 council members (26 stance rows; ALHAMBRA-01 closed 2026-06-15)
 - [x] **Phase 127: Beverly Hills Stances** — Mayor + 4 council (Treasurer excluded; 42 stance rows; BEVHILLS-01 closed 2026-06-16)
-- [~] **Phase 128: Carson Stances** — Mayor + 4 council (Clerk + Treasurer excluded) [Plan 01 complete: Davis-Holmes(9)+Hilton(5)=14 rows; migrations 719-720; Plan 02 next]
+- [x] **Phase 128: Carson Stances** — Mayor + 4 council (Clerk + Treasurer excluded); 34 stance rows across 5 officials; migrations 719–723; CARSON-01 closed 2026-06-16
 - [ ] **Phase 129: Compton Stances** — Mayor + 4 council
 - [ ] **Phase 130: Culver City Stances** — 5 council members
 - [ ] **Phase 131: El Segundo Stances** — 5 council members
@@ -1476,7 +1476,7 @@ All 13 requirements covered ✓
 |-------|----------------|--------|-----------|
 | 126. Alhambra Stances | 3/3 | Complete | 2026-06-15 |
 | 127. Beverly Hills Stances | 3/3 | Complete   | 2026-06-16 |
-| 128. Carson Stances | 2/3 | In Progress|  |
+| 128. Carson Stances | 3/3 | Complete | 2026-06-16 |
 | 129. Compton Stances | 0/? | Not started | — |
 | 130. Culver City Stances | 0/? | Not started | — |
 | 131. El Segundo Stances | 0/? | Not started | — |

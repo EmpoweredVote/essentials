@@ -13,7 +13,7 @@
 
 ## CARSON — Carson Stances
 
-- [ ] **CARSON-01:** Compass shows evidence-only stance data for Carson Mayor + City Council (5 officials: Davis-Holmes, Hilton, Dear, Hicks, Rojas; City Clerk Bradshaw + City Treasurer Cooper excluded — administrative roles); sequential research, 100% citation rate
+- [x] **CARSON-01:** Compass shows evidence-only stance data for Carson Mayor + City Council (5 officials: Davis-Holmes, Hilton, Dear, Hicks, Rojas; City Clerk Bradshaw + City Treasurer Cooper excluded — administrative roles); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 719–723; 34 total stance rows (Davis-Holmes=9, Hilton=5, Dear=8, Hicks=6, Rojas=6); 0 uncited, 0 unpaired
 
 ## COMPTON — Compton Stances
 
@@ -73,7 +73,7 @@
 |-------------|-------|--------|
 | ALHAMBRA-01 | 126 | ✅ |
 | BEVHILLS-01 | 127 | ✅ |
-| CARSON-01 | 128 | ⬜ |
+| CARSON-01 | 128 | ✅ |
 | COMPTON-01 | 129 | ⬜ |
 | CULVERCITY-01 | 130 | ⬜ |
 | ELSEGUNDO-01 | 131 | ⬜ |
