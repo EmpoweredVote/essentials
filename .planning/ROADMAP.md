@@ -17,7 +17,7 @@
 - ✅ **v11.0 Maryland Essentials** - Phases 90-99 (shipped 2026-06-08)
 - ✅ **v12.0 Virginia Essentials** - Phases 100-106 (shipped 2026-06-10)
 - ✅ **v13.0 Massachusetts Expanded** - Phases 107-116 (shipped 2026-06-13)
-- 🔄 **v14.0 MA Tier 3 City Coverage** - Phases 117-125 (in progress)
+- ✅ **v14.0 MA Tier 3 City Coverage** - Phases 117-125 (shipped 2026-06-15)
 
 ---
 
@@ -722,12 +722,12 @@ All 17 requirements covered ✓
 - [x] **Phase 117: Newton Deep Seed** - Mayor + Board of Aldermen + School Committee officials and headshots
 - [x] **Phase 118: Somerville Deep Seed** - Mayor + City Council + School Committee officials and headshots
 - [x] **Phase 119: Lynn Deep Seed** - Mayor + City Council officials and headshots
-- [ ] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
+- [x] **Phase 120: New Bedford Deep Seed** - Mayor + City Council officials and headshots
 - [x] **Phase 121: Fall River + Medford + Waltham Deep Seeds** - Officials and headshots for three smaller Tier 3 cities
 - [x] **Phase 122: MA Tier 3 Stances Wave 1** - Evidence-only stances for Newton + Somerville officials
 - [x] **Phase 123: MA Tier 3 Stances Wave 2** - Evidence-only stances for Lynn + New Bedford officials
 - [x] **Phase 124: MA Tier 3 Stances Wave 3** - Evidence-only stances for Fall River + Medford + Waltham officials
-- [ ] **Phase 125: MA Tier 3 Playbook Retrospective** - LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows
+- [x] **Phase 125: MA Tier 3 Playbook Retrospective** - LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows
 
 ## Phase Details
 
@@ -870,15 +870,15 @@ Plans:
 3. Section-split check returns 0 rows after seeding
 4. New Bedford geo_id asserted present in geofence_boundaries before any INSERT
 
-**Plans:** 2/2 plans ready
+**Plans:** 2/2 plans complete
 
 **Wave 1**
 
-- [ ] 120-01-PLAN.md — New Bedford city government (migration 587: Mayor Mitchell + 11 City Councilors)
+- [x] 120-01-PLAN.md — New Bedford city government (migration 587: Mayor Mitchell + 11 City Councilors)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 120-02-PLAN.md — New Bedford headshots (Python script + migration 588: best-effort, newbedford-ma.gov Cloudflare-blocked; alternative sources)
+- [x] 120-02-PLAN.md — New Bedford headshots (Python script + migration 588: 1/12 uploaded; 11 gaps documented; Cloudflare-blocked councilor pages; NEWBED-02 satisfied per best-effort convention)
 
 ---
 
@@ -908,21 +908,21 @@ Plans:
 4. All seeded officials have best-effort headshots at 600×750; gaps documented
 5. Section-split check returns 0 rows after all three cities are seeded
 
-**Plans:** 5 plans
+**Plans:** 5/5 plans complete
 
 **Wave 1** *(3 independent city migrations — no file overlap, run in parallel)*
 
-- [ ] 121-01-PLAN.md — Fall River city government (migration 590: Mayor Coogan + City Councilors)
-- [ ] 121-02-PLAN.md — Medford city government (migration 591: Mayor Lungo-Koehn + City Council)
-- [ ] 121-03-PLAN.md — Waltham city government (migration 592: Mayor Donahue + City Council)
+- [x] 121-01-PLAN.md — Fall River city government (migration 590: Mayor Coogan + City Councilors)
+- [x] 121-02-PLAN.md — Medford city government (migration 591: Mayor Lungo-Koehn + City Council)
+- [x] 121-03-PLAN.md — Waltham city government (migration 592: Mayor Donahue + City Council)
 
 **Wave 2** *(blocked on 121-02 — Medford SC needs Mayor's politician_id)*
 
-- [ ] 121-04-PLAN.md — Medford School Committee (migration 593: elected SC members + Mayor ex-officio + G5420 geofence)
+- [x] 121-04-PLAN.md — Medford School Committee (migration 593: elected SC members + Mayor ex-officio + G5420 geofence)
 
 **Wave 3** *(blocked on all Wave 1 + Wave 2 — headshots need all seeded politician_ids)*
 
-- [ ] 121-05-PLAN.md — All three cities headshots (migrations 594 FR + 595 Medford + 596 Waltham; phase-wide section-split verification)
+- [x] 121-05-PLAN.md — All three cities headshots (migrations 594 FR + 595 Medford + 596 Waltham; phase-wide section-split verification)
 
 ---
 
@@ -1069,7 +1069,7 @@ Total Phase 124: 34 officials; 76 stances; 0 uncited; 0 unpaired; FALLRIV-03+MED
 3. v14.0 milestone marked complete in STATE.md and ROADMAP.md
 4. No orphaned requirements in REQUIREMENTS.md (all 22 v14.0 reqs marked complete)
 
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 **Wave 1**
 
@@ -1077,7 +1077,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 125-02-PLAN.md — v14.0 milestone close (STATE.md + ROADMAP.md + REQUIREMENTS.md)
+- [x] 125-02-PLAN.md — v14.0 milestone close (STATE.md + ROADMAP.md + REQUIREMENTS.md)
 
 ---
 
@@ -1116,10 +1116,10 @@ All 22 requirements covered ✓
 |-------|----------------|--------|-----------|
 | 117. Newton Deep Seed | 3/3 | Complete | 2026-06-14 |
 | 118. Somerville Deep Seed | 3/3 | Complete | 2026-06-14 |
-| 119. Lynn Deep Seed | 0/3 | Planned | - |
-| 120. New Bedford Deep Seed | 0/TBD | Not started | - |
-| 121. Fall River + Medford + Waltham Deep Seeds | 0/5 | Planned | - |
+| 119. Lynn Deep Seed | 3/3 | Complete | 2026-06-14 |
+| 120. New Bedford Deep Seed | 2/2 | Complete | 2026-06-14 |
+| 121. Fall River + Medford + Waltham Deep Seeds | 5/5 | Complete | 2026-06-15 |
 | 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
 | 123. MA Tier 3 Stances Wave 2 | 5/5 | Complete | 2026-06-15 |
-| 124. MA Tier 3 Stances Wave 3 | 3/5 | In Progress | - |
-| 125. MA Tier 3 Playbook Retrospective | 1/2 | In Progress|  |
+| 124. MA Tier 3 Stances Wave 3 | 5/5 | Complete | 2026-06-15 |
+| 125. MA Tier 3 Playbook Retrospective | 2/2 | Complete | 2026-06-15 |
