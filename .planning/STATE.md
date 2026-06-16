@@ -3,25 +3,25 @@ gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
 status: in_progress
-stopped_at: 126-02 complete 2026-06-16
-last_updated: "2026-06-16T04:58:00Z"
-last_activity: 2026-06-16 -- Phase 126 Plan 02 complete; Wang(7)+Andrade-Stadler(4)=11 stance rows; migrations 706-707 applied; all 5 Alhambra officials done (26 total); next migration 708
+stopped_at: 126-03 complete 2026-06-15
+last_updated: "2026-06-15T00:00:00Z"
+last_activity: 2026-06-15 -- Phase 126 complete; ALHAMBRA-01 closed; 26 total stance rows across 5 officials; next migration 708
 progress:
   total_phases: 13
-  completed_phases: 0
-  total_plans: 1
-  completed_plans: 1
-  percent: 2
+  completed_phases: 1
+  total_plans: 3
+  completed_plans: 3
+  percent: 8
 ---
 
 # State
 
 ## Current Position
 
-Phase: 126 — Alhambra Stances (in progress)
-Plan: 126-03 (Wave 3 of 3)
-Status: Ready to execute
-Last activity: 2026-06-16 -- 126-02 complete; Wang(7)+Andrade-Stadler(4)=11 stance rows; migrations 706-707 applied and verified; all 5 officials done (26 total); next migration 708
+Phase: 127 — Beverly Hills Stances (not yet started)
+Plan: —
+Status: Not started
+Last activity: 2026-06-15 -- Phase 126 complete; ALHAMBRA-01 closed; 26 total stance rows across 5 officials (Lee=7, Maza=4, Maloney=4, Wang=7, Andrade-Stadler=4); migrations 703-707 applied; Q1-Q4 all clear; next migration 708
 Next migration: 708
 
 ## Project Reference
@@ -35,7 +35,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
-| 126 — Alhambra Stances | Evidence-only stances for 5 council members | ALHAMBRA-01 | Not started |
+| 126 — Alhambra Stances | Evidence-only stances for 5 council members | ALHAMBRA-01 | Complete (2026-06-15) |
 | 127 — Beverly Hills Stances | Evidence-only stances for Mayor + 4 council | BEVHILLS-01 | Not started |
 | 128 — Carson Stances | Evidence-only stances for Mayor + 4 council | CARSON-01 | Not started |
 | 129 — Compton Stances | Evidence-only stances for Mayor + 4 council | COMPTON-01 | Not started |
@@ -60,7 +60,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - CSV format: politician_id,topic_id,topic_key,value,notes — no commas or quotes in notes
 - Values are 1–5 directly (1=most progressive, 5=most conservative)
 - Apply scripts use `npx tsx` via Bash (PowerShell blocked by execution policy)
-- Next migration: 699
+- Next migration: 708
 
 ## Accumulated Context
 
@@ -119,8 +119,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-16T04:58:00Z
-Stopped at: 126-02 complete — Wang(7)+Andrade-Stadler(4)=11 stance rows, migrations 706-707 applied; all 5 Alhambra officials done; resume with 126-03
+Last session: 2026-06-15T00:00:00Z
+Stopped at: 126-03 complete — Phase 126 Alhambra Stances fully closed; ALHAMBRA-01 satisfied; resume with Phase 127 Beverly Hills Stances
 Resume file: None
 
 ## Performance Metrics
@@ -220,3 +220,4 @@ Resume file: None
 - [Phase 125-02]: All 22 v14.0 requirements marked complete in REQUIREMENTS.md; traceability table all ✅; STATE.md + ROADMAP.md milestone close applied; v14.0 MA Tier 3 City Coverage milestone formally closed 2026-06-15; next migration 699
 - [Phase 126-01]: Alhambra stances Wave 1 — Lee(7)+Maza(4)+Maloney(4)=15 rows; migrations 703-705; actual starting migration 703 (699-702 were applied; STATE.md 699 was stale); 5 Alhambra UUIDs resolved (Lee=f22187bb, Maza=27441d13, Maloney=e4df4fce, Wang=abad7f66, Andrade-Stadler=f6d52199); 2019 Welcoming City resolution unanimous vote = local-immigration evidence for Lee+Maloney; next migration=706
 - [Phase 126-02]: Alhambra stances Wave 2 — Wang(7)+Andrade-Stadler(4)=11 rows; migrations 706-707; Wang rotational Mayor pitfall avoided (no Mayor office created; all reasoning uses Council Member Wang or rotational Mayor qualifier); Andrade-Stadler 4 stances from unanimous votes; all 5 Alhambra officials complete (26 total rows); next migration=708
+- [Phase 126-03]: Phase 126 CLOSED — 5 officials (Lee D1=7, Maza D2=4, Maloney D3=4, Wang D4=7, Andrade-Stadler D5=4); Q1=5 rows, Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics; 26 total stance rows across migrations 703-707; 0 blank-spoke officials; Wang rotational Mayor handled correctly (Council Member context only); ALHAMBRA-01 FULLY CLOSED; next migration=708

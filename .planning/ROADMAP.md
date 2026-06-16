@@ -1132,11 +1132,11 @@ All 22 requirements covered ✓
 **Goal:** Evidence-only compass stances for all 12 deep-seeded LA-area city councils — 65 elected officials (clerks and treasurers excluded) across Alhambra, Beverly Hills, Carson, Compton, Culver City, El Segundo, Gardena, Hawthorne, Santa Monica, South Gate, West Hollywood, and Whittier. All 12 cities were deep-seeded in v7.0; this milestone is stances-only (no geofence or officials work required). Target: up to 44 evidence-only stances per person.  
 **Phases:** 126–138 (13 phases)  
 **Requirements:** 13  
-**Next migration:** 706
+**Next migration:** 708
 
 ## Phases
 
-- [ ] **Phase 126: Alhambra Stances** — 5 council members
+- [x] **Phase 126: Alhambra Stances** — 5 council members (26 stance rows; ALHAMBRA-01 closed 2026-06-15)
 - [ ] **Phase 127: Beverly Hills Stances** — Mayor + 4 council (Treasurer excluded)
 - [ ] **Phase 128: Carson Stances** — Mayor + 4 council (Clerk + Treasurer excluded)
 - [ ] **Phase 129: Compton Stances** — Mayor + 4 council
@@ -1174,6 +1174,13 @@ All 22 requirements covered ✓
 2. 0 uncited values (all have citation evidence)
 3. 0 unpaired (each stance maps to a live topic_id)
 4. Compass renders on at least one Alhambra official profile
+
+**Plans:** 3 plans
+Plans:
+
+- [x] 126-01-PLAN.md — Wave 0 pre-flight + Katherine Lee (D1) + Ross J. Maza (D2) + Jeff Maloney (D3) stances (migrations 703 through 705)
+- [x] 126-02-PLAN.md — Noya Wang (D4) + Adele Andrade-Stadler (D5) stances (migrations 706 through 707)
+- [x] 126-03-PLAN.md — Phase-wide closure verification (Q1-Q4 all clear) + close ALHAMBRA-01
 
 ---
 
@@ -1446,7 +1453,7 @@ All 13 requirements covered ✓
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 126. Alhambra Stances | 2/3 | In progress | Plans 01-02 complete (26 stance rows / 5 officials); Plan 03 closure pending |
+| 126. Alhambra Stances | 3/3 | Complete | 2026-06-15 |
 | 127. Beverly Hills Stances | 0/? | Not started | — |
 | 128. Carson Stances | 0/? | Not started | — |
 | 129. Compton Stances | 0/? | Not started | — |

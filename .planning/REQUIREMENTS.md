@@ -5,7 +5,7 @@
 
 ## ALHAMBRA — Alhambra Stances
 
-- [ ] **ALHAMBRA-01:** Compass shows evidence-only stance data for Alhambra City Council (5 members: Lee, Maza, Maloney, Wang, Andrade-Stadler); sequential research, 100% citation rate, no blank-default values
+- [x] **ALHAMBRA-01:** Compass shows evidence-only stance data for Alhambra City Council (5 members: Lee, Maza, Maloney, Wang, Andrade-Stadler); sequential research, 100% citation rate, no blank-default values
 
 ## BEVHILLS — Beverly Hills Stances
 
@@ -71,7 +71,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ALHAMBRA-01 | 126 | ⬜ |
+| ALHAMBRA-01 | 126 | ✅ |
 | BEVHILLS-01 | 127 | ⬜ |
 | CARSON-01 | 128 | ⬜ |
 | COMPTON-01 | 129 | ⬜ |
