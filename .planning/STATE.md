@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
-status: Not started
-last_updated: "2026-06-16T08:40:55.878Z"
-last_activity: 2026-06-16 — Phase 127 Beverly Hills Stances complete; BEVHILLS-01 closed; 42 total stance rows across 5 officials; Fisher excluded (0 rows)
+status: executing
+last_updated: "2026-06-16T15:23:21.441Z"
+last_activity: 2026-06-16 — Phase 128 Plan 01 complete; Davis-Holmes (9 stances) + Hilton (5 stances) applied; 0 unpaired, 0 uncited; Bradshaw + Cooper excluded (0 rows)
 progress:
   total_phases: 13
   completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 9
+  completed_plans: 7
   percent: 15
 ---
 
@@ -17,11 +17,11 @@ progress:
 
 ## Current Position
 
-Phase: 128 — Carson Stances (not yet started)
-Plan: —
-Status: Not started
-Last activity: 2026-06-16 — Phase 127 Beverly Hills Stances complete; BEVHILLS-01 closed; 42 total stance rows across 5 officials; Fisher excluded (0 rows)
-Next migration: 719
+Phase: 128 — Carson Stances (in progress — Plan 01 complete)
+Plan: 01 complete; Plan 02 next
+Status: In progress
+Last activity: 2026-06-16 — Phase 128 Plan 01 complete; Davis-Holmes (9 stances) + Hilton (5 stances) applied; 0 unpaired, 0 uncited; Bradshaw + Cooper excluded (0 rows)
+Next migration: 721
 
 ## Project Reference
 
@@ -36,7 +36,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 |-------|------|--------------|--------|
 | 126 — Alhambra Stances | Evidence-only stances for 5 council members | ALHAMBRA-01 | Complete (2026-06-15) |
 | 127 — Beverly Hills Stances | Evidence-only stances for Mayor + 4 council | BEVHILLS-01 | Complete (2026-06-16) |
-| 128 — Carson Stances | Evidence-only stances for Mayor + 4 council | CARSON-01 | Not started |
+| 128 — Carson Stances | Evidence-only stances for Mayor + 4 council | CARSON-01 | In progress (Plan 01 done) |
 | 129 — Compton Stances | Evidence-only stances for Mayor + 4 council | COMPTON-01 | Not started |
 | 130 — Culver City Stances | Evidence-only stances for 5 council members | CULVERCITY-01 | Not started |
 | 131 — El Segundo Stances | Evidence-only stances for 5 council members | ELSEGUNDO-01 | Not started |
@@ -59,7 +59,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - CSV format: politician_id,topic_id,topic_key,value,notes — no commas or quotes in notes
 - Values are 1–5 directly (1=most progressive, 5=most conservative)
 - Apply scripts use `npx tsx` via Bash (PowerShell blocked by execution policy)
-- Next migration: 719
+- Next migration: 721
 
 ## Accumulated Context
 
@@ -118,8 +118,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-16T12:00:00.000Z
-Stopped at: Phase 127 Plan 03 complete — Phase 127 Beverly Hills Stances closed; BEVHILLS-01 satisfied; next migration 719
+Last session: 2026-06-16T14:00:00.000Z
+Stopped at: Phase 128 Plan 01 complete — Davis-Holmes (9) + Hilton (5) stances applied; migrations 719-720; next migration 721
 Resume file: None
 
 ## Performance Metrics
@@ -225,3 +225,4 @@ Resume file: None
 - [Phase 127-01]: Beverly Hills Wave 0 revealed 713_alhambra_dedup.sql existed on disk but was NOT applied to DB (MAX applied = 712); applied and registered 713 first; NNN confirmed = 714. Friedman (directly-elected Mayor) 9 stances: housing 4.0, residential-zoning 5.0, homelessness-response 5.0, public-safety-approach 4.0, local-immigration 5.0, transportation-priorities 4.0, taxes 4.0, growth-and-development 4.0, local-environment 3.0; migration 714 applied. Corman 7 stances: housing 4.0, residential-zoning 4.0, homelessness-response 4.0, public-safety-approach 4.0, local-immigration 4.0, transportation-priorities 4.0, taxes 4.0; migration 715 applied. 16 total rows; 0 unpaired, 0 uncited; next migration=716
 - [Phase 127-02]: Mirisch (longest-serving BH council member) 11 stances including progressive outliers campaign-finance=2.0 (documented op-ed advocacy for local contribution limits) and climate-change=2.0 (documented environmental concern); residential-zoning=5.0 (most protective on council); migration 716 applied. Nazarian 7 stances including civil-rights=2.0 (documented anti-discrimination/hate crime advocacy — progressive outlier); all other topics 4.0 reflecting council consensus; migration 717 applied. Wells 8 stances all 4.0 reflecting council consensus on housing/zoning/homelessness/safety/immigration/taxes/development/transportation; migration 718 applied. 26 total rows; 0 unpaired, 0 uncited; all 5 BH officials complete; next migration=719
 - [Phase 127-03]: Phase 127 Beverly Hills Stances CLOSED — Q1=5 rows (all 5 officials with stances), Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics, Q5=0 (Fisher exclusion confirmed). Per-official counts: Friedman (Mayor, directly elected)=9, Corman=7, Mirisch=11, Nazarian=7, Wells=8; total 42 stance rows (migrations 714-718); 0 blank-spoke officials; Fisher (City Treasurer, external_id -700011, UUID 7f162e20) excluded throughout — zero rows across all plans; BEVHILLS-01 FULLY CLOSED; next migration=719
+- [Phase 128-01]: Carson Wave 0 confirmed NNN=719 (MAX applied=718; 716+717+718 all present); 44 active topics; all 7 Carson UUIDs resolved. Davis-Holmes (Mayor, directly elected LOCAL_EXEC) 9 stances: homelessness-response=3.0, housing=2.0, public-safety-approach=3.0, economic-development=2.0, local-environment=2.0, growth-and-development=2.0, taxes=2.0, transportation-priorities=2.0, local-immigration=2.0; migration 719 applied. Hilton (D1) 5 stances: housing=2.0, homelessness-response=3.0, public-safety-approach=3.0, local-environment=2.0, local-immigration=2.0; migration 720 applied. 14 total rows; 0 unpaired, 0 uncited; Bradshaw(-700305, 8523d499) + Cooper(-700306, 702d8439) excluded (0 rows); next migration=721
