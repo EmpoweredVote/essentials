@@ -1069,11 +1069,11 @@ Total Phase 124: 34 officials; 76 stances; 0 uncited; 0 unpaired; FALLRIV-03+MED
 3. v14.0 milestone marked complete in STATE.md and ROADMAP.md
 4. No orphaned requirements in REQUIREMENTS.md (all 22 v14.0 reqs marked complete)
 
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 125-01-PLAN.md — LOCATION-ONBOARDING.md: 7 Cities Onboarded rows + MA Tier 3 GOTCHAs + MA Quick Reference extension
+- [x] 125-01-PLAN.md — LOCATION-ONBOARDING.md: 7 Cities Onboarded rows + MA Tier 3 GOTCHAs + MA Quick Reference extension
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -1122,4 +1122,4 @@ All 22 requirements covered ✓
 | 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
 | 123. MA Tier 3 Stances Wave 2 | 5/5 | Complete | 2026-06-15 |
 | 124. MA Tier 3 Stances Wave 3 | 3/5 | In Progress | - |
-| 125. MA Tier 3 Playbook Retrospective | 0/2 | Planned | - |
+| 125. MA Tier 3 Playbook Retrospective | 1/2 | In Progress|  |

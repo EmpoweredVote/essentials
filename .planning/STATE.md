@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v14.0
 milestone_name: MA Tier 3 City Coverage
 status: executing
-last_updated: "2026-06-16T00:15:05.685Z"
-last_activity: 2026-06-16 -- Phase 125 planning complete
+last_updated: "2026-06-16T00:30:00.000Z"
+last_activity: 2026-06-16 -- Phase 125 Plan 01 complete; LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows + 6 MA GOTCHAs; MA-RETRO-02 partially satisfied (Plan 02 will flip checkbox); next migration 699
 progress:
   total_phases: 9
   completed_phases: 8
   total_plans: 33
-  completed_plans: 31
+  completed_plans: 32
   percent: 89
 ---
 
@@ -18,9 +18,9 @@ progress:
 ## Current Position
 
 Phase: 125 — MA Tier 3 Playbook Retrospective
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-16 -- Phase 125 planning complete
+Plan: 01 complete; 02 pending
+Status: Executing
+Last activity: 2026-06-16 -- Phase 125 Plan 01 complete; LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows + 6 MA GOTCHAs (11 total STATE-SPECIFIC: MA callouts)
 Next migration: 699
 
 ## Project Reference
@@ -115,7 +115,7 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-15T23:30:00.000Z
+Last session: 2026-06-16T00:31:57.077Z
 Stopped at: Phase 124 Plan 05 complete (2026-06-15) — Phase 124 fully closed; FALLRIV-03+MEDFORD-03+WALTHAM-03 satisfied; next is Phase 125 MA Tier 3 Playbook Retrospective
 Resume file: None
 
@@ -169,6 +169,7 @@ Resume file: None
 | Phase 124 P03 | ~25m | 2 tasks | 7 files (683-689 stances SQLs); 10 stances for 7 Waltham at-large officials; 2 blank-spoke (Tzioumis+Vidal); 0 uncited; WALTHAM-03 partial (at-large batch) |
 | Phase 124 P04 | ~35m | 3 tasks | 9 files (690-698 stances SQLs); 9 stances for 9 Waltham ward councillors; 0 blank-spoke; 0 uncited; WALTHAM-03 fully closed; total Waltham 19 rows |
 | Phase 124 P05 | ~15m | 2 tasks | 3 files (REQUIREMENTS.md, ROADMAP.md, STATE.md); Q1-Q6=0; 76 total stances across 34 officials; FALLRIV-03+MEDFORD-03+WALTHAM-03 closed |
+| Phase 125 P01 | ~9m | 3 tasks | 1 file (LOCATION-ONBOARDING.md); 7 Cities Onboarded rows; 4 MA trap rows; 7 Key Facts bullets; 6 new MA GOTCHAs (11 total) |
 
 ## Decisions
 
@@ -209,3 +210,4 @@ Resume file: None
 - [Phase 124-03]: Migrations 677-683 specified in plan pre-occupied by Medford Plan 02; Waltham at-large stances used 683-689 instead; 7 officials done; Donahue(Mayor) 3 stances (MBTA compliance + Route 128); Tzioumis+Vidal blank-spoke (newer members, no individual evidence); MBTA Communities Act compliance vote primary evidence for 5 of 7 officials; city.waltham.ma.us Cloudflare-blocked; all 16 Waltham UUIDs captured for Plan 04
 - [Phase 124-04]: Migrations 684-692 specified in plan pre-occupied by Plan 03 at-large files (683-689); ward stances used 690-698 instead; all 9 ward councillors received housing=2.0 (MBTA compliance vote only available evidence); no blank-spoke officials; Logan(CP) searched specifically but no additional statements found; total Waltham 19 stance rows; WALTHAM-03 fully closed; Phase 124 COMPLETE
 - [Phase 124-05]: Phase 124 CLOSED — 34 officials (10 Fall River + 8 Medford + 16 Waltham); Q1=0 Q2=0 Q3=0 Q4=0 Q5=0 Q6=0; 17 Fall River + 40 Medford + 19 Waltham = 76 total stances; 8 blank-spoke officials (correct per evidence-only rule); FALLRIV-03+MEDFORD-03+WALTHAM-03 satisfied; next migration=699
+- [Phase 125-01]: LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows (Newton/Somerville/Lynn/New Bedford/Fall River/Medford/Waltham) + 4 MA Quick Reference trap rows + 7 Key Facts bullets + 6 new STATE-SPECIFIC: MA GOTCHAs (11 total); Medford geo_id DB-verified as 2539835 (estimate 2540115 wrong; external_id prefix -2540115xxx already seeded from wrong estimate — perpetual discrepancy documented); all 7 geo_ids confirmed from geofence_boundaries query; New Bedford 2545000 reconfirmed from migration 587
