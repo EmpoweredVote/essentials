@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
 milestone: v14.0
-milestone_name: milestone
-status: Ready
-stopped_at: ""
-last_updated: "2026-06-15T23:30:00.000Z"
-last_activity: 2026-06-15 -- Phase 124 complete; Plan 05 (closure verification) done; Q1=0 Q2=0 Q3=0 Q4=0 Q5=0 Q6=0; 76 total stances across 34 officials; FALLRIV-03+MEDFORD-03+WALTHAM-03 all closed; next migration 699
+milestone_name: MA Tier 3 City Coverage
+status: executing
+last_updated: "2026-06-16T00:15:05.685Z"
+last_activity: 2026-06-16 -- Phase 125 planning complete
 progress:
-  total_phases: 26
-  completed_phases: 26
-  total_plans: 97
-  completed_plans: 97
-  percent: 100
+  total_phases: 9
+  completed_phases: 8
+  total_plans: 33
+  completed_plans: 31
+  percent: 89
 ---
 
 # State
@@ -20,8 +19,8 @@ progress:
 
 Phase: 125 — MA Tier 3 Playbook Retrospective
 Plan: Not started
-Status: Ready
-Last activity: 2026-06-15 -- Phase 124 complete; Plan 05 closure verification done; all 6 SQL checks returned 0; FALLRIV-03+MEDFORD-03+WALTHAM-03 closed; next migration 699
+Status: Ready to execute
+Last activity: 2026-06-16 -- Phase 125 planning complete
 Next migration: 699
 
 ## Project Reference
