@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v15.0
-milestone_name: LA City Stances
-status: in_progress
-stopped_at: 126-03 complete 2026-06-15
-last_updated: "2026-06-15T00:00:00Z"
-last_activity: 2026-06-15 -- Phase 126 complete; ALHAMBRA-01 closed; 26 total stance rows across 5 officials; next migration 708
+milestone_name: milestone
+status: Not started
+stopped_at: context exhaustion at 75% (2026-06-16)
+last_updated: "2026-06-16T07:11:14.923Z"
+last_activity: "2026-06-16 -- Migration 713 applied: deduped Alhambra politicians; 4 stale pre-district records deleted, headshots moved to geofenced records; Jeff Maloney headshot still missing; next migration 714"
 progress:
-  total_phases: 13
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 8
+  total_phases: 39
+  completed_phases: 27
+  total_plans: 102
+  completed_plans: 102
+  percent: 69
 ---
 
 # State
@@ -21,8 +21,8 @@ progress:
 Phase: 127 — Beverly Hills Stances (not yet started)
 Plan: —
 Status: Not started
-Last activity: 2026-06-15 -- Phase 126 complete; ALHAMBRA-01 closed; 26 total stance rows across 5 officials (Lee=7, Maza=4, Maloney=4, Wang=7, Andrade-Stadler=4); migrations 703-707 applied; Q1-Q4 all clear; next migration 708
-Next migration: 708
+Last activity: 2026-06-16 -- Migration 713 applied: deduped Alhambra politicians; 4 stale pre-district records deleted, headshots moved to geofenced records; Jeff Maloney headshot still missing; next migration 714
+Next migration: 714
 
 ## Project Reference
 
@@ -119,8 +119,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-15T00:00:00Z
-Stopped at: 126-03 complete — Phase 126 Alhambra Stances fully closed; ALHAMBRA-01 satisfied; resume with Phase 127 Beverly Hills Stances
+Last session: 2026-06-16T07:11:14.906Z
+Stopped at: context exhaustion at 75% (2026-06-16)
 Resume file: None
 
 ## Performance Metrics
