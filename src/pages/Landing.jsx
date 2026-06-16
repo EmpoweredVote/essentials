@@ -52,7 +52,6 @@ const COVERAGE_STATES = [
     name: 'Maryland', abbrev: 'MD',
     areas: [
       { label: 'Leonardtown',      browseGovernmentList: ['2446475'], browseStateAbbrev: 'MD' },
-      { label: "St. Mary's County",browseGovernmentList: ['24037'],   browseStateAbbrev: 'MD', hasContext: true },
     ],
   },
   {
