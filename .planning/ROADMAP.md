@@ -1147,7 +1147,7 @@ All 22 requirements covered ✓
 ## Phases
 
 - [x] **Phase 126: Alhambra Stances** — 5 council members (26 stance rows; ALHAMBRA-01 closed 2026-06-15)
-- [ ] **Phase 127: Beverly Hills Stances** — Mayor + 4 council (Treasurer excluded)
+- [x] **Phase 127: Beverly Hills Stances** — Mayor + 4 council (Treasurer excluded; 42 stance rows; BEVHILLS-01 closed 2026-06-16)
 - [ ] **Phase 128: Carson Stances** — Mayor + 4 council (Clerk + Treasurer excluded)
 - [ ] **Phase 129: Compton Stances** — Mayor + 4 council
 - [ ] **Phase 130: Culver City Stances** — 5 council members
@@ -1214,18 +1214,12 @@ Plans:
 2. 0 uncited values; 0 unpaired
 3. Compass renders on at least one Beverly Hills official profile
 
-**Plans:** 3 plansPlans:
-**Wave 1**
+**Plans:** 3 plans
+Plans:
 
-- [ ] 127-01-PLAN.md — Wave 0 pre-flight + Lester Friedman (Mayor) + Craig A. Corman stances (migrations NNN through NNN+1)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-- [ ] 127-02-PLAN.md — John A. Mirisch + Sharona R. Nazarian + Mary N. Wells stances (migrations NNN+2 through NNN+4)
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-- [ ] 127-03-PLAN.md — Phase-wide closure verification + close BEVHILLS-01
+- [x] 127-01-PLAN.md — Wave 0 pre-flight + Lester Friedman (Mayor) + Craig A. Corman stances (migrations 714 through 715)
+- [x] 127-02-PLAN.md — John A. Mirisch + Sharona R. Nazarian + Mary N. Wells stances (migrations 716 through 718)
+- [x] 127-03-PLAN.md — Phase-wide closure verification + close BEVHILLS-01
 
 **Cross-cutting constraints:**
 
@@ -1481,7 +1475,7 @@ All 13 requirements covered ✓
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 126. Alhambra Stances | 3/3 | Complete | 2026-06-15 |
-| 127. Beverly Hills Stances | 2/3 | Executing | — |
+| 127. Beverly Hills Stances | 3/3 | Complete | 2026-06-16 |
 | 128. Carson Stances | 0/? | Not started | — |
 | 129. Compton Stances | 0/? | Not started | — |
 | 130. Culver City Stances | 0/? | Not started | — |

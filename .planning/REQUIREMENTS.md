@@ -9,7 +9,7 @@
 
 ## BEVHILLS — Beverly Hills Stances
 
-- [ ] **BEVHILLS-01:** Compass shows evidence-only stance data for Beverly Hills Mayor + City Council (5 officials: Friedman, Corman, Mirisch, Nazarian, Wells; City Treasurer Fisher excluded — administrative role); sequential research, 100% citation rate
+- [x] **BEVHILLS-01:** Compass shows evidence-only stance data for Beverly Hills Mayor + City Council (5 officials: Friedman, Corman, Mirisch, Nazarian, Wells; City Treasurer Fisher excluded — administrative role); sequential research, 100% citation rate
 
 ## CARSON — Carson Stances
 
@@ -72,7 +72,7 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | ALHAMBRA-01 | 126 | ✅ |
-| BEVHILLS-01 | 127 | ⬜ |
+| BEVHILLS-01 | 127 | ✅ |
 | CARSON-01 | 128 | ⬜ |
 | COMPTON-01 | 129 | ⬜ |
 | CULVERCITY-01 | 130 | ⬜ |
