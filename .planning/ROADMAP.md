@@ -406,6 +406,7 @@ Plans:
 **Wave 2** *(blocked on both Wave 1 plans — needs seeded politicians)*
 
 - [x] 108-03-PLAN.md — Boston headshots: migration 349 (14 council + best-effort SC, 600×750, type='default')
+
 **UI hint**: no
 
 ---
@@ -515,24 +516,31 @@ Plans:
 
 **Plans:** 7/7 plans executed
 **Wave 1**
+
 - [x] 111-01-PLAN.md — Governor Healey stances (migration 359)
 
 **Wave 2** *(blocked on Wave 1 — D-08 sequential)*
+
 - [x] 111-02-PLAN.md — Driscoll + Campbell + Goldberg + DiZoglio + Galvin stances (migrations 360-364)
 
 **Wave 3** *(blocked on Wave 2)*
+
 - [x] 111-03-PLAN.md — Warren stances (migration 365)
 
 **Wave 4** *(blocked on Wave 3)*
+
 - [x] 111-04-PLAN.md — Markey stances (migration 366)
 
 **Wave 5** *(blocked on Wave 4)*
+
 - [x] 111-05-PLAN.md — MA House reps MA-01 through MA-05 (migrations 367-371)
 
 **Wave 6** *(blocked on Wave 5)*
+
 - [x] 111-06-PLAN.md — MA House reps MA-06 through MA-09 (migrations 372-375) + close MA-STANCES-02
 
 **Wave 7** *(blocked on Wave 6)*
+
 - [x] 111-07-PLAN.md — Phase-wide verification + compass render checkpoint + close MA-STANCES-01 + MA-STANCES-02
 
 ---
@@ -585,6 +593,7 @@ Plans:
 3. Blank spokes for reps with no public evidence documented as expected outcome
 
 **Plans:** 5/5 complete
+
 - [x] 113-01-PLAN.md — Stances for HD-01 through HD-20 (migrations 416-435)
 - [x] 113-02-PLAN.md — Stances for HD-21 through HD-40 (migrations 436-455)
 - [x] 113-03-PLAN.md — Stances for HD-41 through HD-60 (migrations 456-475)
@@ -1038,6 +1047,7 @@ Plans:
 
 **Plans:** 5/5 complete (2026-06-15)
 Plans:
+
 - [x] 124-01-PLAN.md — Wave 0 pre-flight + Fall River Mayor Coogan + all 9 at-large councillors (migrations 665-674)
 - [x] 124-02-PLAN.md — Medford Mayor Lungo-Koehn + 7 at-large City Councilors (migrations 675-682)
 - [x] 124-03-PLAN.md — Waltham Mayor Donahue + 6 at-large City Councillors (migrations 683-689)
@@ -1204,13 +1214,22 @@ Plans:
 2. 0 uncited values; 0 unpaired
 3. Compass renders on at least one Beverly Hills official profile
 
-
-**Plans:** 3 plans
-Plans:
+**Plans:** 3 plansPlans:
+**Wave 1**
 
 - [ ] 127-01-PLAN.md — Wave 0 pre-flight + Lester Friedman (Mayor) + Craig A. Corman stances (migrations NNN through NNN+1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 127-02-PLAN.md — John A. Mirisch + Sharona R. Nazarian + Mary N. Wells stances (migrations NNN+2 through NNN+4)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 127-03-PLAN.md — Phase-wide closure verification + close BEVHILLS-01
+
+**Cross-cutting constraints:**
+
+- Every stance value written has a paired context row with at least one path-bearing source URL
 
 ---
 

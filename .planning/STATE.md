@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
 milestone: v15.0
-milestone_name: milestone
-status: Not started
-stopped_at: context exhaustion at 75% (2026-06-16)
-last_updated: "2026-06-16T07:11:14.923Z"
-last_activity: "2026-06-16 -- Migration 713 applied: deduped Alhambra politicians; 4 stale pre-district records deleted, headshots moved to geofenced records; Jeff Maloney headshot still missing; next migration 714"
+milestone_name: LA City Stances
+status: executing
+last_updated: "2026-06-16T08:01:31.169Z"
+last_activity: 2026-06-16 -- Phase 127 planning complete
 progress:
-  total_phases: 39
-  completed_phases: 27
-  total_plans: 102
-  completed_plans: 102
-  percent: 69
+  total_phases: 13
+  completed_phases: 1
+  total_plans: 6
+  completed_plans: 3
+  percent: 8
 ---
 
 # State
@@ -20,8 +19,8 @@ progress:
 
 Phase: 127 — Beverly Hills Stances (not yet started)
 Plan: —
-Status: Not started
-Last activity: 2026-06-16 -- Migration 713 applied: deduped Alhambra politicians; 4 stale pre-district records deleted, headshots moved to geofenced records; Jeff Maloney headshot still missing; next migration 714
+Status: Ready to execute
+Last activity: 2026-06-16 -- Phase 127 planning complete
 Next migration: 714
 
 ## Project Reference
