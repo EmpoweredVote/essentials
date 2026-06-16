@@ -1204,6 +1204,14 @@ Plans:
 2. 0 uncited values; 0 unpaired
 3. Compass renders on at least one Beverly Hills official profile
 
+
+**Plans:** 3 plans
+Plans:
+
+- [ ] 127-01-PLAN.md — Wave 0 pre-flight + Lester Friedman (Mayor) + Craig A. Corman stances (migrations NNN through NNN+1)
+- [ ] 127-02-PLAN.md — John A. Mirisch + Sharona R. Nazarian + Mary N. Wells stances (migrations NNN+2 through NNN+4)
+- [ ] 127-03-PLAN.md — Phase-wide closure verification + close BEVHILLS-01
+
 ---
 
 ### Phase 128: Carson Stances
@@ -1454,7 +1462,7 @@ All 13 requirements covered ✓
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 126. Alhambra Stances | 3/3 | Complete | 2026-06-15 |
-| 127. Beverly Hills Stances | 0/? | Not started | — |
+| 127. Beverly Hills Stances | 0/3 | Not started | — |
 | 128. Carson Stances | 0/? | Not started | — |
 | 129. Compton Stances | 0/? | Not started | — |
 | 130. Culver City Stances | 0/? | Not started | — |
