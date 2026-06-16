@@ -18,6 +18,7 @@
 - ✅ **v12.0 Virginia Essentials** - Phases 100-106 (shipped 2026-06-10)
 - ✅ **v13.0 Massachusetts Expanded** - Phases 107-116 (shipped 2026-06-13)
 - ✅ **v14.0 MA Tier 3 City Coverage** - Phases 117-125 (shipped 2026-06-15)
+- 🔄 **v15.0 LA City Stances** - Phases 126-138 (in progress)
 
 ---
 
@@ -1123,3 +1124,338 @@ All 22 requirements covered ✓
 | 123. MA Tier 3 Stances Wave 2 | 5/5 | Complete | 2026-06-15 |
 | 124. MA Tier 3 Stances Wave 3 | 5/5 | Complete | 2026-06-15 |
 | 125. MA Tier 3 Playbook Retrospective | 2/2 | Complete   | 2026-06-16 |
+
+---
+
+# v15.0 LA City Stances
+
+**Goal:** Evidence-only compass stances for all 12 deep-seeded LA-area city councils — 65 elected officials (clerks and treasurers excluded) across Alhambra, Beverly Hills, Carson, Compton, Culver City, El Segundo, Gardena, Hawthorne, Santa Monica, South Gate, West Hollywood, and Whittier. All 12 cities were deep-seeded in v7.0; this milestone is stances-only (no geofence or officials work required). Target: up to 44 evidence-only stances per person.  
+**Phases:** 126–138 (13 phases)  
+**Requirements:** 13  
+**Next migration:** 706
+
+## Phases
+
+- [ ] **Phase 126: Alhambra Stances** — 5 council members
+- [ ] **Phase 127: Beverly Hills Stances** — Mayor + 4 council (Treasurer excluded)
+- [ ] **Phase 128: Carson Stances** — Mayor + 4 council (Clerk + Treasurer excluded)
+- [ ] **Phase 129: Compton Stances** — Mayor + 4 council
+- [ ] **Phase 130: Culver City Stances** — 5 council members
+- [ ] **Phase 131: El Segundo Stances** — 5 council members
+- [ ] **Phase 132: Gardena Stances** — Mayor + 4 council
+- [ ] **Phase 133: Hawthorne Stances** — Mayor + 4 council
+- [ ] **Phase 134: Santa Monica Stances** — 10 council members
+- [ ] **Phase 135: South Gate Stances** — 5 council members
+- [ ] **Phase 136: West Hollywood Stances** — 5 council members
+- [ ] **Phase 137: Whittier Stances** — Mayor + 4 council
+- [ ] **Phase 138: LA Tier 1 Retrospective** — LOCATION-ONBOARDING.md + milestone close
+
+## Phase Details
+
+### Phase 126: Alhambra Stances
+
+**Goal:** Evidence-only compass stances for all 5 Alhambra City Council members.
+
+**Requirements:** ALHAMBRA-01
+
+**Key facts:**
+
+- geo_id=0600884 (already seeded in v7.0)
+- 5 officials: Katherine Lee (D1), Ross Maza (D2), Jeff Maloney (D3), Noya Wang (D4), Adele Andrade-Stadler (D5)
+- politician_ids in DB — verify before writing migrations
+- Run ONE politician at a time — never parallel
+- No default values — blank spoke = no evidence found
+- Per-individual migration files starting at 703 (actual; 699-702 were pre-occupied); apply immediately per-person
+- 100% citation rate required
+
+**Success criteria:**
+
+1. At least 3 of 5 officials have ≥1 stance row
+2. 0 uncited values (all have citation evidence)
+3. 0 unpaired (each stance maps to a live topic_id)
+4. Compass renders on at least one Alhambra official profile
+
+---
+
+### Phase 127: Beverly Hills Stances
+
+**Goal:** Evidence-only compass stances for Beverly Hills Mayor + 4 City Council members.
+
+**Requirements:** BEVHILLS-01
+
+**Key facts:**
+
+- geo_id=0606308 (already seeded in v7.0)
+- 5 officials: Lester Friedman (Mayor), Craig A. Corman, John A. Mirisch, Sharona Nazarian, Mary N. Wells
+- City Treasurer Howard Fisher excluded (administrative role — no policy stances expected)
+- Beverly Hills officials tend to have coverage in local press (Beverly Hills Courier, Patch)
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 3 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+3. Compass renders on at least one Beverly Hills official profile
+
+---
+
+### Phase 128: Carson Stances
+
+**Goal:** Evidence-only compass stances for Carson Mayor + 4 City Council members.
+
+**Requirements:** CARSON-01
+
+**Key facts:**
+
+- geo_id=0611530 (already seeded in v7.0)
+- 5 officials: Lula Davis-Holmes (Mayor), Jawane Hilton (D1), Jim Dear (D2), Cedric Hicks (D3), Arleen Rojas (D4)
+- City Clerk Khaleah Bradshaw + City Treasurer Monica Cooper excluded (administrative roles)
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 3 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+3. Compass renders on at least one Carson official profile
+
+---
+
+### Phase 129: Compton Stances
+
+**Goal:** Evidence-only compass stances for Compton Mayor + 4 City Council members.
+
+**Requirements:** COMPTON-01
+
+**Key facts:**
+
+- geo_id=0615044 (already seeded in v7.0)
+- 5 officials: Emma Sharif (Mayor), Deidre Duhart (D1), Andre Spicer (D2), Jonathan Bowers (D3), Lillie Darden (D4)
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 3 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+3. Compass renders on at least one Compton official profile
+
+---
+
+### Phase 130: Culver City Stances
+
+**Goal:** Evidence-only compass stances for all 5 Culver City Council members.
+
+**Requirements:** CULVERCITY-01
+
+**Key facts:**
+
+- geo_id=0617568 (already seeded in v7.0)
+- 5 officials: Albert Vera, Freddy Puza, Bryan Fish, Yasmine-Imani McMorrin, Dan O'Brien
+- Culver City is a politically active, progressive city — likely higher stance yield than smaller cities
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 3 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+3. Compass renders on at least one Culver City official profile
+
+---
+
+### Phase 131: El Segundo Stances
+
+**Goal:** Evidence-only compass stances for all 5 El Segundo City Council members.
+
+**Requirements:** ELSEGUNDO-01
+
+**Key facts:**
+
+- geo_id=0622412 (already seeded in v7.0)
+- 5 officials: Lance Giroux, Drew Boyles, Ryan Baldino, Michelle Keldorf, Chris Pimentel
+- Small aerospace/industrial city — local issues (LAX, El Segundo Air Force Base) dominate coverage
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 2 of 5 officials have ≥1 stance row (smaller press footprint expected)
+2. 0 uncited values; 0 unpaired
+
+---
+
+### Phase 132: Gardena Stances
+
+**Goal:** Evidence-only compass stances for Gardena Mayor + 4 City Council members.
+
+**Requirements:** GARDENA-01
+
+**Key facts:**
+
+- geo_id=0628168 (already seeded in v7.0)
+- 5 officials: Tasha Cerda (Mayor), Rodney Tanaka, Mark Henderson, Paulette Francis, Wanda Love
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 2 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+
+---
+
+### Phase 133: Hawthorne Stances
+
+**Goal:** Evidence-only compass stances for Hawthorne Mayor + 4 City Council members.
+
+**Requirements:** HAWTHORNE-01
+
+**Key facts:**
+
+- geo_id=0632548 (already seeded in v7.0)
+- 5 officials: Alex Vargas (Mayor), Alex Monteiro, Katrina Manning, Angie Reyes English, Faye Johnson
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 2 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+
+---
+
+### Phase 134: Santa Monica Stances
+
+**Goal:** Evidence-only compass stances for all 10 Santa Monica City Council members.
+
+**Requirements:** SANTAMONICA-01
+
+**Key facts:**
+
+- geo_id=0670000 (already seeded in v7.0)
+- 10 officials: Phil Brock, Natalya Zernitskaya, Barry Snell, Ellis Raskin, Dan Hall, Jesse Zwick, Oscar de la Torre, Caroline Torosis, Christine Parra, Lana Negrete
+- Largest city in this milestone (10 officials); SM is politically active with strong local press (Santa Monica Daily Press, Lookout News)
+- Brock is the sitting Mayor — likely richest public record
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 6 of 10 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+3. Compass renders on Mayor Brock profile
+
+---
+
+### Phase 135: South Gate Stances
+
+**Goal:** Evidence-only compass stances for all 5 South Gate City Council members.
+
+**Requirements:** SOUTHGATE-01
+
+**Key facts:**
+
+- geo_id=0673080 (already seeded in v7.0)
+- 5 officials: Maria Davila, Joshua Barron, Maria del Pilar Avalos, Gil Hurtado, Al Rios
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 2 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+
+---
+
+### Phase 136: West Hollywood Stances
+
+**Goal:** Evidence-only compass stances for all 5 West Hollywood City Council members.
+
+**Requirements:** WEHO-01
+
+**Key facts:**
+
+- geo_id=0684410 (already seeded in v7.0)
+- 5 officials: Danny Hang, Chelsea Byers, Lauren Meister, John Erickson, John Heilman
+- WeHo is a high-profile progressive city — council members tend to have strong public records (housing, LGBTQ+ rights, homelessness)
+- Heilman has been on council since 1984 — longest-serving, richest public record
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 4 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+3. Compass renders on at least one WeHo official profile
+
+---
+
+### Phase 137: Whittier Stances
+
+**Goal:** Evidence-only compass stances for Whittier Mayor + 4 City Council members.
+
+**Requirements:** WHITTIER-01
+
+**Key facts:**
+
+- geo_id=0685292 (already seeded in v7.0)
+- 5 officials: James Becerra (Mayor), Fernando Dutra (D1), Vicky Santana (D2), Octavio Martinez (D3), Aida Macedo (D4)
+- Run ONE politician at a time — never parallel
+
+**Success criteria:**
+
+1. At least 2 of 5 officials have ≥1 stance row
+2. 0 uncited values; 0 unpaired
+
+---
+
+### Phase 138: LA Tier 1 Retrospective
+
+**Goal:** Update LOCATION-ONBOARDING.md with 12 LA city rows and close v15.0.
+
+**Requirements:** LA-RETRO-01
+
+**Key facts:**
+
+- Add 12 rows to Cities Onboarded table (one per city)
+- Document any LA-area city GOTCHAs (local press sources, council structure variations, thin-record patterns)
+- v15.0 milestone close: update STATE.md + ROADMAP.md milestones checklist
+
+**Success criteria:**
+
+1. 12 new rows added to Cities Onboarded table in LOCATION-ONBOARDING.md
+2. Any LA-specific GOTCHAs documented
+3. v15.0 milestone marked complete in STATE.md and ROADMAP.md
+4. No orphaned requirements in REQUIREMENTS.md (all 13 v15.0 reqs marked complete)
+
+---
+
+## Coverage Matrix
+
+| Req | Phase |
+|-----|-------|
+| ALHAMBRA-01 | 126 |
+| BEVHILLS-01 | 127 |
+| CARSON-01 | 128 |
+| COMPTON-01 | 129 |
+| CULVERCITY-01 | 130 |
+| ELSEGUNDO-01 | 131 |
+| GARDENA-01 | 132 |
+| HAWTHORNE-01 | 133 |
+| SANTAMONICA-01 | 134 |
+| SOUTHGATE-01 | 135 |
+| WEHO-01 | 136 |
+| WHITTIER-01 | 137 |
+| LA-RETRO-01 | 138 |
+
+All 13 requirements covered ✓
+
+## Progress Table
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 126. Alhambra Stances | 0/? | Not started | — |
+| 127. Beverly Hills Stances | 0/? | Not started | — |
+| 128. Carson Stances | 0/? | Not started | — |
+| 129. Compton Stances | 0/? | Not started | — |
+| 130. Culver City Stances | 0/? | Not started | — |
+| 131. El Segundo Stances | 0/? | Not started | — |
+| 132. Gardena Stances | 0/? | Not started | — |
+| 133. Hawthorne Stances | 0/? | Not started | — |
+| 134. Santa Monica Stances | 0/? | Not started | — |
+| 135. South Gate Stances | 0/? | Not started | — |
+| 136. West Hollywood Stances | 0/? | Not started | — |
+| 137. Whittier Stances | 0/? | Not started | — |
+| 138. LA Tier 1 Retrospective | 0/2 | Not started | — |

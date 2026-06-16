@@ -1,27 +1,28 @@
 ---
 gsd_state_version: 1.0
-milestone: v14.0
-milestone_name: MA Tier 3 City Coverage
-status: completed
-last_updated: "2026-06-16T01:12:52.119Z"
-last_activity: 2026-06-15 -- Phase 125 complete; v14.0 MA Tier 3 City Coverage milestone closed; MA-RETRO-02 satisfied; LOCATION-ONBOARDING.md updated with 7 Cities Onboarded rows + MA Tier 3 GOTCHAs; next migration 699
+milestone: v15.0
+milestone_name: LA City Stances
+status: in_progress
+stopped_at: 126-01 complete 2026-06-16
+last_updated: "2026-06-16T04:30:22Z"
+last_activity: 2026-06-16 -- Phase 126 Plan 01 complete; Lee(7)+Maza(4)+Maloney(4)=15 stance rows; migrations 703-705 applied; next migration 706
 progress:
-  total_phases: 9
-  completed_phases: 9
-  total_plans: 33
-  completed_plans: 33
-  percent: 100
+  total_phases: 13
+  completed_phases: 0
+  total_plans: 1
+  completed_plans: 1
+  percent: 2
 ---
 
 # State
 
 ## Current Position
 
-Phase: 125 — MA Tier 3 Playbook Retrospective
-Plan: 02 complete (phase closed)
-Status: Complete
-Last activity: 2026-06-15 -- Phase 125 complete; v14.0 MA Tier 3 City Coverage milestone closed; MA-RETRO-02 satisfied; LOCATION-ONBOARDING.md updated with 7 Cities Onboarded rows + MA Tier 3 GOTCHAs; next migration 699
-Next migration: 699
+Phase: 126 — Alhambra Stances (in progress)
+Plan: 126-02 (Wave 2 of 3)
+Status: Ready to execute
+Last activity: 2026-06-16 -- 126-01 complete; Lee(7)+Maza(4)+Maloney(4)=15 stance rows; migrations 703-705 applied and verified; next migration 706
+Next migration: 706
 
 ## Project Reference
 
@@ -30,32 +31,35 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 **Current focus:** v14.0 — MA Tier 3 City Coverage
 
-## v14.0 Roadmap Summary
+## v15.0 Roadmap Summary
 
 | Phase | Goal | Requirements | Status |
 |-------|------|--------------|--------|
-| 117 — Newton Deep Seed | Mayor + council + school committee officials + headshots | NEWTON-01, NEWTON-02 | Complete (3 plans) |
-| 118 — Somerville Deep Seed | Mayor + City Council + School Committee officials + headshots | SOMERVILLE-01, SOMERVILLE-02 | Complete (3 plans) |
-| 119 — Lynn Deep Seed | Mayor + City Council officials + headshots | LYNN-01, LYNN-02 | Complete (3 plans) |
-| 120 — New Bedford Deep Seed | Mayor + City Council officials + headshots | NEWBED-01, NEWBED-02 | Complete (2 plans) |
-| 121 — Fall River + Medford + Waltham Deep Seeds | Officials + headshots for three smaller Tier 3 cities | FALLRIV-01/02, MEDFORD-01/02, WALTHAM-01/02 | Complete (5 plans) |
-| 122 — MA Tier 3 Stances Wave 1 | Evidence-only stances: Newton + Somerville | NEWTON-03, SOMERVILLE-03 | Complete (5 plans) |
-| 123 — MA Tier 3 Stances Wave 2 | Evidence-only stances: Lynn + New Bedford | LYNN-03, NEWBED-03 | Complete (5 plans) |
-| 124 — MA Tier 3 Stances Wave 3 | Evidence-only stances: Fall River + Medford + Waltham | FALLRIV-03, MEDFORD-03, WALTHAM-03 | Complete (5 plans) |
-| 125 — MA Tier 3 Playbook Retrospective | LOCATION-ONBOARDING.md GOTCHAs + 7 Cities Onboarded rows | MA-RETRO-02 | Complete (2 plans) |
+| 126 — Alhambra Stances | Evidence-only stances for 5 council members | ALHAMBRA-01 | Not started |
+| 127 — Beverly Hills Stances | Evidence-only stances for Mayor + 4 council | BEVHILLS-01 | Not started |
+| 128 — Carson Stances | Evidence-only stances for Mayor + 4 council | CARSON-01 | Not started |
+| 129 — Compton Stances | Evidence-only stances for Mayor + 4 council | COMPTON-01 | Not started |
+| 130 — Culver City Stances | Evidence-only stances for 5 council members | CULVERCITY-01 | Not started |
+| 131 — El Segundo Stances | Evidence-only stances for 5 council members | ELSEGUNDO-01 | Not started |
+| 132 — Gardena Stances | Evidence-only stances for Mayor + 4 council | GARDENA-01 | Not started |
+| 133 — Hawthorne Stances | Evidence-only stances for Mayor + 4 council | HAWTHORNE-01 | Not started |
+| 134 — Santa Monica Stances | Evidence-only stances for 10 council members | SANTAMONICA-01 | Not started |
+| 135 — South Gate Stances | Evidence-only stances for 5 council members | SOUTHGATE-01 | Not started |
+| 136 — West Hollywood Stances | Evidence-only stances for 5 council members | WEHO-01 | Not started |
+| 137 — Whittier Stances | Evidence-only stances for Mayor + 4 council | WHITTIER-01 | Not started |
+| 138 — LA Tier 1 Retrospective | LOCATION-ONBOARDING.md 12 city rows + milestone close | LA-RETRO-01 | Not started |
 
-## Key MA Facts (carry into plans)
+## Key v15.0 Facts (carry into plans)
 
-- FIPS code: 25 (state='25' in geofence_boundaries; districts.state='ma' for STATE/COUNTY tiers, 'MA' for NATIONAL)
-- 58 G4110 cities already loaded (v5.0) — assert, do not reload; 293 COUSUB towns loaded (v13.0 Phase 107)
-- Boston geo_id='2507000' (G4110); Cambridge geo_id='2511000'; Worcester geo_id='2582000'
-- All 7 Tier 3 cities are G4110 and already in geofences (no new TIGER load needed)
-- Newton geo_id=2545560; Somerville geo_id=2562535; Lynn geo_id=2537490
-- New Bedford, Fall River, Medford, Waltham: verify geo_ids from DB before seeding
-- MA legislature: 40 senators + 160 house reps — all seeded with offices in v5.0; all 217 have stances (v13.0)
-- MA 2026: primary 2026-09-08, general 2026-11-03
-- MA city elections: typically odd-year (2025, 2027) — no city-level race rows needed for most Tier 3 cities
+- All 12 cities already deep-seeded in v7.0 — no geofence or officials work needed; stances only
+- 65 politicians total (clerks/treasurers excluded): verify politician_ids from DB before each phase
+- City geo_ids: Alhambra=0600884, Beverly Hills=0606308, Carson=0611530, Compton=0615044, Culver City=0617568, El Segundo=0622412, Gardena=0628168, Hawthorne=0632548, Santa Monica=0670000, South Gate=0673080, West Hollywood=0684410, Whittier=0685292
+- 44 live compass topics — full coverage target; evidence-only rule always applies
 - Stances research: ONE at a time — never parallel; per-individual migration files; apply immediately
+- No default values — blank spoke = no evidence found (never Neutral/Likely as fallback)
+- CSV format: politician_id,topic_id,topic_key,value,notes — no commas or quotes in notes
+- Values are 1–5 directly (1=most progressive, 5=most conservative)
+- Apply scripts use `npx tsx` via Bash (PowerShell blocked by execution policy)
 - Next migration: 699
 
 ## Accumulated Context
@@ -115,8 +119,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-16T01:12:52.110Z
-Stopped at: Phase 124 Plan 05 complete (2026-06-15) — Phase 124 fully closed; FALLRIV-03+MEDFORD-03+WALTHAM-03 satisfied; next is Phase 125 MA Tier 3 Playbook Retrospective
+Last session: 2026-06-16T04:30:22Z
+Stopped at: 126-01 complete — 15 stance rows (Lee/Maza/Maloney), migrations 703-705 applied; resume with 126-02
 Resume file: None
 
 ## Performance Metrics
@@ -170,6 +174,7 @@ Resume file: None
 | Phase 124 P04 | ~35m | 3 tasks | 9 files (690-698 stances SQLs); 9 stances for 9 Waltham ward councillors; 0 blank-spoke; 0 uncited; WALTHAM-03 fully closed; total Waltham 19 rows |
 | Phase 124 P05 | ~15m | 2 tasks | 3 files (REQUIREMENTS.md, ROADMAP.md, STATE.md); Q1-Q6=0; 76 total stances across 34 officials; FALLRIV-03+MEDFORD-03+WALTHAM-03 closed |
 | Phase 125 P01 | ~9m | 3 tasks | 1 file (LOCATION-ONBOARDING.md); 7 Cities Onboarded rows; 4 MA trap rows; 7 Key Facts bullets; 6 new MA GOTCHAs (11 total) |
+| Phase 126 P01 | ~50m | 3 tasks | 3 files (703-705 stances SQLs); 15 stance rows for Lee/Maza/Maloney; 0 unpaired, 0 uncited; all 5 Alhambra UUIDs resolved |
 
 ## Decisions
 
@@ -212,3 +217,4 @@ Resume file: None
 - [Phase 124-05]: Phase 124 CLOSED — 34 officials (10 Fall River + 8 Medford + 16 Waltham); Q1=0 Q2=0 Q3=0 Q4=0 Q5=0 Q6=0; 17 Fall River + 40 Medford + 19 Waltham = 76 total stances; 8 blank-spoke officials (correct per evidence-only rule); FALLRIV-03+MEDFORD-03+WALTHAM-03 satisfied; next migration=699
 - [Phase 125-01]: LOCATION-ONBOARDING.md updated with 7 MA Tier 3 Cities Onboarded rows (Newton/Somerville/Lynn/New Bedford/Fall River/Medford/Waltham) + 4 MA Quick Reference trap rows + 7 Key Facts bullets + 6 new STATE-SPECIFIC: MA GOTCHAs (11 total); Medford geo_id DB-verified as 2539835 (estimate 2540115 wrong; external_id prefix -2540115xxx already seeded from wrong estimate — perpetual discrepancy documented); all 7 geo_ids confirmed from geofence_boundaries query; New Bedford 2545000 reconfirmed from migration 587
 - [Phase 125-02]: All 22 v14.0 requirements marked complete in REQUIREMENTS.md; traceability table all ✅; STATE.md + ROADMAP.md milestone close applied; v14.0 MA Tier 3 City Coverage milestone formally closed 2026-06-15; next migration 699
+- [Phase 126-01]: Alhambra stances Wave 1 — Lee(7)+Maza(4)+Maloney(4)=15 rows; migrations 703-705; actual starting migration 703 (699-702 were applied; STATE.md 699 was stale); 5 Alhambra UUIDs resolved (Lee=f22187bb, Maza=27441d13, Maloney=e4df4fce, Wang=abad7f66, Andrade-Stadler=f6d52199); 2019 Welcoming City resolution unanimous vote = local-immigration evidence for Lee+Maloney; next migration=706
