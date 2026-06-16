@@ -1,71 +1,69 @@
-# Requirements: v14.0 MA Tier 3 City Coverage
+# Requirements: v15.0 LA City Stances
 
-**Defined:** 2026-06-14
+**Defined:** 2026-06-15
 **Core Value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## NEWTON — Newton Deep Seed
+## ALHAMBRA — Alhambra Stances
 
-- [x] **NEWTON-01:** A Newton address returns a LOCAL section showing Mayor + Board of Aldermen (or City Council) + School Committee members with correct offices linked to geo_id=2545560
-- [x] **NEWTON-02:** All Newton elected officials (Mayor + council + school committee) have headshots at 600×750 in Supabase Storage (politician_photos bucket); best-effort where official photos unavailable online
-- [x] **NEWTON-03:** Compass shows evidence-only stance data for Newton Mayor + council members; sequential research, 100% citation rate, no blank-default values
+- [ ] **ALHAMBRA-01:** Compass shows evidence-only stance data for Alhambra City Council (5 members: Lee, Maza, Maloney, Wang, Andrade-Stadler); sequential research, 100% citation rate, no blank-default values
 
-## SOMERVILLE — Somerville Deep Seed
+## BEVHILLS — Beverly Hills Stances
 
-- [x] **SOMERVILLE-01:** A Somerville address returns a LOCAL section showing Mayor + City Council + School Committee members with correct offices linked to geo_id=2562535
-- [x] **SOMERVILLE-02:** All Somerville elected officials have headshots at 600×750 in Supabase Storage; best-effort where official photos unavailable online
-- [x] **SOMERVILLE-03:** Compass shows evidence-only stance data for Somerville Mayor + City Councillors; sequential research, 100% citation rate
+- [ ] **BEVHILLS-01:** Compass shows evidence-only stance data for Beverly Hills Mayor + City Council (5 officials: Friedman, Corman, Mirisch, Nazarian, Wells; City Treasurer Fisher excluded — administrative role); sequential research, 100% citation rate
 
-## LYNN — Lynn Deep Seed
+## CARSON — Carson Stances
 
-- [x] **LYNN-01:** A Lynn address returns a LOCAL section showing Mayor + City Council members with correct offices linked to geo_id=2537490
-- [x] **LYNN-02:** Lynn elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [x] **LYNN-03:** Compass shows evidence-only stance data for Lynn Mayor + Council; sequential research, 100% citation rate
+- [ ] **CARSON-01:** Compass shows evidence-only stance data for Carson Mayor + City Council (5 officials: Davis-Holmes, Hilton, Dear, Hicks, Rojas; City Clerk Bradshaw + City Treasurer Cooper excluded — administrative roles); sequential research, 100% citation rate
 
-## NEWBED — New Bedford Deep Seed
+## COMPTON — Compton Stances
 
-- [x] **NEWBED-01:** A New Bedford address returns a LOCAL section showing Mayor + City Council members with correct offices linked to New Bedford's geo_id
-- [x] **NEWBED-02:** New Bedford elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [x] **NEWBED-03:** Compass shows evidence-only stance data for New Bedford Mayor + Council; sequential research, 100% citation rate
+- [ ] **COMPTON-01:** Compass shows evidence-only stance data for Compton Mayor + City Council (5 officials: Sharif, Duhart, Spicer, Bowers, Darden); sequential research, 100% citation rate
 
-## FALLRIV — Fall River Deep Seed
+## CULVERCITY — Culver City Stances
 
-- [x] **FALLRIV-01:** A Fall River address returns a LOCAL section showing Mayor + City Council members with correct offices linked to Fall River's geo_id
-- [x] **FALLRIV-02:** Fall River elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [x] **FALLRIV-03:** Compass shows evidence-only stance data for Fall River Mayor + Council; sequential research, 100% citation rate
+- [ ] **CULVERCITY-01:** Compass shows evidence-only stance data for Culver City Council (5 members: Vera, Puza, Fish, McMorrin, O'Brien); sequential research, 100% citation rate
 
-## MEDFORD — Medford Deep Seed
+## ELSEGUNDO — El Segundo Stances
 
-- [x] **MEDFORD-01:** A Medford address returns a LOCAL section showing Mayor + Board of Aldermen (or City Council) + School Committee members with correct offices linked to Medford's geo_id
-- [x] **MEDFORD-02:** Medford elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [x] **MEDFORD-03:** Compass shows evidence-only stance data for Medford Mayor + Aldermen/Council; sequential research, 100% citation rate
+- [ ] **ELSEGUNDO-01:** Compass shows evidence-only stance data for El Segundo City Council (5 members: Giroux, Boyles, Baldino, Keldorf, Pimentel); sequential research, 100% citation rate
 
-## WALTHAM — Waltham Deep Seed
+## GARDENA — Gardena Stances
 
-- [x] **WALTHAM-01:** A Waltham address returns a LOCAL section showing Mayor + City Council members with correct offices linked to Waltham's geo_id
-- [x] **WALTHAM-02:** Waltham elected officials have headshots at 600×750 in Supabase Storage; best-effort coverage
-- [x] **WALTHAM-03:** Compass shows evidence-only stance data for Waltham Mayor + Council; sequential research, 100% citation rate
+- [ ] **GARDENA-01:** Compass shows evidence-only stance data for Gardena Mayor + City Council (5 officials: Cerda, Tanaka, Henderson, Francis, Love); sequential research, 100% citation rate
 
-## MA-RETRO — Playbook Retrospective
+## HAWTHORNE — Hawthorne Stances
 
-- [x] **MA-RETRO-02:** LOCATION-ONBOARDING.md updated with any MA Tier 3 city GOTCHAs (smaller city patterns, headshot sources, government structure variations); 7 new rows added to the Cities Onboarded table
+- [ ] **HAWTHORNE-01:** Compass shows evidence-only stance data for Hawthorne Mayor + City Council (5 officials: Vargas, Monteiro, Manning, Reyes English, Johnson); sequential research, 100% citation rate
+
+## SANTAMONICA — Santa Monica Stances
+
+- [ ] **SANTAMONICA-01:** Compass shows evidence-only stance data for Santa Monica City Council (10 members: Brock, Zernitskaya, Snell, Raskin, Hall, Zwick, de la Torre, Torosis, Parra, Negrete); sequential research, 100% citation rate
+
+## SOUTHGATE — South Gate Stances
+
+- [ ] **SOUTHGATE-01:** Compass shows evidence-only stance data for South Gate City Council (5 members: Davila, Barron, Avalos, Hurtado, Rios); sequential research, 100% citation rate
+
+## WEHO — West Hollywood Stances
+
+- [ ] **WEHO-01:** Compass shows evidence-only stance data for West Hollywood City Council (5 members: Hang, Byers, Meister, Erickson, Heilman); sequential research, 100% citation rate
+
+## WHITTIER — Whittier Stances
+
+- [ ] **WHITTIER-01:** Compass shows evidence-only stance data for Whittier Mayor + City Council (5 officials: Becerra, Dutra, Santana, Martinez, Macedo); sequential research, 100% citation rate
+
+## LA-RETRO — Retrospective
+
+- [ ] **LA-RETRO-01:** LOCATION-ONBOARDING.md updated with 12 LA-area city rows added to Cities Onboarded table; any LA-area city GOTCHAs documented; v15.0 milestone marked complete in STATE.md and ROADMAP.md
 
 ---
 
-## Future Requirements
-
-<!-- Not in this milestone. -->
-
-- School board deep seeds for Tier 3 cities (Newton/Somerville/Lynn/New Bedford/Fall River/Medford/Waltham school committees at G5420 depth)
-- Compass UI fixes — spoke accordion, min/max buttons, label sizing, Empowered Compass-style tooltips
-- MA Tier 4 cities (under 50k population)
-- 2026 city-level election races if any MA Tier 3 city holds elections that cycle
-
 ## Out of Scope
 
-- New state or federal coverage — v14.0 is MA-only
-- Compass UI changes — deferred; data milestone only
-- MA town governments (COUSUB tier) — geofences loaded in v13.0; officials deferred
-- Stance research for MA state/federal officials — completed in v13.0 (217 officials)
+- City of Los Angeles supplemental stances (already partially covered in v7.0) — separate milestone
+- LA County officials stances — partially covered in v7.0
+- LAUSD board stances — deferred
+- Headshot updates for any of the 12 cities — data-only milestone
+- Any new city deep seeds — all 12 cities already seeded in v7.0
 
 ---
 
@@ -73,25 +71,16 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NEWTON-01 | 117 | ✅ |
-| NEWTON-02 | 117 | ✅ |
-| NEWTON-03 | 122 | ✅ |
-| SOMERVILLE-01 | 118 | ✅ |
-| SOMERVILLE-02 | 118 | ✅ |
-| SOMERVILLE-03 | 122 | ✅ |
-| LYNN-01 | 119 | ✅ |
-| LYNN-02 | 119 | ✅ |
-| LYNN-03 | 123 | ✅ |
-| NEWBED-01 | 120 | ✅ |
-| NEWBED-02 | 120 | ✅ |
-| NEWBED-03 | 123 | ✅ |
-| FALLRIV-01 | 121 | ✅ |
-| FALLRIV-02 | 121 | ✅ |
-| FALLRIV-03 | 124 | ✅ |
-| MEDFORD-01 | 121 | ✅ |
-| MEDFORD-02 | 121 | ✅ |
-| MEDFORD-03 | 124 | ✅ |
-| WALTHAM-01 | 121 | ✅ |
-| WALTHAM-02 | 121 | ✅ |
-| WALTHAM-03 | 124 | ✅ |
-| MA-RETRO-02 | 125 | ✅ |
+| ALHAMBRA-01 | 126 | ⬜ |
+| BEVHILLS-01 | 127 | ⬜ |
+| CARSON-01 | 128 | ⬜ |
+| COMPTON-01 | 129 | ⬜ |
+| CULVERCITY-01 | 130 | ⬜ |
+| ELSEGUNDO-01 | 131 | ⬜ |
+| GARDENA-01 | 132 | ⬜ |
+| HAWTHORNE-01 | 133 | ⬜ |
+| SANTAMONICA-01 | 134 | ⬜ |
+| SOUTHGATE-01 | 135 | ⬜ |
+| WEHO-01 | 136 | ⬜ |
+| WHITTIER-01 | 137 | ⬜ |
+| LA-RETRO-01 | 138 | ⬜ |
