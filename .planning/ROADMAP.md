@@ -1155,7 +1155,7 @@ All 22 requirements covered ✓
 - [x] **Phase 132: Gardena Stances** — Mayor + 4 council (directly elected mayor; none excluded); 19 stance rows; migrations 739–743; GARDENA-01 closed 2026-06-16
 - [x] **Phase 133: Hawthorne Stances** — Mayor + 4 council (directly elected mayor; none excluded); 17 stance rows; migrations 744–748; HAWTHORNE-01 closed 2026-06-16
 - [x] **Phase 134: Santa Monica Stances** — 10 council members (rotational mayor; none excluded); 41 stance rows; migrations 749–758; SANTAMONICA-01 closed 2026-06-16
-- [ ] **Phase 135: South Gate Stances** — 5 council members
+- [x] **Phase 135: South Gate Stances** — 5 council members (rotational mayor; none excluded); 8 stance rows (Barron zero-INSERT, thin record); migrations 759–763; SOUTHGATE-01 closed 2026-06-16
 - [ ] **Phase 136: West Hollywood Stances** — 5 council members
 - [ ] **Phase 137: Whittier Stances** — Mayor + 4 council
 - [ ] **Phase 138: LA Tier 1 Retrospective** — LOCATION-ONBOARDING.md + milestone close
@@ -1483,7 +1483,7 @@ All 13 requirements covered ✓
 | 132. Gardena Stances | 1/1 | Complete | 2026-06-16 |
 | 133. Hawthorne Stances | 1/1 | Complete | 2026-06-16 |
 | 134. Santa Monica Stances | 1/1 | Complete | 2026-06-16 |
-| 135. South Gate Stances | 0/? | Not started | — |
+| 135. South Gate Stances | 1/1 | Complete | 2026-06-16 |
 | 136. West Hollywood Stances | 0/? | Not started | — |
 | 137. Whittier Stances | 0/? | Not started | — |
 | 138. LA Tier 1 Retrospective | 0/2 | Not started | — |
