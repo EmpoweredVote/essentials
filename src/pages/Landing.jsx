@@ -384,8 +384,12 @@ export default function Landing() {
         <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
           Choose an Alpha Community
         </h2>
-        <p className="text-base text-gray-500 dark:text-gray-400 mb-8">
+        <p className="text-base text-gray-500 dark:text-gray-400 mb-2">
           Each one is a preview of the full Essentials experience. Click a state to browse its covered areas.
+        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-8">
+          <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 mr-1">Purple Cities</span>
+          have stances.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start">
           {COVERAGE_STATES.map((state) => {
