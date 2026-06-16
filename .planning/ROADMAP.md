@@ -18,7 +18,7 @@
 - ✅ **v12.0 Virginia Essentials** - Phases 100-106 (shipped 2026-06-10)
 - ✅ **v13.0 Massachusetts Expanded** - Phases 107-116 (shipped 2026-06-13)
 - ✅ **v14.0 MA Tier 3 City Coverage** - Phases 117-125 (shipped 2026-06-15)
-- 🔄 **v15.0 LA City Stances** - Phases 126-138 (in progress)
+- ✅ **v15.0 LA City Stances** - Phases 126-138 (shipped 2026-06-16)
 
 ---
 
@@ -1158,7 +1158,7 @@ All 22 requirements covered ✓
 - [x] **Phase 135: South Gate Stances** — 5 council members (rotational mayor; none excluded); 8 stance rows (Barron zero-INSERT, thin record); migrations 759–763; SOUTHGATE-01 closed 2026-06-16
 - [x] **Phase 136: West Hollywood Stances** — 5 council members (rotational mayor; none excluded); 21 stance rows; migrations 764–768; WEHO-01 closed 2026-06-16
 - [x] **Phase 137: Whittier Stances** — Mayor + 4 council (directly elected mayor; none excluded); 16 stance rows; migrations 769–773; WHITTIER-01 closed 2026-06-16
-- [ ] **Phase 138: LA Tier 1 Retrospective** — LOCATION-ONBOARDING.md + milestone close
+- [x] **Phase 138: LA Tier 1 Retrospective** — LOCATION-ONBOARDING.md (12 city rows + LA Quick Reference) + milestone close; LA-RETRO-01 closed 2026-06-16
 
 ## Phase Details
 
@@ -1486,4 +1486,4 @@ All 13 requirements covered ✓
 | 135. South Gate Stances | 1/1 | Complete | 2026-06-16 |
 | 136. West Hollywood Stances | 1/1 | Complete | 2026-06-16 |
 | 137. Whittier Stances | 1/1 | Complete | 2026-06-16 |
-| 138. LA Tier 1 Retrospective | 0/2 | Not started | — |
+| 138. LA Tier 1 Retrospective | 1/1 | Complete | 2026-06-16 |

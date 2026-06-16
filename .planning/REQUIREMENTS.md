@@ -17,43 +17,43 @@
 
 ## COMPTON — Compton Stances
 
-- [ ] **COMPTON-01:** Compass shows evidence-only stance data for Compton Mayor + City Council (5 officials: Sharif, Duhart, Spicer, Bowers, Darden); sequential research, 100% citation rate
+- [x] **COMPTON-01:** Compass shows evidence-only stance data for Compton Mayor + City Council (5 officials: Sharif, Duhart, Spicer, Bowers, Darden); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 724–728; 20 stance rows; 0 uncited, 0 unpaired
 
 ## CULVERCITY — Culver City Stances
 
-- [ ] **CULVERCITY-01:** Compass shows evidence-only stance data for Culver City Council (5 members: Vera, Puza, Fish, McMorrin, O'Brien); sequential research, 100% citation rate
+- [x] **CULVERCITY-01:** Compass shows evidence-only stance data for Culver City Council (5 members: Vera, Puza, Fish, McMorrin, O'Brien); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 729–733; 29 stance rows; 0 uncited, 0 unpaired
 
 ## ELSEGUNDO — El Segundo Stances
 
-- [ ] **ELSEGUNDO-01:** Compass shows evidence-only stance data for El Segundo City Council (5 members: Giroux, Boyles, Baldino, Keldorf, Pimentel); sequential research, 100% citation rate
+- [x] **ELSEGUNDO-01:** Compass shows evidence-only stance data for El Segundo City Council (5 members: Giroux, Boyles, Baldino, Keldorf, Pimentel); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 734–738; 15 stance rows; 0 uncited, 0 unpaired
 
 ## GARDENA — Gardena Stances
 
-- [ ] **GARDENA-01:** Compass shows evidence-only stance data for Gardena Mayor + City Council (5 officials: Cerda, Tanaka, Henderson, Francis, Love); sequential research, 100% citation rate
+- [x] **GARDENA-01:** Compass shows evidence-only stance data for Gardena Mayor + City Council (5 officials: Cerda, Tanaka, Henderson, Francis, Love); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 739–743; 19 stance rows; 0 uncited, 0 unpaired
 
 ## HAWTHORNE — Hawthorne Stances
 
-- [ ] **HAWTHORNE-01:** Compass shows evidence-only stance data for Hawthorne Mayor + City Council (5 officials: Vargas, Monteiro, Manning, Reyes English, Johnson); sequential research, 100% citation rate
+- [x] **HAWTHORNE-01:** Compass shows evidence-only stance data for Hawthorne Mayor + City Council (5 officials: Vargas, Monteiro, Manning, Reyes English, Johnson); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 744–748; 17 stance rows; 0 uncited, 0 unpaired
 
 ## SANTAMONICA — Santa Monica Stances
 
-- [ ] **SANTAMONICA-01:** Compass shows evidence-only stance data for Santa Monica City Council (10 members: Brock, Zernitskaya, Snell, Raskin, Hall, Zwick, de la Torre, Torosis, Parra, Negrete); sequential research, 100% citation rate
+- [x] **SANTAMONICA-01:** Compass shows evidence-only stance data for Santa Monica City Council (10 members: Brock, Zernitskaya, Snell, Raskin, Hall, Zwick, de la Torre, Torosis, Parra, Negrete); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 749–758; 41 stance rows; 0 uncited, 0 unpaired; seed includes 2020-24 + Dec-2024 cohorts
 
 ## SOUTHGATE — South Gate Stances
 
-- [ ] **SOUTHGATE-01:** Compass shows evidence-only stance data for South Gate City Council (5 members: Davila, Barron, Avalos, Hurtado, Rios); sequential research, 100% citation rate
+- [x] **SOUTHGATE-01:** Compass shows evidence-only stance data for South Gate City Council (5 members: Davila, Barron, Avalos, Hurtado, Rios); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 759–763; 8 stance rows (Barron zero-INSERT, thin record); 0 uncited, 0 unpaired
 
 ## WEHO — West Hollywood Stances
 
-- [ ] **WEHO-01:** Compass shows evidence-only stance data for West Hollywood City Council (5 members: Hang, Byers, Meister, Erickson, Heilman); sequential research, 100% citation rate
+- [x] **WEHO-01:** Compass shows evidence-only stance data for West Hollywood City Council (5 members: Hang, Byers, Meister, Erickson, Heilman); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 764–768; 21 stance rows; 0 uncited, 0 unpaired
 
 ## WHITTIER — Whittier Stances
 
-- [ ] **WHITTIER-01:** Compass shows evidence-only stance data for Whittier Mayor + City Council (5 officials: Becerra, Dutra, Santana, Martinez, Macedo); sequential research, 100% citation rate
+- [x] **WHITTIER-01:** Compass shows evidence-only stance data for Whittier Mayor + City Council (5 officials: Becerra, Dutra, Santana, Martinez, Macedo); sequential research, 100% citation rate — Satisfied 2026-06-16; migrations 769–773; 16 stance rows; 0 uncited, 0 unpaired
 
 ## LA-RETRO — Retrospective
 
-- [ ] **LA-RETRO-01:** LOCATION-ONBOARDING.md updated with 12 LA-area city rows added to Cities Onboarded table; any LA-area city GOTCHAs documented; v15.0 milestone marked complete in STATE.md and ROADMAP.md
+- [x] **LA-RETRO-01:** LOCATION-ONBOARDING.md updated with 12 LA-area city rows added to Cities Onboarded table; any LA-area city GOTCHAs documented; v15.0 milestone marked complete in STATE.md and ROADMAP.md — Satisfied 2026-06-16; 12 Cities Onboarded rows + "LA-Area City Stances (v15.0) Quick Reference" block (6 traps) added; milestone closed
 
 ---
 
@@ -74,13 +74,13 @@
 | ALHAMBRA-01 | 126 | ✅ |
 | BEVHILLS-01 | 127 | ✅ |
 | CARSON-01 | 128 | ✅ |
-| COMPTON-01 | 129 | ⬜ |
-| CULVERCITY-01 | 130 | ⬜ |
-| ELSEGUNDO-01 | 131 | ⬜ |
-| GARDENA-01 | 132 | ⬜ |
-| HAWTHORNE-01 | 133 | ⬜ |
-| SANTAMONICA-01 | 134 | ⬜ |
-| SOUTHGATE-01 | 135 | ⬜ |
-| WEHO-01 | 136 | ⬜ |
-| WHITTIER-01 | 137 | ⬜ |
-| LA-RETRO-01 | 138 | ⬜ |
+| COMPTON-01 | 129 | ✅ |
+| CULVERCITY-01 | 130 | ✅ |
+| ELSEGUNDO-01 | 131 | ✅ |
+| GARDENA-01 | 132 | ✅ |
+| HAWTHORNE-01 | 133 | ✅ |
+| SANTAMONICA-01 | 134 | ✅ |
+| SOUTHGATE-01 | 135 | ✅ |
+| WEHO-01 | 136 | ✅ |
+| WHITTIER-01 | 137 | ✅ |
+| LA-RETRO-01 | 138 | ✅ |

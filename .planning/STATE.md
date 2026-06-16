@@ -2,25 +2,25 @@
 gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
-status: executing
-last_updated: "2026-06-17T03:30:00.000Z"
-last_activity: 2026-06-16 — Phase 137 Whittier Stances complete; WHITTIER-01 closed; 16 total stance rows across Mayor + 4 council (Dutra 4, Becerra/Santana/Martinez/Macedo 3 each); directly elected mayor (none excluded); next migration 774. All 12 city stance phases (126-137) complete — only Phase 138 retrospective/milestone-close remains
+status: complete
+last_updated: "2026-06-17T04:00:00.000Z"
+last_activity: 2026-06-16 — v15.0 LA City Stances MILESTONE CLOSED. Phase 138 retrospective complete (LA-RETRO-01); all 13 requirements satisfied. 288 evidence-only stance rows across 65 officials in 12 LA-area cities (migrations 703–773); 0 uncited, 0 unpaired. LOCATION-ONBOARDING.md updated (12 city rows + LA Quick Reference). Next migration 774
 progress:
   total_phases: 13
-  completed_phases: 12
-  total_plans: 18
-  completed_plans: 18
-  percent: 92
+  completed_phases: 13
+  total_plans: 19
+  completed_plans: 19
+  percent: 100
 ---
 
 # State
 
 ## Current Position
 
-Phase: 138 — LA Tier 1 Retrospective + milestone close (not yet started)
+Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
-Status: Not started
-Last activity: 2026-06-16 — Phase 137 Whittier Stances complete; WHITTIER-01 closed; 16 total stance rows; directly elected mayor (none excluded). All 12 city stance phases done.
+Status: Milestone closed 2026-06-16
+Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
 Next migration: 774
 
 ## Project Reference
@@ -28,7 +28,7 @@ Next migration: 774
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 138 — LA Tier 1 Retrospective + milestone close
+**Current focus:** v15.0 complete — awaiting next milestone direction
 
 ## v15.0 Roadmap Summary
 
@@ -46,7 +46,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 | 135 — South Gate Stances | Evidence-only stances for 5 council members | SOUTHGATE-01 | Complete (2026-06-16) |
 | 136 — West Hollywood Stances | Evidence-only stances for 5 council members | WEHO-01 | Complete (2026-06-16) |
 | 137 — Whittier Stances | Evidence-only stances for Mayor + 4 council | WHITTIER-01 | Complete (2026-06-16) |
-| 138 — LA Tier 1 Retrospective | LOCATION-ONBOARDING.md 12 city rows + milestone close | LA-RETRO-01 | Not started |
+| 138 — LA Tier 1 Retrospective | LOCATION-ONBOARDING.md 12 city rows + milestone close | LA-RETRO-01 | Complete (2026-06-16) |
 
 ## Key v15.0 Facts (carry into plans)
 
@@ -118,8 +118,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-17T03:30:00.000Z
-Stopped at: Phase 137 complete — WHITTIER-01 closed; 16 stance rows (migrations 769-773); next migration 774. Only Phase 138 (retrospective + milestone close) remains
+Last session: 2026-06-17T04:00:00.000Z
+Stopped at: v15.0 LA City Stances MILESTONE CLOSED — all 13 phases (126-138) complete; 288 stance rows across 65 officials in 12 cities (migrations 703-773); LA-RETRO-01 done; next migration 774
 Resume file: None
 
 ## Performance Metrics
@@ -226,6 +226,7 @@ Resume file: None
 - [Phase 127-02]: Mirisch (longest-serving BH council member) 11 stances including progressive outliers campaign-finance=2.0 (documented op-ed advocacy for local contribution limits) and climate-change=2.0 (documented environmental concern); residential-zoning=5.0 (most protective on council); migration 716 applied. Nazarian 7 stances including civil-rights=2.0 (documented anti-discrimination/hate crime advocacy — progressive outlier); all other topics 4.0 reflecting council consensus; migration 717 applied. Wells 8 stances all 4.0 reflecting council consensus on housing/zoning/homelessness/safety/immigration/taxes/development/transportation; migration 718 applied. 26 total rows; 0 unpaired, 0 uncited; all 5 BH officials complete; next migration=719
 - [Phase 127-03]: Phase 127 Beverly Hills Stances CLOSED — Q1=5 rows (all 5 officials with stances), Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics, Q5=0 (Fisher exclusion confirmed). Per-official counts: Friedman (Mayor, directly elected)=9, Corman=7, Mirisch=11, Nazarian=7, Wells=8; total 42 stance rows (migrations 714-718); 0 blank-spoke officials; Fisher (City Treasurer, external_id -700011, UUID 7f162e20) excluded throughout — zero rows across all plans; BEVHILLS-01 FULLY CLOSED; next migration=719
 - [Phase 128-01]: Carson Wave 0 confirmed NNN=719 (MAX applied=718; 716+717+718 all present); 44 active topics; all 7 Carson UUIDs resolved. Davis-Holmes (Mayor, directly elected LOCAL_EXEC) 9 stances: homelessness-response=3.0, housing=2.0, public-safety-approach=3.0, economic-development=2.0, local-environment=2.0, growth-and-development=2.0, taxes=2.0, transportation-priorities=2.0, local-immigration=2.0; migration 719 applied. Hilton (D1) 5 stances: housing=2.0, homelessness-response=3.0, public-safety-approach=3.0, local-environment=2.0, local-immigration=2.0; migration 720 applied. 14 total rows; 0 unpaired, 0 uncited; Bradshaw(-700305, 8523d499) + Cooper(-700306, 702d8439) excluded (0 rows); next migration=721
+- [Phase 138-01]: v15.0 LA City Stances MILESTONE CLOSED 2026-06-16 — Phase 138 retrospective (LA-RETRO-01) complete. All 13 requirements ✅. 288 evidence-only stance rows across 65 officials in 12 LA-area cities (Alhambra 26, Beverly Hills 42, Carson 34, Compton 20, Culver City 29, El Segundo 15, Gardena 19, Hawthorne 17, Santa Monica 41, South Gate 8, West Hollywood 21, Whittier 16; migrations 703-773); 0 uncited, 0 unpaired, 0 inactive-topic rows across the whole milestone. LOCATION-ONBOARDING.md updated: 12 Cities Onboarded rows + "LA-Area City Stances (v15.0) Quick Reference" (6 traps). Carry-forward: Santa Monica seed has 10 council rows (2020-24 + Dec-2024 cohorts; live council 7); Whittier district-label drift; stance migrations never register in schema_migrations (on-disk counter authoritative). Next migration 774.
 - [Phase 137-01]: Phase 137 Whittier Stances CLOSED — Mayor + 4 council (Dutra 4, Becerra/Santana/Martinez/Macedo 3 each); 16 total stance rows (migrations 769-773); 0 unpaired, 0 uncited, 0 inactive. Directly elected Mayor Becerra (none excluded). Moderate/suburban profile: public-safety 4.0 cluster (Becerra/Dutra/Santana/Martinez) + neighborhood-character growth 4.0 (Becerra, Macedo "not a developer") + economic-development 2.0; Dutra transportation 2.0 (LA Metro Board Chair); Macedo rights-conscious public-safety 3.0. DB district labels drift vs current reality (Dutra D1-seeded/lost D4 2026 to Macedo; Martinez D3-seeded/reported D2) — flagged for Phase 138. Applied via psql -f. WHITTIER-01 FULLY CLOSED; next migration=774
 - [Phase 136-01]: Phase 136 West Hollywood Stances CLOSED — 5 council members (Byers 5, Erickson 5, Hang 4, Meister 4, Heilman 3); 21 total stance rows (migrations 764-768); 0 unpaired, 0 uncited, 0 inactive. Rotational mayor (none excluded). Uniformly progressive city (rent control/LGBTQ+ founding): Heilman rent-regulation+housing+civil-rights all 1.0; Erickson abortion 1.0 (former PPLA VP); Meister cross-cut (rent-regulation 1.0 but growth-and-development 4.0 neighborhood-preservation). Applied via psql -f. WEHO-01 FULLY CLOSED; next migration=769
 - [Phase 135-01]: Phase 135 South Gate Stances CLOSED — 5 council members (Hurtado 3, Rios 2, Avalos 2, Davila 1, Barron 0); 8 total stance rows (migrations 759-763); 0 unpaired, 0 uncited, 0 inactive. Rotational mayor (none excluded). Thin-record small working-class city — Barron (Mayor, elected 2022) zero-INSERT ledger (no findable directional positions); Davila 1 (Housing Authority chair). Hurtado public-safety 4.0 (POA endorsement); Avalos healthcare 2.0 (mental-health funding); Rios transportation 2.0 (light rail). Honest blank spokes, no defaulting. Applied via psql -f. SOUTHGATE-01 FULLY CLOSED; next migration=764
