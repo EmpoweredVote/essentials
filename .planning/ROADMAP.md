@@ -1154,7 +1154,7 @@ All 22 requirements covered ✓
 - [x] **Phase 131: El Segundo Stances** — 5 council members (rotational mayor; none excluded); 15 stance rows; migrations 734–738; ELSEGUNDO-01 closed 2026-06-16
 - [x] **Phase 132: Gardena Stances** — Mayor + 4 council (directly elected mayor; none excluded); 19 stance rows; migrations 739–743; GARDENA-01 closed 2026-06-16
 - [x] **Phase 133: Hawthorne Stances** — Mayor + 4 council (directly elected mayor; none excluded); 17 stance rows; migrations 744–748; HAWTHORNE-01 closed 2026-06-16
-- [ ] **Phase 134: Santa Monica Stances** — 10 council members
+- [x] **Phase 134: Santa Monica Stances** — 10 council members (rotational mayor; none excluded); 41 stance rows; migrations 749–758; SANTAMONICA-01 closed 2026-06-16
 - [ ] **Phase 135: South Gate Stances** — 5 council members
 - [ ] **Phase 136: West Hollywood Stances** — 5 council members
 - [ ] **Phase 137: Whittier Stances** — Mayor + 4 council
@@ -1482,7 +1482,7 @@ All 13 requirements covered ✓
 | 131. El Segundo Stances | 1/1 | Complete | 2026-06-16 |
 | 132. Gardena Stances | 1/1 | Complete | 2026-06-16 |
 | 133. Hawthorne Stances | 1/1 | Complete | 2026-06-16 |
-| 134. Santa Monica Stances | 0/? | Not started | — |
+| 134. Santa Monica Stances | 1/1 | Complete | 2026-06-16 |
 | 135. South Gate Stances | 0/? | Not started | — |
 | 136. West Hollywood Stances | 0/? | Not started | — |
 | 137. Whittier Stances | 0/? | Not started | — |
