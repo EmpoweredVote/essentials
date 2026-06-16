@@ -5,25 +5,109 @@ import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
 
-const COVERAGE_COUNTIES = [
-  { label: 'Los Angeles County', state: 'California', browseGovernmentList: ['0644000', '06037', '0622710'], browseStateAbbrev: 'CA', browseCountyGeoId: '06037' },
-  { label: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
-  { label: 'Collin County', state: 'Texas', browseStateAbbrev: 'TX', browseCountyGeoId: '48085', browseGovernmentList: ['4801924','4803300','4808872','4813684','4825224','4825488','4827684','4838068','4841800','4844308','4845012','4845744','4847496','4850100','4850760','4855152','4863000','4863276','4863432','4863500','4864220','4875960','4877740'] },
-];
-
-const COVERAGE_CITIES = [
-  { label: 'Berkeley', state: 'California', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA' },
-  { label: 'Fremont', state: 'California', browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA' },
-  { label: 'Sacramento', state: 'California', browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA' },
-  { label: 'San Diego', state: 'California', browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA' },
-  { label: 'San Francisco', state: 'California', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA' },
-  { label: 'San Jose', state: 'California', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA' },
-  { label: 'Portland', state: 'Maine', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
-  { label: 'Cambridge', state: 'Massachusetts', browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA' },
-  { label: 'Boston', state: 'Massachusetts', browseGovernmentList: ['2507000'], browseStateAbbrev: 'MA' },
-  { label: 'Portland', state: 'Oregon', browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR' },
-  { label: 'Leonardtown', state: 'Maryland', browseGovernmentList: ['2446475', '24037'], browseStateAbbrev: 'MD' },
-  { label: 'Alexandria', state: 'Virginia', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA' },
+const COVERAGE_STATES = [
+  {
+    name: 'California', abbrev: 'CA', statewide: true, compass: true,
+    areas: [
+      { label: 'LA County', browseGovernmentList: ['0644000', '06037', '0622710'], browseStateAbbrev: 'CA', browseCountyGeoId: '06037' },
+      { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA' },
+      { label: 'Fremont', browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA' },
+      { label: 'Sacramento', browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA' },
+      { label: 'San Diego', browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA' },
+      { label: 'San Francisco', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA' },
+      { label: 'San Jose', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA' },
+    ],
+  },
+  {
+    name: 'Indiana', abbrev: 'IN', statewide: false, compass: false,
+    areas: [
+      { label: 'Monroe County', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
+    ],
+  },
+  {
+    name: 'Maine', abbrev: 'ME', statewide: true, compass: true,
+    areas: [
+      { label: 'Auburn', browseGovernmentList: ['2302060'], browseStateAbbrev: 'ME' },
+      { label: 'Bangor', browseGovernmentList: ['2302795'], browseStateAbbrev: 'ME' },
+      { label: 'Biddeford', browseGovernmentList: ['2304860'], browseStateAbbrev: 'ME' },
+      { label: 'Lewiston', browseGovernmentList: ['2338740'], browseStateAbbrev: 'ME' },
+      { label: 'Portland', browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
+      { label: 'South Portland', browseGovernmentList: ['2371990'], browseStateAbbrev: 'ME' },
+    ],
+  },
+  {
+    name: 'Maryland', abbrev: 'MD', statewide: true, compass: true,
+    areas: [
+      { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
+      { label: 'Leonardtown', browseGovernmentList: ['2446475'], browseStateAbbrev: 'MD' },
+    ],
+  },
+  {
+    name: 'Massachusetts', abbrev: 'MA', statewide: true, compass: true,
+    areas: [
+      { label: 'Boston', browseGovernmentList: ['2507000'], browseStateAbbrev: 'MA' },
+      { label: 'Brockton', browseGovernmentList: ['2509000'], browseStateAbbrev: 'MA' },
+      { label: 'Cambridge', browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA' },
+      { label: 'Fall River', browseGovernmentList: ['2523000'], browseStateAbbrev: 'MA' },
+      { label: 'Lowell', browseGovernmentList: ['2537000'], browseStateAbbrev: 'MA' },
+      { label: 'Lynn', browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA' },
+      { label: 'Medford', browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA' },
+      { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA' },
+      { label: 'Newton', browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA' },
+      { label: 'Quincy', browseGovernmentList: ['2555745'], browseStateAbbrev: 'MA' },
+      { label: 'Somerville', browseGovernmentList: ['2562535'], browseStateAbbrev: 'MA' },
+      { label: 'Springfield', browseGovernmentList: ['2567000'], browseStateAbbrev: 'MA' },
+      { label: 'Waltham', browseGovernmentList: ['2572600'], browseStateAbbrev: 'MA' },
+      { label: 'Worcester', browseGovernmentList: ['2582000'], browseStateAbbrev: 'MA' },
+    ],
+  },
+  {
+    name: 'Oregon', abbrev: 'OR', statewide: true, compass: true,
+    areas: [
+      { label: 'Multnomah County', browseGovernmentList: ['41051'], browseStateAbbrev: 'OR' },
+      { label: 'Fairview', browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
+      { label: 'Gresham', browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
+      { label: 'Maywood Park', browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
+      { label: 'Portland', browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR' },
+      { label: 'Troutdale', browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
+      { label: 'Wood Village', browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
+    ],
+  },
+  {
+    name: 'Texas', abbrev: 'TX', statewide: true, compass: false,
+    areas: [
+      { label: 'Collin County', browseStateAbbrev: 'TX', browseCountyGeoId: '48085', browseGovernmentList: ['4801924','4803300','4808872','4813684','4825224','4825488','4827684','4838068','4841800','4844308','4845012','4845744','4847496','4850100','4850760','4855152','4863000','4863276','4863432','4863500','4864220','4875960','4877740'] },
+      { label: 'Allen', browseGovernmentList: ['4801924'], browseStateAbbrev: 'TX' },
+      { label: 'Anna', browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX' },
+      { label: 'Blue Ridge', browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
+      { label: 'Celina', browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX' },
+      { label: 'Fairview', browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX' },
+      { label: 'Farmersville', browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX' },
+      { label: 'Frisco', browseGovernmentList: ['4827684'], browseStateAbbrev: 'TX' },
+      { label: 'Josephine', browseGovernmentList: ['4838068'], browseStateAbbrev: 'TX' },
+      { label: 'Lavon', browseGovernmentList: ['4841800'], browseStateAbbrev: 'TX' },
+      { label: 'Lowry Crossing', browseGovernmentList: ['4844308'], browseStateAbbrev: 'TX' },
+      { label: 'Lucas', browseGovernmentList: ['4845012'], browseStateAbbrev: 'TX' },
+      { label: 'McKinney', browseGovernmentList: ['4845744'], browseStateAbbrev: 'TX' },
+      { label: 'Melissa', browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX' },
+      { label: 'Murphy', browseGovernmentList: ['4850100'], browseStateAbbrev: 'TX' },
+      { label: 'Nevada', browseGovernmentList: ['4850760'], browseStateAbbrev: 'TX' },
+      { label: 'Parker', browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX' },
+      { label: 'Plano', browseGovernmentList: ['4858016'], browseStateAbbrev: 'TX' },
+      { label: 'Princeton', browseGovernmentList: ['4859576'], browseStateAbbrev: 'TX' },
+      { label: 'Prosper', browseGovernmentList: ['4859696'], browseStateAbbrev: 'TX' },
+      { label: 'Richardson', browseGovernmentList: ['4861796'], browseStateAbbrev: 'TX' },
+      { label: 'Saint Paul', browseGovernmentList: ['4864220'], browseStateAbbrev: 'TX' },
+      { label: 'Van Alstyne', browseGovernmentList: ['4874924'], browseStateAbbrev: 'TX' },
+      { label: 'Weston', browseGovernmentList: ['4877740'], browseStateAbbrev: 'TX' },
+    ],
+  },
+  {
+    name: 'Virginia', abbrev: 'VA', statewide: true, compass: true,
+    areas: [
+      { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA' },
+    ],
+  },
 ];
 
 const STEPS = [
@@ -99,6 +183,15 @@ export default function Landing() {
     } else {
       navigate(`/results?q=${encodeURIComponent(area.address)}`);
     }
+  };
+
+  const [expandedStates, setExpandedStates] = useState(new Set());
+  const toggleState = (abbrev) => {
+    setExpandedStates(prev => {
+      const next = new Set(prev);
+      if (next.has(abbrev)) next.delete(abbrev); else next.add(abbrev);
+      return next;
+    });
   };
 
   const [nameQuery, setNameQuery] = useState('');
@@ -276,48 +369,76 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── Area + Address Section ── */}
+      {/* ── Alpha Communities Section ── */}
       <section className="w-full px-8 sm:px-12 lg:px-24 py-16">
         <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
           Choose an Alpha Community
         </h2>
         <p className="text-base text-gray-500 dark:text-gray-400 mb-8">
-          Each one is a preview of the full Essentials experience.
+          Each one is a preview of the full Essentials experience. Click a state to browse its covered areas.
         </p>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-8 items-start">
-
-          {/* Counties — 1/4 width */}
-          <div className="flex flex-col gap-2">
-            <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">Counties</p>
-            {COVERAGE_COUNTIES.map((area) => (
-              <button
-                key={`${area.label}-${area.state}`}
-                onClick={() => handleAreaClick(area)}
-                className="w-full text-left px-4 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-2"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {COVERAGE_STATES.map((state) => {
+            const isExpanded = expandedStates.has(state.abbrev);
+            return (
+              <div
+                key={state.abbrev}
+                className="bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal)] dark:border-ev-teal-light rounded-xl shadow-sm overflow-hidden"
               >
-                <div className="text-sm font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light leading-tight">{area.label}</div>
-                <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
-              </button>
-            ))}
-          </div>
-
-          {/* Cities — 3 columns, alphabetized horizontally then vertically */}
-          <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Cities</p>
-            <div className="grid grid-cols-3 gap-2">
-              {COVERAGE_CITIES.map((area) => (
+                {/* Card header — click to expand/collapse */}
                 <button
-                  key={`${area.label}-${area.state}`}
-                  onClick={() => handleAreaClick(area)}
-                  className="w-full text-left px-4 py-4 bg-white dark:bg-gray-900 border-2 border-[var(--ev-teal-dark)] dark:border-[var(--ev-teal)] rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal-dark)] focus:ring-offset-2"
+                  onClick={() => toggleState(state.abbrev)}
+                  aria-expanded={isExpanded}
+                  className="w-full text-left px-4 pt-4 pb-3 flex items-start justify-between gap-2 hover:bg-[var(--ev-bg-light)] dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[var(--ev-teal)]"
                 >
-                  <div className="text-sm font-semibold text-[var(--ev-teal-dark)] dark:text-[var(--ev-teal)] leading-tight">{area.label}</div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{area.state}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline gap-2">
+                      <span className="font-bold text-[var(--ev-teal)] dark:text-ev-teal-light">{state.name}</span>
+                      <span className="text-xs text-gray-400 dark:text-gray-500 font-mono shrink-0">{state.abbrev}</span>
+                    </div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                      {state.areas.length} {state.areas.length === 1 ? 'area' : 'areas'}
+                    </div>
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {state.statewide && (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--ev-teal)]/10 dark:bg-ev-teal-light/15 text-[var(--ev-teal)] dark:text-ev-teal-light font-medium">
+                          Statewide
+                        </span>
+                      )}
+                      {state.compass && (
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium">
+                          Compass
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  {/* Chevron */}
+                  <svg
+                    width="16" height="16" viewBox="0 0 16 16" fill="none"
+                    className={`shrink-0 mt-1 text-gray-400 dark:text-gray-500 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                    aria-hidden="true"
+                  >
+                    <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </button>
-              ))}
-            </div>
-          </div>
 
+                {/* Expanded city/area chips */}
+                {isExpanded && (
+                  <div className="px-3 pb-3 pt-2 border-t border-gray-100 dark:border-gray-800 flex flex-wrap gap-1.5">
+                    {state.areas.map((area) => (
+                      <button
+                        key={area.label}
+                        onClick={() => handleAreaClick(area)}
+                        className="text-xs px-3 py-1.5 rounded-full bg-[var(--ev-teal)]/10 hover:bg-[var(--ev-teal)]/20 dark:bg-ev-teal-light/15 dark:hover:bg-ev-teal-light/25 text-[var(--ev-teal)] dark:text-ev-teal-light font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)] focus:ring-offset-1"
+                      >
+                        {area.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
 
