@@ -1122,4 +1122,4 @@ All 22 requirements covered ✓
 | 122. MA Tier 3 Stances Wave 1 | 5/5 | Complete | 2026-06-15 |
 | 123. MA Tier 3 Stances Wave 2 | 5/5 | Complete | 2026-06-15 |
 | 124. MA Tier 3 Stances Wave 3 | 5/5 | Complete | 2026-06-15 |
-| 125. MA Tier 3 Playbook Retrospective | 2/2 | Complete | 2026-06-15 |
+| 125. MA Tier 3 Playbook Retrospective | 2/2 | Complete   | 2026-06-16 |
