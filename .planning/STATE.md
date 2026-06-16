@@ -3,32 +3,32 @@ gsd_state_version: 1.0
 milestone: v15.0
 milestone_name: LA City Stances
 status: executing
-last_updated: "2026-06-16T22:00:00.000Z"
-last_activity: 2026-06-16 — Phase 132 Gardena Stances complete; GARDENA-01 closed; 19 total stance rows across Mayor + 4 council (Cerda 5, Henderson 3, Tanaka 3, Francis 4, Love 4); directly elected mayor (none excluded); next migration 744
+last_updated: "2026-06-16T23:00:00.000Z"
+last_activity: 2026-06-16 — Phase 133 Hawthorne Stances complete; HAWTHORNE-01 closed; 17 total stance rows across Mayor + 4 council (Vargas 4, Manning 2, Monteiro 3, English 4, Johnson 4); directly elected mayor (none excluded); next migration 749
 progress:
   total_phases: 13
-  completed_phases: 7
-  total_plans: 13
-  completed_plans: 13
-  percent: 54
+  completed_phases: 8
+  total_plans: 14
+  completed_plans: 14
+  percent: 62
 ---
 
 # State
 
 ## Current Position
 
-Phase: 133 — Hawthorne Stances (not yet started)
+Phase: 134 — Santa Monica Stances (not yet started)
 Plan: —
 Status: Not started
-Last activity: 2026-06-16 — Phase 132 Gardena Stances complete; GARDENA-01 closed; 19 total stance rows across Mayor + 4 council; directly elected mayor (none excluded)
-Next migration: 744
+Last activity: 2026-06-16 — Phase 133 Hawthorne Stances complete; HAWTHORNE-01 closed; 17 total stance rows across Mayor + 4 council; directly elected mayor (none excluded)
+Next migration: 749
 
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 133 — Hawthorne Stances
+**Current focus:** Phase 134 — Santa Monica Stances
 
 ## v15.0 Roadmap Summary
 
@@ -41,7 +41,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 | 130 — Culver City Stances | Evidence-only stances for 5 council members | CULVERCITY-01 | Complete (2026-06-16) |
 | 131 — El Segundo Stances | Evidence-only stances for 5 council members | ELSEGUNDO-01 | Complete (2026-06-16) |
 | 132 — Gardena Stances | Evidence-only stances for Mayor + 4 council | GARDENA-01 | Complete (2026-06-16) |
-| 133 — Hawthorne Stances | Evidence-only stances for Mayor + 4 council | HAWTHORNE-01 | Not started |
+| 133 — Hawthorne Stances | Evidence-only stances for Mayor + 4 council | HAWTHORNE-01 | Complete (2026-06-16) |
 | 134 — Santa Monica Stances | Evidence-only stances for 10 council members | SANTAMONICA-01 | Not started |
 | 135 — South Gate Stances | Evidence-only stances for 5 council members | SOUTHGATE-01 | Not started |
 | 136 — West Hollywood Stances | Evidence-only stances for 5 council members | WEHO-01 | Not started |
@@ -59,7 +59,7 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - CSV format: politician_id,topic_id,topic_key,value,notes — no commas or quotes in notes
 - Values are 1–5 directly (1=most progressive, 5=most conservative)
 - Apply scripts use `npx tsx` via Bash (PowerShell blocked by execution policy)
-- Next migration: 744
+- Next migration: 749
 
 ## Accumulated Context
 
@@ -118,8 +118,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-16T22:00:00.000Z
-Stopped at: Phase 132 complete — GARDENA-01 closed; 19 stance rows (migrations 739-743); next migration 744
+Last session: 2026-06-16T23:00:00.000Z
+Stopped at: Phase 133 complete — HAWTHORNE-01 closed; 17 stance rows (migrations 744-748); next migration 749
 Resume file: None
 
 ## Performance Metrics
@@ -226,6 +226,7 @@ Resume file: None
 - [Phase 127-02]: Mirisch (longest-serving BH council member) 11 stances including progressive outliers campaign-finance=2.0 (documented op-ed advocacy for local contribution limits) and climate-change=2.0 (documented environmental concern); residential-zoning=5.0 (most protective on council); migration 716 applied. Nazarian 7 stances including civil-rights=2.0 (documented anti-discrimination/hate crime advocacy — progressive outlier); all other topics 4.0 reflecting council consensus; migration 717 applied. Wells 8 stances all 4.0 reflecting council consensus on housing/zoning/homelessness/safety/immigration/taxes/development/transportation; migration 718 applied. 26 total rows; 0 unpaired, 0 uncited; all 5 BH officials complete; next migration=719
 - [Phase 127-03]: Phase 127 Beverly Hills Stances CLOSED — Q1=5 rows (all 5 officials with stances), Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics, Q5=0 (Fisher exclusion confirmed). Per-official counts: Friedman (Mayor, directly elected)=9, Corman=7, Mirisch=11, Nazarian=7, Wells=8; total 42 stance rows (migrations 714-718); 0 blank-spoke officials; Fisher (City Treasurer, external_id -700011, UUID 7f162e20) excluded throughout — zero rows across all plans; BEVHILLS-01 FULLY CLOSED; next migration=719
 - [Phase 128-01]: Carson Wave 0 confirmed NNN=719 (MAX applied=718; 716+717+718 all present); 44 active topics; all 7 Carson UUIDs resolved. Davis-Holmes (Mayor, directly elected LOCAL_EXEC) 9 stances: homelessness-response=3.0, housing=2.0, public-safety-approach=3.0, economic-development=2.0, local-environment=2.0, growth-and-development=2.0, taxes=2.0, transportation-priorities=2.0, local-immigration=2.0; migration 719 applied. Hilton (D1) 5 stances: housing=2.0, homelessness-response=3.0, public-safety-approach=3.0, local-environment=2.0, local-immigration=2.0; migration 720 applied. 14 total rows; 0 unpaired, 0 uncited; Bradshaw(-700305, 8523d499) + Cooper(-700306, 702d8439) excluded (0 rows); next migration=721
+- [Phase 133-01]: Phase 133 Hawthorne Stances CLOSED — Mayor + 4 council (Vargas 4, Manning 2, Monteiro 3, English 4, Johnson 4); 17 total stance rows (migrations 744-748); 0 unpaired, 0 uncited, 0 inactive. Directly elected Mayor Vargas (none excluded). SpaceX/Tesla/Boring economic-development heavy city → economic-development 2.0 common; public-safety 4.0 cluster (Monteiro/English) + Vargas 3.0 (crime + youth prevention); Johnson distinctive homelessness-response 3.0 ("Treatment First, Housing Second"). Applied via psql -f from disk artifacts. HAWTHORNE-01 FULLY CLOSED; next migration=749
 - [Phase 132-01]: Phase 132 Gardena Stances CLOSED — Mayor + 4 council (Cerda 5, Henderson 3, Tanaka 3, Francis 4, Love 4); 19 total stance rows (migrations 739-743); 0 unpaired, 0 uncited, 0 inactive. Directly elected Mayor Cerda (LOCAL_EXEC, no rotational qualifier), none excluded. Diverse profile: services/dev cluster 2.0 (homelessness/housing/economic-development/healthcare/environment) + enforcement/preservation cluster 4.0. Notable: Tanaka (retired Gardena PD Lt.) public-safety 4.0 + residential-zoning 4.0 (local-control vs Sacramento); Love lone "no" vote on 333-unit 5-story development → residential-zoning 4.0, housing 3.0; Francis healthcare 2.0 (low-cost access). Applied via psql -f from disk artifacts. GARDENA-01 FULLY CLOSED; next migration=744
 - [Phase 131-01]: Phase 131 El Segundo Stances CLOSED — 5 council members (Pimentel 3, Baldino 3, Boyles 4, Giroux 2, Keldorf 3); 15 total stance rows (migrations 734-738); 0 unpaired, 0 uncited, 0 inactive. Rotational mayor (Alhambra pattern), none excluded. Business/aerospace South Bay city — consistently business-friendly + fiscally conservative + preservationist council: pro-economic-development 2.0 (Pimentel/Boyles/Giroux), controlled-growth/character-preservation 4.0 (all), well-resourced public safety 4.0, fiscal restraint taxes 4.0 (Baldino/Boyles), Boyles residential-zoning 4.0 (protect single-family). Keldorf cross-cut: local-environment 2.0 (LA League of Conservation Voters endorsement) alongside public-safety 4.0. ELSEGUNDO-01 FULLY CLOSED; next migration=739
 - [Phase 130-01]: Phase 130 Culver City Stances CLOSED — 5 council members (Puza 6, Fish 6, McMorrin 6, O'Brien 6, Vera 5); 29 total stance rows (migrations 729-733); 0 unpaired, 0 uncited, 0 rows on inactive topics. Rotational mayor (Alhambra pattern) — no Mayor office, all "Council Member", none excluded. FULL ideological spread captured with evidence: progressive bloc (McMorrin all 1.0-2.0 incl. PD-defunding 1.0 + rent-control 1.0; Puza + Fish transportation 1.0, civil-rights/housing 1.0) vs moderate O'Brien (PD-staffing 4.0, R1-preservation 4.0, MOVE-rollback 3.0) vs conservative Vera (rent-regulation 5.0 anti-RC/Measure-B, PD 4.0, ended Incremental Infill 4.0). MOVE Culver City 2023 bus/bike-lane rollback (3-2) is the defining distinguishing vote. Bryan Fish public name "Bubba Fish". Executed continuous sequential flow via Supabase MCP execute_sql. CULVERCITY-01 FULLY CLOSED; next migration=734
