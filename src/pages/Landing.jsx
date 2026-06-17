@@ -114,6 +114,21 @@ const COVERAGE_STATES = [
     ],
   },
   {
+    name: 'Utah', abbrev: 'UT',
+    areas: [
+      { label: 'Layton',          browseGovernmentList: ['4943660'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Lehi',            browseGovernmentList: ['4944320'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Ogden',           browseGovernmentList: ['4955980'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Orem',            browseGovernmentList: ['4957300'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Provo',           browseGovernmentList: ['4962470'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Salt Lake City',  browseGovernmentList: ['4967000'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Sandy',           browseGovernmentList: ['4967440'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'St. George',      browseGovernmentList: ['4965330'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'West Jordan',     browseGovernmentList: ['4982950'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'West Valley City',browseGovernmentList: ['4983470'], browseStateAbbrev: 'UT', hasContext: true },
+    ],
+  },
+  {
     name: 'Virginia', abbrev: 'VA',
     areas: [
       { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA', hasContext: true },
