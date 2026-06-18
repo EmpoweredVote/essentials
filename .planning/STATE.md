@@ -21,12 +21,13 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 808
+Next migration: 809
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
-- DONE+: D24 Stratton (2). [13/18]. TODO: D25 McKell a7cc7fe1-b491-4498-bab5-3f3661987abb (HB300 floor sponsor) · D26 Hinkins f01f1d5b-aeca-4548-bd39-14137e552422 · D27 Owens 53162004-fa67-42f7-a2f8-6289dc8237b2 · D28 Vickers 34fcabbb-bbc3-44fc-bd7e-32c05d7abd42 · D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
+- DONE+: D24 Stratton (2), D25 McKell (6, migration 808). [14/18]. TODO: D26 Hinkins f01f1d5b-aeca-4548-bd39-14137e552422 · D27 Owens 53162004-fa67-42f7-a2f8-6289dc8237b2 · D28 Vickers 34fcabbb-bbc3-44fc-bd7e-32c05d7abd42 · D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
+  - McKell (migration 808): all 6 confirmed by NAME on le.utah.gov roll calls / first-party sponsorship → voting-rights 4 (HB300 floor sponsor), civil-rights 5 (HB261 anti-DEI), school-vouchers 5 (HB215), abortion 4 (HB467 ban+exceptions), trans-athletes 5 (HB11 override), taxes 4 (HB106 income-tax cut). Honest blanks: fossil-fuels/climate (only nuclear evidence — doesn't map to coal/IPP anchors), childcare (no McKell bill — SB176/SB248 are others'), medicare/aid (no attributable SB96/Prop3 vote). EXTRA: prime sponsor SB152 social-media age-verification (no clean in-scope topic). Next migration 809.
 - ⚠ CHILDCARE FLAG: applied Weiler childcare=4 (NO) & Winterton childcare=2 (YES) from Freedom Index "SB248 childcare." BUT 2025 SB248 = Controlled Substances; childcare bill is 2026 SB248 (possibly in-progress). Votes are opposite (internally consistent) so likely real committee/floor votes, but VERIFY both against a named 2026 roll call later; revert if unconfirmed.
 - ECON-DEV POLARITY TRAP: a conservative's "anti-crony-capitalism / govt shouldn't pick winners & losers / free-market" = ANTI-subsidy = LOW end (1-2), NOT 5. Anti-union/labor bills do NOT map to economic-development at all (EXTRA). Agents keep mis-scoring this 5 — drop or invert. Vickers (D28) voted YEA on HB300 final passage (only Weiler was GOP no there) — confirm names, don't assume.
 - HB300 voting-rights inference rule: Dem caucus voted unanimously NO (confirmed) → safe to score Dems voting-rights=2 without individual name. GOP NOT unanimous (Weiler+Vickers defected) → require individual name to score a Republican; else skip.
