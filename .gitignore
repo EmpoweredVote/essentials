@@ -25,3 +25,11 @@ dist-ssr
 
 .env
 .superpowers/
+
+# Throwaway one-off migration/seed scripts (often hold ad-hoc creds — keep out of git)
+scripts/_tmp*
+supabase/.temp/
+
+# Python
+__pycache__/
+*.pyc

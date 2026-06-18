@@ -4,9 +4,14 @@ Images are already uploaded to Supabase Storage.
 Just needs to insert the DB rows with correct schema (no photo_origin_url column).
 """
 
+import os
+import sys
 import psycopg2
 
-DATABASE_URL = "postgresql://postgres.kxsdzaojfaibhuzmclfq:TriviaProd2026@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if not DATABASE_URL:
+    print("ERROR: set DATABASE_URL in your environment")
+    sys.exit(1)
 SUPABASE_URL = "https://kxsdzaojfaibhuzmclfq.supabase.co"
 ORIGIN_URL = "https://www.senate.ca.gov/senators"
 
