@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 834
+Next migration: 838
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -55,9 +55,13 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD23 Hoang Nguyen (14, mig 831, DEM, seated 2025): abortion 1, voting-rights 2 (HB300 NAY by NAME), school-vouchers 1, civil-rights 1, same-sex-marriage 1, immigration 2, local-immigration 2, climate-change 2, fossil-fuels 2, local-environment 1, housing 2, homelessness 1, homelessness-response 1, redistricting 1. From Vote411 + campaign issue pages + HB141 floor debate.
 - HD24 Grant Amjad Miller (6, mig 832, DEM, freshman 2025): voting-rights 2 (HB300 NAY by name; disambiguated from Miller T. D45 who voted YEA), homelessness 1 + homelessness-response 1 (HB362 Homeless Rights chief sponsor), trans-athletes 1 + civil-rights 1 (opposed HB269 + ACLU board), abortion 2.
 - HD25 Angela Romero (14, mig 833, DEM, MINORITY LEADER): civil-rights 1 (HB261 NAY) + school-vouchers 1 (HB215 NAY) roll-call confirmed; abortion 1, voting-rights 2, climate-change 2, fossil-fuels 2, local-environment 1, transportation-priorities 1, healthcare 2, homelessness 2, homelessness-response 2, housing 2, immigration 1, public-safety-approach 2 (police reform). deportation/local-immigration/medicare-aid/trans-athletes BLANK.
-- TODO batch 2 remaining: HD26 MacPherson(R), HD27 Loubet(R), HD28 Peck(R), HD29 Bolinder(R), HD30 Fitisemanu(D), HD31 Mauga(D), HD32 Hayes(D), HD33 Doug Owens(D), HD34 Moss(D). (HD21 already had stances — skipped.)
-- ⚠ DEM HANDLING WORKS: HB300 Dem caucus unanimous NO → voting-rights=2 caucus-safe; Vote411/campaign issue pages = rich first-party progressive evidence; values map LOW (1-2) EXCEPT residential-zoning (inverted: pro-density Dem = HIGH 4-5).
-- Next migration 834. **HOUSE: 21/64 done.**
+- HD26 Matt MacPherson (4, mig 834, R, seated Oct 2023): civil-rights 5 (HB261), taxes 4 (HB106), deportation 5 + local-immigration 5 (HB226 co-sponsor). voting-rights BLANK (ABSENT both HB300 votes — no inference); abortion BLANK (HB560 ambiguous).
+- HD27 Anthony E. Loubet (8, mig 835, R): voting-rights 4, abortion 4 (HB467), school-vouchers 5, civil-rights 5, taxes 4 (HB54), deportation 5 + local-immigration 5 (HB226), residential-zoning 1 (first-party opposes density = LOW inverted).
+- HD28 Nicholeen P. Peck (6, mig 836, R, seated 2025): voting-rights 4, abortion 4 (HB232 sponsor), civil-rights 5 (SB295), taxes 4, religious-freedom 5 (HB095 sponsor + WOW president), same-sex-marriage 5 (WOW org statement). trans-medical bills → EXTRA.
+- HD29 Bridger Bolinder (4, mig 837, R): abortion 4 (HB467), school-vouchers 5, civil-rights 5 (HB261), taxes 4 (HB54). voting-rights BLANK (absent HB300); thin rural record.
+- TODO batch 2 remaining (DEMS): HD30 Fitisemanu, HD31 Mauga, HD32 Hayes, HD33 Doug Owens, HD34 Moss. (HD21 already had stances — skipped.)
+- ⚠ DEM HANDLING WORKS: HB300 Dem caucus unanimous NO → voting-rights=2 caucus-safe; Vote411/campaign issue pages = rich first-party progressive evidence; values map LOW (1-2) EXCEPT residential-zoning (inverted: pro-density Dem = HIGH 4-5). ⚠ Several Rs ABSENT on HB300 (MacPherson, Bolinder) → voting-rights blank, never infer.
+- Next migration 834. **HOUSE: 25/64 done.**
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
