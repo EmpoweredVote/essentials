@@ -1298,7 +1298,7 @@ export default function Results() {
         (t) => userAnsweredIds.has(String(t.id)) && polAnsweredIds.has(String(t.id))
       ).length;
     }
-    const showCompassOverlay = matchCount >= 3;
+    const showCompassOverlay = compassMode && matchCount >= 3;
 
     const compassOverlayWidth = 190;
     const compassBg = isDark ? '#1a2235' : isCandidate ? '#fffef5' : '#fff';
