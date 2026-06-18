@@ -446,7 +446,7 @@ COMMIT;
 ### Headshot Upload Pattern
 ```bash
 # Source: Phase 51 Plan 03 Task 2 established pattern
-export SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4c2R6YW9qZmFpYmh1em1jbGZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1MDM2NTEwMywiZXhwIjoyMDY1OTQxMTAzfQ.6cZBx-L-pFiNOf3r6c9xolq2RHZT3pBsVdZxsVqYnYo"
+export SUPABASE_SERVICE_ROLE_KEY="<REDACTED: read from $SUPABASE_SERVICE_ROLE_KEY env var — never commit>"
 
 curl -X POST \
   -H "Authorization: Bearer ${SUPABASE_SERVICE_ROLE_KEY}" \

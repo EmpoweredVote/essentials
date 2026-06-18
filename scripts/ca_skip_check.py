@@ -1,10 +1,15 @@
 """
 CA Legislature Headshot Skip Check - using psycopg2 direct DB connection
 """
+import os
+import sys
 import psycopg2
 import json
 
-DATABASE_URL = "postgresql://postgres.kxsdzaojfaibhuzmclfq:TriviaProd2026@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if not DATABASE_URL:
+    print("ERROR: set DATABASE_URL in your environment")
+    sys.exit(1)
 
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()

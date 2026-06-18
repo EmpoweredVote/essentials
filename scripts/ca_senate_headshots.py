@@ -19,7 +19,10 @@ import io
 import sys
 import time
 
-DATABASE_URL = "postgresql://postgres.kxsdzaojfaibhuzmclfq:TriviaProd2026@aws-0-us-west-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+if not DATABASE_URL:
+    print("ERROR: set DATABASE_URL in your environment")
+    sys.exit(1)
 SUPABASE_URL = "https://kxsdzaojfaibhuzmclfq.supabase.co"
 SUPABASE_SERVICE_KEY = os.environ.get('SUPABASE_SECRET_KEY') or os.environ.get('SUPABASE_SERVICE_ROLE_KEY', '')
 if not SUPABASE_SERVICE_KEY:
