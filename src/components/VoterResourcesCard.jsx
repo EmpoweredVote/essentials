@@ -239,7 +239,7 @@ export default function VoterResourcesCard({ voterInfo, loading = false, stateNa
               </a>.
             </p>
             <a href={ballotUrl || officialUrl} target="_blank" rel="noopener noreferrer"
-              className="shrink-0 inline-flex items-center gap-2 rounded-lg bg-[#ff5740] px-4 py-2 text-sm font-bold text-white hover:bg-[#e84e38] transition-colors">
+              className="shrink-0 inline-flex items-center gap-2 rounded-lg bg-[#00657c] dark:bg-[#59b0c4] px-4 py-2 text-sm font-bold text-white hover:bg-[#004d5c] dark:hover:bg-[#4a9ab3] transition-colors">
               <BallotIcon className="w-4 h-4" />
               {ballotUrl ? 'View your sample ballot' : 'Find your ballot'}
             </a>
