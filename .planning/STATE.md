@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 872
+Next migration: 876
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -105,8 +105,14 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD69 Logan Monson (12, mig 869, R freshman 2025): abortion 4 (sanctity-of-life+HB233), civil-rights 5 (SB295), childcare 5, deportation 5 + local-immigration 5 + immigration 5 (HB226), taxes 4, voting-rights 4, economic-development 2, public-safety-approach 4, school-vouchers 5, religious-freedom 5.
 - HD70 Carl R. Albrecht (10, mig 870, R energy leader): voting-rights 4, abortion 4, civil-rights 5, trans-athletes 5, taxes 4, medicare/aid 4, deportation 5 + local-immigration 5 (HB226), fossil-fuels 5 + climate-change 4 (SB224 floor sponsor). school-vouchers UNCERTAIN (voted NAY — rural funding objection).
 - HD71 Rex P. Shipp (10, mig 871, R): abortion 4 (SB174+HB467), voting-rights 4 (+HB213 sponsor), school-vouchers 5, civil-rights 5, trans-athletes 5, taxes 4, medicare/aid 4 (SB96), deportation 5 + local-immigration 5 (HB226), childcare 5 (SB248 NAY).
-- TODO batch 4: HD72 Elison(R), HD73 Jack(R), HD74 Walter(R), HD75 Brooks(R). [4 LEFT to finish entire UT Legislature]
-- Next migration 872. **HOUSE: 70/75 have stances; 5 remain (HD64 intentional blank + HD72-75).**
+- HD72 Joseph Elison (8, mig 872, R): abortion 4, school-vouchers 5, civil-rights 5, voting-rights 4, taxes 4, deportation 5 + local-immigration 5 (HB226), childcare 5 (SB248 NAY).
+- HD73 Colin W. Jack (8, mig 873, R, energy cmte chair): abortion 4, school-vouchers 5, civil-rights 5, voting-rights 4, taxes 4, deportation 5 + local-immigration 5 (HB211 chief sponsor — absent on HB226), climate-change 4 (anti-renewable solar-restriction bills HB241/HB201).
+- HD74 R. Neil Walter (8, mig 874, R): abortion 4, school-vouchers 5, civil-rights 5, taxes 4, voting-rights 4, deportation 5 + local-immigration 5 (HB226), fossil-fuels 5 (SB514 IPP-coal prime sponsor).
+- HD75 Walt Brooks (9, mig 875, R): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4 (SB96), deportation 5 + local-immigration 5 (HB226). FINAL UT LEGISLATURE REP.
+
+## ✅✅ UTAH LEGISLATURE STANCE RESEARCH COMPLETE (2026-06-18)
+**DB-verified: Senate 29/29 + House 74/75 = 103/104 legislators have evidence-only compass stances.** The single House blank is **HD64 Jackie Larson** (appointed May 2026, after both sessions adjourned — no floor record + only values-level platform; honest blank per no-default rule; revisit after 2027 session). Migrations 808-875 (Senate 808-812; House batch1 813-822, batch2 823-842, batch3 843-862, batch4 863-875). **Next migration 876.**
+Method held throughout: one research agent at a time (rate-limit rule), every value name-confirmed on le.utah.gov roll calls / sponsored bill / first-party statement, no defaults, honest blanks. Cross-rep consistency enforced on housing/residential-zoning inverted polarity, economic-development anti-subsidy=LOW, childcare SB248 (NO=5 / YES=2), and SB295/HB261 civil-rights=5. Disambiguations: all 4 Petersons, Cory vs Celeste Maloy, Doug vs Derrin Owens, Carol vs Jefferson Moss, Miller G/T. Many honest blanks: GOP defectors (Hinkins/Owens vouchers; Dunnigan lone HB300 NAY→voting-rights 2; Watkins childcare 2/labor), Rs absent on HB300 (Ivory/Hawkins/MacPherson/Bolinder/Kohler/Bolinder), seating-date exclusions (10+ freshmen). REMAINING UT GAPS: SLC D4 Napier-Pearce (city, appointed, 0 stances) + HD64 Larson (legislature, appointed, 0 stances) + Sandy 0-photos resolved earlier. Utah still NOT on Landing.jsx beyond the 10 cities already added.
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
