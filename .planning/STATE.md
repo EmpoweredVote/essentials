@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 843
+Next migration: 848
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -66,6 +66,16 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD34 Carol Spackman Moss (11, mig 842, DEM, seated 2001; ≠ J. Moss R): school-vouchers 1 (HB215 NAY), civil-rights 1 (HB261 NAY), voting-rights 2, deportation 1 + local-immigration 2 (HB226 NAY), redistricting 1 (SB200 floor sponsor), climate-change 1, fossil-fuels 2, local-environment 1, transportation-priorities 1, trans-athletes 1 (opposed HB11). abortion UNCERTAIN (only 3rd-party endorsement).
 - ✅ **BATCH 2 COMPLETE (20 reps HD14-34; migrations 823-842).** ⚠ DEM HANDLING WORKS: HB300 caucus-unanimous NO → voting-rights=2; Vote411/campaign pages = first-party progressive evidence; LOW (1-2) except residential-zoning inverted. ⚠ Rs ABSENT on HB300 (MacPherson, Bolinder) → voting-rights blank. Name-collisions all handled: Peterson T/Petersen M/Peterson K/V, Miller G vs T, Doug vs Derrin Owens, Carol vs J. Moss.
 - Next migration 843. **HOUSE: 41/75 have stances (DB-verified); 34 reps remain.** (30 added this session: batch 1 = 10, batch 2 = 20.)
+
+### HOUSE BATCH 3 (in progress — target HD36-61, ~20 reps, unified dual-party prompt)
+- HD36 James A. Dunnigan (7, mig 843, R pragmatic): abortion 4, school-vouchers 1 (GOP defector — NAY HB215), trans-athletes 5, civil-rights 5, taxes 4, childcare 5 (NO on 2026 SB248 Child Care Expansion Act), voting-rights 2 (LONE GOP NAY on HB300). healthcare UNCERTAIN (mixed insurance-expert record).
+- HD37 Ashlee Matthews (6, mig 844, DEM): school-vouchers 2, civil-rights 1, voting-rights 2 (HB215/HB261/HB300 NAY), childcare 1 (sponsor), transportation-priorities 2, local-environment 2 (platform).
+- HD38 Cheryl K. Acton (6, mig 845, R): abortion 4 (HB136 prime sponsor + HB467), school-vouchers 5, civil-rights 5, trans-athletes 5, voting-rights 4, taxes 4.
+- HD39 Ken Ivory (10, mig 846, R public-lands figure): abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, deportation 5 + local-immigration 5 (HB226), fossil-fuels 5 + climate-change 4 (HB425 chief sponsor), local-environment 5 (public-lands transfer). voting-rights BLANK (absent HB300).
+- HD40 Andrew Stoddard (13, mig 847, DEM prosecutor): abortion 1, civil-rights 1, trans-athletes 1 (HB467/HB261/HB11 NAY), voting-rights 2, school-vouchers 2, local-environment 1 (HB220 sponsor), climate-change 2, data-centers 2 (opposes Stratos), housing 2, taxes 2, public-safety-approach 2, childcare 2, healthcare 2. deportation/local-immigration BLANK (voted YES on narrowed HB226 — conflicts with platform; honest blank).
+- ⚠ CLARIFICATION for future agents: HB226 (2025 "Criminal Amendments") IS the ICE-coordination/deportation bill (raises max sentence to trigger federal deportation + jail-ICE notification). One agent wrongly doubted this. HB215 Dem caucus also unanimous NO (safe caucus-inference like HB300).
+- TODO batch 3: HD41 Arthur(D), HD42 Okerlund, HD44 Teuscher(R), HD46 Roberts, HD47 Strong(R), HD50 Gricius(R), HD51 Hansen, HD52 Maloy(R), HD54 Chevrier(R), HD55 Hawkins(R), HD56 Val L. Peterson(R — the 4th Peterson), HD58 Shallenberger, HD59 Kohler(R), HD60 Pace, HD61 Shepherd(R).
+- Next migration 848. **HOUSE: 46/75 have stances; 29 remain.**
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
