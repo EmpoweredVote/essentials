@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord, fetchRaceCandidate } from '../lib/api';
+import { withCandidatePhotoFallback } from '../lib/candidatePhoto';
 import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
@@ -55,7 +56,10 @@ export default function CandidateProfile() {
             fetchLegislativeSummary(candidate.politician_id),
             fetchJudicialRecord(candidate.politician_id),
           ]);
-          setPol(polResult);
+          // The headshot lives on the race_candidate record (photo_url); the linked
+          // politician record may have no photo of its own. Fall back to the candidate
+          // photo so the profile matches the election card.
+          setPol(withCandidatePhotoFallback(polResult, candidate));
           setLegislativeSummary(legSummary);
           const positionName = (candidate?.position_name || '').toLowerCase();
           const isLegalCandidate = (
