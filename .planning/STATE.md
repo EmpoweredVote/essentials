@@ -21,11 +21,23 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 813
+Next migration: 817
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
-**✅ SENATE COMPLETE 2026-06-17 — 29/29 senators now have stances (DB-verified, 0 remaining).** Final 5 done this session: D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811), D29 Ipson (9, mig 812). Next migration 813. **NEXT: HOUSE (64 reps without stances), same method, one at a time.**
+**✅ SENATE COMPLETE 2026-06-17 — 29/29 senators now have stances (DB-verified, 0 remaining).** Final 5 done this session: D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811), D29 Ipson (9, mig 812). Next migration 813.
+
+### HOUSE stance research (in progress — 64 reps without stances, district order, one at a time)
+**Batch 1 (first 10 of 64):** working HD1→HD13. Done so far:
+- HD1 Thomas W. Peterson (6, mig 813): abortion 4, civil-rights 5, fossil-fuels 5, school-vouchers 5, taxes 4, voting-rights 4 — all name+district confirmed (disambiguated from Petersen M./Peterson K.).
+- HD2 Michael J. Petersen (7, mig 814): abortion 4, school-vouchers 5, civil-rights 5, taxes 4, voting-rights 4, trans-athletes 5 (first-party stmt — seated 2023 so NOT HB11 vote), religious-freedom 5 (HCR004 chief sponsor).
+- HD4 Tiara Auxier (7, mig 815): voting-rights 4, taxes 4, deportation 5, immigration 5, redistricting 5 (SB1011), religious-freedom 5 (HB312 Bible-curriculum sponsor), childcare 2 (SB214 floor sponsor — ⚠ borderline polarity flag). Seated Jan 2025 so older canonical bills excluded.
+- HD6 Rob Bishop (12, mig 816): former US Rep (2003-21), seated Apr 2026 → NO Utah votes; scored from 20-yr congressional record + campaign stmts: abortion 4, same-sex-marriage 5, civil-rights 5, immigration 5, healthcare 4, taxes 4, social-security 5, school-vouchers 5, voting-rights 4, climate-change 4, fossil-fuels 5, local-environment 5.
+- TODO batch 1: HD7 Wilcox, HD8 Kyle, HD9 Sawyer, HD10 Koford, HD12 Schultz (Speaker), HD13 Karen Peterson.
+- ⚠ NAME-COLLISION in this batch: Peterson T. (D1) vs Petersen M. (D2) vs Peterson K. (D13) — confirm name+district on every roll call.
+- Next migration 817. **HOUSE: 4/64 done.**
+
+**NEXT after batch 1: HOUSE reps HD14 onward (54 remaining), same method.**
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
