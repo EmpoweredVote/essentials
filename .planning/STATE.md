@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 867
+Next migration: 872
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -100,8 +100,13 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD64 Jackie Larson (0 stances, R, appointed MAY 2026): no floor record + only values-level platform → honest BLANK (like SLC D4 Napier-Pearce). Revisit after 2027 session.
 - HD65 Doug Welton (8, mig 865, R teacher): voting-rights 4, school-vouchers 5, abortion 4, civil-rights 5, trans-athletes 5, deportation 5 + local-immigration 5 (HB226), taxes 4. EXTRA: opposed HB267 union ban (teacher cross-pressure); childcare UNCERTAIN.
 - HD66 Troy Shelley (8, mig 866, R, seated 2025): voting-rights 4, taxes 4, civil-rights 5 (SB295), deportation 5 + local-immigration 5 (HB226), fossil-fuels 5, climate-change 4 (anti-renewable platform), immigration 4.
-- TODO batch 4: HD67 Watkins(R, ex-Dem), HD68 Chew(R), HD69 Monson(R), HD70 Albrecht(R), HD71 Shipp(R), HD72 Elison(R), HD73 Jack(R), HD74 Walter(R), HD75 Brooks(R).
-- Next migration 867. **HOUSE: 65/75 have stances; 10 remain (HD64 intentional blank).**
+- HD67 Christine Watkins (9, mig 867, R ex-Dem): school-vouchers 5, civil-rights 5, trans-athletes 5, voting-rights 4, deportation 5 + local-immigration 5 (HB226), taxes 4, fossil-fuels 5, childcare 2 (SB248 YES — DEFECTED left). EXTRA: opposed HB267 union ban (labor defection). abortion blank (absent).
+- HD68 Scott H. Chew (11, mig 868, R rancher): voting-rights 4, civil-rights 5, school-vouchers 5, trans-athletes 5, taxes 4, medicare/aid 4 (SB96), deportation 5 + local-immigration 5 (HB226), childcare 5 (SB248 NAY), fossil-fuels 5 + local-environment 5 (SB224 coal). abortion blank (absent all 3).
+- HD69 Logan Monson (12, mig 869, R freshman 2025): abortion 4 (sanctity-of-life+HB233), civil-rights 5 (SB295), childcare 5, deportation 5 + local-immigration 5 + immigration 5 (HB226), taxes 4, voting-rights 4, economic-development 2, public-safety-approach 4, school-vouchers 5, religious-freedom 5.
+- HD70 Carl R. Albrecht (10, mig 870, R energy leader): voting-rights 4, abortion 4, civil-rights 5, trans-athletes 5, taxes 4, medicare/aid 4, deportation 5 + local-immigration 5 (HB226), fossil-fuels 5 + climate-change 4 (SB224 floor sponsor). school-vouchers UNCERTAIN (voted NAY — rural funding objection).
+- HD71 Rex P. Shipp (10, mig 871, R): abortion 4 (SB174+HB467), voting-rights 4 (+HB213 sponsor), school-vouchers 5, civil-rights 5, trans-athletes 5, taxes 4, medicare/aid 4 (SB96), deportation 5 + local-immigration 5 (HB226), childcare 5 (SB248 NAY).
+- TODO batch 4: HD72 Elison(R), HD73 Jack(R), HD74 Walter(R), HD75 Brooks(R). [4 LEFT to finish entire UT Legislature]
+- Next migration 872. **HOUSE: 70/75 have stances; 5 remain (HD64 intentional blank + HD72-75).**
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
