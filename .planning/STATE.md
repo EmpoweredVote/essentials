@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 858
+Next migration: 863
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -86,7 +86,13 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD54 Kristen Chevrier (4, mig 856, R, seated 2025): voting-rights 4, taxes 4, deportation 5 + local-immigration 5 (HB226). Health-freedom/medical-autonomy record → EXTRA (not forced onto healthcare); 2023/24 anchors excluded (seated 2025).
 - HD55 Jon Hawkins (6, mig 857, R): abortion 4, school-vouchers 5, taxes 4 (HB54), civil-rights 5, deportation 5 + local-immigration 5 (HB226). voting-rights blank (absent HB300). Agent re-confirmed HB226 IS the ICE bill.
 - TODO batch 3: HD56 Val L. Peterson(R — the 4th Peterson), HD58 Shallenberger, HD59 Kohler(R), HD60 Pace, HD61 Shepherd(R).
-- Next migration 858. **HOUSE: 56/75 have stances; 19 remain.**
+- HD56 Val L. Peterson (10, mig 858, R, the 4th Peterson — all confirmed "Peterson, V." D56): abortion 4, school-vouchers 5, civil-rights 5, trans-athletes 5, voting-rights 4, taxes 4, deportation 5 + local-immigration 5 + immigration 5 (HB226), childcare 5 (SB248 NAY). Parser sanity-checked vs T/K/M Peterson.
+- HD58 David Shallenberger (7, mig 859, R, seated 2025): voting-rights 4, deportation 5 + local-immigration 5 (HB226), taxes 4, healthcare 5 (free-market/HSAs), economic-development 2 (anti-subsidy), local-environment 4 (market-based/property).
+- HD59 Mike L. Kohler (8, mig 860, R): voting-rights 4, school-vouchers 5, trans-athletes 5 (HB11), civil-rights 5, taxes 4, deportation 5 + local-immigration 5 (HB226), childcare 5 (SB248 NAY). abortion blank (Not Voting on HB467).
+- HD60 Grant Pace (2, mig 861, R, appointed MAY 2026 — no floor record): housing 2 (anti-hedge-fund), residential-zoning 2 (preserve-character). Platform-only; honest thin.
+- HD61 Lisa Shepherd (6, mig 862, R, seated 2025): voting-rights 4, taxes 4, deportation 5 + local-immigration 5 (HB226), childcare 5 (SB248 NAY), civil-rights 5 (SB295 2026 YEA). [childcare+civil-rights set to 5 for cross-rep consistency.]
+- ✅ **BATCH 3 COMPLETE (20 reps HD36-61; migrations 843-862).** Disambiguations handled: all 4 Petersons, Cory vs Celeste Maloy, Miller G/T. Seating-date catches: Arthur (Dec 2025), Pace (May 2026), Chevrier/Roberts/Okerlund/Shepherd/Shallenberger (Jan 2025) — pre-tenure anchors excluded. Housing-polarity correction (Teuscher 2→4). Multiple voting-rights blanks for Rs absent on HB300 (Ivory, Hawkins, MacPherson, Bolinder).
+- Next migration 863. **HOUSE: 61/75 have stances (DB-verified); 14 remain.** (50 added this session: batch 1=10, batch 2=20, batch 3=20.)
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
