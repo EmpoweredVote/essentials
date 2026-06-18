@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 838
+Next migration: 843
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -59,9 +59,13 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD27 Anthony E. Loubet (8, mig 835, R): voting-rights 4, abortion 4 (HB467), school-vouchers 5, civil-rights 5, taxes 4 (HB54), deportation 5 + local-immigration 5 (HB226), residential-zoning 1 (first-party opposes density = LOW inverted).
 - HD28 Nicholeen P. Peck (6, mig 836, R, seated 2025): voting-rights 4, abortion 4 (HB232 sponsor), civil-rights 5 (SB295), taxes 4, religious-freedom 5 (HB095 sponsor + WOW president), same-sex-marriage 5 (WOW org statement). trans-medical bills → EXTRA.
 - HD29 Bridger Bolinder (4, mig 837, R): abortion 4 (HB467), school-vouchers 5, civil-rights 5 (HB261), taxes 4 (HB54). voting-rights BLANK (absent HB300); thin rural record.
-- TODO batch 2 remaining (DEMS): HD30 Fitisemanu, HD31 Mauga, HD32 Hayes, HD33 Doug Owens, HD34 Moss. (HD21 already had stances — skipped.)
-- ⚠ DEM HANDLING WORKS: HB300 Dem caucus unanimous NO → voting-rights=2 caucus-safe; Vote411/campaign issue pages = rich first-party progressive evidence; values map LOW (1-2) EXCEPT residential-zoning (inverted: pro-density Dem = HIGH 4-5). ⚠ Several Rs ABSENT on HB300 (MacPherson, Bolinder) → voting-rights blank, never infer.
-- Next migration 834. **HOUSE: 25/64 done.**
+- HD30 Jake Fitisemanu (10, mig 838, DEM, seated 2025): voting-rights 2 + civil-rights 1 (HB174 trans-care-ban NAY) roll-call confirmed; healthcare 1, housing 2, transportation-priorities 1, climate-change 2, local-environment 2, taxes 2 (food-tax repeal), immigration 2, public-safety-approach 2. deportation/abortion BLANK (absent HB226 / no statement).
+- HD31 Verona Mauga (9, mig 839, DEM, seated 2025): voting-rights 2, abortion 2 (HB233 NAY), civil-rights 1 (HB77 Pride-flag-ban NAY), deportation 1 + local-immigration 1 + immigration 2 (HB226 NAY), transportation-priorities 1 (HB290 sponsor), housing 2 (HB541 sponsor), public-safety-approach 2 (HB166 open-carry-limit sponsor). All roll-call/sponsorship confirmed.
+- HD32 Sahara Hayes (11, mig 840, DEM, seated 2023): school-vouchers 1 (HB215 NAY), civil-rights 1 (HB261+HB77 NAY), voting-rights 2, deportation 1 + local-immigration 1 + immigration 2 (HB226 NAY), abortion 1, healthcare 1, housing 1, climate-change 2, local-environment 1 (platform).
+- HD33 Doug Owens (11, mig 841, DEM, moderate, seated 2023; ≠ Sen. Derrin Owens): abortion 2 (HB467 NAY), school-vouchers 2 (HB215 NAY), civil-rights 1 (HB261 NAY), voting-rights 2, deportation 2 + local-immigration 2 (HB226 NAY — held Dem line, didn't cross), healthcare 2, medicare/aid 2, climate-change 2 (Clean Air Caucus), fossil-fuels 2, local-environment 1 (GSL bills).
+- HD34 Carol Spackman Moss (11, mig 842, DEM, seated 2001; ≠ J. Moss R): school-vouchers 1 (HB215 NAY), civil-rights 1 (HB261 NAY), voting-rights 2, deportation 1 + local-immigration 2 (HB226 NAY), redistricting 1 (SB200 floor sponsor), climate-change 1, fossil-fuels 2, local-environment 1, transportation-priorities 1, trans-athletes 1 (opposed HB11). abortion UNCERTAIN (only 3rd-party endorsement).
+- ✅ **BATCH 2 COMPLETE (20 reps HD14-34; migrations 823-842).** ⚠ DEM HANDLING WORKS: HB300 caucus-unanimous NO → voting-rights=2; Vote411/campaign pages = first-party progressive evidence; LOW (1-2) except residential-zoning inverted. ⚠ Rs ABSENT on HB300 (MacPherson, Bolinder) → voting-rights blank. Name-collisions all handled: Peterson T/Petersen M/Peterson K/V, Miller G vs T, Doug vs Derrin Owens, Carol vs J. Moss.
+- Next migration 843. **HOUSE: 41/75 have stances (DB-verified); 34 reps remain.** (30 added this session: batch 1 = 10, batch 2 = 20.)
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
