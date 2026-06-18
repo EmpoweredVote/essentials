@@ -58,6 +58,32 @@ function getStateAccordionKey(pol, stateName) {
   return `${stateName} Executive`;
 }
 
+/**
+ * Derive a city/jurisdiction accordion key for LOCAL/LOCAL_EXEC (and COUNTY)
+ * officials whose government_name is empty — e.g. a council/mayor office whose
+ * chamber→government link is missing upstream in the data. Without this they all
+ * collapse into a single catch-all "Unknown" accordion (the reported Utah bug).
+ *
+ * Prefer the office's representing_city; otherwise recover the place name from
+ * the district label by stripping the trailing body suffix ("City Council",
+ * "Mayor", "Council, District N", etc.). The key intentionally reduces to the
+ * same string as stripSuffix(government_name) (e.g. "City of Orem") so a
+ * chamber-linked record and a chamber-less duplicate of the same person collapse
+ * together during de-duplication. Returns '' when nothing usable can be derived.
+ */
+function deriveLocalGroupKey(pol) {
+  const dt = pol.district_type || '';
+  if (!dt.startsWith('LOCAL') && dt !== 'COUNTY') return '';
+  let place = (pol.representing_city || '').trim();
+  if (!place) {
+    place = (pol.district_label || '')
+      .replace(/\s*,?\s*(City Council|Town Council|City Commission|Council|Mayor|Board)\b.*$/i, '')
+      .trim();
+  }
+  if (!place) return '';
+  return dt === 'COUNTY' ? place : `City of ${place}`;
+}
+
 function getAccordionKey(pol) {
   const dt = pol.district_type || '';
 
@@ -79,11 +105,13 @@ function getAccordionKey(pol) {
 
   // School bodies get their own accordion keyed by body name, not parent government
   if (dt === 'SCHOOL') {
-    return pol.government_body_name || pol.government_name || 'Unknown';
+    return pol.government_body_name || pol.government_name || deriveLocalGroupKey(pol) || 'Unknown';
   }
 
-  // Local/County: group by government_name
-  return pol.government_name || 'Unknown';
+  // Local/County: group by government_name. When government_name is absent
+  // (chamber→government link missing in the data), fall back to a city group
+  // derived from the district label/city instead of a catch-all "Unknown".
+  return pol.government_name || deriveLocalGroupKey(pol) || 'Unknown';
 }
 
 // Cabinet = heads of executive departments (Secretary of X, Attorney General)
@@ -503,6 +531,7 @@ function deduplicateLocalMultiOffice(politicians) {
 
   const grouped = new Map();
   const nonLocal = [];
+  let uniqueSeq = 0;
 
   for (const pol of politicians) {
     const dt = pol.district_type || '';
@@ -510,7 +539,17 @@ function deduplicateLocalMultiOffice(politicians) {
       nonLocal.push(pol);
       continue;
     }
-    const key = `${pol.government_name || ''}||${pol.id || pol.full_name || ''}`;
+    // Key on a normalized city + person NAME. The same person can be present as
+    // two distinct politician rows — a chamber-linked record and a chamber-less
+    // duplicate — with DIFFERENT ids; keying on id would fail to collapse them.
+    // stripSuffix(government_name) and deriveLocalGroupKey both reduce to the
+    // same city string ("City of Orem"), so the rows merge here. Merge ONLY when
+    // a real full_name is present; without one, keep the record unique so we
+    // never collapse genuinely different people (e.g. a clerk vs. councillors).
+    const cityKey = stripSuffix(pol.government_name) || deriveLocalGroupKey(pol) || '';
+    const name = (pol.full_name || '').trim().toLowerCase();
+    const personKey = name || `__unique:${uniqueSeq++}`;
+    const key = `${cityKey}||${personKey}`;
     if (!grouped.has(key)) grouped.set(key, []);
     grouped.get(key).push(pol);
   }
@@ -521,8 +560,14 @@ function deduplicateLocalMultiOffice(politicians) {
       deduped.push(pols[0]);
       continue;
     }
-    // Keep highest-priority office (LOCAL_EXEC > LOCAL, then exec title priority)
+    // Keep highest-priority office. Prefer the record carrying a real
+    // government_name FIRST: that is the chamber-linked row and — critically —
+    // the one issue stances are attached to, so de-dup must never drop it in
+    // favour of a chamber-less duplicate. Then LOCAL_EXEC > LOCAL, then title.
     pols.sort((a, b) => {
+      const ag = a.government_name ? 0 : 1;
+      const bg = b.government_name ? 0 : 1;
+      if (ag !== bg) return ag - bg;
       if (a.district_type !== b.district_type) {
         if (a.district_type === 'LOCAL_EXEC') return -1;
         if (b.district_type === 'LOCAL_EXEC') return 1;
