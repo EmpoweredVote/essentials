@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 823
+Next migration: 828
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -42,7 +42,15 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - ⚠ NAME-COLLISION handled: Peterson T. (D1) vs Petersen M. (D2) vs Peterson K. (D13) vs Peterson V. (D56) — all confirmed by name+district per roll call.
 - METHOD VALIDATED on House: agents correctly excluded pre-tenure bills (seating checks), caught the Doug-Owens-style risk, handled economic-development/residential-zoning inverted polarities, and left honest blanks for thin records. Next migration 823. **HOUSE: 10/64 done.**
 
-**NEXT: HOUSE reps HD14 onward (54 remaining), same method, one at a time.** Next in district order after HD13: HD14 Karianne Lisonbee, HD15 Ariel Defay, HD16 Trevor Lee, HD17 Stewart E. Barlow, …
+**BATCH 2 (in progress — target HD14→HD34, mixed-party; dual-party prompt handles Dems via HB300-NO→voting-rights=2 caucus rule + progressive-record research).** Done so far:
+- HD14 Karianne Lisonbee (8, mig 823): abortion 4 (SB174 floor sponsor), trans-athletes 5 (HB11 cosp), voting-rights 4 (HB332 ERIC-withdrawal sponsor — not HB300), civil-rights 5 (presented HB261), religious-freedom 5 (HB390), deportation 5, immigration 5, local-immigration 5 (campaign platform).
+- HD15 Ariel Defay (7, mig 824): abortion 4 (first-party), taxes 4 (HB106), voting-rights 4 (HB300), deportation 5 + local-immigration 5 (HB226), civil-rights 5 (SB295 2026), ai-regulation 2 (HB276 AI-guardrail sponsor). Seated Nov 2023.
+- HD16 Trevor Lee (7, mig 825): abortion 4, civil-rights 5 (HB183 sex-designation anti-discrim rollback, chief sponsor), deportation 5 + local-immigration 5 (HB226), school-vouchers 5, taxes 4 (HB54), voting-rights 4. trans-athletes BLANK (his trans bills are flags/sex-designation not sports → EXTRA).
+- HD17 Stewart E. Barlow (10, mig 826, physician): voting-rights 4, abortion 4 (SB174+HB467), school-vouchers 5, trans-athletes 5 (HB11), civil-rights 5, taxes 4, medicare/aid 4 (SB96, seated 2019), deportation 5 + local-immigration 5 (HB226), healthcare 5 (first-party market-based). Confirmed District 17 (FastDemocracy D43 mislabel noted).
+- HD18 Paul A. Cutler (10, mig 827): abortion 4, ai-regulation 5 (HB320 pro-deployment sandbox — light-touch, opposite of Defay's guardrails), civil-rights 5, deportation 5 + local-immigration 5 (HB226), religious-freedom 5, school-vouchers 5, taxes 4, voting-rights 4, local-environment 2 (first-party GSL protection — cross-cut).
+- TODO batch 2: HD19 Ward, HD20 Ballard, then DEMOCRATS HD22 Dailey-Provost, HD23 Nguyen, HD24 Miller, HD25 Romero, HD26 MacPherson(R), HD27 Loubet(R), HD28 Peck(R), HD29 Bolinder(R), HD30 Fitisemanu(D), HD31 Mauga(D), HD32 Hayes(D), HD33 Doug Owens(D), HD34 Moss(D).
+- ⚠ DEM HANDLING: HB300 Dem caucus unanimous NO → voting-rights=2 caucus-safe; research actual progressive votes/statements for the rest (don't assume — Dem caucus not unanimous on everything).
+- Next migration 828. **HOUSE: 15/64 done.**
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
