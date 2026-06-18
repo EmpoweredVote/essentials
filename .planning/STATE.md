@@ -21,7 +21,7 @@ Phase: v15.0 COMPLETE — ready for next milestone
 Plan: —
 Status: Milestone closed 2026-06-16
 Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
-Next migration: 863
+Next migration: 867
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
@@ -93,6 +93,15 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD61 Lisa Shepherd (6, mig 862, R, seated 2025): voting-rights 4, taxes 4, deportation 5 + local-immigration 5 (HB226), childcare 5 (SB248 NAY), civil-rights 5 (SB295 2026 YEA). [childcare+civil-rights set to 5 for cross-rep consistency.]
 - ✅ **BATCH 3 COMPLETE (20 reps HD36-61; migrations 843-862).** Disambiguations handled: all 4 Petersons, Cory vs Celeste Maloy, Miller G/T. Seating-date catches: Arthur (Dec 2025), Pace (May 2026), Chevrier/Roberts/Okerlund/Shepherd/Shallenberger (Jan 2025) — pre-tenure anchors excluded. Housing-polarity correction (Teuscher 2→4). Multiple voting-rights blanks for Rs absent on HB300 (Ivory, Hawkins, MacPherson, Bolinder).
 - Next migration 863. **HOUSE: 61/75 have stances (DB-verified); 14 remain.** (50 added this session: batch 1=10, batch 2=20, batch 3=20.)
+
+### HOUSE BATCH 4 (FINAL 14, in progress — HD62-75, all rural/southern-UT Republicans)
+- HD62 Norman K. Thurston (12, mig 863, R): abortion 4, civil-rights 5, deportation 5, fossil-fuels 5 (HB191 coal), healthcare 5 (anti-ACA+SB96), local-immigration 5, medicare/aid 4 (SB96), school-vouchers 5, taxes 4, trans-athletes 5, voting-rights 4, childcare 5 (SB248 NAY).
+- HD63 Stephen L. Whyte (10, mig 864, R): voting-rights 4, abortion 4, school-vouchers 5, civil-rights 5, taxes 4, deportation 5 + local-immigration 5 (HB226), residential-zoning 5 + housing 4 + growth-and-development 5 (Housing Affordability Commission co-chair, deregulatory YIMBY).
+- HD64 Jackie Larson (0 stances, R, appointed MAY 2026): no floor record + only values-level platform → honest BLANK (like SLC D4 Napier-Pearce). Revisit after 2027 session.
+- HD65 Doug Welton (8, mig 865, R teacher): voting-rights 4, school-vouchers 5, abortion 4, civil-rights 5, trans-athletes 5, deportation 5 + local-immigration 5 (HB226), taxes 4. EXTRA: opposed HB267 union ban (teacher cross-pressure); childcare UNCERTAIN.
+- HD66 Troy Shelley (8, mig 866, R, seated 2025): voting-rights 4, taxes 4, civil-rights 5 (SB295), deportation 5 + local-immigration 5 (HB226), fossil-fuels 5, climate-change 4 (anti-renewable platform), immigration 4.
+- TODO batch 4: HD67 Watkins(R, ex-Dem), HD68 Chew(R), HD69 Monson(R), HD70 Albrecht(R), HD71 Shipp(R), HD72 Elison(R), HD73 Jack(R), HD74 Walter(R), HD75 Brooks(R).
+- Next migration 867. **HOUSE: 65/75 have stances; 10 remain (HD64 intentional blank).**
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
