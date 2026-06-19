@@ -220,7 +220,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // Min/Max batch handlers — operate on what the user currently *sees* (display value),
   // not the raw stored value, so they work correctly on already-inverted spokes.
   function handleStanceMax() {
-    posthog?.capture('compass_stance_alignment_set', { alignment: 'max', context: 'profile' });
+    posthog?.capture('essentials_compass_stance_alignment_set', { alignment: 'max', context: 'profile' });
     const next = { ...invertedSpokes };
     for (const topic of topicsFiltered) {
       const val = userData[topic.short_title];
@@ -236,7 +236,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   }
 
   function handleStanceMin() {
-    posthog?.capture('compass_stance_alignment_set', { alignment: 'min', context: 'profile' });
+    posthog?.capture('essentials_compass_stance_alignment_set', { alignment: 'min', context: 'profile' });
     const next = { ...invertedSpokes };
     for (const topic of topicsFiltered) {
       const val = userData[topic.short_title];
@@ -284,7 +284,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             type="button"
             title={localLensActive ? 'Exit Local Lens' : 'Local Lens — focus on local issues'}
             aria-pressed={localLensActive}
-            onClick={() => { posthog?.capture('compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
+            onClick={() => { posthog?.capture('essentials_compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
             style={{
               display: 'flex', alignItems: 'center', gap: 6,
               height: 32, padding: '0 12px',

@@ -167,7 +167,7 @@ export default function Landing() {
   useGooglePlacesAutocomplete(addressInputRef, {
     onPlaceSelected: (addr) => {
       setAddressInput(addr);
-      posthog?.capture('address_searched', { method: 'autocomplete' });
+      posthog?.capture('essentials_address_searched', { method: 'autocomplete' });
       navigate(`/results?q=${encodeURIComponent(addr)}`);
     },
   });
@@ -189,13 +189,13 @@ export default function Landing() {
 
   const handleSearch = () => {
     if (!addressInput.trim()) return;
-    posthog?.capture('address_searched', { method: 'manual' });
+    posthog?.capture('essentials_address_searched', { method: 'manual' });
     navigate(`/results?q=${encodeURIComponent(addressInput.trim())}`);
   };
 
   const handleAreaClick = (area) => {
     const areaType = area.browseGovernmentList ? 'government_list' : area.browseGeoId ? 'geo' : 'address';
-    posthog?.capture('browse_area_clicked', {
+    posthog?.capture('essentials_browse_area_clicked', {
       label: area.label,
       type: areaType,
       state: area.browseStateAbbrev || area.state || null,

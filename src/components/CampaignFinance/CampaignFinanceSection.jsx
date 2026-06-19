@@ -88,7 +88,7 @@ export default function CampaignFinanceSection({ politicianId }) {
   }, [summary, cycle]);
 
   function handleCycleChange(newCycle) {
-    posthog?.capture('campaign_finance_cycle_changed', { cycle: newCycle });
+    posthog?.capture('essentials_campaign_finance_cycle_changed', { cycle: newCycle });
     setCycle(newCycle);
   }
 

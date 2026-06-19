@@ -136,7 +136,7 @@ export default function VotingRecordSection({ politicianId }) {
           {['ALL', 'YES', 'NO', 'ABSENT', 'ABSTAIN'].map(f => (
             <button
               key={f}
-              onClick={() => { posthog?.capture('voting_record_filter_changed', { filter: f }); setFilter(f); setOffset(0); }}
+              onClick={() => { posthog?.capture('essentials_voting_record_filter_changed', { filter: f }); setFilter(f); setOffset(0); }}
               className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                 filter === f
                   ? 'bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-900'
@@ -168,13 +168,13 @@ export default function VotingRecordSection({ politicianId }) {
                     ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50'
                     : ''
                 }`}
-                onClick={() => { if (v.council_file_number) { posthog?.capture('voting_record_bill_opened'); setSelectedFile(v.council_file_number); } }}
+                onClick={() => { if (v.council_file_number) { posthog?.capture('essentials_voting_record_bill_opened'); setSelectedFile(v.council_file_number); } }}
                 role={v.council_file_number ? 'button' : undefined}
                 tabIndex={v.council_file_number ? 0 : undefined}
                 onKeyDown={(e) => {
                   if (v.council_file_number && (e.key === 'Enter' || e.key === ' ')) {
                     e.preventDefault();
-                    posthog?.capture('voting_record_bill_opened');
+                    posthog?.capture('essentials_voting_record_bill_opened');
                     setSelectedFile(v.council_file_number);
                   }
                 }}
@@ -205,7 +205,7 @@ export default function VotingRecordSection({ politicianId }) {
       {!loading && filteredTotal > LIMIT && (
         <div className="px-5 pb-4 flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-3">
           <button
-            onClick={() => { posthog?.capture('voting_record_page_changed', { direction: 'prev' }); setOffset(Math.max(0, offset - LIMIT)); }}
+            onClick={() => { posthog?.capture('essentials_voting_record_page_changed', { direction: 'prev' }); setOffset(Math.max(0, offset - LIMIT)); }}
             disabled={offset === 0}
             className="px-3 py-1.5 text-xs rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 disabled:opacity-40 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
@@ -215,7 +215,7 @@ export default function VotingRecordSection({ politicianId }) {
             Page {Math.floor(offset / LIMIT) + 1} of {Math.ceil(filteredTotal / LIMIT)}
           </span>
           <button
-            onClick={() => { posthog?.capture('voting_record_page_changed', { direction: 'next' }); setOffset(offset + LIMIT); }}
+            onClick={() => { posthog?.capture('essentials_voting_record_page_changed', { direction: 'next' }); setOffset(offset + LIMIT); }}
             disabled={offset + LIMIT >= filteredTotal}
             className="px-3 py-1.5 text-xs rounded-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 disabled:opacity-40 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >

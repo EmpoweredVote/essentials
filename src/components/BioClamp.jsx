@@ -37,7 +37,7 @@ export default function BioClamp({ text, hook, className = "" }) {
           <button
             onClick={() => {
               const next = !expanded;
-              posthog?.capture(next ? 'bio_expanded' : 'bio_collapsed');
+              posthog?.capture(next ? 'essentials_bio_expanded' : 'essentials_bio_collapsed');
               setExpanded(next);
               if (
                 typeof requestAnimationFrame !== "undefined" &&

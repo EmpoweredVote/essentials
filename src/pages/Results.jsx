@@ -496,7 +496,7 @@ export default function Results() {
     try { return localStorage.getItem('ev:compassMode') === 'true'; } catch { return false; }
   });
   const handleCompassModeChange = (val) => {
-    posthog?.capture('compass_mode_toggled', { enabled: val });
+    posthog?.capture('essentials_compass_mode_toggled', { enabled: val });
     setCompassMode(val);
     try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
     if (val) enableCompass();
@@ -553,14 +553,14 @@ export default function Results() {
 
   const handleStanceMax = () => {
     if (!rawUserAnswers || !allTopics) return;
-    posthog?.capture('stance_alignment_set', { alignment: 'max' });
+    posthog?.capture('essentials_stance_alignment_set', { alignment: 'max' });
     const newMap = computeStanceSpokes('max', rawUserAnswers, allTopics, invertedSpokes || {});
     batchInvertSpokes(newMap);
   };
 
   const handleStanceMin = () => {
     if (!rawUserAnswers || !allTopics) return;
-    posthog?.capture('stance_alignment_set', { alignment: 'min' });
+    posthog?.capture('essentials_stance_alignment_set', { alignment: 'min' });
     const newMap = computeStanceSpokes('min', rawUserAnswers, allTopics, invertedSpokes || {});
     batchInvertSpokes(newMap);
   };
@@ -844,7 +844,7 @@ export default function Results() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const switchView = (view) => {
-    posthog?.capture('tab_switched', { from: activeView, to: view });
+    posthog?.capture('essentials_tab_switched', { from: activeView, to: view });
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       if (view === 'representatives') {
@@ -881,7 +881,7 @@ export default function Results() {
   const addressInputRef = useRef(null);
   useGooglePlacesAutocomplete(addressInputRef, {
     onPlaceSelected: (addr) => {
-      posthog?.capture('address_searched', { method: 'autocomplete' });
+      posthog?.capture('essentials_address_searched', { method: 'autocomplete' });
       setAddressInput(addr);
       handleAddressSearch(addr);
     },
@@ -1169,7 +1169,7 @@ export default function Results() {
     if (pol) {
       const dt = pol.district_type || '';
       const level = dt.startsWith('NATIONAL') ? 'federal' : dt.startsWith('STATE') ? 'state' : 'local';
-      posthog?.capture('politician_viewed', {
+      posthog?.capture('essentials_politician_viewed', {
         level,
         district_type: pol.district_type,
         office_title: pol.office_title,
@@ -1663,9 +1663,9 @@ export default function Results() {
               <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
                 <FilterBar
                   selectedFilter={selectedFilter}
-                  onFilterChange={(v) => { posthog?.capture('filter_changed', { filter_type: 'tier', value: v }); setSelectedFilter(v); }}
+                  onFilterChange={(v) => { posthog?.capture('essentials_filter_changed', { filter_type: 'tier', value: v }); setSelectedFilter(v); }}
                   appointedFilter={appointedFilter}
-                  onAppointedFilterChange={(v) => { posthog?.capture('filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
+                  onAppointedFilterChange={(v) => { posthog?.capture('essentials_filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
                   searchQuery={searchQuery}
                   onSearchChange={setSearchQuery}
                   compassMode={compassMode}
@@ -1845,7 +1845,7 @@ export default function Results() {
                 compassMode={compassMode}
                 isDark={isDark}
                 onCandidateClick={(id) => {
-                  posthog?.capture('candidate_clicked', { candidate_id: id });
+                  posthog?.capture('essentials_candidate_clicked', { candidate_id: id });
                   sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
                   sessionStorage.setItem('ev:fromView', 'elections');
                   navigate(`/candidate/${id}`);
