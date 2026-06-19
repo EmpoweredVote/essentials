@@ -62,7 +62,7 @@ elected rosters, headshots (600×750), and evidence-only compass stances for eac
 
 | # | Phase | Req | geo_id | Goal |
 |---|-------|-----|--------|------|
-| 142 | Long Beach deep-seed | 1/4 | In Progress|  |
+| 142 | Long Beach deep-seed | 2/4 | In Progress|  |
 | 143 | Santa Clarita deep-seed | SCLR-01 | 0669088 | Government + roster + headshots + stances |
 | 144 | Glendale deep-seed | GLEN-01 | 0630000 | Government + roster + headshots + stances |
 | 145 | Lancaster deep-seed | LANC-01 | 0640130 | Government + roster + headshots + stances |
@@ -115,14 +115,14 @@ New officials use the reserved external_id range `-700050…-700099` (per migrat
 **Success criteria:** Per the shared per-city criteria above, plus: existing duplicate/NULL-geo_id
 data reconciled; the 3 elected citywide officers seated; 9/9 (or documented) council districts;
 stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed/142-CONTEXT.md`.
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 **Wave 1**
 
 - [x] 142-01-PLAN.md — Reconcile / data hygiene (geo_id backfill, chamber rename, image dedupe, Mayor office_id, district relabel) — migration 878
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 142-02-PLAN.md — Complete roster: seat D8 Thrash-Ntuk + 3 citywide officers (City Attorney/Prosecutor/Auditor) — migration 879
+- [x] 142-02-PLAN.md — Complete roster: seat D8 Thrash-Ntuk + 3 citywide officers (City Attorney/Prosecutor/Auditor) — migration 879
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
