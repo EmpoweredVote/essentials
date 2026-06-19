@@ -158,7 +158,7 @@ coverage. See `phases/143-santa-clarita-deep-seed/143-CONTEXT.md`.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [x] 143-02-PLAN.md — Complete roster: insert McLean + Miranda (reserved -700xxx), flag rotational Mayor on Weste seat, official_count=5 — migration 895
+- [x] 143-02-PLAN.md — Complete roster: RESEAT existing McLean (-201394) + Miranda (-200980) into surviving Chamber B (no duplicate -700xxx people), flag rotational Mayor on Weste seat, official_count=5 — migration 895
 
 **Wave 3** *(blocked on Wave 2 completion)*
 

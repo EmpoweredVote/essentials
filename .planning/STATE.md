@@ -3,25 +3,32 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-19T20:00:50.781Z"
-last_activity: 2026-06-19 -- Phase 143 execution started
+last_updated: "2026-06-19T21:30:00.000Z"
+last_activity: 2026-06-19 -- Phase 143 (Santa Clarita deep-seed) COMPLETE — SCLR-01 satisfied
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 4
-  percent: 25
+  completed_plans: 8
+  percent: 50
 ---
 
 # State
 
 ## Current Position
 
-Phase: 143 (santa-clarita-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 143
-Last activity: 2026-06-19 -- Phase 143 execution started
-Next migration: 894
+Phase: 143 (santa-clarita-deep-seed) — ✅ COMPLETE (SCLR-01 satisfied 2026-06-19)
+Plan: 4 of 4 complete
+Status: Phase 143 complete — next is Phase 144 (Glendale deep-seed)
+Last activity: 2026-06-19 -- Santa Clarita reconciled + completed + headshots + 26 stances
+Next migration: 902 (structural; stance/headshot files 896–901 did NOT register — ledger MAX 895)
+
+### Phase 143 outcome (Santa Clarita, geo_id 0669088)
+- NOT greenfield. Reconciled a duplicate-chamber partial seed. KEY: McLean (-201394) + Miranda (-200980) already existed in the doomed Chamber A with headshots → RESEATED into surviving Chamber B (eeabd028), NOT inserted as new -700181/-700182 (avoided duplicate people). Cameron Smyth (-700180) RETIRED (departed Dec 2024), not reseated.
+- Migrations: 894 reconcile (ledger), 895 roster (ledger), 896 headshots (audit-only), 897–901 stances (audit-only). Ledger MAX=895.
+- Roster (Chamber B, official_count=5): Weste 665693 (rotational Mayor by title), Ayala 665689, Gibbs 665692, McLean -201394, Miranda -200980. All 1 press_use 600×750 headshot.
+- Stances: 26 total (Weste 7 / McLean 8 / Miranda 6 / Gibbs 4 / Ayala 1), evidence-only, 100% cited, chairs model, no judicial topics. SB54/local-immigration only for 2018-seated (Weste/McLean/Miranda).
+- ⚠ OUT-OF-SCOPE flag: global split-section check found 5 OTHER cities with pre-existing split-section defects (Whittier 8, Compton 6, Carson 5, South El Monte 4, South Pasadena 3) from prior phases — Santa Clarita is clean. Recommend a future cleanup pass.
 
 ### v17.0 milestone (active)
 
@@ -206,7 +213,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 143 — santa-clarita-deep-seed
+**Current focus:** Phase 143 complete (Santa Clarita) — next: Phase 144 (Glendale deep-seed)
 
 ## v15.0 Roadmap Summary
 
