@@ -515,7 +515,7 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, localLensActive, toggleLocalLens, getEffectiveLens, enableCompass } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, localLensActive, setLocalLens, getEffectiveLens, enableCompass } = useCompass();
 
   // Auto-enable compass for calibrated users who haven't set an explicit preference
   useEffect(() => {
@@ -527,6 +527,18 @@ export default function Results() {
       }
     } catch {}
   }, [rawUserAnswers]);
+
+  // Default the Local Lens ON for the elections view (its races are predominantly
+  // local). Applied once per session so it doesn't fight a user who later turns it
+  // off. Other views keep the smart per-office default.
+  const electionsLensDefaultedRef = useRef(false);
+  useEffect(() => {
+    if (electionsLensDefaultedRef.current) return;
+    if (activeView === 'elections' && compassMode && (rawUserAnswers?.length ?? 0) >= 3) {
+      electionsLensDefaultedRef.current = true;
+      setLocalLens(true);
+    }
+  }, [activeView, compassMode, rawUserAnswers, setLocalLens]);
 
   // Auto-apply Stance Max the first time user crosses the 3-answer threshold
   const prevAnswerCountRef = useRef(0);
@@ -1673,7 +1685,7 @@ export default function Results() {
             <CompassControlsBar
               userAnswers={rawUserAnswers}
               localLensActive={localLensActive}
-              toggleLocalLens={toggleLocalLens}
+              setLocalLens={setLocalLens}
               onStanceMin={handleStanceMin}
               onStanceMax={handleStanceMax}
               isDesktop={isDesktop}
