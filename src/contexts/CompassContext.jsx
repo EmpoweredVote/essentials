@@ -395,12 +395,14 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     setLensOverride((prev) => (prev === true ? null : true));
   }, []);
 
-  // Explicit grid-level setter for a labeled on/off toggle. Unlike toggleLocalLens
-  // (which cycles on↔auto), this forces an unambiguous true/false override so the
-  // visible toggle's state always matches what the grid renders. Used by the
-  // elections-page Local Lens control (default ON for that view).
-  const setLocalLens = useCallback((on) => {
-    setLensOverride(on ? true : false);
+  // Explicit grid-level setter for a labeled on/off toggle. Accepts:
+  //   null  → smart per-office default (local offices lensed, state/federal full compass)
+  //   true  → force the local lens on every office
+  //   false → force the full compass on every office
+  // The elections-page toggle uses null↔false so it never forces the local lens onto
+  // state/federal races (which would filter out their topics and hide the compass).
+  const setLocalLens = useCallback((value) => {
+    setLensOverride(value === null ? null : (value ? true : false));
   }, []);
 
   const logout = async () => {
