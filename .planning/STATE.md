@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: planning
-last_updated: "2026-06-19T00:00:00.000Z"
-last_activity: 2026-06-19 — v17.0 started. 16 phases (142-157): deep-seed the 15 largest uncovered LA County cities (government + roster + headshots + evidence-only stances) + close-out. Requirements + roadmap written. Ready to plan Phase 142 (Long Beach). Next migration 878
+last_updated: "2026-06-19T16:38:54.205Z"
+last_activity: 2026-06-19 — Milestone v17.0 LA County City Coverage — Wave 2 started
 progress:
-  total_phases: 16
+  total_phases: 1
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -50,11 +50,14 @@ Open carry-forward: SLC D4 Napier-Pearce portrait + stances (appointed, no sourc
 > reference; all are complete (see the ✅ section markers).
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
+
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
 **✅ SENATE COMPLETE 2026-06-17 — 29/29 senators now have stances (DB-verified, 0 remaining).** Final 5 done this session: D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811), D29 Ipson (9, mig 812). Next migration 813.
 
 ### HOUSE stance research (in progress — 64 reps without stances, district order, one at a time)
+
 **✅ BATCH 1 COMPLETE (first 10 of 64; HD1→HD13; migrations 813-822; 70 stance rows; DB-verified 10/10 have stances).**
+
 - HD1 Thomas W. Peterson (6, mig 813): abortion 4, civil-rights 5, fossil-fuels 5, school-vouchers 5, taxes 4, voting-rights 4 — all name+district confirmed (disambiguated from Petersen M./Peterson K.).
 - HD2 Michael J. Petersen (7, mig 814): abortion 4, school-vouchers 5, civil-rights 5, taxes 4, voting-rights 4, trans-athletes 5 (first-party stmt — seated 2023 so NOT HB11 vote), religious-freedom 5 (HCR004 chief sponsor).
 - HD4 Tiara Auxier (7, mig 815): voting-rights 4, taxes 4, deportation 5, immigration 5, redistricting 5 (SB1011), religious-freedom 5 (HB312 Bible-curriculum sponsor), childcare 2 (SB214 floor sponsor — ⚠ borderline polarity flag). Seated Jan 2025 so older canonical bills excluded.
@@ -69,6 +72,7 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - METHOD VALIDATED on House: agents correctly excluded pre-tenure bills (seating checks), caught the Doug-Owens-style risk, handled economic-development/residential-zoning inverted polarities, and left honest blanks for thin records. Next migration 823. **HOUSE: 10/64 done.**
 
 **BATCH 2 (in progress — target HD14→HD34, mixed-party; dual-party prompt handles Dems via HB300-NO→voting-rights=2 caucus rule + progressive-record research).** Done so far:
+
 - HD14 Karianne Lisonbee (8, mig 823): abortion 4 (SB174 floor sponsor), trans-athletes 5 (HB11 cosp), voting-rights 4 (HB332 ERIC-withdrawal sponsor — not HB300), civil-rights 5 (presented HB261), religious-freedom 5 (HB390), deportation 5, immigration 5, local-immigration 5 (campaign platform).
 - HD15 Ariel Defay (7, mig 824): abortion 4 (first-party), taxes 4 (HB106), voting-rights 4 (HB300), deportation 5 + local-immigration 5 (HB226), civil-rights 5 (SB295 2026), ai-regulation 2 (HB276 AI-guardrail sponsor). Seated Nov 2023.
 - HD16 Trevor Lee (7, mig 825): abortion 4, civil-rights 5 (HB183 sex-designation anti-discrim rollback, chief sponsor), deportation 5 + local-immigration 5 (HB226), school-vouchers 5, taxes 4 (HB54), voting-rights 4. trans-athletes BLANK (his trans bills are flags/sex-designation not sports → EXTRA).
@@ -94,6 +98,7 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - Next migration 843. **HOUSE: 41/75 have stances (DB-verified); 34 reps remain.** (30 added this session: batch 1 = 10, batch 2 = 20.)
 
 ### HOUSE BATCH 3 (in progress — target HD36-61, ~20 reps, unified dual-party prompt)
+
 - HD36 James A. Dunnigan (7, mig 843, R pragmatic): abortion 4, school-vouchers 1 (GOP defector — NAY HB215), trans-athletes 5, civil-rights 5, taxes 4, childcare 5 (NO on 2026 SB248 Child Care Expansion Act), voting-rights 2 (LONE GOP NAY on HB300). healthcare UNCERTAIN (mixed insurance-expert record).
 - HD37 Ashlee Matthews (6, mig 844, DEM): school-vouchers 2, civil-rights 1, voting-rights 2 (HB215/HB261/HB300 NAY), childcare 1 (sponsor), transportation-priorities 2, local-environment 2 (platform).
 - HD38 Cheryl K. Acton (6, mig 845, R): abortion 4 (HB136 prime sponsor + HB467), school-vouchers 5, civil-rights 5, trans-athletes 5, voting-rights 4, taxes 4.
@@ -121,6 +126,7 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - Next migration 863. **HOUSE: 61/75 have stances (DB-verified); 14 remain.** (50 added this session: batch 1=10, batch 2=20, batch 3=20.)
 
 ### HOUSE BATCH 4 (FINAL 14, in progress — HD62-75, all rural/southern-UT Republicans)
+
 - HD62 Norman K. Thurston (12, mig 863, R): abortion 4, civil-rights 5, deportation 5, fossil-fuels 5 (HB191 coal), healthcare 5 (anti-ACA+SB96), local-immigration 5, medicare/aid 4 (SB96), school-vouchers 5, taxes 4, trans-athletes 5, voting-rights 4, childcare 5 (SB248 NAY).
 - HD63 Stephen L. Whyte (10, mig 864, R): voting-rights 4, abortion 4, school-vouchers 5, civil-rights 5, taxes 4, deportation 5 + local-immigration 5 (HB226), residential-zoning 5 + housing 4 + growth-and-development 5 (Housing Affordability Commission co-chair, deregulatory YIMBY).
 - HD64 Jackie Larson (2, mig 876, R, appointed MAY 2026): residential-zoning 2 + growth-and-development 2 — local-control/community-character growth platform is her DOCUMENTED SIGNATURE ISSUE (entered politics fighting a rezoning; "I support local control over planning and zoning"; "Responsible Growth that Respects Community Character"; electjackielarson.com/issues). No floor record (appointed after both sessions adjourned), so all other topics honest BLANK. Prior session marked her full-blank as "values-level platform only"; on actual research her growth/zoning stance is specific+directional, not boilerplate → 2 evidence-bounded stances kept (user-confirmed 2026-06-18). school-vouchers/taxes dropped as too soft (generic "right to choose" / balanced-budget language ≠ directional placement). Revisit other topics after 2027 session.
@@ -137,9 +143,11 @@ Filling stances for the 82 UT legislators without them (22/104 had stances pre-s
 - HD75 Walt Brooks (9, mig 875, R): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4 (SB96), deportation 5 + local-immigration 5 (HB226). FINAL UT LEGISLATURE REP.
 
 ## ✅✅ UTAH LEGISLATURE STANCE RESEARCH COMPLETE (2026-06-18)
+
 **DB-verified: Senate 29/29 + House 75/75 = 104/104 legislators have evidence-only compass stances (FULLY COMPLETE 2026-06-18).** Final fill: **HD64 Jackie Larson** got 2 evidence-bounded stances (residential-zoning 2 + growth-and-development 2, mig 876) from her documented signature growth/zoning local-control platform — re-research overturned the prior session's "values-level only" full-blank call (user-confirmed). All her other topics remain honest blanks (appointed May 2026, no floor record; revisit after 2027 session). Migrations 808-876 (Senate 808-812; House batch1 813-822, batch2 823-842, batch3 843-862, batch4 863-875, Larson 876). **Next migration 877.**
 Method held throughout: one research agent at a time (rate-limit rule), every value name-confirmed on le.utah.gov roll calls / sponsored bill / first-party statement, no defaults, honest blanks. Cross-rep consistency enforced on housing/residential-zoning inverted polarity, economic-development anti-subsidy=LOW, childcare SB248 (NO=5 / YES=2), and SB295/HB261 civil-rights=5. Disambiguations: all 4 Petersons, Cory vs Celeste Maloy, Doug vs Derrin Owens, Carol vs Jefferson Moss, Miller G/T. Many honest blanks: GOP defectors (Hinkins/Owens vouchers; Dunnigan lone HB300 NAY→voting-rights 2; Watkins childcare 2/labor), Rs absent on HB300 (Ivory/Hawkins/MacPherson/Bolinder/Kohler/Bolinder), seating-date exclusions (10+ freshmen). REMAINING UT GAPS: SLC D4 Napier-Pearce (city, appointed, 0 stances). [HD64 Larson resolved 2026-06-18 — 2 stances added. Sandy headshots VERIFIED COMPLETE 2026-06-18 — all 8/8 live in Supabase Storage (politician_photos/{id}-headshot.jpg), 600×750, type=default, press_use; the "0 photos / CivicPlus SPA" note was stale, resolved in an earlier session.]
 **LANDING.JSX — VERIFIED COMPLETE 2026-06-18:** Utah is fully wired identically to every other covered state. All 10 UT cities in COVERAGE_STATES (Landing.jsx:117-129, commits 3cf6fe4/27e16e1) carry browseStateAbbrev:'UT' + hasContext:true (purple). The state legislature surfaces via browse_state=UT (city browse sends {government_geo_ids, state:'UT'} → backend returns city officials + UT legislators). DB-verified all 104 UT legislator offices have districts.state='ut' (lowercase STATE_UPPER/STATE_LOWER) — the exact casing browse_state relies on. NO standalone statewide browse tile exists for ANY state by design (legislature always rides along with a city browse). Decision (user, 2026-06-18): leave as-is — nothing to add. (A dedicated statewide-legislature tile would be a NEW UI pattern + backend change if ever wanted.)
+
 - DONE: D1 Sandall (6), D2 Wilson (5), D4 Musselman (2), D6 Stevenson (7), D8 Weiler (7), D13 Blouin (14), D15 Riebe (6), D16 Harper (7), D17 Fillmore (6), D19 Cullimore (6), D20 Winterton (7), D22 Balderree (4). [12/18]
 - DONE+: D24 Stratton (2), D25 McKell (6, mig 808), D26 Hinkins (6, mig 809), D27 Owens (4, mig 810), D28 Vickers (8, mig 811). [17/18]. TODO: D29 Ipson 389df734-b0a0-4223-befd-e02105c4160b
   - Vickers (migration 811, Senate Majority Leader): voting-rights 4, abortion 4, school-vouchers 5, trans-athletes 5, civil-rights 5, taxes 4, medicare/aid 4, fossil-fuels 5 — ALL confirmed by name on roll calls (medicare/aid also first-party quote). ✅ HB300 FLAG RESOLVED: Vickers voted NAY in committee but YEA on final passage (19-10) — confirmed by name, voting-rights=4 valid. climate-change + healthcare left blank (ambiguous polarity despite pharmacist background — good rigor). Next migration 812.
@@ -155,6 +163,7 @@ Method held throughout: one research agent at a time (rate-limit rule), every va
 - MAPPING GUARDRAILS: pride-flag ban, trans-bathroom, trans-medical bills = NO clean topic (report EXTRA, do NOT force civil-rights/same-sex-marriage). abortion only from access/legality votes. economic-development = corporate incentives only (NOT labor/union). Verify scale text in inform.compass_stances when unsure.
 
 ## Utah State Senate split-section repair (migration 807, 2026-06-17)
+
 Utah Senate showed 25/29 members. Root cause: 4 senators (Johnson D3, Millner D5, Buss D11, Brammer D21) existed with correct office titles/districts/photos/stances but their offices' chamber_id pointed at COUNTY chambers (Box Elder/Cache/Davis/Iron) instead of Utah State Senate (972db9ce-9f24-4df8-b828-1e2951e8fa90) — a split-section mis-parent bug. Fix: repointed the 4 offices' chamber_id (NOT new records — they had 18-24 stances each + photos). Senate now 29/29, House 75/75; split-section scan = 0 mis-parented. Their provider external_ids: Johnson -327384, Millner -301441, Buss -334574, Brammer -314306. (Utah Senate convention: external_id = provider numeric ID, district STATE_UPPER geo_id 490NN G5210 state='ut', image politician_photos/ut/{absid}.jpg type=default license=sourced.)
 
 ## Utah City Deep-Seed (in progress, started 2026-06-17)
@@ -180,11 +189,13 @@ Order: Salt Lake City → West Valley City → West Jordan → Provo → Orem �
 - **LAYTON COMPLETE** (geo_id 4943660; migrations 803/804/805). Six-member council form, 6 all-AT-LARGE (Mayor Petro + 5 council Bloxham/Edmondson/Morris/Thomas/Kolendrianos). external_ids -4943660001..-006. 6/6 headshots (laytoncityutah.gov /LC/Content/gfx/gov/, small 320x360, press_use). 4 stances (very thin small-suburb record; Petro/Bloxham/Morris honest 0). NOTE: `full` is a reserved SQL word — alias the full_name VALUES column as `fullname`.
 
 ## ✅ UTAH 10-CITY DEEP-SEED COMPLETE (2026-06-17)
+
 All 10 Utah city governments seeded end-to-end. **72 officials, 63 headshots, 240 stances.**
 Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan 8/8/21 · Provo 8/8/26 · Orem 7/7/18 · Ogden 8/8/13 · Sandy 8/0/30 · St. George 6/6/27 · Lehi 6/6/24 · Layton 6/6/4.
 **Remaining gaps:** Sandy headshots now **8/8 COMPLETE** (migration 806). 7 council backfilled via each member's detail page (sandy.utah.gov/{id}/Name server-renders ONE content.civicplus.com/api/assets/{GUID}; fetch ?width=800 for full-res). Mayor Zoltanski's official photo (red hat) was user-supplied (her bio photo renders client-side only) — cropped 4:5 from a 640x427 landscape, uploaded. **Only remaining photo gap across all 10 UT cities: SLC D4 Napier-Pearce** (appointed, no official portrait + 0 stances). All-UT-cities photo coverage: 71/72.
 **Sandy council headshot asset GUIDs (content.civicplus.com/api/assets/{guid}?width=800):** D'Sousa 33b5adad / Dekeyzer b189d94b / Sharkey 45f7f338 / Christensen ae40a744 / Stroud c054060b / Nicholl 50d462d2 / Houseman 7b45a7ee.
 **NOT on Landing.jsx login page yet** — Utah still needs the deferred scope decision (which UT jurisdictions to surface; all 10 cities now qualify as purple/has-stances). Next: add Utah to COVERAGE_STATES + backfill the two photo gaps.
+
 - **SALT LAKE CITY COMPLETE** (structure + headshots 7/8 + stances 7/8). Qualifies as a purple/has-stances city, but Utah is NOT yet on the Landing.jsx login page (deferred — needs scope decision on which UT jurisdictions to surface). Next Utah city: West Valley City (geo_id 4983470, empty shell).
 
 ## Project Reference
@@ -285,9 +296,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-17T04:00:00.000Z
-Stopped at: v15.0 LA City Stances MILESTONE CLOSED — all 13 phases (126-138) complete; 288 stance rows across 65 officials in 12 cities (migrations 703-773); LA-RETRO-01 done; next migration 774
-Resume file: None
+Last session: 2026-06-19T16:38:54.187Z
+Stopped at: Phase 142 context gathered
+Resume file: .planning/phases/142-long-beach-deep-seed/142-CONTEXT.md
 
 ## Performance Metrics
 
