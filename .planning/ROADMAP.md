@@ -151,6 +151,22 @@ apply evidence-only compass stances for all officials (currently 0).
 Council" chambers reconciled to one; rotational-Mayor modeled per Santa Clarita's council-manager
 form; 5/5 at-large council seats (or documented); image dedupe (Gibbs 2→1); stances 0 → full
 coverage. See `phases/143-santa-clarita-deep-seed/143-CONTEXT.md`.
+**Plans:** 4 plans
+**Wave 1**
+
+- [ ] 143-01-PLAN.md — Reconcile / data hygiene: geo_id backfill, retire duplicate Chamber A + Smyth, dedupe Gibbs image, normalize titles — migration 894
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 143-02-PLAN.md — Complete roster: insert McLean + Miranda (reserved -700xxx), flag rotational Mayor on Weste seat, official_count=5 — migration 895
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 143-03-PLAN.md — Headshots for McLean + Miranda (600×750) + full-roster image audit — migration 896 (audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 143-04-PLAN.md — Evidence-only compass stances for the 5 current councilmembers (no judicial topics; Smyth excluded) — migrations 897–901 (no ledger)
 
 ### Phase 157: Wave 2 close-out
 
