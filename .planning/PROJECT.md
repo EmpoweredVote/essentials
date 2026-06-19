@@ -133,9 +133,9 @@ deep-seeded (roster → headshots → evidence-only stances) + full compass cove
 104-member Utah state legislature (29 Senate + 75 House; 955 stance rows). Utah is the third
 US state with full legislature-wide compass coverage. See `.planning/v16.0-MILESTONE-AUDIT.md`.
 
-**Open carry-forward:** SLC/Ogden/Layton duplicate council office rows (cleanup migration
-pending — audit UT-CITY-01); SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7
-council reorg follow-up (STATE.md Pending Todos).
+**Open carry-forward:** SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7
+council reorg follow-up (STATE.md Pending Todos). (UT-CITY-01 duplicate office rows resolved
+2026-06-18 via migration 877.)
 
 ### Active
 
