@@ -168,6 +168,32 @@ coverage. See `phases/143-santa-clarita-deep-seed/143-CONTEXT.md`.
 
 - [x] 143-04-PLAN.md — Evidence-only compass stances for the 5 current councilmembers (no judicial topics; Smyth excluded) — migrations 897–901 (no ledger)
 
+### Phase 144: Glendale deep-seed
+
+**Requirements:** GLEN-01
+
+**Goal:** Bring Glendale (geo_id `0630000`) to full Tier 1 depth. **NOT greenfield** —
+DB pre-check (2026-06-19) found it already partially seeded: a `'City of Glendale,
+California, US'` government row (`a7433437`, geo_id NULL) and **TWO duplicate "Glendale City
+Council" chambers** — one empty duplicate (`c019a553`, external_id `-200687`, 0 offices) and
+the real survivor (`771727ec`, external_id `10450`, `official_count=5`) holding 5 seated
+Councilmembers: Ara Najarian (`-700100`), Ardy Kassakhian (`686339`), Daniel Brotman (`686340`),
+Elen Asatryan (`686337`), Vartan Gharpetian (`686336`). ⚠️ Roster needs verification against
+glendaleca.gov — Gharpetian appears to be a stale holdover (left council ~2020); the true current
+5th member must be confirmed (SC-style trap). This phase is **reconcile + complete + stances**:
+delete the empty duplicate chamber, backfill geo_id, reconcile the roster to the verified current
+5-member at-large council, model the rotational Mayor correctly (council-manager form, like SC),
+fix data hygiene (office_id back-links, title normalization), add the 3 missing headshots
+(currently 2/5), then apply evidence-only compass stances for all 5 (currently 0).
+
+**Success criteria:** Per the shared per-city criteria above, plus: the two duplicate "Glendale
+City Council" chambers reconciled to one; roster verified current against glendaleca.gov (stale
+members retired, not deleted); rotational-Mayor modeled per Glendale's council-manager form;
+5/5 at-large headshots (600×750); stances 0 → full evidence-only coverage; no judicial topics
+(Glendale has an appointed, not elected, City Attorney). See
+`phases/144-glendale-deep-seed/144-CONTEXT.md`.
+**Plans:** TBD (created in plan-phase)
+
 ### Phase 157: Wave 2 close-out
 
 **Goal:** Surface the new cities and capture learnings.
