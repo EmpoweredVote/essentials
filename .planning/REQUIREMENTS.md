@@ -22,7 +22,7 @@ Per-city deliverable (the unit of one phase):
 
 ### Tier A — 100k+ population
 
-- [ ] **LBCH-01:** Long Beach (geo_id 0643000) deep-seeded — government + roster + headshots + evidence-only stances
+- [x] **LBCH-01:** Long Beach (geo_id 0643000) deep-seeded — government + roster + headshots + evidence-only stances ✅ 2026-06-19
 - [ ] **SCLR-01:** Santa Clarita (0669088) deep-seeded — government + roster + headshots + evidence-only stances
 - [ ] **GLEN-01:** Glendale (0630000) deep-seeded — government + roster + headshots + evidence-only stances
 - [ ] **LANC-01:** Lancaster (0640130) deep-seeded — government + roster + headshots + evidence-only stances
@@ -61,7 +61,7 @@ Per-city deliverable (the unit of one phase):
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LBCH-01 | 142 | Pending |
+| LBCH-01 | 142 | Complete |
 | SCLR-01 | 143 | Pending |
 | GLEN-01 | 144 | Pending |
 | LANC-01 | 145 | Pending |
