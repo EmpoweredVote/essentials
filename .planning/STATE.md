@@ -1,15 +1,15 @@
 ---
 gsd_state_version: 1.0
-milestone: v15.0
-milestone_name: LA City Stances
+milestone: v16.0
+milestone_name: Utah Coverage
 status: complete
-last_updated: "2026-06-17T05:00:00.000Z"
-last_activity: 2026-06-16 — v15.0 CLOSED + post-milestone roster reconciliation (migrations 774-776): Santa Monica council corrected to 7 (3 departed unlinked); Whittier D1/D3 repointed to current members Pacheco + Warner with stances. 290 LA stance rows live; departed members' records preserved. Next migration 777
+last_updated: "2026-06-18T18:00:00.000Z"
+last_activity: 2026-06-18 — v16.0 Utah Coverage CLOSED (formalized retroactively). 10 cities deep-seeded + 104/104 legislators with evidence-only stances (1,251 UT stance rows; 955 legislature + 296 city); Landing.jsx wired. DB-verified. Carry-forward: 5 duplicate SLC/Ogden/Layton council office rows need a cleanup migration (audit UT-CITY-01). Next migration 877
 progress:
-  total_phases: 13
-  completed_phases: 13
-  total_plans: 19
-  completed_plans: 19
+  total_phases: 3
+  completed_phases: 3
+  total_plans: 3
+  completed_plans: 3
   percent: 100
 ---
 
@@ -17,11 +17,15 @@ progress:
 
 ## Current Position
 
-Phase: v15.0 COMPLETE — ready for next milestone
+Phase: v16.0 Utah Coverage COMPLETE — ready for next milestone
 Plan: —
-Status: Milestone closed 2026-06-16
-Last activity: 2026-06-16 — v15.0 LA City Stances milestone CLOSED; Phase 138 retrospective done; 288 stance rows / 65 officials / 12 cities; all 13 requirements ✅
+Status: Milestone closed 2026-06-18 (formalized retroactively; see .planning/v16.0-MILESTONE-AUDIT.md)
+Last activity: 2026-06-18 — v16.0 Utah Coverage CLOSED. DB-verified: 104/104 legislators with evidence-only stances (955 rows) + 10 cities deep-seeded (63 officials with stances, 296 rows; 71/72 headshots). Landing.jsx wired. 1,251 total UT stance rows. All 6 requirements satisfied.
 Next migration: 877
+
+**CARRY-FORWARD GAP (from v16.0 audit, UT-CITY-01):** SLC/Ogden/Layton have 5 duplicate/stale council office rows that render as duplicate councilmembers — SLC "Council Ward 1" Victoria Petro (9 stranded stances) duplicates "Council District 1" Petro-Eschler; SLC Ward 4 Lopez + Ward 5 Mano (stale); Ogden Hyer (×2 records); Layton Edmondson (×2). Migration 777 renumbered but didn't delete the legacy rows. Needs a cleanup migration (unlink stale rows + reconcile Petro's two records) — production mutation, confirm before applying.
+
+> The detailed Utah per-legislator / per-city research notes below are retained as historical reference; all are complete (see the ✅ section markers). Milestone record: .planning/milestones/v16.0-{REQUIREMENTS,ROADMAP}.md + .planning/v16.0-MILESTONE-AUDIT.md.
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.

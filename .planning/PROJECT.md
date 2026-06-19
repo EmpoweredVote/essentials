@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA, Collin County, TX, Cambridge MA, all of Maine, all of California (7 deep-seeded cities), all of Oregon (Portland deep seed), Multnomah County, OR including 22 school districts across 4 states, and all of Maryland (St. Mary's County + Leonardtown deep seed). It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources. A cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) documents how to onboard any US city from scratch.
+Essentials is a civic engagement web app that helps people discover who represents them and who is running in upcoming elections. It covers Monroe County, IN, Los Angeles County, CA (12-city LA-area stance coverage), Collin County, TX, Cambridge + 14 more Massachusetts cities, all of Maine, all of California (7 deep-seeded cities), all of Oregon (Portland deep seed), Multnomah County, OR including 22 school districts across 4 states, all of Maryland (St. Mary's County + Leonardtown deep seed), Virginia (Alexandria deep seed), and Utah (all 10 largest cities deep-seeded + full 104-member state legislature with compass stances). It works fully for anonymous users (Inform tier) and provides enhanced jurisdiction-aware experiences for Connected accounts. A dedicated Elections page at `/elections` gives any user instant access to their local ballot. Candidate data is populated by a Claude-powered discovery pipeline. The political compass includes 10 LOCAL-scope topics and 8 JUDICIAL-scope topics, with scope filtering so each politician type sees only relevant questions. Legal candidate profiles surface bar evaluation data (LACBA ratings, CJP discipline), judicial compass stances, and legal donor activity — all from free/public sources. A cold-start playbook (`LOCATION-ONBOARDING.md` + 6 templates) documents how to onboard any US city from scratch.
 
 ## Core Value
 
@@ -126,23 +126,20 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Delivered:** MA town geofences (293 G4040 COUSUB boundaries), Boston deep seed (Mayor Wu + 13 City Councillors + School Committee with headshots), MA Tier 2 cities (Worcester + Springfield + Lowell + Brockton + Quincy), MA 2026 elections (240+ race rows + discovery armed), compass stances for all 217 MA officials (6 execs + 11 federal + 40 senators + 160 house reps), and MA playbook retrospective.
 
-### Current Milestone: v14.0 MA Tier 3 City Coverage
+### Current Milestone: none — v16.0 Utah Coverage closed 2026-06-18; awaiting next milestone direction
 
-**Goal:** Bring 7 more Massachusetts cities to full Tier 1 depth — elected officials, headshots at 600×750, evidence-only compass stances, and discovery pipeline armed for each.
+**Most recent (v16.0 Utah Coverage, shipped 2026-06-18):** All 10 largest Utah cities
+deep-seeded (roster → headshots → evidence-only stances) + full compass coverage for the
+104-member Utah state legislature (29 Senate + 75 House; 955 stance rows). Utah is the third
+US state with full legislature-wide compass coverage. See `.planning/v16.0-MILESTONE-AUDIT.md`.
 
-**Target cities:**
-- Newton (~90k pop, geo_id=2545560) — officials + headshots + stances
-- Somerville (~80k pop, geo_id=2562535) — officials + headshots + stances
-- Lynn (~100k pop, geo_id=2537490) — officials + headshots + stances
-- New Bedford (~100k pop) — officials + headshots + stances
-- Fall River (~90k pop) — officials + headshots + stances
-- Medford (~60k pop) — officials + headshots + stances
-- Waltham (~65k pop) — officials + headshots + stances
-- Playbook retrospective — MA Tier 3 GOTCHAs + 7 Cities Onboarded rows
+**Open carry-forward:** SLC/Ogden/Layton duplicate council office rows (cleanup migration
+pending — audit UT-CITY-01); SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7
+council reorg follow-up (STATE.md Pending Todos).
 
 ### Active
 
-- v14.0 MA Tier 3 City Coverage (in progress)
+- None — awaiting next milestone direction. Run `/gsd:new-milestone` to scope the next one.
 
 ### Out of Scope
 
@@ -243,4 +240,4 @@ A resident can look up who represents them — and who is on their ballot — wi
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-14 — v14.0 MA Tier 3 City Coverage milestone started*
+*Last updated: 2026-06-18 — v16.0 Utah Coverage milestone closed (formalized retroactively)*
