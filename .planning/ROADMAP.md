@@ -132,6 +132,26 @@ stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed
 
 - [x] 142-04-PLAN.md — Evidence-only compass stances for all 13 officials (judicial topics for legal officers) — migrations 881–893 (no ledger)
 
+### Phase 143: Santa Clarita deep-seed
+
+**Requirements:** SCLR-01
+
+**Goal:** Bring Santa Clarita (geo_id `0669088`) to full Tier 1 depth. **NOT greenfield** —
+DB pre-check (2026-06-19) found it already partially seeded: a `'City of Santa Clarita,
+California, US'` government row (geo_id NULL) and **TWO duplicate "City Council" chambers**
+under different external_id schemes — one (`-200978`) holding a Mayor office + 2 Council Member
+offices (only Cameron Smyth `-700180` seated), the other (`11243`, `official_count=5`) holding
+3 Councilmembers (Jason Gibbs, Laurene Weste, Patsy Ayala — positive `665xxx` ext_ids).
+This phase is **reconcile + complete + stances**: consolidate the duplicate chambers into the
+real 5-seat at-large council, model the rotational Mayor correctly, complete the roster, fix
+data hygiene (geo_id backfill, image dedupe, title normalization, office_id back-links), then
+apply evidence-only compass stances for all officials (currently 0).
+
+**Success criteria:** Per the shared per-city criteria above, plus: the two duplicate "City
+Council" chambers reconciled to one; rotational-Mayor modeled per Santa Clarita's council-manager
+form; 5/5 at-large council seats (or documented); image dedupe (Gibbs 2→1); stances 0 → full
+coverage. See `phases/143-santa-clarita-deep-seed/143-CONTEXT.md`.
+
 ### Phase 157: Wave 2 close-out
 
 **Goal:** Surface the new cities and capture learnings.
