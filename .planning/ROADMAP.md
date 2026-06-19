@@ -90,6 +90,27 @@ Each city phase (142–156) shares the same shape and success criteria:
 
 **Build order within a phase:** government+chamber → roster (offices) → headshots → stances → spot-check render.
 
+> Per-city detail headings are added below as each phase is planned (the GSD tooling
+> requires a `### Phase N:` section to resolve the phase). The shared shape above applies
+> to all; per-phase headings note city-specific deviations (e.g. existing-seed reconciliation).
+
+### Phase 142: Long Beach deep-seed
+
+**Requirements:** LBCH-01
+
+**Goal:** Bring Long Beach (geo_id `0643000`) to full Tier 1 depth. **NOT greenfield** —
+DB pre-check found it already seeded (gov + 2 chambers + Mayor Rex Richardson + 8 of 9 council +
+9/9 headshots, 0 stances) via v7.0 + migration 294. This phase is **reconcile + complete +
+stances**: fix data hygiene (backfill gov `geo_id`, resolve the duplicate "Long Beach City
+Council" chamber, dedupe images, back-fill Rex Richardson `office_id`), seat the missing 9th
+council district, add the three directly-elected citywide officers (City Attorney, City
+Prosecutor, City Auditor), then apply evidence-only compass stances for all officials.
+New officials use the reserved external_id range `-700050…-700099` (per migration 294).
+
+**Success criteria:** Per the shared per-city criteria above, plus: existing duplicate/NULL-geo_id
+data reconciled; the 3 elected citywide officers seated; 9/9 (or documented) council districts;
+stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed/142-CONTEXT.md`.
+
 ### Phase 157: Wave 2 close-out
 
 **Goal:** Surface the new cities and capture learnings.
