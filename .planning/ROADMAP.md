@@ -62,7 +62,7 @@ elected rosters, headshots (600×750), and evidence-only compass stances for eac
 
 | # | Phase | Req | geo_id | Goal |
 |---|-------|-----|--------|------|
-| 142 | Long Beach deep-seed | 3/4 | In Progress|  |
+| 142 | Long Beach deep-seed | 4/4 | Complete   | 2026-06-19 |
 | 143 | Santa Clarita deep-seed | SCLR-01 | 0669088 | Government + roster + headshots + stances |
 | 144 | Glendale deep-seed | GLEN-01 | 0630000 | Government + roster + headshots + stances |
 | 145 | Lancaster deep-seed | LANC-01 | 0640130 | Government + roster + headshots + stances |
@@ -115,7 +115,7 @@ New officials use the reserved external_id range `-700050…-700099` (per migrat
 **Success criteria:** Per the shared per-city criteria above, plus: existing duplicate/NULL-geo_id
 data reconciled; the 3 elected citywide officers seated; 9/9 (or documented) council districts;
 stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed/142-CONTEXT.md`.
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 **Wave 1**
 
 - [x] 142-01-PLAN.md — Reconcile / data hygiene (geo_id backfill, chamber rename, image dedupe, Mayor office_id, district relabel) — migration 878
@@ -130,7 +130,7 @@ stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 142-04-PLAN.md — Evidence-only compass stances for all 13 officials (judicial topics for legal officers) — migrations 881–893 (no ledger)
+- [x] 142-04-PLAN.md — Evidence-only compass stances for all 13 officials (judicial topics for legal officers) — migrations 881–893 (no ledger)
 
 ### Phase 157: Wave 2 close-out
 
