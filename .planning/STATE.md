@@ -25,10 +25,13 @@ Next migration: 878
 
 ### v17.0 milestone (active)
 
-Deep-seed the 15 largest uncovered LA County cities to Tier 1 depth. Phases 142–157, one per
-city + close-out. Each city is GREENFIELD (geofence only, from v7.0) → create government +
-chamber → seed roster → headshots (600×750) → evidence-only stances (one agent at a time, no
-defaults, honest blanks). Verify per city: form of government, mayor type, district vs at-large,
+Bring the 15 largest uncovered LA County cities to Tier 1 depth. Phases 142–157, one per
+city + close-out. **⚠️ NOT all greenfield — DB-pre-check every city before seeding.** At least
+Long Beach (142) and Carson were already seeded in v7.0 + LA wave-1/wave-3 gap-fill migrations.
+Truly greenfield city → create government + chamber → roster → headshots (600×750) → stances.
+Partially-seeded city (e.g. Long Beach: gov + 9 officials + headshots exist, 0 stances) →
+reconcile + complete + stances. Stances: evidence-only, one agent at a time, no defaults, honest
+blanks. Verify per city: existing DB rows, form of government, mayor type, district vs at-large,
 seat count. Reuses v7.0 CA city-deep-seed playbook + LOCATION-ONBOARDING.md. Requirements:
 .planning/REQUIREMENTS.md · Roadmap: .planning/ROADMAP.md.
 

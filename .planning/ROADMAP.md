@@ -34,9 +34,14 @@ elected rosters, headshots (600×750), and evidence-only compass stances for eac
 
 ## Key Facts (carry into every phase)
 
-- **Greenfield cities:** no `governments` row, no officials — each phase creates the government +
-  chamber, seeds the roster, uploads headshots, then researches stances. (Heavier than v15.0,
-  which only needed stances on already-seeded cities.)
+- **⚠️ NOT all greenfield — DB-pre-check every city first.** The original assumption ("no
+  `governments` row, no officials") is FALSE for at least Long Beach (142) and Carson — both were
+  seeded in v7.0 + LA wave-1/wave-3 gap-fill migrations. Before planning/seeding any city, query
+  `essentials.governments` / `chambers` / `offices` / `politician_images` / `inform.politician_answers`
+  for that geo_id. A truly greenfield city → create government + chamber + roster + headshots + stances.
+  A partially-seeded city (e.g. Long Beach) → **reconcile + complete + stances** (fix data hygiene,
+  add missing seats/officers, fill the stance gap). Treat the roadmap goal as "bring each city to
+  full Tier 1 depth," not "build from scratch."
 - **Geofences already exist** (v7.0, G4110) — confirmed for all 15. Do NOT reload TIGER.
 - **Verify per city before seeding:** form of government (mayor-council vs council-manager),
   directly-elected vs rotational mayor, district vs at-large council, seat count. Several LA
