@@ -126,20 +126,26 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Delivered:** MA town geofences (293 G4040 COUSUB boundaries), Boston deep seed (Mayor Wu + 13 City Councillors + School Committee with headshots), MA Tier 2 cities (Worcester + Springfield + Lowell + Brockton + Quincy), MA 2026 elections (240+ race rows + discovery armed), compass stances for all 217 MA officials (6 execs + 11 federal + 40 senators + 160 house reps), and MA playbook retrospective.
 
-### Current Milestone: none — v16.0 Utah Coverage closed 2026-06-18; awaiting next milestone direction
+### Current Milestone: v17.0 LA County City Coverage — Wave 2
 
-**Most recent (v16.0 Utah Coverage, shipped 2026-06-18):** All 10 largest Utah cities
-deep-seeded (roster → headshots → evidence-only stances) + full compass coverage for the
-104-member Utah state legislature (29 Senate + 75 House; 955 stance rows). Utah is the third
-US state with full legislature-wide compass coverage. See `.planning/v16.0-MILESTONE-AUDIT.md`.
+**Goal:** Deep-seed the 15 largest LA County cities not yet covered — government structure,
+elected rosters, headshots (600×750), and evidence-only compass stances for each.
 
-**Open carry-forward:** SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7
-council reorg follow-up (STATE.md Pending Todos). (UT-CITY-01 duplicate office rows resolved
-2026-06-18 via migration 877.)
+**Target cities (largest-first, geofences confirmed from v7.0):** Long Beach, Santa Clarita,
+Glendale, Lancaster, Palmdale, Pomona, Torrance, Pasadena, Downey, El Monte, West Covina,
+Inglewood, Burbank, Norwalk, Bellflower.
+
+**Shape:** greenfield in the DB (geofences only) → each city = government + chamber → roster →
+headshots → evidence-only stances. 16 phases (142–157, one per city + close-out). Reuses the
+v7.0 CA city-deep-seed playbook + LOCATION-ONBOARDING.md; no new geofence or research work.
+
+**Most recent close (v16.0 Utah Coverage, 2026-06-18):** 10 Utah cities + 104/104 legislators
+with compass stances. See `.planning/v16.0-MILESTONE-AUDIT.md`.
 
 ### Active
 
-- None — awaiting next milestone direction. Run `/gsd:new-milestone` to scope the next one.
+- v17.0 LA County City Coverage — Wave 2 (defining requirements → roadmap done; ready to plan Phase 142)
+- Carry-forward (not blocking): SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7 council reorg.
 
 ### Out of Scope
 
@@ -240,4 +246,4 @@ council reorg follow-up (STATE.md Pending Todos). (UT-CITY-01 duplicate office r
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-18 — v16.0 Utah Coverage milestone closed (formalized retroactively)*
+*Last updated: 2026-06-19 — v17.0 LA County City Coverage — Wave 2 milestone started*

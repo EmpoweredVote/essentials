@@ -1,31 +1,53 @@
 ---
 gsd_state_version: 1.0
-milestone: v16.0
-milestone_name: Utah Coverage
-status: complete
-last_updated: "2026-06-18T18:00:00.000Z"
-last_activity: 2026-06-18 — v16.0 Utah Coverage CLOSED (formalized retroactively). 10 cities deep-seeded + 104/104 legislators with evidence-only stances (1,251 UT stance rows; 955 legislature + 296 city); Landing.jsx wired. DB-verified. Migration 877 applied: removed 5 duplicate SLC/Ogden/Layton council office rows (audit UT-CITY-01 RESOLVED; SLC 8/Ogden 8/Layton 6, one office per person). Next migration 878
+milestone: v17.0
+milestone_name: LA County City Coverage — Wave 2
+status: planning
+last_updated: "2026-06-19T00:00:00.000Z"
+last_activity: 2026-06-19 — v17.0 started. 16 phases (142-157): deep-seed the 15 largest uncovered LA County cities (government + roster + headshots + evidence-only stances) + close-out. Requirements + roadmap written. Ready to plan Phase 142 (Long Beach). Next migration 878
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 3
-  completed_plans: 3
-  percent: 100
+  total_phases: 16
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: v16.0 Utah Coverage COMPLETE — ready for next milestone
+Phase: Not started (defining → planning)
 Plan: —
-Status: Milestone closed 2026-06-18 (formalized retroactively; see .planning/v16.0-MILESTONE-AUDIT.md)
-Last activity: 2026-06-18 — v16.0 Utah Coverage CLOSED. DB-verified: 104/104 legislators with evidence-only stances (955 rows) + 10 cities deep-seeded (63 officials with stances, 296 rows; 71/72 headshots). Landing.jsx wired. 1,251 total UT stance rows. All 6 requirements satisfied.
+Status: v17.0 requirements + roadmap written; ready to plan Phase 142 (Long Beach)
+Last activity: 2026-06-19 — Milestone v17.0 LA County City Coverage — Wave 2 started
 Next migration: 878
 
-**✅ UT-CITY-01 RESOLVED (migration 877, applied 2026-06-18):** Removed the 5 duplicate/stale council office rows — SLC Ward 1 Victoria Petro (dup of D1 Petro-Eschler), SLC Ward 4 Lopez + Ward 5 Mano (stale), Ogden D2 (Chair) R.A. Hyer (dup of D2), Layton "City Council" Edmondson (dup of "City Council Member"). Office rows deleted; politician/stance/image records kept (orphaned, non-rendering) per the LA-reconciliation pattern. DB-verified: SLC 8 / Ogden 8 / Layton 6, one office per person. Petro's 9 old stances left STRANDED (keeper kept its polarity-verified 7); optional future merge of the 4 keeper-absent topics noted in 877_ut_city_office_dedup_cleanup.sql. Ogden "(Chair)" annotation not re-added (one-line UPDATE in the migration file if confirmed).
+### v17.0 milestone (active)
 
-> The detailed Utah per-legislator / per-city research notes below are retained as historical reference; all are complete (see the ✅ section markers). Milestone record: .planning/milestones/v16.0-{REQUIREMENTS,ROADMAP}.md + .planning/v16.0-MILESTONE-AUDIT.md.
+Deep-seed the 15 largest uncovered LA County cities to Tier 1 depth. Phases 142–157, one per
+city + close-out. Each city is GREENFIELD (geofence only, from v7.0) → create government +
+chamber → seed roster → headshots (600×750) → evidence-only stances (one agent at a time, no
+defaults, honest blanks). Verify per city: form of government, mayor type, district vs at-large,
+seat count. Reuses v7.0 CA city-deep-seed playbook + LOCATION-ONBOARDING.md. Requirements:
+.planning/REQUIREMENTS.md · Roadmap: .planning/ROADMAP.md.
+
+City order + geo_ids: 142 Long Beach 0643000 · 143 Santa Clarita 0669088 · 144 Glendale 0630000 ·
+145 Lancaster 0640130 · 146 Palmdale 0655156 · 147 Pomona 0658072 · 148 Torrance 0680000 ·
+149 Pasadena 0656000 · 150 Downey 0619766 · 151 El Monte 0622230 · 152 West Covina 0684200 ·
+153 Inglewood 0636546 · 154 Burbank 0608954 · 155 Norwalk 0652526 · 156 Bellflower 0604982 ·
+157 close-out.
+
+### Previous milestone (v16.0 Utah Coverage — CLOSED 2026-06-18)
+
+DB-verified: 104/104 legislators with stances (955 rows) + 10 cities deep-seeded (63 officials
+with stances, 296 rows; 71/72 headshots); 1,251 total UT stance rows. Migration 877 resolved
+UT-CITY-01 (removed 5 duplicate SLC/Ogden/Layton council office rows; SLC 8 / Ogden 8 /
+Layton 6). Records: .planning/v16.0-MILESTONE-AUDIT.md + milestones/v16.0-{REQUIREMENTS,ROADMAP}.md.
+Open carry-forward: SLC D4 Napier-Pearce portrait + stances (appointed, no source yet).
+
+> The detailed Utah per-legislator / per-city research notes below are retained as historical
+> reference; all are complete (see the ✅ section markers).
 
 ## Utah State LEGISLATURE stance research (in progress, started 2026-06-17)
 Filling stances for the 82 UT legislators without them (22/104 had stances pre-start). **SENATE FIRST, one at a time, evidence-only.** 18 senators lacked stances; working in district order.
