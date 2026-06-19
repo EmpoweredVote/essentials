@@ -111,6 +111,13 @@ New officials use the reserved external_id range `-700050…-700099` (per migrat
 data reconciled; the 3 elected citywide officers seated; 9/9 (or documented) council districts;
 stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed/142-CONTEXT.md`.
 
+**Plans:** 4 plans (one per wave; sequential)
+
+- [ ] 142-01-PLAN.md — Reconcile / data hygiene (geo_id backfill, chamber rename, image dedupe, Mayor office_id, district relabel) — migration 878
+- [ ] 142-02-PLAN.md — Complete roster: seat D8 Thrash-Ntuk + 3 citywide officers (City Attorney/Prosecutor/Auditor) — migration 879
+- [ ] 142-03-PLAN.md — Headshots for the 4 new officials (600×750) + full-roster image audit — migration 880 (audit-only)
+- [ ] 142-04-PLAN.md — Evidence-only compass stances for all 13 officials (judicial topics for legal officers) — migrations 881–893 (no ledger)
+
 ### Phase 157: Wave 2 close-out
 
 **Goal:** Surface the new cities and capture learnings.
