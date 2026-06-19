@@ -115,7 +115,8 @@ New officials use the reserved external_id range `-700050…-700099` (per migrat
 **Success criteria:** Per the shared per-city criteria above, plus: existing duplicate/NULL-geo_id
 data reconciled; the 3 elected citywide officers seated; 9/9 (or documented) council districts;
 stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed/142-CONTEXT.md`.
-**Plans:** 4/4 plans complete
+
+**Plans:** 4/4 plans complete
 **Wave 1**
 
 - [x] 142-01-PLAN.md — Reconcile / data hygiene (geo_id backfill, chamber rename, image dedupe, Mayor office_id, district relabel) — migration 878
@@ -192,7 +193,12 @@ members retired, not deleted); rotational-Mayor modeled per Glendale's council-m
 5/5 at-large headshots (600×750); stances 0 → full evidence-only coverage; no judicial topics
 (Glendale has an appointed, not elected, City Attorney). See
 `phases/144-glendale-deep-seed/144-CONTEXT.md`.
-**Plans:** TBD (created in plan-phase)
+**Plans:** 4 plans
+Plans:
+- [ ] 144-01-PLAN.md — Reconcile: backfill geo_id 0630000, delete empty duplicate chamber c019a553, flag Kassakhian Mayor (structural migration 902)
+- [ ] 144-02-PLAN.md — Roster completion: retire Najarian, INSERT Bartrosouf behind a certification gate, confirm 5 active members (structural migration 903)
+- [ ] 144-03-PLAN.md — Headshots: source Brotman + re-source Gharpetian off scraped_no_license (browser, WAF-blocked), audit Kassakhian/Asatryan, document Bartrosouf gap (audit-only 904)
+- [ ] 144-04-PLAN.md — Stances: evidence-only compass coverage for the 5 going-forward members, chairs model, no judicial topics, Armenian/Artsakh as EXTRA (audit-only 905-909)
 
 ### Phase 157: Wave 2 close-out
 
