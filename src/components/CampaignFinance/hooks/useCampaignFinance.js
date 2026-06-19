@@ -29,6 +29,10 @@ export function useCampaignFinance(politicianId, cycle) {
 
   // Track end_cursor for pagination
   const endCursorRef = useRef(null);
+  // Track the politician currently loaded, so we only clear the summary when the
+  // politician changes (not on a cycle change). Keeping the summary across cycle
+  // changes avoids the section flashing out while the new cycle loads.
+  const loadedPidRef = useRef(politicianId);
 
   // Fetch summary eagerly on politicianId / cycle change
   useEffect(() => {
@@ -37,7 +41,10 @@ export function useCampaignFinance(politicianId, cycle) {
     let cancelled = false;
     setLoading(true);
     setError(null);
-    setSummary(null);
+    if (loadedPidRef.current !== politicianId) {
+      setSummary(null);
+      loadedPidRef.current = politicianId;
+    }
     setContributions(null);
     endCursorRef.current = null;
 

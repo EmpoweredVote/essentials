@@ -92,6 +92,11 @@ export default function CampaignFinanceSection({ politicianId }) {
     setCycle(newCycle);
   }
 
+  // Initial (or new-politician) fetch in flight with no data yet — render nothing.
+  // Prevents a flash of the section for candidates that turn out to have no finance data.
+  // (On a cycle change the hook keeps the previous summary, so this won't hide the section.)
+  if (loading && !summary) return null;
+
   // Don't render section if API errored (endpoint missing) or no data after loading
   if (!loading && !summary && error) return null;
 
