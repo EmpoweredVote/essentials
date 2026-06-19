@@ -469,7 +469,12 @@ No automated test infrastructure required (per established CA deep-seed pattern)
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> All three resolved by CONTEXT.md + orchestrator/user decisions (2026-06-19) and encoded in the plans:
+> (1) Bartrosouf INSERT now WITH a `checkpoint:human-verify` certification gate (Plan 144-02);
+> (2) Najarian stances SKIPPED — stances cover only the 5 going-forward members (Plan 144-04);
+> (3) Brotman headshot via human browser at execution (glendaleca.gov WAF), fallbacks documented (Plan 144-03).
 
 1. **Bartrosouf INSERT timing: now vs. post-certification**
    - What we know: Results are uncertified (June 26 certification date). Bartrosouf has a ~2,800-vote lead (15,396 vs 12,596 Murphy) with ~84,000 ballots outstanding at the initial count — lead is likely to hold.
