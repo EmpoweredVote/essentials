@@ -65,7 +65,7 @@ export default function DonorSearch({ currentPoliticianId }) {
           return b.total_donated - a.total_donated;
         });
 
-        posthog?.capture('donor_searched', { query_length: val.length, has_results: sorted.length > 0 });
+        posthog?.capture('essentials_donor_searched', { query_length: val.length, has_results: sorted.length > 0 });
         setResults({ ...data, politicians: sorted });
       } catch (err) {
         setError(err.message || 'Search failed. Please try again.');
