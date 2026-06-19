@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
-status: completed
-last_updated: "2026-06-19T19:20:51.062Z"
-last_activity: "2026-06-19 -- Phase 142 complete: LB reconciled (mig 878), roster 13 (mig 879: D8 Thrash-Ntuk + City Attorney/Prosecutor/Auditor), 4 headshots (mig 880), 113 evidence-only stances across 12 officials (mig 881-893; Doud honest-blank). All DB-verified. Migrations 878/879 in ledger; 880-893 audit-only."
+status: executing
+last_updated: "2026-06-19T19:48:00.432Z"
+last_activity: 2026-06-19 -- Phase 143 planning complete
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 4
+  total_plans: 8
   completed_plans: 4
   percent: 25
 ---
@@ -19,8 +19,8 @@ progress:
 
 Phase: 142 (Long Beach deep-seed) — ✅ COMPLETE
 Plan: 4 of 4 complete
-Status: Phase 142 complete — LBCH-01 satisfied end-to-end (government + roster + headshots + stances)
-Last activity: 2026-06-19 -- Phase 142 complete: LB reconciled (mig 878), roster 13 (mig 879: D8 Thrash-Ntuk + City Attorney/Prosecutor/Auditor), 4 headshots (mig 880), 113 evidence-only stances across 12 officials (mig 881-893; Doud honest-blank). All DB-verified. Migrations 878/879 in ledger; 880-893 audit-only.
+Status: Ready to execute
+Last activity: 2026-06-19 -- Phase 143 planning complete
 Next migration: 894
 
 ### v17.0 milestone (active)
