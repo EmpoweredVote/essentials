@@ -683,80 +683,108 @@ export default function ElectionsView({
                                   // Side overlay on desktop; stacked beneath the card on phones.
                                   const sideCompass = compassMode && !isMobile;
                                   const stackCompass = compassMode && isMobile && candHasStances && (userAnswers?.length ?? 0) > 0;
-                                  const miniCompass = (size) => (
-                                    <MiniCompass
-                                      userAnswers={userAnswers}
-                                      polAnswers={polAnswersForMini}
-                                      selectedTopics={selectedTopics}
-                                      scopedTopics={scopedTopicsForRace}
-                                      invertedSpokes={invertedSpokes}
-                                      localLensActive={raceLensActive}
-                                      isDark={isDark}
-                                      size={size}
+                                  const wrapperStyle = {
+                                    position: 'relative',
+                                    border: `1px solid ${wrapperBorderColor}`,
+                                    borderRadius: 10,
+                                    overflow: 'hidden',
+                                    cursor: 'pointer',
+                                    transition: 'box-shadow 0.2s ease, transform 0.2s ease',
+                                  };
+                                  const wrapperHandlers = {
+                                    onClick: () => onCandidateClick(candidate.candidate_id),
+                                    onMouseEnter: (e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; },
+                                    onMouseLeave: (e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; },
+                                  };
+                                  const card = (
+                                    <PoliticianCard
+                                      id={candidate.candidate_id}
+                                      imageSrc={candidate.photo_url || undefined}
+                                      imageFocalPoint={candidate.focal_point || 'center 20%'}
+                                      name={candidate.full_name}
+                                      title={cardTitle}
+                                      subtitle={cardSubtitle}
+                                      onClick={null}
+                                      variant="horizontal"
+                                      imageWidth="95px"
+                                      style={{ ...(isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}), border: 'none', borderRadius: 0, cursor: 'pointer' }}
+                                      contentStyle={sideCompass ? { marginRight: compassOverlayWidth } : undefined}
+                                      footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                     />
                                   );
-                                  return (
-                                    <div
-                                      key={candidate.candidate_id}
-                                      style={{
-                                        position: 'relative',
-                                        border: `1px solid ${wrapperBorderColor}`,
-                                        borderRadius: 10,
-                                        overflow: 'hidden',
-                                        cursor: 'pointer',
-                                        transition: 'box-shadow 0.2s ease, transform 0.2s ease',
-                                      }}
-                                      onClick={() => onCandidateClick(candidate.candidate_id)}
-                                      onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-                                      onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}
-                                    >
-                                      <div style={{ position: 'relative' }}>
-                                        <PoliticianCard
-                                          id={candidate.candidate_id}
-                                          imageSrc={candidate.photo_url || undefined}
-                                          imageFocalPoint={candidate.focal_point || 'center 20%'}
-                                          name={candidate.full_name}
-                                          title={cardTitle}
-                                          subtitle={cardSubtitle}
-                                          onClick={null}
-                                          variant="horizontal"
-                                          imageWidth="95px"
-                                          style={{ ...(isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}), border: 'none', borderRadius: 0, cursor: 'pointer' }}
-                                          contentStyle={sideCompass ? { marginRight: compassOverlayWidth } : undefined}
-                                          footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
-                                        />
-                                        {candidate.candidate_status === 'withdrawn' && (
-                                          <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(120,0,0,0.78)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
-                                            Withdrawn
-                                          </div>
-                                        )}
-                                        {isUnopposed && candidate.candidate_status !== 'withdrawn' && (
-                                          <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
-                                            {seats > 1 ? `${seats} seats` : 'Unopposed'}
-                                          </div>
-                                        )}
-                                        {sideCompass && (
-                                          <div
-                                            style={{
-                                              position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
-                                              display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                              backgroundColor: isDark ? '#1a2235' : '#fff',
-                                            }}
-                                          >
-                                            {miniCompass(190)}
-                                          </div>
-                                        )}
-                                      </div>
-                                      {stackCompass && (
+                                  const withdrawnBadge = candidate.candidate_status === 'withdrawn' && (
+                                    <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(120,0,0,0.78)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                      Withdrawn
+                                    </div>
+                                  );
+                                  const unopposedBadge = isUnopposed && candidate.candidate_status !== 'withdrawn' && (
+                                    <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                      {seats > 1 ? `${seats} seats` : 'Unopposed'}
+                                    </div>
+                                  );
+
+                                  // Mobile + compass: stack the compass BELOW the card. The wrapper is a
+                                  // flex column so the card region keeps a definite height (PoliticianCard's
+                                  // photo uses height:100% and collapses without one), and the compass sits
+                                  // beneath at full width instead of crowding the name in a side overlay.
+                                  if (stackCompass) {
+                                    return (
+                                      <div key={candidate.candidate_id} style={{ ...wrapperStyle, display: 'flex', flexDirection: 'column' }} {...wrapperHandlers}>
+                                        <div style={{ position: 'relative', flex: '0 0 auto' }}>
+                                          {card}
+                                          {withdrawnBadge}
+                                          {unopposedBadge}
+                                        </div>
                                         <div
                                           style={{
+                                            flex: '0 0 auto',
                                             borderTop: `1px solid ${wrapperBorderColor}`,
                                             backgroundColor: isDark ? '#1a2235' : '#fff',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                             padding: '12px 0',
                                           }}
                                         >
-                                          {miniCompass(200)}
+                                          <MiniCompass
+                                            userAnswers={userAnswers}
+                                            polAnswers={polAnswersForMini}
+                                            selectedTopics={selectedTopics}
+                                            scopedTopics={scopedTopicsForRace}
+                                            invertedSpokes={invertedSpokes}
+                                            localLensActive={raceLensActive}
+                                            isDark={isDark}
+                                            size={200}
+                                          />
+                                        </div>
+                                      </div>
+                                    );
+                                  }
+
+                                  // Desktop / no-compass: PoliticianCard is a direct child of the grid-item
+                                  // wrapper (definite height → photo renders), with the compass as an
+                                  // absolutely-positioned side overlay when enabled.
+                                  return (
+                                    <div key={candidate.candidate_id} style={wrapperStyle} {...wrapperHandlers}>
+                                      {card}
+                                      {withdrawnBadge}
+                                      {unopposedBadge}
+                                      {sideCompass && (
+                                        <div
+                                          style={{
+                                            position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
+                                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            backgroundColor: isDark ? '#1a2235' : '#fff',
+                                          }}
+                                        >
+                                          <MiniCompass
+                                            userAnswers={userAnswers}
+                                            polAnswers={polAnswersForMini}
+                                            selectedTopics={selectedTopics}
+                                            scopedTopics={scopedTopicsForRace}
+                                            invertedSpokes={invertedSpokes}
+                                            localLensActive={raceLensActive}
+                                            isDark={isDark}
+                                            size={190}
+                                          />
                                         </div>
                                       )}
                                     </div>

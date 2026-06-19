@@ -2,8 +2,8 @@ import { CompassKey } from '@empoweredvote/ev-ui';
 
 export default function CompassControlsBar({
   userAnswers,
-  localLensActive,
-  setLocalLens,
+  lensActive,
+  onToggleLens,
   onStanceMin,
   onStanceMax,
   isDesktop,
@@ -37,15 +37,15 @@ export default function CompassControlsBar({
                 elections view; clearly reflects on/off so users can find it. */}
             <button
               className="stance-btn"
-              onClick={() => setLocalLens(!localLensActive)}
-              aria-pressed={localLensActive}
-              title={localLensActive ? 'Local Lens on — focused on local issues' : 'Local Lens off — full compass'}
+              onClick={onToggleLens}
+              aria-pressed={lensActive}
+              title={lensActive ? 'Local Lens on — local races focus on local issues' : 'Local Lens off — full compass for every race'}
               style={{
                 width: 'auto',
                 height: 34,
                 padding: '0 12px',
                 gap: 6,
-                ...(localLensActive ? { background: '#FF5740', borderColor: '#FF5740', color: '#fff' } : {}),
+                ...(lensActive ? { background: '#FF5740', borderColor: '#FF5740', color: '#fff' } : {}),
               }}
             >
               {/* Location pin — matches EV brand local icon */}
