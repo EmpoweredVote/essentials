@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
-status: executing
-last_updated: "2026-06-19T17:57:55.115Z"
-last_activity: 2026-06-19 -- Phase 142 execution started
+status: completed
+last_updated: "2026-06-19T19:20:51.062Z"
+last_activity: "2026-06-19 -- Phase 142 complete: LB reconciled (mig 878), roster 13 (mig 879: D8 Thrash-Ntuk + City Attorney/Prosecutor/Auditor), 4 headshots (mig 880), 113 evidence-only stances across 12 officials (mig 881-893; Doud honest-blank). All DB-verified. Migrations 878/879 in ledger; 880-893 audit-only."
 progress:
-  total_phases: 3
-  completed_phases: 0
+  total_phases: 4
+  completed_phases: 1
   total_plans: 4
-  completed_plans: 0
-  percent: 0
+  completed_plans: 4
+  percent: 25
 ---
 
 # State
@@ -299,9 +299,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-19T16:38:54.187Z
-Stopped at: Phase 142 context gathered
-Resume file: .planning/phases/142-long-beach-deep-seed/142-CONTEXT.md
+Last session: 2026-06-19T19:20:51.050Z
+Stopped at: Phase 143 context gathered
+Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 
 ## Performance Metrics
 
