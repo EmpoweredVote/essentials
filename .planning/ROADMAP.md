@@ -63,7 +63,7 @@ elected rosters, headshots (600×750), and evidence-only compass stances for eac
 | # | Phase | Req | geo_id | Goal |
 |---|-------|-----|--------|------|
 | 142 | Long Beach deep-seed | 4/4 | Complete   | 2026-06-19 |
-| 143 | Santa Clarita deep-seed | SCLR-01 | 0669088 | Government + roster + headshots + stances |
+| 143 | Santa Clarita deep-seed | 1/4 | In Progress|  |
 | 144 | Glendale deep-seed | GLEN-01 | 0630000 | Government + roster + headshots + stances |
 | 145 | Lancaster deep-seed | LANC-01 | 0640130 | Government + roster + headshots + stances |
 | 146 | Palmdale deep-seed | PLMD-01 | 0655156 | Government + roster + headshots + stances |
@@ -151,10 +151,10 @@ apply evidence-only compass stances for all officials (currently 0).
 Council" chambers reconciled to one; rotational-Mayor modeled per Santa Clarita's council-manager
 form; 5/5 at-large council seats (or documented); image dedupe (Gibbs 2→1); stances 0 → full
 coverage. See `phases/143-santa-clarita-deep-seed/143-CONTEXT.md`.
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 **Wave 1**
 
-- [ ] 143-01-PLAN.md — Reconcile / data hygiene: geo_id backfill, retire duplicate Chamber A + Smyth, dedupe Gibbs image, normalize titles — migration 894
+- [x] 143-01-PLAN.md — Reconcile / data hygiene: geo_id backfill, retire duplicate Chamber A + Smyth, dedupe Gibbs image, normalize titles — migration 894
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

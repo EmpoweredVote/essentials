@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-19T19:48:00.432Z"
-last_activity: 2026-06-19 -- Phase 143 planning complete
+last_updated: "2026-06-19T20:00:50.781Z"
+last_activity: 2026-06-19 -- Phase 143 execution started
 progress:
   total_phases: 4
   completed_phases: 1
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 142 (Long Beach deep-seed) — ✅ COMPLETE
-Plan: 4 of 4 complete
-Status: Ready to execute
-Last activity: 2026-06-19 -- Phase 143 planning complete
+Phase: 143 (santa-clarita-deep-seed) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 143
+Last activity: 2026-06-19 -- Phase 143 execution started
 Next migration: 894
 
 ### v17.0 milestone (active)
@@ -206,7 +206,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 142 — Long Beach deep-seed
+**Current focus:** Phase 143 — santa-clarita-deep-seed
 
 ## v15.0 Roadmap Summary
 
