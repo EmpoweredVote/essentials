@@ -1,12 +1,8 @@
-import { Header } from "@empoweredvote/ev-ui";
+import { Header, getFeedbackUrl } from "@empoweredvote/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "../hooks/useTheme";
-
-function buildFeedbackUrl() {
-  return `https://alpha.empowered.vote/feedback?feature=essentials&url=${encodeURIComponent(window.location.href)}`;
-}
 
 export function Layout({ children }) {
   const { isLoggedIn, userName, logout } = useCompass();
@@ -14,7 +10,7 @@ export function Layout({ children }) {
 
   const feedbackItem = {
     label: "Feedback",
-    onClick: () => window.open(buildFeedbackUrl(), '_blank', 'noopener,noreferrer'),
+    onClick: () => window.open(getFeedbackUrl(), '_blank', 'noopener,noreferrer'),
   };
 
   const profileMenu = isLoggedIn
