@@ -64,7 +64,7 @@ elected rosters, headshots (600×750), and evidence-only compass stances for eac
 |---|-------|-----|--------|------|
 | 142 | Long Beach deep-seed | 4/4 | Complete   | 2026-06-19 |
 | 143 | Santa Clarita deep-seed | 4/4 | Complete   | 2026-06-19 |
-| 144 | Glendale deep-seed | 1/4 | In Progress|  |
+| 144 | Glendale deep-seed | 2/4 | In Progress|  |
 | 145 | Lancaster deep-seed | LANC-01 | 0640130 | Government + roster + headshots + stances |
 | 146 | Palmdale deep-seed | PLMD-01 | 0655156 | Government + roster + headshots + stances |
 | 147 | Pomona deep-seed | POMO-01 | 0658072 | Government + roster + headshots + stances |
@@ -193,10 +193,10 @@ members retired, not deleted); rotational-Mayor modeled per Glendale's council-m
 5/5 at-large headshots (600×750); stances 0 → full evidence-only coverage; no judicial topics
 (Glendale has an appointed, not elected, City Attorney). See
 `phases/144-glendale-deep-seed/144-CONTEXT.md`.
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 Plans:
 - [x] 144-01-PLAN.md — Reconcile: backfill geo_id 0630000, delete empty duplicate chamber c019a553, flag Kassakhian Mayor (structural migration 902)
-- [ ] 144-02-PLAN.md — Roster completion: retire Najarian, INSERT Bartrosouf behind a certification gate, confirm 5 active members (structural migration 903)
+- [x] 144-02-PLAN.md — Roster completion: retire Najarian, INSERT Bartrosouf behind a certification gate, confirm 5 active members (structural migration 903)
 - [ ] 144-03-PLAN.md — Headshots: source Brotman + re-source Gharpetian off scraped_no_license (browser, WAF-blocked), audit Kassakhian/Asatryan, document Bartrosouf gap (audit-only 904)
 - [ ] 144-04-PLAN.md — Stances: evidence-only compass coverage for the 5 going-forward members, chairs model, no judicial topics, Armenian/Artsakh as EXTRA (audit-only 905-909)
 
