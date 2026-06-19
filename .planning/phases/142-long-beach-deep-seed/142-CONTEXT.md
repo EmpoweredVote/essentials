@@ -45,7 +45,7 @@ This phase is therefore **reconcile + complete + stances**, not a from-scratch b
 ### Roster Scope
 - **D-02:** Include all three directly-elected citywide officers — **City Attorney, City Prosecutor, City Auditor**. Unlike SF/Sacramento/Fremont (where these are appointed and excluded), Long Beach elects them citywide; they belong on the ballot the voter sees. Seat them with their own chamber(s)/offices + headshots + stances.
 - **D-03:** Seat the **missing 9th council district**. Researcher verifies which district (1–9) is absent and whether it currently has an officeholder or is vacant; seat if filled, document honestly if vacant. Do not invent an officeholder.
-- **D-04:** **LBUSD school board out of scope** — city government only. Defer school boards for the whole wave (folding 15 boards balloons the milestone; CA precedent kept school districts separate).
+- *(was D-04 — informational scope boundary, see §Phase Boundary Out of scope)* **LBUSD school board out of scope** — city government only. Defer school boards for the whole wave (folding 15 boards balloons the milestone; CA precedent kept school districts separate). Exclusion, not a buildable decision — correctly has zero plan tasks.
 
 ### Stance Research
 - **D-05:** Stances run **in-phase, end-to-end, as the final wave** — after structure reconciliation + headshots are settled and independently verifiable. Evidence-only, one research agent at a time (rate-limit rule), ALL live compass topics, no default values, honest blank spokes. This is the largest single piece of work (0 → full for every official).
@@ -62,8 +62,8 @@ This phase is therefore **reconcile + complete + stances**, not a from-scratch b
 ### External ID Scheme
 - **D-11:** New Long Beach officials (3 citywide officers + missing 9th council seat) use the **reserved range `-700050 … -700099`** (documented as reserved/unused in migration 294) — NOT the milestone's generic geo_id-prefix scheme. This keeps new rows consistent with the existing Long Beach seed (existing council use positive 665830–665842; Mayor uses -200813). Run a pre-flight uniqueness query before assigning any external_id.
 
-### Milestone-Wide
-- **D-12:** This phase's CONTEXT flags a **wave-wide pre-check requirement**: every Wave-2 city phase (143–156) MUST DB-pre-check before assuming greenfield — at least Long Beach and Carson were already seeded. Recommend updating ROADMAP/STATE Key Facts to soften the "all 15 greenfield" claim. (See Deferred Ideas.)
+### Milestone-Wide (informational — not a trackable Phase 142 decision)
+- *(was D-12)* Wave-wide pre-check requirement: every Wave-2 city phase (143–156) MUST DB-pre-check before assuming greenfield — at least Long Beach and Carson were already seeded. **Already actioned**: ROADMAP/STATE Key Facts updated 2026-06-19. Tracked under Deferred Ideas — milestone-maintenance, not a Phase 142 plan task.
 
 ### Locked by milestone Key Facts + playbook (not re-litigated)
 - `governments` INSERT/guard via `WHERE NOT EXISTS` (no geo_id unique constraint); `chambers.slug` is GENERATED — never INSERT it

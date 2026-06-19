@@ -683,7 +683,10 @@ ORDER BY external_id;
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> All three resolved by the recommendations below and implemented in the plans:
+> Q1 → separate chambers (Plan 142-02); Q2 → relabel districts (Plan 142-01); Q3 → is_incumbent=true, is_vacant=false (Plan 142-02).
 
 1. **Should citywide officers (City Attorney, Prosecutor, Auditor) each get their own chamber row, or share one "Citywide Elected Officials" chamber?**
    - What we know: SF uses separate chambers per major citywide office. Sacramento/Fremont/Compton don't seat these officials at all.

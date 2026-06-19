@@ -42,16 +42,20 @@ elected rosters, headshots (600×750), and evidence-only compass stances for eac
   A partially-seeded city (e.g. Long Beach) → **reconcile + complete + stances** (fix data hygiene,
   add missing seats/officers, fill the stance gap). Treat the roadmap goal as "bring each city to
   full Tier 1 depth," not "build from scratch."
+
 - **Geofences already exist** (v7.0, G4110) — confirmed for all 15. Do NOT reload TIGER.
 - **Verify per city before seeding:** form of government (mayor-council vs council-manager),
   directly-elected vs rotational mayor, district vs at-large council, seat count. Several LA
   County cities moved to by-district elections post-CVRA — confirm current district map.
+
 - **Stances:** evidence-only, one research agent at a time (rate-limit rule), all live compass
   topics, per-individual migration files applied immediately, no default values, honest blanks.
+
 - **Conventions:** headshots 600×750 (4:5 Lanczos, press_use); `politician_images.type='default'`;
   governments INSERT uses WHERE NOT EXISTS (no geo_id unique constraint); `slug` is generated on
   chambers (never INSERT it); stance migrations apply via raw SQL and don't register in
   schema_migrations (on-disk counter authoritative). See LOCATION-ONBOARDING.md + templates.
+
 - **Antipartisan:** party may be stored but never displayed on profiles.
 
 ## Phase Summary
@@ -82,6 +86,7 @@ Each city phase (142–156) shares the same shape and success criteria:
 **Goal:** Take the city from geofence-only to full Tier 1 depth.
 
 **Success criteria (per city):**
+
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to the city geo_id
 2. Council structure matches the city's real form of government (district vs at-large, seat count, mayor type) — verified against the official city site
 3. Headshots at 600×750 uploaded for all officials with an available official portrait; genuine gaps documented (no fabricated photos)
@@ -110,12 +115,21 @@ New officials use the reserved external_id range `-700050…-700099` (per migrat
 **Success criteria:** Per the shared per-city criteria above, plus: existing duplicate/NULL-geo_id
 data reconciled; the 3 elected citywide officers seated; 9/9 (or documented) council districts;
 stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed/142-CONTEXT.md`.
-
-**Plans:** 4 plans (one per wave; sequential)
+**Plans:** 4 plans (one per wave; sequential)
+**Wave 1**
 
 - [ ] 142-01-PLAN.md — Reconcile / data hygiene (geo_id backfill, chamber rename, image dedupe, Mayor office_id, district relabel) — migration 878
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 142-02-PLAN.md — Complete roster: seat D8 Thrash-Ntuk + 3 citywide officers (City Attorney/Prosecutor/Auditor) — migration 879
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 142-03-PLAN.md — Headshots for the 4 new officials (600×750) + full-roster image audit — migration 880 (audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 142-04-PLAN.md — Evidence-only compass stances for all 13 officials (judicial topics for legal officers) — migrations 881–893 (no ledger)
 
 ### Phase 157: Wave 2 close-out
@@ -125,6 +139,7 @@ stances 0 → full coverage for the roster. See `phases/142-long-beach-deep-seed
 **Requirements:** LAC2-RETRO-01
 
 **Success criteria:**
+
 1. All 15 new cities present in Landing.jsx COVERAGE_STATES with correct browse wiring (purple/has-context)
 2. LOCATION-ONBOARDING.md updated — any LA-County-Wave-2 GOTCHAs + 15 Cities Onboarded rows
 3. v17.0 milestone audit written (DB-verified per-city counts) and milestone closed in MILESTONES.md / STATE.md / PROJECT.md

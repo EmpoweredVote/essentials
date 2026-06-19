@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
-status: planning
-last_updated: "2026-06-19T16:38:54.205Z"
-last_activity: 2026-06-19 — Milestone v17.0 LA County City Coverage — Wave 2 started
+status: executing
+last_updated: "2026-06-19T17:29:13.086Z"
+last_activity: 2026-06-19 -- Phase 142 planning complete
 progress:
-  total_phases: 1
+  total_phases: 3
   completed_phases: 0
-  total_plans: 0
+  total_plans: 4
   completed_plans: 0
   percent: 0
 ---
@@ -19,8 +19,8 @@ progress:
 
 Phase: Not started (defining → planning)
 Plan: —
-Status: v17.0 requirements + roadmap written; ready to plan Phase 142 (Long Beach)
-Last activity: 2026-06-19 — Milestone v17.0 LA County City Coverage — Wave 2 started
+Status: Ready to execute
+Last activity: 2026-06-19 -- Phase 142 planning complete
 Next migration: 878
 
 ### v17.0 milestone (active)
