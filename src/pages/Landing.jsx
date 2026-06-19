@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
+import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 
 // hasContext: true = city has compass stances seeded (rendered as purple chip)
 const COVERAGE_STATES = [
@@ -160,6 +161,16 @@ export default function Landing() {
   const navigate = useNavigate();
   const { isLoggedIn, myRepresentatives, myLocationNotSet, compassLoading } = useCompass();
   const posthog = usePostHog();
+
+  // Bind Google Places autocomplete to the address input (same hook the results
+  // page uses). Selecting a suggestion navigates straight to the results page.
+  useGooglePlacesAutocomplete(addressInputRef, {
+    onPlaceSelected: (addr) => {
+      setAddressInput(addr);
+      posthog?.capture('address_searched', { method: 'autocomplete' });
+      navigate(`/results?q=${encodeURIComponent(addr)}`);
+    },
+  });
 
   useEffect(() => {
     if (!compassLoading && isLoggedIn && myRepresentatives && myRepresentatives.length > 0) {
