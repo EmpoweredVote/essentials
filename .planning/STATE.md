@@ -3,34 +3,36 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-19T21:30:00.000Z"
-last_activity: 2026-06-19 -- Phase 143 (Santa Clarita deep-seed) COMPLETE — SCLR-01 satisfied
+last_updated: "2026-06-19T23:23:42.243Z"
+last_activity: 2026-06-19 -- Phase 144 execution started
 progress:
-  total_phases: 4
+  total_phases: 5
   completed_phases: 2
-  total_plans: 8
+  total_plans: 12
   completed_plans: 8
-  percent: 50
+  percent: 40
 ---
 
 # State
 
 ## Current Position
 
-Phase: 144 (glendale-deep-seed) — CONTEXT GATHERED (ready for /gsd-plan-phase 144)
-Plan: not yet planned
-Status: Phase 143 complete (SCLR-01); Phase 144 Glendale context captured 2026-06-19
-Last activity: 2026-06-19 -- Phase 144 Glendale discuss-phase complete (roster verified live, Mayor=Kassakhian)
+Phase: 144 (glendale-deep-seed) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 144
+Last activity: 2026-06-19 -- Phase 144 execution started
 Next migration: 902 (structural; stance/headshot files 896–901 did NOT register — ledger MAX 895)
 Resume file: .planning/phases/144-glendale-deep-seed/144-CONTEXT.md
 
 ### Phase 144 context summary (Glendale, geo_id 0630000) — ready to plan
+
 - Near-identical reconcile to SC. Gov shell a7433437 (geo_id NULL→0630000). Empty duplicate chamber c019a553 (-200687) to DELETE; survivor 771727ec (10450, official_count 5).
 - Roster VERIFIED CURRENT live 2026-06-19 (5 at-large): Najarian -700100, Kassakhian 686339, Brotman 686340, Asatryan 686337, Gharpetian 686336. Gharpetian NOT stale (re-won 2024) — no member retirement needed (contrast SC Smyth).
 - Mayor = Kassakhian (686339, selected Apr 2026) → flag title='Mayor' on his seat (rotational, no LOCAL_EXEC). ⚠ Research MUST check June 2 2026 election for seat/mayor turnover before writing.
 - Headshots: 2/5 exist (Kassakhian, Asatryan); 3 missing (Najarian, Brotman, Gharpetian) → glendaleca.gov. Stances 0/5 → full, chairs model, NO judicial (appointed City Attorney).
 
 ### Phase 143 outcome (Santa Clarita, geo_id 0669088)
+
 - NOT greenfield. Reconciled a duplicate-chamber partial seed. KEY: McLean (-201394) + Miranda (-200980) already existed in the doomed Chamber A with headshots → RESEATED into surviving Chamber B (eeabd028), NOT inserted as new -700181/-700182 (avoided duplicate people). Cameron Smyth (-700180) RETIRED (departed Dec 2024), not reseated.
 - Migrations: 894 reconcile (ledger), 895 roster (ledger), 896 headshots (audit-only), 897–901 stances (audit-only). Ledger MAX=895.
 - Roster (Chamber B, official_count=5): Weste 665693 (rotational Mayor by title), Ayala 665689, Gibbs 665692, McLean -201394, Miranda -200980. All 1 press_use 600×750 headshot.
@@ -220,7 +222,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 143 complete (Santa Clarita) — next: Phase 144 (Glendale deep-seed)
+**Current focus:** Phase 144 — glendale-deep-seed
 
 ## v15.0 Roadmap Summary
 
