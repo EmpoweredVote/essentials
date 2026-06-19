@@ -1231,6 +1231,19 @@ export default function Results() {
         base = `District ${pol.district_id}`;
       else if (pol.district_id === '0' && !/(_EXEC)$/.test(pol.district_type))
         base = 'At-Large';
+      // State/federal legislators (e.g. Utah) carry an empty district_id; the
+      // district lives in district_label ("State House District 24",
+      // "State Senate District 9", "Congressional District 1"). Surface just the
+      // "District N" portion. Scoped to legislator types so jurisdiction-style
+      // labels (county/school: "Salt Lake County") never render as a district.
+      else if (
+        pol.district_type === 'STATE_LOWER' ||
+        pol.district_type === 'STATE_UPPER' ||
+        pol.district_type === 'NATIONAL_LOWER'
+      ) {
+        const m = (pol.district_label || '').match(/district\s+(\w+)/i);
+        base = m ? `District ${m[1]}` : undefined;
+      }
       else base = undefined;
 
       // For candidates: append "Candidate" to subtitle
@@ -1605,7 +1618,7 @@ export default function Results() {
 
           {/* Tab toggle + inline filters — tabs left, filters right */}
           {(activeQuery || browseResults) && (
-            <div className="flex flex-wrap items-center gap-y-2 border-b border-[#E2EBEF] dark:border-gray-800 px-6 sm:px-12">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-y-2 border-b border-[#E2EBEF] dark:border-gray-800 px-6 sm:px-12">
               <div className="flex">
                 <button
                   className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
@@ -1639,7 +1652,7 @@ export default function Results() {
                   )}
                 </button>
               </div>
-              <div className="flex-1 min-w-0 flex justify-end py-2 sm:pl-4 w-full sm:w-auto">
+              <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
                 <FilterBar
                   selectedFilter={selectedFilter}
                   onFilterChange={(v) => { posthog?.capture('filter_changed', { filter_type: 'tier', value: v }); setSelectedFilter(v); }}
