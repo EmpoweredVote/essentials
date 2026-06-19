@@ -395,6 +395,14 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     setLensOverride((prev) => (prev === true ? null : true));
   }, []);
 
+  // Explicit grid-level setter for a labeled on/off toggle. Unlike toggleLocalLens
+  // (which cycles on↔auto), this forces an unambiguous true/false override so the
+  // visible toggle's state always matches what the grid renders. Used by the
+  // elections-page Local Lens control (default ON for that view).
+  const setLocalLens = useCallback((on) => {
+    setLensOverride(on ? true : false);
+  }, []);
+
   const logout = async () => {
     try {
       const token = getToken();
@@ -444,6 +452,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       getEffectiveLens,
       toggleLens,
       toggleLocalLens,
+      setLocalLens,
       logout,
     }),
     [
@@ -471,6 +480,7 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       getEffectiveLens,
       toggleLens,
       toggleLocalLens,
+      setLocalLens,
     ]
   );
 
