@@ -193,6 +193,14 @@ export default function Landing() {
     navigate(`/results?q=${encodeURIComponent(addressInput.trim())}`);
   };
 
+  // The active "Choose Your Area" step reads as a button — make it act like one
+  // by focusing the address input (scrolling it into view on mobile, where the
+  // step cards sit below the search).
+  const handleAreaStepClick = () => {
+    addressInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    addressInputRef.current?.focus({ preventScroll: true });
+  };
+
   const handleAreaClick = (area) => {
     const areaType = area.browseGovernmentList ? 'government_list' : area.browseGeoId ? 'geo' : 'address';
     posthog?.capture('essentials_browse_area_clicked', {
@@ -343,7 +351,8 @@ export default function Landing() {
                 </div>
                 {nameSearchResults}
 
-                {/* Address search — long input left, compact Search button right */}
+                {/* Address search — input takes the row; the Search button collapses to a
+                    magnifying-glass icon on mobile so the full address stays readable. */}
                 <div className="flex gap-2 mt-3">
                   <input
                     ref={addressInputRef}
@@ -357,9 +366,18 @@ export default function Landing() {
                   <button
                     onClick={handleSearch}
                     disabled={!addressInput.trim()}
-                    className="px-5 py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
+                    aria-label="Search"
+                    className="shrink-0 flex items-center justify-center min-w-[52px] px-4 sm:px-5 py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
                   >
-                    Search
+                    <svg
+                      className="w-5 h-5 sm:hidden" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="11" cy="11" r="7" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <span className="hidden sm:inline">Search</span>
                   </button>
                 </div>
               </div>
@@ -381,9 +399,13 @@ export default function Landing() {
               {STEPS.map(({ n, heading, body, active }) => (
                 <div
                   key={n}
+                  onClick={active ? handleAreaStepClick : undefined}
+                  onKeyDown={active ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleAreaStepClick(); } } : undefined}
+                  role={active ? 'button' : undefined}
+                  tabIndex={active ? 0 : undefined}
                   className={`flex items-start gap-4 p-5 rounded-2xl border transition-colors ${
                     active
-                      ? 'bg-white dark:bg-ev-navy-card border-[var(--ev-teal)] dark:border-ev-teal-light'
+                      ? 'bg-white dark:bg-ev-navy-card border-[var(--ev-teal)] dark:border-ev-teal-light cursor-pointer hover:border-[var(--ev-teal)]/70 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-ev-yellow'
                       : 'bg-gray-50 dark:bg-ev-navy-elevated border-gray-200 dark:border-white/10'
                   }`}
                 >

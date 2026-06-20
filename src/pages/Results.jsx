@@ -1558,10 +1558,19 @@ export default function Results() {
                 <button
                   onClick={() => { handleAddressSearch(); setEditingSearch(false); }}
                   disabled={!addressInput.trim()}
-                  className="px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
+                  aria-label="Search"
+                  className="shrink-0 flex items-center justify-center min-w-[48px] min-h-[44px] px-4 sm:px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
                              hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
                 >
-                  Search
+                  <svg
+                    className="w-5 h-5 sm:hidden" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <circle cx="11" cy="11" r="7" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                  <span className="hidden sm:inline">Search</span>
                 </button>
                 {(formattedAddress || (searchMode === 'browse' && browseResults)) && (
                   <button
@@ -1629,7 +1638,7 @@ export default function Results() {
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-y-2 border-b border-[#E2EBEF] dark:border-gray-800 px-6 sm:px-12">
               <div className="flex">
                 <button
-                  className={`px-4 py-3 text-sm min-h-[44px] transition-colors ${
+                  className={`px-3 sm:px-4 py-3 text-sm min-h-[44px] transition-colors ${
                     activeView === 'representatives'
                       ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
                       : 'text-[#718096] dark:text-gray-500 font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
@@ -1639,7 +1648,7 @@ export default function Results() {
                   Representatives
                 </button>
                 <button
-                  className={`px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
+                  className={`px-3 sm:px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
                     activeView === 'elections'
                       ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
                       : 'text-[#718096] dark:text-gray-500 font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
@@ -1652,10 +1661,12 @@ export default function Results() {
                   </span>
                   {electionsDaysAway && (
                     <span
-                      className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold"
+                      className="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0"
                       style={{ backgroundColor: '#FED12E', color: '#1a1a1a' }}
                     >
-                      {electionsDaysAway}
+                      {/* compact on mobile (e.g. "3d"), full text from sm up */}
+                      <span className="sm:hidden">{electionsDaysAway.replace(/ days? away$/, 'd').replace(/ days? ago$/, 'd ago')}</span>
+                      <span className="hidden sm:inline">{electionsDaysAway}</span>
                     </span>
                   )}
                 </button>
