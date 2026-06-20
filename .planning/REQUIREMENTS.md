@@ -65,7 +65,7 @@ Per-city deliverable (the unit of one phase):
 | SCLR-01 | 143 | Complete |
 | GLEN-01 | 144 | Complete |
 | LANC-01 | 145 | Pending |
-| PLMD-01 | 146 | Pending |
+| PLMD-01 | 146 | Complete |
 | POMO-01 | 147 | Pending |
 | TORR-01 | 148 | Pending |
 | PASA-01 | 149 | Pending |
