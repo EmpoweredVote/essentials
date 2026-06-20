@@ -142,6 +142,25 @@ Plans:
 
 **Requirements:** TORR-01
 
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 148-01-PLAN.md — Wave 1 reconcile: geo_id backfill (empty-string guard) + DELETE the Brigitte-Lewis typo-duplicate (office+politician) + merge duplicate chamber (move-then-delete, 3 offices) + create one new At-Large row + repoint Sheikh off the shared At-Large UUID; AT-LARGE preserved (no by-district relabel); directly-elected Mayor LOCAL_EXEC reused (migration 936)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 148-02-PLAN.md — Wave 2 roster (light — current council all exists): repair 3 broken back-pointers (Chen/Mattucci/Sheikh) + official_count=7; seat the CURRENTLY-SEATED council (Chen Mayor, no retirements, no Betty Lieu, no Kalani-as-Mayor); directly-elected Mayor reused (migration 937)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 148-03-PLAN.md — Wave 3 headshots: torranceca.gov NO-WAF direct curl; Kaji/Kalani showpublishedimage URLs, Gerson/Bridgett-Lewis council pages, Chen reprocess to canonical seated-Mayor portrait, Mattucci/Sheikh verify existing; 600x750; honest gaps documented (migration 938, audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 148-04-PLAN.md — Wave 4 stances: 7 current members (Chen/Mattucci seated, not retired; no Betty Lieu), evidence-only chairs model, one agent at a time, no judicial topics, no manufactured rent-regulation; documented Torrance votes (Pride/anti-camping/Homekey+/airport-ban) cited (migrations 939-945, audit-only)
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0680000
