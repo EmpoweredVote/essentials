@@ -76,6 +76,25 @@ Plans:
 
 **Requirements:** PLMD-01
 
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 146-01-PLAN.md — Wave 1 reconcile: geo_id backfill + merge duplicate chamber (move-then-delete) + relabel 4 At-Large districts to D1/D2/D4/D5 + create new District 3 row (migration 918)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 146-02-PLAN.md — Wave 2 roster: repair Bishop's bidirectional link + create Bettencourt (-700657) seated into a new District 3 office + flag Mayor on Ohlsen's seat (Glendale model); official_count=5 (migration 919)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 146-03-PLAN.md — Wave 3 headshots: Bettencourt from cityofpalmdaleca.gov documentID=13184 (no WAF), 600×750; the other 4 already imaged; honest gaps documented (migration 920, audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 146-04-PLAN.md — Wave 4 stances: 5 current members (all current, no exclusions), evidence-only chairs model, one agent at a time, no judicial (migrations 921-925, audit-only)
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0655156
