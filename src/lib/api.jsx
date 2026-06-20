@@ -330,6 +330,20 @@ export async function browseByArea(geoId, mtfcc) {
   }
 }
 
+/** Public list of browseable areas (counties, cities, council_districts, sboe) for a
+ *  state — the source of truth for coverage. Returns [] for states we don't cover. */
+export async function fetchBrowseAreas(stateAbbrev) {
+  try {
+    const res = await publicFetch(`/essentials/browse/states/${encodeURIComponent(stateAbbrev)}/areas`);
+    if (!res || !res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    console.error('fetchBrowseAreas error:', err);
+    return [];
+  }
+}
+
 export async function browseByGovernmentList(governmentGeoIds, state, { countyGeoId } = {}) {
   try {
     const body = { government_geo_ids: governmentGeoIds, ...(state ? { state } : {}) };

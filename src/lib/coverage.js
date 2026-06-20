@@ -1,0 +1,161 @@
+// Alpha Community coverage — the single source of truth for which areas Essentials
+// has ingested. Consumed by the landing page (the browse list) and by the locality
+// search fallback (resolving a city/state query to a covered browse target).
+//
+// hasContext: true = city has compass stances seeded (rendered as a purple chip).
+
+export const COVERAGE_STATES = [
+  {
+    name: 'California', abbrev: 'CA',
+    areas: [
+      { label: 'Alhambra',      browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Berkeley',      browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Carson',        browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Compton',       browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Culver City',   browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'El Segundo',    browseGovernmentList: ['0622412'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Fremont',       browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Gardena',       browseGovernmentList: ['0628168'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Hawthorne',     browseGovernmentList: ['0632548'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Los Angeles',   browseGovernmentList: ['0644000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Sacramento',    browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Diego',     browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Francisco', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Jose',      browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Santa Monica',  browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'South Gate',    browseGovernmentList: ['0673080'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'West Hollywood',browseGovernmentList: ['0684410'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Whittier',      browseGovernmentList: ['0685292'], browseStateAbbrev: 'CA', hasContext: true },
+    ],
+  },
+  {
+    name: 'Indiana', abbrev: 'IN',
+    areas: [
+      { label: 'Bloomington', address: '100 W Kirkwood Ave, Bloomington, IN 47404', hasContext: true },
+    ],
+  },
+  {
+    name: 'Maine', abbrev: 'ME',
+    areas: [
+      { label: 'Auburn',        browseGovernmentList: ['2302060'], browseStateAbbrev: 'ME' },
+      { label: 'Bangor',        browseGovernmentList: ['2302795'], browseStateAbbrev: 'ME' },
+      { label: 'Biddeford',     browseGovernmentList: ['2304860'], browseStateAbbrev: 'ME' },
+      { label: 'Lewiston',      browseGovernmentList: ['2338740'], browseStateAbbrev: 'ME' },
+      { label: 'Portland',      browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
+      { label: 'South Portland',browseGovernmentList: ['2371990'], browseStateAbbrev: 'ME' },
+    ],
+  },
+  {
+    name: 'Maryland', abbrev: 'MD',
+    areas: [
+      { label: 'Leonardtown',      browseGovernmentList: ['2446475'], browseStateAbbrev: 'MD' },
+    ],
+  },
+  {
+    name: 'Massachusetts', abbrev: 'MA',
+    areas: [
+      { label: 'Boston',      browseGovernmentList: ['2507000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Brockton',    browseGovernmentList: ['2509000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Cambridge',   browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Fall River',  browseGovernmentList: ['2523000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Lowell',      browseGovernmentList: ['2537000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Lynn',        browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Medford',     browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Newton',      browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Quincy',      browseGovernmentList: ['2555745'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Somerville',  browseGovernmentList: ['2562535'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Springfield', browseGovernmentList: ['2567000'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Waltham',     browseGovernmentList: ['2572600'], browseStateAbbrev: 'MA', hasContext: true },
+      { label: 'Worcester',   browseGovernmentList: ['2582000'], browseStateAbbrev: 'MA', hasContext: true },
+    ],
+  },
+  {
+    name: 'Oregon', abbrev: 'OR',
+    areas: [
+      { label: 'Fairview',    browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
+      { label: 'Gresham',     browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
+      { label: 'Maywood Park',browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
+      { label: 'Portland',    browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Troutdale',   browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
+      { label: 'Wood Village',browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
+    ],
+  },
+  {
+    name: 'Texas', abbrev: 'TX',
+    areas: [
+      { label: 'Allen',         browseGovernmentList: ['4801924'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Anna',          browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Blue Ridge',    browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
+      { label: 'Celina',        browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Fairview',      browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX' },
+      { label: 'Farmersville',  browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX' },
+      { label: 'Frisco',        browseGovernmentList: ['4827684'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Josephine',     browseGovernmentList: ['4838068'], browseStateAbbrev: 'TX' },
+      { label: 'Lavon',         browseGovernmentList: ['4841800'], browseStateAbbrev: 'TX' },
+      { label: 'Longview',      browseGovernmentList: ['4843888'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Lowry Crossing',browseGovernmentList: ['4844308'], browseStateAbbrev: 'TX' },
+      { label: 'Lucas',         browseGovernmentList: ['4845012'], browseStateAbbrev: 'TX' },
+      { label: 'McKinney',      browseGovernmentList: ['4845744'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Melissa',       browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Murphy',        browseGovernmentList: ['4850100'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Nevada',        browseGovernmentList: ['4850760'], browseStateAbbrev: 'TX' },
+      { label: 'Parker',        browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX' },
+      { label: 'Plano',         browseGovernmentList: ['4858016'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Princeton',     browseGovernmentList: ['4859576'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Prosper',       browseGovernmentList: ['4859696'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Richardson',    browseGovernmentList: ['4861796'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Saint Paul',    browseGovernmentList: ['4864220'], browseStateAbbrev: 'TX' },
+      { label: 'Van Alstyne',   browseGovernmentList: ['4874924'], browseStateAbbrev: 'TX' },
+      { label: 'Weston',        browseGovernmentList: ['4877740'], browseStateAbbrev: 'TX' },
+    ],
+  },
+  {
+    name: 'Utah', abbrev: 'UT',
+    areas: [
+      { label: 'Layton',          browseGovernmentList: ['4943660'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Lehi',            browseGovernmentList: ['4944320'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Ogden',           browseGovernmentList: ['4955980'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Orem',            browseGovernmentList: ['4957300'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Provo',           browseGovernmentList: ['4962470'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Salt Lake City',  browseGovernmentList: ['4967000'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Sandy',           browseGovernmentList: ['4967440'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'St. George',      browseGovernmentList: ['4965330'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'West Jordan',     browseGovernmentList: ['4982950'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'West Valley City',browseGovernmentList: ['4983470'], browseStateAbbrev: 'UT', hasContext: true },
+    ],
+  },
+  {
+    name: 'Virginia', abbrev: 'VA',
+    areas: [
+      { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA', hasContext: true },
+    ],
+  },
+];
+
+// state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
+export const STATE_NAME_TO_ABBREV = {
+  alabama: 'AL', alaska: 'AK', arizona: 'AZ', arkansas: 'AR', california: 'CA',
+  colorado: 'CO', connecticut: 'CT', delaware: 'DE', florida: 'FL', georgia: 'GA',
+  hawaii: 'HI', idaho: 'ID', illinois: 'IL', indiana: 'IN', iowa: 'IA', kansas: 'KS',
+  kentucky: 'KY', louisiana: 'LA', maine: 'ME', maryland: 'MD', massachusetts: 'MA',
+  michigan: 'MI', minnesota: 'MN', mississippi: 'MS', missouri: 'MO', montana: 'MT',
+  nebraska: 'NE', nevada: 'NV', 'new hampshire': 'NH', 'new jersey': 'NJ',
+  'new mexico': 'NM', 'new york': 'NY', 'north carolina': 'NC', 'north dakota': 'ND',
+  ohio: 'OH', oklahoma: 'OK', oregon: 'OR', pennsylvania: 'PA', 'rhode island': 'RI',
+  'south carolina': 'SC', 'south dakota': 'SD', tennessee: 'TN', texas: 'TX',
+  utah: 'UT', vermont: 'VT', virginia: 'VA', washington: 'WA', 'west virginia': 'WV',
+  wisconsin: 'WI', wyoming: 'WY', 'district of columbia': 'DC',
+};
+
+/** Normalize a place label for fuzzy comparison: lowercase, drop punctuation,
+ *  expand the "st."/"saint" abbreviation, collapse whitespace. */
+export function normalizePlace(s) {
+  return (s || '')
+    .toLowerCase()
+    .replace(/\./g, '')
+    .replace(/\bsaint\b/g, 'st')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
