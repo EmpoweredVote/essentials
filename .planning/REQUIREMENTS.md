@@ -27,7 +27,7 @@ Per-city deliverable (the unit of one phase):
 - [x] **GLEN-01:** Glendale (0630000) deep-seeded — government + roster + headshots + evidence-only stances ✅ 2026-06-19
 - [x] **LANC-01:** Lancaster (0640130) deep-seeded — government + roster + headshots + evidence-only stances ✅ 2026-06-20 (reconcile: geo_id+dup-chamber+link repair; retired Malhi/Crist, seated White/Castellanos; 4/5 headshots, Mann gap; 13 stances)
 - [ ] **PLMD-01:** Palmdale (0655156) deep-seeded — government + roster + headshots + evidence-only stances
-- [ ] **POMO-01:** Pomona (0658072) deep-seeded — government + roster + headshots + evidence-only stances
+- [x] **POMO-01:** Pomona (0658072) deep-seeded — government + roster + headshots + evidence-only stances ✅ 2026-06-20 (reconcile: geo_id+merge dup chamber [3 offices]+D1-D6 relabel+Lustro shared-district fix; created Ontiveros-Cole D4; 7/7 headshots [WAF-403, PCE-2020/campaign/DB sources]; 32 stances/7 members, 100% cited)
 - [ ] **TORR-01:** Torrance (0680000) deep-seeded — government + roster + headshots + evidence-only stances
 - [ ] **PASA-01:** Pasadena (0656000) deep-seeded — government + roster + headshots + evidence-only stances
 - [ ] **DWNY-01:** Downey (0619766) deep-seeded — government + roster + headshots + evidence-only stances
@@ -66,7 +66,7 @@ Per-city deliverable (the unit of one phase):
 | GLEN-01 | 144 | Complete |
 | LANC-01 | 145 | Pending |
 | PLMD-01 | 146 | Complete |
-| POMO-01 | 147 | Pending |
+| POMO-01 | 147 | Complete |
 | TORR-01 | 148 | Pending |
 | PASA-01 | 149 | Pending |
 | DWNY-01 | 150 | Pending |

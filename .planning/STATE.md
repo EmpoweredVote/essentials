@@ -4,25 +4,34 @@ milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
 last_updated: "2026-06-20T18:23:23.790Z"
-last_activity: 2026-06-20 -- Phase 147 execution started
+last_activity: 2026-06-20 -- Phase 147 (Pomona) COMPLETE — verification PASSED
 progress:
   total_phases: 13
-  completed_phases: 2
-  total_plans: 15
-  completed_plans: 8
-  percent: 15
+  completed_phases: 3
+  total_plans: 19
+  completed_plans: 12
+  percent: 23
 ---
 
 # State
 
 ## Current Position
 
-Phase: 147 (pomona-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 147
-Last activity: 2026-06-20 -- Phase 147 execution started
-Next migration: 902 (structural; stance/headshot files 896–901 did NOT register — ledger MAX 895)
-Resume file: .planning/phases/146-palmdale-deep-seed/146-CONTEXT.md
+Phase: 147 (pomona-deep-seed) — COMPLETE (verification PASSED 2026-06-20)
+Plan: 4 of 4 complete
+Status: Phase 147 done — ready to plan Phase 148 (Torrance)
+Last activity: 2026-06-20 -- Phase 147 (Pomona) COMPLETE
+Next migration: 936 (structural; Pomona 926/927 structural registered, 928 headshots + 929–935 stances audit-only — ledger MAX 927)
+Resume file: .planning/phases/147-pomona-deep-seed/147-VERIFICATION.md
+
+### Phase 147 outcome (Pomona, geo_id 0658072) — COMPLETE
+
+- NOT greenfield. Reconciled a duplicate-chamber partial seed: survivor chamber ddabfccc, doomed 54a55a35 (3 offices moved-then-deleted). geo_id backfilled.
+- Pomona-specific (vs at-large cities): directly-elected Mayor (Lancaster LOCAL_EXEC model, 'Pomona Mayor' 3ec78ed9 reused — NOT rotational flag); 6 single-member districts; shared district UUID 35d17606 split (Garcia D3 / new D5 c821d0fb Lustro); new D4 7adbe57d created for Ontiveros-Cole.
+- Roster (official_count=7): Mayor Sandoval -200916, D1 Martin 675752, D2 Preciado 675753, D3 Garcia -201350, D4 Ontiveros-Cole -700658 (created), D5 Lustro -201352, D6 Canales 675765. Garcia/Lustro/Sandoval NULL back-pointers repaired.
+- Migrations: 926 reconcile (ledger), 927 roster (ledger), 928 headshots (audit-only), 929–935 stances (audit-only). **Ledger MAX=927; next=936.**
+- Headshots 7/7 (pomonaca.gov is WAF-403 — PCE-2020 photos for Sandoval/Garcia/Preciado/Ontiveros-Cole/Lustro, existing DB photo Martin, existing official city portrait Canales; rejected stale PCE-2025 Torres/Gonzalez photos).
+- Stances 32/7 members (Sandoval 10 / Preciado 7 / Garcia 6 / Ontiveros-Cole 4 / Lustro 2 / Martin 2 / Canales 1), evidence-only, 100% cited, chairs model, no judicial (appointed City Attorney). RSO Nov-17-2025 5-1 vote anchored rent-regulation. Canales rent-reg an honest blank (NO vote, no documented reasoning).
 
 ### Phase 144 context summary (Glendale, geo_id 0630000) — ready to plan
 
