@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
-status: executing
-last_updated: "2026-06-20T23:01:01.372Z"
+status: ready_to_plan
+last_updated: 2026-06-20T23:42:38.607Z
 last_activity: 2026-06-20 -- Phase 148 execution started
 progress:
   total_phases: 13
   completed_phases: 3
   total_plans: 19
-  completed_plans: 12
+  completed_plans: 180
   percent: 23
+stopped_at: Phase 148 complete (4/4) — ready to discuss Phase 157
 ---
 
 # State
 
 ## Current Position
 
-Phase: 148 (torrance-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 148
-Last activity: 2026-06-20 -- Phase 148 execution started
+Phase: 157
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-20
 Next migration: 936 (structural; Pomona 926/927 structural registered, 928 headshots + 929–935 stances audit-only — ledger MAX 927)
 Resume file: .planning/phases/147-pomona-deep-seed/147-VERIFICATION.md
 
@@ -231,7 +232,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 148 — torrance-deep-seed
+**Current focus:** Phase 157 — wave 2 close out
 
 ## v15.0 Roadmap Summary
 

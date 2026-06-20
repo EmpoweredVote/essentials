@@ -67,7 +67,7 @@ Per-city deliverable (the unit of one phase):
 | LANC-01 | 145 | Pending |
 | PLMD-01 | 146 | Complete |
 | POMO-01 | 147 | Complete |
-| TORR-01 | 148 | Pending |
+| TORR-01 | 148 | Complete |
 | PASA-01 | 149 | Pending |
 | DWNY-01 | 150 | Pending |
 | ELMN-01 | 151 | Pending |
