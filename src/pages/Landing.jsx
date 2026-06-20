@@ -1,141 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { usePostHog } from 'posthog-js/react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
+import { COVERAGE_STATES } from '../lib/coverage';
+import { resolveLocalityRoute } from '../lib/localitySearch';
 
-// hasContext: true = city has compass stances seeded (rendered as purple chip)
-const COVERAGE_STATES = [
-  {
-    name: 'California', abbrev: 'CA',
-    areas: [
-      { label: 'Alhambra',      browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Berkeley',      browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Carson',        browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Compton',       browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Culver City',   browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'El Segundo',    browseGovernmentList: ['0622412'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Fremont',       browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Gardena',       browseGovernmentList: ['0628168'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Hawthorne',     browseGovernmentList: ['0632548'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Los Angeles',   browseGovernmentList: ['0644000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Sacramento',    browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'San Diego',     browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'San Francisco', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'San Jose',      browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Santa Monica',  browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'South Gate',    browseGovernmentList: ['0673080'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'West Hollywood',browseGovernmentList: ['0684410'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Whittier',      browseGovernmentList: ['0685292'], browseStateAbbrev: 'CA', hasContext: true },
-    ],
-  },
-  {
-    name: 'Indiana', abbrev: 'IN',
-    areas: [
-      { label: 'Bloomington', address: '100 W Kirkwood Ave, Bloomington, IN 47404', hasContext: true },
-    ],
-  },
-  {
-    name: 'Maine', abbrev: 'ME',
-    areas: [
-      { label: 'Auburn',        browseGovernmentList: ['2302060'], browseStateAbbrev: 'ME' },
-      { label: 'Bangor',        browseGovernmentList: ['2302795'], browseStateAbbrev: 'ME' },
-      { label: 'Biddeford',     browseGovernmentList: ['2304860'], browseStateAbbrev: 'ME' },
-      { label: 'Lewiston',      browseGovernmentList: ['2338740'], browseStateAbbrev: 'ME' },
-      { label: 'Portland',      browseGovernmentList: ['2360545'], browseStateAbbrev: 'ME' },
-      { label: 'South Portland',browseGovernmentList: ['2371990'], browseStateAbbrev: 'ME' },
-    ],
-  },
-  {
-    name: 'Maryland', abbrev: 'MD',
-    areas: [
-      { label: 'Leonardtown',      browseGovernmentList: ['2446475'], browseStateAbbrev: 'MD' },
-    ],
-  },
-  {
-    name: 'Massachusetts', abbrev: 'MA',
-    areas: [
-      { label: 'Boston',      browseGovernmentList: ['2507000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Brockton',    browseGovernmentList: ['2509000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Cambridge',   browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Fall River',  browseGovernmentList: ['2523000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Lowell',      browseGovernmentList: ['2537000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Lynn',        browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Medford',     browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Newton',      browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Quincy',      browseGovernmentList: ['2555745'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Somerville',  browseGovernmentList: ['2562535'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Springfield', browseGovernmentList: ['2567000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Waltham',     browseGovernmentList: ['2572600'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Worcester',   browseGovernmentList: ['2582000'], browseStateAbbrev: 'MA', hasContext: true },
-    ],
-  },
-  {
-    name: 'Oregon', abbrev: 'OR',
-    areas: [
-      { label: 'Fairview',    browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
-      { label: 'Gresham',     browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
-      { label: 'Maywood Park',browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
-      { label: 'Portland',    browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
-      { label: 'Troutdale',   browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
-      { label: 'Wood Village',browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
-    ],
-  },
-  {
-    name: 'Texas', abbrev: 'TX',
-    areas: [
-      { label: 'Allen',         browseGovernmentList: ['4801924'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Anna',          browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Blue Ridge',    browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
-      { label: 'Celina',        browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Fairview',      browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX' },
-      { label: 'Farmersville',  browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX' },
-      { label: 'Frisco',        browseGovernmentList: ['4827684'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Josephine',     browseGovernmentList: ['4838068'], browseStateAbbrev: 'TX' },
-      { label: 'Lavon',         browseGovernmentList: ['4841800'], browseStateAbbrev: 'TX' },
-      { label: 'Longview',      browseGovernmentList: ['4843888'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Lowry Crossing',browseGovernmentList: ['4844308'], browseStateAbbrev: 'TX' },
-      { label: 'Lucas',         browseGovernmentList: ['4845012'], browseStateAbbrev: 'TX' },
-      { label: 'McKinney',      browseGovernmentList: ['4845744'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Melissa',       browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Murphy',        browseGovernmentList: ['4850100'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Nevada',        browseGovernmentList: ['4850760'], browseStateAbbrev: 'TX' },
-      { label: 'Parker',        browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX' },
-      { label: 'Plano',         browseGovernmentList: ['4858016'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Princeton',     browseGovernmentList: ['4859576'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Prosper',       browseGovernmentList: ['4859696'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Richardson',    browseGovernmentList: ['4861796'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Saint Paul',    browseGovernmentList: ['4864220'], browseStateAbbrev: 'TX' },
-      { label: 'Van Alstyne',   browseGovernmentList: ['4874924'], browseStateAbbrev: 'TX' },
-      { label: 'Weston',        browseGovernmentList: ['4877740'], browseStateAbbrev: 'TX' },
-    ],
-  },
-  {
-    name: 'Utah', abbrev: 'UT',
-    areas: [
-      { label: 'Layton',          browseGovernmentList: ['4943660'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Lehi',            browseGovernmentList: ['4944320'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Ogden',           browseGovernmentList: ['4955980'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Orem',            browseGovernmentList: ['4957300'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Provo',           browseGovernmentList: ['4962470'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Salt Lake City',  browseGovernmentList: ['4967000'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Sandy',           browseGovernmentList: ['4967440'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'St. George',      browseGovernmentList: ['4965330'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'West Jordan',     browseGovernmentList: ['4982950'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'West Valley City',browseGovernmentList: ['4983470'], browseStateAbbrev: 'UT', hasContext: true },
-    ],
-  },
-  {
-    name: 'Virginia', abbrev: 'VA',
-    areas: [
-      { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA', hasContext: true },
-    ],
-  },
-];
 
 const STEPS = [
   { n: '01', heading: 'Choose Your Area', body: 'Pick an Alpha Area or enter your address — we\'ll find everyone who represents you.', active: true },
@@ -157,10 +29,19 @@ const SearchIcon = () => (
 
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
+  const [searching, setSearching] = useState(false);
   const addressInputRef = useRef(null);
+  const coverageRef = useRef(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { isLoggedIn, myRepresentatives, myLocationNotSet, compassLoading } = useCompass();
   const posthog = usePostHog();
+
+  // ADR-0001 locality fallback: when a city/county/state search couldn't resolve to
+  // covered reps, the user lands here with a hint about what we cover.
+  const fromSearch = searchParams.get('from_search');
+  const coverageStateParam = searchParams.get('coverage_state');
+  const isUncovered = searchParams.get('uncovered') === '1';
 
   // Bind Google Places autocomplete to the address input (same hook the results
   // page uses). Selecting a suggestion navigates straight to the results page.
@@ -187,10 +68,20 @@ export default function Landing() {
     return () => document.removeEventListener('visibilitychange', handleVisible);
   }, [myLocationNotSet]);
 
-  const handleSearch = () => {
-    if (!addressInput.trim()) return;
+  const handleSearch = async () => {
+    const q = addressInput.trim();
+    if (!q || searching) return;
     posthog?.capture('essentials_address_searched', { method: 'manual' });
-    navigate(`/results?q=${encodeURIComponent(addressInput.trim())}`);
+    setSearching(true);
+    try {
+      // ADR-0001: classify the query — a covered city/state/county routes to
+      // Browse-by-Location; a street address (or anything we can't classify)
+      // falls through to the normal address search.
+      const route = await resolveLocalityRoute(q);
+      navigate(route.kind === 'address' ? `/results?q=${encodeURIComponent(q)}` : route.to);
+    } finally {
+      setSearching(false);
+    }
   };
 
   // The active "Choose Your Area" step reads as a button — make it act like one
@@ -230,7 +121,9 @@ export default function Landing() {
     }
   };
 
-  const [expandedStates, setExpandedStates] = useState(new Set());
+  const [expandedStates, setExpandedStates] = useState(
+    () => (coverageStateParam ? new Set([coverageStateParam.toUpperCase()]) : new Set())
+  );
   const toggleState = (abbrev) => {
     setExpandedStates(prev => {
       const next = new Set(prev);
@@ -238,6 +131,19 @@ export default function Landing() {
       return next;
     });
   };
+
+  // Locality fallback: expand the matched state and scroll to the covered-areas
+  // list when we arrived from a city/state/county search we couldn't pin to exact
+  // reps. Runs on param change too (the search often fires from this same page,
+  // so the component doesn't remount).
+  useEffect(() => {
+    if (coverageStateParam) {
+      setExpandedStates((prev) => new Set(prev).add(coverageStateParam.toUpperCase()));
+    }
+    if ((coverageStateParam || isUncovered) && coverageRef.current) {
+      coverageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [coverageStateParam, isUncovered]);
 
   const [nameQuery, setNameQuery] = useState('');
   const [nameResults, setNameResults] = useState([]);
@@ -365,7 +271,7 @@ export default function Landing() {
                   />
                   <button
                     onClick={handleSearch}
-                    disabled={!addressInput.trim()}
+                    disabled={!addressInput.trim() || searching}
                     aria-label="Search"
                     className="shrink-0 flex items-center justify-center min-w-[52px] px-4 sm:px-5 py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
                   >
@@ -429,7 +335,16 @@ export default function Landing() {
       </section>
 
       {/* ── Alpha Communities Section ── */}
-      <section className="w-full px-8 sm:px-12 lg:px-24 py-16">
+      <section ref={coverageRef} id="coverage" className="w-full px-8 sm:px-12 lg:px-24 py-16 scroll-mt-20">
+        {fromSearch && (
+          <div className="mb-6 px-4 py-3 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-white dark:bg-ev-navy-card text-sm text-gray-700 dark:text-gray-200">
+            {isUncovered ? (
+              <>We don't cover <span className="font-semibold">{fromSearch}</span> yet. Here are the Alpha Communities we currently cover — or enter a full street address inside one of them.</>
+            ) : (
+              <>We don't have an exact match for <span className="font-semibold">{fromSearch}</span>. Here are the areas we cover{coverageStateParam ? ` in ${COVERAGE_STATES.find(s => s.abbrev === coverageStateParam.toUpperCase())?.name || 'your state'}` : ''} — pick one, or enter your full street address for your specific representatives.</>
+            )}
+          </div>
+        )}
         <h2 className="text-2xl sm:text-3xl font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light mb-2">
           Choose an Alpha Community
         </h2>

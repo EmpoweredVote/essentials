@@ -21,6 +21,7 @@ import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import MiniCompass from '../components/MiniCompass';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
+import { resolveLocalityRoute } from '../lib/localitySearch';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
@@ -366,6 +367,10 @@ export default function Results() {
   const posthog = usePostHog();
   const queryFromUrl = searchParams.get('q') || '';
   const activeView = searchParams.get('view') || 'representatives';
+  // ADR-0001: arrived here from a city-level (locality) search, so results are the
+  // whole city, not a specific parcel — show the precision banner.
+  const fromLocality = searchParams.get('from_locality') === '1';
+  const localityLabel = searchParams.get('browse_label') || '';
 
   // Search mode: 'address' or 'browse'
   const [searchMode, setSearchMode] = useState('address');
@@ -856,9 +861,19 @@ export default function Results() {
     });
   };
 
-  const handleAddressSearch = (overrideAddress) => {
-    const addr = (typeof overrideAddress === 'string' ? overrideAddress : addressInput).trim();
+  const handleAddressSearch = async (overrideAddress) => {
+    const isOverride = typeof overrideAddress === 'string';
+    const addr = (isOverride ? overrideAddress : addressInput).trim();
     if (!addr) return;
+    // Manual submit (not an autocomplete pick): apply the ADR-0001 locality
+    // fallback. A covered city/state/county routes to Browse-by-Location; a
+    // street address (or anything unclassifiable) falls through to normal search.
+    if (!isOverride) {
+      try {
+        const route = await resolveLocalityRoute(addr);
+        if (route.kind !== 'address') { navigate(route.to); return; }
+      } catch { /* fall through to address search */ }
+    }
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
     setSearchKey(k => k + 1);
@@ -874,6 +889,7 @@ export default function Results() {
       next.delete('browse_label');
       next.delete('browse_city_filter');
       next.delete('browse_school_filter');
+      next.delete('from_locality');
       return next;
     });
   };
@@ -1708,6 +1724,13 @@ export default function Results() {
               {error === 'address_not_found'
                 ? 'We couldn\'t find that address. Please enter a full street address (e.g. "123 Main St, Los Angeles, CA").'
                 : error}
+            </div>
+          )}
+
+          {/* ADR-0001 precision banner — results are city-wide, not parcel-specific */}
+          {fromLocality && (
+            <div className="mx-6 md:mx-12 mt-4 mb-2 px-4 py-3 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-ev-navy-card text-sm text-gray-700 dark:text-gray-200">
+              Showing representatives across {localityLabel ? <span className="font-semibold">{localityLabel}</span> : 'this city'}. Enter your full street address for your exact representatives.
             </div>
           )}
 
