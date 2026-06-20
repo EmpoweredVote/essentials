@@ -26,6 +26,14 @@
 
 **Requirements:** LANC-01
 
+**Plans:** 4 plans
+
+Plans:
+- [ ] 145-01-PLAN.md — Wave 1 reconcile: geo_id backfill + move-then-delete duplicate chamber + Mayor LOCAL_EXEC (migration 910)
+- [ ] 145-02-PLAN.md — Wave 2 roster: retire Crist, reseat Parris/Hughes-Leslie/Mann, create White/Castellanos (migration 911)
+- [ ] 145-03-PLAN.md — Wave 3 headshots: Parris (Wikimedia) + WAF-blocked browser-sourced portraits, honest gaps (migration 912, audit-only)
+- [ ] 145-04-PLAN.md — Wave 4 stances: 5 current members, evidence-only chairs model, one agent at a time, no judicial (migrations 913-917, audit-only)
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0640130
