@@ -628,7 +628,13 @@ No additional ASVS review required.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> RESOLVED 2026-06-20 by the two user override decisions (ROSTER = currently-seated council; Torrance is AT-LARGE):
+> - **Q1 (D4 vacancy):** MOOT — the currently-seated council is seated (Kalani stays in her council seat, Chen stays Mayor); no D4 vacancy is created this phase. The post-June-26 turnover is a deferred future update.
+> - **Q2 (Betty Lieu headshot):** MOOT — Betty Lieu is NOT created this phase (incoming winner, out of scope).
+> - **Q3 (Chen/Mattucci stances):** RESOLVED YES — both are seated current members, researched in Wave 4 as current officials.
+> - **Q4 (geo_id NULL vs ''):** RESOLVED — Wave 1 guards with `WHERE geo_id IS NULL OR geo_id = ''` (handles either).
 
 1. **D4 vacancy: who fills it and when?**
    - What we know: Kalani wins Mayor race (certifying June 26). She vacates her D4 council seat. Standard CA practice is for the city council to appoint a replacement within 60 days.
