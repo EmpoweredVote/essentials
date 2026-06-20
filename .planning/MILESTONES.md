@@ -1,5 +1,46 @@
 # Milestones
 
+## v16.0 Utah Coverage (Shipped: 2026-06-18)
+
+**Delivered:** Full Utah coverage parity with prior states — all 10 Utah city governments
+deep-seeded end-to-end (roster → headshots → evidence-only stances) and complete compass
+coverage for the entire 104-member state legislature. Utah is the third US state (after
+Oregon and Maryland) with full legislature-wide compass coverage. Surfaced on the Landing
+page. Executed as a continuous ad-hoc push immediately after v15.0; formalized as a
+milestone retroactively 2026-06-18 (DB-verified).
+
+**Phases completed:** 139–141 (migrations 777–876)
+
+**Key accomplishments:**
+
+- 10 Utah cities deep-seeded biggest-first — Salt Lake City, West Valley City, West Jordan,
+  Provo, Orem, Ogden, Sandy, St. George, Lehi, Layton; ~72 elected officials, 71/72 headshots
+  at 600×750 (only SLC D4 Napier-Pearce gap), 296 evidence-only city stance rows (Phase 139)
+- Utah State Senate split-section repair — 4 senators repointed from county chambers to the
+  Utah State Senate chamber; Senate 29/29, House 75/75, section-split scan clean (Phase 140)
+- **Full legislature compass coverage — 104/104 Utah state legislators with evidence-only
+  stances (29 Senate + 75 House), 955 stance rows**; every value name-confirmed on le.utah.gov
+  roll calls / sponsored bills / first-party statements; no defaults, honest blanks (Phase 140)
+- Landing.jsx integration — all 10 UT cities in COVERAGE_STATES (browseStateAbbrev:'UT' +
+  hasContext:true); legislature surfaces via browse_state=UT (districts.state='ut') (Phase 141)
+
+**Stats:**
+
+- 3 phases (139–141), migrations 777–876
+- 2 days (2026-06-17 → 2026-06-18)
+- 1,251 total Utah stance rows (955 legislature + 296 city); next migration: 877
+
+**Tech debt carried forward:**
+- SLC/Ogden/Layton have 5 duplicate/stale council office rows (incl. a duplicate Victoria
+  Petro record with 9 stranded stances) that render as duplicate councilmembers — cleanup
+  migration pending (see audit UT-CITY-01)
+- SLC D4 Napier-Pearce: no portrait + 0 stances (appointed 2026-06-09; intentional)
+- HD64 Jackie Larson: revisit other topics after the 2027 Utah session
+
+**Archive:** [milestones/v16.0-ROADMAP.md](milestones/v16.0-ROADMAP.md) | Requirements: [milestones/v16.0-REQUIREMENTS.md](milestones/v16.0-REQUIREMENTS.md) | Audit: [v16.0-MILESTONE-AUDIT.md](v16.0-MILESTONE-AUDIT.md)
+
+---
+
 ## v10.0 Multnomah County & School Boards (Shipped: 2026-06-04)
 
 **Delivered:** Expanded Portland coverage to the full Multnomah County area and added elected school board coverage across all currently-covered cities (OR, CA, TX, IN, ME). Established the G5420 TIGER UNSD school board seeding pattern across 4 states — 22 school districts, 109+ board members seeded, 4 state-specific boundary loaders created.
