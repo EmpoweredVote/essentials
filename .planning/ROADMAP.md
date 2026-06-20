@@ -76,7 +76,7 @@ Plans:
 
 **Requirements:** PLMD-01
 
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 **Wave 1**
@@ -85,7 +85,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 146-02-PLAN.md — Wave 2 roster: repair Bishop's bidirectional link + create Bettencourt (-700657) seated into a new District 3 office + flag Mayor on Ohlsen's seat (Glendale model); official_count=5 (migration 919)
+- [x] 146-02-PLAN.md — Wave 2 roster: repair Bishop's bidirectional link + create Bettencourt (-700657) seated into a new District 3 office + flag Mayor on Ohlsen's seat (Glendale model); official_count=5 (migration 919)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
