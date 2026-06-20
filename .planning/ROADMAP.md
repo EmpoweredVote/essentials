@@ -44,14 +44,15 @@
 **Requirements:** LANC-01
 
 **Plans:** 4 plans
-Plans:
+
+Plans:
 **Wave 1**
 
-- [ ] 145-01-PLAN.md — Wave 1 reconcile: geo_id backfill + move-then-delete duplicate chamber + Mayor LOCAL_EXEC (migration 910)
+- [ ] 145-01-PLAN.md — Wave 1 reconcile: geo_id backfill + merge duplicate chamber (move-then-delete) + repair bidirectional office↔politician link for the 3 continuing members; Mayor district confirmed LOCAL_EXEC (migration 910)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 145-02-PLAN.md — Wave 2 roster: retire Crist, reseat Parris/Hughes-Leslie/Mann, create White/Castellanos (migration 911)
+- [ ] 145-02-PLAN.md — Wave 2 roster turnover: retire Malhi (lost) + Crist (did not file), create White/Castellanos and seat into the freed offices with synced pointers (migration 911)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
