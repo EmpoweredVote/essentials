@@ -76,12 +76,12 @@ Plans:
 
 **Requirements:** PLMD-01
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 146-01-PLAN.md — Wave 1 reconcile: geo_id backfill + merge duplicate chamber (move-then-delete) + relabel 4 At-Large districts to D1/D2/D4/D5 + create new District 3 row (migration 918)
+- [x] 146-01-PLAN.md — Wave 1 reconcile: geo_id backfill + merge duplicate chamber (move-then-delete) + relabel 4 At-Large districts to D1/D2/D4/D5 + create new District 3 row (migration 918)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
