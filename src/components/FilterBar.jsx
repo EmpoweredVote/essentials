@@ -50,7 +50,7 @@ function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
           backgroundColor: bg,
           border: `1px solid ${borderColor}`,
           borderRadius: '6px',
-          minHeight: '34px',
+          minHeight: '44px',
           cursor: 'pointer',
           backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='${chevronStroke}' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")`,
           backgroundRepeat: 'no-repeat',
@@ -131,7 +131,7 @@ export default function FilterBar({
             padding: '6px 10px 6px 30px',
             fontFamily: "'Manrope', sans-serif", fontSize: '13px',
             border: `1px solid ${inputBorder}`, borderRadius: '6px',
-            minHeight: '34px',
+            minHeight: '44px',
             backgroundColor: inputBg, color: inputText,
             outline: 'none', boxSizing: 'border-box',
           }}
@@ -142,8 +142,9 @@ export default function FilterBar({
       {onCompassModeChange !== undefined && (
         <label
           style={{
-            display: 'inline-flex', alignItems: 'center', gap: '5px',
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
             cursor: 'pointer',
+            minHeight: '44px', padding: '0 4px',
             fontFamily: "'Manrope', sans-serif", fontSize: '13px',
             fontWeight: 500,
             color: compassTextColor,
@@ -155,7 +156,7 @@ export default function FilterBar({
             type="checkbox"
             checked={!!compassMode}
             onChange={(e) => onCompassModeChange(e.target.checked)}
-            style={{ accentColor: isDark ? '#59b0c4' : '#00657c', cursor: 'pointer' }}
+            style={{ width: '18px', height: '18px', accentColor: isDark ? '#59b0c4' : '#00657c', cursor: 'pointer' }}
           />
           Compass
         </label>
