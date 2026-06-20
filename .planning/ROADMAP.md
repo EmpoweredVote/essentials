@@ -76,7 +76,7 @@ Plans:
 
 **Requirements:** PLMD-01
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -93,7 +93,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 146-04-PLAN.md — Wave 4 stances: 5 current members (all current, no exclusions), evidence-only chairs model, one agent at a time, no judicial (migrations 921-925, audit-only)
+- [x] 146-04-PLAN.md — Wave 4 stances: 5 current members (all current, no exclusions), evidence-only chairs model, one agent at a time, no judicial (migrations 921-925, audit-only)
 
 **Success criteria:**
 
