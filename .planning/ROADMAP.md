@@ -1,13 +1,26 @@
 ## Wave 2 deep-seed — shared conventions (carry into phases 145–156)
 
-- **Greenfield cities:** no `governments` row, no officials — each phase creates the government +
-  chamber, seeds the roster, uploads headshots, then researches stances (heavier than the v15.0
-  stances-only shortcut).
+- **⚠ NOT greenfield — these are RECONCILES (DB-verified milestone-wide 2026-06-20).** Every one of
+  the 12 remaining cities already has a `governments` row (bulk-imported, likely the v7.0 CA provider
+  load) with **`geo_id = NULL`** and offices already filled. 11 of 12 carry a **duplicate "City Council"
+  chamber** (split-section defect; rosters split across two same-named chambers). **Stances are 0
+  across all 12.** So each phase is **reconcile (backfill geo_id + merge duplicate chambers + repair the
+  offices.politician_id ↔ politicians.office_id bidirectional link + drop stale members) + complete
+  (add current members missing post-election) + headshots (fill gaps) + stances (the big universal
+  gap)** — NOT create-from-scratch. See `145-CONTEXT.md` + memory `project_v170_wave2_not_greenfield`.
+
+- **Search by NAME, not geo_id**, when pre-checking (`name = 'City of <X>, California, US'`) — geo_id
+  is NULL on all of them, so geo_id lookups return nothing (the Lancaster trap).
+
+- **Per-city DB pre-check is MANDATORY before planning each phase** — confirm which members are current
+  (recent elections retire/replace incumbents; e.g. Lancaster's Malhi lost + Crist retired April 2026),
+  confirm the duplicate-chamber split, and check headshot/stance gaps. Do NOT trust a prior pre-check
+  that joined the wrong link direction (`offices.politician_id` vs `politicians.office_id`).
 
 - **Geofences already exist** (v7.0, TIGER G4110) — confirmed for all 15. Do NOT reload TIGER.
-- **Verify per city before seeding:** form of government (mayor-council vs council-manager),
-  directly-elected vs rotational mayor, district vs at-large council, current seat count and
-  district map (several LA County cities moved to by-district elections post-CVRA).
+- **Verify per city:** form of government (mayor-council vs council-manager), directly-elected vs
+  rotational mayor, district vs at-large council, current seat count and district map (several LA
+  County cities moved to by-district elections post-CVRA).
 
 - **Stances:** evidence-only, one research agent at a time (rate-limit rule), all live compass
   topics, per-individual migration files applied immediately, no default values, honest blanks.
