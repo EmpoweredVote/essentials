@@ -142,7 +142,7 @@ Plans:
 
 **Requirements:** TORR-01
 
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 **Wave 1**
@@ -151,7 +151,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 148-02-PLAN.md — Wave 2 roster (light — current council all exists): repair 3 broken back-pointers (Chen/Mattucci/Sheikh) + official_count=7; seat the CURRENTLY-SEATED council (Chen Mayor, no retirements, no Betty Lieu, no Kalani-as-Mayor); directly-elected Mayor reused (migration 937)
+- [x] 148-02-PLAN.md — Wave 2 roster (light — current council all exists): repair 3 broken back-pointers (Chen/Mattucci/Sheikh) + official_count=7; seat the CURRENTLY-SEATED council (Chen Mayor, no retirements, no Betty Lieu, no Kalani-as-Mayor); directly-elected Mayor reused (migration 937)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
