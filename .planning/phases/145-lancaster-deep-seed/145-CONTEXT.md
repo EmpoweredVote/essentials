@@ -30,6 +30,21 @@ Net: roster scattered across two chambers; only 1 of ~5 seats filled; **0 stance
 **⚠ Differs from Glendale (144):** Glendale's duplicate chamber was *empty* (simple delete). Here the duplicate (`a9be708e`) holds the *only seated member* (Crist). The reconcile must **move Crist's office into the survivor chamber FIRST, then delete the emptied duplicate** (the Santa Clarita move-then-delete pattern, not the Glendale delete-empty pattern).
 
 **Next custom ext_id block:** the `-7000xx` block currently spans `-700001 … -700654` (72 rows). Next free is **`-700655`** onward for any newly-added politicians. (Crist keeps `686320`; reuse real provider ext_ids where a member already exists.)
+
+### Resolved roster→DB-row mapping (RESEARCH + DB-verified 2026-06-19 — LOCKED)
+
+The **April 14/28 2026 election** turned over 2 of 5 seats (Crist retired — did not file; Raj Malhi lost, never in DB). Current 5-member roster mapped to existing DB rows (campaign-finance committee rows of the same names are NOT politicians — ignore them):
+
+| Seat | Member | Existing DB row | ext_id | office_id | Action |
+|------|--------|-----------------|--------|-----------|--------|
+| Mayor (directly elected) | R. Rex Parris | `87546d4d-78ee-4aae-82cb-89ae805e10b4` | `-200795` | **NULL** | **reseat** into the Mayor office (UPDATE office_id; do NOT create) |
+| Councilmember (Vice Mayor) | Lauren Hughes-Leslie | `007074c6-6fbe-429f-9e06-8d7251198d8a` | `-201279` | **NULL** | **reseat** (UPDATE office_id) |
+| Councilmember | Ken Mann | `7a600b15-32ff-4c13-90e5-d4ee5f627bb5` | `-201281` | **NULL** | **reseat** (UPDATE office_id) |
+| Councilmember | Cedric White | — none (only campaign committees) | new **`-700655`** | — | **create** new politician + seat |
+| Councilmember | Rocio Castellanos | — none (only campaign committees) | new **`-700656`** | — | **create** new politician + seat |
+| (former) | Marvin Crist | (seated in duplicate chamber `a9be708e`) | `686320` | linked | **retire** (set is_active=false / valid_to; preserve row — did not seek re-election) |
+
+**Implication:** Only White + Castellanos are genuinely new. Parris/Mann/Hughes-Leslie EXIST but are **office-unlinked** → reseat by UPDATE, never INSERT (prevents duplicate-person rows). This supersedes the earlier "new members get -700655+" assumption in D-07 — only 2 are new.
 </db_precheck>
 
 <decisions>
