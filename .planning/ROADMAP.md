@@ -142,12 +142,12 @@ Plans:
 
 **Requirements:** TORR-01
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 148-01-PLAN.md — Wave 1 reconcile: geo_id backfill (empty-string guard) + DELETE the Brigitte-Lewis typo-duplicate (office+politician) + merge duplicate chamber (move-then-delete, 3 offices) + create one new At-Large row + repoint Sheikh off the shared At-Large UUID; AT-LARGE preserved (no by-district relabel); directly-elected Mayor LOCAL_EXEC reused (migration 936)
+- [x] 148-01-PLAN.md — Wave 1 reconcile: geo_id backfill (empty-string guard) + DELETE the Brigitte-Lewis typo-duplicate (office+politician) + merge duplicate chamber (move-then-delete, 3 offices) + create one new At-Large row + repoint Sheikh off the shared At-Large UUID; AT-LARGE preserved (no by-district relabel); directly-elected Mayor LOCAL_EXEC reused (migration 936)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
