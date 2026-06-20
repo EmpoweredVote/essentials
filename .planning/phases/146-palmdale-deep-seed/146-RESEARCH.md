@@ -548,14 +548,14 @@ No additional ASVS review required for this phase type.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Migration granularity: one 918 or two 918/919 for reconcile+roster?**
+1. **Migration granularity: one 918 or two 918/919 for reconcile+roster?** — **RESOLVED** (plan adopted the 918 reconcile / 919 roster split; see plans 146-01 and 146-02).
    - What we know: Lancaster split into 910 (reconcile) + 911 (roster); SC used two files
    - What's unclear: whether the District 3 creation + Bettencourt INSERT (which depends on District 3 UUID) should be in one file or two
    - Recommendation: Split into 918 (reconcile: geo_id + chamber merge + district relabels) and 919 (roster: Bettencourt create + Mayor flag + Bishop pointer repair). This makes each file independently idempotent and easier to review. The new District 3 UUID is needed for 919, so 918 must run first.
 
-2. **Alarcón and Ohlsen headshots: upscale or leave as-is?**
+2. **Alarcón and Ohlsen headshots: upscale or leave as-is?** — **RESOLVED** (Claude's Discretion per CONTEXT.md; plan 146-03 leaves existing portraits as-is and only cleans up Ohlsen's duplicate old-path row).
    - What we know: Alarcón is 216×288 (press_use canonical). Ohlsen has both an old scraped row and a new press_use canonical row. Bettencourt source is 216×288.
    - What's unclear: whether 216×288 upscaled to 600×750 produces acceptable quality for display
    - Recommendation: The 216×288 → 600×750 Lanczos upscale is the same process used for the existing 3 (Bishop/Ohlsen/Alarcón), and they look good in the UI (prior waves accepted this). Leave as-is except clean up Ohlsen's duplicate old-path row. Bettencourt will get the same 216×288 → 600×750 treatment.
