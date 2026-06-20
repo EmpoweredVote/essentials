@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-19T23:23:42.243Z"
+last_updated: "2026-06-20T04:01:41.328Z"
 last_activity: 2026-06-19 -- Phase 144 execution started
 progress:
   total_phases: 5
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 12
-  completed_plans: 8
-  percent: 40
+  completed_plans: 12
+  percent: 60
 ---
 
 # State
@@ -22,7 +22,7 @@ Plan: 1 of 4
 Status: Executing Phase 144
 Last activity: 2026-06-19 -- Phase 144 execution started
 Next migration: 902 (structural; stance/headshot files 896–901 did NOT register — ledger MAX 895)
-Resume file: .planning/phases/144-glendale-deep-seed/144-CONTEXT.md
+Resume file: .planning/phases/157-wave-2-close-out/157-CONTEXT.md
 
 ### Phase 144 context summary (Glendale, geo_id 0630000) — ready to plan
 
@@ -315,8 +315,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-19T19:20:51.050Z
-Stopped at: Phase 143 context gathered
+Last session: 2026-06-20T04:01:41.315Z
+Stopped at: Phase 157 context gathered
 Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 
 ## Performance Metrics
