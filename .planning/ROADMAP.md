@@ -142,7 +142,7 @@ Plans:
 
 **Requirements:** TORR-01
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -159,7 +159,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 148-04-PLAN.md — Wave 4 stances: 7 current members (Chen/Mattucci seated, not retired; no Betty Lieu), evidence-only chairs model, one agent at a time, no judicial topics, no manufactured rent-regulation; documented Torrance votes (Pride/anti-camping/Homekey+/airport-ban) cited (migrations 939-945, audit-only)
+- [x] 148-04-PLAN.md — Wave 4 stances: 7 current members (Chen/Mattucci seated, not retired; no Betty Lieu), evidence-only chairs model, one agent at a time, no judicial topics, no manufactured rent-regulation; documented Torrance votes (Pride/anti-camping/Homekey+/airport-ban) cited (migrations 939-945, audit-only)
 
 **Success criteria:**
 
