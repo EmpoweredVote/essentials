@@ -109,6 +109,25 @@ Plans:
 
 **Requirements:** POMO-01
 
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 147-01-PLAN.md — Wave 1 reconcile: geo_id backfill + merge duplicate chamber (move-then-delete, 3 offices) + relabel 4 At-Large districts to D1/D2/D3/D6 + create new District 4 + District 5 + repoint Lustro off the shared district UUID; directly-elected Mayor LOCAL_EXEC reused (migration 926)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 147-02-PLAN.md — Wave 2 roster: repair 3 bidirectional links (Garcia/Lustro/Sandoval) + create Ontiveros-Cole (-700658) seated into a new District 4 office + reuse the directly-elected Mayor (Lancaster LOCAL_EXEC model); official_count=7 (migration 927)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 147-03-PLAN.md — Wave 3 headshots: pomonaca.gov WAF-403 -> alt sources (PCE 2020 / campaign / DB-reprocess); reject stale PCE-2025 wrong-person photos (Torres/Gonzalez); 600x750; honest gaps documented (migration 928, audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 147-04-PLAN.md — Wave 4 stances: 7 current members (all current, no exclusions), evidence-only chairs model, one agent at a time, no judicial; RSO positions cited (migrations 929-935, audit-only)
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0658072
