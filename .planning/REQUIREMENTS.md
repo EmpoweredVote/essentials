@@ -24,7 +24,7 @@ Per-city deliverable (the unit of one phase):
 
 - [x] **LBCH-01:** Long Beach (geo_id 0643000) deep-seeded — government + roster + headshots + evidence-only stances ✅ 2026-06-19
 - [x] **SCLR-01:** Santa Clarita (0669088) deep-seeded — government + roster + headshots + evidence-only stances ✅ 2026-06-19
-- [ ] **GLEN-01:** Glendale (0630000) deep-seeded — government + roster + headshots + evidence-only stances
+- [x] **GLEN-01:** Glendale (0630000) deep-seeded — government + roster + headshots + evidence-only stances ✅ 2026-06-19
 - [ ] **LANC-01:** Lancaster (0640130) deep-seeded — government + roster + headshots + evidence-only stances
 - [ ] **PLMD-01:** Palmdale (0655156) deep-seeded — government + roster + headshots + evidence-only stances
 - [ ] **POMO-01:** Pomona (0658072) deep-seeded — government + roster + headshots + evidence-only stances
@@ -63,7 +63,7 @@ Per-city deliverable (the unit of one phase):
 |-------------|-------|--------|
 | LBCH-01 | 142 | Complete |
 | SCLR-01 | 143 | Complete |
-| GLEN-01 | 144 | Pending |
+| GLEN-01 | 144 | Complete |
 | LANC-01 | 145 | Pending |
 | PLMD-01 | 146 | Pending |
 | POMO-01 | 147 | Pending |
