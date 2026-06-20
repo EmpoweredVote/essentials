@@ -142,7 +142,7 @@ Plans:
 
 **Requirements:** TORR-01
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 
 Plans:
 **Wave 1**
@@ -155,7 +155,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 148-03-PLAN.md — Wave 3 headshots: torranceca.gov NO-WAF direct curl; Kaji/Kalani showpublishedimage URLs, Gerson/Bridgett-Lewis council pages, Chen reprocess to canonical seated-Mayor portrait, Mattucci/Sheikh verify existing; 600x750; honest gaps documented (migration 938, audit-only)
+- [x] 148-03-PLAN.md — Wave 3 headshots: torranceca.gov NO-WAF direct curl; Kaji/Kalani showpublishedimage URLs, Gerson/Bridgett-Lewis council pages, Chen reprocess to canonical seated-Mayor portrait, Mattucci/Sheikh verify existing; 600x750; honest gaps documented (migration 938, audit-only)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
