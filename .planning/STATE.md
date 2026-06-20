@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-20T18:20:26.955Z"
-last_activity: 2026-06-20 -- Phase 147 planning complete
+last_updated: "2026-06-20T18:23:23.790Z"
+last_activity: 2026-06-20 -- Phase 147 execution started
 progress:
   total_phases: 13
   completed_phases: 2
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 157
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-20 -- Phase 147 planning complete
+Phase: 147 (pomona-deep-seed) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 147
+Last activity: 2026-06-20 -- Phase 147 execution started
 Next migration: 902 (structural; stance/headshot files 896–901 did NOT register — ledger MAX 895)
 Resume file: .planning/phases/146-palmdale-deep-seed/146-CONTEXT.md
 
@@ -222,7 +222,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 157 — wave 2 close out
+**Current focus:** Phase 147 — pomona-deep-seed
 
 ## v15.0 Roadmap Summary
 

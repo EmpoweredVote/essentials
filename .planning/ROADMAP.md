@@ -109,12 +109,12 @@ Plans:
 
 **Requirements:** POMO-01
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 147-01-PLAN.md — Wave 1 reconcile: geo_id backfill + merge duplicate chamber (move-then-delete, 3 offices) + relabel 4 At-Large districts to D1/D2/D3/D6 + create new District 4 + District 5 + repoint Lustro off the shared district UUID; directly-elected Mayor LOCAL_EXEC reused (migration 926)
+- [x] 147-01-PLAN.md — Wave 1 reconcile: geo_id backfill + merge duplicate chamber (move-then-delete, 3 offices) + relabel 4 At-Large districts to D1/D2/D3/D6 + create new District 4 + District 5 + repoint Lustro off the shared district UUID; directly-elected Mayor LOCAL_EXEC reused (migration 926)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
