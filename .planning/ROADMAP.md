@@ -3,16 +3,20 @@
 - **Greenfield cities:** no `governments` row, no officials — each phase creates the government +
   chamber, seeds the roster, uploads headshots, then researches stances (heavier than the v15.0
   stances-only shortcut).
+
 - **Geofences already exist** (v7.0, TIGER G4110) — confirmed for all 15. Do NOT reload TIGER.
 - **Verify per city before seeding:** form of government (mayor-council vs council-manager),
   directly-elected vs rotational mayor, district vs at-large council, current seat count and
   district map (several LA County cities moved to by-district elections post-CVRA).
+
 - **Stances:** evidence-only, one research agent at a time (rate-limit rule), all live compass
   topics, per-individual migration files applied immediately, no default values, honest blanks.
+
 - **Conventions:** headshots 600×750 (4:5 Lanczos, `press_use`); `politician_images.type='default'`;
   governments INSERT uses WHERE NOT EXISTS (no geo_id unique constraint); `slug` is generated on
   chambers (never INSERT it); stance migrations apply via raw SQL and don't register in
   schema_migrations (on-disk counter authoritative). See LOCATION-ONBOARDING.md + templates.
+
 - **Antipartisan:** party may be stored but never displayed on profiles.
 - **Next migration:** 910 (advance the on-disk counter as each phase lands).
 - **Shared build order within each phase:** government+chamber → roster (offices) → headshots →
@@ -27,11 +31,21 @@
 **Requirements:** LANC-01
 
 **Plans:** 4 plans
+Plans:
+**Wave 1**
 
-Plans:
 - [ ] 145-01-PLAN.md — Wave 1 reconcile: geo_id backfill + move-then-delete duplicate chamber + Mayor LOCAL_EXEC (migration 910)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 145-02-PLAN.md — Wave 2 roster: retire Crist, reseat Parris/Hughes-Leslie/Mann, create White/Castellanos (migration 911)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 145-03-PLAN.md — Wave 3 headshots: Parris (Wikimedia) + WAF-blocked browser-sourced portraits, honest gaps (migration 912, audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 145-04-PLAN.md — Wave 4 stances: 5 current members, evidence-only chairs model, one agent at a time, no judicial (migrations 913-917, audit-only)
 
 **Success criteria:**

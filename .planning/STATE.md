@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-20T04:14:31.566Z"
-last_activity: 2026-06-20 -- Phase 157 planning complete
+last_updated: "2026-06-20T06:29:10.964Z"
+last_activity: 2026-06-20 -- Phase 145 planning complete
 progress:
-  total_phases: 1
+  total_phases: 13
   completed_phases: 0
-  total_plans: 3
+  total_plans: 7
   completed_plans: 0
   percent: 0
 ---
@@ -20,7 +20,7 @@ progress:
 Phase: 144 (glendale-deep-seed) — EXECUTING
 Plan: 1 of 4
 Status: Ready to execute
-Last activity: 2026-06-20 -- Phase 157 planning complete
+Last activity: 2026-06-20 -- Phase 145 planning complete
 Next migration: 902 (structural; stance/headshot files 896–901 did NOT register — ledger MAX 895)
 Resume file: .planning/phases/157-wave-2-close-out/157-CONTEXT.md
 

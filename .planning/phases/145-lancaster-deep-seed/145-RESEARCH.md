@@ -442,21 +442,20 @@ No automated test infrastructure required (per established CA deep-seed pattern)
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> All three resolved 2026-06-19 by a live DB query; the answers are now LOCKED in
+> `145-CONTEXT.md` `<db_precheck>` "Resolved roster→DB-row mapping". A pre-flight SELECT
+> at apply time is still required to guard against drift, but the identities/ext_ids are known.
 
 1. **Do Parris, Mann, or Hughes-Leslie already exist as politician rows in the DB?**
-   - What we know: They were seated officials during v7.0 and v15.0 LA-area seeding. Multiple LA-area cities were seeded in those milestones.
-   - What's unclear: Whether Lancaster specifically had any prior seed that inserted their rows.
-   - Recommendation: Pre-flight SELECT in Wave 2 plan (required — listed in pitfalls). This is the single biggest unknowable before execution.
+   - **RESOLVED: YES — all three exist, office-unlinked (`office_id IS NULL`), `is_active=true`.** Parris `87546d4d-78ee-4aae-82cb-89ae805e10b4`, Hughes-Leslie `007074c6-6fbe-429f-9e06-8d7251198d8a`, Mann `7a600b15-32ff-4c13-90e5-d4ee5f627bb5`. → **reseat (UPDATE office_id), do NOT create.** (Same-name rows like "PARRIS FOR MAYOR 2024" are campaign-finance committees — ignore.)
 
-2. **What are the full professional external_ids for Parris, Mann, and Hughes-Leslie?**
-   - What we know: Crist has a positive ext_id `686320` (from a provider). If Parris/Mann/Hughes-Leslie were seeded from the same provider, they'd have positive ext_ids.
-   - What's unclear: No DB data available to confirm or deny.
-   - Recommendation: Pre-flight SELECT; if found with positive ext_ids, reuse them. If not found, assign `-700655`+ range continuing after White (-700655) and Castellanos (-700656).
+2. **What are the full external_ids for Parris, Mann, and Hughes-Leslie?**
+   - **RESOLVED: all NEGATIVE (custom-seeded), not provider positives:** Parris `-200795`, Hughes-Leslie `-201279`, Mann `-201281`. Reuse these. Only White (`-700655`) and Castellanos (`-700656`) are genuinely new.
 
-3. **Were Parris and Mann in the DB from the v15.0 LA wave-1 stances-only phase?**
-   - What we know: v15.0 added stances for pre-seeded cities; Lancaster was NOT in v15.0 (not yet seeded). But v7.0 may have partially seeded Lancaster officials.
-   - Recommendation: The CONTEXT.md DB pre-check (authoritative) shows only Crist in the duplicate chamber. This is consistent with NO prior seeding of Parris/Mann/Hughes-Leslie — they are likely NOT in the DB. However, pre-flight required.
+3. **Were Parris and Mann in the DB from a prior LA wave?**
+   - **RESOLVED: YES (negative ext_ids ⇒ custom-added in a prior CA/LA phase), but never office-linked to Lancaster.** Consistent with the CONTEXT pre-check showing only Crist seated. They need reseating, not insertion.
 
 ---
 
