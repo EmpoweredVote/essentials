@@ -76,7 +76,7 @@ Plans:
 
 **Requirements:** PLMD-01
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 
 Plans:
 **Wave 1**
@@ -89,7 +89,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 146-03-PLAN.md — Wave 3 headshots: Bettencourt from cityofpalmdaleca.gov documentID=13184 (no WAF), 600×750; the other 4 already imaged; honest gaps documented (migration 920, audit-only)
+- [x] 146-03-PLAN.md — Wave 3 headshots: Bettencourt from cityofpalmdaleca.gov documentID=13184 (no WAF), 600×750; the other 4 already imaged; honest gaps documented (migration 920, audit-only)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
