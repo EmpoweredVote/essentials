@@ -758,7 +758,7 @@ V6 (cryptography): not applicable.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Are there exactly 6 or 7 At-Large district rows for geo_id='0656000'?**
    - What we know: CONTEXT.md says 6 offices in survivor chamber. Hampton is in the doomed chamber and also
