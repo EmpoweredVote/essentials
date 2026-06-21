@@ -282,7 +282,7 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 Plans:
 **Wave 1**
 
@@ -290,7 +290,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 152-02-PLAN.md — Roster finalize: rotational Mayor (Lopez-Viado D2) + Mayor Pro Tem (Cantos D4) titles-on-seat + official_count=5; no new politician (mig 1011, structural)
+- [x] 152-02-PLAN.md — Roster finalize: rotational Mayor (Lopez-Viado D2) + Mayor Pro Tem (Cantos D4) titles-on-seat + official_count=5; no new politician (mig 1011, structural)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
