@@ -241,7 +241,7 @@ Plans:
 
 **Requirements:** ELMN-01
 
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 **Wave 1**
@@ -250,7 +250,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 151-02-PLAN.md — Wave 2 roster: create+seat Marisol Cortez (D6, NEW politician, next custom ext_id) into a new office on the District 6 row + repair bidirectional links for all 7 members + official_count=6 (council only; directly-elected Mayor excluded) (migration 1001, structural)
+- [x] 151-02-PLAN.md — Wave 2 roster: create+seat Marisol Cortez (D6, NEW politician, next custom ext_id) into a new office on the District 6 row + repair bidirectional links for all 7 members + official_count=6 (council only; directly-elected Mayor excluded) (migration 1001, structural)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
