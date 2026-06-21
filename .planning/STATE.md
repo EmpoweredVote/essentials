@@ -3,8 +3,7 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 151 context gathered
-last_updated: "2026-06-21T23:16:28.813Z"
+last_updated: "2026-06-21T23:31:46.754Z"
 last_activity: 2026-06-21 -- Phase 152 marked complete
 progress:
   total_phases: 13
@@ -23,7 +22,7 @@ Plan: 1 of 4
 Status: Phase 152 complete
 Last activity: 2026-06-21 -- Phase 152 marked complete
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
-Resume file: .planning/phases/151-el-monte-deep-seed/151-CONTEXT.md
+Resume file: .planning/phases/153-inglewood-deep-seed/153-CONTEXT.md
 
 ### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
 
@@ -364,8 +363,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-21T16:02:44.251Z
-Stopped at: Phase 151 context gathered
+Last session: 2026-06-21T23:31:46.738Z
+Stopped at: Phase 153 context gathered
 Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 
 ## Performance Metrics
