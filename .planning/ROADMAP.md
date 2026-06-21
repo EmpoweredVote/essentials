@@ -208,7 +208,7 @@ Plans:
 
 **Requirements:** DWNY-01
 
-**Plans:** 4/4 plans created
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -221,11 +221,11 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 150-03-PLAN.md — Wave 3 headshots (AUDIT-ONLY, migration 987): downeyca.org WAF-403 to curl — operator in-browser for 4, Frometa via SCAG direct curl; full greenfield (all 5 were 0 images); verify D1 is Horacio Ortiz not Timothy Horn + D3 is Pemberton not 'vacant'; 600x750 4:5; honest gaps documented
+- [x] 150-03-PLAN.md — Wave 3 headshots (AUDIT-ONLY, migration 987): downeyca.org WAF-403 to curl — operator in-browser for 4, Frometa via SCAG direct curl; full greenfield (all 5 were 0 images); verify D1 is Horacio Ortiz not Timothy Horn + D3 is Pemberton not 'vacant'; 600x750 4:5; honest gaps documented
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 150-04-PLAN.md — Wave 4 stances (AUDIT-ONLY, migrations 988-992): 5 current members (Trujillo/Sosa/Frometa rich-medium, Pemberton/Ortiz thin Dec-2023), evidence-only chairs model, one agent at a time, no judicial topics (appointed City Attorney); pre-tenure discipline — Jan 2021 rent-control vote attributed ONLY to Trujillo + Frometa; honest blanks preserved
+- [x] 150-04-PLAN.md — Wave 4 stances (AUDIT-ONLY, migrations 988-992): 5 current members (Trujillo/Sosa/Frometa rich-medium, Pemberton/Ortiz thin Dec-2023), evidence-only chairs model, one agent at a time, no judicial topics (appointed City Attorney); pre-tenure discipline — Jan 2021 rent-control vote attributed ONLY to Trujillo + Frometa; honest blanks preserved
 
 **Success criteria:**
 
