@@ -208,6 +208,25 @@ Plans:
 
 **Requirements:** DWNY-01
 
+**Plans:** 4/4 plans created
+
+Plans:
+**Wave 1**
+
+- [ ] 150-01-PLAN.md — Wave 1 reconcile (STRUCTURAL, migration 985): geo_id backfill (empty-string guard) + merge the 2 duplicate City Council chambers (move-then-delete: Trujillo from orphan a30fd533 into survivor 7cb8a90c) + BY-DISTRICT relabel At-Large to District 1-5 + collapse the stray LOCAL_EXEC (Sosa) into District 2 with title='Mayor' (ROTATIONAL — Palmdale model, ZERO LOCAL_EXEC) + create missing District 1 + fix Trujillo last_name='-'; split-section check 0 rows
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 150-02-PLAN.md — Wave 2 roster reconcile (STRUCTURAL, migration 986): create+seat Horacio Ortiz (D1, next custom ext_id resolved at apply time) + UNLINK-not-delete the 2 stale members (Saab -700160 / Pelc -700161, keep their rows) + repair back-pointers + official_count=5; rotational Mayor preserved (Mayor Pro Tem informational)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 150-03-PLAN.md — Wave 3 headshots (AUDIT-ONLY, migration 987): downeyca.org WAF-403 to curl — operator in-browser for 4, Frometa via SCAG direct curl; full greenfield (all 5 were 0 images); verify D1 is Horacio Ortiz not Timothy Horn + D3 is Pemberton not 'vacant'; 600x750 4:5; honest gaps documented
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 150-04-PLAN.md — Wave 4 stances (AUDIT-ONLY, migrations 988-992): 5 current members (Trujillo/Sosa/Frometa rich-medium, Pemberton/Ortiz thin Dec-2023), evidence-only chairs model, one agent at a time, no judicial topics (appointed City Attorney); pre-tenure discipline — Jan 2021 rent-control vote attributed ONLY to Trujillo + Frometa; honest blanks preserved
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0619766
