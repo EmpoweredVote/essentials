@@ -507,10 +507,10 @@ export default function ElectionsView({
   if (elections.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[240px] text-center px-4">
-        <p className="text-[16px] font-semibold text-[#00657C]">
+        <p className="text-[16px] font-semibold text-[#00657C] dark:text-[#59b0c4]">
           No elections found for this area
         </p>
-        <p className="text-[14px] text-[#4A5568] mt-2">
+        <p className="text-[14px] text-[#4A5568] dark:text-gray-400 mt-2">
           We're expanding coverage — check back as election season approaches.
         </p>
       </div>
@@ -534,7 +534,7 @@ export default function ElectionsView({
               return (
                 <div key={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: isDark ? 'transparent' : tierStyle.bg }}>
                   <div className="mb-3">
-                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
+                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isDark ? '#59b0c4' : tierStyle.text }}>{tier}</span>
                   </div>
 
                   {(() => {
@@ -561,19 +561,19 @@ export default function ElectionsView({
                             marginBottom: '6px',
                           }}>
                             <span style={{
-                              fontSize: '10px',
+                              fontSize: '12px',
                               fontWeight: 700,
                               textTransform: 'uppercase',
                               letterSpacing: '0.6px',
-                              color: tierStyle.text,
-                              opacity: 0.75,
+                              color: isDark ? '#59b0c4' : tierStyle.text,
+                              opacity: isDark ? 1 : 0.75,
                             }}>
                               {branch}
                             </span>
                             <div style={{
                               flex: 1,
                               height: '1px',
-                              backgroundColor: tierStyle.text,
+                              backgroundColor: isDark ? '#59b0c4' : tierStyle.text,
                               opacity: 0.2,
                             }} />
                           </div>

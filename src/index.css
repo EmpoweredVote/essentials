@@ -291,3 +291,51 @@ body {
   background: #1e2a3a;
   border-color: rgba(255, 255, 255, 0.25);
 }
+
+/* ============================================================================
+   Mobile audit — Run 2 fixes for ev-ui-rendered controls (ev-ui uses inline
+   styles, so geometry/color overrides here require specificity / !important).
+   ========================================================================== */
+
+/* R2-1 (M1): header hamburger renders ~40×18 — enlarge the hit area to ≥44×44. */
+.ev-header-mobile-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* R2-1 (M7): "Visit … website" icon links in jurisdiction/subgroup headers
+   render ~14×14 — pad to a ≥44×44 tap target. */
+a[aria-label^="Visit "] {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* R2-1 (M9): PoliticianProfile back control (~24px tall) and contact links
+   (~19px tall) — give them ≥44px tap height. The existing `a` color override
+   above already handles dark-mode contrast for the contact links. */
+.ev-politician-profile > button {
+  min-height: 44px;
+}
+.ev-politician-profile a:not(.ev-stance-panel *) {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* R2-2 (M5): jurisdiction headers (GovernmentBodySection) use #00657c, which
+   is only ~3:1 on the navy dark bg — lift to the light teal (~8:1). */
+.dark .ev-gov-body-section [role="button"] span {
+  color: #59b0c4 !important;
+}
+
+/* R2-2 (M5): the profile back control is a <button> (not an <a>), so the link
+   override misses it — recolor its teal for dark mode. */
+.dark .ev-politician-profile > button {
+  color: #59b0c4 !important;
+}
