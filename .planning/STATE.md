@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-21T04:06:28.119Z"
-last_activity: 2026-06-21 -- Phase 150 planning complete
+last_updated: "2026-06-21T04:47:24.298Z"
+last_activity: 2026-06-21 -- Phase 150 execution started
 progress:
   total_phases: 13
   completed_phases: 5
@@ -17,11 +17,11 @@ progress:
 
 ## Current Position
 
-Phase: 149 (pasadena-deep-seed) — ✅ COMPLETE (2026-06-20)
-Plan: 4 of 4 complete
-Status: Ready to execute
-Last activity: 2026-06-21 -- Phase 150 planning complete
-Next migration: 957 (on-disk MAX 956 authoritative; structural ledger MAX 947 = Pasadena 946 reconcile + 947 complete registered; 948 headshots + 949–956 stances audit-only)
+Phase: 150 (downey-deep-seed) — EXECUTING
+Plan: 2 of 4
+Status: Executing Phase 150 — Plan 01 complete
+Last activity: 2026-06-20 -- Phase 150 Plan 01 (structural reconcile) complete; migration 990 applied
+Next migration: 991 (on-disk MAX 990 = 990_downey_reconcile.sql STRUCTURAL; schema_migrations MAX = 990; 985-989 = state_exec_headshots audit-only)
 Resume file: .planning/phases/150-downey-deep-seed/150-CONTEXT.md
 
 ### Phase 149 outcome (Pasadena, geo_id 0656000) — COMPLETE 2026-06-20
@@ -241,7 +241,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 149 — pasadena-deep-seed
+**Current focus:** Phase 150 — downey-deep-seed
 
 ## v15.0 Roadmap Summary
 
