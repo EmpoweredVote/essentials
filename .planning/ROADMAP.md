@@ -282,11 +282,11 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 152-01-PLAN.md — Reconcile: geo_id backfill + merge two City Council chambers (survivor 12c9360a) + repair 2 one-directional links + by-district relabel D1-D5 (mig 1010, structural)
+- [x] 152-01-PLAN.md — Reconcile: geo_id backfill + merge two City Council chambers (survivor 12c9360a) + repair 2 one-directional links + by-district relabel D1-D5 (mig 1010, structural)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
