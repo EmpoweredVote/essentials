@@ -175,7 +175,7 @@ Plans:
 
 **Requirements:** PASA-01
 
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 **Wave 1**
@@ -184,7 +184,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 149-02-PLAN.md — Wave 2 roster link-repair (STRUCTURAL, migration 947): repair broken back-pointers (Gordo/Hampton + any NULL) + optional Cole-not-Williams name correction + official_count=7; NO retirements/creations (all 8 current and exist); directly-elected Mayor reused
+- [x] 149-02-PLAN.md — Wave 2 roster link-repair (STRUCTURAL, migration 947): repair broken back-pointers (Gordo/Hampton + any NULL) + optional Cole-not-Williams name correction + official_count=7; NO retirements/creations (all 8 current and exist); directly-elected Mayor reused
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
