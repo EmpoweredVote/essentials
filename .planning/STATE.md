@@ -1,26 +1,27 @@
 ---
 gsd_state_version: 1.0
 milestone: v17.0
-milestone_name: LA County City Coverage — Wave 2
-status: executing
-last_updated: "2026-06-21T16:34:55.858Z"
-last_activity: 2026-06-21 -- Phase 151 planning complete
+milestone_name: milestone
+status: completed
+stopped_at: Phase 151 context gathered
+last_updated: "2026-06-21T19:40:17.196Z"
+last_activity: 2026-06-21 -- Phase 151 marked complete
 progress:
   total_phases: 13
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 31
-  completed_plans: 24
-  percent: 46
+  completed_plans: 28
+  percent: 54
 ---
 
 # State
 
 ## Current Position
 
-Phase: 157
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-21 -- Phase 151 planning complete
+Phase: 151 — COMPLETE
+Plan: 1 of 4
+Status: Phase 151 complete
+Last activity: 2026-06-21 -- Phase 151 marked complete
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
 Resume file: .planning/phases/151-el-monte-deep-seed/151-CONTEXT.md
 
@@ -270,7 +271,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 157 — wave 2 close out
+**Current focus:** Phase 151 — el-monte-deep-seed
 
 ## v15.0 Roadmap Summary
 
