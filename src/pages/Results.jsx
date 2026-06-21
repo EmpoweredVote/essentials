@@ -967,6 +967,49 @@ export default function Results() {
     window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
   };
 
+  // Compass top-slot: rendered after each view's full-width banner so it never overlaps it.
+  // Calibrated (>=3 answers) → the controls bar; uncalibrated → a CTA to take the quiz,
+  // since with no stances the per-card compasses can't render and the toggle would
+  // otherwise appear to do nothing. While answers are still loading, render neither.
+  const compassCalibrated = (rawUserAnswers?.length ?? 0) >= 3;
+  const compassControlsSlot = (
+    // 0-height relative anchor: on desktop the bar inside is position:absolute (no layout
+    // shift, floats over the grid's top-right); on mobile it falls back to normal flow.
+    <div style={{ position: 'relative' }}>
+      <CompassControlsBar
+        userAnswers={rawUserAnswers}
+        lensActive={lensActive}
+        onToggleLens={handleToggleLens}
+        onStanceMin={handleStanceMin}
+        onStanceMax={handleStanceMax}
+        isDesktop={isDesktop}
+      />
+    </div>
+  );
+  const compassCtaSlot = (
+    <div className="mx-6 md:mx-12 mt-4 mb-2 px-4 py-4 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-ev-navy-card flex flex-col sm:flex-row sm:items-center gap-3">
+      <p className="text-sm text-gray-700 dark:text-gray-200 flex-1">
+        Set your stances to see how you align with each official on the issues.
+      </p>
+      <button
+        type="button"
+        onClick={handleBuildCompass}
+        className="shrink-0 inline-flex items-center justify-center px-5 py-2.5 text-white font-semibold rounded-full text-sm transition-colors"
+        style={{ backgroundColor: '#00657c' }}
+        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
+      >
+        Set your stances
+      </button>
+    </div>
+  );
+  // Single slot used by both views; only one view is mounted at a time.
+  const compassTopSlot = !compassMode
+    ? null
+    : compassCalibrated
+      ? compassControlsSlot
+      : (compassLoading ? null : compassCtaSlot);
+
   // Derive representing city for building image selection — uses unfiltered list
   // so the building image doesn't disappear when search filter narrows the grid.
   const representingCity = useMemo(() => {
@@ -1336,6 +1379,11 @@ export default function Results() {
       ).length;
     }
     const showCompassOverlay = compassMode && matchCount >= 3;
+    // Desktop: float the compass over the right edge of the card. Mobile: the card is
+    // too narrow for a 190px overlay (it squeezes the name to initials), so stack the
+    // compass below the card content in normal flow instead.
+    const overlayCompass = showCompassOverlay && isDesktop;
+    const stackCompass = showCompassOverlay && !isDesktop;
 
     const compassOverlayWidth = 190;
     const compassBg = isDark ? '#1a2235' : isCandidate ? '#fffef5' : '#fff';
@@ -1369,13 +1417,13 @@ export default function Results() {
             borderRadius: 0,
             cursor: 'pointer',
           }}
-          contentStyle={showCompassOverlay ? { marginRight: compassOverlayWidth } : undefined}
+          contentStyle={overlayCompass ? { marginRight: compassOverlayWidth } : undefined}
           onClick={null}
           variant="horizontal"
           imageWidth="95px"
           footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
         />
-        {showCompassOverlay && (
+        {overlayCompass && (
           <div
             style={{
               position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
@@ -1392,6 +1440,26 @@ export default function Results() {
               localLensActive={polLensActive}
               isDark={isDark}
               size={190}
+            />
+          </div>
+        )}
+        {stackCompass && (
+          <div
+            style={{
+              borderTop: `1px solid ${wrapperBorderColor}`,
+              display: 'flex', justifyContent: 'center', padding: '12px 8px',
+              backgroundColor: compassBg,
+            }}
+          >
+            <MiniCompass
+              userAnswers={rawUserAnswers}
+              polAnswers={polAnswersForMini}
+              selectedTopics={selectedTopics}
+              scopedTopics={scopedTopicsForPol}
+              invertedSpokes={invertedSpokes}
+              localLensActive={polLensActive}
+              isDark={isDark}
+              size={220}
             />
           </div>
         )}
@@ -1703,18 +1771,6 @@ export default function Results() {
             </div>
           )}
 
-          {/* Sticky controls bar — only shown when compass mode is active */}
-          {compassMode && (activeQuery || browseResults) && (
-            <CompassControlsBar
-              userAnswers={rawUserAnswers}
-              lensActive={lensActive}
-              onToggleLens={handleToggleLens}
-              onStanceMin={handleStanceMin}
-              onStanceMax={handleStanceMax}
-              isDesktop={isDesktop}
-            />
-          )}
-
           {activeView === 'representatives' ? (
           <>
 
@@ -1733,6 +1789,9 @@ export default function Results() {
               Showing representatives across {localityLabel ? <span className="font-semibold">{localityLabel}</span> : 'this city'}. Enter your full street address for your exact representatives.
             </div>
           )}
+
+          {/* Compass controls / CTA — placed after the banner so the overlay never covers it */}
+          {(activeQuery || browseResults) && compassTopSlot}
 
           {/* Loading skeletons */}
           {phase === 'loading' && (
@@ -1872,6 +1931,10 @@ export default function Results() {
                   stateCode={userState || null}
                 />
               )}
+
+              {/* Compass controls / CTA — after the voter-info card so the overlay never covers it */}
+              {compassTopSlot}
+
               <ElectionsView
                 elections={nearestElection}
                 loading={electionsLoading}
