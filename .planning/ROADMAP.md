@@ -282,7 +282,7 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 Plans:
 **Wave 1**
 
@@ -294,7 +294,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 152-03-PLAN.md — Headshots: verify-and-fix 5 pre-existing (all low-res), NO-WAF direct curl westcovina.gov documentIDs 1052-1056 (mig 1012, audit-only)
+- [x] 152-03-PLAN.md — Headshots: verify-and-fix 5 pre-existing (all low-res), NO-WAF direct curl westcovina.gov documentIDs 1052-1056 (mig 1012, audit-only)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
