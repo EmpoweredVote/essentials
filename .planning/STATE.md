@@ -2,24 +2,25 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
-status: verifying
-last_updated: "2026-06-21T06:48:23.124Z"
+status: ready_to_plan
+last_updated: 2026-06-21T15:08:17.839Z
 last_activity: 2026-06-21
 progress:
   total_phases: 13
   completed_phases: 6
   total_plans: 27
-  completed_plans: 24
+  completed_plans: 188
   percent: 46
+stopped_at: Phase 150 complete (4/4) — ready to discuss Phase 157
 ---
 
 # State
 
 ## Current Position
 
-Phase: 150 (downey-deep-seed) — EXECUTING
-Plan: 4 of 4 (150-04 stances CHECKPOINT — awaiting human-verify; Tasks 1+2 complete, Task 3 checkpoint)
-Status: Phase complete — ready for verification
+Phase: 157
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-21
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
 Resume file: None
@@ -270,7 +271,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 150 — downey-deep-seed
+**Current focus:** Phase 157 — wave 2 close out
 
 ## v15.0 Roadmap Summary
 
