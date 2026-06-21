@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
-status: ready_to_plan
-last_updated: 2026-06-21T15:08:17.839Z
+status: planning
+last_updated: "2026-06-21T16:02:44.266Z"
 last_activity: 2026-06-21
 progress:
   total_phases: 13
   completed_phases: 6
   total_plans: 27
-  completed_plans: 188
+  completed_plans: 24
   percent: 46
-stopped_at: Phase 150 complete (4/4) — ready to discuss Phase 157
 ---
 
 # State
@@ -23,7 +22,7 @@ Plan: Not started
 Status: Ready to plan
 Last activity: 2026-06-21
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
-Resume file: None
+Resume file: .planning/phases/151-el-monte-deep-seed/151-CONTEXT.md
 
 ### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
 
@@ -364,8 +363,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-21T06:48:23.110Z
-Stopped at: Phase 150 context gathered
+Last session: 2026-06-21T16:02:44.251Z
+Stopped at: Phase 151 context gathered
 Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 
 ## Performance Metrics
