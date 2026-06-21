@@ -18,11 +18,20 @@ progress:
 ## Current Position
 
 Phase: 150 (downey-deep-seed) — EXECUTING
-Plan: 3 of 4 (150-02 complete; 150-03 headshots next)
-Status: Executing
+Plan: 3 of 4 (150-03 headshots CHECKPOINT — awaiting human-verify; 150-04 stances next)
+Status: Awaiting checkpoint (human-verify)
 Last activity: 2026-06-20
-Next migration: 992 (on-disk MAX 991 = 991_downey_complete.sql STRUCTURAL; schema_migrations MAX = 991; 985-989 = state_exec_headshots audit-only)
+Next migration: 993 applied (audit-only headshots); 994 = next (stances Wave 4)
 Resume file: None
+
+### Phase 150 Plan 03 outcome (Downey headshots, mig 993 audit-only) — CHECKPOINT 2026-06-20
+
+- Migration 993 (AUDIT-ONLY, not registered): 5/5 politician_images rows inserted (type='default', press_use) for Ortiz D1 / Sosa D2 / Pemberton D3 / Frometa D4/Mayor / Trujillo D5.
+- All images: operator-downloaded from downeyca.org (WAF-403 bypass), processed 4:5 crop FIRST -> 600x750 Lanczos q90, uploaded to politician_photos/{uuid}-headshot.jpg (all HTTP 200).
+- photo_origin_url set for all 5 members. schema_migrations MAX = 992 (unchanged).
+- Mayor correction context: Frometa D4 is rotational Mayor (not Sosa), corrected in mig 992 before this wave.
+- Trujillo source was 151x189 (only available official source; upscaled acceptably).
+- Awaiting human-verify checkpoint: identity confirmation (esp. Ortiz not Timothy Horn, Pemberton not placeholder).
 
 ### Phase 150 Plan 02 outcome (Downey roster reconcile, mig 991) — COMPLETE 2026-06-20
 
