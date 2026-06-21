@@ -175,12 +175,12 @@ Plans:
 
 **Requirements:** PASA-01
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 149-01-PLAN.md — Wave 1 reconcile (STRUCTURAL, migration 946): geo_id backfill (empty-string guard) + merge the 2 duplicate City Council chambers (move-then-delete, 2 offices: Gordo/Mayor + Hampton) + BY-DISTRICT relabel At-Large to District 1-7 + create any missing district (D7) + Lyon image dedupe; directly-elected Mayor LOCAL_EXEC reused
+- [x] 149-01-PLAN.md — Wave 1 reconcile (STRUCTURAL, migration 946): geo_id backfill (empty-string guard) + merge the 2 duplicate City Council chambers (move-then-delete, 2 offices: Gordo/Mayor + Hampton) + BY-DISTRICT relabel At-Large to District 1-7 + create any missing district (D7) + Lyon image dedupe; directly-elected Mayor LOCAL_EXEC reused
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
