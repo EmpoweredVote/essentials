@@ -4,25 +4,35 @@ milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
 last_updated: "2026-06-21T01:04:12.251Z"
-last_activity: 2026-06-21 -- Phase 149 execution started
+last_activity: 2026-06-21 -- Phase 149 (Pasadena) COMPLETE
 progress:
   total_phases: 13
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 23
-  completed_plans: 16
-  percent: 31
+  completed_plans: 20
+  percent: 38
 ---
 
 # State
 
 ## Current Position
 
-Phase: 149 (pasadena-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 149
-Last activity: 2026-06-21 -- Phase 149 execution started
-Next migration: 936 (structural; Pomona 926/927 structural registered, 928 headshots + 929–935 stances audit-only — ledger MAX 927)
-Resume file: .planning/phases/149-pasadena-deep-seed/149-CONTEXT.md
+Phase: 149 (pasadena-deep-seed) — ✅ COMPLETE (2026-06-20)
+Plan: 4 of 4 complete
+Status: Ready to plan next city (Phase 150 Downey, geo_id 0619766)
+Last activity: 2026-06-21 -- Phase 149 (Pasadena) COMPLETE
+Next migration: 957 (on-disk MAX 956 authoritative; structural ledger MAX 947 = Pasadena 946 reconcile + 947 complete registered; 948 headshots + 949–956 stances audit-only)
+Resume file: .planning/phases/149-pasadena-deep-seed/149-04-SUMMARY.md
+
+### Phase 149 outcome (Pasadena, geo_id 0656000) — COMPLETE 2026-06-20
+
+- NOT greenfield. Reconcile (mig 946) + roster link-repair (mig 947), both STRUCTURAL/registered (ledger MAX now 947).
+- BY-DISTRICT (Pomona/Palmdale pattern): merged 2 'City Council' chambers (survivor 2e7f01d0, deleted bdd1acad after moving Gordo fc5e372a + Hampton 0c357b48); relabeled At-Large→D1-D7; **shared-district defect** (Madison+Rivas both on 4c08b6d3) resolved by repurposing UNUSED ORPHAN At-Large row ab0a29ee as Rivas's District 5 (no new row), 4c08b6d3→Madison D6. Lyon image deduped. geo_id 0656000 backfilled.
+- Directly-elected Mayor (Lancaster/Pomona LOCAL_EXEC, 'Pasadena Mayor' 3bb6c470 / Gordo -200901 reused; NO rotational flag). official_count=7 (council; Mayor not counted).
+- Roster (all 8 CURRENT, no retirements — June 2026 incumbents Jones/Rivas/Lyon held): Mayor Gordo -200901 / D1 Hampton -201094 / D2 Cole 657577 (Rick Cole, sworn Dec 2024, replaced Felicia Williams — name already correct in DB) / D3 Jones 657578 / D4 Masuda 657579 / D5 Rivas -700150 / D6 Madison 657581 / D7 Lyon 657582. All bidirectional links repaired (Gordo/Hampton were NULL post-move).
+- Headshots 8/8 (mig 948 audit-only): all curled from cityofpasadena.net (NO-WAF via curl; urllib 403), 4:5→600×750, canonical {uuid}-headshot.jpg, press_use. ⚠ LOW-RES city sources: Jones/Madison 150×200, Hampton 240×320, Lyon 280×400 upscaled; **Masuda net downgrade** (was 600×750, city source only 150×200 — revisit if ≥600px found). Gordo/Cole/Rivas good. Checkpoint approved all-as-is.
+- Stances 54/8 (migs 949-956 audit-only): Gordo 10 / Masuda 9 / Jones 8 / Cole 8 / Rivas 6 / Lyon 5 / Hampton 4 / Madison 4. Evidence-only chairs model, 100% cited, no judicial topics (appointed City Attorney). **rent-regulation populated for ALL 8** (active Measure H RSO — Gordo 4 opposed Measure H; Madison/Lyon/Rivas 2; Hampton/Masuda/Jones/Cole 3). SB79 recusals handled as non-stances (Rivas; Gordo). transportation 1=transit/5=highways.
+- split-section check 0; PASA-01 satisfied end-to-end. South Pasadena Mayor district (66e1c2b0) has stray geo_id 0656000 — OUT OF SCOPE, left untouched (cross-gov mislabel for future cleanup).
 
 ### Phase 147 outcome (Pomona, geo_id 0658072) — COMPLETE
 
