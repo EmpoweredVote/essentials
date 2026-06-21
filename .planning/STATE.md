@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
-status: ready_to_plan
-last_updated: 2026-06-20T23:42:38.607Z
-last_activity: 2026-06-20 -- Phase 148 execution started
+status: planning
+last_updated: "2026-06-21T00:01:47.664Z"
+last_activity: 2026-06-20
 progress:
   total_phases: 13
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 19
-  completed_plans: 180
-  percent: 23
-stopped_at: Phase 148 complete (4/4) — ready to discuss Phase 157
+  completed_plans: 16
+  percent: 31
 ---
 
 # State
@@ -23,7 +22,7 @@ Plan: Not started
 Status: Ready to plan
 Last activity: 2026-06-20
 Next migration: 936 (structural; Pomona 926/927 structural registered, 928 headshots + 929–935 stances audit-only — ledger MAX 927)
-Resume file: .planning/phases/147-pomona-deep-seed/147-VERIFICATION.md
+Resume file: .planning/phases/149-pasadena-deep-seed/149-CONTEXT.md
 
 ### Phase 147 outcome (Pomona, geo_id 0658072) — COMPLETE
 
@@ -325,8 +324,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-20T15:27:01.238Z
-Stopped at: Phase 146 context gathered
+Last session: 2026-06-21T00:01:47.652Z
+Stopped at: Phase 149 context gathered
 Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 
 ## Performance Metrics
