@@ -18,11 +18,24 @@ progress:
 ## Current Position
 
 Phase: 150 (downey-deep-seed) — EXECUTING
-Plan: 3 of 4 (150-03 headshots CHECKPOINT — awaiting human-verify; 150-04 stances next)
-Status: Awaiting checkpoint (human-verify)
+Plan: 4 of 4 (150-04 stances CHECKPOINT — awaiting human-verify; Tasks 1+2 complete, Task 3 checkpoint)
+Status: Awaiting checkpoint (human-verify) — Downey stances applied, awaiting approval
 Last activity: 2026-06-20
-Next migration: 993 applied (audit-only headshots); 994 = next (stances Wave 4)
+Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
 Resume file: None
+
+### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
+
+- Migrations 994-998 (AUDIT-ONLY, not registered): 23 stance rows applied across 5 current Downey members.
+- Trujillo D5 (-201200, mig 994): 5 stances — rent-regulation(4), public-safety(4), transportation(2), economic-dev(4), local-immigration(1)
+- Sosa D2/Councilmember (675353, mig 995): 6 stances — rent-regulation(4), homelessness(4), homelessness-response(4), public-safety(4), local-immigration(1), economic-dev(4)
+- Frometa D4/Mayor (675361, mig 996): 3 stances — rent-regulation(4), public-safety(4), housing(3); local-immigration BLANK (genuinely nuanced — not forced)
+- Pemberton D3 (675360, mig 997): 4 stances — rent-regulation(4), public-safety(4), homelessness-response(3), local-immigration(1); thin Dec-2023 record, many honest blanks
+- Ortiz D1/Mayor Pro Tem (-700991, mig 998): 5 stances — homelessness(5), homelessness-response(4), rent-regulation(4), public-safety(4), local-immigration(1); thin Dec-2023 record, many honest blanks
+- Pre-tenure attribution: Jan 2021 rent-control vote attributed ONLY to Trujillo (Dec 2020) + Frometa (Dec 2018) — NOT to Sosa/Pemberton/Ortiz (A5 rule)
+- Verification: 0 uncited answers, 0 judicial/inactive topics, schema_migrations MAX=992 unchanged
+- DWNY-01 end-to-end complete pending human checkpoint approval
+- Awaiting human-verify checkpoint: stance coverage, citations, honest blanks, no-judicial rule, pre-tenure attribution, ledger counter
 
 ### Phase 150 Plan 03 outcome (Downey headshots, mig 993 audit-only) — CHECKPOINT 2026-06-20
 
