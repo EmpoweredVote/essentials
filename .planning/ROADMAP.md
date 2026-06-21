@@ -282,6 +282,14 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
+**Plans:** 4 plans
+
+Plans:
+- [ ] 152-01-PLAN.md — Reconcile: geo_id backfill + merge two City Council chambers (survivor 12c9360a) + repair 2 one-directional links + by-district relabel D1-D5 (mig 1010, structural)
+- [ ] 152-02-PLAN.md — Roster finalize: rotational Mayor (Lopez-Viado D2) + Mayor Pro Tem (Cantos D4) titles-on-seat + official_count=5; no new politician (mig 1011, structural)
+- [ ] 152-03-PLAN.md — Headshots: verify-and-fix 5 pre-existing (all low-res), NO-WAF direct curl westcovina.gov documentIDs 1052-1056 (mig 1012, audit-only)
+- [ ] 152-04-PLAN.md — Stances: full greenfield, 5 members evidence-only chairs, no judicial, rent-regulation only-if-evidence, one agent at a time (migs 1013-1017, audit-only)
+
 ### Phase 153: Inglewood deep-seed
 
 **Goal:** Take Inglewood (geo_id 0636546) from geofence-only to full Tier 1 depth — government structure, elected roster, headshots, and evidence-only compass stances.
