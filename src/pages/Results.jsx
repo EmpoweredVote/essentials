@@ -1585,7 +1585,7 @@ export default function Results() {
                   type="button"
                   onClick={() => setEditingSearch(true)}
                   aria-label="Edit search"
-                  className="ml-1 inline-flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
+                  className="ml-1 inline-flex items-center justify-center w-11 h-11 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
                   style={{ color: '#00657c' }}
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -1822,7 +1822,7 @@ export default function Results() {
                     <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
-                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle?.text }}>{tier}</span>
+                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isDark ? '#59b0c4' : tierStyle?.text }}>{tier}</span>
                         </div>
                       )}
                       <p className="mt-4 text-gray-500 dark:text-gray-400">{emptyMessage}</p>
@@ -1846,7 +1846,7 @@ export default function Results() {
                     <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
-                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: tierStyle.text }}>{tier}</span>
+                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isDark ? '#59b0c4' : tierStyle.text }}>{tier}</span>
                         </div>
                       )}
                       {bodies.map((body) => {
