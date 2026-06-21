@@ -241,7 +241,7 @@ Plans:
 
 **Requirements:** ELMN-01
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -258,7 +258,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 151-04-PLAN.md — Wave 4 stances: 7 current members, evidence-only chairs model, one agent at a time, no judicial topics, pre-tenure discipline for the 3 thin Nov-2024 members; blocking human-verify (migrations 1003–1009, audit-only)
+- [x] 151-04-PLAN.md — Wave 4 stances: 7 current members, evidence-only chairs model, one agent at a time, no judicial topics, pre-tenure discipline for the 3 thin Nov-2024 members; blocking human-verify (migrations 1003–1009, audit-only)
 
 **Success criteria:**
 
