@@ -241,12 +241,12 @@ Plans:
 
 **Requirements:** ELMN-01
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 151-01-PLAN.md — Wave 1 reconcile: geo_id backfill ('0622230') + merge the two duplicate 'City Council' chambers (move Longoria+Ruedas into survivor 5ca38f3a, then delete b41e0065) + relabel At-Large→D1–D5 + create District 6 row; directly-elected Mayor (Ancona, LOCAL_EXEC) kept as-is (migration 1000, structural)
+- [x] 151-01-PLAN.md — Wave 1 reconcile: geo_id backfill ('0622230') + merge the two duplicate 'City Council' chambers (move Longoria+Ruedas into survivor 5ca38f3a, then delete b41e0065) + relabel At-Large→D1–D5 + create District 6 row; directly-elected Mayor (Ancona, LOCAL_EXEC) kept as-is (migration 1000, structural)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
