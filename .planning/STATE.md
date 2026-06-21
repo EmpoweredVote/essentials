@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: LA County City Coverage — Wave 2
 status: executing
-last_updated: "2026-06-21T05:04:27.330Z"
-last_activity: 2026-06-21
+last_updated: "2026-06-20T00:00:00.000Z"
+last_activity: 2026-06-20
 progress:
   total_phases: 13
   completed_phases: 5
   total_plans: 27
-  completed_plans: 21
-  percent: 38
+  completed_plans: 22
+  percent: 41
 ---
 
 # State
@@ -18,11 +18,18 @@ progress:
 ## Current Position
 
 Phase: 150 (downey-deep-seed) — EXECUTING
-Plan: 3 of 4
-Status: Ready to execute
-Last activity: 2026-06-21
-Next migration: 991 (on-disk MAX 990 = 990_downey_reconcile.sql STRUCTURAL; schema_migrations MAX = 990; 985-989 = state_exec_headshots audit-only)
+Plan: 3 of 4 (150-02 complete; 150-03 headshots next)
+Status: Executing
+Last activity: 2026-06-20
+Next migration: 992 (on-disk MAX 991 = 991_downey_complete.sql STRUCTURAL; schema_migrations MAX = 991; 985-989 = state_exec_headshots audit-only)
 Resume file: None
+
+### Phase 150 Plan 02 outcome (Downey roster reconcile, mig 991) — COMPLETE 2026-06-20
+
+- Migration 991 (STRUCTURAL, registered): Create+seat Horacio Ortiz (D1, ext_id -700991, UUID 13dc32dd); unlink Saab (-700160) + Pelc (-700161) — office_id NULL, is_active=false, rows KEPT; repair Trujillo's back-pointer (was NULL after Plan 01 chamber move); official_count=5 (already 5 from Plan 01, guard idempotent).
+- Saab's office (44ca5c68) repurposed as District 1 office for Ortiz; district_id updated from 22ff630a (At-Large stale) to 39e05679 (District 1); title='Council Member'. Pelc's surplus office (2ecc0a3e) politician_id NULLed.
+- End state: 5 active members (Ortiz D1/Sosa D2 Mayor/Pemberton D3/Frometa D4/Trujillo D5) with BOTH pointers consistent. ZERO LOCAL_EXEC rows. official_count=5. schema_migrations MAX=991.
+- Deviations: (1) migration numbered 991 not 986 (plan authored before Plan 01 used 990); (2) Ortiz ext_id -700991 not -700985 (range -700659→-700990 fully empty; aligned with mig number).
 
 ### Phase 149 outcome (Pasadena, geo_id 0656000) — COMPLETE 2026-06-20
 

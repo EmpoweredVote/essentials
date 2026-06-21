@@ -213,11 +213,11 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 150-01-PLAN.md — Wave 1 reconcile (STRUCTURAL, migration 985): geo_id backfill (empty-string guard) + merge the 2 duplicate City Council chambers (move-then-delete: Trujillo from orphan a30fd533 into survivor 7cb8a90c) + BY-DISTRICT relabel At-Large to District 1-5 + collapse the stray LOCAL_EXEC (Sosa) into District 2 with title='Mayor' (ROTATIONAL — Palmdale model, ZERO LOCAL_EXEC) + create missing District 1 + fix Trujillo last_name='-'; split-section check 0 rows
+- [x] 150-01-PLAN.md — Wave 1 reconcile (STRUCTURAL, migration 990): geo_id backfill + merged 2 duplicate chambers + BY-DISTRICT relabel At-Large→D1-D5 + collapsed LOCAL_EXEC (Sosa D2 title='Mayor') + created District 1 row (39e05679) + fixed Trujillo name; ZERO LOCAL_EXEC; split-section check 0 rows
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 150-02-PLAN.md — Wave 2 roster reconcile (STRUCTURAL, migration 986): create+seat Horacio Ortiz (D1, next custom ext_id resolved at apply time) + UNLINK-not-delete the 2 stale members (Saab -700160 / Pelc -700161, keep their rows) + repair back-pointers + official_count=5; rotational Mayor preserved (Mayor Pro Tem informational)
+- [x] 150-02-PLAN.md — Wave 2 roster reconcile (STRUCTURAL, migration 991): created+seated Horacio Ortiz (D1, ext_id -700991, UUID 13dc32dd); unlinked Saab (-700160) + Pelc (-700161) — rows KEPT, is_active=false; repaired Trujillo back-pointer (was NULL); official_count=5; all 5 members bidirectionally linked (Ortiz D1/Sosa D2 Mayor/Pemberton D3/Frometa D4/Trujillo D5)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
