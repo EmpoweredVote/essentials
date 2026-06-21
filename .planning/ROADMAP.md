@@ -175,7 +175,7 @@ Plans:
 
 **Requirements:** PASA-01
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -192,7 +192,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 149-04-PLAN.md — Wave 4 stances (AUDIT-ONLY, migrations 949-956): 8 current members (no exclusions), evidence-only chairs model, one agent at a time, no judicial topics; rent-regulation APPLIES (active Measure H RSO — do NOT auto-blank); RSO/Measure H positions cited
+- [x] 149-04-PLAN.md — Wave 4 stances (AUDIT-ONLY, migrations 949-956): 8 current members (no exclusions), evidence-only chairs model, one agent at a time, no judicial topics; rent-regulation APPLIES (active Measure H RSO — do NOT auto-blank); RSO/Measure H positions cited
 
 **Success criteria:**
 
