@@ -241,6 +241,25 @@ Plans:
 
 **Requirements:** ELMN-01
 
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 151-01-PLAN.md — Wave 1 reconcile: geo_id backfill ('0622230') + merge the two duplicate 'City Council' chambers (move Longoria+Ruedas into survivor 5ca38f3a, then delete b41e0065) + relabel At-Large→D1–D5 + create District 6 row; directly-elected Mayor (Ancona, LOCAL_EXEC) kept as-is (migration 1000, structural)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 151-02-PLAN.md — Wave 2 roster: create+seat Marisol Cortez (D6, NEW politician, next custom ext_id) into a new office on the District 6 row + repair bidirectional links for all 7 members + official_count=6 (council only; directly-elected Mayor excluded) (migration 1001, structural)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 151-03-PLAN.md — Wave 3 headshots: verify 6 pre-existing images + source Cortez fresh, all via direct curl from ci.el-monte.ca.us NO-WAF documentIds (7429–7435); 4:5→600×750; re-crop only failures; honest gaps; blocking human-verify (migration 1002, audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 151-04-PLAN.md — Wave 4 stances: 7 current members, evidence-only chairs model, one agent at a time, no judicial topics, pre-tenure discipline for the 3 thin Nov-2024 members; blocking human-verify (migrations 1003–1009, audit-only)
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0622230
