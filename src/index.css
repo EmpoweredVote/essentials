@@ -339,3 +339,13 @@ a[aria-label^="Visit "] {
 .dark .ev-politician-profile > button {
   color: #59b0c4 !important;
 }
+
+/* R2-3 (M6): light-mode gray meta labels sit at ~3.7–4.0:1 — darken to pass
+   WCAG AA. Scoped to light (html:not(.dark)) since dark mode reads fine; ev-ui
+   sets these colors inline, so attribute selectors + !important are required. */
+html:not(.dark) .ev-gov-body-section span[style*="letter-spacing: 0.8px"] {
+  color: #4a5568 !important; /* SubGroupSection labels (was #718096 ≈ 3.7:1) */
+}
+html:not(.dark) .ev-politician-card p[style*="rgb(113, 128, 150)"] {
+  color: #4a5568 !important; /* card secondary subtitle (was #718096 ≈ 4.0:1) */
+}

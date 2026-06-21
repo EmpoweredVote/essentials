@@ -1869,7 +1869,7 @@ export default function Results() {
                                   href={`${TREASURY_URL}/?entity=${toTreasurySlug(treasuryMatch)}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-sm text-[#59b0c4] hover:text-[#00657c] transition-colors"
+                                  className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#59b0c4] dark:hover:text-[#7ec8d8] transition-colors"
                                   style={{ fontFamily: "'Manrope', sans-serif" }}
                                 >
                                   Explore {treasuryMatch.name} revenue and expenses
