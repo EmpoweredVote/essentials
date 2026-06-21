@@ -1388,6 +1388,27 @@ export default function Results() {
     const compassOverlayWidth = 190;
     const compassBg = isDark ? '#1a2235' : isCandidate ? '#fffef5' : '#fff';
     const wrapperBorderColor = isDark ? 'rgba(255,255,255,0.08)' : '#E2EBEF';
+    const cardEl = (
+      <PoliticianCard
+        id={pol.id}
+        imageSrc={imgData.url}
+        name={`${pol.first_name} ${pol.last_name}`}
+        title={cardTitle}
+        subtitle={subtitle}
+        imageFocalPoint={imgData.focalPoint || 'center 20%'}
+        style={{
+          ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}),
+          border: 'none',
+          borderRadius: 0,
+          cursor: 'pointer',
+        }}
+        contentStyle={overlayCompass ? { marginRight: compassOverlayWidth } : undefined}
+        onClick={null}
+        variant="horizontal"
+        imageWidth="95px"
+        footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
+      />
+    );
     return (
       <div
         key={pol.id}
@@ -1399,30 +1420,18 @@ export default function Results() {
           overflow: 'hidden',
           cursor: 'pointer',
           transition: 'box-shadow 0.2s ease, transform 0.2s ease',
+          // Stacked (mobile) layout: flex column so the card region keeps a definite
+          // height. PoliticianCard's photo is height:100% and collapses/stretches
+          // without one — same reason ElectionsView wraps its card in flex:0 0 auto.
+          ...(stackCompass ? { display: 'flex', flexDirection: 'column' } : {}),
         }}
         onClick={handleCardClick}
         onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
         onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}
       >
-        <PoliticianCard
-          id={pol.id}
-          imageSrc={imgData.url}
-          name={`${pol.first_name} ${pol.last_name}`}
-          title={cardTitle}
-          subtitle={subtitle}
-          imageFocalPoint={imgData.focalPoint || 'center 20%'}
-          style={{
-            ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}),
-            border: 'none',
-            borderRadius: 0,
-            cursor: 'pointer',
-          }}
-          contentStyle={overlayCompass ? { marginRight: compassOverlayWidth } : undefined}
-          onClick={null}
-          variant="horizontal"
-          imageWidth="95px"
-          footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
-        />
+        {stackCompass
+          ? <div style={{ position: 'relative', flex: '0 0 auto' }}>{cardEl}</div>
+          : cardEl}
         {overlayCompass && (
           <div
             style={{
@@ -1446,8 +1455,9 @@ export default function Results() {
         {stackCompass && (
           <div
             style={{
+              flex: '0 0 auto',
               borderTop: `1px solid ${wrapperBorderColor}`,
-              display: 'flex', justifyContent: 'center', padding: '12px 8px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px 0',
               backgroundColor: compassBg,
             }}
           >
@@ -1459,7 +1469,7 @@ export default function Results() {
               invertedSpokes={invertedSpokes}
               localLensActive={polLensActive}
               isDark={isDark}
-              size={220}
+              size={200}
             />
           </div>
         )}
