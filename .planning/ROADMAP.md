@@ -175,6 +175,25 @@ Plans:
 
 **Requirements:** PASA-01
 
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 149-01-PLAN.md — Wave 1 reconcile (STRUCTURAL, migration 946): geo_id backfill (empty-string guard) + merge the 2 duplicate City Council chambers (move-then-delete, 2 offices: Gordo/Mayor + Hampton) + BY-DISTRICT relabel At-Large to District 1-7 + create any missing district (D7) + Lyon image dedupe; directly-elected Mayor LOCAL_EXEC reused
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 149-02-PLAN.md — Wave 2 roster link-repair (STRUCTURAL, migration 947): repair broken back-pointers (Gordo/Hampton + any NULL) + optional Cole-not-Williams name correction + official_count=7; NO retirements/creations (all 8 current and exist); directly-elected Mayor reused
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 149-03-PLAN.md — Wave 3 headshots (AUDIT-ONLY, migration 948): cityofpasadena.net NO-WAF direct curl; Rivas newly uploaded (was 0 images), other 7 reprocessed to canonical 600x750; verify D2 is Rick Cole not Felicia Williams; honest gaps documented
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 149-04-PLAN.md — Wave 4 stances (AUDIT-ONLY, migrations 949-956): 8 current members (no exclusions), evidence-only chairs model, one agent at a time, no judicial topics; rent-regulation APPLIES (active Measure H RSO — do NOT auto-blank); RSO/Measure H positions cited
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0656000
