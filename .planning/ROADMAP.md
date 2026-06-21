@@ -175,7 +175,7 @@ Plans:
 
 **Requirements:** PASA-01
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 
 Plans:
 **Wave 1**
@@ -188,7 +188,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 149-03-PLAN.md — Wave 3 headshots (AUDIT-ONLY, migration 948): cityofpasadena.net NO-WAF direct curl; Rivas newly uploaded (was 0 images), other 7 reprocessed to canonical 600x750; verify D2 is Rick Cole not Felicia Williams; honest gaps documented
+- [x] 149-03-PLAN.md — Wave 3 headshots (AUDIT-ONLY, migration 948): cityofpasadena.net NO-WAF direct curl; Rivas newly uploaded (was 0 images), other 7 reprocessed to canonical 600x750; verify D2 is Rick Cole not Felicia Williams; honest gaps documented
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
