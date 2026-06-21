@@ -241,7 +241,7 @@ Plans:
 
 **Requirements:** ELMN-01
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 
 Plans:
 **Wave 1**
@@ -254,7 +254,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 151-03-PLAN.md — Wave 3 headshots: verify 6 pre-existing images + source Cortez fresh, all via direct curl from ci.el-monte.ca.us NO-WAF documentIds (7429–7435); 4:5→600×750; re-crop only failures; honest gaps; blocking human-verify (migration 1002, audit-only)
+- [x] 151-03-PLAN.md — Wave 3 headshots: verify 6 pre-existing images + source Cortez fresh, all via direct curl from ci.el-monte.ca.us NO-WAF documentIds (7429–7435); 4:5→600×750; re-crop only failures; honest gaps; blocking human-verify (migration 1002, audit-only)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
