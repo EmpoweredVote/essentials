@@ -376,7 +376,7 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 Plans:
 **Wave 1**
 
@@ -388,7 +388,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 155-03-PLAN.md — Wave 3 headshots: verify-and-fix all 5 (Ramirez URL replaced, Rios %20%20), 600x750 (blocking human-verify)
+- [x] 155-03-PLAN.md — Wave 3 headshots: verify-and-fix all 5 (Ramirez URL replaced, Rios %20%20), 600x750 (blocking human-verify)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
