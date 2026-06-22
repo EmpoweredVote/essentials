@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-06-22T06:53:21.041Z"
-last_activity: 2026-06-22 -- Phase 154 planning complete
+last_updated: "2026-06-22T07:12:16.824Z"
+last_activity: 2026-06-22
 progress:
   total_phases: 13
   completed_phases: 9
   total_plans: 43
-  completed_plans: 36
+  completed_plans: 37
   percent: 69
 ---
 
@@ -17,12 +17,12 @@ progress:
 
 ## Current Position
 
-Phase: 157
-Plan: Not started
+Phase: 154 (burbank-deep-seed) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-06-22 -- Phase 154 planning complete
+Last activity: 2026-06-22
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
-Resume file: .planning/phases/154-burbank-deep-seed/154-CONTEXT.md
+Resume file: None
 
 ### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
 
@@ -270,7 +270,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 157 — wave 2 close out
+**Current focus:** Phase 154 — burbank-deep-seed
 
 ## v15.0 Roadmap Summary
 
@@ -363,7 +363,7 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-22T06:03:43.217Z
+Last session: 2026-06-22T07:12:16.808Z
 Stopped at: Phase 154 context gathered
 Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 
@@ -422,6 +422,7 @@ Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 | Phase 126 P02 | ~25m | 2 tasks | 2 files (706-707 stances SQLs); 11 stance rows for Wang/Andrade-Stadler; 0 unpaired, 0 uncited; all 5 Alhambra officials complete (26 total) |
 | Phase 127 P01 | ~45m | 3 tasks | 2 files (714-715 stances SQLs); 16 stance rows for Friedman(9)+Corman(7); 0 unpaired, 0 uncited; 713 applied as deviation |
 | Phase 127 P02 | ~30m | 3 tasks | 3 files (716-718 stances SQLs); 26 stance rows for Mirisch(11)+Nazarian(7)+Wells(8); 0 unpaired, 0 uncited; all 5 BH officials complete |
+| Phase 154 P01 | 25min | 2 tasks | 1 files |
 
 ## Decisions
 

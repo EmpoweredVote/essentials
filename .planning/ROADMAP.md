@@ -339,11 +339,11 @@ Plans:
 
 **Requirements:** BURB-01
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 154-01-PLAN.md — Wave 1 reconcile: geo_id 0608954 backfill + dual-chamber merge (survivor 73422d25) + one-directional link repair (Anthony/Mullins) + At-Large district consolidation (mig 1026, structural)
+- [x] 154-01-PLAN.md — Wave 1 reconcile: geo_id 0608954 backfill + dual-chamber merge (survivor 73422d25) + one-directional link repair (Anthony/Mullins) + At-Large district consolidation (mig 1026, structural)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
