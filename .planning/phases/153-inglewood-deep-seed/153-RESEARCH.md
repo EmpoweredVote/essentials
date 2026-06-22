@@ -423,19 +423,24 @@ curl -L -o gray_d1.jpg \
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED — deferred to Wave-1/Wave-3 pre-flight by design)
 
-1. **Where is Alex Padilla in the DB?**
+> These are runtime DB unknowns that cannot be answered from public sources — they require
+> live DB queries. Each is operationally resolved by an explicit pre-flight task with branching
+> logic in the plans (the established "resolve-at-pre-flight" pattern from phases 142–152), so
+> none blocks planning or execution.
+
+1. **(RESOLVED — Wave-1 pre-flight, 153-01 Task 1) Where is Alex Padilla in the DB?**
    - What we know: Official site confirms he is the current D2 councilmember (re-elected 2022). The CONTEXT.md pre-check found only 6 offices under gov `af811c4b` across two named chambers.
    - What's unclear: Is Padilla under a 3rd chamber UUID not named 'City Council'? Is he in the DB at all? Is he one of the 6 but misidentified?
    - Recommendation: Wave-1 pre-flight must query ALL offices under gov `af811c4b` (not filter by chamber name) and surface his full record. If absent from DB: create fresh with ext_id `-7010xx` (check MIN to avoid collision).
 
-2. **Faulk's 2 existing images — are they duplicates of the same photo or two different sources?**
+2. **(RESOLVED — Wave-3 pre-flight, 153-03 Task 1) Faulk's 2 existing images — are they duplicates of the same photo or two different sources?**
    - What we know: CONTEXT.md says Faulk has 2 politician_images rows.
    - What's unclear: Whether both point to the same source URL (a true duplicate to delete-one) or two different photos (may need to verify which is correct person, correct dimensions).
    - Recommendation: Wave-3 pre-flight: query `SELECT * FROM politician_images WHERE politician_id = '729bc539-...'` and check photo_origin_url for both.
 
-3. **Are the Inglewood council district_id rows shared or distinct?**
+3. **(RESOLVED — Wave-1 pre-flight, 153-01 Task 1) Are the Inglewood council district_id rows shared or distinct?**
    - What we know: West Covina had a shared-district defect (two offices shared one district UUID). Inglewood may have the same defect across its At-Large rows.
    - What's unclear: The actual district_id values for the 3 offices in the survivor chamber are not listed in CONTEXT.md.
    - Recommendation: Mandatory pre-flight shared-district check before any relabeling.
