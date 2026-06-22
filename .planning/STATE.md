@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-06-22T23:13:56.915Z"
+last_updated: "2026-06-22T23:28:25.028Z"
 last_activity: 2026-06-22 -- Phase 156 execution started
 progress:
   total_phases: 13
@@ -22,7 +22,7 @@ Plan: 1 of 4
 Status: Executing Phase 156
 Last activity: 2026-06-22 -- Phase 156 execution started
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
-Resume file: .planning/phases/156-bellflower-deep-seed/156-VERIFICATION.md
+Resume file: .planning/phases/157-wave-2-close-out/157-CONTEXT.md
 
 ### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
 
@@ -363,8 +363,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-22T23:13:56.895Z
-Stopped at: Phase 156 complete (4/4) — Bellflower deep-seed VERIFICATION passed
+Last session: 2026-06-22T23:28:25.014Z
+Stopped at: Phase 157 context updated (post-wave revision)
 Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
 
 ## Performance Metrics
