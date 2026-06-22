@@ -400,7 +400,7 @@ Plans:
 
 **Requirements:** BLFL-01
 
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 
 Plans:
 **Wave 1**
@@ -409,7 +409,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 156-02-PLAN.md — Wave 2 roster: create+seat the missing 5th member Sonny R. Santa Ines (D3, new -7010xx ext_id, current Mayor) + Mayor/Mayor Pro Tem (Sanchez D4) titles-on-seat + official_count=5; no unlinking (migration 1043, structural)
+- [x] 156-02-PLAN.md — Wave 2 roster: create+seat the missing 5th member Sonny R. Santa Ines (D3, new -7010xx ext_id, current Mayor) + Mayor/Mayor Pro Tem (Sanchez D4) titles-on-seat + official_count=5; no unlinking (migration 1043, structural)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
