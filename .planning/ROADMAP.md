@@ -340,7 +340,7 @@ Plans:
 **Requirements:** BURB-01
 
 **Plans:** 4/4 plans complete
-Plans:
+Plans:
 **Wave 1**
 
 - [x] 154-01-PLAN.md — Wave 1 reconcile: geo_id 0608954 backfill + dual-chamber merge (survivor 73422d25) + one-directional link repair (Anthony/Mullins) + At-Large district consolidation (mig 1026, structural)
@@ -399,6 +399,25 @@ Plans:
 **Goal:** Take Bellflower (geo_id 0604982) from geofence-only to full Tier 1 depth — government structure, elected roster, headshots, and evidence-only compass stances. (Tier B, 70k–100k.)
 
 **Requirements:** BLFL-01
+
+**Plans:** 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 156-01-PLAN.md — Wave 1 reconcile: geo_id backfill + 4 one-directional link repair + by-district relabel/split (shared At-Large 8db5a2e5 → D1–D5) + LOCAL_EXEC Mayor (Dunton) → D5 council seat conversion + drop orphan LOCAL_EXEC district b0002e15 + title normalize (migration 1042, structural)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 156-02-PLAN.md — Wave 2 roster: create+seat the missing 5th member Sonny R. Santa Ines (D3, new -7010xx ext_id, current Mayor) + Mayor/Mayor Pro Tem (Sanchez D4) titles-on-seat + official_count=5; no unlinking (migration 1043, structural)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 156-03-PLAN.md — Wave 3 headshots: verify-and-fix 4 existing (Dunton/Koops/Morse/Sanchez) + INSERT Santa Ines from bellflower.ca.gov /photo_gallery/ path (NO-WAF Revize curl), 600×750 (migration 1044, audit-only; blocking human-verify)
+
+**Wave 4** *(blocked on Wave 2 completion; may run alongside Wave 3)*
+
+- [ ] 156-04-PLAN.md — Wave 4 stances: full greenfield, 5 members evidence-only CHAIRS, 100% cited, no judicial, no manufactured RSO/shelter-ban, one agent at a time (migrations 1045–1049, audit-only; blocking human-verify)
 
 **Success criteria:**
 
