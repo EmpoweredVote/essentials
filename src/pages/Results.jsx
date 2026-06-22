@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
@@ -483,18 +483,30 @@ export default function Results() {
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Client-side name filter — applied only to the grid (not to non-display logic like locationLabel)
-  const trimmedSearch = (searchQuery || '').trim().toLowerCase();
-  const visibleList = trimmedSearch && Array.isArray(list)
-    ? list.filter((p) => {
-        const name = (p?.full_name || '').toLowerCase();
-        const first = (p?.first_name || '').toLowerCase();
-        const last = (p?.last_name || '').toLowerCase();
-        return name.includes(trimmedSearch)
-            || first.includes(trimmedSearch)
-            || last.includes(trimmedSearch);
-      })
-    : list;
+  // Defer the search term that feeds the expensive filter→dedup→group→render chain.
+  // The input itself stays bound to `searchQuery` (updates immediately, so typing feels
+  // instant), while the heavy grid recompute reads `deferredQuery` and runs at low
+  // priority — React can interrupt it to keep the page (and the mouse) responsive.
+  const deferredQuery = useDeferredValue(searchQuery);
+
+  // Client-side name filter — applied only to the grid (not to non-display logic like locationLabel).
+  // Memoized so the downstream cascade (filteredPols → federalFiltered → deduped → hierarchy)
+  // only recomputes when the term or the underlying list actually changes.
+  const trimmedSearch = useMemo(
+    () => (deferredQuery || '').trim().toLowerCase(),
+    [deferredQuery]
+  );
+  const visibleList = useMemo(() => {
+    if (!trimmedSearch || !Array.isArray(list)) return list;
+    return list.filter((p) => {
+      const name = (p?.full_name || '').toLowerCase();
+      const first = (p?.first_name || '').toLowerCase();
+      const last = (p?.last_name || '').toLowerCase();
+      return name.includes(trimmedSearch)
+          || first.includes(trimmedSearch)
+          || last.includes(trimmedSearch);
+    });
+  }, [trimmedSearch, list]);
 
   // Compass mode toggle — persisted across sessions; off by default for dense view
   const [compassMode, setCompassMode] = useState(() => {
@@ -1420,6 +1432,13 @@ export default function Results() {
           overflow: 'hidden',
           cursor: 'pointer',
           transition: 'box-shadow 0.2s ease, transform 0.2s ease',
+          // Grid virtualization: skip layout+paint for off-screen cards (the heavy part —
+          // image + SVG MiniCompass). Preserves DOM structure, scroll-spy ([data-tier]),
+          // scroll-restore (ev:scrollTop) and the CSS grid, unlike windowing. `auto 120px`
+          // is the placeholder height while skipped; `auto` makes the browser remember each
+          // card's real measured size after its first render so the scrollbar stays accurate.
+          contentVisibility: 'auto',
+          containIntrinsicSize: 'auto 120px',
           // Stacked (mobile) layout: flex column so the card region keeps a definite
           // height. PoliticianCard's photo is height:100% and collapses/stretches
           // without one — same reason ElectionsView wraps its card in flex:0 0 auto.
