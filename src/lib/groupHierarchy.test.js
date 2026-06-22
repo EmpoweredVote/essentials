@@ -246,3 +246,46 @@ describe('Judicial sub-group splitting (judges vs. court officials)', () => {
   });
 
 });
+
+describe('Rotational Mayor / Mayor Pro Tem ordering and labeling', () => {
+
+  // Bellflower-class: by-district council, rotational Mayor (D3) + Mayor Pro Tem (D4).
+  // Raw input deliberately lists Mayor Pro Tem (Sanchez) FIRST and alphabetically before
+  // the Mayor (Santa Ines) — the upstream query order that produced the original defect.
+  // The exec sub-group must label "Mayor" (not "Mayor Pro Tem") and list the Mayor first.
+  it('Mayor leads the exec sub-group and sets its label, even when Mayor Pro Tem is returned first', () => {
+    const bf = {
+      government_name: 'City of Bellflower, California, US',
+      government_body_name: 'Bellflower City Council',
+      chamber_name_formal: 'Bellflower City Council',
+      chamber_name: 'City Council',
+      district_id: '0',
+    };
+    const pols = [
+      makePol({ ...bf, office_title: 'Mayor Pro Tem', last_name: 'Sanchez', district_label: 'District 4' }),
+      makePol({ ...bf, office_title: 'Mayor', last_name: 'Santa Ines', district_label: 'District 3' }),
+      makePol({ ...bf, office_title: 'Councilmember', last_name: 'Morse', district_label: 'District 1' }),
+      makePol({ ...bf, office_title: 'Councilmember', last_name: 'Koops', district_label: 'District 2' }),
+      makePol({ ...bf, office_title: 'Councilmember', last_name: 'Dunton', district_label: 'District 5' }),
+    ];
+
+    const hierarchy = groupIntoHierarchy(pols);
+    const localTier = hierarchy.find(t => t.tier === 'Local');
+    const body = localTier.bodies[0];
+
+    // The exec sub-group holds both Mayor and Mayor Pro Tem
+    const execGroup = body.subgroups.find(sg => sg.pols.some(p => p.office_title === 'Mayor'));
+    expect(execGroup).toBeDefined();
+    expect(execGroup.pols.some(p => p.office_title === 'Mayor Pro Tem')).toBe(true);
+
+    // Label is "Mayor", NOT "Mayor Pro Tem"
+    expect(execGroup.label).toBe('Mayor');
+
+    // Mayor sorts before Mayor Pro Tem within the group
+    const mayorIdx = execGroup.pols.findIndex(p => p.office_title === 'Mayor');
+    const proTemIdx = execGroup.pols.findIndex(p => p.office_title === 'Mayor Pro Tem');
+    expect(mayorIdx).toBeGreaterThanOrEqual(0);
+    expect(mayorIdx).toBeLessThan(proTemIdx);
+  });
+
+});

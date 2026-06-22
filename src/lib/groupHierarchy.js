@@ -430,8 +430,8 @@ function subGroupOrderScore(label, pols) {
 // Mayor before council members; Governor before Lt. Gov; President before VP; others below.
 function execTitlePriority(pol) {
   const t = (pol.office_title || '').toLowerCase();
-  if (/\bmayor\b/.test(t) && !/vice|deputy/.test(t)) return 0;
-  if (/\b(vice\s*mayor|deputy\s*mayor)\b/.test(t)) return 1;
+  if (/\bmayor\b/.test(t) && !/vice|deputy|pro\s*tem/.test(t)) return 0;
+  if (/\b(vice\s*mayor|deputy\s*mayor)\b/.test(t) || /\bmayor\s+pro\s*tem(?:pore)?\b/.test(t)) return 1;
   if (/\bgovernor\b/.test(t) && !/lt\.?|lieutenant/.test(t)) return 0;
   if (/\b(lt\.?\s*governor|lieutenant\s+governor)\b/.test(t)) return 1;
   if (/\bpresident\b/.test(t) && !/vice/.test(t)) return 0;
@@ -626,12 +626,18 @@ export function groupIntoHierarchy(politicians) {
         }
 
         const subgroups = Object.entries(sgMap)
-          .map(([sgKey, sgPols]) => ({
-            key: sgKey,
-            label: getSubGroupLabel(sgPols, stripSuffix(pols[0]?.government_name)),
-            url: getSubGroupUrl(sgPols),
-            pols: sortPoliticians(sgPols),
-          }))
+          .map(([sgKey, sgPols]) => {
+            // Sort first, then derive the label from the sorted order so the sub-group
+            // label reflects the lead official (e.g. "Mayor" over "Mayor Pro Tem"),
+            // not whichever record the upstream query happened to return first.
+            const sortedPols = sortPoliticians(sgPols);
+            return {
+              key: sgKey,
+              label: getSubGroupLabel(sortedPols, stripSuffix(pols[0]?.government_name)),
+              url: getSubGroupUrl(sortedPols),
+              pols: sortedPols,
+            };
+          })
           .sort((a, b) => {
             const sa = subGroupOrderScore(a.label, a.pols);
             const sb = subGroupOrderScore(b.label, b.pols);
