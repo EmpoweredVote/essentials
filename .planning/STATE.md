@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-06-22T19:47:09.550Z"
-last_activity: 2026-06-22 -- Phase 156 planning complete
+last_updated: "2026-06-22T19:58:20.324Z"
+last_activity: 2026-06-22 -- Phase 156 execution started
 progress:
   total_phases: 13
   completed_phases: 11
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 157
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-22 -- Phase 156 planning complete
+Phase: 156 (bellflower-deep-seed) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 156
+Last activity: 2026-06-22 -- Phase 156 execution started
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
 Resume file: .planning/phases/156-bellflower-deep-seed/156-CONTEXT.md
 
@@ -270,7 +270,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 157 — wave 2 close out
+**Current focus:** Phase 156 — bellflower-deep-seed
 
 ## v15.0 Roadmap Summary
 

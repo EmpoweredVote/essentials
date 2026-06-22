@@ -400,12 +400,12 @@ Plans:
 
 **Requirements:** BLFL-01
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 
 Plans:
 **Wave 1**
 
-- [ ] 156-01-PLAN.md — Wave 1 reconcile: geo_id backfill + 4 one-directional link repair + by-district relabel/split (shared At-Large 8db5a2e5 → D1–D5) + LOCAL_EXEC Mayor (Dunton) → D5 council seat conversion + drop orphan LOCAL_EXEC district b0002e15 + title normalize (migration 1042, structural)
+- [x] 156-01-PLAN.md — Wave 1 reconcile: geo_id backfill + 4 one-directional link repair + by-district relabel/split (shared At-Large 8db5a2e5 → D1–D5) + LOCAL_EXEC Mayor (Dunton) → D5 council seat conversion + drop orphan LOCAL_EXEC district b0002e15 + title normalize (migration 1042, structural)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
