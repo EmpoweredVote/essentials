@@ -315,11 +315,11 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 4 plans
+**Plans:** 1/4 plans executed
 Plans:
 **Wave 1**
 
-- [ ] 153-01-PLAN.md — Wave 1 reconcile: geo_id backfill + dual-chamber merge + link repair + Eloy Morales dedup + by-district relabel
+- [x] 153-01-PLAN.md — Wave 1 reconcile: geo_id backfill + dual-chamber merge + link repair + Eloy Morales dedup + by-district relabel
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
