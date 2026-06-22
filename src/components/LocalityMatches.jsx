@@ -18,6 +18,10 @@ export default function LocalityMatches({ query, onSelect }) {
 
   return (
     <div className="mt-2">
+      {/* When our locality matches are showing (name queries — the address-style
+          ones are filtered out upstream), suppress Google Places' own dropdown so
+          it doesn't overlap and intercept clicks on these results. */}
+      <style>{`.pac-container { display: none !important; }`}</style>
       <ul className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-md overflow-hidden">
         {matches.map((area) => (
           <li key={`${area.stateAbbrev}-${area.label}`}>
