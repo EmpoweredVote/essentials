@@ -294,6 +294,7 @@ export default function Landing() {
                 </div>
                 <LocalityMatches
                   query={addressInput}
+                  inputRef={addressInputRef}
                   onSelect={(area) => {
                     posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
                     navigate(coverageAreaToPath(area));
