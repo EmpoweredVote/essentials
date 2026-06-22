@@ -376,7 +376,7 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 1/4 plans executed
+**Plans:** 2/4 plans executed
 Plans:
 **Wave 1**
 
@@ -384,7 +384,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 155-02-PLAN.md — Wave 2 roster: rotational Mayor=Perez/Vice Mayor=Rios titles-on-seat + normalize titles + official_count=5
+- [x] 155-02-PLAN.md — Wave 2 roster: rotational Mayor=Perez/Vice Mayor=Rios titles-on-seat + normalize titles + official_count=5
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
