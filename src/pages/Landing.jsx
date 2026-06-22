@@ -5,8 +5,9 @@ import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
-import { COVERAGE_STATES } from '../lib/coverage';
+import { COVERAGE_STATES, coverageAreaToPath } from '../lib/coverage';
 import { resolveLocalityRoute } from '../lib/localitySearch';
+import LocalityMatches from '../components/LocalityMatches';
 
 
 const STEPS = [
@@ -291,6 +292,13 @@ export default function Landing() {
                     <span className="hidden sm:inline">Search</span>
                   </button>
                 </div>
+                <LocalityMatches
+                  query={addressInput}
+                  onSelect={(area) => {
+                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev });
+                    navigate(coverageAreaToPath(area));
+                  }}
+                />
               </div>
               {!compassLoading && isLoggedIn && myLocationNotSet && (
                 <div className="mt-3 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">

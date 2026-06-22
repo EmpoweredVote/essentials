@@ -8,25 +8,39 @@ export const COVERAGE_STATES = [
   {
     name: 'California', abbrev: 'CA',
     areas: [
-      { label: 'Alhambra',      browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Berkeley',      browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Alhambra', browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Carson',        browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Compton',       browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Culver City',   browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'El Segundo',    browseGovernmentList: ['0622412'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Fremont',       browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Gardena',       browseGovernmentList: ['0628168'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Hawthorne',     browseGovernmentList: ['0632548'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Los Angeles',   browseGovernmentList: ['0644000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Sacramento',    browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'San Diego',     browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Burbank', browseGovernmentList: ['0608954'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Carson', browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Compton', browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Culver City', browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Downey', browseGovernmentList: ['0619766'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'El Monte', browseGovernmentList: ['0622230'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'El Segundo', browseGovernmentList: ['0622412'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Fremont', browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Gardena', browseGovernmentList: ['0628168'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Glendale', browseGovernmentList: ['0630000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Hawthorne', browseGovernmentList: ['0632548'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Inglewood', browseGovernmentList: ['0636546'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Lancaster', browseGovernmentList: ['0640130'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Long Beach', browseGovernmentList: ['0643000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Los Angeles', browseGovernmentList: ['0644000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Norwalk', browseGovernmentList: ['0652526'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Palmdale', browseGovernmentList: ['0655156'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Pasadena', browseGovernmentList: ['0656000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Pomona', browseGovernmentList: ['0658072'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Sacramento', browseGovernmentList: ['0664000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Diego', browseGovernmentList: ['0666000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'San Francisco', browseGovernmentList: ['0667000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'San Jose',      browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Santa Monica',  browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'South Gate',    browseGovernmentList: ['0673080'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'West Hollywood',browseGovernmentList: ['0684410'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Whittier',      browseGovernmentList: ['0685292'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'San Jose', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Santa Clarita', browseGovernmentList: ['0669088'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Santa Monica', browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'South Gate', browseGovernmentList: ['0673080'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Torrance', browseGovernmentList: ['0680000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'West Covina', browseGovernmentList: ['0684200'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'West Hollywood', browseGovernmentList: ['0684410'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Whittier', browseGovernmentList: ['0685292'], browseStateAbbrev: 'CA', hasContext: true },
     ],
   },
   {
@@ -114,16 +128,42 @@ export const COVERAGE_STATES = [
   {
     name: 'Utah', abbrev: 'UT',
     areas: [
-      { label: 'Layton',          browseGovernmentList: ['4943660'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Lehi',            browseGovernmentList: ['4944320'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Ogden',           browseGovernmentList: ['4955980'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Orem',            browseGovernmentList: ['4957300'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Provo',           browseGovernmentList: ['4962470'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Salt Lake City',  browseGovernmentList: ['4967000'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Sandy',           browseGovernmentList: ['4967440'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'St. George',      browseGovernmentList: ['4965330'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'West Jordan',     browseGovernmentList: ['4982950'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'West Valley City',browseGovernmentList: ['4983470'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Alpine', browseGovernmentList: ['4900540'], browseStateAbbrev: 'UT' },
+      { label: 'American Fork', browseGovernmentList: ['4901310'], browseStateAbbrev: 'UT' },
+      { label: 'Bluffdale', browseGovernmentList: ['4906810'], browseStateAbbrev: 'UT' },
+      { label: 'Cedar Hills', browseGovernmentList: ['4911440'], browseStateAbbrev: 'UT' },
+      { label: 'Cottonwood Heights', browseGovernmentList: ['4916270'], browseStateAbbrev: 'UT' },
+      { label: 'Draper', browseGovernmentList: ['4920120'], browseStateAbbrev: 'UT' },
+      { label: 'Eagle Mountain', browseGovernmentList: ['4920810'], browseStateAbbrev: 'UT' },
+      { label: 'Herriman', browseGovernmentList: ['4934970'], browseStateAbbrev: 'UT' },
+      { label: 'Holladay', browseGovernmentList: ['4936070'], browseStateAbbrev: 'UT' },
+      { label: 'Layton', browseGovernmentList: ['4943660'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Lehi', browseGovernmentList: ['4944320'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Lindon', browseGovernmentList: ['4945090'], browseStateAbbrev: 'UT' },
+      { label: 'Mapleton', browseGovernmentList: ['4947950'], browseStateAbbrev: 'UT' },
+      { label: 'Midvale', browseGovernmentList: ['4949710'], browseStateAbbrev: 'UT' },
+      { label: 'Millcreek', browseGovernmentList: ['4950150'], browseStateAbbrev: 'UT' },
+      { label: 'Murray', browseGovernmentList: ['4953230'], browseStateAbbrev: 'UT' },
+      { label: 'Ogden', browseGovernmentList: ['4955980'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Orem', browseGovernmentList: ['4957300'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Payson', browseGovernmentList: ['4958730'], browseStateAbbrev: 'UT' },
+      { label: 'Pleasant Grove', browseGovernmentList: ['4960930'], browseStateAbbrev: 'UT' },
+      { label: 'Provo', browseGovernmentList: ['4962470'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Riverton', browseGovernmentList: ['4964340'], browseStateAbbrev: 'UT' },
+      { label: 'Salem', browseGovernmentList: ['4965770'], browseStateAbbrev: 'UT' },
+      { label: 'Salt Lake City', browseGovernmentList: ['4967000'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Sandy', browseGovernmentList: ['4967440'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Santaquin', browseGovernmentList: ['4967770'], browseStateAbbrev: 'UT' },
+      { label: 'Saratoga Springs', browseGovernmentList: ['4967825'], browseStateAbbrev: 'UT' },
+      { label: 'South Jordan', browseGovernmentList: ['4970850'], browseStateAbbrev: 'UT' },
+      { label: 'South Salt Lake', browseGovernmentList: ['4971070'], browseStateAbbrev: 'UT' },
+      { label: 'Spanish Fork', browseGovernmentList: ['4971290'], browseStateAbbrev: 'UT' },
+      { label: 'Springville', browseGovernmentList: ['4972280'], browseStateAbbrev: 'UT' },
+      { label: 'St. George', browseGovernmentList: ['4965330'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Taylorsville', browseGovernmentList: ['4975360'], browseStateAbbrev: 'UT' },
+      { label: 'Vineyard', browseGovernmentList: ['4980420'], browseStateAbbrev: 'UT' },
+      { label: 'West Jordan', browseGovernmentList: ['4982950'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'West Valley City', browseGovernmentList: ['4983470'], browseStateAbbrev: 'UT', hasContext: true },
     ],
   },
   {
@@ -158,4 +198,62 @@ export function normalizePlace(s) {
     .replace(/\bsaint\b/g, 'st')
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
+}
+
+// ── City/area name search (Phase 1 locality typeahead) ──────────────────────
+
+// Flattened, searchable view of every covered area, tagged with its state.
+const ALL_COVERAGE_AREAS = COVERAGE_STATES.flatMap((s) =>
+  s.areas.map((a) => ({ ...a, stateAbbrev: a.browseStateAbbrev || s.abbrev, stateName: s.name }))
+);
+
+/**
+ * Search covered cities/areas by name for the search-box typeahead. Returns
+ * ranked matches (name-prefix first, then stance-seeded, then alphabetical).
+ * Returns [] for queries that look like a street address (leading digit) so the
+ * Google address autocomplete owns that path and the two dropdowns don't collide.
+ */
+export function searchCoverageAreas(query, limit = 6) {
+  const raw = (query || '').trim();
+  if (raw.length < 2 || /^\d/.test(raw)) return [];
+  const q = normalizePlace(raw);
+  if (!q) return [];
+  const matches = [];
+  for (const area of ALL_COVERAGE_AREAS) {
+    const idx = normalizePlace(area.label).indexOf(q);
+    if (idx !== -1) matches.push({ area, idx });
+  }
+  matches.sort((a, b) =>
+    a.idx - b.idx ||
+    (b.area.hasContext ? 1 : 0) - (a.area.hasContext ? 1 : 0) ||
+    a.area.label.localeCompare(b.area.label)
+  );
+  return matches.slice(0, limit).map((m) => m.area);
+}
+
+/**
+ * Build the /results browse URL for a covered area. Mirrors Landing's
+ * handleAreaClick routing so the typeahead and the grid navigate identically.
+ */
+export function coverageAreaToPath(area) {
+  if (area.browseGovernmentList) {
+    const params = new URLSearchParams({
+      browse_government_list: area.browseGovernmentList.join(','),
+      browse_label: area.label,
+    });
+    if (area.browseStateAbbrev) params.set('browse_state', area.browseStateAbbrev);
+    if (area.browseCountyGeoId) params.set('browse_county_geo_id', area.browseCountyGeoId);
+    return `/results?${params.toString()}`;
+  }
+  if (area.browseGeoId) {
+    const params = new URLSearchParams({
+      browse_geo_id: area.browseGeoId,
+      browse_label: area.label,
+    });
+    if (area.browseMtfcc) params.set('browse_mtfcc', area.browseMtfcc);
+    if (area.browseCityFilter) params.set('browse_city_filter', area.browseCityFilter);
+    if (area.browseSchoolFilter) params.set('browse_school_filter', area.browseSchoolFilter);
+    return `/results?${params.toString()}`;
+  }
+  return `/results?q=${encodeURIComponent(area.address)}`;
 }

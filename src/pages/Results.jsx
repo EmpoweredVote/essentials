@@ -22,6 +22,8 @@ import { useTheme } from '../hooks/useTheme';
 import MiniCompass from '../components/MiniCompass';
 import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import { resolveLocalityRoute } from '../lib/localitySearch';
+import LocalityMatches from '../components/LocalityMatches';
+import { coverageAreaToPath } from '../lib/coverage';
 import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
@@ -1699,6 +1701,17 @@ export default function Results() {
                   </button>
                 )}
               </div>
+
+              {searchMode === 'address' && (
+                <LocalityMatches
+                  query={addressInput}
+                  onSelect={(area) => {
+                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev });
+                    navigate(coverageAreaToPath(area));
+                    setEditingSearch(false);
+                  }}
+                />
+              )}
 
               {/* Quick-access shortcuts for anonymous users */}
               {searchMode === 'address' && SHORTCUTS.length > 0 && (
