@@ -283,7 +283,8 @@ Plans:
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
 **Plans:** 4/4 plans complete
-Plans:
+
+Plans:
 **Wave 1**
 
 - [x] 152-01-PLAN.md — Reconcile: geo_id backfill + merge two City Council chambers (survivor 12c9360a) + repair 2 one-directional links + by-district relabel D1-D5 (mig 1010, structural)
@@ -313,6 +314,14 @@ Plans:
 3. Headshots at 600×750 uploaded for all officials with an available official portrait; genuine gaps documented (no fabricated photos)
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
+
+**Plans:** 4 plans
+
+Plans:
+- [ ] 153-01-PLAN.md — Wave 1 reconcile: geo_id backfill + dual-chamber merge + link repair + Eloy Morales dedup + by-district relabel
+- [ ] 153-02-PLAN.md — Wave 2 roster: unlink Dotson + locate-or-create Padilla D2 + official_count=4
+- [ ] 153-03-PLAN.md — Wave 3 headshots: Faulk dedup + 5 official portraits 600x750 (audit-only)
+- [ ] 153-04-PLAN.md — Wave 4 stances: evidence-only CHAIRS, 100% cited, one agent at a time (audit-only)
 
 ### Phase 154: Burbank deep-seed
 
