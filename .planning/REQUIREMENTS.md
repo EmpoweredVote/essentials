@@ -74,6 +74,6 @@ Per-city deliverable (the unit of one phase):
 | WCOV-01 | 152 | Pending |
 | INGL-01 | 153 | Complete |
 | BURB-01 | 154 | Complete |
-| NRWK-01 | 155 | Pending |
+| NRWK-01 | 155 | Complete |
 | BLFL-01 | 156 | Pending |
 | LAC2-RETRO-01 | 157 | Pending |
