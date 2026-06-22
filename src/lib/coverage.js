@@ -9,6 +9,7 @@ export const COVERAGE_STATES = [
     name: 'California', abbrev: 'CA',
     areas: [
       { label: 'Alhambra', browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Bellflower', browseGovernmentList: ['0604982'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Burbank', browseGovernmentList: ['0608954'], browseStateAbbrev: 'CA', hasContext: true },
