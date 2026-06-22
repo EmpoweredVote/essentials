@@ -315,7 +315,7 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 Plans:
 **Wave 1**
 
@@ -331,7 +331,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 153-04-PLAN.md — Wave 4 stances: evidence-only CHAIRS, 100% cited, one agent at a time (audit-only)
+- [x] 153-04-PLAN.md — Wave 4 stances: evidence-only CHAIRS, 100% cited, one agent at a time (audit-only)
 
 ### Phase 154: Burbank deep-seed
 
