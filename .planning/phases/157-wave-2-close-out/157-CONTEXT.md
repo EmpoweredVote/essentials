@@ -22,7 +22,7 @@ This is a retrospective/surfacing phase. NOT in scope: seeding/reconciling city 
 ## Implementation Decisions
 
 ### Landing.jsx surfacing (Success criterion 1)
-- **D-01:** List **all 15** Wave-2 cities as browsable entries in the CA block of `COVERAGE_STATES` (alphabetical), each with `browseGovernmentList: ['<geo_id>']` + `browseStateAbbrev: 'CA'`. Geo_ids per ROADMAP/STATE: Long Beach 0643000 · Santa Clarita 0669088 · Glendale 0630000 · Lancaster 0640130 · Palmdale 0655156 · Pomona 0658072 · Torrance 0680000 · Pasadena 0656000 · Downey 0619766 · El Monte 0622230 · West Covina 0684200 · Inglewood 0636546 · Burbank 0608954 · Norwalk 0652526 · Bellflower 0604982.
+- **D-01:** Ensure **all 15** Wave-2 cities are present as browsable entries in the CA block of `COVERAGE_STATES` (in `src/lib/coverage.js`, alphabetical), each with `browseGovernmentList: ['<geo_id>']` + `browseStateAbbrev: 'CA'`. Geo_ids per ROADMAP/STATE: Long Beach 0643000 · Santa Clarita 0669088 · Glendale 0630000 · Lancaster 0640130 · Palmdale 0655156 · Pomona 0658072 · Torrance 0680000 · Pasadena 0656000 · Downey 0619766 · El Monte 0622230 · West Covina 0684200 · Inglewood 0636546 · Burbank 0608954 · Norwalk 0652526 · Bellflower 0604982. **As of 2026-06-22 all 15 are already present** (verified in `src/lib/coverage.js`) — so this is a presence/alphabetical/geo_id verification, with the only live edit being the D-02 `hasContext` reconciliation.
 - **D-02:** Set `hasContext: true` (purple chip) **only for cities that have ≥1 seeded compass stance**. A city that finishes with a roster + headshots but 0 stances (honest blank) is still listed and browsable, but stays plain (no purple chip). This keeps the chip's "has compass context" promise honest and matches the existing `Landing.jsx:9` comment semantics. Determine the per-city stance count from the DB at audit time, not from assumption.
 
 ### Milestone audit pass bar (Success criterion 3)
@@ -56,7 +56,8 @@ This is a retrospective/surfacing phase. NOT in scope: seeding/reconciling city 
 - `.planning/REQUIREMENTS.md` — LAC2-RETRO-01 acceptance text
 
 ### Surfacing target
-- `src/pages/Landing.jsx` — `COVERAGE_STATES` array; line ~9 documents `hasContext` semantics; CA block lines ~14–32 show the alphabetical entry format to extend
+- `src/lib/coverage.js` — the **real** `COVERAGE_STATES` definition (Landing.jsx imports it via `import { COVERAGE_STATES } from '../lib/coverage'`). **Correction (2026-06-22):** all 15 Wave-2 cities are ALREADY present in the CA block here (added incrementally during each city's deep-seed phase), every one currently `hasContext: true`. Wave 2 surfacing is therefore **verify-and-reconcile**, not a blind add — confirm all 15 present + alphabetical, and bring each city's `hasContext` into agreement with the Wave-1 audit's real DB stance counts (drop the purple chip from any 0-stance city per D-02).
+- `src/pages/Landing.jsx` — consumer only; renders `COVERAGE_STATES.map(...)`. No edits expected here unless render wiring changes.
 
 ### Shared UI fix verification target (D-08)
 - `src/lib/groupHierarchy.js` — Phase 156 Mayor > Mayor-Pro-Tem ordering+label fix lives here; confirm committed + flag deploy status in the audit (do not modify in this phase)
@@ -81,7 +82,7 @@ This is a retrospective/surfacing phase. NOT in scope: seeding/reconciling city 
 ## Existing Code Insights
 
 ### Reusable Assets
-- `Landing.jsx` `COVERAGE_STATES` CA block: established alphabetical entry pattern `{ label, browseGovernmentList: ['<geo_id>'], browseStateAbbrev: 'CA', hasContext: true }`. Wave-2 cities are NOT yet present (current CA list ends at Whittier) — they get inserted into alphabetical order.
+- `src/lib/coverage.js` `COVERAGE_STATES` CA block: established alphabetical entry pattern `{ label, browseGovernmentList: ['<geo_id>'], browseStateAbbrev: 'CA', hasContext: true }`. **Correction (2026-06-22):** all 15 Wave-2 cities are ALREADY present here (added during their per-city phases), all currently `hasContext: true` — Wave 2 reconciles the chip against real DB stance counts (D-02), it does not insert new entries. (`src/pages/Landing.jsx` is the consumer that imports and renders this array.)
 - `LOCATION-ONBOARDING.md` "Cities Onboarded" table: established 5-column row format with rich "Notable patterns" cells (see v15.0 LA-area rows for the pattern to mirror).
 
 ### Established Patterns
