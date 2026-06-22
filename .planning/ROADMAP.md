@@ -316,11 +316,21 @@ Plans:
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
 **Plans:** 4 plans
-
 Plans:
+**Wave 1**
+
 - [ ] 153-01-PLAN.md — Wave 1 reconcile: geo_id backfill + dual-chamber merge + link repair + Eloy Morales dedup + by-district relabel
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 153-02-PLAN.md — Wave 2 roster: unlink Dotson + locate-or-create Padilla D2 + official_count=4
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 153-03-PLAN.md — Wave 3 headshots: Faulk dedup + 5 official portraits 600x750 (audit-only)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 153-04-PLAN.md — Wave 4 stances: evidence-only CHAIRS, 100% cited, one agent at a time (audit-only)
 
 ### Phase 154: Burbank deep-seed
