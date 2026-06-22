@@ -69,7 +69,12 @@ export default function Landing() {
   }, [myLocationNotSet]);
 
   const handleSearch = async () => {
-    const q = addressInput.trim();
+    // Read the live DOM value, not React state: Google Places Autocomplete writes
+    // directly to the input element, and not every write fires React's onChange, so
+    // `addressInput` state can lag/truncate behind what's actually in the box (the
+    // dropdown matches the full text but state may be stale). The ref is the source
+    // of truth; fall back to state only if the ref isn't mounted.
+    const q = (addressInputRef.current?.value ?? addressInput).trim();
     if (!q || searching) return;
     posthog?.capture('essentials_address_searched', { method: 'manual' });
     setSearching(true);
