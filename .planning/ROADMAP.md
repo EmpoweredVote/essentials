@@ -339,7 +339,7 @@ Plans:
 
 **Requirements:** BURB-01
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 Plans:
 **Wave 1**
 
@@ -351,7 +351,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 154-03-PLAN.md — Wave 3 headshots: verify-and-fix Perez/Anthony/Mullins + fill Rizzotti/Takahashi gaps from burbankca.gov, 600x750 (mig 1028, audit-only; blocking checkpoint)
+- [x] 154-03-PLAN.md — Wave 3 headshots: verify-and-fix Perez/Anthony/Mullins + fill Rizzotti/Takahashi gaps from burbankca.gov, 600x750 (mig 1028, audit-only; blocking checkpoint)
 - [ ] 154-04-PLAN.md — Wave 3 stances: evidence-only CHAIRS greenfield for all 5 (Anthony to Rizzotti), 100% cited, no judicial (migs 1029-1033, audit-only; blocking checkpoint)
 
 **Success criteria:**
