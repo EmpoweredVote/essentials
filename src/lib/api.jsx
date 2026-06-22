@@ -344,11 +344,14 @@ export async function fetchBrowseAreas(stateAbbrev) {
   }
 }
 
-export async function browseByGovernmentList(governmentGeoIds, state, { countyGeoId } = {}) {
+export async function browseByGovernmentList(governmentGeoIds, state, { countyGeoId, skipOverlap } = {}) {
   try {
     const body = { government_geo_ids: governmentGeoIds, ...(state ? { state } : {}) };
     if (countyGeoId) {
       body.county_geo_id = countyGeoId;
+    }
+    if (skipOverlap) {
+      body.skip_overlap = true;
     }
     const res = await publicFetch('/essentials/browse/by-government-list', {
       method: 'POST',

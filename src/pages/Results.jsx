@@ -805,12 +805,13 @@ export default function Results() {
 
     const browseState = searchParams.get('browse_state') ?? undefined;
     const browseCountyGeoId = searchParams.get('browse_county_geo_id') || undefined;
+    const skipOverlap = searchParams.get('browse_skip_overlap') === '1';
 
     setSearchMode('browse');
     setBrowseLoading(true);
     if (label) setAddressInput(decodeURIComponent(label));
 
-    browseByGovernmentList(ids, browseState, { countyGeoId: browseCountyGeoId }).then(({ data, error }) => {
+    browseByGovernmentList(ids, browseState, { countyGeoId: browseCountyGeoId, skipOverlap }).then(({ data, error }) => {
       if (error) console.error('browse government list error:', error);
       setBrowseResults(data);
       setBrowseLoading(false);

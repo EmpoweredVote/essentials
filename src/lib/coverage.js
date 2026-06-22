@@ -279,6 +279,9 @@ export function coverageAreaToPath(area) {
     });
     if (area.browseStateAbbrev) params.set('browse_state', area.browseStateAbbrev);
     if (area.browseCountyGeoId) params.set('browse_county_geo_id', area.browseCountyGeoId);
+    // A county browse shows only the county government's own officials + statewide
+    // (not every official inside the county-sized geofence).
+    if (area.kind === 'county') params.set('browse_skip_overlap', '1');
     return `/results?${params.toString()}`;
   }
   if (area.browseGeoId) {
