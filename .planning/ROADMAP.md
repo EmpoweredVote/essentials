@@ -400,7 +400,7 @@ Plans:
 
 **Requirements:** BLFL-01
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 
 Plans:
 **Wave 1**
@@ -413,7 +413,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 156-03-PLAN.md — Wave 3 headshots: verify-and-fix 4 existing (Dunton/Koops/Morse/Sanchez) + INSERT Santa Ines from bellflower.ca.gov /photo_gallery/ path (NO-WAF Revize curl), 600×750 (migration 1044, audit-only; blocking human-verify)
+- [x] 156-03-PLAN.md — Wave 3 headshots: verify-and-fix 4 existing (Dunton/Koops/Morse/Sanchez) + INSERT Santa Ines from bellflower.ca.gov /photo_gallery/ path (NO-WAF Revize curl), 600×750 (migration 1044, audit-only; blocking human-verify)
 
 **Wave 4** *(blocked on Wave 2 completion; may run alongside Wave 3)*
 
