@@ -339,6 +339,14 @@ Plans:
 
 **Requirements:** BURB-01
 
+**Plans:** 4 plans
+
+Plans:
+- [ ] 154-01-PLAN.md — Wave 1 reconcile: geo_id 0608954 backfill + dual-chamber merge (survivor 73422d25) + one-directional link repair (Anthony/Mullins) + At-Large district consolidation (mig 1026, structural)
+- [ ] 154-02-PLAN.md — Wave 2 roster: rotational Mayor (Takahashi)/Vice Mayor (Mullins) titles-on-seat + normalize council titles + official_count=5 (mig 1027, structural)
+- [ ] 154-03-PLAN.md — Wave 3 headshots: verify-and-fix Perez/Anthony/Mullins + fill Rizzotti/Takahashi gaps from burbankca.gov, 600x750 (mig 1028, audit-only; blocking checkpoint)
+- [ ] 154-04-PLAN.md — Wave 3 stances: evidence-only CHAIRS greenfield for all 5 (Anthony to Rizzotti), 100% cited, no judicial (migs 1029-1033, audit-only; blocking checkpoint)
+
 **Success criteria:**
 
 1. `essentials.governments` row + chamber(s) exist; current mayor + full council seated as offices linked to geo_id 0608954
