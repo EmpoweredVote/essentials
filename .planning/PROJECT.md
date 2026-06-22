@@ -126,26 +126,23 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Delivered:** MA town geofences (293 G4040 COUSUB boundaries), Boston deep seed (Mayor Wu + 13 City Councillors + School Committee with headshots), MA Tier 2 cities (Worcester + Springfield + Lowell + Brockton + Quincy), MA 2026 elections (240+ race rows + discovery armed), compass stances for all 217 MA officials (6 execs + 11 federal + 40 senators + 160 house reps), and MA playbook retrospective.
 
-### Current Milestone: v17.0 LA County City Coverage — Wave 2
+### v17.0 LA County City Coverage — Wave 2 (Shipped: 2026-06-22)
 
-**Goal:** Deep-seed the 15 largest LA County cities not yet covered — government structure,
-elected rosters, headshots (600×750), and evidence-only compass stances for each.
-
-**Target cities (largest-first, geofences confirmed from v7.0):** Long Beach, Santa Clarita,
-Glendale, Lancaster, Palmdale, Pomona, Torrance, Pasadena, Downey, El Monte, West Covina,
-Inglewood, Burbank, Norwalk, Bellflower.
-
-**Shape:** greenfield in the DB (geofences only) → each city = government + chamber → roster →
-headshots → evidence-only stances. 16 phases (142–157, one per city + close-out). Reuses the
-v7.0 CA city-deep-seed playbook + LOCATION-ONBOARDING.md; no new geofence or research work.
-
-**Most recent close (v16.0 Utah Coverage, 2026-06-18):** 10 Utah cities + 104/104 legislators
-with compass stances. See `.planning/v16.0-MILESTONE-AUDIT.md`.
+**Delivered:** 15 LA County cities deep-seeded end-to-end (government + roster → 600×750 headshots →
+evidence-only compass stances) and surfaced on the Landing page — Long Beach, Santa Clarita, Glendale,
+Lancaster, Palmdale, Pomona, Torrance, Pasadena, Downey, El Monte, West Covina, Inglewood, Burbank,
+Norwalk, Bellflower. 92 officials, 91/92 headshots, 445 stance rows; all 15 carry the purple chip.
+Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels, June-2026 reseating).
+16 phases (142–156 one-per-city + 157 close-out). See `.planning/v17.0-MILESTONE-AUDIT.md`.
 
 ### Active
 
-- v17.0 LA County City Coverage — Wave 2 (defining requirements → roadmap done; ready to plan Phase 142)
-- Carry-forward (not blocking): SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7 council reorg.
+- **No active milestone** — v17.0 closed 2026-06-22. Next milestone TBD (run `/gsd:new-milestone`).
+- **Most recent close (v17.0 LA County Wave-2, 2026-06-22):** 15 LA County cities deep-seeded + surfaced.
+  See `.planning/v17.0-MILESTONE-AUDIT.md`.
+- Carry-forward (not blocking): split-section cleanup for 5 NON-Wave-2 councils (Whittier/Compton/Carson/
+  South El Monte/South Pasadena); groupHierarchy.js Mayor>MPT fix deploy pending; Lancaster Ken Mann headshot;
+  SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7 council reorg.
 
 ### Out of Scope
 
@@ -246,4 +243,4 @@ with compass stances. See `.planning/v16.0-MILESTONE-AUDIT.md`.
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
 ---
-*Last updated: 2026-06-19 — v17.0 LA County City Coverage — Wave 2 milestone started*
+*Last updated: 2026-06-22 — v17.0 LA County City Coverage — Wave 2 milestone shipped*

@@ -2,27 +2,27 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-06-22T23:28:25.028Z"
-last_activity: 2026-06-22 -- Phase 156 execution started
+status: complete
+last_updated: "2026-06-22T23:45:51.108Z"
+last_activity: 2026-06-22 -- v17.0 milestone closed (Phase 157 complete)
 progress:
   total_phases: 13
-  completed_phases: 12
+  completed_phases: 13
   total_plans: 51
-  completed_plans: 48
-  percent: 92
+  completed_plans: 51
+  percent: 100
 ---
 
 # State
 
 ## Current Position
 
-Phase: 156 (bellflower-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 156
-Last activity: 2026-06-22 -- Phase 156 execution started
-Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
-Resume file: .planning/phases/157-wave-2-close-out/157-CONTEXT.md
+Milestone: v17.0 LA County City Coverage — Wave 2 — ✅ CLOSED 2026-06-22
+Phase: 157 (wave-2-close-out) — COMPLETE (3/3 plans)
+Status: v17.0 milestone complete; all 13 phases / 51 plans done
+Last activity: 2026-06-22 -- v17.0 milestone closed (audit written, cities surfaced, status flipped)
+Next migration: 1048 (on-disk counter authoritative; stance migrations applied audit-only, bypass schema_migrations)
+Resume file: .planning/v17.0-MILESTONE-AUDIT.md
 
 ### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
 
@@ -270,7 +270,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 156 — bellflower-deep-seed
+**Current focus:** Phase 157 — wave-2-close-out
 
 ## v15.0 Roadmap Summary
 

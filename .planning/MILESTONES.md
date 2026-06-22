@@ -1,5 +1,51 @@
 # Milestones
 
+## v17.0 LA County City Coverage — Wave 2 (Shipped: 2026-06-22)
+
+**Delivered:** 15 LA County cities deep-seeded end-to-end (government + roster → 600×750 headshots →
+evidence-only compass stances) and surfaced on the Landing page. This wave was **reconcile-heavy** —
+most cities were already partially seeded (v7.0-era skeletons), so each phase pre-checked the DB,
+merged duplicate chambers, relabeled At-Large→by-district where charters had changed, and reseated
+for June-2026 election turnover. DB-verified at close (read-only) in the v17.0 milestone audit.
+
+**Phases completed:** 142–156 (one city per phase) + 157 (close-out: audit + surfacing + milestone close)
+
+**Key accomplishments:**
+
+- **15 cities deep-seeded** — Long Beach, Santa Clarita, Glendale, Lancaster, Palmdale, Pomona,
+  Torrance, Pasadena, Downey, El Monte, West Covina, Inglewood, Burbank, Norwalk, Bellflower;
+  **92 seated officials**, **91/92 headshots** at 600×750 (only Lancaster Ken Mann gap),
+  **445 evidence-only compass stance rows** (Phases 142–156)
+- **All 15 cities carry ≥1 stance → all surfaced with the purple `hasContext` chip** in
+  `src/lib/coverage.js` (verified honest against per-city DB stance counts, D-02)
+- **Reconcile patterns proven & documented** — duplicate-chamber merges (Pasadena, Inglewood,
+  West Covina), At-Large→by-district relabels (Palmdale, Pomona, El Monte Ord. 3010, Bellflower
+  Ord. 1410), directly-elected vs rotational mayor disambiguation (Downey Frometa-not-Sosa,
+  Norwalk Perez-not-Ayala), wrong-person headshot fixes (West Covina Gutierrez; Pomona stale-PCE
+  avoidance); captured as the "LA County Wave-2 (v17.0)" GOTCHA block in LOCATION-ONBOARDING.md
+- **Split-section scan clean** across all 15 Wave-2 cities (0 rows)
+- Shared UI fix `src/lib/groupHierarchy.js` (Mayor > Mayor Pro Tem ordering) committed to main (a235f25)
+
+**Stats:**
+
+- 16 phases (142–157); structural migrations through ~1047 on disk (next migration: 1048)
+- 5 days (2026-06-18 → 2026-06-22)
+- 15 cities · 92 officials · 91/92 headshots · **445 stance rows**; split-section 0/15
+- Stance migrations applied **audit-only** (raw SQL; bypass `supabase_migrations.schema_migrations`) —
+  counts verified from `inform.politician_answers`; the on-disk file counter is authoritative
+
+**Tech debt carried forward:**
+- **Split-section cleanup — 5 NON-Wave-2 councils** (Whittier, Compton, Carson, South El Monte,
+  South Pasadena): pre-existing v7.0/v15.0 defects, out of scope since Phase 143; candidate for a
+  dedicated cleanup phase (see audit LAC2-SPLITSEC-01)
+- **groupHierarchy.js Mayor>Mayor-Pro-Tem fix** committed to main (a235f25) — **production deploy
+  still pending** (LAC2-DEPLOY-01)
+- Lancaster Ken Mann headshot backfill; 9 honest blank-spoke officials to revisit as records accrue
+
+**Audit:** [v17.0-MILESTONE-AUDIT.md](v17.0-MILESTONE-AUDIT.md)
+
+---
+
 ## v16.0 Utah Coverage (Shipped: 2026-06-18)
 
 **Delivered:** Full Utah coverage parity with prior states — all 10 Utah city governments
