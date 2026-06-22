@@ -72,7 +72,7 @@ Per-city deliverable (the unit of one phase):
 | DWNY-01 | 150 | In Progress (Plans 01+02 done; 03 headshots + 04 stances pending) |
 | ELMN-01 | 151 | Pending |
 | WCOV-01 | 152 | Pending |
-| INGL-01 | 153 | Pending |
+| INGL-01 | 153 | Complete |
 | BURB-01 | 154 | Pending |
 | NRWK-01 | 155 | Pending |
 | BLFL-01 | 156 | Pending |

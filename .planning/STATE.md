@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-06-22T00:10:34.328Z"
+status: ready_to_plan
+last_updated: 2026-06-22T05:49:58.932Z
 last_activity: 2026-06-22 -- Phase 153 execution started
 progress:
   total_phases: 13
   completed_phases: 8
   total_plans: 39
-  completed_plans: 32
+  completed_plans: 200
   percent: 62
+stopped_at: Phase 153 complete (4/4) — ready to discuss Phase 157
 ---
 
 # State
 
 ## Current Position
 
-Phase: 153 (inglewood-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 153
-Last activity: 2026-06-22 -- Phase 153 execution started
+Phase: 157
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-22
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
 Resume file: .planning/phases/153-inglewood-deep-seed/153-CONTEXT.md
 
@@ -270,7 +271,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 153 — inglewood-deep-seed
+**Current focus:** Phase 157 — wave 2 close out
 
 ## v15.0 Roadmap Summary
 
