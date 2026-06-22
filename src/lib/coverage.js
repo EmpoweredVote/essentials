@@ -220,6 +220,14 @@ export const COVERAGE_COUNTIES = [
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
 ];
 
+// Browsable states — every US state (each has statewide officials seeded:
+// governor/AG/etc. + US Senators). A state routes to the "browse a state" view.
+// Built from STATE_NAME_TO_ABBREV; DC excluded (no statewide executives).
+const titleCasePlace = (s) => s.replace(/\b\w/g, (c) => c.toUpperCase());
+export const COVERAGE_BROWSE_STATES = Object.entries(STATE_NAME_TO_ABBREV)
+  .filter(([, abbrev]) => abbrev !== 'DC')
+  .map(([name, abbrev]) => ({ label: titleCasePlace(name), browseState: abbrev }));
+
 // ── City/area name search (locality typeahead) ───────────────────────────────
 
 // Flattened, searchable view of every covered area, tagged with its kind + state.
@@ -228,6 +236,7 @@ const ALL_COVERAGE_AREAS = [
     s.areas.map((a) => ({ ...a, kind: 'city', stateAbbrev: a.browseStateAbbrev || s.abbrev, stateName: s.name }))
   ),
   ...COVERAGE_COUNTIES.map((c) => ({ ...c, kind: 'county', stateAbbrev: c.browseStateAbbrev })),
+  ...COVERAGE_BROWSE_STATES.map((s) => ({ ...s, kind: 'state' })),
 ];
 
 /**
@@ -259,6 +268,10 @@ export function searchCoverageAreas(query, limit = 6) {
  * handleAreaClick routing so the typeahead and the grid navigate identically.
  */
 export function coverageAreaToPath(area) {
+  if (area.kind === 'state' || (area.browseState && !area.browseGovernmentList)) {
+    const params = new URLSearchParams({ browse_state_officials: area.browseState, browse_label: area.label });
+    return `/results?${params.toString()}`;
+  }
   if (area.browseGovernmentList) {
     const params = new URLSearchParams({
       browse_government_list: area.browseGovernmentList.join(','),

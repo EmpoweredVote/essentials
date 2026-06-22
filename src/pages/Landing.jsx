@@ -295,7 +295,7 @@ export default function Landing() {
                 <LocalityMatches
                   query={addressInput}
                   onSelect={(area) => {
-                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev });
+                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
                     navigate(coverageAreaToPath(area));
                   }}
                 />

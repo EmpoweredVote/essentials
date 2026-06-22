@@ -363,6 +363,20 @@ export async function browseByGovernmentList(governmentGeoIds, state, { countyGe
   }
 }
 
+/** Statewide officials for a state (executives + US Senators + federal) — the
+ *  "browse a state" entry point. Returns { data, error } like the other browse fns. */
+export async function browseByState(stateAbbrev) {
+  try {
+    const res = await publicFetch(`/essentials/browse/states/${encodeURIComponent(stateAbbrev)}/officials`);
+    if (!res || !res.ok) return { data: [], error: `${res?.status ?? 'unknown'}` };
+    const data = await res.json();
+    return { data: Array.isArray(data) ? data : [], error: null };
+  } catch (err) {
+    console.error('browseByState error:', err);
+    return { data: [], error: err.message };
+  }
+}
+
 export async function fetchElectionsByAddress(address) {
   try {
     const res = await publicFetch(

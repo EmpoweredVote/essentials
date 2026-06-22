@@ -14,7 +14,7 @@ import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, fetchVoterInfo } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, fetchVoterInfo } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
@@ -858,6 +858,24 @@ export default function Results() {
         });
       }
       setBrowseResults(filtered);
+      setBrowseLoading(false);
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Handle ?browse_state_officials=CA — statewide officials (executives + US
+  // Senators + federal). The "browse a state" entry point from the typeahead.
+  useEffect(() => {
+    const stateAbbrev = searchParams.get('browse_state_officials');
+    const label = searchParams.get('browse_label');
+    if (!stateAbbrev) return;
+
+    setSearchMode('browse');
+    setBrowseLoading(true);
+    if (label) setAddressInput(decodeURIComponent(label));
+
+    browseByState(stateAbbrev).then(({ data, error }) => {
+      if (error) console.error('browse state error:', error);
+      setBrowseResults(data);
       setBrowseLoading(false);
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -1706,7 +1724,7 @@ export default function Results() {
                 <LocalityMatches
                   query={addressInput}
                   onSelect={(area) => {
-                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev });
+                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
                     navigate(coverageAreaToPath(area));
                     setEditingSearch(false);
                   }}
