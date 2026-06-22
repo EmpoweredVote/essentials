@@ -400,7 +400,7 @@ Plans:
 
 **Requirements:** BLFL-01
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 
 Plans:
 **Wave 1**
@@ -417,7 +417,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 2 completion; may run alongside Wave 3)*
 
-- [ ] 156-04-PLAN.md — Wave 4 stances: full greenfield, 5 members evidence-only CHAIRS, 100% cited, no judicial, no manufactured RSO/shelter-ban, one agent at a time (migrations 1045–1049, audit-only; blocking human-verify)
+- [x] 156-04-PLAN.md — Wave 4 stances: full greenfield, 5 members evidence-only CHAIRS, 100% cited, no judicial, no manufactured RSO/shelter-ban, one agent at a time (migrations 1045–1049, audit-only; blocking human-verify)
 
 **Success criteria:**
 
