@@ -376,7 +376,7 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 3/4 plans executed
+**Plans:** 4/4 plans complete
 Plans:
 **Wave 1**
 
@@ -392,7 +392,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 155-04-PLAN.md — Wave 4 stances: evidence-only CHAIRS for 5 officials, shelter-ban anchor, 100% cited (blocking human-verify)
+- [x] 155-04-PLAN.md — Wave 4 stances: evidence-only CHAIRS for 5 officials, shelter-ban anchor, 100% cited (blocking human-verify)
 
 ### Phase 156: Bellflower deep-seed
 
