@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v17.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-06-22T17:22:57.666Z"
-last_activity: 2026-06-22 -- Phase 155 planning complete
+last_updated: "2026-06-22T18:12:15.434Z"
+last_activity: 2026-06-22 -- Phase 155 execution started
 progress:
   total_phases: 13
   completed_phases: 10
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 154 — COMPLETE
-Plan: 3 of 4
-Status: Ready to execute
-Last activity: 2026-06-22 -- Phase 155 planning complete
+Phase: 155 (norwalk-deep-seed) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 155
+Last activity: 2026-06-22 -- Phase 155 execution started
 Next migration: 998 applied (audit-only stances); stances complete pending checkpoint approval
 Resume file: .planning/phases/155-norwalk-deep-seed/155-CONTEXT.md
 
@@ -270,7 +270,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 154 — burbank-deep-seed
+**Current focus:** Phase 155 — norwalk-deep-seed
 
 ## v15.0 Roadmap Summary
 
