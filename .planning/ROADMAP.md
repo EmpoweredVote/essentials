@@ -377,11 +377,21 @@ Plans:
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
 **Plans:** 4 plans
-
 Plans:
+**Wave 1**
+
 - [ ] 155-01-PLAN.md — Wave 1 reconcile: geo_id backfill + dual-chamber merge + 4 one-directional link repair + LOCAL_EXEC Mayor->At-Large conversion + At-Large consolidation
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 155-02-PLAN.md — Wave 2 roster: rotational Mayor=Perez/Vice Mayor=Rios titles-on-seat + normalize titles + official_count=5
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 155-03-PLAN.md — Wave 3 headshots: verify-and-fix all 5 (Ramirez URL replaced, Rios %20%20), 600x750 (blocking human-verify)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 155-04-PLAN.md — Wave 4 stances: evidence-only CHAIRS for 5 officials, shelter-ban anchor, 100% cited (blocking human-verify)
 
 ### Phase 156: Bellflower deep-seed
