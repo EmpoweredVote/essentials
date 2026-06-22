@@ -31,13 +31,20 @@ export default function LocalityMatches({ query, onSelect }) {
             >
               <span className="min-w-0 truncate">
                 <span className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light">{area.label}</span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">, {area.stateAbbrev}</span>
+                {area.stateAbbrev && <span className="text-sm text-gray-500 dark:text-gray-400">, {area.stateAbbrev}</span>}
               </span>
-              {area.hasContext && (
-                <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[var(--ev-teal)] dark:text-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-gray-800 rounded-full px-2 py-0.5">
-                  Stances
-                </span>
-              )}
+              <span className="shrink-0 flex items-center gap-2">
+                {area.kind && area.kind !== 'city' && (
+                  <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 rounded-full px-2 py-0.5">
+                    {area.kind}
+                  </span>
+                )}
+                {area.hasContext && (
+                  <span className="text-[10px] font-semibold uppercase tracking-wide text-[var(--ev-teal)] dark:text-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-gray-800 rounded-full px-2 py-0.5">
+                    Stances
+                  </span>
+                )}
+              </span>
             </button>
           </li>
         ))}

@@ -200,12 +200,35 @@ export function normalizePlace(s) {
     .trim();
 }
 
-// ── City/area name search (Phase 1 locality typeahead) ──────────────────────
+// Covered counties — browsable like cities (the county government's geo_id routes
+// through browse-by-government-list, returning the county's own officials —
+// supervisors/commissioners, sheriff, DA, assessor — plus statewide officials).
+// Search-only (not shown on the landing grid). Synced from essentials.governments.
+export const COVERAGE_COUNTIES = [
+  { label: 'Los Angeles County', browseGovernmentList: ['06037'], browseStateAbbrev: 'CA', hasContext: true },
+  { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
+  { label: 'Multnomah County', browseGovernmentList: ['41051'], browseStateAbbrev: 'OR' },
+  { label: 'Box Elder County', browseGovernmentList: ['49003'], browseStateAbbrev: 'UT' },
+  { label: 'Cache County', browseGovernmentList: ['49005'], browseStateAbbrev: 'UT' },
+  { label: 'Davis County', browseGovernmentList: ['49011'], browseStateAbbrev: 'UT' },
+  { label: 'Iron County', browseGovernmentList: ['49021'], browseStateAbbrev: 'UT' },
+  { label: 'Salt Lake County', browseGovernmentList: ['49035'], browseStateAbbrev: 'UT', hasContext: true },
+  { label: 'Summit County', browseGovernmentList: ['49043'], browseStateAbbrev: 'UT' },
+  { label: 'Tooele County', browseGovernmentList: ['49045'], browseStateAbbrev: 'UT' },
+  { label: 'Utah County', browseGovernmentList: ['49049'], browseStateAbbrev: 'UT', hasContext: true },
+  { label: 'Washington County', browseGovernmentList: ['49053'], browseStateAbbrev: 'UT' },
+  { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
+];
 
-// Flattened, searchable view of every covered area, tagged with its state.
-const ALL_COVERAGE_AREAS = COVERAGE_STATES.flatMap((s) =>
-  s.areas.map((a) => ({ ...a, stateAbbrev: a.browseStateAbbrev || s.abbrev, stateName: s.name }))
-);
+// ── City/area name search (locality typeahead) ───────────────────────────────
+
+// Flattened, searchable view of every covered area, tagged with its kind + state.
+const ALL_COVERAGE_AREAS = [
+  ...COVERAGE_STATES.flatMap((s) =>
+    s.areas.map((a) => ({ ...a, kind: 'city', stateAbbrev: a.browseStateAbbrev || s.abbrev, stateName: s.name }))
+  ),
+  ...COVERAGE_COUNTIES.map((c) => ({ ...c, kind: 'county', stateAbbrev: c.browseStateAbbrev })),
+];
 
 /**
  * Search covered cities/areas by name for the search-box typeahead. Returns
