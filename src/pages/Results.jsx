@@ -875,7 +875,11 @@ export default function Results() {
 
   const handleAddressSearch = async (overrideAddress) => {
     const isOverride = typeof overrideAddress === 'string';
-    const addr = (isOverride ? overrideAddress : addressInput).trim();
+    // Manual submit reads the live input DOM value, not React state: Google Places
+    // Autocomplete writes to the input element and not every write fires onChange, so
+    // `addressInput` state can lag/truncate behind the box. The ref is the source of
+    // truth (same fix as Landing handleSearch). Autocomplete picks pass an override.
+    const addr = (isOverride ? overrideAddress : (addressInputRef.current?.value ?? addressInput)).trim();
     if (!addr) return;
     // Manual submit (not an autocomplete pick): apply the ADR-0001 locality
     // fallback. A covered city/state/county routes to Browse-by-Location; a
