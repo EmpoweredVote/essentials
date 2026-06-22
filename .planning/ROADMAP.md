@@ -315,7 +315,7 @@ Plans:
 4. Evidence-only compass stances applied for officials with a findable public record; 100% citation; honest blank spokes elsewhere
 5. City browse view renders the roster (with photos) and stances; no duplicate/stale office rows
 
-**Plans:** 2/4 plans executed
+**Plans:** 3/4 plans executed
 Plans:
 **Wave 1**
 
@@ -327,7 +327,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 153-03-PLAN.md — Wave 3 headshots: Faulk dedup + 5 official portraits 600x750 (audit-only)
+- [x] 153-03-PLAN.md — Wave 3 headshots: Faulk dedup + 5 official portraits 600x750 (audit-only)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
