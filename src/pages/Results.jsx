@@ -406,6 +406,7 @@ export default function Results() {
     if (addressInput.trim().length > 0) return;
     if (searchParams.get('browse_geo_id')) return;
     if (searchParams.get('browse_government_list')) return;
+    if (searchParams.get('browse_state_officials')) return;
     let cancelled = false;
     loadUserAddressFromContext().then((stored) => {
       if (cancelled || !stored?.addr) return;
