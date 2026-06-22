@@ -61,6 +61,46 @@
 
 ---
 
+---
+
+# Update — 2026-06-22 (post-wave revision)
+
+**Trigger:** All 15 city phases (142–156) now complete; context re-opened to reflect actual wave outcomes. Sequencing-dependency block lifted.
+
+**Areas revised:** Shared UI fix deployment · Roster audit baseline · Per-city audit gotchas
+
+## Shared UI fix deployment (new D-08)
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Verify committed + flag deploy | Audit records wave-era shared UI fixes (e.g. groupHierarchy.js Mayor>MPT) are committed to main + notes pending deploy. Not a blocker, not a deploy action. | ✓ |
+| Include deploy in close-out | Actively trigger/confirm production deploy. Expands scope into deployment. | |
+| Out of scope | Touch only Landing.jsx; ignore shared UI fixes entirely. | |
+
+**Notes:** Keeps "surfaced cities render correctly" honest without making 157 a deploy phase. `src/lib/groupHierarchy.js` is the concrete file.
+
+## Roster audit baseline (new D-03a)
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Current officeholders; uncertain = gap | HARD roster check verifies current post-June-2026 occupants; election-uncertain seats logged as documented gaps not blockers. | ✓ |
+| Strict — uncertain seats block close | Any unverifiable post-election seat blocks close. Risks stalling on free-source-unverifiable data. | |
+| Keep generic count check | Roster-vs-official_count only; no currency requirement. | |
+
+**Notes:** Many cities reseated for June 2026 turnover; matches structure-hard/data-soft.
+
+## Per-city audit gotchas (new D-04a + D-07 enhancement)
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Both audit checks + GOTCHA rows | Bake patterns into D-04 queries (geo_id join, merge-survivor verify, wrong-person headshot spot-check, split-section query) AND D-07 GOTCHA rows. | ✓ |
+| GOTCHAs only | Onboarding rows only; audit stays count-based. | |
+| Claude's discretion | Don't enumerate; trust audit agent. | |
+
+**Notes:** `districts.government_id` is NULL — join via geo_id. Run split-section detection per city.
+
+---
+
 ## Claude's Discretion
 
 - Exact wording of GOTCHA entries and "Notable patterns" cells in LOCATION-ONBOARDING.md — synthesized from per-city artifacts.
