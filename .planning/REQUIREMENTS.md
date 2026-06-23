@@ -97,16 +97,16 @@ Per city/government deliverable (the Tier 1 unit):
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NV-GEO-01 | TBD | Pending |
-| NV-STATE-01 | TBD | Pending |
-| NV-STATE-02 | TBD | Pending |
-| NV-LEG-01 | TBD | Pending |
-| NV-LEG-02 | TBD | Pending |
-| CLARK-01 | TBD | Pending |
-| CLARK-02 | TBD | Pending |
-| CLARK-03 | TBD | Pending |
-| CLARK-04 | TBD | Pending |
-| CLARK-05 | TBD | Pending |
-| CCSD-01 | TBD | Pending |
-| NV-ELEC-01 | TBD | Pending |
-| NV-RETRO-01 | TBD | Pending |
+| NV-GEO-01 | Phase 158 | Pending |
+| NV-STATE-01 | Phase 159 | Pending |
+| NV-STATE-02 | Phase 159 | Pending |
+| NV-LEG-01 | Phase 160 | Pending |
+| NV-LEG-02 | Phase 160 | Pending |
+| CLARK-01 | Phase 161 | Pending |
+| CLARK-02 | Phase 162 | Pending |
+| CLARK-03 | Phase 163 | Pending |
+| CLARK-04 | Phase 164 | Pending |
+| CLARK-05 | Phase 165 | Pending |
+| CCSD-01 | Phase 166 | Pending |
+| NV-ELEC-01 | Phase 167 | Pending |
+| NV-RETRO-01 | Phase 168 | Pending |

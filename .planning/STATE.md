@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: Las Vegas & Clark County, NV
-status: planning
-last_updated: "2026-06-23T03:30:37.241Z"
+status: roadmapped
+last_updated: "2026-06-23T04:00:00.000Z"
 last_activity: 2026-06-23
 progress:
-  total_phases: 0
+  total_phases: 11
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,10 +17,32 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Not started (roadmap created — ready to plan Phase 158)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-06-23 — Milestone v18.0 started
+Status: Roadmapped (11 phases, 158–168; awaiting `/gsd-plan-phase 158`)
+Last activity: 2026-06-23 — v18.0 roadmap created (13/13 requirements mapped)
+
+### v18.0 roadmap (created 2026-06-23)
+
+Nevada new-state milestone, 11 phases (158–168), continuing numbering from v17.0 (closed at 157).
+State foundation first, then Clark County metro deep-seeds, then schools, elections, close.
+13/13 requirements mapped 1:1 — no orphans, no duplicates. Next migration: **1048** (on-disk
+counter authoritative; stance migs apply audit-only). Legislature stances DEFERRED to a follow-up.
+
+- **158 Nevada TIGER Geofences** — NV-GEO-01 (all tiers; Strip = unincorporated; section-split clean)
+- **159 Nevada State & Federal Government** — NV-STATE-01 + NV-STATE-02 (Lombardo + 5 const. officers + 2 US Senators + 4 US House)
+- **160 Nevada Legislature (seed + headshots)** — NV-LEG-01 + NV-LEG-02 (21 Senate + 42 Assembly; STANCES DEFERRED)
+- **161 Clark County Commission Deep-Seed** — CLARK-01 (7-member board; governs the unincorporated Strip — essential)
+- **162 City of Las Vegas Deep-Seed** — CLARK-02
+- **163 Henderson Deep-Seed** — CLARK-03 (NV's 2nd-largest city)
+- **164 North Las Vegas Deep-Seed** — CLARK-04
+- **165 Boulder City Deep-Seed** — CLARK-05
+- **166 CCSD Board of Trustees Deep-Seed** — CCSD-01 (5th-largest US district; G5420 if district-elected)
+- **167 NV 2026 Elections & Discovery** — NV-ELEC-01 (Governor + 42 Assembly + ~10 Senate + 4 US House; US Senators NOT up 2026)
+- **168 Nevada Playbook Retrospective & Close** — NV-RETRO-01 (surface NV in coverage.js, GOTCHAs, audit, close)
+
+Deep-seed unit (161–166): government + chamber → roster → 600×750 headshots → evidence-only
+stances (one agent at a time, 100% cited, no defaults, honest blanks) → surface in `src/lib/coverage.js`.
 
 ### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
 
