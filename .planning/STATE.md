@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: Las Vegas & Clark County, NV
-status: roadmapped
-last_updated: "2026-06-23T04:00:00.000Z"
-last_activity: 2026-06-23
+status: Roadmapped (11 phases, 158–168; awaiting `/gsd-plan-phase 158`)
+last_updated: "2026-06-23T04:01:34.811Z"
+last_activity: 2026-06-23 — v18.0 roadmap created (13/13 requirements mapped)
 progress:
   total_phases: 11
   completed_phases: 0
@@ -383,9 +383,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-22T23:28:25.014Z
-Stopped at: Phase 157 context updated (post-wave revision)
-Resume file: .planning/phases/143-santa-clarita-deep-seed/143-CONTEXT.md
+Last session: 2026-06-23T04:01:34.799Z
+Stopped at: Phase 158 context gathered
+Resume file: .planning/phases/158-nevada-tiger-geofences/158-CONTEXT.md
 
 ## Performance Metrics
 
