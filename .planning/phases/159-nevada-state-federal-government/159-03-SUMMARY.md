@@ -83,6 +83,11 @@ All exec/federal tiers are **uppercase 'NV'**, zero lowercase 'nv' ✓
 - After Plan 01, the integer ledger MAX is **1050** (`nv_controller`). Audit migrations 1051/1052 are intentionally NOT registered.
 - **Action at phase close:** set the on-disk counter so the next migration is **1051**... note: 1051/1052 file numbers are already consumed on disk as audit-only files, so the next *structural* migration number is **1053**. Record next-migration = **1053** at phase close.
 
+## Browse-link correction (verified against live production API 2026-06-23)
+- The plan's suggested statewide browse link `?browse_geo_id=32&browse_mtfcc=G5200` is **wrong**: `G5200` is the Congressional-District MTFCC and no NV entity carries `geo_id=32 + G5200` (state execs/senators use `geo_id=32` with empty mtfcc; only House CDs use `G5200` at geo_ids 3201-3204). That link returns nothing.
+- **Correct statewide link:** `essentials.empowered.vote/results?browse_state_officials=NV&browse_label=Nevada` → backend `/api/essentials/browse/states/NV/officials`.
+- Live API confirmed (HTTP 200): returns all 6 NV STATE_EXEC officials (incl. **Andy Matthews / Controller / State of Nevada**, serving `…07a8598f-…-headshot.jpg`, `cc_by_sa_3.0`) + both senators, all with images. House reps are correctly NOT in the statewide list (district-specific — verify by address per CD).
+
 ## Human Checkpoint
 Task 2 (`checkpoint:human-verify`, blocking) is pending — operator must confirm officials render with correct-person headshots and correct address routing across all 4 CDs before the phase is marked complete.
 
