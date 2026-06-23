@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
+/* Don't scan planning/docs dirs for class candidates. Tailwind v4 auto-scans the
+   whole git tree; markdown there often contains Windows paths whose backslash
+   sequences (e.g. `\feedback…`) parse as CSS hex escapes and crash the build
+   (RangeError: Invalid code point). Only src/ holds real class usage. */
+@source not "../.planning";
+@source not "../**/*.md";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
