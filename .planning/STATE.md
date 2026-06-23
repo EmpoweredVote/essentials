@@ -2,32 +2,33 @@
 gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: Las Vegas & Clark County, NV
-status: executing
-last_updated: "2026-06-23T06:25:42.578Z"
-last_activity: 2026-06-23 -- Phase 159 planning complete
+status: phase_complete
+last_updated: "2026-06-23T07:30:00.000Z"
+last_activity: 2026-06-23 -- Phase 159 complete (NV State Controller + 5 headshots; verified PASS)
 progress:
   total_phases: 11
-  completed_phases: 1
-  total_plans: 5
-  completed_plans: 2
-  percent: 9
+  completed_phases: 2
+  total_plans: 8
+  completed_plans: 5
+  percent: 18
 ---
 
 # State
 
 ## Current Position
 
-Phase: 159
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-06-23 -- Phase 159 planning complete
+Phase: 159 (nevada-state-federal-government) — COMPLETE (verified PASS 2026-06-23)
+Plan: 3 of 3 complete
+Status: Phase 159 complete; next = Phase 160 (Nevada Legislature seed + headshots)
+Last activity: 2026-06-23 -- Phase 159 complete (Controller Andy Matthews + 5 headshots; all 4 criteria proven, human-approved)
 
 ### v18.0 roadmap (created 2026-06-23)
 
 Nevada new-state milestone, 11 phases (158–168), continuing numbering from v17.0 (closed at 157).
 State foundation first, then Clark County metro deep-seeds, then schools, elections, close.
-13/13 requirements mapped 1:1 — no orphans, no duplicates. Next migration: **1048** (on-disk
+13/13 requirements mapped 1:1 — no orphans, no duplicates. Next migration: **1053** (on-disk
 counter authoritative; stance migs apply audit-only). Legislature stances DEFERRED to a follow-up.
+[Phase 159 corrected the stale "1048" → DB integer-ledger MAX was 1049; phase 159 consumed 1050 (structural, registered) + 1051/1052 (audit-only, unregistered); next is 1053.]
 
 - **158 Nevada TIGER Geofences** — NV-GEO-01 (all tiers; Strip = unincorporated; section-split clean)
 - **159 Nevada State & Federal Government** — NV-STATE-01 + NV-STATE-02 (Lombardo + 5 const. officers + 2 US Senators + 4 US House)
@@ -290,7 +291,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 159 — nevada state & federal government
+**Current focus:** Phase 159 complete (2026-06-23) — next up Phase 160 (Nevada Legislature)
 
 ## v15.0 Roadmap Summary
 

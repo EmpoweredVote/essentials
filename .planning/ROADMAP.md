@@ -54,7 +54,7 @@ this milestone seeds + headshots legislators only.
 - Decimal phases (e.g. 160.1): Urgent insertions (marked INSERTED)
 
 - [x] **Phase 158: Nevada TIGER Geofences** - Load all NV boundary tiers so any NV address routes correctly (completed 2026-06-23)
-- [ ] **Phase 159: Nevada State & Federal Government** - Governor + constitutional officers + 2 US Senators + 4 US House reps
+- [x] **Phase 159: Nevada State & Federal Government** - Governor + constitutional officers + 2 US Senators + 4 US House reps (completed 2026-06-23)
 - [ ] **Phase 160: Nevada Legislature (seed + headshots)** - 21 Senators + 42 Assembly members with headshots; stances deferred
 - [ ] **Phase 161: Clark County Commission Deep-Seed** - 7-member board governing the unincorporated Strip
 - [ ] **Phase 162: City of Las Vegas Deep-Seed** - Mayor + City Council
@@ -99,12 +99,12 @@ this milestone seeds + headshots legislators only.
 **Reconcile note**: NOT greenfield. DB audit (159-RESEARCH.md) found 11 of 12 target officials already exist. Only net-new work is **Controller Andy Matthews** (mig 1050) + **4 US House headshots** (mig 1051). Senators render + casing + two-senators-one-district are pre-satisfied (verify-only). Next structural migration = **1050** (DB MAX=1049; STATE.md's "1048" is stale — correct at phase close).**Plans**: 3 plans
 **Wave 1**
 
-- [ ] 159-01-PLAN.md — Create Controller Andy Matthews end-to-end (chamber + STATE_EXEC district + politician + office, mig 1050) + 600×750 headshot (script + audit-only mig 1052)
-- [ ] 159-02-PLAN.md — Upload 600×750 headshots for the 4 US House reps (unitedstates/images, resize-only) + audit-only politician_images mig 1051
+- [x] 159-01-PLAN.md — Create Controller Andy Matthews end-to-end (chamber + STATE_EXEC district + politician + office, mig 1050) + 600×750 headshot (script + audit-only mig 1052)
+- [x] 159-02-PLAN.md — Upload 600×750 headshots for the 4 US House reps (unitedstates/images, resize-only) + audit-only politician_images mig 1051
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 159-03-PLAN.md — Inline SQL-audit + live-browse verification of all 4 success criteria (6 execs, 2 senators, 4 House, casing, 0 section-split) + human-verify checkpoint
+- [x] 159-03-PLAN.md — Inline SQL-audit + live-browse verification of all 4 success criteria (6 execs, 2 senators, 4 House, casing, 0 section-split) + human-verify checkpoint
 
 ### Phase 160: Nevada Legislature (seed + headshots)
 
@@ -241,7 +241,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 158. Nevada TIGER Geofences | 2/2 | Complete    | 2026-06-23 |
-| 159. Nevada State & Federal Government | 0/3 | Planned | - |
+| 159. Nevada State & Federal Government | 3/3 | Complete   | 2026-06-23 |
 | 160. Nevada Legislature (seed + headshots) | 0/TBD | Not started | - |
 | 161. Clark County Commission Deep-Seed | 0/TBD | Not started | - |
 | 162. City of Las Vegas Deep-Seed | 0/TBD | Not started | - |
