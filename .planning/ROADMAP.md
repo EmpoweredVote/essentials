@@ -253,7 +253,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 |-------|----------------|--------|-----------|
 | 158. Nevada TIGER Geofences | 2/2 | Complete    | 2026-06-23 |
 | 159. Nevada State & Federal Government | 3/3 | Complete   | 2026-06-23 |
-| 160. Nevada Legislature (seed + headshots) | 0/TBD | Not started | - |
+| 160. Nevada Legislature (seed + headshots) | 0/3 | Planned | - |
 | 161. Clark County Commission Deep-Seed | 0/TBD | Not started | - |
 | 162. City of Las Vegas Deep-Seed | 0/TBD | Not started | - |
 | 163. Henderson Deep-Seed | 0/TBD | Not started | - |
