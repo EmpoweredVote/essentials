@@ -87,6 +87,12 @@ export const COVERAGE_STATES = [
     ],
   },
   {
+    name: 'Missouri', abbrev: 'MO',
+    areas: [
+      { label: 'Springfield', browseGovernmentList: ['2970000', '2928860'], browseStateAbbrev: 'MO', hasContext: true },
+    ],
+  },
+  {
     name: 'Oregon', abbrev: 'OR',
     areas: [
       { label: 'Fairview',    browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
