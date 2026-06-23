@@ -435,19 +435,19 @@ Plans:
 
 **Requirements:** LAC2-RETRO-01
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 Plans:
 **Wave 1**
 
-- [ ] 157-01-PLAN.md — DB-verify per-city counts for all 15 cities + write v17.0-MILESTONE-AUDIT.md (structure-hard/data-soft verdicts, deferred split-section follow-up)
+- [x] 157-01-PLAN.md — DB-verify per-city counts for all 15 cities + write v17.0-MILESTONE-AUDIT.md (structure-hard/data-soft verdicts, deferred split-section follow-up)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 157-02-PLAN.md — Surface 15 cities in Landing.jsx COVERAGE_STATES (alphabetical, hasContext only for >=1-stance cities) + add 15 Cities Onboarded rows + net-new GOTCHAs to LOCATION-ONBOARDING.md
+- [x] 157-02-PLAN.md — Surface 15 cities in Landing.jsx COVERAGE_STATES (alphabetical, hasContext only for >=1-stance cities) + add 15 Cities Onboarded rows + net-new GOTCHAs to LOCATION-ONBOARDING.md
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 157-03-PLAN.md — Close milestone: v17.0 Shipped entry in MILESTONES.md + status flip in STATE.md / PROJECT.md
+- [x] 157-03-PLAN.md — Close milestone: v17.0 Shipped entry in MILESTONES.md + status flip in STATE.md / PROJECT.md
 
 **Success criteria:**
 
