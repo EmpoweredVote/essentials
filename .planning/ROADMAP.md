@@ -68,7 +68,9 @@ this milestone seeds + headshots legislators only.
   2. A City of Las Vegas, Henderson, North Las Vegas, and Boulder City address each returns the correct G4110 city tier plus county/CD/SLDU/SLDL.
   3. NV TIGER boundaries loaded for all tiers (G4110 cities, G4020 counties, CDs, SLDU, SLDL); loader keys verified from the actual TIGER zip filenames.
   4. Section-split scan returns 0 rows (no mis-parented boundaries).
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 158-01-PLAN.md — Add NV to TIGER loader (4 allowlists), create verify+smoke scripts, dry-run to confirm sldl/place counts (no DB writes)
+- [ ] 158-02-PLAN.md — Live-load all 5 NV tiers, verify gates (Strip-unincorporated + section-split), run 5-address smoke test
 
 ### Phase 159: Nevada State & Federal Government
 **Goal**: A NV resident sees their full statewide and federal representation — Governor, constitutional officers, both US Senators, and their US House member — each with a headshot.
@@ -188,7 +190,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 158. Nevada TIGER Geofences | 0/TBD | Not started | - |
+| 158. Nevada TIGER Geofences | 0/2 | Planned | - |
 | 159. Nevada State & Federal Government | 0/TBD | Not started | - |
 | 160. Nevada Legislature (seed + headshots) | 0/TBD | Not started | - |
 | 161. Clark County Commission Deep-Seed | 0/TBD | Not started | - |
