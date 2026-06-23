@@ -1,12 +1,27 @@
+import { useState } from "react";
 import { Header, getFeedbackUrl } from "@empoweredvote/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "../hooks/useTheme";
+import { getAutoOpenMyLocation, setAutoOpenMyLocation } from "../lib/locationPref";
 
 export function Layout({ children }) {
   const { isLoggedIn, userName, logout } = useCompass();
   const { isDark } = useTheme();
+
+  // Opt-in toggle (default OFF): when on, a Connected Account is auto-ported to its
+  // saved home-location representatives on the next app open (read in Landing.jsx).
+  // The ev-ui menu closes on click, so the ☑/☐ glyph reflects the new state on reopen.
+  const [autoOpen, setAutoOpen] = useState(() => getAutoOpenMyLocation());
+  const autoLocationItem = {
+    label: `${autoOpen ? "☑" : "☐"}  Default to my saved location`,
+    onClick: () => {
+      const next = !autoOpen;
+      setAutoOpenMyLocation(next);
+      setAutoOpen(next);
+    },
+  };
 
   const feedbackItem = {
     label: "Feedback",
@@ -19,6 +34,7 @@ export function Layout({ children }) {
         items: [
           { label: "Profile", onClick: () => { window.location.href = 'https://login.empowered.vote/profile'; } },
           { label: "EV Financials", onClick: () => { window.location.href = 'https://financials.empowered.vote'; } },
+          autoLocationItem,
           feedbackItem,
           { label: "Sign out", onClick: logout },
         ],

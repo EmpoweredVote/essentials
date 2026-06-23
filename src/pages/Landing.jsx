@@ -8,6 +8,7 @@ import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
 import { COVERAGE_STATES, coverageAreaToPath } from '../lib/coverage';
 import { resolveLocalityRoute } from '../lib/localitySearch';
 import LocalityMatches from '../components/LocalityMatches';
+import { getAutoOpenMyLocation } from '../lib/locationPref';
 
 
 const STEPS = [
@@ -54,8 +55,18 @@ export default function Landing() {
     },
   });
 
+  // Connected-account auto-port to the user's saved home location is OPT-IN
+  // (default OFF). Only redirect when the user has explicitly enabled "Default to
+  // my saved location" in the hamburger menu; otherwise a connected account stays
+  // on this default page just like a guest. See src/lib/locationPref.js.
   useEffect(() => {
-    if (!compassLoading && isLoggedIn && myRepresentatives && myRepresentatives.length > 0) {
+    if (
+      !compassLoading &&
+      isLoggedIn &&
+      myRepresentatives &&
+      myRepresentatives.length > 0 &&
+      getAutoOpenMyLocation()
+    ) {
       navigate('/results?prefilled=true', { replace: true });
     }
   }, [compassLoading, isLoggedIn, myRepresentatives, navigate]);
