@@ -118,7 +118,18 @@ this milestone seeds + headshots legislators only.
   3. All 63 legislators have 600×750 headshots in Supabase Storage (genuine gaps documented, no fabricated photos).
   4. No compass stances are created for legislators this milestone (explicitly deferred — verified absent).
 
-**Plans**: TBD
+**Plans**: 3 plans
+**Wave 1**
+
+- [ ] 160-01-PLAN.md — Wave-0 DB probes (21/42 districts, Senate keying, unused ext_id ranges) + write structural migration 1053 (2 chambers + 63 politicians + 63 offices linked to existing SLDU/SLDL + back-fills) + roster operator-verify checkpoint + inline apply
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 160-02-PLAN.md — Write _tmp-nv-legislature-headshots.py (crop-4:5 → 600x750, archive.leg.state.nv.us) + run inline + write/apply audit-only headshot migration 1054
+
+**Wave 3** *(blocked on Waves 1-2)*
+
+- [ ] 160-03-PLAN.md — Inline 9 SQL/HTTP verification checks (21/42 counts, linkage, 63 headshots CDN-200, 0 stances, casing nv, 0 section-split, ledger 1053) + address-routing/correct-person human-verify checkpoint
 
 ### Phase 161: Clark County Commission Deep-Seed
 
