@@ -8,6 +8,19 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
+## Current Milestone: v18.0 Las Vegas & Clark County, NV
+
+**Goal:** Open Nevada as a fully-covered state and deep-seed the Clark County (Las Vegas) metro to Tier 1 depth.
+
+**Target features:**
+- Nevada state foundation — TIGER geofences (all tiers), State of Nevada government (Governor + constitutional officers), 63 state legislators (21 Senate + 42 Assembly) + 2 US Senators + 4 US House reps, all with 600×750 headshots. **Legislature compass stances deferred to a follow-up milestone** (OR v8.0→v9.0 split).
+- Clark County metro deep-seeds (government → roster → headshots → evidence-only city-official stances) — Clark County Commission (governs the unincorporated Strip / Paradise / Spring Valley), City of Las Vegas, Henderson, North Las Vegas, Boulder City.
+- CCSD Board of Trustees (5th-largest US district) — geofences + roster + headshots + stances.
+- NV 2026 elections seeded + discovery pipeline armed (Governor, all 42 Assembly, partial Senate, 4 US House; NV's US Senators are not up in 2026).
+- LOCATION-ONBOARDING.md retrospective — Nevada GOTCHAs + Nevada Quick Reference + Cities Onboarded rows.
+
+**Key context:** New state — no NV data exists yet, so full state groundwork precedes city deep-seeds. Phases continue from 158; next migration 1048. Reuses the v7.0 city-deep-seed playbook + LOCATION-ONBOARDING.md.
+
 ## Requirements
 
 ### Validated
@@ -137,7 +150,11 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
-- **No active milestone** — v17.0 closed 2026-06-22. Next milestone TBD (run `/gsd:new-milestone`).
+- **v18.0 Las Vegas & Clark County, NV** — started 2026-06-22. Opens Nevada (new state): full state foundation
+  (geofences + government + 63 legislators + federal) → Clark County metro deep-seeds (County Commission + Las
+  Vegas + Henderson + North Las Vegas + Boulder City) → CCSD board → NV 2026 elections + discovery →
+  playbook retrospective. Legislature stances deferred to a follow-up. Requirements: `.planning/REQUIREMENTS.md` ·
+  Roadmap: `.planning/ROADMAP.md`.
 - **Most recent close (v17.0 LA County Wave-2, 2026-06-22):** 15 LA County cities deep-seeded + surfaced.
   See `.planning/v17.0-MILESTONE-AUDIT.md`.
 - Carry-forward (not blocking): split-section cleanup for 5 NON-Wave-2 councils (Whittier/Compton/Carson/
@@ -242,5 +259,22 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 | ENCLAVE_CITY_ALIASES backend env var for Maywood Park | Small enclave cities surrounded by Portland (TIGER G4110 boundary exists) need explicit alias to override larger-city geofence match | ✓ Good — v10.0 (Phase 84) |
 | G5420 TIGER UNSD school district pattern: 4 state loaders established | TIGER UNSD zip per state → filter to target GEOIDs → G5420 geofence_boundaries → district_type='SCHOOL' districts → chamber + officials; pattern repeatable for any future school board | ✓ Good — v10.0 |
 
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd:complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
 ---
-*Last updated: 2026-06-22 — v17.0 LA County City Coverage — Wave 2 milestone shipped*
+*Last updated: 2026-06-22 — v18.0 Las Vegas & Clark County, NV milestone started*

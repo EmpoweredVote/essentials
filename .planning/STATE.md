@@ -1,28 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v17.0
-milestone_name: milestone
-status: complete
-last_updated: "2026-06-22T23:45:51.108Z"
-last_activity: 2026-06-22 -- v17.0 milestone closed (Phase 157 complete)
+milestone: v18.0
+milestone_name: Las Vegas & Clark County, NV
+status: planning
+last_updated: "2026-06-23T03:30:37.241Z"
+last_activity: 2026-06-23
 progress:
-  total_phases: 13
-  completed_phases: 13
-  total_plans: 51
-  completed_plans: 51
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Milestone: v17.0 LA County City Coverage — Wave 2 — ✅ CLOSED 2026-06-22
-Phase: 157 (wave-2-close-out) — COMPLETE (3/3 plans)
-Status: v17.0 milestone complete; all 13 phases / 51 plans done
-Last activity: 2026-06-22 -- v17.0 milestone closed (audit written, cities surfaced, status flipped)
-Next migration: 1048 (on-disk counter authoritative; stance migrations applied audit-only, bypass schema_migrations)
-Resume file: .planning/v17.0-MILESTONE-AUDIT.md
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-06-23 — Milestone v18.0 started
 
 ### Phase 150 Plan 04 outcome (Downey stances, migs 994-998 audit-only) — CHECKPOINT 2026-06-20
 
