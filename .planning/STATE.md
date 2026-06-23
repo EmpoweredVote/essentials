@@ -1,26 +1,27 @@
 ---
 gsd_state_version: 1.0
 milestone: v18.0
-milestone_name: Las Vegas & Clark County, NV
-status: phase_complete
-last_updated: "2026-06-23T07:30:00.000Z"
-last_activity: 2026-06-23 -- Phase 159 complete (NV State Controller + 5 headshots; verified PASS)
+milestone_name: milestone
+status: completed
+stopped_at: Phase 158 context gathered
+last_updated: "2026-06-23T16:43:51.427Z"
+last_activity: 2026-06-23 -- Phase 160 marked complete
 progress:
   total_phases: 11
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 8
-  completed_plans: 5
-  percent: 18
+  completed_plans: 8
+  percent: 27
 ---
 
 # State
 
 ## Current Position
 
-Phase: 160 (nevada-legislature-seed-headshots) — PLANNED (3 plans, plan-checker PASS 2026-06-23)
-Plan: 0 of 3 executed
-Status: Phase 160 planned & ready to execute (/gsd-execute-phase 160); next migration 1053
-Last activity: 2026-06-23 -- Phase 160 planned (NV legislature greenfield seed: 2 chambers + 63 legislators + 63 headshots)
+Phase: 160 — COMPLETE
+Plan: 3 of 3
+Status: Phase 160 complete
+Last activity: 2026-06-23 -- Phase 160 marked complete
 
 ### v18.0 roadmap (created 2026-06-23)
 
@@ -291,7 +292,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 159 complete (2026-06-23) — next up Phase 160 (Nevada Legislature)
+**Current focus:** Phase 160 — nevada-legislature-seed-headshots
 
 ## v15.0 Roadmap Summary
 

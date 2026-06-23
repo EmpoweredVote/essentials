@@ -55,7 +55,7 @@ this milestone seeds + headshots legislators only.
 
 - [x] **Phase 158: Nevada TIGER Geofences** - Load all NV boundary tiers so any NV address routes correctly (completed 2026-06-23)
 - [x] **Phase 159: Nevada State & Federal Government** - Governor + constitutional officers + 2 US Senators + 4 US House reps (completed 2026-06-23)
-- [ ] **Phase 160: Nevada Legislature (seed + headshots)** - 21 Senators + 42 Assembly members with headshots; stances deferred
+- [x] **Phase 160: Nevada Legislature (seed + headshots)** - 21 Senators + 42 Assembly members with headshots; stances deferred
 - [ ] **Phase 161: Clark County Commission Deep-Seed** - 7-member board governing the unincorporated Strip
 - [ ] **Phase 162: City of Las Vegas Deep-Seed** - Mayor + City Council
 - [ ] **Phase 163: Henderson Deep-Seed** - NV's 2nd-largest city
@@ -121,15 +121,15 @@ this milestone seeds + headshots legislators only.
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 160-01-PLAN.md — Wave-0 DB probes (21/42 districts, Senate keying, unused ext_id ranges) + write structural migration 1053 (2 chambers + 63 politicians + 63 offices linked to existing SLDU/SLDL + back-fills) + roster operator-verify checkpoint + inline apply
+- [x] 160-01-PLAN.md — Wave-0 DB probes (21/42 districts, Senate keying, unused ext_id ranges) + write structural migration 1053 (2 chambers + 63 politicians + 63 offices linked to existing SLDU/SLDL + back-fills) + roster operator-verify checkpoint + inline apply
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 160-02-PLAN.md — Write _tmp-nv-legislature-headshots.py (crop-4:5 → 600x750, archive.leg.state.nv.us) + run inline + write/apply audit-only headshot migration 1054
+- [x] 160-02-PLAN.md — Write _tmp-nv-legislature-headshots.py (crop-4:5 → 600x750, archive.leg.state.nv.us) + run inline + write/apply audit-only headshot migration 1054
 
 **Wave 3** *(blocked on Waves 1-2)*
 
-- [ ] 160-03-PLAN.md — Inline 9 SQL/HTTP verification checks (21/42 counts, linkage, 63 headshots CDN-200, 0 stances, casing nv, 0 section-split, ledger 1053) + address-routing/correct-person human-verify checkpoint
+- [x] 160-03-PLAN.md — Inline 9 SQL/HTTP verification checks (21/42 counts, linkage, 63 headshots CDN-200, 0 stances, casing nv, 0 section-split, ledger 1053) + address-routing/correct-person human-verify checkpoint
 
 ### Phase 161: Clark County Commission Deep-Seed
 
@@ -253,7 +253,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 |-------|----------------|--------|-----------|
 | 158. Nevada TIGER Geofences | 2/2 | Complete    | 2026-06-23 |
 | 159. Nevada State & Federal Government | 3/3 | Complete   | 2026-06-23 |
-| 160. Nevada Legislature (seed + headshots) | 0/3 | Planned | - |
+| 160. Nevada Legislature (seed + headshots) | 3/3 | Complete | 2026-06-23 |
 | 161. Clark County Commission Deep-Seed | 0/TBD | Not started | - |
 | 162. City of Las Vegas Deep-Seed | 0/TBD | Not started | - |
 | 163. Henderson Deep-Seed | 0/TBD | Not started | - |
