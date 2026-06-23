@@ -476,17 +476,19 @@ All other claims are VERIFIED via live psql queries or CITED from Congress.gov/b
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Andy Matthews headshot license**
+1. **Andy Matthews headshot license** — RESOLVED (resolution path embedded in Plan 159-01 Task 2)
    - What we know: Official `controller.nv.gov` page has no portrait in HTML; campaign site has 2019 photos
    - What's unclear: License status of campaign site photos; Wikimedia Commons availability
    - Recommendation: Run `/find-headshots` skill for Andy Matthews before migration; prefer Wikimedia Commons cc_by or public_domain; if none, use Ballotpedia image and note license
+   - **RESOLUTION:** Plan 159-01 Task 2 runs `/find-headshots`, documents the chosen source URL + license inline as a SOURCE comment, and falls back to 'unknown' license only if no licensed source exists. Judgment call deferred to execution time by necessity.
 
-2. **STATE.md migration counter**
+2. **STATE.md migration counter** — RESOLVED (answer known: next migration = 1050)
    - What we know: STATE.md says "next migration 1048" but DB shows MAX=1049
    - What's unclear: Whether STATE.md needs updating before this phase starts or the planner corrects it inline
    - Recommendation: Planner should open Phase 159 plan with migration 1050 as the first structural migration, and note the STATE.md counter discrepancy for correction at phase completion
+   - **RESOLUTION:** DB MAX=1049 confirmed; Phase 159's first structural migration is 1050. Plan 159-03 Task 1 records the STATE.md "1048" discrepancy for correction at phase close.
 
 ---
 
