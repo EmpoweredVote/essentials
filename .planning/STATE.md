@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: Las Vegas & Clark County, NV
-status: Roadmapped (11 phases, 158–168; awaiting `/gsd-plan-phase 158`)
-last_updated: "2026-06-23T04:01:34.811Z"
-last_activity: 2026-06-23 — v18.0 roadmap created (13/13 requirements mapped)
+status: ready_to_plan
+last_updated: 2026-06-23T04:48:32.763Z
+last_activity: 2026-06-23 -- Phase 158 execution started
 progress:
   total_phases: 11
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 217
   percent: 0
+stopped_at: Phase 158 complete (2/2) — ready to discuss Phase 159
 ---
 
 # State
 
 ## Current Position
 
-Phase: Not started (roadmap created — ready to plan Phase 158)
-Plan: —
-Status: Roadmapped (11 phases, 158–168; awaiting `/gsd-plan-phase 158`)
-Last activity: 2026-06-23 — v18.0 roadmap created (13/13 requirements mapped)
+Phase: 159
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-23
 
 ### v18.0 roadmap (created 2026-06-23)
 
@@ -290,7 +291,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 157 — wave-2-close-out
+**Current focus:** Phase 159 — nevada state & federal government
 
 ## v15.0 Roadmap Summary
 

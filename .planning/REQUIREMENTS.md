@@ -97,7 +97,7 @@ Per city/government deliverable (the Tier 1 unit):
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NV-GEO-01 | Phase 158 | Pending |
+| NV-GEO-01 | Phase 158 | Complete |
 | NV-STATE-01 | Phase 159 | Pending |
 | NV-STATE-02 | Phase 159 | Pending |
 | NV-LEG-01 | Phase 160 | Pending |

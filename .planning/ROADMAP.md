@@ -45,7 +45,7 @@ this milestone seeds + headshots legislators only.
 - Integer phases (158, 159, …): Planned milestone work
 - Decimal phases (e.g. 160.1): Urgent insertions (marked INSERTED)
 
-- [ ] **Phase 158: Nevada TIGER Geofences** - Load all NV boundary tiers so any NV address routes correctly
+- [x] **Phase 158: Nevada TIGER Geofences** - Load all NV boundary tiers so any NV address routes correctly (completed 2026-06-23)
 - [ ] **Phase 159: Nevada State & Federal Government** - Governor + constitutional officers + 2 US Senators + 4 US House reps
 - [ ] **Phase 160: Nevada Legislature (seed + headshots)** - 21 Senators + 42 Assembly members with headshots; stances deferred
 - [ ] **Phase 161: Clark County Commission Deep-Seed** - 7-member board governing the unincorporated Strip
@@ -69,8 +69,8 @@ this milestone seeds + headshots legislators only.
   3. NV TIGER boundaries loaded for all tiers (G4110 cities, G4020 counties, CDs, SLDU, SLDL); loader keys verified from the actual TIGER zip filenames.
   4. Section-split scan returns 0 rows (no mis-parented boundaries).
 **Plans**: 2 plans
-- [ ] 158-01-PLAN.md — Add NV to TIGER loader (4 allowlists), create verify+smoke scripts, dry-run to confirm sldl/place counts (no DB writes)
-- [ ] 158-02-PLAN.md — Live-load all 5 NV tiers, verify gates (Strip-unincorporated + section-split), run 5-address smoke test
+- [x] 158-01-PLAN.md — Add NV to TIGER loader (4 allowlists), create verify+smoke scripts, dry-run to confirm sldl/place counts (no DB writes)
+- [x] 158-02-PLAN.md — Live-load all 5 NV tiers, verify gates (Strip-unincorporated + section-split), run 5-address smoke test
 
 ### Phase 159: Nevada State & Federal Government
 **Goal**: A NV resident sees their full statewide and federal representation — Governor, constitutional officers, both US Senators, and their US House member — each with a headshot.
@@ -190,7 +190,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 158. Nevada TIGER Geofences | 0/2 | Planned | - |
+| 158. Nevada TIGER Geofences | 2/2 | Complete    | 2026-06-23 |
 | 159. Nevada State & Federal Government | 0/TBD | Not started | - |
 | 160. Nevada Legislature (seed + headshots) | 0/TBD | Not started | - |
 | 161. Clark County Commission Deep-Seed | 0/TBD | Not started | - |
