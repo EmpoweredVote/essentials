@@ -171,6 +171,7 @@ export const COVERAGE_STATES = [
     name: 'Virginia', abbrev: 'VA',
     areas: [
       { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA', hasContext: true },
+      { label: 'Falls Church', browseGovernmentList: ['5127200', '51610'], browseStateAbbrev: 'VA', hasContext: true },
     ],
   },
 ];
