@@ -143,7 +143,11 @@ this milestone seeds + headshots legislators only.
   3. Evidence-only compass stances render on commissioner profiles — 100% cited, honest blank spokes where no public record exists, zero default values.
   4. Clark County surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+- [ ] 161-01-PLAN.md — Structural seed: Wave-0 probes + roster checkpoint + mig 1055 (Clark County government + Board of County Commissioners + 7 commissioner offices on the single COUNTY district + back-fill)
+- [ ] 161-02-PLAN.md — Headshots: _tmp-clark-county-commission-headshots.py + audit-only mig 1056 (7 politician_images) + coverage.js COVERAGE_COUNTIES entry
+- [ ] 161-03-PLAN.md — Stances (one agent at a time, evidence-only) audit-only migs 1057-1063 + 9-check E2E verification + human-verify checkpoint
 
 ### Phase 162: City of Las Vegas Deep-Seed
 
