@@ -16,14 +16,26 @@
   --color-ev-yellow-light: #fef3c7;
   --color-ev-yellow-dark: #eab308;
 
-  /* Empowered Vote - Dark Mode Palette */
-  --color-ev-navy: #020618;
-  --color-ev-navy-card: #1a2235;
-  --color-ev-navy-elevated: #1e2a3a;
+  /* Empowered Vote - Dark Mode Palette (Figma GitHub-dark, node 3957:563) */
+  --color-ev-navy: #0d1117;
+  --color-ev-navy-card: #161b22;
+  --color-ev-navy-elevated: #21262d;
   --color-ev-black: #1c1c1c;
-  --color-ev-teal-light: #59b0c4;
+  --color-ev-teal-light: #00c8d7;
   --color-ev-coral: #ff5740;
   --color-ev-blue: #3b82f6;
+
+  /* D-02 text tokens */
+  --color-ev-text-primary: #e6edf3;
+  --color-ev-text-muted: #8b949e;
+
+  /* D-02 divider/border slates */
+  --color-ev-slate: #2d3748;
+  --color-ev-slate-strong: #4a5568;
+
+  /* D-05 typography tokens */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -43,7 +55,7 @@ body {
 }
 
 .dark body {
-  color: #f3f4f6;
+  color: #e6edf3;
 }
 
 /* Google Places Autocomplete dropdown */
