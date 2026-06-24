@@ -75,8 +75,14 @@ Exceptions:
 ## Typography
 
 Fonts: **Inter** for body/UI, **Manrope** for display + section/eyebrow labels (D-05/06/07).
-Weights used: **Regular (400)** + **SemiBold (600)** dominant (Bold 700 only for the hero title).
+Weights used: **Regular (400)** + **SemiBold (600)** dominant.
 Exactly the four sizes from the mockup — reconcile into type tokens, no inline literals.
+
+**Weight exception (deliberate, approved):** **Bold (700)** is used on **exactly one element — the
+hero/location title — and nowhere else.** This exceeds the default 2-weight heuristic by one weight,
+on purpose: it is faithful to the Figma style guide (node `3957:563`) and is a locked user decision
+(CONTEXT.md **D-06**: "Hero title = Manrope Bold 30px"). The body/UI ramp remains strictly 400 + 600;
+no other element may use 700. Accepted as a justified single-use exception, not a typography smell.
 
 | Role | Size | Weight | Line Height | Font | Notes |
 |------|------|--------|-------------|------|-------|
