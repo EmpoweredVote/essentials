@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
 
 /* Don't scan planning/docs dirs for class candidates. Tailwind v4 auto-scans the
    whole git tree; markdown there often contains Windows paths whose backslash
@@ -51,7 +50,7 @@ html,
 body {
   @apply bg-[var(--ev-bg-light)] dark:bg-ev-navy;
   color: #111827;
-  font-family: 'Manrope', sans-serif;
+  font-family: var(--font-sans);
 }
 
 .dark body {

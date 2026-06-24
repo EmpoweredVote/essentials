@@ -4,6 +4,10 @@ import { BrowserRouter } from "react-router";
 import { PostHogProvider } from "posthog-js/react";
 import posthog from "posthog-js";
 import "./index.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/manrope/600.css";
+import "@fontsource/manrope/700.css";
 import App from "./App.jsx";
 
 posthog.init('phc_kpUWTjEcRRwSn7zdNstbDVYqAMQvEFZ5EgrWFeaAh5mu', {
