@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v19.0
 milestone_name: Essentials Dark-Mode Redesign & Section Banners
-status: planning
+status: roadmapped
 last_updated: "2026-06-24T17:44:30.233Z"
 last_activity: 2026-06-24
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,10 +17,36 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 169 (Dark-Mode Design System Foundation) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-06-24 — Milestone v19.0 started
+Status: Roadmapped (awaiting phase planning)
+Last activity: 2026-06-24 — v19.0 roadmap created (4 phases, 169–172; 11/11 reqs mapped)
+
+### v19.0 roadmap (created 2026-06-24)
+
+Frontend-only dark-mode + section-banner milestone. 4 phases (169–172), continuing numbering
+from v18.0 (PARKED at Phase 162; phase dirs 158–168 reserved). 11/11 requirements mapped 1:1 —
+no orphans, no duplicates. No backend/DB changes (banner data is structure-only). Figma source
+J9mfnUSnc2k6fUQDhw9L7h node 3957:563.
+
+- **169 Dark-Mode Design System Foundation** — DARK-01 (extract Figma tokens → index.css @theme/CSS
+  vars, single source of truth) + DARK-02 (Results/Representatives renders in dark treatment;
+  PoliticianCard 4:5 preserved; ev-ui !important overrides; no light-mode regression).
+- **170 Section Banners & Continuous Scroll (Results)** — CORE SLICE. BANR-01 (reusable SectionBanner:
+  image + dark gradient + label + pin) + BANR-02 (City→State→Federal in one continuous scroll) +
+  BANR-03 (location-aware via extended buildingImages.js + graceful gradient fallback) + BANR-04
+  (stats data-slot + feature-icon slot as hidden scaffolding) + NAV-01 (remove tier sort buttons;
+  keep Elected/Appointed filter + name search).
+- **171 Banner Asset Pipeline & Exemplar Art** — ASST-01 (Bloomington/Indiana/US + LA/California/US
+  art: Unsplash skylines + Wikimedia landmarks + AI fallback, unified dark overlay, mirrored to
+  Storage, wired into buildingImages.js) + ASST-02 (documented repeatable sourcing→treatment→wiring
+  procedure for the ~10 remaining covered states).
+- **172 Elections Page Parity** — DARK-03 (Elections in same dark treatment) + BANR-05 (same
+  SectionBanner dividers between tiers); preserve seeded-shuffle ordering, unopposed/no-candidate
+  handling, elections/me auto-load, MiniCompass overlay.
+
+DEFERRED (not v19.0): live banner stats, feature-icon links, banner art for other states, Landing +
+profile pages dark treatment. v18.0 NV resumes after v19.0 closes (next NV migration 1064).
 
 ### v18.0 roadmap (created 2026-06-23)
 

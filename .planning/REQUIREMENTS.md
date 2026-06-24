@@ -97,14 +97,14 @@ this milestone). v18.0 NV is parked at Phase 162 and resumes after this closes.
 
 | REQ-ID | Phase |
 |--------|-------|
-| DARK-01 | — |
-| DARK-02 | — |
-| DARK-03 | — |
-| BANR-01 | — |
-| BANR-02 | — |
-| BANR-03 | — |
-| BANR-04 | — |
-| BANR-05 | — |
-| NAV-01 | — |
-| ASST-01 | — |
-| ASST-02 | — |
+| DARK-01 | 169 |
+| DARK-02 | 169 |
+| DARK-03 | 172 |
+| BANR-01 | 170 |
+| BANR-02 | 170 |
+| BANR-03 | 170 |
+| BANR-04 | 170 |
+| BANR-05 | 172 |
+| NAV-01 | 170 |
+| ASST-01 | 171 |
+| ASST-02 | 171 |
