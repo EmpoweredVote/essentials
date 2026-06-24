@@ -130,21 +130,21 @@ body {
 
 /* Dark mode: override ev-ui inline background on politician cards */
 .dark .ev-politician-card {
-  background-color: #1a2235 !important;
+  background-color: #161b22 !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .dark .ev-politician-card:hover {
-  background-color: #1e2a3a !important;
+  background-color: #21262d !important;
 }
 
 /* Dark mode: ev-politician-card text — !important required; ev-ui uses inline styles */
 .dark .ev-politician-card h3 {
-  color: #f3f4f6 !important;
+  color: #e6edf3 !important;
 }
 
 .dark .ev-politician-card p {
-  color: #d1d5db !important;
+  color: #8b949e !important;
 }
 
 /* Dark mode: PoliticianProfile card — ev-ui uses inline styles so !important is required */
@@ -324,6 +324,15 @@ body {
   justify-content: center;
 }
 
+/* Dark mode: ev-ui Header child text overrides — ev-ui hardcodes the old palette
+   internally (darkMode: #f3f4f6/#d1d5db/#59b0c4) so we must override with !important.
+   The <header> root has no class; bg is owned by Layout.jsx isDark style prop. */
+.dark .ev-header-secondary,
+.dark .ev-header-nav,
+.dark .ev-header-mobile-menu {
+  color: #e6edf3 !important;
+}
+
 /* R2-1 (M7): "Visit … website" icon links in jurisdiction/subgroup headers
    render ~14×14 — pad to a ≥44×44 tap target. */
 a[aria-label^="Visit "] {
@@ -346,10 +355,14 @@ a[aria-label^="Visit "] {
   align-items: center;
 }
 
-/* R2-2 (M5): jurisdiction headers (GovernmentBodySection) use #00657c, which
-   is only ~3:1 on the navy dark bg — lift to the light teal (~8:1). */
+/* R2-2 (M5) + D-06: jurisdiction headers (GovernmentBodySection) eyebrow label —
+   accent teal, Manrope SemiBold uppercase 1.2px tracking (D-06 eyebrow spec). */
 .dark .ev-gov-body-section [role="button"] span {
-  color: #59b0c4 !important;
+  color: #00c8d7 !important;
+  font-family: var(--font-display) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.2px !important;
 }
 
 /* R2-2 (M5): the profile back control is a <button> (not an <a>), so the link
