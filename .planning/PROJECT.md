@@ -8,18 +8,19 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: v18.0 Las Vegas & Clark County, NV
+## Current Milestone: v19.0 Essentials Dark-Mode Redesign & Section Banners
 
-**Goal:** Open Nevada as a fully-covered state and deep-seed the Clark County (Las Vegas) metro to Tier 1 depth.
+**Goal:** Adopt the Figma dark-mode visual design for Essentials and replace the Local/State/National sort buttons with scrollable, graphic banner dividers between City → State → Federal sections.
 
 **Target features:**
-- Nevada state foundation — TIGER geofences (all tiers), State of Nevada government (Governor + constitutional officers), 63 state legislators (21 Senate + 42 Assembly) + 2 US Senators + 4 US House reps, all with 600×750 headshots. **Legislature compass stances deferred to a follow-up milestone** (OR v8.0→v9.0 split).
-- Clark County metro deep-seeds (government → roster → headshots → evidence-only city-official stances) — Clark County Commission (governs the unincorporated Strip / Paradise / Spring Valley), City of Las Vegas, Henderson, North Las Vegas, Boulder City.
-- CCSD Board of Trustees (5th-largest US district) — geofences + roster + headshots + stances.
-- NV 2026 elections seeded + discovery pipeline armed (Governor, all 42 Assembly, partial Senate, 4 US House; NV's US Senators are not up in 2026).
-- LOCATION-ONBOARDING.md retrospective — Nevada GOTCHAs + Nevada Quick Reference + Cities Onboarded rows.
+- Dark-mode design system extracted from the Figma style guide (color/type/spacing tokens), applied to the Results/Representatives + Elections pages.
+- Section banner-divider component — City/State/Federal, continuous vertical scroll; the Local/State/National sort buttons are **removed**.
+- Banner art in Aditi's Bloomington treatment — exemplar sets Bloomington/Indiana/US and LA/California/US; reusable system + graceful fallback for the ~10 other covered states until art is added.
+- Banner data-slot + feature-icon-slot architecture (**structure now; live stats** like population/electoral-count **and feature links** like treasury-tracker **deferred** to a follow-up).
+- Existing candidate/rep tile component **preserved** (current shape/size + photo) — Figma tile size is **not** adopted.
+- Banner image-sourcing pipeline: Unsplash (skylines) + Wikimedia (state/federal landmarks) + AI fallback, unified dark overlay, mirrored to Supabase Storage.
 
-**Key context:** New state — no NV data exists yet, so full state groundwork precedes city deep-seeds. Phases continue from 158; next migration 1048. Reuses the v7.0 city-deep-seed playbook + LOCATION-ONBOARDING.md.
+**Key context:** Pure frontend milestone — a deliberate detour from the data-entry track. **v18.0 Las Vegas & Clark County, NV is PARKED at Phase 162** and resumes after v19.0 closes (snapshots: `v18.0-{ROADMAP,REQUIREMENTS,STATE}.md`; next NV migration 1064). Phases continue from 169. Figma source: `J9mfnUSnc2k6fUQDhw9L7h` node `3957:563`. Stack: React 19 + Vite + Tailwind 4 + `@empoweredvote/ev-ui`; ev-ui dark-mode inline-style overrides require `!important`.
 
 ## Requirements
 
@@ -150,11 +151,14 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
-- **v18.0 Las Vegas & Clark County, NV** — started 2026-06-22. Opens Nevada (new state): full state foundation
-  (geofences + government + 63 legislators + federal) → Clark County metro deep-seeds (County Commission + Las
-  Vegas + Henderson + North Las Vegas + Boulder City) → CCSD board → NV 2026 elections + discovery →
-  playbook retrospective. Legislature stances deferred to a follow-up. Requirements: `.planning/REQUIREMENTS.md` ·
-  Roadmap: `.planning/ROADMAP.md`.
+- **v19.0 Essentials Dark-Mode Redesign & Section Banners** — started 2026-06-24. Frontend milestone: adopt the
+  Figma dark-mode design + scrollable City/State/Federal banner dividers (remove sort buttons), reusable banner
+  system + exemplar art (Bloomington/Indiana/US, LA/California/US), banner data/icon slots (structure only),
+  preserve current tiles. Requirements: `.planning/REQUIREMENTS.md` · Roadmap: `.planning/ROADMAP.md`.
+- **⏸ PARKED: v18.0 Las Vegas & Clark County, NV** — started 2026-06-22, paused 2026-06-24 at **Phase 162** (4/11
+  phases done: 158 geofences, 159 state/federal, 160 legislature, 161 Clark County Commission). Resumes after
+  v19.0 closes. Live state snapshotted to `.planning/v18.0-{ROADMAP,REQUIREMENTS,STATE}.md`; phase dirs 158–168
+  intact; next NV migration **1064**; legislature stances deferred.
 - **Most recent close (v17.0 LA County Wave-2, 2026-06-22):** 15 LA County cities deep-seeded + surfaced.
   See `.planning/v17.0-MILESTONE-AUDIT.md`.
 - Carry-forward (not blocking): split-section cleanup for 5 NON-Wave-2 councils (Whittier/Compton/Carson/
@@ -277,4 +281,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-22 — v18.0 Las Vegas & Clark County, NV milestone started*
+*Last updated: 2026-06-24 — v19.0 Dark-Mode Redesign & Section Banners started; v18.0 NV parked at Phase 162*
