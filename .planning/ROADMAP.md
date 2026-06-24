@@ -38,7 +38,9 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
   3. ev-ui inline-style components (`GovernmentBodySection` / `SubGroupSection`) display correctly on dark via `!important` overrides — no light-mode bleed.
   4. The `PoliticianCard` 4:5 tile renders unchanged in shape and size (only re-themed for dark).
   5. Light mode still renders as-is (no light-mode regression).
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 169-01-PLAN.md — Reconcile dark `@theme` token VALUES to the Figma palette + wire Inter/Manrope `--font-*` tokens (DARK-01)
+  - [ ] 169-02-PLAN.md — Apply the palette to Results + global header (ev-ui `!important` overrides, inline-literal sweep, minimal FilterBar) + manual-visual sign-off (DARK-02)
 **UI hint**: yes
 
 ### Phase 170: Section Banners & Continuous Scroll (Results)
@@ -84,7 +86,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 169. Dark-Mode Design System Foundation | 0/0 | Not started | - |
+| 169. Dark-Mode Design System Foundation | 0/2 | Not started | - |
 | 170. Section Banners & Continuous Scroll (Results) | 0/0 | Not started | - |
 | 171. Banner Asset Pipeline & Exemplar Art | 0/0 | Not started | - |
 | 172. Elections Page Parity | 0/0 | Not started | - |
