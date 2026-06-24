@@ -29,54 +29,71 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 ## Phase Details
 
 ### Phase 169: Dark-Mode Design System Foundation
+
 **Goal**: The Results/Representatives page renders in the Figma dark-mode treatment, driven by a single source of design tokens.
 **Depends on**: Nothing (first phase of milestone)
 **Requirements**: DARK-01, DARK-02
 **Success Criteria** (what must be TRUE):
+
   1. A user viewing Results in dark mode sees the Figma style-guide treatment — page background (`ev-navy`), tab/header chrome, section areas, and tiles all read as the dark design, with no faint-gray-on-dark legibility failures.
   2. Color, type-scale, and spacing values used on Results trace to `@theme` / CSS variables in `src/index.css` (single source of truth), not scattered inline literals.
   3. ev-ui inline-style components (`GovernmentBodySection` / `SubGroupSection`) display correctly on dark via `!important` overrides — no light-mode bleed.
   4. The `PoliticianCard` 4:5 tile renders unchanged in shape and size (only re-themed for dark).
-  5. Light mode still renders as-is (no light-mode regression).
-**Plans**: 2 plans
+  5. Light mode still renders as-is (no light-mode regression).**Plans**: 2 plans
+
+**Wave 1**
+
   - [ ] 169-01-PLAN.md — Reconcile dark `@theme` token VALUES to the Figma palette + wire Inter/Manrope `--font-*` tokens (DARK-01)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
   - [ ] 169-02-PLAN.md — Apply the palette to Results + global header (ev-ui `!important` overrides, inline-literal sweep, minimal FilterBar) + manual-visual sign-off (DARK-02)
+
 **UI hint**: yes
 
 ### Phase 170: Section Banners & Continuous Scroll (Results)
+
 **Goal**: Results presents City → State → Federal as one continuous scroll separated by graphic banner dividers, with the tier sort control gone.
 **Depends on**: Phase 169
 **Requirements**: BANR-01, BANR-02, BANR-03, BANR-04, NAV-01
 **Success Criteria** (what must be TRUE):
+
   1. Scrolling Results shows a Bloomington skyline banner before City officials, an Indiana banner before State, and a US banner before Federal — each a full-bleed image with dark gradient overlay, location label, and pin (Aditi's Bloomington treatment), rendered by one reusable `SectionBanner` component.
   2. There are no Local/State/National tier sort buttons; all three tiers always render in full in a single vertical scroll (no tab/button switching between tiers).
   3. The correct banner image + label is selected per jurisdiction (e.g. an LA address shows LA / California / US), driven by an extended `buildingImages.js` tier→image mapping; a jurisdiction with no specific art falls back gracefully to a gradient/generic banner instead of breaking.
   4. The Elected/Appointed type filter and the name search still work, reconciled into the new banner-divided layout.
   5. Each banner exposes a stats data-slot and a feature-icon slot as hidden/empty scaffolding (structure present in the component API; no live data or links rendered this milestone).
+
 **Plans**: TBD
 **UI hint**: yes
 
 ### Phase 171: Banner Asset Pipeline & Exemplar Art
+
 **Goal**: The two exemplar banner sets exist as real art, and anyone can add a new jurisdiction's banner set by following a written procedure.
 **Depends on**: Phase 170 (consumes the `SectionBanner` + `buildingImages.js` mapping)
 **Requirements**: ASST-01, ASST-02
 **Success Criteria** (what must be TRUE):
+
   1. Bloomington/Indiana/US and LA/California/US banner art exists in the unified skyline + dark-overlay treatment (Unsplash skylines + Wikimedia state/federal landmarks + AI fallback), stored consistently (public/images or Supabase Storage mirror) and wired into `buildingImages.js`.
   2. Browsing a Bloomington address and an LA address each shows its own exemplar banner set on the live Results page (not the generic fallback).
   3. A documented, repeatable procedure exists describing image sourcing → dark-overlay treatment → wiring into `buildingImages.js`, sufficient for the ~10 remaining covered states to be filled in later without re-deriving the process.
   4. Jurisdictions without art still fall back to the graceful gradient/generic banner (no broken images).
+
 **Plans**: TBD
 **UI hint**: yes
 
 ### Phase 172: Elections Page Parity
+
 **Goal**: The Elections page matches Results — same dark treatment and the same banner dividers between tiers.
 **Depends on**: Phase 170 (SectionBanner pattern), Phase 169 (dark tokens), Phase 171 (art available)
 **Requirements**: DARK-03, BANR-05
 **Success Criteria** (what must be TRUE):
+
   1. The Elections page renders in the same Figma dark-mode treatment as Results (background, chrome, section areas, tiles consistent across both pages).
   2. Scrolling the Elections page shows the same `SectionBanner` dividers between City → State → Federal tiers, location-aware per jurisdiction with the same graceful fallback.
   3. Existing Elections behaviors are preserved — randomized per-session candidate ordering, "Running Unopposed" / "No candidates have filed" handling, and Connected auto-load via `elections/me`.
   4. Compass / MiniCompass overlay behavior on Elections is preserved (re-themed only as needed for dark legibility).
+
 **Plans**: TBD
 **UI hint**: yes
 
