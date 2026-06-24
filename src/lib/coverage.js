@@ -227,6 +227,7 @@ export const COVERAGE_COUNTIES = [
   { label: 'Utah County', browseGovernmentList: ['49049'], browseStateAbbrev: 'UT', hasContext: true },
   { label: 'Washington County', browseGovernmentList: ['49053'], browseStateAbbrev: 'UT' },
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
+  { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
 ];
 
 // Browsable states — every US state (each has statewide officials seeded:
