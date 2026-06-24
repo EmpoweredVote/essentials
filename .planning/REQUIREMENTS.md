@@ -34,7 +34,7 @@ this milestone). v18.0 NV is parked at Phase 162 and resumes after this closes.
 
 ### Dark-Mode Visual System (DARK)
 
-- [ ] **DARK-01**: Dark-mode design tokens (color, type scale, spacing) are extracted from the Figma
+- [x] **DARK-01**: Dark-mode design tokens (color, type scale, spacing) are extracted from the Figma
   style guide and reconciled into `src/index.css` `@theme` / CSS variables as the single source of truth.
 - [ ] **DARK-02**: The Results/Representatives page renders in the Figma dark-mode treatment (page
   background, tab/header chrome, section areas, tiles) — visually matching the style guide on dark.

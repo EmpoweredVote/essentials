@@ -43,7 +43,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 
 **Wave 1**
 
-  - [ ] 169-01-PLAN.md — Reconcile dark `@theme` token VALUES to the Figma palette + wire Inter/Manrope `--font-*` tokens (DARK-01)
+  - [x] 169-01-PLAN.md — Reconcile dark `@theme` token VALUES to the Figma palette + wire Inter/Manrope `--font-*` tokens (DARK-01)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -103,7 +103,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 169. Dark-Mode Design System Foundation | 0/2 | Not started | - |
+| 169. Dark-Mode Design System Foundation | 1/2 | In Progress|  |
 | 170. Section Banners & Continuous Scroll (Results) | 0/0 | Not started | - |
 | 171. Banner Asset Pipeline & Exemplar Art | 0/0 | Not started | - |
 | 172. Elections Page Parity | 0/0 | Not started | - |
