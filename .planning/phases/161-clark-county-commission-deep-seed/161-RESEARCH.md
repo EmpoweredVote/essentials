@@ -572,17 +572,16 @@ Browse link for review: `essentials.empowered.vote/results?browse_government_lis
 | A4 | Using clarkcountynv.gov 175×175 primary (vs. high-res Wikimedia for Kirkpatrick) | Headshot Sources | LOW — cosmetic quality only; planner may elect to use Wikimedia CC BY 2.0 for Kirkpatrick. |
 | A5 | GroupHierarchy.js Chair-first ordering covers the COUNTY tier (Naft sorts first) | Migration Shape Pattern 4 | MEDIUM — Phase 83 UAT confirmed Chair-first fix for Multnomah but this was phase 83. Verify at execution time; if not already handled, the groupHierarchy.js fix from phase 156 (a235f25) may need extension to county. |
 
-## Open Questions
+## Open Questions (RESOLVED — runtime-mitigated)
 
-1. **GroupHierarchy.js Chair-first ordering for county tier**
+> Both questions are resolved at execution time via gates built into the plans; neither blocks artifact authoring. Q2 additionally pre-confirmed by the orchestrator on 2026-06-23 (ledger structural MAX=1053 → next=1055; county district `state='nv'`).
+
+1. **GroupHierarchy.js Chair-first ordering for county tier** — RESOLVED at runtime per A5 (Plan 03 Task 3 human-verify step 2: check groupHierarchy.js / Multnomah display; extend if Naft not first).
    - Known: LA city phases (155/156) have groupHierarchy.js rotational-mayor ordering. Phase 83 (Multnomah) fixed Chair-first (memory `project_phase83_uat_issues`).
    - Unclear: Whether the groupHierarchy.js fix (commit a235f25) covers the COUNTY tier specifically, and whether it's deployed.
    - Recommendation: Executor checks groupHierarchy.js and Multnomah display at execution time. If Naft doesn't appear first, extend the existing pattern.
 
-2. **Phase migration counter confirmation**
-   - Known: STATE.md says "next migration 1053" but phases 160 applied 1053 (structural) + 1054 (audit-only, unregistered). On-disk max = 1054.
-   - Unclear: DB ledger MAX — likely 1053 (only structural registered) but needs Wave-0 probe.
-   - Recommendation: Wave-0 `SELECT MAX(CAST(version AS INTEGER)) FROM supabase_migrations.schema_migrations;` → assert 1053; next structural = **1055**.
+2. **Phase migration counter confirmation** — RESOLVED: orchestrator pre-confirmed structural ledger literal MAX=1053 (1051/1052/1054 are audit-only, unregistered); on-disk files through 1054 → next structural = **1055**. Plan 01 Task 2 P1 re-asserts before apply.
 
 ## Security Domain
 
