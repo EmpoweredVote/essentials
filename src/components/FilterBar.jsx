@@ -23,10 +23,10 @@ const TYPE_OPTIONS = [
 
 function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
   const isActive = value !== 'All';
-  const bg = isDark ? '#1a2235' : '#fff';
-  const borderColor = isActive ? '#59b0c4' : (isDark ? '#2d3f5a' : '#d1d5db');
-  const textColor = isActive ? (isDark ? '#59b0c4' : '#00657c') : (isDark ? '#d1d5db' : '#374151');
-  const chevronStroke = isDark ? '%2359b0c4' : '%236b7280';
+  const bg = isDark ? '#161b22' : '#fff';
+  const borderColor = isActive ? (isDark ? '#00c8d7' : '#59b0c4') : (isDark ? '#2d3748' : '#d1d5db');
+  const textColor = isActive ? (isDark ? '#00c8d7' : '#00657c') : (isDark ? '#8b949e' : '#374151');
+  const chevronStroke = isDark ? '%2300c8d7' : '%236b7280';
   return (
     <label
       style={{
@@ -59,7 +59,7 @@ function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
         }}
       >
         {options.map((o) => (
-          <option key={o.value} value={o.value} style={{ backgroundColor: isDark ? '#1a2235' : '#fff', color: textColor }}>{o.label}</option>
+          <option key={o.value} value={o.value} style={{ backgroundColor: isDark ? '#161b22' : '#fff', color: textColor }}>{o.label}</option>
         ))}
       </select>
     </label>
@@ -79,12 +79,12 @@ export default function FilterBar({
   compassMode, onCompassModeChange,
   isDark,
 }) {
-  const inputBg = isDark ? '#1a2235' : '#fff';
-  const inputBorder = isDark ? '#2d3f5a' : '#d1d5db';
-  const inputBorderFocus = isDark ? '#59b0c4' : '#00657c';
-  const inputText = isDark ? '#d1d5db' : '#374151';
-  const iconStroke = isDark ? '#59b0c4' : '#6b7280';
-  const compassTextColor = compassMode ? (isDark ? '#59b0c4' : '#00657c') : (isDark ? '#9ca3af' : '#374151');
+  const inputBg = isDark ? '#161b22' : '#fff';
+  const inputBorder = isDark ? '#2d3748' : '#d1d5db';
+  const inputBorderFocus = isDark ? '#00c8d7' : '#00657c';
+  const inputText = isDark ? '#8b949e' : '#374151';
+  const iconStroke = isDark ? '#00c8d7' : '#6b7280';
+  const compassTextColor = compassMode ? (isDark ? '#00c8d7' : '#00657c') : (isDark ? '#8b949e' : '#374151');
 
   return (
     <div
@@ -156,7 +156,7 @@ export default function FilterBar({
             type="checkbox"
             checked={!!compassMode}
             onChange={(e) => onCompassModeChange(e.target.checked)}
-            style={{ width: '18px', height: '18px', accentColor: isDark ? '#59b0c4' : '#00657c', cursor: 'pointer' }}
+            style={{ width: '18px', height: '18px', accentColor: isDark ? '#00c8d7' : '#00657c', cursor: 'pointer' }}
           />
           Compass
         </label>

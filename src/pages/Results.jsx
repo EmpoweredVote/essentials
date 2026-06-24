@@ -1424,7 +1424,7 @@ export default function Results() {
     const stackCompass = showCompassOverlay && !isDesktop;
 
     const compassOverlayWidth = 190;
-    const compassBg = isDark ? '#1a2235' : isCandidate ? '#fffef5' : '#fff';
+    const compassBg = isDark ? '#161b22' : isCandidate ? '#fffef5' : '#fff';
     const wrapperBorderColor = isDark ? 'rgba(255,255,255,0.08)' : '#E2EBEF';
     const cardEl = (
       <PoliticianCard
@@ -1435,7 +1435,7 @@ export default function Results() {
         subtitle={subtitle}
         imageFocalPoint={imgData.focalPoint || 'center 20%'}
         style={{
-          ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}),
+          ...(isCandidate ? { borderLeft: '4px solid #fed12e', backgroundColor: '#fffef5' } : isDark ? { backgroundColor: '#161b22', borderColor: '#2d3748' } : {}),
           border: 'none',
           borderRadius: 0,
           cursor: 'pointer',
@@ -1792,7 +1792,7 @@ export default function Results() {
                   className={`px-3 sm:px-4 py-3 text-sm min-h-[44px] transition-colors ${
                     activeView === 'representatives'
                       ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
-                      : 'text-[#718096] dark:text-gray-500 font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
+                      : 'text-[#718096] dark:text-[#8b949e] font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
                   }`}
                   onClick={() => switchView('representatives')}
                 >
@@ -1802,7 +1802,7 @@ export default function Results() {
                   className={`px-3 sm:px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
                     activeView === 'elections'
                       ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
-                      : 'text-[#718096] dark:text-gray-500 font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
+                      : 'text-[#718096] dark:text-[#8b949e] font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
                   }`}
                   onClick={() => switchView('elections')}
                 >
@@ -1889,17 +1889,17 @@ export default function Results() {
                     <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
-                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isDark ? '#59b0c4' : tierStyle?.text }}>{tier}</span>
+                          <span style={{ color: isDark ? '#00c8d7' : tierStyle?.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
                         </div>
                       )}
-                      <p className="mt-4 text-gray-500 dark:text-gray-400">{emptyMessage}</p>
+                      <p className="mt-4 dark:text-[#8b949e] text-gray-500">{emptyMessage}</p>
                     </div>
                   );
                 })}
 
                 {/* Name-search no-matches state */}
                 {trimmedSearch && Array.isArray(visibleList) && visibleList.length === 0 && Array.isArray(list) && list.length > 0 && (
-                  <p className="mt-4 text-gray-500 dark:text-gray-400 text-center">
+                  <p className="mt-4 text-gray-500 dark:text-[#8b949e] text-center">
                     No matches for &ldquo;{searchQuery}&rdquo;. Clear the search box to see all results.
                   </p>
                 )}
@@ -1913,7 +1913,7 @@ export default function Results() {
                     <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
-                          <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isDark ? '#59b0c4' : tierStyle.text }}>{tier}</span>
+                          <span style={{ color: isDark ? '#00c8d7' : tierStyle.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
                         </div>
                       )}
                       {bodies.map((body) => {
@@ -1936,7 +1936,7 @@ export default function Results() {
                                   href={`${TREASURY_URL}/?entity=${toTreasurySlug(treasuryMatch)}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#59b0c4] dark:hover:text-[#7ec8d8] transition-colors"
+                                  className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#00c8d7] dark:hover:text-[#7ec8d8] transition-colors"
                                   style={{ fontFamily: "'Manrope', sans-serif" }}
                                 >
                                   Explore {treasuryMatch.name} revenue and expenses
