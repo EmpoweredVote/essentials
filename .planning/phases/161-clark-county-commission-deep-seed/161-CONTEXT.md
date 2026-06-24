@@ -21,7 +21,7 @@ Deep-seed the **Clark County, Nevada** government and its **7-member Board of Co
 
 ### Chair modeling + chamber name
 - **D-02:** Chamber name = **"Board of County Commissioners"** (matches the official body name; analogous to Multnomah "Board of Commissioners").
-- **D-03:** The board-selected **Chair (currently Marilyn Kirkpatrick)** is modeled as a **title on her commissioner seat** (rotational-mayor / title-on-seat pattern from the LA city phases), NOT a separate office row. Chair sorts first in display (matches Multnomah Chair-first ordering, memory `project_phase83_uat_issues`). No phantom 8th seat.
+- **D-03:** The board-selected **Chair (currently Michael Naft, District A — elected Chair 2026-01-07; corrected from Kirkpatrick during research)** is modeled as a **title on his commissioner seat** (rotational-mayor / title-on-seat pattern from the LA city phases), NOT a separate office row. Chair sorts first in display (matches Multnomah Chair-first ordering, memory `project_phase83_uat_issues`). Vice-Chair = McCurdy (District D). No phantom 8th seat. (Confirmed: county district `state='nv'` lowercase; geo_id 32003.)
 
 ### Government modeling + IDs
 - **D-04:** Create a **standalone government "Clark County, Nevada, US"** (mirror naming of "Multnomah County, Oregon, US"), NOT nested under the State of Nevada (geo_id 32) government. Prevents county officials from surfacing under the state.
