@@ -44,7 +44,7 @@ this milestone). v18.0 NV is parked at Phase 162 and resumes after this closes.
 
 - [x] **BANR-01**: A reusable `SectionBanner` component renders a full-bleed graphic banner in Aditi's
   Bloomington treatment — skyline/landmark image + dark gradient overlay + location label and pin.
-- [ ] **BANR-02**: Banners divide the Results page into City → State → Federal sections in a single
+- [x] **BANR-02**: Banners divide the Results page into City → State → Federal sections in a single
   continuous vertical scroll (no tab/button switching between tiers).
 - [x] **BANR-03**: Banners are location-aware — the correct image + label is selected per jurisdiction
   (extending `buildingImages.js` tier→image mapping), with a graceful fallback (gradient/generic) when

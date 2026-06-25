@@ -73,7 +73,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 
 **Wave 2** *(blocked on Wave 1)*
 
-  - [ ] 170-03-PLAN.md — Wire `SectionBanner` into `Results.jsx` (continuous-scroll dividers, School folds under City, location-aware fallback) + remove all `selectedFilter`/scroll-spy dead code (BANR-02, BANR-03, NAV-01)
+  - [x] 170-03-PLAN.md — Wire `SectionBanner` into `Results.jsx` (continuous-scroll dividers, School folds under City, location-aware fallback) + remove all `selectedFilter`/scroll-spy dead code (BANR-02, BANR-03, NAV-01)
 
 **Wave 3** *(blocked on Wave 2; human checkpoint)*
 
@@ -118,7 +118,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 169. Dark-Mode Design System Foundation | 2/2 | Complete   | 2026-06-25 |
-| 170. Section Banners & Continuous Scroll (Results) | 2/4 | In Progress|  |
+| 170. Section Banners & Continuous Scroll (Results) | 3/4 | In Progress|  |
 | 171. Banner Asset Pipeline & Exemplar Art | 0/0 | Not started | - |
 | 172. Elections Page Parity | 0/0 | Not started | - |
 
