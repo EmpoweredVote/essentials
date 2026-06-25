@@ -474,11 +474,6 @@ export default function Results() {
     ? (browseLoading ? 'loading' : (browseResults ? 'fresh' : 'idle'))
     : (cachedResult ? 'fresh' : hookPhase);
 
-  // Initialize selectedFilter from cache if available
-  const [selectedFilter, setSelectedFilter] = useState(
-    cachedResult?.filter || 'All'
-  );
-
   // Initialize appointedFilter from cache if available (defaults to 'All' per FILT-03)
   const [appointedFilter, setAppointedFilter] = useState(
     cachedResult?.appointedFilter || 'All'
@@ -521,9 +516,6 @@ export default function Results() {
     try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
     if (val) enableCompass();
   };
-  // Scroll-spy tier tracking for building image swap
-  const [scrollActiveTier, setScrollActiveTier] = useState('Local');
-
   // Elections tab data
   const [electionsData, setElectionsData] = useState(null);
   const [electionsLoading, setElectionsLoading] = useState(false);
@@ -707,13 +699,12 @@ export default function Results() {
         sessionStorage.setItem('ev:results', JSON.stringify({
           query: queryFromUrl,
           list,
-          filter: selectedFilter,
           appointedFilter: appointedFilter,
           timestamp: Date.now(),
         }));
       }
     }
-  }, [list, phase, selectedFilter, appointedFilter, queryFromUrl]);
+  }, [list, phase, appointedFilter, queryFromUrl]);
 
   // Restore scroll position when returning from a profile page
   useEffect(() => {
@@ -1195,68 +1186,22 @@ export default function Results() {
   );
 
   const filteredHierarchy = useMemo(() => {
-    if (appointedFilter === 'All' && selectedFilter === 'All') return hierarchy;
+    if (appointedFilter === 'All') return hierarchy;
 
     return hierarchy
-      .filter(({ tier }) => selectedFilter === 'All' || tier === selectedFilter)
       .map(({ tier, bodies }) => ({
         tier,
         bodies: bodies.map((body) => ({
           ...body,
           subgroups: body.subgroups.map((sg) => ({
             ...sg,
-            pols: appointedFilter === 'All'
-              ? sg.pols
-              : sg.pols.filter((pol) => matchesAppointedFilter(pol, appointedFilter)),
+            pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, appointedFilter)),
           })).filter((sg) => sg.pols.length > 0),
         })).filter((body) => body.subgroups.length > 0),
       }))
       .filter(({ bodies }) => bodies.length > 0);
-  }, [hierarchy, appointedFilter, selectedFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [hierarchy, appointedFilter]);
 
-  // Location label — uses unfiltered list so the label stays stable while user searches.
-  const locationLabel = useMemo(() => {
-    const src = Array.isArray(list) ? list : [];
-    if (!src.length) return null;
-    const sample = src[0];
-    const city = sample.representing_city;
-    const state = sample.representing_state;
-
-    if (selectedFilter === 'State') {
-      return state ? `${state}, USA` : null;
-    }
-    return city && state ? `${city}, ${state}` : null;
-  }, [list, selectedFilter]);
-
-  // Derive active building image based on filter or scroll-spy
-  const activeBuildingImage =
-    selectedFilter === 'All'
-      ? buildingImageMap[scrollActiveTier] || buildingImageMap.Local
-      : buildingImageMap[selectedFilter] || buildingImageMap.Federal;
-
-  // Scroll-spy: swap building image as user scrolls between tier sections
-  useEffect(() => {
-    if (selectedFilter !== 'All') return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setScrollActiveTier(entry.target.dataset.tier);
-          }
-        }
-      },
-      {
-        root: null,
-        rootMargin: '-40% 0px -60% 0px',
-        threshold: 0,
-      }
-    );
-
-    const sections = document.querySelectorAll('[data-tier]');
-    sections.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [selectedFilter, isDesktop, mainRef.current]);
 
   const handlePoliticianClick = (id) => {
     // Save scroll position before navigating to profile
@@ -1824,8 +1769,6 @@ export default function Results() {
               </div>
               <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
                 <FilterBar
-                  selectedFilter={selectedFilter}
-                  onFilterChange={(v) => { posthog?.capture('essentials_filter_changed', { filter_type: 'tier', value: v }); setSelectedFilter(v); }}
                   appointedFilter={appointedFilter}
                   onAppointedFilterChange={(v) => { posthog?.capture('essentials_filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
                   searchQuery={searchQuery}
@@ -1878,8 +1821,6 @@ export default function Results() {
                   const tierStyle = tierColors[tierKey];
                   const hasTier = filteredHierarchy.some(h => h.tier === tier);
                   if (hasTier) return null;
-                  // Only show if filtering to All or this specific tier
-                  if (selectedFilter !== 'All' && selectedFilter !== tier) return null;
 
                   const emptyMessage = appointedFilter !== 'All'
                     ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
@@ -1887,11 +1828,6 @@ export default function Results() {
 
                   return (
                     <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
-                      {selectedFilter === 'All' && (
-                        <div className="mb-3">
-                          <span style={{ color: isDark ? 'var(--color-ev-teal-light)' : tierStyle?.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
-                        </div>
-                      )}
                       <p className="mt-4 dark:text-[#8b949e] text-gray-500">{emptyMessage}</p>
                     </div>
                   );
@@ -1911,11 +1847,6 @@ export default function Results() {
 
                   return (
                     <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
-                      {selectedFilter === 'All' && (
-                        <div className="mb-3">
-                          <span style={{ color: isDark ? 'var(--color-ev-teal-light)' : tierStyle.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
-                        </div>
-                      )}
                       {bodies.map((body) => {
                         const isJudicialBody = body.subgroups.some(sg =>
                           sg.pols.some(p => p.district_type === 'JUDICIAL')
@@ -2005,7 +1936,6 @@ export default function Results() {
               <ElectionsView
                 elections={nearestElection}
                 loading={electionsLoading}
-                tierFilter={selectedFilter}
                 compassMode={compassMode}
                 isDark={isDark}
                 hideWithdrawn={true}
