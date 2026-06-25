@@ -28,6 +28,7 @@ import LocationBrowser from '../components/LocationBrowser';
 import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
+import SectionBanner from '../components/SectionBanner.jsx';
 import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug } from '../lib/treasury';
 
 const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || 'https://treasurytracker.empowered.vote';
@@ -1845,8 +1846,30 @@ export default function Results() {
                   const tierStyle = tierColors[tierKey] ?? tierColors['local'];
                   if (!tierStyle) return null;
 
+                  const tierBanner = tier === 'Local'
+                    ? <SectionBanner
+                        tier="city"
+                        locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
+                        imageUrl={buildingImageMap.Local}
+                      />
+                    : tier === 'State'
+                    ? <SectionBanner
+                        tier="state"
+                        locationName={(userState && STATE_NAMES[userState]) || userState || 'Your State'}
+                        imageUrl={buildingImageMap.State}
+                      />
+                    : tier === 'Federal'
+                    ? <SectionBanner
+                        tier="federal"
+                        locationName="United States"
+                        imageUrl={buildingImageMap.Federal}
+                      />
+                    : null;
+
                   return (
-                    <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
+                    <Fragment key={tier}>
+                      {tierBanner}
+                    <div data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
                       {bodies.map((body) => {
                         const isJudicialBody = body.subgroups.some(sg =>
                           sg.pols.some(p => p.district_type === 'JUDICIAL')
@@ -1900,6 +1923,7 @@ export default function Results() {
                         );
                       })}
                     </div>
+                    </Fragment>
                   );
                 })}
 
