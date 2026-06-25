@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { Header } from "@empoweredvote/ev-ui";
+import { Header, getFeedbackUrl } from "@empoweredvote/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "../hooks/useTheme";
 import { getAutoOpenMyLocation, setAutoOpenMyLocation } from "../lib/locationPref";
-
-// getFeedbackUrl is available in ev-ui ≥0.9.5 but not in the local build (0.7.2).
-// Inline the URL here so the build is not gated on the local ev-ui version.
-const getFeedbackUrl = () => "https://empowered.vote/feedback";
 
 export function Layout({ children }) {
   const { isLoggedIn, userName, logout } = useCompass();
@@ -29,7 +25,7 @@ export function Layout({ children }) {
 
   const feedbackItem = {
     label: "Feedback",
-    onClick: () => window.open(getFeedbackUrl(), '_blank', 'noopener,noreferrer'),
+    onClick: () => window.open(getFeedbackUrl({ feature: 'essentials' }), '_blank', 'noopener,noreferrer'),
   };
 
   const profileMenu = isLoggedIn
