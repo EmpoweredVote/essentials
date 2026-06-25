@@ -39,7 +39,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
   2. Color, type-scale, and spacing values used on Results trace to `@theme` / CSS variables in `src/index.css` (single source of truth), not scattered inline literals.
   3. ev-ui inline-style components (`GovernmentBodySection` / `SubGroupSection`) display correctly on dark via `!important` overrides — no light-mode bleed.
   4. The `PoliticianCard` 4:5 tile renders unchanged in shape and size (only re-themed for dark).
-  5. Light mode still renders as-is (no light-mode regression).**Plans**: 2 plans
+  5. Light mode still renders as-is (no light-mode regression).**Plans**: 2 plans
 
 **Wave 1**
 
@@ -64,7 +64,21 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
   4. The Elected/Appointed type filter and the name search still work, reconciled into the new banner-divided layout.
   5. Each banner exposes a stats data-slot and a feature-icon slot as hidden/empty scaffolding (structure present in the component API; no live data or links rendered this milestone).
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+**Wave 1**
+
+  - [ ] 170-01-PLAN.md — Create the reusable `SectionBanner` component (image + tinted-fallback variants, eyebrow/pin/title, scaffolding slots) + unit tests (BANR-01, BANR-03, BANR-04)
+  - [ ] 170-02-PLAN.md — Remove the Tier sort dropdown from `FilterBar`; preserve Type filter + name search + Compass toggle (NAV-01)
+
+**Wave 2** *(blocked on Wave 1)*
+
+  - [ ] 170-03-PLAN.md — Wire `SectionBanner` into `Results.jsx` (continuous-scroll dividers, School folds under City, location-aware fallback) + remove all `selectedFilter`/scroll-spy dead code (BANR-02, BANR-03, NAV-01)
+
+**Wave 3** *(blocked on Wave 2; human checkpoint)*
+
+  - [ ] 170-04-PLAN.md — Start dev server + human visual/functional sign-off of banners, fallback, and filters (BANR-01..04, NAV-01)
+
 **UI hint**: yes
 
 ### Phase 171: Banner Asset Pipeline & Exemplar Art
@@ -104,7 +118,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 169. Dark-Mode Design System Foundation | 2/2 | Complete   | 2026-06-25 |
-| 170. Section Banners & Continuous Scroll (Results) | 0/0 | Not started | - |
+| 170. Section Banners & Continuous Scroll (Results) | 0/4 | Not started | - |
 | 171. Banner Asset Pipeline & Exemplar Art | 0/0 | Not started | - |
 | 172. Elections Page Parity | 0/0 | Not started | - |
 
