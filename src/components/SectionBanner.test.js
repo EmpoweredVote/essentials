@@ -1,33 +1,13 @@
 /**
  * Unit tests for SectionBanner.jsx — pure-logic only (no jsdom, no React render).
- * Asserts the tier→eyebrow and tier→fallback-gradient mappings.
+ * Asserts the tier→fallback-gradient mapping.
  *
  * Mirror of src/lib/groupHierarchy.test.js pattern: import from vitest,
  * no react/testing-library imports.
  */
 
 import { describe, it, expect } from 'vitest';
-import { EYEBROW_TEXT, FALLBACK_GRADIENTS } from './SectionBanner.jsx';
-
-describe('EYEBROW_TEXT — tier to eyebrow label mapping', () => {
-  it('city tier has exact eyebrow "YOUR CITY"', () => {
-    expect(EYEBROW_TEXT.city).toBe('YOUR CITY');
-  });
-
-  it('state tier has exact eyebrow "YOUR STATE"', () => {
-    expect(EYEBROW_TEXT.state).toBe('YOUR STATE');
-  });
-
-  it('federal tier has exact eyebrow "FEDERAL"', () => {
-    expect(EYEBROW_TEXT.federal).toBe('FEDERAL');
-  });
-
-  it('all three tiers are defined', () => {
-    expect(EYEBROW_TEXT.city).toBeDefined();
-    expect(EYEBROW_TEXT.state).toBeDefined();
-    expect(EYEBROW_TEXT.federal).toBeDefined();
-  });
-});
+import { FALLBACK_GRADIENTS } from './SectionBanner.jsx';
 
 describe('FALLBACK_GRADIENTS — tier to gradient string mapping', () => {
   it('city gradient is defined and non-empty', () => {

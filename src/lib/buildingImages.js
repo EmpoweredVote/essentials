@@ -67,7 +67,9 @@ const STATE_NAME_TO_ABBREV = Object.fromEntries(
   ])
 );
 
-const FEDERAL_IMAGE = '/images/us-capitol.jpg';
+// US Capitol west front (public domain, Wikimedia Commons), cropped to a wide
+// banner with the dome centered. Hosted in production storage (cache-safe path).
+const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/national/us-capitol-banner.jpg';
 
 const CURATED_LOCAL = {
   bloomington: '/images/bloomington-city-hall.jpg',

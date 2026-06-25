@@ -1067,10 +1067,18 @@ export default function Results() {
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"
-  const userState = useMemo(
-    () => parseStateFromAddress(addressInput),
-    [addressInput]
-  );
+  const userState = useMemo(() => {
+    const fromAddr = parseStateFromAddress(addressInput);
+    if (fromAddr) return fromAddr;
+    // Browse mode has no typed address — derive the state from the browse params
+    // so the State banner shows e.g. "California" instead of "Your State".
+    const browseState = searchParams.get('browse_state_officials')
+      || searchParams.get('browse_state');
+    if (browseState && /^[A-Za-z]{2}$/.test(browseState)) {
+      return browseState.toUpperCase();
+    }
+    return null;
+  }, [addressInput, searchParams]);
 
   const buildingImageMap = useMemo(
     () => getBuildingImages(representingCity, userState),

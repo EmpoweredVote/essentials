@@ -16,14 +16,6 @@
 
 import { useState, useEffect } from 'react';
 
-/** Eyebrow copy per tier (D-02 casing, exact). */
-// eslint-disable-next-line react-refresh/only-export-components
-export const EYEBROW_TEXT = {
-  city: 'YOUR CITY',
-  state: 'YOUR STATE',
-  federal: 'FEDERAL',
-};
-
 /**
  * Fallback gradient tints per tier (D-10).
  * Tier-tinted enough to read clearly as a divider band even with no art, while
@@ -99,28 +91,11 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
         />
       )}
 
-      {/* Text content — positioned at the bottom over the image/gradient */}
+      {/* Title — positioned at the bottom over the image/gradient (no pin, no eyebrow) */}
       <div
         className="px-6 md:px-12"
         style={{ position: 'absolute', bottom: 0, left: 0, right: 0, paddingBottom: '16px' }}
       >
-        {/* Eyebrow */}
-        <div style={{ marginBottom: '4px' }}>
-          <span
-            style={{
-              color: 'var(--color-ev-teal-light)',
-              fontFamily: 'var(--font-display)',
-              fontWeight: 600,
-              textTransform: 'uppercase',
-              letterSpacing: '1.2px',
-              fontSize: '12px',
-            }}
-          >
-            {EYEBROW_TEXT[tier]}
-          </span>
-        </div>
-
-        {/* Title row: coral pin + locationName */}
         <div
           style={{
             fontFamily: 'var(--font-display)',
@@ -129,18 +104,8 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
             lineHeight: '36px',
             letterSpacing: '-0.75px',
             color: 'var(--color-ev-text-primary)',
-            display: 'flex',
-            alignItems: 'center',
           }}
         >
-          <img
-            src="/images/noun-location-7814384-FF5740.svg"
-            alt=""
-            aria-hidden="true"
-            width={20}
-            height={20}
-            style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}
-          />
           {locationName}
         </div>
       </div>
