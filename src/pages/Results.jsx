@@ -13,7 +13,7 @@ import FilterBar, { StickyCompassKey } from '../components/FilterBar';
 import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
-import { getBuildingImages, parseStateFromAddress } from '../lib/buildingImages';
+import { getBuildingImages, parseStateFromAddress, parseCityFromAddress } from '../lib/buildingImages';
 import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, fetchVoterInfo } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
@@ -1047,16 +1047,23 @@ export default function Results() {
     for (const p of src) {
       if (p.representing_city) return p.representing_city;
     }
-    // Fallback: extract city name from local politicians' chamber_name
+    // Fallback 1: extract city name from local politicians' chamber_name.
+    // Handles "Bloomington City Council" and "City of Bloomington".
     for (const p of src) {
       const dt = p?.district_type || '';
       if (dt === 'LOCAL' && p.chamber_name) {
-        const match = p.chamber_name.match(/^(\w[\w\s]+?)\s+City\b/);
-        if (match) return match[1];
+        const beforeCity = p.chamber_name.match(/^(\w[\w\s]+?)\s+City\b/);
+        if (beforeCity) return beforeCity[1];
+        const cityOf = p.chamber_name.match(/^City of\s+(.+)$/i);
+        if (cityOf) return cityOf[1].trim();
       }
     }
+    // Fallback 2: parse the city out of the typed address ("…, Bloomington, IN 47404").
+    // Reliable for address searches where politician data lacks representing_city.
+    const fromAddress = parseCityFromAddress(addressInput);
+    if (fromAddress) return fromAddress;
     return null;
-  }, [list]);
+  }, [list, addressInput]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"

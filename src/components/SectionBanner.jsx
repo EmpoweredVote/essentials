@@ -14,6 +14,8 @@
  * Dark-mode only: this component never runs in a light context.
  */
 
+import { useState, useEffect } from 'react';
+
 /** Eyebrow copy per tier (D-02 casing, exact). */
 // eslint-disable-next-line react-refresh/only-export-components
 export const EYEBROW_TEXT = {
@@ -22,12 +24,17 @@ export const EYEBROW_TEXT = {
   federal: 'FEDERAL',
 };
 
-/** Fallback gradient tints per tier (D-10 — subtly distinct, all base from #0d1117). */
+/**
+ * Fallback gradient tints per tier (D-10).
+ * Tier-tinted enough to read clearly as a divider band even with no art, while
+ * keeping the bottom-left (where the eyebrow/pin/title sit) dark for legibility —
+ * the 135° axis runs #0d1117 (top-left) → tinted (bottom-right).
+ */
 // eslint-disable-next-line react-refresh/only-export-components
 export const FALLBACK_GRADIENTS = {
-  city:    'linear-gradient(135deg, #0d1117 0%, #0d1822 100%)',
-  state:   'linear-gradient(135deg, #0d1117 0%, #121a17 100%)',
-  federal: 'linear-gradient(135deg, #0d1117 0%, #18120d 100%)',
+  city:    'linear-gradient(135deg, #0d1117 0%, #15233a 55%, #1f3a5c 100%)',
+  state:   'linear-gradient(135deg, #0d1117 0%, #14302a 55%, #1c4a3d 100%)',
+  federal: 'linear-gradient(135deg, #0d1117 0%, #2e2113 55%, #4a3115 100%)',
 };
 
 /** Mandatory dark gradient overlay for image banners (UI-SPEC Color §). */
@@ -45,16 +52,25 @@ const IMAGE_OVERLAY_GRADIENT =
  *   featureIcons  {array|null}                optional — scaffolding slot, renders nothing (BANR-04)
  */
 export default function SectionBanner({ tier, locationName, imageUrl, stats, featureIcons }) {
+  // BANR-03: never show a broken <img>. If the image 404s (e.g. a paused storage
+  // bucket), fall back to the tier-tinted gradient instead of a broken-image icon.
+  const [imageFailed, setImageFailed] = useState(false);
+  // Reset the error flag whenever the source changes so a new tier/address re-attempts.
+  useEffect(() => { setImageFailed(false); }, [imageUrl]);
+
+  const showImage = Boolean(imageUrl) && !imageFailed;
+
   return (
     <div className="-mx-6 md:-mx-12 relative overflow-hidden h-[120px] md:h-[180px]">
 
-      {imageUrl ? (
+      {showImage ? (
         <>
           {/* Image layer */}
           <img
             src={imageUrl}
             alt=""
             aria-hidden="true"
+            onError={() => setImageFailed(true)}
             style={{
               position: 'absolute',
               inset: 0,

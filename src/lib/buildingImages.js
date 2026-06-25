@@ -129,6 +129,44 @@ export function getBuildingImages(representingCity, stateAbbrev) {
 // so we don't pick up street/unit abbreviations that happen to precede digits.
 const VALID_STATE_ABBREVS = new Set([...Object.keys(STATE_CAPITOLS), 'DC']);
 
+/**
+ * Parse the city name from an address string. The city is the comma-separated
+ * segment immediately before the state token (2-letter abbreviation, optionally
+ * followed by a ZIP and/or "USA"). Used as a fallback for tier-banner labels and
+ * curated-image lookup when politician data has no `representing_city`.
+ *
+ * "100 W Kirkwood Ave, Bloomington, IN, 47404"      → "Bloomington"
+ * "100 W Kirkwood Ave, Bloomington, IN 47404, USA"  → "Bloomington"
+ * "Los Angeles, CA"                                 → "Los Angeles"
+ * @param {string} address
+ * @returns {string|null}
+ */
+export function parseCityFromAddress(address) {
+  const addr = (address || '').trim();
+  if (!addr) return null;
+
+  const parts = addr.split(',').map((s) => s.trim()).filter(Boolean);
+  if (parts.length < 2) return null;
+
+  for (let i = 1; i < parts.length; i++) {
+    const abbrev = parts[i].match(/^([A-Za-z]{2})\b/);
+    if (abbrev && VALID_STATE_ABBREVS.has(abbrev[1].toUpperCase())) {
+      const city = parts[i - 1];
+      // Guard against returning a street-number segment (cities don't start with a digit).
+      if (city && !/^\d/.test(city)) return city;
+      return null;
+    }
+  }
+
+  // "City, Full State Name, USA" form.
+  const suffixMatch = addr.match(/(?:^|,)\s*([^,]+?)\s*,\s*([^,]+?)\s*,\s*USA\s*$/i);
+  if (suffixMatch && STATE_NAME_TO_ABBREV[suffixMatch[2].toLowerCase().trim()]) {
+    return suffixMatch[1].trim();
+  }
+
+  return null;
+}
+
 export function parseStateFromAddress(address) {
   const addr = (address || '').trim();
 
