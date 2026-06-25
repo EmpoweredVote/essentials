@@ -56,7 +56,7 @@ this milestone). v18.0 NV is parked at Phase 162 and resumes after this closes.
 
 ### Navigation & Scroll (NAV)
 
-- [ ] **NAV-01**: The Local/State/National tier sort control is removed from the Results page; all tiers
+- [x] **NAV-01**: The Local/State/National tier sort control is removed from the Results page; all tiers
   always render in full, separated by banners, in continuous scroll. The Elected/Appointed type filter
   and name search are preserved (reconciled into the new layout).
 
