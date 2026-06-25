@@ -42,14 +42,14 @@ this milestone). v18.0 NV is parked at Phase 162 and resumes after this closes.
 
 ### Section Banner Dividers (BANR)
 
-- [ ] **BANR-01**: A reusable `SectionBanner` component renders a full-bleed graphic banner in Aditi's
+- [x] **BANR-01**: A reusable `SectionBanner` component renders a full-bleed graphic banner in Aditi's
   Bloomington treatment — skyline/landmark image + dark gradient overlay + location label and pin.
 - [ ] **BANR-02**: Banners divide the Results page into City → State → Federal sections in a single
   continuous vertical scroll (no tab/button switching between tiers).
-- [ ] **BANR-03**: Banners are location-aware — the correct image + label is selected per jurisdiction
+- [x] **BANR-03**: Banners are location-aware — the correct image + label is selected per jurisdiction
   (extending `buildingImages.js` tier→image mapping), with a graceful fallback (gradient/generic) when
   no jurisdiction-specific art exists.
-- [ ] **BANR-04**: The `SectionBanner` component exposes a stats data-slot (e.g. population, electoral
+- [x] **BANR-04**: The `SectionBanner` component exposes a stats data-slot (e.g. population, electoral
   count) and a feature-icon slot (e.g. treasury-tracker icon → link), rendered as hidden/empty
   scaffolding this milestone (structure only; live data and links deferred).
 - [ ] **BANR-05**: The Elections page uses the same `SectionBanner` dividers between tiers.
