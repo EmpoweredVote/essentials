@@ -42,7 +42,11 @@ export default function useGooglePlacesAutocomplete(inputRef, { onPlaceSelected 
         autocomplete = new placesLib.Autocomplete(inputRef.current, {
           componentRestrictions: { country: 'us' },
           fields: ['formatted_address', 'address_components'],
-          types: ['address'],
+          // 'geocode' returns both street addresses AND localities (cities), so
+          // typing a city name like "Bloomington" suggests "Bloomington, IN, USA"
+          // instead of an unrelated street match ("Bloom Walk, Los Angeles").
+          // 'address' (street-only) silently dropped city queries onto wrong streets.
+          types: ['geocode'],
         });
 
         autocomplete.addListener('place_changed', () => {
