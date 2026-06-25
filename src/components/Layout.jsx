@@ -1,10 +1,23 @@
 import { useState } from "react";
-import { Header, getFeedbackUrl } from "@empoweredvote/ev-ui";
+import { Header } from "@empoweredvote/ev-ui";
 import { useCompass } from "../contexts/CompassContext";
 import { redirectToLogin } from "../lib/auth";
 import { ThemeToggle } from "./ThemeToggle";
 import { useTheme } from "../hooks/useTheme";
 import { getAutoOpenMyLocation, setAutoOpenMyLocation } from "../lib/locationPref";
+
+// getFeedbackUrl is exported in ev-ui 0.9.6 (node_modules) but the local
+// ../ev-ui/dist alias used during dev does not yet include it. Replicate the
+// real signature (feature + url attribution params) until the local build is
+// updated.  When localEvUi alias is removed, replace with:
+//   import { Header, getFeedbackUrl } from "@empoweredvote/ev-ui";
+const getFeedbackUrl = ({ feature } = {}) => {
+  const params = new URLSearchParams();
+  if (feature) params.set("feature", feature);
+  if (typeof window !== "undefined") params.set("url", window.location.href);
+  const qs = params.toString();
+  return qs ? `https://empowered.vote/feedback?${qs}` : "https://empowered.vote/feedback";
+};
 
 export function Layout({ children }) {
   const { isLoggedIn, userName, logout } = useCompass();
