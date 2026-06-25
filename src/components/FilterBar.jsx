@@ -1,19 +1,12 @@
 import { CompassKey, useMediaQuery } from '@empoweredvote/ev-ui';
 
 /**
- * FilterBar — single horizontal strip that consolidates tier/type/name filters
+ * FilterBar — single horizontal strip that consolidates type/name filters
  * for the address-results page. Replaces the desktop sidebar AND the mobile
  * filter strip with one shared layout.
  *
  * Sticky to its scroll container. Wraps to a second row on narrow viewports.
  */
-
-const TIER_OPTIONS = [
-  { value: 'All', label: 'All tiers' },
-  { value: 'Local', label: 'Local' },
-  { value: 'State', label: 'State' },
-  { value: 'Federal', label: 'Federal' },
-];
 
 const TYPE_OPTIONS = [
   { value: 'All', label: 'All types' },
@@ -67,13 +60,12 @@ function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
 }
 
 /**
- * Inline filter controls — Tier dropdown, Type dropdown, name search input,
+ * Inline filter controls — Type dropdown, name search input,
  * and an optional Compass toggle checkbox.
  * No wrapper chrome (no border/padding/background) so it can be dropped
  * directly into another row (e.g. next to the Reps/Elections tabs).
  */
 export default function FilterBar({
-  selectedFilter, onFilterChange,
   appointedFilter, onAppointedFilterChange,
   searchQuery, onSearchChange,
   compassMode, onCompassModeChange,
@@ -94,14 +86,6 @@ export default function FilterBar({
         minWidth: 0,
       }}
     >
-      <Dropdown
-        label="Tier"
-        ariaLabel="Filter by tier"
-        value={selectedFilter}
-        onChange={onFilterChange}
-        options={TIER_OPTIONS}
-        isDark={isDark}
-      />
       <Dropdown
         label="Type"
         ariaLabel="Filter by type"
