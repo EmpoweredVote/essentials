@@ -1,10 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v19.0
-milestone_name: Essentials Dark-Mode Redesign & Section Banners
-status: verifying
-last_updated: "2026-06-25T00:29:44.728Z"
-last_activity: 2026-06-25
+milestone_name: milestone
+status: completed
+stopped_at: Phase 169 UI-SPEC approved
+last_updated: "2026-06-25T01:30:58.296Z"
+last_activity: 2026-06-25 -- Phase 169 marked complete
 progress:
   total_phases: 4
   completed_phases: 1
@@ -17,11 +18,11 @@ progress:
 
 ## Current Position
 
-Phase: 169 (Dark-Mode Design System Foundation) — COMPLETE
+Phase: 169 — COMPLETE
 Phase Next: 170 (Section Banners & Continuous Scroll)
 Plan: 2 of 2 (all plans complete)
-Status: Phase 169 complete — DARK-01 + DARK-02 satisfied; visual sign-off confirmed
-Last activity: 2026-06-25
+Status: Phase 169 complete
+Last activity: 2026-06-25 -- Phase 169 marked complete
 
 ### v19.0 roadmap (created 2026-06-24)
 
