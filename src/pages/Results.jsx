@@ -1889,7 +1889,7 @@ export default function Results() {
                     <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
-                          <span style={{ color: isDark ? '#00c8d7' : tierStyle?.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
+                          <span style={{ color: isDark ? 'var(--color-ev-teal-light)' : tierStyle?.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
                         </div>
                       )}
                       <p className="mt-4 dark:text-[#8b949e] text-gray-500">{emptyMessage}</p>
@@ -1913,7 +1913,7 @@ export default function Results() {
                     <div key={tier} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
                       {selectedFilter === 'All' && (
                         <div className="mb-3">
-                          <span style={{ color: isDark ? '#00c8d7' : tierStyle.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
+                          <span style={{ color: isDark ? 'var(--color-ev-teal-light)' : tierStyle.text, fontFamily: isDark ? 'var(--font-display)' : undefined, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1.2px', fontSize: '12px' }}>{tier}</span>
                         </div>
                       )}
                       {bodies.map((body) => {
