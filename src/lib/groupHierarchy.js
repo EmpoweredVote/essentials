@@ -414,11 +414,14 @@ function subGroupOrderScore(label, pols) {
   if (lower.includes('house') || lower.includes('assembly')) return 0;
   if (lower.includes('senate')) return 1;
 
+  // Chief executive (Mayor / Governor) sorts FIRST within the tier — but ONLY the
+  // mayor/governor, not every LOCAL_EXEC officer. City Attorney, City Controller,
+  // City Clerk, City Manager, etc. are LOCAL_EXEC too; they must sort AFTER the
+  // legislative body (council), so they fall through to the "other" score below.
   if (
     pols.length > 0 &&
-    (pols.every(p => p.district_type === 'LOCAL_EXEC') ||
-      (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw)) &&
-       pols.every(p => LOCAL_EXEC_TITLE_RE.test(p.office_title || ''))))
+    pols.every(p => p.district_type === 'LOCAL' || p.district_type === 'LOCAL_EXEC') &&
+    pols.every(p => LOCAL_EXEC_TITLE_RE.test(p.office_title || ''))
   ) return 10;
   if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 20;
   if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 20;

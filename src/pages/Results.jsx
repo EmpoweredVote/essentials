@@ -2008,6 +2008,7 @@ export default function Results() {
                 tierFilter={selectedFilter}
                 compassMode={compassMode}
                 isDark={isDark}
+                hideWithdrawn={true}
                 onCandidateClick={(id) => {
                   posthog?.capture('essentials_candidate_clicked', { candidate_id: id });
                   sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
