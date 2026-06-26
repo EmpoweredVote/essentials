@@ -96,26 +96,26 @@ const FALLBACK_STATE = '/images/state-capitol-generic.svg';
 //   AK - Mt. Hayes and the eastern Alaska Range | Paxson Woelber | CC BY 2.0
 //   AL - Birmingham, Alabama (2023) | WeaponizingArchitecture | CC BY-SA 4.0
 //   AR - Little Rock pano | Daniel Schwen | CC BY-SA 4.0
-//   AZ - Phoenix Skyline from South Mountain at Night | Alan Stark | CC BY-SA 2.0
+//   AZ - Downtown Phoenix (skyline + mountains) | DPPed | CC BY-SA 3.0
 //   CA - Golden Gate Bridge and San Francisco | Brocken Inaglory | CC BY-SA 4.0
 //   CO - Denver Skyline at Blue Hour | Brian Papantonio | CC BY 2.0
 //   CT - Hartford Skyline from Great River Park | KyleConstable | CC BY-SA 4.0
 //   DE - Wilmington Delaware skyline | Tim Kiser | CC BY-SA 2.5
 //   FL - Miami Late Afternoon Skyline | Euthman | CC BY 4.0
 //   GA - Midtown Atlanta skyline | Marc Merlin | CC BY-SA 4.0
-//   HI - Honolulu Skyline | Jason Jacobs | CC BY 2.0
+//   HI - Skyline from Kaka'ako Waterfront Park, Honolulu | The Eloquent Peasant | CC BY-SA 4.0
 //   IA - Morning Skyline, Des Moines, Iowa | Tony Webster | CC BY 2.0
-//   ID - Boise Skyline Night | Abhinavp235 | CC BY-SA 3.0
+//   ID - Boise Downtown Panoramic | Patrick Rodriguez | CC BY-SA 4.0
 //   IL - Chicago from North Avenue Beach | King of Hearts | CC BY-SA 3.0
 //   IN - Downtown Indianapolis skyline | Momoneymoproblemz | CC BY-SA 4.0
-//   KS - Wichita night skyline | Andrea Allen | CC BY 2.0
+//   KS - Wichita, Kansas skyline | Quintin Soloviev | CC BY 4.0
 //   KY - Panorama de Louisville | Anindya Chakraborty | CC BY-SA 3.0
 //   LA - New Orleans Skyline from Uptown | VerruckteDan | CC BY-SA 3.0
 //   MA - Boston skyline from Longfellow Bridge | King of Hearts | CC BY-SA 4.0
 //   MD - Baltimore, Maryland skyline | Quintin Soloviev | CC BY 4.0
 //   ME - Portland skyline 2024 | Seasider53 | CC BY 4.0
-//   MI - Detroit Night Skyline | Shakil Mustafa | CC BY-SA 3.0
-//   MN - Sunset over the Minneapolis skyline | Mac H (media601) | CC BY-SA 2.0
+//   MI - Detroit Skyline from Windsor | TheWxResearcher | CC0
+//   MN - Minneapolis Skyline from Stone Arch Bridge | w_lemay | CC BY-SA 2.0
 //   MO - STL Skyline (Gateway Arch) | Buphoff | CC BY-SA 3.0
 //   MS - Jackson MS Downtown Panorama | chmeredith | CC BY 2.0
 //   MT - Glacier National Park, Montana | TerryDOtt | CC BY 2.0
@@ -124,8 +124,8 @@ const FALLBACK_STATE = '/images/state-capitol-generic.svg';
 //   NE - Omaha skyline from Lincoln Monument | SounderBruce | CC BY-SA 4.0
 //   NH - White Mountain National Forest | Debivort | CC BY-SA 3.0
 //   NJ - Newport, Jersey City panorama | King of Hearts | CC BY-SA 4.0
-//   NM - Albuquerque pano sunset | Daniel Schwen | CC BY-SA 4.0
-//   NV - Las Vegas Panorama (Bellagio to Paris) | Paul Harrison | CC BY-SA 4.0
+//   NM - Albuquerque & Sandia Mountains | Daniel Schwen | CC BY-SA 4.0
+//   NV - Las Vegas Strip (daytime) | Serge Melki | CC BY 2.0
 //   NY - Midtown Manhattan from Weehawken | King of Hearts | CC BY-SA 4.0
 //   OH - Cincinnati, Ohio Skyline | American Diabetio | CC BY-SA 4.0
 //   OK - Oklahoma City Skyline from Bricktown | Soonerfever | Public domain
@@ -135,7 +135,7 @@ const FALLBACK_STATE = '/images/state-capitol-generic.svg';
 //   SC - Arthur Ravenel Bridge (from water) | bbatsell | CC BY-SA 2.5
 //   SD - Mount Rushmore National Memorial | Nick Amoscato | CC BY 2.0
 //   TN - Nashville panorama | Kaldari | Public domain
-//   TX - Austin Texas Downtown Skyline at Night | Jonathan Cutrer | CC BY 2.0
+//   TX - Austin, Texas Skyline 2018 | Sk5893 | CC BY-SA 4.0
 //   UT - SLC Skyline 2024 | Invictus323 | CC BY 4.0
 //   VA - Richmond Skyline from East Grace Street | Don.s.okeefe | CC BY-SA 3.0
 //   VT - Vermont fall foliage panorama | chensiyuan | CC BY-SA 4.0
