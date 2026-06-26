@@ -105,7 +105,7 @@ const FALLBACK_STATE = '/images/state-capitol-generic.svg';
 //   GA - Midtown Atlanta skyline | Marc Merlin | CC BY-SA 4.0
 //   HI - Skyline from Kaka'ako Waterfront Park, Honolulu | The Eloquent Peasant | CC BY-SA 4.0
 //   IA - Morning Skyline, Des Moines, Iowa | Tony Webster | CC BY 2.0
-//   ID - Boise Downtown Panoramic | Patrick Rodriguez | CC BY-SA 4.0
+//   ID - Boise downtown panorama (foothills, daytime) | SniperProgrammer | CC BY-SA 3.0
 //   IL - Chicago from North Avenue Beach | King of Hearts | CC BY-SA 3.0
 //   IN - Downtown Indianapolis skyline | Momoneymoproblemz | CC BY-SA 4.0
 //   KS - Wichita, Kansas skyline | Quintin Soloviev | CC BY 4.0
