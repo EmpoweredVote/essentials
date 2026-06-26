@@ -20,7 +20,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 ## Phases
 
 - [x] **Phase 169: Dark-Mode Design System Foundation** — Extract Figma dark tokens into `index.css` and bring Results/Representatives to the dark treatment. (completed 2026-06-25)
-- [ ] **Phase 170: Section Banners & Continuous Scroll (Results)** — Reusable `SectionBanner` divides Results into City → State → Federal in one scroll; tier sort buttons removed.
+- [x] **Phase 170: Section Banners & Continuous Scroll (Results)** — Reusable `SectionBanner` divides Results into City → State → Federal in one scroll; tier sort buttons removed. (completed 2026-06-26)
 - [ ] **Phase 171: Banner Asset Pipeline & Exemplar Art** — Bloomington/Indiana/US + LA/California/US banner art produced + documented repeatable sourcing procedure.
 - [ ] **Phase 172: Elections Page Parity** — Elections page adopts the same dark treatment and `SectionBanner` dividers.
 
@@ -77,7 +77,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 
 **Wave 3** *(blocked on Wave 2; human checkpoint)*
 
-  - [ ] 170-04-PLAN.md — Start dev server + human visual/functional sign-off of banners, fallback, and filters (BANR-01..04, NAV-01)
+  - [x] 170-04-PLAN.md — Start dev server + human visual/functional sign-off of banners, fallback, and filters (BANR-01..04, NAV-01)
 
 **UI hint**: yes
 
@@ -118,7 +118,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 169. Dark-Mode Design System Foundation | 2/2 | Complete   | 2026-06-25 |
-| 170. Section Banners & Continuous Scroll (Results) | 3/4 | In Progress|  |
+| 170. Section Banners & Continuous Scroll (Results) | 4/4 | Complete   | 2026-06-26 |
 | 171. Banner Asset Pipeline & Exemplar Art | 0/0 | Not started | - |
 | 172. Elections Page Parity | 0/0 | Not started | - |
 
