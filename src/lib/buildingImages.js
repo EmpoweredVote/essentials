@@ -89,6 +89,18 @@ const CURATED_LOCAL = {
 const FALLBACK_LOCAL = '/images/city-hall-generic.svg';
 const FALLBACK_STATE = '/images/state-capitol-generic.svg';
 
+// Curated wide panoramic state banners (skyline where iconic, else landscape),
+// hosted in production storage. States not listed here fall back to the local
+// capitol-building photo. Attribution (all Wikimedia Commons):
+//   NY — Midtown Manhattan from Weehawken, King of Hearts, CC BY-SA 4.0
+//   IL — Chicago from North Avenue Beach, King of Hearts, CC BY-SA 3.0
+//   WY — Teton Range Panorama Spring, GrandTetonNPS, Public domain
+//   FL — Miami Late Afternoon Skyline, Euthman, CC BY 4.0
+//   CO — Denver Skyline at Blue Hour, Brian Papantonio, CC BY 2.0
+const STATE_PANORAMA_BASE =
+  'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/states/';
+const STATE_PANORAMAS = new Set(['NY', 'IL', 'WY', 'FL', 'CO']);
+
 /**
  * Get building images for each tier.
  * @param {string} representingCity - City name from politician data
@@ -107,10 +119,12 @@ export function getBuildingImages(representingCity, stateAbbrev) {
     }
   }
 
-  // State: look up abbreviation for real capitol photo, else null
+  // State: prefer a curated panoramic banner; else the local capitol photo; else null
   let stateImage = null;
   const abbrev = (stateAbbrev || '').toUpperCase();
-  if (STATE_CAPITOLS[abbrev]) {
+  if (STATE_PANORAMAS.has(abbrev)) {
+    stateImage = `${STATE_PANORAMA_BASE}${abbrev}.jpg`;
+  } else if (STATE_CAPITOLS[abbrev]) {
     stateImage = `/images/state-capitols/${STATE_CAPITOLS[abbrev]}.jpg`;
   }
 
