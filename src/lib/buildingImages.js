@@ -89,17 +89,68 @@ const CURATED_LOCAL = {
 const FALLBACK_LOCAL = '/images/city-hall-generic.svg';
 const FALLBACK_STATE = '/images/state-capitol-generic.svg';
 
-// Curated wide panoramic state banners (skyline where iconic, else landscape),
-// hosted in production storage. States not listed here fall back to the local
-// capitol-building photo. Attribution (all Wikimedia Commons):
-//   NY — Midtown Manhattan from Weehawken, King of Hearts, CC BY-SA 4.0
-//   IL — Chicago from North Avenue Beach, King of Hearts, CC BY-SA 3.0
-//   WY — Teton Range Panorama Spring, GrandTetonNPS, Public domain
-//   FL — Miami Late Afternoon Skyline, Euthman, CC BY 4.0
-//   CO — Denver Skyline at Blue Hour, Brian Papantonio, CC BY 2.0
+// Curated wide panoramic state banners (skyline where iconic, natural landscape
+// otherwise), hosted in production storage. All 50 states covered; any state not
+// in the set falls back to the local capitol-building photo.
+// Attribution (all Wikimedia Commons) - title | author | license:
+//   AK - Mt. Hayes and the eastern Alaska Range | Paxson Woelber | CC BY 2.0
+//   AL - Birmingham, Alabama (2023) | WeaponizingArchitecture | CC BY-SA 4.0
+//   AR - Little Rock pano | Daniel Schwen | CC BY-SA 4.0
+//   AZ - Phoenix Skyline from South Mountain at Night | Alan Stark | CC BY-SA 2.0
+//   CA - Golden Gate Bridge and San Francisco | Brocken Inaglory | CC BY-SA 4.0
+//   CO - Denver Skyline at Blue Hour | Brian Papantonio | CC BY 2.0
+//   CT - Hartford Skyline from Great River Park | KyleConstable | CC BY-SA 4.0
+//   DE - Wilmington Delaware skyline | Tim Kiser | CC BY-SA 2.5
+//   FL - Miami Late Afternoon Skyline | Euthman | CC BY 4.0
+//   GA - Midtown Atlanta skyline | Marc Merlin | CC BY-SA 4.0
+//   HI - Honolulu Skyline | Jason Jacobs | CC BY 2.0
+//   IA - Morning Skyline, Des Moines, Iowa | Tony Webster | CC BY 2.0
+//   ID - Boise Skyline Night | Abhinavp235 | CC BY-SA 3.0
+//   IL - Chicago from North Avenue Beach | King of Hearts | CC BY-SA 3.0
+//   IN - Downtown Indianapolis skyline | Momoneymoproblemz | CC BY-SA 4.0
+//   KS - Wichita night skyline | Andrea Allen | CC BY 2.0
+//   KY - Panorama de Louisville | Anindya Chakraborty | CC BY-SA 3.0
+//   LA - New Orleans Skyline from Uptown | VerruckteDan | CC BY-SA 3.0
+//   MA - Boston skyline from Longfellow Bridge | King of Hearts | CC BY-SA 4.0
+//   MD - Baltimore, Maryland skyline | Quintin Soloviev | CC BY 4.0
+//   ME - Portland skyline 2024 | Seasider53 | CC BY 4.0
+//   MI - Detroit Night Skyline | Shakil Mustafa | CC BY-SA 3.0
+//   MN - Sunset over the Minneapolis skyline | Mac H (media601) | CC BY-SA 2.0
+//   MO - STL Skyline (Gateway Arch) | Buphoff | CC BY-SA 3.0
+//   MS - Jackson MS Downtown Panorama | chmeredith | CC BY 2.0
+//   MT - Glacier National Park, Montana | TerryDOtt | CC BY 2.0
+//   NC - Charlotte Skyline | James Willamor | CC BY-SA 3.0
+//   ND - Badlands, Theodore Roosevelt NP | Acroterion | CC BY-SA 4.0
+//   NE - Omaha skyline from Lincoln Monument | SounderBruce | CC BY-SA 4.0
+//   NH - White Mountain National Forest | Debivort | CC BY-SA 3.0
+//   NJ - Newport, Jersey City panorama | King of Hearts | CC BY-SA 4.0
+//   NM - Albuquerque pano sunset | Daniel Schwen | CC BY-SA 4.0
+//   NV - Las Vegas Panorama (Bellagio to Paris) | Paul Harrison | CC BY-SA 4.0
+//   NY - Midtown Manhattan from Weehawken | King of Hearts | CC BY-SA 4.0
+//   OH - Cincinnati, Ohio Skyline | American Diabetio | CC BY-SA 4.0
+//   OK - Oklahoma City Skyline from Bricktown | Soonerfever | Public domain
+//   OR - Portland from Pittock Mansion | King of Hearts | CC BY-SA 4.0
+//   PA - Pittsburgh skyline panorama | Cbaile19 | CC0
+//   RI - Providence, RI skyline | (Providence_RI_skyline) | CC BY-SA 2.0
+//   SC - Arthur Ravenel Bridge (from water) | bbatsell | CC BY-SA 2.5
+//   SD - Mount Rushmore National Memorial | Nick Amoscato | CC BY 2.0
+//   TN - Nashville panorama | Kaldari | Public domain
+//   TX - Austin Texas Downtown Skyline at Night | Jonathan Cutrer | CC BY 2.0
+//   UT - SLC Skyline 2024 | Invictus323 | CC BY 4.0
+//   VA - Richmond Skyline from East Grace Street | Don.s.okeefe | CC BY-SA 3.0
+//   VT - Vermont fall foliage panorama | chensiyuan | CC BY-SA 4.0
+//   WA - Seattle (Space Needle and Mt. Rainier) | Daniel Schwen | CC BY-SA 4.0
+//   WI - Milwaukee panorama (west, day) | Dori | CC BY-SA 3.0 US
+//   WV - New River Gorge Bridge | JaGa | CC BY-SA 4.0
+//   WY - Teton Range Panorama Spring | GrandTetonNPS | Public domain
 const STATE_PANORAMA_BASE =
   'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/states/';
-const STATE_PANORAMAS = new Set(['NY', 'IL', 'WY', 'FL', 'CO']);
+const STATE_PANORAMAS = new Set([
+  'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN',
+  'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH',
+  'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA',
+  'VT', 'WA', 'WI', 'WV', 'WY',
+]);
 
 /**
  * Get building images for each tier.
