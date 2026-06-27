@@ -1,6 +1,6 @@
 # Plan 171-02 Summary — Bloomington Exemplar Art + D-04 Cleanup (ASST-01)
 
-**Status:** Tasks 1–3 complete & verified; Task 4 (human visual sign-off) awaiting approval.
+**Status:** Complete — Tasks 1–4 done (human sign-off approved 2026-06-27).
 **Requirements:** ASST-01
 
 ## What was built
@@ -52,11 +52,26 @@ dead-asset cleanup and an address-parser regression guard.
 - `feat(171-02)`: rewire Bloomington to Storage + D-04 cleanup
 - `test(171-02)`: parser/fallback regression guard
 
+### Task 4 — Human visual sign-off (approved)
+- During sign-off the operator requested the flag higher (top third). The center-crop could not
+  do this, so `process_banner.py` gained a **`--vertical-anchor`** option (0=top, 0.5=center
+  default, 1=bottom). Bloomington re-processed and re-uploaded at **`--vertical-anchor 0.85`**
+  (flag + courthouse dome in the top third; 274 KB live). The runbook documents the new option.
+- Operator approved the final crop; wiring proven (regression test + 200 URL + green build/suite).
+
 ## Deviations
 - D-09 (AI generation dropped) honored — Bloomington is a real licensed photo. Intentional
   divergence from ASST-01's "AI fallback" text, not a gap.
-- One toolchain fix to a Plan 01 file (`upload_banner.py`) discovered during the live test.
+- Two toolchain improvements to Plan 01 files surfaced during the live test/sign-off:
+  `upload_banner.py` cp1252 fix, and the new `process_banner.py --vertical-anchor` option.
 
-## Note for sign-off
-The Storage image is live now, but the `buildingImages.js` rewire is committed and **not yet
-deployed** — verify on a local dev server (`npm run dev`) or a preview build, or after deploying.
+## Deploy note
+The Storage image is live; the `buildingImages.js` rewire is committed but takes effect on the
+live site at the next deploy of main.
+
+## Commits (full set)
+- `fix(171-02)`: upload_banner.py ASCII-safe
+- `feat(171-02)`: rewire Bloomington to Storage + D-04 cleanup
+- `test(171-02)`: parser/fallback regression guard
+- `feat(171-02)`: process_banner.py --vertical-anchor
+- `docs(171-02)`: document --vertical-anchor in runbook
