@@ -1,8 +1,11 @@
 /**
  * Building image mapping for Essentials tier sections.
- * Federal: always the real US Capitol photo.
- * State: real capitol building per state, fallback to generic SVG.
- * Local: curated images for select cities, fallback to generic SVG.
+ * Federal: always the real US Capitol photo (Supabase Storage).
+ * State: curated wide panoramic banner per state (Supabase Storage); all 50 states
+ *   covered. States without a panorama return null — SectionBanner.jsx renders the
+ *   graceful tier-gradient fallback.
+ * Local: curated banner art for select cities (Supabase Storage); uncurated cities
+ *   return null and fall back to the same tier gradient.
  */
 
 /** Map of state abbreviation → kebab-case file stem for state capitol images */
@@ -71,8 +74,12 @@ const STATE_NAME_TO_ABBREV = Object.fromEntries(
 // banner with the dome centered. Hosted in production storage (cache-safe path).
 const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/national/us-capitol-banner.jpg';
 
+// Curated standalone-city banner art (cities/<slug>.jpg in Storage, D-05) +
+// LA-county skylines (la_county/building_photos/<geoid>.jpg). Attribution
+// (Wikimedia Commons) - title | author | license:
+//   bloomington - Kirkwood Ave. in Bloomington, IN | Yahala | CC BY-SA 3.0
 const CURATED_LOCAL = {
-  bloomington: '/images/bloomington-city-hall.jpg',
+  bloomington: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bloomington.jpg',
   'los angeles': 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg',
   'long beach': 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0643000.jpg',
   glendale: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0630000.jpg',
@@ -86,12 +93,9 @@ const CURATED_LOCAL = {
   norwalk: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0652526.jpg',
 };
 
-const FALLBACK_LOCAL = '/images/city-hall-generic.svg';
-const FALLBACK_STATE = '/images/state-capitol-generic.svg';
-
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
 // otherwise), hosted in production storage. All 50 states covered; any state not
-// in the set falls back to the local capitol-building photo.
+// in the set returns null (graceful tier-gradient fallback in SectionBanner.jsx).
 // Attribution (all Wikimedia Commons) - title | author | license:
 //   AK - Mt. Hayes and the eastern Alaska Range | Paxson Woelber | CC BY 2.0
 //   AL - Birmingham, Alabama (2023) | WeaponizingArchitecture | CC BY-SA 4.0
@@ -170,13 +174,11 @@ export function getBuildingImages(representingCity, stateAbbrev) {
     }
   }
 
-  // State: prefer a curated panoramic banner; else the local capitol photo; else null
+  // State: curated panoramic banner if available; else null (graceful gradient fallback)
   let stateImage = null;
   const abbrev = (stateAbbrev || '').toUpperCase();
   if (STATE_PANORAMAS.has(abbrev)) {
     stateImage = `${STATE_PANORAMA_BASE}${abbrev}.jpg`;
-  } else if (STATE_CAPITOLS[abbrev]) {
-    stateImage = `/images/state-capitols/${STATE_CAPITOLS[abbrev]}.jpg`;
   }
 
   return {
