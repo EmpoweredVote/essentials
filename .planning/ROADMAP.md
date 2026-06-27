@@ -94,7 +94,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
   4. Jurisdictions without art still fall back to the graceful gradient/generic banner (no broken images).
 
 **Plans**: 2 plans
-- [ ] 171-01-PLAN.md — Reusable banner toolchain (scripts/banners PIL process + Storage upload) + docs/banner-asset-pipeline.md operator runbook (ASST-02)
+- [x] 171-01-PLAN.md — Reusable banner toolchain (scripts/banners PIL process + Storage upload) + docs/banner-asset-pipeline.md operator runbook (ASST-02)
 - [ ] 171-02-PLAN.md — Bloomington exemplar art (source/treat/upload to cities/bloomington.jpg) + buildingImages.js rewire + D-04 dead-code/asset cleanup + live verify (ASST-01)
 **UI hint**: yes
 
@@ -121,7 +121,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 |-------|----------------|--------|-----------|
 | 169. Dark-Mode Design System Foundation | 2/2 | Complete   | 2026-06-25 |
 | 170. Section Banners & Continuous Scroll (Results) | 4/4 | Complete   | 2026-06-26 |
-| 171. Banner Asset Pipeline & Exemplar Art | 0/0 | Not started | - |
+| 171. Banner Asset Pipeline & Exemplar Art | 1/2 | In Progress|  |
 | 172. Elections Page Parity | 0/0 | Not started | - |
 
 ---
