@@ -53,7 +53,7 @@ def upload_banner(local_file, dest_path, service_key):
     public_url = f'{BUCKET_PUBLIC_BASE}/{BUCKET_NAME}/{dest_path}'
 
     print(f'Uploading: {local_file}')
-    print(f'  → {BUCKET_NAME}/{dest_path}')
+    print(f'  -> {BUCKET_NAME}/{dest_path}')
 
     # Use curl --data-binary for binary-safe upload.
     # -X PUT to overwrite an existing key (vs POST which creates new only).
