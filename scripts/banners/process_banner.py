@@ -47,23 +47,32 @@ def download_image(url):
     return r.content
 
 
-def center_crop_to_ratio(img, target_ratio):
+def crop_to_ratio(img, target_ratio, vertical_anchor=0.5):
     """
-    Center-crop img to match target_ratio (width/height) WITHOUT stretching.
+    Crop img to match target_ratio (width/height) WITHOUT stretching.
     Crops the longer dimension to preserve the shorter one.
+
+    vertical_anchor controls WHERE the vertical crop is taken when the source is
+    taller than the target (the common case for ultra-wide banners):
+      0.0 = keep the TOP band (trims the bottom)
+      0.5 = center (default — equivalent to the original center-crop)
+      1.0 = keep the BOTTOM band (trims the top)
+    A higher anchor trims more sky off the top, raising skyline/landmark features
+    toward the upper third of the banner. Horizontal crops stay centered.
     """
     w, h = img.size
     current_ratio = w / h
+    vertical_anchor = max(0.0, min(1.0, vertical_anchor))
 
     if current_ratio > target_ratio:
-        # Image is wider than target — crop sides
+        # Image is wider than target — crop sides (centered)
         new_w = int(h * target_ratio)
         left = (w - new_w) // 2
         img = img.crop((left, 0, left + new_w, h))
     elif current_ratio < target_ratio:
-        # Image is taller than target — crop top/bottom (center vertically)
+        # Image is taller than target — crop top/bottom using the anchor
         new_h = int(w / target_ratio)
-        top = (h - new_h) // 2
+        top = int((h - new_h) * vertical_anchor)
         img = img.crop((0, top, w, top + new_h))
     # Exactly equal ratio: no crop needed
 
@@ -88,19 +97,20 @@ def apply_dark_overlay(img):
     return composited.convert('RGB')
 
 
-def process_banner(input_path, output_path, apply_overlay=False):
+def process_banner(input_path, output_path, apply_overlay=False, vertical_anchor=0.5):
     """
-    Open a source image, center-crop to 3.15:1, resize to 1700x540 LANCZOS,
-    optionally apply dark overlay, and save as JPEG quality 90.
+    Open a source image, crop to 3.15:1 (vertical_anchor controls the vertical
+    crop position), resize to 1700x540 LANCZOS, optionally apply dark overlay,
+    and save as JPEG quality 90.
     """
     print(f"Opening: {input_path}")
     img = Image.open(input_path).convert('RGB')
     orig_w, orig_h = img.size
     print(f"Source size: {orig_w} x {orig_h} (ratio {orig_w/orig_h:.2f}:1)")
 
-    # Center-crop to target aspect ratio (no distortion)
-    img = center_crop_to_ratio(img, TARGET_RATIO)
-    print(f"After crop: {img.size[0]} x {img.size[1]}")
+    # Crop to target aspect ratio (no distortion), honoring the vertical anchor
+    img = crop_to_ratio(img, TARGET_RATIO, vertical_anchor=vertical_anchor)
+    print(f"After crop: {img.size[0]} x {img.size[1]} (vertical anchor {vertical_anchor})")
 
     # Resize to banner spec
     img = img.resize((TARGET_W, TARGET_H), Image.LANCZOS)
@@ -151,6 +161,17 @@ def main():
             'the overlay at render. Only use this to match sources that need extra legibility.'
         )
     )
+    parser.add_argument(
+        '--vertical-anchor',
+        type=float,
+        default=0.5,
+        metavar='0.0-1.0',
+        help=(
+            'Vertical crop position for taller-than-banner sources: 0.0 keeps the top '
+            'band, 0.5 centers (default), 1.0 keeps the bottom band. Raise it to trim '
+            'sky and lift skyline/landmark features toward the top third.'
+        )
+    )
 
     args = parser.parse_args()
 
@@ -164,7 +185,8 @@ def main():
             sys.exit(1)
         input_path = args.input
 
-    process_banner(input_path, args.output, apply_overlay=args.overlay)
+    process_banner(input_path, args.output, apply_overlay=args.overlay,
+                   vertical_anchor=args.vertical_anchor)
 
 
 if __name__ == '__main__':
