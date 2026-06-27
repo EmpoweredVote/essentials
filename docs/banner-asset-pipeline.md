@@ -93,13 +93,25 @@ python scripts/banners/process_banner.py \
 python scripts/banners/process_banner.py \
   --url "https://upload.wikimedia.org/wikipedia/commons/..." \
   --output /tmp/bloomington.jpg
+
+# Lift skyline/landmarks toward the top third by trimming sky (see --vertical-anchor below)
+python scripts/banners/process_banner.py \
+  --input /path/to/source-photo.jpg \
+  --output /tmp/bloomington.jpg \
+  --vertical-anchor 0.85
 ```
 
 The script will:
-1. Center-crop the source to the 3.15:1 banner aspect ratio (no distortion/stretching).
+1. Crop the source to the 3.15:1 banner aspect ratio (no distortion/stretching).
 2. Resize to **1700 x 540 px** using LANCZOS resampling.
 3. Save as JPEG quality 90, optimize=True.
 4. Print the output dimensions and file size (expect ~100–300 KB for a well-compressed source).
+
+**Framing tip — `--vertical-anchor`** (default `0.5`): when the source is taller than the
+banner, this controls which horizontal band is kept — `0.0` keeps the top, `0.5` centers,
+`1.0` keeps the bottom. Raise it to trim sky and lift a skyline, flag, or dome toward the
+top third. The Bloomington exemplar shipped at `--vertical-anchor 0.85`. Horizontal crops
+always stay centered. Preview the output before uploading and adjust the anchor as needed.
 
 **Target spec** (measured from live production assets):
 
