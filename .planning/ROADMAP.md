@@ -93,7 +93,9 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
   3. A documented, repeatable procedure exists describing image sourcing → dark-overlay treatment → wiring into `buildingImages.js`, sufficient for the ~10 remaining covered states to be filled in later without re-deriving the process.
   4. Jurisdictions without art still fall back to the graceful gradient/generic banner (no broken images).
 
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 171-01-PLAN.md — Reusable banner toolchain (scripts/banners PIL process + Storage upload) + docs/banner-asset-pipeline.md operator runbook (ASST-02)
+- [ ] 171-02-PLAN.md — Bloomington exemplar art (source/treat/upload to cities/bloomington.jpg) + buildingImages.js rewire + D-04 dead-code/asset cleanup + live verify (ASST-01)
 **UI hint**: yes
 
 ### Phase 172: Elections Page Parity
