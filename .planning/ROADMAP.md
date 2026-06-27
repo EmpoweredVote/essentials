@@ -21,7 +21,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 
 - [x] **Phase 169: Dark-Mode Design System Foundation** — Extract Figma dark tokens into `index.css` and bring Results/Representatives to the dark treatment. (completed 2026-06-25)
 - [x] **Phase 170: Section Banners & Continuous Scroll (Results)** — Reusable `SectionBanner` divides Results into City → State → Federal in one scroll; tier sort buttons removed. (completed 2026-06-26)
-- [x] **Phase 171: Banner Asset Pipeline & Exemplar Art** — Bloomington/Indiana/US + LA/California/US banner art produced + documented repeatable sourcing procedure. (completed 2026-06-27)
+- [x] **Phase 171: Banner Asset Pipeline & Exemplar Art** — Bloomington/Indiana/US + LA/California/US banner art produced + documented repeatable sourcing procedure. (completed 2026-06-27)
 - [ ] **Phase 172: Elections Page Parity** — Elections page adopts the same dark treatment and `SectionBanner` dividers.
 
 ---
@@ -110,7 +110,12 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
   3. Existing Elections behaviors are preserved — randomized per-session candidate ordering, "Running Unopposed" / "No candidates have filed" handling, and Connected auto-load via `elections/me`.
   4. Compass / MiniCompass overlay behavior on Elections is preserved (re-themed only as needed for dark legibility).
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+**Wave 1**
+
+  - [ ] 172-01-PLAN.md — Dark-token parity swap (DARK-03) + thread banner inputs from Results + `SectionBanner` per tier (BANR-05) + human visual-parity sign-off (DARK-03, BANR-05)
+
 **UI hint**: yes
 
 ---
@@ -122,7 +127,7 @@ changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 1
 | 169. Dark-Mode Design System Foundation | 2/2 | Complete   | 2026-06-25 |
 | 170. Section Banners & Continuous Scroll (Results) | 4/4 | Complete   | 2026-06-26 |
 | 171. Banner Asset Pipeline & Exemplar Art | 2/2 | Complete   | 2026-06-27 |
-| 172. Elections Page Parity | 0/0 | Not started | - |
+| 172. Elections Page Parity | 0/1 | Planned | - |
 
 ---
 
