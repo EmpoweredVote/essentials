@@ -172,7 +172,7 @@ body {
    prop, so it is excluded from these blanket !important overrides — otherwise
    they would flatten its title/pill/link color hierarchy in dark mode. */
 .dark .ev-politician-profile a:not(.ev-stance-panel *) {
-  color: #59b0c4 !important;
+  color: var(--color-ev-teal-light) !important; /* dark teal token (#00c8d7) */
 }
 
 .dark .ev-politician-profile a:not(.ev-stance-panel *):hover {
@@ -236,7 +236,7 @@ body {
 }
 
 .dark .ev-legislative-record-wrapper a {
-  color: #59b0c4 !important;
+  color: var(--color-ev-teal-light) !important; /* dark teal token (#00c8d7) */
 }
 
 .dark .ev-legislative-record-wrapper a:hover {
@@ -373,7 +373,7 @@ a[aria-label^="Visit "] {
 /* R2-2 (M5): the profile back control is a <button> (not an <a>), so the link
    override misses it — recolor its teal for dark mode. */
 .dark .ev-politician-profile > button {
-  color: #59b0c4 !important;
+  color: var(--color-ev-teal-light) !important; /* dark teal token (#00c8d7) */
 }
 
 /* R2-3 (M6): light-mode gray meta labels sit at ~3.7–4.0:1 — darken to pass
