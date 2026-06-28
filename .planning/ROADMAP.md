@@ -167,7 +167,8 @@ this milestone seeds + headshots legislators only.
   2. All seated officials render with 600×750 headshots (genuine gaps documented).
   3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
   4. City of Las Vegas surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
-**Plans**: 3 plans
+
+**Plans**: 3 plans
 **Wave 1**
 
 - [x] 162-01-PLAN.md — Wave-0 probes + load 6 X0015 ward geofences + structural migration (standalone city government + chamber + LOCAL_EXEC Mayor + 6 LOCAL wards) + coverage.js NV block
@@ -192,7 +193,11 @@ this milestone seeds + headshots legislators only.
   3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
   4. Henderson surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+- [ ] 163-01-PLAN.md — Structural seed: Wave-0 BLOCKING probes + roster checkpoint → X0016 ward-boundary loader (D-01b fallback) → structural migration 1084 (standalone govt + Henderson City Council + Mayor at-large + 4 ward offices) → coverage.js NV-block edit
+- [ ] 163-02-PLAN.md — Headshots: per-member fallback-chain sourcing (cityofhenderson.com is WAF-403) → 600×750 crop+resize pipeline → audit-only migration 1085 → Storage mirror, gaps documented
+- [ ] 163-03-PLAN.md — Stances + E2E: all-topics stance research one-at-a-time per official → audit-only per-official migrations 1086-1090 → 9-check E2E verification + human-verify checkpoint
 
 ### Phase 164: North Las Vegas Deep-Seed
 
