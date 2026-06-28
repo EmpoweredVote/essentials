@@ -1437,6 +1437,10 @@ export default function Results() {
           ...(stackCompass ? { display: 'flex', flexDirection: 'column' } : {}),
         }}
         onClick={handleCardClick}
+        role="link"
+        tabIndex={0}
+        aria-label={`${pol.first_name} ${pol.last_name}, ${cardTitle}`}
+        onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleCardClick(); } }}
         onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
         onMouseLeave={(e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}
       >
@@ -1655,6 +1659,7 @@ export default function Results() {
                   value={addressInput}
                   onChange={(e) => setAddressInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && (handleAddressSearch(), setEditingSearch(false))}
+                  aria-label="Enter your full street address"
                   placeholder="Enter your full street address"
                   className="flex-1 min-w-0 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg
                              focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]

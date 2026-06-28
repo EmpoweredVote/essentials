@@ -380,3 +380,23 @@ html:not(.dark) .ev-gov-body-section span[style*="letter-spacing: 0.8px"] {
 html:not(.dark) .ev-politician-card p[style*="rgb(113, 128, 150)"] {
   color: #4a5568 !important; /* card secondary subtitle (was #718096 ≈ 4.0:1) */
 }
+
+/* R2-4 (M3): the jurisdiction accordion header is already keyboard-accessible
+   via ev-ui (role=button, tabindex=0, aria-expanded) but renders only ~24px
+   tall — give it a ≥44px tap target. */
+.ev-gov-body-section [role="button"] {
+  min-height: 44px;
+}
+
+/* R2-4 (M4): the rep/candidate cards are now keyboard-focusable (role=link,
+   tabindex=0). The UA 1px ring hugs the rounded border and is easy to miss —
+   give keyboard focus a clear, offset ring. */
+[data-pol-id]:focus-visible,
+.ev-gov-body-section [role="link"]:focus-visible {
+  outline: 2px solid var(--ev-teal, #00657c);
+  outline-offset: 2px;
+}
+.dark [data-pol-id]:focus-visible,
+.dark .ev-gov-body-section [role="link"]:focus-visible {
+  outline-color: #00c8d7;
+}
