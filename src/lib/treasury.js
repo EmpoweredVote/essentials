@@ -47,6 +47,11 @@ function normalize(s) {
  * Matching strategy:
  * - The body title must start with (or equal) the normalized municipality name.
  * - The municipality must have available_datasets.length > 0 (has-data predicate).
+ * - When a `state` is supplied, only treasury entities in that state are eligible.
+ *   This disambiguates same-named cities across states (e.g. Salem UT must NOT
+ *   match Salem MA, Saratoga Springs UT must NOT match Saratoga CA). When a city
+ *   has no same-state treasury entity, this returns null so the caller renders
+ *   no link rather than a wrong-state one.
  * - When multiple candidates match (e.g. "Bloomington" vs "Bloomington Township"),
  *   the longest-name candidate wins (most specific match).
  *
@@ -54,20 +59,29 @@ function normalize(s) {
  *
  * @param {string} bodyTitle - e.g. "Bloomington Common Council"
  * @param {Array}  cities    - from fetchTreasuryCities()
+ * @param {string} [state]   - 2-letter state abbrev (e.g. "UT") to constrain the match
  * @returns {object|null}    - matching city object, or null
  */
 const ENTITY_TYPE_WORDS = ['township', 'county', 'village', 'borough', 'town', 'parish'];
 
-export function findMatchingMunicipality(bodyTitle, cities) {
+export function findMatchingMunicipality(bodyTitle, cities, state) {
   if (!bodyTitle || !Array.isArray(cities)) return null;
 
   const t = normalize(bodyTitle);
+
+  // Disambiguate by state: a Utah city must only match a Utah treasury entity.
+  // Without this, name-only matching lets a same-named city in another state win
+  // (Salem UT → salem-ma, Saratoga Springs UT → saratoga-ca).
+  const wantState = typeof state === 'string' && /^[A-Za-z]{2}$/.test(state)
+    ? state.toUpperCase()
+    : null;
 
   // Strip "City of", "Town of", etc. prefixes before matching
   const stripped = t.replace(/^(city|town|village|county|township|borough) of /, '');
 
   const candidates = cities.filter((c) => {
     if (!c.available_datasets || c.available_datasets.length === 0) return false;
+    if (wantState && (c.state || '').toUpperCase() !== wantState) return false;
     const cityName = normalize(c.name);
     const base = stripped === cityName || stripped.startsWith(cityName + ' ') ? stripped : t;
     if (base !== cityName && !base.startsWith(cityName + ' ')) return false;
