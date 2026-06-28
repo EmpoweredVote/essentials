@@ -184,6 +184,7 @@ export const COVERAGE_STATES = [
     name: 'Nevada', abbrev: 'NV',
     areas: [
       { label: 'Las Vegas', browseGovernmentList: ['3240000'], browseStateAbbrev: 'NV', hasContext: true },
+      { label: 'Henderson', browseGovernmentList: ['3231900'], browseStateAbbrev: 'NV', hasContext: true },
     ],
   },
 ];
