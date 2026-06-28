@@ -6,6 +6,7 @@ import {
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassKey, useMediaQuery, tierColors, pillars } from '@empoweredvote/ev-ui';
 import IconOverlay from './IconOverlay';
 import MiniCompass from './MiniCompass';
+import SectionBanner from './SectionBanner.jsx';
 import { getBranch } from '../utils/branchType';
 import { getOfficeDescription } from '../utils/officeDescriptions';
 import { useCompass } from '../contexts/CompassContext';
@@ -252,6 +253,10 @@ export default function ElectionsView({
   compassMode = false,
   onCandidateClick,
   isDark = false,
+  buildingImageMap = {},
+  representingCity = null,
+  userState = null,
+  stateNames = {},
 }) {
   const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances, getEffectiveLens, selectedTopics } = useCompass();
   const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
@@ -531,11 +536,29 @@ export default function ElectionsView({
               const tierStyle = tierColors[tierKey];
               if (!tierStyle) return null;
 
+              const banner = tier === 'Local'
+                ? <SectionBanner
+                    tier="city"
+                    locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
+                    imageUrl={buildingImageMap?.Local}
+                  />
+                : tier === 'State'
+                ? <SectionBanner
+                    tier="state"
+                    locationName={(userState && stateNames?.[userState]) || userState || 'Your State'}
+                    imageUrl={buildingImageMap?.State}
+                  />
+                : tier === 'Federal'
+                ? <SectionBanner
+                    tier="federal"
+                    locationName="United States"
+                    imageUrl={buildingImageMap?.Federal}
+                  />
+                : null;
+
               return (
                 <div key={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: isDark ? 'transparent' : tierStyle.bg }}>
-                  <div className="mb-3">
-                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isDark ? '#00c8d7' : tierStyle.text }}>{tier}</span>
-                  </div>
+                  {banner}
 
                   {(() => {
                     // Group consecutive bodies by branch for visual separation
