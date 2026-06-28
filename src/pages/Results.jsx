@@ -1912,8 +1912,14 @@ export default function Results() {
                         const isJudicialBody = body.subgroups.some(sg =>
                           sg.pols.some(p => p.district_type === 'JUDICIAL')
                         );
+                        // Disambiguate the treasury entity by state so a Utah city never
+                        // links to a same-named entity in another state (Salem UT → salem-ma).
+                        // Prefer the body's own politicians' state; fall back to the view state.
+                        const bodyState = body.subgroups
+                          .flatMap((sg) => sg.pols)
+                          .find((p) => p?.representing_state)?.representing_state || userState;
                         const treasuryMatch = (tier === 'Local' && !isJudicialBody)
-                          ? findMatchingMunicipality(body.title, treasuryCities)
+                          ? findMatchingMunicipality(body.title, treasuryCities, bodyState)
                           : null;
                         return (
                           <GovernmentBodySection
