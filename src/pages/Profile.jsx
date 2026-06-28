@@ -187,7 +187,7 @@ function Profile() {
           />
 
           <div className="mt-3 mb-1">
-            <Link to={`/politician/${id}/citations`} className="inline-flex items-center min-h-[44px] text-sm text-[var(--ev-teal)] dark:text-[#59b0c4] hover:underline">
+            <Link to={`/politician/${id}/citations`} className="inline-flex items-center min-h-[44px] text-sm text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline">
               View sources &amp; evidence &rarr;
             </Link>
           </div>
