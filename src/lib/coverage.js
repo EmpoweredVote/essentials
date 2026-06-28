@@ -180,6 +180,12 @@ export const COVERAGE_STATES = [
       { label: 'Falls Church', browseGovernmentList: ['5127200', '51610'], browseStateAbbrev: 'VA', hasContext: true },
     ],
   },
+  {
+    name: 'Nevada', abbrev: 'NV',
+    areas: [
+      { label: 'Las Vegas', browseGovernmentList: ['3240000'], browseStateAbbrev: 'NV', hasContext: true },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
