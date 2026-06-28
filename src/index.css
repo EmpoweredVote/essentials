@@ -73,6 +73,11 @@ body {
   border-top: 1px solid #f0f0f0;
   font-size: 14px;
   color: #374151;
+  /* R2-6 (M12): the dropdown width tracks the (narrow) input, so Google's default
+     nowrap+ellipsis truncates addresses at 320px ("654 East 770th So…"). Let them
+     wrap so the full suggestion is readable before the user taps. */
+  white-space: normal !important;
+  line-height: 1.4;
 }
 
 .pac-item:first-child {

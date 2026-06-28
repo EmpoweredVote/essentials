@@ -1769,10 +1769,10 @@ export default function Results() {
 
           {/* Tab toggle + inline filters — tabs left, filters right */}
           {(activeQuery || browseResults) && (
-            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-y-2 border-b border-[#E2EBEF] dark:border-gray-800 px-6 sm:px-12">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-y-2 border-b border-[#E2EBEF] dark:border-gray-800 px-4 sm:px-12">
               <div className="flex">
                 <button
-                  className={`px-3 sm:px-4 py-3 text-sm min-h-[44px] transition-colors ${
+                  className={`px-2 sm:px-4 py-3 text-sm min-h-[44px] transition-colors ${
                     activeView === 'representatives'
                       ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
                       : 'text-[#718096] dark:text-[#8b949e] font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
@@ -1782,7 +1782,7 @@ export default function Results() {
                   Representatives
                 </button>
                 <button
-                  className={`px-3 sm:px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
+                  className={`px-2 sm:px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
                     activeView === 'elections'
                       ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
                       : 'text-[#718096] dark:text-[#8b949e] font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
@@ -1798,8 +1798,9 @@ export default function Results() {
                       className="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0"
                       style={{ backgroundColor: '#FED12E', color: '#1a1a1a' }}
                     >
-                      {/* compact on mobile (e.g. "3d"), full text from sm up */}
-                      <span className="sm:hidden">{electionsDaysAway.replace(/ days? away$/, 'd').replace(/ days? ago$/, 'd ago')}</span>
+                      {/* compact on mobile (e.g. "3d"), full text from sm up — both
+                          directions collapse to "Nd" so the tab row fits at 280px */}
+                      <span className="sm:hidden">{electionsDaysAway.replace(/ days? (away|ago)$/, 'd').replace(/^Yesterday$/, '1d')}</span>
                       <span className="hidden sm:inline">{electionsDaysAway}</span>
                     </span>
                   )}
