@@ -3,24 +3,32 @@ gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-06-28T15:29:42.326Z"
-last_activity: 2026-06-28 -- Phase 163 planning complete
+last_updated: "2026-06-28T23:59:00.000Z"
+last_activity: 2026-06-28 -- Phase 163 Henderson deep-seed COMPLETE (CLARK-03)
 progress:
   total_phases: 11
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 17
-  completed_plans: 14
-  percent: 45
+  completed_plans: 17
+  percent: 55
 ---
 
 # State
 
 ## Current Position
 
-Phase: 162 — COMPLETE (City of Las Vegas deep-seed; CLARK-02 satisfied end-to-end)
+Phase: 163 — COMPLETE (Henderson deep-seed; CLARK-03 satisfied end-to-end, operator-approved)
 Plan: 3 of 3
-Status: Ready to execute
-Last activity: 2026-06-28 -- Phase 163 planning complete
+Status: Complete — next is Phase 164 North Las Vegas
+Last activity: 2026-06-28 -- Phase 163 Henderson deep-seed COMPLETE (CLARK-03)
+
+### Phase 163 outcome (City of Henderson, geo_id 3231900) — COMPLETE 2026-06-28
+- Standalone gov 'City of Henderson, Nevada, US' + Henderson City Council (official_count=5) + Mayor Romero LOCAL_EXEC (geo_id 3231900) + 4 LOCAL X0016 ward districts (first Henderson custom geofences; ward 2 had 19 rings → ST_MakeValid). Ext_ids -3206001..-3206005.
+- Migs: 1084 structural (registered) + 1085 headshots + 1086-1090 stances (all audit-only). **Next migration 1091. Ledger MAX stays 1084.**
+- Headshots 5/5 (press_use): Romero NVBiz, Seebock campaign PNG (RGBA→white-composite added to pipeline), Larson/Cox/Stewart Ballotpedia 200×300 (3× upscale). cityofhenderson.com is Akamai WAF-403 — per-member fallback chain.
+- Stances 28 (Romero 8/Seebock 6/Larson 4/Cox 3/Stewart 7), evidence-only chairs, 100% cited, 0 defaults. Honest blanks: Cox homelessness (absent for unanimous 2023 camping ban); Stewart residential-zoning dropped (Three Kids Mine = growth-and-development not single-family-vs-density). Seebock public-safety from campaign platform not LVMPD role.
+- All 9 checks pass: 5 offices (1 LOCAL_EXEC+4 LOCAL), ward-precise routing (each ward point covered by exactly 1 X0016 + city G4110), 0 uncited, 0 section-split, casing 'nv', only 1084 registered. Operator-approved on live app.
+- ⚠ DEFERRED browse bug: government-list browse of an unseeded city leaks stale prior-location officials under wrong state banner (see project_browse_government_list_state_leak) — fix as focused follow-up.
 
 ### v18.0 roadmap (created 2026-06-23)
 
