@@ -14,6 +14,7 @@ import {
   getBuildingImages,
   parseCityFromAddress,
   parseStateFromAddress,
+  stateAbbrevFromGeoId,
 } from './buildingImages.js';
 
 const BLOOMINGTON_URL =
@@ -34,6 +35,23 @@ describe('getBuildingImages — Bloomington wiring + fallback (ASST-01)', () => 
 
   it('still resolves a panorama State for a covered state (unchanged behavior)', () => {
     expect(getBuildingImages('Anytown', 'CA').State).toBe(CA_PANORAMA_URL);
+  });
+});
+
+describe('stateAbbrevFromGeoId — geo_id FIPS prefix is authoritative for state', () => {
+  it('derives CA from a Los Angeles place geo_id', () => {
+    expect(stateAbbrevFromGeoId('0644000')).toBe('CA');
+  });
+  it('derives CA from an LA County geo_id', () => {
+    expect(stateAbbrevFromGeoId('06037')).toBe('CA');
+  });
+  it('derives MO from a Springfield, Missouri geo_id', () => {
+    expect(stateAbbrevFromGeoId('2970000')).toBe('MO');
+  });
+  it('returns null for empty/non-numeric input', () => {
+    expect(stateAbbrevFromGeoId('')).toBeNull();
+    expect(stateAbbrevFromGeoId(null)).toBeNull();
+    expect(stateAbbrevFromGeoId('CA')).toBeNull();
   });
 });
 

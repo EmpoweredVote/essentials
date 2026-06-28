@@ -62,6 +62,32 @@ const STATE_CAPITOLS = {
   WY: 'wyoming',
 };
 
+/** US Census FIPS state code (the 2-digit prefix of a geo_id) → 2-letter abbreviation. */
+const STATE_FIPS_TO_ABBREV = {
+  '01': 'AL', '02': 'AK', '04': 'AZ', '05': 'AR', '06': 'CA', '08': 'CO', '09': 'CT',
+  '10': 'DE', '11': 'DC', '12': 'FL', '13': 'GA', '15': 'HI', '16': 'ID', '17': 'IL',
+  '18': 'IN', '19': 'IA', '20': 'KS', '21': 'KY', '22': 'LA', '23': 'ME', '24': 'MD',
+  '25': 'MA', '26': 'MI', '27': 'MN', '28': 'MS', '29': 'MO', '30': 'MT', '31': 'NE',
+  '32': 'NV', '33': 'NH', '34': 'NJ', '35': 'NM', '36': 'NY', '37': 'NC', '38': 'ND',
+  '39': 'OH', '40': 'OK', '41': 'OR', '42': 'PA', '44': 'RI', '45': 'SC', '46': 'SD',
+  '47': 'TN', '48': 'TX', '49': 'UT', '50': 'VT', '51': 'VA', '53': 'WA', '54': 'WV',
+  '55': 'WI', '56': 'WY',
+};
+
+/**
+ * Derive a 2-letter state abbreviation from a Census geo_id's FIPS prefix.
+ * Census place/county/SLD geo_ids are FIPS-prefixed (first 2 digits = state FIPS),
+ * so the geo_id is authoritative for the state regardless of any URL param — this
+ * prevents a stale/contradictory `browse_state` from mislabeling real officials.
+ * @param {string} geoId e.g. "0644000" (Los Angeles, CA) → "CA", "06037" → "CA"
+ * @returns {string|null} 2-letter abbreviation, or null if not derivable
+ */
+export function stateAbbrevFromGeoId(geoId) {
+  const s = String(geoId || '').trim();
+  if (!/^\d{2}/.test(s)) return null;
+  return STATE_FIPS_TO_ABBREV[s.slice(0, 2)] || null;
+}
+
 /** Reverse map: lowercase full state name → abbreviation (derived from STATE_CAPITOLS) */
 const STATE_NAME_TO_ABBREV = Object.fromEntries(
   Object.entries(STATE_CAPITOLS).map(([abbrev, stem]) => [

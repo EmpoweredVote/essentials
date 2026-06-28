@@ -13,7 +13,7 @@ import FilterBar, { StickyCompassKey } from '../components/FilterBar';
 import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
-import { getBuildingImages, parseStateFromAddress, parseCityFromAddress } from '../lib/buildingImages';
+import { getBuildingImages, parseStateFromAddress, parseCityFromAddress, stateAbbrevFromGeoId } from '../lib/buildingImages';
 import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, fetchVoterInfo } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
@@ -1070,8 +1070,13 @@ export default function Results() {
   const userState = useMemo(() => {
     const fromAddr = parseStateFromAddress(addressInput);
     if (fromAddr) return fromAddr;
-    // Browse mode has no typed address — derive the state from the browse params
-    // so the State banner shows e.g. "California" instead of "Your State".
+    // In geo browse mode the geo_id's FIPS prefix is authoritative for the state,
+    // so a stale/contradictory browse_state can never mislabel real officials
+    // (e.g. Newsom shown as "Missouri"). Geo wins over the raw param.
+    const fromGeo = stateAbbrevFromGeoId(searchParams.get('browse_geo_id'));
+    if (fromGeo) return fromGeo;
+    // Otherwise derive the state from the browse params so the State banner
+    // shows e.g. "California" instead of "Your State".
     const browseState = searchParams.get('browse_state_officials')
       || searchParams.get('browse_state');
     if (browseState && /^[A-Za-z]{2}$/.test(browseState)) {
@@ -1732,6 +1737,18 @@ export default function Results() {
                         else next.delete('browse_label');
                         next.delete('browse_city_filter');
                         next.delete('browse_school_filter');
+                        // Clear params owned by the other (mutually exclusive) browse
+                        // modes so a prior selection can't leak into this one — e.g.
+                        // Springfield's browse_government_list + browse_state=MO
+                        // surviving into an LA geo browse and mislabeling it "Missouri".
+                        next.delete('browse_government_list');
+                        next.delete('browse_state_officials');
+                        next.delete('browse_county_geo_id');
+                        next.delete('browse_skip_overlap');
+                        // Set this area's real state (drives the State-tier label/banner);
+                        // selectedState from LocationBrowser is a 2-letter abbreviation.
+                        if (state && /^[A-Za-z]{2}$/.test(state)) next.set('browse_state', state.toUpperCase());
+                        else next.delete('browse_state');
                         next.set('mode', 'browse');
                         return next;
                       }, { replace: true });
