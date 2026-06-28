@@ -174,7 +174,7 @@ this milestone seeds + headshots legislators only.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 162-02-PLAN.md — 7 City Council headshots (Azure Blob, 600×750 crop-4:5) + audit-only politician_images migration
+- [x] 162-02-PLAN.md — 7 City Council headshots (Azure Blob, 600×750 crop-4:5) + audit-only politician_images migration
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -276,7 +276,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 159. Nevada State & Federal Government | 3/3 | Complete   | 2026-06-23 |
 | 160. Nevada Legislature (seed + headshots) | 3/3 | Complete | 2026-06-23 |
 | 161. Clark County Commission Deep-Seed | 3/3 | Complete | 2026-06-24 |
-| 162. City of Las Vegas Deep-Seed | 1/3 | In Progress|  |
+| 162. City of Las Vegas Deep-Seed | 2/3 | In Progress|  |
 | 163. Henderson Deep-Seed | 0/TBD | Not started | - |
 | 164. North Las Vegas Deep-Seed | 0/TBD | Not started | - |
 | 165. Boulder City Deep-Seed | 0/TBD | Not started | - |
