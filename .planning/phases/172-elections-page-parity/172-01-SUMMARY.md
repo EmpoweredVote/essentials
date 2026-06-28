@@ -75,7 +75,7 @@ Each task was committed atomically:
 
 1. **Task 1: Dark-token parity swap (DARK-03)** - `16e279f` (feat)
 2. **Task 2: Thread banner inputs + insert SectionBanner per tier (BANR-05)** - `e6e39e3` (feat)
-3. **Task 3: Human visual-parity sign-off** - PENDING human verify (Task 3 is checkpoint:human-verify — orchestrator-owned)
+3. **Task 3: Human visual-parity sign-off** - Banner-mode decision RESOLVED (operator 2026-06-27: keep banner in BOTH light & dark, matching Results — no change). Live visual sign-off DEFERRED to operator post-deploy ("deploy and I'll verify").
 
 ## Files Created/Modified
 
@@ -85,7 +85,7 @@ Each task was committed atomically:
 ## Decisions Made
 
 - Prop threading (not re-derivation) for banner inputs: eliminates risk of Elections tab showing a different city/state label than the Representatives tab for the same search
-- SectionBanner rendered in both light and dark (matching Results.jsx behavior); whether light mode banner is desired is confirmed at Task 3 human checkpoint per RESEARCH Open Question 2
+- SectionBanner rendered in both light and dark (matching Results.jsx behavior). RESEARCH Open Question 2 RESOLVED at sign-off: operator confirmed banners in light mode are desired as-is ("I like the banners in light, they don't need anything to make them darker"). Future idea (not this phase): a broader light-mode refinement pass.
 - stateNames prop accepts the full STATE_NAMES map (not a pre-resolved string) to mirror how Results.jsx uses it inside the tier selection logic
 
 ## Deviations from Plan
