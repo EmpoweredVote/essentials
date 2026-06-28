@@ -1822,8 +1822,8 @@ export default function Results() {
           {activeView === 'representatives' ? (
           <>
 
-          {/* Error message */}
-          {error && (
+          {/* Error message — only for the current address query; never leak into a browse/locality view */}
+          {error && activeQuery && (
             <div className="mx-8 mt-4 mb-4 text-center text-red-600 bg-red-50 border border-red-200 rounded p-4">
               {error === 'address_not_found'
                 ? 'We couldn\'t find that address. Please enter a full street address (e.g. "123 Main St, Los Angeles, CA").'
@@ -1853,8 +1853,8 @@ export default function Results() {
           {/* Results */}
           {phase !== 'loading' && (
               <div className="px-6 md:px-12 pt-6 pb-8">
-                {/* Empty states for tiers with no data */}
-                {phase !== 'loading' && activeQuery && ['Local', 'School', 'State'].map((tier) => {
+                {/* Empty states for tiers with no data — suppressed on error (the error card already explains it) */}
+                {phase !== 'loading' && activeQuery && !error && ['Local', 'School', 'State'].map((tier) => {
                   const tierKey = tier.toLowerCase();
                   const tierStyle = tierColors[tierKey];
                   const hasTier = filteredHierarchy.some(h => h.tier === tier);
@@ -1964,7 +1964,7 @@ export default function Results() {
                   );
                 })}
 
-                {federalFiltered.length === 0 && phase !== 'loading' && activeQuery && (
+                {federalFiltered.length === 0 && phase !== 'loading' && activeQuery && !error && (
                   <p className="text-center text-gray-600 dark:text-gray-400 mt-8">
                     No results found for this location.
                   </p>

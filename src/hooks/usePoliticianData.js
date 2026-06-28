@@ -46,6 +46,7 @@ export function usePoliticianData(query, options = {}) {
   useEffect(() => {
     if (!enabled || !query) {
       setPhase("idle");
+      setError(null); // clear any stale error so it can't leak into a later browse/locality view
       setFormattedAddress("");
       return;
     }
