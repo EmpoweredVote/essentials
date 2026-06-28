@@ -78,6 +78,17 @@ export function Layout({ children }) {
         } : undefined}
       />
       {children}
+      <footer className="border-t border-[#E2EBEF] dark:border-white/10 px-6 py-6 text-center text-xs text-gray-600 dark:text-ev-text-muted">
+        <p>
+          © {new Date().getFullYear()}{' '}
+          <a
+            href="https://empowered.vote"
+            className="text-[var(--ev-teal)] dark:text-ev-teal-light hover:underline"
+          >
+            Empowered Vote
+          </a>
+        </p>
+      </footer>
     </>
   );
 }
