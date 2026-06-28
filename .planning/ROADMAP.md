@@ -1,161 +1,295 @@
-# Roadmap: v19.0 Essentials Dark-Mode Redesign & Section Banners
+# Roadmap: v18.0 Las Vegas & Clark County, NV
 
-**Created:** 2026-06-24
-**Granularity:** standard (no config override)
-**Coverage:** 11/11 requirements mapped (no orphans, no duplicates)
+## Overview
 
-**Milestone goal:** Adopt the Figma dark-mode visual design for Essentials and replace the
-Local/State/National sort buttons with scrollable, full-bleed graphic banner dividers between
-City → State → Federal sections — recreating Aditi's Bloomington-banner treatment as a reusable,
-location-aware, data-ready system.
+Open **Nevada** as a fully-covered state (no NV data exists yet) and deep-seed the **Clark County
+(Las Vegas) metro** to Tier 1 depth. The journey follows the proven new-state sequencing used for
+CA (v7.0), OR (v8.0), ME (v6.0), MD (v11.0), and VA (v12.0): **state foundation first** (TIGER
+geofences → state + federal government → 63 state legislators), **then metro deep-seeds**
+(Clark County Commission, City of Las Vegas, Henderson, North Las Vegas, Boulder City), **then**
+the CCSD Board of Trustees, NV 2026 elections + discovery, and a Nevada playbook retrospective +
+milestone close. Phases continue from 157 (v17.0); this milestone starts at **Phase 158**.
+Legislature compass stances are **deferred** to a follow-up milestone (the OR v8.0→v9.0 split) —
+this milestone seeds + headshots legislators only.
 
-**Frontend-only.** React 19 + Vite + Tailwind 4 + `@empoweredvote/ev-ui`. No backend/DB schema
-changes. Continues phase numbering from v18.0 (parked at Phase 162; phase dirs 158–168 reserved).
-**This milestone starts at Phase 169.** v18.0 NV resumes after v19.0 closes.
+## Milestone-wide conventions (carry into every phase)
 
-**Figma source:** `J9mfnUSnc2k6fUQDhw9L7h` node `3957:563`.
+- **New state, greenfield** — no NV data exists. State groundwork (geofences → government →
+  legislators) **must precede** any city/county deep-seed (nothing routes without geofences).
 
----
+- **TIGER first.** Verify the loader key per tier from the actual TIGER2024 zip filename
+  (`cd119` not `cd` — the Maine/Oregon trap); wrong key = silent no-op. Section-split scan after.
+
+- **Per-government build order:** `governments` row + chamber(s) → roster (offices, correct
+  district-vs-at-large structure + seat count, verified per government) → 600×750 headshots
+  (4:5 Lanczos, `press_use`, `politician_images.type='default'`) → evidence-only compass stances
+  → spot-check render.
+
+- **Stances:** evidence-only, **one research agent at a time** (rate-limit rule), all live compass
+  topics, 100% citation, **no default values**, honest blank spokes where no public record exists.
+  Skip judicial-* topics for legislators and appointed officials. Stance migrations apply via raw
+  SQL and do **not** register in `supabase_migrations.schema_migrations` — the **on-disk counter is
+  authoritative** (currently **next = 1048**). Structural migrations register normally.
+
+- **The Strip is unincorporated** — the **Clark County Commission** (7 members) governs the
+  Strip / Paradise / Spring Valley / Sunrise Manor / Enterprise. This is essential coverage, not
+  optional, and is the first metro deep-seed.
+
+- **Schema:** `essentials.governments` (INSERT via `WHERE NOT EXISTS` — no geo_id unique
+  constraint), `essentials.chambers` (`slug` is generated — never INSERT it; `official_count` lives
+  here, not on `governments`), `essentials.politician_images`, `inform.politician_answers`
+  (stances), `inform.compass_topics` (`topic_key` / `is_live`), `inform.compass_stances` (chairs).
+
+- **Antipartisan:** party may be stored but **never displayed** on profiles.
+- **Surfacing target** is `src/lib/coverage.js` (NOT Landing.jsx) — a city/state surfaces with the
+  purple `hasContext` chip once it carries ≥1 stance.
+
+- **gsd-executor has no Supabase MCP** — DB-verify steps run inline within the phase.
 
 ## Phases
 
-- [x] **Phase 169: Dark-Mode Design System Foundation** — Extract Figma dark tokens into `index.css` and bring Results/Representatives to the dark treatment. (completed 2026-06-25)
-- [x] **Phase 170: Section Banners & Continuous Scroll (Results)** — Reusable `SectionBanner` divides Results into City → State → Federal in one scroll; tier sort buttons removed. (completed 2026-06-26)
-- [x] **Phase 171: Banner Asset Pipeline & Exemplar Art** — Bloomington/Indiana/US + LA/California/US banner art produced + documented repeatable sourcing procedure. (completed 2026-06-27)
-- [x] **Phase 172: Elections Page Parity** — Elections page adopts the same dark treatment and `SectionBanner` dividers. (completed 2026-06-28)
+**Phase Numbering:**
 
----
+- Integer phases (158, 159, …): Planned milestone work
+- Decimal phases (e.g. 160.1): Urgent insertions (marked INSERTED)
+
+- [x] **Phase 158: Nevada TIGER Geofences** - Load all NV boundary tiers so any NV address routes correctly (completed 2026-06-23)
+- [x] **Phase 159: Nevada State & Federal Government** - Governor + constitutional officers + 2 US Senators + 4 US House reps (completed 2026-06-23)
+- [x] **Phase 160: Nevada Legislature (seed + headshots)** - 21 Senators + 42 Assembly members with headshots; stances deferred
+- [x] **Phase 161: Clark County Commission Deep-Seed** - 7-member board governing the unincorporated Strip
+- [ ] **Phase 162: City of Las Vegas Deep-Seed** - Mayor + City Council
+- [ ] **Phase 163: Henderson Deep-Seed** - NV's 2nd-largest city
+- [ ] **Phase 164: North Las Vegas Deep-Seed** - Mayor + City Council
+- [ ] **Phase 165: Boulder City Deep-Seed** - Mayor + City Council
+- [ ] **Phase 166: CCSD Board of Trustees Deep-Seed** - 5th-largest US school district, elected board
+- [ ] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed
+- [ ] **Phase 168: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone
 
 ## Phase Details
 
-### Phase 169: Dark-Mode Design System Foundation
+### Phase 158: Nevada Tiger Geofences
 
-**Goal**: The Results/Representatives page renders in the Figma dark-mode treatment, driven by a single source of design tokens.
-**Depends on**: Nothing (first phase of milestone)
-**Requirements**: DARK-01, DARK-02
+**Goal**: Nevada becomes geographically routable — any NV address resolves to its correct federal, state, county, and city representatives.
+**Depends on**: Nothing (first phase of milestone; v17.0 closed at Phase 157)
+**Requirements**: NV-GEO-01
 **Success Criteria** (what must be TRUE):
 
-  1. A user viewing Results in dark mode sees the Figma style-guide treatment — page background (`ev-navy`), tab/header chrome, section areas, and tiles all read as the dark design, with no faint-gray-on-dark legibility failures.
-  2. Color, type-scale, and spacing values used on Results trace to `@theme` / CSS variables in `src/index.css` (single source of truth), not scattered inline literals.
-  3. ev-ui inline-style components (`GovernmentBodySection` / `SubGroupSection`) display correctly on dark via `!important` overrides — no light-mode bleed.
-  4. The `PoliticianCard` 4:5 tile renders unchanged in shape and size (only re-themed for dark).
-  5. Light mode still renders as-is (no light-mode regression).**Plans**: 2 plans
+  1. A Las Vegas Strip address (unincorporated) returns Clark County tiers with no city — the Strip is correctly recognized as unincorporated (no false G4110 city match).
+  2. A City of Las Vegas, Henderson, North Las Vegas, and Boulder City address each returns the correct G4110 city tier plus county/CD/SLDU/SLDL.
+  3. NV TIGER boundaries loaded for all tiers (G4110 cities, G4020 counties, CDs, SLDU, SLDL); loader keys verified from the actual TIGER zip filenames.
+  4. Section-split scan returns 0 rows (no mis-parented boundaries).
 
+**Plans**: 2 plans
+
+- [x] 158-01-PLAN.md — Add NV to TIGER loader (4 allowlists), create verify+smoke scripts, dry-run to confirm sldl/place counts (no DB writes)
+- [x] 158-02-PLAN.md — Live-load all 5 NV tiers, verify gates (Strip-unincorporated + section-split), run 5-address smoke test
+
+### Phase 159: Nevada State & Federal Government
+
+**Goal**: A NV resident sees their full statewide and federal representation — Governor, constitutional officers, both US Senators, and their US House member — each with a headshot.
+**Depends on**: Phase 158 (geofence-linked federal districts)
+**Requirements**: NV-STATE-01, NV-STATE-02
+**Success Criteria** (what must be TRUE):
+
+  1. Governor Lombardo + Lt. Governor, Attorney General, Secretary of State, Treasurer, and Controller render as STATE_EXEC officials with chambers, offices, and 600×750 headshots.
+  2. Both US Senators (Cortez Masto + Rosen) render as NATIONAL_UPPER with headshots; the two-senators-share-one-district uniqueness pattern is handled (key = district_id + politician_id).
+  3. Each of the 4 US House reps renders for an address in their geofence-linked district with a 600×750 headshot.
+  4. `districts.state` casing is correct (uppercase 'NV' for STATE_EXEC/NATIONAL tiers) so backend queries match.
+
+**Reconcile note**: NOT greenfield. DB audit (159-RESEARCH.md) found 11 of 12 target officials already exist. Only net-new work is **Controller Andy Matthews** (mig 1050) + **4 US House headshots** (mig 1051). Senators render + casing + two-senators-one-district are pre-satisfied (verify-only). Next structural migration = **1050** (DB MAX=1049; STATE.md's "1048" is stale — correct at phase close).**Plans**: 3 plans
 **Wave 1**
 
-  - [x] 169-01-PLAN.md — Reconcile dark `@theme` token VALUES to the Figma palette + wire Inter/Manrope `--font-*` tokens (DARK-01)
+- [x] 159-01-PLAN.md — Create Controller Andy Matthews end-to-end (chamber + STATE_EXEC district + politician + office, mig 1050) + 600×750 headshot (script + audit-only mig 1052)
+- [x] 159-02-PLAN.md — Upload 600×750 headshots for the 4 US House reps (unitedstates/images, resize-only) + audit-only politician_images mig 1051
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-  - [x] 169-02-PLAN.md — Apply the palette to Results + global header (ev-ui `!important` overrides, inline-literal sweep, minimal FilterBar) + manual-visual sign-off (DARK-02)
+- [x] 159-03-PLAN.md — Inline SQL-audit + live-browse verification of all 4 success criteria (6 execs, 2 senators, 4 House, casing, 0 section-split) + human-verify checkpoint
 
-**UI hint**: yes
+### Phase 160: Nevada Legislature (seed + headshots)
 
-### Phase 170: Section Banners & Continuous Scroll (Results)
-
-**Goal**: Results presents City → State → Federal as one continuous scroll separated by graphic banner dividers, with the tier sort control gone.
-**Depends on**: Phase 169
-**Requirements**: BANR-01, BANR-02, BANR-03, BANR-04, NAV-01
+**Goal**: Any NV address returns its correct State Senator and Assembly member, each with a headshot. (Compass stances deferred to a follow-up milestone.)
+**Depends on**: Phase 158 (SLDU/SLDL geofences)
+**Requirements**: NV-LEG-01, NV-LEG-02
 **Success Criteria** (what must be TRUE):
 
-  1. Scrolling Results shows a Bloomington skyline banner before City officials, an Indiana banner before State, and a US banner before Federal — each a full-bleed image with dark gradient overlay, location label, and pin (Aditi's Bloomington treatment), rendered by one reusable `SectionBanner` component.
-  2. There are no Local/State/National tier sort buttons; all three tiers always render in full in a single vertical scroll (no tab/button switching between tiers).
-  3. The correct banner image + label is selected per jurisdiction (e.g. an LA address shows LA / California / US), driven by an extended `buildingImages.js` tier→image mapping; a jurisdiction with no specific art falls back gracefully to a gradient/generic banner instead of breaking.
-  4. The Elected/Appointed type filter and the name search still work, reconciled into the new banner-divided layout.
-  5. Each banner exposes a stats data-slot and a feature-icon slot as hidden/empty scaffolding (structure present in the component API; no live data or links rendered this milestone).
+  1. All 21 NV State Senators seeded with offices linked to SLDU districts; a sample NV address returns the correct senator.
+  2. All 42 NV Assembly members seeded with offices linked to SLDL districts; a sample NV address returns the correct assembly member.
+  3. All 63 legislators have 600×750 headshots in Supabase Storage (genuine gaps documented, no fabricated photos).
+  4. No compass stances are created for legislators this milestone (explicitly deferred — verified absent).
 
-**Plans**: 4 plans
-
+**Plans**: 3 plans
 **Wave 1**
 
-  - [x] 170-01-PLAN.md — Create the reusable `SectionBanner` component (image + tinted-fallback variants, eyebrow/pin/title, scaffolding slots) + unit tests (BANR-01, BANR-03, BANR-04)
-  - [x] 170-02-PLAN.md — Remove the Tier sort dropdown from `FilterBar`; preserve Type filter + name search + Compass toggle (NAV-01)
+- [x] 160-01-PLAN.md — Wave-0 DB probes (21/42 districts, Senate keying, unused ext_id ranges) + write structural migration 1053 (2 chambers + 63 politicians + 63 offices linked to existing SLDU/SLDL + back-fills) + roster operator-verify checkpoint + inline apply
 
-**Wave 2** *(blocked on Wave 1)*
+**Wave 2** *(blocked on Wave 1 completion)*
 
-  - [x] 170-03-PLAN.md — Wire `SectionBanner` into `Results.jsx` (continuous-scroll dividers, School folds under City, location-aware fallback) + remove all `selectedFilter`/scroll-spy dead code (BANR-02, BANR-03, NAV-01)
+- [x] 160-02-PLAN.md — Write _tmp-nv-legislature-headshots.py (crop-4:5 → 600x750, archive.leg.state.nv.us) + run inline + write/apply audit-only headshot migration 1054
 
-**Wave 3** *(blocked on Wave 2; human checkpoint)*
+**Wave 3** *(blocked on Waves 1-2)*
 
-  - [x] 170-04-PLAN.md — Start dev server + human visual/functional sign-off of banners, fallback, and filters (BANR-01..04, NAV-01)
+- [x] 160-03-PLAN.md — Inline 9 SQL/HTTP verification checks (21/42 counts, linkage, 63 headshots CDN-200, 0 stances, casing nv, 0 section-split, ledger 1053) + address-routing/correct-person human-verify checkpoint
 
-**UI hint**: yes
+### Phase 161: Clark County Commission Deep-Seed
 
-### Phase 171: Banner Asset Pipeline & Exemplar Art
-
-**Goal**: The two exemplar banner sets exist as real art, and anyone can add a new jurisdiction's banner set by following a written procedure.
-**Depends on**: Phase 170 (consumes the `SectionBanner` + `buildingImages.js` mapping)
-**Requirements**: ASST-01, ASST-02
+**Goal**: A resident of the unincorporated Las Vegas Strip / Paradise / Spring Valley / Sunrise Manor / Enterprise looks up who represents them and gets the correct County Commissioner — with evidence-only stances on their profile.
+**Depends on**: Phase 158 (county geofences)
+**Requirements**: CLARK-01
 **Success Criteria** (what must be TRUE):
 
-  1. Bloomington/Indiana/US and LA/California/US banner art exists in the unified skyline + dark-overlay treatment (Unsplash skylines + Wikimedia state/federal landmarks + AI fallback), stored consistently (public/images or Supabase Storage mirror) and wired into `buildingImages.js`.
-  2. Browsing a Bloomington address and an LA address each shows its own exemplar banner set on the live Results page (not the generic fallback).
-  3. A documented, repeatable procedure exists describing image sourcing → dark-overlay treatment → wiring into `buildingImages.js`, sufficient for the ~10 remaining covered states to be filled in later without re-deriving the process.
-  4. Jurisdictions without art still fall back to the graceful gradient/generic banner (no broken images).
+  1. A Strip / Paradise / Spring Valley address returns the correct Clark County Commissioner (no empty LOCAL section).
+  2. All 7 commissioners render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on commissioner profiles — 100% cited, honest blank spokes where no public record exists, zero default values.
+  4. Clark County surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: 2 plans
-- [x] 171-01-PLAN.md — Reusable banner toolchain (scripts/banners PIL process + Storage upload) + docs/banner-asset-pipeline.md operator runbook (ASST-02)
-- [x] 171-02-PLAN.md — Bloomington exemplar art (source/treat/upload to cities/bloomington.jpg) + buildingImages.js rewire + D-04 dead-code/asset cleanup + live verify (ASST-01)
-**UI hint**: yes
-
-### Phase 172: Elections Page Parity
-
-**Goal**: The Elections page matches Results — same dark treatment and the same banner dividers between tiers.
-**Depends on**: Phase 170 (SectionBanner pattern), Phase 169 (dark tokens), Phase 171 (art available)
-**Requirements**: DARK-03, BANR-05
-**Success Criteria** (what must be TRUE):
-
-  1. The Elections page renders in the same Figma dark-mode treatment as Results (background, chrome, section areas, tiles consistent across both pages).
-  2. Scrolling the Elections page shows the same `SectionBanner` dividers between City → State → Federal tiers, location-aware per jurisdiction with the same graceful fallback.
-  3. Existing Elections behaviors are preserved — randomized per-session candidate ordering, "Running Unopposed" / "No candidates have filed" handling, and Connected auto-load via `elections/me`.
-  4. Compass / MiniCompass overlay behavior on Elections is preserved (re-themed only as needed for dark legibility).
-
-**Plans**: 1 plan
-
+**Plans**: 3 plans
 **Wave 1**
 
-  - [x] 172-01-PLAN.md — Dark-token parity swap (DARK-03) + thread banner inputs from Results + `SectionBanner` per tier (BANR-05) + human visual-parity sign-off (DARK-03, BANR-05)
+- [x] 161-01-PLAN.md — Structural seed: Wave-0 probes + roster checkpoint + mig 1055 (Clark County government + Board of County Commissioners + 7 commissioner offices on the single COUNTY district + back-fill)
 
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 161-02-PLAN.md — Headshots: _tmp-clark-county-commission-headshots.py + audit-only mig 1056 (7 politician_images) + coverage.js COVERAGE_COUNTIES entry
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [x] 161-03-PLAN.md — Stances (one agent at a time, evidence-only) audit-only migs 1057-1063 + 9-check E2E verification + human-verify checkpoint
+
+### Phase 162: City of Las Vegas Deep-Seed
+
+**Goal**: A City of Las Vegas resident looks up who represents them and gets the correct Mayor + ward council member, with evidence-only stances on their profiles.
+**Depends on**: Phase 158 (city geofences)
+**Requirements**: CLARK-02
+**Success Criteria** (what must be TRUE):
+
+  1. A City of Las Vegas address returns the correct Mayor + ward council member; form of government (mayor + council, ward vs at-large) verified and modeled correctly.
+  2. All seated officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
+  4. City of Las Vegas surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: 3 plans
+
+### Phase 163: Henderson Deep-Seed
+
+**Goal**: A Henderson resident (NV's 2nd-largest city) looks up who represents them and gets the correct Mayor + council member, with evidence-only stances on their profiles.
+**Depends on**: Phase 158 (city geofences)
+**Requirements**: CLARK-03
+**Success Criteria** (what must be TRUE):
+
+  1. Any Henderson address returns the correct Mayor + council member; ward/at-large structure and seat count verified.
+  2. All seated officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
+  4. Henderson surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 164: North Las Vegas Deep-Seed
+
+**Goal**: A North Las Vegas resident looks up who represents them and gets the correct Mayor + council member, with evidence-only stances on their profiles.
+**Depends on**: Phase 158 (city geofences)
+**Requirements**: CLARK-04
+**Success Criteria** (what must be TRUE):
+
+  1. Any North Las Vegas address returns the correct Mayor + council member; ward/at-large structure and seat count verified.
+  2. All seated officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
+  4. North Las Vegas surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 165: Boulder City Deep-Seed
+
+**Goal**: A Boulder City resident looks up who represents them and gets the correct Mayor + council member, with evidence-only stances on their profiles.
+**Depends on**: Phase 158 (city geofences)
+**Requirements**: CLARK-05
+**Success Criteria** (what must be TRUE):
+
+  1. Any Boulder City address returns the correct Mayor + council member; form of government and seat count verified.
+  2. All seated officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
+  4. Boulder City surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 166: CCSD Board of Trustees Deep-Seed
+
+**Goal**: A Clark County resident looks up who represents them on the Clark County School District Board of Trustees (5th-largest US district) and gets the correct trustee, with evidence-only stances.
+**Depends on**: Phase 158 (county geofences; board-district G5420 geofences if applicable)
+**Requirements**: CCSD-01
+**Success Criteria** (what must be TRUE):
+
+  1. A Clark County address returns the correct CCSD trustee (board-district geofences loaded via the G5420 UNSD pattern if board is district-elected; at-large handled otherwise).
+  2. The elected board roster is seeded with correct office titles and all trustees render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on trustee profiles — 100% cited, honest blanks, no default values.
+  4. CCSD surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
 **UI hint**: yes
 
----
+### Phase 167: NV 2026 Elections & Discovery
+
+**Goal**: Any NV user visiting `/elections` sees their 2026 ballot, and the discovery pipeline automatically finds NV candidates from official sources.
+**Depends on**: Phases 158–160 (geofences + legislators provide race-to-district linkage)
+**Requirements**: NV-ELEC-01
+**Success Criteria** (what must be TRUE):
+
+  1. NV 2026 election + race rows seeded — Governor, all 42 Assembly seats, the ~10 Senate seats up, and 4 US House races; NV's two US Senators correctly absent (not up in 2026).
+  2. A NV address on `/elections` returns the correct 2026 races for that jurisdiction.
+  3. `discovery_jurisdictions` rows for NV are present with `cron_active=true`; a test discovery run completes against an official NV source.
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 168: Nevada Playbook Retrospective & Close
+
+**Goal**: Nevada coverage is discoverable in the app and the onboarding playbook captures everything learned, so the next Nevada wave (or any new state) is faster.
+**Depends on**: Phases 158–167
+**Requirements**: NV-RETRO-01
+**Success Criteria** (what must be TRUE):
+
+  1. All covered NV jurisdictions (state legislature ride-along + Clark County metro cities + CCSD) are surfaced in `src/lib/coverage.js` / Landing wiring, consistent with every other covered state.
+  2. LOCATION-ONBOARDING.md updated with Nevada GOTCHAs + a Nevada Quick Reference block + new Cities Onboarded rows.
+  3. A v18.0 milestone audit is written (DB-verified counts: geofences, officials, headshots, stance rows) and the milestone is closed.
+
+**Plans**: TBD
+**UI hint**: yes
 
 ## Progress
 
+**Execution Order:**
+Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 → 164 → 165 → 166 → 167 → 168
+
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 169. Dark-Mode Design System Foundation | 2/2 | Complete   | 2026-06-25 |
-| 170. Section Banners & Continuous Scroll (Results) | 4/4 | Complete   | 2026-06-26 |
-| 171. Banner Asset Pipeline & Exemplar Art | 2/2 | Complete   | 2026-06-27 |
-| 172. Elections Page Parity | 1/1 | Complete   | 2026-06-28 |
-
----
+| 158. Nevada TIGER Geofences | 2/2 | Complete    | 2026-06-23 |
+| 159. Nevada State & Federal Government | 3/3 | Complete   | 2026-06-23 |
+| 160. Nevada Legislature (seed + headshots) | 3/3 | Complete | 2026-06-23 |
+| 161. Clark County Commission Deep-Seed | 3/3 | Complete | 2026-06-24 |
+| 162. City of Las Vegas Deep-Seed | 0/TBD | Not started | - |
+| 163. Henderson Deep-Seed | 0/TBD | Not started | - |
+| 164. North Las Vegas Deep-Seed | 0/TBD | Not started | - |
+| 165. Boulder City Deep-Seed | 0/TBD | Not started | - |
+| 166. CCSD Board of Trustees Deep-Seed | 0/TBD | Not started | - |
+| 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
+| 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 
 ## Coverage
 
-✓ All 11 v19.0 requirements mapped to exactly one phase
-✓ No orphaned requirements
-✓ No duplicate assignments
+All 13 v18.0 requirements mapped to exactly one phase. No orphans, no duplicates.
 
-| REQ-ID | Phase |
-|--------|-------|
-| DARK-01 | 169 |
-| DARK-02 | 169 |
-| DARK-03 | 172 |
-| BANR-01 | 170 |
-| BANR-02 | 170 |
-| BANR-03 | 170 |
-| BANR-04 | 170 |
-| BANR-05 | 172 |
-| NAV-01 | 170 |
-| ASST-01 | 171 |
-| ASST-02 | 171 |
-
----
-
-## Deferred (Future Requirements — not in v19.0)
-
-- Live banner stats wired into BANR-04's data-slot.
-- Banner feature-icon links (treasury-tracker, etc.) wired to live destinations.
-- Banner art for remaining covered states (OR, ME, MA, MD, VA, UT, TX, NV, others).
-- Landing page + politician profile pages brought to the dark treatment (v19.0 scopes Results + Elections only).
+| Requirement | Phase |
+|-------------|-------|
+| NV-GEO-01 | 158 |
+| NV-STATE-01 | 159 |
+| NV-STATE-02 | 159 |
+| NV-LEG-01 | 160 |
+| NV-LEG-02 | 160 |
+| CLARK-01 | 161 |
+| CLARK-02 | 162 |
+| CLARK-03 | 163 |
+| CLARK-04 | 164 |
+| CLARK-05 | 165 |
+| CCSD-01 | 166 |
+| NV-ELEC-01 | 167 |
+| NV-RETRO-01 | 168 |
