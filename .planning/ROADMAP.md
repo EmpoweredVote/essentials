@@ -167,11 +167,17 @@ this milestone seeds + headshots legislators only.
   2. All seated officials render with 600×750 headshots (genuine gaps documented).
   3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
   4. City of Las Vegas surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
-
-**Plans**: 3 plans
+**Plans**: 3 plans
+**Wave 1**
 
 - [ ] 162-01-PLAN.md — Wave-0 probes + load 6 X0015 ward geofences + structural migration (standalone city government + chamber + LOCAL_EXEC Mayor + 6 LOCAL wards) + coverage.js NV block
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 162-02-PLAN.md — 7 City Council headshots (Azure Blob, 600×750 crop-4:5) + audit-only politician_images migration
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 162-03-PLAN.md — evidence-only stances (one agent at a time) + 9-check E2E verification + ward-precise routing human-verify checkpoint
 
 ### Phase 163: Henderson Deep-Seed
