@@ -716,6 +716,10 @@ export default function ElectionsView({
                                   };
                                   const wrapperHandlers = {
                                     onClick: () => onCandidateClick(candidate.candidate_id),
+                                    role: 'link',
+                                    tabIndex: 0,
+                                    'aria-label': `${candidate.full_name}, ${cardTitle}`,
+                                    onKeyDown: (e) => { if (e.key === 'Enter') { e.preventDefault(); onCandidateClick(candidate.candidate_id); } },
                                     onMouseEnter: (e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; },
                                     onMouseLeave: (e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; },
                                   };

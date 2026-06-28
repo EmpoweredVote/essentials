@@ -283,6 +283,7 @@ export default function Landing() {
                     value={addressInput}
                     onChange={(e) => setAddressInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    aria-label="Enter your street address"
                     placeholder="If you reside in an Alpha Community, enter your street address"
                     className="flex-1 min-w-0 px-3 py-4 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 shadow-sm"
                   />
