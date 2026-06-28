@@ -57,7 +57,7 @@ this milestone seeds + headshots legislators only.
 - [x] **Phase 159: Nevada State & Federal Government** - Governor + constitutional officers + 2 US Senators + 4 US House reps (completed 2026-06-23)
 - [x] **Phase 160: Nevada Legislature (seed + headshots)** - 21 Senators + 42 Assembly members with headshots; stances deferred
 - [x] **Phase 161: Clark County Commission Deep-Seed** - 7-member board governing the unincorporated Strip
-- [ ] **Phase 162: City of Las Vegas Deep-Seed** - Mayor + City Council
+- [x] **Phase 162: City of Las Vegas Deep-Seed** - Mayor + City Council (completed 2026-06-28)
 - [ ] **Phase 163: Henderson Deep-Seed** - NV's 2nd-largest city
 - [ ] **Phase 164: North Las Vegas Deep-Seed** - Mayor + City Council
 - [ ] **Phase 165: Boulder City Deep-Seed** - Mayor + City Council
@@ -178,7 +178,7 @@ this milestone seeds + headshots legislators only.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 162-03-PLAN.md — evidence-only stances (one agent at a time) + 9-check E2E verification + ward-precise routing human-verify checkpoint
+- [x] 162-03-PLAN.md — evidence-only stances (one agent at a time) + 9-check E2E verification + ward-precise routing human-verify checkpoint
 
 ### Phase 163: Henderson Deep-Seed
 
@@ -276,7 +276,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 159. Nevada State & Federal Government | 3/3 | Complete   | 2026-06-23 |
 | 160. Nevada Legislature (seed + headshots) | 3/3 | Complete | 2026-06-23 |
 | 161. Clark County Commission Deep-Seed | 3/3 | Complete | 2026-06-24 |
-| 162. City of Las Vegas Deep-Seed | 2/3 | In Progress|  |
+| 162. City of Las Vegas Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 163. Henderson Deep-Seed | 0/TBD | Not started | - |
 | 164. North Las Vegas Deep-Seed | 0/TBD | Not started | - |
 | 165. Boulder City Deep-Seed | 0/TBD | Not started | - |
