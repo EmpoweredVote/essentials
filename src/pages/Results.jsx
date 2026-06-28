@@ -1984,6 +1984,10 @@ export default function Results() {
                   sessionStorage.setItem('ev:fromView', 'elections');
                   navigate(`/candidate/${id}`);
                 }}
+                buildingImageMap={buildingImageMap}
+                representingCity={representingCity}
+                userState={userState}
+                stateNames={STATE_NAMES}
               />
             </div>
           )}

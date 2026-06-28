@@ -6,6 +6,7 @@ import {
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassKey, useMediaQuery, tierColors, pillars } from '@empoweredvote/ev-ui';
 import IconOverlay from './IconOverlay';
 import MiniCompass from './MiniCompass';
+import SectionBanner from './SectionBanner.jsx';
 import { getBranch } from '../utils/branchType';
 import { getOfficeDescription } from '../utils/officeDescriptions';
 import { useCompass } from '../contexts/CompassContext';
@@ -252,6 +253,10 @@ export default function ElectionsView({
   compassMode = false,
   onCandidateClick,
   isDark = false,
+  buildingImageMap = {},
+  representingCity = null,
+  userState = null,
+  stateNames = {},
 }) {
   const { allTopics, userAnswers: rawUserAnswers, invertedSpokes, politicianIdsWithStances, getEffectiveLens, selectedTopics } = useCompass();
   const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
@@ -479,19 +484,19 @@ export default function ElectionsView({
       <div>
         {[0, 1].map((i) => (
           <div key={i} className="mb-6 animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-24 mb-4" />
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24 mb-4" />
             <div className="flex items-center gap-3 py-2">
-              <div className="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0" />
+              <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex-shrink-0" />
               <div className="flex-1 flex flex-col gap-2">
-                <div className="h-4 bg-gray-200 rounded w-2/3" />
-                <div className="h-3 bg-gray-200 rounded w-1/2" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+                <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
               </div>
             </div>
             <div className="flex items-center gap-3 py-2">
-              <div className="w-16 h-16 rounded-full bg-gray-200 flex-shrink-0" />
+              <div className="w-16 h-16 rounded-full bg-gray-200 dark:bg-gray-700 flex-shrink-0" />
               <div className="flex-1 flex flex-col gap-2">
-                <div className="h-4 bg-gray-200 rounded w-2/3" />
-                <div className="h-3 bg-gray-200 rounded w-1/2" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+                <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
               </div>
             </div>
           </div>
@@ -507,7 +512,7 @@ export default function ElectionsView({
   if (elections.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[240px] text-center px-4">
-        <p className="text-[16px] font-semibold text-[#00657C] dark:text-[#59b0c4]">
+        <p className="text-[16px] font-semibold text-[#00657C] dark:text-[#00c8d7]">
           No elections found for this area
         </p>
         <p className="text-[14px] text-[#4A5568] dark:text-gray-400 mt-2">
@@ -531,11 +536,29 @@ export default function ElectionsView({
               const tierStyle = tierColors[tierKey];
               if (!tierStyle) return null;
 
+              const banner = tier === 'Local'
+                ? <SectionBanner
+                    tier="city"
+                    locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
+                    imageUrl={buildingImageMap?.Local}
+                  />
+                : tier === 'State'
+                ? <SectionBanner
+                    tier="state"
+                    locationName={(userState && stateNames?.[userState]) || userState || 'Your State'}
+                    imageUrl={buildingImageMap?.State}
+                  />
+                : tier === 'Federal'
+                ? <SectionBanner
+                    tier="federal"
+                    locationName="United States"
+                    imageUrl={buildingImageMap?.Federal}
+                  />
+                : null;
+
               return (
                 <div key={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={{ backgroundColor: isDark ? 'transparent' : tierStyle.bg }}>
-                  <div className="mb-3">
-                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: isDark ? '#59b0c4' : tierStyle.text }}>{tier}</span>
-                  </div>
+                  {banner}
 
                   {(() => {
                     // Group consecutive bodies by branch for visual separation
@@ -565,7 +588,7 @@ export default function ElectionsView({
                               fontWeight: 700,
                               textTransform: 'uppercase',
                               letterSpacing: '0.6px',
-                              color: isDark ? '#59b0c4' : tierStyle.text,
+                              color: isDark ? '#00c8d7' : tierStyle.text,
                               opacity: isDark ? 1 : 0.75,
                             }}>
                               {branch}
@@ -573,7 +596,7 @@ export default function ElectionsView({
                             <div style={{
                               flex: 1,
                               height: '1px',
-                              backgroundColor: isDark ? '#59b0c4' : tierStyle.text,
+                              backgroundColor: isDark ? '#00c8d7' : tierStyle.text,
                               opacity: 0.2,
                             }} />
                           </div>
@@ -635,16 +658,16 @@ export default function ElectionsView({
                               {isEmpty ? (
                                 <div
                                   style={{
-                                    backgroundColor: pillars.empower.light,
-                                    borderLeft: `3px solid ${pillars.empower.textColor}`,
+                                    backgroundColor: isDark ? '#161b22' : pillars.empower.light,
+                                    borderLeft: `3px solid ${isDark ? '#00c8d7' : pillars.empower.textColor}`,
                                     borderRadius: '6px',
                                     padding: '12px 16px',
                                   }}
                                 >
-                                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#1C1C1C', margin: 0 }}>
+                                  <p style={{ fontSize: '14px', fontWeight: 600, color: isDark ? '#e6edf3' : '#1C1C1C', margin: 0 }}>
                                     No candidates have filed
                                   </p>
-                                  <p style={{ fontSize: '13px', color: '#6B7280', marginTop: '4px', marginBottom: 0 }}>
+                                  <p style={{ fontSize: '13px', color: isDark ? '#8b949e' : '#6B7280', marginTop: '4px', marginBottom: 0 }}>
                                     This seat is currently uncontested.
                                   </p>
                                 </div>
@@ -707,7 +730,7 @@ export default function ElectionsView({
                                       onClick={null}
                                       variant="horizontal"
                                       imageWidth="95px"
-                                      style={{ ...(isDark ? { backgroundColor: '#1a2235', borderColor: '#2d3f5a' } : {}), border: 'none', borderRadius: 0, cursor: 'pointer' }}
+                                      style={{ ...(isDark ? { backgroundColor: '#161b22', borderColor: '#2d3748' } : {}), border: 'none', borderRadius: 0, cursor: 'pointer' }}
                                       contentStyle={sideCompass ? { marginRight: compassOverlayWidth } : undefined}
                                       footer={<IconOverlay ballot={ballot} hasStances={candHasStances} branch={branch} />}
                                     />
@@ -739,7 +762,7 @@ export default function ElectionsView({
                                           style={{
                                             flex: '0 0 auto',
                                             borderTop: `1px solid ${wrapperBorderColor}`,
-                                            backgroundColor: isDark ? '#1a2235' : '#fff',
+                                            backgroundColor: isDark ? '#161b22' : '#fff',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                                             padding: '12px 0',
                                           }}
@@ -772,7 +795,7 @@ export default function ElectionsView({
                                           style={{
                                             position: 'absolute', right: 0, top: 0, bottom: 0, width: compassOverlayWidth,
                                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                            backgroundColor: isDark ? '#1a2235' : '#fff',
+                                            backgroundColor: isDark ? '#161b22' : '#fff',
                                           }}
                                         >
                                           <MiniCompass
