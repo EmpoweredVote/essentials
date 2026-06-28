@@ -75,7 +75,7 @@ Each task was committed atomically:
 
 1. **Task 1: Dark-token parity swap (DARK-03)** - `16e279f` (feat)
 2. **Task 2: Thread banner inputs + insert SectionBanner per tier (BANR-05)** - `e6e39e3` (feat)
-3. **Task 3: Human visual-parity sign-off** - Banner-mode decision RESOLVED (operator 2026-06-27: keep banner in BOTH light & dark, matching Results — no change). Live visual sign-off DEFERRED to operator post-deploy ("deploy and I'll verify").
+3. **Task 3: Human visual-parity sign-off** - APPROVED by operator 2026-06-27 (post-deploy). Banner-mode decision: keep banner in BOTH light & dark, matching Results. (A pre-existing stale-browse-param bug surfaced during verification and was fixed separately in fe64cb2.)
 
 ## Files Created/Modified
 

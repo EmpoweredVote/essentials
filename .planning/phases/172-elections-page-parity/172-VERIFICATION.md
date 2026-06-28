@@ -1,8 +1,9 @@
 ---
 phase: 172-elections-page-parity
 verified: 2026-06-27T19:45:00Z
-status: human_needed
-score: 4/4 must-haves verified (code); live visual sign-off deploy-pending (operator-owned)
+status: passed
+score: 4/4 must-haves verified (code) + operator visual sign-off APPROVED 2026-06-27 (deployed)
+signoff: "Operator approved 2026-06-27 after deploy; Elections dark treatment + tier banners confirmed live (verified via clean LA browse after the stale-param fix fe64cb2)."
 overrides_applied: 0
 re_verification:
   previous_status: null
