@@ -59,7 +59,7 @@ this milestone seeds + headshots legislators only.
 - [x] **Phase 161: Clark County Commission Deep-Seed** - 7-member board governing the unincorporated Strip
 - [x] **Phase 162: City of Las Vegas Deep-Seed** - Mayor + City Council (completed 2026-06-28)
 - [x] **Phase 163: Henderson Deep-Seed** - NV's 2nd-largest city (completed 2026-06-28)
-- [ ] **Phase 164: North Las Vegas Deep-Seed** - Mayor + City Council
+- [x] **Phase 164: North Las Vegas Deep-Seed** - Mayor + City Council
 - [ ] **Phase 165: Boulder City Deep-Seed** - Mayor + City Council
 - [ ] **Phase 166: CCSD Board of Trustees Deep-Seed** - 5th-largest US school district, elected board
 - [ ] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed
@@ -221,15 +221,15 @@ this milestone seeds + headshots legislators only.
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 164-01-PLAN.md — Structural seed: Wave-0 BLOCKING probes + roster checkpoint → X0017 ward-boundary loader (Clark County GISMO PLACE=80, D-01b fallback) → structural migration 1093 (standalone govt + North Las Vegas City Council + Mayor at-large + 4 Arabic-numeral ward offices) → coverage.js NV-block edit
+- [x] 164-01-PLAN.md — Structural seed: Wave-0 BLOCKING probes + roster checkpoint → X0017 ward-boundary loader (Clark County GISMO PLACE=80, D-01b fallback) → structural migration 1093 (standalone govt + North Las Vegas City Council + Mayor at-large + 4 Arabic-numeral ward offices) → coverage.js NV-block edit
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 164-02-PLAN.md — Headshots: per-member fallback-chain sourcing (cityofnorthlasvegas.com is WAF-403; Goynes-Brown via Wikimedia public-domain) → 600×750 crop+resize pipeline → audit-only migration 1094 → Storage mirror, gaps documented
+- [x] 164-02-PLAN.md — Headshots: per-member fallback-chain sourcing (cityofnorthlasvegas.com is WAF-403; Goynes-Brown via Wikimedia public-domain) → 600×750 crop+resize pipeline → audit-only migration 1094 → Storage mirror, gaps documented
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 164-03-PLAN.md — Stances + E2E: all-topics stance research one-at-a-time per official → audit-only per-official migrations 1095-1099 → 9-check E2E verification + human-verify checkpoint
+- [x] 164-03-PLAN.md — Stances + E2E: all-topics stance research one-at-a-time per official → audit-only per-official migrations 1095-1099 → 9-check E2E verification + human-verify checkpoint
 
 ### Phase 165: Boulder City Deep-Seed
 
@@ -301,7 +301,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 161. Clark County Commission Deep-Seed | 3/3 | Complete | 2026-06-24 |
 | 162. City of Las Vegas Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 163. Henderson Deep-Seed | 3/3 | Complete   | 2026-06-28 |
-| 164. North Las Vegas Deep-Seed | 0/TBD | Not started | - |
+| 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
 | 165. Boulder City Deep-Seed | 0/TBD | Not started | - |
 | 166. CCSD Board of Trustees Deep-Seed | 0/TBD | Not started | - |
 | 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
