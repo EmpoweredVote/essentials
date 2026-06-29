@@ -249,7 +249,7 @@ this milestone seeds + headshots legislators only.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 165-02-PLAN.md — 600x750 headshots for all 5 (flybouldercity.com, no WAF) + audit-only migration 1101 + correct-person spot-check
+- [x] 165-02-PLAN.md — 600x750 headshots for all 5 (flybouldercity.com, no WAF) + audit-only migration 1101 + correct-person spot-check
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -312,7 +312,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 162. City of Las Vegas Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 163. Henderson Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
-| 165. Boulder City Deep-Seed | 1/3 | In Progress|  |
+| 165. Boulder City Deep-Seed | 2/3 | In Progress|  |
 | 166. CCSD Board of Trustees Deep-Seed | 0/TBD | Not started | - |
 | 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
