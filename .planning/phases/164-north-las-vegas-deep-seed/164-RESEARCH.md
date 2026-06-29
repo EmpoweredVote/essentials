@@ -756,19 +756,19 @@ ON CONFLICT (version) DO NOTHING;
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Council-member headshot sources (Barrón, Garcia-Anderson, Black, Cherchio)**
+1. **Council-member headshot sources (Barrón, Garcia-Anderson, Black, Cherchio)** — RESOLVED: deferred to a Wave-0 operator sourcing task (Plan 164-02); per D-06 a genuine gap is documented honestly, never a hard-block.
    - What we know: official site WAF-403; Goynes-Brown has a confirmed Wikimedia public-domain photo; the 4 council members do not (Wikimedia search returned no usable files).
    - What's unclear: whether Ballotpedia, campaign sites, or news media serve clean portrait-style headshots without overlays.
    - Recommendation: Wave-0 operator task — visit each Ballotpedia page (`Isaac_E._Barron`, `Ruth_Garcia-Anderson`, `Richard_Cherchio`), Scott Black's mayoral campaign site, and recent LVRJ/Nevada Current/8NewsNow article thumbnails. Treat a genuine gap as documented, not a blocker. Scott Black (active mayoral candidate) is most likely to have a fresh campaign portrait.
 
-2. **Migration number at execution**
+2. **Migration number at execution** — RESOLVED: 1093 confirmed (on-disk MAX 1092); Plan 164-01 Task 1 re-probes immediately before writing the structural migration.
    - What we know: on-disk MAX = 1092 on 2026-06-28; next = 1093.
    - What's unclear: whether more migrations land before NLV execution (Phase 149 already drifted +2 past Henderson's note).
    - Recommendation: Wave-0 re-run `ls .../migrations | grep -oE '^[0-9]+' | sort -n | tail -1` immediately before writing the structural migration. Number from there.
 
-3. **NLV full_name accent handling**
+3. **NLV full_name accent handling** — RESOLVED: store the accented official form ("Isaac E. Barrón"); unicode normalization handles accent-insensitive search. Locked in Plan 164-01 / PATTERNS.
    - What we know: official records and the GISMO layer use "Isaac E. Barrón" (accented).
    - What's unclear: operator preference for the stored display form.
    - Recommendation: store the accented official form; the project's unicode normalization handles accent-insensitive search. Be internally consistent across full_name/first_name/last_name.
