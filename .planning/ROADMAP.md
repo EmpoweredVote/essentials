@@ -63,6 +63,7 @@ this milestone seeds + headshots legislators only.
 - [x] **Phase 165: Boulder City Deep-Seed** - Mayor + City Council (completed 2026-06-29)
 - [x] **Phase 166: CCSD Board of Trustees Deep-Seed** - 5th-largest US school district, elected board
  (completed 2026-06-29)
+
 - [ ] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed
 - [ ] **Phase 168: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone
 
@@ -281,6 +282,7 @@ this milestone seeds + headshots legislators only.
 **Wave 3** *(blocked on Wave 2 completion)*
 
 - [x] 166-03-PLAN.md — evidence-only stances one-at-a-time for all 11 (education cluster: CCSDPD/SRO, vouchers, curriculum/DEI/trans-athletes, funding/growth) + per-trustee audit-only migrations 1109-1119 + full 10-check E2E verification (appointed four nonvoting → statement-only, many honest blanks)
+
 **UI hint**: yes
 
 ### Phase 167: NV 2026 Elections & Discovery
@@ -293,12 +295,19 @@ this milestone seeds + headshots legislators only.
   1. NV 2026 election + race rows seeded — Governor, all 42 Assembly seats, the ~10 Senate seats up, and 4 US House races; NV's two US Senators correctly absent (not up in 2026).
   2. A NV address on `/elections` returns the correct 2026 races for that jurisdiction.
   3. `discovery_jurisdictions` rows for NV are present with `cron_active=true`; a test discovery run completes against an official NV source.
-
-**Plans**: 3 plans
+**Plans**: 3 plans
+**Wave 1**
 
 - [ ] 167-01-PLAN.md — Seed the NV 2026 Statewide General election row (migration 1111) + smoke harness
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 167-02-PLAN.md — Seed 63 NV 2026 race rows (6 exec + 11 Senate + 42 Assembly + 4 US House; migration 1112) with a Wave-0 geo_id/office pre-check
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 167-03-PLAN.md — Seed the NV discovery_jurisdictions row (migration 1113) + execute one real discovery test run
+
 **UI hint**: yes
 
 ### Phase 168: Nevada Playbook Retrospective & Close
