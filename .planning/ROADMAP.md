@@ -242,7 +242,8 @@ this milestone seeds + headshots legislators only.
   2. All seated officials render with 600×750 headshots (genuine gaps documented).
   3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
   4. Boulder City surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
-**Plans**: 3 plans
+
+**Plans**: 3 plans
 **Wave 1**
 
 - [x] 165-01-PLAN.md — Wave-0 probes + roster checkpoint, structural migration 1100 (standalone gov + chamber + 1 LOCAL_EXEC Mayor + 1 shared LOCAL at-large council district on geo_id 3206500, no wards), coverage.js surfacing
@@ -267,7 +268,18 @@ this milestone seeds + headshots legislators only.
   3. Evidence-only compass stances render on trustee profiles — 100% cited, honest blanks, no default values.
   4. CCSD surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 3 plans
+**Wave 1**
+
+- [ ] 166-01-PLAN.md — Wave-0 probes + loader dry-run + 11-member roster checkpoint, NEW G5420 TIGER UNSD loader (load-ccsd-school-boundary.ts, GEOID 3200060) run before structural migration 1107 (standalone gov + Board of School Trustees chamber + 1 shared SCHOOL district on geo_id 3200060 + 11 offices: 7 elected A–G + 4 appointed by jurisdiction), smoke-test extension + coverage.js surfacing
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 166-02-PLAN.md — 600x750 headshots for the 11 trustees (ccsd.net + BoardDocs WAF-403 → per-trustee fallback chain) + audit-only migration 1108 + correct-person spot-check; appointed-trustee gaps documented
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 166-03-PLAN.md — evidence-only stances one-at-a-time for all 11 (education cluster: CCSDPD/SRO, vouchers, curriculum/DEI/trans-athletes, funding/growth) + per-trustee audit-only migrations 1109-1119 + full 10-check E2E verification (appointed four nonvoting → statement-only, many honest blanks)
 **UI hint**: yes
 
 ### Phase 167: NV 2026 Elections & Discovery
@@ -313,7 +325,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 163. Henderson Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
 | 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
-| 166. CCSD Board of Trustees Deep-Seed | 0/TBD | Not started | - |
+| 166. CCSD Board of Trustees Deep-Seed | 0/3 | Not started | - |
 | 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 
