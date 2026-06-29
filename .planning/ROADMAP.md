@@ -64,7 +64,7 @@ this milestone seeds + headshots legislators only.
 - [x] **Phase 166: CCSD Board of Trustees Deep-Seed** - 5th-largest US school district, elected board
  (completed 2026-06-29)
 
-- [ ] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed
+- [x] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed (completed 2026-06-29)
 - [ ] **Phase 168: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone
 
 ## Phase Details
@@ -306,7 +306,7 @@ this milestone seeds + headshots legislators only.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 167-03-PLAN.md — Seed the NV discovery_jurisdictions row (migration 1113) + execute one real discovery test run
+- [x] 167-03-PLAN.md — Seed the NV discovery_jurisdictions row (migration 1113) + execute one real discovery test run
 
 **UI hint**: yes
 
@@ -340,7 +340,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
 | 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
-| 167. NV 2026 Elections & Discovery | 2/3 | In Progress|  |
+| 167. NV 2026 Elections & Discovery | 3/3 | Complete   | 2026-06-29 |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 
 ## Coverage
