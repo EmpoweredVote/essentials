@@ -571,9 +571,11 @@ The no-gambling charter is a constitutional feature of Boulder City, not an acti
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Mayor Pro Tem title display — "Council Member" vs "Mayor Pro Tem"**
+> Both items below are Claude's Discretion per D-04a (no user decision required) and were resolved by the planner: chamber name = "Boulder City City Council"; Jorgensen title = "Council Member".
+
+1. **Mayor Pro Tem title display — "Council Member" vs "Mayor Pro Tem"** (RESOLVED → "Council Member")
    - What we know: Jorgensen holds the Mayor Pro Tem designation; Boulder City has no separately-elected MPT seat.
    - What's unclear: Whether the planner wants `title='Council Member'` or `title='Mayor Pro Tem'` for display purposes in the app.
    - Recommendation: Seed as `title='Council Member'` (at-large title, no confusion with a separately-elected position). The Mayor Pro Tem role is internal council designation. This is Claude's Discretion per D-04a.
@@ -736,9 +738,9 @@ All external dependencies are the same as Phases 161–164. No new dependencies.
 | Stance evidence depth | MEDIUM | Search results confirm topic areas; per-member vote citations require agent research |
 | external_id block | HIGH | CONTEXT.md confirmed free; Wave-0 re-probes before write |
 
-### Open Questions
-- Chamber name: "Boulder City City Council" vs "Boulder City Council" — Claude's Discretion per D-04a; recommend "Boulder City City Council" to match official naming convention.
-- Mayor Pro Tem title in UI: seed Jorgensen as "Council Member" (recommended) vs "Mayor Pro Tem".
+### Open Questions (RESOLVED)
+- Chamber name: "Boulder City City Council" vs "Boulder City Council" — Claude's Discretion per D-04a; RESOLVED → "Boulder City City Council" (matches official naming convention).
+- Mayor Pro Tem title in UI: RESOLVED → seed Jorgensen as "Council Member" (at-large title; Mayor Pro Tem is an internal council designation).
 
 ### Ready for Planning
 Research complete. Planner can now create PLAN.md files. No blocking unknowns remain.

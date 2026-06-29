@@ -242,11 +242,17 @@ this milestone seeds + headshots legislators only.
   2. All seated officials render with 600×750 headshots (genuine gaps documented).
   3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
   4. Boulder City surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
-
-**Plans**: 3 plans
+**Plans**: 3 plans
+**Wave 1**
 
 - [ ] 165-01-PLAN.md — Wave-0 probes + roster checkpoint, structural migration 1100 (standalone gov + chamber + 1 LOCAL_EXEC Mayor + 1 shared LOCAL at-large council district on geo_id 3206500, no wards), coverage.js surfacing
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 165-02-PLAN.md — 600x750 headshots for all 5 (flybouldercity.com, no WAF) + audit-only migration 1101 + correct-person spot-check
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 165-03-PLAN.md — evidence-only stances one-at-a-time for all 5 (CGO/data-center/solar/camping-ban emphasis) + per-official audit-only migrations 1102-1106 + 8-check E2E verification
 
 ### Phase 166: CCSD Board of Trustees Deep-Seed
