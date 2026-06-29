@@ -265,17 +265,17 @@ this milestone seeds + headshots legislators only.
 
   1. A Clark County address returns the correct CCSD trustee (board-district geofences loaded via the G5420 UNSD pattern if board is district-elected; at-large handled otherwise).
   2. The elected board roster is seeded with correct office titles and all trustees render with 600×750 headshots (genuine gaps documented).
-  3. Evidence-only compass stances render on trustee profiles — 100% cited, honest blanks, no default values.
+  3. Evidence-only compass stances render on trustee profiles — 100% cited, honest blanks, no default values. **[DEFERRED 2026-06-29 — operator decision: the current civic compass is dominated by state/federal topics a school-board trustee has no cited record on; defer until education-native compass topics exist. See 166-03-SUMMARY.md.]**
   4. CCSD surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: 3 plans
+**Plans**: 3 plans (01 ✓ structural+geofence+surfacing, 02 ✓ headshots 7/11, 03 DEFERRED — stances)
 **Wave 1**
 
-- [ ] 166-01-PLAN.md — Wave-0 probes + loader dry-run + 11-member roster checkpoint, NEW G5420 TIGER UNSD loader (load-ccsd-school-boundary.ts, GEOID 3200060) run before structural migration 1107 (standalone gov + Board of School Trustees chamber + 1 shared SCHOOL district on geo_id 3200060 + 11 offices: 7 elected A–G + 4 appointed by jurisdiction), smoke-test extension + coverage.js surfacing
+- [x] 166-01-PLAN.md — Wave-0 probes + loader dry-run + 11-member roster checkpoint, NEW G5420 TIGER UNSD loader (load-ccsd-school-boundary.ts, GEOID 3200060) run before structural migration 1107 (standalone gov + Board of School Trustees chamber + 1 shared SCHOOL district on geo_id 3200060 + 11 offices: 7 elected A–G + 4 appointed by jurisdiction), smoke-test extension + coverage.js surfacing
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 166-02-PLAN.md — 600x750 headshots for the 11 trustees (ccsd.net + BoardDocs WAF-403 → per-trustee fallback chain) + audit-only migration 1108 + correct-person spot-check; appointed-trustee gaps documented
+- [x] 166-02-PLAN.md — 600x750 headshots for the 11 trustees (ccsd.net + BoardDocs WAF-403 → per-trustee fallback chain) + audit-only migration 1108 + correct-person spot-check; appointed-trustee gaps documented
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -325,7 +325,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 163. Henderson Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
 | 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
-| 166. CCSD Board of Trustees Deep-Seed | 0/3 | Not started | - |
+| 166. CCSD Board of Trustees Deep-Seed | 2/3 | In Progress|  |
 | 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 

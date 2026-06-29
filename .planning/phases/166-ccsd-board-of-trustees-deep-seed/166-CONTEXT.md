@@ -121,7 +121,8 @@ This phase **carries forward the Boulder City (165) / North Las Vegas (164) deep
 ## Deferred Ideas
 
 - **Per-trustee sub-district (A–G) geofence routing** — sourcing the 7 trustee-electoral-district polygons (CCSD/Clark County GIS) + a custom MTFCC to route each address to its ONE elected trustee. Deferred to a future precision phase if the polygons prove sourceable; the 4 appointed seats have no sub-district regardless.
-- **Education-native compass topics** — the live compass lacks education-specific spokes (teacher pay/contracts, curriculum standards, school-safety as its own topic). A compass-design concern (see `project_local_compass_questions`), not this phase.
+- **ALL CCSD trustee stances** — DEFERRED 2026-06-29 (operator decision during execution). The current civic compass is dominated by state/federal topics a school-board trustee has no cited record on; applying it would render a near-empty compass. Plan 03 was not executed (no stance research, no migrations 1109–1119). Revisit when education-native compass topics exist, or apply a curated education subset later. See 166-03-SUMMARY.md.
+- **Education-native compass topics** — the live compass lacks education-specific spokes (teacher pay/contracts, curriculum standards, school-safety as its own topic). A compass-design concern (see `project_local_compass_questions`), not this phase. (This is the precondition for the deferred stance work above.)
 - **CCSD Superintendent + non-elected/administrative offices** — out of scope (appointed executive, not a board seat).
 - **Other NV school districts** (Washoe, rural counties) — future NV waves.
 
