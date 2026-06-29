@@ -245,7 +245,7 @@ this milestone seeds + headshots legislators only.
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 165-01-PLAN.md — Wave-0 probes + roster checkpoint, structural migration 1100 (standalone gov + chamber + 1 LOCAL_EXEC Mayor + 1 shared LOCAL at-large council district on geo_id 3206500, no wards), coverage.js surfacing
+- [x] 165-01-PLAN.md — Wave-0 probes + roster checkpoint, structural migration 1100 (standalone gov + chamber + 1 LOCAL_EXEC Mayor + 1 shared LOCAL at-large council district on geo_id 3206500, no wards), coverage.js surfacing
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -312,7 +312,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 162. City of Las Vegas Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 163. Henderson Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
-| 165. Boulder City Deep-Seed | 0/TBD | Not started | - |
+| 165. Boulder City Deep-Seed | 1/3 | In Progress|  |
 | 166. CCSD Board of Trustees Deep-Seed | 0/TBD | Not started | - |
 | 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
