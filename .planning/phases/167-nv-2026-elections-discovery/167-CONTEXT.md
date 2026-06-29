@@ -69,13 +69,36 @@ and arm the candidate-discovery pipeline against an official NV source.
 - **D-06:** **3-plan shape:** (01) elections row → (02) races rows → (03) discovery + test run.
   Races resolve their election FK via subquery on the general-election name + `state='NV'`.
 - **D-07:** **Race rows anchor on the district/office, not the incumbent.** Open seats (incumbent
-  termed out / not running) still get a row keyed to `office_id`. `ON CONFLICT (election_id,
-  position_name) WHERE primary_party IS NULL DO NOTHING` idempotency (VA 324 convention).
-- **D-08:** **Migration mechanics:** files in `C:/EV-Accounts/backend/migrations/`; each migration
-  idempotent (`ON CONFLICT DO NOTHING`) + `DO $$` post-verify `RAISE EXCEPTION` block + ledger
-  `INSERT INTO supabase_migrations.schema_migrations (version)`; paired `_apply-migration-NNN.ts`
-  smoke-test script. **Next migration counter = 1109** (per project memory). tsx invoked from
-  `C:/EV-Accounts/backend` via `node node_modules/tsx/dist/cli.mjs` (no PATH/.bin).
+  termed out / not running) still get a row keyed to `office_id`. Idempotency via **`NOT EXISTS`
+  guards** on `(election_id, office_id)` — there is **no DB unique constraint**, so do NOT use
+  `ON CONFLICT` (the VA 324 `ON CONFLICT` claim is stale; superseded by D-09).
+- **D-08:** **Migration mechanics:** files in `C:/EV-Accounts/backend/migrations/`; idempotent via
+  `NOT EXISTS` guards + `BEGIN;/COMMIT;` transaction; paired `_apply-migration-NNN.ts` smoke-test
+  script. **Next migration counter = 1111** (verified live 2026-06-29: 1109 + 1110 are taken by the
+  PARALLEL v2.20 milestone — TX/NY 2026 US House races/candidates; do NOT collide). tsx invoked from
+  `C:/EV-Accounts/backend` via `node node_modules/tsx/dist/cli.mjs` (no PATH/.bin). NOTE: recent 2026
+  election migrations (1109) do NOT write a `schema_migrations` ledger row — on-disk counter is
+  authoritative; researcher to confirm whether to ledger or not.
+
+### Live schema reconciliation (verified 2026-06-29 — supersedes stale VA/MD specifics)
+- **D-09:** The **current** canonical prior-art is migration **`1109_seed_tx_ny_2026_house_elections_races.sql`**
+  (authored today), NOT VA 322/324/325. Verified live facts the planner MUST follow:
+  - **`essentials.elections`** columns: `id, name, election_date (date), election_type,
+    jurisdiction_level (NOT NULL), state (char, nullable), description`. Seed **one** row named
+    **`NV 2026 Statewide General`** (CA/TX/NY/OR naming convention — NOT "2026 Nevada General
+    Election"), `election_type='general'`, `jurisdiction_level='state'`, `election_date='2026-11-03'`,
+    `state='NV'`. No NV election row exists yet (confirmed).
+  - **`essentials.races`** columns: `id, election_id (NOT NULL), office_id (nullable),
+    position_name (NOT NULL), primary_party (nullable), seats (NOT NULL int), description`. **No
+    `geo_id` column** — resolve `office_id` via the incumbent office on `districts.geo_id`.
+    `primary_party` stays **NULL** (antipartisan — D-05 invariant). `seats` defaults to 1 per race.
+  - **Office availability confirmed live:** NV has **6 STATE_EXEC** (Gov + Lt Gov + AG + SoS +
+    Treasurer + Controller), **4 NATIONAL_LOWER** (US House), **42 STATE_LOWER** (Assembly), **21
+    STATE_UPPER** (Senate) offices — every race FK target already exists. 0 NV 2026 races exist yet.
+  - **Mixed-casing trap:** `essentials.districts.state` contains BOTH `'nv'` and `'NV'` — resolve
+    offices with `ILIKE 'nv'` (or handle both), never an exact-case `=`.
+  - **`discovery_jurisdictions`** columns confirmed: `jurisdiction_geoid, jurisdiction_name, state,
+    election_date, source_url, allowed_domains` — **no `cron_active` column** (reconfirms D-05).
 
 ### Claude's Discretion
 - Exact zero-padding/position_name strings for state-legislative races (follow MD `280` legislative
@@ -94,7 +117,12 @@ and arm the candidate-discovery pipeline against an official NV source.
 - `.planning/ROADMAP.md` §"Phase 167" — goal + 3 success criteria.
 - `.planning/REQUIREMENTS.md` → **NV-ELEC-01** — the binding requirement.
 
-### Direct prior-art pattern (the template to mirror)
+### CURRENT canonical prior-art (verified 2026-06-29 — mirror THIS for schema specifics; supersedes VA/MD)
+- `C:/EV-Accounts/backend/migrations/1109_seed_tx_ny_2026_house_elections_races.sql` — **most recent** 2026 election+races migration; authoritative for elections/races schema, `jurisdiction_level`, `NOT EXISTS` guards, `BEGIN/COMMIT`, antipartisan NULL `primary_party`, office-via-`districts.geo_id` linkage, "{ST} 2026 Statewide General" naming. **Read this FIRST.**
+- `C:/EV-Accounts/backend/migrations/1110_*.sql` — TX general candidates (race_candidates wiring) — reference for how candidates attach AFTER races (out of scope here, but shows the downstream shape).
+- `.planning/phases/148-field-resolution-stance-gap-diagnostic/148-FIELD-TABLE.md` — field-resolution table pattern used by the v2.20 effort (per-district decided-field list); useful model for the NV Senate-seats-up list.
+
+### Older prior-art (VA/MD — pattern/shape only; schema details now stale, see D-09)
 - `.planning/phases/105-va-2026-elections-discovery/105-01-SUMMARY.md` — elections-row migration (322 pattern).
 - `.planning/phases/105-va-2026-elections-discovery/105-02-SUMMARY.md` — federal race-row migration (324 pattern; office_id literals after live resolution).
 - `.planning/phases/105-va-2026-elections-discovery/105-03-SUMMARY.md` — discovery_jurisdictions migration (325 pattern; D-03 no-cron_active).
