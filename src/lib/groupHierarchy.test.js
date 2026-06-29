@@ -289,3 +289,66 @@ describe('Rotational Mayor / Mayor Pro Tem ordering and labeling', () => {
   });
 
 });
+
+describe('Letter-district ordering (Clark County Commission A–G)', () => {
+
+  // Clark County Board of Commissioners: 7 members on ONE shared COUNTY district
+  // (same district_id, district_label "Clark County"); the seat letter lives only
+  // in office_title "Commissioner (District A..G)". They must sort A,B,C,…,G — NOT
+  // alphabetically by last name. Raw input is deliberately in name-alphabetical order.
+  it('sorts commissioners by district letter A–G, not alphabetically by name', () => {
+    const cc = {
+      district_type: 'COUNTY',
+      government_name: 'Clark County, Nevada, US',
+      government_body_name: 'Board of County Commissioners',
+      chamber_name_formal: 'Board of County Commissioners',
+      chamber_name: 'Board of County Commissioners',
+      district_label: 'Clark County',
+      district_id: 'shared-county-uuid',
+    };
+    const pols = [
+      makePol({ ...cc, office_title: 'Commissioner (District C)', last_name: 'Becker' }),
+      makePol({ ...cc, office_title: 'Commissioner (District G)', last_name: 'Gibson' }),
+      makePol({ ...cc, office_title: 'Commissioner (District F)', last_name: 'Jones' }),
+      makePol({ ...cc, office_title: 'Commissioner (District B)', last_name: 'Kirkpatrick' }),
+      makePol({ ...cc, office_title: 'Commissioner (District D)', last_name: 'McCurdy II' }),
+      makePol({ ...cc, office_title: 'Commissioner (District A)', last_name: 'Naft' }),
+      makePol({ ...cc, office_title: 'Commissioner (District E)', last_name: 'Segerblom' }),
+    ];
+
+    const hierarchy = groupIntoHierarchy(pols);
+    const localTier = hierarchy.find(t => t.tier === 'Local');
+    const body = localTier.bodies[0];
+    const group = body.subgroups[0];
+
+    expect(group.pols.map(p => p.last_name)).toEqual([
+      'Naft',        // A
+      'Kirkpatrick', // B
+      'Becker',      // C
+      'McCurdy II',  // D
+      'Segerblom',   // E
+      'Jones',       // F
+      'Gibson',      // G
+    ]);
+  });
+
+  // Numbered districts must still sort numerically (no regression).
+  it('still sorts numbered districts numerically', () => {
+    const base = {
+      district_type: 'LOCAL',
+      government_name: 'City of Example, Nevada, US',
+      government_body_name: 'Example City Council',
+      district_id: '0',
+    };
+    const pols = [
+      makePol({ ...base, office_title: 'Council Member', last_name: 'Zane', district_label: 'District 2' }),
+      makePol({ ...base, office_title: 'Council Member', last_name: 'Adams', district_label: 'District 10' }),
+      makePol({ ...base, office_title: 'Council Member', last_name: 'Brown', district_label: 'District 1' }),
+    ];
+    const hierarchy = groupIntoHierarchy(pols);
+    const group = hierarchy.find(t => t.tier === 'Local').bodies[0].subgroups[0];
+    // 1, 2, 10 (numeric — NOT lexical "1, 10, 2")
+    expect(group.pols.map(p => p.last_name)).toEqual(['Brown', 'Zane', 'Adams']);
+  });
+
+});
