@@ -298,7 +298,7 @@ this milestone seeds + headshots legislators only.
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 167-01-PLAN.md — Seed the NV 2026 Statewide General election row (migration 1111) + smoke harness
+- [x] 167-01-PLAN.md — Seed the NV 2026 Statewide General election row (migration 1111) + smoke harness
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -340,7 +340,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
 | 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
-| 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
+| 167. NV 2026 Elections & Discovery | 1/3 | In Progress|  |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 
 ## Coverage
