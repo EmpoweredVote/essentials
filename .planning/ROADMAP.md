@@ -302,7 +302,7 @@ this milestone seeds + headshots legislators only.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 167-02-PLAN.md — Seed 63 NV 2026 race rows (6 exec + 11 Senate + 42 Assembly + 4 US House; migration 1112) with a Wave-0 geo_id/office pre-check
+- [x] 167-02-PLAN.md — Seed 63 NV 2026 race rows (6 exec + 11 Senate + 42 Assembly + 4 US House; migration 1112) with a Wave-0 geo_id/office pre-check
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -340,7 +340,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
 | 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
-| 167. NV 2026 Elections & Discovery | 1/3 | In Progress|  |
+| 167. NV 2026 Elections & Discovery | 2/3 | In Progress|  |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 
 ## Coverage
