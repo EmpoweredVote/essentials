@@ -60,7 +60,7 @@ this milestone seeds + headshots legislators only.
 - [x] **Phase 162: City of Las Vegas Deep-Seed** - Mayor + City Council (completed 2026-06-28)
 - [x] **Phase 163: Henderson Deep-Seed** - NV's 2nd-largest city (completed 2026-06-28)
 - [x] **Phase 164: North Las Vegas Deep-Seed** - Mayor + City Council
-- [ ] **Phase 165: Boulder City Deep-Seed** - Mayor + City Council
+- [x] **Phase 165: Boulder City Deep-Seed** - Mayor + City Council (completed 2026-06-29)
 - [ ] **Phase 166: CCSD Board of Trustees Deep-Seed** - 5th-largest US school district, elected board
 - [ ] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed
 - [ ] **Phase 168: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone
@@ -253,7 +253,7 @@ this milestone seeds + headshots legislators only.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 165-03-PLAN.md — evidence-only stances one-at-a-time for all 5 (CGO/data-center/solar/camping-ban emphasis) + per-official audit-only migrations 1102-1106 + 8-check E2E verification
+- [x] 165-03-PLAN.md — evidence-only stances one-at-a-time for all 5 (CGO/data-center/solar/camping-ban emphasis) + per-official audit-only migrations 1102-1106 + 8-check E2E verification
 
 ### Phase 166: CCSD Board of Trustees Deep-Seed
 
@@ -312,7 +312,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 162. City of Las Vegas Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 163. Henderson Deep-Seed | 3/3 | Complete   | 2026-06-28 |
 | 164. North Las Vegas Deep-Seed | 3/3 | Complete | 2026-06-29 |
-| 165. Boulder City Deep-Seed | 2/3 | In Progress|  |
+| 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 166. CCSD Board of Trustees Deep-Seed | 0/TBD | Not started | - |
 | 167. NV 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |

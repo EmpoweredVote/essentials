@@ -60,7 +60,7 @@ Per city/government deliverable (the Tier 1 unit):
 - [ ] **CLARK-03:** Henderson deep-seeded (NV's 2nd-largest city) — government + roster +
       headshots + evidence-only stances.
 - [ ] **CLARK-04:** North Las Vegas deep-seeded — government + roster + headshots + evidence-only stances.
-- [ ] **CLARK-05:** Boulder City deep-seeded — government + roster + headshots + evidence-only stances.
+- [x] **CLARK-05:** Boulder City deep-seeded — government + roster + headshots + evidence-only stances.
 
 ### Schools
 
@@ -106,7 +106,7 @@ Per city/government deliverable (the Tier 1 unit):
 | CLARK-02 | Phase 162 | Pending |
 | CLARK-03 | Phase 163 | Pending |
 | CLARK-04 | Phase 164 | Pending |
-| CLARK-05 | Phase 165 | Pending |
+| CLARK-05 | Phase 165 | Complete |
 | CCSD-01 | Phase 166 | Pending |
 | NV-ELEC-01 | Phase 167 | Pending |
 | NV-RETRO-01 | Phase 168 | Pending |
