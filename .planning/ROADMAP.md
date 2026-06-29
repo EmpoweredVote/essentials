@@ -218,7 +218,18 @@ this milestone seeds + headshots legislators only.
   3. Evidence-only compass stances render on profiles — 100% cited, honest blanks, no default values.
   4. North Las Vegas surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 3 plans
+**Wave 1**
+
+- [ ] 164-01-PLAN.md — Structural seed: Wave-0 BLOCKING probes + roster checkpoint → X0017 ward-boundary loader (Clark County GISMO PLACE=80, D-01b fallback) → structural migration 1093 (standalone govt + North Las Vegas City Council + Mayor at-large + 4 Arabic-numeral ward offices) → coverage.js NV-block edit
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 164-02-PLAN.md — Headshots: per-member fallback-chain sourcing (cityofnorthlasvegas.com is WAF-403; Goynes-Brown via Wikimedia public-domain) → 600×750 crop+resize pipeline → audit-only migration 1094 → Storage mirror, gaps documented
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 164-03-PLAN.md — Stances + E2E: all-topics stance research one-at-a-time per official → audit-only per-official migrations 1095-1099 → 9-check E2E verification + human-verify checkpoint
 
 ### Phase 165: Boulder City Deep-Seed
 
