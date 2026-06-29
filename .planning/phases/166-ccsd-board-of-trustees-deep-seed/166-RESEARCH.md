@@ -535,7 +535,7 @@ CCSD is the 5th-largest US district (~300K students) — far richer board-level 
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED — all three delegated to Wave-0 gates / answered in plans)
 
 1. **Does any Chrome-UA + Referer combination bypass the ccsd.net WAF for trustee portraits?**
    - What we know: ccsd.net/trustees and BoardDocs both 403 to a bare Chrome UA.
