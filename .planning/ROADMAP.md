@@ -326,7 +326,7 @@ this milestone seeds + headshots legislators only.
 **Plans**: 2 plans
 
 **Wave 1**
-- [ ] 168-01-PLAN.md — Wave-0 live-resolve 10 race_ids + incumbent/cross-office politician_ids, then author+apply migration 1114 seeding race_candidates for all 10 NV 2026 races (+ 8-assertion smoke harness)
+- [x] 168-01-PLAN.md — Wave-0 live-resolve 10 race_ids + incumbent/cross-office politician_ids, then author+apply migration 1114 seeding race_candidates for all 10 NV 2026 races (+ 8-assertion smoke harness)
 
 **Wave 2** *(blocked on Plan 01)*
 - [ ] 168-02-PLAN.md — Fetch challenger headshots one-at-a-time via find-headshots (honest-skip where none) + human-verify /elections cards
@@ -365,7 +365,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 167. NV 2026 Elections & Discovery | 3/3 | Complete   | 2026-06-29 |
-| 168. NV 2026 Candidate Population — Statewide & US House | 0/TBD | Not started | - |
+| 168. NV 2026 Candidate Population — Statewide & US House | 1/2 | In Progress|  |
 | 169. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 
 ## Coverage

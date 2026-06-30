@@ -115,5 +115,5 @@ Per city/government deliverable (the Tier 1 unit):
 | CLARK-05 | Phase 165 | Complete |
 | CCSD-01 | Phase 166 | Pending |
 | NV-ELEC-01 | Phase 167 | Complete |
-| NV-CAND-01 | Phase 168 | Pending |
+| NV-CAND-01 | Phase 168 | Complete |
 | NV-RETRO-01 | Phase 169 | Pending |
