@@ -2,24 +2,25 @@
 gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: milestone
-status: executing
-last_updated: "2026-06-30T01:16:52.771Z"
+status: ready_to_plan
+last_updated: 2026-06-30T02:08:20.976Z
 last_activity: 2026-06-30
 progress:
   total_phases: 12
   completed_phases: 11
   total_plans: 33
-  completed_plans: 32
+  completed_plans: 255
   percent: 92
+stopped_at: Phase 168 complete (2/2) — ready to discuss Phase 169
 ---
 
 # State
 
 ## Current Position
 
-Phase: 168 (nv-2026-candidate-population-statewide-us-house) — EXECUTING
-Plan: 2 of 2
-Status: Ready to execute
+Phase: 169
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-30
 
 ### Phase 163 outcome (City of Henderson, geo_id 3231900) — COMPLETE 2026-06-28
@@ -301,7 +302,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 168 — nv-2026-candidate-population-statewide-us-house
+**Current focus:** Phase 169 — dark mode design system foundation
 
 ## v15.0 Roadmap Summary
 
