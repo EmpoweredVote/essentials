@@ -11,17 +11,19 @@ progress:
   total_plans: 33
   completed_plans: 255
   percent: 92
-stopped_at: Phase 168 complete (2/2) — ready to discuss Phase 169
+stopped_at: Phase 168 complete (2/2) — ready to discuss Phase 173 (NV Retro; renumbered from 169 — 169–172 occupied by parked v19.0 detour)
 ---
 
 # State
 
 ## Current Position
 
-Phase: 169
+Phase: 173
 Plan: Not started
 Status: Ready to plan
 Last activity: 2026-06-30
+
+> ⚠ Phase 169 (Nevada Playbook Retrospective & Close) was renumbered to **173** on 2026-06-30. Phase numbers 169–172 are occupied by the parked v19.0 frontend detour (completed dark-mode / section-banner / banner-pipeline / elections-parity dirs under `.planning/phases/169…172-*`). The renumber avoids a directory collision; numeric execution order is unaffected.
 
 ### Phase 163 outcome (City of Henderson, geo_id 3231900) — COMPLETE 2026-06-28
 
@@ -51,7 +53,7 @@ counter authoritative; stance migs apply audit-only). Legislature stances DEFERR
 - **166 CCSD Board of Trustees Deep-Seed** — CCSD-01 (5th-largest US district; G5420 if district-elected)
 - **167 NV 2026 Elections & Discovery** — NV-ELEC-01 (Governor + 42 Assembly + ~10 Senate + 4 US House; US Senators NOT up 2026)
 - **168 NV 2026 Candidate Population — Statewide & US House** — NV-CAND-01 (curated general nominees / June 9 primary winners for 6 execs + 4 US House; race_candidates bound; legislative deferred)
-- **169 Nevada Playbook Retrospective & Close** — NV-RETRO-01 (surface NV in coverage.js, GOTCHAs, audit, close)
+- **173 Nevada Playbook Retrospective & Close** — NV-RETRO-01 (surface NV in coverage.js, GOTCHAs, audit, close) [renumbered from 169 on 2026-06-30; 169–172 = parked v19.0 detour dirs]
 
 Deep-seed unit (161–166): government + chamber → roster → 600×750 headshots → evidence-only
 stances (one agent at a time, 100% cited, no defaults, honest blanks) → surface in `src/lib/coverage.js`.
