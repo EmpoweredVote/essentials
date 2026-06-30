@@ -20,8 +20,9 @@ stopped_at: Phase 168 complete (2/2) — ready to discuss Phase 173 (NV Retro; r
 
 Phase: 173
 Plan: Not started
-Status: Ready to plan
+Status: Context gathered — ready to plan
 Last activity: 2026-06-30
+Resume file: .planning/phases/173-nevada-playbook-retrospective-close/173-CONTEXT.md
 
 > ⚠ Phase 169 (Nevada Playbook Retrospective & Close) was renumbered to **173** on 2026-06-30. Phase numbers 169–172 are occupied by the parked v19.0 frontend detour (completed dark-mode / section-banner / banner-pipeline / elections-parity dirs under `.planning/phases/169…172-*`). The renumber avoids a directory collision; numeric execution order is unaffected.
 
