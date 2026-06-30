@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-06-30T07:05:30.343Z"
+last_updated: "2026-06-30T07:12:12.884Z"
 last_activity: 2026-06-30
 progress:
   total_phases: 12
   completed_phases: 11
   total_plans: 34
-  completed_plans: 32
+  completed_plans: 33
   percent: 92
 ---
 
@@ -18,12 +18,18 @@ progress:
 ## Current Position
 
 Phase: 173 (nevada-playbook-retrospective-close) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-30
 Resume file: None
 
 > ⚠ Phase 169 (Nevada Playbook Retrospective & Close) was renumbered to **173** on 2026-06-30. Phase numbers 169–172 are occupied by the parked v19.0 frontend detour (completed dark-mode / section-banner / banner-pipeline / elections-parity dirs under `.planning/phases/169…172-*`). The renumber avoids a directory collision; numeric execution order is unaffected.
+
+### Phase 173 Plan 02 outcome (NV chip reconciliation + playbook update) — COMPLETE 2026-06-30
+
+- `src/lib/coverage.js`: removed `hasContext` key from CCSD entry (browseGeoId 3200060) — plain chip, 0 stances by design. Other 5 NV jurisdictions keep `hasContext:true` (LV 36/Henderson 28/N.LV 18/Boulder City 19/Clark County 32 stance rows). Node verify exits 0.
+- `LOCATION-ONBOARDING.md`: 6 new Cities Onboarded rows + 3 NV GOTCHAs (standalone-county, X0015/X0016/X0017 MTFCCs, lowercase nv casing) + `## Nevada Quick Reference` block (ext_id schemes, geo_ids, WAF map, browse params, migration counter convention). LV ext range -3205001..-3205007 correctly distinct from Henderson -3206001..-3206005.
+- Commits: 06a9db3 (coverage.js), bd57975 (LOCATION-ONBOARDING.md).
 
 ### Phase 163 outcome (City of Henderson, geo_id 3231900) — COMPLETE 2026-06-28
 
@@ -397,7 +403,7 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-30T07:05:07.159Z
+Last session: 2026-06-30T07:12:12.865Z
 Stopped at: Phase 168 context gathered
 Resume file: None
 
