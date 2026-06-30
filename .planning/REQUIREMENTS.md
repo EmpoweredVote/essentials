@@ -116,4 +116,4 @@ Per city/government deliverable (the Tier 1 unit):
 | CCSD-01 | Phase 166 | Pending |
 | NV-ELEC-01 | Phase 167 | Complete |
 | NV-CAND-01 | Phase 168 | Complete |
-| NV-RETRO-01 | Phase 173 | Pending |
+| NV-RETRO-01 | Phase 173 | Complete |

@@ -2,27 +2,26 @@
 gsd_state_version: 1.0
 milestone: v18.0
 milestone_name: milestone
-status: ready_to_plan
-last_updated: 2026-06-30T02:08:20.976Z
+status: executing
+last_updated: "2026-06-30T07:05:30.343Z"
 last_activity: 2026-06-30
 progress:
   total_phases: 12
   completed_phases: 11
-  total_plans: 33
-  completed_plans: 255
+  total_plans: 34
+  completed_plans: 32
   percent: 92
-stopped_at: Phase 168 complete (2/2) — ready to discuss Phase 173 (NV Retro; renumbered from 169 — 169–172 occupied by parked v19.0 detour)
 ---
 
 # State
 
 ## Current Position
 
-Phase: 173
-Plan: Not started
-Status: Context gathered — ready to plan
+Phase: 173 (nevada-playbook-retrospective-close) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
 Last activity: 2026-06-30
-Resume file: .planning/phases/173-nevada-playbook-retrospective-close/173-CONTEXT.md
+Resume file: None
 
 > ⚠ Phase 169 (Nevada Playbook Retrospective & Close) was renumbered to **173** on 2026-06-30. Phase numbers 169–172 are occupied by the parked v19.0 frontend detour (completed dark-mode / section-banner / banner-pipeline / elections-parity dirs under `.planning/phases/169…172-*`). The renumber avoids a directory collision; numeric execution order is unaffected.
 
@@ -305,7 +304,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 169 — dark mode design system foundation
+**Current focus:** Phase 173 — nevada-playbook-retrospective-close
 
 ## v15.0 Roadmap Summary
 
@@ -398,7 +397,7 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-30T01:16:52.752Z
+Last session: 2026-06-30T07:05:07.159Z
 Stopped at: Phase 168 context gathered
 Resume file: None
 
@@ -459,6 +458,7 @@ Resume file: None
 | Phase 127 P02 | ~30m | 3 tasks | 3 files (716-718 stances SQLs); 26 stance rows for Mirisch(11)+Nazarian(7)+Wells(8); 0 unpaired, 0 uncited; all 5 BH officials complete |
 | Phase 154 P01 | 25min | 2 tasks | 1 files |
 | Phase 154-burbank-deep-seed P02 | 20min | 2 tasks | 1 files |
+| Phase 173 P01 | 15 | 2 tasks | 1 files |
 
 ## Decisions
 
@@ -521,3 +521,5 @@ Resume file: None
 - [Phase 130-01]: Phase 130 Culver City Stances CLOSED — 5 council members (Puza 6, Fish 6, McMorrin 6, O'Brien 6, Vera 5); 29 total stance rows (migrations 729-733); 0 unpaired, 0 uncited, 0 rows on inactive topics. Rotational mayor (Alhambra pattern) — no Mayor office, all "Council Member", none excluded. FULL ideological spread captured with evidence: progressive bloc (McMorrin all 1.0-2.0 incl. PD-defunding 1.0 + rent-control 1.0; Puza + Fish transportation 1.0, civil-rights/housing 1.0) vs moderate O'Brien (PD-staffing 4.0, R1-preservation 4.0, MOVE-rollback 3.0) vs conservative Vera (rent-regulation 5.0 anti-RC/Measure-B, PD 4.0, ended Incremental Infill 4.0). MOVE Culver City 2023 bus/bike-lane rollback (3-2) is the defining distinguishing vote. Bryan Fish public name "Bubba Fish". Executed continuous sequential flow via Supabase MCP execute_sql. CULVERCITY-01 FULLY CLOSED; next migration=734
 - [Phase 129-01]: Phase 129 Compton Stances CLOSED — 5 officials (Sharif Mayor=7, Duhart D1=3, Spicer D2=5, Bowers D3=4, Darden D4=1); 20 total stance rows (migrations 724-728); 0 unpaired, 0 uncited, 0 rows on inactive topics. NO excluded officials (Compton has no separately-seeded City Clerk/Treasurer in DB — distinct from Carson/BH). Compass diversity on public-safety-approach: Spicer 1.0 (explicit "almost nothing to do with law enforcement" outlier) → Sharif 2.0 (community prevention/Violence Reduction Network) → Bowers 3.0 (40-yr emergency-response career, enforcement + commissions, genuine center). Darden thin record (1 stance, HOPICS homeless-services engagement) — most coverage biographical (former Water Dept GM); blank spokes honest per evidence-only rule. Reconciliation note: schema_migrations MAX stays 718 because stance migrations apply via raw SQL and never register there — on-disk file counter (now 728) is authoritative. Executed in one continuous sequential flow via Supabase MCP execute_sql; applied one official at a time. COMPTON-01 FULLY CLOSED; next migration=729
 - [Phase 128-03]: Phase 128 Carson Stances CLOSED — Q1=5 rows (all 5 officials with stances), Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics, Q5=0 (Bradshaw+Cooper exclusion confirmed). Per-official counts: Davis-Holmes(Mayor, directly elected)=9, Hilton(D1)=5, Dear(D2)=8, Hicks(D3)=6, Rojas(D4)=6; total 34 stance rows (migrations 719-723); Carson 2017 immigration-protective resolution established local-immigration=2.0 pattern for all 5 officials; Dear richest D1-D4 record (growth-and-development+taxes); Hicks/Rojas local-environment=2.0 from AQMD advocacy near industrial zones; CARSON-01 FULLY CLOSED; next migration=724
+- [Phase ?]: CCSD chip determination
+- [Phase ?]: LV parked phase structure verified
