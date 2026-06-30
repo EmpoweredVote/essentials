@@ -715,27 +715,33 @@ ON CONFLICT (politician_id, topic_id) DO NOTHING;
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> All four questions resolved during planning (Phase 175 plans, 2026-06-30). Each is either handled by an idempotent guard in migration 1120 or decided in the plan. None blocks execution.
 
 1. **Does essentials.districts already have a COUNTY row for geo_id=41067?**
    - What we know: Multnomah (244) created its COUNTY district explicitly; OR TIGER loader loaded geofence_boundaries for all counties. Essentials.districts may or may not have been populated from the TIGER load.
    - What's unclear: Whether the OR TIGER phase also populated essentials.districts rows, or only essentials.geofence_boundaries.
    - Recommendation: Wave-0 probe `SELECT id, district_type, state FROM essentials.districts WHERE geo_id='41067'`. If row exists with correct state='or', the WHERE NOT EXISTS guard handles it. If state='OR' (wrong casing), it must be fixed.
+   - **RESOLVED:** Plan 175-01 Wave-0 probe 2 checks this; the COUNTY-district INSERT uses a `WHERE NOT EXISTS` guard so pre-existence is a no-op. Wrong casing ('OR') is FLAGGED in Wave-0.
 
 2. **Does the FeatureServer return a single polygon per district, or multi-polygon (rings)?**
    - What we know: One feature was returned in the sample query (may be due to response pagination or the query only returning one feature). The full query for all 4 was confirmed to list 4 features.
    - What's unclear: Whether any district has enclave/exclave polygons requiring `ST_Multi` wrapping (Henderson Ward III had 4 rings).
    - Recommendation: Run loader with `--dry-run` first and inspect `rings` count per district. The `ST_Multi` wrap in the insert is safe even for single-polygon cases.
+   - **RESOLVED:** Plan 175-01 Task 1 wraps geometry in `ST_Multi(...)` (safe for single- or multi-polygon) and runs `--dry-run` first; ST_MakeValid fallback handles multi-ring cases.
 
 3. **Label collision in coverage.js — use COVERAGE_COUNTIES or COVERAGE_STATES areas?**
    - What we know: UT already has `'Washington County'` in COVERAGE_COUNTIES. OR cities go in COVERAGE_STATES areas block.
    - What's unclear: User preference — should Washington County (OR) be in COVERAGE_COUNTIES with label `'Washington County, OR'`, or in the Oregon block of COVERAGE_STATES with `browseGovernmentList`?
    - Recommendation: COVERAGE_COUNTIES with `'Washington County, OR'` label is simplest and consistent with how Clark County (NV) and Multnomah County (OR) are handled. Planner should confirm.
+   - **RESOLVED:** Planner chose COVERAGE_COUNTIES with label `'Washington County, OR'` (Plan 175-03 Task 2) — disambiguates from the UT `'Washington County'` entry (geo_id 49053).
 
 4. **Does the FeatureServer require authentication for geometry access?**
    - What we know: The attribute query returned results; the geometry query returned 1 feature.
    - What's unclear: Whether full geometry for all 4 districts is publicly accessible or gated.
    - Recommendation: Run `--dry-run` loader first; if 401/403, check gispub.co.washington.or.us for anonymous access terms. The WashCo GIS page states data is publicly available.
+   - **RESOLVED:** FeatureServer confirmed publicly accessible (live fetch 2026-06-30, RESEARCH Sources); Plan 175-01 Task 1 runs `--dry-run` first to confirm at execution.
 
 ---
 
