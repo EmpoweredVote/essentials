@@ -373,7 +373,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 167. NV 2026 Elections & Discovery | 3/3 | Complete   | 2026-06-29 |
 | 168. NV 2026 Candidate Population — Statewide & US House | 2/2 | Complete    | 2026-06-30 |
-| 173. Nevada Playbook Retrospective & Close | 3/3 | Complete   | 2026-06-30 |
+| 173. Nevada Playbook Retrospective & Close | 3/3 | Complete    | 2026-06-30 |
 
 ## Coverage
 
