@@ -459,7 +459,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - Integer phases (174, 175, …): Planned milestone work
 - Decimal phases (e.g. 175.1): Urgent insertions (marked INSERTED)
 
-- [ ] **Phase 174: West-Metro School-District Geofences** - Load G5420 geofence boundaries for 5 west-metro school districts (TIGER UNSD pattern); prerequisite for school-board phases
+- [x] **Phase 174: West-Metro School-District Geofences** - Load G5420 geofence boundaries for 5 west-metro school districts (TIGER UNSD pattern); prerequisite for school-board phases (completed 2026-06-30)
 - [ ] **Phase 175: Washington County Commission Deep-Seed** - Chair + commissioners, standalone county government (geo_id 41067), with stances
 - [ ] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large)
 - [ ] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city)
@@ -490,7 +490,7 @@ SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, and Sherwood SD 88J — so th
   4. No other geofence tiers are modified (city/county/CD/SLDU/SLDL tiers are complete statewide — untouched).
 **Plans**: 1 plan
 
-- [ ] 174-01-PLAN.md — Clone TIGER UNSD loader (5 GEOIDs, source tiger_unsd_or_2024_westmetro), run live, verify 5-district routing + section-split gates
+- [x] 174-01-PLAN.md — Clone TIGER UNSD loader (5 GEOIDs, source tiger_unsd_or_2024_westmetro), run live, verify 5-district routing + section-split gates
 
 ### Phase 175: Washington County Commission Deep-Seed
 
@@ -686,7 +686,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 174. West-Metro School-District Geofences | 0/TBD | Not started | - |
+| 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
 | 175. Washington County Commission Deep-Seed | 0/TBD | Not started | - |
 | 176. City of Beaverton Deep-Seed | 0/TBD | Not started | - |
 | 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
