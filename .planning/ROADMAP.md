@@ -351,7 +351,7 @@ this milestone seeds + headshots legislators only.
 
 - [x] 173-01-PLAN.md — Write DB-verified v18.0-MILESTONE-AUDIT.md (per-jurisdiction counts + verdicts + 4 known-issues)
 - [x] 173-02-PLAN.md — Reconcile NV hasContext chips in coverage.js (CCSD plain) + LOCATION-ONBOARDING.md rows + GOTCHAs + Nevada Quick Reference
-- [ ] 173-03-PLAN.md — MILESTONES.md v18.0 Shipped entry + STATE.md/PROJECT.md/ROADMAP.md status flip
+- [x] 173-03-PLAN.md — MILESTONES.md v18.0 Shipped entry + STATE.md/PROJECT.md/ROADMAP.md status flip
 
 **UI hint**: yes
 
