@@ -108,4 +108,19 @@ Per city/government deliverable (the Tier 1 unit):
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (to be filled by roadmap) | | |
+| WM-GEO-01 | Phase 174 | Pending |
+| WASH-01 | Phase 175 | Pending |
+| WASH-02 | Phase 176 | Pending |
+| WASH-03 | Phase 177 | Pending |
+| WASH-04 | Phase 178 | Pending |
+| WASH-05 | Phase 179 | Pending |
+| WASH-06 | Phase 180 | Pending |
+| WASH-07 | Phase 181 | Pending |
+| WASH-08 | Phase 182 | Pending |
+| WSCH-01 | Phase 183 | Pending |
+| WSCH-02 | Phase 183 | Pending |
+| WSCH-03 | Phase 184 | Pending |
+| WSCH-04 | Phase 184 | Pending |
+| WSCH-05 | Phase 184 | Pending |
+| WM-ELEC-01 | Phase 185 | Pending |
+| WM-RETRO-01 | Phase 186 | Pending |

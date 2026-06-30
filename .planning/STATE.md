@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
-status: planning
+status: roadmap_created
 last_updated: "2026-06-30T15:22:07.451Z"
 last_activity: 2026-06-30
 progress:
-  total_phases: 0
+  total_phases: 13
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,10 +17,34 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 174 — West-Metro School-District Geofences (next to plan)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-06-30 — Milestone v20.0 started
+Status: Roadmap created; ready for Phase 174 planning
+Last activity: 2026-06-30 — v20.0 roadmap created (13 phases, 16/16 requirements mapped)
+
+### v20.0 roadmap (created 2026-06-30)
+
+Brownfield local-layer deep-seed on Oregon's complete state foundation (v8.0–v10.0). 13 phases
+(174–186), continuing numbering from v18.0 (closed at 173; 169–172 occupied by parked v19.0 detour).
+16/16 requirements mapped 1:1 — no orphans. Next migration: **1115** (on-disk counter authoritative).
+
+- **174 West-Metro School-District Geofences** — WM-GEO-01 (G5420 UNSD loader; 5 districts; prerequisite for school-board phases 183-184)
+- **175 Washington County Commission Deep-Seed** — WASH-01 (Chair + commissioners; standalone county govt geo_id 41067; stances)
+- **176 City of Beaverton Deep-Seed** — WASH-02 (flagship; verify ward vs at-large at plan time; custom X00xx ward geofences only if by-ward)
+- **177 City of Hillsboro Deep-Seed** — WASH-03 (county seat / largest WashCo city)
+- **178 City of Tigard Deep-Seed** — WASH-04
+- **179 City of Tualatin Deep-Seed** — WASH-05
+- **180 City of Forest Grove Deep-Seed** — WASH-06
+- **181 City of Sherwood Deep-Seed** — WASH-07
+- **182 City of Cornelius Deep-Seed** — WASH-08
+- **183 School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J** — WSCH-01 + WSCH-02 (roster + headshots; 0 stances by design; depends on Phase 174)
+- **184 School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J** — WSCH-03 + WSCH-04 + WSCH-05 (roster + headshots; 0 stances by design; depends on Phase 174)
+- **185 WashCo 2026 Elections & Discovery** — WM-ELEC-01 (race rows + discovery_jurisdictions + cron armed; depends on phases 175-182)
+- **186 West-Metro Playbook Retrospective & Close** — WM-RETRO-01 (coverage.js chips reconciled, WashCo GOTCHAs, DB-verified audit, milestone close)
+
+Deep-seed unit (175–182): government + chamber → roster → 600x750 headshots → evidence-only
+stances (one agent at a time, 100% cited, no defaults, honest blanks) → surface in src/lib/coverage.js.
+School-board unit (183–184): government + chamber → roster → 600x750 headshots → 0 stances by design → plain chip.
 
 ### Phase 173 Plan 02 outcome (NV chip reconciliation + playbook update) — COMPLETE 2026-06-30
 

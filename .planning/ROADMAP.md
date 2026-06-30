@@ -296,7 +296,7 @@ this milestone seeds + headshots legislators only.
   1. NV 2026 election + race rows seeded — Governor, all 42 Assembly seats, the ~10 Senate seats up, and 4 US House races; NV's two US Senators correctly absent (not up in 2026).
   2. A NV address on `/elections` returns the correct 2026 races for that jurisdiction.
   3. `discovery_jurisdictions` rows for NV are present with `cron_active=true`; a test discovery run completes against an official NV source.
-**Plans**: 3 plans
+**Plans**: 3 plans
 **Wave 1**
 
 - [x] 167-01-PLAN.md — Seed the NV 2026 Statewide General election row (migration 1111) + smoke harness
@@ -395,3 +395,326 @@ All 14 v18.0 requirements mapped to exactly one phase. No orphans, no duplicates
 | NV-ELEC-01 | 167 |
 | NV-CAND-01 | 168 |
 | NV-RETRO-01 | 173 |
+
+---
+
+# Roadmap: v20.0 Beaverton & Washington County, OR
+
+## Overview
+
+Deep-seed the **Washington County / west-metro Portland** local layer onto Oregon's already-complete
+state foundation (v8.0–v10.0). This is a **brownfield local-layer deep-seed** — no state or federal
+work required, only the west-metro school-district G5420 geofences are added. The journey follows the
+proven Clark County metro cadence from v18.0: one government per deep-seed phase (gov + roster +
+headshots + evidence-only stances), school boards batched into two phases (roster + headshots, 0
+stances by design), followed by elections + discovery, and a playbook retrospective + milestone close.
+Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
+
+## Milestone-wide conventions (carry into every phase)
+
+- **Brownfield local-layer** — OR state/federal/legislative foundation is complete (v8.0–v10.0).
+  No geofence, state, or federal work. City/county geofences already exist statewide.
+  Only net-new geofence work is the west-metro school-district G5420 load (Phase 174).
+
+- **districts.state casing** — OR has an inconsistency: `'or'` (lowercase, TIGER-loaded, used for
+  city/county/SLDU/SLDL district joins) vs `'OR'` (uppercase, manually inserted, used for
+  STATE_EXEC/NATIONAL tiers). **Always verify casing with a spot-check before WHERE filters.**
+  Wrong case = silent exclusion (no error, just missing data).
+
+- **Per-government build order:** `governments` row (via `WHERE NOT EXISTS`) + chamber(s) → roster
+  (offices, form of government verified against official city site, district vs at-large structure +
+  seat count) → 600×750 headshots (4:5 Lanczos q90, `press_use`, `type='default'`) → evidence-only
+  compass stances → spot-check render.
+
+- **Stances:** evidence-only, **one research agent at a time** (rate-limit rule), all live compass
+  topics, 100% citation, **no default values**, honest blank spokes. School boards excluded from
+  compass by design (CCSD precedent). Stance migrations apply via raw SQL, do **not** register in
+  `supabase_migrations.schema_migrations` — **on-disk counter is authoritative**.
+  Structural migrations register normally.
+
+- **School boards:** roster + headshots only. 0 compass stances by design. Board-district structure
+  verified per district (some districts have sub-zones, some are at-large). G5420 geofences must
+  exist before seeding (Phase 174 prerequisite).
+
+- **Surfacing target** is `src/lib/coverage.js` — Oregon block in COVERAGE_STATES + Washington
+  County in COVERAGE_COUNTIES. City carries `hasContext: true` chip once ≥1 stance row exists.
+  School boards carry plain chip (0 stances by design).
+
+- **Schema:** `essentials.governments` (INSERT via `WHERE NOT EXISTS`), `essentials.chambers`
+  (`official_count` lives here; `slug` is generated — never INSERT it), `essentials.districts`
+  (no `name_formal` column — use `label`; `government_id` is NULL across OR rows, join via geo_id),
+  `inform.politician_answers` (stances).
+
+- **gsd-executor has no Supabase MCP** — DB-verify steps run inline within the phase.
+
+- **Next migration at milestone start: 1115** (on-disk counter authoritative; v18.0 closed at 1115).
+
+## Phases
+
+**Phase Numbering:**
+
+- Integer phases (174, 175, …): Planned milestone work
+- Decimal phases (e.g. 175.1): Urgent insertions (marked INSERTED)
+
+- [ ] **Phase 174: West-Metro School-District Geofences** - Load G5420 geofence boundaries for 5 west-metro school districts (TIGER UNSD pattern); prerequisite for school-board phases
+- [ ] **Phase 175: Washington County Commission Deep-Seed** - Chair + commissioners, standalone county government (geo_id 41067), with stances
+- [ ] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large)
+- [ ] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city)
+- [ ] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council
+- [ ] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council
+- [ ] **Phase 180: City of Forest Grove Deep-Seed** - Mayor + Council
+- [ ] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council
+- [ ] **Phase 182: City of Cornelius Deep-Seed** - Mayor + Council
+- [ ] **Phase 183: School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J** - Roster + headshots for the two largest west-metro school boards; 0 stances by design
+- [ ] **Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J** - Roster + headshots for three remaining school boards; 0 stances by design
+- [ ] **Phase 185: WashCo 2026 Elections & Discovery** - 2026 local elections + discovery pipeline armed for all new west-metro jurisdictions
+- [ ] **Phase 186: West-Metro Playbook Retrospective & Close** - Surface jurisdictions, Washington County GOTCHAs, DB-verified milestone audit, close
+
+## Phase Details
+
+### Phase 174: West-Metro School-District Geofences
+
+**Goal**: Any west-metro address routes to its correct school district — Beaverton SD 48J, Hillsboro
+SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, and Sherwood SD 88J — so that school-board phases
+(183–184) can link officials to the correct G5420 boundaries.
+**Depends on**: Nothing (first phase of milestone; v18.0 closed at Phase 173)
+**Requirements**: WM-GEO-01
+**Success Criteria** (what must be TRUE):
+
+  1. G5420 geofence boundaries exist for all 5 target west-metro school districts; a Beaverton address returns Beaverton SD 48J and a Hillsboro address returns Hillsboro SD 1J.
+  2. The TIGER UNSD loader ran against the correct OR UNSD zip file; loader GEOID filter is confirmed against the 5 target district GEOIDs (not the 6 Multnomah districts already loaded in v10.0).
+  3. Section-split scan across the 5 new district geo_ids returns 0 rows (no mis-parented boundaries).
+  4. No other geofence tiers are modified (city/county/CD/SLDU/SLDL tiers are complete statewide — untouched).
+
+**Plans**: TBD
+
+### Phase 175: Washington County Commission Deep-Seed
+
+**Goal**: A Washington County resident (unincorporated area) looks up who represents them and gets the
+correct County Commissioner with evidence-only stances on their profile. Washington County is a
+standalone county government (not nested under State of Oregon), like Clark County in v18.0.
+**Depends on**: Existing OR TIGER county geofences (geo_id 41067, already present from v8.0)
+**Requirements**: WASH-01
+**Success Criteria** (what must be TRUE):
+
+  1. An unincorporated Washington County address returns the correct County Commissioner (no empty LOCAL section); the standalone county government row exists (geo_id 41067, not nested under State of Oregon).
+  2. The full Board of Commissioners roster (Chair + commissioners) is seeded with correct seat count and office structure; all seated officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on commissioner profiles — 100% cited, honest blank spokes, zero default values.
+  4. Washington County surfaces with the purple `hasContext` chip in `src/lib/coverage.js` (COVERAGE_COUNTIES block).
+
+**Plans**: TBD
+
+### Phase 176: City of Beaverton Deep-Seed
+
+**Goal**: A Beaverton resident (the flagship west-metro city) looks up who represents them and gets
+the correct Mayor + council member, with evidence-only stances on their profiles.
+**Depends on**: Existing OR TIGER city geofences (geo_id 4105350, already present from v8.0); custom
+ward geofences only if Beaverton uses ward-based elections (verified at plan time)
+**Requirements**: WASH-02
+**Success Criteria** (what must be TRUE):
+
+  1. Any Beaverton address returns the correct Mayor + council member; form of government is verified against the official Beaverton city site at plan time (at-large vs ward-elected council; if ward-based, custom X00xx ward geofences are loaded before seeding).
+  2. The full seated roster is seeded with correct office structure and seat count; all officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
+  4. Beaverton surfaces with the purple `hasContext` chip in `src/lib/coverage.js` (Oregon block).
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 177: City of Hillsboro Deep-Seed
+
+**Goal**: A Hillsboro resident (Washington County seat / largest WashCo city) looks up who represents
+them and gets the correct Mayor + council member, with evidence-only stances on their profiles.
+**Depends on**: Existing OR TIGER city geofences (geo_id 4133850, already present from v8.0)
+**Requirements**: WASH-03
+**Success Criteria** (what must be TRUE):
+
+  1. Any Hillsboro address returns the correct Mayor + council member; form of government (at-large vs ward) verified and modeled correctly.
+  2. The full seated roster is seeded with correct office structure; all officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
+  4. Hillsboro surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 178: City of Tigard Deep-Seed
+
+**Goal**: A Tigard resident looks up who represents them and gets the correct Mayor + council member,
+with evidence-only stances on their profiles.
+**Depends on**: Existing OR TIGER city geofences (geo_id 4173650, already present from v8.0)
+**Requirements**: WASH-04
+**Success Criteria** (what must be TRUE):
+
+  1. Any Tigard address returns the correct Mayor + council member; form of government verified and modeled correctly.
+  2. The full seated roster is seeded; all officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
+  4. Tigard surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 179: City of Tualatin Deep-Seed
+
+**Goal**: A Tualatin resident looks up who represents them and gets the correct Mayor + council
+member, with evidence-only stances on their profiles.
+**Depends on**: Existing OR TIGER city geofences (geo_id 4175200, already present from v8.0)
+**Requirements**: WASH-05
+**Success Criteria** (what must be TRUE):
+
+  1. Any Tualatin address returns the correct Mayor + council member; form of government verified and modeled correctly.
+  2. The full seated roster is seeded; all officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
+  4. Tualatin surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 180: City of Forest Grove Deep-Seed
+
+**Goal**: A Forest Grove resident looks up who represents them and gets the correct Mayor + council
+member, with evidence-only stances on their profiles.
+**Depends on**: Existing OR TIGER city geofences (geo_id 4126200, already present from v8.0)
+**Requirements**: WASH-06
+**Success Criteria** (what must be TRUE):
+
+  1. Any Forest Grove address returns the correct Mayor + council member; form of government verified and modeled correctly.
+  2. The full seated roster is seeded; all officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
+  4. Forest Grove surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 181: City of Sherwood Deep-Seed
+
+**Goal**: A Sherwood resident looks up who represents them and gets the correct Mayor + council
+member, with evidence-only stances on their profiles.
+**Depends on**: Existing OR TIGER city geofences (geo_id 4167450, already present from v8.0)
+**Requirements**: WASH-07
+**Success Criteria** (what must be TRUE):
+
+  1. Any Sherwood address returns the correct Mayor + council member; form of government verified and modeled correctly.
+  2. The full seated roster is seeded; all officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
+  4. Sherwood surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 182: City of Cornelius Deep-Seed
+
+**Goal**: A Cornelius resident looks up who represents them and gets the correct Mayor + council
+member, with evidence-only stances on their profiles.
+**Depends on**: Existing OR TIGER city geofences (geo_id 4115350, already present from v8.0)
+**Requirements**: WASH-08
+**Success Criteria** (what must be TRUE):
+
+  1. Any Cornelius address returns the correct Mayor + council member; form of government verified and modeled correctly.
+  2. The full seated roster is seeded; all officials render with 600×750 headshots (genuine gaps documented).
+  3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
+  4. Cornelius surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
+
+**Plans**: TBD
+
+### Phase 183: School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J
+
+**Goal**: A student or parent in the Beaverton or Hillsboro school district looks up their school
+board and gets the correct board member, each with a headshot. (0 compass stances by design —
+civic compass is not applied to school boards.)
+**Depends on**: Phase 174 (G5420 geofences must exist before seeding; school-board officials link to
+SCHOOL districts that reference these geofences)
+**Requirements**: WSCH-01, WSCH-02
+**Success Criteria** (what must be TRUE):
+
+  1. Beaverton SD 48J board roster is seeded with verified board-district structure and seat count (Beaverton SD is one of Oregon's largest — board structure verified against official district site); all board members render with 600×750 headshots (genuine gaps documented).
+  2. Hillsboro SD 1J board roster is seeded with verified structure; all board members render with 600×750 headshots (genuine gaps documented).
+  3. A Beaverton address returns the correct Beaverton SD board member; a Hillsboro address returns the correct Hillsboro SD board member.
+  4. Both school boards are listed in `src/lib/coverage.js` (plain chip — 0 stances by design is honest; no `hasContext: true`).
+
+**Plans**: TBD
+
+### Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J
+
+**Goal**: A student or parent in the Tigard-Tualatin, Forest Grove, or Sherwood school district looks
+up their school board and gets the correct board member, each with a headshot. (0 compass stances by
+design.)
+**Depends on**: Phase 174 (G5420 geofences)
+**Requirements**: WSCH-03, WSCH-04, WSCH-05
+**Success Criteria** (what must be TRUE):
+
+  1. Tigard-Tualatin SD 23J board roster seeded with verified structure; board members render with 600×750 headshots (genuine gaps documented); address routing returns the correct member.
+  2. Forest Grove SD 15 board roster seeded; headshots at 600×750 (genuine gaps documented); address routing verified.
+  3. Sherwood SD 88J board roster seeded; headshots at 600×750 (genuine gaps documented); address routing verified.
+  4. All three school boards are listed in `src/lib/coverage.js` (plain chip — 0 stances by design).
+
+**Plans**: TBD
+
+### Phase 185: WashCo 2026 Elections & Discovery
+
+**Goal**: Any west-metro user visiting `/elections` sees their 2026 local ballot, and the discovery
+pipeline automatically finds candidates from official Oregon / Washington County sources.
+**Depends on**: Phases 175–182 (government rows + offices must exist for race-to-office linkage);
+Phase 174 (school-district rows needed for school-board races if applicable)
+**Requirements**: WM-ELEC-01
+**Success Criteria** (what must be TRUE):
+
+  1. 2026 election + race rows seeded for Washington County Commission, all 7 west-metro cities (mayoral / council seats up in 2026), and 5 school boards as applicable; races link to correct office_id rows.
+  2. A west-metro address on `/elections` returns the correct 2026 races for that jurisdiction (county commissioner + city council + school board races, as applicable).
+  3. `discovery_jurisdictions` rows exist for all new west-metro jurisdictions with `cron_active=true`; a test discovery run against the Oregon SOS / Washington County elections authority completes without error.
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 186: West-Metro Playbook Retrospective & Close
+
+**Goal**: All west-metro jurisdictions are discoverable in the app, the onboarding playbook captures
+everything learned about Washington County, and the v20.0 milestone is formally closed.
+**Depends on**: Phases 174–185
+**Requirements**: WM-RETRO-01
+**Success Criteria** (what must be TRUE):
+
+  1. All covered west-metro jurisdictions are surfaced in `src/lib/coverage.js` (Oregon block in COVERAGE_STATES + Washington County in COVERAGE_COUNTIES) with honest purple/plain chips reconciled against real DB stance counts (no assumed hasContext — DB-verified at close).
+  2. `LOCATION-ONBOARDING.md` updated with Washington County GOTCHAs (OR districts.state casing, school-district G5420 loader, WashCo headshot sources, county-not-under-state pattern) + new Cities Onboarded rows for all 7 cities + Washington County + 5 school boards.
+  3. A DB-verified `v20.0-MILESTONE-AUDIT.md` is written (per-jurisdiction roster / headshot / stance counts + verdicts) and the milestone is closed in MILESTONES.md + STATE.md + PROJECT.md.
+
+**Plans**: TBD
+**UI hint**: yes
+
+## Progress
+
+**Execution Order:**
+Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 → 180 → 181 → 182 → 183 → 184 → 185 → 186
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 174. West-Metro School-District Geofences | 0/TBD | Not started | - |
+| 175. Washington County Commission Deep-Seed | 0/TBD | Not started | - |
+| 176. City of Beaverton Deep-Seed | 0/TBD | Not started | - |
+| 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
+| 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
+| 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
+| 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
+| 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
+| 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
+| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
+| 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
+| 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
+| 186. West-Metro Playbook Retrospective & Close | 0/TBD | Not started | - |
+
+## Coverage
+
+All 16 v20.0 requirements mapped to exactly one phase. No orphans, no duplicates.
+
+| Requirement | Phase |
+|-------------|-------|
+| WM-GEO-01 | 174 |
+| WASH-01 | 175 |
+| WASH-02 | 176 |
+| WASH-03 | 177 |
+| WASH-04 | 178 |
+| WASH-05 | 179 |
+| WASH-06 | 180 |
+| WASH-07 | 181 |
+| WASH-08 | 182 |
+| WSCH-01 | 183 |
+| WSCH-02 | 183 |
+| WSCH-03 | 184 |
+| WSCH-04 | 184 |
+| WSCH-05 | 184 |
+| WM-ELEC-01 | 185 |
+| WM-RETRO-01 | 186 |
