@@ -55,7 +55,7 @@ completed: 2026-06-30
 - **Duration:** ~35 min
 - **Started:** 2026-06-30T01:05:00Z
 - **Completed (Task 1):** 2026-06-30T01:40:00Z
-- **Tasks:** Task 1 complete; Task 2 pending human-verify
+- **Tasks:** Task 1 complete; Task 2 complete (human-verified 2026-06-29 — user confirmed candidates render on live /elections)
 - **Files modified:** 21 DB rows updated (10 politicians created, 10 politician_images inserted, 11 race_candidates linked)
 
 ## Accomplishments
@@ -113,7 +113,7 @@ completed: 2026-06-30
 ## Task Status
 
 - **Task 1 (headshots):** COMPLETE - 10 imaged, 2 honest-skips
-- **Task 2 (human-verify live /elections render):** PENDING - awaiting human checkpoint approval
+- **Task 2 (human-verify live /elections render):** COMPLETE - human-verified 2026-06-29 (user confirmed candidates render on live /elections: "This works"). Note: a separate pre-existing CCSD-trustee A–G sort issue was raised during this check — it is an undeployed-code/deploy gap (fix already in commit 6c85a66), NOT a Phase 168 candidate-data defect.
 
 ## Deviations from Plan
 
@@ -154,6 +154,6 @@ No new endpoints or auth surfaces. Storage writes used existing service-role key
 - [x] DB verification: 19/21 candidates have_photo=true; 2 honest-skips documented
 - [x] All 10 in-scope races have >= 2 candidates (confirmed in query output)
 - [x] No schema_migrations row added (pure data operation)
-- [ ] Task 2: human-verify live /elections render - PENDING
+- [x] Task 2: human-verify live /elections render - APPROVED 2026-06-29
 
-## Self-Check: PARTIAL - Task 1 complete, Task 2 pending human approval
+## Self-Check: PASSED - both tasks complete; live /elections render human-verified by user
