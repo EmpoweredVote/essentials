@@ -323,7 +323,14 @@ this milestone seeds + headshots legislators only.
   3. A NV address on `/elections` shows the candidates under each of those 10 races (Governor of Nevada no longer shows "No candidates have filed" when nominees exist).
   4. Each candidate is evidence-cited from an official or Ballotpedia source (`confidence='official'`).
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+**Wave 1**
+- [ ] 168-01-PLAN.md — Wave-0 live-resolve 10 race_ids + incumbent/cross-office politician_ids, then author+apply migration 1114 seeding race_candidates for all 10 NV 2026 races (+ 8-assertion smoke harness)
+
+**Wave 2** *(blocked on Plan 01)*
+- [ ] 168-02-PLAN.md — Fetch challenger headshots one-at-a-time via find-headshots (honest-skip where none) + human-verify /elections cards
+
 **Scope notes**: Legislative races (11 State Senate + 42 State Assembly) are explicitly OUT of scope here and deferred to a separate follow-up. The 32 rows in `candidate_staging` from discovery run `1e5a2041` are primary-heavy leads (0 matched a `race_id`, ~3 dupes, Governor missing) — treat as reference leads only, NOT an import source. Migration counter is at 1114.
 **UI hint**: yes
 
