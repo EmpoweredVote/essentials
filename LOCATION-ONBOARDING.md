@@ -83,6 +83,12 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Burbank | CA | 2026-06-22 | plurality | **v17.0 Wave-2 deep-seed (Phase 154).** At-large + rotational mayor (Takahashi=Mayor / Mullins=Vice Mayor; official_count=5). burbankca.gov requires **Chrome UA** (not full WAF). geo_id=0608954; 5/5 headshots; 5/5 stances; 42 stance rows |
 | Norwalk | CA | 2026-06-22 | plurality | **v17.0 Wave-2 deep-seed (Phase 155).** Rotational Mayor=Perez / VM=Rios (Ayala NOT mayor — LOCAL_EXEC mis-seed converted to At-Large). norwalkca.gov Revize **NO-WAF** but Ramirez source 404→RR-Digital + Rios `%20%20` double-space filename quirk. geo_id=0652526; 5/5 headshots; 26 stance rows |
 | Bellflower | CA | 2026-06-22 | plurality | **v17.0 Wave-2 deep-seed (Phase 156).** Single-chamber but **by-district (Ord. 1410)** + rotational mayor; Dunton LOCAL_EXEC mis-seed→D5; Santa Ines D3 created -701003 (Mayor) / Sanchez D4 (Mayor Pro Tem). NO-WAF Revize /photo_gallery/. geo_id=0604982; 5/5 headshots; **thin stances 2/5** (Santa Ines 2 + Morse 5; Dunton/Koops/Sanchez honest blanks); 7 stance rows |
+| Las Vegas | NV | 2026-06-28 | plurality | **v18.0 deep-seed (Phase 162).** By-ward (6 X0015 custom geofences); Mayor Berkley LOCAL_EXEC (directly elected); 7 officials total. ext -3205001 (Mayor Berkley) + -3205002..-3205007 (6 council). geo_id=3240000; 7/7 headshots; 6/7 stances (1 councilmember honest blank — no attributable record); 36 stance rows. Purple chip. |
+| Henderson | NV (city) | 2026-06-28 | plurality | **v18.0 deep-seed (Phase 163).** By-ward (4 X0016 custom geofences); Mayor Romero LOCAL_EXEC (directly elected); 5 officials. ext -3206001 (Mayor) + -3206002..-3206005 (wards 1-4). cityofhenderson.com = **Akamai WAF-403** — per-member fallback chain (NVBiz / campaign PNG RGBA→white composite / Ballotpedia upscale). Ward 2 geofence had 19 rings → ST_MakeValid. geo_id=3231900; 5/5 headshots; 5/5 stances; 28 stance rows. Purple chip. |
+| North Las Vegas | NV (city) | 2026-06-29 | plurality | **v18.0 deep-seed (Phase 164).** By-ward (X0017 from Clark County GISMO PLACE=80); Mayor LOCAL_EXEC; 5 officials. ext -3207xxx (Arabic ward numeral labels). cityofnorthlasvegas.com **WAF-403** → Wikimedia fallback. geo_id=3251800; 5/5 headshots; 5/5 stances; 18 stance rows. Purple chip. |
+| Boulder City | NV (city) | 2026-06-29 | plurality | **v18.0 deep-seed (Phase 165).** At-large (no wards); Mayor + 4 council, 5 officials. ext -3208xxx. flybouldercity.com = clean/NO-WAF. geo_id=3206500; 5/5 headshots; 5/5 stances; 19 stance rows. Purple chip. |
+| Clark County School District | NV (school) | 2026-06-29 | plurality | **v18.0 deep-seed (Phase 166).** G5420 school district geofence (TIGER UNSD); 7 elected trustees (A–G) + 4 appointed trustees = 11 total (official_count=11). ext -3209xxx. School-board compass **deferred by design** — 0 stances. geo_id=3200060/G5420; 7/11 headshots (4 appointed trustees no accessible portrait). Plain chip (no hasContext). |
+| Clark County | NV (county) | 2026-06-24 | plurality | **v18.0 deep-seed (Phase 161).** Standalone county government (NOT under State of NV — own governments row, geo_id=32003). Board of County Commissioners: 7 commissioners, Chair Naft title-on-seat. ext -3200301..-3200307. Single COUNTY district (state='nv' lowercase). Governs the unincorporated Strip/Paradise/Spring Valley. official_count=NULL (data-soft; roster correct at 7). clarkcountynv.gov AEM 175x175 headshots. geo_id=32003; 7/7 headshots; 7/7 stances; 32 stance rows. Purple chip. |
 
 ---
 
@@ -232,6 +238,47 @@ Check this table before starting a new city — proven patterns from prior onboa
 
 ---
 
+## Nevada Quick Reference
+
+**Read this before starting any NV city, county, or state work.** These traps are NV-specific — general playbook guidance above does not warn for them.
+
+| Trap | See Step | One-Line Summary |
+|------|----------|-----------------|
+| Custom ward MTFCCs per city | Step 3 | Las Vegas wards = X0015; Henderson wards = X0016; North Las Vegas wards = X0017 (Clark County GISMO PLACE=80); CCSD = G5420 (TIGER UNSD); the Strip is unincorporated Clark County (no city geofence) |
+| Clark County is standalone, NOT under State of NV | Step 1, Step 5 | Clark County is a **separate government row** with its own `essentials.governments` entry (geo_id=32003); it does NOT roll up under the State of Nevada government. Single COUNTY district, state='nv' lowercase. Governs the unincorporated Strip/Paradise/Spring Valley/Sunrise Manor/Enterprise. |
+| Per-city WAF map | Step 4 | **WAF-403** (need alt source): cityofhenderson.com (Akamai — per-member fallback chain); cityofnorthlasvegas.com (WAF-403 → Wikimedia fallback). **NO-WAF** (curl directly): flybouldercity.com; clarkcountynv.gov (AEM 175x175). No city website scrape confirmed for LV (gov.lasvegasnevada.gov — verify on next wave). |
+| lowercase 'nv' casing everywhere | Step 3, Step 5 | All NV district rows (SLDU/SLDL/LOCAL/COUNTY tiers) use **`state='nv'`** (lowercase). Only STATE_EXEC and NATIONAL tiers use uppercase `'NV'`. Casing mismatch = silent routing failure. |
+| Wikimedia requires descriptive bot UA | Step 4 | Wikimedia Commons headshots return HTTP 429 on a browser UA — use a descriptive bot UA (e.g., `EmpoweredVoteBot/1.0; +https://empowered.vote`). Same pattern as MA (Phase 119 Lynn Mayor confirmed). |
+| Legislature surfaces via browse_state_officials=NV | Step 3 | NV legislature (21 senators + 42 assembly) is NOT in a city-grid entry in coverage.js. It surfaces automatically via `?browse_state_officials=NV` (STATE_NAME_TO_ABBREV has `nevada: 'NV'` → auto-builds COVERAGE_BROWSE_STATES). Do NOT add a separate legislature entry to COVERAGE_STATES. |
+| School-board compass deferred by design | Step 5 | CCSD and any future NV school board: civic compass is not applied to school boards. Do NOT add compass stances; board stays listed/browsable but with no purple chip (hasContext omitted). |
+| CCSD 4 appointed trustees lack headshots | Step 4 | 7 elected A–G trustees have headshots; 4 appointed trustees have no accessible official portrait. Accept as documented gap (not a structural defect). |
+| Migration counter — stance migrations audit-only | Step 5 | NV stance migrations apply via raw `psql -f` (audit-only, unregistered) — same pattern as LA v15.0/v17.0. Do NOT register them in `supabase_migrations.schema_migrations`. The **on-disk file counter is authoritative** for "next migration". |
+
+**Nevada Key Facts:**
+- FIPS: 32 (state='32' in geofence_boundaries; districts.state='nv' for STATE/COUNTY/LOCAL/SLDU/SLDL tiers, 'NV' for STATE_EXEC/NATIONAL)
+- Custom ward geofences: Las Vegas X0015 (6 wards), Henderson X0016 (4 wards), North Las Vegas X0017 (4 wards from GISMO PLACE=80)
+- School district geofence: CCSD G5420 (TIGER UNSD), geo_id=3200060
+- **ext_id schemes:**
+  - Clark County Commission: -3200301..-3200307 (Chair Naft -3200301)
+  - Controller (constitutional officer): -3200006
+  - State Senate (SLDU): -3203001..-3203021 (21 senators)
+  - State Assembly (SLDL): -3204001..-3204042 (42 assembly members)
+  - City of Las Vegas: **-3205001..-3205007** (Mayor Berkley -3205001; 6 council -3205002..-3205007) — **DISTINCT from Henderson** (-3206xxx)
+  - City of Henderson: -3206001..-3206005 (Mayor -3206001; 4 ward council -3206002..-3206005) — **DISTINCT from Las Vegas** (-3205xxx)
+  - City of North Las Vegas: -3207xxx (Arabic ward numerals in district labels)
+  - City of Boulder City: -3208xxx (at-large, no wards)
+- **geo_ids:** Las Vegas 3240000 · Henderson 3231900 · North Las Vegas 3251800 · Boulder City 3206500 · Clark County 32003 · CCSD 3200060
+- **Browse params:**
+  - Statewide officials (legislature + execs): `?browse_state_officials=NV`
+  - City or county: `browse_government_list=<geo_id>` (e.g., `?browse_government_list=3240000`)
+  - CCSD: `?browse_geo_id=3200060&browse_mtfcc=G5420`
+- Legislature headshots: archive.leg.state.nv.us/84th2027 (us_government_work, 63/63 legislators)
+- Clark County Commission headshots: clarkcountynv.gov AEM (175x175 — upscale to 600×750)
+- Elections site: nvsos.gov (Nevada Secretary of State)
+- Next migration after v18.0 close: **1115** (on-disk counter authoritative; verify before writing migration)
+
+---
+
 ## Step 1: Government Structure Research
 
 Before touching the database, confirm how the city government is structured.
@@ -260,6 +307,12 @@ Before touching the database, confirm how the city government is structured.
 > [GOTCHA] **[STATE-SPECIFIC: MA] MA Tier 3 council structure assumptions were wrong for every city — verify from official charter/site before writing any migration:** Every v14.0 Tier 3 city had a wrong council-structure assumption in the planning documents. Fall River was assumed to have 3 at-large + 6 ward councilors — it actually has 9 all-at-large (no ward seats at all). Medford was assumed to have a mixed structure — it is 7 all-at-large. Waltham was assumed to have 9 councilors — it actually has 6 at-large + 9 ward = 15 total. An agent seeding the wrong structure creates extra office rows, wrong titles, and a mismatch between the displayed council and the actual elected body. Always verify council structure from the city's official website or city charter before writing any migration — not from Wikipedia, Ballotpedia, or planning estimates. Phase 121 confirmed all three mismatches.
 
 > [GOTCHA] **[STATE-SPECIFIC: MA] Somerville School Committee has TWO ex-officio members (Mayor AND Council President) — not just Mayor:** Most MA cities with a Mayor ex-officio on the School Committee have exactly one ex-officio member. Somerville has two: Mayor Jake Wilson AND Council President Lance Davis. This requires a different seeding pattern than Newton/Lynn/Medford (which have Mayor-only ex-officio). The external_id back-fill range for elected SC members must exclude BOTH ex-officio external_ids to avoid overwriting their canonical office_ids. An agent copying the Newton/Lynn one-ex-officio SC pattern for Somerville would overwrite the Council President's city council office_id with the SC office_id. Always check the city's school committee enabling legislation or official site to confirm the number of ex-officio members. Phase 118-02 confirmed.
+
+> [GOTCHA] **[STATE-SPECIFIC: NV] Clark County is a STANDALONE county government — NOT under the State of Nevada government row:** When seeding Clark County, do NOT link its government row to the State of Nevada. Clark County is a fully independent `essentials.governments` entry with its own geo_id (32003) — the same standalone-county pattern as any other county government that browses independently. Its Board of County Commissioners attaches to a single COUNTY district (districts.state='nv' lowercase). All officials in the unincorporated Strip, Paradise, Spring Valley, Sunrise Manor, and Enterprise fall under Clark County, not any incorporated city. Phase 161 confirmed.
+
+> [GOTCHA] **[STATE-SPECIFIC: NV] Each NV city uses a DISTINCT custom ward MTFCC — Las Vegas X0015, Henderson X0016, North Las Vegas X0017 — do NOT mix them up:** Nevada's Clark County cities each have their own custom ward-geofence MTFCC that must be kept distinct. Las Vegas uses X0015 (6 wards), Henderson uses X0016 (4 wards), North Las Vegas uses X0017 (4 wards, sourced from Clark County GISMO PLACE=80). Reusing one city's MTFCC for another city's wards would merge their routing — a Henderson ward address would return Las Vegas council members. Always assert the correct MTFCC in the post-load smoke test. Clark County School District uses G5420 (TIGER UNSD, the standard school-district MTFCC). The unincorporated Strip has NO city-ward geofence — it routes through the Clark County (32003) G4020 boundary. Phases 162–164 confirmed these MTFCCs.
+
+> [GOTCHA] **[STATE-SPECIFIC: NV] NV district casing is lowercase 'nv' everywhere EXCEPT STATE_EXEC and NATIONAL tiers:** All NV district rows for LOCAL, COUNTY, STATE_UPPER, and STATE_LOWER tiers use `districts.state='nv'` (lowercase). STATE_EXEC offices (Governor, Lt. Gov, AG, etc.) and NATIONAL offices (US Senators, US House members) use `state='NV'` (uppercase). This matches the casing rule established in OR/ME/UT and is set by the TIGER loader's `abbrev`/`abbrevUpper` variables. After seeding any new NV tier, spot-check: `SELECT DISTINCT state FROM essentials.districts WHERE state ILIKE 'nv'` — any uppercase STATE/COUNTY/SLDU/SLDL row is a bug. Phase 158 (TIGER loader) + Phase 160 (legislature) confirmed. Violating this causes silent routing failures (all district lookups return empty).
 
 ### Schema decisions to record before migrating
 
