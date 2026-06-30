@@ -296,6 +296,7 @@ this milestone seeds + headshots legislators only.
   1. NV 2026 election + race rows seeded — Governor, all 42 Assembly seats, the ~10 Senate seats up, and 4 US House races; NV's two US Senators correctly absent (not up in 2026).
   2. A NV address on `/elections` returns the correct 2026 races for that jurisdiction.
   3. `discovery_jurisdictions` rows for NV are present with `cron_active=true`; a test discovery run completes against an official NV source.
+
 **Plans**: 3 plans
 **Wave 1**
 
@@ -326,9 +327,11 @@ this milestone seeds + headshots legislators only.
 **Plans**: 2 plans
 
 **Wave 1**
+
 - [x] 168-01-PLAN.md — Wave-0 live-resolve 10 race_ids + incumbent/cross-office politician_ids, then author+apply migration 1114 seeding race_candidates for all 10 NV 2026 races (+ 8-assertion smoke harness)
 
 **Wave 2** *(blocked on Plan 01)*
+
 - [x] 168-02-PLAN.md — Fetch challenger headshots one-at-a-time via find-headshots (honest-skip where none) + human-verify /elections cards
 
 **Scope notes**: Legislative races (11 State Senate + 42 State Assembly) are explicitly OUT of scope here and deferred to a separate follow-up. The 32 rows in `candidate_staging` from discovery run `1e5a2041` are primary-heavy leads (0 matched a `race_id`, ~3 dupes, Governor missing) — treat as reference leads only, NOT an import source. Migration counter is at 1114.
@@ -485,8 +488,8 @@ SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, and Sherwood SD 88J — so th
   2. The TIGER UNSD loader ran against the correct OR UNSD zip file; loader GEOID filter is confirmed against the 5 target district GEOIDs (not the 6 Multnomah districts already loaded in v10.0).
   3. Section-split scan across the 5 new district geo_ids returns 0 rows (no mis-parented boundaries).
   4. No other geofence tiers are modified (city/county/CD/SLDU/SLDL tiers are complete statewide — untouched).
+**Plans**: 1 plan
 
-**Plans**: 1 plan
 - [ ] 174-01-PLAN.md — Clone TIGER UNSD loader (5 GEOIDs, source tiger_unsd_or_2024_westmetro), run live, verify 5-district routing + section-split gates
 
 ### Phase 175: Washington County Commission Deep-Seed
