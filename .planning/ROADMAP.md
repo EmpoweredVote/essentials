@@ -486,7 +486,8 @@ SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, and Sherwood SD 88J — so th
   3. Section-split scan across the 5 new district geo_ids returns 0 rows (no mis-parented boundaries).
   4. No other geofence tiers are modified (city/county/CD/SLDU/SLDL tiers are complete statewide — untouched).
 
-**Plans**: TBD
+**Plans**: 1 plan
+- [ ] 174-01-PLAN.md — Clone TIGER UNSD loader (5 GEOIDs, source tiger_unsd_or_2024_westmetro), run live, verify 5-district routing + section-split gates
 
 ### Phase 175: Washington County Commission Deep-Seed
 
