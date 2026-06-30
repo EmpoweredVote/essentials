@@ -33,9 +33,9 @@ Last activity: 2026-06-29
 
 ### v18.0 roadmap (created 2026-06-23)
 
-Nevada new-state milestone, 11 phases (158–168), continuing numbering from v17.0 (closed at 157).
-State foundation first, then Clark County metro deep-seeds, then schools, elections, close.
-13/13 requirements mapped 1:1 — no orphans, no duplicates. Next migration: **1053** (on-disk
+Nevada new-state milestone, 12 phases (158–169), continuing numbering from v17.0 (closed at 157).
+State foundation first, then Clark County metro deep-seeds, then schools, elections, candidates, close.
+14/14 requirements mapped 1:1 — no orphans, no duplicates. [Phase 168 candidate-population inserted 2026-06-29; retrospective moved 168→169.] Next migration: **1053** (on-disk
 counter authoritative; stance migs apply audit-only). Legislature stances DEFERRED to a follow-up.
 [Phase 159 corrected the stale "1048" → DB integer-ledger MAX was 1049; phase 159 consumed 1050 (structural, registered) + 1051/1052 (audit-only, unregistered); next is 1053.]
 
@@ -49,7 +49,8 @@ counter authoritative; stance migs apply audit-only). Legislature stances DEFERR
 - **165 Boulder City Deep-Seed** — CLARK-05
 - **166 CCSD Board of Trustees Deep-Seed** — CCSD-01 (5th-largest US district; G5420 if district-elected)
 - **167 NV 2026 Elections & Discovery** — NV-ELEC-01 (Governor + 42 Assembly + ~10 Senate + 4 US House; US Senators NOT up 2026)
-- **168 Nevada Playbook Retrospective & Close** — NV-RETRO-01 (surface NV in coverage.js, GOTCHAs, audit, close)
+- **168 NV 2026 Candidate Population — Statewide & US House** — NV-CAND-01 (curated general nominees / June 9 primary winners for 6 execs + 4 US House; race_candidates bound; legislative deferred)
+- **169 Nevada Playbook Retrospective & Close** — NV-RETRO-01 (surface NV in coverage.js, GOTCHAs, audit, close)
 
 Deep-seed unit (161–166): government + chamber → roster → 600×750 headshots → evidence-only
 stances (one agent at a time, 100% cited, no defaults, honest blanks) → surface in `src/lib/coverage.js`.

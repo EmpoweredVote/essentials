@@ -65,7 +65,8 @@ this milestone seeds + headshots legislators only.
  (completed 2026-06-29)
 
 - [x] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed (completed 2026-06-29)
-- [ ] **Phase 168: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone
+- [ ] **Phase 168: NV 2026 Candidate Population — Statewide & US House** - Curated general-election nominees (primary winners) for 6 statewide execs + 4 US House, bound to race rows
+- [ ] **Phase 169: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone
 
 ## Phase Details
 
@@ -310,10 +311,26 @@ this milestone seeds + headshots legislators only.
 
 **UI hint**: yes
 
-### Phase 168: Nevada Playbook Retrospective & Close
+### Phase 168: NV 2026 Candidate Population — Statewide & US House
+
+**Goal**: NV users visiting `/elections` see the actual Nov 3, 2026 general-election candidates (nominees) for the 6 statewide constitutional offices and the 4 US House districts — so the Governor race (and the rest) is no longer blank. Candidates are the decided June 9, 2026 primary winners, curated/verified, and bound to the race rows seeded in Phase 167.
+**Depends on**: Phase 167 (race rows must exist)
+**Requirements**: NV-CAND-01
+**Success Criteria** (what must be TRUE):
+
+  1. `essentials.race_candidates` rows exist for all 6 statewide-exec races + all 4 US House races, each bound to the correct `race_id` (Phase 167 races) and to a politician record.
+  2. Only general-election nominees (primary winners) are included — no losing primary entrants, no duplicates; the field is verified against the official NV / Ballotpedia general-election result.
+  3. A NV address on `/elections` shows the candidates under each of those 10 races (Governor of Nevada no longer shows "No candidates have filed" when nominees exist).
+  4. Each candidate is evidence-cited from an official or Ballotpedia source (`confidence='official'`).
+
+**Plans**: TBD
+**Scope notes**: Legislative races (11 State Senate + 42 State Assembly) are explicitly OUT of scope here and deferred to a separate follow-up. The 32 rows in `candidate_staging` from discovery run `1e5a2041` are primary-heavy leads (0 matched a `race_id`, ~3 dupes, Governor missing) — treat as reference leads only, NOT an import source. Migration counter is at 1114.
+**UI hint**: yes
+
+### Phase 169: Nevada Playbook Retrospective & Close
 
 **Goal**: Nevada coverage is discoverable in the app and the onboarding playbook captures everything learned, so the next Nevada wave (or any new state) is faster.
-**Depends on**: Phases 158–167
+**Depends on**: Phases 158–168
 **Requirements**: NV-RETRO-01
 **Success Criteria** (what must be TRUE):
 
@@ -327,7 +344,7 @@ this milestone seeds + headshots legislators only.
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 → 164 → 165 → 166 → 167 → 168
+Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 → 164 → 165 → 166 → 167 → 168 → 169
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -341,11 +358,12 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 165. Boulder City Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 167. NV 2026 Elections & Discovery | 3/3 | Complete   | 2026-06-29 |
-| 168. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
+| 168. NV 2026 Candidate Population — Statewide & US House | 0/TBD | Not started | - |
+| 169. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
 
 ## Coverage
 
-All 13 v18.0 requirements mapped to exactly one phase. No orphans, no duplicates.
+All 14 v18.0 requirements mapped to exactly one phase. No orphans, no duplicates.
 
 | Requirement | Phase |
 |-------------|-------|
@@ -361,4 +379,5 @@ All 13 v18.0 requirements mapped to exactly one phase. No orphans, no duplicates
 | CLARK-05 | 165 |
 | CCSD-01 | 166 |
 | NV-ELEC-01 | 167 |
-| NV-RETRO-01 | 168 |
+| NV-CAND-01 | 168 |
+| NV-RETRO-01 | 169 |

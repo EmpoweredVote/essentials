@@ -73,6 +73,12 @@ Per city/government deliverable (the Tier 1 unit):
       seats up, 4 US House races) + discovery pipeline armed (`discovery_jurisdictions` rows,
       cron active). NV's two US Senators are not up in 2026.
 
+- [ ] **NV-CAND-01:** NV 2026 general-election candidates (nominees / decided June 9 primary
+      winners) populated for the 6 statewide constitutional offices + 4 US House districts —
+      `race_candidates` rows bound to the Phase 167 `race_id`s and to politician records, general
+      field only (no losing primary entrants / dupes), evidence-cited (`confidence='official'`).
+      Legislative races (Senate + Assembly) deferred to a separate follow-up.
+
 ### Close-out
 
 - [ ] **NV-RETRO-01:** Landing.jsx surfaces all covered NV jurisdictions; LOCATION-ONBOARDING.md
@@ -109,4 +115,5 @@ Per city/government deliverable (the Tier 1 unit):
 | CLARK-05 | Phase 165 | Complete |
 | CCSD-01 | Phase 166 | Pending |
 | NV-ELEC-01 | Phase 167 | Complete |
-| NV-RETRO-01 | Phase 168 | Pending |
+| NV-CAND-01 | Phase 168 | Pending |
+| NV-RETRO-01 | Phase 169 | Pending |
