@@ -440,7 +440,9 @@ const res = await client.query(
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Both questions resolved at planning time (Phase 174 plan 174-01): neither affects which GEOIDs to use, the loader structure, or success criteria. Q1 is cosmetic (display name only; routing joins on geo_id) and handled by --dry-run inspection in plan Task 1. Q2 does not apply to this phase (no migration registered); the executor re-confirms the on-disk MAX inline for downstream phases 183-184 per Pitfall 5.
 
 1. **TIGER NAME exact string in shapefile**
    - What we know: TIGERweb API returned "Beaverton School District 48J", "Hillsboro School District 1J", etc.
