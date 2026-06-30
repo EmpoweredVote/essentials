@@ -1,119 +1,111 @@
-# Requirements: v18.0 Las Vegas & Clark County, NV
+# Requirements: v20.0 Beaverton & Washington County, OR
 
-**Defined:** 2026-06-22
+**Defined:** 2026-06-30
 **Core Value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
 
 ## Scope
 
-Open **Nevada** as a fully-covered state (no NV data exists yet) and deep-seed the **Clark County
-(Las Vegas) metro** to Tier 1 depth. Two-part shape, mirroring every prior new-state milestone
-(CA v7.0, OR v8.0, ME v6.0, MD v11.0, VA v12.0):
+Deep-seed the **Washington County / west-metro Portland** local layer onto Oregon's **already-complete
+state foundation** (v8.0–v10.0: OR TIGER geofences for all tiers statewide, State of Oregon government,
+90 legislators + federal delegation). This is a **brownfield local-layer deep-seed** — no geofence,
+state, or federal work is required **except** loading the west-metro school-district G5420 geofences
+(only the 6 Multnomah district geofences exist today). Any west-metro address already routes to its
+correct federal/state/legislative representatives; this milestone adds the missing county, city, and
+school-board slate.
 
-1. **Nevada state foundation** — TIGER geofences (all tiers) → State of Nevada government
-   (Governor + constitutional officers) → 63 state legislators (21 Senate + 42 Assembly) + federal
-   delegation, all with 600×750 headshots. **Legislature compass stances are deferred to a
-   follow-up milestone** (the OR v8.0→v9.0 split).
-2. **Clark County metro deep-seeds** — government → roster → headshots (600×750) → evidence-only
-   city-official compass stances, for the **Clark County Commission** (which governs the
-   unincorporated Las Vegas Strip / Paradise / Spring Valley / Sunrise Manor / Enterprise),
-   **City of Las Vegas**, **Henderson**, **North Las Vegas**, and **Boulder City**. Plus the
-   **CCSD Board of Trustees** (5th-largest US district), NV 2026 elections + discovery pipeline,
-   and a Nevada playbook retrospective.
+Greenfield (zero seeded local government): Beaverton city (geo_id **4105350**), Washington County
+(**41067**), and all west-metro cities — all already carry G4110/G4020 geofences. The 5 tiny Washington
+County cities (King City, Durham, North Plains, Banks, Gaston) and their dedicated school districts
+(Banks SD, Gaston SD) are **deferred** (sparse rosters / minimal online footprint).
+
+Two-part shape:
+
+1. **Washington County metro deep-seeds** — government → roster → 600×750 headshots → evidence-only
+   compass stances, for the **Washington County Board of Commissioners** and **7 cities**: Beaverton
+   (flagship), Hillsboro (county seat / largest), Tigard, Tualatin, Forest Grove, Sherwood, Cornelius.
+2. **School boards + elections + close** — **5 school-district boards** (roster + headshots,
+   **0 compass stances by design** — civic compass is not applied to school boards), 2026 local
+   elections + discovery pipeline, Landing-page surfacing, playbook update, and a DB-verified
+   milestone close.
 
 Per city/government deliverable (the Tier 1 unit):
 - (a) `essentials.governments` row + chamber(s) + elected roster (correct form of government,
-      district vs. at-large structure, seat count — verified per government)
+      district vs. at-large structure, seat count — **verified per government** against the official site)
 - (b) Official headshots at 600×750 in Supabase Storage; genuine gaps documented (no fabricated photos)
 - (c) Evidence-only compass stances across all live topics — sequential research (one at a time),
       100% citation, no default values, honest blank spokes where no public record exists
+      (school boards excluded by design)
 
-## Milestone v18.0 Requirements
+## Milestone v20.0 Requirements
 
-### Nevada Geofences
+### West-Metro Geofences
 
-- [ ] **NV-GEO-01:** Nevada TIGER geofences loaded for all tiers (G4110 cities, G4020 counties,
-      CDs, SLDU, SLDL); any NV address routes to the correct federal, state, county, and city
-      representatives. Section-split scan clean.
+- [ ] **WM-GEO-01:** West-metro school-district G5420 geofences loaded (TIGER UNSD pattern) for
+      Beaverton SD 48J, Hillsboro SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, and Sherwood
+      SD 88J; any west-metro address routes to its correct school district. Section-split scan clean.
+      (City + county geofences already exist statewide.)
 
-### Nevada State & Federal Government
+### Washington County Metro Deep-Seeds
 
-- [ ] **NV-STATE-01:** State of Nevada government seeded — Governor Lombardo + constitutional
-      officers (Lt. Governor, Attorney General, Secretary of State, Treasurer, Controller) with
-      chambers, offices, STATE_EXEC districts, and 600×750 headshots.
-- [ ] **NV-STATE-02:** Nevada federal delegation seeded — 2 US Senators (Cortez Masto, Rosen) +
-      4 US House reps with geofence-linked districts and 600×750 headshots.
-
-### Nevada Legislature (seed + headshots; stances deferred)
-
-- [ ] **NV-LEG-01:** 21 Nevada State Senators seeded with offices linked to SLDU districts and
-      600×750 headshots. Compass stances deferred to a follow-up milestone.
-- [ ] **NV-LEG-02:** 42 Nevada Assembly members seeded with offices linked to SLDL districts and
-      600×750 headshots. Compass stances deferred to a follow-up milestone.
-
-### Clark County Metro Deep-Seeds
-
-- [ ] **CLARK-01:** Clark County Commission deep-seeded (7-member board governing the
-      unincorporated Strip / Paradise / Spring Valley / Sunrise Manor / Enterprise) — government +
+- [ ] **WASH-01:** Washington County Board of Commissioners deep-seeded (Chair + commissioners) —
+      government + roster + headshots + evidence-only stances. Standalone county government (not
+      nested under State of Oregon), like the v18.0 Clark County Commission.
+- [ ] **WASH-02:** City of Beaverton deep-seeded (Mayor + Council) — government + roster + headshots
+      + evidence-only stances. **Form of government verified at plan time** (at-large/by-position vs
+      wards; custom X00xx ward geofences only if by-ward, per the Portland X0012 precedent).
+- [ ] **WASH-03:** City of Hillsboro deep-seeded (county seat / largest WashCo city) — government +
       roster + headshots + evidence-only stances.
-- [ ] **CLARK-02:** City of Las Vegas deep-seeded (Mayor + City Council) — government + roster +
-      headshots + evidence-only stances.
-- [ ] **CLARK-03:** Henderson deep-seeded (NV's 2nd-largest city) — government + roster +
-      headshots + evidence-only stances.
-- [ ] **CLARK-04:** North Las Vegas deep-seeded — government + roster + headshots + evidence-only stances.
-- [x] **CLARK-05:** Boulder City deep-seeded — government + roster + headshots + evidence-only stances.
+- [ ] **WASH-04:** City of Tigard deep-seeded — government + roster + headshots + evidence-only stances.
+- [ ] **WASH-05:** City of Tualatin deep-seeded — government + roster + headshots + evidence-only stances.
+- [ ] **WASH-06:** City of Forest Grove deep-seeded — government + roster + headshots + evidence-only stances.
+- [ ] **WASH-07:** City of Sherwood deep-seeded — government + roster + headshots + evidence-only stances.
+- [ ] **WASH-08:** City of Cornelius deep-seeded — government + roster + headshots + evidence-only stances.
 
-### Schools
+### School Boards (roster + headshots; 0 compass stances by design)
 
-- [ ] **CCSD-01:** Clark County School District Board of Trustees deep-seeded — board-district
-      geofences (G5420 UNSD pattern, if applicable) + elected roster + headshots + evidence-only stances.
+- [ ] **WSCH-01:** Beaverton SD 48J Board deep-seeded — roster + headshots; board-district structure
+      verified. (One of Oregon's largest districts.)
+- [ ] **WSCH-02:** Hillsboro SD 1J Board deep-seeded — roster + headshots.
+- [ ] **WSCH-03:** Tigard-Tualatin SD 23J Board deep-seeded — roster + headshots.
+- [ ] **WSCH-04:** Forest Grove SD 15 Board deep-seeded — roster + headshots.
+- [ ] **WSCH-05:** Sherwood SD 88J Board deep-seeded — roster + headshots.
 
-### Elections & Discovery
+### Elections
 
-- [ ] **NV-ELEC-01:** NV 2026 elections seeded (Governor, all 42 Assembly seats, the ~10 Senate
-      seats up, 4 US House races) + discovery pipeline armed (`discovery_jurisdictions` rows,
-      cron active). NV's two US Senators are not up in 2026.
+- [ ] **WM-ELEC-01:** 2026 local elections seeded for the new west-metro jurisdictions (Washington
+      County + 7 cities + 5 school boards as applicable) with the discovery pipeline armed
+      (discovery_jurisdictions rows, proximity-aware cron) against official Washington County /
+      Oregon SOS sources.
 
-- [ ] **NV-CAND-01:** NV 2026 general-election candidates (nominees / decided June 9 primary
-      winners) populated for the 6 statewide constitutional offices + 4 US House districts —
-      `race_candidates` rows bound to the Phase 167 `race_id`s and to politician records, general
-      field only (no losing primary entrants / dupes), evidence-cited (`confidence='official'`).
-      Legislative races (Senate + Assembly) deferred to a separate follow-up.
+### Retrospective & Close
 
-### Close-out
-
-- [ ] **NV-RETRO-01:** Landing.jsx surfaces all covered NV jurisdictions; LOCATION-ONBOARDING.md
-      updated with Nevada GOTCHAs + Nevada Quick Reference + Cities Onboarded rows; milestone
-      audit written; milestone closed.
+- [ ] **WM-RETRO-01:** Landing surfaces all covered west-metro jurisdictions (`src/lib/coverage.js`
+      Oregon block + Washington County in COVERAGE_COUNTIES, honest purple chips per real DB stance
+      count); LOCATION-ONBOARDING.md updated with Washington County GOTCHAs + Cities Onboarded rows;
+      DB-verified `.planning/v20.0-MILESTONE-AUDIT.md` written; v20.0 milestone closed in
+      MILESTONES.md + STATE.md + PROJECT.md.
 
 ## Future Requirements (deferred)
 
-- **NV legislature compass stances** — evidence-only stances for all 63 legislators (the OR
-  v8.0→v9.0 follow-up pattern). Deferred to a dedicated follow-up milestone.
-- Mesquite (Clark County's smallest incorporated city) — future Clark County wave.
-- Washoe County / Reno–Sparks metro and rural Nevada cities — future Nevada waves.
-- Nevada township/justice-court structure beyond the County Commission.
+- Tiny Washington County cities — King City, Durham, North Plains, Banks, Gaston (sparse rosters /
+  minimal online footprint); candidate for a follow-up west-metro wave.
+- Banks SD 13 and Gaston SD 511J school boards (serve the deferred tiny cities).
+- Clackamas / east-metro expansion (Lake Oswego, Wilsonville, Oregon City, etc.).
+- OR state-legislature compass stances were completed in v9.0; no legislature work in this milestone.
 
 ## Out of Scope
 
+- Oregon state / federal / legislative seeding — already complete (v8.0–v10.0); not revisited.
+- Statewide geofence loading — all OR city/county/CD/SLDU/SLDL tiers already loaded; only the
+  west-metro **school-district** G5420 geofences are added.
+- School-board compass stances — deferred by design (civic compass not applied to school boards;
+  CCSD precedent).
 - Default/placeholder stance values (evidence-only rule — permanent exclusion).
 - Party display on profiles (antipartisan design — permanent exclusion).
-- Legislature stance research this milestone (explicitly deferred — see Future Requirements).
+- The parked v19.0 frontend redesign (dark-mode / banners) — separate milestone.
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| NV-GEO-01 | Phase 158 | Complete |
-| NV-STATE-01 | Phase 159 | Pending |
-| NV-STATE-02 | Phase 159 | Pending |
-| NV-LEG-01 | Phase 160 | Pending |
-| NV-LEG-02 | Phase 160 | Pending |
-| CLARK-01 | Phase 161 | Pending |
-| CLARK-02 | Phase 162 | Pending |
-| CLARK-03 | Phase 163 | Pending |
-| CLARK-04 | Phase 164 | Pending |
-| CLARK-05 | Phase 165 | Complete |
-| CCSD-01 | Phase 166 | Pending |
-| NV-ELEC-01 | Phase 167 | Complete |
-| NV-CAND-01 | Phase 168 | Complete |
-| NV-RETRO-01 | Phase 173 | Complete |
+| (to be filled by roadmap) | | |
