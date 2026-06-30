@@ -1,5 +1,69 @@
 # Milestones
 
+## v18.0 Las Vegas & Clark County, NV (Shipped: 2026-06-30)
+
+**Delivered:** Nevada opened as a fully-covered new state — TIGER geofences (all tiers) → State of
+Nevada government (Governor + constitutional officers + federal delegation) → 63 state legislators
+(seed + 600×750 headshots) → Clark County Commission (governing the unincorporated Las Vegas Strip /
+Paradise / Spring Valley) → 4 Clark County metro cities deep-seeded (Las Vegas, Henderson, North Las
+Vegas, Boulder City) → CCSD Board of Trustees deep-seeded → NV 2026 elections + discovery pipeline
+armed → statewide + US House candidates populated. All 6 metro jurisdictions surfaced in
+`src/lib/coverage.js`. DB-verified at close in the [v18.0 milestone audit](v18.0-MILESTONE-AUDIT.md).
+
+**Phases completed:** 158–168 (state foundation through elections + candidates) + 173 (close-out:
+audit + surfacing + playbook + milestone close). Phases 169–172 belong to the separately-parked v19.0
+frontend detour and are not part of this milestone.
+
+**Key accomplishments:**
+
+- **Nevada opened as a new state** — TIGER geofences loaded for all boundary tiers (G4110 cities,
+  G4020 counties, CDs, SLDU, SLDL); any NV address routes to the correct federal, state, county,
+  and city representatives (Phase 158)
+- **63 NV state legislators seeded with offices + 600×750 headshots** (21 Senate + 42 Assembly,
+  archive.leg.state.nv.us, us_government_work license) — compass stances deferred to follow-up
+  (the OR v8.0→v9.0 split pattern) (Phase 160)
+- **6 Clark County metro jurisdictions deep-seeded** — Clark County Commission (7 members + Chair
+  Naft title-on-seat, governs the unincorporated Strip), City of Las Vegas (7, 36 stances),
+  Henderson (5, 28 stances), North Las Vegas (5, 18 stances), Boulder City (5, 19 stances), CCSD
+  (11 trustees, 0 stances by design); **40 seated metro officials, 36/40 headshots, 133 total metro
+  stance rows** (Phases 161–166)
+- **5/6 jurisdictions carry the purple `hasContext` chip** (Las Vegas, Henderson, North Las Vegas,
+  Boulder City, Clark County); CCSD plain chip by design (school-board compass deferred) (Phase 173)
+- **0 split-section defects** across all 6 metro jurisdictions (scan clean)
+- **New structural patterns established and documented** — standalone-county-not-under-state (Clark
+  County is its own government, geo_id 32003, NOT nested under State of NV); custom LOCAL ward MTFCC
+  codes (Henderson wards X0016, North Las Vegas wards X0017); lowercase `'nv'` casing for all
+  district joins; Strip = unincorporated Clark County (no G4110 city match at a Strip address)
+- **NV 2026 elections + discovery armed** — Governor + 42 Assembly + ~10 Senate + 4 US House race
+  rows + discovery_jurisdictions cron_active (Phase 167); statewide + US House candidate roster
+  populated (Phase 168)
+- **Nevada playbook captured** — 6 Cities Onboarded rows, 3 NV GOTCHAs, Nevada Quick Reference block
+  (ext_id schemes, geo_ids, WAF map, browse params) added to `LOCATION-ONBOARDING.md` (Phase 173)
+
+**Stats:**
+
+- 11 data phases (158–168) + 1 close-out phase (173); date range 2026-06-22 → 2026-06-30
+- 40 metro seated officials · 36/40 headshots · 133 metro stance rows
+- 63 legislature ride-along (seed + headshots only, 0 stances by design)
+- **Next migration: 1115** (on-disk counter authoritative; stance migrations apply audit-only /
+  unregistered; structural migrations register normally)
+
+**Tech debt carried forward (D-08):**
+
+- **NV legislature compass stances deferred** — 63 legislators seeded + headshots but 0 stances;
+  explicit follow-up milestone (the OR v8.0→v9.0 split pattern) (D-08.1)
+- **Mesquite** — Clark County's smallest incorporated city (~20k pop.) not seeded; candidate for a
+  future Clark County wave (D-08.2)
+- **Browse-government-list state-leak bug** — browsing an unseeded city leaks stale prior-location
+  officials under the wrong state banner; backend follow-up fix deferred (D-08.3)
+- **Phase renumber 169→173** — phase numbers 169–172 are occupied by the parked v19.0 frontend
+  detour; the NV Retrospective was renumbered to 173 on 2026-06-30 to avoid directory collision;
+  numeric execution order is otherwise unaffected (D-08.4)
+
+**Audit:** [v18.0-MILESTONE-AUDIT.md](v18.0-MILESTONE-AUDIT.md)
+
+---
+
 ## v17.0 LA County City Coverage — Wave 2 (Shipped: 2026-06-22)
 
 **Delivered:** 15 LA County cities deep-seeded end-to-end (government + roster → 600×750 headshots →
