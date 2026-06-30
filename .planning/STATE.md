@@ -1,30 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v18.0
-milestone_name: milestone
-status: milestone_complete
-last_updated: 2026-06-30T07:27:52.255Z
+milestone: v20.0
+milestone_name: Beaverton & Washington County, OR
+status: planning
+last_updated: "2026-06-30T15:22:07.451Z"
 last_activity: 2026-06-30
 progress:
-  total_phases: 12
-  completed_phases: 12
-  total_plans: 34
-  completed_plans: 258
-  percent: 100
-stopped_at: Milestone complete (Phase 173 was final phase)
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 173
-Plan: Not started
-Status: Milestone complete
-Last activity: 2026-06-30
-Resume file: None
-
-> ⚠ Phase 169 (Nevada Playbook Retrospective & Close) was renumbered to **173** on 2026-06-30. Phase numbers 169–172 are occupied by the parked v19.0 frontend detour (completed dark-mode / section-banner / banner-pipeline / elections-parity dirs under `.planning/phases/169…172-*`). The renumber avoids a directory collision; numeric execution order is unaffected.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-06-30 — Milestone v20.0 started
 
 ### Phase 173 Plan 02 outcome (NV chip reconciliation + playbook update) — COMPLETE 2026-06-30
 

@@ -8,19 +8,19 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: v19.0 Essentials Dark-Mode Redesign & Section Banners
+## Current Milestone: v20.0 Beaverton & Washington County, OR
 
-**Goal:** Adopt the Figma dark-mode visual design for Essentials and replace the Local/State/National sort buttons with scrollable, graphic banner dividers between City → State → Federal sections.
+**Goal:** Deep-seed the Washington County / west-metro local layer onto Oregon's existing state foundation, so any west-metro address surfaces its full local slate (county, city, school board) with evidence-only compass coverage.
 
 **Target features:**
-- Dark-mode design system extracted from the Figma style guide (color/type/spacing tokens), applied to the Results/Representatives + Elections pages.
-- Section banner-divider component — City/State/Federal, continuous vertical scroll; the Local/State/National sort buttons are **removed**.
-- Banner art in Aditi's Bloomington treatment — exemplar sets Bloomington/Indiana/US and LA/California/US; reusable system + graceful fallback for the ~10 other covered states until art is added.
-- Banner data-slot + feature-icon-slot architecture (**structure now; live stats** like population/electoral-count **and feature links** like treasury-tracker **deferred** to a follow-up).
-- Existing candidate/rep tile component **preserved** (current shape/size + photo) — Figma tile size is **not** adopted.
-- Banner image-sourcing pipeline: Unsplash (skylines) + Wikimedia (state/federal landmarks) + AI fallback, unified dark overlay, mirrored to Supabase Storage.
+- West-metro school-district G5420 geofences loaded (TIGER UNSD pattern; city + county geofences already exist statewide).
+- Washington County Board of Commissioners deep-seeded (county tier, like Clark County Commission in v18.0) with evidence-only compass stances.
+- 7 west-metro cities deep-seeded with stances — Beaverton (flagship), Hillsboro (county seat/largest), Tigard, Tualatin, Forest Grove, Sherwood, Cornelius (gov + roster + 600×750 headshots + evidence-only compass stances + honest blanks).
+- 5 school boards seeded (roster + headshots, **0 compass stances by design** — civic compass not applied to school boards): Beaverton SD 48J, Hillsboro SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, Sherwood SD 88J.
+- 2026 local elections + discovery pipeline armed for the new jurisdictions.
+- Surface in `src/lib/coverage.js` (Oregon block + Washington County in COVERAGE_COUNTIES), playbook update (Oregon GOTCHAs + Washington County rows), and milestone close (audit + MILESTONES entry).
 
-**Key context:** Pure frontend milestone — a deliberate detour from the data-entry track. Started 2026-06-24 as a detour during v18.0; v18.0 subsequently resumed and shipped 2026-06-30 (see v18.0 entry below). v19.0 now resumes as the next active milestone. Phases continue from 173 (169–172 consumed by this detour). Figma source: `J9mfnUSnc2k6fUQDhw9L7h` node `3957:563`. Stack: React 19 + Vite + Tailwind 4 + `@empoweredvote/ev-ui`; ev-ui dark-mode inline-style overrides require `!important`.
+**Key context:** Brownfield local-layer deep-seed on the complete OR state/federal/legislative foundation (v8.0–v10.0); no geofence/state work except the school-district G5420 load. Greenfield: Beaverton city (geo_id **4105350**), Washington County (41067), and all west-metro cities have geofences but zero seeded local government. 5 tiny WashCo cities (King City/Durham/North Plains/Banks/Gaston) deferred. OR gotchas: `districts.state` casing inconsistency (`'or'` vs `'OR'` both exist — verify before filters), geofence loader key is `cd119`, COUNTY-section/Chair-first ordering quirks. **Beaverton's form of government must be verified at plan time** (mayor + council; at-large/by-position vs wards — if by-ward, custom X00xx ward geofences needed like Portland's X0012). Surfacing target is `src/lib/coverage.js`. Phases continue at 174+ (169–172 belong to parked v19.0).
 
 ## Requirements
 
@@ -163,8 +163,9 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 - **⏸ PARKED: v19.0 Essentials Dark-Mode Redesign & Section Banners** — started 2026-06-24, paused to complete
   v18.0. Frontend milestone: adopt the Figma dark-mode design + scrollable City/State/Federal banner dividers
   (remove sort buttons), reusable banner system + exemplar art (Bloomington/Indiana/US, LA/California/US), banner
-  data/icon slots (structure only), preserve current tiles. Resumes after v18.0 close-out.
-  Requirements: `.planning/REQUIREMENTS.md` · Roadmap: `.planning/ROADMAP.md`.
+  data/icon slots (structure only), preserve current tiles. Phases 169–170 done; 171–172 (banner asset pipeline,
+  Elections parity) pending. Remains parked while v20.0 (Beaverton/Washington County) is the active milestone;
+  resume after v20.0 or as a separate effort. Phase dirs `.planning/phases/169…172-*`.
 - **Most recent close (v18.0 Las Vegas & Clark County, NV, 2026-06-30):** Nevada opened as a new state — 6 metro
   jurisdictions deep-seeded, 40 officials, 133 stance rows, 5/6 purple chip. 11 data phases (158–168) + close-out
   phase 173. See `.planning/v18.0-MILESTONE-AUDIT.md`.
@@ -288,4 +289,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-30 — v18.0 Las Vegas & Clark County, NV shipped (Phases 158–168 + 173); v19.0 Dark-Mode Redesign & Section Banners parked (resumes after v18.0 close)*
+*Last updated: 2026-06-30 — v20.0 Beaverton & Washington County, OR started (west-metro local deep-seed on the OR foundation; phases continue at 174+); v19.0 Dark-Mode Redesign parked (169–172); v18.0 Las Vegas & Clark County, NV shipped*
