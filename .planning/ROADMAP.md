@@ -66,7 +66,7 @@ this milestone seeds + headshots legislators only.
 
 - [x] **Phase 167: NV 2026 Elections & Discovery** - Governor + 42 Assembly + ~10 Senate + 4 US House races + discovery armed (completed 2026-06-29)
 - [x] **Phase 168: NV 2026 Candidate Population — Statewide & US House** - Curated general-election nominees (primary winners) for 6 statewide execs + 4 US House, bound to race rows (completed 2026-06-30)
-- [ ] **Phase 173: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone (renumbered from 169 — dirs 169–172 occupied by parked v19.0 frontend detour)
+- [x] **Phase 173: Nevada Playbook Retrospective & Close** - Surface NV jurisdictions, document GOTCHAs, audit, close milestone (renumbered from 169 — dirs 169–172 occupied by parked v19.0 frontend detour) (completed 2026-06-30)
 
 ## Phase Details
 
@@ -373,7 +373,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 167. NV 2026 Elections & Discovery | 3/3 | Complete   | 2026-06-29 |
 | 168. NV 2026 Candidate Population — Statewide & US House | 2/2 | Complete    | 2026-06-30 |
-| 173. Nevada Playbook Retrospective & Close | 2/3 | In Progress|  |
+| 173. Nevada Playbook Retrospective & Close | 3/3 | Complete   | 2026-06-30 |
 
 ## Coverage
 

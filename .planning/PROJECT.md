@@ -20,7 +20,7 @@ A resident can look up who represents them — and who is on their ballot — wi
 - Existing candidate/rep tile component **preserved** (current shape/size + photo) — Figma tile size is **not** adopted.
 - Banner image-sourcing pipeline: Unsplash (skylines) + Wikimedia (state/federal landmarks) + AI fallback, unified dark overlay, mirrored to Supabase Storage.
 
-**Key context:** Pure frontend milestone — a deliberate detour from the data-entry track. **v18.0 Las Vegas & Clark County, NV is PARKED at Phase 162** and resumes after v19.0 closes (snapshots: `v18.0-{ROADMAP,REQUIREMENTS,STATE}.md`; next NV migration 1064). Phases continue from 169. Figma source: `J9mfnUSnc2k6fUQDhw9L7h` node `3957:563`. Stack: React 19 + Vite + Tailwind 4 + `@empoweredvote/ev-ui`; ev-ui dark-mode inline-style overrides require `!important`.
+**Key context:** Pure frontend milestone — a deliberate detour from the data-entry track. Started 2026-06-24 as a detour during v18.0; v18.0 subsequently resumed and shipped 2026-06-30 (see v18.0 entry below). v19.0 now resumes as the next active milestone. Phases continue from 173 (169–172 consumed by this detour). Figma source: `J9mfnUSnc2k6fUQDhw9L7h` node `3957:563`. Stack: React 19 + Vite + Tailwind 4 + `@empoweredvote/ev-ui`; ev-ui dark-mode inline-style overrides require `!important`.
 
 ## Requirements
 
@@ -140,6 +140,15 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Delivered:** MA town geofences (293 G4040 COUSUB boundaries), Boston deep seed (Mayor Wu + 13 City Councillors + School Committee with headshots), MA Tier 2 cities (Worcester + Springfield + Lowell + Brockton + Quincy), MA 2026 elections (240+ race rows + discovery armed), compass stances for all 217 MA officials (6 execs + 11 federal + 40 senators + 160 house reps), and MA playbook retrospective.
 
+### v18.0 Las Vegas & Clark County, NV (Shipped: 2026-06-30)
+
+**Delivered:** Nevada opened as a fully-covered new state — TIGER geofences → State of Nevada government
+(Governor + constitutional officers + federal delegation) → 63 state legislators (seed + headshots) →
+Clark County Commission + 4 Clark County metro cities (Las Vegas, Henderson, North Las Vegas, Boulder
+City) + CCSD Board of Trustees deep-seeded → NV 2026 elections + discovery armed → milestone close.
+40 metro officials, 36/40 headshots, 133 metro stance rows, 5/6 purple chip, 0 split-section defects.
+11 data phases (158–168) + close-out 173. See `.planning/v18.0-MILESTONE-AUDIT.md`.
+
 ### v17.0 LA County City Coverage — Wave 2 (Shipped: 2026-06-22)
 
 **Delivered:** 15 LA County cities deep-seeded end-to-end (government + roster → 600×750 headshots →
@@ -151,16 +160,14 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
-- **v19.0 Essentials Dark-Mode Redesign & Section Banners** — started 2026-06-24. Frontend milestone: adopt the
-  Figma dark-mode design + scrollable City/State/Federal banner dividers (remove sort buttons), reusable banner
-  system + exemplar art (Bloomington/Indiana/US, LA/California/US), banner data/icon slots (structure only),
-  preserve current tiles. Requirements: `.planning/REQUIREMENTS.md` · Roadmap: `.planning/ROADMAP.md`.
-- **⏸ PARKED: v18.0 Las Vegas & Clark County, NV** — started 2026-06-22, paused 2026-06-24 at **Phase 162** (4/11
-  phases done: 158 geofences, 159 state/federal, 160 legislature, 161 Clark County Commission). Resumes after
-  v19.0 closes. Live state snapshotted to `.planning/v18.0-{ROADMAP,REQUIREMENTS,STATE}.md`; phase dirs 158–168
-  intact; next NV migration **1064**; legislature stances deferred.
-- **Most recent close (v17.0 LA County Wave-2, 2026-06-22):** 15 LA County cities deep-seeded + surfaced.
-  See `.planning/v17.0-MILESTONE-AUDIT.md`.
+- **⏸ PARKED: v19.0 Essentials Dark-Mode Redesign & Section Banners** — started 2026-06-24, paused to complete
+  v18.0. Frontend milestone: adopt the Figma dark-mode design + scrollable City/State/Federal banner dividers
+  (remove sort buttons), reusable banner system + exemplar art (Bloomington/Indiana/US, LA/California/US), banner
+  data/icon slots (structure only), preserve current tiles. Resumes after v18.0 close-out.
+  Requirements: `.planning/REQUIREMENTS.md` · Roadmap: `.planning/ROADMAP.md`.
+- **Most recent close (v18.0 Las Vegas & Clark County, NV, 2026-06-30):** Nevada opened as a new state — 6 metro
+  jurisdictions deep-seeded, 40 officials, 133 stance rows, 5/6 purple chip. 11 data phases (158–168) + close-out
+  phase 173. See `.planning/v18.0-MILESTONE-AUDIT.md`.
 - Carry-forward (not blocking): split-section cleanup for 5 NON-Wave-2 councils (Whittier/Compton/Carson/
   South El Monte/South Pasadena); groupHierarchy.js Mayor>MPT fix deploy pending; Lancaster Ken Mann headshot;
   SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7 council reorg.
@@ -281,4 +288,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-24 — v19.0 Dark-Mode Redesign & Section Banners started; v18.0 NV parked at Phase 162*
+*Last updated: 2026-06-30 — v18.0 Las Vegas & Clark County, NV shipped (Phases 158–168 + 173); v19.0 Dark-Mode Redesign & Section Banners parked (resumes after v18.0 close)*
