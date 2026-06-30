@@ -488,7 +488,8 @@ SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, and Sherwood SD 88J — so th
   2. The TIGER UNSD loader ran against the correct OR UNSD zip file; loader GEOID filter is confirmed against the 5 target district GEOIDs (not the 6 Multnomah districts already loaded in v10.0).
   3. Section-split scan across the 5 new district geo_ids returns 0 rows (no mis-parented boundaries).
   4. No other geofence tiers are modified (city/county/CD/SLDU/SLDL tiers are complete statewide — untouched).
-**Plans**: 1 plan
+
+**Plans**: 1 plan
 
 - [x] 174-01-PLAN.md — Clone TIGER UNSD loader (5 GEOIDs, source tiger_unsd_or_2024_westmetro), run live, verify 5-district routing + section-split gates
 
@@ -506,7 +507,12 @@ standalone county government (not nested under State of Oregon), like Clark Coun
   3. Evidence-only compass stances render on commissioner profiles — 100% cited, honest blank spokes, zero default values.
   4. Washington County surfaces with the purple `hasContext` chip in `src/lib/coverage.js` (COVERAGE_COUNTIES block).
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 175-01-PLAN.md — Standalone county government + Board of County Commissioners chamber + 5 offices (Chair on COUNTY 41067, D1-D4 on custom X0018 per-district geofences); structural migration 1120 + GIS loader
+- [ ] 175-02-PLAN.md — Commissioner headshots (4:5 -> 600x750, washingtoncountyor.gov); audit-only migration 1121
+- [ ] 175-03-PLAN.md — Evidence-only compass stances (one agent at a time, migrations 1122-1126) + coverage.js hasContext surfacing
 
 ### Phase 176: City of Beaverton Deep-Seed
 
