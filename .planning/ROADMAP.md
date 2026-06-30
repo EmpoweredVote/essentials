@@ -347,7 +347,12 @@ this milestone seeds + headshots legislators only.
   2. LOCATION-ONBOARDING.md updated with Nevada GOTCHAs + a Nevada Quick Reference block + new Cities Onboarded rows.
   3. A v18.0 milestone audit is written (DB-verified counts: geofences, officials, headshots, stance rows) and the milestone is closed.
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+- [ ] 173-01-PLAN.md — Write DB-verified v18.0-MILESTONE-AUDIT.md (per-jurisdiction counts + verdicts + 4 known-issues)
+- [ ] 173-02-PLAN.md — Reconcile NV hasContext chips in coverage.js (CCSD plain) + LOCATION-ONBOARDING.md rows + GOTCHAs + Nevada Quick Reference
+- [ ] 173-03-PLAN.md — MILESTONES.md v18.0 Shipped entry + STATE.md/PROJECT.md/ROADMAP.md status flip
+
 **UI hint**: yes
 
 ## Progress
@@ -368,7 +373,7 @@ Phases execute in numeric order: 158 → 159 → 160 → 161 → 162 → 163 →
 | 166. CCSD Board of Trustees Deep-Seed | 3/3 | Complete   | 2026-06-29 |
 | 167. NV 2026 Elections & Discovery | 3/3 | Complete   | 2026-06-29 |
 | 168. NV 2026 Candidate Population — Statewide & US House | 2/2 | Complete    | 2026-06-30 |
-| 173. Nevada Playbook Retrospective & Close | 0/TBD | Not started | - |
+| 173. Nevada Playbook Retrospective & Close | 0/3 | Not started | - |
 
 ## Coverage
 
