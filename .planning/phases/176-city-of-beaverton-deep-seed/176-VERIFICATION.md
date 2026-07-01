@@ -1,9 +1,10 @@
 ---
 phase: 176-city-of-beaverton-deep-seed
 verified: 2026-07-01T00:00:00Z
-status: human_needed
+status: passed
 score: 4/4
 overrides_applied: 0
+human_verified: 2026-07-01 — user approved Beaverton live-browse (Kimmi headshot replaced, banner added)
 human_verification:
   - test: "Browse essentials.empowered.vote/results?browse_geo_id=4105350&browse_mtfcc=G4110 — confirm Mayor Beaty sorts first, all 6 councilors follow, no empty LOCAL section, no section-split, headshots render (check Tivnon upscale quality), compass stances visible"
     expected: "Mayor Beaty listed first; 6 named councilors follow; no party label; headshots display without text/graphic overlays; spoke chart shows evidence-only stances for each official"
