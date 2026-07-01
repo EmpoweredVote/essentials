@@ -435,6 +435,10 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
   3.15:1 → `upload_banner.py` → `cities/<slug>.jpg`), then add the `CURATED_LOCAL` entry +
   attribution in `src/lib/buildingImages.js`. **Wikimedia Commons / Unsplash only; NO AI-generated
   images.** No text/graphic overlays baked in (component applies its own gradient).
+  **Also set `offices.representing_city='<City>'` in the structural migration** — the Local banner
+  derives its city from that field; the Gresham template leaves it blank + names the chamber
+  "City Council" (no city prefix), so the banner silently falls back to the gradient. Beaverton
+  needed a backfill (mig 1141); do it inline for 177+.
 
 - **Stances:** evidence-only, **one research agent at a time** (rate-limit rule), all live compass
   topics, 100% citation, **no default values**, honest blank spokes. School boards excluded from
