@@ -515,7 +515,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 175-02-PLAN.md — Commissioner headshots (4:5 -> 600x750, washingtoncountyor.gov); audit-only migration 1121
+- [x] 175-02-PLAN.md — Commissioner headshots (4:5 -> 600x750, washingtoncountyor.gov); audit-only migration 1121
 - [ ] 175-03-PLAN.md — Evidence-only compass stances (one agent at a time, migrations 1122-1126) + coverage.js hasContext surfacing
 
 ### Phase 176: City of Beaverton Deep-Seed
@@ -697,7 +697,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
-| 175. Washington County Commission Deep-Seed | 1/3 | In Progress|  |
+| 175. Washington County Commission Deep-Seed | 2/3 | In Progress|  |
 | 176. City of Beaverton Deep-Seed | 0/TBD | Not started | - |
 | 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
