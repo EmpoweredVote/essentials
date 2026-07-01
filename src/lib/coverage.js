@@ -227,6 +227,7 @@ export const COVERAGE_COUNTIES = [
   { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
   { label: 'Greene County', browseGovernmentList: ['29077'], browseStateAbbrev: 'MO', hasContext: true },
   { label: 'Multnomah County', browseGovernmentList: ['41051'], browseStateAbbrev: 'OR' },
+  { label: 'Washington County, OR', browseGovernmentList: ['41067'], browseStateAbbrev: 'OR', hasContext: true },
   { label: 'Box Elder County', browseGovernmentList: ['49003'], browseStateAbbrev: 'UT' },
   { label: 'Cache County', browseGovernmentList: ['49005'], browseStateAbbrev: 'UT' },
   { label: 'Davis County', browseGovernmentList: ['49011'], browseStateAbbrev: 'UT' },
