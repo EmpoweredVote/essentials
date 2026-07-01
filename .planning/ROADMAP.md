@@ -532,13 +532,24 @@ custom ward geofences needed; all seats + Mayor link to the existing city geofen
   2. The full seated roster is seeded with correct office structure and seat count; all officials render with 600×750 headshots (genuine gaps documented).
   3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
   4. Beaverton surfaces with the purple `hasContext` chip in `src/lib/coverage.js` (Oregon block).
+**Plans**: 5 plans (migrations 1131 structural + 1132 headshots + 1133-1139 stances)
+**Wave 1**
 
-**Plans**: 5 plans (migrations 1131 structural + 1132 headshots + 1133-1139 stances)
 - [ ] 176-01-PLAN.md - Wave-0 DB probes (ext_id block free, migration MAX, no dup gov, geofence exists, Position 1 seated, live topic_keys)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 176-02-PLAN.md - Structural seed (gov + City Council chamber + 2 at-large districts + 7 offices; mig 1131)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 176-03-PLAN.md - 600x750 headshots for 7 officials + audit-only mig 1132
 - [ ] 176-04-PLAN.md - Evidence-only stances, 7 officials one-at-a-time (migs 1133-1139)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 176-05-PLAN.md - Surface Beaverton in coverage.js Oregon block (purple hasContext chip)
+
 **UI hint**: yes
 
 ### Phase 177: City of Hillsboro Deep-Seed

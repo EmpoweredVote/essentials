@@ -505,7 +505,7 @@ the first entry in the Oregon areas array: `{ label: 'Beaverton', ... }`.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED at execution — Wave-0 / executor-time determinations)
 
 1. **Position 1 seat status at execution time**
    - What we know: As of 2026-07-01, May 2026 primary certification is pending (~June 25 deadline). Hartmeier-Prigg holds the seat until January 2027 regardless.
