@@ -508,9 +508,13 @@ standalone county government (not nested under State of Oregon), like Clark Coun
   4. Washington County surfaces with the purple `hasContext` chip in `src/lib/coverage.js` (COVERAGE_COUNTIES block).
 
 **Plans**: 3 plans
-
 Plans:
+**Wave 1**
+
 - [ ] 175-01-PLAN.md — Standalone county government + Board of County Commissioners chamber + 5 offices (Chair on COUNTY 41067, D1-D4 on custom X0018 per-district geofences); structural migration 1120 + GIS loader
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 175-02-PLAN.md — Commissioner headshots (4:5 -> 600x750, washingtoncountyor.gov); audit-only migration 1121
 - [ ] 175-03-PLAN.md — Evidence-only compass stances (one agent at a time, migrations 1122-1126) + coverage.js hasContext surfacing
 
