@@ -109,7 +109,7 @@ Per city/government deliverable (the Tier 1 unit):
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | WM-GEO-01 | Phase 174 | Complete |
-| WASH-01 | Phase 175 | Pending |
+| WASH-01 | Phase 175 | Complete |
 | WASH-02 | Phase 176 | Pending |
 | WASH-03 | Phase 177 | Pending |
 | WASH-04 | Phase 178 | Pending |

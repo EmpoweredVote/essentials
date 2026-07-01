@@ -697,7 +697,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
-| 175. Washington County Commission Deep-Seed | 3/3 | Complete   | 2026-07-01 |
+| 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
 | 176. City of Beaverton Deep-Seed | 0/TBD | Not started | - |
 | 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
