@@ -461,7 +461,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 
 - [x] **Phase 174: West-Metro School-District Geofences** - Load G5420 geofence boundaries for 5 west-metro school districts (TIGER UNSD pattern); prerequisite for school-board phases (completed 2026-06-30)
 - [x] **Phase 175: Washington County Commission Deep-Seed** - Chair + commissioners, standalone county government (geo_id 41067), with stances (completed 2026-07-01)
-- [ ] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large)
+- [x] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large) (completed 2026-07-01)
 - [ ] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city)
 - [ ] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council
 - [ ] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council
@@ -544,11 +544,11 @@ custom ward geofences needed; all seats + Mayor link to the existing city geofen
 **Wave 3** *(blocked on Wave 2 completion)*
 
 - [x] 176-03-PLAN.md - 600x750 headshots for 7 officials + audit-only mig 1132
-- [ ] 176-04-PLAN.md - Evidence-only stances, 7 officials one-at-a-time (migs 1133-1139)
+- [x] 176-04-PLAN.md - Evidence-only stances, 7 officials one-at-a-time (migs 1133-1139)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 176-05-PLAN.md - Surface Beaverton in coverage.js Oregon block (purple hasContext chip)
+- [x] 176-05-PLAN.md - Surface Beaverton in coverage.js Oregon block (purple hasContext chip)
 
 **UI hint**: yes
 
@@ -715,7 +715,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 |-------|----------------|--------|-----------|
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
 | 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
-| 176. City of Beaverton Deep-Seed | 3/5 | In Progress|  |
+| 176. City of Beaverton Deep-Seed | 5/5 | Complete   | 2026-07-01 |
 | 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
 | 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
