@@ -511,7 +511,7 @@ standalone county government (not nested under State of Oregon), like Clark Coun
 Plans:
 **Wave 1**
 
-- [ ] 175-01-PLAN.md — Standalone county government + Board of County Commissioners chamber + 5 offices (Chair on COUNTY 41067, D1-D4 on custom X0018 per-district geofences); structural migration 1120 + GIS loader
+- [x] 175-01-PLAN.md — Standalone county government + Board of County Commissioners chamber + 5 offices (Chair on COUNTY 41067, D1-D4 on custom X0018 per-district geofences); structural migration 1120 + GIS loader
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -697,7 +697,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
-| 175. Washington County Commission Deep-Seed | 0/TBD | Not started | - |
+| 175. Washington County Commission Deep-Seed | 1/3 | In Progress|  |
 | 176. City of Beaverton Deep-Seed | 0/TBD | Not started | - |
 | 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
