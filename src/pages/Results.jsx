@@ -1070,6 +1070,14 @@ export default function Results() {
   // Derive representing city for building image selection — uses unfiltered list
   // so the building image doesn't disappear when search filter narrows the grid.
   const representingCity = useMemo(() => {
+    // In browse mode the browsed area label is authoritative for the city banner.
+    // Deriving the city from politician records can surface a neighboring city
+    // when districts overlap (e.g. a Culver City browse showing "Inglewood"
+    // because an overlapping district's official has representing_city set).
+    if (searchMode === 'browse') {
+      const label = searchParams.get('browse_label');
+      if (label && label.trim()) return label.trim();
+    }
     const src = Array.isArray(list) ? list : [];
     for (const p of src) {
       if (p.representing_city) return p.representing_city;
@@ -1090,7 +1098,7 @@ export default function Results() {
     const fromAddress = parseCityFromAddress(addressInput);
     if (fromAddress) return fromAddress;
     return null;
-  }, [list, addressInput]);
+  }, [list, addressInput, searchMode, searchParams]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"
