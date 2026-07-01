@@ -427,7 +427,14 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - **Per-government build order:** `governments` row (via `WHERE NOT EXISTS`) + chamber(s) → roster
   (offices, form of government verified against official city site, district vs at-large structure +
   seat count) → 600×750 headshots (4:5 Lanczos q90, `press_use`, `type='default'`) → evidence-only
-  compass stances → spot-check render.
+  compass stances → **community horizon/skyline banner** → spot-check render.
+
+- **Community banner (every city — standing constraint, added Phase 176):** acquire a
+  **legally-licensed** wide horizon/skyline/landmark photo of the city and wire it as the community
+  banner. Follow `docs/banner-asset-pipeline.md` (`scripts/banners/process_banner.py` → 1700×540 @
+  3.15:1 → `upload_banner.py` → `cities/<slug>.jpg`), then add the `CURATED_LOCAL` entry +
+  attribution in `src/lib/buildingImages.js`. **Wikimedia Commons / Unsplash only; NO AI-generated
+  images.** No text/graphic overlays baked in (component applies its own gradient).
 
 - **Stances:** evidence-only, **one research agent at a time** (rate-limit rule), all live compass
   topics, 100% citation, **no default values**, honest blank spokes. School boards excluded from
