@@ -535,11 +535,11 @@ custom ward geofences needed; all seats + Mayor link to the existing city geofen
 **Plans**: 5 plans (migrations 1131 structural + 1132 headshots + 1133-1139 stances)
 **Wave 1**
 
-- [ ] 176-01-PLAN.md - Wave-0 DB probes (ext_id block free, migration MAX, no dup gov, geofence exists, Position 1 seated, live topic_keys)
+- [x] 176-01-PLAN.md - Wave-0 DB probes (ext_id block free, migration MAX, no dup gov, geofence exists, Position 1 seated, live topic_keys)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 176-02-PLAN.md - Structural seed (gov + City Council chamber + 2 at-large districts + 7 offices; mig 1131)
+- [x] 176-02-PLAN.md - Structural seed (gov + City Council chamber + 2 at-large districts + 7 offices; mig 1131)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -715,7 +715,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 |-------|----------------|--------|-----------|
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
 | 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
-| 176. City of Beaverton Deep-Seed | 0/TBD | Not started | - |
+| 176. City of Beaverton Deep-Seed | 2/5 | In Progress|  |
 | 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
 | 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
