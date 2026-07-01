@@ -460,7 +460,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - Decimal phases (e.g. 175.1): Urgent insertions (marked INSERTED)
 
 - [x] **Phase 174: West-Metro School-District Geofences** - Load G5420 geofence boundaries for 5 west-metro school districts (TIGER UNSD pattern); prerequisite for school-board phases (completed 2026-06-30)
-- [ ] **Phase 175: Washington County Commission Deep-Seed** - Chair + commissioners, standalone county government (geo_id 41067), with stances
+- [x] **Phase 175: Washington County Commission Deep-Seed** - Chair + commissioners, standalone county government (geo_id 41067), with stances (completed 2026-07-01)
 - [ ] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large)
 - [ ] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city)
 - [ ] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council
@@ -516,7 +516,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 
 - [x] 175-02-PLAN.md — Commissioner headshots (4:5 -> 600x750, washingtoncountyor.gov); audit-only migration 1121
-- [ ] 175-03-PLAN.md — Evidence-only compass stances (one agent at a time, migrations 1122-1126) + coverage.js hasContext surfacing
+- [x] 175-03-PLAN.md — Evidence-only compass stances (one agent at a time, migrations 1122-1126) + coverage.js hasContext surfacing
 
 ### Phase 176: City of Beaverton Deep-Seed
 
@@ -697,7 +697,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
-| 175. Washington County Commission Deep-Seed | 2/3 | In Progress|  |
+| 175. Washington County Commission Deep-Seed | 3/3 | Complete   | 2026-07-01 |
 | 176. City of Beaverton Deep-Seed | 0/TBD | Not started | - |
 | 177. City of Hillsboro Deep-Seed | 0/TBD | Not started | - |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
