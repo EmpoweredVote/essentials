@@ -964,6 +964,16 @@ export default function Results() {
 
   // Per-politician stances cache for CompassCardVertical comparison overlay (compass mode only)
   const [stancesByPolId, setStancesByPolId] = useState({});
+
+  // Reset the per-politician stance cache whenever the location changes. Without
+  // this, stancesByPolId accumulated every politician's stances across every
+  // location click and never evicted — 250+ entries after a handful of browses —
+  // which is what made the app get progressively slower over a session.
+  const locationKey = `${searchMode}|${activeQuery || ''}|${browseArea?.geo_id || ''}|${browseArea?.mtfcc || ''}`;
+  useEffect(() => {
+    setStancesByPolId({});
+  }, [locationKey]);
+
   useEffect(() => {
     if (!compassMode) return;
     if (!filteredPols || filteredPols.length === 0 || allTopics.length === 0) return;
@@ -971,27 +981,40 @@ export default function Results() {
     const targets = filteredPols.filter(p => politicianIdsWithStances.has(String(p.id)) && !stancesByPolId[p.id]);
     if (targets.length === 0) return;
     let cancelled = false;
-    Promise.all(
-      targets.map(p =>
-        fetchPoliticianAnswers(p.id)
-          .then(rows => {
-            const map = {};
-            for (const r of rows) {
-              const t = topicById.get(r.topic_id);
-              if (t?.short_title) map[t.short_title] = r.value ?? 0;
-            }
-            return [p.id, map];
-          })
-          .catch(() => [p.id, {}])
-      )
-    ).then(pairs => {
-      if (cancelled) return;
-      setStancesByPolId(prev => {
-        const next = { ...prev };
-        for (const [id, m] of pairs) next[id] = m;
-        return next;
-      });
-    });
+
+    // Fetch in bounded batches instead of firing one request per politician all
+    // at once. A dense area (LA County, Las Vegas) could queue 50+ parallel
+    // /answers requests; the browser caps concurrency per origin and the old
+    // single Promise.all only rendered after the slowest of all 50 resolved.
+    // Batching commits results per wave, so cards fill in progressively.
+    const BATCH_SIZE = 6;
+    (async () => {
+      for (let i = 0; i < targets.length; i += BATCH_SIZE) {
+        if (cancelled) return;
+        const slice = targets.slice(i, i + BATCH_SIZE);
+        const pairs = await Promise.all(
+          slice.map(p =>
+            fetchPoliticianAnswers(p.id)
+              .then(rows => {
+                const map = {};
+                for (const r of rows) {
+                  const t = topicById.get(r.topic_id);
+                  if (t?.short_title) map[t.short_title] = r.value ?? 0;
+                }
+                return [p.id, map];
+              })
+              .catch(() => [p.id, {}])
+          )
+        );
+        if (cancelled) return;
+        setStancesByPolId(prev => {
+          const next = { ...prev };
+          for (const [id, m] of pairs) next[id] = m;
+          return next;
+        });
+      }
+    })();
+
     return () => { cancelled = true; };
   }, [compassMode, filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
