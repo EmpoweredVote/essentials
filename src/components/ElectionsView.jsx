@@ -363,6 +363,11 @@ export default function ElectionsView({
       const tierMap = {}; // tier → { bodyKey → { races: [] } }
 
       for (const race of dedupedRaces) {
+        // Hide races with no candidates. Most election "shells" are seeded ahead of
+        // candidate ingestion; rendering a wall of "No candidates have filed" cards is
+        // noise (and misleads, since candidates usually do exist but aren't ingested yet).
+        // Empty bodies/tiers then never get created, so no empty headers remain.
+        if ((race.candidates || []).length === 0) continue;
         const tier = getTier(race.district_type);
         const cleaned = cleanPositionName(race.position_name);
         const { body, subgroup } = deriveBodyAndSubGroup(cleaned, race.district_type);
@@ -694,9 +699,14 @@ export default function ElectionsView({
                                       }).filter(Boolean)
                                     : null;
                                   const raceUpper = String(race.districtType || '').toUpperCase();
-                                  const raceLensActive = getEffectiveLens(
-                                    (raceUpper === 'LOCAL' || raceUpper === 'LOCAL_EXEC' || raceUpper === 'COUNTY') ? 'local' : 'state'
-                                  );
+                                  // The Local Lens applies ONLY to local races. Statewide/federal races
+                                  // (Governor, U.S. Senate, President, legislature) must compare on the full
+                                  // compass — otherwise a statewide candidate is judged on the 8 hyper-local
+                                  // Local Lens topics they legitimately have no local stances on, falls under
+                                  // the 3-shared-spoke floor, and renders blank (e.g. a Governor candidate
+                                  // whose record is state/federal). Only local-tier races use the lens.
+                                  const isLocalRace = (raceUpper === 'LOCAL' || raceUpper === 'LOCAL_EXEC' || raceUpper === 'COUNTY');
+                                  const raceLensActive = isLocalRace ? getEffectiveLens('local') : false;
                                   // Lens ON → local-scoped topics; OFF → full compass (no tier lock).
                                   const scopedTopicsForRace = raceLensActive
                                     ? allTopics.filter((t) => t.applies_local !== false)
