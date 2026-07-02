@@ -609,7 +609,23 @@ with evidence-only stances on their profiles.
   3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
   4. Tigard surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 5 plans
+**Wave 1**
+
+- [ ] 178-01-PLAN.md — Wave-0 DB probes (geo_id 4173650, ext_id block -4173651..-4173657, migration MAX), roster re-fetch via local news + fresh WebSearch, headshot retrievability test
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 178-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (pure at-large, plain Mayor/Councilor titles, Hu+Anderson appointed, representing_city inline, WR-01 post-verify); mig 1159
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 178-03-PLAN.md — 600×750 headshots (per-official local-news sourcing, genuine gaps documented) + audit-only mig 1160
+- [ ] 178-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1161-1167 (one agent at a time, WR-02 row-count assertions)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 178-05-PLAN.md — Community banner (cities/tigard.jpg) + coverage.js Oregon-block purple hasContext chip + buildingImages.js CURATED_LOCAL key + live-browse close
 
 ### Phase 179: City of Tualatin Deep-Seed
 
@@ -746,7 +762,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
 | 176. City of Beaverton Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
-| 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
+| 178. City of Tigard Deep-Seed | 0/5 | Not started | - |
 | 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
 | 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
