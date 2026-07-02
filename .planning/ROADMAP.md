@@ -616,7 +616,7 @@ with evidence-only stances on their profiles.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 178-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (pure at-large, plain Mayor/Councilor titles, Hu+Anderson appointed, representing_city inline, WR-01 post-verify); mig 1159
+- [x] 178-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (pure at-large, plain Mayor/Councilor titles, Hu+Anderson appointed, representing_city inline, WR-01 post-verify); mig 1159
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -762,7 +762,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
 | 176. City of Beaverton Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
-| 178. City of Tigard Deep-Seed | 1/5 | In Progress|  |
+| 178. City of Tigard Deep-Seed | 2/5 | In Progress|  |
 | 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
 | 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
