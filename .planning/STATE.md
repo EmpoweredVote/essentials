@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
 status: executing
-last_updated: "2026-07-02T03:24:23.992Z"
-last_activity: 2026-07-02 -- Phase 177 planning complete
+last_updated: "2026-07-02T03:36:37.600Z"
+last_activity: 2026-07-02
 progress:
   total_phases: 13
   completed_phases: 3
   total_plans: 14
-  completed_plans: 9
+  completed_plans: 10
   percent: 23
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 177
-Plan: Not started
+Phase: 177 (city-of-hillsboro-deep-seed) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-07-02 -- Phase 177 planning complete
+Last activity: 2026-07-02
 
 ### v20.0 roadmap (created 2026-06-30)
 
@@ -331,7 +331,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 177 — city of hillsboro deep seed
+**Current focus:** Phase 177 — city-of-hillsboro-deep-seed
 
 ## v15.0 Roadmap Summary
 
@@ -424,9 +424,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-02T02:42:18.689Z
-Stopped at: Phase 177 context gathered
-Resume file: .planning/phases/177-city-of-hillsboro-deep-seed/177-CONTEXT.md
+Last session: 2026-07-02T03:36:37.583Z
+Stopped at: Completed 177-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -486,6 +486,7 @@ Resume file: .planning/phases/177-city-of-hillsboro-deep-seed/177-CONTEXT.md
 | Phase 154 P01 | 25min | 2 tasks | 1 files |
 | Phase 154-burbank-deep-seed P02 | 20min | 2 tasks | 1 files |
 | Phase 173 P01 | 15 | 2 tasks | 1 files |
+| Phase 177 P01 | 4min | 2 tasks | 1 files |
 
 ## Decisions
 
@@ -550,3 +551,4 @@ Resume file: .planning/phases/177-city-of-hillsboro-deep-seed/177-CONTEXT.md
 - [Phase 128-03]: Phase 128 Carson Stances CLOSED — Q1=5 rows (all 5 officials with stances), Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics, Q5=0 (Bradshaw+Cooper exclusion confirmed). Per-official counts: Davis-Holmes(Mayor, directly elected)=9, Hilton(D1)=5, Dear(D2)=8, Hicks(D3)=6, Rojas(D4)=6; total 34 stance rows (migrations 719-723); Carson 2017 immigration-protective resolution established local-immigration=2.0 pattern for all 5 officials; Dear richest D1-D4 record (growth-and-development+taxes); Hicks/Rojas local-environment=2.0 from AQMD advocacy near industrial zones; CARSON-01 FULLY CLOSED; next migration=724
 - [Phase ?]: CCSD chip determination
 - [Phase ?]: LV parked phase structure verified
+- [Phase 177]: Confirmed geo_id 4134100 for Hillsboro (CONTEXT.md's 4133850 was wrong/nonexistent); greenfield status, ext_id block -4134101..-4134107, next migration 1150, lowercase 'or' casing, and at-large routing (no ward geofences) all confirmed via Wave-0 probes
