@@ -682,10 +682,12 @@ M). **Use the corrected geo_id `4134100`** — do not copy `4133850` from CONTEX
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Is the qcode.us Hillsboro Charter Chapter VIII text directly verifiable, or only via
-   WebSearch summary?**
+   WebSearch summary?** *(RESOLVED-BY-PRECEDENT — appointed-City-Attorney/skip-judicial-topics
+   decision is implemented in Plan 04 with documented low-risk rationale; Beaverton and Boulder
+   City skipped judicial topics on the same grounds without issue.)*
    - What we know: WebSearch surfaced a summary claiming appointed City Attorney, sourced from
      `library.qcode.us/lib/hillsboro_or/pub/municipal_code/item/city_of_hillsboro_city_charter-chapter_viii`.
    - What's unclear: This research did not directly WebFetch that URL to quote the primary text
@@ -697,6 +699,8 @@ M). **Use the corrected geo_id `4134100`** — do not copy `4133850` from CONTEX
      similar (less-verified) grounds without issue.
 
 2. **Does the CivicWeb headshot CDN require a specific header/referrer to serve images?**
+   *(RESOLVED — operationally gated by Plan 177-01 Task 2.C: test-download gate with byte-validity
+   check and documented fallback before the headshot manifest is built.)*
    - What we know: The portal page itself returns 200 and lists image paths; one direct curl
      attempt at the Mayor's image path returned 200 status but 0 bytes written locally.
    - What's unclear: Whether this is a curl/local-write issue in the research sandbox, a

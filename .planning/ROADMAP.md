@@ -578,12 +578,22 @@ them and gets the correct Mayor + council member, with evidence-only stances on 
   4. Hillsboro surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
 **Plans**: 5 plans
-
 Plans:
+**Wave 1**
+
 - [ ] 177-01-PLAN.md — Wave-0 DB probes (geo_id 4134100, ext_id block, migration MAX), roster re-fetch, headshot retrievability test
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 177-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (representing_city inline)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 177-03-PLAN.md — 600×750 headshots (CivicWeb portal source) + audit-only image migration
 - [ ] 177-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations (one agent at a time)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 177-05-PLAN.md — Community banner + coverage.js Oregon-block purple hasContext chip + live-browse close
 
 ### Phase 178: City of Tigard Deep-Seed
