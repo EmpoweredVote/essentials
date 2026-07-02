@@ -98,6 +98,7 @@ export const COVERAGE_STATES = [
       { label: 'Beaverton',   browseGovernmentList: ['4105350'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Fairview',    browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
       { label: 'Gresham',     browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
+      { label: 'Hillsboro',   browseGovernmentList: ['4134100'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Maywood Park',browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
       { label: 'Portland',    browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Troutdale',   browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
