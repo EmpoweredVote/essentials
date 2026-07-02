@@ -585,7 +585,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 177-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (representing_city inline)
+- [x] 177-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (representing_city inline)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -745,7 +745,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
 | 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
 | 176. City of Beaverton Deep-Seed | 5/5 | Complete    | 2026-07-02 |
-| 177. City of Hillsboro Deep-Seed | 1/5 | In Progress|  |
+| 177. City of Hillsboro Deep-Seed | 2/5 | In Progress|  |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
 | 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
 | 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
