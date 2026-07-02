@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
 status: executing
-last_updated: "2026-07-02T20:07:07.904Z"
-last_activity: 2026-07-02 -- Phase 178 planning complete
+last_updated: "2026-07-02T21:14:27.208Z"
+last_activity: 2026-07-02 -- Phase 178 execution started
 progress:
   total_phases: 13
   completed_phases: 4
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 177 (city-of-hillsboro-deep-seed) — EXECUTING
-Plan: 5 of 5
-Status: Ready to execute
-Last activity: 2026-07-02 -- Phase 178 planning complete
+Phase: 178 (city-of-tigard-deep-seed) — EXECUTING
+Plan: 1 of 5
+Status: Executing Phase 178
+Last activity: 2026-07-02 -- Phase 178 execution started
 
 ### v20.0 roadmap (created 2026-06-30)
 
@@ -331,7 +331,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 177 — city-of-hillsboro-deep-seed
+**Current focus:** Phase 178 — city-of-tigard-deep-seed
 
 ## v15.0 Roadmap Summary
 
