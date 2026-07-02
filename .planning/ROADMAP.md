@@ -473,7 +473,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - [x] **Phase 174: West-Metro School-District Geofences** - Load G5420 geofence boundaries for 5 west-metro school districts (TIGER UNSD pattern); prerequisite for school-board phases (completed 2026-06-30)
 - [x] **Phase 175: Washington County Commission Deep-Seed** - Chair + commissioners, standalone county government (geo_id 41067), with stances (completed 2026-07-01)
 - [x] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large) (completed 2026-07-01)
-- [ ] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city)
+- [x] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city) (completed 2026-07-02)
 - [ ] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council
 - [ ] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council
 - [ ] **Phase 180: City of Forest Grove Deep-Seed** - Mayor + Council
@@ -594,7 +594,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 177-05-PLAN.md — Community banner + coverage.js Oregon-block purple hasContext chip + live-browse close
+- [x] 177-05-PLAN.md — Community banner + coverage.js Oregon-block purple hasContext chip + live-browse close
 
 ### Phase 178: City of Tigard Deep-Seed
 
@@ -745,7 +745,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 174. West-Metro School-District Geofences | 1/1 | Complete   | 2026-06-30 |
 | 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
 | 176. City of Beaverton Deep-Seed | 5/5 | Complete    | 2026-07-02 |
-| 177. City of Hillsboro Deep-Seed | 4/5 | In Progress|  |
+| 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
 | 178. City of Tigard Deep-Seed | 0/TBD | Not started | - |
 | 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
 | 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
