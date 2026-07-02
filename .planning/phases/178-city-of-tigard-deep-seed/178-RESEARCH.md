@@ -492,7 +492,9 @@ Tigard resident address
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED — dispositioned into plans)
+
+> Plan-checker disposition 2026-07-02: Q1 → non-blocking by this research's own finding (both scenarios are non-elected; skip-judicial-* holds either way). Q2 → deliberately an execution-time search task in 178-03 (genuine gaps are an acceptable, documented outcome). Q3 → resolved procedurally via 178-01's Wave-0 fresh-roster re-fetch gate.
 
 1. **Exact "who appoints the City Attorney" charter clause text**
    - What we know: WebSearch aggregation states Council appoints City Manager, City Attorney, and Municipal Court Judge; charter §4.2 describes City Attorney qualifications but the appointing-body clause specifically was not captured verbatim due to a fetch/grep gap in this session.
