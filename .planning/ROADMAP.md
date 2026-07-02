@@ -543,7 +543,8 @@ custom ward geofences needed; all seats + Mayor link to the existing city geofen
   2. The full seated roster is seeded with correct office structure and seat count; all officials render with 600×750 headshots (genuine gaps documented).
   3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
   4. Beaverton surfaces with the purple `hasContext` chip in `src/lib/coverage.js` (Oregon block).
-**Plans**: 5 plans (migrations 1131 structural + 1132 headshots + 1133-1139 stances)
+
+**Plans**: 5 plans (migrations 1131 structural + 1132 headshots + 1133-1139 stances)
 **Wave 1**
 
 - [x] 176-01-PLAN.md - Wave-0 DB probes (ext_id block free, migration MAX, no dup gov, geofence exists, Position 1 seated, live topic_keys)
@@ -567,7 +568,7 @@ custom ward geofences needed; all seats + Mayor link to the existing city geofen
 
 **Goal**: A Hillsboro resident (Washington County seat / largest WashCo city) looks up who represents
 them and gets the correct Mayor + council member, with evidence-only stances on their profiles.
-**Depends on**: Existing OR TIGER city geofences (geo_id 4133850, already present from v8.0)
+**Depends on**: Existing OR TIGER city geofences (geo_id 4134100, already present from v8.0 — note: the correct place code is 4134100; the earlier 4133850 value was wrong / nonexistent in geofence_boundaries)
 **Requirements**: WASH-03
 **Success Criteria** (what must be TRUE):
 
@@ -576,7 +577,14 @@ them and gets the correct Mayor + council member, with evidence-only stances on 
   3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
   4. Hillsboro surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 177-01-PLAN.md — Wave-0 DB probes (geo_id 4134100, ext_id block, migration MAX), roster re-fetch, headshot retrievability test
+- [ ] 177-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (representing_city inline)
+- [ ] 177-03-PLAN.md — 600×750 headshots (CivicWeb portal source) + audit-only image migration
+- [ ] 177-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations (one agent at a time)
+- [ ] 177-05-PLAN.md — Community banner + coverage.js Oregon-block purple hasContext chip + live-browse close
 
 ### Phase 178: City of Tigard Deep-Seed
 
