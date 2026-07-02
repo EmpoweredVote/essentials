@@ -474,7 +474,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - [x] **Phase 175: Washington County Commission Deep-Seed** - Chair + commissioners, standalone county government (geo_id 41067), with stances (completed 2026-07-01)
 - [x] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large) (completed 2026-07-01)
 - [x] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city) (completed 2026-07-02)
-- [ ] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council
+- [x] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council (completed 2026-07-02)
 - [ ] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council
 - [ ] **Phase 180: City of Forest Grove Deep-Seed** - Mayor + Council
 - [ ] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council
@@ -625,7 +625,7 @@ with evidence-only stances on their profiles.
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 178-05-PLAN.md — Community banner (cities/tigard.jpg) + coverage.js Oregon-block purple hasContext chip + buildingImages.js CURATED_LOCAL key + live-browse close
+- [x] 178-05-PLAN.md — Community banner (cities/tigard.jpg) + coverage.js Oregon-block purple hasContext chip + buildingImages.js CURATED_LOCAL key + live-browse close
 
 ### Phase 179: City of Tualatin Deep-Seed
 
@@ -762,7 +762,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 175. Washington County Commission Deep-Seed | 3/3 | Complete    | 2026-07-01 |
 | 176. City of Beaverton Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
-| 178. City of Tigard Deep-Seed | 4/5 | In Progress|  |
+| 178. City of Tigard Deep-Seed | 5/5 | Complete   | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
 | 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
