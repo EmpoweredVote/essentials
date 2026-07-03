@@ -693,7 +693,7 @@ member, with evidence-only stances on their profiles.
 
 **Goal**: A Sherwood resident looks up who represents them and gets the correct Mayor + council
 member, with evidence-only stances on their profiles.
-**Depends on**: Existing OR TIGER city geofences (geo_id 4167450, already present from v8.0)
+**Depends on**: Existing OR TIGER city geofences (geo_id **4167100** — CORRECTED at plan time; the stated 4167450 returns 0 rows, does not exist; already present from v8.0)
 **Requirements**: WASH-07
 **Success Criteria** (what must be TRUE):
 
@@ -702,7 +702,23 @@ member, with evidence-only stances on their profiles.
   3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
   4. Sherwood surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 5 plans
+**Wave 1**
+
+- [ ] 181-01-PLAN.md — Wave-0 DB probes (geo_id CORRECTION 4167450→4167100, ext_id block -4167101..-4167107, migration MAX 1186→1187 [ledger 1178 trap]), direct sherwoodoregon.gov roster re-fetch (no WAF) + 7/7 headshot re-download + A4 judge-appointment confirm + banner-crop view + Open Question 2 seated-roster note
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 181-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (Forest Grove shape: directly-elected Mayor [2-YEAR term] + 6 plain-title Councilors, ALL is_appointed=false, representing_city inline, D-15 WR-B pairwise identity gate); mig 1187
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 181-03-PLAN.md — 600×750 headshots (all 7 direct from sherwoodoregon.gov static <img> tags, square 600×600 sources → width-crop to 4:5; WR-01 + D-15 WR-C + WR-A) + audit-only mig 1188
+- [ ] 181-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1189-1195 (one agent at a time, triple-gate; Oct-2025 housing-charter anchor + Open Question 2 + Mays pitfall + D-16 Pamplin)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 181-05-PLAN.md — Community banner (cities/sherwood.jpg, Railroad St Old Town CC BY 3.0 primary / Downtown alternate, D-14) + coverage.js Oregon-block purple hasContext chip (Portland↔Tigard slot, geo_id 4167100) + buildingImages.js CURATED_LOCAL single-word 'sherwood' key + live-browse close
 
 ### Phase 182: City of Cornelius Deep-Seed
 
@@ -797,7 +813,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
+| 181. City of Sherwood Deep-Seed | 0/5 | Not started | - |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
