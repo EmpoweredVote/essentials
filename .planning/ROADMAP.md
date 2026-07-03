@@ -671,7 +671,23 @@ member, with evidence-only stances on their profiles.
   3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
   4. Forest Grove surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 5 plans
+**Wave 1**
+
+- [ ] 180-01-PLAN.md — Wave-0 DB probes (geo_id 4126200 CONFIRMED correct — re-verify regardless, ext_id block -4126201..-4126207, migration MAX 1177→1178 [ledger 1169 trap]), direct forestgrove-or.gov roster re-fetch (no WAF; Schimmel-not-Truax recheck) + JS-capable headshot fetch attempt + A7 judge-appointment confirm + banner-crop view + 'forest grove' key confirm
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 180-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (Tualatin district shape + Tigard PLAIN 'Mayor'/'Councilor' titles, ALL is_appointed=false, representing_city inline, post-verify incl. independent geofence assertion + D-14 WR-02 in-file identity gate); mig 1178
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 180-03-PLAN.md — 600×750 headshots (JS-capable fetch of forestgrove-or.gov first, then D-16 fallback chain; genuine gap possible, no hard 7/7; D-14 WR-01 non-zero-exit pipeline) + audit-only mig 1179
+- [ ] 180-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1180-1186 (one agent at a time, triple-gate identity+count+context-parity; Falconer/Milwaukie + Truax pitfalls flagged)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 180-05-PLAN.md — Community banner (cities/forest-grove.jpg, Old College Hall CC BY 3.0 / Downtown FG PD alternate) + coverage.js Oregon-block purple hasContext chip (Fairview↔Gresham slot, geo_id 4126200) + buildingImages.js CURATED_LOCAL 'forest grove' space-key + live-browse close
 
 ### Phase 181: City of Sherwood Deep-Seed
 
