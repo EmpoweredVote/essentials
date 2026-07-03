@@ -477,7 +477,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - [x] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council (completed 2026-07-02)
 - [x] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [x] **Phase 180: City of Forest Grove Deep-Seed** - Mayor + Council (completed 2026-07-03)
-- [ ] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council
+- [x] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [ ] **Phase 182: City of Cornelius Deep-Seed** - Mayor + Council
 - [ ] **Phase 183: School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J** - Roster + headshots for the two largest west-metro school boards; 0 stances by design
 - [ ] **Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J** - Roster + headshots for three remaining school boards; 0 stances by design
@@ -714,11 +714,11 @@ member, with evidence-only stances on their profiles.
 **Wave 3** *(blocked on Wave 2 completion)*
 
 - [x] 181-03-PLAN.md — 600×750 headshots (all 7 direct from sherwoodoregon.gov static <img> tags, square 600×600 sources → width-crop to 4:5; WR-01 + D-15 WR-C + WR-A) + audit-only mig 1188
-- [ ] 181-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1189-1195 (one agent at a time, triple-gate; Oct-2025 housing-charter anchor + Open Question 2 + Mays pitfall + D-16 Pamplin)
+- [x] 181-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1189-1195 (one agent at a time, triple-gate; Oct-2025 housing-charter anchor + Open Question 2 + Mays pitfall + D-16 Pamplin)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 181-05-PLAN.md — Community banner (cities/sherwood.jpg, Railroad St Old Town CC BY 3.0 primary / Downtown alternate, D-14) + coverage.js Oregon-block purple hasContext chip (Portland↔Tigard slot, geo_id 4167100) + buildingImages.js CURATED_LOCAL single-word 'sherwood' key + live-browse close
+- [x] 181-05-PLAN.md — Community banner (cities/sherwood.jpg, Railroad St Old Town CC BY 3.0 primary / Downtown alternate, D-14) + coverage.js Oregon-block purple hasContext chip (Portland↔Tigard slot, geo_id 4167100) + buildingImages.js CURATED_LOCAL single-word 'sherwood' key + live-browse close
 
 ### Phase 182: City of Cornelius Deep-Seed
 
@@ -813,7 +813,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 181. City of Sherwood Deep-Seed | 3/5 | In Progress|  |
+| 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |

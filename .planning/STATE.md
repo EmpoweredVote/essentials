@@ -2,24 +2,25 @@
 gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
-status: executing
-last_updated: "2026-07-03T20:15:10.999Z"
+status: ready_to_plan
+last_updated: 2026-07-03T23:06:59.911Z
 last_activity: 2026-07-03
 progress:
   total_phases: 13
   completed_phases: 7
   total_plans: 34
-  completed_plans: 32
+  completed_plans: 292
   percent: 54
+stopped_at: Phase 181 complete (5/5) — ready to discuss Phase 182
 ---
 
 # State
 
 ## Current Position
 
-Phase: 181 (City of Sherwood Deep-Seed) — EXECUTING
-Plan: 4 of 5
-Status: Ready to execute
+Phase: 182
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-07-03
 
 ### v20.0 roadmap (created 2026-06-30)
@@ -331,7 +332,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 181 — City of Sherwood Deep-Seed
+**Current focus:** Phase 182 — city of cornelius deep seed
 
 ## v15.0 Roadmap Summary
 
