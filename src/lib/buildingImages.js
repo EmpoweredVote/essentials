@@ -96,9 +96,11 @@ const STATE_NAME_TO_ABBREV = Object.fromEntries(
   ])
 );
 
-// US Capitol west front (public domain, Wikimedia Commons), cropped to a wide
-// banner with the dome centered. Hosted in production storage (cache-safe path).
-const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/national/us-capitol-banner.jpg';
+// US Capitol from the Capitol Reflecting Pool (Wikimedia Commons) —
+//   Panorama at the Capitol Reflecting Pool (September 2023) 02 | DiscoA340 | CC BY-SA 4.0
+// Leveled 0.6° and cropped to 1700x540 with a thin water strip anchoring the bottom
+// (operator-selected 2026-07-03). v2 filename busts the CDN cache on the old path.
+const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/national/us-capitol-banner-v2.jpg';
 
 // Curated standalone-city banner art (cities/<slug>.jpg in Storage, D-05) +
 // LA-county skylines (la_county/building_photos/<geoid>.jpg). Attribution
