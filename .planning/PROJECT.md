@@ -289,4 +289,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-03 — v20.0 in progress: Phase 179 City of Tualatin deep-seed complete (WASH-05 — 7 officials, 7/7 headshots, 59 cited stances, CC BY-SA banner, verified live in-session); phases 174-178 complete; next Phase 180 Forest Grove; v19.0 Dark-Mode Redesign parked (169–172); v18.0 Las Vegas & Clark County, NV shipped*
+*Last updated: 2026-07-03 — v20.0 in progress: Phase 180 City of Forest Grove deep-seed complete (WASH-06 — 7 officials, 7/7 headshots via D-16 local-news chain, 39 cited stances, CC BY 3.0 Old College Hall banner, verified live in-session; WR-01/WR-02 template fixes shipped); phases 174-179 complete; next Phase 181 Sherwood; v19.0 Dark-Mode Redesign parked (169–172); v18.0 Las Vegas & Clark County, NV shipped*
