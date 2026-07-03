@@ -108,7 +108,7 @@ const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/
 //   hillsboro - East end of Orenco Station Plaza with MAX train arriving (2016) | Steve Morgan | CC BY-SA 4.0
 //   tigard - Downtown Tigard Oregon | M.O. Stevens (Aboutmovies) | Public Domain
 //   tualatin - Tualatin Commons daytime | M.O. Stevens (Aboutmovies) | CC BY-SA 3.0
-//   forest grove - Old College Hall, Pacific University (back) | M.O. Stevens (Aboutmovies) | CC BY 3.0
+//   forest grove - Aerial View of Forest Grove, Oregon | Meronim | CC BY-SA 3.0
 const CURATED_LOCAL = {
   bloomington: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bloomington.jpg',
   beaverton: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/beaverton.jpg',
