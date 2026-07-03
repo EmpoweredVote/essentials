@@ -678,7 +678,7 @@ member, with evidence-only stances on their profiles.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 180-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (Tualatin district shape + Tigard PLAIN 'Mayor'/'Councilor' titles, ALL is_appointed=false, representing_city inline, post-verify incl. independent geofence assertion + D-14 WR-02 in-file identity gate); mig 1178
+- [x] 180-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (Tualatin district shape + Tigard PLAIN 'Mayor'/'Councilor' titles, ALL is_appointed=false, representing_city inline, post-verify incl. independent geofence assertion + D-14 WR-02 in-file identity gate); mig 1178
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -796,7 +796,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 180. City of Forest Grove Deep-Seed | 1/5 | In Progress|  |
+| 180. City of Forest Grove Deep-Seed | 2/5 | In Progress|  |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
