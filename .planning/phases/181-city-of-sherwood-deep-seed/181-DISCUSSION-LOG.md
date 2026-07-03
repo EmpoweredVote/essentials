@@ -18,12 +18,13 @@
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Old Town Sherwood street view (recommended) | Historic Smockville main street / Cannery Square area; ground-level everyday scene per the 180 lesson; operator picks from Wikimedia Category:Sherwood, Oregon gallery | ✓ (AFK default) |
-| Landmark subject | Rejected class — 180 operator rejected Old College Hall roofline crop | |
+| Old Town Sherwood street view (recommended) | Historic Smockville main street / Cannery Square area; ground-level everyday scene per the 180 lesson; operator picks from Wikimedia Category:Sherwood, Oregon gallery | ✓ (AFK default, then user-refined) |
+| Multi-roofline skyline | "Dallas Skyline"-style wide framing with many buildings — user confirmed this class also works | ✓ (acceptable alternate) |
+| Single-building roof crop | Rejected class — the landmark search often decays into a zoomed closeup of one unidentifiable building's roof (180 Old College Hall) | |
 | Aerial view | Rejected class — 180 operator rejected the community aerial ("nobody sees their town from a plane") | |
 
-**User's choice:** AFK — recommended option applied (D-14).
-**Notes:** 180 lesson recorded in memory: street-level main-street scenes win; browse the Wikimedia city category and present ground-level candidates first. License + crop quality still beat subject preference.
+**User's choice:** AFK default applied, then refined by the user post-discussion (2026-07-03): "landmark rooflines work when it's multiple rooflines... If we go the landscape route, it can't be a zoomed in crop of the top of a building. More like 'Dallas Skyline' or 'New York City Skyline'."
+**Notes:** Refined rule recorded in [[feedback_deepseed_community_banner]] and D-14. License + crop quality still beat subject preference.
 
 ---
 
