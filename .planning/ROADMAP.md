@@ -631,7 +631,7 @@ with evidence-only stances on their profiles.
 
 **Goal**: A Tualatin resident looks up who represents them and gets the correct Mayor + council
 member, with evidence-only stances on their profiles.
-**Depends on**: Existing OR TIGER city geofences (geo_id 4175200, already present from v8.0)
+**Depends on**: Existing OR TIGER city geofences (geo_id **4174950** — CORRECTED at plan time; the stated 4175200 returns 0 rows, does not exist; already present from v8.0)
 **Requirements**: WASH-05
 **Success Criteria** (what must be TRUE):
 
@@ -640,7 +640,23 @@ member, with evidence-only stances on their profiles.
   3. Evidence-only compass stances render on profiles — 100% cited, honest blank spokes, no default values.
   4. Tualatin surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
-**Plans**: TBD
+**Plans**: 5 plans
+**Wave 1**
+
+- [ ] 179-01-PLAN.md — Wave-0 DB probes (geo_id CORRECTION 4175200→4174950, ext_id block -4174951..-4174957, migration MAX 1168→1169 [ledger 1159 trap]), direct tualatinoregon.gov roster re-fetch (no WAF) + fresh WebSearch, headshot retrievability test
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 179-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (Beaverton shape: directly-elected Mayor + 6 numbered Positions, ALL is_appointed=false, representing_city inline, WR-01 post-verify incl. independent geofence assertion); mig 1169
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 179-03-PLAN.md — 600×750 headshots (all 7 direct from tualatinoregon.gov, no WAF, no fallback — D-16 unused; HARD assert 7/7) + audit-only mig 1170
+- [ ] 179-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1171-1177 (one agent at a time, triple-gate identity+count+context-parity)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 179-05-PLAN.md — Community banner (cities/tualatin.jpg, Tualatin Commons CC BY-SA 3.0) + coverage.js Oregon-block purple hasContext chip (Troutdale↔Wood Village slot, geo_id 4174950) + buildingImages.js CURATED_LOCAL key + live-browse close
 
 ### Phase 180: City of Forest Grove Deep-Seed
 
