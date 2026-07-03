@@ -682,8 +682,8 @@ member, with evidence-only stances on their profiles.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 180-03-PLAN.md — 600×750 headshots (JS-capable fetch of forestgrove-or.gov first, then D-16 fallback chain; genuine gap possible, no hard 7/7; D-14 WR-01 non-zero-exit pipeline) + audit-only mig 1179
-- [ ] 180-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1180-1186 (one agent at a time, triple-gate identity+count+context-parity; Falconer/Milwaukie + Truax pitfalls flagged)
+- [x] 180-03-PLAN.md — 600×750 headshots (JS-capable fetch of forestgrove-or.gov first, then D-16 fallback chain; genuine gap possible, no hard 7/7; D-14 WR-01 non-zero-exit pipeline) + audit-only mig 1179
+- [x] 180-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1180-1186 (one agent at a time, triple-gate identity+count+context-parity; Falconer/Milwaukie + Truax pitfalls flagged)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -796,7 +796,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 180. City of Forest Grove Deep-Seed | 2/5 | In Progress|  |
+| 180. City of Forest Grove Deep-Seed | 4/5 | In Progress|  |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
