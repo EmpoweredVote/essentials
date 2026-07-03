@@ -674,7 +674,7 @@ member, with evidence-only stances on their profiles.
 **Plans**: 5 plans
 **Wave 1**
 
-- [ ] 180-01-PLAN.md — Wave-0 DB probes (geo_id 4126200 CONFIRMED correct — re-verify regardless, ext_id block -4126201..-4126207, migration MAX 1177→1178 [ledger 1169 trap]), direct forestgrove-or.gov roster re-fetch (no WAF; Schimmel-not-Truax recheck) + JS-capable headshot fetch attempt + A7 judge-appointment confirm + banner-crop view + 'forest grove' key confirm
+- [x] 180-01-PLAN.md — Wave-0 DB probes (geo_id 4126200 CONFIRMED correct — re-verify regardless, ext_id block -4126201..-4126207, migration MAX 1177→1178 [ledger 1169 trap]), direct forestgrove-or.gov roster re-fetch (no WAF; Schimmel-not-Truax recheck) + JS-capable headshot fetch attempt + A7 judge-appointment confirm + banner-crop view + 'forest grove' key confirm
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -796,7 +796,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
+| 180. City of Forest Grove Deep-Seed | 1/5 | In Progress|  |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
