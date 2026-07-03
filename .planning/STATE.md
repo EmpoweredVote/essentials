@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
-status: executing
-last_updated: "2026-07-03T04:35:48.176Z"
+status: ready_to_plan
+last_updated: 2026-07-03T08:00:50.543Z
 last_activity: 2026-07-03 -- Phase 180 execution started
 progress:
   total_phases: 13
   completed_phases: 6
   total_plans: 29
-  completed_plans: 24
+  completed_plans: 287
   percent: 46
+stopped_at: Phase 180 complete (5/5) — ready to discuss Phase 181
 ---
 
 # State
 
 ## Current Position
 
-Phase: 180 (City of Forest Grove Deep-Seed) — EXECUTING
-Plan: 1 of 5
-Status: Executing Phase 180
-Last activity: 2026-07-03 -- Phase 180 execution started
+Phase: 181
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-07-03
 
 ### v20.0 roadmap (created 2026-06-30)
 
@@ -331,7 +332,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 180 — City of Forest Grove Deep-Seed
+**Current focus:** Phase 181 — city of sherwood deep seed
 
 ## v15.0 Roadmap Summary
 

@@ -796,7 +796,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 180. City of Forest Grove Deep-Seed | 5/5 | Complete   | 2026-07-03 |
+| 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
