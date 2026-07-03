@@ -475,7 +475,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - [x] **Phase 176: City of Beaverton Deep-Seed** - Mayor + Council (flagship; form of government verified at plan time — ward vs at-large) (completed 2026-07-01)
 - [x] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city) (completed 2026-07-02)
 - [x] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council (completed 2026-07-02)
-- [ ] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council
+- [x] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [ ] **Phase 180: City of Forest Grove Deep-Seed** - Mayor + Council
 - [ ] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council
 - [ ] **Phase 182: City of Cornelius Deep-Seed** - Mayor + Council
@@ -643,20 +643,20 @@ member, with evidence-only stances on their profiles.
 **Plans**: 5 plans
 **Wave 1**
 
-- [ ] 179-01-PLAN.md — Wave-0 DB probes (geo_id CORRECTION 4175200→4174950, ext_id block -4174951..-4174957, migration MAX 1168→1169 [ledger 1159 trap]), direct tualatinoregon.gov roster re-fetch (no WAF) + fresh WebSearch, headshot retrievability test
+- [x] 179-01-PLAN.md — Wave-0 DB probes (geo_id CORRECTION 4175200→4174950, ext_id block -4174951..-4174957, migration MAX 1168→1169 [ledger 1159 trap]), direct tualatinoregon.gov roster re-fetch (no WAF) + fresh WebSearch, headshot retrievability test
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 179-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (Beaverton shape: directly-elected Mayor + 6 numbered Positions, ALL is_appointed=false, representing_city inline, WR-01 post-verify incl. independent geofence assertion); mig 1169
+- [x] 179-02-PLAN.md — Structural seed: government + City Council chamber + 2 citywide districts + 7 offices (Beaverton shape: directly-elected Mayor + 6 numbered Positions, ALL is_appointed=false, representing_city inline, WR-01 post-verify incl. independent geofence assertion); mig 1169
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 179-03-PLAN.md — 600×750 headshots (all 7 direct from tualatinoregon.gov, no WAF, no fallback — D-16 unused; HARD assert 7/7) + audit-only mig 1170
-- [ ] 179-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1171-1177 (one agent at a time, triple-gate identity+count+context-parity)
+- [x] 179-03-PLAN.md — 600×750 headshots (all 7 direct from tualatinoregon.gov, no WAF, no fallback — D-16 unused; HARD assert 7/7) + audit-only mig 1170
+- [x] 179-04-PLAN.md — Evidence-only compass stances, 7 audit-only migrations 1171-1177 (one agent at a time, triple-gate identity+count+context-parity)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 179-05-PLAN.md — Community banner (cities/tualatin.jpg, Tualatin Commons CC BY-SA 3.0) + coverage.js Oregon-block purple hasContext chip (Troutdale↔Wood Village slot, geo_id 4174950) + buildingImages.js CURATED_LOCAL key + live-browse close
+- [x] 179-05-PLAN.md — Community banner (cities/tualatin.jpg, Tualatin Commons CC BY-SA 3.0) + coverage.js Oregon-block purple hasContext chip (Troutdale↔Wood Village slot, geo_id 4174950) + buildingImages.js CURATED_LOCAL key + live-browse close
 
 ### Phase 180: City of Forest Grove Deep-Seed
 
@@ -779,7 +779,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 176. City of Beaverton Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 177. City of Hillsboro Deep-Seed | 5/5 | Complete   | 2026-07-02 |
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
-| 179. City of Tualatin Deep-Seed | 0/TBD | Not started | - |
+| 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 180. City of Forest Grove Deep-Seed | 0/TBD | Not started | - |
 | 181. City of Sherwood Deep-Seed | 0/TBD | Not started | - |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
