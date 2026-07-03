@@ -190,7 +190,6 @@ export const COVERAGE_STATES = [
       { label: 'Henderson', browseGovernmentList: ['3231900'], browseStateAbbrev: 'NV', hasContext: true },
       { label: 'North Las Vegas', browseGovernmentList: ['3251800'], browseStateAbbrev: 'NV', hasContext: true },
       { label: 'Boulder City', browseGovernmentList: ['3206500'], browseStateAbbrev: 'NV', hasContext: true },
-      { label: 'Clark County School District', browseGeoId: '3200060', browseMtfcc: 'G5420', browseStateAbbrev: 'NV' },
     ],
   },
 ];
@@ -244,6 +243,13 @@ export const COVERAGE_COUNTIES = [
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
 ];
 
+// Covered school districts (school-board deep-seeds). Search-only (not shown on
+// the landing grid — a district chip among city chips reads out of place), same
+// convention as counties. Each routes through browse-by-geofence to the board.
+export const COVERAGE_SCHOOL_DISTRICTS = [
+  { label: 'Clark County School District', browseGeoId: '3200060', browseMtfcc: 'G5420', browseStateAbbrev: 'NV' },
+];
+
 // Browsable states — every US state (each has statewide officials seeded:
 // governor/AG/etc. + US Senators). A state routes to the "browse a state" view.
 // Built from STATE_NAME_TO_ABBREV; DC excluded (no statewide executives).
@@ -260,6 +266,7 @@ const ALL_COVERAGE_AREAS = [
     s.areas.map((a) => ({ ...a, kind: 'city', stateAbbrev: a.browseStateAbbrev || s.abbrev, stateName: s.name }))
   ),
   ...COVERAGE_COUNTIES.map((c) => ({ ...c, kind: 'county', stateAbbrev: c.browseStateAbbrev })),
+  ...COVERAGE_SCHOOL_DISTRICTS.map((d) => ({ ...d, kind: 'school district', stateAbbrev: d.browseStateAbbrev })),
   ...COVERAGE_BROWSE_STATES.map((s) => ({ ...s, kind: 'state' })),
 ];
 
