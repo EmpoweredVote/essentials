@@ -103,6 +103,7 @@ export const COVERAGE_STATES = [
       { label: 'Portland',    browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Tigard',      browseGovernmentList: ['4173650'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Troutdale',   browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
+      { label: 'Tualatin',    browseGovernmentList: ['4174950'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Wood Village',browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
     ],
   },
