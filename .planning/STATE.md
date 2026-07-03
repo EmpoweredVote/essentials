@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
 status: executing
-last_updated: "2026-07-03T18:01:23.590Z"
-last_activity: 2026-07-03 -- Phase 181 planning complete
+last_updated: "2026-07-03T18:38:10.116Z"
+last_activity: 2026-07-03
 progress:
   total_phases: 13
   completed_phases: 7
   total_plans: 34
-  completed_plans: 29
+  completed_plans: 30
   percent: 54
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 181
-Plan: Not started
+Phase: 181 (City of Sherwood Deep-Seed) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-07-03 -- Phase 181 planning complete
+Last activity: 2026-07-03
 
 ### v20.0 roadmap (created 2026-06-30)
 
@@ -331,7 +331,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 181 — city of sherwood deep seed
+**Current focus:** Phase 181 — City of Sherwood Deep-Seed
 
 ## v15.0 Roadmap Summary
 
@@ -424,9 +424,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-03T16:08:58.809Z
+Last session: 2026-07-03T18:28:01.468Z
 Stopped at: Phase 181 context gathered
-Resume file: .planning/phases/181-city-of-sherwood-deep-seed/181-CONTEXT.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -490,6 +490,7 @@ Resume file: .planning/phases/181-city-of-sherwood-deep-seed/181-CONTEXT.md
 | Phase 177 P03 | 20min | 3 tasks | 2 files |
 | Phase 177 P04 | 45min | 3 tasks | 7 files |
 | Phase 177 P05 | 15m | 3 tasks | 2 files |
+| Phase 181 P01 | 35m | 2 tasks | 1 files |
 
 ## Decisions
 
@@ -559,3 +560,6 @@ Resume file: .planning/phases/181-city-of-sherwood-deep-seed/181-CONTEXT.md
 - [Phase 177-04]: Hillsboro stances: 60 rows/7 officials, 100% cited, zero defaults; data-center split 3v3 (Sinclair/Alcaire/Harris vs Salgado/Anvery/Case); ICE/sanctuary Res 2906 anchors local-immigration for 6 members
 - [Phase 177]: Hillsboro banner: Wikimedia Commons Orenco Station Plaza MAX photo (Steve Morgan, CC BY-SA 4.0) chosen over Unsplash for clean license + civic/transit landmark recognizability
 - [Phase 177]: Live visual verification (banner render, purple chip, roster ordering) DEFERRED to post-deploy human UAT; Task 3 checkpoint auto-approved on code-level evidence only
+- [Phase ?]: Sherwood geo_id CORRECTED: 4167100 confirmed (stated 4167450 is 0 rows / does not exist)
+- [Phase ?]: Sherwood: pure at-large + directly-elected 2-year Mayor + 6 plain-title Councilors; next structural migration 1187
+- [Phase ?]: Sherwood A4 confirmed: City Attorney + Municipal Court Judge council-appointed — skip all 8 judicial-* topics in plan 04

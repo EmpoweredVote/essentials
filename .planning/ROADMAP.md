@@ -705,7 +705,7 @@ member, with evidence-only stances on their profiles.
 **Plans**: 5 plans
 **Wave 1**
 
-- [ ] 181-01-PLAN.md — Wave-0 DB probes (geo_id CORRECTION 4167450→4167100, ext_id block -4167101..-4167107, migration MAX 1186→1187 [ledger 1178 trap]), direct sherwoodoregon.gov roster re-fetch (no WAF) + 7/7 headshot re-download + A4 judge-appointment confirm + banner-crop view + Open Question 2 seated-roster note
+- [x] 181-01-PLAN.md — Wave-0 DB probes (geo_id CORRECTION 4167450→4167100, ext_id block -4167101..-4167107, migration MAX 1186→1187 [ledger 1178 trap]), direct sherwoodoregon.gov roster re-fetch (no WAF) + 7/7 headshot re-download + A4 judge-appointment confirm + banner-crop view + Open Question 2 seated-roster note
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -813,7 +813,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 178. City of Tigard Deep-Seed | 5/5 | Complete    | 2026-07-02 |
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 181. City of Sherwood Deep-Seed | 0/5 | Not started | - |
+| 181. City of Sherwood Deep-Seed | 1/5 | In Progress|  |
 | 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
