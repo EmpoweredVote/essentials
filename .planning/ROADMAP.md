@@ -770,7 +770,24 @@ SCHOOL districts that reference these geofences)
   3. A Beaverton address returns the correct Beaverton SD board member; a Hillsboro address returns the correct Hillsboro SD board member.
   4. Both school boards are listed in `src/lib/coverage.js` (plain chip — 0 stances by design is honest; no `hasContext: true`).
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+**Wave 1**
+
+- [ ] 183-01-PLAN.md — Wave-0 DB/roster/headshot probes: both G5420 geofences valid, greenfield, ext_id blocks free, next migration 1203/1204, both 7-director rosters + whole-district at-large re-confirmed (D-Z1 zone branch does NOT fire), 14 finalsite headshot URLs HTTP 200, verbatim chamber + office-title strings locked
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 183-02-PLAN.md — Structural migration 1203: 2 governments + 2 verbatim chambers ('School Board' / 'Board of Directors') + 2 single-shared SCHOOL districts on the existing Phase-174 geofences + 14 director offices (7 'Director, Zone N' + 7 'Director, Position N', Chair/Vice-Chair as title-on-seat) + dual-district post-verify DO block + ledger registration
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 183-03-PLAN.md — Headshots: _tmp-westmetro-school-wave1-headshots.py (14 finalsite sources, crop-4:5->600x750 Lanczos q90, WR-01/02/C fixes) + audit-only migration 1204 (politician_images, no ledger row); document genuine low-res gaps, no fabrication
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 183-04-PLAN.md — Surfacing + full E2E: append 2 plain COVERAGE_SCHOOL_DISTRICTS entries (no hasContext) + SQL/HTTP gate suite + push -> deploy-by-content -> Playwright live browse of both G5420 links + human-verify
 
 ### Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J
 
@@ -835,7 +852,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 182. City of Cornelius Deep-Seed | 5/5 | Complete    | 2026-07-04 |
-| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
+| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/4 | Not started | - |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
 | 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 186. West-Metro Playbook Retrospective & Close | 0/TBD | Not started | - |
