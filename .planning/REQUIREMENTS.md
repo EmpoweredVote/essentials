@@ -117,8 +117,8 @@ Per city/government deliverable (the Tier 1 unit):
 | WASH-06 | Phase 180 | Complete |
 | WASH-07 | Phase 181 | Complete |
 | WASH-08 | Phase 182 | Complete |
-| WSCH-01 | Phase 183 | Pending |
-| WSCH-02 | Phase 183 | Pending |
+| WSCH-01 | Phase 183 | Complete |
+| WSCH-02 | Phase 183 | Complete |
 | WSCH-03 | Phase 184 | Pending |
 | WSCH-04 | Phase 184 | Pending |
 | WSCH-05 | Phase 184 | Pending |
