@@ -134,3 +134,9 @@ Values confirmed and ready for the orchestrator to apply/verify:
 - **official_count:** 5 (Mayor + 4 councilor seats, 1 vacant).
 - **Next migration after 1196:** 1197 (for plan 03's headshot migration).
 
+## Self-Check: PASSED
+
+- FOUND: `C:/EV-Accounts/backend/migrations/1196_cornelius_city_council.sql`
+- FOUND: commit `335c650` (SUMMARY.md)
+- No unexpected file deletions in the commit.
+
