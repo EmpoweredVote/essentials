@@ -10,8 +10,9 @@ requires:
     plan: 02
     provides: "Migration 1196 applied (a5f62cfe); minted politician UUIDs for the 4 filled Cornelius seats; next migration 1197"
 provides:
-  - "_tmp-cornelius-headshots.py (gitignored helper, NOT committed) — download/composite-onto-white/(no-op crop)/resize/upload pipeline for the 4 filled Cornelius officials, WR-01 exit + WR-C empty-roster guard + WR-02 prefetch retained"
-  - "1197_cornelius_headshots.sql (authored, NOT yet applied) — audit-only politician_images INSERTs for the 4 filled officials, count=4 url-embeds-uuid gate, WR-A-synced note"
+  - "_tmp-cornelius-headshots.py (gitignored helper, NOT committed) — download/composite-onto-white/(no-op crop)/resize/upload pipeline for the 4 filled Cornelius officials, WR-01 exit + WR-C empty-roster guard + WR-02 prefetch retained; RUN by orchestrator 2026-07-03, 4/4 uploaded, 0 failed"
+  - "1197_cornelius_headshots.sql — APPLIED audit-only migration (commit a56be249 in C:/EV-Accounts): 4 politician_images rows for the filled officials, count=4 url-embeds-uuid gate PASSED, WR-A-synced note"
+  - "All 4 filled Cornelius officials have live 600x750 headshots at politician_photos/{uuid}-headshot.jpg (identity + quality verified by orchestrator); vacant 5th seat correctly has no photo"
 affects: [182-04-city-of-cornelius-deep-seed, 182-05-city-of-cornelius-deep-seed]
 
 # Tech tracking
@@ -23,8 +24,8 @@ tech-stack:
 
 key-files:
   created:
-    - "C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py (separate repo, gitignored, NOT committed; 498 lines)"
-    - "C:/EV-Accounts/backend/migrations/1197_cornelius_headshots.sql (separate repo; authored, awaiting orchestrator apply + commit; 101 lines)"
+    - "C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py (separate repo, gitignored, NOT committed; 498 lines; run by orchestrator, 4/4 uploaded)"
+    - "C:/EV-Accounts/backend/migrations/1197_cornelius_headshots.sql (separate repo; applied to production and committed there as a56be249 by the orchestrator; 101 lines)"
   modified: []
 
 key-decisions:
@@ -34,7 +35,7 @@ key-decisions:
   - "license='press_use' for all 4 filled officials — uniform official city-site studio portraits; orchestrator may adjust per actual source at run time per plan direction"
   - "UUIDs resolved at RUNTIME by external_id via psycopg2 in the script; the migration's INSERT blocks use the same 4 UUIDs pre-filled from 182-02-SUMMARY.md's minted values, per the Sherwood 1188 audit-migration template shape"
 
-requirements-completed: []  # WASH-08 spans plans 01-05; this plan authors the headshot artifacts. Pipeline run + migration apply happens in the orchestrator's Task 3 checkpoint (not yet executed) — full WASH-08 completion belongs to plan 05 / phase close.
+requirements-completed: []  # WASH-08 spans plans 01-05; this plan delivers the headshot portion (pipeline run + migration 1197 applied + verified, Task 3 approved). Full WASH-08 completion belongs to plan 05 / phase close.
 
 # Metrics
 duration: 15min
@@ -43,13 +44,13 @@ completed: 2026-07-04
 
 # Phase 182 Plan 03: City of Cornelius Headshot Pipeline + Audit Migration Summary
 
-**Authored `_tmp-cornelius-headshots.py` (498 lines, cloned from the Sherwood WR-01/WR-02/WR-C template) and `1197_cornelius_headshots.sql` (101 lines, cloned from the Sherwood 1188 audit-migration shape) for the 4 filled Cornelius officials (Dalin/Godinez Valencia/Baker/López) — the RGBA-onto-white composite step is the primary exercised pipeline step this phase (all 4 sources are transparent-PNG circular cutouts already exactly 4:5, so the crop guard is a confirmed no-op) — with the vacant 5th seat correctly excluded from both artifacts as a documented genuine gap; Task 3 (pipeline run + migration apply + visual verification + EV-Accounts commit) is a blocking checkpoint reserved for the orchestrator, which has DB/Storage access this agent lacks.**
+**Authored `_tmp-cornelius-headshots.py` (498 lines, cloned from the Sherwood WR-01/WR-02/WR-C template) and `1197_cornelius_headshots.sql` (101 lines, cloned from the Sherwood 1188 audit-migration shape) for the 4 filled Cornelius officials (Dalin/Godinez Valencia/Baker/López) — the RGBA-onto-white composite step is the primary exercised pipeline step this phase (all 4 sources are transparent-PNG circular cutouts already exactly 4:5, so the crop guard is a confirmed no-op) — with the vacant 5th seat correctly excluded from both artifacts as a documented genuine gap; the orchestrator RAN the pipeline (4/4 uploaded, clean pure-white corners verified per-official), APPLIED migration 1197 (url-embeds-uuid gate passed, 4 rows), and COMMITTED it in C:/EV-Accounts as a56be249 — Task 3 checkpoint approved.**
 
 ## Performance
 
-- **Duration:** ~15 min (Tasks 1-2 authoring)
-- **Completed:** 2026-07-04 (authored; Task 3 checkpoint not yet executed)
-- **Tasks:** 2 of 3 completed by this agent (Task 3 is the orchestrator's blocking checkpoint per the plan's explicit execution architecture)
+- **Duration:** ~15 min (Tasks 1-2 authoring) + orchestrator Task 3 run/apply/verify round-trip
+- **Completed:** 2026-07-04 (Tasks 1-2 authored 02:38Z; Task 3 run/applied/verified/committed by orchestrator, approved 2026-07-03)
+- **Tasks:** 3 of 3 completed (Task 3 checkpoint executed by the orchestrator per the plan's execution architecture and approved)
 - **Files modified:** 2 (both outside this worktree's repo)
 
 ## Accomplishments
@@ -80,16 +81,17 @@ repository (`C:/EV-Accounts`) per the plan's explicit execution architecture ("g
 both files... The INLINE ORCHESTRATOR runs `_tmp-cornelius-headshots.py`... then applies the audit
 migration via `psql -f`"). No files inside this worktree were created or modified by Tasks 1-2;
 `git status --short` in this worktree returns clean except for this SUMMARY.md. Per the plan's
-explicit instruction, the `.py` file is a gitignored `_tmp-*` helper that must NOT be committed
-anywhere; the `.sql` migration is committed in the `C:/EV-Accounts` repo only by the orchestrator,
-after Task 3's pipeline run + migration apply + visual verification succeed.
+explicit instruction, the `.py` file is a gitignored `_tmp-*` helper that was NOT committed
+anywhere (verified by the orchestrator at Task 3); the `.sql` migration was committed in the
+`C:/EV-Accounts` repo by the orchestrator as **a56be249** on master (after the pipeline run +
+migration apply + visual verification all passed, with nothing pre-staged — D-16 check clean).
 
-**Plan metadata:** SUMMARY.md commit (this file) — see final response for hash.
+**Plan metadata:** SUMMARY.md commits (this file) — `4b69d46` (initial), plus the Task-3 results commit (see final response).
 
 ## Files Created/Modified
 
-- `C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py` — headshot pipeline script (separate repo; gitignored; NOT committed; 498 lines)
-- `C:/EV-Accounts/backend/migrations/1197_cornelius_headshots.sql` — audit-only headshot migration (separate repo; authored, awaiting orchestrator apply + commit; 101 lines)
+- `C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py` — headshot pipeline script (separate repo; gitignored; NOT committed; 498 lines; run by orchestrator, 4/4 uploaded)
+- `C:/EV-Accounts/backend/migrations/1197_cornelius_headshots.sql` — audit-only headshot migration (separate repo; applied to production and committed there as a56be249)
 
 ## Decisions Made
 
@@ -110,28 +112,63 @@ line with the same precedent set by plan 02. Proceeded using the plan's own deta
 value used (documentIDs, ext_ids, UUIDs, license, vacant-seat documentID=1975 warning). No
 functional impact.
 
+## Pipeline Run Results
+
+Task 3 checkpoint executed by the orchestrator and approved. Results recorded verbatim below.
+
+PIPELINE RUN RESULTS (orchestrator, 2026-07-03):
+
+Script run (`py scripts/_tmp-cornelius-headshots.py`): **4/4 uploaded, 0 failed.**
+- Dalin → politician_photos/856f7e70-a846-4ba3-a0df-e7d8146ed11a-headshot.jpg (80,665 bytes)
+- Godinez Valencia → f75a20a9-1a22-4d23-ac9c-ac1040e27754-headshot.jpg (81,012 bytes)
+- Baker → 31df8939-d8ba-4b54-9c69-18317d7096ee-headshot.jpg (80,797 bytes)
+- López → 18d8515e-3b3e-4d53-a1a3-4eece6e17dcc-headshot.jpg (65,161 bytes)
+
+(Console showed "Ed�n L�pez" mojibake — Windows console codepage display only; DB name verified
+intact, filenames are UUID-based, no data impact.)
+
+Visual identity/quality check (all 4 downloaded from CDN and inspected): correct person per
+official (Dalin gray-bearded Mayor; Godinez Valencia; Baker young June-2026 appointee; López),
+600×750 RGB, all four corners pure white (255,255,255) — clean composite, no black-corner
+artifact, no distortion, no overlays. Circular city portraits on navy background composited onto
+white, consistent with the milestone style.
+
+Migration 1197 applied: BEGIN, 4× INSERT 0 1, DO, COMMIT — url-embeds-uuid gate passed.
+Post-apply audit: 4 rows in politician_images, all type='default', photo_license='press_use',
+url_embeds_uuid=t for all 4.
+
+EV-Accounts commit: checked staged state first (nothing pre-staged — D-16 clean), staged ONLY
+backend/migrations/1197_cornelius_headshots.sql → commit **a56be249** on master. The _tmp-*.py
+helper NOT committed (gitignored, correct).
+
+Vacant seat: no photo, documented genuine gap — confirmed.
+
 ## User Setup Required
 
-None for this plan's authored artifacts. Task 3 (pipeline run, migration apply, visual
-verification, EV-Accounts commit) requires the orchestrator's DB/Storage access, which this
-executor does not have — that checkpoint is returned below, unexecuted, per the plan's explicit
-execution architecture.
+None - no external service configuration required.
 
 ## Next Phase Readiness
 
-**Tasks 1-2 complete. Task 3 is a blocking checkpoint for the orchestrator** — this executor has
-no DB/Storage access and cannot run `_tmp-cornelius-headshots.py` or apply
-`1197_cornelius_headshots.sql`. Values the orchestrator needs:
+**ALL THREE TASKS COMPLETE — the headshot portion of WASH-08 is delivered end-to-end.** Confirmed
+values downstream plans must use:
 
-- **Script path:** `C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py` (run via `python`)
-- **Migration path:** `C:/EV-Accounts/backend/migrations/1197_cornelius_headshots.sql` (apply via `psql "$DATABASE_URL" -f`)
-- **Expected outcome:** 4/4 headshots uploaded (Dalin/Godinez Valencia/Baker/López), clean white backgrounds (no black corners from the transparent-PNG sources), no crop artifacts (source already 4:5), politician_images row count = 4, url-embeds-uuid DO block passes.
-- **Vacant seat (-4115555):** correctly has NO image — do not force one.
-- **Commit protocol:** check `git -C "C:/EV-Accounts" status` first (D-16); stage ONLY `backend/migrations/1197_cornelius_headshots.sql`; do NOT commit the `_tmp-*.py` helper.
-- **After Task 3 approval:** plan 03 is complete; plans 04 (stances) and 05 (close) can proceed. Plan 04 does not depend on plan 03's headshots (stances are independent of photos), so plan 04 may already be running in parallel per the phase's wave structure.
+- **Headshot CDN paths (all live, HTTP 200 verified by orchestrator):**
+  - Dalin: `politician_photos/856f7e70-a846-4ba3-a0df-e7d8146ed11a-headshot.jpg`
+  - Godinez Valencia: `politician_photos/f75a20a9-1a22-4d23-ac9c-ac1040e27754-headshot.jpg`
+  - Baker: `politician_photos/31df8939-d8ba-4b54-9c69-18317d7096ee-headshot.jpg`
+  - López: `politician_photos/18d8515e-3b3e-4d53-a1a3-4eece6e17dcc-headshot.jpg`
+- **Coverage:** 4/4 filled seats (best-in-milestone direct sourcing held — no regression, no
+  fallback chain needed). The vacant 5th seat (-4115555) correctly has NO image — a documented
+  genuine gap, never a former officeholder's photo.
+- **Migration 1197:** applied to production (audit-only, NOT in the ledger), committed in
+  C:/EV-Accounts as a56be249. On-disk migration counter now at 1197; next available number for
+  plan 04's stance migrations per that plan's own allocation (1198-1201 reserved for stances).
+- **Plans 04 (stances) and 05 (surfacing/close):** unblocked with respect to this plan; plan 04
+  runs independently of headshots and may already be complete or in flight per the wave structure.
 
 ## Self-Check: PASSED
 
 - FOUND: `C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py` (498 lines)
 - FOUND: `C:/EV-Accounts/backend/migrations/1197_cornelius_headshots.sql` (101 lines)
+- FOUND: commit `4b69d46` (SUMMARY.md initial)
 - No unexpected file deletions.
