@@ -10,7 +10,8 @@ requires:
     plan: 01
     provides: "Wave-0 verified geo_id 4115550, ext_id block -4115551..-4115555, next migration 1196, vacant-seat decision option (a), roster confirmation"
 provides:
-  - "1196_cornelius_city_council.sql — authored structural migration (not yet applied): government + chamber + 2 districts + 5 offices (4 filled + 1 vacant) + office_id backfill + post-verify DO block + ledger row"
+  - "1196_cornelius_city_council.sql — APPLIED structural migration (commit a5f62cfe in C:/EV-Accounts): government + chamber + 2 districts + 5 offices (4 filled + 1 vacant) + office_id backfill + post-verify DO block + ledger row"
+  - "Minted politician UUIDs for plans 03/04: Dalin 856f7e70-a846-4ba3-a0df-e7d8146ed11a, Godinez Valencia f75a20a9-1a22-4d23-ac9c-ac1040e27754, Baker 31df8939-d8ba-4b54-9c69-18317d7096ee, López 18d8515e-3b3e-4d53-a1a3-4eece6e17dcc"
 affects: [182-03-city-of-cornelius-deep-seed, 182-04-city-of-cornelius-deep-seed, 182-05-city-of-cornelius-deep-seed]
 
 # Tech tracking
@@ -23,7 +24,7 @@ tech-stack:
 
 key-files:
   created:
-    - "C:/EV-Accounts/backend/migrations/1196_cornelius_city_council.sql (separate repo, NOT yet committed there — awaiting orchestrator apply + commit)"
+    - "C:/EV-Accounts/backend/migrations/1196_cornelius_city_council.sql (separate repo; applied to production and committed there as a5f62cfe by the orchestrator)"
   modified: []
 
 key-decisions:
@@ -33,7 +34,7 @@ key-decisions:
   - "Geofence post-verify gate strengthened to check name='Cornelius city' (not existence alone) — this phase's Pitfall 1, the 4115350/Coquille trap"
   - "Pairwise (external_id, full_name) identity gate used (D-15 WR-B pattern) instead of two independent IN-list membership checks, so a name/id transposition on re-run cannot silently pass"
 
-requirements-completed: []  # WASH-08 spans plans 01-05; this plan only authors the structural migration. Task 2 (apply + verify + commit) is reserved for the orchestrator per the plan's stated execution architecture and has NOT yet run.
+requirements-completed: []  # WASH-08 spans plans 01-05; this plan delivers the roster/structure portion (migration applied + verified). Full WASH-08 completion belongs to plan 05 / phase close.
 
 # Metrics
 duration: 20min
@@ -42,13 +43,13 @@ completed: 2026-07-04
 
 # Phase 182 Plan 02: City of Cornelius Structural Migration Summary
 
-**Authored `1196_cornelius_city_council.sql` (419 lines, UTF-8 no BOM) seeding City of Cornelius (geo_id 4115550) + City Council chamber (official_count=5) + LOCAL_EXEC/LOCAL districts + 5 offices — Mayor Dalin (elected) + Councilor Godinez Valencia (elected, Council-President title-on-seat) + Councilor Baker (appointed) + Councilor Edén López (appointed, first accented name this milestone) + 1 genuine TX-23-precedent vacant seat — with the D-16 chamber-CTE hoist, a strengthened name-matched geofence gate, and a pairwise identity gate; migration is authored and verified by inspection only — Task 2 (psql apply + orchestrator E2E verification + commit in the C:/EV-Accounts repo) is reserved for the orchestrator per this plan's explicit execution architecture and has not yet run.**
+**Authored and APPLIED `1196_cornelius_city_council.sql` (419 lines, UTF-8 no BOM) seeding City of Cornelius (geo_id 4115550) + City Council chamber (official_count=5) + LOCAL_EXEC/LOCAL districts + 5 offices — Mayor Dalin (elected) + Councilor Godinez Valencia (elected, Council-President title-on-seat) + Councilor Baker (appointed) + Councilor Edén López (appointed, first accented name this milestone, accent verified intact live) + 1 genuine TX-23-precedent vacant seat — with the D-16 chamber-CTE hoist, a strengthened name-matched geofence gate that confirmed 'Cornelius city' (not the Coquille trap), and a pairwise identity gate; in-migration DO block emitted Post-verification PASSED, independent E2E gate a-i all passed, and the migration was committed in C:/EV-Accounts as a5f62cfe with 4 minted politician UUIDs recorded for plans 03/04.**
 
 ## Performance
 
-- **Duration:** ~20 min (Task 1 authoring only)
-- **Completed:** 2026-07-04T02:20:00Z (Task 1); Task 2 pending orchestrator action
-- **Tasks:** 1 of 2 completed by this executor (Task 2 is `checkpoint:human-verify` reserved for the orchestrator — see `<mcp_tools>` constraint: this agent has no DB access)
+- **Duration:** ~20 min (Task 1 authoring) + orchestrator Task 2 apply/verify round-trip
+- **Completed:** 2026-07-04 (Task 1 authored 02:20Z; Task 2 applied/verified/committed by orchestrator, approved 2026-07-03)
+- **Tasks:** 2 of 2 completed (Task 2 checkpoint executed by the orchestrator per the plan's execution architecture and approved)
 - **Files modified:** 1 (outside this worktree's repo)
 
 ## Accomplishments
@@ -74,15 +75,15 @@ This plan has no in-worktree code commits for Task 1: the plan's sole artifact
 per the plan's explicit execution architecture ("gsd-executor WRITES the `.sql` file... The
 INLINE ORCHESTRATOR applies it via `psql` ... and commits it in the C:/EV-Accounts repo"). No
 files inside this worktree were created or modified by Task 1; `git status --short` in this
-worktree returns clean. The migration file itself has NOT been committed in the C:/EV-Accounts
-repo — that commit happens only after the orchestrator applies it and the in-migration + E2E
-gates pass (Task 2).
+worktree returns clean. The migration file was committed in the C:/EV-Accounts repo by the
+orchestrator as **a5f62cfe** on master (after the in-migration + E2E gates passed at Task 2, with
+only the 1196 file staged — no pre-staged trap).
 
-**Plan metadata:** SUMMARY.md commit (this file) — see commit hash in final response.
+**Plan metadata:** SUMMARY.md commits (this file) — `335c650` (initial), `12bc5b9` (self-check), plus the Task-2 results commit (see final response).
 
 ## Files Created/Modified
 
-- `C:/EV-Accounts/backend/migrations/1196_cornelius_city_council.sql` — structural migration (separate repo; authored, NOT yet applied or committed there)
+- `C:/EV-Accounts/backend/migrations/1196_cornelius_city_council.sql` — structural migration (separate repo; applied to production and committed there as a5f62cfe)
 
 ## Decisions Made
 
@@ -103,36 +104,56 @@ read directly. No functional impact — every literal value (geo_id, ext_id bloc
 migration number, vacant-seat decision) came from the plan's frontmatter/roster/interfaces blocks
 and 182-01-SUMMARY.md, not from the missing PATTERNS file.
 
+## Migration Apply Results
+
+Task 2 checkpoint executed by the orchestrator and approved. Results recorded verbatim below.
+
+MIGRATION APPLY RESULTS (orchestrator, 2026-07-03):
+
+Apply: `psql -f migrations/1196_cornelius_city_council.sql` → BEGIN … COMMIT clean. In-migration DO block emitted:
+"Post-verification PASSED: Cornelius gov=1, offices=5, geofence_name_match>=1, section-split=0, office_id nulls=0, representing_city=5, vacant_office=1, appointed_positions=2, pairwise_identity=4"
+
+Independent E2E gate (all PASS):
+- a) government: 'City of Cornelius, Oregon, US' @ geo_id 4115550 ✓
+- b) chamber: 'City Council' / name_formal 'Cornelius City Council' / official_count=5 ✓
+- c) districts: LOCAL_EXEC 'Cornelius (Mayor, Citywide, 2-Year Term)' + LOCAL 'Cornelius (At-Large)', both geo_id 4115550 state='or' ✓
+- d) 5 offices: Mayor Jeffrey C. Dalin (elected); Councilor Angeles Godinez Valencia (elected); Councilor Edgar Baker (p.is_appointed=t); Councilor Edén López (p.is_appointed=t, accent intact); Councilor VACANT (is_vacant=t, politician_id NULL — TX-23 shape) ✓ — note: is_appointed lives on essentials.politicians, not offices (E2E query adjusted accordingly)
+- e) office_id backfill: 4/4 filled politicians have office_id ✓
+- f) section-split scan: 0 rows ✓
+- g) strengthened geofence gate: geo_id 4115550 + G4110 + name='Cornelius city' → 1 row ✓
+- h) UTF-8: external_id -4115554 → 'Edén López' renders correctly ✓
+- i) ledger: version '1196' present in the ledger table ✓ (note: ledger versions sort LEXICALLY — '999' > '1196' as text — so ORDER BY version DESC hides 4-digit entries; checked by direct WHERE)
+
+EV-Accounts commit: checked `git -C C:/EV-Accounts status` first — other workstream files present but UNSTAGED (no pre-staged trap). Staged ONLY backend/migrations/1196_cornelius_city_council.sql → commit **a5f62cfe** on master.
+
+MINTED POLITICIAN UUIDs (for plans 03/04):
+- -4115551 Jeffrey C. Dalin → 856f7e70-a846-4ba3-a0df-e7d8146ed11a
+- -4115552 Angeles Godinez Valencia → f75a20a9-1a22-4d23-ac9c-ac1040e27754
+- -4115553 Edgar Baker → 31df8939-d8ba-4b54-9c69-18317d7096ee
+- -4115554 Edén López → 18d8515e-3b3e-4d53-a1a3-4eece6e17dcc
+
+Vacant 5th office row: politician_id NULL, is_vacant=true — no UUID (no politician row exists, by design; ext_id -4115555 intentionally unused).
+
 ## User Setup Required
 
-None for this plan's Task 1. Task 2 requires the orchestrator (which holds DB access via
-`DATABASE_URL` and the `psql` CLI) to:
-1. Apply the migration: `psql "$DATABASE_URL" -f C:/EV-Accounts/backend/migrations/1196_cornelius_city_council.sql`
-2. Confirm the in-migration DO block emits `Post-verification PASSED` (listing
-   `pairwise_identity=4, appointed_positions=2, vacant_office=1`).
-3. Run the independent E2E gate (items a-i in the plan's Task 2 `<how-to-verify>`).
-4. Check `git -C "C:/EV-Accounts" status` for pre-staged files from other workstreams, stage ONLY
-   `backend/migrations/1196_cornelius_city_council.sql`, and commit in the C:/EV-Accounts repo.
+None - no external service configuration required.
 
 ## Next Phase Readiness
 
-**Task 1 (author migration) is COMPLETE. Task 2 (apply + verify + commit) is a
-`checkpoint:human-verify`, `gate="blocking"` reserved for the orchestrator** — this executor has
-no DB access and cannot run `psql` or query the live schema (per the plan's `<mcp_tools>`
-constraint). Downstream plans 03 (headshots) and 04 (stances) depend on Task 2 completing, since
-they need the minted politician UUIDs for the 4 filled external_ids
-(-4115551..-4115554) which only exist once the migration is actually applied.
+**BOTH TASKS COMPLETE — plans 03 (headshots) and 04 (stances) are unblocked.** Confirmed values
+downstream plans must use:
 
-Values confirmed and ready for the orchestrator to apply/verify:
-- **Migration file:** `C:/EV-Accounts/backend/migrations/1196_cornelius_city_council.sql` (419
-  lines, UTF-8 no BOM, no forbidden literal strings).
-- **geo_id:** `4115550` ('Cornelius city', G4110). NEVER `4115350` (Coquille city trap).
-- **Roster (ext_id → name → seat):** -4115551 Jeffrey C. Dalin (Mayor, elected) · -4115552
-  Angeles Godinez Valencia (Councilor, elected, Council-President note) · -4115553 Edgar Baker
-  (Councilor, appointed) · -4115554 Edén López (Councilor, appointed) · -4115555 UNUSED (vacant
-  seat, no politician row).
+- **Minted politician UUIDs (by external_id):**
+  - -4115551 Jeffrey C. Dalin → `856f7e70-a846-4ba3-a0df-e7d8146ed11a`
+  - -4115552 Angeles Godinez Valencia → `f75a20a9-1a22-4d23-ac9c-ac1040e27754`
+  - -4115553 Edgar Baker → `31df8939-d8ba-4b54-9c69-18317d7096ee`
+  - -4115554 Edén López → `18d8515e-3b3e-4d53-a1a3-4eece6e17dcc`
+  - -4115555 — UNUSED; vacant 5th office row has NO politician and NO UUID (TX-23 shape).
+- **geo_id:** `4115550` ('Cornelius city', G4110, name-match verified live). NEVER `4115350` (Coquille city trap).
 - **official_count:** 5 (Mayor + 4 councilor seats, 1 vacant).
+- **Migration 1196:** applied to production, registered in the ledger, committed in C:/EV-Accounts as a5f62cfe.
 - **Next migration after 1196:** 1197 (for plan 03's headshot migration).
+- **Ledger sorting gotcha (for future verifiers):** ledger versions sort lexically ('999' > '1196' as text) — check 4-digit entries by direct WHERE, not ORDER BY version DESC.
 
 ## Self-Check: PASSED
 
