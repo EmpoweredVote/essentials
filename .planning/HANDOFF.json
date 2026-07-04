@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-07-04T19:51:08.325Z",
+  "phase": "184",
+  "phase_name": "School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J",
+  "phase_dir": ".planning/phases/184-school-boards-wave-2-tigard-tualatin-sd-23j-forest-grove-sd-",
+  "plan": 1,
+  "task": null,
+  "total_tasks": null,
+  "status": "paused",
+  "completed_tasks": [
+    {"id": 1, "name": "discuss-phase: 184-CONTEXT.md + 184-DISCUSSION-LOG.md (AFK-recommended resolution, 183 precedent)", "status": "done", "commit": "201506b"},
+    {"id": 2, "name": "STATE.md session record", "status": "done", "commit": "e6ab694"},
+    {"id": 3, "name": "184-RESEARCH.md (gsd-phase-researcher; rosters/election-method/headshots/WR-fix specs verified live)", "status": "done", "commit": "b8d69bf"},
+    {"id": 4, "name": "184-VALIDATION.md (Nyquist strategy)", "status": "done", "commit": "7518e05"},
+    {"id": 5, "name": "184-PATTERNS.md (gsd-pattern-mapper) + 184-01-PLAN.md (Wave-0 probes plan)", "status": "done", "commit": "02f50c1"}
+  ],
+  "remaining_tasks": [
+    {"id": 6, "name": "Author 184-02-PLAN.md (structural migration 1206: 3 govts + 3 chambers + 3 SCHOOL districts + 15 offices, WR-01/WR-02 fixes)", "status": "not_started"},
+    {"id": 7, "name": "Author 184-03-PLAN.md (headshot ETL 3-CDN + audit migration with WR-03 fix; Harrington gap handling)", "status": "not_started"},
+    {"id": 8, "name": "Author 184-04-PLAN.md (coverage.js 3 entries + full E2E gate suite + deploy + Playwright browse)", "status": "not_started"},
+    {"id": 9, "name": "gsd-plan-checker verification of all 4 plans", "status": "not_started"},
+    {"id": 10, "name": "Requirements/decision coverage gates + roadmap annotation + plan commit", "status": "not_started"},
+    {"id": 11, "name": "execute-phase 184 (auto-advance was armed via --chain)", "status": "not_started"}
+  ],
+  "blockers": [
+    {"description": "User machine experiencing memory pressure / stalls — session intentionally paused mid plan-phase", "type": "external", "workaround": "Resume after reboot; consider /gsd-plan-phase 184 --chunked to bound per-agent runtime"}
+  ],
+  "human_actions_pending": [],
+  "decisions": [
+    {"decision": "Phase argument '14' resolved to 184", "rationale": "STATE.md stopped_at said 'ready to discuss Phase 184'; only pending discussable phase; user AFK", "phase": "184"},
+    {"decision": "All gray areas resolved to recommended options (carry Phase 183 decisions; bake 183-REVIEW WR-01/02/03 + IN-01..04 fixes into clones; single shared plan-set; D-Z1/D-Z2/D-R1..R5/D-B1 carried)", "rationale": "User AFK; Phase 181/182/183 precedent documented in those CONTEXT headers", "phase": "184"},
+    {"decision": "All three boards planned as 5-seat at-large (NOT 7-seat)", "rationale": "184-RESEARCH.md verified live on all three official district sites 2026-07-04 — overturns the 'commonly 7-director' framing", "phase": "184"},
+    {"decision": "Forest Grove domain is www.fgsdk12.org", "rationale": "Guessed fgsd.k12.or.us does not resolve (confirmed)", "phase": "184"},
+    {"decision": "Next structural migration 1206, headshots 1207 (expected)", "rationale": "On-disk MAX 1205 verified during research; on-disk counter authoritative; re-confirm at Wave-0", "phase": "184"}
+  ],
+  "uncommitted_files": [],
+  "next_action": "Resume planner: /gsd-plan-phase 184 — it will detect 184-01-PLAN.md ('Add more plans') and existing RESEARCH/PATTERNS/VALIDATION; instruct planner to author plans 02-04 mirroring 183's 4-plan shape, then run gsd-plan-checker. NOTE: workflow._auto_chain_active=true is still set, so plan-phase will auto-advance to execute-phase when planning passes; run 'gsd-sdk query config-set workflow._auto_chain_active false' first if auto-execution is not wanted.",
+  "context_notes": "Same-shape clone of Phase 183 extended to 3 districts. Everything the remaining plans need is in 184-RESEARCH.md (verified rosters, per-member headshot URLs across finalsite/Edlio/WordPress-wp-json CDNs, exact WR fix SQL) and 184-PATTERNS.md (fixed excerpts). 184-01-PLAN.md's closing output block lists what Wave-0 must hand to plans 02-04. Open research questions for Wave-0: verbatim TTSD/FGSD office-title wording; Linda Harrington (FGSD Position 4) photo recoverability; TTSD Chair/Vice-Chair rotation staleness."
+}
