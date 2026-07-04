@@ -19,7 +19,7 @@ findings:
   warning: 4
   info: 4
   total: 9
-status: issues_found
+status: issues_found_fixed
 ---
 
 # Phase 182: Code Review Report
@@ -85,6 +85,8 @@ is_circle_cutout = corners_transparent and abs(bw - bh) <= max(4, bw // 100)
 (A circle inscribed in its bbox is transparent at all four bbox corners; a fully opaque
 square is transparent at none.)
 
+**Status:** FIXED (2026-07-04, orchestrator --fix pass). Circle branch now requires BOTH a square alpha bbox AND transparent bbox corners (4 inset corner probes, alpha < 16) — fully-opaque square sources (Sherwood-class) route to the plain composite + crop_to_4_5 path. Compile-checked.
+
 ## Warnings
 
 ### WR-01: `alpha.getbbox()` can return None — unguarded subscript crashes with a cryptic TypeError
@@ -102,6 +104,8 @@ bbox = alpha.getbbox()
 if bbox is None:
     raise Exception('source image is fully transparent (no opaque pixels) — blank/placeholder asset?')
 ```
+
+**Status:** FIXED. `bbox is None` now raises ValueError('source image is fully transparent (blank) — refusing to process') before any subscript.
 
 ### WR-02: `w -= w % 4` does not deliver the promised "exact 4:5 integer pair" — odd h silently breaks the invariant
 
@@ -124,6 +128,8 @@ if w < MIN_DIM:
     raise Exception(f'circle cutout too small for inscribed 4:5 crop (w={w})')
 ```
 
+**Status:** FIXED. `w -= w % 8` — w=8k gives h=10k: exact 4:5 integer pair, both even, no drift under crop_to_4_5's tolerance.
+
 ### WR-03: Plain `assert` used for the CDN-base guard and the 600x750 size invariant — contradicts the file's own `-O`-stripping rule
 
 **File:** `C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py:179-181, 338`
@@ -142,6 +148,8 @@ if not (SUPABASE_URL.startswith('https://') and '.supabase.co' in SUPABASE_URL):
 if img.size != TARGET_SIZE:
     raise Exception(f'Expected {TARGET_SIZE}, got {img.size}')
 ```
+
+**Status:** FIXED. Both plain asserts (CDN-base derivation, 600x750 size invariant) converted to explicit `if: raise ValueError` — survive -O/PYTHONOPTIMIZE.
 
 ### WR-04: 1197's post-verify gate is permanently satisfied by Cornelius rows — a stale-clone in Phase 183+ passes vacuously
 
@@ -165,6 +173,8 @@ IF (SELECT COUNT(*) FROM (VALUES (-4115551),(-4115552),(-4115553),(-4115554)) v(
 ```
 so the checked ID list sits adjacent to the INSERTs and is copy-edited with them.
 
+**Status:** FIXED (EV-Accounts commit 5be4ce99). Gate rewritten to derive its identity set from a VALUES list of the SAME uuids the INSERTs use (NOT EXISTS per-uuid check) with an explicit WHEN-CLONING note; a clone that edits INSERTs but not the gate now fails loudly. Re-applied against production: idempotent inserts held (INSERT 0 0 x4), new gate passes.
+
 ## Info
 
 ### IN-01: Pipeline header documentation not updated for the post-UAT circle-crop branch
@@ -179,6 +189,8 @@ circle crop has already replaced `img`, logging the cropped size under a mislead
 circle-inscribed-crop branch; move the `Original size` print above the composite block or
 relabel it `Working size`.
 
+**Status:** FIXED. Header rewritten to describe the circle-inscribed-crop pipeline (and the corner-check guard); post-crop log relabeled 'Working size (post-composite/cutout-crop)'.
+
 ### IN-02: Descriptive User-Agent carries an apparent placeholder contact address
 
 **File:** `C:/EV-Accounts/backend/scripts/_tmp-cornelius-headshots.py:192`
@@ -186,6 +198,8 @@ relabel it `Working size`.
 (project contact is jmadison@empowered.vote). A dead contact defeats the purpose of a
 descriptive UA (site operators cannot reach you before blocking).
 **Fix:** Use a monitored address in the template.
+
+**Status:** FIXED. UA contact corrected to jmadison@empowered.vote.
 
 ### IN-03: .env parser does not strip surrounding quotes from values
 
@@ -195,6 +209,8 @@ descriptive UA (site operators cannot reach you before blocking).
 today, but a one-line `v.strip().strip('\'"')` makes the template robust to the common
 dotenv quoting convention.
 **Fix:** `_env[k.strip()] = v.strip().strip('"\'')`
+
+**Status:** NOT FIXED (accepted). Current .env has unquoted values; noted for the successor template.
 
 ### IN-04: Probe A3's "EXPECT exactly 1 row" expectation is only true while no other Cornelius-named place is TIGER-loaded
 
@@ -212,3 +228,5 @@ loaded state".
 _Reviewed: 2026-07-04T05:06:28Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
+
+**Status:** NOT FIXED (accepted). Probe already ran and passed; note stands for future TIGER loads (Cornelius, NC geo 3714700).
