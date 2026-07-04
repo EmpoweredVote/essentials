@@ -783,7 +783,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 183-03-PLAN.md — Headshots: _tmp-westmetro-school-wave1-headshots.py (14 finalsite sources, crop-4:5->600x750 Lanczos q90, WR-01/02/C fixes) + audit-only migration 1204 (politician_images, no ledger row); document genuine low-res gaps, no fabrication
+- [x] 183-03-PLAN.md — Headshots: _tmp-westmetro-school-wave1-headshots.py (14 finalsite sources, crop-4:5->600x750 Lanczos q90, WR-01/02/C fixes) + audit-only migration 1204 (politician_images, no ledger row); document genuine low-res gaps, no fabrication
 
 **Wave 4** *(blocked on Wave 3)*
 
@@ -852,7 +852,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 182. City of Cornelius Deep-Seed | 5/5 | Complete    | 2026-07-04 |
-| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 2/4 | In Progress|  |
+| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 3/4 | In Progress|  |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
 | 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 186. West-Metro Playbook Retrospective & Close | 0/TBD | Not started | - |
