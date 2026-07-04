@@ -22,7 +22,8 @@ findings:
   warning: 4
   info: 1
   total: 5
-status: issues_found
+fixed: 4
+status: issues_found_fixed
 ---
 
 # Phase 181: Code Review Report
@@ -30,7 +31,7 @@ status: issues_found
 **Reviewed:** 2026-07-03
 **Depth:** standard
 **Files Reviewed:** 13
-**Status:** issues_found
+**Status:** issues_found_fixed (4/4 in-scope warnings fixed; IN-01 out of scope, unaddressed)
 
 ## Summary
 
@@ -69,6 +70,8 @@ if not all(m['license'] for m in OFFICIALS):
     raise ValueError('every official must carry a license string')
 ```
 
+**Status:** fixed on disk (gitignored template — not committed; propagates when Phase 182 clones the script). Converted all three roster-integrity `assert` statements to explicit `if: raise ValueError(...)` checks in `_tmp-sherwood-headshots.py`.
+
 ### WR-02: Test-download guard re-fetches the same URL that `process_member` fetches again, independently
 
 **File:** `C:/EV-Accounts/backend/scripts/_tmp-sherwood-headshots.py:407-408, 320, 362`
@@ -81,6 +84,8 @@ def test_download_guard(member: dict):
     ...
     return raw_bytes  # reuse in process_member instead of re-downloading
 ```
+
+**Status:** fixed on disk (gitignored template — not committed; propagates when Phase 182 clones the script). `test_download_guard()` now returns the verified bytes (or `None`); `main()` captures them and passes them to `process_member()` via a new `prefetched_bytes` param, which is used only for the first official (idx 0) so the exact bytes the guard verified are the bytes actually processed.
 
 ### WR-03: `getBuildingImages()` Local-image matching is unscoped by state, and the new `sherwood` key inherits the collision risk
 
@@ -111,11 +116,15 @@ for (const [key, entry] of Object.entries(CURATED_LOCAL)) {
 }
 ```
 
+**Status:** fixed (commit `6999052` in essentials repo). `CURATED_LOCAL` entries restructured to `{ state, src }`; the match loop now requires `entry.state === abbrev` unless the caller passes no state or the entry has none (backward-compatible — missing caller state is match-allowed). `npm run build` passes. All 19 existing keys retain their original state assignment (bloomington IN; beaverton/hillsboro/tigard/tualatin/'forest grove'/sherwood OR; the 10 LA-county keys CA).
+
 ### WR-04: Answers/context row-count parity gate does not detect content drift between the two hand-duplicated VALUES blocks
 
 **File:** `C:/EV-Accounts/backend/migrations/1189_rosener_stances.sql:48-58` (same pattern in 1190–1195)
 **Issue:** Each stance migration maintains two independently-typed, verbatim-duplicated `VALUES` lists — one feeding `inform.politician_answers` (topic_key, value) and one feeding `inform.politician_context` (topic_key, reasoning, sources). The WR-03 gate only asserts `COUNT(answers) == COUNT(context) == N`. If a future hand-edit changes the chair `value` in the answers block (e.g. correcting a mis-scored stance) without mirroring the same reasoning-implied change in the context block, or vice versa, the row counts stay identical and the gate passes silently even though the two tables now disagree about what evidence supports the value. This is a design limitation of the entire audit-migration convention (not unique to Sherwood) but is present in every file this phase adds and will be cloned into Phase 182.
 **Fix:** Not necessarily fixable within a single migration file's scope, but worth carrying forward as a known gap: consider a stronger gate that checks per-topic_key value/topic pairing between the two tables (e.g. `SELECT COUNT(*) FROM politician_answers a JOIN politician_context c USING (politician_id, topic_id) WHERE ...` to at least confirm both a value and reasoning exist for the exact same topic set), rather than two independent scalar counts.
+
+**Status:** fixed (commit `0946233c` in EV-Accounts repo, migrations 1189–1195). Added a fourth gate to each file's DO block: a `NOT EXISTS` check asserting every `politician_answers` row has a matching `politician_context` row (same `politician_id`/`topic_id`) with non-empty `reasoning` and non-empty `sources`, and the reverse check that no `politician_context` row references a `topic_id` absent from `politician_answers` — i.e. set equality on `topic_id` plus a non-empty-evidence requirement. Migrations were NOT re-run against any database (already applied in production); only the on-disk files were edited so future clones (e.g. Phase 182) inherit the stronger gate. Verified no `slug`, `photo_origin_url`, or `schema_migrations` strings were introduced. Given this is new PL/pgSQL logic that cannot be executed to confirm correctness without touching production, this fix should be treated as **fixed: requires human verification** of the gate logic before further stance migrations rely on it as a template.
 
 ## Info
 
