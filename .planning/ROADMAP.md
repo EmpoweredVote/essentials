@@ -484,7 +484,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - [x] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [x] **Phase 182: City of Cornelius Deep-Seed** - Mayor + Council (completed 2026-07-04)
 - [x] **Phase 183: School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J** - Roster + headshots for the two largest west-metro school boards; 0 stances by design (completed 2026-07-04)
-- [ ] **Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J** - Roster + headshots for three remaining school boards; 0 stances by design
+- [x] **Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J** - Roster + headshots for three remaining school boards; 0 stances by design (completed 2026-07-04)
 - [ ] **Phase 185: WashCo 2026 Elections & Discovery** - 2026 local elections + discovery pipeline armed for all new west-metro jurisdictions
 - [ ] **Phase 186: West-Metro Playbook Retrospective & Close** - Surface jurisdictions, Washington County GOTCHAs, DB-verified milestone audit, close
 
@@ -803,7 +803,7 @@ design.)
   3. Sherwood SD 88J board roster seeded; headshots at 600×750 (genuine gaps documented); address routing verified.
   4. All three school boards are listed in `src/lib/coverage.js` (plain chip — 0 stances by design).
 
-**Plans**: TBD
+**Plans**: 4 plans (completed 2026-07-04) — 01 Wave-0 probes · 02 structural mig 1208 · 03 headshot ETL + mig 1209 · 04 coverage.js + E2E
 
 ### Phase 185: WashCo 2026 Elections & Discovery
 
