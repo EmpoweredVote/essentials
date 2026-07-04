@@ -740,7 +740,7 @@ member, with evidence-only stances on their profiles.
 **Plans**: 5 plans
 **Wave 1**
 
-- [ ] 182-01-PLAN.md - Wave-0 DB/roster/headshot/banner probes (geo_id 4115550 existence-AND-name gate vs the 4115350/Coquille trap; greenfield + ext_id + migration-counter confirm; roster re-fetch incl. open-vacancy check; vacant-seat modeling decision)
+- [x] 182-01-PLAN.md - Wave-0 DB/roster/headshot/banner probes (geo_id 4115550 existence-AND-name gate vs the 4115350/Coquille trap; greenfield + ext_id + migration-counter confirm; roster re-fetch incl. open-vacancy check; vacant-seat modeling decision)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -834,7 +834,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 182. City of Cornelius Deep-Seed | 0/TBD | Not started | - |
+| 182. City of Cornelius Deep-Seed | 1/5 | In Progress|  |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
 | 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
