@@ -744,7 +744,7 @@ member, with evidence-only stances on their profiles.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 182-02-PLAN.md - Structural migration 1196: government + City Council chamber + LOCAL_EXEC Mayor (2-yr) + LOCAL at-large districts + 5 offices (Baker/Lopez appointed, TX-23 vacant seat, CTE hoist, strengthened name-match geofence + pairwise identity gates)
+- [x] 182-02-PLAN.md - Structural migration 1196: government + City Council chamber + LOCAL_EXEC Mayor (2-yr) + LOCAL at-large districts + 5 offices (Baker/Lopez appointed, TX-23 vacant seat, CTE hoist, strengthened name-match geofence + pairwise identity gates)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -834,7 +834,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 182. City of Cornelius Deep-Seed | 1/5 | In Progress|  |
+| 182. City of Cornelius Deep-Seed | 2/5 | In Progress|  |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
 | 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
