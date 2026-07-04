@@ -748,8 +748,8 @@ member, with evidence-only stances on their profiles.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 182-03-PLAN.md - Headshots: transparent-PNG composite-onto-white pipeline (4/4 filled seats) + audit-only migration 1197
-- [ ] 182-04-PLAN.md - Evidence-only compass stances (migrations 1198-1201, one sonnet agent at a time, D-15 Spanish sources, Nov-17 immigration anchor, four-gate DO blocks)
+- [x] 182-03-PLAN.md - Headshots: transparent-PNG composite-onto-white pipeline (4/4 filled seats) + audit-only migration 1197
+- [x] 182-04-PLAN.md - Evidence-only compass stances (migrations 1198-1201, one sonnet agent at a time, D-15 Spanish sources, Nov-17 immigration anchor, four-gate DO blocks)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -834,7 +834,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 179. City of Tualatin Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
-| 182. City of Cornelius Deep-Seed | 2/5 | In Progress|  |
+| 182. City of Cornelius Deep-Seed | 4/5 | In Progress|  |
 | 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/TBD | Not started | - |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
 | 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
