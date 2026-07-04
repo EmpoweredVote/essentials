@@ -59,7 +59,7 @@ Per city/government deliverable (the Tier 1 unit):
 - [ ] **WASH-05:** City of Tualatin deep-seeded — government + roster + headshots + evidence-only stances.
 - [ ] **WASH-06:** City of Forest Grove deep-seeded — government + roster + headshots + evidence-only stances.
 - [ ] **WASH-07:** City of Sherwood deep-seeded — government + roster + headshots + evidence-only stances.
-- [ ] **WASH-08:** City of Cornelius deep-seeded — government + roster + headshots + evidence-only stances.
+- [x] **WASH-08:** City of Cornelius deep-seeded — government + roster + headshots + evidence-only stances.
 
 ### School Boards (roster + headshots; 0 compass stances by design)
 
