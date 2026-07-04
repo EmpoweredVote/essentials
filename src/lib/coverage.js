@@ -96,6 +96,7 @@ export const COVERAGE_STATES = [
     name: 'Oregon', abbrev: 'OR',
     areas: [
       { label: 'Beaverton',    browseGovernmentList: ['4105350'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Cornelius',    browseGovernmentList: ['4115550'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Fairview',     browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
       { label: 'Forest Grove', browseGovernmentList: ['4126200'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Gresham',      browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
