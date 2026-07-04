@@ -127,6 +127,18 @@ Live browse link (once the above completes): `essentials.empowered.vote/results?
 - `npm run build` exit 0; built bundle grep confirms `4115550` (1 match) and `cornelius` (1 match)
 - No unexpected file deletions in the commit (`git diff --diff-filter=D --name-only HEAD~1 HEAD` empty)
 
+## Orchestrator Results — Tasks 1 and 3 COMPLETE (2026-07-04)
+
+**Task 1 — Banner (done):** "Cornelius Civic Center - Oregon.JPG" (Wikimedia Commons, CC BY-SA 3.0, M.O. Stevens) processed via `process_banner.py --vertical-anchor 0.55` (1679×1412 → 1700×540, 114.7 KB; "Cornelius Civic Center" sign legible, entrance + street-level greenery in frame) and uploaded via `upload_banner.py` to `cities/cornelius.jpg` — CDN HTTP 200 (117,431 bytes). Post-hoc operator swap remains available per D-14 precedent.
+
+**Task 3 — Push / deploy / live-verify (done):**
+- Worktree merged to main; `npm run build` passed post-merge; local bundle contains `4115550`.
+- Pushed `f3b6c99..ea0a78d` to origin/main; Render deploy LIVE on commit `ea0a78d` (service srv-d7290ltm5p6s73ct3a2g).
+- Deploy verified by bundle CONTENT per D-16: served `assets/index-OlAU6Cvp.js` contains `4115550` and `cities/cornelius.jpg` (bundle hash differs from local build as expected — ignored).
+- Live browse (`essentials.empowered.vote/results?browse_geo_id=4115550&browse_mtfcc=G4110`, Playwright): Civic Center banner renders (not gradient) behind "Cornelius, OR"; Mayor Jeffrey Dalin FIRST with compass icon; Cornelius City Council shows Edgar Baker (no compass icon — honest blank, correct), Angeles Godinez Valencia (compass), Edén López (accent renders, compass); vacant seat cleanly absent; NO party labels; no section-split; County/State/US sections nest correctly.
+
+**UAT fix (user-reported, same session):** the 4 headshots showed white circle edges inside the site's round avatar mask (full-frame white composite of the circular-cutout sources). Fixed by re-cropping the largest 4:5 rectangle INSCRIBED in the photo circle (998×1248 centered on the circle center (800,1000); corner distance 799 < r=800) → 600×750 Lanczos q90, re-uploaded to the SAME canonical Storage URLs — `politician_images` rows unchanged, migration 1197 untouched. All 4 canonical CDN URLs byte-verified (`cmp`) serving the fixed crops. The circle-inscribed-crop logic (auto-detects a square alpha bbox) was added to `_tmp-cornelius-headshots.py`, making the **Cornelius script the successor headshot template for Phase 183+** (supersedes Sherwood's).
+
 ---
 *Phase: 182-city-of-cornelius-deep-seed*
-*Plan 05 Task 2 completed 2026-07-04 by worktree agent; Tasks 1 and 3 pending orchestrator action — phase NOT yet closed.*
+*Plan 05 completed 2026-07-04 — Task 2 by worktree agent (`a5f0724`); Tasks 1 and 3 + UAT headshot-crop fix by orchestrator.*
