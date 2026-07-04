@@ -476,8 +476,10 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - [x] **Phase 177: City of Hillsboro Deep-Seed** - Mayor + Council (county seat / largest WashCo city) (completed 2026-07-02)
 - [x] **Phase 178: City of Tigard Deep-Seed** - Mayor + Council
  (completed 2026-07-02)
+
 - [x] **Phase 179: City of Tualatin Deep-Seed** - Mayor + Council
  (completed 2026-07-03)
+
 - [x] **Phase 180: City of Forest Grove Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [x] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [ ] **Phase 182: City of Cornelius Deep-Seed** - Mayor + Council
@@ -736,10 +738,21 @@ member, with evidence-only stances on their profiles.
   4. Cornelius surfaces with the purple `hasContext` chip in `src/lib/coverage.js`.
 
 **Plans**: 5 plans
+**Wave 1**
+
 - [ ] 182-01-PLAN.md - Wave-0 DB/roster/headshot/banner probes (geo_id 4115550 existence-AND-name gate vs the 4115350/Coquille trap; greenfield + ext_id + migration-counter confirm; roster re-fetch incl. open-vacancy check; vacant-seat modeling decision)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 182-02-PLAN.md - Structural migration 1196: government + City Council chamber + LOCAL_EXEC Mayor (2-yr) + LOCAL at-large districts + 5 offices (Baker/Lopez appointed, TX-23 vacant seat, CTE hoist, strengthened name-match geofence + pairwise identity gates)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 182-03-PLAN.md - Headshots: transparent-PNG composite-onto-white pipeline (4/4 filled seats) + audit-only migration 1197
 - [ ] 182-04-PLAN.md - Evidence-only compass stances (migrations 1198-1201, one sonnet agent at a time, D-15 Spanish sources, Nov-17 immigration anchor, four-gate DO blocks)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 182-05-PLAN.md - Surfacing: cities/cornelius.jpg banner + buildingImages.js CURATED_LOCAL + coverage.js Oregon-block purple hasContext chip (geo_id 4115550) + bundle-content deploy verify + live browse
 
 ### Phase 183: School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J
