@@ -2,7 +2,7 @@
 phase: 182-city-of-cornelius-deep-seed
 plan: 05
 subsystem: frontend
-tags: [coverage, buildingimages, banner, oregon, cornelius, hascontext, wr-03, worktree-partial]
+tags: [coverage, buildingimages, banner, oregon, cornelius, hascontext, wr-03, circle-inscribed-crop]
 
 # Dependency graph
 requires:
@@ -19,13 +19,17 @@ provides:
   - "coverage.js Oregon block has a 'Cornelius' entry (geo_id 4115550, hasContext:true) between Beaverton and Fairview"
   - "buildingImages.js CURATED_LOCAL has a single-word 'cornelius' key (post-WR-03 {state:'OR', src} format) + attribution comment, pointing at cities/cornelius.jpg"
   - "npm run build passes; built bundle content-checked for '4115550' and 'cornelius' (both present)"
-affects: []  # this plan closes phase 182; orchestrator completes the remaining banner-upload + deploy/live-verify steps
+  - "1700×540 Cornelius Civic Center banner LIVE at cities/cornelius.jpg (CDN HTTP 200, 117,431 bytes; CC BY-SA 3.0, M.O. Stevens)"
+  - "Render deploy LIVE on ea0a78d, verified by bundle CONTENT (served JS contains 4115550 + cities/cornelius.jpg); live browse verified end-to-end via Playwright"
+  - "Circle-inscribed 4:5 headshot crop (UAT fix): all 4 Cornelius headshots re-cropped and re-uploaded to canonical URLs; _tmp-cornelius-headshots.py is now the successor headshot template for Phase 183+ (supersedes Sherwood's)"
+affects: []  # this plan closes phase 182 — WASH-08 satisfied end-to-end
 
 # Tech tracking
 tech-stack:
   added: []
   patterns:
     - "Parallel-worktree split of a plan with orchestrator-only steps (banner processing/upload, git push, Render deploy verification, Playwright live checks) from in-repo code edits (coverage.js/buildingImages.js) — the worktree agent executes and commits only the in-repo edit task, returning a checkpoint for the remaining orchestrator-owned steps"
+    - "Circle-inscribed 4:5 headshot crop for circular-cutout PNG sources: crop the largest 4:5 rectangle inscribed in the photo circle (corners inside the radius) BEFORE resize, so no white circle edge shows inside the site's round avatar mask — logic added to _tmp-cornelius-headshots.py (auto-detects square alpha bbox), the successor template for Phase 183+"
 
 key-files:
   created: []
@@ -38,23 +42,23 @@ key-decisions:
   - "Cornelius CURATED_LOCAL key added as a single word (no space/hyphen trap, unlike 'forest grove') in the post-WR-03 {state:'OR', src} format, placed alongside the other Oregon entries (beaverton/hillsboro/tigard/tualatin/'forest grove'/sherwood)"
   - "coverage.js Cornelius entry placed alphabetically between Beaverton and Fairview per the plan's explicit ordering instruction ('Be' < 'Co' < 'Fa')"
 
-requirements-completed: []  # WASH-08 is NOT fully closed by this worktree agent — banner upload + Render deploy + live-browse verification remain orchestrator-owned steps (Tasks 1 and 3). Do not mark WASH-08 complete until those steps are confirmed.
+requirements-completed: [WASH-08]  # all three tasks done: Task 2 (worktree agent, a5f0724) + Tasks 1 and 3 (orchestrator — banner live, deploy content-verified on ea0a78d, live browse confirmed) + UAT headshot-crop fix. WASH-08 satisfied end-to-end.
 
 # Metrics
-duration: 15min
+duration: 15min (worktree Task 2) + orchestrator Tasks 1/3 + UAT-fix round-trip
 completed: 2026-07-04
 ---
 
-# Phase 182 Plan 05: City of Cornelius Banner + Coverage Surfacing Summary (PARTIAL — Task 2 only)
+# Phase 182 Plan 05: City of Cornelius Banner + Coverage Surfacing Summary
 
-**Wired the single-word `cornelius` CURATED_LOCAL banner key (post-WR-03 `{state:'OR', src}` format, pointing at `cities/cornelius.jpg`) in buildingImages.js and surfaced Cornelius with the purple `hasContext` chip (geo_id 4115550, CORRECTED) between Beaverton and Fairview in coverage.js — `npm run build` passes and the built bundle was content-checked (not hash-checked, per D-16) for both `4115550` and `cornelius`, both present exactly once. This worktree agent executed ONLY Task 2 of the plan; Task 1 (banner sourcing/processing/upload to Supabase Storage) and Task 3 (git push, Render deploy verification by bundle content, live-browse end-to-end confirmation) are explicitly orchestrator-owned steps per this agent's dispatch instructions and remain outstanding.**
+**Closed phase 182 end-to-end: wired the single-word `cornelius` CURATED_LOCAL banner key (post-WR-03 `{state:'OR', src}` format) in buildingImages.js and surfaced Cornelius with the purple `hasContext` chip (geo_id 4115550, CORRECTED) between Beaverton and Fairview in coverage.js (Task 2, worktree agent, `a5f0724`); the orchestrator processed and uploaded the 1700×540 Cornelius Civic Center banner (CC BY-SA 3.0, M.O. Stevens) to `cities/cornelius.jpg` (Task 1), merged/pushed to `ea0a78d`, verified the Render deploy by bundle CONTENT per D-16 (served JS contains `4115550` + `cities/cornelius.jpg`), and confirmed the full live browse via Playwright — Mayor Dalin first, honest-blank Baker, accented Edén López intact, vacant seat cleanly absent, banner rendering (not gradient), no party labels (Task 3) — plus a same-session UAT fix re-cropping all 4 headshots with a circle-inscribed 4:5 crop, making the Cornelius script the Phase 183+ headshot template. WASH-08 satisfied end-to-end.**
 
 ## Performance
 
-- **Duration:** ~15 min
-- **Completed:** 2026-07-04 (Task 2 only; Tasks 1 and 3 pending orchestrator action)
-- **Tasks:** 1 of 3 completed by this worktree agent (Task 2); Tasks 1 and 3 are checkpoint tasks explicitly reserved for the orchestrator per the dispatch instructions ("Banner processing/upload, git push to origin, Render deploy verification, and Playwright live checks are ORCHESTRATOR work — return checkpoints for those")
-- **Files modified:** 2 (`src/lib/coverage.js`, `src/lib/buildingImages.js`)
+- **Duration:** ~15 min (worktree Task 2) + orchestrator Tasks 1/3 + UAT-fix round-trip
+- **Completed:** 2026-07-04 (all 3 tasks + UAT fix)
+- **Tasks:** 3 of 3 completed — Task 2 by this worktree agent; Tasks 1 and 3 (checkpoints) by the orchestrator per the dispatch instructions ("Banner processing/upload, git push to origin, Render deploy verification, and Playwright live checks are ORCHESTRATOR work")
+- **Files modified:** 2 in this repo (`src/lib/coverage.js`, `src/lib/buildingImages.js`) + banner asset in Storage + 4 headshot re-uploads (UAT fix) + `_tmp-cornelius-headshots.py` crop-logic update (C:/EV-Accounts, gitignored)
 
 ## Accomplishments
 
@@ -82,23 +86,13 @@ Commit message: `feat(182-05): surface Cornelius purple chip + wire cornelius CU
 
 None — Task 2 executed exactly as written (single-word key, post-WR-03 `{state, src}` format, exact coverage.js entry shape, geo_id 4115550, alphabetical placement). No Rule 1-4 deviations triggered; no bugs found, no missing critical functionality, no blocking issues, no architectural changes.
 
-## Task 1 and Task 3 — NOT executed by this worktree agent (orchestrator-owned)
+## Task 1 and Task 3 — executed by the orchestrator (per dispatch execution split)
 
-Per this agent's explicit dispatch instructions (`<parallel_execution>` EDIT SCOPE note), this worktree agent's scope was limited to the in-repo code edits (Task 2). The following remain outstanding and must be completed by the orchestrator:
-
-**Task 1 — banner sourcing/processing/upload:**
-- Pre-resolved decision (per dispatch instructions, auto-mode Wave-0): source = Wikimedia Commons "Cornelius Civic Center - Oregon.JPG", CC BY-SA 3.0, photographer M.O. Stevens. Attribution string used in this plan's code edit: "M.O. Stevens, CC BY-SA 3.0, via Wikimedia Commons."
-- **Post-hoc-swap precedent note:** per D-14, this candidate required the heaviest crop of the milestone (native ~1.19:1 to the 3.15:1 target). The orchestrator assessed the crop as workable at Wave-0 ("Cornelius Civic Center" sign legible, entrance visible) but the actual `process_banner.py --vertical-anchor` run and final visual review have NOT been performed by this agent. If the final 1700x540 crop looks materially worse than the Wave-0 preview, the orchestrator retains authority to swap to the `unsplash` fallback option per the plan's Task 1 decision options — this is the "post-hoc-swap precedent" referenced in the dispatch instructions.
-- Outstanding steps: run `python scripts/banners/process_banner.py --input <raw> --output <processed_1700x540.jpg> --vertical-anchor <0.4-0.55>`, then `python scripts/banners/upload_banner.py --file <processed_1700x540.jpg> --path cities/cornelius.jpg`, and confirm the CDN URL returns HTTP 200.
-
-**Task 3 — deploy, live-browse verification, push:**
-- The code edits from Task 2 are committed in this worktree (`a5f0724`) but have NOT been pushed to origin from this worktree agent — the orchestrator owns merging worktree branches and pushing to trigger the Render deploy.
-- After deploy, the orchestrator must verify by bundle CONTENT (grep the served JS for `4115550` or `cities/cornelius.jpg`), never by hash comparison (D-16 — a 45-min false wait occurred in phase 181 from hash-chasing).
-- Live-browse verification at `essentials.empowered.vote/results?browse_geo_id=4115550&browse_mtfcc=G4110` — confirm Mayor Dalin sorts first, 3 filled councilors follow, vacant seat renders cleanly, headshots/stances render, banner renders (not gradient fallback), purple chip appears, no party label.
+Per this agent's explicit dispatch instructions (`<parallel_execution>` EDIT SCOPE note), this worktree agent's scope was limited to the in-repo code edits (Task 2). Tasks 1 and 3 were checkpoint tasks executed by the orchestrator and are COMPLETE — full results recorded verbatim in the "Orchestrator Results" section below. The pre-resolved Wave-0 banner decision (Wikimedia Commons "Cornelius Civic Center - Oregon.JPG", CC BY-SA 3.0, M.O. Stevens — the D-14 named alternate) was carried through as planned; the D-14 post-hoc-swap precedent remains available to the operator if a better street-level candidate ever surfaces.
 
 ## Known Stubs
 
-None introduced by this plan's edits. The `cornelius` CURATED_LOCAL entry points at `cities/cornelius.jpg`, which does NOT yet exist in Supabase Storage as of this agent's commit (Task 1 pending) — until the orchestrator uploads the banner, `getBuildingImages()` will return this URL but the underlying asset will 404, and the Local section will show a broken image rather than the gradient fallback (the code has no existence check; this mirrors every prior phase's plan-05 sequencing, where the CURATED_LOCAL key is always wired before the upload completes). This is expected sequencing, not a defect — Task 1 must complete before Task 3's live-browse check.
+None. The `cornelius` CURATED_LOCAL entry's target asset `cities/cornelius.jpg` is uploaded and live (CDN HTTP 200, 117,431 bytes) — the wiring-before-upload sequencing gap that existed at the Task 2 commit was closed by the orchestrator's Task 1 in the same session, before the Task 3 live-browse check.
 
 ## Threat Flags
 
@@ -106,26 +100,25 @@ None — no new network endpoints, auth paths, file access patterns, or schema c
 
 ## User Setup Required
 
-None from this agent's edits. The orchestrator's remaining Task 1/Task 3 work requires: Supabase Storage upload credentials (already available to the orchestrator per the banner-asset-pipeline convention) and the Render API key at `C:/EV-Accounts/backend/.env` (service `srv-d7290ltm5p6s73ct3a2g`) for deploy-status polling.
+None - no external service configuration required.
 
 ## Next Phase Readiness
 
-**This plan (182-05) and phase 182 are NOT yet complete.** Task 2 (this agent's scope) is done and committed. The orchestrator must still:
-1. Run the banner pipeline (Task 1) using the pre-resolved Wikimedia Commons candidate, upload to `cities/cornelius.jpg`, confirm HTTP 200.
-2. Push this worktree's commit (`a5f0724`) to origin/main (merge per the harness's worktree-merge convention).
-3. Verify the Render deploy by bundle content (never hash).
-4. Perform the live-browse end-to-end check and confirm all Task 3 acceptance criteria.
-5. Only after all of the above pass should WASH-08 be marked complete and STATE.md/ROADMAP.md updated — this worktree agent explicitly did NOT touch STATE.md or ROADMAP.md per its dispatch instructions.
+**This plan (182-05) and phase 182 are COMPLETE — WASH-08 satisfied end-to-end** (roster/structure 1196, headshots 1197 + UAT circle-inscribed re-crop, stances 1198-1201, banner + purple chip + live verification, all confirmed live). Notes for successor phases:
 
-Live browse link (once the above completes): `essentials.empowered.vote/results?browse_geo_id=4115550&browse_mtfcc=G4110`
+- **Live browse link (phase close):** `essentials.empowered.vote/results?browse_geo_id=4115550&browse_mtfcc=G4110`
+- **Headshot template succession:** Phase 183+ deep-seeds must clone `_tmp-cornelius-headshots.py` (NOT Sherwood's) — it carries WR-01/WR-02/WR-C plus the new circle-inscribed 4:5 crop logic (auto-detects a square alpha bbox) that prevents white circle edges inside the round avatar mask.
+- **Migration counter:** on-disk MAX = 1201; next = 1202 (per 182-04-SUMMARY; this plan added no migrations).
+- **D-14 post-hoc swap:** the Civic Center banner is live and acceptable; the operator may still swap in a better street-level Cornelius scene later per precedent.
+- **Vacant 5th seat:** application window closed 2026-07-22 — a future refresh pass should seat the appointee (and revisit Baker's honest-blank stances once post-appointment minutes publish).
 
 ## Self-Check: PASSED
 
-- FOUND: `C:/Transparent Motivations/essentials/.claude/worktrees/agent-af4c6e5d63c83f677/src/lib/coverage.js` contains `'Cornelius'`
-- FOUND: `C:/Transparent Motivations/essentials/.claude/worktrees/agent-af4c6e5d63c83f677/src/lib/buildingImages.js` contains `cornelius:`
-- FOUND: commit `a5f0724` in `git log --oneline`
-- `npm run build` exit 0; built bundle grep confirms `4115550` (1 match) and `cornelius` (1 match)
-- No unexpected file deletions in the commit (`git diff --diff-filter=D --name-only HEAD~1 HEAD` empty)
+- FOUND: `C:/Transparent Motivations/essentials/src/lib/coverage.js` contains `'Cornelius'` (geo_id 4115550, on main post-merge)
+- FOUND: `C:/Transparent Motivations/essentials/src/lib/buildingImages.js` contains `cornelius:` + attribution comment
+- FOUND: commits `a5f0724` (Task 2) and `2c0e68c` (SUMMARY) in `git log`, merged to main at `ea0a78d`
+- `npm run build` exit 0 (worktree + post-merge); served bundle content-verified by orchestrator (`4115550`, `cities/cornelius.jpg`)
+- No unexpected file deletions in the commits (`git diff --diff-filter=D --name-only` empty)
 
 ## Orchestrator Results — Tasks 1 and 3 COMPLETE (2026-07-04)
 
