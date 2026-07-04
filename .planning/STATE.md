@@ -2,24 +2,25 @@
 gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
-status: verifying
-last_updated: "2026-07-04T18:01:29.892Z"
+status: ready_to_plan
+last_updated: 2026-07-04T18:37:43.851Z
 last_activity: 2026-07-04
 progress:
   total_phases: 13
   completed_phases: 10
   total_plans: 43
-  completed_plans: 43
+  completed_plans: 301
   percent: 77
+stopped_at: Phase 183 complete (4/4) — ready to discuss Phase 184
 ---
 
 # State
 
 ## Current Position
 
-Phase: 183 (school-boards-wave-1-beaverton-sd-48j-hillsboro-sd-1j) — EXECUTING
-Plan: 4 of 4
-Status: Phase complete — ready for verification
+Phase: 184
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-07-04
 
 ### v20.0 roadmap (created 2026-06-30)
@@ -331,7 +332,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 183 — school-boards-wave-1-beaverton-sd-48j-hillsboro-sd-1j
+**Current focus:** Phase 184 — school boards wave 2 — tigard tualatin sd 23j + forest grove sd 15 + sherwood sd 88j
 
 ## v15.0 Roadmap Summary
 
