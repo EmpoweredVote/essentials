@@ -252,6 +252,8 @@ export const COVERAGE_COUNTIES = [
 // convention as counties. Each routes through browse-by-geofence to the board.
 export const COVERAGE_SCHOOL_DISTRICTS = [
   { label: 'Clark County School District', browseGeoId: '3200060', browseMtfcc: 'G5420', browseStateAbbrev: 'NV' },
+  { label: 'Beaverton School District 48J', browseGeoId: '4101920', browseMtfcc: 'G5420', browseStateAbbrev: 'OR' },
+  { label: 'Hillsboro School District 1J', browseGeoId: '4100023', browseMtfcc: 'G5420', browseStateAbbrev: 'OR' },
 ];
 
 // Browsable states — every US state (each has statewide officials seeded:
