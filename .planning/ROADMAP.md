@@ -775,7 +775,7 @@ SCHOOL districts that reference these geofences)
 Plans:
 **Wave 1**
 
-- [ ] 183-01-PLAN.md — Wave-0 DB/roster/headshot probes: both G5420 geofences valid, greenfield, ext_id blocks free, next migration 1203/1204, both 7-director rosters + whole-district at-large re-confirmed (D-Z1 zone branch does NOT fire), 14 finalsite headshot URLs HTTP 200, verbatim chamber + office-title strings locked
+- [x] 183-01-PLAN.md — Wave-0 DB/roster/headshot probes: both G5420 geofences valid, greenfield, ext_id blocks free, next migration 1203/1204, both 7-director rosters + whole-district at-large re-confirmed (D-Z1 zone branch does NOT fire), 14 finalsite headshot URLs HTTP 200, verbatim chamber + office-title strings locked
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -852,7 +852,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 182. City of Cornelius Deep-Seed | 5/5 | Complete    | 2026-07-04 |
-| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 0/4 | Not started | - |
+| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 1/4 | In Progress|  |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
 | 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 186. West-Metro Playbook Retrospective & Close | 0/TBD | Not started | - |

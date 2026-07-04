@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: Beaverton & Washington County, OR
 status: executing
-last_updated: "2026-07-04T15:22:04.546Z"
-last_activity: 2026-07-04 -- Phase 183 planning complete
+last_updated: "2026-07-04T16:03:18.697Z"
+last_activity: 2026-07-04
 progress:
   total_phases: 13
   completed_phases: 9
   total_plans: 43
-  completed_plans: 39
+  completed_plans: 40
   percent: 69
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 183
-Plan: Not started
+Phase: 183 (school-boards-wave-1-beaverton-sd-48j-hillsboro-sd-1j) — EXECUTING
+Plan: 2 of 4
 Status: Ready to execute
-Last activity: 2026-07-04 -- Phase 183 planning complete
+Last activity: 2026-07-04
 
 ### v20.0 roadmap (created 2026-06-30)
 
@@ -331,7 +331,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 183 — school boards wave 1 — beaverton sd 48j + hillsboro sd 1j
+**Current focus:** Phase 183 — school-boards-wave-1-beaverton-sd-48j-hillsboro-sd-1j
 
 ## v15.0 Roadmap Summary
 
@@ -424,9 +424,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-04T06:40:20.845Z
-Stopped at: Phase 183 context gathered
-Resume file: .planning/phases/183-school-boards-wave-1-beaverton-sd-48j-hillsboro-sd-1j/183-CONTEXT.md
+Last session: 2026-07-04T16:03:18.680Z
+Stopped at: Completed 183-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -493,6 +493,7 @@ Resume file: .planning/phases/183-school-boards-wave-1-beaverton-sd-48j-hillsbor
 | Phase 181 P01 | 35m | 2 tasks | 1 files |
 | Phase 181 P02 | 25m | 1 tasks | 1 files |
 | Phase 181 P03 | 35m | 3 tasks | 2 files |
+| Phase 183 P01 | 6min | 2 tasks | 1 files |
 
 ## Decisions
 
@@ -567,3 +568,6 @@ Resume file: .planning/phases/183-school-boards-wave-1-beaverton-sd-48j-hillsbor
 - [Phase ?]: Sherwood A4 confirmed: City Attorney + Municipal Court Judge council-appointed — skip all 8 judicial-* topics in plan 04
 - [Phase 181]: Sherwood: geo_id 4167100 (Wave-0 corrected from stated 4167450); Mayor Rosener 2-year term recorded in LOCAL_EXEC label; Young Council President is title-on-seat only; Mays seeded as plain Councilor despite former-Mayor/CP history; D-15 WR-B pairwise identity gate passed (7/7)
 - [Phase 181]: Sherwood headshots (181-03): 7/7 official portraits live via mig 1188. Keith Mays's official city-served portrait is an older photo of him — accepted as-is since it is the portrait the city itself serves.
+- [Phase 183]: Both Beaverton SD 48J and Hillsboro SD 1J are whole-district at-large (7 directors each) — no sub-zone geofences — Wave-0 re-fetch confirmed district's own election language and overturned CONTEXT.md's stale Beaverton zone-voted assumption
+- [Phase 183]: Next migration numbers locked at 1203 (structural) / 1204 (headshots) from on-disk MAX 1202 — DB ledger MAX (1196) is a known lag/trap; on-disk file MAX is authoritative
+- [Phase 183]: Verbatim naming locked: Beaverton='School Board'/'Director, Zone N', Hillsboro='Board of Directors'/'Director, Position N' — Per-district verbatim confirmed live, not the 254_or blanket 'Board of Education' naming

@@ -179,3 +179,9 @@ No blockers.
 ---
 *Phase: 183-school-boards-wave-1-beaverton-sd-48j-hillsboro-sd-1j*
 *Completed: 2026-07-04*
+
+## Self-Check: PASSED
+
+- FOUND: `.planning/phases/183-school-boards-wave-1-beaverton-sd-48j-hillsboro-sd-1j/183-01-SUMMARY.md`
+- FOUND: `C:/EV-Accounts/backend/scripts/_tmp-westmetro-school-wave1-probe.sql`
+- FOUND: commit `3b96a93` (docs(183-01): record Wave-0 verification results)
