@@ -63,9 +63,9 @@ Per city/government deliverable (the Tier 1 unit):
 
 ### School Boards (roster + headshots; 0 compass stances by design)
 
-- [ ] **WSCH-01:** Beaverton SD 48J Board deep-seeded — roster + headshots; board-district structure
+- [x] **WSCH-01:** Beaverton SD 48J Board deep-seeded — roster + headshots; board-district structure
       verified. (One of Oregon's largest districts.)
-- [ ] **WSCH-02:** Hillsboro SD 1J Board deep-seeded — roster + headshots.
+- [x] **WSCH-02:** Hillsboro SD 1J Board deep-seeded — roster + headshots.
 - [ ] **WSCH-03:** Tigard-Tualatin SD 23J Board deep-seeded — roster + headshots.
 - [ ] **WSCH-04:** Forest Grove SD 15 Board deep-seeded — roster + headshots.
 - [ ] **WSCH-05:** Sherwood SD 88J Board deep-seeded — roster + headshots.
