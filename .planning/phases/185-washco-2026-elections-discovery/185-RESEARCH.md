@@ -459,16 +459,19 @@ CONTEXT (D-11) states west-metro offices have `representing_city = NULL`, justif
    - What we know: D-10 says race rows anchor on the office regardless of contestedness; these 3 offices ARE up in the 2026 cycle and DO have a confirmed winner (Teater, Dugger, Monteblanco), just not via a Nov ballot item.
    - What's unclear: whether WM-ELEC-01's ballot-visibility goal is served by a race row with exactly 1 uncontested candidate (which would render on `/elections` as "Kevin Teater — re-elected"), or whether that's noise since there's nothing for a west-metro voter to actually vote ON in November for that seat.
    - Recommendation: seed these 3 as race rows WITH their single already-decided candidate (matches D-10's office-anchoring intent and gives the ballot page complete information), but this is explicitly flagged as a planner decision, not a settled fact.
+   - **RESOLVED (185-01 `<seed_decisions>`):** OMIT all 3 May-decided seats (WashCo D2 / Beaverton Pos2 / Pos5), yielding exactly 25 races. The ceremonial-uncontested-row option floated here was declined in favor of D-03's literal "only seats up in **Nov** 2026" reading, reinforced by Pitfall 1 (a May-decided seat has no November ballot item).
 
 2. **Exact stable URL for Hillsboro's city elections information.**
    - What we know: the city publishes election news via its News/Components system (e.g., `hillsboro-oregon.gov/Home/Components/News/News/17502/4300`), which is a per-article URL, not a stable "elections" landing page like the other 6 cities have.
    - What's unclear: whether a stable `/elections` or `/city-council/elections` path exists on hillsboro-oregon.gov that this research didn't surface.
    - Recommendation: 5-minute Wave-0 task — browse hillsboro-oregon.gov's own navigation for an Elections section before defaulting to the root domain as source_url.
+   - **RESOLVED (185-03 Task 1):** the discovery-migration task confirms a stable Hillsboro elections URL by browsing the site's navigation and falls back to the root domain in `source_url` (with hillsboro-oregon.gov still in `allowed_domains`) if none is found.
 
 3. **Full candidate slate for Hillsboro (3 seats), Tigard (4 seats), Forest Grove (4 seats), Sherwood (4 seats), and Tualatin Positions 1/3 — 16 of 25 recommended race rows have NO independently-confirmed Nov 2026 candidate as of this research date.**
    - What we know: each city's own elections page is confirmed reachable (HTTP 200, no WAF) by the ORIGINAL deep-seed research for that city; Hillsboro's filing period literally had not opened yet (opens July 6, 2026) as of this research date (2026-07-04).
    - What's unclear: whether by plan/execution time (likely several days to weeks later) filing will have closed and a real slate will be knowable, or whether this remains a discovery-pipeline job.
    - Recommendation: seed all 16 race rows regardless (office-anchored, D-10); attempt one direct Wave-0 re-fetch per city; if still empty, ship with 0 candidates and let the just-armed discovery pipeline populate them over the following days — this is explicitly an acceptable outcome per D-07's "candidate count may be small or zero" acceptance bar.
+   - **RESOLVED (185-02 Task 1):** the candidate plan opens with a Wave-0 direct-fetch of each unresolved city's own elections page for the actual filed slate; any candidate confirmed with a citation is seeded, and any race still unconfirmed ships with 0 `race_candidates` (never a fabricated name).
 
 ---
 

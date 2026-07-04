@@ -1,8 +1,8 @@
 ---
 phase: 185
 slug: washco-2026-elections-discovery
-status: draft
-nyquist_compliant: false
+status: planned
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-07-04
 ---
@@ -37,25 +37,28 @@ created: 2026-07-04
 
 ## Per-Task Verification Map
 
-| Requirement | Behavior | Test Type | Automated Command | File Exists | Status |
-|-------------|----------|-----------|-------------------|-------------|--------|
-| WM-ELEC-01 | Race rows exist, each linked to a pre-existing `office_id`; 0 with NULL office_id; 0 with non-NULL `primary_party` (antipartisan) | DB assertion (`DO $$ ... RAISE EXCEPTION`) embedded in races migration | `_apply-migration-<races>.ts` | ✅ (pattern established) | ⬜ pending |
-| WM-ELEC-01 | `discovery_jurisdictions` has exactly 8 new OR rows, all `election_date='2026-11-03'`, `state`-cased per existing OR rows | DB assertion embedded in discovery migration | `_apply-migration-<discovery>.ts` | ✅ | ⬜ pending |
-| WM-ELEC-01 | 0 school-board race rows for any of the 5 west-metro G5420 districts | DB assertion (negative check) added to races migration post-verify block | `_apply-migration-<races>.ts` | ❌ W0 (3-line addition to existing pattern) | ⬜ pending |
-| WM-ELEC-01 | `race_candidates` rows attach only confirmed candidates; no fabricated names; headshots 600×750 where a source photo exists | DB assertion (count matches confirmed slate) + manual headshot spot-check | `_apply-migration-<candidates>.ts` | ✅ | ⬜ pending |
-| WM-ELEC-01 | 1 real discovery run completes with `status='completed'`, `error_message IS NULL` | Live smoke test (POST trigger + poll `discovery_runs`) | `curl -X POST .../api/admin/discover/jurisdiction/:id` + poll | ✅ (Phase 167 Plan 03 pattern) | ⬜ pending |
-| WM-ELEC-01 | `/elections` returns the seeded races for a known west-metro address | Manual UAT | Load `/elections` for a Beaverton/Hillsboro address | ❌ W0 (no automated E2E for this page; human-verify) | ⬜ pending |
+| Plan / Task | Requirement | Behavior | Test Type | Automated Command | File Exists | Status |
+|-------------|-------------|----------|-----------|-------------------|-------------|--------|
+| 185-01 T1 | WM-ELEC-01 | Live migration counter + OR 2026 General election row casing re-verified (Wave 0) | Live check | `ls migrations \| sort -n \| tail -1` + `SELECT name,state FROM elections WHERE election_date='2026-11-03'` | n/a (verification) | ⬜ pending |
+| 185-01 T2 | WM-ELEC-01 | 25 race rows exist, each linked to a pre-existing office_id; 0 NULL office_id; 0 non-NULL primary_party; 0 school-board races (negative assertion) | DB assertion (`DO $$ ... RAISE EXCEPTION`) embedded in races migration | `_apply-migration-{BASE}.ts` | ✅ (pattern established) | ⬜ pending |
+| 185-02 T1 | WM-ELEC-01 | Unresolved-city candidate slates re-fetched; names cited or recorded "0 confirmed" (Wave 0) | Manual re-fetch → verified by T2 citation-coverage assertion | (records names+URLs) | n/a | ⬜ pending |
+| 185-02 T2 | WM-ELEC-01 | race_candidates attach only cited candidates; 0 active rows with NULL politician_id; 0 dup full_name per race; every row has a source; reuse candidates share existing rows | DB assertion embedded in candidates migration | `_apply-migration-{BASE+1}.ts` | ✅ | ⬜ pending |
+| 185-02 T3 | WM-ELEC-01 | New challengers with a source photo have a 600×750 press_use headshot; no duplicate for reused candidates | DB assertion (image count) + manual visual spot-check | `_apply-migration-{BASE+1}.ts` | ✅ | ⬜ pending |
+| 185-03 T1 | WM-ELEC-01 | Exactly 8 OR discovery_jurisdictions rows (election_date 2026-11-03, state 'OR'); 0 school-board rows | DB assertion embedded in discovery migration | `_apply-migration-{BASE+2}.ts` | ✅ | ⬜ pending |
+| 185-03 T2 | WM-ELEC-01 | 1 real discovery run completes with `status='completed'`, `error_message IS NULL` | Live smoke test (POST trigger + poll `discovery_runs`) | `POST .../api/admin/discover/jurisdiction/:id` + poll | ✅ (Phase 167 Plan 03 pattern) | ⬜ pending |
+| phase gate | WM-ELEC-01 | `/elections` returns the seeded races for a known west-metro address | Manual UAT | Load `/elections` for a Beaverton/Hillsboro address | ❌ (no automated E2E; human-verify) | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
 ---
 
-## Wave 0 Requirements
+## Wave 0 Requirements (folded into the relevant plans)
 
-- [ ] Live re-verify the exact stored `name`/`state` casing of the pre-existing OR 2026 General election row (`SELECT name, state FROM essentials.elections WHERE election_date='2026-11-03'`) before writing the races migration FK subquery.
-- [ ] Live re-verify the on-disk migration counter (`ls migrations | sort -n | tail`) — RESEARCH found it already advanced to 1211 (next = 1212); parallel workstreams may advance it again.
-- [ ] Direct-fetch each unresolved city's own elections page (Hillsboro, Tigard, Forest Grove, Sherwood, Tualatin Pos1/Pos3) for the actual filed candidate list — 16 of 25 races have no independently-confirmed Nov 2026 candidate yet.
-- [ ] Add the "0 school-board races" negative assertion to the races migration post-verify block.
+- [x] Live re-verify the on-disk migration counter → **185-01 Task 1** (BASE recorded in 185-01 SUMMARY for Plans 02/03).
+- [x] Live re-verify the exact stored `name`/`state` casing of the OR 2026 General election row → **185-01 Task 1**.
+- [x] Add the "0 school-board races" negative assertion to the races migration post-verify block → **185-01 Task 2**.
+- [x] Direct-fetch each unresolved city's own elections page (Hillsboro, Tigard, Forest Grove, Sherwood, Tualatin Pos1/Pos3) for the actual filed candidate list → **185-02 Task 1**.
+- [x] Confirm a stable Hillsboro elections URL + Cornelius redirect target → **185-03 Task 1**.
 
 ---
 
@@ -70,11 +73,11 @@ created: 2026-07-04
 
 ## Validation Sign-Off
 
-- [ ] All tasks have an embedded DB assertion, a smoke-test command, or a Wave 0 dependency
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references (election-row casing, live counter, unresolved candidate slates, school-board negative assertion)
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter (by planner once map is complete)
+- [x] All tasks have an embedded DB assertion, a smoke-test command, or a Wave 0 dependency
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references (election-row casing, live counter, unresolved candidate slates, school-board negative assertion)
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter (by planner once map is complete)
 
-**Approval:** pending
+**Approval:** planner-complete (pending execution)
