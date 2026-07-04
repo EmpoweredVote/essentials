@@ -510,7 +510,11 @@ Recommended assignment: Beaverton `-4101921` (Zone 1) through `-4101927` (Zone 7
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Both questions below are operationally resolved by the plans: Plan 183-01 Task 2 locks
+> "Director, Position N" as the non-blocking default with a Wave-0 confirmation pass, and
+> Plan 183-03 implements the document-gap-don't-fabricate fallback per D-R5.
 
 1. **Exact verbatim confirmation of Hillsboro's office-title convention ("Director, Position N")**
    - What we know: Ballotpedia + the district's own site confirm "Position N" numbering; ORS 332 + the parallel Beaverton filing convention support the "Director" prefix.
