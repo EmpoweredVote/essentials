@@ -483,7 +483,7 @@ Phases continue from 173 (v18.0); this milestone starts at **Phase 174**.
 - [x] **Phase 180: City of Forest Grove Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [x] **Phase 181: City of Sherwood Deep-Seed** - Mayor + Council (completed 2026-07-03)
 - [x] **Phase 182: City of Cornelius Deep-Seed** - Mayor + Council (completed 2026-07-04)
-- [ ] **Phase 183: School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J** - Roster + headshots for the two largest west-metro school boards; 0 stances by design
+- [x] **Phase 183: School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J** - Roster + headshots for the two largest west-metro school boards; 0 stances by design (completed 2026-07-04)
 - [ ] **Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J** - Roster + headshots for three remaining school boards; 0 stances by design
 - [ ] **Phase 185: WashCo 2026 Elections & Discovery** - 2026 local elections + discovery pipeline armed for all new west-metro jurisdictions
 - [ ] **Phase 186: West-Metro Playbook Retrospective & Close** - Surface jurisdictions, Washington County GOTCHAs, DB-verified milestone audit, close
@@ -787,7 +787,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 183-04-PLAN.md — Surfacing + full E2E: append 2 plain COVERAGE_SCHOOL_DISTRICTS entries (no hasContext) + SQL/HTTP gate suite + push -> deploy-by-content -> Playwright live browse of both G5420 links + human-verify
+- [x] 183-04-PLAN.md — Surfacing + full E2E: append 2 plain COVERAGE_SCHOOL_DISTRICTS entries (no hasContext) + SQL/HTTP gate suite + push -> deploy-by-content -> Playwright live browse of both G5420 links + human-verify
 
 ### Phase 184: School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J
 
@@ -852,7 +852,7 @@ Phases execute in numeric order: 174 → 175 → 176 → 177 → 178 → 179 →
 | 180. City of Forest Grove Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 181. City of Sherwood Deep-Seed | 5/5 | Complete    | 2026-07-03 |
 | 182. City of Cornelius Deep-Seed | 5/5 | Complete    | 2026-07-04 |
-| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 3/4 | In Progress|  |
+| 183. School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J | 4/4 | Complete   | 2026-07-04 |
 | 184. School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
 | 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 186. West-Metro Playbook Retrospective & Close | 0/TBD | Not started | - |
