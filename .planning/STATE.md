@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v20.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 185 context gathered
-last_updated: "2026-07-05T08:27:01.709Z"
-last_activity: 2026-07-05 -- Phase 186 marked complete
+stopped_at: v20.0 milestone closed
+last_updated: "2026-07-05T08:35:00.000Z"
+last_activity: 2026-07-05 -- v20.0 milestone archived + tagged (formal close)
 progress:
   total_phases: 25
   completed_phases: 24
@@ -18,10 +18,31 @@ progress:
 
 ## Current Position
 
-Phase: 186 — COMPLETE
-Plan: 1 of 1
-Status: Phase 186 complete
-Last activity: 2026-07-05 -- Phase 186 marked complete
+Milestone: **v20.0 — CLOSED & ARCHIVED 2026-07-05**
+Status: No active milestone. v19.0 (Dark-Mode Redesign, Phases 169–172) remains PARKED.
+Next: resume v19.0 or open a new milestone via `/gsd:new-milestone`.
+Last activity: 2026-07-05 -- v20.0 milestone archived (milestones/v20.0-*) + tagged v20.0
+
+## Deferred Items
+
+Items acknowledged and deferred at v20.0 milestone close on 2026-07-05 (12 open artifacts;
+9 are stale cross-milestone leftovers, 3 are v20.0 per-phase checkpoints superseded by the
+DB-verified v20.0-MILESTONE-AUDIT.md + live operator approvals):
+
+| Category | Item | Status |
+|----------|------|--------|
+| debug | cambridge-locals-missing (v5.0) | diagnosed — CONFIRMED root cause (offices district_id NULL), never formally closed |
+| uat | phase 103 (v13.0 MA) | partial — 3 open scenarios |
+| uat | phase 167 (v18.0 NV) | partial — 1 open scenario |
+| verification | phase 103 (v13.0) | human_needed |
+| verification | phase 106 (v13.0) | human_needed |
+| verification | phase 108 (v13.0) | human_needed |
+| verification | phase 110 (v13.0) | human_needed |
+| verification | phase 126 | human_needed |
+| verification | phase 167 (v18.0) | human_needed |
+| verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+| verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+| verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 
 ### v20.0 roadmap (created 2026-06-30)
 

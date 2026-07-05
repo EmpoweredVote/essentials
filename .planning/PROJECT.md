@@ -8,21 +8,11 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: v20.0 Beaverton & Washington County, OR — ✅ SHIPPED 2026-07-05
+## Current Milestone: none active
 
-**Status:** Closed 2026-07-05. DB-verified in `.planning/v20.0-MILESTONE-AUDIT.md`; playbook updated in `LOCATION-ONBOARDING.md`; MILESTONES.md entry added. All 16 requirements met (Phases 174–186). **Next:** v19.0 Essentials Dark-Mode Redesign & Section Banners remains parked (Phases 169–172) — resume it or open a new milestone.
+**v20.0 Beaverton & Washington County, OR closed 2026-07-05** (see summary block below + `MILESTONES.md` + `milestones/v20.0-*`). No milestone is currently active.
 
-**Goal:** Deep-seed the Washington County / west-metro local layer onto Oregon's existing state foundation, so any west-metro address surfaces its full local slate (county, city, school board) with evidence-only compass coverage.
-
-**Target features:**
-- West-metro school-district G5420 geofences loaded (TIGER UNSD pattern; city + county geofences already exist statewide).
-- Washington County Board of Commissioners deep-seeded (county tier, like Clark County Commission in v18.0) with evidence-only compass stances.
-- 7 west-metro cities deep-seeded with stances — Beaverton (flagship), Hillsboro (county seat/largest), Tigard, Tualatin, Forest Grove, Sherwood, Cornelius (gov + roster + 600×750 headshots + evidence-only compass stances + honest blanks).
-- 5 school boards seeded (roster + headshots, **0 compass stances by design** — civic compass not applied to school boards): Beaverton SD 48J, Hillsboro SD 1J, Tigard-Tualatin SD 23J, Forest Grove SD 15, Sherwood SD 88J.
-- 2026 local elections + discovery pipeline armed for the new jurisdictions.
-- Surface in `src/lib/coverage.js` (Oregon block + Washington County in COVERAGE_COUNTIES), playbook update (Oregon GOTCHAs + Washington County rows), and milestone close (audit + MILESTONES entry).
-
-**Key context:** Brownfield local-layer deep-seed on the complete OR state/federal/legislative foundation (v8.0–v10.0); no geofence/state work except the school-district G5420 load. Greenfield: Beaverton city (geo_id **4105350**), Washington County (41067), and all west-metro cities have geofences but zero seeded local government. 5 tiny WashCo cities (King City/Durham/North Plains/Banks/Gaston) deferred. OR gotchas: `districts.state` casing inconsistency (`'or'` vs `'OR'` both exist — verify before filters), geofence loader key is `cd119`, COUNTY-section/Chair-first ordering quirks. **Beaverton's form of government must be verified at plan time** (mayor + council; at-large/by-position vs wards — if by-ward, custom X00xx ward geofences needed like Portland's X0012). Surfacing target is `src/lib/coverage.js`. Phases continue at 174+ (169–172 belong to parked v19.0).
+**Next:** either resume the parked **v19.0 Essentials Dark-Mode Redesign & Section Banners** (Phases 169–172; 169–170 done, 171–172 pending) or open a new coverage milestone via `/gsd:new-milestone`. Candidate next targets: tiny WashCo cities (King City/Durham/North Plains/Banks/Gaston + Banks/Gaston SDs), or Clackamas / east-metro expansion (Lake Oswego, Wilsonville, Oregon City).
 
 ## Requirements
 
@@ -141,6 +131,18 @@ A resident can look up who represents them — and who is on their ballot — wi
 ### v13.0 Massachusetts Expanded (Shipped: 2026-06-13)
 
 **Delivered:** MA town geofences (293 G4040 COUSUB boundaries), Boston deep seed (Mayor Wu + 13 City Councillors + School Committee with headshots), MA Tier 2 cities (Worcester + Springfield + Lowell + Brockton + Quincy), MA 2026 elections (240+ race rows + discovery armed), compass stances for all 217 MA officials (6 execs + 11 federal + 40 senators + 160 house reps), and MA playbook retrospective.
+
+### v20.0 West-Metro Washington County, OR (Shipped: 2026-07-05)
+
+**Delivered:** The Washington County / west-metro Portland local layer deep-seeded onto Oregon's existing
+state foundation — west-metro school-district G5420 geofences (Phase 174) → Washington County Board of
+Commissioners (standalone county, geo_id 41067) → 7 city deep-seeds (Beaverton flagship, Hillsboro, Tigard,
+Tualatin, Forest Grove, Sherwood, Cornelius) → 5 school-district boards (roster + headshots, 0 compass by
+design) → 2026 elections + confirmed candidate slate + armed discovery → playbook retrospective + close.
+**80 seated officials, 79/80 headshots, 391 city/county stance rows, 50/51 city/county officials with
+evidence-only stances; 25 race rows + 12 candidates/8 races + 8 discovery jurisdictions + 1 live run.** All
+8 city/county jurisdictions carry the DB-honest purple chip; 5 school districts plain + search-only.
+13 phases (174–186). See `.planning/milestones/v20.0-MILESTONE-AUDIT.md`.
 
 ### v18.0 Las Vegas & Clark County, NV (Shipped: 2026-06-30)
 

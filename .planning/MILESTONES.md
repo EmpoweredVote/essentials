@@ -40,6 +40,8 @@ frontend detour and are not part of this milestone.
 - 12 phases (174–185) + 1 close-out (186); date range 2026-06-30 → 2026-07-05
 - EV-Accounts migrations: structural per city/county/school (175–184) + elections layer 1213/1215/1216/1218/1219
 - 80 seated officials · 79/80 headshots · 391 city/county stance rows · 25 races · 12 candidates · 8 discovery jurisdictions
+- Known deferred items at close: 12 (see STATE.md Deferred Items) — 3 v20.0 per-phase verification checkpoints
+  (Ph177/178/180, operator-approved live + DB-verified in the milestone audit) + 9 stale cross-milestone leftovers
 
 **What's next:** v19.0 Essentials Dark-Mode Redesign & Section Banners remains parked (Phases 169–172) —
 resume it, or open a new milestone. Post-close follow-ups (non-blocking) tracked in the v20.0 audit:
