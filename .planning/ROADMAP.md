@@ -820,7 +820,7 @@ Phase 174 (school-district rows needed for school-board races if applicable)
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 185-01-PLAN.md — Seed 25 office-anchored OR 2026 General race rows (WashCo Commission + 7 cities; May-decided + school-board seats excluded)
+- [x] 185-01-PLAN.md — Seed 25 office-anchored OR 2026 General race rows (WashCo Commission + 7 cities; May-decided + school-board seats excluded)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -862,7 +862,7 @@ Phases execute in numeric order: 174 â 175 â 176 â 177 â 178
 | 182. City of Cornelius Deep-Seed | 5/5 | Complete    | 2026-07-04 |
 | 183. School Boards Wave 1 â Beaverton SD 48J + Hillsboro SD 1J | 4/4 | Complete    | 2026-07-04 |
 | 184. School Boards Wave 2 â Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J | 0/TBD | Not started | - |
-| 185. WashCo 2026 Elections & Discovery | 0/TBD | Not started | - |
+| 185. WashCo 2026 Elections & Discovery | 1/3 | In Progress|  |
 | 186. West-Metro Playbook Retrospective & Close | 0/TBD | Not started | - |
 
 ## Coverage
