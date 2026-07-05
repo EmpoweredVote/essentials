@@ -7,7 +7,7 @@ This file is the milestone index; only the current/most-recent milestones are ex
 
 - ✅ **v20.0 West-Metro Washington County, OR** — Phases 174–186 (shipped 2026-07-05)
 - ✅ **v18.0 Las Vegas & Clark County, NV** — Phases 158–168, 173 (shipped 2026-06-30)
-- ⏸ **v19.0 Dark-Mode Redesign & Section Banners** — Phases 169–172 (PARKED; 169–170 done, 171–172 pending)
+- ✅ **v19.0 Dark-Mode Redesign & Section Banners** — Phases 169–172 (shipped 2026-06-28, formally closed 2026-07-05)
 - ✅ **v17.0 LA County City Coverage Wave 2** — Phases 142–157 (shipped 2026-06-22)
 - ✅ earlier milestones v2.0–v16.0 — see `.planning/milestones/` archives + `MILESTONES.md`
 
@@ -55,11 +55,17 @@ Full detail: `.planning/v18.0-MILESTONE-AUDIT.md` + `MILESTONES.md`.
 </details>
 
 <details>
-<summary>⏸ v19.0 Dark-Mode Redesign & Section Banners (Phases 169–172) — PARKED</summary>
+<summary>✅ v19.0 Dark-Mode Redesign & Section Banners (Phases 169–172) — SHIPPED 2026-06-28 (closed 2026-07-05)</summary>
 
-Frontend milestone paused to complete v18.0/v20.0. Phases 169–170 done; 171–172 (banner asset
-pipeline, Elections parity) pending. Phase dirs `.planning/phases/169…172-*`. Resume as a separate
-effort or fold into a new milestone.
+Full detail: `.planning/milestones/v19.0-ROADMAP.md` · audit: `v19.0-MILESTONE-AUDIT.md`
+
+- [x] Phase 169: Dark-Mode Design System Foundation (2/2) — completed 2026-06-25
+- [x] Phase 170: Section Banners & Continuous Scroll — Results (4/4) — completed 2026-06-26
+- [x] Phase 171: Banner Asset Pipeline & Exemplar Art (2/2) — completed 2026-06-27
+- [x] Phase 172: Elections Page Parity (1/1) — completed 2026-06-28
+
+Frontend-only detour built 2026-06-25 → 06-28 (verified + deployed); formal close ran 2026-07-05.
+Deferred (out of scope): live banner stats, feature-icon links, remaining-state art, Landing/profile dark mode.
 
 </details>
 

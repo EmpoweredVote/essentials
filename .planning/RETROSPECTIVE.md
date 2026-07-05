@@ -92,3 +92,47 @@
 - Agents: stance research run one-at-a-time per official (rate-limit rule) — parallel would burn Anthropic quota; sonnet used for stance agents
 - Sessions: ~6 work sessions across 6 days (2026-06-30 → 2026-07-05)
 - Notable: the deep-seed unit is now highly repeatable; the dominant cost was per-city research (roster verification + headshot sourcing + evidence-only stance research), not structural seeding
+
+## Milestone: v19.0 — Essentials Dark-Mode Redesign & Section Banners
+
+**Shipped:** 2026-06-28 (build) · formally closed 2026-07-05
+**Phases:** 4 (169–172) | **Plans:** 9
+
+### What Was Built
+
+- Figma dark-mode design system migrated into `src/index.css` `@theme` tokens (single source of truth, GitHub-dark palette); Inter/Manrope self-hosted; ev-ui dark overrides via `.dark .ev-* {…!important}`
+- Reusable `SectionBanner` component (full-bleed image + dark gradient + location label/pin, tinted fallback, empty stats + feature-icon scaffolding slots)
+- Results converted to continuous City → State → Federal scroll with banner dividers; tier sort control removed
+- Banner asset pipeline: `docs/banner-asset-pipeline.md` runbook + `scripts/banners/{process,upload}_banner.py`; 2 exemplar sets live (Bloomington/IN/US + LA/CA/US)
+- Elections page brought to dark parity + the same banner dividers (behavior-preserving, color-only diff)
+
+### What Worked
+
+- **Token-first sequencing** — Phase 169 established the dark palette as a single source of truth before any component work, so 170–172 only referenced tokens, never re-derived literals; the "stale dark literal" grep became a clean, repeatable verification gate
+- **Scaffolding-not-features discipline** — BANR-04 shipped empty stats/icon slots as structure only; resisting the urge to wire live data kept the milestone tight and the deferred list honest
+- **Operator visual sign-off per phase** — dark-mode/banner correctness is inherently visual; each phase ended with a human deploy-and-confirm checkpoint rather than pretending code-level checks were sufficient
+
+### What Was Inefficient
+
+- **The milestone was never formally closed for 7 days** — all 4 phases were built, verified, and deployed by 2026-06-28, but the pivot to v18.0/v20.0 left the tracking docs (PROJECT.md/STATE.md/memory) frozen at "parked, 171–172 pending." That stale language caused real confusion at resume time ("what's next?" → nothing, it was done). **Lesson: run the formal close immediately after the last phase verifies, even for a detour milestone — or the records rot.**
+- **Parking snapshots vs milestone archives were conflated** — `v19.0-{ROADMAP,REQUIREMENTS,STATE}.md` lived in `.planning/` root as parking snapshots and were mistaken for (absent) milestone archives; the frozen REQUIREMENTS snapshot even showed 4 requirements unchecked that were actually complete
+- **ev-ui local alias lag** — `vite.config.js` aliases `@empoweredvote/ev-ui` → local `../ev-ui/dist`, which lagged the npm build; newer exports were absent there and a direct import broke the build (had to shim locally)
+
+### Patterns Established
+
+- Dark tokens: change only the **dark VALUES** in `@theme`, keep names — beware the two-#59b0c4 trap (dark ev-teal-light vs light --ev-light-blue)
+- ev-ui dark overrides require `!important` and header child hooks (`.ev-header-secondary/-nav/-mobile-menu`)
+- Banner asset convention: `cities/<slug>.jpg`, `states/<ABBR>.jpg`, `national/…`; dark overlay applied at render by `SectionBanner`, source images stored untreated
+- Single-source-of-truth for banner inputs: derive `buildingImageMap`/`representingCity`/`userState` once in the parent (Results) and thread as props — child never re-derives (anti-pattern grep guard)
+
+### Key Lessons
+
+- **Close detour milestones the moment they verify** — a "we'll formalize it later" close is the single biggest process debt this project has hit; stale "parked" status outlived the actual work by a week
+- **Visual milestones need deployed human sign-off** — code-level verification (grep for stale literals, wiring, tests) is necessary but not sufficient; the "passed (code) / human_needed (visual)" split is the honest status
+- **Keep parking snapshots clearly distinct from milestone archives** — name/locate them so they're never mistaken for a formal close
+
+### Cost Observations
+
+- Frontend-only; no stance-research agents; 59/59 unit tests + clean build gated each phase
+- Sessions: ~4 focused sessions over 4 days (2026-06-25 → 06-28), then a short close session 2026-07-05
+- Notable: cheapest milestone type (no per-jurisdiction research), but the deferred-close cost real confusion later — process debt, not token cost

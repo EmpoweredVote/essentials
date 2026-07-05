@@ -113,6 +113,50 @@ frontend detour and are not part of this milestone.
 
 ---
 
+## v19.0 Essentials Dark-Mode Redesign & Section Banners (Shipped: 2026-06-28 · formally closed: 2026-07-05)
+
+**Delivered:** A frontend-only detour that adopted the Figma dark-mode visual design across the
+Results/Representatives and Elections pages and replaced the Local/State/National tier sort buttons with
+scrollable, full-bleed, location-aware `SectionBanner` dividers between City → State → Federal — recreating
+Aditi's Bloomington-banner treatment as a reusable, data-ready system. Build completed 2026-06-25 → 06-28
+(all phases verified + operator-signed-off + deployed); the formal milestone close was deferred while the
+v18.0 (NV) and v20.0 (WashCo OR) data-track milestones ran, then executed 2026-07-05.
+
+**Phases completed:** 169 (dark-token foundation: DARK-01/02) → 170 (section banners + continuous scroll +
+sort-button removal on Results: BANR-01/02/03/04, NAV-01) → 171 (banner asset pipeline + 2 exemplar sets:
+ASST-01/02) → 172 (Elections page parity: DARK-03, BANR-05).
+
+**Key accomplishments:**
+
+- **Figma dark-mode design system** — GitHub-dark palette migrated into `src/index.css` `@theme` tokens
+  (single source of truth: ev-navy #0d1117, ev-navy-card #161b22, ev-teal-light #00c8d7, +text tokens);
+  Inter/Manrope self-hosted; ev-ui components dark-themed via `.dark .ev-* {…!important}`; light mode
+  untouched; PoliticianCard 4:5 geometry preserved (Phase 169)
+- **Reusable `SectionBanner` component** — full-bleed image + dark gradient + location label/pin, tinted
+  gradient fallback, empty stats + feature-icon scaffolding slots; tier sort control removed; Results
+  renders City → State → Federal in one continuous scroll (Phase 170)
+- **Banner asset pipeline** — `docs/banner-asset-pipeline.md` 8-stage runbook + `scripts/banners/`
+  (`process_banner.py` 1700×540 q90 LANCZOS + `upload_banner.py` service-role-key-from-env); 6 exemplar
+  assets live in Storage (Bloomington/IN/US + LA/CA/US) wired into `buildingImages.js`; D-04 dead-asset
+  cleanup (Phase 171)
+- **Elections page parity** — dark-token swap + `SectionBanner` per tier threaded from Results; seeded
+  ordering, unopposed/no-candidate handling, `elections/me` auto-load, and MiniCompass all preserved
+  (provably color-only diff); operator deploy sign-off (Phase 172)
+
+**Stats:**
+
+- 4 phases (169–172), 9 plans; build date range 2026-06-25 → 2026-06-28
+- Frontend-only — no backend/DB schema changes; 59/59 unit tests green + build clean at each phase
+- 11/11 requirements (DARK/BANR/NAV/ASST); all phase VERIFICATION.md files `passed`
+
+**What's next:** Deferred dark/banner enhancements (out of v19.0 scope) — live banner stats data-slot
+wiring, feature-icon links, banner art for the ~10 remaining covered states, and Landing + profile-page
+dark treatment. A natural next milestone if the frontend track resumes.
+
+**Audit:** [v19.0-MILESTONE-AUDIT.md](v19.0-MILESTONE-AUDIT.md)
+
+---
+
 ## v17.0 LA County City Coverage — Wave 2 (Shipped: 2026-06-22)
 
 **Delivered:** 15 LA County cities deep-seeded end-to-end (government + roster → 600×750 headshots →

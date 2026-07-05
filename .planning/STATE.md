@@ -18,10 +18,10 @@ progress:
 
 ## Current Position
 
-Milestone: **v20.0 — CLOSED & ARCHIVED 2026-07-05**
-Status: No active milestone. v19.0 (Dark-Mode Redesign, Phases 169–172) remains PARKED.
-Next: resume v19.0 or open a new milestone via `/gsd:new-milestone`.
-Last activity: 2026-07-05 -- v20.0 milestone archived (milestones/v20.0-*) + tagged v20.0
+Milestone: **v20.0 CLOSED 2026-07-05** · **v19.0 CLOSED 2026-07-05** (build was done 2026-06-28; formal close deferred until now)
+Status: No active or parked milestone. Both archived to `milestones/` + tagged.
+Next: open a new milestone via `/gsd:new-milestone` (candidate: resume the deferred v19.0 frontend track — banner stats/icons, remaining-state art, Landing/profile dark mode).
+Last activity: 2026-07-05 -- v19.0 + v20.0 milestones archived (milestones/v19.0-*, v20.0-*) + tagged
 
 ## Deferred Items
 
