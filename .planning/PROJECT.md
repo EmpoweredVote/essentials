@@ -8,7 +8,9 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: v20.0 Beaverton & Washington County, OR
+## Current Milestone: v20.0 Beaverton & Washington County, OR — ✅ SHIPPED 2026-07-05
+
+**Status:** Closed 2026-07-05. DB-verified in `.planning/v20.0-MILESTONE-AUDIT.md`; playbook updated in `LOCATION-ONBOARDING.md`; MILESTONES.md entry added. All 16 requirements met (Phases 174–186). **Next:** v19.0 Essentials Dark-Mode Redesign & Section Banners remains parked (Phases 169–172) — resume it or open a new milestone.
 
 **Goal:** Deep-seed the Washington County / west-metro local layer onto Oregon's existing state foundation, so any west-metro address surfaces its full local slate (county, city, school board) with evidence-only compass coverage.
 
@@ -289,4 +291,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-04 — v20.0 in progress: Phase 183 School Boards Wave 1 complete (WSCH-01 + WSCH-02 — Beaverton SD 48J + Hillsboro SD 1J seeded on Phase-174 G5420 geofences, both boards verified whole-district at-large [live verification overturned the Beaverton zone-voted assumption], migrations 1203 structural + 1205 headshots [renumbered from 1204, claimed by concurrent AZ workstream], 14/14 headshots [Hillsboro genuine-original Lanczos upscales documented, CDN t_image_size_6 upscale trap avoided], 0 stances by design, plain coverage.js entries, verified live in-session 8/8 must-haves; 183-REVIEW: 0 critical, 3 latent template warnings for Wave-2 cloners); all 7 WashCo cities (176–182) complete; next Phase 184 School Boards Wave 2 (Tigard-Tualatin/Forest Grove/Sherwood); v19.0 Dark-Mode Redesign parked (169–172); v18.0 Las Vegas & Clark County, NV shipped*
+*Last updated: 2026-07-05 — **v20.0 Beaverton & Washington County, OR SHIPPED** (Phase 186 close-out complete). Final DB-verified state: Washington County + 7 west-metro cities + 5 school-district boards; 80 seated officials, 79/80 headshots, 50/51 city/county officials with evidence-only stances (391 rows), school boards deferred by design; 2026 layer = 25 races + 12 candidates/8 races + 8 discovery jurisdictions + 1 live discovery run. Coverage.js reconciled (all 8 city/county purple chips DB-honest, no edits), LOCATION-ONBOARDING.md playbook updated (13 Cities Onboarded rows + West-Metro Quick Reference), v20.0-MILESTONE-AUDIT.md written. Non-blocking follow-ups: Cornelius thin stances, FG SD-15 headshot gap, 2 new-challenger headshots, ongoing 2026 candidate discovery. Next: v19.0 Dark-Mode Redesign remains parked (169–172), or open a new milestone; v18.0 NV shipped*

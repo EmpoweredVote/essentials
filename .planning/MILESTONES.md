@@ -1,5 +1,52 @@
 # Milestones
 
+## v20.0 Beaverton & Washington County, OR (Shipped: 2026-07-05)
+
+**Delivered:** The Washington County west-metro local layer deep-seeded onto Oregon's existing state
+foundation — Washington County Board of Commissioners + 7 west-metro cities + 5 school-district boards →
+600×750 headshots + evidence-only compass stances (school boards deferred by design) → 2026 election race
+shells + confirmed candidate slate + armed discovery pipeline. Every west-metro resident routes to their
+county, city, and school district, and city/county officials carry a compass. DB-verified at close in the
+[v20.0 milestone audit](v20.0-MILESTONE-AUDIT.md).
+
+**Phases completed:** 174 (school-district G5420 geofences) → 175 (Washington County Commission) → 176–182
+(7 city deep-seeds) → 183–184 (5 school-board boards) → 185 (2026 elections + candidates + discovery) → 186
+(close-out: audit + playbook + milestone close). Phases 169–172 belong to the separately-parked v19.0
+frontend detour and are not part of this milestone.
+
+**Key accomplishments:**
+
+- **Washington County opened as a standalone county government** (geo_id 41067, NOT under State of OR) —
+  Board of Commissioners = Chair + 4 district commissioners on custom LOCAL geofences
+  (`washco-or-commissioner-district-1..4`); 5/5 headshots + stances, 67 stance rows (Phase 175)
+- **7 west-metro cities deep-seeded** — Beaverton (7, 91 stances), Hillsboro (7, 60), Tualatin (7, 59),
+  Tigard (7, 48), Forest Grove (7, 39), Sherwood (7, 23), Cornelius (4, thin 4-row honest blanks);
+  **51 city/county officials, 51/51 headshots, 50/51 with stances, 391 stance rows** (Phases 175–182)
+- **5 school-district boards seeded** (roster + headshots, compass DEFERRED by design) — Beaverton SD 48J,
+  Hillsboro SD 1J, Tigard-Tualatin SD 23J, Sherwood SD 88J, Forest Grove SD 15; 29 trustees, 28/29
+  headshots (1 Harrington gap, no source) on Phase-174 G5420 geofences (Phases 183–184)
+- **2026 election layer** — 25 office-anchored OR 2026 General west-metro race rows, 12 candidate rows across
+  8 confirmed races (4 new challengers + 8 reuse, per-row citations, antipartisan), 8 discovery_jurisdictions
+  armed + one live discovery run completed; 17 races correctly ship 0 candidates pending open filing (Phase 185)
+- **All 8 city/county jurisdictions carry the purple `hasContext` chip** (DB-verified honest); 5 school
+  districts plain + search-only (compass deferred) — coverage.js reconciled, no edits needed (Phase 186)
+- **New patterns documented** — two-table OR state casing (`districts.state='or'` vs `elections/discovery.state='OR'`);
+  incumbent-based office resolution for plain-'Councilor' at-large councils; `races.position_name` unique-index
+  constraint; shared migration-counter drift; May-primary+Nov-runoff vs straight-to-November election mechanics;
+  `chambers.policy_engagement_level` as the admin/no-compass lever
+
+**Stats:**
+
+- 12 phases (174–185) + 1 close-out (186); date range 2026-06-30 → 2026-07-05
+- EV-Accounts migrations: structural per city/county/school (175–184) + elections layer 1213/1215/1216/1218/1219
+- 80 seated officials · 79/80 headshots · 391 city/county stance rows · 25 races · 12 candidates · 8 discovery jurisdictions
+
+**What's next:** v19.0 Essentials Dark-Mode Redesign & Section Banners remains parked (Phases 169–172) —
+resume it, or open a new milestone. Post-close follow-ups (non-blocking) tracked in the v20.0 audit:
+Cornelius thin stances, Forest Grove SD-15 headshot gap, 2 new-challenger headshots, ongoing 2026 candidate discovery.
+
+---
+
 ## v18.0 Las Vegas & Clark County, NV (Shipped: 2026-06-30)
 
 **Delivered:** Nevada opened as a fully-covered new state — TIGER geofences (all tiers) → State of

@@ -89,6 +89,19 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Boulder City | NV (city) | 2026-06-29 | plurality | **v18.0 deep-seed (Phase 165).** At-large (no wards); Mayor + 4 council, 5 officials. ext -3208xxx. flybouldercity.com = clean/NO-WAF. geo_id=3206500; 5/5 headshots; 5/5 stances; 19 stance rows. Purple chip. |
 | Clark County School District | NV (school) | 2026-06-29 | plurality | **v18.0 deep-seed (Phase 166).** G5420 school district geofence (TIGER UNSD); 7 elected trustees (A–G) + 4 appointed trustees = 11 total (official_count=11). ext -3209xxx. School-board compass **deferred by design** — 0 stances. geo_id=3200060/G5420; 7/11 headshots (4 appointed trustees no accessible portrait). Plain chip (no hasContext). |
 | Clark County | NV (county) | 2026-06-24 | plurality | **v18.0 deep-seed (Phase 161).** Standalone county government (NOT under State of NV — own governments row, geo_id=32003). Board of County Commissioners: 7 commissioners, Chair Naft title-on-seat. ext -3200301..-3200307. Single COUNTY district (state='nv' lowercase). Governs the unincorporated Strip/Paradise/Spring Valley. official_count=NULL (data-soft; roster correct at 7). clarkcountynv.gov AEM 175x175 headshots. geo_id=32003; 7/7 headshots; 7/7 stances; 32 stance rows. Purple chip. |
+| Washington County | OR (county) | 2026-07-01 | plurality (May primary + Nov runoff) | **v20.0 deep-seed (Phase 175).** Standalone county govt (NOT under State of OR; geo_id=41067). Board of Commissioners = Chair + 4 district commissioners on custom LOCAL geofences `washco-or-commissioner-district-1..4` (X0018). districts.state='or' lowercase. geo_id=41067; 5/5 headshots; 5/5 stances; 67 stance rows. Purple chip. |
+| Beaverton | OR | 2026-07-02 | plurality (May primary + Nov runoff) | **v20.0 deep-seed (Phase 176).** At-large numbered Positions + directly-elected Mayor (LOCAL_EXEC). geo_id=4105350; 7/7 headshots + stances; 91 stance rows (richest in milestone). Purple chip. |
+| Hillsboro | OR | 2026-07-02 | plurality (straight-to-November) | **v20.0 deep-seed (Phase 177).** Ward/Position labels (Wards 1–3 × Positions A/B). CivicWeb NO-WAF. geo_id=4134100; 7/7; 60 stance rows. Purple chip. |
+| Tigard | OR | 2026-07-02 | plurality (straight-to-November) | **v20.0 deep-seed (Phase 178).** Pure at-large (multiple plain 'Councilor' offices — resolve by incumbent, not title). tigardlife photo source. geo_id=4173650; 7/7; 48 stance rows. Purple chip. |
+| Tualatin | OR | 2026-07-02 | plurality (straight-to-November) | **v20.0 deep-seed (Phase 179).** At-large numbered Positions. geo_id=4174950 (**stated 4175200 was wrong** — verify from DB). 7/7; 59 stance rows. Purple chip. |
+| Forest Grove | OR | 2026-07-03 | plurality (straight-to-November) | **v20.0 deep-seed (Phase 180).** Pure at-large. D-16 headshot chain required (no city photos). geo_id=4126200; 7/7; 39 stance rows. Purple chip. |
+| Sherwood | OR | 2026-07-03 | plurality (straight-to-November) | **v20.0 deep-seed (Phase 181).** Pure at-large, 2-yr Mayor term. City-site square/webp headshots. geo_id=4167100; 7/7; 23 stance rows. Purple chip. |
+| Cornelius | OR | 2026-07-04 | plurality (straight-to-November) | **v20.0 deep-seed (Phase 182).** Pure at-large, 2-yr Mayor, 1 vacant seat (filled by appointment, not election). geo_id=4115550 (**CORRECTED from stated 4115350 = Coquille, a different city**). Circle-cutout PNG headshot crop lesson. 4/4 headshots; **thin stances (3/4 officials, 4 rows)** — appointed-interim councilors, honest blanks. Purple chip. |
+| Beaverton School District 48J | OR (school) | 2026-07-04 | plurality (May odd-year) | **v20.0 (Phase 183).** G5420 geo_id=4101920; 7/7 headshots; **compass deferred by design** (0 stances). Search-only, plain chip. |
+| Hillsboro School District 1J | OR (school) | 2026-07-04 | plurality (May odd-year) | **v20.0 (Phase 183).** G5420 geo_id=4100023; 7/7 headshots; compass deferred. Search-only, plain chip. |
+| Tigard-Tualatin School District 23J | OR (school) | 2026-07-04 | plurality (May odd-year) | **v20.0 (Phase 184).** G5420 geo_id=4112240; 5/5 headshots; compass deferred. Search-only, plain chip. |
+| Sherwood School District 88J | OR (school) | 2026-07-04 | plurality (May odd-year) | **v20.0 (Phase 184).** G5420 geo_id=4111290; 5/5 headshots; compass deferred. Search-only, plain chip. |
+| Forest Grove School District 15 | OR (school) | 2026-07-04 | plurality (May odd-year) | **v20.0 (Phase 184).** G5420 geo_id=4105160; **4/5 headshots (Harrington gap — no source)**; compass deferred. Search-only, plain chip. |
 
 ---
 
@@ -159,6 +172,37 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Federal officials may pre-exist | Step 5 | Pre-flight SELECT before INSERT; OR senators Wyden+Merkley pre-existed under -400065/-400066; UPDATE external_id, not INSERT |
 | Portland 2026 ballot: D3/D4/Auditor only | Step 2, 6 | Mayor+D1+D2 have 4-year terms; only D3+D4+Auditor (7 races) are on the November 2026 ballot |
 | G4110 count needs dry-run confirmation | Step 3 | OR actual count is 241 (not 242); always dry-run place layer; update count in loader + verify SQL + smoke test |
+
+---
+
+## Washington County / West-Metro Quick Reference (v20.0)
+
+**Read before any Washington County OR city/county/school work.** v20.0 deep-seeded Washington County + 7 west-metro cities + 5 school districts (Phases 174–186), then seeded the 2026 election + discovery layer (Phase 185). DB-verified in `.planning/v20.0-MILESTONE-AUDIT.md`.
+
+| Trap / Pattern | One-Line Summary |
+|----------------|------------------|
+| Two-table state casing | `essentials.districts.state='or'` (LOWERCASE) for every OR district join; but `essentials.elections.state` and `essentials.discovery_jurisdictions.state='OR'` (UPPERCASE, char(2)). Same word, two conventions — do not conflate. |
+| Migration counter drifts hourly | The shared on-disk counter in `C:/EV-Accounts/backend/migrations` advances multiple times/day from parallel workstreams (MN/IN/MD/AZ). Re-run `ls | sort -n | tail` immediately before EVERY migration write; take number = live_max+1. v20.0's `1213_seed_washco_2026_local_races.sql` cosmetically collides with a parallel IN `1213_*` — harmless in the direct-apply/no-ledger model. |
+| Standalone county (not under state) | Washington County is its own `governments` row (geo_id=41067), NOT under State of Oregon — same pattern as Clark County NV. Board = Chair (geo_id 41067 COUNTY district) + 4 commissioners on custom LOCAL geofences `washco-or-commissioner-district-1..4`. |
+| geo_id correction traps | Cornelius = **4115550** (stated 4115350 = Coquille, a DIFFERENT city); Tualatin = **4174950** (stated 4175200 wrong). Always name-match probe geo_ids against the DB before seeding. |
+| Election mechanic split | WashCo Commission + Beaverton use **May primary + November runoff** (only seats with no May majority reach the Nov ballot). The other 6 cities (Hillsboro/Tigard/Tualatin/Forest Grove/Sherwood/Cornelius) go **straight to November** (plurality). Do not seed a Nov race for a May-decided seat. |
+| Plain-'Councilor' at-large councils | Tigard/Forest Grove/Sherwood/Cornelius have MULTIPLE offices titled 'Councilor' sharing one LOCAL district — resolve each seat by its CURRENT incumbent's office linkage, NOT by `o.title` (title alone collapses them). |
+| races.position_name unique indexes | `essentials.races` has `idx_races_election_position_no_party (election_id, position_name) WHERE primary_party IS NULL` + `races_election_position_party_unique`. All rows in one election need DISTINCT position_name — use `{City} {Body} {Seat}` labels; untitled at-large seats get lettered "Seat A/B/C". |
+| Per-table idempotency (races layer) | `races` & `race_candidates` → `NOT EXISTS` (NO unique constraint for the dedupe key; never `ON CONFLICT`). `politicians.external_id` & `discovery_jurisdictions (jurisdiction_geoid, election_date)` → `ON CONFLICT DO NOTHING` (real unique indexes). |
+| Data-seed migrations = no ledger | races/candidates/discovery/headshot migrations do NOT write `supabase_migrations.schema_migrations` (1109/1110/1112/1113 family). On-disk counter is authoritative. |
+| Discovery host trap | Trigger discovery via `POST https://accounts-api.empowered.vote/api/admin/discover/jurisdiction/:id` (`:id` = discovery_jurisdictions UUID). `accounts-api.onrender.com` 404s. `X-Admin-Token` from `.env` — never echo/log/commit. |
+| School boards: search-only, compass deferred | 5 west-metro G5420 districts (4101920/4100023/4112240/4111290/4105160) are in `COVERAGE_SCHOOL_DISTRICTS` (search-only, plain chip, no `hasContext`) — AND now removed from the search typeahead too (cities+states only). Compass stances DEFERRED by design (0 rows). OR school elections are May odd-year (2025/2027), so NO Nov 2026 school races. |
+| Admin roles → policy_engagement_level | To give a non-policy office the "administrative, no compass" treatment, set `essentials.chambers.policy_engagement_level='none'` (API-read, per-chamber, no deploy). `src/lib/classify.js` `computeVariant` is DEAD CODE — do not edit it for this. |
+| Pre-check every jurisdiction | Some west-metro govs were pre-seeded; DB pre-check each by geo_id/name before writing (join districts by geo_id — `districts.government_id` is often NULL). |
+
+**West-Metro Key Facts:**
+- geo_ids: Washington County 41067 · Beaverton 4105350 · Hillsboro 4134100 · Tigard 4173650 · Tualatin 4174950 · Forest Grove 4126200 · Sherwood 4167100 · Cornelius 4115550
+- School districts (G5420): Beaverton SD 48J 4101920 · Hillsboro SD 1J 4100023 · Tigard-Tualatin SD 23J 4112240 · Sherwood SD 88J 4111290 · Forest Grove SD 15 4105160
+- OR 2026 General election: id `de10e3a7-f5c2-47e6-acd7-ee87be9413db`, name `'OR 2026 General'`, state `'OR'`, 2026-11-03
+- 2026 challenger external_id band: -4850001..-4850099 (Callaway -4850001, Philip -4850002, Kocher -4850003, Dittman -4850004)
+- Headshot bucket `politician_photos`; CDN `https://kxsdzaojfaibhuzmclfq.supabase.co/storage/v1/object/public/politician_photos/{id}-headshot.jpg`; politician_images = (politician_id, url, type='default', photo_license='press_use'); photo_origin_url lives on `politicians`.
+- Browse: city/county `?browse_government_list=<geo_id>`; school district `?browse_geo_id=<geo_id>&browse_mtfcc=G5420`; state `?browse_state_officials=OR`
+- Next migration after v20.0 close: re-verify live (`ls C:/EV-Accounts/backend/migrations | sort -n | tail`) — counter drifts.
 
 ---
 
