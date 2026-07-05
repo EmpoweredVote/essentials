@@ -92,35 +92,6 @@ describe('computeVariant — no-stances detection', () => {
   });
 });
 
-describe('computeVariant — appointed admin/legal roles without stances', () => {
-  const answers = [1, 2, 3];
-  it.each([
-    'City Administrator',
-    'County Administrator',
-    'City Attorney',
-    'County Attorney',
-    'City Manager',
-    'Town Manager',
-    'Chief Administrative Officer',
-  ])('returns "administrative" for "%s" when it has no stances', (title) => {
-    expect(computeVariant(makePol({ office_title: title }), answers, false)).toBe('administrative');
-  });
-
-  it('preserves the compass for an ELECTED City Attorney that HAS stances (no regression)', () => {
-    expect(computeVariant(makePol({ office_title: 'City Attorney' }), answers, true)).toBe('compass');
-  });
-
-  it('does NOT catch "Attorney General" (elected policymaker keeps compass)', () => {
-    expect(
-      computeVariant(makePol({ district_type: 'STATE_EXEC', office_title: 'Attorney General' }), answers, true)
-    ).toBe('compass');
-  });
-
-  it('a stanceless generic council member is still "no-stances", not "administrative"', () => {
-    expect(computeVariant(makePol({ office_title: 'Council Member' }), answers, false)).toBe('no-stances');
-  });
-});
-
 describe('classifyCategory — SCHEMA-02 STATE_BOARD (Phase 133 D-09)', () => {
   test('STATE_BOARD classifies into State tier with State Board of Education group', () => {
     const pol = { district_type: 'STATE_BOARD', office_title: 'State Board of Education District 5' };

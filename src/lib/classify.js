@@ -321,17 +321,6 @@ export function computeVariant(pol, userAnswers, hasStances = true) {
   if (/clerk|treasurer|auditor|recorder|assessor/.test(title)) return 'administrative';
   if (dt === 'JUDICIAL' || /judge|justice|court/.test(title)) return 'judicial';
 
-  // Appointed administrative / legal executive roles (city|county manager, administrator,
-  // city|county attorney) are non-policy and get no compass. Gate on !hasStances so an
-  // ELECTED city/county attorney who actually takes positions (and has researched stances)
-  // still shows their compass — a bare title match would wrongly hide those.
-  if (
-    !hasStances &&
-    /city attorney|county attorney|city administrator|county administrator|city manager|town manager|village manager|chief administrative officer/.test(title)
-  ) {
-    return 'administrative';
-  }
-
   // No stances on file — show "no stances" plate regardless of user calibration,
   // so we don't bait the user into calibrating only to find no comparison data.
   if (!hasStances) return 'no-stances';
