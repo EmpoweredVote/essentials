@@ -270,12 +270,14 @@ export const COVERAGE_BROWSE_STATES = Object.entries(STATE_NAME_TO_ABBREV)
 // ── City/area name search (locality typeahead) ───────────────────────────────
 
 // Flattened, searchable view of every covered area, tagged with its kind + state.
+// Name typeahead is intentionally limited to CITIES + STATES only — counties and
+// school districts are excluded from search (they cluttered results and read out of
+// place among city names). They remain reachable via direct browse links / the grid;
+// COVERAGE_COUNTIES and COVERAGE_SCHOOL_DISTRICTS are still exported for that routing.
 const ALL_COVERAGE_AREAS = [
   ...COVERAGE_STATES.flatMap((s) =>
     s.areas.map((a) => ({ ...a, kind: 'city', stateAbbrev: a.browseStateAbbrev || s.abbrev, stateName: s.name }))
   ),
-  ...COVERAGE_COUNTIES.map((c) => ({ ...c, kind: 'county', stateAbbrev: c.browseStateAbbrev })),
-  ...COVERAGE_SCHOOL_DISTRICTS.map((d) => ({ ...d, kind: 'school district', stateAbbrev: d.browseStateAbbrev })),
   ...COVERAGE_BROWSE_STATES.map((s) => ({ ...s, kind: 'state' })),
 ];
 
