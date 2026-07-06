@@ -113,6 +113,17 @@ const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/
 //   forest grove - Christmas Tree Recycling (Pacific Avenue street view, lower band) | Visitor7 | CC BY-SA 3.0
 //   sherwood - Railroad St, Sherwood, Oregon | dreid1987 | CC BY 3.0
 //   cornelius - Cornelius Civic Center - Oregon.JPG (city hall / public library) | M.O. Stevens | CC BY-SA 3.0
+//   [2026-07-05 CA banner audit: 7 LA-county cities moved OFF la_county/building_photos
+//    onto cities/<slug>.jpg with fresh licensed Wikimedia sources (operator-certified).
+//    Los Angeles + Torrance kept their prior la_county/building_photos shots; Pomona +
+//    Carson certified as-is.]
+//   long-beach - Long Beach from Queensway Bay | Christophe.Finot | CC BY-SA 2.5
+//   glendale - Glendale panorama (from a Griffith Park trail, city + Verdugo Mtns) | KeeganProbably | CC BY 4.0
+//   pasadena - Pasadena City Hall (Day) | RBerteig | CC BY 2.0
+//   west-covina - West Covina Civic Center | Wikimedia user ASDFGH | CC BY-SA 4.0
+//   downey - Oldest operating McDonald's, Downey (Googie arches) | Northwalker | CC0 / Public Domain
+//   burbank - Hollywood Burbank Airport & the Verdugo Mountains | Natecation | CC BY-SA 4.0
+//   norwalk - Norwalk City Hall | Northwalker | CC0 / Public Domain
 //
 // WR-03 FIX (181-REVIEW): each entry now carries a `state` alongside `src` so
 // getBuildingImages() can require a state match in addition to the substring
@@ -129,16 +140,16 @@ const CURATED_LOCAL = {
   sherwood: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/sherwood.jpg' },
   cornelius: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/cornelius.jpg' },
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
-  'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0643000.jpg' },
-  glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0630000.jpg' },
+  'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
+  glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
   pomona: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0658072.jpg' },
   torrance: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0680000.jpg' },
-  pasadena: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0656000.jpg' },
-  'west covina': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0684200.jpg' },
-  downey: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0619766.jpg' },
-  burbank: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0608954.jpg' },
+  pasadena: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pasadena.jpg' },
+  'west covina': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-covina.jpg' },
+  downey: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/downey.jpg' },
+  burbank: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/burbank.jpg' },
   carson: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0611530.jpg' },
-  norwalk: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0652526.jpg' },
+  norwalk: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/norwalk.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
