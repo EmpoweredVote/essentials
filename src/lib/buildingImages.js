@@ -141,6 +141,13 @@ const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/
 //   alhambra - San Gabriel Valley streetscape | Sony 1992 | CC0 / Public Domain
 //   el monte - El Monte bus station | Oran Viriyincy | CC BY-SA 2.0
 //   south gate - Leland R. Weaver Library | ShticktatorTal | CC BY-SA 4.0
+//   [2026-07-06 CA batch wave 2b: 6 more certified after a second review pass.]
+//   san diego - Downtown skyline across the bay (leveled +1.05deg, brightened) | Mds08011 | CC BY 4.0
+//   fremont - Mission Peak over Lake Elizabeth | Oleg Alexandrov | CC BY-SA 3.0
+//   culver city - Historic Culver Theater neon 'Culver' marquee | John Margolies / Library of Congress | Public Domain
+//   palmdale - Palmdale vista: Lake Palmdale & the Antelope Valley | G-BDXH | CC0 / Public Domain
+//   santa clarita - Six Flags Magic Mountain in the valley hills | Konrad Summers | CC BY-SA 2.0
+//   whittier - Uptown Whittier, Greenleaf Avenue | Northwalker | CC0 / Public Domain
 //
 // WR-03 FIX (181-REVIEW): each entry now carries a `state` alongside `src` so
 // getBuildingImages() can require a state match in addition to the substring
@@ -181,6 +188,12 @@ const CURATED_LOCAL = {
   alhambra: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alhambra.jpg' },
   'el monte': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-monte.jpg' },
   'south gate': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-gate.jpg' },
+  'san diego': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/san-diego.jpg' },
+  fremont: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fremont.jpg' },
+  'culver city': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/culver-city.jpg' },
+  palmdale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/palmdale.jpg' },
+  'santa clarita': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-clarita.jpg' },
+  whittier: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/whittier.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
