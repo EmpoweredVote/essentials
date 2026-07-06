@@ -233,6 +233,21 @@ const CURATED_LOCAL = {
   medford: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/medford.jpg' },
   'new bedford': { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/new-bedford.jpg' },
   newton: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/newton.jpg' },
+  // Utah city banners (Wikimedia Commons; state-scoped UT). Wave 1 batch shipped 2026-07-06:
+  //   provo       - Downtown Provo with Y Mountain | Farragutful | CC BY-SA 4.0
+  //   orem        - Mount Timpanogos over Orem | An Errant Knight | CC BY-SA 4.0
+  //   ogden       - Historic 25th Street & Union Station | sirrobot (Flickr) | CC BY 2.0
+  //   sandy       - Wasatch Range above Sandy | Scott Catron | CC BY-SA 3.0
+  //   west jordan - Gardner Mill, Gardner Village | Tricia Simpson | CC BY-SA 3.0
+  //   st. george  - St. George below the red sandstone cliffs | Stan Shebs | CC BY-SA 3.0
+  //   lehi        - Lehi valley: Utah Lake + Wasatch | Don Ramey Logan | CC BY 4.0
+  provo: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/provo.jpg' },
+  orem: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/orem.jpg' },
+  ogden: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/ogden.jpg' },
+  sandy: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/sandy.jpg' },
+  'west jordan': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-jordan.jpg' },
+  'st. george': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/st-george.jpg' },
+  lehi: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lehi.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
