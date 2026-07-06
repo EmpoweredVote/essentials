@@ -248,6 +248,17 @@ const CURATED_LOCAL = {
   'west jordan': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-jordan.jpg' },
   'st. george': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/st-george.jpg' },
   lehi: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lehi.jpg' },
+  // UT Wave 1 redos shipped 2026-07-06 (operator round-2):
+  //   salt lake city  - Utah State Capitol (distinct from UT state banner's SLC skyline) | Pocksuppet1999 | CC BY-SA 3.0
+  //   layton          - suburban neighborhood + Wasatch | D. Sharon Pruitt | CC BY 2.0
+  //   west valley city- West Valley City Hall | Ben P L | CC BY-SA 2.0
+  //   murray          - historic downtown State Street | CountyLemonade | CC BY 3.0
+  //   draper          - Draper Temple + Wasatch foothills | Leon7 | CC BY-SA 3.0
+  'salt lake city': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/salt-lake-city.jpg' },
+  layton: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/layton.jpg' },
+  'west valley city': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-valley-city.jpg' },
+  murray: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/murray.jpg' },
+  draper: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/draper.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
