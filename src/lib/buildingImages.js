@@ -167,6 +167,23 @@ const CURATED_LOCAL = {
   'forest grove': { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/forest-grove.jpg' },
   sherwood: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/sherwood.jpg' },
   cornelius: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/cornelius.jpg' },
+  // Oregon Wave 2 city banners (2026-07-06, operator-certified). Licensed
+  // Wikimedia Commons; state-scoped 'OR'. Keys are lowercase browse_label form;
+  // storage files hyphenated. Hillsboro was re-cropped LOWER (same Steve Morgan
+  // Orenco Station photo) to show the plaza ground -- storage overwrite only.
+  //   gresham      - Historic civic building & veterans-memorial plaza | SkateOregon | CC BY 4.0
+  //   wood village - Wood Village City Hall & Civic Center | Another Believer | CC BY-SA 4.0
+  //   maywood park - leafy residential street (Tudor cottage & firs) | Tedder | CC BY 3.0
+  //   portland     - Portland Japanese Garden, Heavenly Falls | Daderot | CC0 / Public Domain
+  //                  (the majestic Mt. Hood / Mirror Lake shot became the OR STATE banner instead)
+  //   troutdale    - 'Troutdale / Gateway to the Gorge' Centennial Arch | Another Believer | CC BY-SA 4.0
+  //   fairview(OR) - Fairview Lake, autumn | Finetooth | CC BY-SA 3.0 (in the Fairview array below;
+  //                  file is cities/fairview-or.jpg so it does not collide with TX Fairview)
+  gresham: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gresham.jpg' },
+  'wood village': { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/wood-village.jpg' },
+  'maywood park': { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/maywood-park.jpg' },
+  portland: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/portland.jpg' },
+  troutdale: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/troutdale.jpg' },
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
   'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
   glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
@@ -321,7 +338,13 @@ const CURATED_LOCAL = {
   anna: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/anna.jpg' },
   'blue ridge': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/blue-ridge.jpg' },
   celina: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/celina.jpg' },
-  fairview: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fairview.jpg' },
+  // Fairview exists in both TX (Collin County) and OR (Multnomah County); this
+  // entry is an ARRAY of state-scoped variants resolved by getBuildingImages's
+  // multi-variant loop. TX file = cities/fairview.jpg; OR file = cities/fairview-or.jpg.
+  fairview: [
+    { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fairview.jpg' },
+    { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fairview-or.jpg' },
+  ],
   farmersville: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/farmersville.jpg' },
   frisco: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/frisco.jpg' },
   josephine: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/josephine.jpg' },
@@ -383,7 +406,8 @@ const CURATED_LOCAL = {
 //   NY - Midtown Manhattan from Weehawken | King of Hearts | CC BY-SA 4.0
 //   OH - Cincinnati skyline from Devou Park | Ynsalh | CC BY-SA 4.0
 //   OK - Oklahoma City Skyline from Bricktown | Soonerfever | Public domain
-//   OR - Portland from Pittock Mansion | King of Hearts | CC BY-SA 4.0
+//   OR - Mount Hood over the forest (Mirror Lake), majestic Mt. Hood | Oregon's Mt. Hood Territory | Public Domain
+//        [2026-07-06: replaced the prior Portland-from-Pittock-Mansion skyline per operator -- state banner is now the mountain, Portland CITY banner is the Japanese Garden]
 //   PA - Pittsburgh skyline panorama | Cbaile19 | CC0
 //   RI - Providence, RI skyline | (Providence_RI_skyline) | CC BY-SA 2.0
 //   SC - Arthur Ravenel Bridge (from water) | bbatsell | CC BY-SA 2.5
@@ -423,8 +447,15 @@ export function getBuildingImages(representingCity, stateAbbrev) {
   // stateAbbrev keep working unchanged.
   let localImage = null;
   for (const [key, entry] of Object.entries(CURATED_LOCAL)) {
-    if (city.includes(key) && (!abbrev || !entry.state || entry.state === abbrev)) {
-      localImage = entry.src;
+    if (!city.includes(key)) continue;
+    // An entry is either a single {state, src} or an ARRAY of state-scoped
+    // variants for a city name that recurs across states (e.g. Fairview OR vs
+    // Fairview TX). Pick the variant whose state matches the caller's; a
+    // missing/unknown caller state or entry state is treated as match-allowed.
+    const variants = Array.isArray(entry) ? entry : [entry];
+    const match = variants.find((v) => !abbrev || !v.state || v.state === abbrev);
+    if (match) {
+      localImage = match.src;
       break;
     }
   }
