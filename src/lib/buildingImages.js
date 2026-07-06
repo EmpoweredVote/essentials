@@ -148,6 +148,10 @@ const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/
 //   palmdale - Palmdale vista: Lake Palmdale & the Antelope Valley | G-BDXH | CC0 / Public Domain
 //   santa clarita - Six Flags Magic Mountain in the valley hills | Konrad Summers | CC BY-SA 2.0
 //   whittier - Uptown Whittier, Greenleaf Avenue | Northwalker | CC0 / Public Domain
+//   [2026-07-06 CA batch wave 2c: final 3 (thin-coverage suburbs, best licensed real photo).]
+//   gardena - Arthur Lee Johnson Memorial Park 'City of Gardena' monument sign | Jengod | CC BY-SA 4.0
+//   compton - Martin Luther King Jr. Memorial (city-seal sculpture), Civic Center | Eric Polk | CC BY 3.0
+//   el segundo - Old Town Music Hall, Richmond St | Caterpillar84 | CC BY-SA 4.0
 //
 // WR-03 FIX (181-REVIEW): each entry now carries a `state` alongside `src` so
 // getBuildingImages() can require a state match in addition to the substring
@@ -194,6 +198,9 @@ const CURATED_LOCAL = {
   palmdale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/palmdale.jpg' },
   'santa clarita': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-clarita.jpg' },
   whittier: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/whittier.jpg' },
+  gardena: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gardena.jpg' },
+  compton: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/compton.jpg' },
+  'el segundo': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-segundo.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
