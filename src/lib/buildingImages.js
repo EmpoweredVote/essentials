@@ -213,6 +213,26 @@ const CURATED_LOCAL = {
   springfield: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/springfield.jpg' },
   waltham: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/waltham.jpg' },
   worcester: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/worcester.jpg' },
+  // Massachusetts batch 2 shipped 2026-07-06 (operator round-2 review):
+  //   boston      - Financial District skyline from Boston Harbor (distinct from the
+  //                 MA state banner's Charles-River skyline) | Beyond My Ken | CC BY-SA 4.0
+  //   brockton    - Downtown Main St, Enterprise Bldg + City Hall dome | Tyoung0543 | CC BY-SA 4.0
+  //   cambridge   - MIT Great Dome & Killian Court | Yishen Miao | CC BY-SA 3.0
+  //   fall-river  - St. Anne's Church & Shrine over Kennedy Park | Leonardo DaSilva | CC BY 3.0
+  //   lowell      - Boott Cotton Mills & Eastern Canal | National Park Service | Public Domain
+  //   lynn        - Downtown Lynn with Nahant Bay (horizon leveled) | Terageorge | CC BY-SA 4.0
+  //   medford     - Medford Square | John Phelan | CC BY 3.0
+  //   new-bedford - Whaling District cobblestone street | Infrogmation | CC BY 2.5
+  //   newton      - Newton City Hall & War Memorial (leveled) | Kenneth C. Zirkel | CC BY-SA 4.0
+  boston: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/boston.jpg' },
+  brockton: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/brockton.jpg' },
+  cambridge: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/cambridge.jpg' },
+  'fall river': { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fall-river.jpg' },
+  lowell: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lowell.jpg' },
+  lynn: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lynn.jpg' },
+  medford: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/medford.jpg' },
+  'new bedford': { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/new-bedford.jpg' },
+  newton: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/newton.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
