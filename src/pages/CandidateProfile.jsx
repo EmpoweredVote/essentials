@@ -14,7 +14,11 @@ import { useTheme } from '../hooks/useTheme';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
-  const d = new Date(dateStr);
+  // A bare YYYY-MM-DD parses as UTC midnight; in any US (UTC-negative) timezone that
+  // renders as the day BEFORE via toLocaleDateString. Anchor at local noon so the
+  // election day is always shown exactly — matches the elections-tab idiom (Results.jsx).
+  const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(dateStr);
+  const d = new Date(dateOnly ? dateStr + 'T12:00:00' : dateStr);
   if (isNaN(d.getTime())) return dateStr;
   return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
