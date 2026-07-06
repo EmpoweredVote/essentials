@@ -124,6 +124,23 @@ const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/
 //   downey - Oldest operating McDonald's, Downey (Googie arches) | Northwalker | CC0 / Public Domain
 //   burbank - Hollywood Burbank Airport & the Verdugo Mountains | Natecation | CC BY-SA 4.0
 //   norwalk - Norwalk City Hall | Northwalker | CC0 / Public Domain
+//   [2026-07-06 CA batch wave 2: 14 new CA cities added (operator-certified). Banner
+//    renders in browse mode off the coverage.js browse_label, so no representing_city
+//    dependency. San Diego + the "lower-crop" cities are a second review pass.]
+//   san francisco - Downtown skyline from Twin Peaks | Dead.rabbit | CC BY-SA 4.0
+//   san jose - Downtown San Jose skyline panorama | XAtsukex | CC BY 3.0
+//   sacramento - Tower Bridge & downtown from Old Sacramento | Sydchrismom | CC BY-SA 4.0
+//   berkeley - UC Berkeley campus & the Campanile from the hills | 4300streetcar | CC BY 4.0
+//   santa monica - Santa Monica Pier & Pacific Wheel after sunset | Erwin Kreijne | CC BY 3.0
+//   beverly hills - Rodeo Drive | Jess Hawsor | CC BY-SA 4.0
+//   inglewood - SoFi Stadium | Troutfarm27 | CC BY-SA 4.0
+//   west hollywood - Pacific Design Center (the 'Blue Whale') | Tony Mariotti | CC BY 2.0
+//   lancaster - Antelope Valley California Poppy Reserve | Rennett Stowe | CC BY 2.0
+//   hawthorne - SpaceX HQ & Falcon 9 booster | Juan Kulichevsky | CC BY-SA 2.0
+//   bellflower - Bellflower City Hall | YonderStone | CC BY-SA 4.0
+//   alhambra - San Gabriel Valley streetscape | Sony 1992 | CC0 / Public Domain
+//   el monte - El Monte bus station | Oran Viriyincy | CC BY-SA 2.0
+//   south gate - Leland R. Weaver Library | ShticktatorTal | CC BY-SA 4.0
 //
 // WR-03 FIX (181-REVIEW): each entry now carries a `state` alongside `src` so
 // getBuildingImages() can require a state match in addition to the substring
@@ -150,6 +167,20 @@ const CURATED_LOCAL = {
   burbank: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/burbank.jpg' },
   carson: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0611530.jpg' },
   norwalk: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/norwalk.jpg' },
+  'san francisco': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/san-francisco.jpg' },
+  'san jose': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/san-jose.jpg' },
+  sacramento: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/sacramento.jpg' },
+  berkeley: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/berkeley.jpg' },
+  'santa monica': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-monica.jpg' },
+  'beverly hills': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/beverly-hills.jpg' },
+  inglewood: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/inglewood.jpg' },
+  'west hollywood': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-hollywood.jpg' },
+  lancaster: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lancaster.jpg' },
+  hawthorne: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/hawthorne.jpg' },
+  bellflower: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bellflower.jpg' },
+  alhambra: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alhambra.jpg' },
+  'el monte': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-monte.jpg' },
+  'south gate': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-gate.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
