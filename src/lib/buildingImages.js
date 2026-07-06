@@ -291,6 +291,52 @@ const CURATED_LOCAL = {
   riverton: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverton.jpg' },
   'spanish fork': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/spanish-fork.jpg' },
   springville: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/springville.jpg' },
+  // Texas city banners (Wikimedia Commons; state-scoped 'TX' so 'nevada'/'anna'
+  // etc. do not collide with same-named cities elsewhere). Collin County + East
+  // TX (Longview). Operator-certified 2026-07-06. Keys are space-form to match
+  // coverage.js browse_label; storage files are hyphenated.
+  //   allen        - Allen Heritage Center (old train depot) | Jphill19 | CC BY-SA 4.0
+  //   anna         - 1894 Sherley & Bros Hardware Store ("Beech-Nut" ghost mural) | Ebmrreditor | CC BY-SA 4.0
+  //   blue ridge   - Tilton Street downtown storefronts | Michael Barera | CC BY-SA 4.0
+  //   celina       - historic downtown square | Nicolas Henderson | CC BY 2.0
+  //   fairview     - rural ranch scene, Hart Road ("Keeping it Country") | Fairsaka | Public Domain
+  //   farmersville - historic brick Main Street | Michael Barera | CC BY-SA 4.0
+  //   frisco       - George A. Purefoy Municipal Center & clock tower | Michael Barera | CC BY-SA 4.0
+  //   josephine    - Josephine City Park gazebo | Michael Barera | CC BY-SA 4.0
+  //   lavon        - U.S. Post Office | Michael Barera | CC BY-SA 4.0
+  //   longview     - Fredonia Street historic downtown | Michael Barera | CC BY-SA 4.0
+  //   mckinney     - historic downtown square | Rick Ray | CC BY 2.0
+  //   murphy       - Municipal Court & Police building | Flimbone08 | CC BY-SA 4.0
+  //   nevada       - Cottonwood Creek Baptist Church | Michael Barera | CC BY-SA 4.0
+  //   parker       - Southfork Ranch (the "Dallas" Ewing mansion) | Carol M. Highsmith | Public Domain
+  //   plano        - Legacy West / Shops at Legacy plaza | Mohidshahab | CC BY-SA 4.0
+  //   princeton    - "PRINCETON" municipal water tower | Pinecar | CC0
+  //   prosper      - historic grain-elevator townscape | Colby Nate | CC BY 2.0
+  //   richardson   - UT Dallas Engineering & Computer Science Complex | Stan9999 | Public Domain
+  //   van alstyne  - historic Main Street & water tower | Renelibrary | CC BY-SA 3.0
+  //   weston       - Weston City Hall (oldest town in Collin County) | City0fWeston | CC BY-SA 4.0
+  // Coverage gaps (no licensed Commons photo -> tier-gradient fallback, operator-accepted):
+  // Melissa, Saint Paul, Lowry Crossing, Lucas.
+  allen: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/allen.jpg' },
+  anna: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/anna.jpg' },
+  'blue ridge': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/blue-ridge.jpg' },
+  celina: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/celina.jpg' },
+  fairview: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fairview.jpg' },
+  farmersville: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/farmersville.jpg' },
+  frisco: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/frisco.jpg' },
+  josephine: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/josephine.jpg' },
+  lavon: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lavon.jpg' },
+  longview: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/longview.jpg' },
+  mckinney: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/mckinney.jpg' },
+  murphy: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/murphy.jpg' },
+  nevada: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/nevada.jpg' },
+  parker: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/parker.jpg' },
+  plano: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/plano.jpg' },
+  princeton: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/princeton.jpg' },
+  prosper: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/prosper.jpg' },
+  richardson: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/richardson.jpg' },
+  'van alstyne': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/van-alstyne.jpg' },
+  weston: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/weston.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
