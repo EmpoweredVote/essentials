@@ -201,6 +201,18 @@ const CURATED_LOCAL = {
   gardena: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gardena.jpg' },
   compton: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/compton.jpg' },
   'el segundo': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-segundo.jpg' },
+  // Massachusetts city banners (Wikimedia Commons; state-scoped so 'springfield'
+  // does not collide with Springfield, MO). Batch 1 shipped 2026-07-06:
+  //   quincy      - Marina Bay waterfront & clock tower | Sswonk | CC BY 3.0
+  //   somerville  - Union Square, Boston skyline beyond | 4300streetcar | CC BY 4.0
+  //   springfield - Downtown skyline across the Connecticut River | Steven Polom | CC BY 2.0
+  //   waltham     - Moody Street downtown | Traveler100 | CC BY-SA 3.0
+  //   worcester   - Downtown skyline from Union Station | 4300streetcar | CC BY 4.0
+  quincy: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/quincy.jpg' },
+  somerville: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/somerville.jpg' },
+  springfield: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/springfield.jpg' },
+  waltham: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/waltham.jpg' },
+  worcester: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/worcester.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
