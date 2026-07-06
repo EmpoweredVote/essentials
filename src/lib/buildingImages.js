@@ -280,6 +280,17 @@ const CURATED_LOCAL = {
   'south salt lake': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-salt-lake.jpg' },
   taylorsville: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/taylorsville.jpg' },
   vineyard: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/vineyard.jpg' },
+  // UT Wave 2 redos shipped 2026-07-06 (operator round-2): completes all 36 UT coverage cities.
+  //   american fork - Mount Timpanogos Utah Temple (facade) | Rick Willoughby | CC BY 2.0
+  //   holladay      - Holladay Village center + Mount Olympus | Derrellwilliams | CC BY-SA 4.0
+  //   riverton      - strip with Wasatch behind | An Errant Knight | CC BY-SA 4.0
+  //   spanish fork  - street with Wasatch behind | Ken Lund | CC BY-SA 2.0
+  //   springville   - Main St below snowy Wasatch | Sbharris | CC BY-SA 3.0
+  'american fork': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/american-fork.jpg' },
+  holladay: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/holladay.jpg' },
+  riverton: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverton.jpg' },
+  'spanish fork': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/spanish-fork.jpg' },
+  springville: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/springville.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
