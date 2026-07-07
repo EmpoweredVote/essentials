@@ -31,6 +31,7 @@ import CompassControlsBar from '../components/CompassControlsBar';
 import SectionBanner from '../components/SectionBanner.jsx';
 import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
 import { resolveFeatureIcons } from '../lib/featureIcons';
+import { resolvePopulation } from '../lib/population';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -1147,6 +1148,22 @@ export default function Results() {
     [representingCity, userState, treasuryCities]
   );
 
+  const populationMap = useMemo(() => {
+    const cityPop = resolvePopulation({
+      tier: 'city',
+      geoId: searchParams.get('browse_geo_id'),
+      city: representingCity,
+      stateAbbrev: userState,
+    });
+    const statePop = resolvePopulation({ tier: 'state', stateAbbrev: userState });
+    const federalPop = resolvePopulation({ tier: 'federal' });
+    return {
+      Local: cityPop != null ? { label: 'POPULATION', value: cityPop } : null,
+      State: statePop != null ? { label: 'POPULATION', value: statePop } : null,
+      Federal: federalPop != null ? { label: 'POPULATION', value: federalPop } : null,
+    };
+  }, [representingCity, userState, searchParams]);
+
   // Only show the nearest upcoming election; hiding future elections avoids duplicate
   // race sections when a primary and general are both returned for the same seat.
   const nearestElection = useMemo(() => {
@@ -1953,6 +1970,7 @@ export default function Results() {
                         locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
                         imageUrl={buildingImageMap.Local}
                         featureIcons={featureIconMap.Local}
+                        stats={populationMap.Local}
                       />
                     : tier === 'State'
                     ? <SectionBanner
@@ -1960,6 +1978,7 @@ export default function Results() {
                         locationName={(userState && STATE_NAMES[userState]) || userState || 'Your State'}
                         imageUrl={buildingImageMap.State}
                         featureIcons={featureIconMap.State}
+                        stats={populationMap.State}
                       />
                     : tier === 'Federal'
                     ? <SectionBanner
@@ -1967,6 +1986,7 @@ export default function Results() {
                         locationName="United States"
                         imageUrl={buildingImageMap.Federal}
                         featureIcons={featureIconMap.Federal}
+                        stats={populationMap.Federal}
                       />
                     : null;
 
@@ -2081,6 +2101,7 @@ export default function Results() {
                 }}
                 buildingImageMap={buildingImageMap}
                 featureIconMap={featureIconMap}
+                populationMap={populationMap}
                 representingCity={representingCity}
                 userState={userState}
                 stateNames={STATE_NAMES}
