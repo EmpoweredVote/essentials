@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v21.0
 milestone_name: Smart Banners
 status: executing
-last_updated: "2026-07-07T20:45:35.021Z"
-last_activity: 2026-07-07 -- Phase 188 planning complete
+last_updated: "2026-07-07T21:36:15.737Z"
+last_activity: 2026-07-07
 progress:
   total_phases: 32
   completed_phases: 29
   total_plans: 98
-  completed_plans: 96
+  completed_plans: 97
   percent: 91
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 188
-Plan: Not started
+Phase: 188 (location-stats-strip) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-07-07 -- Phase 188 planning complete
+Last activity: 2026-07-07
 
 ## Deferred Items
 
@@ -372,7 +372,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 188 — location stats strip
+**Current focus:** Phase 188 — location-stats-strip
 
 ## v15.0 Roadmap Summary
 
@@ -465,9 +465,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-07T19:42:43.880Z
-Stopped at: Phase 188 UI-SPEC approved
-Resume file: .planning/phases/188-location-stats-strip/188-UI-SPEC.md
+Last session: 2026-07-07T21:36:15.715Z
+Stopped at: Completed 188-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -539,6 +539,7 @@ Resume file: .planning/phases/188-location-stats-strip/188-UI-SPEC.md
 | Phase 183 P03 | 15min | 3 tasks | 2 files |
 | Phase 183 P04 | 20min | 2 tasks | 1 files |
 | Phase 187 P02 | 55min | 3 tasks | 3 files |
+| Phase 188 P01 | 25m | 2 tasks | 4 files |
 
 ## Decisions
 
@@ -621,3 +622,5 @@ Resume file: .planning/phases/188-location-stats-strip/188-UI-SPEC.md
 - [Phase 183]: Phase 183: no hasContext key on either new school-district coverage.js entry — 0-stances-by-design is the honest state (Phase 173 CCSD lesson applied proactively)
 - [Phase 187-02]: Centralized TREASURY_URL in Results.jsx (deleted local const) so the existing per-body text link and the new Treasury chip resolve to the identical financials.empowered.vote domain
 - [Phase 187-02]: FeatureIconChip reimplements IconOverlay's @floating-ui IconWithTooltip pattern locally in SectionBanner.jsx, adapted to wrap a real <a> so aria-label lives on the link (extraction to a shared component deferred to Phase 189)
+- [Phase 188]: Minified population bundle (~1.19MB) exceeds 600KB flag threshold; kept static export per plan, flagged dynamic-import fallback for Plan 03/189
+- [Phase 188]: src/data/ directory auto-created via mkdirSync before writing population bundle (Rule 3 fix)

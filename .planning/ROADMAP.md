@@ -75,7 +75,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 
 **Wave 1**
 
-  - [ ] 188-01-PLAN.md — Census generator + committed FIPS-keyed population bundle; export STATE_FIPS_TO_ABBREV (wave 1)
+  - [x] 188-01-PLAN.md — Census generator + committed FIPS-keyed population bundle; export STATE_FIPS_TO_ABBREV (wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -185,7 +185,7 @@ This deferred scope is what v21.0 now fills.
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete    | 2026-07-07 |
-| 188. Location Stats Strip | v21.0 | 0/TBD | Not started | - |
+| 188. Location Stats Strip | v21.0 | 1/3 | In Progress|  |
 | 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
 
 **v21.0: 0/3 phases complete, 2 plans (Phase 187), 0/14 requirements. Progress 0%.**
