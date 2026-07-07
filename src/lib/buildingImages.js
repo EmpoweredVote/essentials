@@ -248,7 +248,14 @@ const CURATED_LOCAL = {
   //   worcester   - Downtown skyline from Union Station | 4300streetcar | CC BY 4.0
   quincy: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/quincy.jpg' },
   somerville: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/somerville.jpg' },
-  springfield: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/springfield.jpg' },
+  // Springfield exists in MA (downtown skyline) and MO (Gillioz Theatre streetscape,
+  // added with the VA/MD/MO batch). Array of state-scoped variants, resolved by
+  // getBuildingImages's multi-variant loop. MA file = cities/springfield.jpg;
+  // MO file = cities/springfield-mo.jpg (suffix avoids collision).
+  springfield: [
+    { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/springfield.jpg' },
+    { state: 'MO', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/springfield-mo.jpg' },
+  ],
   waltham: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/waltham.jpg' },
   worcester: { state: 'MA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/worcester.jpg' },
   // Massachusetts batch 2 shipped 2026-07-06 (operator round-2 review):
@@ -393,6 +400,16 @@ const CURATED_LOCAL = {
   henderson: { state: 'NV', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/henderson.jpg' },
   'north las vegas': { state: 'NV', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/north-las-vegas.jpg' },
   'boulder city': { state: 'NV', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/boulder-city.jpg' },
+  // Virginia + Maryland + Missouri city banners (FINAL batch, operator-certified
+  // 2026-07-06). Licensed Wikimedia Commons; state-scoped. Keys are space-form to
+  // match coverage.js browse_label; storage files hyphenated. Springfield MO is in
+  // the springfield array above (state 'MO'), NOT here, to share that key with MA.
+  //   alexandria    - Old Town King St historic storefronts | DiscoA340 | CC BY-SA 4.0
+  //   falls church  - 'The Falls Church' (the 1769 namesake Episcopal church) | Southerngs | CC BY-SA 3.0
+  //   leonardtown   - St. Mary's County Courthouse (county seat) + Maryland flag | Dougtone | CC BY-SA 2.0
+  alexandria: { state: 'VA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alexandria.jpg' },
+  'falls church': { state: 'VA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/falls-church.jpg' },
+  leonardtown: { state: 'MD', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/leonardtown.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
