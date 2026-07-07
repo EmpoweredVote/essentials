@@ -1109,14 +1109,23 @@ export default function Results() {
     // (e.g. Newsom shown as "Missouri"). Geo wins over the raw param.
     const fromGeo = stateAbbrevFromGeoId(searchParams.get('browse_geo_id'));
     if (fromGeo) return fromGeo;
-    // Government-list browse has no browse_geo_id, but the first government geo_id's
-    // FIPS prefix is just as authoritative (e.g. '3231900' -> NV). Use it before the
+    // Government-list browse has no browse_geo_id, but each government id's FIPS
+    // prefix is just as authoritative (e.g. '3231900' -> NV). Use it before the
     // raw browse_state param so the geography — not a stale param — wins here too.
+    // WR-03 defensive guard: only trust the derived state when EVERY id in the
+    // list shares the same FIPS prefix. A multi-state government-list browse (not
+    // observed today — all curated browses are single-state) must not silently
+    // tether the State/Local Treasury chip to just the first id's state; when the
+    // ids diverge, fall through so userState stays null/undefined and the tether
+    // chip is omitted (TETH-03 graceful degradation) rather than pointing at the
+    // wrong state for governments later in the list.
     const govList = searchParams.get('browse_government_list');
     if (govList) {
-      const firstGovId = govList.split(',').map((s) => s.trim()).filter(Boolean)[0];
-      const fromGovGeo = stateAbbrevFromGeoId(firstGovId);
-      if (fromGovGeo) return fromGovGeo;
+      const govIds = govList.split(',').map((s) => s.trim()).filter(Boolean);
+      const govStates = new Set(govIds.map((id) => stateAbbrevFromGeoId(id)).filter(Boolean));
+      if (govStates.size === 1) {
+        return [...govStates][0];
+      }
     }
     // Otherwise derive the state from the browse params so the State banner
     // shows e.g. "California" instead of "Your State".
