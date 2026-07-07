@@ -182,8 +182,26 @@ const CURATED_LOCAL = {
   gresham: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gresham.jpg' },
   'wood village': { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/wood-village.jpg' },
   'maywood park': { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/maywood-park.jpg' },
-  portland: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/portland.jpg' },
+  // Portland exists in OR (Japanese Garden) and ME. The ME variant is the
+  // Portland skyline that WAS the Maine state banner, moved here when the ME
+  // state banner became the Androscoggin riverfront. ME file is portland-me.jpg
+  // so it does not collide with OR's cities/portland.jpg.
+  portland: [
+    { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/portland.jpg' },
+    { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/portland-me.jpg' },
+  ],
   troutdale: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/troutdale.jpg' },
+  // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
+  // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
+  // (see the portland array above). The Maine STATE banner is now the
+  // Androscoggin riverfront (Auburn), NOT the Portland skyline.
+  //   south portland - Bug Light (Portland Breakwater Light), Bug Light Park | Giorgio Galeotti | CC BY-SA 4.0
+  //   bangor         - West Market Square Historic District | Warren LeMay | CC BY-SA 2.0
+  //   biddeford      - Biddeford Pool harbor | Dcrjsr | CC BY 3.0
+  //   (lewiston + auburn pending a redo review round)
+  'south portland': { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-portland.jpg' },
+  bangor: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bangor.jpg' },
+  biddeford: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biddeford.jpg' },
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
   'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
   glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
@@ -390,7 +408,8 @@ const CURATED_LOCAL = {
 //   LA - New Orleans CBD from across the Mississippi | Michael Maples (USACE) | Public domain
 //   MA - Boston skyline from Longfellow Bridge | King of Hearts | CC BY-SA 4.0
 //   MD - Baltimore, Maryland skyline | Quintin Soloviev | CC BY 4.0
-//   ME - Portland skyline 2024 | Seasider53 | CC BY 4.0
+//   ME - Great Falls / Androscoggin River at Festival Plaza Park, Auburn | Kristen Wheatley | CC BY 2.0
+//        [2026-07-06: replaced the Portland skyline per operator; that skyline moved to the Portland CITY banner (cities/portland-me.jpg)]
 //   MI - Detroit Skyline from Windsor | TheWxResearcher | CC0
 //   MN - Minneapolis Skyline from Stone Arch Bridge | w_lemay | CC BY-SA 2.0
 //   MO - STL Skyline (Gateway Arch) | Buphoff | CC BY-SA 3.0
@@ -446,7 +465,13 @@ export function getBuildingImages(representingCity, stateAbbrev) {
   // state is treated as match-allowed so existing callers that don't pass
   // stateAbbrev keep working unchanged.
   let localImage = null;
-  for (const [key, entry] of Object.entries(CURATED_LOCAL)) {
+  // Match the LONGEST key first so a more specific city name wins over one that
+  // is a substring of it (e.g. "south portland" must beat "portland"). Otherwise
+  // resolution order follows key length descending; ties keep insertion order.
+  const curatedEntries = Object.entries(CURATED_LOCAL).sort(
+    (a, b) => b[0].length - a[0].length
+  );
+  for (const [key, entry] of curatedEntries) {
     if (!city.includes(key)) continue;
     // An entry is either a single {state, src} or an ARRAY of state-scoped
     // variants for a city name that recurs across states (e.g. Fairview OR vs
