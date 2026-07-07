@@ -104,3 +104,23 @@ Treasury Tracker) are a **documented follow-on pattern, out of scope** for v21.0
 ## Traceability
 
 <!-- Filled by the roadmapper: REQ-ID → Phase mapping. -->
+
+All 14 v21.0 requirements mapped to exactly one phase. No orphans, no duplicates. See
+`.planning/ROADMAP.md` for full phase details.
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| ICON-01 | Phase 187: Tethered Feature-Icon Row | Pending |
+| ICON-02 | Phase 187: Tethered Feature-Icon Row | Pending |
+| ICON-03 | Phase 187: Tethered Feature-Icon Row | Pending |
+| TETH-01 | Phase 187: Tethered Feature-Icon Row | Pending |
+| TETH-02 | Phase 187: Tethered Feature-Icon Row | Pending |
+| TETH-03 | Phase 187: Tethered Feature-Icon Row | Pending |
+| TETH-04 | Phase 187: Tethered Feature-Icon Row | Pending |
+| STAT-01 | Phase 188: Location Stats Strip | Pending |
+| STAT-02 | Phase 188: Location Stats Strip | Pending |
+| STAT-03 | Phase 188: Location Stats Strip | Pending |
+| SBAN-01 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
+| SBAN-02 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
+| SBAN-03 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
+| SBAN-04 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |

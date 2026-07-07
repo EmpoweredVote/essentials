@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v21.0
 milestone_name: Smart Banners
-status: planning
-last_updated: "2026-07-07T06:38:12.221Z"
+status: roadmapped
+last_updated: "2026-07-07T00:00:00.000Z"
 last_activity: 2026-07-07
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-07-07 — Milestone v21.0 started
+Phase: 187 of 189 (Tethered Feature-Icon Row) — ready to plan
+Plan: — (roadmap complete, no plans generated yet)
+Status: Roadmapped — ready for /gsd:plan-phase 187
+Last activity: 2026-07-07 — v21.0 ROADMAP.md created (3 phases: 187-189), REQUIREMENTS.md traceability filled (14/14 mapped), STATE.md updated
 
 ## Deferred Items
 
@@ -42,6 +42,24 @@ DB-verified v20.0-MILESTONE-AUDIT.md + live operator approvals):
 | verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+
+### v21.0 roadmap (created 2026-07-07)
+
+Frontend-only milestone filling v19.0's inert `SectionBanner` `stats`/`featureIcons` scaffolding
+slots. 3 phases (187-189), continuing numbering from v20.0 (closed at 186). 14/14 requirements
+mapped 1:1 — no orphans, no duplicates. No backend/DB schema changes.
+
+- **187 Tethered Feature-Icon Row** — ICON-01/02/03 + TETH-01/02/03/04 (product-icon row + Treasury
+  deep-link resolution; icon carries the banner's own location, never the user's; omitted entirely
+  when no valid per-location link exists; state/federal tiers resolve non-municipal Treasury entities)
+- **188 Location Stats Strip** — STAT-01/02/03 (Census-sourced population-first stats strip on city +
+  state banners, keyed to geo identifier/FIPS, not hardcoded; graceful omission when unavailable —
+  independent workstream from Phase 187, can build in parallel)
+- **189 Smart-Banner Integration & Graceful Degradation** — SBAN-01/02/03/04 (wires Phases 187+188
+  into one shared component consumed by both Results.jsx and ElectionsView.jsx; identical cross-page
+  behavior; empty-state parity with v19.0 — no empty containers, no layout shift, no console errors)
+
+Execution order: 187 -> 188 -> 189 (189 depends on both 187 and 188).
 
 ### v20.0 roadmap (created 2026-06-30)
 
