@@ -37,41 +37,55 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 ## Phase Details
 
 ### Phase 187: Tethered Feature-Icon Row
+
 **Goal**: Every section banner shows a row of EV-product logo icons that deep-link into **that banner's own location** in other EV products — never the user's saved/broker location — and an icon appears only when a valid per-location link actually exists.
 **Depends on**: Nothing (first phase of v21.0; extends v19.0's `SectionBanner` `featureIcons` slot and the existing `treasury.js` has-data matching contract)
 **Requirements**: ICON-01, ICON-02, ICON-03, TETH-01, TETH-02, TETH-03, TETH-04
 **Success Criteria** (what must be TRUE):
+
   1. On a banner whose location has an available Treasury dataset, the icon row shows a Treasury icon; hovering or keyboard-focusing it shows a tooltip naming "Treasury Tracker."
   2. Clicking the Treasury icon on a banner opens `financials.empowered.vote/?entity=<name-state>` for **the banner's own location** — verified by viewing a banner whose location differs from the user's own saved/current location and confirming the link carries the banner's location, not the user's.
   3. A state-tier banner (e.g., "Texas") links its Treasury icon to the Texas state General Fund entity when one exists; a federal-tier banner links to a federal Treasury entity when one exists — not only municipalities.
   4. A banner whose location has no matching Treasury entity shows no Treasury icon at all — no greyed-out or disabled icon, no dead link.
-  5. Icons render from the shared `ev-landing/ev-landing-main/icons` set in a variant that stays legible against the banner's dark background, and are positioned so they never overlap the location title text.
-**Plans**: 2 plans
+  5. Icons render from the shared `ev-landing/ev-landing-main/icons` set in a variant that stays legible against the banner's dark background, and are positioned so they never overlap the location title text.**Plans**: 2 plans
+
+**Wave 1**
+
   - [ ] 187-01-PLAN.md — Treasury state/federal resolvers, product registry, resolveFeatureIcons + pure-logic tests (wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
   - [ ] 187-02-PLAN.md — SectionBanner chip row + accessible tooltip; wire featureIconMap through Results + ElectionsView (wave 2)
+
 **UI hint**: yes
 
 ### Phase 188: Location Stats Strip
+
 **Goal**: City and state banners show at least one legible, Census-sourced fact (population first) about that banner's own location, resolved dynamically from the location's geo identifier — and the strip degrades gracefully when a stat is unavailable.
 **Depends on**: Nothing (independent workstream from Phase 187; extends v19.0's `SectionBanner` `stats` slot)
 **Requirements**: STAT-01, STAT-02, STAT-03
 **Success Criteria** (what must be TRUE):
+
   1. A city-tier banner (e.g., Plano, TX) displays that city's population as a legibly formatted fact, positioned so it never collides with the location title.
   2. A state-tier banner (e.g., Texas) displays that state's population.
   3. The displayed population is fetched/keyed by the banner location's Census geo identifier (FIPS place/state code) — not a hardcoded per-city or per-state lookup table.
   4. When Census data is unavailable for a location (no FIPS match, fetch failure, etc.), the stats strip simply omits that fact — no "undefined," no "0," no broken label — and the rest of the banner still renders normally.
+
 **Plans**: TBD
 **UI hint**: yes
 
 ### Phase 189: Smart-Banner Integration & Graceful Degradation
+
 **Goal**: The icon row and stats strip from Phases 187–188 appear identically on both the Representatives/Results page and the Elections page, built and consumed from one shared component — and a banner with no product links and no available stats still renders exactly as it did in v19.0.
 **Depends on**: Phase 187, Phase 188
 **Requirements**: SBAN-01, SBAN-02, SBAN-03, SBAN-04
 **Success Criteria** (what must be TRUE):
+
   1. Viewing the Results page and the Elections page for the same location show the identical icon row and stats strip on each of the city / state / federal banners — no page-specific divergence in behavior or appearance.
   2. Both `Results.jsx` and `ElectionsView.jsx` render their banners through the same shared component — confirmed by code inspection, not two parallel implementations (single source of truth, promotable to `@empoweredvote/ev-ui`).
   3. A banner for a location with zero valid product links and zero available stats renders its title, pin, and art exactly as in v19.0 — no empty containers, no layout shift, no console errors.
   4. All three tiers (city, state, federal) show the enhanced banner treatment — icon row and/or stats strip where data exists — on both pages.
+
 **Plans**: TBD
 **UI hint**: yes
 
