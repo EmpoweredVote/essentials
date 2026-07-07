@@ -71,10 +71,11 @@ of the very corner" — do not reduce below `12px` on either axis, and do not se
   while the title is bottom-**left** — no horizontal overlap by design.
 - This phase's stat block must have its total rendered height (padding + two lines + inter-line gap)
   fit inside `y = 16px` to `y ≤ 65px` — a **49px budget** with a 3px safety margin before the
-  title/icon band begins at `y = 68px`. The exact geometry below (padding 6px, label 13px line-height,
-  2px gap, number 22px line-height = 43px content + 12px padding = **49px total**) fits this budget
-  precisely. Do not increase font sizes or padding without re-verifying this arithmetic.
-- On desktop (180px band), the same fixed geometry leaves ~128px of clearance above the title band —
+  title/icon band begins at `y = 68px`. The grid-compliant geometry below (4px padding-top + 13px
+  label line-height + 4px inter-line gap + 22px number line-height + 4px padding-bottom = **47px
+  total**) fits this budget with 2px of slack. Every value is a multiple of 4. Do not increase font
+  sizes or padding without re-verifying this arithmetic.
+- On desktop (180px band), the same fixed geometry leaves ~130px of clearance above the title band —
   no risk there; the mobile calculation above is the binding constraint.
 
 ### Scrim (D-11 — same treatment family as Phase 187's `FeatureIconChip`)
@@ -84,8 +85,8 @@ of the very corner" — do not reduce below `12px` on either axis, and do not se
 | Background | `rgba(13, 17, 23, 0.55)` — literal rgba (not a CSS var; matches `FeatureIconChip`'s hardcoded value verbatim, since `--color-ev-navy` is `#0d1117` and this codebase's precedent hardcodes the alpha-blended literal rather than `color-mix()`) |
 | Backdrop filter | `blur(2px)` — identical value to `FeatureIconChip`, so the two scrims read as one visual system |
 | Border radius | `10px` (rounded rectangle — distinct from the icon chips' `50%` circle, but same "rounded, semi-transparent, navy" family) |
-| Padding | `6px 12px` (vertical 6px, horizontal 12px — the 6px vertical value is a **declared exception** to the 8-pt spacing scale, required to fit both lines inside the 49px mobile budget; see Spacing Scale § below) |
-| Layout | flex column, `align-items: flex-end` (right-aligns both lines as a block), `gap: 2px` between the label and number lines |
+| Padding | `4px 12px` (vertical 4px, horizontal 12px) — both values are multiples of 4; the horizontal 12px matches the existing `src/index.css:71` `padding: 8px 12px` precedent |
+| Layout | flex column, `align-items: flex-end` (right-aligns both lines as a block), `gap: 4px` between the label and number lines |
 | Sizing | intrinsic (fits content) — do not set a fixed width; right-alignment via the `top/right` absolute anchor handles positioning, not a fixed box width |
 
 ### Inner text stack (top to bottom)
@@ -100,23 +101,18 @@ Both lines **always render together** — never label-only or number-only (D-10)
 
 ## Spacing Scale
 
-Declared values (must be multiples of 4, with declared exceptions):
+Declared values (all multiples of 4):
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| xs | 4px | not used this phase |
+| xs | 4px | scrim vertical padding (top + bottom); inter-line gap (label → number) |
 | sm | 8px | not used this phase |
 | md | 16px | scrim's top/right inset from the banner edges (matches Phase 187's icon-row `bottom:16px/right:16px` inset for a consistent rhythm down the right edge) |
-| — | 12px | scrim horizontal padding |
-| — | 2px | inter-line gap (label → number) |
+| — | 12px | scrim horizontal padding (multiple of 4; matches the `src/index.css:71` `padding: 8px 12px` precedent) |
 
-Exceptions:
-- **6px** vertical scrim padding — not a multiple of 4/8. Required to fit both lines inside the
-  49px mobile vertical budget proven above. This mirrors the precedent set by Phase 187's own
-  `FeatureIconChip` (36px chip diameter, `blur(2px)`) of allowing small non-scale values where pixel-
-  exact-fit is the binding constraint.
-- **2px** inter-line gap — same rationale (sub-4px value used only for typographic line-gap, never
-  for layout/component spacing).
+Exceptions: none. Every spacing value used in this phase (4px, 12px, 16px) is a multiple of 4 and
+the two-line stat fits the 120px mobile band with 2px of slack (47px content vs. 49px budget) —
+no sub-grid value is required.
 
 ---
 
