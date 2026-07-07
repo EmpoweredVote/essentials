@@ -79,7 +79,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-  - [ ] 188-02-PLAN.md — Pure resolvePopulation() (D-04/05/06 + STAT-03 null-on-miss) with fixture-injected Vitest matrix (wave 2)
+  - [x] 188-02-PLAN.md — Pure resolvePopulation() (D-04/05/06 + STAT-03 null-on-miss) with fixture-injected Vitest matrix (wave 2)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -185,7 +185,7 @@ This deferred scope is what v21.0 now fills.
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete    | 2026-07-07 |
-| 188. Location Stats Strip | v21.0 | 1/3 | In Progress|  |
+| 188. Location Stats Strip | v21.0 | 2/3 | In Progress|  |
 | 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
 
 **v21.0: 0/3 phases complete, 2 plans (Phase 187), 0/14 requirements. Progress 0%.**

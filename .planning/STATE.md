@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v21.0
 milestone_name: Smart Banners
 status: executing
-last_updated: "2026-07-07T21:36:15.737Z"
+last_updated: "2026-07-07T21:47:22.148Z"
 last_activity: 2026-07-07
 progress:
   total_phases: 32
   completed_phases: 29
   total_plans: 98
-  completed_plans: 97
+  completed_plans: 98
   percent: 91
 ---
 
@@ -18,7 +18,7 @@ progress:
 ## Current Position
 
 Phase: 188 (location-stats-strip) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-07-07
 
@@ -465,8 +465,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-07T21:36:15.715Z
-Stopped at: Completed 188-01-PLAN.md
+Last session: 2026-07-07T21:47:22.121Z
+Stopped at: Completed 188-02-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -540,6 +540,7 @@ Resume file: None
 | Phase 183 P04 | 20min | 2 tasks | 1 files |
 | Phase 187 P02 | 55min | 3 tasks | 3 files |
 | Phase 188 P01 | 25m | 2 tasks | 4 files |
+| Phase 188 P02 | 12min | 2 tasks | 2 files |
 
 ## Decisions
 
@@ -624,3 +625,4 @@ Resume file: None
 - [Phase 187-02]: FeatureIconChip reimplements IconOverlay's @floating-ui IconWithTooltip pattern locally in SectionBanner.jsx, adapted to wrap a real <a> so aria-label lives on the link (extraction to a shared component deferred to Phase 189)
 - [Phase 188]: Minified population bundle (~1.19MB) exceeds 600KB flag threshold; kept static export per plan, flagged dynamic-import fallback for Plan 03/189
 - [Phase 188]: src/data/ directory auto-created via mkdirSync before writing population bundle (Rule 3 fix)
+- [Phase 188-02]: resolvePopulation takes maps as an explicit second argument (default = bound real bundle) rather than a factory/curried function — simplest DI seam matching RESEARCH's Wave-0 requirement without adding new architectural surface

@@ -119,7 +119,7 @@ All 14 v21.0 requirements mapped to exactly one phase. No orphans, no duplicates
 | TETH-04 | Phase 187: Tethered Feature-Icon Row | Complete |
 | STAT-01 | Phase 188: Location Stats Strip | Pending |
 | STAT-02 | Phase 188: Location Stats Strip | Complete |
-| STAT-03 | Phase 188: Location Stats Strip | Pending |
+| STAT-03 | Phase 188: Location Stats Strip | Complete |
 | SBAN-01 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
 | SBAN-02 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
 | SBAN-03 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
