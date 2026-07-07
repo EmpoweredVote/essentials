@@ -48,6 +48,12 @@ describe('stateAbbrevFromGeoId — geo_id FIPS prefix is authoritative for state
   it('derives MO from a Springfield, Missouri geo_id', () => {
     expect(stateAbbrevFromGeoId('2970000')).toBe('MO');
   });
+  // Regression: government-list browse derives state from the first list geo_id's
+  // FIPS prefix (Results.jsx userState), so a Henderson (NV) browse cannot show a
+  // contradictory banner from a stale browse_state param.
+  it('derives NV from a Henderson, Nevada place geo_id (government-list browse)', () => {
+    expect(stateAbbrevFromGeoId('3231900')).toBe('NV');
+  });
   it('returns null for empty/non-numeric input', () => {
     expect(stateAbbrevFromGeoId('')).toBeNull();
     expect(stateAbbrevFromGeoId(null)).toBeNull();

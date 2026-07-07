@@ -1,63 +1,93 @@
 ---
 gsd_state_version: 1.0
-milestone: v19.0
+milestone: v20.0
 milestone_name: milestone
 status: completed
-stopped_at: Phase 171 context gathered
-last_updated: "2026-06-28T03:49:31.996Z"
-last_activity: 2026-06-28 -- Phase 172 marked complete
+stopped_at: v20.0 milestone closed
+last_updated: "2026-07-05T08:35:00.000Z"
+last_activity: 2026-07-05 -- v20.0 milestone archived + tagged (formal close)
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 9
-  completed_plans: 9
-  percent: 100
+  total_phases: 25
+  completed_phases: 24
+  total_plans: 84
+  completed_plans: 84
+  percent: 96
 ---
 
 # State
 
 ## Current Position
 
-Phase: 172 — COMPLETE
-Phase Next: 170 (Section Banners & Continuous Scroll)
-Plan: 1 of 1
-Status: Phase 172 complete
-Last activity: 2026-06-28 -- Phase 172 marked complete
+Milestone: **v20.0 CLOSED 2026-07-05** · **v19.0 CLOSED 2026-07-05** (build was done 2026-06-28; formal close deferred until now)
+Status: No active or parked milestone. Both archived to `milestones/` + tagged.
+Next: open a new milestone via `/gsd:new-milestone` (candidate: resume the deferred v19.0 frontend track — banner stats/icons, remaining-state art, Landing/profile dark mode).
+Last activity: 2026-07-05 -- v19.0 + v20.0 milestones archived (milestones/v19.0-*, v20.0-*) + tagged
 
-### v19.0 roadmap (created 2026-06-24)
+## Deferred Items
 
-Frontend-only dark-mode + section-banner milestone. 4 phases (169–172), continuing numbering
-from v18.0 (PARKED at Phase 162; phase dirs 158–168 reserved). 11/11 requirements mapped 1:1 —
-no orphans, no duplicates. No backend/DB changes (banner data is structure-only). Figma source
-J9mfnUSnc2k6fUQDhw9L7h node 3957:563.
+Items acknowledged and deferred at v20.0 milestone close on 2026-07-05 (12 open artifacts;
+9 are stale cross-milestone leftovers, 3 are v20.0 per-phase checkpoints superseded by the
+DB-verified v20.0-MILESTONE-AUDIT.md + live operator approvals):
 
-- **169 Dark-Mode Design System Foundation** — DARK-01 (extract Figma tokens → index.css @theme/CSS
-  vars, single source of truth) + DARK-02 (Results/Representatives renders in dark treatment;
-  PoliticianCard 4:5 preserved; ev-ui !important overrides; no light-mode regression).
+| Category | Item | Status |
+|----------|------|--------|
+| debug | cambridge-locals-missing (v5.0) | diagnosed — CONFIRMED root cause (offices district_id NULL), never formally closed |
+| uat | phase 103 (v13.0 MA) | partial — 3 open scenarios |
+| uat | phase 167 (v18.0 NV) | partial — 1 open scenario |
+| verification | phase 103 (v13.0) | human_needed |
+| verification | phase 106 (v13.0) | human_needed |
+| verification | phase 108 (v13.0) | human_needed |
+| verification | phase 110 (v13.0) | human_needed |
+| verification | phase 126 | human_needed |
+| verification | phase 167 (v18.0) | human_needed |
+| verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+| verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+| verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 
-- **170 Section Banners & Continuous Scroll (Results)** — CORE SLICE. BANR-01 (reusable SectionBanner:
-  image + dark gradient + label + pin) + BANR-02 (City→State→Federal in one continuous scroll) +
-  BANR-03 (location-aware via extended buildingImages.js + graceful gradient fallback) + BANR-04
-  (stats data-slot + feature-icon slot as hidden scaffolding) + NAV-01 (remove tier sort buttons;
-  keep Elected/Appointed filter + name search).
+### v20.0 roadmap (created 2026-06-30)
 
-- **171 Banner Asset Pipeline & Exemplar Art** — ASST-01 (Bloomington/Indiana/US + LA/California/US
-  art: Unsplash skylines + Wikimedia landmarks + AI fallback, unified dark overlay, mirrored to
-  Storage, wired into buildingImages.js) + ASST-02 (documented repeatable sourcing→treatment→wiring
-  procedure for the ~10 remaining covered states).
+Brownfield local-layer deep-seed on Oregon's complete state foundation (v8.0–v10.0). 13 phases
+(174–186), continuing numbering from v18.0 (closed at 173; 169–172 occupied by parked v19.0 detour).
+16/16 requirements mapped 1:1 — no orphans. Next migration: **1115** (on-disk counter authoritative).
 
-- **172 Elections Page Parity** — DARK-03 (Elections in same dark treatment) + BANR-05 (same
-  SectionBanner dividers between tiers); preserve seeded-shuffle ordering, unopposed/no-candidate
-  handling, elections/me auto-load, MiniCompass overlay.
+- **174 West-Metro School-District Geofences** — WM-GEO-01 (G5420 UNSD loader; 5 districts; prerequisite for school-board phases 183-184)
+- **175 Washington County Commission Deep-Seed** — WASH-01 (Chair + commissioners; standalone county govt geo_id 41067; stances)
+- **176 City of Beaverton Deep-Seed** — WASH-02 (flagship; verify ward vs at-large at plan time; custom X00xx ward geofences only if by-ward)
+- **177 City of Hillsboro Deep-Seed** — WASH-03 (county seat / largest WashCo city)
+- **178 City of Tigard Deep-Seed** — WASH-04
+- **179 City of Tualatin Deep-Seed** — WASH-05
+- **180 City of Forest Grove Deep-Seed** — WASH-06
+- **181 City of Sherwood Deep-Seed** — WASH-07
+- **182 City of Cornelius Deep-Seed** — WASH-08
+- **183 School Boards Wave 1 — Beaverton SD 48J + Hillsboro SD 1J** — WSCH-01 + WSCH-02 (roster + headshots; 0 stances by design; depends on Phase 174)
+- **184 School Boards Wave 2 — Tigard-Tualatin SD 23J + Forest Grove SD 15 + Sherwood SD 88J** — WSCH-03 + WSCH-04 + WSCH-05 (roster + headshots; 0 stances by design; depends on Phase 174)
+- **185 WashCo 2026 Elections & Discovery** — WM-ELEC-01 (race rows + discovery_jurisdictions + cron armed; depends on phases 175-182)
+- **186 West-Metro Playbook Retrospective & Close** — WM-RETRO-01 (coverage.js chips reconciled, WashCo GOTCHAs, DB-verified audit, milestone close)
 
-DEFERRED (not v19.0): live banner stats, feature-icon links, banner art for other states, Landing +
-profile pages dark treatment. v18.0 NV resumes after v19.0 closes (next NV migration 1064).
+Deep-seed unit (175–182): government + chamber → roster → 600x750 headshots → evidence-only
+stances (one agent at a time, 100% cited, no defaults, honest blanks) → surface in src/lib/coverage.js.
+School-board unit (183–184): government + chamber → roster → 600x750 headshots → 0 stances by design → plain chip.
+
+### Phase 173 Plan 02 outcome (NV chip reconciliation + playbook update) — COMPLETE 2026-06-30
+
+- `src/lib/coverage.js`: removed `hasContext` key from CCSD entry (browseGeoId 3200060) — plain chip, 0 stances by design. Other 5 NV jurisdictions keep `hasContext:true` (LV 36/Henderson 28/N.LV 18/Boulder City 19/Clark County 32 stance rows). Node verify exits 0.
+- `LOCATION-ONBOARDING.md`: 6 new Cities Onboarded rows + 3 NV GOTCHAs (standalone-county, X0015/X0016/X0017 MTFCCs, lowercase nv casing) + `## Nevada Quick Reference` block (ext_id schemes, geo_ids, WAF map, browse params, migration counter convention). LV ext range -3205001..-3205007 correctly distinct from Henderson -3206001..-3206005.
+- Commits: 06a9db3 (coverage.js), bd57975 (LOCATION-ONBOARDING.md).
+
+### Phase 163 outcome (City of Henderson, geo_id 3231900) — COMPLETE 2026-06-28
+
+- Standalone gov 'City of Henderson, Nevada, US' + Henderson City Council (official_count=5) + Mayor Romero LOCAL_EXEC (geo_id 3231900) + 4 LOCAL X0016 ward districts (first Henderson custom geofences; ward 2 had 19 rings → ST_MakeValid). Ext_ids -3206001..-3206005.
+- Migs: 1084 structural (registered) + 1085 headshots + 1086-1090 stances (all audit-only). **Next migration 1091. Ledger MAX stays 1084.**
+- Headshots 5/5 (press_use): Romero NVBiz, Seebock campaign PNG (RGBA→white-composite added to pipeline), Larson/Cox/Stewart Ballotpedia 200×300 (3× upscale). cityofhenderson.com is Akamai WAF-403 — per-member fallback chain.
+- Stances 28 (Romero 8/Seebock 6/Larson 4/Cox 3/Stewart 7), evidence-only chairs, 100% cited, 0 defaults. Honest blanks: Cox homelessness (absent for unanimous 2023 camping ban); Stewart residential-zoning dropped (Three Kids Mine = growth-and-development not single-family-vs-density). Seebock public-safety from campaign platform not LVMPD role.
+- All 9 checks pass: 5 offices (1 LOCAL_EXEC+4 LOCAL), ward-precise routing (each ward point covered by exactly 1 X0016 + city G4110), 0 uncited, 0 section-split, casing 'nv', only 1084 registered. Operator-approved on live app.
+- ⚠ DEFERRED browse bug: government-list browse of an unseeded city leaks stale prior-location officials under wrong state banner (see project_browse_government_list_state_leak) — fix as focused follow-up.
 
 ### v18.0 roadmap (created 2026-06-23)
 
-Nevada new-state milestone, 11 phases (158–168), continuing numbering from v17.0 (closed at 157).
-State foundation first, then Clark County metro deep-seeds, then schools, elections, close.
-13/13 requirements mapped 1:1 — no orphans, no duplicates. Next migration: **1053** (on-disk
+Nevada new-state milestone, 12 phases (158–169), continuing numbering from v17.0 (closed at 157).
+State foundation first, then Clark County metro deep-seeds, then schools, elections, candidates, close.
+14/14 requirements mapped 1:1 — no orphans, no duplicates. [Phase 168 candidate-population inserted 2026-06-29; retrospective moved 168→169.] Next migration: **1053** (on-disk
 counter authoritative; stance migs apply audit-only). Legislature stances DEFERRED to a follow-up.
 [Phase 159 corrected the stale "1048" → DB integer-ledger MAX was 1049; phase 159 consumed 1050 (structural, registered) + 1051/1052 (audit-only, unregistered); next is 1053.]
 
@@ -71,7 +101,8 @@ counter authoritative; stance migs apply audit-only). Legislature stances DEFERR
 - **165 Boulder City Deep-Seed** — CLARK-05
 - **166 CCSD Board of Trustees Deep-Seed** — CCSD-01 (5th-largest US district; G5420 if district-elected)
 - **167 NV 2026 Elections & Discovery** — NV-ELEC-01 (Governor + 42 Assembly + ~10 Senate + 4 US House; US Senators NOT up 2026)
-- **168 Nevada Playbook Retrospective & Close** — NV-RETRO-01 (surface NV in coverage.js, GOTCHAs, audit, close)
+- **168 NV 2026 Candidate Population — Statewide & US House** — NV-CAND-01 (curated general nominees / June 9 primary winners for 6 execs + 4 US House; race_candidates bound; legislative deferred)
+- **173 Nevada Playbook Retrospective & Close** — NV-RETRO-01 (surface NV in coverage.js, GOTCHAs, audit, close) [renumbered from 169 on 2026-06-30; 169–172 = parked v19.0 detour dirs]
 
 Deep-seed unit (161–166): government + chamber → roster → 600×750 headshots → evidence-only
 stances (one agent at a time, 100% cited, no defaults, honest blanks) → surface in `src/lib/coverage.js`.
@@ -322,7 +353,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 172 — elections-page-parity
+**Current focus:** Phase 186 — west-metro-retrospective-close
 
 ## v15.0 Roadmap Summary
 
@@ -415,9 +446,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-06-27T18:12:30.807Z
-Stopped at: Phase 171 context gathered
-Resume file: .planning/phases/171-banner-asset-pipeline-exemplar-art/171-CONTEXT.md
+Last session: 2026-07-04T22:38:53.755Z
+Stopped at: Phase 185 context gathered
+Resume file: .planning/phases/185-washco-2026-elections-discovery/185-CONTEXT.md
 
 ## Performance Metrics
 
@@ -476,7 +507,18 @@ Resume file: .planning/phases/171-banner-asset-pipeline-exemplar-art/171-CONTEXT
 | Phase 127 P02 | ~30m | 3 tasks | 3 files (716-718 stances SQLs); 26 stance rows for Mirisch(11)+Nazarian(7)+Wells(8); 0 unpaired, 0 uncited; all 5 BH officials complete |
 | Phase 154 P01 | 25min | 2 tasks | 1 files |
 | Phase 154-burbank-deep-seed P02 | 20min | 2 tasks | 1 files |
-| Phase 170 P02 | 5m | 1 tasks | 1 files |
+| Phase 173 P01 | 15 | 2 tasks | 1 files |
+| Phase 177 P01 | 4min | 2 tasks | 1 files |
+| Phase 177 P03 | 20min | 3 tasks | 2 files |
+| Phase 177 P04 | 45min | 3 tasks | 7 files |
+| Phase 177 P05 | 15m | 3 tasks | 2 files |
+| Phase 181 P01 | 35m | 2 tasks | 1 files |
+| Phase 181 P02 | 25m | 1 tasks | 1 files |
+| Phase 181 P03 | 35m | 3 tasks | 2 files |
+| Phase 183 P01 | 6min | 2 tasks | 1 files |
+| Phase 183 P02 | 25min | 2 tasks | 1 files |
+| Phase 183 P03 | 15min | 3 tasks | 2 files |
+| Phase 183 P04 | 20min | 2 tasks | 1 files |
 
 ## Decisions
 
@@ -539,3 +581,21 @@ Resume file: .planning/phases/171-banner-asset-pipeline-exemplar-art/171-CONTEXT
 - [Phase 130-01]: Phase 130 Culver City Stances CLOSED — 5 council members (Puza 6, Fish 6, McMorrin 6, O'Brien 6, Vera 5); 29 total stance rows (migrations 729-733); 0 unpaired, 0 uncited, 0 rows on inactive topics. Rotational mayor (Alhambra pattern) — no Mayor office, all "Council Member", none excluded. FULL ideological spread captured with evidence: progressive bloc (McMorrin all 1.0-2.0 incl. PD-defunding 1.0 + rent-control 1.0; Puza + Fish transportation 1.0, civil-rights/housing 1.0) vs moderate O'Brien (PD-staffing 4.0, R1-preservation 4.0, MOVE-rollback 3.0) vs conservative Vera (rent-regulation 5.0 anti-RC/Measure-B, PD 4.0, ended Incremental Infill 4.0). MOVE Culver City 2023 bus/bike-lane rollback (3-2) is the defining distinguishing vote. Bryan Fish public name "Bubba Fish". Executed continuous sequential flow via Supabase MCP execute_sql. CULVERCITY-01 FULLY CLOSED; next migration=734
 - [Phase 129-01]: Phase 129 Compton Stances CLOSED — 5 officials (Sharif Mayor=7, Duhart D1=3, Spicer D2=5, Bowers D3=4, Darden D4=1); 20 total stance rows (migrations 724-728); 0 unpaired, 0 uncited, 0 rows on inactive topics. NO excluded officials (Compton has no separately-seeded City Clerk/Treasurer in DB — distinct from Carson/BH). Compass diversity on public-safety-approach: Spicer 1.0 (explicit "almost nothing to do with law enforcement" outlier) → Sharif 2.0 (community prevention/Violence Reduction Network) → Bowers 3.0 (40-yr emergency-response career, enforcement + commissions, genuine center). Darden thin record (1 stance, HOPICS homeless-services engagement) — most coverage biographical (former Water Dept GM); blank spokes honest per evidence-only rule. Reconciliation note: schema_migrations MAX stays 718 because stance migrations apply via raw SQL and never register there — on-disk file counter (now 728) is authoritative. Executed in one continuous sequential flow via Supabase MCP execute_sql; applied one official at a time. COMPTON-01 FULLY CLOSED; next migration=729
 - [Phase 128-03]: Phase 128 Carson Stances CLOSED — Q1=5 rows (all 5 officials with stances), Q2=0 uncited, Q3=0 unpaired, Q4=0 rows on inactive topics, Q5=0 (Bradshaw+Cooper exclusion confirmed). Per-official counts: Davis-Holmes(Mayor, directly elected)=9, Hilton(D1)=5, Dear(D2)=8, Hicks(D3)=6, Rojas(D4)=6; total 34 stance rows (migrations 719-723); Carson 2017 immigration-protective resolution established local-immigration=2.0 pattern for all 5 officials; Dear richest D1-D4 record (growth-and-development+taxes); Hicks/Rojas local-environment=2.0 from AQMD advocacy near industrial zones; CARSON-01 FULLY CLOSED; next migration=724
+- [Phase ?]: CCSD chip determination
+- [Phase ?]: LV parked phase structure verified
+- [Phase 177]: Confirmed geo_id 4134100 for Hillsboro (CONTEXT.md's 4133850 was wrong/nonexistent); greenfield status, ext_id block -4134101..-4134107, next migration 1150, lowercase 'or' casing, and at-large routing (no ward geofences) all confirmed via Wave-0 probes
+- [Phase 177]: Migration 1150 applied (governments/chamber/2 districts/7 offices); representing_city inline (D-09); Council President title-on-seat (D-07); at-large confirmed with zero ward geofences; all E2E gates pass
+- [Phase 177-04]: Hillsboro stances: 60 rows/7 officials, 100% cited, zero defaults; data-center split 3v3 (Sinclair/Alcaire/Harris vs Salgado/Anvery/Case); ICE/sanctuary Res 2906 anchors local-immigration for 6 members
+- [Phase 177]: Hillsboro banner: Wikimedia Commons Orenco Station Plaza MAX photo (Steve Morgan, CC BY-SA 4.0) chosen over Unsplash for clean license + civic/transit landmark recognizability
+- [Phase 177]: Live visual verification (banner render, purple chip, roster ordering) DEFERRED to post-deploy human UAT; Task 3 checkpoint auto-approved on code-level evidence only
+- [Phase ?]: Sherwood geo_id CORRECTED: 4167100 confirmed (stated 4167450 is 0 rows / does not exist)
+- [Phase ?]: Sherwood: pure at-large + directly-elected 2-year Mayor + 6 plain-title Councilors; next structural migration 1187
+- [Phase ?]: Sherwood A4 confirmed: City Attorney + Municipal Court Judge council-appointed — skip all 8 judicial-* topics in plan 04
+- [Phase 181]: Sherwood: geo_id 4167100 (Wave-0 corrected from stated 4167450); Mayor Rosener 2-year term recorded in LOCAL_EXEC label; Young Council President is title-on-seat only; Mays seeded as plain Councilor despite former-Mayor/CP history; D-15 WR-B pairwise identity gate passed (7/7)
+- [Phase 181]: Sherwood headshots (181-03): 7/7 official portraits live via mig 1188. Keith Mays's official city-served portrait is an older photo of him — accepted as-is since it is the portrait the city itself serves.
+- [Phase 183]: Both Beaverton SD 48J and Hillsboro SD 1J are whole-district at-large (7 directors each) — no sub-zone geofences — Wave-0 re-fetch confirmed district's own election language and overturned CONTEXT.md's stale Beaverton zone-voted assumption
+- [Phase 183]: Next migration numbers locked at 1203 (structural) / 1204 (headshots) from on-disk MAX 1202 — DB ledger MAX (1196) is a known lag/trap; on-disk file MAX is authoritative
+- [Phase 183]: Verbatim naming locked: Beaverton='School Board'/'Director, Zone N', Hillsboro='Board of Directors'/'Director, Position N' — Per-district verbatim confirmed live, not the 254_or blanket 'Board of Education' naming
+- [Phase 183]: Migration 1203 ledger INSERT placed inside transaction before COMMIT (1159/1178/1196 convention), not after COMMIT per plan's literal 1107-era text
+- [Phase 183]: Migration renumbered 1204 -> 1205 (on-disk-MAX-authoritative convention): 1204 was claimed on-disk by a concurrent AZ ballot-ineligible-reconciliation workstream before this file was authored — Next migration after this one is 1206
+- [Phase 183]: Phase 183: no hasContext key on either new school-district coverage.js entry — 0-stances-by-design is the honest state (Phase 173 CCSD lesson applied proactively)

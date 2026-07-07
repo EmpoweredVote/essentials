@@ -11,7 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@empoweredvote/ev-ui": "^0.9.6",
+    "@empoweredvote/ev-ui": "^0.9.7",
     "@floating-ui/react": "^0.27.19",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",

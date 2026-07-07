@@ -95,12 +95,19 @@ export const COVERAGE_STATES = [
   {
     name: 'Oregon', abbrev: 'OR',
     areas: [
-      { label: 'Fairview',    browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
-      { label: 'Gresham',     browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
-      { label: 'Maywood Park',browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
-      { label: 'Portland',    browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
-      { label: 'Troutdale',   browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
-      { label: 'Wood Village',browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
+      { label: 'Beaverton',    browseGovernmentList: ['4105350'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Cornelius',    browseGovernmentList: ['4115550'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Fairview',     browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
+      { label: 'Forest Grove', browseGovernmentList: ['4126200'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Gresham',      browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
+      { label: 'Hillsboro',    browseGovernmentList: ['4134100'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Maywood Park', browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
+      { label: 'Portland',     browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Sherwood',     browseGovernmentList: ['4167100'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Tigard',       browseGovernmentList: ['4173650'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Troutdale',    browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
+      { label: 'Tualatin',     browseGovernmentList: ['4174950'], browseStateAbbrev: 'OR', hasContext: true },
+      { label: 'Wood Village', browseGovernmentList: ['4183950'], browseStateAbbrev: 'OR' },
     ],
   },
   {
@@ -180,6 +187,15 @@ export const COVERAGE_STATES = [
       { label: 'Falls Church', browseGovernmentList: ['5127200', '51610'], browseStateAbbrev: 'VA', hasContext: true },
     ],
   },
+  {
+    name: 'Nevada', abbrev: 'NV',
+    areas: [
+      { label: 'Las Vegas', browseGovernmentList: ['3240000'], browseStateAbbrev: 'NV', hasContext: true },
+      { label: 'Henderson', browseGovernmentList: ['3231900'], browseStateAbbrev: 'NV', hasContext: true },
+      { label: 'North Las Vegas', browseGovernmentList: ['3251800'], browseStateAbbrev: 'NV', hasContext: true },
+      { label: 'Boulder City', browseGovernmentList: ['3206500'], browseStateAbbrev: 'NV', hasContext: true },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
@@ -217,6 +233,7 @@ export const COVERAGE_COUNTIES = [
   { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
   { label: 'Greene County', browseGovernmentList: ['29077'], browseStateAbbrev: 'MO', hasContext: true },
   { label: 'Multnomah County', browseGovernmentList: ['41051'], browseStateAbbrev: 'OR' },
+  { label: 'Washington County, OR', browseGovernmentList: ['41067'], browseStateAbbrev: 'OR', hasContext: true },
   { label: 'Box Elder County', browseGovernmentList: ['49003'], browseStateAbbrev: 'UT' },
   { label: 'Cache County', browseGovernmentList: ['49005'], browseStateAbbrev: 'UT' },
   { label: 'Davis County', browseGovernmentList: ['49011'], browseStateAbbrev: 'UT' },
@@ -230,6 +247,18 @@ export const COVERAGE_COUNTIES = [
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
 ];
 
+// Covered school districts (school-board deep-seeds). Search-only (not shown on
+// the landing grid — a district chip among city chips reads out of place), same
+// convention as counties. Each routes through browse-by-geofence to the board.
+export const COVERAGE_SCHOOL_DISTRICTS = [
+  { label: 'Clark County School District', browseGeoId: '3200060', browseMtfcc: 'G5420', browseStateAbbrev: 'NV' },
+  { label: 'Beaverton School District 48J', browseGeoId: '4101920', browseMtfcc: 'G5420', browseStateAbbrev: 'OR' },
+  { label: 'Hillsboro School District 1J', browseGeoId: '4100023', browseMtfcc: 'G5420', browseStateAbbrev: 'OR' },
+  { label: 'Tigard-Tualatin School District 23J', browseGeoId: '4112240', browseMtfcc: 'G5420', browseStateAbbrev: 'OR' },
+  { label: 'Forest Grove School District 15', browseGeoId: '4105160', browseMtfcc: 'G5420', browseStateAbbrev: 'OR' },
+  { label: 'Sherwood School District 88J', browseGeoId: '4111290', browseMtfcc: 'G5420', browseStateAbbrev: 'OR' },
+];
+
 // Browsable states — every US state (each has statewide officials seeded:
 // governor/AG/etc. + US Senators). A state routes to the "browse a state" view.
 // Built from STATE_NAME_TO_ABBREV; DC excluded (no statewide executives).
@@ -241,11 +270,14 @@ export const COVERAGE_BROWSE_STATES = Object.entries(STATE_NAME_TO_ABBREV)
 // ── City/area name search (locality typeahead) ───────────────────────────────
 
 // Flattened, searchable view of every covered area, tagged with its kind + state.
+// Name typeahead is intentionally limited to CITIES + STATES only — counties and
+// school districts are excluded from search (they cluttered results and read out of
+// place among city names). They remain reachable via direct browse links / the grid;
+// COVERAGE_COUNTIES and COVERAGE_SCHOOL_DISTRICTS are still exported for that routing.
 const ALL_COVERAGE_AREAS = [
   ...COVERAGE_STATES.flatMap((s) =>
     s.areas.map((a) => ({ ...a, kind: 'city', stateAbbrev: a.browseStateAbbrev || s.abbrev, stateName: s.name }))
   ),
-  ...COVERAGE_COUNTIES.map((c) => ({ ...c, kind: 'county', stateAbbrev: c.browseStateAbbrev })),
   ...COVERAGE_BROWSE_STATES.map((s) => ({ ...s, kind: 'state' })),
 ];
 

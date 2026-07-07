@@ -85,34 +85,63 @@ export function cleanPositionName(name) {
   return cleaned;
 }
 
-/** Derive card title and subtitle from a race position name.
- *  e.g., "Judge of the Monroe Circuit Court, 10th Judicial Circuit, No. 5"
- *    → title: "Indiana Circuit Court Judge", subtitle: "10th Circuit, Division 5"
- *  e.g., "State Representative, District 60"
- *    → title: "State Representative", subtitle: "District 60"
+/** Ordinal suffix: 1 → "1st", 2 → "2nd", 5 → "5th", 11 → "11th". */
+function ordinal(n) {
+  const v = n % 100;
+  if (v >= 11 && v <= 13) return `${n}th`;
+  switch (n % 10) {
+    case 1: return `${n}st`;
+    case 2: return `${n}nd`;
+    case 3: return `${n}rd`;
+    default: return `${n}th`;
+  }
+}
+
+/**
+ * State-qualified, congressional-convention office heading for the blue section title.
+ * Only NATIONAL_* and STATE_* offices get reformatted (they were state-less and redundant);
+ * Local / County / Judicial / School positions already name their jurisdiction and pass through.
+ *   NATIONAL_LOWER → "Louisiana's 5th Congressional District"
+ *   NATIONAL_UPPER → "U.S. Senator — Louisiana"
+ *   NATIONAL_EXEC  → "President of the United States"
+ *   STATE_EXEC     → "Governor of Colorado" / "Lieutenant Governor of Colorado" / "Colorado Attorney General"
+ *   STATE_UPPER    → "Colorado State Senate District 14"
+ *   STATE_LOWER    → "Colorado State House District 60" (or "State Assembly" where applicable)
  */
-function deriveCardTitleSubtitle(positionName, districtType) {
-  const pos = positionName || '';
+export function formatOfficeHeading(cleanedPosition, districtType, stateFull) {
+  const pos = cleanedPosition || '';
+  const dt = districtType || '';
+  const st = stateFull || '';
+  const distNum = (pos.match(/District\s+(\d+)/i) || [])[1];
 
-  // Judicial positions
-  if (districtType === 'JUDICIAL') {
-    const circuitMatch = pos.match(/(\d+)(?:st|nd|rd|th)\s+(?:Judicial\s+)?Circuit/i);
-    const divMatch = pos.match(/No\.\s*(\d+)/i) || pos.match(/Division\s*(\d+)/i);
-    const circuit = circuitMatch ? `${circuitMatch[1]}th Circuit` : '';
-    const division = divMatch ? `Division ${divMatch[1]}` : '';
-    const subtitle = [circuit, division].filter(Boolean).join(', ');
-    const courtMatch = pos.match(/^(?:Judge of the\s+)?(.+?Court)/i);
-    const courtTitle = courtMatch ? `${courtMatch[1]} Judge` : 'Circuit Court Judge';
-    return { title: courtTitle, subtitle: subtitle || undefined };
+  if (dt === 'NATIONAL_LOWER') {
+    if (distNum) return st ? `${st}'s ${ordinal(+distNum)} Congressional District` : `${ordinal(+distNum)} Congressional District`;
+    return st ? `${st} At-Large Congressional District` : 'At-Large Congressional District';
   }
+  if (dt === 'NATIONAL_UPPER') return st ? `U.S. Senator — ${st}` : 'U.S. Senator';
+  if (dt === 'NATIONAL_EXEC') return 'President of the United States';
 
-  // Positions with comma-separated district: "State Representative, District 60"
-  const commaIdx = pos.indexOf(', ');
-  if (commaIdx > 0) {
-    return { title: pos.slice(0, commaIdx), subtitle: pos.slice(commaIdx + 2) };
+  if (dt === 'STATE_EXEC') {
+    if (/lieutenant governor/i.test(pos)) return st ? `Lieutenant Governor of ${st}` : pos;
+    if (/governor/i.test(pos)) return st ? `Governor of ${st}` : pos;
+    return st ? `${st} ${pos}` : pos; // Attorney General, Secretary of State, Treasurer, etc.
   }
+  if (dt === 'STATE_UPPER') {
+    return st ? `${st} State Senate${distNum ? ` District ${distNum}` : ''}` : pos;
+  }
+  if (dt === 'STATE_LOWER') {
+    const chamber = /assembly/i.test(pos) ? 'State Assembly' : 'State House';
+    return st ? `${st} ${chamber}${distNum ? ` District ${distNum}` : ''}` : pos;
+  }
+  return pos; // Local / County / Judicial / School / Other — unchanged
+}
 
-  return { title: pos, subtitle: undefined };
+/** Long election date for the grey subtitle: "2026-11-03" → "November 3, 2026". */
+function formatElectionDateLong(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr + 'T12:00:00');
+  if (Number.isNaN(d.getTime())) return '';
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
 /** Map district_type to tier name */
@@ -363,6 +392,11 @@ export default function ElectionsView({
       const tierMap = {}; // tier → { bodyKey → { races: [] } }
 
       for (const race of dedupedRaces) {
+        // Hide races with no candidates. Most election "shells" are seeded ahead of
+        // candidate ingestion; rendering a wall of "No candidates have filed" cards is
+        // noise (and misleads, since candidates usually do exist but aren't ingested yet).
+        // Empty bodies/tiers then never get created, so no empty headers remain.
+        if ((race.candidates || []).length === 0) continue;
         const tier = getTier(race.district_type);
         const cleaned = cleanPositionName(race.position_name);
         const { body, subgroup } = deriveBodyAndSubGroup(cleaned, race.district_type);
@@ -522,6 +556,9 @@ export default function ElectionsView({
     );
   }
 
+  // Full state name for state-qualified office headings (all surfaced races are in the user's state).
+  const stateFull = (userState && stateNames?.[userState]) || '';
+
   return (
     <div>
       {/* CompassKey lives in the page-level FilterBar — no per-view duplicate */}
@@ -604,7 +641,7 @@ export default function ElectionsView({
                         {branchBodies.map((body) => (
                           <GovernmentBodySection
                             key={body.key}
-                            title={body.title}
+                            title={formatOfficeHeading(body.title, body.races[0]?.districtType, stateFull)}
                             tier={tierKey}
                           >
                       {body.races.map((race, raceIdx) => {
@@ -638,11 +675,22 @@ export default function ElectionsView({
                           >
                             <SubGroupSection
                               title={(() => {
+                                // Federal/State single-office races: the blue body header now names the
+                                // office (state-qualified), so the grey line is redundant — replace it with
+                                // a "who + when" caption. Local/County/Judicial keep their distinguishing
+                                // subgroup label (it disambiguates offices/divisions within one body).
+                                const isSingleOffice = /^(NATIONAL|STATE)/.test(race.districtType || '');
+                                let label = race.label;
+                                if (isSingleOffice) {
+                                  const dateLong = formatElectionDateLong(election.election_date);
+                                  const base = race.party ? `${race.party} Primary` : 'Candidates for office';
+                                  label = dateLong ? `${base} — election on ${dateLong}` : base;
+                                }
                                 const desc = getOfficeDescription(race.cleanedPosition);
-                                if (!desc) return race.label;
+                                if (!desc) return label;
                                 return (
                                   <span style={{ display: 'inline-flex', alignItems: 'center' }}>
-                                    {race.label}
+                                    {label}
                                     <RoleInfoTooltip description={desc} />
                                   </span>
                                 );
@@ -681,7 +729,10 @@ export default function ElectionsView({
                                     electionDate: elDate,
                                     electionLabel: election.election_type === 'primary' ? 'Primary' : 'General',
                                   };
-                                  const { title: cardTitle, subtitle: cardSubtitle } = deriveCardTitleSubtitle(race.cleanedPosition, race.districtType);
+                                  // The section header already names the office (state-qualified), so the
+                                  // per-card office line is redundant on the elections page — omit it from the
+                                  // visible card but keep a descriptive string for the card's aria-label.
+                                  const cardAriaOffice = formatOfficeHeading(race.cleanedPosition, race.districtType, stateFull);
 
                                   const polIdKey = candidate.politician_id ? String(candidate.politician_id) : null;
                                   const candHasStances = polIdKey ? politicianIdsWithStances.has(polIdKey) : false;
@@ -694,9 +745,14 @@ export default function ElectionsView({
                                       }).filter(Boolean)
                                     : null;
                                   const raceUpper = String(race.districtType || '').toUpperCase();
-                                  const raceLensActive = getEffectiveLens(
-                                    (raceUpper === 'LOCAL' || raceUpper === 'LOCAL_EXEC' || raceUpper === 'COUNTY') ? 'local' : 'state'
-                                  );
+                                  // The Local Lens applies ONLY to local races. Statewide/federal races
+                                  // (Governor, U.S. Senate, President, legislature) must compare on the full
+                                  // compass — otherwise a statewide candidate is judged on the 8 hyper-local
+                                  // Local Lens topics they legitimately have no local stances on, falls under
+                                  // the 3-shared-spoke floor, and renders blank (e.g. a Governor candidate
+                                  // whose record is state/federal). Only local-tier races use the lens.
+                                  const isLocalRace = (raceUpper === 'LOCAL' || raceUpper === 'LOCAL_EXEC' || raceUpper === 'COUNTY');
+                                  const raceLensActive = isLocalRace ? getEffectiveLens('local') : false;
                                   // Lens ON → local-scoped topics; OFF → full compass (no tier lock).
                                   const scopedTopicsForRace = raceLensActive
                                     ? allTopics.filter((t) => t.applies_local !== false)
@@ -718,7 +774,7 @@ export default function ElectionsView({
                                     onClick: () => onCandidateClick(candidate.candidate_id),
                                     role: 'link',
                                     tabIndex: 0,
-                                    'aria-label': `${candidate.full_name}, ${cardTitle}`,
+                                    'aria-label': `${candidate.full_name}, ${cardAriaOffice}`,
                                     onKeyDown: (e) => { if (e.key === 'Enter') { e.preventDefault(); onCandidateClick(candidate.candidate_id); } },
                                     onMouseEnter: (e) => { e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-2px)'; },
                                     onMouseLeave: (e) => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; },
@@ -729,8 +785,8 @@ export default function ElectionsView({
                                       imageSrc={candidate.photo_url || undefined}
                                       imageFocalPoint={candidate.focal_point || 'center 20%'}
                                       name={candidate.full_name}
-                                      title={cardTitle}
-                                      subtitle={cardSubtitle}
+                                      title={undefined}
+                                      subtitle={undefined}
                                       onClick={null}
                                       variant="horizontal"
                                       imageWidth="95px"

@@ -467,9 +467,13 @@ export default function Results() {
     }
   }, [formattedAddress]);
 
-  // Derive actual data and phase from cache, hook, or browse results
-  const list = searchMode === 'browse' && browseResults
-    ? browseResults
+  // Derive actual data and phase from cache, hook, or browse results.
+  // In browse mode ALWAYS use browseResults (never fall back to address hookData /
+  // cache): an empty/unseeded browse must show "no results", not bleed the prior
+  // address search's officials through (e.g. a stale Los Angeles list surfacing
+  // under a Nevada browse). browseResults is null only while loading.
+  const list = searchMode === 'browse'
+    ? (browseResults || [])
     : (cachedResult ? cachedResult.list : hookData);
   const phase = searchMode === 'browse'
     ? (browseLoading ? 'loading' : (browseResults ? 'fresh' : 'idle'))
@@ -960,6 +964,16 @@ export default function Results() {
 
   // Per-politician stances cache for CompassCardVertical comparison overlay (compass mode only)
   const [stancesByPolId, setStancesByPolId] = useState({});
+
+  // Reset the per-politician stance cache whenever the location changes. Without
+  // this, stancesByPolId accumulated every politician's stances across every
+  // location click and never evicted — 250+ entries after a handful of browses —
+  // which is what made the app get progressively slower over a session.
+  const locationKey = `${searchMode}|${activeQuery || ''}|${browseArea?.geo_id || ''}|${browseArea?.mtfcc || ''}`;
+  useEffect(() => {
+    setStancesByPolId({});
+  }, [locationKey]);
+
   useEffect(() => {
     if (!compassMode) return;
     if (!filteredPols || filteredPols.length === 0 || allTopics.length === 0) return;
@@ -967,27 +981,40 @@ export default function Results() {
     const targets = filteredPols.filter(p => politicianIdsWithStances.has(String(p.id)) && !stancesByPolId[p.id]);
     if (targets.length === 0) return;
     let cancelled = false;
-    Promise.all(
-      targets.map(p =>
-        fetchPoliticianAnswers(p.id)
-          .then(rows => {
-            const map = {};
-            for (const r of rows) {
-              const t = topicById.get(r.topic_id);
-              if (t?.short_title) map[t.short_title] = r.value ?? 0;
-            }
-            return [p.id, map];
-          })
-          .catch(() => [p.id, {}])
-      )
-    ).then(pairs => {
-      if (cancelled) return;
-      setStancesByPolId(prev => {
-        const next = { ...prev };
-        for (const [id, m] of pairs) next[id] = m;
-        return next;
-      });
-    });
+
+    // Fetch in bounded batches instead of firing one request per politician all
+    // at once. A dense area (LA County, Las Vegas) could queue 50+ parallel
+    // /answers requests; the browser caps concurrency per origin and the old
+    // single Promise.all only rendered after the slowest of all 50 resolved.
+    // Batching commits results per wave, so cards fill in progressively.
+    const BATCH_SIZE = 6;
+    (async () => {
+      for (let i = 0; i < targets.length; i += BATCH_SIZE) {
+        if (cancelled) return;
+        const slice = targets.slice(i, i + BATCH_SIZE);
+        const pairs = await Promise.all(
+          slice.map(p =>
+            fetchPoliticianAnswers(p.id)
+              .then(rows => {
+                const map = {};
+                for (const r of rows) {
+                  const t = topicById.get(r.topic_id);
+                  if (t?.short_title) map[t.short_title] = r.value ?? 0;
+                }
+                return [p.id, map];
+              })
+              .catch(() => [p.id, {}])
+          )
+        );
+        if (cancelled) return;
+        setStancesByPolId(prev => {
+          const next = { ...prev };
+          for (const [id, m] of pairs) next[id] = m;
+          return next;
+        });
+      }
+    })();
+
     return () => { cancelled = true; };
   }, [compassMode, filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1043,6 +1070,14 @@ export default function Results() {
   // Derive representing city for building image selection — uses unfiltered list
   // so the building image doesn't disappear when search filter narrows the grid.
   const representingCity = useMemo(() => {
+    // In browse mode the browsed area label is authoritative for the city banner.
+    // Deriving the city from politician records can surface a neighboring city
+    // when districts overlap (e.g. a Culver City browse showing "Inglewood"
+    // because an overlapping district's official has representing_city set).
+    if (searchMode === 'browse') {
+      const label = searchParams.get('browse_label');
+      if (label && label.trim()) return label.trim();
+    }
     const src = Array.isArray(list) ? list : [];
     for (const p of src) {
       if (p.representing_city) return p.representing_city;
@@ -1063,7 +1098,7 @@ export default function Results() {
     const fromAddress = parseCityFromAddress(addressInput);
     if (fromAddress) return fromAddress;
     return null;
-  }, [list, addressInput]);
+  }, [list, addressInput, searchMode, searchParams]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"
@@ -1075,6 +1110,15 @@ export default function Results() {
     // (e.g. Newsom shown as "Missouri"). Geo wins over the raw param.
     const fromGeo = stateAbbrevFromGeoId(searchParams.get('browse_geo_id'));
     if (fromGeo) return fromGeo;
+    // Government-list browse has no browse_geo_id, but the first government geo_id's
+    // FIPS prefix is just as authoritative (e.g. '3231900' -> NV). Use it before the
+    // raw browse_state param so the geography — not a stale param — wins here too.
+    const govList = searchParams.get('browse_government_list');
+    if (govList) {
+      const firstGovId = govList.split(',').map((s) => s.trim()).filter(Boolean)[0];
+      const fromGovGeo = stateAbbrevFromGeoId(firstGovId);
+      if (fromGovGeo) return fromGovGeo;
+    }
     // Otherwise derive the state from the browse params so the State banner
     // shows e.g. "California" instead of "Your State".
     const browseState = searchParams.get('browse_state_officials')
@@ -1750,6 +1794,12 @@ export default function Results() {
                         next.delete('browse_state_officials');
                         next.delete('browse_county_geo_id');
                         next.delete('browse_skip_overlap');
+                        // Drop the address query too: it is mutually exclusive with
+                        // browse mode. Left in place, ?q= survives into the browse URL
+                        // and on reload re-runs the address fetch — whose officials then
+                        // bleed through if the browse target is empty/unseeded (the
+                        // "Los Angeles, NV + California politicians" leak).
+                        next.delete('q');
                         // Set this area's real state (drives the State-tier label/banner);
                         // selectedState from LocationBrowser is a 2-letter abbreviation.
                         if (state && /^[A-Za-z]{2}$/.test(state)) next.set('browse_state', state.toUpperCase());

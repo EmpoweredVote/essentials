@@ -8,19 +8,13 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: v19.0 Essentials Dark-Mode Redesign & Section Banners
+## Current Milestone: none active
 
-**Goal:** Adopt the Figma dark-mode visual design for Essentials and replace the Local/State/National sort buttons with scrollable, graphic banner dividers between City → State → Federal sections.
+**v20.0 Beaverton & Washington County, OR closed 2026-07-05** (see summary block below + `MILESTONES.md` + `milestones/v20.0-*`). No milestone is currently active.
 
-**Target features:**
-- Dark-mode design system extracted from the Figma style guide (color/type/spacing tokens), applied to the Results/Representatives + Elections pages.
-- Section banner-divider component — City/State/Federal, continuous vertical scroll; the Local/State/National sort buttons are **removed**.
-- Banner art in Aditi's Bloomington treatment — exemplar sets Bloomington/Indiana/US and LA/California/US; reusable system + graceful fallback for the ~10 other covered states until art is added.
-- Banner data-slot + feature-icon-slot architecture (**structure now; live stats** like population/electoral-count **and feature links** like treasury-tracker **deferred** to a follow-up).
-- Existing candidate/rep tile component **preserved** (current shape/size + photo) — Figma tile size is **not** adopted.
-- Banner image-sourcing pipeline: Unsplash (skylines) + Wikimedia (state/federal landmarks) + AI fallback, unified dark overlay, mirrored to Supabase Storage.
+**v19.0 Essentials Dark-Mode Redesign & Section Banners also formally closed 2026-07-05** — its 4 phases (169–172) had actually been built, verified, and deployed 2026-06-25 → 06-28; only the formal close was outstanding (see summary block below + `milestones/v19.0-*`).
 
-**Key context:** Pure frontend milestone — a deliberate detour from the data-entry track. **v18.0 Las Vegas & Clark County, NV is PARKED at Phase 162** and resumes after v19.0 closes (snapshots: `v18.0-{ROADMAP,REQUIREMENTS,STATE}.md`; next NV migration 1064). Phases continue from 169. Figma source: `J9mfnUSnc2k6fUQDhw9L7h` node `3957:563`. Stack: React 19 + Vite + Tailwind 4 + `@empoweredvote/ev-ui`; ev-ui dark-mode inline-style overrides require `!important`.
+**Next:** open a new milestone via `/gsd:new-milestone`. Candidate targets: (a) resume the frontend track with the deferred dark/banner work (live banner stats, feature-icon links, remaining-state banner art, Landing + profile-page dark treatment); (b) tiny WashCo cities (King City/Durham/North Plains/Banks/Gaston + Banks/Gaston SDs); or (c) Clackamas / east-metro expansion (Lake Oswego, Wilsonville, Oregon City).
 
 ## Requirements
 
@@ -140,6 +134,40 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 **Delivered:** MA town geofences (293 G4040 COUSUB boundaries), Boston deep seed (Mayor Wu + 13 City Councillors + School Committee with headshots), MA Tier 2 cities (Worcester + Springfield + Lowell + Brockton + Quincy), MA 2026 elections (240+ race rows + discovery armed), compass stances for all 217 MA officials (6 execs + 11 federal + 40 senators + 160 house reps), and MA playbook retrospective.
 
+### v19.0 Essentials Dark-Mode Redesign & Section Banners (Shipped: 2026-06-28 · closed 2026-07-05)
+
+**Delivered:** Frontend-only detour — adopted the Figma dark-mode design across Results/Representatives +
+Elections and replaced Local/State/National tier sort buttons with scrollable, location-aware
+`SectionBanner` dividers between City → State → Federal (Aditi's Bloomington treatment) as a reusable,
+data-ready system. Figma dark tokens migrated to `src/index.css` `@theme` (single source of truth,
+GitHub-dark palette); reusable `SectionBanner` + continuous scroll + sort-button removal; banner asset
+pipeline (`docs/banner-asset-pipeline.md` + `scripts/banners/`) with 2 exemplar sets (Bloomington/IN/US +
+LA/CA/US); Elections parity. **4 phases (169–172), 9 plans, 11/11 requirements**; frontend-only, no
+backend/DB changes. Build 2026-06-25 → 06-28 (verified + deployed); formal close 2026-07-05. Deferred (out
+of scope): live banner stats, feature-icon links, remaining-state art, Landing/profile dark mode. See
+`.planning/milestones/v19.0-MILESTONE-AUDIT.md`.
+
+### v20.0 West-Metro Washington County, OR (Shipped: 2026-07-05)
+
+**Delivered:** The Washington County / west-metro Portland local layer deep-seeded onto Oregon's existing
+state foundation — west-metro school-district G5420 geofences (Phase 174) → Washington County Board of
+Commissioners (standalone county, geo_id 41067) → 7 city deep-seeds (Beaverton flagship, Hillsboro, Tigard,
+Tualatin, Forest Grove, Sherwood, Cornelius) → 5 school-district boards (roster + headshots, 0 compass by
+design) → 2026 elections + confirmed candidate slate + armed discovery → playbook retrospective + close.
+**80 seated officials, 79/80 headshots, 391 city/county stance rows, 50/51 city/county officials with
+evidence-only stances; 25 race rows + 12 candidates/8 races + 8 discovery jurisdictions + 1 live run.** All
+8 city/county jurisdictions carry the DB-honest purple chip; 5 school districts plain + search-only.
+13 phases (174–186). See `.planning/milestones/v20.0-MILESTONE-AUDIT.md`.
+
+### v18.0 Las Vegas & Clark County, NV (Shipped: 2026-06-30)
+
+**Delivered:** Nevada opened as a fully-covered new state — TIGER geofences → State of Nevada government
+(Governor + constitutional officers + federal delegation) → 63 state legislators (seed + headshots) →
+Clark County Commission + 4 Clark County metro cities (Las Vegas, Henderson, North Las Vegas, Boulder
+City) + CCSD Board of Trustees deep-seeded → NV 2026 elections + discovery armed → milestone close.
+40 metro officials, 36/40 headshots, 133 metro stance rows, 5/6 purple chip, 0 split-section defects.
+11 data phases (158–168) + close-out 173. See `.planning/v18.0-MILESTONE-AUDIT.md`.
+
 ### v17.0 LA County City Coverage — Wave 2 (Shipped: 2026-06-22)
 
 **Delivered:** 15 LA County cities deep-seeded end-to-end (government + roster → 600×750 headshots →
@@ -151,16 +179,12 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
-- **v19.0 Essentials Dark-Mode Redesign & Section Banners** — started 2026-06-24. Frontend milestone: adopt the
-  Figma dark-mode design + scrollable City/State/Federal banner dividers (remove sort buttons), reusable banner
-  system + exemplar art (Bloomington/Indiana/US, LA/California/US), banner data/icon slots (structure only),
-  preserve current tiles. Requirements: `.planning/REQUIREMENTS.md` · Roadmap: `.planning/ROADMAP.md`.
-- **⏸ PARKED: v18.0 Las Vegas & Clark County, NV** — started 2026-06-22, paused 2026-06-24 at **Phase 162** (4/11
-  phases done: 158 geofences, 159 state/federal, 160 legislature, 161 Clark County Commission). Resumes after
-  v19.0 closes. Live state snapshotted to `.planning/v18.0-{ROADMAP,REQUIREMENTS,STATE}.md`; phase dirs 158–168
-  intact; next NV migration **1064**; legislature stances deferred.
-- **Most recent close (v17.0 LA County Wave-2, 2026-06-22):** 15 LA County cities deep-seeded + surfaced.
-  See `.planning/v17.0-MILESTONE-AUDIT.md`.
+- **No active milestone.** Most recent closes: **v20.0** West-Metro Washington County OR (2026-07-05) and
+  **v19.0** Dark-Mode Redesign & Section Banners (build 2026-06-28, formally closed 2026-07-05). Next: open a
+  new milestone via `/gsd:new-milestone` — see the "Current Milestone: none active" section for candidate targets.
+- **Deferred frontend track (from v19.0, out of that milestone's scope):** live banner stats data-slot wiring,
+  banner feature-icon links, banner art for the ~10 remaining covered states, and Landing + politician-profile
+  dark-mode treatment. A natural next milestone if the frontend track resumes.
 - Carry-forward (not blocking): split-section cleanup for 5 NON-Wave-2 councils (Whittier/Compton/Carson/
   South El Monte/South Pasadena); groupHierarchy.js Mayor>MPT fix deploy pending; Lancaster Ken Mann headshot;
   SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7 council reorg.
@@ -281,4 +305,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-24 — v19.0 Dark-Mode Redesign & Section Banners started; v18.0 NV parked at Phase 162*
+*Last updated: 2026-07-05 — **v20.0 Beaverton & Washington County, OR SHIPPED** (Phase 186 close-out complete). Final DB-verified state: Washington County + 7 west-metro cities + 5 school-district boards; 80 seated officials, 79/80 headshots, 50/51 city/county officials with evidence-only stances (391 rows), school boards deferred by design; 2026 layer = 25 races + 12 candidates/8 races + 8 discovery jurisdictions + 1 live discovery run. Coverage.js reconciled (all 8 city/county purple chips DB-honest, no edits), LOCATION-ONBOARDING.md playbook updated (13 Cities Onboarded rows + West-Metro Quick Reference), v20.0-MILESTONE-AUDIT.md written. Non-blocking follow-ups: Cornelius thin stances, FG SD-15 headshot gap, 2 new-challenger headshots, ongoing 2026 candidate discovery. Next: v19.0 Dark-Mode Redesign remains parked (169–172), or open a new milestone; v18.0 NV shipped*

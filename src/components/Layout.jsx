@@ -64,8 +64,8 @@ export function Layout({ children }) {
   return (
     <>
       <Header
-        logoSrc="/EVLogo.svg"
-        logoAlt="Empowered Vote"
+        logoSrc={isDark ? "/essentials-logo-dark.svg" : "/essentials-logo-light.svg"}
+        logoAlt="Empowered Essentials"
         logoHref="https://empowered.vote"
         navItems={[]}
         darkMode={isDark}

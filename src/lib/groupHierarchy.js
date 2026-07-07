@@ -511,11 +511,28 @@ function sortPoliticians(pols) {
     const bNum = parseInt(bId, 10);
     if (!isNaN(aNum) && !isNaN(bNum) && aNum !== bNum) return aNum - bNum;
 
-    // Extract district number from office_title when district_id is unavailable
-    // e.g. "Commissioner (District 3)" → 3, "Board Member, Place 1" → 1
-    const aTitleNum = parseInt((a.office_title || '').match(/(?:district|place|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
-    const bTitleNum = parseInt((b.office_title || '').match(/(?:district|place|seat|ward)\s+(\d+)/i)?.[1] ?? '', 10);
-    if (!isNaN(aTitleNum) && !isNaN(bTitleNum) && aTitleNum !== bTitleNum) return aTitleNum - bTitleNum;
+    // Extract a district designator from office_title (or district_label) when
+    // district_id is non-numeric/shared. Handles BOTH numeric ("District 3",
+    // "Ward 1", "Place 2") AND alphabetic ("District A", "Seat B") designators.
+    // Clark County's Board of Commissioners uses letter districts A–G that share
+    // one COUNTY district row, so the letter lives only in office_title — without
+    // this they fall through to alphabetical-by-last-name (the reported bug).
+    const DESIG_RE = /(?:district|place|seat|ward|division|precinct|sub-?district)\s+([0-9]+|[A-Za-z])\b/i;
+    const aDesig = ((a.office_title || '').match(DESIG_RE) || (a.district_label || '').match(DESIG_RE) || [])[1];
+    const bDesig = ((b.office_title || '').match(DESIG_RE) || (b.district_label || '').match(DESIG_RE) || [])[1];
+    if (aDesig && bDesig) {
+      const aDesigNum = /^[0-9]+$/.test(aDesig);
+      const bDesigNum = /^[0-9]+$/.test(bDesig);
+      if (aDesigNum && bDesigNum) {
+        const d = parseInt(aDesig, 10) - parseInt(bDesig, 10);
+        if (d !== 0) return d;
+      } else if (!aDesigNum && !bDesigNum) {
+        const d = aDesig.toUpperCase().localeCompare(bDesig.toUpperCase());
+        if (d !== 0) return d;
+      } else {
+        return aDesigNum ? -1 : 1; // numbered districts sort before lettered ones
+      }
+    }
 
     // Alphabetical fallback
     return (a.last_name || '').localeCompare(b.last_name || '');
