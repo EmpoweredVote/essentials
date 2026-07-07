@@ -83,7 +83,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-  - [ ] 188-03-PLAN.md — SectionBanner top-right population scrim + populationMap wiring through Results.jsx + ElectionsView.jsx (wave 3)
+  - [x] 188-03-PLAN.md — SectionBanner top-right population scrim + populationMap wiring through Results.jsx + ElectionsView.jsx (wave 3)
 
 **UI hint**: yes
 
@@ -185,7 +185,7 @@ This deferred scope is what v21.0 now fills.
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
 | 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete    | 2026-07-07 |
-| 188. Location Stats Strip | v21.0 | 2/3 | In Progress|  |
+| 188. Location Stats Strip | v21.0 | 3/3 | Complete   | 2026-07-07 |
 | 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
 
 **v21.0: 0/3 phases complete, 2 plans (Phase 187), 0/14 requirements. Progress 0%.**
