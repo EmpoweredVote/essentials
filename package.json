@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "gen:population": "node scripts/gen-population.mjs"
   },
   "dependencies": {
     "@empoweredvote/ev-ui": "^0.9.7",

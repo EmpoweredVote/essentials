@@ -63,7 +63,7 @@ const STATE_CAPITOLS = {
 };
 
 /** US Census FIPS state code (the 2-digit prefix of a geo_id) → 2-letter abbreviation. */
-const STATE_FIPS_TO_ABBREV = {
+export const STATE_FIPS_TO_ABBREV = {
   '01': 'AL', '02': 'AK', '04': 'AZ', '05': 'AR', '06': 'CA', '08': 'CO', '09': 'CT',
   '10': 'DE', '11': 'DC', '12': 'FL', '13': 'GA', '15': 'HI', '16': 'ID', '17': 'IL',
   '18': 'IN', '19': 'IA', '20': 'KS', '21': 'KY', '22': 'LA', '23': 'ME', '24': 'MD',
