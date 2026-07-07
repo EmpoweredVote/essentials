@@ -31,7 +31,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 **Phase Numbering:** Continues from v20.0 (last phase: 186). This milestone's phases start at 187.
 
 - [x] **Phase 187: Tethered Feature-Icon Row** - Build the location-tethered, context-aware product-icon row and Treasury deep-link resolution. (completed 2026-07-07)
-- [ ] **Phase 188: Location Stats Strip** - Build the Census-sourced, population-first stats strip keyed to the banner's geo identifier.
+- [x] **Phase 188: Location Stats Strip** - Build the Census-sourced, population-first stats strip keyed to the banner's geo identifier. (completed 2026-07-07)
 - [ ] **Phase 189: Smart-Banner Integration & Graceful Degradation** - Wire the enhanced component into both Results and Elections pages as one shared implementation; verify empty-state and cross-page parity.
 
 ## Phase Details
@@ -188,6 +188,6 @@ This deferred scope is what v21.0 now fills.
 | 188. Location Stats Strip | v21.0 | 3/3 | Complete   | 2026-07-07 |
 | 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
 
-**v21.0: 0/3 phases complete, 2 plans (Phase 187), 0/14 requirements. Progress 0%.**
+**v21.0: 2/3 phases complete, 5 plans (Phase 187: 2, Phase 188: 3), 9/14 requirements. Progress 67%.**
 
 <!-- v20.0 progress table archived to .planning/milestones/v20.0-ROADMAP.md at milestone close. -->
