@@ -165,6 +165,24 @@ auditable, §6.4):
 - **`[brackets]` required:** any inserted, substituted, or clarified word — including
   de-identification substitutions.
 
+**Punctuation** (spoken quotes are unpunctuated — you supply it; every mark is interpretive, so it
+carries the same substance cap as any edit):
+
+- **Fidelity to delivery, not rhetorical taste.** Punctuate to reflect the speaker's actual pauses,
+  thought-groups, and emphasis — never to add drama or polish that wasn't there. Respect punctuation
+  the transcript already has when it reflects delivery; don't "upgrade" it.
+- **Neutrality hierarchy — prefer the least-interpretive mark that works:** periods/commas (neutral)
+  → colon/semicolon (only when that explanatory/balancing relationship is genuinely present) → em
+  dash (only for a real self-interruption or aside the speaker actually made — *not* to manufacture
+  emphasis or fuse two of their sentences into one; when tempted, use a period).
+- **No added exclamation points** (they inject emotion the reader can't hear). **Question marks only
+  for actual questions.**
+- **Keep faithful comma-splices** that mirror a deliberate spoken rhythm ("they call it sprawl, I
+  call it the California dream") rather than normalizing them into periods.
+- **Normalize numbers** ("300,000," "70%") — readability, not meaning.
+- When a punctuation choice is **meaning-affecting** (a sentence boundary that changes what a clause
+  modifies), verify against audio and note the call in the `editor_note`.
+
 Rules:
 
 - **Never reorder** the speaker's points.
@@ -183,7 +201,15 @@ Rules:
   - **Speaker-blinding is a standard step**, not an afterthought — every quote gets a blind
     version, not just the occasional one.
 - **Ellipsis-density as a quality signal:** if a quote needs many elisions to cohere, the source
-  span is probably too scattered — prefer a more contiguous passage. Few marks = better span.
+  span is probably too scattered — prefer a more contiguous passage. Few marks = better span. When a
+  span *is* mark-heavy, the fix is almost never to paraphrase or to pad — it's to **(a) split into
+  separate sentences, each drawn from a contiguous run**, and **(b) reclassify self-corrections /
+  restatements as silent cleanup** (not `…`). If it *still* needs a thicket of ellipses, the quote is
+  carrying too many sub-claims — drop one (idea triage). *Example: "70% of CEQA lawsuits are used to
+  block housing … filed by … labor unions to extract … project labor agreements" (3 marks) becomes
+  "70% of CEQA lawsuits are used to block housing. … They're filed by labor unions to extract what
+  they call project labor agreements" (1 mark) — two contiguous sentences; "the unions, labor unions"
+  is a silent self-correction.*
 
 ---
 
@@ -365,19 +391,19 @@ government play in making sure people can afford housing?"* Two candidates, real
 **Hilton — curated (honestly marked, ~axis: deregulate / build out):**
 
 > "Get rid of the … environmental regulations that are making it much more expensive to build
-> housing — the basic cost of building is four or five times as high in California. … 70% of CEQA
-> lawsuits are used to block housing … filed by … labor unions to extract … project labor
-> agreements. … We have to end the war on single family homes. They call it sprawl, I call it the
-> California dream — a home … with a yard. … Barely 5% of our land in California is developed …
+> housing. The basic cost of building is four or five times as high in California. … 70% of CEQA
+> lawsuits are used to block housing. … They're filed by labor unions to extract what they call
+> project labor agreements. … We have to end the war on single family homes. They call it sprawl, I call it the
+> California dream. A home … with a yard. … Barely 5% of our land in California is developed …
 > [there's] plenty of room to build outwards."
 
 **Becerra — curated (honestly marked, ~axis: coordinate / build up):**
 
 > "We've seen … a little more than a hundred thousand units built over the last few years. If we
-> can double, triple that, get it to about 300,000, that would be a pretty good achievement — we
+> can double, triple that, get it to about 300,000, that would be a pretty good achievement. We
 > have to go beyond that. Let's … streamline the regulatory process so that we can get developers
 > through … much quicker, ask our local governments to stop imposing so many impact fees, [and] …
-> have a statewide coordinated housing policy so it makes sense where we build — [building] up and
+> have a statewide coordinated housing policy so it makes sense where we build, [building] up and
 > by transit. … I will declare a state of emergency when I become a governor … to move this as
 > quickly as possible."
 
