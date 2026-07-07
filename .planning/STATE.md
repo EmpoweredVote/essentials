@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v21.0
 milestone_name: Smart Banners
-status: executing
-last_updated: "2026-07-07T18:26:13.614Z"
+status: ready_to_plan
+last_updated: 2026-07-07T18:45:47.939Z
 last_activity: 2026-07-07
 progress:
   total_phases: 32
   completed_phases: 29
   total_plans: 95
-  completed_plans: 96
+  completed_plans: 311
   percent: 91
+stopped_at: Phase 187 complete (2/2) — ready to discuss Phase 188
 ---
 
 # State
 
 ## Current Position
 
-Phase: 187 (tethered-feature-icon-row) — COMPLETE
-Plan: 2 of 2 (complete)
-Status: Phase 187 complete (both plans + human-verify checkpoint approved 2026-07-07); ready for Phase 188 (Location Stats Strip) — not auto-started per working rule
-Last activity: 2026-07-07 -- Phase 187 complete
+Phase: 188
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-07-07
 
 ## Deferred Items
 
@@ -372,7 +373,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 187 — tethered-feature-icon-row
+**Current focus:** Phase 188 — location stats strip
 
 ## v15.0 Roadmap Summary
 
