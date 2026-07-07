@@ -51,7 +51,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 
 **Wave 1**
 
-  - [ ] 187-01-PLAN.md — Treasury state/federal resolvers, product registry, resolveFeatureIcons + pure-logic tests (wave 1)
+  - [x] 187-01-PLAN.md — Treasury state/federal resolvers, product registry, resolveFeatureIcons + pure-logic tests (wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -171,7 +171,7 @@ This deferred scope is what v21.0 now fills.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 187. Tethered Feature-Icon Row | v21.0 | 0/2 | Planned | - |
+| 187. Tethered Feature-Icon Row | v21.0 | 1/2 | In Progress|  |
 | 188. Location Stats Strip | v21.0 | 0/TBD | Not started | - |
 | 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
 
