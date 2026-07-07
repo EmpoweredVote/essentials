@@ -553,9 +553,12 @@ produces byte-identical slugs, so reuse it verbatim for all three tiers.
 **If this table is empty:** N/A — see rows above. All three are low-risk with mitigations already
 identified; none block planning.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Treasury domain: hardcode `financials.empowered.vote`, or centralize+reuse the existing `TREASURY_URL` constant?**
+> All three resolved during planning (2026-07-07). Q1 → 187-01 ("Open question resolved: Treasury domain");
+> Q2 → 187-02 ("Architecture (Claude's Discretion)"); Q3 → 187-02 Task 1 action. Inline `RESOLVED:` markers below.
+
+1. **RESOLVED:** **Treasury domain: hardcode `financials.empowered.vote`, or centralize+reuse the existing `TREASURY_URL` constant?** → Centralize a single exported `TREASURY_URL` in `treasury.js` set to `financials.empowered.vote`, consumed by both the new icon and the existing per-body text link (per 187-01).
    - What we know: CONTEXT/REQUIREMENTS/ROADMAP all specify `financials.empowered.vote` as the contract.
      The existing per-body text link in `Results.jsx` uses a `TREASURY_URL` const defaulting to
      `treasurytracker.empowered.vote` (from `.env.example`). Both domains serve the identical app and
@@ -568,7 +571,7 @@ identified; none block planning.
      text link and the new icon, updated to `financials.empowered.vote` per the locked contract — this
      also fixes the inconsistency for free.
 
-2. **Self-contained resolution inside `SectionBanner` vs. parent-resolved + prop-drilled (Claude's Discretion, D-flagged in CONTEXT)?**
+2. **RESOLVED:** **Self-contained resolution inside `SectionBanner` vs. parent-resolved + prop-drilled (Claude's Discretion, D-flagged in CONTEXT)?** → Parent-resolved + prop-drilled `featureIconMap` (mirrors `buildingImageMap`), per 187-02.
    - What we know: The parent-resolved approach has a direct, working precedent (`buildingImageMap`)
      and avoids redundant `/treasury/cities` fetches. The self-contained approach keeps `SectionBanner`
      fully independent (arguably cleaner for Phase 189's "one shared component" goal, since resolution
@@ -580,7 +583,7 @@ identified; none block planning.
      and avoids fetch duplication), but this is explicitly left as Claude's Discretion per CONTEXT — the
      planner should pick one and note the choice for Phase 189 to build on, not re-litigate it there.
 
-3. **Should the `IconWithTooltip` implementation be extracted into a shared component, or reimplemented locally in `SectionBanner.jsx`?**
+3. **RESOLVED:** **Should the `IconWithTooltip` implementation be extracted into a shared component, or reimplemented locally in `SectionBanner.jsx`?** → Reimplement the `@floating-ui` hover+focus pattern locally in `SectionBanner`; shared-component extraction deferred (per 187-02 Task 1).
    - What we know: The exact hover+focus+aria-label tooltip pattern already exists in
      `src/components/IconOverlay.jsx` but is not currently exported for reuse (it's a private helper
      function inside that file).
