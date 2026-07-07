@@ -1988,7 +1988,7 @@ export default function Results() {
                             {treasuryMatch && (
                               <div className="mb-3">
                                 <a
-                                  href={`${TREASURY_URL}/?entity=${toTreasurySlug(treasuryMatch)}`}
+                                  href={`${TREASURY_URL}/?entity=${encodeURIComponent(toTreasurySlug(treasuryMatch))}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#00c8d7] dark:hover:text-[#7ec8d8] transition-colors"
