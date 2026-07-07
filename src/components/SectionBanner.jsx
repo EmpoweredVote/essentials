@@ -137,12 +137,24 @@ function FeatureIconChip({ icon }) {
  *   tier          {'city'|'state'|'federal'}  required — determines eyebrow, fallback gradient
  *   locationName  {string}                    required — text shown after the coral pin
  *   imageUrl      {string|null}               optional — when truthy renders image + overlay
- *   stats         {object|null}               optional — scaffolding slot, renders nothing (BANR-04)
+ *   stats         {{label:string,value:number}|null} optional — resolved population stat (STAT-01);
+ *                                              renders a top-right scrim only when shouldRenderStat(stats)
+ *                                              is true; null/undefined/0/NaN/non-number renders nothing (STAT-03)
  *   featureIcons  {array|null}                optional — [{key,href,label,iconSrc}]; renders a
  *                                              bottom-right circular-chip row with an accessible
  *                                              hover+focus tooltip per entry; [] or absent renders
  *                                              nothing (ICON-01/02/03, TETH-03, Phase 187)
  */
+
+/**
+ * Pure predicate (Phase 188): should the population stat scrim render?
+ * Treats null/undefined/0/NaN/non-number identically — omit (STAT-03).
+ * @param {{label?:string,value?:number}|null|undefined} stats
+ */
+// eslint-disable-next-line react-refresh/only-export-components
+export function shouldRenderStat(stats) {
+  return typeof stats?.value === 'number' && stats.value > 0;
+}
 export default function SectionBanner({ tier, locationName, imageUrl, stats, featureIcons }) {
   // BANR-03: never show a broken <img>. If the image 404s (e.g. a paused storage
   // bucket), fall back to the tier-tinted gradient instead of a broken-image icon.
@@ -210,8 +222,52 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
         </div>
       </div>
 
-      {/* Scaffolding slot (BANR-04) — zero visual impact, DOM anchor for a later milestone (Phase 188) */}
-      {stats && <div className="sr-only" data-slot="stats" />}
+      {/* Population stat scrim (STAT-01/STAT-03, Phase 188) — top-right, right-aligned,
+          rounded semi-transparent navy scrim (same treatment family as the feature-icon
+          chips below). Omits entirely when stats does not resolve to a positive number. */}
+      {shouldRenderStat(stats) && (
+        <div
+          data-slot="stats"
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            gap: '4px',
+            background: 'rgba(13,17,23,0.55)',
+            backdropFilter: 'blur(2px)',
+            borderRadius: '10px',
+            padding: '4px 12px',
+          }}
+        >
+          <span
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '11px',
+              fontWeight: 600,
+              lineHeight: '13px',
+              letterSpacing: '1px',
+              textTransform: 'uppercase',
+              color: 'var(--color-ev-text-muted)',
+            }}
+          >
+            {stats.label}
+          </span>
+          <span
+            style={{
+              fontFamily: 'var(--font-sans)',
+              fontSize: '20px',
+              fontWeight: 700,
+              lineHeight: '22px',
+              color: 'var(--color-ev-text-primary)',
+            }}
+          >
+            {stats.value.toLocaleString()}
+          </span>
+        </div>
+      )}
 
       {/* Feature-icon row (ICON-01/02/03, D-05/D-06) — bottom-right, never overlaps the
           bottom-left title. Empty/absent array renders nothing (TETH-03). Top-right stays
