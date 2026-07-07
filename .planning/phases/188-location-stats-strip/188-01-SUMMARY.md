@@ -135,3 +135,7 @@ None for this plan going forward — the operator already obtained and supplied 
 ---
 *Phase: 188-location-stats-strip*
 *Completed: 2026-07-07*
+
+## Self-Check: PASSED
+
+All claimed files (`scripts/gen-population.mjs`, `src/data/population.js`, this SUMMARY.md) and all four commit hashes (`51d2ddb2`, `581b2fe6`, `13454da5`, `1058d279`) verified present in the repo/git history.
