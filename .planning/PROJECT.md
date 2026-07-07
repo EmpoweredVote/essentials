@@ -8,13 +8,20 @@ Essentials is a civic engagement web app that helps people discover who represen
 
 A resident can look up who represents them — and who is on their ballot — without creating an account.
 
-## Current Milestone: none active
+## Current Milestone: v21.0 Smart Banners
 
-**v20.0 Beaverton & Washington County, OR closed 2026-07-05** (see summary block below + `MILESTONES.md` + `milestones/v20.0-*`). No milestone is currently active.
+**Goal:** Turn the section banners into location-aware hubs — each shows a few legible facts about that place (population, etc.) and a row of EV-product logo icons that deep-link to *that exact location* in other EV products.
 
-**v19.0 Essentials Dark-Mode Redesign & Section Banners also formally closed 2026-07-05** — its 4 phases (169–172) had actually been built, verified, and deployed 2026-06-25 → 06-28; only the formal close was outstanding (see summary block below + `milestones/v19.0-*`).
+**Target features:**
+- Feature-icon row on `SectionBanner` — product logos (from `ev-landing/icons`) with hover tooltips, filling the pre-built `featureIcons` scaffolding slot (BANR-04)
+- Location-tethered deep-links — each icon carries **the banner's own location**, never the user's broker/current location (Texas banner → Texas Treasury Tracker; Plano banner → Plano Treasury Tracker)
+- Context-aware visibility — an icon renders only when a valid per-location link exists (reuse `treasury.js` `findMatchingMunicipality` has-data pattern; extend to state/federal Treasury entities); no dead links, the icon simply doesn't appear
+- Stats strip — curated legible facts (population first) per tier, sourced from Census, filling the pre-built `stats` scaffolding slot (BANR-04)
+- Wired into **both** `Results.jsx` and `ElectionsView.jsx` across city / state / federal tiers
 
-**Next:** open a new milestone via `/gsd:new-milestone`. Candidate targets: (a) resume the frontend track with the deferred dark/banner work (live banner stats, feature-icon links, remaining-state banner art, Landing + profile-page dark treatment); (b) tiny WashCo cities (King City/Durham/North Plains/Banks/Gaston + Banks/Gaston SDs); or (c) Clackamas / east-metro expansion (Lake Oswego, Wilsonville, Oregon City).
+**Scope:** Essentials-only, built as a reusable component (promotable to `@empoweredvote/ev-ui` later). Reciprocal icons on *other* apps' banners (e.g. Essentials icon on Treasury Tracker) are a documented follow-on pattern, not this milestone. Continues v19.0's `SectionBanner` scaffolding; Treasury contract = `financials.empowered.vote/?entity=<name-state>`.
+
+**Prior closes (context):** v20.0 Beaverton & Washington County, OR (2026-07-05) and v19.0 Dark-Mode Redesign & Section Banners (built 2026-06-28, formally closed 2026-07-05) — see summary blocks below + `milestones/v20.0-*` / `milestones/v19.0-*`.
 
 ## Requirements
 
@@ -179,12 +186,12 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
-- **No active milestone.** Most recent closes: **v20.0** West-Metro Washington County OR (2026-07-05) and
-  **v19.0** Dark-Mode Redesign & Section Banners (build 2026-06-28, formally closed 2026-07-05). Next: open a
-  new milestone via `/gsd:new-milestone` — see the "Current Milestone: none active" section for candidate targets.
-- **Deferred frontend track (from v19.0, out of that milestone's scope):** live banner stats data-slot wiring,
-  banner feature-icon links, banner art for the ~10 remaining covered states, and Landing + politician-profile
-  dark-mode treatment. A natural next milestone if the frontend track resumes.
+- **v21.0 Smart Banners (active — requirements being defined).** Fill v19.0's pre-built `SectionBanner`
+  scaffolding slots: a location-tethered feature-icon row (product logos + tooltips, deep-linking each
+  banner's own location into other EV products, context-aware/no dead links) and a Census-sourced stats
+  strip (population first). Essentials-only reusable component. See "Current Milestone" section above.
+- **Still-deferred v19.0 frontend track (NOT in v21.0 scope):** banner art for the ~10 remaining covered
+  states, and Landing + politician-profile dark-mode treatment.
 - Carry-forward (not blocking): split-section cleanup for 5 NON-Wave-2 councils (Whittier/Compton/Carson/
   South El Monte/South Pasadena); groupHierarchy.js Mayor>MPT fix deploy pending; Lancaster Ken Mann headshot;
   SLC D4 Napier-Pearce portrait + stances; Beverly Hills ~July-7 council reorg.
@@ -305,4 +312,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-05 — **v20.0 Beaverton & Washington County, OR SHIPPED** (Phase 186 close-out complete). Final DB-verified state: Washington County + 7 west-metro cities + 5 school-district boards; 80 seated officials, 79/80 headshots, 50/51 city/county officials with evidence-only stances (391 rows), school boards deferred by design; 2026 layer = 25 races + 12 candidates/8 races + 8 discovery jurisdictions + 1 live discovery run. Coverage.js reconciled (all 8 city/county purple chips DB-honest, no edits), LOCATION-ONBOARDING.md playbook updated (13 Cities Onboarded rows + West-Metro Quick Reference), v20.0-MILESTONE-AUDIT.md written. Non-blocking follow-ups: Cornelius thin stances, FG SD-15 headshot gap, 2 new-challenger headshots, ongoing 2026 candidate discovery. Next: v19.0 Dark-Mode Redesign remains parked (169–172), or open a new milestone; v18.0 NV shipped*
+*Last updated: 2026-07-06 — **v21.0 Smart Banners OPENED** (phases start at 187; requirements being defined). Turns SectionBanner into a location-aware hub: tethered product-icon row (deep-links each banner's own location into other EV products, context-aware) + Census stats strip; fills v19.0's `stats`/`featureIcons` scaffolding slots; Essentials-only reusable component. Treasury contract = financials.empowered.vote/?entity=<name-state>. Prior: **v20.0 Beaverton & Washington County, OR SHIPPED** (Phase 186 close-out complete). Final DB-verified state: Washington County + 7 west-metro cities + 5 school-district boards; 80 seated officials, 79/80 headshots, 50/51 city/county officials with evidence-only stances (391 rows), school boards deferred by design; 2026 layer = 25 races + 12 candidates/8 races + 8 discovery jurisdictions + 1 live discovery run. Coverage.js reconciled (all 8 city/county purple chips DB-honest, no edits), LOCATION-ONBOARDING.md playbook updated (13 Cities Onboarded rows + West-Metro Quick Reference), v20.0-MILESTONE-AUDIT.md written. Non-blocking follow-ups: Cornelius thin stances, FG SD-15 headshot gap, 2 new-challenger headshots, ongoing 2026 candidate discovery. Next: v19.0 Dark-Mode Redesign remains parked (169–172), or open a new milestone; v18.0 NV shipped*

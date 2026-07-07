@@ -1,27 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v20.0
-milestone_name: milestone
-status: completed
-stopped_at: v20.0 milestone closed
-last_updated: "2026-07-05T08:35:00.000Z"
-last_activity: 2026-07-05 -- v20.0 milestone archived + tagged (formal close)
+milestone: v21.0
+milestone_name: Smart Banners
+status: planning
+last_updated: "2026-07-07T06:38:12.221Z"
+last_activity: 2026-07-07
 progress:
-  total_phases: 25
-  completed_phases: 24
-  total_plans: 84
-  completed_plans: 84
-  percent: 96
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Milestone: **v20.0 CLOSED 2026-07-05** · **v19.0 CLOSED 2026-07-05** (build was done 2026-06-28; formal close deferred until now)
-Status: No active or parked milestone. Both archived to `milestones/` + tagged.
-Next: open a new milestone via `/gsd:new-milestone` (candidate: resume the deferred v19.0 frontend track — banner stats/icons, remaining-state art, Landing/profile dark mode).
-Last activity: 2026-07-05 -- v19.0 + v20.0 milestones archived (milestones/v19.0-*, v20.0-*) + tagged
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-07 — Milestone v21.0 started
 
 ## Deferred Items
 
