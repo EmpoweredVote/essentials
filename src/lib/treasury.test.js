@@ -7,7 +7,12 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { findMatchingMunicipality, toTreasurySlug } from './treasury';
+import {
+  findMatchingMunicipality,
+  findStateTreasuryEntity,
+  findFederalTreasuryEntity,
+  toTreasurySlug,
+} from './treasury';
 
 // Minimal slice of the live /treasury/cities shape (real duplicate-name data).
 const ds = [{ fiscal_year: 2024, dataset_type: 'revenue' }];
@@ -58,5 +63,55 @@ describe('findMatchingMunicipality — state disambiguation', () => {
   it('ignores an invalid state token and still matches by name', () => {
     const m = findMatchingMunicipality('Orem City Council', CITIES, 'Utah');
     expect(m).toMatchObject({ name: 'Orem' });
+  });
+});
+
+// Minimal slice of the live /treasury/cities shape for state/federal entities
+// (real Texas / United States records, confirmed via live probe 2026-07-07).
+const STATE_FEDERAL_CITIES = [
+  { name: 'Texas', state: 'TX', entity_type: 'state', available_datasets: ds },
+  { name: 'Oklahoma', state: 'OK', entity_type: 'state', available_datasets: [] },
+  { name: 'United States', state: 'US', entity_type: 'federal', available_datasets: ds },
+  { name: 'Plano', state: 'TX', entity_type: 'municipality', available_datasets: ds },
+];
+
+describe('findStateTreasuryEntity', () => {
+  it('returns the Texas state entity for TX', () => {
+    const m = findStateTreasuryEntity('TX', STATE_FEDERAL_CITIES);
+    expect(m).toMatchObject({ name: 'Texas', state: 'TX', entity_type: 'state' });
+    expect(toTreasurySlug(m)).toBe('texas-tx');
+  });
+
+  it('renders NO match for a state abbreviation with no state entity (ZZ)', () => {
+    expect(findStateTreasuryEntity('ZZ', STATE_FEDERAL_CITIES)).toBeNull();
+  });
+
+  it('renders NO match for a state entity with empty available_datasets (Oklahoma)', () => {
+    expect(findStateTreasuryEntity('OK', STATE_FEDERAL_CITIES)).toBeNull();
+  });
+
+  it('returns null when cities is an empty array', () => {
+    expect(findStateTreasuryEntity('TX', [])).toBeNull();
+  });
+
+  it('returns null for falsy state or non-array cities (guards)', () => {
+    expect(findStateTreasuryEntity(null, STATE_FEDERAL_CITIES)).toBeNull();
+    expect(findStateTreasuryEntity('TX', null)).toBeNull();
+  });
+});
+
+describe('findFederalTreasuryEntity', () => {
+  it("returns the 'United States' federal entity", () => {
+    const m = findFederalTreasuryEntity(STATE_FEDERAL_CITIES);
+    expect(m).toMatchObject({ name: 'United States', state: 'US', entity_type: 'federal' });
+    expect(toTreasurySlug(m)).toBe('united-states-us');
+  });
+
+  it('returns null for an empty list', () => {
+    expect(findFederalTreasuryEntity([])).toBeNull();
+  });
+
+  it('returns null for non-array input (guard)', () => {
+    expect(findFederalTreasuryEntity(null)).toBeNull();
   });
 });
