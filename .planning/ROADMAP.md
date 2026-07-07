@@ -46,7 +46,9 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
   3. A state-tier banner (e.g., "Texas") links its Treasury icon to the Texas state General Fund entity when one exists; a federal-tier banner links to a federal Treasury entity when one exists — not only municipalities.
   4. A banner whose location has no matching Treasury entity shows no Treasury icon at all — no greyed-out or disabled icon, no dead link.
   5. Icons render from the shared `ev-landing/ev-landing-main/icons` set in a variant that stays legible against the banner's dark background, and are positioned so they never overlap the location title text.
-**Plans**: TBD
+**Plans**: 2 plans
+  - [ ] 187-01-PLAN.md — Treasury state/federal resolvers, product registry, resolveFeatureIcons + pure-logic tests (wave 1)
+  - [ ] 187-02-PLAN.md — SectionBanner chip row + accessible tooltip; wire featureIconMap through Results + ElectionsView (wave 2)
 **UI hint**: yes
 
 ### Phase 188: Location Stats Strip
@@ -155,10 +157,10 @@ This deferred scope is what v21.0 now fills.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 187. Tethered Feature-Icon Row | v21.0 | 0/TBD | Not started | - |
+| 187. Tethered Feature-Icon Row | v21.0 | 0/2 | Planned | - |
 | 188. Location Stats Strip | v21.0 | 0/TBD | Not started | - |
 | 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
 
-**v21.0: 0/3 phases complete, 0 plans, 0/14 requirements. Progress 0%.**
+**v21.0: 0/3 phases complete, 2 plans (Phase 187), 0/14 requirements. Progress 0%.**
 
 <!-- v20.0 progress table archived to .planning/milestones/v20.0-ROADMAP.md at milestone close. -->

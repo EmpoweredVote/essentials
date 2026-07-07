@@ -1,9 +1,9 @@
 ---
 phase: 187
 slug: tethered-feature-icon-row
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: planned
+nyquist_compliant: true
+wave_0_complete: false  # test files created within plan 187-01 (wave 1)
 created: 2026-07-07
 ---
 
@@ -46,12 +46,12 @@ manually (roadmap marks this phase "UI hint: yes").
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
 | (Wave 0) | — | 0 | TETH-02/03/04 | — | N/A | unit | `npx vitest run src/lib/treasury.test.js src/lib/featureIcons.test.js` | ❌ W0 | ⬜ pending |
-| (resolver) | TBD | 1 | TETH-02 | — | State resolver returns TX entity; wrong state → null | unit | `npx vitest run src/lib/treasury.test.js` | ❌ W0 | ⬜ pending |
-| (resolver) | TBD | 1 | TETH-04 | — | Federal resolver returns "United States"; empty list → null | unit | `npx vitest run src/lib/treasury.test.js` | ❌ W0 | ⬜ pending |
-| (registry) | TBD | 1 | TETH-03 | — | No matching entity / empty datasets → `null` (icon omitted) | unit | `npx vitest run src/lib/featureIcons.test.js` | ❌ W0 | ⬜ pending |
-| (slug) | TBD | 1 | TETH-02 | — | Slug for a real record is `<name>-<state>` lowercase-dash | unit | `npx vitest run src/lib/treasury.test.js` | ✅ extend | ⬜ pending |
-| (chip/tooltip) | TBD | 2 | ICON-01/02/03 | — | Chip renders only for resolved icons; tooltip on hover+focus; bottom-right, no title overlap | manual | N/A (no render harness) | N/A | ⬜ pending |
-| (tether) | TBD | 2 | TETH-01 | — | Banner whose location ≠ user's opens a link carrying the **banner's** location | manual | N/A (visual QA, two known-different locations) | N/A | ⬜ pending |
+| 187-01-T1 | 187-01 | 1 | TETH-02 | — | State resolver returns TX entity; wrong state → null | unit | `npx vitest run src/lib/treasury.test.js` | ❌ W0 | ⬜ pending |
+| 187-01-T1 | 187-01 | 1 | TETH-04 | — | Federal resolver returns "United States"; empty list → null | unit | `npx vitest run src/lib/treasury.test.js` | ❌ W0 | ⬜ pending |
+| 187-01-T2 | 187-01 | 1 | TETH-03 | — | No matching entity / empty datasets → `null` (icon omitted) | unit | `npx vitest run src/lib/featureIcons.test.js` | ❌ W0 | ⬜ pending |
+| 187-01-T1 | 187-01 | 1 | TETH-02 | — | Slug for a real record is `<name>-<state>` lowercase-dash | unit | `npx vitest run src/lib/treasury.test.js` | ✅ extend | ⬜ pending |
+| 187-02-T1/T3 | 187-02 | 2 | ICON-01/02/03 | — | Chip renders only for resolved icons; tooltip on hover+focus; bottom-right, no title overlap | manual | N/A (no render harness) | N/A | ⬜ pending |
+| 187-02-T2/T3 | 187-02 | 2 | TETH-01 | — | Banner whose location ≠ user's opens a link carrying the **banner's** location | manual | N/A (visual QA, two known-different locations) | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky. Concrete task IDs assigned by the planner.*
 
@@ -89,4 +89,4 @@ manually (roadmap marks this phase "UI hint: yes").
 - [ ] Feedback latency < 15s
 - [ ] `nyquist_compliant: true` set in frontmatter (after planner assigns concrete task IDs)
 
-**Approval:** pending
+**Approval:** planner-assigned (task IDs mapped 2026-07-07; manual-only rows gated by 187-02 Task 3 checkpoint)
