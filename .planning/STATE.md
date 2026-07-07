@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v21.0
 milestone_name: Smart Banners
-status: roadmapped
-last_updated: "2026-07-07T00:00:00.000Z"
-last_activity: 2026-07-07
+status: "Roadmapped — ready for /gsd:plan-phase 187"
+last_updated: "2026-07-07T15:16:58.095Z"
+last_activity: "2026-07-07 — v21.0 ROADMAP.md created (3 phases: 187-189), REQUIREMENTS.md traceability filled (14/14 mapped), STATE.md updated"
 progress:
-  total_phases: 3
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 32
+  completed_phases: 28
+  total_plans: 93
+  completed_plans: 94
+  percent: 88
 ---
 
 # State
@@ -52,9 +52,11 @@ mapped 1:1 — no orphans, no duplicates. No backend/DB schema changes.
 - **187 Tethered Feature-Icon Row** — ICON-01/02/03 + TETH-01/02/03/04 (product-icon row + Treasury
   deep-link resolution; icon carries the banner's own location, never the user's; omitted entirely
   when no valid per-location link exists; state/federal tiers resolve non-municipal Treasury entities)
+
 - **188 Location Stats Strip** — STAT-01/02/03 (Census-sourced population-first stats strip on city +
   state banners, keyed to geo identifier/FIPS, not hardcoded; graceful omission when unavailable —
   independent workstream from Phase 187, can build in parallel)
+
 - **189 Smart-Banner Integration & Graceful Degradation** — SBAN-01/02/03/04 (wires Phases 187+188
   into one shared component consumed by both Results.jsx and ElectionsView.jsx; identical cross-page
   behavior; empty-state parity with v19.0 — no empty containers, no layout shift, no console errors)
@@ -463,9 +465,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-04T22:38:53.755Z
-Stopped at: Phase 185 context gathered
-Resume file: .planning/phases/185-washco-2026-elections-discovery/185-CONTEXT.md
+Last session: 2026-07-07T15:16:58.079Z
+Stopped at: Phase 187 context gathered
+Resume file: .planning/phases/187-tethered-feature-icon-row/187-CONTEXT.md
 
 ## Performance Metrics
 
