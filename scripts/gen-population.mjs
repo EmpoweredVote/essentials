@@ -18,7 +18,7 @@
  * Free key signup: https://api.census.gov/data/key_signup.html
  */
 
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { STATE_FIPS_TO_ABBREV } from '../src/lib/buildingImages.js';
@@ -153,6 +153,7 @@ export const POP_BY_FIPS = ${JSON.stringify(POP_BY_FIPS)};
 export const NAME_STATE_TO_FIPS = ${JSON.stringify(NAME_STATE_TO_FIPS)};
 `;
 
+mkdirSync(dirname(OUT_PATH), { recursive: true });
 writeFileSync(OUT_PATH, header, 'utf8');
 console.log(`Wrote ${OUT_PATH}`);
 console.log(`  POP_BY_FIPS entries: ${Object.keys(POP_BY_FIPS).length}`);
