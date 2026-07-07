@@ -3,24 +3,24 @@ gsd_state_version: 1.0
 milestone: v21.0
 milestone_name: Smart Banners
 status: executing
-last_updated: "2026-07-07T17:22:13.499Z"
-last_activity: 2026-07-07 -- Phase 187 execution started
+last_updated: "2026-07-07T18:26:13.614Z"
+last_activity: 2026-07-07
 progress:
   total_phases: 32
-  completed_phases: 28
+  completed_phases: 29
   total_plans: 95
-  completed_plans: 94
-  percent: 88
+  completed_plans: 96
+  percent: 91
 ---
 
 # State
 
 ## Current Position
 
-Phase: 187 (tethered-feature-icon-row) — EXECUTING
-Plan: 1 of 2
-Status: Executing Phase 187
-Last activity: 2026-07-07 -- Phase 187 execution started
+Phase: 187 (tethered-feature-icon-row) — COMPLETE
+Plan: 2 of 2 (complete)
+Status: Phase 187 complete (both plans + human-verify checkpoint approved 2026-07-07); ready for Phase 188 (Location Stats Strip) — not auto-started per working rule
+Last activity: 2026-07-07 -- Phase 187 complete
 
 ## Deferred Items
 
@@ -465,9 +465,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-07T15:16:58.079Z
-Stopped at: Phase 187 context gathered
-Resume file: .planning/phases/187-tethered-feature-icon-row/187-CONTEXT.md
+Last session: 2026-07-07T18:26:13.597Z
+Stopped at: Completed 187-02-PLAN.md (human-verify checkpoint approved)
+Resume file: None
 
 ## Performance Metrics
 
@@ -538,6 +538,7 @@ Resume file: .planning/phases/187-tethered-feature-icon-row/187-CONTEXT.md
 | Phase 183 P02 | 25min | 2 tasks | 1 files |
 | Phase 183 P03 | 15min | 3 tasks | 2 files |
 | Phase 183 P04 | 20min | 2 tasks | 1 files |
+| Phase 187 P02 | 55min | 3 tasks | 3 files |
 
 ## Decisions
 
@@ -618,3 +619,5 @@ Resume file: .planning/phases/187-tethered-feature-icon-row/187-CONTEXT.md
 - [Phase 183]: Migration 1203 ledger INSERT placed inside transaction before COMMIT (1159/1178/1196 convention), not after COMMIT per plan's literal 1107-era text
 - [Phase 183]: Migration renumbered 1204 -> 1205 (on-disk-MAX-authoritative convention): 1204 was claimed on-disk by a concurrent AZ ballot-ineligible-reconciliation workstream before this file was authored — Next migration after this one is 1206
 - [Phase 183]: Phase 183: no hasContext key on either new school-district coverage.js entry — 0-stances-by-design is the honest state (Phase 173 CCSD lesson applied proactively)
+- [Phase 187-02]: Centralized TREASURY_URL in Results.jsx (deleted local const) so the existing per-body text link and the new Treasury chip resolve to the identical financials.empowered.vote domain
+- [Phase 187-02]: FeatureIconChip reimplements IconOverlay's @floating-ui IconWithTooltip pattern locally in SectionBanner.jsx, adapted to wrap a real <a> so aria-label lives on the link (extraction to a shared component deferred to Phase 189)

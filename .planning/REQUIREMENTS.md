@@ -39,25 +39,25 @@ Treasury Tracker) are a **documented follow-on pattern, out of scope** for v21.0
 
 ### Feature Icon Row (ICON)
 
-- [ ] **ICON-01:** A user sees a row of EV-product logo icons on a section banner (city / state / federal)
+- [x] **ICON-01:** A user sees a row of EV-product logo icons on a section banner (city / state / federal)
       whenever at least one product has a valid per-location link for that banner's location.
-- [ ] **ICON-02:** A user who hovers or keyboard-focuses an icon sees a tooltip naming the product the icon
+- [x] **ICON-02:** A user who hovers or keyboard-focuses an icon sees a tooltip naming the product the icon
       links to.
-- [ ] **ICON-03:** Icons render from the shared `ev-landing/ev-landing-main/icons` symbol set, are
+- [x] **ICON-03:** Icons render from the shared `ev-landing/ev-landing-main/icons` symbol set, are
       dark-banner-legible (light/dark symbol variant as appropriate), and are positioned so they never
       obscure the banner's location title.
 
 ### Location Tethering (TETH)
 
-- [ ] **TETH-01:** Clicking a product icon opens that product at **the banner's own location**, not the
+- [x] **TETH-01:** Clicking a product icon opens that product at **the banner's own location**, not the
       user's saved/broker location (verified by comparing a banner whose location differs from the user's
       current location).
-- [ ] **TETH-02:** The Treasury Tracker icon links via the `financials.empowered.vote/?entity=<name-state>`
+- [x] **TETH-02:** The Treasury Tracker icon links via the `financials.empowered.vote/?entity=<name-state>`
       slug contract, resolved through `treasury.js` (has-data predicate + same-state disambiguation).
-- [ ] **TETH-03:** A product icon appears only when a valid per-location deep-link can be constructed for
+- [x] **TETH-03:** A product icon appears only when a valid per-location deep-link can be constructed for
       that banner's location; otherwise the icon is omitted entirely (no dead links, no disabled/greyed
       placeholders).
-- [ ] **TETH-04:** State- and federal-tier banners resolve their Treasury entity at the correct tier
+- [x] **TETH-04:** State- and federal-tier banners resolve their Treasury entity at the correct tier
       (state General Fund / federal), not only municipalities — e.g. the state banner links to the state
       Treasury entity when one exists.
 
@@ -110,13 +110,13 @@ All 14 v21.0 requirements mapped to exactly one phase. No orphans, no duplicates
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ICON-01 | Phase 187: Tethered Feature-Icon Row | Pending |
-| ICON-02 | Phase 187: Tethered Feature-Icon Row | Pending |
-| ICON-03 | Phase 187: Tethered Feature-Icon Row | Pending |
-| TETH-01 | Phase 187: Tethered Feature-Icon Row | Pending |
-| TETH-02 | Phase 187: Tethered Feature-Icon Row | Pending |
-| TETH-03 | Phase 187: Tethered Feature-Icon Row | Pending |
-| TETH-04 | Phase 187: Tethered Feature-Icon Row | Pending |
+| ICON-01 | Phase 187: Tethered Feature-Icon Row | Complete |
+| ICON-02 | Phase 187: Tethered Feature-Icon Row | Complete |
+| ICON-03 | Phase 187: Tethered Feature-Icon Row | Complete |
+| TETH-01 | Phase 187: Tethered Feature-Icon Row | Complete |
+| TETH-02 | Phase 187: Tethered Feature-Icon Row | Complete |
+| TETH-03 | Phase 187: Tethered Feature-Icon Row | Complete |
+| TETH-04 | Phase 187: Tethered Feature-Icon Row | Complete |
 | STAT-01 | Phase 188: Location Stats Strip | Pending |
 | STAT-02 | Phase 188: Location Stats Strip | Pending |
 | STAT-03 | Phase 188: Location Stats Strip | Pending |

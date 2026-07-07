@@ -55,7 +55,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-  - [ ] 187-02-PLAN.md — SectionBanner chip row + accessible tooltip; wire featureIconMap through Results + ElectionsView (wave 2)
+  - [x] 187-02-PLAN.md — SectionBanner chip row + accessible tooltip; wire featureIconMap through Results + ElectionsView (wave 2)
 
 **UI hint**: yes
 
@@ -171,7 +171,7 @@ This deferred scope is what v21.0 now fills.
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 187. Tethered Feature-Icon Row | v21.0 | 1/2 | In Progress|  |
+| 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete   | 2026-07-07 |
 | 188. Location Stats Strip | v21.0 | 0/TBD | Not started | - |
 | 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
 
