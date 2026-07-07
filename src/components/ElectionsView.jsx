@@ -283,6 +283,7 @@ export default function ElectionsView({
   onCandidateClick,
   isDark = false,
   buildingImageMap = {},
+  featureIconMap = {},
   representingCity = null,
   userState = null,
   stateNames = {},
@@ -578,18 +579,21 @@ export default function ElectionsView({
                     tier="city"
                     locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
                     imageUrl={buildingImageMap?.Local}
+                    featureIcons={featureIconMap?.Local}
                   />
                 : tier === 'State'
                 ? <SectionBanner
                     tier="state"
                     locationName={(userState && stateNames?.[userState]) || userState || 'Your State'}
                     imageUrl={buildingImageMap?.State}
+                    featureIcons={featureIconMap?.State}
                   />
                 : tier === 'Federal'
                 ? <SectionBanner
                     tier="federal"
                     locationName="United States"
                     imageUrl={buildingImageMap?.Federal}
+                    featureIcons={featureIconMap?.Federal}
                   />
                 : null;
 

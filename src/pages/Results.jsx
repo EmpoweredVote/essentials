@@ -29,9 +29,8 @@ import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
 import SectionBanner from '../components/SectionBanner.jsx';
-import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug } from '../lib/treasury';
-
-const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || 'https://treasurytracker.empowered.vote';
+import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
+import { resolveFeatureIcons } from '../lib/featureIcons';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -1134,6 +1133,11 @@ export default function Results() {
     [representingCity, userState]
   );
 
+  const featureIconMap = useMemo(
+    () => resolveFeatureIcons({ representingCity, userState, treasuryCities }),
+    [representingCity, userState, treasuryCities]
+  );
+
   // Only show the nearest upcoming election; hiding future elections avoids duplicate
   // race sections when a primary and general are both returned for the same seat.
   const nearestElection = useMemo(() => {
@@ -1939,18 +1943,21 @@ export default function Results() {
                         tier="city"
                         locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
                         imageUrl={buildingImageMap.Local}
+                        featureIcons={featureIconMap.Local}
                       />
                     : tier === 'State'
                     ? <SectionBanner
                         tier="state"
                         locationName={(userState && STATE_NAMES[userState]) || userState || 'Your State'}
                         imageUrl={buildingImageMap.State}
+                        featureIcons={featureIconMap.State}
                       />
                     : tier === 'Federal'
                     ? <SectionBanner
                         tier="federal"
                         locationName="United States"
                         imageUrl={buildingImageMap.Federal}
+                        featureIcons={featureIconMap.Federal}
                       />
                     : null;
 
@@ -2064,6 +2071,7 @@ export default function Results() {
                   navigate(`/candidate/${id}`);
                 }}
                 buildingImageMap={buildingImageMap}
+                featureIconMap={featureIconMap}
                 representingCity={representingCity}
                 userState={userState}
                 stateNames={STATE_NAMES}
