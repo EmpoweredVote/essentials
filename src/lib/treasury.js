@@ -2,6 +2,14 @@
 import { apiFetch } from './auth';
 
 /**
+ * Centralized Treasury Tracker base URL. Single source of truth consumed by
+ * both the existing per-body text link (Results.jsx) and the tethered
+ * feature-icon row (featureIcons.js) — see 187-01 "Open question resolved".
+ */
+export const TREASURY_URL =
+  import.meta.env.VITE_TREASURY_URL || 'https://financials.empowered.vote';
+
+/**
  * Fetches the list of Treasury municipalities from the backend.
  * Returns [] on network error or non-ok response (never throws).
  */
@@ -97,4 +105,47 @@ export function findMatchingMunicipality(bodyTitle, cities, state) {
 
   // Longest name wins (most specific match)
   return candidates.sort((a, b) => b.name.length - a.name.length)[0];
+}
+
+/**
+ * Finds the state-tier Treasury entity for a 2-letter state abbreviation.
+ * Unlike findMatchingMunicipality, this is a direct entity_type + state match —
+ * state Treasury entities are singular per state and have unambiguous plain names.
+ * Confirmed via live /treasury/cities probe 2026-07-07 (50 entity_type: 'state' rows).
+ *
+ * @param {string} state - 2-letter abbrev, e.g. "TX"
+ * @param {Array} cities - from fetchTreasuryCities()
+ * @returns {object|null}
+ */
+export function findStateTreasuryEntity(state, cities) {
+  if (!state || !Array.isArray(cities)) return null;
+  const wantState = state.toUpperCase();
+  return (
+    cities.find(
+      (c) =>
+        c.entity_type === 'state' &&
+        (c.state || '').toUpperCase() === wantState &&
+        Array.isArray(c.available_datasets) &&
+        c.available_datasets.length > 0
+    ) || null
+  );
+}
+
+/**
+ * Finds the (currently singular) federal Treasury entity ("United States").
+ * Confirmed via live /treasury/cities probe 2026-07-07 (1 entity_type: 'federal' row).
+ *
+ * @param {Array} cities - from fetchTreasuryCities()
+ * @returns {object|null}
+ */
+export function findFederalTreasuryEntity(cities) {
+  if (!Array.isArray(cities)) return null;
+  return (
+    cities.find(
+      (c) =>
+        c.entity_type === 'federal' &&
+        Array.isArray(c.available_datasets) &&
+        c.available_datasets.length > 0
+    ) || null
+  );
 }
