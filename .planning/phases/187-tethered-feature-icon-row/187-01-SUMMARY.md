@@ -114,6 +114,12 @@ None - no external service configuration required.
 - `TREASURY_URL` is now a single exported source of truth in `treasury.js` — 187-02 should re-import it in `Results.jsx` (replacing its local `treasurytracker.empowered.vote`-defaulting constant) rather than defining a second one.
 - No blockers. All must_haves truths from this plan's frontmatter are verified by the test suite.
 
+## Self-Check: PASSED
+
+All 7 created/modified files confirmed present on disk; all 5 commit hashes
+(`f24b3a22`, `0e441e6c`, `6877ce40`, `a32b5394`, `f6a51187`) confirmed in
+`git log --oneline --all`.
+
 ---
 *Phase: 187-tethered-feature-icon-row*
 *Completed: 2026-07-07*
