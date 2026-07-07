@@ -198,10 +198,13 @@ const CURATED_LOCAL = {
   //   south portland - Bug Light (Portland Breakwater Light), Bug Light Park | Giorgio Galeotti | CC BY-SA 4.0
   //   bangor         - West Market Square Historic District | Warren LeMay | CC BY-SA 2.0
   //   biddeford      - Biddeford Pool harbor | Dcrjsr | CC BY 3.0
-  //   (lewiston + auburn pending a redo review round)
+  //   lewiston       - Basilica of Saints Peter and Paul (entrance & rose window) | Carol Boldt | CC BY-SA 4.0
+  //   auburn         - Androscoggin County Courthouse | Kenneth C. Zirkel | CC BY-SA 4.0
   'south portland': { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-portland.jpg' },
   bangor: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bangor.jpg' },
   biddeford: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biddeford.jpg' },
+  lewiston: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lewiston.jpg' },
+  auburn: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/auburn.jpg' },
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
   'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
   glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
