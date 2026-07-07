@@ -89,6 +89,11 @@ export function findMatchingMunicipality(bodyTitle, cities, state) {
 
   const candidates = cities.filter((c) => {
     if (!c.available_datasets || c.available_datasets.length === 0) return false;
+    // Require the matched candidate to actually be municipality-shaped, mirroring
+    // the entity_type guard already used by findStateTreasuryEntity (WR-01). Only
+    // exclude when entity_type IS SET and isn't municipality-shaped — entities with
+    // no entity_type must still pass so existing matches are unaffected.
+    if (c.entity_type && !['municipality', 'city', 'town', 'village'].includes(c.entity_type)) return false;
     if (wantState && (c.state || '').toUpperCase() !== wantState) return false;
     const cityName = normalize(c.name);
     const base = stripped === cityName || stripped.startsWith(cityName + ' ') ? stripped : t;
