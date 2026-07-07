@@ -71,7 +71,20 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
   3. The displayed population is fetched/keyed by the banner location's Census geo identifier (FIPS place/state code) — not a hardcoded per-city or per-state lookup table.
   4. When Census data is unavailable for a location (no FIPS match, fetch failure, etc.), the stats strip simply omits that fact — no "undefined," no "0," no broken label — and the rest of the banner still renders normally.
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+**Wave 1**
+
+  - [ ] 188-01-PLAN.md — Census generator + committed FIPS-keyed population bundle; export STATE_FIPS_TO_ABBREV (wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+  - [ ] 188-02-PLAN.md — Pure resolvePopulation() (D-04/05/06 + STAT-03 null-on-miss) with fixture-injected Vitest matrix (wave 2)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+  - [ ] 188-03-PLAN.md — SectionBanner top-right population scrim + populationMap wiring through Results.jsx + ElectionsView.jsx (wave 3)
+
 **UI hint**: yes
 
 ### Phase 189: Smart-Banner Integration & Graceful Degradation
