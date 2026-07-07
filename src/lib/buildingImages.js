@@ -381,6 +381,18 @@ const CURATED_LOCAL = {
   richardson: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/richardson.jpg' },
   'van alstyne': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/van-alstyne.jpg' },
   weston: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/weston.jpg' },
+  // Nevada city banners (Wikimedia Commons; state-scoped 'NV'). Operator-certified
+  // 2026-07-06. Keys are space-form to match coverage.js browse_label; storage
+  // files are hyphenated. Note: the NV STATE banner is the Las Vegas Strip, so the
+  // Las Vegas CITY banner is deliberately the Welcome sign instead (distinct vantage).
+  //   las vegas       - 'Welcome to Fabulous Las Vegas' sign (Betty Willis), Las Vegas Blvd | Christian David | CC BY-SA 4.0
+  //   henderson       - Lake Las Vegas South Shore (villas, lake, desert mountains) | Coolcaesar | CC BY-SA 4.0
+  //   north las vegas - Aliante Nature Discovery Park (pond, pavilion, geese) | Kim Dung Ho | CC BY 2.0
+  //   boulder city    - Hoover Dam from the overlook (the public-works landmark that defines the town) | Karlis Dambrans | CC BY 2.0
+  'las vegas': { state: 'NV', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/las-vegas.jpg' },
+  henderson: { state: 'NV', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/henderson.jpg' },
+  'north las vegas': { state: 'NV', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/north-las-vegas.jpg' },
+  'boulder city': { state: 'NV', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/boulder-city.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
