@@ -1,26 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v21.0
-milestone_name: Smart Banners
-status: Awaiting next milestone
-last_updated: "2026-07-08T19:00:09.989Z"
-last_activity: 2026-07-08 — Milestone v21.0 completed and archived
+milestone: v22.0
+milestone_name: Tucson & Arizona
+status: planning
+last_updated: "2026-07-08T20:52:25.707Z"
+last_activity: 2026-07-08
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: Milestone v21.0 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-07-08 — Milestone v21.0 completed and archived
+Status: Defining requirements
+Last activity: 2026-07-08 — Milestone v22.0 started
 
 ## Deferred Items
 
@@ -28,6 +28,7 @@ Re-acknowledged and deferred again at v21.0 milestone close on 2026-07-08 (uncha
 v20.0 close; 12 open artifacts — none belong to v21.0, which had zero open items and closed on
 Phase 189's VERIFICATION PASS 8/8 + live operator sign-off). 9 are stale cross-milestone
 leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0-MILESTONE-AUDIT.md
+
 + live operator approvals:
 
 | Category | Item | Status |

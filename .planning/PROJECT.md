@@ -20,7 +20,28 @@ Both are wired identically into Results and Elections through one shared `buildB
 title-only banner when a location has neither links nor stats. Frontend-only — no backend/DB changes.
 See the v21.0 shipped block below + `milestones/v21.0-*`.
 
-**No active milestone.** Next milestone opens via `/gsd-new-milestone`.
+**Active milestone: v22.0 Tucson & Arizona.** Opening Arizona as a fully-covered new
+state and deep-seeding the Tucson metro. See Current Milestone below.
+
+## Current Milestone: v22.0 Tucson & Arizona
+
+**Goal:** Open Arizona as a fully-covered new state and deep-seed the Tucson metro — every AZ
+resident routes to their federal / state / county / city representatives, and Tucson-metro city +
+county officials carry a compass.
+
+**Target features:**
+- Arizona TIGER geofences — all tiers (G4110 cities, G4020 counties, CDs, SLDU/SLDL); section-split clean
+- State of Arizona government — Gov. Hobbs + constitutional officers + 2 US Senators + 9 US House reps, with headshots
+- Arizona Legislature — 30 senators + 60 house reps seeded with 600×750 headshots (**compass stances deferred** — NV v18.0 pattern)
+- Pima County Board of Supervisors — standalone county government (5 districts), roster + headshots + evidence-only stances
+- City of Tucson deep-seed — flagship (Mayor + 6 wards); roster → headshots → evidence-only stances
+- Tucson-metro suburb deep-seeds — Oro Valley, Marana, Sahuarita, South Tucson
+- AZ 2026 elections + discovery — race shells + confirmed candidate slate + armed discovery cron
+- Arizona playbook retrospective + close — coverage.js chips, AZ GOTCHAs, DB-verified audit
+
+**Deferred by design (future milestones):** full AZ legislature compass stances; TUSD + metro
+school-district boards. New-state → major version bump to v22.0; phase numbering continues from
+v21.0 (closed at 189), so phases start at 190.
 
 ## Requirements
 
@@ -205,7 +226,11 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
-- **No active milestone.** v21.0 Smart Banners shipped 2026-07-08; next milestone opens via `/gsd-new-milestone`.
+- **v22.0 Tucson & Arizona (ACTIVE, opened 2026-07-08)** — Arizona new-state foundation (geofences +
+  state/federal government + 90-member legislature seed) + Tucson-metro deep-seed (Pima County + City of
+  Tucson + Oro Valley + Marana + Sahuarita + South Tucson) + 2026 elections + close. Each city/county
+  deep-seed carries a licensed community banner (street-scene/skyline, no AI/aerial). Legislature compass
+  stances + school boards deferred by design.
 - **Candidate for a next milestone — reciprocal + richer smart banners (deferred from v21.0):** reciprocal
   tethering (the Essentials icon on *other* EV apps' banners), per-location Compass / Read & Rank contracts
   once those apps accept a location URL, richer per-tier stats beyond population, and promoting the
@@ -338,7 +363,20 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-08 — **v21.0 Smart Banners SHIPPED & ARCHIVED.** Section banners are now
+*Last updated: 2026-07-08 — **v22.0 Tucson & Arizona OPENED.** New-state coverage milestone: Arizona
+foundation (TIGER geofences + Hobbs/constitutional officers + 2 US Senators + 9 US House + 90-member
+legislature seed & headshots, stances deferred) → Pima County Board of Supervisors → City of Tucson
+flagship deep-seed → 4 Tucson-metro suburbs (Oro Valley, Marana, Sahuarita, South Tucson) → AZ 2026
+elections + discovery → playbook retrospective + close. Each city/county deep-seed carries a licensed
+community banner (street-scene/skyline, no AI/aerial). Legislature compass stances + TUSD/metro school
+boards deferred by design. Phases continue from v21.0 (closed at 189), starting at 190. Reuses the
+`LOCATION-ONBOARDING.md` playbook + NV (v18.0) / OR-WashCo (v20.0) new-state precedent. Prior close:
+v21.0 Smart Banners (2026-07-08).*
+
+<details>
+<summary>Earlier footer — v21.0 close (2026-07-08)</summary>
+
+*v21.0 Smart Banners SHIPPED & ARCHIVED.* Section banners are now
 location-aware hubs across Results + Elections: tethered Treasury deep-links carrying each banner's
 own location (context-aware, no dead links), a Census-sourced population strip (build-time FIPS bundle,
 graceful null-on-miss), and a shared `buildBannerProps` single source of truth — all verified PASS 8/8
@@ -351,5 +389,7 @@ cross-milestone artifacts remain deferred (see STATE.md). No active milestone �
 <summary>Earlier footer — v21.0 Phase 187 checkpoint (2026-07-07)</summary>
 
 *v21.0 Phase 187 (Tethered Feature-Icon Row) COMPLETE (2/2 plans, verified 11/11 must-haves; human-approved checkpoint). Every section banner now shows a bottom-right Treasury chip deep-linking the banner's OWN location into financials.empowered.vote (TETH-01), with an accessible hover+focus tooltip and no chip when no per-location dataset exists (TETH-03). Requirements ICON-01/02/03 + TETH-01/02/03/04 satisfied. Next: Phase 188 (Location Stats Strip). **v21.0 Smart Banners OPENED** (phases start at 187). Turns SectionBanner into a location-aware hub: tethered product-icon row (deep-links each banner's own location into other EV products, context-aware) + Census stats strip; fills v19.0's `stats`/`featureIcons` scaffolding slots; Essentials-only reusable component. Treasury contract = financials.empowered.vote/?entity=<name-state>. Prior: **v20.0 Beaverton & Washington County, OR SHIPPED** (Phase 186 close-out complete). Final DB-verified state: Washington County + 7 west-metro cities + 5 school-district boards; 80 seated officials, 79/80 headshots, 50/51 city/county officials with evidence-only stances (391 rows), school boards deferred by design; 2026 layer = 25 races + 12 candidates/8 races + 8 discovery jurisdictions + 1 live discovery run. Coverage.js reconciled (all 8 city/county purple chips DB-honest, no edits), LOCATION-ONBOARDING.md playbook updated (13 Cities Onboarded rows + West-Metro Quick Reference), v20.0-MILESTONE-AUDIT.md written. Non-blocking follow-ups: Cornelius thin stances, FG SD-15 headshot gap, 2 new-challenger headshots, ongoing 2026 candidate discovery. Next: v19.0 Dark-Mode Redesign remains parked (169–172), or open a new milestone; v18.0 NV shipped*
+
+</details>
 
 </details>
