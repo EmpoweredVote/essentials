@@ -111,7 +111,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-  - [ ] 189-03-PLAN.md — Live spot-check: D-05 placement, cross-page parity, SBAN-04 empty-state (checkpoint, wave 3)
+  - [x] 189-03-PLAN.md — Live spot-check: D-05 placement, cross-page parity, SBAN-04 empty-state (checkpoint, wave 3)
 
 **UI hint**: yes
 
@@ -199,7 +199,7 @@ This deferred scope is what v21.0 now fills.
 |-------|-----------|----------------|--------|-----------|
 | 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete    | 2026-07-07 |
 | 188. Location Stats Strip | v21.0 | 3/3 | Complete   | 2026-07-07 |
-| 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 2/3 | In Progress|  |
+| 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 3/3 | Complete   | 2026-07-08 |
 
 **v21.0: 2/3 phases complete, 8 plans (Phase 187: 2, Phase 188: 3, Phase 189: 3 planned), 9/14 requirements. Progress 67%.**
 
