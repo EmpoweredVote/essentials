@@ -258,9 +258,9 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
           <span
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: '20px',
+              fontSize: '14px',
               fontWeight: 700,
-              lineHeight: '22px',
+              lineHeight: '16px',
               color: 'var(--color-ev-text-primary)',
             }}
           >
