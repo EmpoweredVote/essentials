@@ -138,7 +138,7 @@ function FeatureIconChip({ icon }) {
  *   locationName  {string}                    required — text shown after the coral pin
  *   imageUrl      {string|null}               optional — when truthy renders image + overlay
  *   stats         {{label:string,value:number}|null} optional — resolved population stat (STAT-01);
- *                                              renders a top-right scrim only when shouldRenderStat(stats)
+ *                                              renders a mid-left scrim (189 D-05) only when shouldRenderStat(stats)
  *                                              is true; null/undefined/0/NaN/non-number renders nothing (STAT-03)
  *   featureIcons  {array|null}                optional — [{key,href,label,iconSrc}]; renders a
  *                                              bottom-right circular-chip row with an accessible
@@ -154,6 +154,17 @@ function FeatureIconChip({ icon }) {
 // eslint-disable-next-line react-refresh/only-export-components
 export function shouldRenderStat(stats) {
   return typeof stats?.value === 'number' && stats.value > 0;
+}
+
+/**
+ * Pure predicate (Phase 189): should the feature-icon row render?
+ * Mirrors shouldRenderStat's omit-cleanly convention (STAT-03/ICON-03/TETH-03) —
+ * only a non-empty array renders; [] / null / undefined / non-array omit.
+ * @param {Array|null|undefined} featureIcons
+ */
+// eslint-disable-next-line react-refresh/only-export-components
+export function shouldRenderIcons(featureIcons) {
+  return Array.isArray(featureIcons) && featureIcons.length > 0;
 }
 export default function SectionBanner({ tier, locationName, imageUrl, stats, featureIcons }) {
   // BANR-03: never show a broken <img>. If the image 404s (e.g. a paused storage
@@ -222,57 +233,61 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
         </div>
       </div>
 
-      {/* Population stat scrim (STAT-01/STAT-03, Phase 188) — top-right, right-aligned,
-          rounded semi-transparent navy scrim (same treatment family as the feature-icon
-          chips below). Omits entirely when stats does not resolve to a positive number. */}
+      {/* Population stat scrim (STAT-01/STAT-03, Phase 188; repositioned mid-left per
+          189 D-05, superseding 188 D-11/D-12's top-right placement) — floated above the
+          location title, left-aligned to the title's own px-6/md:px-12 margin. Responsive
+          vertical anchor (upper-left on mobile, vertically centered on desktop) requires
+          Tailwind's md: breakpoint, which inline styles cannot express — hence the
+          className on this outer wrapper (the only such deviation from this component's
+          otherwise all-inline-style convention). Omits entirely when stats does not
+          resolve to a positive number. */}
       {shouldRenderStat(stats) && (
-        <div
-          data-slot="stats"
-          style={{
-            position: 'absolute',
-            top: '16px',
-            right: '16px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            gap: '4px',
-            background: 'rgba(13,17,23,0.55)',
-            backdropFilter: 'blur(2px)',
-            borderRadius: '10px',
-            padding: '4px 12px',
-          }}
-        >
-          <span
+        <div className="px-6 md:px-12 absolute left-0 top-4 md:top-1/2 md:-translate-y-1/2">
+          <div
+            data-slot="stats"
             style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '11px',
-              fontWeight: 600,
-              lineHeight: '13px',
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
-              color: 'var(--color-ev-text-muted)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '4px',
+              background: 'rgba(13,17,23,0.55)',
+              backdropFilter: 'blur(2px)',
+              borderRadius: '10px',
+              padding: '4px 12px',
             }}
           >
-            {stats.label}
-          </span>
-          <span
-            style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '14px',
-              fontWeight: 700,
-              lineHeight: '16px',
-              color: 'var(--color-ev-text-primary)',
-            }}
-          >
-            {stats.value.toLocaleString()}
-          </span>
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '11px',
+                fontWeight: 600,
+                lineHeight: '13px',
+                letterSpacing: '1px',
+                textTransform: 'uppercase',
+                color: 'var(--color-ev-text-muted)',
+              }}
+            >
+              {stats.label}
+            </span>
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '14px',
+                fontWeight: 700,
+                lineHeight: '16px',
+                color: 'var(--color-ev-text-primary)',
+              }}
+            >
+              {stats.value.toLocaleString()}
+            </span>
+          </div>
         </div>
       )}
 
       {/* Feature-icon row (ICON-01/02/03, D-05/D-06) — bottom-right, never overlaps the
           bottom-left title. Empty/absent array renders nothing (TETH-03). Top-right stays
           free for Phase 188's population stat (D-07). */}
-      {featureIcons?.length > 0 && (
+      {shouldRenderIcons(featureIcons) && (
         <div
           data-slot="feature-icons"
           style={{

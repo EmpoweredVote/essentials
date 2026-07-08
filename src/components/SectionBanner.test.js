@@ -7,7 +7,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { FALLBACK_GRADIENTS, shouldRenderStat } from './SectionBanner.jsx';
+import { FALLBACK_GRADIENTS, shouldRenderStat, shouldRenderIcons } from './SectionBanner.jsx';
 
 describe('FALLBACK_GRADIENTS — tier to gradient string mapping', () => {
   it('city gradient is defined and non-empty', () => {
@@ -68,5 +68,27 @@ describe('shouldRenderStat', () => {
 
   it('returns false for an empty object', () => {
     expect(shouldRenderStat({})).toBe(false);
+  });
+});
+
+describe('shouldRenderIcons', () => {
+  it('returns true for a non-empty array', () => {
+    expect(shouldRenderIcons([{ key: 'x' }])).toBe(true);
+  });
+
+  it('returns false for an empty array', () => {
+    expect(shouldRenderIcons([])).toBe(false);
+  });
+
+  it('returns false for null', () => {
+    expect(shouldRenderIcons(null)).toBe(false);
+  });
+
+  it('returns false for undefined', () => {
+    expect(shouldRenderIcons(undefined)).toBe(false);
+  });
+
+  it('returns false for a non-array', () => {
+    expect(shouldRenderIcons('x')).toBe(false);
   });
 });
