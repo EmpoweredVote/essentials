@@ -99,7 +99,20 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
   3. A banner for a location with zero valid product links and zero available stats renders its title, pin, and art exactly as in v19.0 — no empty containers, no layout shift, no console errors.
   4. All three tiers (city, state, federal) show the enhanced banner treatment — icon row and/or stats strip where data exists — on both pages.
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+**Wave 1**
+
+  - [ ] 189-01-PLAN.md — Pure buildBannerProps helper + tests; SectionBanner shouldRenderIcons + D-05 mid-left stat reposition (wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+  - [ ] 189-02-PLAN.md — Wire Results.jsx + ElectionsView.jsx through buildBannerProps one-liners (wave 2)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+  - [ ] 189-03-PLAN.md — Live spot-check: D-05 placement, cross-page parity, SBAN-04 empty-state (checkpoint, wave 3)
+
 **UI hint**: yes
 
 ### Coverage (v21.0)
@@ -186,8 +199,8 @@ This deferred scope is what v21.0 now fills.
 |-------|-----------|----------------|--------|-----------|
 | 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete    | 2026-07-07 |
 | 188. Location Stats Strip | v21.0 | 3/3 | Complete   | 2026-07-07 |
-| 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/TBD | Not started | - |
+| 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/3 | Planned | - |
 
-**v21.0: 2/3 phases complete, 5 plans (Phase 187: 2, Phase 188: 3), 9/14 requirements. Progress 67%.**
+**v21.0: 2/3 phases complete, 8 plans (Phase 187: 2, Phase 188: 3, Phase 189: 3 planned), 9/14 requirements. Progress 67%.**
 
 <!-- v20.0 progress table archived to .planning/milestones/v20.0-ROADMAP.md at milestone close. -->
