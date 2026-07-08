@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "gen:coverage": "node scripts/gen-coverage.mjs",
+    "prebuild": "node scripts/gen-coverage.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
