@@ -1,8 +1,8 @@
 ---
 phase: 189
 slug: smart-banner-integration-graceful-degradation
-status: draft
-nyquist_compliant: false
+status: approved
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-07-08
 ---
@@ -74,4 +74,4 @@ created: 2026-07-08
 - [ ] Feedback latency < 10s
 - [ ] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-07-08 (plan-checker confirmed Nyquist checks 8a–8d pass; `wave_0_complete` flips true once `bannerProps.test.js` lands in execution)
