@@ -32,6 +32,7 @@ import SectionBanner from '../components/SectionBanner.jsx';
 import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
+import { buildBannerProps } from '../lib/bannerProps';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -1184,6 +1185,18 @@ export default function Results() {
     };
   }, [representingCity, userState, searchParams]);
 
+  const bannerCtx = useMemo(
+    () => ({
+      representingCity,
+      userState,
+      stateNames: STATE_NAMES,
+      buildingImageMap,
+      featureIconMap,
+      populationMap,
+    }),
+    [representingCity, userState, buildingImageMap, featureIconMap, populationMap]
+  );
+
   // Only show the nearest upcoming election; hiding future elections avoids duplicate
   // race sections when a primary and general are both returned for the same seat.
   const nearestElection = useMemo(() => {
@@ -1986,29 +1999,11 @@ export default function Results() {
                   if (!tierStyle) return null;
 
                   const tierBanner = tier === 'Local'
-                    ? <SectionBanner
-                        tier="city"
-                        locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
-                        imageUrl={buildingImageMap.Local}
-                        featureIcons={featureIconMap.Local}
-                        stats={populationMap.Local}
-                      />
+                    ? <SectionBanner {...buildBannerProps('city', bannerCtx)} />
                     : tier === 'State'
-                    ? <SectionBanner
-                        tier="state"
-                        locationName={(userState && STATE_NAMES[userState]) || userState || 'Your State'}
-                        imageUrl={buildingImageMap.State}
-                        featureIcons={featureIconMap.State}
-                        stats={populationMap.State}
-                      />
+                    ? <SectionBanner {...buildBannerProps('state', bannerCtx)} />
                     : tier === 'Federal'
-                    ? <SectionBanner
-                        tier="federal"
-                        locationName="United States"
-                        imageUrl={buildingImageMap.Federal}
-                        featureIcons={featureIconMap.Federal}
-                        stats={populationMap.Federal}
-                      />
+                    ? <SectionBanner {...buildBannerProps('federal', bannerCtx)} />
                     : null;
 
                   return (
