@@ -8,9 +8,8 @@
 //
 // Regenerate:  npm run gen:coverage   (also runs automatically via the `prebuild` hook)
 //
-// NOTE: the `federal` record is INTENTIONALLY OMITTED until Deliverable 2 (the national-officials
-// browse route `?browse_federal_officials=1`) ships. Emitting it early would hand TT a dead link.
-// When D2 lands, add the `federal` block here (see the commented stub at the bottom).
+// NOTE: Deliverable 2 (the national-officials browse route `?browse_federal_officials=1`) is LIVE,
+// so the `federal` record is now emitted. It points at the national-officials browse target.
 
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -56,8 +55,11 @@ const catalog = {
   cities,
   counties,
   states,
-  // federal: { label: 'United States', target: '/results?browse_federal_officials=1&browse_label=United+States' },
-  //   ^ uncomment when Deliverable 2 is live.
+  // Deliverable 2 (national-officials browse) is live — federal record enabled.
+  federal: {
+    label: 'United States',
+    target: '/results?browse_federal_officials=1&browse_label=United+States',
+  },
 };
 
 // Fail fast rather than ship a truncated catalog (mirrors gen-population.mjs).
@@ -73,5 +75,5 @@ mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, JSON.stringify(catalog, null, 2) + '\n', 'utf8');
 console.log(
   `coverage.json written: ${cities.length} cities, ${counties.length} counties, ` +
-    `${states.length} states (federal omitted pending D2) -> ${OUT}`
+    `${states.length} states, federal record included -> ${OUT}`
 );
