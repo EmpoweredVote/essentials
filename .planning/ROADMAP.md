@@ -91,7 +91,9 @@ milestone starts at **Phase 190**.
   3. Congressional district (CD) boundaries loaded for Arizona's 9 US House districts
   4. SLDU (30 districts) and SLDL (30 districts, 2-seat) boundaries loaded for the state legislature
   5. Section-split scan against the new AZ rows returns 0 defects
-**Plans**: TBD
+**Plans**: 2 plans
+- [ ] 190-01-PLAN.md — Add AZ (FIPS 04) to TIGER loader + verify/smoke scripts; dry-run to confirm counts (sldl=30 per D-04, place ~91); pre-existing-row check. No DB writes.
+- [ ] 190-02-PLAN.md — Live-load 5 AZ layers (cd119/sldu/sldl/place/county); SQL gates (unincorporated-Pima probe, casing, section-split); 6-address smoke test.
 
 #### Phase 191: Arizona State & Federal Government
 **Goal**: Arizona's statewide executive and federal delegation are seeded with correct election/appointment status and are visible on their own profile pages.
