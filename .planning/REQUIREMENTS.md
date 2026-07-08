@@ -120,7 +120,7 @@ All 14 v21.0 requirements mapped to exactly one phase. No orphans, no duplicates
 | STAT-01 | Phase 188: Location Stats Strip | Complete |
 | STAT-02 | Phase 188: Location Stats Strip | Complete |
 | STAT-03 | Phase 188: Location Stats Strip | Complete |
-| SBAN-01 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
-| SBAN-02 | Phase 189: Smart-Banner Integration & Graceful Degradation | Pending |
+| SBAN-01 | Phase 189: Smart-Banner Integration & Graceful Degradation | Complete |
+| SBAN-02 | Phase 189: Smart-Banner Integration & Graceful Degradation | Complete |
 | SBAN-03 | Phase 189: Smart-Banner Integration & Graceful Degradation | Complete |
 | SBAN-04 | Phase 189: Smart-Banner Integration & Graceful Degradation | Complete |
