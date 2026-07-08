@@ -86,4 +86,21 @@ community banner → surface in `src/lib/coverage.js`.
 
 ## Traceability
 
-<!-- Filled by roadmap: REQ-ID → Phase mapping. -->
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| AZ-GEO-01 | Phase 190 | Pending |
+| AZ-STATE-01 | Phase 191 | Pending |
+| AZ-STATE-02 | Phase 191 | Pending |
+| AZ-LEG-01 | Phase 192 | Pending |
+| PIMA-01 | Phase 193 | Pending |
+| TUC-01 | Phase 194 | Pending |
+| SUB-01 | Phase 195 | Pending |
+| SUB-02 | Phase 196 | Pending |
+| SUB-03 | Phase 197 | Pending |
+| SUB-04 | Phase 198 | Pending |
+| BANR-01 | Phases 193, 194, 195, 196, 197, 198 | Pending |
+| AZ-ELEC-01 | Phase 199 | Pending |
+| AZ-RETRO-01 | Phase 200 | Pending |
+
+**Coverage:** 13/13 v22.0 requirements mapped. No orphans, no duplicates (BANR-01 intentionally spans
+the 6 deep-seed phases as a cross-cutting deliverable).

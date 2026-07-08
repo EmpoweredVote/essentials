@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
 status: planning
-last_updated: "2026-07-08T20:52:25.707Z"
+last_updated: "2026-07-08T21:30:00.000Z"
 last_activity: 2026-07-08
 progress:
-  total_phases: 0
+  total_phases: 11
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-07-08 — Milestone v22.0 started
+Phase: 190 of 200 (Arizona TIGER Geofences) — ready to plan
+Plan: — (roadmap created, no plans authored yet)
+Status: Roadmap created — ready for /gsd:plan-phase 190
+Last activity: 2026-07-08 — ROADMAP.md written (11 phases, 190-200, continuing from v21.0's close at 189); REQUIREMENTS.md traceability filled (13/13 mapped, no orphans, BANR-01 cross-cutting across 193-198)
 
 ## Deferred Items
 
@@ -45,6 +45,39 @@ leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0
 | verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+
+### v22.0 roadmap (created 2026-07-08)
+
+New-state coverage milestone: Arizona foundation (TIGER geofences -> state/federal government ->
+90-member legislature seed+headshots, stances deferred) -> Tucson-metro local layer (Pima County ->
+City of Tucson flagship -> 4 suburbs) -> 2026 elections + discovery -> playbook retrospective + close.
+11 phases (190-200), continuing numbering from v21.0 (closed at 189). 13/13 requirements mapped -
+no orphans. BANR-01 (licensed community banner) is cross-cutting across the 6 deep-seed phases
+(193-198), not a standalone phase. Reuses LOCATION-ONBOARDING.md + NV (v18.0) / OR-WashCo (v20.0)
+new-state precedent.
+
+- **190 Arizona TIGER Geofences** - AZ-GEO-01 (all tiers: G4110 cities, G4020 counties, CDs, SLDU,
+  SLDL; section-split clean; prerequisite for every other phase)
+- **191 Arizona State & Federal Government** - AZ-STATE-01 + AZ-STATE-02 (Hobbs + constitutional
+  officers + 2 US Senators + 9 US House, combined into one phase per the NV v18.0 pattern)
+- **192 Arizona Legislature (seed + headshots)** - AZ-LEG-01 (30 senators + 60 house reps; STANCES
+  DEFERRED, matching the NV v18.0 split)
+- **193 Pima County Board of Supervisors Deep-Seed** - PIMA-01 + BANR-01 (standalone county govt,
+  5 districts, NOT nested under State of AZ; includes its licensed banner)
+- **194 City of Tucson Deep-Seed** - TUC-01 + BANR-01 (flagship; Mayor + 6 wards; verify ward vs
+  at-large + AZ partisan-election handling at plan time; includes banner)
+- **195 Oro Valley Deep-Seed** - SUB-01 + BANR-01
+- **196 Marana Deep-Seed** - SUB-02 + BANR-01
+- **197 Sahuarita Deep-Seed** - SUB-03 + BANR-01
+- **198 South Tucson Deep-Seed** - SUB-04 + BANR-01
+- **199 AZ 2026 Elections & Discovery** - AZ-ELEC-01 (depends on phases 191-198 for office anchors)
+- **200 Arizona Playbook Retrospective & Close** - AZ-RETRO-01 (coverage.js reconciled, AZ GOTCHAs,
+  DB-verified audit, milestone close)
+
+Deep-seed unit (193-198): government + chamber -> roster -> 600x750 headshots -> evidence-only
+stances (one agent at a time, 100% cited, no defaults, honest blanks) -> licensed community banner
+(street-scene/skyline, no AI/aerial, sourced one at a time) -> surface in src/lib/coverage.js.
+Phases 191-198 all depend only on Phase 190; suggested execution order mirrors NV/OR-WashCo shape.
 
 ### v21.0 roadmap (created 2026-07-07)
 
