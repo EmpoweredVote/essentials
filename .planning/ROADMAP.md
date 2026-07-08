@@ -103,7 +103,7 @@ when a banner has neither links nor stats. Frontend-only — no backend/DB schem
 
 **Wave 1**
 
-  - [ ] 189-01-PLAN.md — Pure buildBannerProps helper + tests; SectionBanner shouldRenderIcons + D-05 mid-left stat reposition (wave 1)
+  - [x] 189-01-PLAN.md — Pure buildBannerProps helper + tests; SectionBanner shouldRenderIcons + D-05 mid-left stat reposition (wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -199,7 +199,7 @@ This deferred scope is what v21.0 now fills.
 |-------|-----------|----------------|--------|-----------|
 | 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete    | 2026-07-07 |
 | 188. Location Stats Strip | v21.0 | 3/3 | Complete   | 2026-07-07 |
-| 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 0/3 | Planned | - |
+| 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 1/3 | In Progress|  |
 
 **v21.0: 2/3 phases complete, 8 plans (Phase 187: 2, Phase 188: 3, Phase 189: 3 planned), 9/14 requirements. Progress 67%.**
 
