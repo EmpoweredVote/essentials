@@ -6,135 +6,38 @@ shipped milestones are collapsed into `<details>` blocks.
 
 ## Milestones
 
-- 🚧 **v21.0 Smart Banners** — Phases 187–189 (active)
+- ✅ **v21.0 Smart Banners** — Phases 187–189 (shipped 2026-07-08)
 - ✅ **v20.0 West-Metro Washington County, OR** — Phases 174–186 (shipped 2026-07-05)
 - ✅ **v18.0 Las Vegas & Clark County, NV** — Phases 158–168, 173 (shipped 2026-06-30)
 - ✅ **v19.0 Dark-Mode Redesign & Section Banners** — Phases 169–172 (shipped 2026-06-28, formally closed 2026-07-05)
 - ✅ **v17.0 LA County City Coverage Wave 2** — Phases 142–157 (shipped 2026-06-22)
 - ✅ earlier milestones v2.0–v16.0 — see `.planning/milestones/` archives + `MILESTONES.md`
 
+_No active milestone. Open the next one with `/gsd-new-milestone`._
+
 ## Phases
 
-### 🚧 v21.0 Smart Banners (Phases 187–189) — ACTIVE
+<details>
+<summary>✅ v21.0 Smart Banners (Phases 187–189) — SHIPPED 2026-07-08</summary>
 
-## Overview
+Full detail: `.planning/milestones/v21.0-ROADMAP.md` · requirements: `.planning/milestones/v21.0-REQUIREMENTS.md`
 
-v19.0 shipped `SectionBanner` with two deliberately inert scaffolding slots — `stats` and
-`featureIcons` — plus the `treasury.js` has-data matching contract. v21.0 fills both slots:
-a tethered product-icon row that deep-links each banner's *own* location (never the user's)
-into other EV products, and a Census-sourced stats strip led by population. The two workstreams
-build independently (icon/tethering logic vs. Census stats sourcing) and converge in a final
-integration phase that wires the enhanced, single-source-of-truth component into both
-`Results.jsx` and `ElectionsView.jsx`, verifying identical behavior and graceful degradation
-when a banner has neither links nor stats. Frontend-only — no backend/DB schema changes.
+Filled v19.0's two deliberately-inert `SectionBanner` scaffolding slots (`featureIcons` + `stats`),
+turning every section banner into a location-aware hub. Frontend-only — no backend/DB schema changes.
+A tethered EV-product icon row deep-links each banner's OWN location (never the user's) into other EV
+products; a Census-sourced population strip shows a legible fact per tier; both wired identically into
+Results and Elections through one shared `buildBannerProps` helper, degrading gracefully to the v19.0
+title-only banner when no links or stats exist.
 
-**Phase Numbering:** Continues from v20.0 (last phase: 186). This milestone's phases start at 187.
+- [x] Phase 187: Tethered Feature-Icon Row (2/2) — completed 2026-07-07
+- [x] Phase 188: Location Stats Strip (3/3) — completed 2026-07-07
+- [x] Phase 189: Smart-Banner Integration & Graceful Degradation (3/3) — completed 2026-07-08
 
-- [x] **Phase 187: Tethered Feature-Icon Row** - Build the location-tethered, context-aware product-icon row and Treasury deep-link resolution. (completed 2026-07-07)
-- [x] **Phase 188: Location Stats Strip** - Build the Census-sourced, population-first stats strip keyed to the banner's geo identifier. (completed 2026-07-07)
-- [x] **Phase 189: Smart-Banner Integration & Graceful Degradation** - Wire the enhanced component into both Results and Elections pages as one shared implementation; verify empty-state and cross-page parity. (completed 2026-07-08)
+14/14 requirements (ICON-01/02/03 + TETH-01/02/03/04 → 187; STAT-01/02/03 → 188; SBAN-01/02/03/04 → 189).
+Phase 189 VERIFICATION PASS 8/8 (operator-approved live); no standalone milestone audit — Phase 189 was
+the integration/verification phase.
 
-## Phase Details
-
-### Phase 187: Tethered Feature-Icon Row
-
-**Goal**: Every section banner shows a row of EV-product logo icons that deep-link into **that banner's own location** in other EV products — never the user's saved/broker location — and an icon appears only when a valid per-location link actually exists.
-**Depends on**: Nothing (first phase of v21.0; extends v19.0's `SectionBanner` `featureIcons` slot and the existing `treasury.js` has-data matching contract)
-**Requirements**: ICON-01, ICON-02, ICON-03, TETH-01, TETH-02, TETH-03, TETH-04
-**Success Criteria** (what must be TRUE):
-
-  1. On a banner whose location has an available Treasury dataset, the icon row shows a Treasury icon; hovering or keyboard-focusing it shows a tooltip naming "Treasury Tracker."
-  2. Clicking the Treasury icon on a banner opens `financials.empowered.vote/?entity=<name-state>` for **the banner's own location** — verified by viewing a banner whose location differs from the user's own saved/current location and confirming the link carries the banner's location, not the user's.
-  3. A state-tier banner (e.g., "Texas") links its Treasury icon to the Texas state General Fund entity when one exists; a federal-tier banner links to a federal Treasury entity when one exists — not only municipalities.
-  4. A banner whose location has no matching Treasury entity shows no Treasury icon at all — no greyed-out or disabled icon, no dead link.
-  5. Icons render from the shared `ev-landing/ev-landing-main/icons` set in a variant that stays legible against the banner's dark background, and are positioned so they never overlap the location title text.**Plans**: 2 plans
-
-**Wave 1**
-
-  - [x] 187-01-PLAN.md — Treasury state/federal resolvers, product registry, resolveFeatureIcons + pure-logic tests (wave 1)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-  - [x] 187-02-PLAN.md — SectionBanner chip row + accessible tooltip; wire featureIconMap through Results + ElectionsView (wave 2)
-
-**UI hint**: yes
-
-### Phase 188: Location Stats Strip
-
-**Goal**: City and state banners show at least one legible, Census-sourced fact (population first) about that banner's own location, resolved dynamically from the location's geo identifier — and the strip degrades gracefully when a stat is unavailable.
-**Depends on**: Nothing (independent workstream from Phase 187; extends v19.0's `SectionBanner` `stats` slot)
-**Requirements**: STAT-01, STAT-02, STAT-03
-**Success Criteria** (what must be TRUE):
-
-  1. A city-tier banner (e.g., Plano, TX) displays that city's population as a legibly formatted fact, positioned so it never collides with the location title.
-  2. A state-tier banner (e.g., Texas) displays that state's population.
-  3. The displayed population is fetched/keyed by the banner location's Census geo identifier (FIPS place/state code) — not a hardcoded per-city or per-state lookup table.
-  4. When Census data is unavailable for a location (no FIPS match, fetch failure, etc.), the stats strip simply omits that fact — no "undefined," no "0," no broken label — and the rest of the banner still renders normally.
-
-**Plans**: 3 plans
-
-**Wave 1**
-
-  - [x] 188-01-PLAN.md — Census generator + committed FIPS-keyed population bundle; export STATE_FIPS_TO_ABBREV (wave 1)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-  - [x] 188-02-PLAN.md — Pure resolvePopulation() (D-04/05/06 + STAT-03 null-on-miss) with fixture-injected Vitest matrix (wave 2)
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-  - [x] 188-03-PLAN.md — SectionBanner top-right population scrim + populationMap wiring through Results.jsx + ElectionsView.jsx (wave 3)
-
-**UI hint**: yes
-
-### Phase 189: Smart-Banner Integration & Graceful Degradation
-
-**Goal**: The icon row and stats strip from Phases 187–188 appear identically on both the Representatives/Results page and the Elections page, built and consumed from one shared component — and a banner with no product links and no available stats still renders exactly as it did in v19.0.
-**Depends on**: Phase 187, Phase 188
-**Requirements**: SBAN-01, SBAN-02, SBAN-03, SBAN-04
-**Success Criteria** (what must be TRUE):
-
-  1. Viewing the Results page and the Elections page for the same location show the identical icon row and stats strip on each of the city / state / federal banners — no page-specific divergence in behavior or appearance.
-  2. Both `Results.jsx` and `ElectionsView.jsx` render their banners through the same shared component — confirmed by code inspection, not two parallel implementations (single source of truth, promotable to `@empoweredvote/ev-ui`).
-  3. A banner for a location with zero valid product links and zero available stats renders its title, pin, and art exactly as in v19.0 — no empty containers, no layout shift, no console errors.
-  4. All three tiers (city, state, federal) show the enhanced banner treatment — icon row and/or stats strip where data exists — on both pages.
-
-**Plans**: 3 plans
-
-**Wave 1**
-
-  - [x] 189-01-PLAN.md — Pure buildBannerProps helper + tests; SectionBanner shouldRenderIcons + D-05 mid-left stat reposition (wave 1)
-
-**Wave 2** *(blocked on Wave 1 completion)*
-
-  - [x] 189-02-PLAN.md — Wire Results.jsx + ElectionsView.jsx through buildBannerProps one-liners (wave 2)
-
-**Wave 3** *(blocked on Wave 2 completion)*
-
-  - [x] 189-03-PLAN.md — Live spot-check: D-05 placement, cross-page parity, SBAN-04 empty-state (checkpoint, wave 3)
-
-**UI hint**: yes
-
-### Coverage (v21.0)
-
-All 14 v21.0 requirements mapped to exactly one phase. No orphans, no duplicates.
-
-| Requirement | Phase |
-|-------------|-------|
-| ICON-01 | 187 |
-| ICON-02 | 187 |
-| ICON-03 | 187 |
-| TETH-01 | 187 |
-| TETH-02 | 187 |
-| TETH-03 | 187 |
-| TETH-04 | 187 |
-| STAT-01 | 188 |
-| STAT-02 | 188 |
-| STAT-03 | 188 |
-| SBAN-01 | 189 |
-| SBAN-02 | 189 |
-| SBAN-03 | 189 |
-| SBAN-04 | 189 |
+</details>
 
 <details>
 <summary>✅ v20.0 West-Metro Washington County, OR (Phases 174–186) — SHIPPED 2026-07-05</summary>
@@ -189,18 +92,12 @@ Full detail: `.planning/milestones/v19.0-ROADMAP.md` · audit: `v19.0-MILESTONE-
 
 Frontend-only detour built 2026-06-25 → 06-28 (verified + deployed); formal close ran 2026-07-05.
 Deferred (out of scope): live banner stats, feature-icon links, remaining-state art, Landing/profile dark mode.
-This deferred scope is what v21.0 now fills.
+This deferred scope is what v21.0 filled.
 
 </details>
 
-## Progress (most-recent milestone: v21.0)
+## Progress
 
-| Phase | Milestone | Plans Complete | Status | Completed |
-|-------|-----------|----------------|--------|-----------|
-| 187. Tethered Feature-Icon Row | v21.0 | 2/2 | Complete    | 2026-07-07 |
-| 188. Location Stats Strip | v21.0 | 3/3 | Complete   | 2026-07-07 |
-| 189. Smart-Banner Integration & Graceful Degradation | v21.0 | 3/3 | Complete   | 2026-07-08 |
-
-**v21.0: 3/3 phases complete, 8 plans (Phase 187: 2, Phase 188: 3, Phase 189: 3), 14/14 requirements. Progress 100% — ready for milestone close.**
-
-<!-- v20.0 progress table archived to .planning/milestones/v20.0-ROADMAP.md at milestone close. -->
+All v21.0 phases shipped (3/3 phases, 8 plans, 14/14 requirements — 100%). Per-milestone progress
+tables are archived to `.planning/milestones/v{X.Y}-ROADMAP.md` at close. No active milestone —
+open the next one with `/gsd-new-milestone`.

@@ -2,31 +2,33 @@
 gsd_state_version: 1.0
 milestone: v21.0
 milestone_name: Smart Banners
-status: executing
-last_updated: "2026-07-08T15:52:08.469Z"
-last_activity: 2026-07-08
+status: Awaiting next milestone
+last_updated: "2026-07-08T19:00:09.989Z"
+last_activity: 2026-07-08 — Milestone v21.0 completed and archived
 progress:
-  total_phases: 32
-  completed_phases: 30
-  total_plans: 101
-  completed_plans: 101
-  percent: 94
+  total_phases: 3
+  completed_phases: 3
+  total_plans: 8
+  completed_plans: 8
+  percent: 100
 ---
 
 # State
 
 ## Current Position
 
-Phase: 189 (smart-banner-integration-graceful-degradation) — EXECUTING
-Plan: 3 of 3
-Status: Ready to execute
-Last activity: 2026-07-08
+Phase: Milestone v21.0 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-08 — Milestone v21.0 completed and archived
 
 ## Deferred Items
 
-Items acknowledged and deferred at v20.0 milestone close on 2026-07-05 (12 open artifacts;
-9 are stale cross-milestone leftovers, 3 are v20.0 per-phase checkpoints superseded by the
-DB-verified v20.0-MILESTONE-AUDIT.md + live operator approvals):
+Re-acknowledged and deferred again at v21.0 milestone close on 2026-07-08 (unchanged from the
+v20.0 close; 12 open artifacts — none belong to v21.0, which had zero open items and closed on
+Phase 189's VERIFICATION PASS 8/8 + live operator sign-off). 9 are stale cross-milestone
+leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0-MILESTONE-AUDIT.md
++ live operator approvals:
 
 | Category | Item | Status |
 |----------|------|--------|
@@ -632,3 +634,7 @@ Resume file: None
 - [Phase 188]: shouldRenderStat exported pure predicate on SectionBanner gates the top-right population scrim (STAT-03 omit); population resolved once in Results.jsx populationMap useMemo and threaded through ElectionsView (parent-resolves/child-renders, no page divergence — Phase 189 alignment)
 - [Phase 189]: buildBannerProps folds locationName construction into the single assembly point, not just the 3 named maps, to fully close SBAN-03
 - [Phase ?]: ElectionsView bannerCtx useMemo placed before early returns to satisfy rules-of-hooks (not near render block as sketched)
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone
