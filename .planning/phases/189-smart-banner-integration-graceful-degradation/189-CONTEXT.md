@@ -52,6 +52,26 @@ icons, reciprocal icons on other apps' banners, expanding coverage, ev-ui promot
   initial bundle. Include the split **only if it is a low-risk, near-1-line change**; otherwise **defer**
   it as its own perf task and log that decision. Do not let a bundle refactor expand 189's scope.
 
+### Banner stat placement — reposition (SUPERSEDES 188 D-11)
+- **D-05:** Move the population stat from **top-right** (188 D-11/D-12) to **mid-left**, floated above
+  the location title. **Responsive** (verified live in a prototype at 390px and 1280px):
+  - **Desktop (`md:`, 180px banner):** vertically centered on the left edge (`md:top-1/2 md:-translate-y-1/2`).
+  - **Mobile (120px banner):** upper-left (`top-4`) — a vertically-centered stat overlaps the title on the
+    short banner (measured 13px overlap), so it nudges up; verified 9px clear gap above the title.
+  - **Left-aligned to the title's margin** — the stat's wrapper shares the title's `px-6 md:px-12` padding
+    so the label/number and the location name line up on the same left edge.
+  - **Exact prototype approach (for the executor to replicate):** an absolute wrapper
+    `className="px-6 md:px-12 absolute left-0 top-4 md:top-1/2 md:-translate-y-1/2"` containing an
+    `inline-flex` column scrim, `align-items: flex-start`, unchanged 188 tokens
+    (`background: rgba(13,17,23,0.55)`, `backdropFilter: blur(2px)`, `borderRadius: 10px`, `padding: 4px 12px`),
+    label `11px/600` uppercase `--color-ev-text-muted`, number `14px/700` `--color-ev-text-primary` via
+    `.toLocaleString()`. Keep the `shouldRenderStat(stats)` omit guard (STAT-03) intact.
+  - This is a SectionBanner **render** change; it is orthogonal to D-01's `buildBannerProps` (props are
+    unchanged — only where the `stats` block renders moves). Implement both in this phase.
+- **D-06:** No standalone `189-UI-SPEC.md`. The visual contract is **188-UI-SPEC.md + the D-05 override**.
+  188 D-11/D-12 (top-right, corner-clearance) are explicitly overridden by D-05; all other 188 UI-SPEC
+  values (scrim tokens, label/number type, dark-mode, no-`!important`) still hold.
+
 ### Empty-state parity proof (SBAN-04)
 - **D-04:** Prove v19.0 parity **lightweight**: code inspection + a **live spot-check of a no-data
   location** (e.g. a government-list county browse with no place link and an unresolved city stat →
