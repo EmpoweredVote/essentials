@@ -104,7 +104,10 @@ milestone starts at **Phase 190**.
   2. 2 US Senators (Kelly, Gallego) seeded as NATIONAL_UPPER, statewide
   3. 9 US House reps seeded as NATIONAL_LOWER, each correctly linked to their CD geofence from Phase 190
   4. All seeded state and federal officials have 600×750 headshots
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 191-01-PLAN.md — STATE_EXEC gap: structural migration 1282 (3 chambers/3 districts/7 politicians -4004001..-4004007/7 offices incl. 5-seat Corporation Commission) + 7 headshots (mig 1283)
+- [ ] 191-02-PLAN.md — US House headshots: 8 reps via unitedstates.github.io resize-only pipeline (mig 1284, audit-only)
+- [ ] 191-03-PLAN.md — Verification SQL audit + human-verify checkpoint (identity, live browse, Presmyk resolution)
 
 #### Phase 192: Arizona Legislature (seed + headshots)
 **Goal**: The full 90-member Arizona Legislature is seeded and photographed, ready for a future stance-research pass.
