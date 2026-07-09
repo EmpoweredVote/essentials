@@ -69,7 +69,7 @@ milestone starts at **Phase 190**.
 - Decimal phases (190.1, 190.2): Urgent insertions (marked with INSERTED)
 
 - [ ] **Phase 190: Arizona TIGER Geofences** - All boundary tiers loaded; any AZ address resolves to the correct jurisdiction stack
-- [ ] **Phase 191: Arizona State & Federal Government** - Hobbs + constitutional officers + 2 US Senators + 9 US House, all with headshots
+- [x] **Phase 191: Arizona State & Federal Government** - Hobbs + constitutional officers + 2 US Senators + 9 US House, all with headshots (completed 2026-07-09)
 - [ ] **Phase 192: Arizona Legislature (seed + headshots)** - 30 senators + 60 house reps seeded and photographed; stances deferred
 - [ ] **Phase 193: Pima County Board of Supervisors Deep-Seed** - Standalone county government + roster + headshots + stances + banner
 - [ ] **Phase 194: City of Tucson Deep-Seed** - Flagship: Mayor + 6 wards + roster + headshots + stances + banner
@@ -268,7 +268,7 @@ any relative order among themselves, but the suggested sequence (state/federal â
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 190. Arizona TIGER Geofences | 2/2 | Complete   | 2026-07-08 |
-| 191. Arizona State & Federal Government | 3/3 | Complete   | 2026-07-09 |
+| 191. Arizona State & Federal Government | 3/3 | Complete    | 2026-07-09 |
 | 192. Arizona Legislature (seed + headshots) | 0/TBD | Not started | - |
 | 193. Pima County Board of Supervisors Deep-Seed | 0/TBD | Not started | - |
 | 194. City of Tucson Deep-Seed | 0/TBD | Not started | - |
