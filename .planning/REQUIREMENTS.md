@@ -24,7 +24,7 @@ community banner → surface in `src/lib/coverage.js`.
 - [x] **AZ-STATE-01**: State of Arizona government seeded — Gov. Katie Hobbs + constitutional officers
   (per AZ constitution: some voter-elected, some appointed) with chambers, offices, STATE_EXEC districts,
   and 600×750 headshots.
-- [ ] **AZ-STATE-02**: Arizona federal delegation seeded — 2 US Senators (Kelly + Gallego) as
+- [x] **AZ-STATE-02**: Arizona federal delegation seeded — 2 US Senators (Kelly + Gallego) as
   NATIONAL_UPPER + 9 US House reps as NATIONAL_LOWER on CD geofences, all with 600×750 headshots.
 - [ ] **AZ-LEG-01**: 30 Arizona state senators + 60 house reps (2 per legislative district) seeded with
   offices linked to SLDU/SLDL district geofences and 600×750 headshots. **Compass stances deferred by
@@ -90,7 +90,7 @@ community banner → surface in `src/lib/coverage.js`.
 |-------------|-------|--------|
 | AZ-GEO-01 | Phase 190 | Pending |
 | AZ-STATE-01 | Phase 191 | Complete |
-| AZ-STATE-02 | Phase 191 | Pending |
+| AZ-STATE-02 | Phase 191 | Complete |
 | AZ-LEG-01 | Phase 192 | Pending |
 | PIMA-01 | Phase 193 | Pending |
 | TUC-01 | Phase 194 | Pending |
