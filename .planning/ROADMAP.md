@@ -139,7 +139,7 @@ milestone starts at **Phase 190**.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 192-02-PLAN.md — 90/90 headshots: azleg.gov crop-first 600×750 pipeline + audit-only politician_images migration
+- [x] 192-02-PLAN.md — 90/90 headshots: azleg.gov crop-first 600×750 pipeline + audit-only politician_images migration
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -279,7 +279,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 |-------|----------------|--------|-----------|
 | 190. Arizona TIGER Geofences | 2/2 | Complete   | 2026-07-08 |
 | 191. Arizona State & Federal Government | 3/3 | Complete    | 2026-07-09 |
-| 192. Arizona Legislature (seed + headshots) | 1/3 | In Progress|  |
+| 192. Arizona Legislature (seed + headshots) | 2/3 | In Progress|  |
 | 193. Pima County Board of Supervisors Deep-Seed | 0/TBD | Not started | - |
 | 194. City of Tucson Deep-Seed | 0/TBD | Not started | - |
 | 195. Oro Valley Deep-Seed | 0/TBD | Not started | - |
