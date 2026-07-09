@@ -1,9 +1,9 @@
 ---
 phase: 193
 slug: pima-county-board-of-supervisors-deep-seed
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: planned
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-07-09
 ---
 
