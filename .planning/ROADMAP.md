@@ -133,7 +133,11 @@ milestone starts at **Phase 190**.
   3. 90/90 legislators have 600×750 headshots
   4. 0 compass stances present for AZ legislators — confirmed deferred by design (not a gap), matching the NV v18.0 pattern
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+- [ ] 192-01-PLAN.md — Structural seed: 2 chambers + 30 Senate + 60 House offices/politicians (guarded, applied) under State of Arizona (geo_id 04)
+- [ ] 192-02-PLAN.md — 90/90 headshots: azleg.gov crop-first 600×750 pipeline + audit-only politician_images migration
+- [ ] 192-03-PLAN.md — Verification: full SQL/HTTP audit (incl. 0-stances deferred-by-design) + live address-routing/correct-person human-verify
 
 #### Phase 193: Pima County Board of Supervisors Deep-Seed
 
