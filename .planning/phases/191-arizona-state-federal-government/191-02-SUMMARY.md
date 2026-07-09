@@ -112,3 +112,11 @@ None - no external service configuration required. All writes applied directly t
 ---
 *Phase: 191-arizona-state-federal-government*
 *Completed: 2026-07-09*
+
+## Self-Check: PASSED
+
+- FOUND: `C:/EV-Accounts/backend/migrations/1284_az_house_headshots.sql`
+- FOUND: `C:/EV-Accounts/backend/scripts/_tmp-az-house-headshots.py` (gitignored, on disk)
+- FOUND: `.planning/phases/191-arizona-state-federal-government/191-02-SUMMARY.md`
+- FOUND: commit `b5df5e9e` (C:/EV-Accounts — migration 1284)
+- FOUND: commit `cd1f43bc` (essentials — SUMMARY.md)
