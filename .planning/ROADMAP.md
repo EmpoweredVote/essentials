@@ -135,7 +135,7 @@ milestone starts at **Phase 190**.
 **Plans**: 3 plans
 **Wave 1**
 
-- [ ] 192-01-PLAN.md — Structural seed: 2 chambers + 30 Senate + 60 House offices/politicians (guarded, applied) under State of Arizona (geo_id 04)
+- [x] 192-01-PLAN.md — Structural seed: 2 chambers + 30 Senate + 60 House offices/politicians (guarded, applied) under State of Arizona (geo_id 04)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -279,7 +279,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 |-------|----------------|--------|-----------|
 | 190. Arizona TIGER Geofences | 2/2 | Complete   | 2026-07-08 |
 | 191. Arizona State & Federal Government | 3/3 | Complete    | 2026-07-09 |
-| 192. Arizona Legislature (seed + headshots) | 0/TBD | Not started | - |
+| 192. Arizona Legislature (seed + headshots) | 1/3 | In Progress|  |
 | 193. Pima County Board of Supervisors Deep-Seed | 0/TBD | Not started | - |
 | 194. City of Tucson Deep-Seed | 0/TBD | Not started | - |
 | 195. Oro Valley Deep-Seed | 0/TBD | Not started | - |
