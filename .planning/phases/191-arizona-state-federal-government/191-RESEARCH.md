@@ -602,9 +602,9 @@ this session, or **CITED** from official .gov/Wikipedia/Wikimedia Commons/Ballot
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Les Presmyk headshot license**
+1. **Les Presmyk headshot license** — RESOLVED: deliberately deferred to execution-time sourcing (`/find-headshots`) + a Plan 03 `checkpoint:human-verify` fallback (NV 159 Andy Matthews precedent). Non-blocking by design; the other 6 officials do not wait on it.
    - What we know: No Wikimedia Commons portrait exists (only mineral-specimen photos under his
      name); `asmi.az.gov` is WAF-blocked (403).
    - What's unclear: Whether Ballotpedia, an AZGOP press photo, or another source carries a
@@ -613,7 +613,7 @@ this session, or **CITED** from official .gov/Wikipedia/Wikimedia Commons/Ballot
      confirmed present) for Les Presmyk at execution time; fall back to a `checkpoint:human-verify`
      if no licensed source exists, exactly mirroring the NV 159 Andy Matthews resolution.
 
-2. **Corporation Commission chamber name**
+2. **Corporation Commission chamber name** — RESOLVED: `name='Corporation Commission'`, `name_formal='Arizona Corporation Commission'` (short-form convention, adopted verbatim by the plans).
    - What we know: D-02 specifies "a distinct 'Arizona Corporation Commission' chamber."
    - What's unclear: Whether `chambers.name` should be the short form `'Corporation Commission'`
      (matching the existing short-form convention: `'Governor'`, `'Attorney General'`, etc.) with

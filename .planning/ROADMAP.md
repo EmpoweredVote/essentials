@@ -64,6 +64,7 @@ milestone starts at **Phase 190**.
 ### Phases
 
 **Phase Numbering:**
+
 - Integer phases (190, 191, 192...): Planned milestone work, continuing from v21.0 (closed at 189)
 - Decimal phases (190.1, 190.2): Urgent insertions (marked with INSERTED)
 
@@ -82,137 +83,175 @@ milestone starts at **Phase 190**.
 ### Phase Details
 
 #### Phase 190: Arizona TIGER Geofences
+
 **Goal**: Any Arizona address routes to the correct federal, state, county, and city representatives via TIGER geofence boundaries loaded for every tier.
 **Depends on**: Nothing (first phase; v21.0 closed at Phase 189)
 **Requirements**: AZ-GEO-01
 **Success Criteria** (what must be TRUE):
+
   1. G4110 incorporated-place boundaries loaded for all Arizona cities/towns, including Tucson, Oro Valley, Marana, Sahuarita, and South Tucson
   2. G4020 county boundaries loaded for all 15 Arizona counties, including Pima County (geo_id confirmed)
   3. Congressional district (CD) boundaries loaded for Arizona's 9 US House districts
   4. SLDU (30 districts) and SLDL (30 districts, 2-seat) boundaries loaded for the state legislature
   5. Section-split scan against the new AZ rows returns 0 defects
+
 **Plans**: 2 plans
+
 - [x] 190-01-PLAN.md — Add AZ (FIPS 04) to TIGER loader + verify/smoke scripts; dry-run to confirm counts (sldl=30 per D-04, place ~91); pre-existing-row check. No DB writes.
 - [x] 190-02-PLAN.md — Live-load 5 AZ layers (cd119/sldu/sldl/place/county); SQL gates (unincorporated-Pima probe, casing, section-split); 6-address smoke test.
 
 #### Phase 191: Arizona State & Federal Government
+
 **Goal**: Arizona's statewide executive and federal delegation are seeded with correct election/appointment status and are visible on their own profile pages.
 **Depends on**: Phase 190
 **Requirements**: AZ-STATE-01, AZ-STATE-02
 **Success Criteria** (what must be TRUE):
+
   1. Governor Katie Hobbs + constitutional officers seeded as STATE_EXEC with correct voter-elected vs. appointed flags per the AZ constitution
   2. 2 US Senators (Kelly, Gallego) seeded as NATIONAL_UPPER, statewide
   3. 9 US House reps seeded as NATIONAL_LOWER, each correctly linked to their CD geofence from Phase 190
-  4. All seeded state and federal officials have 600×750 headshots
-**Plans**: 3 plans
+  4. All seeded state and federal officials have 600×750 headshots**Plans**: 3 plans
+
+**Wave 1**
+
 - [ ] 191-01-PLAN.md — STATE_EXEC gap: structural migration 1282 (3 chambers/3 districts/7 politicians -4004001..-4004007/7 offices incl. 5-seat Corporation Commission) + 7 headshots (mig 1283)
 - [ ] 191-02-PLAN.md — US House headshots: 8 reps via unitedstates.github.io resize-only pipeline (mig 1284, audit-only)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 191-03-PLAN.md — Verification SQL audit + human-verify checkpoint (identity, live browse, Presmyk resolution)
 
 #### Phase 192: Arizona Legislature (seed + headshots)
+
 **Goal**: The full 90-member Arizona Legislature is seeded and photographed, ready for a future stance-research pass.
 **Depends on**: Phase 190
 **Requirements**: AZ-LEG-01
 **Success Criteria** (what must be TRUE):
+
   1. 30 Arizona state senators seeded with offices linked to their SLDU district geofence
   2. 60 Arizona state house reps (2 per legislative district) seeded with offices linked to their SLDL district geofence
   3. 90/90 legislators have 600×750 headshots
   4. 0 compass stances present for AZ legislators — confirmed deferred by design (not a gap), matching the NV v18.0 pattern
+
 **Plans**: TBD
 
 #### Phase 193: Pima County Board of Supervisors Deep-Seed
+
 **Goal**: Pima County residents can see their district supervisor with a full compass, and the county carries its own licensed banner.
 **Depends on**: Phase 190
 **Requirements**: PIMA-01, BANR-01
 **Success Criteria** (what must be TRUE):
+
   1. Pima County Board of Supervisors seeded as a standalone county government (5 supervisor districts on LOCAL geofences), NOT nested under State of Arizona
   2. 5/5 supervisors have 600×750 headshots
   3. Evidence-only compass stances seeded for supervisors — 100% cited, no defaults, honest blanks where evidence is absent
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) is sourced, processed, uploaded to Storage, and wired into `src/lib/buildingImages.js`
   5. Pima County surfaced in `src/lib/coverage.js` with a DB-honest chip
+
 **Plans**: TBD
 
 #### Phase 194: City of Tucson Deep-Seed
+
 **Goal**: Any Tucson address returns the correct Mayor and ward councilmember, each with a full compass, and the city carries its own licensed banner.
 **Depends on**: Phase 190
 **Requirements**: TUC-01, BANR-01
 **Success Criteria** (what must be TRUE):
+
   1. Mayor + 6 ward council members seeded with the election method verified at plan time (ward-elected vs. at-large, and AZ's partisan-primary/nonpartisan-general handling confirmed)
   2. 7/7 officials have 600×750 headshots
   3. Evidence-only compass stances seeded for all 7 officials — 100% cited, no defaults, honest blanks
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) is sourced, processed, uploaded to Storage, and wired into `src/lib/buildingImages.js`
   5. City of Tucson surfaced in `src/lib/coverage.js` with a DB-honest chip
+
 **Plans**: TBD
 **UI hint**: yes
 
 #### Phase 195: Oro Valley Deep-Seed
+
 **Goal**: Oro Valley residents can see their council with a compass, and the town carries its own licensed banner.
 **Depends on**: Phase 190
 **Requirements**: SUB-01, BANR-01
 **Success Criteria** (what must be TRUE):
+
   1. Oro Valley government + council roster seeded with election method verified at plan time
   2. All seated officials have 600×750 headshots
   3. Evidence-only compass stances seeded — 100% cited, no defaults, honest blanks
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) sourced and wired into `src/lib/buildingImages.js`
   5. Oro Valley surfaced in `src/lib/coverage.js` with a DB-honest chip
+
 **Plans**: TBD
 
 #### Phase 196: Marana Deep-Seed
+
 **Goal**: Marana residents can see their council with a compass, and the town carries its own licensed banner.
 **Depends on**: Phase 190
 **Requirements**: SUB-02, BANR-01
 **Success Criteria** (what must be TRUE):
+
   1. Marana government + council roster seeded with election method verified at plan time
   2. All seated officials have 600×750 headshots
   3. Evidence-only compass stances seeded — 100% cited, no defaults, honest blanks
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) sourced and wired into `src/lib/buildingImages.js`
   5. Marana surfaced in `src/lib/coverage.js` with a DB-honest chip
+
 **Plans**: TBD
 
 #### Phase 197: Sahuarita Deep-Seed
+
 **Goal**: Sahuarita residents can see their council with a compass, and the town carries its own licensed banner.
 **Depends on**: Phase 190
 **Requirements**: SUB-03, BANR-01
 **Success Criteria** (what must be TRUE):
+
   1. Sahuarita government + council roster seeded with election method verified at plan time
   2. All seated officials have 600×750 headshots
   3. Evidence-only compass stances seeded — 100% cited, no defaults, honest blanks
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) sourced and wired into `src/lib/buildingImages.js`
   5. Sahuarita surfaced in `src/lib/coverage.js` with a DB-honest chip
+
 **Plans**: TBD
 
 #### Phase 198: South Tucson Deep-Seed
+
 **Goal**: South Tucson residents can see their council with a compass, and the city carries its own licensed banner.
 **Depends on**: Phase 190
 **Requirements**: SUB-04, BANR-01
 **Success Criteria** (what must be TRUE):
+
   1. South Tucson government + council roster seeded with election method verified at plan time
   2. All seated officials have 600×750 headshots
   3. Evidence-only compass stances seeded — 100% cited, no defaults, honest blanks
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) sourced and wired into `src/lib/buildingImages.js`
   5. South Tucson surfaced in `src/lib/coverage.js` with a DB-honest chip
+
 **Plans**: TBD
 
 #### Phase 199: AZ 2026 Elections & Discovery
+
 **Goal**: Any AZ resident can see their 2026 ballot for statewide, federal, legislative, and Tucson-metro local races, with discovery running to keep candidate rosters current.
 **Depends on**: Phases 191–198 (offices must exist before races can anchor to them)
 **Requirements**: AZ-ELEC-01
 **Success Criteria** (what must be TRUE):
+
   1. 2026 race shells seeded for statewide offices, all 9 US House seats, all 90 legislative seats, and Tucson-metro local races (Pima County + 5 cities)
   2. Confirmed candidate slate populated for races where filing has closed
   3. `discovery_jurisdictions` rows armed with the AZ election-authority domain allowlist and `cron_active=true`
+
 **Plans**: TBD
 **UI hint**: yes
 
 #### Phase 200: Arizona Playbook Retrospective & Close
+
 **Goal**: The milestone closes with an honest, DB-verified record of what shipped, and the onboarding playbook captures Arizona-specific lessons for the next state.
 **Depends on**: Phase 199
 **Requirements**: AZ-RETRO-01
 **Success Criteria** (what must be TRUE):
+
   1. `src/lib/coverage.js` reconciled — every Tucson-metro jurisdiction with ≥1 stance carries the DB-honest purple chip, no chip where stances are 0
   2. Arizona GOTCHAs + an Arizona Quick Reference block added to `LOCATION-ONBOARDING.md`
   3. DB-verified milestone audit written (`v22.0-MILESTONE-AUDIT.md`)
   4. Milestone marked shipped in PROJECT.md / MILESTONES.md / STATE.md
+
 **Plans**: TBD
 **UI hint**: yes
 
