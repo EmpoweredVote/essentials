@@ -480,38 +480,43 @@ sourcing succeeded.
 source reachability and migration numbering) were BOTH independently DB/live-verified in this
 session, not assumed.
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+*Resolved 2026-07-09 during phase planning / plan-revision — per CONTEXT.md D-02 (LOCKED), the
+discussion-log Chair choice, and the `project_by_district_relabel_pattern` precedent.*
 
 1. **Should the 2026 Board Chair (Jennifer Allen, District 3) get a literal `(Chair)` suffix on her
-   office `title`, or should the phase follow the Clark County precedent of zero DB footprint for
-   the chair distinction?**
-   - What we know: D-02 says "the Chair is a title annotation on the sitting supervisor." The only
-     existing precedent (Clark County, live-verified) shows NO textual trace of Chair status
-     anywhere in the database — `title='Commissioner (District A)'`, no suffix, `role_canonical`
-     NULL. Washington County's Chair is structurally different (a separately-elected 5th office),
-     which is explicitly NOT what Pima wants.
-   - What's unclear: Whether "title annotation" in D-02 was written expecting a literal string
-     change (e.g. `title='Supervisor, District 3 (Chair)'`) or was simply describing "not a separate
-     office" using loose language, with the actual precedent being zero-footprint.
-   - Recommendation: Default to the Clark County zero-footprint precedent (simplest, matches the
-     strongest analog, and avoids a title string that goes stale the moment the board rotates chairs
-     again next January) unless the planner/user wants an explicit annotation. If an explicit
-     annotation is wanted, it should be clearly flagged as a NEW pattern (not yet used anywhere in
-     the codebase) and the planner should decide the exact title string format.
+   office `title`, or follow a zero-DB-footprint approach?**
+   - **RESOLVED → TITLE ANNOTATION (literal `(Chair)` suffix on the D3 seat).** D-02 is LOCKED:
+     "the Chair is a title annotation on the sitting supervisor who currently holds it … Follows the
+     by-district relabel pattern." The discussion log records the user EXPLICITLY choosing
+     "1 chamber, 5 district seats, **Chair as title**" and REJECTING the "no Chair marker / don't
+     surface the Chair role" option. The by-district relabel pattern surfaces a rotational role via
+     the `title` field ON the occupant's seat (rotational Mayor = `title='Mayor'` on the council
+     seat), NOT a separate office and NOT zero-footprint.
+   - **Decision:** Jennifer Allen's D3 office carries `title='Supervisor, District 3 (Chair)'`; the
+     other four carry plain `'Supervisor, District N'`. Still exactly 5 offices, one 'Board of
+     Supervisors' chamber, all elected by district (Chair is not separately elected). `role_canonical`
+     stays NULL for all 5 — the annotation lives in `title`, matching the rotational-mayor precedent.
+   - **Supersedes the earlier recommendation:** this research pass had initially recommended the
+     Clark County zero-footprint default; that recommendation is OVERRIDDEN by the locked D-02
+     decision + the explicit user choice. The Clark zero-footprint shape is NOT used here.
+   - **Rotation caveat:** the Chair is board-selected annually, so the annotation is informational
+     and rotates; the blocking roster-currency checkpoint (Plan 02 Task 2) re-confirms the current
+     chair before apply so the `(Chair)` suffix lands on the correct district seat.
 
-2. **Exact supervisor office title text.** Clark County used `'Commissioner (District A)'`.
-   Washington County used `'County Chair'` / (commissioner titles not fully captured in this pass).
-   Pima's official title per `pima.gov` is "Supervisor" (e.g. "Supervisor Rex Scott", "District 4
-   Supervisor, Andrés Cano" — inconsistent phrasing across the CMS pages themselves: some pages say
-   "Supervisor {Name}", others say "District {N} Supervisor, {Name}").
-   - Recommendation: `'Supervisor, District N'` (matching the Clark County `'Commissioner (District
-     N)'` shape) is the safest normalized choice — consistent with project convention of a clean,
-     display-ready title independent of the source site's inconsistent phrasing.
+2. **Exact supervisor office title text.**
+   - **RESOLVED → `'Supervisor, District N'`** (the normalized, display-ready form, independent of
+     pima.gov's inconsistent phrasing), with the D3 seat annotated `'Supervisor, District 3 (Chair)'`
+     per Open Question 1. This matches the Clark `'Commissioner (District N)'` shape adapted to Pima's
+     "Supervisor" title.
 
-3. **`X0002`'s exact reservation reason.** Not independently re-verified in this session (see A3).
-   Does not block this phase (X0019 avoids it either way), but worth a note for a future
-   playbook-retrospective cleanup pass if the gap is ever found to be an accidental orphan rather
-   than a deliberate exclusion.
+3. **`X0019` custom mtfcc code + the `X0002` reservation gap.**
+   - **RESOLVED → use `X0019`** (DB-verified unused; the next number strictly after the highest
+     confirmed-in-use code `X0018` from Washington County). `X0002`'s exact reservation reason is NOT
+     re-verified (see Assumptions Log A3) but does not block this phase — `X0019` is safely outside
+     the excluded `X0001-X0004` routing range either way. The `X0002` gap is noted only as a
+     future-playbook-retrospective cleanup item, not a Phase 193 concern.
 
 ## Environment Availability
 

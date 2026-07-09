@@ -159,11 +159,28 @@ milestone starts at **Phase 190**.
   5. Pima County surfaced in `src/lib/coverage.js` with a DB-honest chip
 
 **Plans**: 6 plans
+**Wave 1**
+
 - [ ] 193-01-PLAN.md — Source + load the 5 supervisor-district LOCAL X0019 geofences from Pima County GIS
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 193-02-PLAN.md — Seed the standalone Pima County government, Board of Supervisors chamber, and 5 by-district offices
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 193-03-PLAN.md — Fetch + bind 5/5 supervisor 600x750 headshots (pima.gov CivicPlus)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 193-04-PLAN.md — Evidence-only compass stances for the 5 supervisors (one at a time, 36 non-judicial topics)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 193-05-PLAN.md — Source + wire the Catalinas/Sonoran community banner + coverage.js chip
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
 - [ ] 193-06-PLAN.md — Full production audit + live-browse verification
 
 #### Phase 194: City of Tucson Deep-Seed
