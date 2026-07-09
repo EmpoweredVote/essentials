@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
 status: executing
-last_updated: "2026-07-09T02:01:43.318Z"
-last_activity: 2026-07-09 -- Phase 191 planning complete
+last_updated: "2026-07-09T02:26:02.223Z"
+last_activity: 2026-07-09
 progress:
   total_phases: 43
   completed_phases: 1
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 2
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 190 — COMPLETE
-Plan: 1 of 2
+Phase: 191 (arizona-state-federal-government) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-07-09 -- Phase 191 planning complete
+Last activity: 2026-07-09
 
 ## Deferred Items
 
@@ -413,7 +413,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 190 — arizona-tiger-geofences
+**Current focus:** Phase 191 — arizona-state-federal-government
 
 ## v15.0 Roadmap Summary
 
@@ -506,9 +506,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-09T01:07:45.189Z
-Stopped at: Phase 191 context gathered
-Resume file: .planning/phases/191-arizona-state-federal-government/191-CONTEXT.md
+Last session: 2026-07-09T02:26:02.210Z
+Stopped at: Completed 191-01-PLAN.md (Presmyk headshot deferred to Plan 03)
+Resume file: 191-02-PLAN.md
 
 ## Performance Metrics
 
@@ -585,6 +585,7 @@ Resume file: .planning/phases/191-arizona-state-federal-government/191-CONTEXT.m
 | Phase 188 P03 | 18min | 2 tasks | 4 files |
 | Phase 189 P01 | 6min | 2 tasks | 4 files |
 | Phase 189 P02 | 12min | 2 tasks | 2 files |
+| Phase 191 P01 | 14min | - tasks | - files |
 
 ## Decisions
 
@@ -673,6 +674,8 @@ Resume file: .planning/phases/191-arizona-state-federal-government/191-CONTEXT.m
 - [Phase 188]: shouldRenderStat exported pure predicate on SectionBanner gates the top-right population scrim (STAT-03 omit); population resolved once in Results.jsx populationMap useMemo and threaded through ElectionsView (parent-resolves/child-renders, no page divergence — Phase 189 alignment)
 - [Phase 189]: buildBannerProps folds locationName construction into the single assembly point, not just the 3 named maps, to fully close SBAN-03
 - [Phase ?]: ElectionsView bannerCtx useMemo placed before early returns to satisfy rules-of-hooks (not near render block as sketched)
+- [Phase ?]: Presmyk headshot deferred to Plan 03 checkpoint — no licensed source found (Wikimedia none, Wikipedia infobox empty, Ballotpedia placeholder, AZGOP 404, asmi.az.gov WAF-403)
+- [Phase ?]: Corporation Commission office guard uses (district_id, politician_id) not (district_id, chamber_id) — required for 5 officials sharing 1 district+chamber
 
 ## Operator Next Steps
 

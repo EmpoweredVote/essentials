@@ -114,7 +114,7 @@ milestone starts at **Phase 190**.
 
 **Wave 1**
 
-- [ ] 191-01-PLAN.md — STATE_EXEC gap: structural migration 1282 (3 chambers/3 districts/7 politicians -4004001..-4004007/7 offices incl. 5-seat Corporation Commission) + 7 headshots (mig 1283)
+- [x] 191-01-PLAN.md — STATE_EXEC gap: structural migration 1282 (3 chambers/3 districts/7 politicians -4004001..-4004007/7 offices incl. 5-seat Corporation Commission) + 7 headshots (mig 1283)
 - [ ] 191-02-PLAN.md — US House headshots: 8 reps via unitedstates.github.io resize-only pipeline (mig 1284, audit-only)
 
 **Wave 2** *(blocked on Wave 1 completion)*
@@ -268,7 +268,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 190. Arizona TIGER Geofences | 2/2 | Complete   | 2026-07-08 |
-| 191. Arizona State & Federal Government | 0/TBD | Not started | - |
+| 191. Arizona State & Federal Government | 1/3 | In Progress|  |
 | 192. Arizona Legislature (seed + headshots) | 0/TBD | Not started | - |
 | 193. Pima County Board of Supervisors Deep-Seed | 0/TBD | Not started | - |
 | 194. City of Tucson Deep-Seed | 0/TBD | Not started | - |

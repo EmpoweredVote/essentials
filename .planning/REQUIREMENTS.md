@@ -21,7 +21,7 @@ community banner → surface in `src/lib/coverage.js`.
 - [ ] **AZ-GEO-01**: Any Arizona address routes to the correct federal, state, county, and city
   representatives via TIGER geofences loaded for all tiers (G4110 cities, G4020 counties, CDs, SLDU,
   SLDL); section-split scan clean.
-- [ ] **AZ-STATE-01**: State of Arizona government seeded — Gov. Katie Hobbs + constitutional officers
+- [x] **AZ-STATE-01**: State of Arizona government seeded — Gov. Katie Hobbs + constitutional officers
   (per AZ constitution: some voter-elected, some appointed) with chambers, offices, STATE_EXEC districts,
   and 600×750 headshots.
 - [ ] **AZ-STATE-02**: Arizona federal delegation seeded — 2 US Senators (Kelly + Gallego) as
@@ -89,7 +89,7 @@ community banner → surface in `src/lib/coverage.js`.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | AZ-GEO-01 | Phase 190 | Pending |
-| AZ-STATE-01 | Phase 191 | Pending |
+| AZ-STATE-01 | Phase 191 | Complete |
 | AZ-STATE-02 | Phase 191 | Pending |
 | AZ-LEG-01 | Phase 192 | Pending |
 | PIMA-01 | Phase 193 | Pending |
