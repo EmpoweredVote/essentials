@@ -500,7 +500,7 @@ migration of existing state.
 pattern, and roster-vacancy resolution above are `[VERIFIED]` via live `psql`/`curl` probes run
 this session** — not training-data assumptions. Only A1-A3 carry residual uncertainty.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should the two house offices per district get any distinguishing metadata at all (even
    non-voter-facing)?**
@@ -510,18 +510,21 @@ this session** — not training-data assumptions. Only A1-A3 carry residual unce
    - What's unclear: Whether a future admin/internal tool would benefit from *some* internal
      tiebreaker (e.g., which of the 2 ext_ids maps to which physical office desk) — not observed
      as a need anywhere else in the codebase.
-   - Recommendation: Leave both columns blank, matching NV precedent exactly. Do not invent a
-     new convention for AZ alone.
+   - RESOLVED: Leave both columns blank, matching NV precedent exactly. Do not invent a
+     new convention for AZ alone. (Implemented in Plan 01 — role_canonical +
+     normalized_position_name left NULL.)
 
 2. **Exact migration number to assign.**
    - What we know: on-disk MAX is 1285 this session; ledger's highest registered integer is
      1282 (1283-1285 are audit-only/unregistered, as designed).
    - What's unclear: Whether another phase lands a migration between this research and Phase
      192's execution (191-03-SUMMARY explicitly warns this "is expected to recur").
-   - Recommendation: Re-run both the on-disk `ls backend/migrations | sort` MAX check and the
+   - RESOLVED: Re-run both the on-disk `ls backend/migrations | sort` MAX check and the
      ledger `count(*) WHERE version='NNNN'` check as the FIRST inline-orchestrator step of Plan 01
      (Wave-0), exactly as NV 160's Task 2 (P3) did. Provisionally: structural = **1286**,
-     audit-only headshots = **1287**.
+     audit-only headshots = **1287** — but these numbers are expected to drift; Plans 01/02
+     name their files at disk-MAX+1 at execute time and record the ACTUAL numbers in their
+     SUMMARYs, and Plan 03 substitutes those actual numbers before its ledger-registration audit.
 
 ## Environment Availability
 

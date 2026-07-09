@@ -132,11 +132,17 @@ milestone starts at **Phase 190**.
   2. 60 Arizona state house reps (2 per legislative district) seeded with offices linked to their SLDL district geofence
   3. 90/90 legislators have 600×750 headshots
   4. 0 compass stances present for AZ legislators — confirmed deferred by design (not a gap), matching the NV v18.0 pattern
-
-**Plans**: 3 plans
+**Plans**: 3 plans
+**Wave 1**
 
 - [ ] 192-01-PLAN.md — Structural seed: 2 chambers + 30 Senate + 60 House offices/politicians (guarded, applied) under State of Arizona (geo_id 04)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 192-02-PLAN.md — 90/90 headshots: azleg.gov crop-first 600×750 pipeline + audit-only politician_images migration
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 192-03-PLAN.md — Verification: full SQL/HTTP audit (incl. 0-stances deferred-by-design) + live address-routing/correct-person human-verify
 
 #### Phase 193: Pima County Board of Supervisors Deep-Seed
