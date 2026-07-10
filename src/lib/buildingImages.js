@@ -417,6 +417,13 @@ const CURATED_LOCAL = {
   // match coverage.js browse_label 'Pima County'; storage file is hyphenated.
   //   pima county   - Santa Catalina Mountains from West Saguaro National Park near Tucson | WClarke | CC BY-SA 4.0
   'pima county': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pima-county.jpg' },
+  // Arizona CITY banner (Phase 194). A downtown-Tucson streetscape (palm trees
+  // framing the downtown high-rise towers against blue sky) — reads as Tucson the
+  // CITY, deliberately distinct from the Pima COUNTY landscape banner (Catalinas +
+  // saguaro) and the AZ STATE banner (the Phoenix skyline). Single-variant key (no
+  // same-named-city collision in the covered set); storage file is cities/tucson.jpg.
+  //   tucson        - Downtown Tucson (palms + high-rises) | Bill Morrow | CC BY 2.0
+  tucson: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tucson.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
