@@ -207,7 +207,7 @@ milestone starts at **Phase 190**.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 194-03-PLAN.md — 7/7 600x750 headshots (WAF fallback via Playwright) + audit migration
+- [x] 194-03-PLAN.md — 7/7 600x750 headshots (WAF fallback via Playwright) + audit migration
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -328,7 +328,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 191. Arizona State & Federal Government | 3/3 | Complete    | 2026-07-09 |
 | 192. Arizona Legislature (seed + headshots) | 3/3 | Complete    | 2026-07-09 |
 | 193. Pima County Board of Supervisors Deep-Seed | 6/6 | Complete    | 2026-07-10 |
-| 194. City of Tucson Deep-Seed | 2/6 | In Progress|  |
+| 194. City of Tucson Deep-Seed | 3/6 | In Progress|  |
 | 195. Oro Valley Deep-Seed | 0/TBD | Not started | - |
 | 196. Marana Deep-Seed | 0/TBD | Not started | - |
 | 197. Sahuarita Deep-Seed | 0/TBD | Not started | - |
