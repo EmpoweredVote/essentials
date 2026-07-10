@@ -192,12 +192,21 @@ Rules:
 - **Stitching:** join non-contiguous spans only **within a single continuous answer/thought**,
   with an honest `…` marking the gap. Never stitch across different questions or topics to
   assemble a position the candidate never stated as one.
+- **Leading / trailing ellipsis:** never end a quote with a trailing `…`. Use a leading `…` only
+  when you start partway into the *same* sentence (lopping off its front); no leading `…` is needed
+  when the quote begins at a genuine sentence/clause boundary that reads complete.
 - **Two-layer de-identification:**
   - *Canonical (revealed) quote* keeps names and speaker self-identification (accountability).
-  - *Blind quote* additionally **depersonalizes named people** (§4.1) and **strips speaker
-    self-identification** ("as governor," "in my district," own record). These extra redactions
-    still obey the substance cap and are still honestly marked; they relax to the canonical
-    quote at reveal.
+  - *Blind quote* additionally strips three kinds of identity leak:
+    - **Speaker self-identification** — "as governor," "in my district," touting their own record.
+    - **Named people** in policy critiques — depersonalized to office ("Newsom" → "[the current
+      administration]"); §4.1.
+    - **Partisan / side tells** — words that reveal which side is speaking in a two-way race
+      ("Democrat," "Republican," "my party"). Prefer to **drop** them ("these policies") or
+      neutralize to office ("[the current administration's] policies") rather than a vague swap
+      like "[current]," which reads awkwardly and shifts the meaning.
+  - These extra redactions still obey the substance cap and are still honestly marked; they relax
+    to the canonical quote at reveal.
   - **Speaker-blinding is a standard step**, not an afterthought — every quote gets a blind
     version, not just the occasional one.
 - **Ellipsis-density as a quality signal:** if a quote needs many elisions to cohere, the source
@@ -265,6 +274,12 @@ answer contains many ideas; keep the ones most representative of the candidate's
 approach* and those that create a *genuine, legible contrast*; cut supporting stats,
 mechanics-explainers, and topical asides. Record which and why.
 
+**Keep it short and self-contained — two sentences max** (go longer only when heavy editing needs
+explaining). Typically: one sentence on source/verification and how the quote aligns with the
+candidate's current Compass stance on that topic; one on any edits (or "verbatim, no edits"). Flag
+source weakness plainly ("campaign website, not verifiable to video"). No section numbers or
+internal jargon ("§4.3," "tier-1") — write for a skeptical human, not a note-to-self.
+
 ### 6.2 Edit history *(net-new)*
 
 Beyond the point-in-time `editor_note`, every change to a quote is logged — who changed what,
@@ -330,28 +345,52 @@ Cadence is aspirational / informal for now.
 
 ---
 
-## 7. The Compass coupling model
+## 7. Topic responsiveness and the Compass coupling model
+
+Two different alignments matter here, and they are **not** the same check. Keep them separate.
+
+### 7.1 Responsiveness — quote ↔ topic QUESTION (a hard gate)
+
+A quote is usable in a topic only if it genuinely **answers that topic's framed question** —
+engaging the axis/dimension the question sets, not merely touching the subject. This is a **gate,
+not a preference, and it outranks distinctiveness (§8).**
+
+Why it's a gate: the blind ranking is only meaningful if the quotes are **comparable answers to
+the same question.** If one candidate answers "what to do about people camping" (enforce) and
+another answers "how to prevent homelessness" (prevent), the ranking is *uninterpretable* — the
+positions aren't mutually exclusive, so preferring one doesn't reject the other. **Comparability is
+the precondition for a valid ranking; responsiveness guarantees it.** Distinctiveness only makes a
+contrast *legible* — among non-comparable answers it manufactures a *false* one.
+
+*When a candidate's most distinctive quote is off-question:*
+- **(a)** Prefer their best **on-question, verbatim** quote, even if less distinctive.
+- **(b)** **Re-home** the strong off-question quote under the topic whose question it *does* answer.
+- **(c)** If they have no on-question quote, they are **absent** from the topic (§3).
+- **Never** rank an off-question quote just because it's the best verbatim option available.
+
+*Cross-team signal:* if a major, common position (prevention, Housing First) keeps landing
+off-question for a topic, the **topic's framing may be too narrow** — feed that back to
+`compass-topic-builder`. The mismatch is a signal, like the in-tension flag below.
+
+### 7.2 Coupling — quote ↔ compass VALUE
 
 The shared unit between Read & Rank and the Compass is the **`topic_key`, not the stance value.**
-The Compass value is a number synthesized from words *and* deeds across many sources; a Read &
-Rank quote is one candidate's prose from one moment. **A quote can therefore never *be* the
-Compass stance — at most it is one piece of evidence consistent with it.**
-
-A quote attaches to a `topic_key` and must be genuinely *about* that topic and articulate the
-candidate's approach on it. Mapping to the Compass axis is a bonus, not a requirement. The
-relationship between a quote and the synthesized stance is one of three:
+The Compass value is a number synthesized from words *and* deeds across many sources; a Read & Rank
+quote is one candidate's prose from one moment. **A quote can never *be* the Compass stance — at
+most it is one piece of evidence consistent with it.** Among quotes that already pass the
+responsiveness gate, the relationship to the synthesized value is one of three:
 
 - **Reinforcing** — the quote clearly illustrates the direction of the numeric stance. →
   *Preferred* when surfacing a quote inside Compass/Essentials next to the value.
-- **Elaborating / orthogonal** — genuinely about the topic but on a different sub-dimension than
-  the axis measures (e.g. a "convene everyone" approach quote). → A valid Read & Rank quote;
-  used as "in their words" color, not as Compass evidence.
+- **Elaborating** — answers the question but on a different **sub-dimension than the numeric axis
+  captures** (e.g. a "convene everyone" approach quote). → Valid and rankable; used as "in their
+  words" color in Compass, not as axis evidence. *(Off-**axis** is fine; off-**question** is not —
+  that fails §7.1 and isn't rankable at all.)*
 - **In tension** — the quote pulls against the synthesized value. → **Flag, don't silently
   surface.** It means either the Compass value needs re-review or the quote is unrepresentative
   (a §4.3/§4.4 problem). Resolve before surfacing next to the value.
 
-So: *same topics, not necessarily the same axes.* Prefer reinforcing quotes inside the Compass;
-allow elaborating quotes as color; never drop an in-tension quote next to the value unresolved.
+So: *same topics, not necessarily the same axes — but always the same question.*
 
 ---
 
@@ -359,6 +398,9 @@ allow elaborating quotes as color; never drop an in-tension quote next to the va
 
 Bias can hide in *which topics a race surfaces*, not just in the quotes.
 
+- **Responsiveness precedes parity (§7.1).** Only on-question quotes are eligible; comparability is
+  the precondition for a fair comparison. Never manufacture a head-to-head from quotes answering
+  different questions, and never reach for an off-question quote to fill a topic.
 - **Selection driver = voter salience + the shared Compass taxonomy, never candidate advantage.**
 - **Neutral, evenly-applied availability filter** — the ≥2-qualifying-quotes rule (§3) is applied
   with **equal curation effort** across candidates and topics; you don't dig harder for one side.
