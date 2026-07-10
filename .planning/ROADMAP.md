@@ -181,7 +181,7 @@ milestone starts at **Phase 190**.
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 193-06-PLAN.md — Full production audit + live-browse verification
+- [x] 193-06-PLAN.md — Full production audit + live-browse verification
 
 #### Phase 194: City of Tucson Deep-Seed
 
@@ -303,7 +303,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 190. Arizona TIGER Geofences | 2/2 | Complete   | 2026-07-08 |
 | 191. Arizona State & Federal Government | 3/3 | Complete    | 2026-07-09 |
 | 192. Arizona Legislature (seed + headshots) | 3/3 | Complete    | 2026-07-09 |
-| 193. Pima County Board of Supervisors Deep-Seed | 5/6 | In Progress|  |
+| 193. Pima County Board of Supervisors Deep-Seed | 6/6 | Complete   | 2026-07-10 |
 | 194. City of Tucson Deep-Seed | 0/TBD | Not started | - |
 | 195. Oro Valley Deep-Seed | 0/TBD | Not started | - |
 | 196. Marana Deep-Seed | 0/TBD | Not started | - |
