@@ -240,7 +240,7 @@ milestone starts at **Phase 190**.
 **Plans**: 4 plans
 **Wave 1**
 
-- [ ] 195-01-PLAN.md - Structural migration 1305: greenfield Town of Oro Valley govt + Town Council chamber + 2 new districts (LOCAL_EXEC Mayor + 1 shared LOCAL for all 6 council) + 7 nonpartisan officials (party NULL); substantive BLOCKING roster-currency re-verify during the active 2026 election before apply.
+- [x] 195-01-PLAN.md - Structural migration 1305: greenfield Town of Oro Valley govt + Town Council chamber + 2 new districts (LOCAL_EXEC Mayor + 1 shared LOCAL for all 6 council) + 7 nonpartisan officials (party NULL); substantive BLOCKING roster-currency re-verify during the active 2026 election before apply.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -345,7 +345,7 @@ any relative order among themselves, but the suggested sequence (state/federal Ã
 | 192. Arizona Legislature (seed + headshots) | 3/3 | Complete    | 2026-07-09 |
 | 193. Pima County Board of Supervisors Deep-Seed | 6/6 | Complete    | 2026-07-10 |
 | 194. City of Tucson Deep-Seed | 6/6 | Complete   | 2026-07-10 |
-| 195. Oro Valley Deep-Seed | 0/TBD | Not started | - |
+| 195. Oro Valley Deep-Seed | 1/4 | In Progress|  |
 | 196. Marana Deep-Seed | 0/TBD | Not started | - |
 | 197. Sahuarita Deep-Seed | 0/TBD | Not started | - |
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |

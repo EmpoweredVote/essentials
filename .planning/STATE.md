@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
 status: executing
-last_updated: "2026-07-10T18:14:39.833Z"
-last_activity: 2026-07-10 -- Phase 195 planning complete
+last_updated: "2026-07-10T18:18:58.158Z"
+last_activity: 2026-07-10 -- Phase 195 execution started
 progress:
   total_phases: 43
   completed_phases: 5
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 194 — COMPLETE
-Plan: 1 of 6
-Status: Ready to execute
-Last activity: 2026-07-10 -- Phase 195 planning complete
+Phase: 195 (oro-valley-deep-seed) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 195
+Last activity: 2026-07-10 -- Phase 195 execution started
 
 ## Deferred Items
 
@@ -413,7 +413,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 194 — city-of-tucson-deep-seed
+**Current focus:** Phase 195 — oro-valley-deep-seed
 
 ## v15.0 Roadmap Summary
 
