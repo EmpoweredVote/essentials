@@ -238,10 +238,20 @@ milestone starts at **Phase 190**.
   5. Oro Valley surfaced in `src/lib/coverage.js` with a DB-honest chip
 
 **Plans**: 4 plans
+**Wave 1**
 
 - [ ] 195-01-PLAN.md - Structural migration 1305: greenfield Town of Oro Valley govt + Town Council chamber + 2 new districts (LOCAL_EXEC Mayor + 1 shared LOCAL for all 6 council) + 7 nonpartisan officials (party NULL); substantive BLOCKING roster-currency re-verify during the active 2026 election before apply.
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 195-02-PLAN.md - 7 headshots (600x750) via the /find-headshots Playwright WAF fallback (orovalleyaz.gov Akamai-blocked); audit-only migration 1306.
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 195-03-PLAN.md - Evidence-only compass stances, one official at a time, 36 non-judicial topics, 100% cited, honest blanks; audit-only migrations 1307-1313.
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 195-04-PLAN.md - Licensed Oro Valley banner (one at a time, distinct from Pima's Catalina banner) wired into buildingImages.js + append 'Oro Valley' to the EXISTING Arizona coverage.js block.
 
 #### Phase 196: Marana Deep-Seed
