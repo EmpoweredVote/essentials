@@ -21,6 +21,12 @@ findings:
   info: 5
   total: 6
 status: issues_found
+fixes_applied:
+  - id: WR-01
+    outcome: fixed
+    commit: "0e9a7a10 (C:/EV-Accounts master)"
+    note: "Orientation-aware ArcGIS rings→GeoJSON (signed-area winding → Polygon/MultiPolygon + degenerate/orphan guards). Single-ring output byte-identical; loader re-run confirms 5 districts unchanged. tsc --noEmit clean."
+info_findings_deferred: [IN-01, IN-02, IN-03, IN-04, IN-05]  # not in --fix scope (Info; no --all); IN-02 stale docstring worth a later touch-up
 ---
 
 # Phase 193: Code Review Report
@@ -28,7 +34,7 @@ status: issues_found
 **Reviewed:** 2026-07-09
 **Depth:** standard
 **Files Reviewed:** 11
-**Status:** issues_found
+**Status:** issues_found (WR-01 fixed 2026-07-09 via --fix; 5 Info deferred)
 
 ## Summary
 
