@@ -1,8 +1,8 @@
 ---
 phase: 194
 slug: city-of-tucson-deep-seed
-status: draft
-nyquist_compliant: false
+status: approved
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-07-09
 ---
@@ -78,10 +78,12 @@ created: 2026-07-09
 
 ## Validation Sign-Off
 
-- [ ] Every deliverable has an orchestrator-run DB/asset/grep assertion (above)
-- [ ] Sampling continuity: assertion after each migration apply, load, upload, and stance write
-- [ ] Both BLOCKING Wave-0 checkpoints (loader ring-verify, roster-currency) resolved before seeding
-- [ ] Section-split scan clean after ward geofence load
-- [ ] `nyquist_compliant: true` set in frontmatter (by planner / nyquist auditor)
+- [x] Every deliverable has an orchestrator-run DB/asset/grep assertion (above) — confirmed present in all 6 PLAN.md
+- [x] Sampling continuity: assertion after each migration apply, load, upload, and stance write — no 3 consecutive tasks without an automated verify
+- [x] Both BLOCKING Wave-0 checkpoints planned as gating tasks (194-01 Task 2 loader ring-verify, 194-02 Task 2 roster-currency), both `autonomous: false`
+- [x] Section-split-scan-clean assertion is a task in 194-01/194-06
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+> `wave_0_complete` stays `false` intentionally — the two Wave-0 gates are *planned* but *execute* during `/gsd:execute-phase 194`; it flips to `true` once those checkpoints actually pass at runtime.
+
+**Approval:** approved 2026-07-09 (plan-checker: 0 blockers, Dimension 8 PASS)

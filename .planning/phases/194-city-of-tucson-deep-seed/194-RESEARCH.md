@@ -561,9 +561,12 @@ geofence multi-ring structure and current roster/Vice-Mayor identity) were BOTH 
 live-verified against primary GIS data and cross-checked news sources in this session, not assumed
 from a single source.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Should the multi-ring loader re-verify total ward area or feature count against a second,
+> Both open questions are non-blocking and resolved to a recommendation below; each `Recommendation:`
+> is the RESOLVED answer. Plan 194-02 implements Q2's answer (title-suffix annotation only).
+
+1. **RESOLVED — Should the multi-ring loader re-verify total ward area or feature count against a second,
    independent source (e.g., the City's own published ward-population/area figures) before trusting
    the winding-classification output?**
    - What we know: Signed-area classification confirms all 9 rings across Wards 4/5 are exterior
@@ -576,7 +579,7 @@ from a single source.
      a smoke test could probe a coordinate inside the largest secondary ring of Ward 5 as a bonus
      check, but this is not required for correctness.
 
-2. **Exact Vice Mayor annotation text and whether the annotation should also appear in `remarks`.**
+2. **RESOLVED — Exact Vice Mayor annotation text and whether the annotation should also appear in `remarks`.**
    - What we know: D-05 + Pattern 2 establish `title='Council Member, Ward 1 (Vice Mayor)'` as the
      locked shape (mirroring Pima's `(Chair)` suffix).
    - What's unclear: Whether to also note the rotation mechanic (annual, council-selected) in a

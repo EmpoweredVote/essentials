@@ -132,7 +132,8 @@ milestone starts at **Phase 190**.
   2. 60 Arizona state house reps (2 per legislative district) seeded with offices linked to their SLDL district geofence
   3. 90/90 legislators have 600Ã750 headshots
   4. 0 compass stances present for AZ legislators â confirmed deferred by design (not a gap), matching the NV v18.0 pattern
-**Plans**: 3 plans
+
+**Plans**: 3 plans
 **Wave 1**
 
 - [x] 192-01-PLAN.md â Structural seed: 2 chambers + 30 Senate + 60 House offices/politicians (guarded, applied) under State of Arizona (geo_id 04)
@@ -195,8 +196,31 @@ milestone starts at **Phase 190**.
   3. Evidence-only compass stances seeded for all 7 officials â 100% cited, no defaults, honest blanks
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) is sourced, processed, uploaded to Storage, and wired into `src/lib/buildingImages.js`
   5. City of Tucson surfaced in `src/lib/coverage.js` with a DB-honest chip
+**Plans**: 6 plans
+**Wave 1**
 
-**Plans**: TBD
+- [ ] 194-01-PLAN.md — Ward geofence loader (multi-ring-aware) + BLOCKING ring-verify + load 6 X0020 wards
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [ ] 194-02-PLAN.md — Structural migration: City of Tucson gov + City Council chamber + Mayor (new LOCAL_EXEC) + 6 ward offices + BLOCKING roster-currency + apply
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 194-03-PLAN.md — 7/7 600x750 headshots (WAF fallback via Playwright) + audit migration
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 194-04-PLAN.md — Evidence-only compass stances, one official at a time (Mayor + 6 wards)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
+- [ ] 194-05-PLAN.md — Licensed downtown-Tucson banner + NEW Arizona coverage.js block + buildingImages wiring
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
+- [ ] 194-06-PLAN.md — Full production audit + live-browse per-ward + Mayor routing verification
+
 **UI hint**: yes
 
 #### Phase 195: Oro Valley Deep-Seed
