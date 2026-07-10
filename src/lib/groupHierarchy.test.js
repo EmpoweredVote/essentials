@@ -290,6 +290,45 @@ describe('Rotational Mayor / Mayor Pro Tem ordering and labeling', () => {
 
 });
 
+describe('At-large Mayor + parenthetical Vice-Mayor annotation (Tucson-class)', () => {
+
+  // Tucson: at-large Mayor is its own LOCAL_EXEC seat; the Ward 1 council member carries
+  // a parenthetical "(Vice Mayor)" annotation. The word "Mayor" in the Ward 1 title must
+  // NOT pull that council member into the Mayor's exec sub-group ahead of the real Mayor.
+  it('Mayor (LOCAL_EXEC) leads; the Ward-1 "(Vice Mayor)" member stays with the council and sorts after the Mayor', () => {
+    const gov = {
+      government_name: 'City of Tucson, Arizona, US',
+      government_body_name: 'Tucson City Council',
+      chamber_name_formal: 'Tucson City Council',
+      chamber_name: 'City Council',
+    };
+    // Upstream deliberately returns the Vice Mayor (Ward 1) FIRST — the original defect order.
+    const pols = [
+      makePol({ ...gov, district_type: 'LOCAL', office_title: 'Council Member, Ward 1 (Vice Mayor)', last_name: 'Santa Cruz', district_id: 'w1', district_label: 'Ward 1' }),
+      makePol({ ...gov, district_type: 'LOCAL_EXEC', office_title: 'Mayor', last_name: 'Romero', district_id: '0', district_label: 'City of Tucson (Mayor)' }),
+      makePol({ ...gov, district_type: 'LOCAL', office_title: 'Council Member, Ward 2', last_name: 'Cunningham', district_id: 'w2', district_label: 'Ward 2' }),
+      makePol({ ...gov, district_type: 'LOCAL', office_title: 'Council Member, Ward 6', last_name: 'Schubert', district_id: 'w6', district_label: 'Ward 6' }),
+    ];
+
+    const hierarchy = groupIntoHierarchy(pols);
+    const localTier = hierarchy.find(t => t.tier === 'Local');
+    const allSubgroups = localTier.bodies.flatMap(b => b.subgroups);
+
+    // The Mayor's exec sub-group must NOT contain the "(Vice Mayor)" council member.
+    const mayorGroup = allSubgroups.find(sg => sg.pols.some(p => p.office_title === 'Mayor'));
+    expect(mayorGroup).toBeDefined();
+    expect(mayorGroup.pols.some(p => /vice mayor/i.test(p.office_title || ''))).toBe(false);
+
+    // Flattened render order: the Mayor comes before the Ward-1 Vice Mayor.
+    const flat = allSubgroups.flatMap(sg => sg.pols);
+    const mayorIdx = flat.findIndex(p => p.office_title === 'Mayor');
+    const viceIdx = flat.findIndex(p => /vice mayor/i.test(p.office_title || ''));
+    expect(mayorIdx).toBeGreaterThanOrEqual(0);
+    expect(viceIdx).toBeGreaterThan(mayorIdx);
+  });
+
+});
+
 describe('Letter-district ordering (Clark County Commission A–G)', () => {
 
   // Clark County Board of Commissioners: 7 members on ONE shared COUNTY district

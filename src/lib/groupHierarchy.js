@@ -172,6 +172,18 @@ function isJudicialOfficial(pol) {
 // ── Sub-group key ────────────────────────────────────────────────
 
 const LOCAL_EXEC_TITLE_RE = /\b(mayor|governor)\b/i;
+// Detect an executive (Mayor/Governor) title for sub-group segmentation, testing on the
+// PARENTHETICAL-STRIPPED title. This keeps genuine exec-titled council members whose
+// primary title carries the honorific (e.g. rotational "Mayor Pro Tem" in Bellflower,
+// where Mayor + Pro Tem are one by-district exec sub-group) while excluding a council
+// member who merely carries a parenthetical annotation (e.g. Tucson's Ward 1
+// "Council Member, Ward 1 (Vice Mayor)" — an at-large Mayor already exists as its own
+// LOCAL_EXEC seat, so the Ward 1 member belongs with the council). Within-group ordering
+// (execTitlePriority) still puts the actual Mayor ahead of any Pro Tem / Vice Mayor.
+const isChiefExecTitle = (title) => {
+  const primary = (title || '').replace(/\([^)]*\)/g, ' ');
+  return LOCAL_EXEC_TITLE_RE.test(primary);
+};
 
 function getSubGroupKey(pol) {
   // Use government_body_name + district_type + role segment as compound key.
@@ -190,7 +202,7 @@ function getSubGroupKey(pol) {
   }
 
   let roleSegment;
-  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC') && LOCAL_EXEC_TITLE_RE.test(pol.office_title || '')) {
+  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC') && isChiefExecTitle(pol.office_title)) {
     roleSegment = 'EXEC'; // Mayor / Governor — own sub-group, sorts first
   } else if (dt === 'LOCAL_EXEC') {
     // City Manager, City Administrator, etc. — unique key per title so each gets own label
@@ -283,7 +295,7 @@ function getSubGroupLabel(pols, accordionTitle) {
   // Use the office_title directly rather than the chamber name as the sub-group label.
   if (
     (dt === 'LOCAL' || dt === 'LOCAL_EXEC') &&
-    pols.every(p => LOCAL_EXEC_TITLE_RE.test(p.office_title || ''))
+    pols.every(p => isChiefExecTitle(p.office_title))
   ) {
     const title = first.office_title || '';
     return title.replace(/^(City|Town|Village|County)\s+/i, '').replace(/\s+-\s+.*$/, '') || title;
@@ -421,7 +433,7 @@ function subGroupOrderScore(label, pols) {
   if (
     pols.length > 0 &&
     pols.every(p => p.district_type === 'LOCAL' || p.district_type === 'LOCAL_EXEC') &&
-    pols.every(p => LOCAL_EXEC_TITLE_RE.test(p.office_title || ''))
+    pols.every(p => isChiefExecTitle(p.office_title))
   ) return 10;
   if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 20;
   if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 20;
