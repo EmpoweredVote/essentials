@@ -2,25 +2,26 @@
 gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
-status: executing
-last_updated: "2026-07-09T22:49:08.935Z"
+status: ready_to_plan
+last_updated: 2026-07-10T01:30:27.708Z
 last_activity: 2026-07-09 -- Phase 193 execution started
 progress:
   total_phases: 43
   completed_phases: 3
   total_plans: 14
-  completed_plans: 8
+  completed_plans: 14
   percent: 7
+stopped_at: Phase 193 complete (6/6) — ready to discuss Phase 194
 ---
 
 # State
 
 ## Current Position
 
-Phase: 193 (pima-county-board-of-supervisors-deep-seed) — EXECUTING
-Plan: 1 of 6
-Status: Executing Phase 193
-Last activity: 2026-07-09 -- Phase 193 execution started
+Phase: 194
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-07-10
 
 ## Deferred Items
 
@@ -413,7 +414,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 193 — pima-county-board-of-supervisors-deep-seed
+**Current focus:** Phase 194 — city of tucson deep seed
 
 ## v15.0 Roadmap Summary
 

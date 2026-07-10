@@ -32,7 +32,7 @@ community banner → surface in `src/lib/coverage.js`.
 
 ### Tucson-Metro Local Layer
 
-- [ ] **PIMA-01**: Pima County Board of Supervisors seeded as a standalone county government (5
+- [x] **PIMA-01**: Pima County Board of Supervisors seeded as a standalone county government (5
   supervisor districts on LOCAL geofences), NOT nested under State of AZ — roster → 600×750 headshots →
   evidence-only compass stances → licensed community banner → surfaced in `src/lib/coverage.js`.
 - [ ] **TUC-01**: City of Tucson deep-seed (flagship) — Mayor + 6 ward council members (verify
@@ -46,7 +46,7 @@ community banner → surface in `src/lib/coverage.js`.
 
 ### Community Banners
 
-- [ ] **BANR-01**: Every deep-seeded Tucson-metro jurisdiction (City of Tucson + Oro Valley + Marana +
+- [x] **BANR-01**: Every deep-seeded Tucson-metro jurisdiction (City of Tucson + Oro Valley + Marana +
   Sahuarita + South Tucson + Pima County) carries a licensed community banner — real street-scene or
   skyline photo, no AI-generated and no aerial imagery, sourced one at a time, processed to the banner
   spec (`scripts/banners/`), uploaded to Storage, and wired into `src/lib/buildingImages.js`. (Arizona
@@ -92,13 +92,13 @@ community banner → surface in `src/lib/coverage.js`.
 | AZ-STATE-01 | Phase 191 | Complete |
 | AZ-STATE-02 | Phase 191 | Complete |
 | AZ-LEG-01 | Phase 192 | Complete |
-| PIMA-01 | Phase 193 | Pending |
+| PIMA-01 | Phase 193 | Complete |
 | TUC-01 | Phase 194 | Pending |
 | SUB-01 | Phase 195 | Pending |
 | SUB-02 | Phase 196 | Pending |
 | SUB-03 | Phase 197 | Pending |
 | SUB-04 | Phase 198 | Pending |
-| BANR-01 | Phases 193, 194, 195, 196, 197, 198 | Pending |
+| BANR-01 | Phases 193, 194, 195, 196, 197, 198 | Complete |
 | AZ-ELEC-01 | Phase 199 | Pending |
 | AZ-RETRO-01 | Phase 200 | Pending |
 
