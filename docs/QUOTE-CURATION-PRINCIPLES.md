@@ -89,6 +89,11 @@ The accountability principles (§6) depend on all of them existing.
   voice is not a comparison"). A candidate with no genuine public position on a topic is simply
   **absent** from it — a legitimate, unflagged absence — and the topic still runs with the 2+
   who do have positions.
+- **Record-only is still absent.** A candidate who has spoken about a topic *only* through record
+  or attacks — never a forward position (§1) — is absent from it. Do not launder record into a
+  pseudo-position to fill a slot; that misrepresents them and breaks the comparison. (Real example:
+  a candidate whose entire immigration corpus is "I sued the administration N times" has stated no
+  forward immigration position — leave them absent, don't manufacture one.)
 
 ---
 
@@ -234,7 +239,9 @@ verifiability (spoken sources deep-link to video).
 2. **News interviews** — spoken, on-record, questioned.
 3. **Prepared public remarks** — stump/floor speeches, testimony (spoken, unprobed).
 4. **Candidate-bylined written** — op-eds, official platform, *only if clearly the candidate's
-   own words.*
+   own words, quoted as a **verbatim sentence** from the source — never a curator-summarized
+   bullet list* (e.g. "Support DACA, oppose Muslim ban and family separation" is a summary, not a
+   quote).
 5. **Hard-excluded — not merely deprioritized:** hot-mic, private, secretly-recorded, or clearly
    off-the-cuff "gotcha" remarks. Using off-guard speech is the manufactured-drama we reject and
    it corrodes trust. **Do not use.**
