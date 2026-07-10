@@ -410,6 +410,13 @@ const CURATED_LOCAL = {
   alexandria: { state: 'VA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alexandria.jpg' },
   'falls church': { state: 'VA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/falls-church.jpg' },
   leonardtown: { state: 'MD', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/leonardtown.jpg' },
+  // Arizona COUNTY banner (first county-tier CURATED_LOCAL key). Reads as Pima
+  // County the place (Santa Catalina Mountains + Sonoran-desert saguaro foreground),
+  // deliberately distinct from the future Tucson CITY banner (Phase 194, a downtown
+  // streetscape) and the AZ STATE banner (the Phoenix skyline). Key is space-form to
+  // match coverage.js browse_label 'Pima County'; storage file is hyphenated.
+  //   pima county   - Santa Catalina Mountains from West Saguaro National Park near Tucson | WClarke | CC BY-SA 4.0
+  'pima county': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pima-county.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
