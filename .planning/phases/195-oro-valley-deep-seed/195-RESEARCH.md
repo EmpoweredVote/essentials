@@ -510,7 +510,11 @@ SELECT external_id FROM essentials.politicians WHERE external_id BETWEEN -400901
 the single highest-risk claim in this research and should be the planner's top priority to re-verify,
 not merely acknowledge.
 
-## Open Questions
+## Open Questions (RESOLVED — deferred to execution-time checkpoints: Q1 → Plan 01 Task 2, Q2 → Plan 04 Task 1, Q3 → Plan 01 Task 2)
+
+All three questions below are time/execution-dependent (they cannot be settled on paper before a live
+re-check during an active election) and are each operationalized as a blocking execution-time gate in
+the plans — they are RESOLVED-by-deferral, not unresolved design ambiguities.
 
 1. **Are Oro Valley council seats formally numbered ("Position 1"–"6"), or genuinely undifferentiated
    at-large (Torrance-style)?**
