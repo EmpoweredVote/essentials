@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Derived at build time by scripts/gen-coverage.mjs (prebuild) from src/lib/coverage.js — see phase 188/TT contract.
+public/coverage.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

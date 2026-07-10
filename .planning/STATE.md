@@ -1,33 +1,36 @@
 ---
 gsd_state_version: 1.0
-milestone: v20.0
-milestone_name: milestone
+milestone: v22.0
+milestone_name: Tucson & Arizona
 status: completed
-stopped_at: v20.0 milestone closed
-last_updated: "2026-07-05T08:35:00.000Z"
-last_activity: 2026-07-05 -- v20.0 milestone archived + tagged (formal close)
+stopped_at: Phase 194 context gathered
+last_updated: "2026-07-10T08:16:58.212Z"
+last_activity: 2026-07-10 -- Phase 194 marked complete
 progress:
-  total_phases: 25
-  completed_phases: 24
-  total_plans: 84
-  completed_plans: 84
-  percent: 96
+  total_phases: 11
+  completed_phases: 5
+  total_plans: 20
+  completed_plans: 20
+  percent: 45
 ---
 
 # State
 
 ## Current Position
 
-Milestone: **v20.0 CLOSED 2026-07-05** · **v19.0 CLOSED 2026-07-05** (build was done 2026-06-28; formal close deferred until now)
-Status: No active or parked milestone. Both archived to `milestones/` + tagged.
-Next: open a new milestone via `/gsd:new-milestone` (candidate: resume the deferred v19.0 frontend track — banner stats/icons, remaining-state art, Landing/profile dark mode).
-Last activity: 2026-07-05 -- v19.0 + v20.0 milestones archived (milestones/v19.0-*, v20.0-*) + tagged
+Phase: 194 — COMPLETE
+Plan: 1 of 6
+Status: Phase 194 complete
+Last activity: 2026-07-10 -- Phase 194 marked complete
 
 ## Deferred Items
 
-Items acknowledged and deferred at v20.0 milestone close on 2026-07-05 (12 open artifacts;
-9 are stale cross-milestone leftovers, 3 are v20.0 per-phase checkpoints superseded by the
-DB-verified v20.0-MILESTONE-AUDIT.md + live operator approvals):
+Re-acknowledged and deferred again at v21.0 milestone close on 2026-07-08 (unchanged from the
+v20.0 close; 12 open artifacts — none belong to v21.0, which had zero open items and closed on
+Phase 189's VERIFICATION PASS 8/8 + live operator sign-off). 9 are stale cross-milestone
+leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0-MILESTONE-AUDIT.md
+
++ live operator approvals:
 
 | Category | Item | Status |
 |----------|------|--------|
@@ -43,6 +46,64 @@ DB-verified v20.0-MILESTONE-AUDIT.md + live operator approvals):
 | verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+
+### v22.0 roadmap (created 2026-07-08)
+
+New-state coverage milestone: Arizona foundation (TIGER geofences -> state/federal government ->
+90-member legislature seed+headshots, stances deferred) -> Tucson-metro local layer (Pima County ->
+City of Tucson flagship -> 4 suburbs) -> 2026 elections + discovery -> playbook retrospective + close.
+11 phases (190-200), continuing numbering from v21.0 (closed at 189). 13/13 requirements mapped -
+no orphans. BANR-01 (licensed community banner) is cross-cutting across the 6 deep-seed phases
+(193-198), not a standalone phase. Reuses LOCATION-ONBOARDING.md + NV (v18.0) / OR-WashCo (v20.0)
+new-state precedent.
+
+- **190 Arizona TIGER Geofences** - AZ-GEO-01 (all tiers: G4110 cities, G4020 counties, CDs, SLDU,
+  SLDL; section-split clean; prerequisite for every other phase)
+
+- **191 Arizona State & Federal Government** - AZ-STATE-01 + AZ-STATE-02 (Hobbs + constitutional
+  officers + 2 US Senators + 9 US House, combined into one phase per the NV v18.0 pattern)
+
+- **192 Arizona Legislature (seed + headshots)** - AZ-LEG-01 (30 senators + 60 house reps; STANCES
+  DEFERRED, matching the NV v18.0 split)
+
+- **193 Pima County Board of Supervisors Deep-Seed** - PIMA-01 + BANR-01 (standalone county govt,
+  5 districts, NOT nested under State of AZ; includes its licensed banner)
+
+- **194 City of Tucson Deep-Seed** - TUC-01 + BANR-01 (flagship; Mayor + 6 wards; verify ward vs
+  at-large + AZ partisan-election handling at plan time; includes banner)
+
+- **195 Oro Valley Deep-Seed** - SUB-01 + BANR-01
+- **196 Marana Deep-Seed** - SUB-02 + BANR-01
+- **197 Sahuarita Deep-Seed** - SUB-03 + BANR-01
+- **198 South Tucson Deep-Seed** - SUB-04 + BANR-01
+- **199 AZ 2026 Elections & Discovery** - AZ-ELEC-01 (depends on phases 191-198 for office anchors)
+- **200 Arizona Playbook Retrospective & Close** - AZ-RETRO-01 (coverage.js reconciled, AZ GOTCHAs,
+  DB-verified audit, milestone close)
+
+Deep-seed unit (193-198): government + chamber -> roster -> 600x750 headshots -> evidence-only
+stances (one agent at a time, 100% cited, no defaults, honest blanks) -> licensed community banner
+(street-scene/skyline, no AI/aerial, sourced one at a time) -> surface in src/lib/coverage.js.
+Phases 191-198 all depend only on Phase 190; suggested execution order mirrors NV/OR-WashCo shape.
+
+### v21.0 roadmap (created 2026-07-07)
+
+Frontend-only milestone filling v19.0's inert `SectionBanner` `stats`/`featureIcons` scaffolding
+slots. 3 phases (187-189), continuing numbering from v20.0 (closed at 186). 14/14 requirements
+mapped 1:1 — no orphans, no duplicates. No backend/DB schema changes.
+
+- **187 Tethered Feature-Icon Row** — ICON-01/02/03 + TETH-01/02/03/04 (product-icon row + Treasury
+  deep-link resolution; icon carries the banner's own location, never the user's; omitted entirely
+  when no valid per-location link exists; state/federal tiers resolve non-municipal Treasury entities)
+
+- **188 Location Stats Strip** — STAT-01/02/03 (Census-sourced population-first stats strip on city +
+  state banners, keyed to geo identifier/FIPS, not hardcoded; graceful omission when unavailable —
+  independent workstream from Phase 187, can build in parallel)
+
+- **189 Smart-Banner Integration & Graceful Degradation** — SBAN-01/02/03/04 (wires Phases 187+188
+  into one shared component consumed by both Results.jsx and ElectionsView.jsx; identical cross-page
+  behavior; empty-state parity with v19.0 — no empty containers, no layout shift, no console errors)
+
+Execution order: 187 -> 188 -> 189 (189 depends on both 187 and 188).
 
 ### v20.0 roadmap (created 2026-06-30)
 
@@ -353,7 +414,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 186 — west-metro-retrospective-close
+**Current focus:** Phase 194 — city-of-tucson-deep-seed
 
 ## v15.0 Roadmap Summary
 
@@ -446,9 +507,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-04T22:38:53.755Z
-Stopped at: Phase 185 context gathered
-Resume file: .planning/phases/185-washco-2026-elections-discovery/185-CONTEXT.md
+Last session: 2026-07-10T05:05:19.759Z
+Stopped at: Phase 194 context gathered
+Resume file: .planning/phases/194-city-of-tucson-deep-seed/194-CONTEXT.md
 
 ## Performance Metrics
 
@@ -519,6 +580,15 @@ Resume file: .planning/phases/185-washco-2026-elections-discovery/185-CONTEXT.md
 | Phase 183 P02 | 25min | 2 tasks | 1 files |
 | Phase 183 P03 | 15min | 3 tasks | 2 files |
 | Phase 183 P04 | 20min | 2 tasks | 1 files |
+| Phase 187 P02 | 55min | 3 tasks | 3 files |
+| Phase 188 P01 | 25m | 2 tasks | 4 files |
+| Phase 188 P02 | 12min | 2 tasks | 2 files |
+| Phase 188 P03 | 18min | 2 tasks | 4 files |
+| Phase 189 P01 | 6min | 2 tasks | 4 files |
+| Phase 189 P02 | 12min | 2 tasks | 2 files |
+| Phase 191 P01 | 14min | - tasks | - files |
+| Phase 191 P02 | 12min | 2 tasks | 2 files |
+| Phase 191 P03 | 20min | 2 tasks | 2 files |
 
 ## Decisions
 
@@ -599,3 +669,19 @@ Resume file: .planning/phases/185-washco-2026-elections-discovery/185-CONTEXT.md
 - [Phase 183]: Migration 1203 ledger INSERT placed inside transaction before COMMIT (1159/1178/1196 convention), not after COMMIT per plan's literal 1107-era text
 - [Phase 183]: Migration renumbered 1204 -> 1205 (on-disk-MAX-authoritative convention): 1204 was claimed on-disk by a concurrent AZ ballot-ineligible-reconciliation workstream before this file was authored — Next migration after this one is 1206
 - [Phase 183]: Phase 183: no hasContext key on either new school-district coverage.js entry — 0-stances-by-design is the honest state (Phase 173 CCSD lesson applied proactively)
+- [Phase 187-02]: Centralized TREASURY_URL in Results.jsx (deleted local const) so the existing per-body text link and the new Treasury chip resolve to the identical financials.empowered.vote domain
+- [Phase 187-02]: FeatureIconChip reimplements IconOverlay's @floating-ui IconWithTooltip pattern locally in SectionBanner.jsx, adapted to wrap a real <a> so aria-label lives on the link (extraction to a shared component deferred to Phase 189)
+- [Phase 188]: Minified population bundle (~1.19MB) exceeds 600KB flag threshold; kept static export per plan, flagged dynamic-import fallback for Plan 03/189
+- [Phase 188]: src/data/ directory auto-created via mkdirSync before writing population bundle (Rule 3 fix)
+- [Phase 188-02]: resolvePopulation takes maps as an explicit second argument (default = bound real bundle) rather than a factory/curried function — simplest DI seam matching RESEARCH's Wave-0 requirement without adding new architectural surface
+- [Phase 188]: shouldRenderStat exported pure predicate on SectionBanner gates the top-right population scrim (STAT-03 omit); population resolved once in Results.jsx populationMap useMemo and threaded through ElectionsView (parent-resolves/child-renders, no page divergence — Phase 189 alignment)
+- [Phase 189]: buildBannerProps folds locationName construction into the single assembly point, not just the 3 named maps, to fully close SBAN-03
+- [Phase ?]: ElectionsView bannerCtx useMemo placed before early returns to satisfy rules-of-hooks (not near render block as sketched)
+- [Phase ?]: Presmyk headshot deferred to Plan 03 checkpoint — no licensed source found (Wikimedia none, Wikipedia infobox empty, Ballotpedia placeholder, AZGOP 404, asmi.az.gov WAF-403)
+- [Phase ?]: Corporation Commission office guard uses (district_id, politician_id) not (district_id, chamber_id) — required for 5 officials sharing 1 district+chamber
+- [Phase 191]: Runtime UUID resolution via external_id lookup (not hardcoded) mitigates wrong-photo binding for AZ US House headshots — Threat T-191-07 mitigation; matches NV 1051 analog pattern
+- [Phase 191]: 191-03: Presmyk headshot processed (not deferred) via operator-supplied local file; migration 1285 audit-only, photo_license='operator_supplied' — Closes AZ-STATE-01's last open item; operator explicitly chose to upload rather than accept the NV-159-style carry-forward deferral
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone

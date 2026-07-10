@@ -11,6 +11,7 @@ import { getBranch } from '../utils/branchType';
 import { getOfficeDescription } from '../utils/officeDescriptions';
 import { useCompass } from '../contexts/CompassContext';
 import { fetchPoliticianAnswers } from '../lib/compass';
+import { buildBannerProps } from '../lib/bannerProps';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 
@@ -283,6 +284,8 @@ export default function ElectionsView({
   onCandidateClick,
   isDark = false,
   buildingImageMap = {},
+  featureIconMap = {},
+  populationMap = {},
   representingCity = null,
   userState = null,
   stateNames = {},
@@ -512,6 +515,18 @@ export default function ElectionsView({
     });
   }, [elections, sessionSeed]);
 
+  const bannerCtx = useMemo(
+    () => ({
+      representingCity,
+      userState,
+      stateNames,
+      buildingImageMap,
+      featureIconMap,
+      populationMap,
+    }),
+    [representingCity, userState, stateNames, buildingImageMap, featureIconMap, populationMap]
+  );
+
   // Loading state — matches SkeletonSection from Results.jsx
   if (loading) {
     return (
@@ -574,23 +589,11 @@ export default function ElectionsView({
               if (!tierStyle) return null;
 
               const banner = tier === 'Local'
-                ? <SectionBanner
-                    tier="city"
-                    locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
-                    imageUrl={buildingImageMap?.Local}
-                  />
+                ? <SectionBanner {...buildBannerProps('city', bannerCtx)} />
                 : tier === 'State'
-                ? <SectionBanner
-                    tier="state"
-                    locationName={(userState && stateNames?.[userState]) || userState || 'Your State'}
-                    imageUrl={buildingImageMap?.State}
-                  />
+                ? <SectionBanner {...buildBannerProps('state', bannerCtx)} />
                 : tier === 'Federal'
-                ? <SectionBanner
-                    tier="federal"
-                    locationName="United States"
-                    imageUrl={buildingImageMap?.Federal}
-                  />
+                ? <SectionBanner {...buildBannerProps('federal', bannerCtx)} />
                 : null;
 
               return (

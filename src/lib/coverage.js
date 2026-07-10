@@ -196,6 +196,15 @@ export const COVERAGE_STATES = [
       { label: 'Boulder City', browseGovernmentList: ['3206500'], browseStateAbbrev: 'NV', hasContext: true },
     ],
   },
+  {
+    // First Arizona CITY entry (Phase 194). Pima County lives in COVERAGE_COUNTIES
+    // (unrelated array) — do NOT add cities there. hasContext:true is DB-honest:
+    // Plan 04 seeded evidence-only compass stances for the 7 Tucson officials.
+    name: 'Arizona', abbrev: 'AZ',
+    areas: [
+      { label: 'Tucson', browseGovernmentList: ['0477000'], browseStateAbbrev: 'AZ', hasContext: true },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
@@ -245,6 +254,7 @@ export const COVERAGE_COUNTIES = [
   { label: 'Washington County', browseGovernmentList: ['49053'], browseStateAbbrev: 'UT' },
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
+  { label: 'Pima County', browseGovernmentList: ['04019'], browseStateAbbrev: 'AZ', hasContext: true },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on

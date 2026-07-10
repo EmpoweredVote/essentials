@@ -11,6 +11,14 @@ services:
         value: "20"
       - key: NPM_TOKEN
         sync: false  # Set in Render dashboard — GitHub PAT with read:packages scope
+    headers:
+      # Public coverage catalog (reciprocal of Treasury Tracker's /treasury/cities) — wildcard CORS.
+      - path: /coverage.json
+        name: Access-Control-Allow-Origin
+        value: "*"
+      - path: /coverage.json
+        name: Cache-Control
+        value: "public, max-age=3600"
     routes:
       - type: rewrite
         source: /*

@@ -63,7 +63,7 @@ const STATE_CAPITOLS = {
 };
 
 /** US Census FIPS state code (the 2-digit prefix of a geo_id) → 2-letter abbreviation. */
-const STATE_FIPS_TO_ABBREV = {
+export const STATE_FIPS_TO_ABBREV = {
   '01': 'AL', '02': 'AK', '04': 'AZ', '05': 'AR', '06': 'CA', '08': 'CO', '09': 'CT',
   '10': 'DE', '11': 'DC', '12': 'FL', '13': 'GA', '15': 'HI', '16': 'ID', '17': 'IL',
   '18': 'IN', '19': 'IA', '20': 'KS', '21': 'KY', '22': 'LA', '23': 'ME', '24': 'MD',
@@ -410,6 +410,21 @@ const CURATED_LOCAL = {
   alexandria: { state: 'VA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alexandria.jpg' },
   'falls church': { state: 'VA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/falls-church.jpg' },
   leonardtown: { state: 'MD', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/leonardtown.jpg' },
+  // Arizona COUNTY banner (first county-tier CURATED_LOCAL key). Reads as Pima
+  // County the place (Santa Catalina Mountains + Sonoran-desert saguaro foreground),
+  // deliberately distinct from the future Tucson CITY banner (Phase 194, a downtown
+  // streetscape) and the AZ STATE banner (the Phoenix skyline). Key is space-form to
+  // match coverage.js browse_label 'Pima County'; storage file is hyphenated.
+  //   pima county   - Santa Catalina Mountains from West Saguaro National Park near Tucson | WClarke | CC BY-SA 4.0
+  'pima county': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pima-county.jpg' },
+  // Arizona CITY banner (Phase 194). Downtown Tucson skyline viewed from Sentinel
+  // Peak (the downtown high-rise cluster with the Santa Catalina Mountains behind),
+  // horizon leveled and cropped to show the base of the downtown buildings — reads as
+  // Tucson the CITY, deliberately distinct from the Pima COUNTY landscape banner
+  // (Catalinas + saguaro) and the AZ STATE banner (the Phoenix skyline). Single-variant
+  // key (no same-named-city collision in the covered set); storage file cities/tucson.jpg.
+  //   tucson        - View of Tucson from Sentinel Peak (leveled) | John Diebolt | Public domain
+  tucson: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tucson.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape

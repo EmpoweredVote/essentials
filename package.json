@@ -5,13 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "gen:coverage": "node scripts/gen-coverage.mjs",
+    "prebuild": "node scripts/gen-coverage.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "gen:population": "node scripts/gen-population.mjs"
   },
   "dependencies": {
-    "@empoweredvote/ev-ui": "^0.9.7",
+    "@empoweredvote/ev-ui": "^0.9.8",
     "@floating-ui/react": "^0.27.19",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",

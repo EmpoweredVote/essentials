@@ -14,7 +14,7 @@ import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress, parseCityFromAddress, stateAbbrevFromGeoId } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, fetchVoterInfo } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, browseFederalOfficials, fetchVoterInfo } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
@@ -29,9 +29,10 @@ import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
 import SectionBanner from '../components/SectionBanner.jsx';
-import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug } from '../lib/treasury';
-
-const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || 'https://treasurytracker.empowered.vote';
+import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
+import { resolveFeatureIcons } from '../lib/featureIcons';
+import { resolvePopulation } from '../lib/population';
+import { buildBannerProps } from '../lib/bannerProps';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -408,6 +409,7 @@ export default function Results() {
     if (searchParams.get('browse_geo_id')) return;
     if (searchParams.get('browse_government_list')) return;
     if (searchParams.get('browse_state_officials')) return;
+    if (searchParams.get('browse_federal_officials')) return;
     let cancelled = false;
     loadUserAddressFromContext().then((stored) => {
       if (cancelled || !stored?.addr) return;
@@ -878,6 +880,25 @@ export default function Results() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Handle ?browse_federal_officials=1 — all federal-tier officials nationally
+  // (US Senate/House, President/VP/Cabinet/agencies, federal judiciary). The
+  // "browse the United States" entry point; Treasury Tracker's federal deep-link
+  // target (phase-125 coverage contract). No state — the Federal banner leads.
+  useEffect(() => {
+    if (searchParams.get('browse_federal_officials') !== '1') return;
+    const label = searchParams.get('browse_label');
+
+    setSearchMode('browse');
+    setBrowseLoading(true);
+    if (label) setAddressInput(decodeURIComponent(label));
+
+    browseFederalOfficials().then(({ data, error }) => {
+      if (error) console.error('browse federal error:', error);
+      setBrowseResults(data);
+      setBrowseLoading(false);
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const switchView = (view) => {
     posthog?.capture('essentials_tab_switched', { from: activeView, to: view });
     setSearchParams((prev) => {
@@ -1110,14 +1131,23 @@ export default function Results() {
     // (e.g. Newsom shown as "Missouri"). Geo wins over the raw param.
     const fromGeo = stateAbbrevFromGeoId(searchParams.get('browse_geo_id'));
     if (fromGeo) return fromGeo;
-    // Government-list browse has no browse_geo_id, but the first government geo_id's
-    // FIPS prefix is just as authoritative (e.g. '3231900' -> NV). Use it before the
+    // Government-list browse has no browse_geo_id, but each government id's FIPS
+    // prefix is just as authoritative (e.g. '3231900' -> NV). Use it before the
     // raw browse_state param so the geography — not a stale param — wins here too.
+    // WR-03 defensive guard: only trust the derived state when EVERY id in the
+    // list shares the same FIPS prefix. A multi-state government-list browse (not
+    // observed today — all curated browses are single-state) must not silently
+    // tether the State/Local Treasury chip to just the first id's state; when the
+    // ids diverge, fall through so userState stays null/undefined and the tether
+    // chip is omitted (TETH-03 graceful degradation) rather than pointing at the
+    // wrong state for governments later in the list.
     const govList = searchParams.get('browse_government_list');
     if (govList) {
-      const firstGovId = govList.split(',').map((s) => s.trim()).filter(Boolean)[0];
-      const fromGovGeo = stateAbbrevFromGeoId(firstGovId);
-      if (fromGovGeo) return fromGovGeo;
+      const govIds = govList.split(',').map((s) => s.trim()).filter(Boolean);
+      const govStates = new Set(govIds.map((id) => stateAbbrevFromGeoId(id)).filter(Boolean));
+      if (govStates.size === 1) {
+        return [...govStates][0];
+      }
     }
     // Otherwise derive the state from the browse params so the State banner
     // shows e.g. "California" instead of "Your State".
@@ -1132,6 +1162,39 @@ export default function Results() {
   const buildingImageMap = useMemo(
     () => getBuildingImages(representingCity, userState),
     [representingCity, userState]
+  );
+
+  const featureIconMap = useMemo(
+    () => resolveFeatureIcons({ representingCity, userState, treasuryCities }),
+    [representingCity, userState, treasuryCities]
+  );
+
+  const populationMap = useMemo(() => {
+    const cityPop = resolvePopulation({
+      tier: 'city',
+      geoId: searchParams.get('browse_geo_id'),
+      city: representingCity,
+      stateAbbrev: userState,
+    });
+    const statePop = resolvePopulation({ tier: 'state', stateAbbrev: userState });
+    const federalPop = resolvePopulation({ tier: 'federal' });
+    return {
+      Local: cityPop != null ? { label: 'POPULATION', value: cityPop } : null,
+      State: statePop != null ? { label: 'POPULATION', value: statePop } : null,
+      Federal: federalPop != null ? { label: 'POPULATION', value: federalPop } : null,
+    };
+  }, [representingCity, userState, searchParams]);
+
+  const bannerCtx = useMemo(
+    () => ({
+      representingCity,
+      userState,
+      stateNames: STATE_NAMES,
+      buildingImageMap,
+      featureIconMap,
+      populationMap,
+    }),
+    [representingCity, userState, buildingImageMap, featureIconMap, populationMap]
   );
 
   // Only show the nearest upcoming election; hiding future elections avoids duplicate
@@ -1792,6 +1855,7 @@ export default function Results() {
                         // surviving into an LA geo browse and mislabeling it "Missouri".
                         next.delete('browse_government_list');
                         next.delete('browse_state_officials');
+                        next.delete('browse_federal_officials');
                         next.delete('browse_county_geo_id');
                         next.delete('browse_skip_overlap');
                         // Drop the address query too: it is mutually exclusive with
@@ -1935,23 +1999,11 @@ export default function Results() {
                   if (!tierStyle) return null;
 
                   const tierBanner = tier === 'Local'
-                    ? <SectionBanner
-                        tier="city"
-                        locationName={representingCity && userState ? `${representingCity}, ${userState}` : (representingCity || 'Your City')}
-                        imageUrl={buildingImageMap.Local}
-                      />
+                    ? <SectionBanner {...buildBannerProps('city', bannerCtx)} />
                     : tier === 'State'
-                    ? <SectionBanner
-                        tier="state"
-                        locationName={(userState && STATE_NAMES[userState]) || userState || 'Your State'}
-                        imageUrl={buildingImageMap.State}
-                      />
+                    ? <SectionBanner {...buildBannerProps('state', bannerCtx)} />
                     : tier === 'Federal'
-                    ? <SectionBanner
-                        tier="federal"
-                        locationName="United States"
-                        imageUrl={buildingImageMap.Federal}
-                      />
+                    ? <SectionBanner {...buildBannerProps('federal', bannerCtx)} />
                     : null;
 
                   return (
@@ -1981,7 +2033,7 @@ export default function Results() {
                             {treasuryMatch && (
                               <div className="mb-3">
                                 <a
-                                  href={`${TREASURY_URL}/?entity=${toTreasurySlug(treasuryMatch)}`}
+                                  href={`${TREASURY_URL}/?entity=${encodeURIComponent(toTreasurySlug(treasuryMatch))}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#00c8d7] dark:hover:text-[#7ec8d8] transition-colors"
@@ -2064,6 +2116,8 @@ export default function Results() {
                   navigate(`/candidate/${id}`);
                 }}
                 buildingImageMap={buildingImageMap}
+                featureIconMap={featureIconMap}
+                populationMap={populationMap}
                 representingCity={representingCity}
                 userState={userState}
                 stateNames={STATE_NAMES}

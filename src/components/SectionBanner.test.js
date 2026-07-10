@@ -7,7 +7,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { FALLBACK_GRADIENTS } from './SectionBanner.jsx';
+import { FALLBACK_GRADIENTS, shouldRenderStat, shouldRenderIcons } from './SectionBanner.jsx';
 
 describe('FALLBACK_GRADIENTS — tier to gradient string mapping', () => {
   it('city gradient is defined and non-empty', () => {
@@ -38,5 +38,57 @@ describe('FALLBACK_GRADIENTS — tier to gradient string mapping', () => {
     expect(FALLBACK_GRADIENTS.city).toContain('#0d1117');
     expect(FALLBACK_GRADIENTS.state).toContain('#0d1117');
     expect(FALLBACK_GRADIENTS.federal).toContain('#0d1117');
+  });
+});
+
+describe('shouldRenderStat', () => {
+  it('returns true for a positive numeric value', () => {
+    expect(shouldRenderStat({ label: 'POPULATION', value: 652503 })).toBe(true);
+  });
+
+  it('returns false for null', () => {
+    expect(shouldRenderStat(null)).toBe(false);
+  });
+
+  it('returns false for undefined', () => {
+    expect(shouldRenderStat(undefined)).toBe(false);
+  });
+
+  it('returns false for value: 0', () => {
+    expect(shouldRenderStat({ value: 0 })).toBe(false);
+  });
+
+  it('returns false for value: NaN', () => {
+    expect(shouldRenderStat({ value: NaN })).toBe(false);
+  });
+
+  it('returns false for a string value', () => {
+    expect(shouldRenderStat({ value: '5' })).toBe(false);
+  });
+
+  it('returns false for an empty object', () => {
+    expect(shouldRenderStat({})).toBe(false);
+  });
+});
+
+describe('shouldRenderIcons', () => {
+  it('returns true for a non-empty array', () => {
+    expect(shouldRenderIcons([{ key: 'x' }])).toBe(true);
+  });
+
+  it('returns false for an empty array', () => {
+    expect(shouldRenderIcons([])).toBe(false);
+  });
+
+  it('returns false for null', () => {
+    expect(shouldRenderIcons(null)).toBe(false);
+  });
+
+  it('returns false for undefined', () => {
+    expect(shouldRenderIcons(undefined)).toBe(false);
+  });
+
+  it('returns false for a non-array', () => {
+    expect(shouldRenderIcons('x')).toBe(false);
   });
 });

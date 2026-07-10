@@ -1,5 +1,47 @@
 # Retrospective
 
+## Milestone: v21.0 — Smart Banners
+
+**Shipped:** 2026-07-08
+**Phases:** 3 (187–189) | **Plans:** 8
+
+### What Was Built
+
+- Tethered feature-icon row on `SectionBanner` — per-tier Treasury deep-link resolvers (municipal / state General Fund / federal) that carry the banner's own location into `financials.empowered.vote`, surfaced as a bottom-right chip with an @floating-ui hover/focus tooltip, omitted entirely on no-match
+- Census population pipeline — build-time ACS5-2023 generator (`scripts/gen-population.mjs`) → committed FIPS-keyed bundle (`src/data/population.js`, ~32K places + 52 states + national); pure `resolvePopulation` resolver with graceful null-on-miss
+- `buildBannerProps` shared prop-assembly helper — unified all 6 hand-assembled call sites (3 per page) across Results + Elections into uniform one-liners; single source of truth, promotable to `@empoweredvote/ev-ui`
+- Graceful degradation to the v19.0 title-only banner when a location has neither links nor stats
+
+### What Worked
+
+- Two independent workstreams (187 icons, 188 stats) built in parallel and converged in a single integration phase (189) — clean dependency shape, no cross-contamination
+- Test-first pure logic: `featureIcons`, `population`, and `bannerProps` all shipped with Vitest suites (including a 13-case fixture matrix) before wiring into JSX — refactors in 189 stayed safe
+- Reusing v19.0's already-built (inert) `stats`/`featureIcons` scaffolding slots meant the UI contract was fixed up front — the milestone was pure fill-in, not redesign
+- Phase 189 doubled as the milestone audit (integration + cross-page parity + empty-state), verified PASS 8/8 with live operator sign-off — no separate audit phase needed
+
+### What Was Inefficient
+
+- The stat placement moved twice (188 top-right → 189 mid-left, D-05 supersedes D-11) once both slots coexisted and collision with the icon chip became visible — a combined-layout mock at UI-spec time would have caught it in one pass
+- `/gsd-complete-milestone`'s SDK `milestone.complete` counted all 32 unarchived phase dirs on disk (not just v21.0's 3), producing a garbage MILESTONES.md entry that had to be hand-rewritten — phase dirs from v18–v20 were never archived off `.planning/phases/`
+
+### Patterns Established
+
+- Location-tethered deep-links: the banner carries its OWN location, the exact inverse of the `ev-context` broker's "inherit the user's location" — verify against a banner whose location differs from the user's
+- Context-aware visibility: omit the affordance entirely when no valid per-location link/stat exists — never a greyed/disabled placeholder, never a zero/undefined label
+- Census data as a committed build-time bundle, not a runtime fetch — no per-render API call, no runtime failure surface, fixture-testable via an injectable maps seam
+- `buildBannerProps(tier, ctx)` single assembly point as the antidote to N-call-site prop drift across two pages
+
+### Key Lessons
+
+- Archive phase directories at each milestone close (`/gsd-cleanup`) — leaving them on disk makes the completion SDK miscount phases/plans and scrape cross-milestone accomplishments; verify the generated MILESTONES.md entry before committing
+- When two banner slots share one surface, spec their combined layout together — placement decisions made per-slot get re-litigated at integration
+
+### Cost Observations
+
+- Frontend-only, no stance-research agents; short 2-day milestone (2026-07-07 → 2026-07-08)
+- 69 commits, 63 files, +8,633/−99 (population bundle dominates insertions)
+- Notable: heavy pure-logic + Vitest investment up front made the 189 integration refactor cheap and low-risk
+
 ## Milestone: v10.0 — Multnomah County & School Boards
 
 **Shipped:** 2026-06-04

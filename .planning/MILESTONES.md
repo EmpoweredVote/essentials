@@ -1,5 +1,28 @@
 # Milestones
 
+## v21.0 Smart Banners (Shipped: 2026-07-08)
+
+**Phases completed:** 3 phases (187–189), 8 plans
+
+**Stats:** 69 commits · 63 files changed (23 non-planning) · +8,633 / −99 · 2 days (2026-07-07 → 2026-07-08) · git range `c14ea89b` → `d46e823d`
+
+**Delivered:** Filled v19.0's two inert `SectionBanner` scaffolding slots (`featureIcons` + `stats`), turning every section banner into a location-aware hub. Frontend-only, no backend/DB changes. A tethered EV-product icon row deep-links each banner's OWN location (never the user's) into other EV products, and a Census-sourced population strip shows a legible fact per tier — both wired identically into Results and Elections through one shared prop-assembly helper, degrading gracefully to the v19.0 title-only banner when no links or stats exist. 14/14 requirements.
+
+**Key accomplishments:**
+
+- **Tethered Treasury deep-links (187):** per-tier resolvers (`findMatchingMunicipality` / `findStateTreasuryEntity` / `findFederalTreasuryEntity`) build a `financials.empowered.vote/?entity=<name-state>` link carrying the *banner's own* location, omitting the icon entirely on no-match — no dead links, no greyed placeholders (ICON-01/02/03, TETH-01/02/03/04).
+- **Accessible feature-icon chip (187):** bottom-right EV-product chip with an @floating-ui hover/focus tooltip, resolved once via `featureIconMap` and drilled through all 6 section banners across both pages.
+- **Census population pipeline (188):** build-time Node/ESM generator (`scripts/gen-population.mjs`) pulls live ACS5-2023 population for ~32K places + 52 states/territories + the national total into a committed FIPS-keyed bundle (`src/data/population.js`); `STATE_FIPS_TO_ABBREV` promoted to an exported single source of truth (STAT-02).
+- **Pure `resolvePopulation` + graceful omission (188):** null-on-any-miss resolver (state-abbrev→FIPS, city via geo_id OR name|state index, federal US total) with an injectable maps seam and a 13-case fixture Vitest matrix; `shouldRenderStat` gates the scrim so misses omit cleanly — no zeros, nulls, or broken labels (STAT-01/03).
+- **`buildBannerProps` single source of truth (189):** all 6 hand-assembled `<SectionBanner>` call sites (3 per page) replaced with uniform `buildBannerProps(tier, ctx)` one-liners, closing the last Results/Elections prop-assembly divergence (SBAN-01/02/03).
+- **Verified cross-page parity + empty-state (189):** 189-VERIFICATION PASS 8/8, operator-approved live — identical icon row + stats strip on both pages across city/state/federal tiers, and a link-less/stat-less banner renders exactly as in v19.0 with no empty containers, layout shift, or console errors (SBAN-04).
+
+**Archived:** `milestones/v21.0-ROADMAP.md`, `milestones/v21.0-REQUIREMENTS.md`. No milestone audit produced — Phase 189 served as the integration/verification phase (PASS 8/8, live operator sign-off).
+
+**Known deferred items at close:** 12 pre-acknowledged cross-milestone artifacts (1 debug + 3 UAT + 8 verification gaps from v5.0/v13.0/v18.0/v20.0) — see STATE.md Deferred Items. None belong to v21.0.
+
+---
+
 ## v20.0 Beaverton & Washington County, OR (Shipped: 2026-07-05)
 
 **Delivered:** The Washington County west-metro local layer deep-seeded onto Oregon's existing state
@@ -19,17 +42,22 @@ frontend detour and are not part of this milestone.
 - **Washington County opened as a standalone county government** (geo_id 41067, NOT under State of OR) —
   Board of Commissioners = Chair + 4 district commissioners on custom LOCAL geofences
   (`washco-or-commissioner-district-1..4`); 5/5 headshots + stances, 67 stance rows (Phase 175)
+
 - **7 west-metro cities deep-seeded** — Beaverton (7, 91 stances), Hillsboro (7, 60), Tualatin (7, 59),
   Tigard (7, 48), Forest Grove (7, 39), Sherwood (7, 23), Cornelius (4, thin 4-row honest blanks);
   **51 city/county officials, 51/51 headshots, 50/51 with stances, 391 stance rows** (Phases 175–182)
+
 - **5 school-district boards seeded** (roster + headshots, compass DEFERRED by design) — Beaverton SD 48J,
   Hillsboro SD 1J, Tigard-Tualatin SD 23J, Sherwood SD 88J, Forest Grove SD 15; 29 trustees, 28/29
   headshots (1 Harrington gap, no source) on Phase-174 G5420 geofences (Phases 183–184)
+
 - **2026 election layer** — 25 office-anchored OR 2026 General west-metro race rows, 12 candidate rows across
   8 confirmed races (4 new challengers + 8 reuse, per-row citations, antipartisan), 8 discovery_jurisdictions
   armed + one live discovery run completed; 17 races correctly ship 0 candidates pending open filing (Phase 185)
+
 - **All 8 city/county jurisdictions carry the purple `hasContext` chip** (DB-verified honest); 5 school
   districts plain + search-only (compass deferred) — coverage.js reconciled, no edits needed (Phase 186)
+
 - **New patterns documented** — two-table OR state casing (`districts.state='or'` vs `elections/discovery.state='OR'`);
   incumbent-based office resolution for plain-'Councilor' at-large councils; `races.position_name` unique-index
   constraint; shared migration-counter drift; May-primary+Nov-runoff vs straight-to-November election mechanics;
@@ -68,24 +96,30 @@ frontend detour and are not part of this milestone.
 - **Nevada opened as a new state** — TIGER geofences loaded for all boundary tiers (G4110 cities,
   G4020 counties, CDs, SLDU, SLDL); any NV address routes to the correct federal, state, county,
   and city representatives (Phase 158)
+
 - **63 NV state legislators seeded with offices + 600×750 headshots** (21 Senate + 42 Assembly,
   archive.leg.state.nv.us, us_government_work license) — compass stances deferred to follow-up
   (the OR v8.0→v9.0 split pattern) (Phase 160)
+
 - **6 Clark County metro jurisdictions deep-seeded** — Clark County Commission (7 members + Chair
   Naft title-on-seat, governs the unincorporated Strip), City of Las Vegas (7, 36 stances),
   Henderson (5, 28 stances), North Las Vegas (5, 18 stances), Boulder City (5, 19 stances), CCSD
   (11 trustees, 0 stances by design); **40 seated metro officials, 36/40 headshots, 133 total metro
   stance rows** (Phases 161–166)
+
 - **5/6 jurisdictions carry the purple `hasContext` chip** (Las Vegas, Henderson, North Las Vegas,
   Boulder City, Clark County); CCSD plain chip by design (school-board compass deferred) (Phase 173)
+
 - **0 split-section defects** across all 6 metro jurisdictions (scan clean)
 - **New structural patterns established and documented** — standalone-county-not-under-state (Clark
   County is its own government, geo_id 32003, NOT nested under State of NV); custom LOCAL ward MTFCC
   codes (Henderson wards X0016, North Las Vegas wards X0017); lowercase `'nv'` casing for all
   district joins; Strip = unincorporated Clark County (no G4110 city match at a Strip address)
+
 - **NV 2026 elections + discovery armed** — Governor + 42 Assembly + ~10 Senate + 4 US House race
   rows + discovery_jurisdictions cron_active (Phase 167); statewide + US House candidate roster
   populated (Phase 168)
+
 - **Nevada playbook captured** — 6 Cities Onboarded rows, 3 NV GOTCHAs, Nevada Quick Reference block
   (ext_id schemes, geo_ids, WAF map, browse params) added to `LOCATION-ONBOARDING.md` (Phase 173)
 
@@ -101,10 +135,13 @@ frontend detour and are not part of this milestone.
 
 - **NV legislature compass stances deferred** — 63 legislators seeded + headshots but 0 stances;
   explicit follow-up milestone (the OR v8.0→v9.0 split pattern) (D-08.1)
+
 - **Mesquite** — Clark County's smallest incorporated city (~20k pop.) not seeded; candidate for a
   future Clark County wave (D-08.2)
+
 - **Browse-government-list state-leak bug** — browsing an unseeded city leaks stale prior-location
   officials under the wrong state banner; backend follow-up fix deferred (D-08.3)
+
 - **Phase renumber 169→173** — phase numbers 169–172 are occupied by the parked v19.0 frontend
   detour; the NV Retrospective was renumbered to 173 on 2026-06-30 to avoid directory collision;
   numeric execution order is otherwise unaffected (D-08.4)
@@ -132,13 +169,16 @@ ASST-01/02) → 172 (Elections page parity: DARK-03, BANR-05).
   (single source of truth: ev-navy #0d1117, ev-navy-card #161b22, ev-teal-light #00c8d7, +text tokens);
   Inter/Manrope self-hosted; ev-ui components dark-themed via `.dark .ev-* {…!important}`; light mode
   untouched; PoliticianCard 4:5 geometry preserved (Phase 169)
+
 - **Reusable `SectionBanner` component** — full-bleed image + dark gradient + location label/pin, tinted
   gradient fallback, empty stats + feature-icon scaffolding slots; tier sort control removed; Results
   renders City → State → Federal in one continuous scroll (Phase 170)
+
 - **Banner asset pipeline** — `docs/banner-asset-pipeline.md` 8-stage runbook + `scripts/banners/`
   (`process_banner.py` 1700×540 q90 LANCZOS + `upload_banner.py` service-role-key-from-env); 6 exemplar
   assets live in Storage (Bloomington/IN/US + LA/CA/US) wired into `buildingImages.js`; D-04 dead-asset
   cleanup (Phase 171)
+
 - **Elections page parity** — dark-token swap + `SectionBanner` per tier threaded from Results; seeded
   ordering, unopposed/no-candidate handling, `elections/me` auto-load, and MiniCompass all preserved
   (provably color-only diff); operator deploy sign-off (Phase 172)
@@ -173,13 +213,16 @@ for June-2026 election turnover. DB-verified at close (read-only) in the v17.0 m
   Torrance, Pasadena, Downey, El Monte, West Covina, Inglewood, Burbank, Norwalk, Bellflower;
   **92 seated officials**, **91/92 headshots** at 600×750 (only Lancaster Ken Mann gap),
   **445 evidence-only compass stance rows** (Phases 142–156)
+
 - **All 15 cities carry ≥1 stance → all surfaced with the purple `hasContext` chip** in
   `src/lib/coverage.js` (verified honest against per-city DB stance counts, D-02)
+
 - **Reconcile patterns proven & documented** — duplicate-chamber merges (Pasadena, Inglewood,
   West Covina), At-Large→by-district relabels (Palmdale, Pomona, El Monte Ord. 3010, Bellflower
   Ord. 1410), directly-elected vs rotational mayor disambiguation (Downey Frometa-not-Sosa,
   Norwalk Perez-not-Ayala), wrong-person headshot fixes (West Covina Gutierrez; Pomona stale-PCE
   avoidance); captured as the "LA County Wave-2 (v17.0)" GOTCHA block in LOCATION-ONBOARDING.md
+
 - **Split-section scan clean** across all 15 Wave-2 cities (0 rows)
 - Shared UI fix `src/lib/groupHierarchy.js` (Mayor > Mayor Pro Tem ordering) committed to main (a235f25)
 
@@ -192,11 +235,14 @@ for June-2026 election turnover. DB-verified at close (read-only) in the v17.0 m
   counts verified from `inform.politician_answers`; the on-disk file counter is authoritative
 
 **Tech debt carried forward:**
+
 - **Split-section cleanup — 5 NON-Wave-2 councils** (Whittier, Compton, Carson, South El Monte,
   South Pasadena): pre-existing v7.0/v15.0 defects, out of scope since Phase 143; candidate for a
   dedicated cleanup phase (see audit LAC2-SPLITSEC-01)
+
 - **groupHierarchy.js Mayor>Mayor-Pro-Tem fix** committed to main (a235f25) — **production deploy
   still pending** (LAC2-DEPLOY-01)
+
 - Lancaster Ken Mann headshot backfill; 9 honest blank-spoke officials to revisit as records accrue
 
 **Audit:** [v17.0-MILESTONE-AUDIT.md](v17.0-MILESTONE-AUDIT.md)
@@ -219,11 +265,14 @@ milestone retroactively 2026-06-18 (DB-verified).
 - 10 Utah cities deep-seeded biggest-first — Salt Lake City, West Valley City, West Jordan,
   Provo, Orem, Ogden, Sandy, St. George, Lehi, Layton; ~72 elected officials, 71/72 headshots
   at 600×750 (only SLC D4 Napier-Pearce gap), 296 evidence-only city stance rows (Phase 139)
+
 - Utah State Senate split-section repair — 4 senators repointed from county chambers to the
   Utah State Senate chamber; Senate 29/29, House 75/75, section-split scan clean (Phase 140)
+
 - **Full legislature compass coverage — 104/104 Utah state legislators with evidence-only
   stances (29 Senate + 75 House), 955 stance rows**; every value name-confirmed on le.utah.gov
   roll calls / sponsored bills / first-party statements; no defaults, honest blanks (Phase 140)
+
 - Landing.jsx integration — all 10 UT cities in COVERAGE_STATES (browseStateAbbrev:'UT' +
   hasContext:true); legislature surfaces via browse_state=UT (districts.state='ut') (Phase 141)
 
@@ -234,9 +283,11 @@ milestone retroactively 2026-06-18 (DB-verified).
 - 1,251 total Utah stance rows (955 legislature + 296 city); next migration: 877
 
 **Tech debt carried forward:**
+
 - SLC/Ogden/Layton have 5 duplicate/stale council office rows (incl. a duplicate Victoria
   Petro record with 9 stranded stances) that render as duplicate councilmembers — cleanup
   migration pending (see audit UT-CITY-01)
+
 - SLC D4 Napier-Pearce: no portrait + 0 stances (appointed 2026-06-09; intentional)
 - HD64 Jackie Larson: revisit other topics after the 2027 Utah session
 
@@ -268,6 +319,7 @@ milestone retroactively 2026-06-18 (DB-verified).
 - Next migration: 268
 
 **Tech debt carried forward:**
+
 - 40/40 Phase 89 officials (ME + IN school boards) have no headshots — CMS platforms block server-side fetches; browser automation required
 - South Portland D1 (Rauscher) + At-Large (Ryan) names assumed from JS-only source
 - Fairview + Maywood Park + Allen ISD + Whitehurst-Payne: confirmed online headshot unavailability
@@ -577,7 +629,7 @@ milestone retroactively 2026-06-18 (DB-verified).
 **Phases completed:** 0 phases, 0 plans, 0 tasks
 
 **Key accomplishments:**
+
 - (none recorded)
 
 ---
-

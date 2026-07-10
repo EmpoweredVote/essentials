@@ -380,6 +380,21 @@ export async function browseByState(stateAbbrev) {
   }
 }
 
+// "Browse the United States" — all federal-tier officials nationally (no state
+// filter). Backs the ?browse_federal_officials=1 shortcut and Treasury Tracker's
+// federal deep-link (phase-125 coverage contract).
+export async function browseFederalOfficials() {
+  try {
+    const res = await publicFetch('/essentials/browse/federal/officials');
+    if (!res || !res.ok) return { data: [], error: `${res?.status ?? 'unknown'}` };
+    const data = await res.json();
+    return { data: Array.isArray(data) ? data : [], error: null };
+  } catch (err) {
+    console.error('browseFederalOfficials error:', err);
+    return { data: [], error: err.message };
+  }
+}
+
 export async function fetchElectionsByAddress(address) {
   try {
     const res = await publicFetch(
