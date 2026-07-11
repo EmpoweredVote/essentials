@@ -38,7 +38,7 @@ community banner → surface in `src/lib/coverage.js`.
 - [ ] **TUC-01**: City of Tucson deep-seed (flagship) — Mayor + 6 ward council members (verify
   ward-elected vs at-large and AZ partisan-election handling at plan time) → roster → 600×750 headshots →
   evidence-only compass stances → licensed community banner → surfaced in `src/lib/coverage.js`.
-- [ ] **SUB-01**: Oro Valley deep-seed — government + roster → 600×750 headshots → evidence-only stances
+- [x] **SUB-01**: Oro Valley deep-seed — government + roster → 600×750 headshots → evidence-only stances
   → licensed community banner → surfaced in `src/lib/coverage.js`.
 - [ ] **SUB-02**: Marana deep-seed — same deep-seed unit.
 - [ ] **SUB-03**: Sahuarita deep-seed — same deep-seed unit.
@@ -94,7 +94,7 @@ community banner → surface in `src/lib/coverage.js`.
 | AZ-LEG-01 | Phase 192 | Complete |
 | PIMA-01 | Phase 193 | Complete |
 | TUC-01 | Phase 194 | Pending |
-| SUB-01 | Phase 195 | Pending |
+| SUB-01 | Phase 195 | Complete |
 | SUB-02 | Phase 196 | Pending |
 | SUB-03 | Phase 197 | Pending |
 | SUB-04 | Phase 198 | Pending |

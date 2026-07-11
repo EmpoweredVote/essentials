@@ -73,7 +73,7 @@ milestone starts at **Phase 190**.
 - [x] **Phase 192: Arizona Legislature (seed + headshots)** - 30 senators + 60 house reps seeded and photographed; stances deferred (completed 2026-07-09)
 - [x] **Phase 193: Pima County Board of Supervisors Deep-Seed** - Standalone county government + roster + headshots + stances + banner (completed 2026-07-10)
 - [ ] **Phase 194: City of Tucson Deep-Seed** - Flagship: Mayor + 6 wards + roster + headshots + stances + banner
-- [ ] **Phase 195: Oro Valley Deep-Seed** - Government + roster + headshots + stances + banner
+- [x] **Phase 195: Oro Valley Deep-Seed** - Government + roster + headshots + stances + banner (completed 2026-07-11)
 - [ ] **Phase 196: Marana Deep-Seed** - Government + roster + headshots + stances + banner
 - [ ] **Phase 197: Sahuarita Deep-Seed** - Government + roster + headshots + stances + banner
 - [ ] **Phase 198: South Tucson Deep-Seed** - Government + roster + headshots + stances + banner
@@ -345,7 +345,7 @@ any relative order among themselves, but the suggested sequence (state/federal Ã
 | 192. Arizona Legislature (seed + headshots) | 3/3 | Complete    | 2026-07-09 |
 | 193. Pima County Board of Supervisors Deep-Seed | 6/6 | Complete    | 2026-07-10 |
 | 194. City of Tucson Deep-Seed | 6/6 | Complete   | 2026-07-10 |
-| 195. Oro Valley Deep-Seed | 4/4 | Complete   | 2026-07-11 |
+| 195. Oro Valley Deep-Seed | 4/4 | Complete    | 2026-07-11 |
 | 196. Marana Deep-Seed | 0/TBD | Not started | - |
 | 197. Sahuarita Deep-Seed | 0/TBD | Not started | - |
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
