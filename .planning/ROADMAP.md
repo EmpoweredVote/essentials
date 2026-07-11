@@ -248,7 +248,7 @@ milestone starts at **Phase 190**.
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 195-03-PLAN.md - Evidence-only compass stances, one official at a time, 36 non-judicial topics, 100% cited, honest blanks; audit-only migrations 1307-1313.
+- [x] 195-03-PLAN.md - Evidence-only compass stances, one official at a time, 36 non-judicial topics, 100% cited, honest blanks; audit-only migrations 1307-1313.
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
@@ -345,7 +345,7 @@ any relative order among themselves, but the suggested sequence (state/federal Ã
 | 192. Arizona Legislature (seed + headshots) | 3/3 | Complete    | 2026-07-09 |
 | 193. Pima County Board of Supervisors Deep-Seed | 6/6 | Complete    | 2026-07-10 |
 | 194. City of Tucson Deep-Seed | 6/6 | Complete   | 2026-07-10 |
-| 195. Oro Valley Deep-Seed | 2/4 | In Progress|  |
+| 195. Oro Valley Deep-Seed | 3/4 | In Progress|  |
 | 196. Marana Deep-Seed | 0/TBD | Not started | - |
 | 197. Sahuarita Deep-Seed | 0/TBD | Not started | - |
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
