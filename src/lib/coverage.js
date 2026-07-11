@@ -203,6 +203,10 @@ export const COVERAGE_STATES = [
     name: 'Arizona', abbrev: 'AZ',
     areas: [
       { label: 'Tucson', browseGovernmentList: ['0477000'], browseStateAbbrev: 'AZ', hasContext: true },
+      // Oro Valley (Phase 195). Appended to the EXISTING Arizona block (not a second
+      // block). hasContext:true is DB-honest — Plan 03 seeded evidence-only compass
+      // stances for the 7 Oro Valley officials. Pima County stays in COVERAGE_COUNTIES.
+      { label: 'Oro Valley', browseGovernmentList: ['0451600'], browseStateAbbrev: 'AZ', hasContext: true },
     ],
   },
 ];

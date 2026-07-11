@@ -425,6 +425,15 @@ const CURATED_LOCAL = {
   // key (no same-named-city collision in the covered set); storage file cities/tucson.jpg.
   //   tucson        - View of Tucson from Sentinel Peak (leveled) | John Diebolt | Public domain
   tucson: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tucson.jpg' },
+  // Oro Valley community banner (Phase 195). The Cañada del Oro (CDO) Riverfront Park
+  // pedestrian trail bridge — a distinctive rust-colored arched truss over the wash,
+  // deliberately distinct from the Pima COUNTY Catalina/Pusch-Ridge landscape banner,
+  // the Tucson CITY downtown streetscape, and the AZ STATE Phoenix skyline (its
+  // mountains sit small in the far background; the bridge is the subject). Single-variant
+  // key (no same-named-city collision); storage file cities/oro-valley.jpg (hyphenated),
+  // coverage.js label is space-form 'Oro Valley'.
+  //   oro valley    - Oro Valley CDO Trail Bridge | Djmaschek | CC BY-SA 3.0
+  'oro valley': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/oro-valley.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
