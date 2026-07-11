@@ -252,7 +252,7 @@ milestone starts at **Phase 190**.
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 195-04-PLAN.md - Licensed Oro Valley banner (one at a time, distinct from Pima's Catalina banner) wired into buildingImages.js + append 'Oro Valley' to the EXISTING Arizona coverage.js block.
+- [x] 195-04-PLAN.md - Licensed Oro Valley banner (one at a time, distinct from Pima's Catalina banner) wired into buildingImages.js + append 'Oro Valley' to the EXISTING Arizona coverage.js block.
 
 #### Phase 196: Marana Deep-Seed
 
@@ -345,7 +345,7 @@ any relative order among themselves, but the suggested sequence (state/federal Ã
 | 192. Arizona Legislature (seed + headshots) | 3/3 | Complete    | 2026-07-09 |
 | 193. Pima County Board of Supervisors Deep-Seed | 6/6 | Complete    | 2026-07-10 |
 | 194. City of Tucson Deep-Seed | 6/6 | Complete   | 2026-07-10 |
-| 195. Oro Valley Deep-Seed | 3/4 | In Progress|  |
+| 195. Oro Valley Deep-Seed | 4/4 | Complete   | 2026-07-11 |
 | 196. Marana Deep-Seed | 0/TBD | Not started | - |
 | 197. Sahuarita Deep-Seed | 0/TBD | Not started | - |
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
