@@ -64,6 +64,26 @@ community banner → surface in `src/lib/coverage.js`.
   jurisdiction carrying ≥1 stance), Arizona GOTCHAs + Quick Reference added to `LOCATION-ONBOARDING.md`,
   DB-verified milestone audit written, and milestone closed.
 
+### Coachella Valley, CA (appended 2026-07-12)
+
+Local-layer deep-seed appended to v22.0, independent of the Arizona phases (CA TIGER city+county
+boundaries already loaded). All three bodies are 5-member and by-district; both cities have a
+rotational mayor (title on a seat). Reuses the standalone-county / by-district city deep-seed unit.
+
+- [ ] **CV-01**: Riverside County seeded as a standalone county government (geo_id 06065) with a
+  5-member by-district Board of Supervisors (D1-D5) + confirmed constitutional officers (Sheriff, DA,
+  Assessor), supervisorial-district X-geofences from the county ArcGIS Hub, 600×750 headshots,
+  evidence-only compass stances, and a Riverside County entry in `coverage.js` COVERAGE_COUNTIES.
+- [ ] **CV-02**: City of Palm Springs (geo_id 0655254) deep-seeded — 5-member by-district council with
+  rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
+  evidence-only stances, and a `coverage.js` chip.
+- [ ] **CV-03**: City of Indio (geo_id 0636448) deep-seeded — 5-member by-district council with
+  rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
+  evidence-only stances, and a `coverage.js` chip.
+
+BANR-01 (above) extends to cover all three appended jurisdictions — each carries a licensed
+community banner sourced one at a time.
+
 ---
 
 ## Future Requirements (deferred)
@@ -101,6 +121,11 @@ community banner → surface in `src/lib/coverage.js`.
 | BANR-01 | Phases 193, 194, 195, 196, 197, 198 | Complete |
 | AZ-ELEC-01 | Phase 199 | Pending |
 | AZ-RETRO-01 | Phase 200 | Pending |
+| CV-01 | Phase 201 | Pending |
+| CV-02 | Phase 202 | Pending |
+| CV-03 | Phase 203 | Pending |
+| BANR-01 (appended) | Phases 201, 202, 203 | Pending |
 
-**Coverage:** 13/13 v22.0 requirements mapped. No orphans, no duplicates (BANR-01 intentionally spans
-the 6 deep-seed phases as a cross-cutting deliverable).
+**Coverage:** 13/13 core v22.0 requirements mapped + 3 appended Coachella Valley, CA requirements
+(CV-01/02/03 → Phases 201/202/203). No orphans, no duplicates (BANR-01 intentionally spans the 6 AZ
+deep-seed phases and the 3 appended CA deep-seed phases as a cross-cutting deliverable).

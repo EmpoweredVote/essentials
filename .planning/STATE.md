@@ -4,24 +4,27 @@ milestone: v22.0
 milestone_name: Tucson & Arizona
 status: ready_to_plan
 last_updated: 2026-07-11T08:01:38.472Z
-last_activity: 2026-07-10 -- Phase 195 execution started
+last_activity: 2026-07-12 -- Appended Coachella Valley CA phases 201-203 (AZ paused at 196)
 progress:
   total_phases: 43
   completed_phases: 5
   total_plans: 24
   completed_plans: 24
   percent: 12
-stopped_at: Phase 195 complete (4/4) — ready to discuss Phase 196
+stopped_at: Phase 195 complete (4/4) — ready to discuss Phase 196 (AZ PAUSED); appended CA phases 201-203, Phase 201 ready to plan
 ---
 
 # State
 
 ## Current Position
 
-Phase: 196
+Phase: 201 (Riverside County Board of Supervisors Deep-Seed — appended Coachella Valley, CA track)
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-07-11
+Last activity: 2026-07-12 — Appended CA phases 201-203; Arizona PAUSED (resume at Phase 196)
+
+**Arizona resume point:** Phase 196 (Marana Deep-Seed). Phases 196-200 remain planned and resumable;
+the Coachella Valley, CA work (201-203) is an independent append and does not block or alter them.
 
 ## Deferred Items
 
@@ -448,6 +451,15 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - Next migration: 777
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- 2026-07-12 — Appended 3 phases (201 Riverside County BoS, 202 Palm Springs, 203 Indio) for a
+  Coachella Valley, CA local-layer deep-seed. Independent of Arizona (CA TIGER city+county boundaries
+  already loaded: Riverside County 06065, Palm Springs 0655254, Indio 0636448). New requirement
+  category CV-01/02/03; BANR-01 extended to cover 201-203. Arizona PAUSED at Phase 196 (resumable).
+  Recon confirmed all three greenfield (no existing governments); all three are 5-member by-district
+  bodies; both cities have a rotational mayor; all three primary .gov domains are WAF-403.
 
 ### Key Decisions (carry forward)
 
