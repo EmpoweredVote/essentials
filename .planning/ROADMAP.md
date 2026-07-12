@@ -370,7 +370,7 @@ blanks) -> licensed community banner (real street-scene/skyline, no AI/aerial, s
 Plans:
 - [x] 201-01-PLAN.md — Load 5 supervisorial-district X0021 geofences (ArcGIS f=geojson)
 - [x] 201-02-PLAN.md — Standalone Riverside County government + Board of Supervisors chamber + 5 by-district offices (Chair title annotation, board-only)
-- [ ] 201-03-PLAN.md — 5/5 600x750 supervisor headshots + audit migration
+- [x] 201-03-PLAN.md — 5/5 600x750 supervisor headshots + audit migration
 - [ ] 201-04-PLAN.md — Evidence-only compass stances (one supervisor at a time)
 - [ ] 201-05-PLAN.md — Licensed downtown Riverside / Mission Inn banner + coverage.js surfacing
 - [ ] 201-06-PLAN.md — Full production audit + live-browse verification
@@ -431,7 +431,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
-| 201. Riverside County Board of Supervisors Deep-Seed (CA) | 2/6 | In Progress|  |
+| 201. Riverside County Board of Supervisors Deep-Seed (CA) | 3/6 | In Progress|  |
 | 202. Palm Springs Deep-Seed (CA) | 0/TBD | Not started | - |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 

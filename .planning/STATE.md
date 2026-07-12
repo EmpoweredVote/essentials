@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
 status: executing
-last_updated: "2026-07-12T23:05:00.000Z"
+last_updated: "2026-07-12T23:08:06.088Z"
 last_activity: 2026-07-12
 progress:
   total_phases: 46
   completed_phases: 6
   total_plans: 30
-  completed_plans: 26
+  completed_plans: 27
   percent: 13
 ---
 
@@ -18,8 +18,8 @@ progress:
 ## Current Position
 
 Phase: 201 (riverside-county-board-of-supervisors-deep-seed) — EXECUTING
-Plan: 3 of 6
-Status: Ready to execute (201-02 complete — standalone govt + Board chamber + 5 supervisor offices applied to prod; next: 201-03 headshots)
+Plan: 4 of 6
+Status: Ready to execute
 Last activity: 2026-07-12
 
 **Arizona resume point:** Phase 196 (Marana Deep-Seed). Phases 196-200 remain planned and resumable;
@@ -93,15 +93,19 @@ Phases 191-198 all depend only on Phase 190; suggested execution order mirrors N
   'Riverside County, California, US' government (geo_id 06065, type County, NOT under State of CA) + 'Board of
   Supervisors' chamber (official_count=5) + 5 LOCAL X0021 districts (riverside-ca-supervisor-district-1..5,
   lowercase 'ca') + 5 by-district supervisor offices/politicians. Board-only (D-01) — no constitutional officers.
+
 - In-transaction post-verify gate PASSED: gov=1, offices=5, appointed=0, split=0, chair_on=-4010002. Task 3
   independent assertions all green (distinct state='ca', distinct mtfcc='X0021', section-split=0). governments
   table has no parent column → standalone by construction.
+
 - Roster + chair operator-re-verified current at Task 2 checkpoint (rivco district sites / Ballotpedia /
   KVCR-KESQ / June-2026 results): D1 Medina / D2 Spiegel (2026 Chair) / D3 Washington / D4 Perez / D5 Gutierrez.
   All incumbents, no resignations/appointments/vacancies, no June-2026 certification delta. All is_appointed=false.
+
 - Chair (D-02): Spiegel D2 title annotation 'Supervisor, District 2 (Chair)' only; no separate office; role_canonical NULL.
 - **5 UUID manifest for Plans 03/04:** -4010001 Medina ea521b54 / -4010002 Spiegel 9c4ae0c3 / -4010003 Washington
   8770fed4 / -4010004 Perez c986a6af / -4010005 Gutierrez 26d3fdd0.
+
 - Commit 93cbbc6b (migration, C:/EV-Accounts master). Next migration disk-MAX now 1314. Next: 201-03 headshots.
 
 ### v21.0 roadmap (created 2026-07-07)
@@ -535,8 +539,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-12T22:23:09.165Z
-Stopped at: Completed 201-01-PLAN.md
+Last session: 2026-07-12T23:08:06.074Z
+Stopped at: Completed 201-03-PLAN.md (Riverside County headshots, 5/5, mig 1315)
 Resume file: None
 
 ## Performance Metrics
@@ -618,6 +622,7 @@ Resume file: None
 | Phase 191 P02 | 12min | 2 tasks | 2 files |
 | Phase 191 P03 | 20min | 2 tasks | 2 files |
 | Phase 201 P01 | 6min | 2 tasks | 1 files |
+| Phase 201 P03 | 45m | 3 tasks | 2 files |
 
 ## Decisions
 
@@ -711,6 +716,8 @@ Resume file: None
 - [Phase 191]: Runtime UUID resolution via external_id lookup (not hardcoded) mitigates wrong-photo binding for AZ US House headshots — Threat T-191-07 mitigation; matches NV 1051 analog pattern
 - [Phase 191]: 191-03: Presmyk headshot processed (not deferred) via operator-supplied local file; migration 1285 audit-only, photo_license='operator_supplied' — Closes AZ-STATE-01's last open item; operator explicitly chose to upload rather than accept the NV-159-style carry-forward deferral
 - [Phase 201]: Confirmed Riverside ArcGIS DISTRICT attribute field works directly (no fallback needed); X0021 confirmed unused pre-load; 5/5 geofences valid WGS84
+- [Phase 201]: Chuck Washington sourced from Ballotpedia (press_use) instead of his own off-center-framed district-site portrait
+- [Phase 201]: Added RGBA-to-white-composite fix ahead of crop/resize (Rule 1 bug fix) to prevent black backdrops on transparent-PNG sources
 
 ## Operator Next Steps
 
