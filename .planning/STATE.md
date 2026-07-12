@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
 status: executing
-last_updated: "2026-07-12T23:08:06.088Z"
+last_updated: "2026-07-12T23:54:34.813Z"
 last_activity: 2026-07-12
 progress:
   total_phases: 46
