@@ -85,7 +85,7 @@ Arizona phases above (CA TIGER city+county boundaries already loaded); Arizona 1
 resumable. Same standalone-county / by-district city deep-seed shape as 193-195. Execution order
 201 -> 202 -> 203 (banners + stances one at a time).
 
-- [ ] **Phase 201: Riverside County Board of Supervisors Deep-Seed** - Standalone county government (geo_id 06065) + 5 by-district supervisors + X-geofences + confirmed constitutional officers + headshots + stances + banner
+- [ ] **Phase 201: Riverside County Board of Supervisors Deep-Seed** - Standalone county government (geo_id 06065) + 5 by-district supervisors (board only, constitutional officers deferred per D-01) + X0021 geofences + headshots + stances + banner
 - [ ] **Phase 202: Palm Springs Deep-Seed** - City government (geo_id 0655254): 5-member by-district council + rotational mayor + X-geofences + headshots + stances + banner
 - [ ] **Phase 203: Indio Deep-Seed** - City government (geo_id 0636448): 5-member by-district council + rotational mayor + X-geofences + headshots + stances + banner
 
@@ -355,7 +355,7 @@ blanks) -> licensed community banner (real street-scene/skyline, no AI/aerial, s
 
 #### Phase 201: Riverside County Board of Supervisors Deep-Seed
 
-**Goal**: Riverside County is seeded as a standalone county government with its 5-member by-district Board of Supervisors plus confirmed countywide constitutional officers, so any Riverside County address routes to the correct supervisor and the county surfaces with an evidence-only compass.
+**Goal**: Riverside County is seeded as a standalone county government with its 5-member by-district Board of Supervisors (board ONLY — constitutional officers deferred per D-01), so any Riverside County address routes to the correct supervisor and the county surfaces with an evidence-only compass.
 **Depends on**: Nothing (CA county boundary 06065 already loaded; independent of Arizona 190-200)
 **Requirements**: CV-01, BANR-01
 **Success Criteria** (what must be TRUE):
@@ -366,7 +366,14 @@ blanks) -> licensed community banner (real street-scene/skyline, no AI/aerial, s
   4. Evidence-only compass stances applied (one agent at a time, 100% cited, honest blank spokes, no defaults)
   5. Licensed community banner sourced; Riverside County surfaced in `src/lib/coverage.js` COVERAGE_COUNTIES with a DB-honest chip
 
-**Plans**: TBD (run /gsd-plan-phase 201 to break down)
+**Plans**: 6 plans
+Plans:
+- [ ] 201-01-PLAN.md — Load 5 supervisorial-district X0021 geofences (ArcGIS f=geojson)
+- [ ] 201-02-PLAN.md — Standalone Riverside County government + Board of Supervisors chamber + 5 by-district offices (Chair title annotation, board-only)
+- [ ] 201-03-PLAN.md — 5/5 600x750 supervisor headshots + audit migration
+- [ ] 201-04-PLAN.md — Evidence-only compass stances (one supervisor at a time)
+- [ ] 201-05-PLAN.md — Licensed downtown Riverside / Mission Inn banner + coverage.js surfacing
+- [ ] 201-06-PLAN.md — Full production audit + live-browse verification
 **UI hint**: yes
 
 #### Phase 202: Palm Springs Deep-Seed
