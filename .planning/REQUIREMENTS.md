@@ -71,9 +71,10 @@ boundaries already loaded). All three bodies are 5-member and by-district; both 
 rotational mayor (title on a seat). Reuses the standalone-county / by-district city deep-seed unit.
 
 - [ ] **CV-01**: Riverside County seeded as a standalone county government (geo_id 06065) with a
-  5-member by-district Board of Supervisors (D1-D5) + confirmed constitutional officers (Sheriff, DA,
-  Assessor), supervisorial-district X-geofences from the county ArcGIS Hub, 600×750 headshots,
-  evidence-only compass stances, and a Riverside County entry in `coverage.js` COVERAGE_COUNTIES.
+  5-member by-district Board of Supervisors (D1-D5, "Chair" as a seat title) — **board only,
+  constitutional officers deferred** (Phase 201 D-01, matching Pima/Clark/WashCo precedent) —
+  supervisorial-district X-geofences from the county ArcGIS Hub, 600×750 headshots, evidence-only
+  compass stances, and a Riverside County entry in `coverage.js` COVERAGE_COUNTIES.
 - [ ] **CV-02**: City of Palm Springs (geo_id 0655254) deep-seeded — 5-member by-district council with
   rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
   evidence-only stances, and a `coverage.js` chip.

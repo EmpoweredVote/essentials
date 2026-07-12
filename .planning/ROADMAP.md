@@ -362,7 +362,7 @@ blanks) -> licensed community banner (real street-scene/skyline, no AI/aerial, s
 
   1. Standalone `County of Riverside` government row (geo_id 06065, NOT nested under State of CA) + Board of Supervisors chamber seeded
   2. 5 supervisorial-district X-geofences loaded from the county ArcGIS Hub (gis.countyofriverside.us OpenData SupervisorialDistricts MapServer/0); a probe address in each district routes to exactly one supervisor
-  3. 5 supervisors (D1 Medina, D2 Spiegel, D3 Washington, D4 Perez, D5 Gutierrez) + confirmed constitutional officers (Sheriff Bianco — re-verify still sitting, DA Hestrin, Assessor Aldana) seeded with 600x750 headshots; Auditor-Controller + Treasurer deferred (unconfirmed)
+  3. 5 supervisors (D1 Medina, D2 Spiegel, D3 Washington, D4 Perez, D5 Gutierrez) seeded with 600x750 headshots, with "Chair" as a title on the sitting chair's district seat (2026: Spiegel D2 — re-verify at execute time). Board ONLY — constitutional officers (Sheriff/DA/Assessor) deferred per D-01 (matches Pima/Clark/WashCo board-only precedent)
   4. Evidence-only compass stances applied (one agent at a time, 100% cited, honest blank spokes, no defaults)
   5. Licensed community banner sourced; Riverside County surfaced in `src/lib/coverage.js` COVERAGE_COUNTIES with a DB-honest chip
 
