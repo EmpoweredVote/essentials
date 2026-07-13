@@ -63,7 +63,7 @@ completed: 2026-07-12
 
 | Dist | external_id | politician UUID | Full Name | Source | photo_license |
 |---|---|---|---|---|---|
-| 1 | -4010001 | ea521b54-7b19-459a-9993-4ce70a84d592 | Jose Medina | rivcodistrict1.org (official site asset host) | us_government_work |
+| 1 | -4010001 | ea521b54-7b19-459a-9993-4ce70a84d592 | Jose Medina | Wikimedia Commons `File:Jose Medina, 2025.jpg` (PD county portrait) — re-sourced post-UAT; original rivcodistrict1.org asset was a circular-cutout PNG that framed the face too small (migration 1322) | public_domain |
 | 2 | -4010002 | 9c4ae0c3-81fe-4034-8f64-e5cd6f815f6f | Karen Spiegel (Chair) | rivcodistrict2.org (official site asset host) | us_government_work |
 | 3 | -4010003 | 8770fed4-7595-46e2-9103-246f3904a96b | Chuck Washington | Ballotpedia (his own site's photo was off-center; Ballotpedia already-centered) | press_use |
 | 4 | -4010004 | c986a6af-f09f-4934-83ed-1d9cd26a84f1 | V. Manuel "Manny" Perez | rivco4.org (official site asset host) | us_government_work |
