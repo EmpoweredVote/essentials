@@ -373,7 +373,7 @@ Plans:
 - [x] 201-03-PLAN.md — 5/5 600x750 supervisor headshots + audit migration
 - [x] 201-04-PLAN.md — Evidence-only compass stances (one supervisor at a time)
 - [x] 201-05-PLAN.md — Licensed downtown Riverside / Mission Inn banner + coverage.js surfacing
-- [ ] 201-06-PLAN.md — Full production audit + live-browse verification
+- [x] 201-06-PLAN.md — Full production audit + live-browse verification
 **UI hint**: yes
 
 #### Phase 202: Palm Springs Deep-Seed
@@ -431,7 +431,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
-| 201. Riverside County Board of Supervisors Deep-Seed (CA) | 5/6 | In Progress|  |
+| 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete   | 2026-07-13 |
 | 202. Palm Springs Deep-Seed (CA) | 0/TBD | Not started | - |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 
