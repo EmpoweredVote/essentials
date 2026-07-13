@@ -425,6 +425,15 @@ const CURATED_LOCAL = {
   // County'; storage file is hyphenated.
   //   riverside county - Mission Inn Hotel in Riverside, California | Maliagould | CC BY-SA 4.0
   'riverside county': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverside-county.jpg' },
+  // Coachella Valley / Riverside County CITY banners (surface on address search via
+  // representingCity; no coverage chip). Longest-key-first matching keeps 'riverside county'
+  // (county browse) distinct from 'riverside' (city address). All CA, state-scoped.
+  //   riverside     - Fox Theater, Riverside, California | John Margolies | Public domain
+  'riverside': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverside.jpg' },
+  //   temecula      - Old Town Temecula | John Ward (jdubphoto.com) | CC BY-SA 3.0
+  'temecula': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/temecula.jpg' },
+  //   palm springs  - Palm Springs Palm Canyon Dr | R. Haupt (Renhau) | CC BY-SA 3.0
+  'palm springs': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/palm-springs.jpg' },
   // Arizona CITY banner (Phase 194; banner image refreshed post-UAT). The historic
   // Hotel Congress corner on Congress Street in downtown Tucson (rooftop "HOTEL
   // CONGRESS 100" sign, Mission-Revival brick facade, streetcar wires) — a real,
