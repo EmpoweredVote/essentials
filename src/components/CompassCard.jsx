@@ -50,6 +50,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     compassLoading,
     compassDataLoaded,
     getEffectiveLens,
+    getEffectiveLensKey,
+    lenses,
     toggleLens,
   } = useCompass();
   const location = useLocation();
@@ -58,6 +60,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // Lens by default, everything else shows the user's regular compass. An explicit
   // session toggle overrides this (see CompassContext.getEffectiveLens).
   const localLensActive = getEffectiveLens(districtScope);
+
+  // Effective lens key ('local' | 'federal' | null). For federal offices (U.S.
+  // House/Senate) the Federal lens auto-applies its curated 8-topic set as the
+  // comparison spokes. Local keeps its applies_local scoping below.
+  const lensKey = getEffectiveLensKey(districtScope);
+  const federalLens = lensKey === 'federal' ? (lenses || []).find((l) => l.key === 'federal') : null;
+  const lensTopicIds = federalLens ? federalLens.topicIds : null;
 
   // Topic pool for the comparison + stance breakdown:
   //   • Local Lens ON  → local-scoped topics (the lens is about local issues).
@@ -123,6 +132,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       scopedTopics,
       maxSpokes: MAX_SPOKES,
       localLensActive,
+      lensTopicIds,
     });
     hasEnoughSpokes = result.hasEnoughSpokes;
     replacedSpokes = result.replacedSpokes;

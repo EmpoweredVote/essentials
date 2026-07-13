@@ -8,6 +8,18 @@ export async function fetchTopics() {
   if (!res || !res.ok) throw new Error(`fetchTopics failed: ${res?.status ?? 'network error'}`);
   return res.json();
 }
+// Compass lenses: [{ key, name, description, color, icon, autoDistrictTypes, topicIds }]
+// publicFetch — lenses are public reference data. Returns [] on any failure so
+// callers fall back to the bundled *_LENS_TOPICS constants below.
+export async function fetchLenses() {
+  try {
+    const res = await publicFetch('/compass/lenses');
+    if (!res || !res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
 // Politician answers: [{ topic_id, value }, ...]
 // Uses publicFetch — politician stances are public and must not redirect unauthenticated guests.
 export async function fetchPoliticianAnswers(politicianId) {
@@ -403,6 +415,22 @@ export const JUDICIAL_LENS_TOPICS = [
 ];
 
 /**
+ * Federal Lens — 8 issues most U.S. House & Senate members and candidates have answered.
+ * Mirrors FEDERAL_LENS.topicIds in EV-CompassV2/src/lib/lenses.js. Offline fallback;
+ * live source is GET /compass/lenses.
+ */
+export const FEDERAL_LENS_TOPICS = [
+  'e8dad4a8-eb93-4931-91f5-d8fb5d7dd529', // Healthcare
+  'f7e5678d-dadd-4556-a2fc-446e24642ceb', // Taxes
+  '4e2c69ce-591e-4197-9cd5-7aceff79d390', // Immigration
+  'af2fdfd6-02c4-49df-b09c-cf8536f4773f', // Abortion
+  'f1e44d66-5d27-4b51-b54f-b7ace86f6a3c', // Climate Change
+  '44905f3b-e105-4f6c-afc7-5d223813dbac', // Deportation
+  'cab61e8a-64fe-4bbd-bc08-fe9914d0091b', // Medicare/aid
+  'a22215c3-6693-4bc2-b248-01aebba14570', // Fossil Fuels
+];
+
+/**
  * Persists Local Lens activation state and pre-lens snapshot to localStorage.
  * @param {boolean} isActive
  * @param {{ selectedTopics: string[], invertedSpokes: object } | null} snapshot
@@ -462,6 +490,7 @@ export function computeDisplaySpokes({
   scopedTopics,
   maxSpokes = 8,
   localLensActive = false,
+  lensTopicIds = null,
 }) {
   // Fast path: no politician answers or no scoped topics
   if (!polAnswers || scopedTopics.length === 0) {
@@ -487,7 +516,10 @@ export function computeDisplaySpokes({
   // and it's within the provided scope. When too few overlap, the caller renders the
   // "not enough shared topics" state — that is the intended, honest outcome.
   let preferredIds = null;
-  if (localLensActive) {
+  if (lensTopicIds && lensTopicIds.length > 0) {
+    // Explicit lens (e.g. Federal) — its curated topic set defines the spokes.
+    preferredIds = lensTopicIds.slice(0, maxSpokes);
+  } else if (localLensActive) {
     preferredIds = LOCAL_LENS_TOPICS.slice(0, maxSpokes);
   } else if (selectedTopics && selectedTopics.length > 0) {
     // Cap at maxSpokes — post-calibration bug can set all 36 topics as selected.

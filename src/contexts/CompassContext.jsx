@@ -1,8 +1,12 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   fetchTopics,
+  fetchLenses,
   fetchUserAnswers,
   fetchSelectedTopics,
+  LOCAL_LENS_TOPICS,
+  FEDERAL_LENS_TOPICS,
+  JUDICIAL_LENS_TOPICS,
   fetchPoliticiansWithStances,
   fetchUserVerdicts,
   parseCompassFragment,
@@ -60,11 +64,36 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   // per-office default, which avoids the stale-global-toggle confusion.
   const [lensOverride, setLensOverride] = useState(null); // null | true | false
 
+  // Available lenses — live source is GET /compass/lenses; the *_LENS_TOPICS
+  // constants are the offline fallback until the fetch resolves.
+  const [lenses, setLenses] = useState(() => [
+    { key: 'local',    color: '#5A9A6E', topicIds: LOCAL_LENS_TOPICS,    autoDistrictTypes: ['LOCAL', 'LOCAL_EXEC', 'COUNTY', 'SCHOOL'] },
+    { key: 'federal',  color: '#1E3A5F', topicIds: FEDERAL_LENS_TOPICS,  autoDistrictTypes: ['NATIONAL_EXEC', 'NATIONAL_UPPER', 'NATIONAL_LOWER'] },
+    { key: 'judicial', color: '#C2440A', topicIds: JUDICIAL_LENS_TOPICS, autoDistrictTypes: ['JUDICIAL', 'NATIONAL_JUDICIAL'] },
+  ]);
+
   // Effective lens for a given office scope. Consumers that know the politician's
   // districtScope (CompassCard, MiniCompass via Results/ElectionsView) call this.
+  // Kept boolean (Local Lens on/off) for the elections grid + toggle.
   const getEffectiveLens = useCallback(
     (districtScope) => (lensOverride != null ? lensOverride : districtScope === 'local'),
     [lensOverride]
+  );
+
+  // Effective lens KEY for a given office scope: 'local' | 'federal' | null.
+  // Auto-applies per office (local offices → Local, U.S. House/Senate → Federal),
+  // honoring the session toggle. Judicial offices keep their dedicated section.
+  const getEffectiveLensKey = useCallback(
+    (districtScope) => {
+      if (lensOverride === false) return null;               // user turned the lens off
+      if (districtScope === 'federal') {
+        return lenses.some((l) => l.key === 'federal') ? 'federal' : null;
+      }
+      if (lensOverride === true) return 'local';             // legacy force-on (grid)
+      if (districtScope === 'local') return 'local';
+      return null;
+    },
+    [lensOverride, lenses]
   );
 
   // Flip the lens relative to whatever the caller currently sees (its effective value).
@@ -84,6 +113,11 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       const topics = await fetchTopics();
 
       setAllTopics(topics);
+
+      // Hydrate lenses from the API (non-blocking; keep fallback constants on failure).
+      fetchLenses()
+        .then((rows) => { if (Array.isArray(rows) && rows.length > 0) setLenses(rows); })
+        .catch(() => { /* keep fallback */ });
 
       let answers = [];
       let selected = [];
@@ -451,7 +485,9 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       // getEffectiveLens(districtScope) instead of reading localLensActive directly.
       lensOverride,
       localLensActive: lensOverride === true,
+      lenses,
       getEffectiveLens,
+      getEffectiveLensKey,
       toggleLens,
       toggleLocalLens,
       setLocalLens,
@@ -479,7 +515,9 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       toggleInversion,
       batchInvertSpokes,
       lensOverride,
+      lenses,
       getEffectiveLens,
+      getEffectiveLensKey,
       toggleLens,
       toggleLocalLens,
       setLocalLens,
