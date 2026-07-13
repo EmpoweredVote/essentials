@@ -451,7 +451,7 @@ Plans:
 
 **Wave 5**
 
-- [ ] 203-05-PLAN.md — NEW licensed Indio banner (Old Town/downtown streetscape, no AI/aerial, one at a time) → cities/indio.jpg; new buildingImages.js indio key + DB-honest coverage.js chip (0636448).
+- [x] 203-05-PLAN.md — NEW licensed Indio banner (Old Town/downtown streetscape, no AI/aerial, one at a time) → cities/indio.jpg; new buildingImages.js indio key + DB-honest coverage.js chip (0636448).
 
 **Wave 6**
 
@@ -483,7 +483,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
 | 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 203. Indio Deep-Seed (CA) | 4/6 | In Progress|  |
+| 203. Indio Deep-Seed (CA) | 5/6 | In Progress|  |
 
 ### Coverage
 
