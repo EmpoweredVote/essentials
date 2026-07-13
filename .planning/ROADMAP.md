@@ -439,7 +439,7 @@ Plans:
 
 **Wave 2**
 
-- [ ] 203-02-PLAN.md — Structural migration 1338: City of Indio gov (0636448) + City Council chamber (official_count=5) + 5 LOCAL X0023 districts + 5 by-district members (Holmes/D3=Mayor, Fermon/D2=Mayor Pro Tem as seat titles, ext_ids -4012001..-4012005); pre-flight + post-verify Gates (a)-(f); roster/D5-name reconfirm checkpoint.
+- [x] 203-02-PLAN.md — Structural migration 1338: City of Indio gov (0636448) + City Council chamber (official_count=5) + 5 LOCAL X0023 districts + 5 by-district members (Holmes/D3=Mayor, Fermon/D2=Mayor Pro Tem as seat titles, ext_ids -4012001..-4012005); pre-flight + post-verify Gates (a)-(f); roster/D5-name reconfirm checkpoint.
 
 **Wave 3**
 
@@ -483,7 +483,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
 | 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 203. Indio Deep-Seed (CA) | 1/6 | In Progress|  |
+| 203. Indio Deep-Seed (CA) | 2/6 | In Progress|  |
 
 ### Coverage
 
