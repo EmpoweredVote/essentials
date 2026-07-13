@@ -19,11 +19,16 @@ resolves the new banner. Build + coverage generator green.
 - **License:** **CC0** (public domain) — the cleanest of the three candidates reviewed.
 - **Constraints met:** real photo ✓ · no AI ✓ · no aerial/satellite ✓ · NOT the reused CV/Mission Inn
   banner (D-01) ✓ · reads as Indio ✓.
-- **Processing:** `scripts/banners/process_banner.py --vertical-anchor 0.16` (crop 2894×1807 → 2894×919 →
-  1700×540, no distortion), then `scripts/banners/upload_banner.py --dest cities/indio.jpg`. Anchor was
-  reframed from 0.30 → **0.16** post-review (the 0.30 crop pushed the "Indio" script sign against the top
-  edge); 0.16 centers the sign with headroom so the "Indio" name is clearly in frame. Storage no-cache
-  overwrite = instant refresh (no redeploy needed).
+- **Processing:** `scripts/banners/process_banner.py --vertical-anchor 0.0` (crop 2894×1807 → 2894×919 →
+  1700×540, no distortion), then `scripts/banners/upload_banner.py --dest cities/indio.jpg`. Anchor
+  reframed 0.30 → 0.16 → **0.0** across two review rounds. KEY REASON: `SectionBanner.jsx` renders the
+  1700×540 image in a short full-bleed strip (`h-[120px] md:h-[180px]`, `objectFit:cover`, default
+  center object-position), so the live banner shows only the **vertical-center ~30–44%** of the image on
+  desktop. The focal subject (the "Indio" script sign) must therefore sit at the image's VERTICAL CENTER,
+  not the top — earlier anchors left it in the upper third, so the live center-crop clipped it to its
+  bottom half. Anchor 0.0 places the sign (high in the source) as close to center as possible (~0.46);
+  simulated center-44% and center-30% crops both show the full word. Storage no-cache overwrite = instant
+  refresh (no redeploy needed).
 - **Storage:** `politician_photos/cities/indio.jpg` — `curl -sI` → **HTTP 200**, image/jpeg, 162 KB
   (no-cache overwrite; instant refresh).
 - Two other candidates were reviewed and declined by the operator: A = Old Town Miles/Oasis street signs
