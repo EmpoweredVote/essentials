@@ -1100,7 +1100,15 @@ export default function Results() {
       if (label && label.trim()) return label.trim();
     }
     const src = Array.isArray(list) ? list : [];
+    // Only local-government officials may set the local city banner. A statewide or
+    // federal office (NATIONAL_* / STATE_*) can carry a stray representing_city — e.g. a
+    // U.S. Senator whose office was tagged with a city from an old city-council record —
+    // and, because it is returned for every address in the state, would otherwise hijack
+    // the banner wherever the real local officials have no representing_city (a Riverside
+    // County address rendering under an "Inglewood" banner via Sen. Padilla's office).
     for (const p of src) {
+      const dt = p?.district_type || '';
+      if (dt.startsWith('NATIONAL') || dt.startsWith('STATE')) continue;
       if (p.representing_city) return p.representing_city;
     }
     // Fallback 1: extract city name from local politicians' chamber_name.
