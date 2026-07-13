@@ -1,9 +1,9 @@
 ---
 phase: 202
 slug: palm-springs-deep-seed
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: approved
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-07-12
 ---
 
@@ -76,11 +76,11 @@ config surface plus all backend structural/audit assertions.
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or orchestrator-run audit assertions
-- [ ] Sampling continuity: no 3 consecutive tasks without a verification step
-- [ ] Wave 0 covers all MISSING references (none — existing infra sufficient)
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s (build) / audit at phase gate
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or orchestrator-run audit assertions
+- [x] Sampling continuity: no 3 consecutive tasks without a verification step
+- [x] Wave 0 covers all MISSING references (none — existing infra sufficient)
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s (build) / audit at phase gate
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-07-12

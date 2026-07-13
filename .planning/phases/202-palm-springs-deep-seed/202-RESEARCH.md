@@ -243,22 +243,25 @@ Stage `hasContext: false` first if the coverage-wave runs before the stance-wave
 
 **If this table is empty:** N/A — see rows above. All other factual claims in this document (ArcGIS endpoint mechanics, banner CDN presence, migration/pattern precedents) were directly verified via WebFetch/Bash/Grep against live services or the project's own committed files this session.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Exact next-free X-code / ext_id block / migration number**
    - What we know: precedent counters as of 2026-07-12 (X0021 max, migration 1327 max, `-4010005` the most recent county/city ext_id used)
    - What's unclear: whether phases 196-198 (AZ suburbs) or 203 (Indio) will execute before 202 and consume the "next" slot
    - Recommendation: DB/disk-verify all three counters as the first pre-flight step of the structural-migration plan wave, exactly as Phase 201's own plan set did (it had to correct its own pre-planned ext_id block at execute time)
+   - **RESOLVED:** operationalized by Plan 01 (X0022 geofence counter) + Plan 02 Task 1/Task 2 — the executor authors placeholder numbers and the orchestrator DB/disk-verifies the real next migration number (disk MAX+1) + free `-401Nxxx` ext_id block at apply time. All migration-number `<automated>` gates were made number-agnostic (glob the descriptive stem) so a shifted number cannot break verification.
 
 2. **Best headshot source per councilmember**
    - What we know: `palmspringsca.gov` is Akamai WAF-403 to bots (confirmed live this session); Ballotpedia coverage is thin (city not in Ballotpedia's scheduled top-100); The Palm Springs Post and KESQ have recent, good-quality photos of the Dec 2025 swearing-in (Soto + Ready together); campaign-style personal sites likely exist for at least Soto (health-care-executive candidate) and possibly deHarte (per CONTEXT.md's `rondeharte.com` note)
    - What's unclear: per-member final source and license — this is normally resolved at execute time (per-member WAF/reachability probing, same discipline as every prior phase)
    - Recommendation: probe each of the 5 members individually at execute time (Wikimedia Commons category search, Ballotpedia candidate pages for 2022/2024 election cycles, thepalmspringspost.com photo archive, individual campaign sites) — do not assume a single CMS pattern works for all 5, matching the Riverside precedent where 5 different district-site domains were needed
+   - **RESOLVED:** operationalized by Plan 03 Task 1 (per-member `photo_url` TODO + documented probe order) and Task 2 (orchestrator probes each source individually, fills `photo_url` + `photo_license`, runs the pipeline, visual-QA per image).
 
 3. **Whether the directly-elected-mayor petition affects the phase's stance research window**
    - What we know: an active petition/council-review process is underway with a July 22, 2026 public input session
    - What's unclear: whether any councilmember's compass stances should reference this live local debate (e.g., a "local governance/democracy" adjacent topic, if one exists in the live compass topic set) — likely NOT a fit for the existing ~36 non-judicial topic set (housing/taxes/public-safety/etc.), but worth a quick check during stance research
    - Recommendation: treat as background context only unless a live compass topic is a genuine match; do not force a stance on this issue into an unrelated topic
+   - **RESOLVED:** operationalized by Plan 04 Task 1/Task 2 — both stance tasks carry the explicit "directly-elected-mayor petition is background context only — do NOT force it into an unrelated topic" instruction.
 
 ## Environment Availability
 
