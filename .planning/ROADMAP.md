@@ -394,7 +394,7 @@ Plans:
 **Plans**: 6 plans in 6 waves
 **Wave 1**
 
-- [ ] 202-01-PLAN.md — Load 5 council-district X0022 geofences from the confirmed 2022 ArcGIS FeatureServer
+- [x] 202-01-PLAN.md — Load 5 council-district X0022 geofences from the confirmed 2022 ArcGIS FeatureServer
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -458,7 +458,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 202. Palm Springs Deep-Seed (CA) | 0/TBD | Not started | - |
+| 202. Palm Springs Deep-Seed (CA) | 1/6 | In Progress|  |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 
 ### Coverage
