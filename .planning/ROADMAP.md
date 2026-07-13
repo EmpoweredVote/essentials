@@ -406,7 +406,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 202-04-PLAN.md — Evidence-only compass stances, one councilmember at a time (5 audit-only migrations)
+- [x] 202-04-PLAN.md — Evidence-only compass stances, one councilmember at a time (5 audit-only migrations)
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
@@ -458,7 +458,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 202. Palm Springs Deep-Seed (CA) | 3/6 | In Progress|  |
+| 202. Palm Springs Deep-Seed (CA) | 4/6 | In Progress|  |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 
 ### Coverage
