@@ -434,6 +434,8 @@ const CURATED_LOCAL = {
   'temecula': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/temecula.jpg' },
   //   palm springs  - Palm Springs Palm Canyon Dr | R. Haupt (Renhau) | CC BY-SA 3.0
   'palm springs': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/palm-springs.jpg' },
+  //   indio         - "Welcome to Indio" sign on the palm-lined city boulevard | Northwalker | CC0
+  'indio': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/indio.jpg' },
   // Arizona CITY banner (Phase 194; banner image refreshed post-UAT). The historic
   // Hotel Congress corner on Congress Street in downtown Tucson (rooftop "HOTEL
   // CONGRESS 100" sign, Mission-Revival brick facade, streetcar wires) — a real,
