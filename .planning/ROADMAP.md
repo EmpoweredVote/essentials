@@ -435,7 +435,7 @@ Plans:
 
 **Wave 1**
 
-- [ ] 203-01-PLAN.md — Author + run the gis.indio.org ArcGIS loader; 5 X0023 council-district geofences (indio-ca-council-district-1..5, lowercase ca), WGS84 sanity + council-name cross-check.
+- [x] 203-01-PLAN.md — Author + run the gis.indio.org ArcGIS loader; 5 X0023 council-district geofences (indio-ca-council-district-1..5, lowercase ca), WGS84 sanity + council-name cross-check.
 
 **Wave 2**
 
@@ -483,7 +483,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
 | 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 203. Indio Deep-Seed (CA) | 0/6 | Not started | - |
+| 203. Indio Deep-Seed (CA) | 1/6 | In Progress|  |
 
 ### Coverage
 
