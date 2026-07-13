@@ -447,7 +447,7 @@ Plans:
 
 **Wave 4**
 
-- [ ] 203-04-PLAN.md — Evidence-only compass stances, 5 audit-only migrations 1340-1344 (one member at a time, 100% cited, honest blanks, no defaults, non-judicial).
+- [x] 203-04-PLAN.md — Evidence-only compass stances, 5 audit-only migrations 1340-1344 (one member at a time, 100% cited, honest blanks, no defaults, non-judicial).
 
 **Wave 5**
 
@@ -483,7 +483,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
 | 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 203. Indio Deep-Seed (CA) | 3/6 | In Progress|  |
+| 203. Indio Deep-Seed (CA) | 4/6 | In Progress|  |
 
 ### Coverage
 
