@@ -417,6 +417,14 @@ const CURATED_LOCAL = {
   // match coverage.js browse_label 'Pima County'; storage file is hyphenated.
   //   pima county   - Santa Catalina Mountains from West Saguaro National Park near Tucson | WClarke | CC BY-SA 4.0
   'pima county': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pima-county.jpg' },
+  // California COUNTY banner (Phase 201, second county-tier CURATED_LOCAL key). Reads
+  // as Riverside County the place — the historic Mission Inn facade in downtown
+  // Riverside (the county seat civic landmark), deliberately distinct from the future
+  // Palm Springs (Phase 202) and Indio (Phase 203) CITY banners in the same Coachella
+  // Valley track. Key is space-form to match coverage.js browse_label 'Riverside
+  // County'; storage file is hyphenated.
+  //   riverside county - Mission Inn Hotel in Riverside, California | Maliagould | CC BY-SA 4.0
+  'riverside county': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverside-county.jpg' },
   // Arizona CITY banner (Phase 194). Downtown Tucson skyline viewed from Sentinel
   // Peak (the downtown high-rise cluster with the Santa Catalina Mountains behind),
   // horizon leveled and cropped to show the base of the downtown buildings — reads as
