@@ -61,7 +61,7 @@ function Dropdown({ label, value, options, onChange, ariaLabel, isDark }) {
 
 /**
  * Inline filter controls — Type dropdown, name search input,
- * and an optional Compass toggle checkbox.
+ * and an optional Compass toggle (compass symbol: color when on, grey when off).
  * No wrapper chrome (no border/padding/background) so it can be dropped
  * directly into another row (e.g. next to the Reps/Elections tabs).
  */
@@ -124,26 +124,40 @@ export default function FilterBar({
         />
       </div>
       {onCompassModeChange !== undefined && (
-        <label
+        <button
+          type="button"
+          onClick={() => onCompassModeChange(!compassMode)}
+          aria-pressed={!!compassMode}
+          title={compassMode ? 'Compass on — click to turn off' : 'Compass off — click to turn on'}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: '8px',
             cursor: 'pointer',
-            minHeight: '44px', padding: '0 4px',
+            minHeight: '44px', padding: '0 8px',
+            background: 'none', border: 'none',
             fontFamily: "'Manrope', sans-serif", fontSize: '13px',
-            fontWeight: 500,
+            fontWeight: compassMode ? 600 : 500,
             color: compassTextColor,
             whiteSpace: 'nowrap',
             userSelect: 'none',
           }}
         >
-          <input
-            type="checkbox"
-            checked={!!compassMode}
-            onChange={(e) => onCompassModeChange(e.target.checked)}
-            style={{ width: '18px', height: '18px', accentColor: isDark ? '#00c8d7' : '#00657c', cursor: 'pointer' }}
+          {/* Compass symbol as the on/off affordance: full color when on,
+              greyscale + dimmed when off. Theme-aware SVG. */}
+          <img
+            src={isDark ? '/compass-symbol-dark.svg' : '/compass-symbol-light.svg'}
+            alt=""
+            aria-hidden="true"
+            width={24}
+            height={24}
+            style={{
+              display: 'block',
+              filter: compassMode ? 'none' : 'grayscale(1)',
+              opacity: compassMode ? 1 : 0.45,
+              transition: 'filter 0.15s ease, opacity 0.15s ease',
+            }}
           />
           Compass
-        </label>
+        </button>
       )}
     </div>
   );
