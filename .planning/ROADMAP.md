@@ -443,7 +443,7 @@ Plans:
 
 **Wave 3**
 
-- [ ] 203-03-PLAN.md — Headshot pipeline (indio.civicweb.net primary / indio.org CivicPlus StaffDirectory via Browser-UA fallback) → 600x750 4:5 crop-first; audit-only migration 1339; visual-QA checkpoint.
+- [x] 203-03-PLAN.md — Headshot pipeline (indio.civicweb.net primary / indio.org CivicPlus StaffDirectory via Browser-UA fallback) → 600x750 4:5 crop-first; audit-only migration 1339; visual-QA checkpoint.
 
 **Wave 4**
 
@@ -483,7 +483,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
 | 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 203. Indio Deep-Seed (CA) | 2/6 | In Progress|  |
+| 203. Indio Deep-Seed (CA) | 3/6 | In Progress|  |
 
 ### Coverage
 
