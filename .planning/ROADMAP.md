@@ -414,7 +414,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 202-06-PLAN.md — Full production audit + live-browse per-district routing + banner-render sign-off
+- [x] 202-06-PLAN.md — Full production audit + live-browse per-district routing + banner-render sign-off
 
 **UI hint**: yes
 
@@ -458,7 +458,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 202. Palm Springs Deep-Seed (CA) | 5/6 | In Progress|  |
+| 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete   | 2026-07-13 |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 
 ### Coverage
