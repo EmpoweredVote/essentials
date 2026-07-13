@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
-status: ready_to_plan
-last_updated: 2026-07-13T06:50:58.852Z
-last_activity: 2026-07-13 -- Phase 202 execution started
+status: planning
+last_updated: "2026-07-13T15:36:39.846Z"
+last_activity: 2026-07-13
 progress:
   total_phases: 46
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 36
   completed_plans: 36
-  percent: 15
-stopped_at: Phase 202 complete (6/6) — ready to discuss Phase 203
+  percent: 17
 ---
 
 # State
@@ -540,9 +539,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-12T23:08:06.074Z
-Stopped at: Completed 201-03-PLAN.md (Riverside County headshots, 5/5, mig 1315)
-Resume file: None
+Last session: 2026-07-13T15:36:39.827Z
+Stopped at: Phase 203 context gathered
+Resume file: .planning/phases/203-indio-deep-seed/203-CONTEXT.md
 
 ## Performance Metrics
 
