@@ -398,7 +398,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 202-02-PLAN.md — Structural migration: City of Palm Springs gov + City Council + 5 by-district members (Soto=Mayor, Ready=Mayor Pro Tem title-on-seat)
+- [x] 202-02-PLAN.md — Structural migration: City of Palm Springs gov + City Council + 5 by-district members (Soto=Mayor, Ready=Mayor Pro Tem title-on-seat)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -458,7 +458,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 202. Palm Springs Deep-Seed (CA) | 1/6 | In Progress|  |
+| 202. Palm Springs Deep-Seed (CA) | 2/6 | In Progress|  |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 
 ### Coverage
