@@ -368,12 +368,14 @@ blanks) -> licensed community banner (real street-scene/skyline, no AI/aerial, s
 
 **Plans**: 6 plans
 Plans:
+
 - [x] 201-01-PLAN.md — Load 5 supervisorial-district X0021 geofences (ArcGIS f=geojson)
 - [x] 201-02-PLAN.md — Standalone Riverside County government + Board of Supervisors chamber + 5 by-district offices (Chair title annotation, board-only)
 - [x] 201-03-PLAN.md — 5/5 600x750 supervisor headshots + audit migration
 - [x] 201-04-PLAN.md — Evidence-only compass stances (one supervisor at a time)
 - [x] 201-05-PLAN.md — Licensed downtown Riverside / Mission Inn banner + coverage.js surfacing
 - [x] 201-06-PLAN.md — Full production audit + live-browse verification
+
 **UI hint**: yes
 
 #### Phase 202: Palm Springs Deep-Seed
@@ -389,7 +391,31 @@ Plans:
   4. Evidence-only compass stances applied (one agent at a time, 100% cited, honest blanks, no defaults)
   5. Licensed community banner sourced; city surfaced in `src/lib/coverage.js` with a DB-honest chip
 
-**Plans**: TBD (run /gsd-plan-phase 202 to break down)
+**Plans**: 6 plans in 6 waves
+**Wave 1**
+
+- [x] 202-01-PLAN.md — Load 5 council-district X0022 geofences from the confirmed 2022 ArcGIS FeatureServer
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 202-02-PLAN.md — Structural migration: City of Palm Springs gov + City Council + 5 by-district members (Soto=Mayor, Ready=Mayor Pro Tem title-on-seat)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [ ] 202-03-PLAN.md — 5 headshots (600×750 4:5 crop-first) + audit-only politician_images migration
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [ ] 202-04-PLAN.md — Evidence-only compass stances, one councilmember at a time (5 audit-only migrations)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
+- [ ] 202-05-PLAN.md — coverage.js Palm Springs chip (banner already shipped Ph201; buildingImages.js unchanged)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
+- [ ] 202-06-PLAN.md — Full production audit + live-browse per-district routing + banner-render sign-off
+
 **UI hint**: yes
 
 #### Phase 203: Indio Deep-Seed
@@ -432,7 +458,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 202. Palm Springs Deep-Seed (CA) | 0/TBD | Not started | - |
+| 202. Palm Springs Deep-Seed (CA) | 2/6 | In Progress|  |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 
 ### Coverage
@@ -547,4 +573,3 @@ This deferred scope is what v21.0 filled.
 **v22.0 Tucson & Arizona is the active milestone** â Phases 190-203 (11 AZ + 3 appended
 Coachella Valley, CA). See the expanded roadmap above. Per-milestone progress tables are archived to
 `.planning/milestones/v{X.Y}-ROADMAP.md` at close.
-
