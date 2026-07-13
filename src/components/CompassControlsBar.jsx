@@ -54,10 +54,10 @@ export default function CompassControlsBar({
                 ...(lensActive ? { background: '#FF5740', borderColor: '#FF5740', color: '#fff' } : {}),
               }}
             >
-              {/* Location pin — matches EV brand local icon */}
+              {/* Viewfinder — "focus this view on its key issues" (lens metaphor) */}
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-                <circle cx="12" cy="9" r="2.5" />
+                <path d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5" />
+                <circle cx="12" cy="12" r="3" />
               </svg>
               <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>Lens</span>
             </button>
