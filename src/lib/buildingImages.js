@@ -425,13 +425,14 @@ const CURATED_LOCAL = {
   // County'; storage file is hyphenated.
   //   riverside county - Mission Inn Hotel in Riverside, California | Maliagould | CC BY-SA 4.0
   'riverside county': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverside-county.jpg' },
-  // Arizona CITY banner (Phase 194). Downtown Tucson skyline viewed from Sentinel
-  // Peak (the downtown high-rise cluster with the Santa Catalina Mountains behind),
-  // horizon leveled and cropped to show the base of the downtown buildings — reads as
+  // Arizona CITY banner (Phase 194; banner image refreshed post-UAT). The historic
+  // Hotel Congress corner on Congress Street in downtown Tucson (rooftop "HOTEL
+  // CONGRESS 100" sign, Mission-Revival brick facade, streetcar wires) — a real,
+  // level, ground-level street scene of the downtown historic district, reads as
   // Tucson the CITY, deliberately distinct from the Pima COUNTY landscape banner
   // (Catalinas + saguaro) and the AZ STATE banner (the Phoenix skyline). Single-variant
   // key (no same-named-city collision in the covered set); storage file cities/tucson.jpg.
-  //   tucson        - View of Tucson from Sentinel Peak (leveled) | John Diebolt | Public domain
+  //   tucson        - Tucson May 2019 28 (Hotel Congress) | Michael Barera | CC BY-SA 4.0
   tucson: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tucson.jpg' },
   // Oro Valley community banner (Phase 195). The Cañada del Oro (CDO) Riverfront Park
   // pedestrian trail bridge — a distinctive rust-colored arched truss over the wash,
