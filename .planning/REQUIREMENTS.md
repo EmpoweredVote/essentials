@@ -75,7 +75,7 @@ rotational mayor (title on a seat). Reuses the standalone-county / by-district c
   constitutional officers deferred** (Phase 201 D-01, matching Pima/Clark/WashCo precedent) —
   supervisorial-district X-geofences from the county ArcGIS Hub, 600×750 headshots, evidence-only
   compass stances, and a Riverside County entry in `coverage.js` COVERAGE_COUNTIES.
-- [ ] **CV-02**: City of Palm Springs (geo_id 0655254) deep-seeded — 5-member by-district council with
+- [x] **CV-02**: City of Palm Springs (geo_id 0655254) deep-seeded — 5-member by-district council with
   rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
   evidence-only stances, and a `coverage.js` chip.
 - [ ] **CV-03**: City of Indio (geo_id 0636448) deep-seeded — 5-member by-district council with
@@ -123,7 +123,7 @@ community banner sourced one at a time.
 | AZ-ELEC-01 | Phase 199 | Pending |
 | AZ-RETRO-01 | Phase 200 | Pending |
 | CV-01 | Phase 201 | Complete |
-| CV-02 | Phase 202 | Pending |
+| CV-02 | Phase 202 | Complete |
 | CV-03 | Phase 203 | Pending |
 | BANR-01 (appended) | Phases 201, 202, 203 | Pending |
 

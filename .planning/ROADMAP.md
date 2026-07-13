@@ -86,7 +86,7 @@ resumable. Same standalone-county / by-district city deep-seed shape as 193-195.
 201 -> 202 -> 203 (banners + stances one at a time).
 
 - [x] **Phase 201: Riverside County Board of Supervisors Deep-Seed** - Standalone county government (geo_id 06065) + 5 by-district supervisors (board only, constitutional officers deferred per D-01) + X0021 geofences + headshots + stances + banner (completed 2026-07-13)
-- [ ] **Phase 202: Palm Springs Deep-Seed** - City government (geo_id 0655254): 5-member by-district council + rotational mayor + X-geofences + headshots + stances + banner
+- [x] **Phase 202: Palm Springs Deep-Seed** - City government (geo_id 0655254): 5-member by-district council + rotational mayor + X-geofences + headshots + stances + banner (completed 2026-07-13)
 - [ ] **Phase 203: Indio Deep-Seed** - City government (geo_id 0636448): 5-member by-district council + rotational mayor + X-geofences + headshots + stances + banner
 
 ### Phase Details
@@ -458,7 +458,7 @@ any relative order among themselves, but the suggested sequence (state/federal Ã
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
-| 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete   | 2026-07-13 |
+| 202. Palm Springs Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
 | 203. Indio Deep-Seed (CA) | 0/TBD | Not started | - |
 
 ### Coverage
