@@ -70,7 +70,7 @@ Local-layer deep-seed appended to v22.0, independent of the Arizona phases (CA T
 boundaries already loaded). All three bodies are 5-member and by-district; both cities have a
 rotational mayor (title on a seat). Reuses the standalone-county / by-district city deep-seed unit.
 
-- [ ] **CV-01**: Riverside County seeded as a standalone county government (geo_id 06065) with a
+- [x] **CV-01**: Riverside County seeded as a standalone county government (geo_id 06065) with a
   5-member by-district Board of Supervisors (D1-D5, "Chair" as a seat title) — **board only,
   constitutional officers deferred** (Phase 201 D-01, matching Pima/Clark/WashCo precedent) —
   supervisorial-district X-geofences from the county ArcGIS Hub, 600×750 headshots, evidence-only
@@ -122,7 +122,7 @@ community banner sourced one at a time.
 | BANR-01 | Phases 193, 194, 195, 196, 197, 198 | Complete |
 | AZ-ELEC-01 | Phase 199 | Pending |
 | AZ-RETRO-01 | Phase 200 | Pending |
-| CV-01 | Phase 201 | Pending |
+| CV-01 | Phase 201 | Complete |
 | CV-02 | Phase 202 | Pending |
 | CV-03 | Phase 203 | Pending |
 | BANR-01 (appended) | Phases 201, 202, 203 | Pending |
