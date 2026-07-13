@@ -38,13 +38,14 @@ export default function CompassControlsBar({
       <div style={{ pointerEvents: 'auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
         {showStanceButtons && (
           <>
-            {/* Local Lens — labeled, touch-friendly toggle. Default ON for the
-                elections view; clearly reflects on/off so users can find it. */}
+            {/* Lens — labeled, touch-friendly toggle. Default ON; focuses each
+                race on its most relevant issues (local races → local issues,
+                U.S. House/Senate → federal issues). Clearly reflects on/off. */}
             <button
               className="stance-btn"
               onClick={onToggleLens}
               aria-pressed={lensActive}
-              title={lensActive ? 'Local Lens on — local races focus on local issues' : 'Local Lens off — full compass for every race'}
+              title={lensActive ? 'Lens on — each race focuses on its most relevant issues' : 'Lens off — full compass for every race'}
               style={{
                 width: 'auto',
                 height: 34,
@@ -58,7 +59,7 @@ export default function CompassControlsBar({
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
                 <circle cx="12" cy="9" r="2.5" />
               </svg>
-              <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>Local Lens</span>
+              <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>Lens</span>
             </button>
             <div style={{ display: 'flex', gap: 4 }}>
               <button className="stance-btn" onClick={onStanceMin} style={{ width: 34, height: 34 }} title="Stance Min — pull strong spokes inward">

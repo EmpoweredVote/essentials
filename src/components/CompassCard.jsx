@@ -287,12 +287,12 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         >
           Compass &amp; Issues
         </h2>
-        {/* Local Lens toggle — always visible (loading, empty, and data states) so
+        {/* Lens toggle — always visible (loading, empty, and data states) so
             users can switch comparison topics even when the default view is sparse. */}
         {hasUserCompass && (
           <button
             type="button"
-            title={localLensActive ? 'Exit Local Lens' : 'Local Lens — focus on local issues'}
+            title={localLensActive ? 'Exit lens — compare on your full compass' : 'Lens — focus this race on its key issues'}
             aria-pressed={localLensActive}
             onClick={() => { posthog?.capture('essentials_compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
             style={{
@@ -310,7 +310,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
               <circle cx="12" cy="9" r="2.5" />
             </svg>
-            Local Lens
+            Lens
           </button>
         )}
       </div>
