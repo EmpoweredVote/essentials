@@ -97,17 +97,23 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
           (isDesktop && hoveredKey === lens.key) || (!isDesktop && tappedKey === lens.key)
         );
 
+        // Chips overlay the location banner, so every state needs an OPAQUE
+        // surface — a transparent/low-alpha fill lets the banner photo bleed
+        // through and destroys contrast. Opaque surface matches .stance-btn
+        // (#FFFFFF / #161b22) and the COMPASS KEY pill; the coloured border +
+        // text carry the lit/needs-calibration language on top of it.
+        const chipSurface = isDark ? '#161b22' : '#FFFFFF';
         let stateStyle = {};
         if (needsCalibration) {
           stateStyle = {
-            background: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
+            background: chipSurface,
             color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.4)',
             border: '1.5px solid #7C3AED',
           };
         } else if (isActive) {
           stateStyle = { background: lens.color, borderColor: lens.color, color: '#fff' };
         } else {
-          stateStyle = { background: 'transparent', color: lens.color, borderColor: lens.color };
+          stateStyle = { background: chipSurface, color: lens.color, borderColor: lens.color };
         }
 
         return (
