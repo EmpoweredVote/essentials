@@ -3,7 +3,7 @@ import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant } from '../lib/classify';
-import { fetchPoliticianAnswers, computeStanceSpokes, LOCAL_LENS_TOPICS } from '../lib/compass';
+import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -534,7 +534,7 @@ export default function Results() {
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
-  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, lensOverride, setLocalLens, getEffectiveLens, enableCompass } = useCompass();
+  const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, activeLensKey, setActiveLens, lenses, isLensCalibrated, enableCompass } = useCompass();
 
   // Auto-enable compass for calibrated users who haven't set an explicit preference
   useEffect(() => {
@@ -547,13 +547,43 @@ export default function Results() {
     } catch {}
   }, [rawUserAnswers]);
 
-  // Local Lens toggle state. Default (lensOverride === null) is the smart per-office
-  // behavior: local offices use the lens, state/federal show the full compass — so
-  // every compass renders. The visible toggle reads as ON here and flips to a full
-  // compass everywhere (false) when turned off. It never forces the local lens onto
-  // state/federal races, which would filter out their topics and hide the compass.
-  const lensActive = lensOverride !== false;
-  const handleToggleLens = () => setLocalLens(lensActive ? false : null);
+  const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
+
+  // Global lens switcher (Req 5/8): a synthesized "Best Match" chip (internal key
+  // 'custom', D-05/D-07) prepended to the API-hydrated lenses, each annotated with
+  // its own calibration state + topic count for LensChipRow. Replaces the retired
+  // per-office auto-lensing — explicit selection now applies to every card.
+  const augmentedLenses = useMemo(() => {
+    const custom = {
+      key: 'custom',
+      name: 'Best Match',
+      color: '#FF5740',
+      calibrated: (rawUserAnswers?.length ?? 0) >= 3,
+      topicCount: 0,
+    };
+    const named = (lenses || []).map((lens) => ({
+      ...lens,
+      calibrated: isLensCalibrated(lens, rawUserAnswers),
+      topicCount: Array.isArray(lens.topicIds) ? lens.topicIds.length : 0,
+    }));
+    return [custom, ...named];
+  }, [lenses, rawUserAnswers, isLensCalibrated]);
+
+  const handleSelectLens = (key) => {
+    posthog?.capture('essentials_compass_lens_selected', { lens: key });
+    setActiveLens(key);
+  };
+
+  const handleCalibrateLens = (key) => {
+    const returnUrl = window.location.href;
+    saveLensPending(key);
+    window.location.assign(`${COMPASS_URL}/?calibrate=${encodeURIComponent(key)}&return=${encodeURIComponent(returnUrl)}`);
+  };
+
+  // Resolve the active lens's topic set for the grid: 'custom' means no explicit
+  // lens is selected, so every card falls back to the Best Match overlap (Req 8).
+  const activeLens = activeLensKey === 'custom' ? null : lenses.find((l) => l.key === activeLensKey);
+  const activeLensTopicIds = activeLens ? activeLens.topicIds : null;
 
   // Auto-apply Stance Max the first time user crosses the 3-answer threshold
   const prevAnswerCountRef = useRef(0);
@@ -1039,7 +1069,6 @@ export default function Results() {
     return () => { cancelled = true; };
   }, [compassMode, filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
   const handleBuildCompass = () => {
     const returnUrl = window.location.href;
     window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
@@ -1056,8 +1085,10 @@ export default function Results() {
     <div style={{ position: 'relative' }}>
       <CompassControlsBar
         userAnswers={rawUserAnswers}
-        lensActive={lensActive}
-        onToggleLens={handleToggleLens}
+        lenses={augmentedLenses}
+        activeLensKey={activeLensKey}
+        onSelectLens={handleSelectLens}
+        onCalibrate={handleCalibrateLens}
         onStanceMin={handleStanceMin}
         onStanceMax={handleStanceMax}
         isDesktop={isDesktop}
@@ -1473,20 +1504,20 @@ export default function Results() {
           return t ? { topic_id: t.id, value } : null;
         }).filter(Boolean)
       : null;
-    // Local offices default to the Local Lens; others to the user's regular compass.
-    const polLensActive = getEffectiveLens(isLocalDistrict(pol.district_type) ? 'local' : 'state');
-    // Lens ON → local-scoped topics; lens OFF → full compass (no tier lock), matching CompassCard.
-    const scopedTopicsForPol = polLensActive
+    // Global lens applies to every card (Req 8): a narrow non-local lens must use
+    // the full topic pool, matching CompassCard; only the 'local' lens scopes down.
+    const scopedTopicsForPol = activeLensKey === 'local'
       ? allTopics.filter((t) => t.applies_local !== false)
       : allTopics;
 
     // Pre-check: only show the overlay when MiniCompass will actually draw ≥3 spokes.
-    // Mirrors computeDisplaySpokes exactly: the chosen topic set is the Local Lens (on)
-    // or the user's selected compass (off); a spoke needs both sides answered + in scope.
+    // Mirrors computeDisplaySpokes exactly: the chosen topic set is the active lens's
+    // topics, or the user's selected compass for Best Match; a spoke needs both sides
+    // answered + in scope.
     const userAnsweredIds = new Set((rawUserAnswers || []).map((a) => String(a.topic_id)));
     const polAnsweredIds = new Set((polAnswersForMini || []).filter((a) => a.value > 0).map((a) => String(a.topic_id)));
     const scopedIdsForPol = new Set((scopedTopicsForPol || []).map((t) => String(t.id)));
-    const preferredForPol = polLensActive ? LOCAL_LENS_TOPICS : (selectedTopics || []);
+    const preferredForPol = (activeLensKey === 'custom' ? selectedTopics : activeLensTopicIds) || [];
     let matchCount;
     if (preferredForPol.length > 0) {
       matchCount = preferredForPol.filter(
@@ -1576,7 +1607,8 @@ export default function Results() {
               selectedTopics={selectedTopics}
               scopedTopics={scopedTopicsForPol}
               invertedSpokes={invertedSpokes}
-              localLensActive={polLensActive}
+              lensTopicIds={activeLensTopicIds}
+              localLensActive={activeLensKey === 'local'}
               isDark={isDark}
               size={190}
             />
@@ -1597,7 +1629,8 @@ export default function Results() {
               selectedTopics={selectedTopics}
               scopedTopics={scopedTopicsForPol}
               invertedSpokes={invertedSpokes}
-              localLensActive={polLensActive}
+              lensTopicIds={activeLensTopicIds}
+              localLensActive={activeLensKey === 'local'}
               isDark={isDark}
               size={200}
             />

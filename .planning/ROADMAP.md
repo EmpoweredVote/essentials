@@ -510,6 +510,48 @@ requirements CV-01/02/03 (one per phase); BANR-01 also spans 201-203.
 | CV-02 | 202 |
 | CV-03 | 203 |
 | BANR-01 (appended) | 201, 202, 203 |
+| LENS-01 | 204 |
+
+## Appended: Compass Lens Switcher (Phase 204)
+
+Standalone feature phase — **independent of the Tucson/Arizona and Coachella Valley deep-seed tracks**
+(no data dependency; touches only the compass UI layer). Turns essentials' latent lens data model
+(`CompassContext.lenses` hydrated from `GET /compass/lenses`) into an explicit, extensible,
+calibration-aware **global lens switcher** on the results grid, retiring the silent per-office
+auto-lensing. Mirrors the lens/calibration model already shipped in `C:\EV-CompassV2`.
+
+#### Phase 204: Compass Lens Switcher (Results Grid)
+
+**Goal**: Replace the results-grid binary on/off "Lens" toggle with a single global, data-driven lens
+switcher (Custom + every lens from `GET /compass/lenses`), each chip showing a calibration state
+(LIT vs greyed + purple-rim), that sets the comparison topic-set for every card at once and defaults
+to a per-politician **Custom (overlap)** lens when none is selected.
+**Depends on**: Nothing (compass-UI-only; assumes `GET /compass/lenses` returns lens `name`/`description`/`color`)
+**Requirements**: LENS-01
+**Spec**: `.planning/phases/204-compass-lens-switcher/204-SPEC.md` (11 requirements, ambiguity 0.161)
+**Success Criteria** (what must be TRUE):
+
+  1. With compass on, the grid shows a data-driven lens-chip row (Custom + each API lens); the old binary on/off toggle is gone; adding a lens to the API makes a chip appear with no code change
+  2. Each chip renders LIT when the user answered ≥ min(8, lens size) of its topics, else greyed + purple-rim; Custom is always LIT; hovering a purple chip prompts calibration and clicking it hands off to compass.empowered.vote (lens-scoped, return URL)
+  3. Explicit selection is global (applies one lens to every card); with none selected the default is the Custom overlap lens per card (compass topics first, then biggest disagreements, cap 8); per-office auto-lensing retired
+  4. A narrow selected lens leaves non-matching cards in the "not enough shared topics" state (no silent fallback); the selected lens persists across visits (localStorage `ev:compassLens`)
+
+**Plans**: 4 plans in 3 waves
+
+**Wave 1**
+
+- [x] 204-01-PLAN.md — Lens data/algorithm core in compass.js: metadata fallbacks + normalizeApiLens + hex sanitizer + isLensCalibrated(min(8,size)) + ev:compassLens persistence + Best Match biggest-disagreement fill (Req 9 unit-tested)
+- [x] 204-03-PLAN.md — New LensChipRow.jsx presentational switcher: data-driven pills (Best Match first), active/LIT/needs-calibration(purple-rim) states, per-lens icons, hover+tap-to-prompt calibrate affordance
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [x] 204-02-PLAN.md — CompassContext global persisted activeLensKey + setActiveLens + name/description fallback + normalizeApiLens hydration + auto-select-on-return (D-12); per-office auto-lensing retired for the grid, profile/elections shims kept
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 204-04-PLAN.md — Wiring: thread lensTopicIds through MiniCompass, replace binary toggle with LensChipRow in CompassControlsBar (desktop-wrap/mobile-scroll), global active-lens grid handling + calibration handoff in Results.jsx, + full 11-criteria human-verify (incl. flagged real-account federal-handoff landing)
+
+**UI hint**: yes
 
 ## Phases (shipped milestones)
 

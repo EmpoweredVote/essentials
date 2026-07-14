@@ -3,27 +3,32 @@ gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
 status: executing
-last_updated: "2026-07-13T16:57:59.455Z"
-last_activity: 2026-07-13 -- Phase 203 execution started
+last_updated: "2026-07-14T20:15:12.827Z"
+last_activity: 2026-07-14 -- Phase 204 execution started
 progress:
-  total_phases: 46
-  completed_phases: 8
-  total_plans: 42
-  completed_plans: 36
-  percent: 17
+  total_phases: 47
+  completed_phases: 9
+  total_plans: 46
+  completed_plans: 42
+  percent: 19
 ---
 
 # State
 
 ## Current Position
 
-Phase: 203 (indio-deep-seed) — EXECUTING
-Plan: 1 of 6
-Status: Executing Phase 203
-Last activity: 2026-07-13 -- Phase 203 execution started
+Phase: 204 (compass-lens-switcher) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 204
+Last activity: 2026-07-14 -- Phase 204 execution started
 
 **Arizona resume point:** Phase 196 (Marana Deep-Seed). Phases 196-200 remain planned and resumable;
 the Coachella Valley, CA work (201-203) is an independent append and does not block or alter them.
+
+**Side-track — Phase 204 (Compass Lens Switcher):** standalone compass-UI phase on branch
+`feat/federal-lens`, independent of the Tucson/Coachella deep-seed tracks (not counted in the v22.0
+progress totals above). SPEC + CONTEXT gathered 2026-07-13.
+Resume: `.planning/phases/204-compass-lens-switcher/204-CONTEXT.md` → next `/gsd:plan-phase 204`.
 
 ## Deferred Items
 
@@ -437,7 +442,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 203 — indio-deep-seed
+**Current focus:** Phase 204 — compass-lens-switcher
 
 ## v15.0 Roadmap Summary
 
