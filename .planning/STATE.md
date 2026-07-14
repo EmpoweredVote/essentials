@@ -25,6 +25,11 @@ Last activity: 2026-07-13 -- Phase 203 execution started
 **Arizona resume point:** Phase 196 (Marana Deep-Seed). Phases 196-200 remain planned and resumable;
 the Coachella Valley, CA work (201-203) is an independent append and does not block or alter them.
 
+**Side-track — Phase 204 (Compass Lens Switcher):** standalone compass-UI phase on branch
+`feat/federal-lens`, independent of the Tucson/Coachella deep-seed tracks (not counted in the v22.0
+progress totals above). SPEC + CONTEXT gathered 2026-07-13.
+Resume: `.planning/phases/204-compass-lens-switcher/204-CONTEXT.md` → next `/gsd:plan-phase 204`.
+
 ## Deferred Items
 
 Re-acknowledged and deferred again at v21.0 milestone close on 2026-07-08 (unchanged from the
