@@ -437,6 +437,24 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     return unsub;
   }, [compassDataLoaded, isLoggedIn, allTopics]);
 
+  // Auto-select the lens on return from calibration (D-12). The grid's onCalibrate
+  // handler (Plan 04) writes `ev:compassLensPending` right before routing out to
+  // compass.empowered.vote. Once compass data has loaded, if a pending lens is now
+  // calibrated, adopt it as the active selection and clear the marker. If it's
+  // still not calibrated, leave the marker for a later visit — do NOT auto-select.
+  // clearLensPending() is the loop guard: once applied, the effect is a no-op on
+  // every subsequent run until a new pending marker is written.
+  useEffect(() => {
+    if (!compassDataLoaded) return;
+    const pendingKey = loadLensPending();
+    if (!pendingKey) return;
+    const pendingLens = lenses.find((l) => l.key === pendingKey);
+    if (pendingLens && isLensCalibrated(pendingLens, userAnswers)) {
+      setActiveLens(pendingKey);
+      clearLensPending();
+    }
+  }, [compassDataLoaded, userAnswers, lenses, setActiveLens]);
+
   const toggleInversion = useCallback((shortTitle) => {
     setInvertedSpokes((prev) => ({ ...prev, [shortTitle]: !prev[shortTitle] }));
   }, []);
