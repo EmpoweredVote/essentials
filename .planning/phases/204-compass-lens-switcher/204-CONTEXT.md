@@ -132,9 +132,13 @@ Downstream agents MUST read `204-SPEC.md` before planning or implementing. Requi
 - **Reworking the standalone `JudicialCompassSection`** — Judicial becomes a grid lens; the separate profile section stays as-is.
 - **Bringing the switcher to the profile CompassCard** — this phase is grid-only (per-card was rejected as overwhelming).
 
-## Research / Planning Flags (verify before/during planning)
-- **⚠ API metadata dependency:** confirm `GET /compass/lenses` (essentials backend) returns `name`, `description`, and `color` per lens. Essentials' fallback lenses only carry `key/color/topicIds`. If missing, a small backend/data addition precedes the UI work. (SPEC Ambiguity Report flags Constraint Clarity for this.)
-- **⚠ Calibrate-URL contract:** define the exact `compass.empowered.vote` entry point + params for "this lens's unanswered topics" + return URL. Requires coordination with the EV-CompassV2 side; not fully specifiable from the essentials repo alone.
+## Research / Planning Flags — RESOLVED 2026-07-14
+- **✅ API metadata dependency — RESOLVED, no backend work.** `getCompassLenses()` (`C:\EV-Accounts\backend\src\lib\compassService.ts` L190-217) already selects and returns per lens: `{ key, name, description, color, icon, autoDistrictTypes, topicIds }`. So `GET /api/compass/lenses` provides everything the chips need. Essentials' `CompassContext.lenses` currently **drops** `name`/`description`/`icon` on hydration — the only work is to stop dropping them (a frontend change already in Phase 204 scope).
+- **✅ Calibrate-URL contract — RESOLVED, bridge built in EV-CompassV2.** Contract: essentials links a purple lens to
+  **`compass.empowered.vote/?calibrate=<lensKey>&return=<essentialsResultsUrl>`**.
+  EV-CompassV2 (`feat/lenses-from-api`, commit `5d0016c`) now: `App.jsx` stashes `?calibrate=<key>` to `sessionStorage.start_calibrate_lens` on mount (survives the HelpGuard redirect); `CombinedPage` consumes it once (after lenses+topics load) and calls the existing `doCalibrateLens(lensByKey(key))` — generalized to **any** lens key (future State/International included). The `?return=` round-trip (ReturnBanner → back with compass fragment) is unchanged.
+  - **Verified (dev):** capture → consume → `doCalibrateLens` dispatch + return-banner all work end-to-end, no errors (build passes; Playwright drive on a dev server).
+  - **⚠ Validation item for execute-phase:** confirm with a **real calibrated account** that the federal handoff lands directly on that lens's topics. With an empty simulated guest, CompassV2's overlay showed its generic new-user onboarding intro ("Start with Local Lens") rather than jumping to Federal — this is the overlay's existing new-user branch (our change reuses the same `doCalibrateLens` as CompassV2's internal "Set up Federal Lens" button), but it needs a real-account check to confirm the landing screen. If the intro appears for real users too, that's a follow-up in EV-CompassV2's overlay, not essentials.
 
 </deferred>
 
