@@ -1,9 +1,12 @@
 import { CompassKey } from '@empoweredvote/ev-ui';
+import LensChipRow from './LensChipRow';
 
 export default function CompassControlsBar({
   userAnswers,
-  lensActive,
-  onToggleLens,
+  lenses,
+  activeLensKey,
+  onSelectLens,
+  onCalibrate,
   onStanceMin,
   onStanceMax,
   isDesktop,
@@ -38,29 +41,29 @@ export default function CompassControlsBar({
       <div style={{ pointerEvents: 'auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
         {showStanceButtons && (
           <>
-            {/* Lens — labeled, touch-friendly toggle. Default ON; focuses each
-                race on its most relevant issues (local races → local issues,
-                U.S. House/Senate → federal issues). Clearly reflects on/off. */}
-            <button
-              className="stance-btn"
-              onClick={onToggleLens}
-              aria-pressed={lensActive}
-              title={lensActive ? 'Lens on — each race focuses on its most relevant issues' : 'Lens off — full compass for every race'}
-              style={{
-                width: 'auto',
-                height: 34,
-                padding: '0 12px',
-                gap: 6,
-                ...(lensActive ? { background: '#FF5740', borderColor: '#FF5740', color: '#fff' } : {}),
-              }}
-            >
-              {/* Viewfinder — "focus this view on its key issues" (lens metaphor) */}
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>Lens</span>
-            </button>
+            {/* Global lens chip row — replaces the old binary Lens toggle.
+                Desktop: chips flow inside this bar's existing flexWrap:'wrap'
+                row (D-08). Mobile: wrapped below in a nowrap/overflowX:auto
+                strip so it becomes a single-row horizontal scroll (D-09). */}
+            {isDesktop ? (
+              <LensChipRow
+                lenses={lenses}
+                activeLensKey={activeLensKey}
+                onSelectLens={onSelectLens}
+                onCalibrate={onCalibrate}
+                isDesktop={isDesktop}
+              />
+            ) : (
+              <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', maxWidth: '100%' }}>
+                <LensChipRow
+                  lenses={lenses}
+                  activeLensKey={activeLensKey}
+                  onSelectLens={onSelectLens}
+                  onCalibrate={onCalibrate}
+                  isDesktop={isDesktop}
+                />
+              </div>
+            )}
             <div style={{ display: 'flex', gap: 4 }}>
               <button className="stance-btn" onClick={onStanceMin} style={{ width: 34, height: 34 }} title="Stance Min — pull strong spokes inward">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width="14" height="14">

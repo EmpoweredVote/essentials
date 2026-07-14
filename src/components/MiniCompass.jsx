@@ -32,6 +32,7 @@ export default function MiniCompass({
   scopedTopics,
   invertedSpokes,
   localLensActive,
+  lensTopicIds = null,
   isDark,
   size = 120,
 }) {
@@ -52,6 +53,7 @@ export default function MiniCompass({
       scopedTopics,
       maxSpokes: MAX_SPOKES,
       localLensActive,
+      lensTopicIds,
     });
 
     if (!result.hasEnoughSpokes) return empty;
@@ -104,7 +106,7 @@ export default function MiniCompass({
       hasReplacedSpokes: Object.keys(result.replacedSpokes).length > 0,
       dotPositions: dots,
     };
-  }, [polAnswers, userAnswers, selectedTopics, scopedTopics, localLensActive, invertedSpokes]);
+  }, [polAnswers, userAnswers, selectedTopics, scopedTopics, localLensActive, lensTopicIds, invertedSpokes]);
 
   const handleMouseMove = useCallback((e) => {
     const svg = containerRef.current?.querySelector('svg');
