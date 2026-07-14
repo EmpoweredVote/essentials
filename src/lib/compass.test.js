@@ -256,3 +256,73 @@ describe('lens selection persistence', () => {
     expect(loadLensPending()).toBeNull();
   });
 });
+
+describe('computeDisplaySpokes — Best Match (custom) biggest-disagreement fill (Req 9)', () => {
+  // 10 topics, scopedTopics order defines the tie-break index (t1=0 .. t10=9).
+  const BM = [
+    topic('t1', 'A'), topic('t2', 'B'), topic('t3', 'C'), topic('t4', 'D'), topic('t5', 'E'),
+    topic('t6', 'F'), topic('t7', 'G'), topic('t8', 'H'), topic('t9', 'I'), topic('t10', 'J'),
+  ];
+
+  it('user compass topics come first (in order), then remaining both-answered candidates fill by descending |diff|, ties by scopedTopics order, capped at maxSpokes', () => {
+    const userValues = { t1: 3, t2: 3, t3: 1, t4: 5, t5: 2, t6: 4, t7: 3, t8: 1, t9: 5, t10: 3 };
+    const polValues = { t1: 3, t2: 1, t3: 5, t4: 1, t5: 2, t6: 4, t7: 5, t8: 5, t9: 1, t10: 3 };
+    // diffs (excluding t1,t2 which are selectedTopics): t3=4 t4=4 t5=0 t6=0 t7=2 t8=4 t9=4 t10=0
+    const userAnswers = Object.entries(userValues).map(([id, v]) => ans(id, v));
+    const polAnswers = Object.entries(polValues).map(([id, v]) => ans(id, v));
+    const selectedTopics = ['t1', 't2'];
+
+    const { displayTopicIds, hasEnoughSpokes } = computeDisplaySpokes({
+      selectedTopics, userAnswers, polAnswers, scopedTopics: BM, maxSpokes: 8, localLensActive: false,
+    });
+
+    // t1,t2 first (selected order), then diff-4 ties broken by index (t3,t4,t8,t9),
+    // diff-2 (t7), diff-0 ties broken by index (t5,t6,t10) — only need 6 more to hit 8.
+    expect(displayTopicIds).toEqual(['t1', 't2', 't3', 't4', 't8', 't9', 't7', 't5']);
+    expect(displayTopicIds.length).toBeLessThanOrEqual(8);
+    expect(hasEnoughSpokes).toBe(true);
+  });
+
+  it('returns all shared candidates when the total is <= maxSpokes', () => {
+    const scoped = BM.slice(0, 5); // t1..t5
+    const userAnswers = scoped.map((t) => ans(t.id, 3));
+    const polAnswers = scoped.map((t) => ans(t.id, 3));
+    const selectedTopics = ['t1'];
+
+    const { displayTopicIds } = computeDisplaySpokes({
+      selectedTopics, userAnswers, polAnswers, scopedTopics: scoped, maxSpokes: 8, localLensActive: false,
+    });
+
+    expect([...displayTopicIds].sort()).toEqual(['t1', 't2', 't3', 't4', 't5']);
+  });
+
+  it('does NOT run the fill pass when an explicit lensTopicIds is set (curated-set intersection only)', () => {
+    const lensIds = FEDERAL_LENS_TOPICS.slice(0, 3);
+    const lensScoped = lensIds.map((id, i) => topic(id, `Lens ${i}`));
+    const extraScoped = [topic('extraA', 'Extra A'), topic('extraB', 'Extra B'), topic('extraC', 'Extra C'), topic('extraD', 'Extra D'), topic('extraE', 'Extra E')];
+    const scoped = [...lensScoped, ...extraScoped];
+    const userAnswers = scoped.map((t) => ans(t.id, 3));
+    const polAnswers = scoped.map((t) => ans(t.id, 1)); // large diffs on the extras — would dominate a fill pass if one ran
+
+    const { displayTopicIds, hasEnoughSpokes } = computeDisplaySpokes({
+      selectedTopics: [], userAnswers, polAnswers, scopedTopics: scoped, maxSpokes: 8, localLensActive: false, lensTopicIds: lensIds,
+    });
+
+    expect(displayTopicIds).toEqual(lensIds); // only the 3 lens topics — no fill from the extras
+    expect(hasEnoughSpokes).toBe(true); // 3 meets the >=3 threshold; unaffected by the Req 9 fill pass
+  });
+
+  it('does NOT run the fill pass when localLensActive is true', () => {
+    const lensScoped = LOCAL_LENS_TOPICS.slice(0, 3).map((id, i) => topic(id, `Lens ${i}`));
+    const extraScoped = [topic('extraA', 'Extra A'), topic('extraB', 'Extra B'), topic('extraC', 'Extra C'), topic('extraD', 'Extra D'), topic('extraE', 'Extra E')];
+    const scoped = [...lensScoped, ...extraScoped];
+    const userAnswers = scoped.map((t) => ans(t.id, 3));
+    const polAnswers = scoped.map((t) => ans(t.id, 1));
+
+    const { displayTopicIds } = computeDisplaySpokes({
+      selectedTopics: [], userAnswers, polAnswers, scopedTopics: scoped, maxSpokes: 8, localLensActive: true,
+    });
+
+    expect(displayTopicIds).toEqual(LOCAL_LENS_TOPICS.slice(0, 3));
+  });
+});
