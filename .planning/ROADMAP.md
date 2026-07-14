@@ -536,7 +536,20 @@ to a per-politician **Custom (overlap)** lens when none is selected.
   3. Explicit selection is global (applies one lens to every card); with none selected the default is the Custom overlap lens per card (compass topics first, then biggest disagreements, cap 8); per-office auto-lensing retired
   4. A narrow selected lens leaves non-matching cards in the "not enough shared topics" state (no silent fallback); the selected lens persists across visits (localStorage `ev:compassLens`)
 
-**Plans**: TBD (run /gsd:discuss-phase 204 → plan-phase)
+**Plans**: 4 plans in 3 waves
+
+**Wave 1**
+
+- [ ] 204-01-PLAN.md — Lens data/algorithm core in compass.js: metadata fallbacks + normalizeApiLens + hex sanitizer + isLensCalibrated(min(8,size)) + ev:compassLens persistence + Best Match biggest-disagreement fill (Req 9 unit-tested)
+- [ ] 204-03-PLAN.md — New LensChipRow.jsx presentational switcher: data-driven pills (Best Match first), active/LIT/needs-calibration(purple-rim) states, per-lens icons, hover+tap-to-prompt calibrate affordance
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 204-02-PLAN.md — CompassContext global persisted activeLensKey + setActiveLens + name/description fallback + normalizeApiLens hydration + auto-select-on-return (D-12); per-office auto-lensing retired for the grid, profile/elections shims kept
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 204-04-PLAN.md — Wiring: thread lensTopicIds through MiniCompass, replace binary toggle with LensChipRow in CompassControlsBar (desktop-wrap/mobile-scroll), global active-lens grid handling + calibration handoff in Results.jsx, + full 11-criteria human-verify (incl. flagged real-account federal-handoff landing)
 
 **UI hint**: yes
 
