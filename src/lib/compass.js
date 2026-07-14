@@ -632,6 +632,15 @@ export function clearLensPending() {
  * @param {number}    [params.maxSpokes=8]     - Hard cap on displayed spokes (default 8)
  * @param {boolean}   [params.localLensActive=false] - When true, preferredIds = LOCAL_LENS_TOPICS
  *
+ * Best Match (Req 9): when neither an explicit `lensTopicIds` nor `localLensActive`
+ * is set and the user has `selectedTopics`, candidates = topics both sides answered,
+ * within scope. If more than `maxSpokes` such candidates exist, the user's own
+ * selectedTopics (both-answered, in-scope) come first in selectedTopics order, then
+ * remaining slots are filled from the other both-answered in-scope topics ordered by
+ * descending |userValue - polValue| (biggest disagreement first), ties broken by
+ * `scopedTopics` display order. The explicit-lens and localLensActive branches, and
+ * the no-preferred-set fallback, are unaffected by this fill pass.
+ *
  * @returns {{
  *   displayTopicIds: string[],
  *   replacedSpokes: { [short_title]: boolean },
@@ -671,6 +680,14 @@ export function computeDisplaySpokes({
   // and it's within the provided scope. When too few overlap, the caller renders the
   // "not enough shared topics" state — that is the intended, honest outcome.
   let preferredIds = null;
+  // True only for the "Best Match" (custom overlap) case: no explicit lens, local
+  // lens off, and the user has a selected compass — this is the sole branch the
+  // Req 9 biggest-disagreement fill pass applies to.
+  const isBestMatchCase =
+    !(lensTopicIds && lensTopicIds.length > 0) &&
+    !localLensActive &&
+    !!(selectedTopics && selectedTopics.length > 0);
+
   if (lensTopicIds && lensTopicIds.length > 0) {
     // Explicit lens (e.g. Federal) — its curated topic set defines the spokes.
     preferredIds = lensTopicIds.slice(0, maxSpokes);
@@ -706,6 +723,32 @@ export function computeDisplaySpokes({
         displayTopicIds.push(sid);
       }
       if (displayTopicIds.length >= maxSpokes) break;
+    }
+  }
+
+  // Best Match fill pass (Req 9): the compass-first collection above may leave
+  // room under maxSpokes — fill remaining slots from other both-answered,
+  // in-scope candidates, biggest disagreement first, ties by scopedTopics order.
+  if (isBestMatchCase && displayTopicIds.length < maxSpokes) {
+    const userValueById = new Map(userAnswers.map((a) => [String(a.topic_id), a.value]));
+    const polValueById = new Map(
+      polAnswers.filter((a) => a.value > 0).map((a) => [String(a.topic_id), a.value])
+    );
+
+    const remaining = [];
+    scopedTopics.forEach((t, idx) => {
+      const sid = String(t.id);
+      if (chosen.has(sid) || !userAnsweredSet.has(sid) || !polAnsweredSet.has(sid)) return;
+      const diff = Math.abs((userValueById.get(sid) ?? 0) - (polValueById.get(sid) ?? 0));
+      remaining.push({ sid, diff, idx });
+    });
+
+    remaining.sort((a, b) => (b.diff !== a.diff ? b.diff - a.diff : a.idx - b.idx));
+
+    for (const candidate of remaining) {
+      if (displayTopicIds.length >= maxSpokes) break;
+      chosen.add(candidate.sid);
+      displayTopicIds.push(candidate.sid);
     }
   }
 

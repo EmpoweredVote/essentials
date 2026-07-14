@@ -1,12 +1,17 @@
 /**
  * Tests for computeDisplaySpokes() — the compass comparison spoke-selection algorithm.
  *
- * Model: spokes are driven strictly by a *preferred* topic set —
- *   • Local Lens ON  → the curated LOCAL_LENS_TOPICS.
- *   • Local Lens OFF → the user's own selected/regular compass.
+ * Model: spokes are driven by a *preferred* topic set —
+ *   • Explicit lens (lensTopicIds set) → the curated lens topic set only, no fill.
+ *   • Local Lens ON (localLensActive)  → the curated LOCAL_LENS_TOPICS only, no fill.
+ *   • Best Match / Custom (both off, selectedTopics present) → the user's selected
+ *     topics first, then (Req 9) remaining slots up to maxSpokes are filled from
+ *     other both-answered, in-scope candidates ordered by descending
+ *     |userValue - polValue|, ties broken by scopedTopics display order.
  * A spoke shows only when BOTH the user and the politician answered it and it's
- * within the provided scope. There is NO auto-substitution: if too few preferred
- * topics overlap, the caller renders "not enough shared topics" — the intended outcome.
+ * within the provided scope. Only the Best Match/Custom case auto-fills; the
+ * explicit-lens and local-lens branches never substitute — if too few of their
+ * curated topics overlap, the caller renders "not enough shared topics".
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
@@ -55,8 +60,8 @@ const T = [
   topic('t6', 'Econ Dev'),
 ];
 
-describe("computeDisplaySpokes — lens OFF uses the user's selected compass", () => {
-  it('shows selected topics both sides answered, in order; drops unanswered ones WITHOUT substituting', () => {
+describe("computeDisplaySpokes — lens OFF uses the user's selected compass (Best Match, Req 9)", () => {
+  it('shows selected topics both sides answered first, then fills remaining slots (up to maxSpokes) with other both-answered in-scope topics', () => {
     const selectedTopics = ['t1', 't2', 't3', 't4'];
     const userAnswers = T.map((t) => ans(t.id));        // user answered everything
     const polAnswers = [ans('t1'), ans('t2'), ans('t5')]; // pol answered t1,t2 (selected) + t5 (not selected)
@@ -65,13 +70,16 @@ describe("computeDisplaySpokes — lens OFF uses the user's selected compass", (
       selectedTopics, userAnswers, polAnswers, scopedTopics: T, maxSpokes: 8, localLensActive: false,
     });
 
-    // Only t1 & t2 (selected AND both-answered). t5 is NOT pulled in as a substitute.
-    expect(displayTopicIds).toEqual(['t1', 't2']);
-    expect(hasEnoughSpokes).toBe(false); // < 3 → "not enough shared topics" (expected)
-    expect(replacedSpokes).toEqual({});  // no substitution ever
+    // t1 & t2 (selected AND both-answered) first, then t5 fills a remaining slot
+    // (both-answered, not selected) per the Req 9 Best Match fill pass. t3/t4 are
+    // dropped from the "selected-first" phase (pol never answered them) but are not
+    // eligible for the fill either since pol didn't answer them.
+    expect(displayTopicIds).toEqual(['t1', 't2', 't5']);
+    expect(hasEnoughSpokes).toBe(true); // 3 >= 3
+    expect(replacedSpokes).toEqual({});  // replacedSpokes stays unused (stance-invert bookkeeping only)
   });
 
-  it('renders the comparison when ≥3 selected topics are shared, preserving order', () => {
+  it('renders the comparison when ≥3 selected topics are shared, preserving order, then fills remaining slots by disagreement', () => {
     const selectedTopics = ['t4', 't1', 't3'];
     const userAnswers = T.map((t) => ans(t.id));
     const polAnswers = T.map((t) => ans(t.id));
@@ -81,7 +89,10 @@ describe("computeDisplaySpokes — lens OFF uses the user's selected compass", (
     });
 
     expect(hasEnoughSpokes).toBe(true);
-    expect(displayTopicIds).toEqual(['t4', 't1', 't3']); // preferred order preserved
+    // Selected topics first (order preserved), then the rest of T fills the
+    // remaining slots (all diff 0 here since userAnswers/polAnswers are identical,
+    // so ties are broken by scopedTopics order: t2, t5, t6).
+    expect(displayTopicIds).toEqual(['t4', 't1', 't3', 't2', 't5', 't6']);
   });
 });
 
@@ -138,15 +149,18 @@ describe('computeDisplaySpokes — caps and guards', () => {
     expect(r.hasEnoughSpokes).toBe(false);
   });
 
-  it('excludes preferred topics that are not in scope', () => {
-    // 't9' is selected and both-answered but NOT in scopedTopics → must be excluded.
+  it('excludes preferred topics that are not in scope (t9 is out-of-scope even though both-answered); the fill pass then adds the remaining in-scope candidate', () => {
+    // 't9' is selected and both-answered but NOT in scopedTopics → must be excluded
+    // from the "selected-first" phase, and it can never be pulled in by the Req 9
+    // fill pass either, since the fill only draws candidates from scopedTopics.
     const scoped = [topic('t1', 'A'), topic('t2', 'B'), topic('t3', 'C')];
     const userAnswers = [ans('t1'), ans('t2'), ans('t3'), ans('t9')];
     const polAnswers = [ans('t1'), ans('t2'), ans('t3'), ans('t9')];
     const { displayTopicIds } = computeDisplaySpokes({
       selectedTopics: ['t9', 't1', 't2'], userAnswers, polAnswers, scopedTopics: scoped, maxSpokes: 8, localLensActive: false,
     });
-    expect(displayTopicIds).toEqual(['t1', 't2']); // t9 dropped (out of scope)
+    // t9 dropped (out of scope); t3 pulled in by the Req 9 fill (both-answered, in-scope, not selected).
+    expect(displayTopicIds).toEqual(['t1', 't2', 't3']);
   });
 });
 
