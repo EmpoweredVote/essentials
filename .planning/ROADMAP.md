@@ -545,7 +545,7 @@ to a per-politician **Custom (overlap)** lens when none is selected.
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 204-02-PLAN.md — CompassContext global persisted activeLensKey + setActiveLens + name/description fallback + normalizeApiLens hydration + auto-select-on-return (D-12); per-office auto-lensing retired for the grid, profile/elections shims kept
+- [x] 204-02-PLAN.md — CompassContext global persisted activeLensKey + setActiveLens + name/description fallback + normalizeApiLens hydration + auto-select-on-return (D-12); per-office auto-lensing retired for the grid, profile/elections shims kept
 
 **Wave 3** *(blocked on Wave 2)*
 
