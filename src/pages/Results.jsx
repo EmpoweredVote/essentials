@@ -1080,8 +1080,8 @@ export default function Results() {
   // otherwise appear to do nothing. While answers are still loading, render neither.
   const compassCalibrated = (rawUserAnswers?.length ?? 0) >= 3;
   const compassControlsSlot = (
-    // 0-height relative anchor: on desktop the bar inside is position:absolute (no layout
-    // shift, floats over the grid's top-right); on mobile it falls back to normal flow.
+    // The bar renders in normal flow (right-aligned on desktop) so it sits above the
+    // section banner instead of floating over it.
     <div style={{ position: 'relative' }}>
       <CompassControlsBar
         userAnswers={rawUserAnswers}

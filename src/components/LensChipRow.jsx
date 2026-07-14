@@ -1,6 +1,21 @@
 import { useState } from 'react';
 import { useTheme } from '../hooks/useTheme';
 
+// Blend a #RGB/#RRGGBB hex toward white by `amount` (0..1). Used so a dark lens
+// color (e.g. federal navy #1E3A5F) stays legible as inactive text/border on the
+// dark chip surface — the raw color is near-invisible there.
+function lightenForDark(hex, amount = 0.5) {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex);
+  if (!m) return hex;
+  let h = m[1];
+  if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  const mix = (c) => Math.round(c + (255 - c) * amount);
+  return `#${[mix(r), mix(g), mix(b)].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+}
+
 // Icon for each lens chip: Capitol dome (federal), gavel (judicial), house
 // (local), viewfinder (Best Match / custom — mirrors the retired binary Lens
 // toggle icon in CompassControlsBar), neutral dot fallback for any future
@@ -113,7 +128,10 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
         } else if (isActive) {
           stateStyle = { background: lens.color, borderColor: lens.color, color: '#fff' };
         } else {
-          stateStyle = { background: chipSurface, color: lens.color, borderColor: lens.color };
+          // Inactive/LIT: coloured outline + text on the opaque surface. In dark
+          // mode lighten the lens colour so dark hues (federal navy) stay legible.
+          const outline = isDark ? lightenForDark(lens.color) : lens.color;
+          stateStyle = { background: chipSurface, color: outline, borderColor: outline };
         }
 
         return (
