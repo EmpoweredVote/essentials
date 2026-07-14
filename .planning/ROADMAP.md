@@ -510,6 +510,35 @@ requirements CV-01/02/03 (one per phase); BANR-01 also spans 201-203.
 | CV-02 | 202 |
 | CV-03 | 203 |
 | BANR-01 (appended) | 201, 202, 203 |
+| LENS-01 | 204 |
+
+## Appended: Compass Lens Switcher (Phase 204)
+
+Standalone feature phase — **independent of the Tucson/Arizona and Coachella Valley deep-seed tracks**
+(no data dependency; touches only the compass UI layer). Turns essentials' latent lens data model
+(`CompassContext.lenses` hydrated from `GET /compass/lenses`) into an explicit, extensible,
+calibration-aware **global lens switcher** on the results grid, retiring the silent per-office
+auto-lensing. Mirrors the lens/calibration model already shipped in `C:\EV-CompassV2`.
+
+#### Phase 204: Compass Lens Switcher (Results Grid)
+
+**Goal**: Replace the results-grid binary on/off "Lens" toggle with a single global, data-driven lens
+switcher (Custom + every lens from `GET /compass/lenses`), each chip showing a calibration state
+(LIT vs greyed + purple-rim), that sets the comparison topic-set for every card at once and defaults
+to a per-politician **Custom (overlap)** lens when none is selected.
+**Depends on**: Nothing (compass-UI-only; assumes `GET /compass/lenses` returns lens `name`/`description`/`color`)
+**Requirements**: LENS-01
+**Spec**: `.planning/phases/204-compass-lens-switcher/204-SPEC.md` (11 requirements, ambiguity 0.161)
+**Success Criteria** (what must be TRUE):
+
+  1. With compass on, the grid shows a data-driven lens-chip row (Custom + each API lens); the old binary on/off toggle is gone; adding a lens to the API makes a chip appear with no code change
+  2. Each chip renders LIT when the user answered ≥ min(8, lens size) of its topics, else greyed + purple-rim; Custom is always LIT; hovering a purple chip prompts calibration and clicking it hands off to compass.empowered.vote (lens-scoped, return URL)
+  3. Explicit selection is global (applies one lens to every card); with none selected the default is the Custom overlap lens per card (compass topics first, then biggest disagreements, cap 8); per-office auto-lensing retired
+  4. A narrow selected lens leaves non-matching cards in the "not enough shared topics" state (no silent fallback); the selected lens persists across visits (localStorage `ev:compassLens`)
+
+**Plans**: TBD (run /gsd:discuss-phase 204 → plan-phase)
+
+**UI hint**: yes
 
 ## Phases (shipped milestones)
 
