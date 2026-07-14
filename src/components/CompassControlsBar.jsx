@@ -15,27 +15,23 @@ export default function CompassControlsBar({
   return (
     <div
       style={{
-        // Desktop: a true overlay anchored to the top-right of the results area. It is
-        // taken out of normal flow (position:absolute) so toggling Compass never shifts
-        // the surrounding content, and it lives below any full-width banner (locality
-        // notice / voter info) so the COMPASS KEY can't cover it. See Results.jsx where
-        // this is rendered inside a 0-height relative anchor placed after the banner.
-        // Mobile: the content is too narrow to float over — the bar takes its own row
-        // in normal flow so it can't overlap the cards/header.
-        position: isDesktop ? 'absolute' : 'static',
-        top: isDesktop ? 0 : undefined,
-        right: isDesktop ? 48 : undefined,
+        // The bar sits in normal document flow ABOVE the section banner (right-aligned
+        // on desktop), rather than floating over it. An earlier version used
+        // position:absolute to avoid layout shift when toggling Compass, but that
+        // dropped the bar on top of the first tier's full-width city banner. Reserving
+        // its own row keeps the lens chips / COMPASS KEY clear of the banner photo.
+        position: 'static',
         zIndex: 30,
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
         gap: 8,
-        justifyContent: 'flex-end',
+        justifyContent: isDesktop ? 'flex-end' : 'flex-start',
         paddingTop: 8,
-        paddingLeft: isDesktop ? 0 : 24,
-        paddingRight: isDesktop ? 0 : 24,
-        marginBottom: isDesktop ? 0 : 8,
-        pointerEvents: isDesktop ? 'none' : 'auto',
+        paddingLeft: isDesktop ? 48 : 24,
+        paddingRight: isDesktop ? 48 : 24,
+        marginBottom: 8,
+        pointerEvents: 'auto',
       }}
     >
       <div style={{ pointerEvents: 'auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
