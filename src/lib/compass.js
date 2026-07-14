@@ -460,6 +460,161 @@ export function loadLocalLensState() {
   }
 }
 
+// ─── Lens metadata, calibration, and persisted-selection helpers ────────────
+
+/**
+ * Per-lens display metadata fallback (name/description/color) — mirrors
+ * EV-CompassV2's LOCAL_LENS/FEDERAL_LENS/JUDICIAL_LENS objects verbatim.
+ * This is the offline fallback; the live source of truth is GET /compass/lenses.
+ */
+export const LENS_FALLBACKS = [
+  {
+    key: 'local',
+    name: 'Local Lens',
+    description: '8 questions most local candidates have already answered',
+    color: '#5A9A6E',
+    topicIds: LOCAL_LENS_TOPICS,
+    autoDistrictTypes: ['LOCAL', 'LOCAL_EXEC', 'COUNTY', 'SCHOOL'],
+  },
+  {
+    key: 'federal',
+    name: 'Federal Lens',
+    description: '8 issues most U.S. House & Senate members and candidates have answered',
+    color: '#1E3A5F',
+    topicIds: FEDERAL_LENS_TOPICS,
+    autoDistrictTypes: ['NATIONAL_EXEC', 'NATIONAL_UPPER', 'NATIONAL_LOWER'],
+  },
+  {
+    key: 'judicial',
+    name: 'Judicial Lens',
+    description: '8 questions for judicial and DA candidates',
+    color: '#C2440A',
+    topicIds: JUDICIAL_LENS_TOPICS,
+    autoDistrictTypes: ['JUDICIAL', 'NATIONAL_JUDICIAL'],
+  },
+];
+
+/** Default fallback color used when an API-supplied lens color is missing or invalid. */
+const DEFAULT_LENS_COLOR = '#94A3B8';
+
+/** Matches #RGB or #RRGGBB hex colors only. */
+const HEX_COLOR_RE = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
+
+/**
+ * Returns `color` only when it is a valid #RGB/#RRGGBB hex string; otherwise
+ * returns `fallback`. Guards against non-hex/injection strings (e.g.
+ * `javascript:alert(1)`, `url(...)`) from reaching an inline style (T-204-02).
+ */
+export function sanitizeLensColor(color, fallback = DEFAULT_LENS_COLOR) {
+  return typeof color === 'string' && HEX_COLOR_RE.test(color) ? color : fallback;
+}
+
+/** Title-cases a lens key (e.g. 'federal' -> 'Federal') for use as a name fallback. */
+function titleCaseKey(key) {
+  return String(key || '')
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
+/**
+ * Normalizes a GET /compass/lenses API row into a defensive, render-safe shape.
+ * Mirrors EV-CompassV2's lenses.js normalizeApiLens (name/description/color/icon
+ * + array-coerced topicIds/autoDistrictTypes), plus hex color sanitization.
+ */
+export function normalizeApiLens(l) {
+  return {
+    key: l?.key,
+    name: l?.name || titleCaseKey(l?.key),
+    description: l?.description || '',
+    color: sanitizeLensColor(l?.color),
+    icon: l?.icon,
+    topicIds: Array.isArray(l?.topicIds) ? l.topicIds : [],
+    autoDistrictTypes: Array.isArray(l?.autoDistrictTypes) ? l.autoDistrictTypes : [],
+  };
+}
+
+/**
+ * A lens is "calibrated" (ready/LIT) once the user has answered (value > 0)
+ * at least min(8, lens.topicIds.length) of its topics (Req 4).
+ * Custom/"Best Match" readiness (>=3 answers) is decided by the caller — this
+ * function is only for named lenses that carry a topicIds array.
+ */
+export function isLensCalibrated(lens, userAnswers) {
+  const topicIds = Array.isArray(lens?.topicIds) ? lens.topicIds : [];
+  if (topicIds.length === 0) return false;
+  const idSet = new Set(topicIds.map(String));
+  const answered = Array.isArray(userAnswers) ? userAnswers : [];
+  let count = 0;
+  for (const a of answered) {
+    if (a && a.value > 0 && idSet.has(String(a.topic_id))) count += 1;
+  }
+  return count >= Math.min(8, topicIds.length);
+}
+
+/** localStorage keys for the persisted lens selection (Req 11). */
+export const LENS_SELECTION_KEY = 'ev:compassLens';
+export const LENS_PENDING_KEY = 'ev:compassLensPending';
+
+/**
+ * Persists the user's explicitly-selected lens key.
+ * @param {string} key
+ */
+export function saveLensSelection(key) {
+  try {
+    localStorage.setItem(LENS_SELECTION_KEY, key);
+  } catch { /* storage unavailable — non-fatal */ }
+}
+
+/**
+ * Reads the persisted lens selection, validated against a set of known keys.
+ * Falls back to 'custom' (Best Match) when the stored value is missing or is
+ * not one of `knownKeys` (T-204-01 — never trust a persisted key blindly).
+ * @param {string[]} knownKeys
+ * @returns {string}
+ */
+export function loadLensSelection(knownKeys) {
+  try {
+    const stored = localStorage.getItem(LENS_SELECTION_KEY);
+    const known = Array.isArray(knownKeys) ? knownKeys : [];
+    return stored && known.includes(stored) ? stored : 'custom';
+  } catch {
+    return 'custom';
+  }
+}
+
+/**
+ * Persists a "pending calibration" lens key — set right before the user is
+ * routed out to compass.empowered.vote for a specific lens, so the app can
+ * auto-select that lens on return (D-12) once it reflects as calibrated.
+ * @param {string} key
+ */
+export function saveLensPending(key) {
+  try {
+    localStorage.setItem(LENS_PENDING_KEY, key);
+  } catch { /* storage unavailable — non-fatal */ }
+}
+
+/**
+ * Reads the pending-calibration lens key, or null if none is set.
+ * @returns {string|null}
+ */
+export function loadLensPending() {
+  try {
+    return localStorage.getItem(LENS_PENDING_KEY) || null;
+  } catch {
+    return null;
+  }
+}
+
+/** Clears the pending-calibration lens key. */
+export function clearLensPending() {
+  try {
+    localStorage.removeItem(LENS_PENDING_KEY);
+  } catch { /* storage unavailable — non-fatal */ }
+}
+
 // ─── Shared spoke-selection algorithm ────────────────────────────────────────
 
 /**
