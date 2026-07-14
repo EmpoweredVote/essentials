@@ -4,9 +4,6 @@ import {
   fetchLenses,
   fetchUserAnswers,
   fetchSelectedTopics,
-  LOCAL_LENS_TOPICS,
-  FEDERAL_LENS_TOPICS,
-  JUDICIAL_LENS_TOPICS,
   fetchPoliticiansWithStances,
   fetchUserVerdicts,
   parseCompassFragment,
@@ -17,6 +14,13 @@ import {
   saveGuestVerdicts,
   loadGuestVerdicts,
   clearGuestVerdicts,
+  LENS_FALLBACKS,
+  normalizeApiLens,
+  isLensCalibrated,
+  saveLensSelection,
+  loadLensSelection,
+  loadLensPending,
+  clearLensPending,
 } from "../lib/compass";
 import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
 import { fetchMyRepresentatives } from "../lib/api";
@@ -64,17 +68,33 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   // per-office default, which avoids the stale-global-toggle confusion.
   const [lensOverride, setLensOverride] = useState(null); // null | true | false
 
-  // Available lenses — live source is GET /compass/lenses; the *_LENS_TOPICS
-  // constants are the offline fallback until the fetch resolves.
-  const [lenses, setLenses] = useState(() => [
-    { key: 'local',    color: '#5A9A6E', topicIds: LOCAL_LENS_TOPICS,    autoDistrictTypes: ['LOCAL', 'LOCAL_EXEC', 'COUNTY', 'SCHOOL'] },
-    { key: 'federal',  color: '#1E3A5F', topicIds: FEDERAL_LENS_TOPICS,  autoDistrictTypes: ['NATIONAL_EXEC', 'NATIONAL_UPPER', 'NATIONAL_LOWER'] },
-    { key: 'judicial', color: '#C2440A', topicIds: JUDICIAL_LENS_TOPICS, autoDistrictTypes: ['JUDICIAL', 'NATIONAL_JUDICIAL'] },
-  ]);
+  // Available lenses — live source is GET /compass/lenses; LENS_FALLBACKS (name +
+  // description + color/topicIds/autoDistrictTypes) is the offline fallback until
+  // the fetch resolves.
+  const [lenses, setLenses] = useState(() => LENS_FALLBACKS);
+
+  // ── Global lens selection (Req 11) ──────────────────────────────────────
+  // Persisted, explicit lens key applied to every card on the grid. Default
+  // 'custom' (Best Match). Unknown/stale persisted values degrade to 'custom'
+  // (T-204-01 — loadLensSelection validates against the live lens-key set).
+  const [activeLensKey, setActiveLensKey] = useState(() =>
+    loadLensSelection(['custom', ...LENS_FALLBACKS.map((l) => l.key)])
+  );
+
+  const setActiveLens = useCallback((key) => {
+    setActiveLensKey(key);
+    saveLensSelection(key);
+  }, []);
 
   // Effective lens for a given office scope. Consumers that know the politician's
   // districtScope (CompassCard, MiniCompass via Results/ElectionsView) call this.
   // Kept boolean (Local Lens on/off) for the elections grid + toggle.
+  //
+  // NOTE (Phase 204 / Req 8): the results GRID no longer consumes this per-office
+  // auto-lensing — it now reads the single global `activeLensKey` instead (wired
+  // in Plan 04). getEffectiveLens/getEffectiveLensKey/toggleLens/toggleLocalLens/
+  // setLocalLens are kept exported and fully functional here ONLY as shims for the
+  // out-of-scope profile CompassCard and ElectionsView consumers — do not remove.
   const getEffectiveLens = useCallback(
     (districtScope) => (lensOverride != null ? lensOverride : districtScope === 'local'),
     [lensOverride]
@@ -115,8 +135,10 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       setAllTopics(topics);
 
       // Hydrate lenses from the API (non-blocking; keep fallback constants on failure).
+      // Normalize each row so name/description/icon are guaranteed and color is
+      // sanitized before it ever reaches an inline style (T-204-02).
       fetchLenses()
-        .then((rows) => { if (Array.isArray(rows) && rows.length > 0) setLenses(rows); })
+        .then((rows) => { if (Array.isArray(rows) && rows.length > 0) setLenses(rows.map(normalizeApiLens)); })
         .catch(() => { /* keep fallback */ });
 
       let answers = [];
@@ -491,6 +513,10 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       toggleLens,
       toggleLocalLens,
       setLocalLens,
+      // Global lens selection (Req 11) — the grid's single source of truth.
+      activeLensKey,
+      setActiveLens,
+      isLensCalibrated,
       logout,
     }),
     [
@@ -521,6 +547,8 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       toggleLens,
       toggleLocalLens,
       setLocalLens,
+      activeLensKey,
+      setActiveLens,
     ]
   );
 
