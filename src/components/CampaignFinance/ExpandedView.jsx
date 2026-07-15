@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import ConfidenceDot from './ConfidenceDot';
-import IndustryChart from './IndustryChart';
 import DonorList from './DonorList';
 
 /**
@@ -111,17 +110,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
         </div>
       </div>
 
-      {/* Section 2: Industry breakdown */}
-      {summary.sector_breakdown && summary.sector_breakdown.length > 0 && (
-        <div>
-          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
-            Industry Breakdown
-          </h4>
-          <IndustryChart data={summary.sector_breakdown} />
-        </div>
-      )}
-
-      {/* Section 3: Top donors */}
+      {/* Section 2: Top donors */}
       {summary.top_donors && summary.top_donors.length > 0 && (
         <div>
           <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
