@@ -225,6 +225,35 @@ Rules:
   they call project labor agreements" (1 mark) — two contiguous sentences; "the unions, labor unions"
   is a silent self-correction.*
 
+### 4.6 Differentiation — prefer the HOW
+
+Responsiveness (§7.1) only guarantees a quote *answers the question*. Among quotes that clear that
+gate, prefer the one that shows **how** the candidate would pursue the goal — the mechanism,
+approach, or means — not merely that the goal is desirable. Showing the differences in the *how* is
+a core purpose of Read & Rank; a quote everyone would nod at manufactures no legible contrast.
+
+This is a **preference, not a gate.** It never disqualifies a quote on its own and never overrides
+responsiveness. It flags one narrow case, and only when **both** conditions hold:
+
+1. **Non-differentiating** — no candidate in the race would plausibly *disagree* with the goal the
+   quote states ("who wouldn't want safe, beautiful streets?").
+2. **Mechanism-free** — the quote names no approach, means, or *how* the goal would be pursued.
+
+A **contested or directional** goal is fine even without a stated mechanism — a directional stance
+("prioritize enforcement over services for street camping") is contestable and creates legible
+contrast, so it is rankable as-is. Both conditions are required; either one alone passes.
+
+**Guardrail against editorializing.** This is not a "substance police" test — do not use it to
+reject positions you find thin, and do not demand a policy white-paper. It triggers only on the
+agreeable-*and*-mechanism-free intersection. When a candidate has no HOW-bearing on-question quote,
+they may simply be **absent** from the topic (§3) — do not manufacture depth.
+
+*Worked example (real).* "My dream … is that we can make it safer and easier for people to move
+around outside of their cars … a pleasant and beautiful experience to get around this city." This
+is on-question (it favors non-car mobility) but states a goal no one contests, with no mechanism —
+flag it, and prefer a quote that says *how* (dedicated bus lanes, road-diet tradeoffs, parking
+policy).
+
 ---
 
 ## 5. Source principles
@@ -369,6 +398,19 @@ positions aren't mutually exclusive, so preferring one doesn't reject the other.
 the precondition for a valid ranking; responsiveness guarantees it.** Distinctiveness only makes a
 contrast *legible* — among non-comparable answers it manufactures a *false* one.
 
+**The two questions.** Two questions hide behind "the topic's framed question," and the per-race
+override (below, §7.3) splits them apart. The **Compass question** is canonical, tied to the
+topic's axis, and global — it is what people answer when they take their Compass, and curation
+never changes it here. The **ranking question** is what Read & Rank *displays* and what
+responsiveness is gated against: `ranking question = per-race override ?? Compass question`. When no
+override exists the two are identical (today's default). **Responsiveness (this section) is measured
+against the resolved ranking question.** "Same question" means *the quotes ranked together answer
+the same question as each other* within one race-topic — not that the string is identical to the
+Compass question or the same across races.
+
+**After the gate:** among quotes that clear responsiveness, prefer the one that shows the HOW, not
+just an agreeable goal no one would contest (§4.6).
+
 *When a candidate's most distinctive quote is off-question:*
 - **(a)** Prefer their best **on-question, verbatim** quote, even if less distinctive.
 - **(b)** **Re-home** the strong off-question quote under the topic whose question it *does* answer.
@@ -376,8 +418,11 @@ contrast *legible* — among non-comparable answers it manufactures a *false* on
 - **Never** rank an off-question quote just because it's the best verbatim option available.
 
 *Cross-team signal:* if a major, common position (prevention, Housing First) keeps landing
-off-question for a topic, the **topic's framing may be too narrow** — feed that back to
-`compass-topic-builder`. The mismatch is a signal, like the in-tension flag below.
+off-question for a topic, the framing is mismatched. Two remedies, by scope: if the debate framed
+*this race's* topic differently but the Compass question is fine elsewhere, write a **race-local
+ranking-question override** (§7.3); if the Compass question is **systemically** wrong, feed that
+back to `compass-topic-builder` to fix the topic globally. An override is never a substitute for
+fixing a globally-broken Compass question. The mismatch is a signal, like the in-tension flag below.
 
 ### 7.2 Coupling — quote ↔ compass VALUE
 
@@ -397,7 +442,35 @@ responsiveness gate, the relationship to the synthesized value is one of three:
   surface.** It means either the Compass value needs re-review or the quote is unrepresentative
   (a §4.3/§4.4 problem). Resolve before surfacing next to the value.
 
-So: *same topics, not necessarily the same axes — but always the same question.*
+So: *same topics, not necessarily the same axes — but always the same ranking question among the
+quotes ranked together.* (Across races the ranking question may differ via a §7.3 override; within a
+race-topic all ranked quotes answer the same one. The override never changes the Compass **value** or
+axis — see §7.3 — so the coupling in this section is unaffected.)
+
+### 7.3 Race-local ranking questions (the override)
+
+A curator may give a race-topic its own **ranking question** — the question Read & Rank shows and
+gates responsiveness against — stored per `(race_id, topic_key)` and resolved as
+`override ?? Compass question`. Use it when the debate or interview framed the topic in a
+race-specific way the generic Compass question misses (e.g. a national "What role should fossil
+fuels play?" vs. a California debate's "How should California balance environmental regulations with
+the cost of gas?").
+
+An override **may** re-word, localize, add debate context, or shorten. It **must**:
+
+- **Stay on the same axis.** It engages the *same* Compass axis/dimension as the topic. If the
+  race's real question is on a different axis, that is a Compass fix or a re-home (§7.1), **not** an
+  override — an axis-shifting override silently breaks the §7.2 coupling and the "same topics"
+  guarantee.
+- **Stay blind.** It is shown identically to every candidate and must not name or contextually leak
+  a candidate (§4.2). "California" (the race) is fine; "the former mayor's plan" is not.
+- **Derive from the real question.** Prefer the actual debate/interview question, tightened for
+  clarity, over an invented one. Record the source.
+
+Because it is axis-invariant, "answers the ranking question" still implies "is evidence on the
+Compass axis," so responsiveness (§7.1) and coupling (§7.2) both continue to hold. The override is a
+**Read & Rank ranking-question concern only** — anywhere the Compass question is surfaced (Compass,
+Essentials) still shows the canonical Compass question.
 
 ---
 
@@ -407,7 +480,9 @@ Bias can hide in *which topics a race surfaces*, not just in the quotes.
 
 - **Responsiveness precedes parity (§7.1).** Only on-question quotes are eligible; comparability is
   the precondition for a fair comparison. Never manufacture a head-to-head from quotes answering
-  different questions, and never reach for an off-question quote to fill a topic.
+  different questions, and never reach for an off-question quote to fill a topic. Among the eligible
+  on-question quotes, prefer the one that shows the HOW (§4.6) — but that is a selection preference,
+  never a lever to engineer outcome balance.
 - **Selection driver = voter salience + the shared Compass taxonomy, never candidate advantage.**
 - **Neutral, evenly-applied availability filter** — the ≥2-qualifying-quotes rule (§3) is applied
   with **equal curation effort** across candidates and topics; you don't dig harder for one side.
