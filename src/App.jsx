@@ -32,6 +32,20 @@ function PostHogPageview() {
   return null;
 }
 
+// React Router does not reset scroll on navigation, so navigating from a
+// scrolled list (e.g. Results) into a tall page like a profile left the window
+// at the old offset — landing mid-page inside the campaign-finance section.
+// Reset to top on every path change EXCEPT /results, which restores its own
+// grid scroll position when you return from a profile (see Results.jsx).
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (pathname === '/results') return;
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function RequireAuth({ children }) {
   if (!getToken()) {
     redirectToLogin();
@@ -81,6 +95,7 @@ function App() {
   return (
     <CompassProvider compassEnabled={localStorage.getItem('ev:compassMode') === 'true'}>
       <PostHogPageview />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/results" element={<Results />} />
