@@ -398,6 +398,16 @@ positions aren't mutually exclusive, so preferring one doesn't reject the other.
 the precondition for a valid ranking; responsiveness guarantees it.** Distinctiveness only makes a
 contrast *legible* — among non-comparable answers it manufactures a *false* one.
 
+**The two questions.** Two questions hide behind "the topic's framed question," and the per-race
+override (below, §7.3) splits them apart. The **Compass question** is canonical, tied to the
+topic's axis, and global — it is what people answer when they take their Compass, and curation
+never changes it here. The **ranking question** is what Read & Rank *displays* and what
+responsiveness is gated against: `ranking question = per-race override ?? Compass question`. When no
+override exists the two are identical (today's default). **Responsiveness (this section) is measured
+against the resolved ranking question.** "Same question" means *the quotes ranked together answer
+the same question as each other* within one race-topic — not that the string is identical to the
+Compass question or the same across races.
+
 **After the gate:** among quotes that clear responsiveness, prefer the one that shows the HOW, not
 just an agreeable goal no one would contest (§4.6).
 
@@ -408,8 +418,11 @@ just an agreeable goal no one would contest (§4.6).
 - **Never** rank an off-question quote just because it's the best verbatim option available.
 
 *Cross-team signal:* if a major, common position (prevention, Housing First) keeps landing
-off-question for a topic, the **topic's framing may be too narrow** — feed that back to
-`compass-topic-builder`. The mismatch is a signal, like the in-tension flag below.
+off-question for a topic, the framing is mismatched. Two remedies, by scope: if the debate framed
+*this race's* topic differently but the Compass question is fine elsewhere, write a **race-local
+ranking-question override** (§7.3); if the Compass question is **systemically** wrong, feed that
+back to `compass-topic-builder` to fix the topic globally. An override is never a substitute for
+fixing a globally-broken Compass question. The mismatch is a signal, like the in-tension flag below.
 
 ### 7.2 Coupling — quote ↔ compass VALUE
 
@@ -429,7 +442,35 @@ responsiveness gate, the relationship to the synthesized value is one of three:
   surface.** It means either the Compass value needs re-review or the quote is unrepresentative
   (a §4.3/§4.4 problem). Resolve before surfacing next to the value.
 
-So: *same topics, not necessarily the same axes — but always the same question.*
+So: *same topics, not necessarily the same axes — but always the same ranking question among the
+quotes ranked together.* (Across races the ranking question may differ via a §7.3 override; within a
+race-topic all ranked quotes answer the same one. The override never changes the Compass **value** or
+axis — see §7.3 — so the coupling in this section is unaffected.)
+
+### 7.3 Race-local ranking questions (the override)
+
+A curator may give a race-topic its own **ranking question** — the question Read & Rank shows and
+gates responsiveness against — stored per `(race_id, topic_key)` and resolved as
+`override ?? Compass question`. Use it when the debate or interview framed the topic in a
+race-specific way the generic Compass question misses (e.g. a national "What role should fossil
+fuels play?" vs. a California debate's "How should California balance environmental regulations with
+the cost of gas?").
+
+An override **may** re-word, localize, add debate context, or shorten. It **must**:
+
+- **Stay on the same axis.** It engages the *same* Compass axis/dimension as the topic. If the
+  race's real question is on a different axis, that is a Compass fix or a re-home (§7.1), **not** an
+  override — an axis-shifting override silently breaks the §7.2 coupling and the "same topics"
+  guarantee.
+- **Stay blind.** It is shown identically to every candidate and must not name or contextually leak
+  a candidate (§4.2). "California" (the race) is fine; "the former mayor's plan" is not.
+- **Derive from the real question.** Prefer the actual debate/interview question, tightened for
+  clarity, over an invented one. Record the source.
+
+Because it is axis-invariant, "answers the ranking question" still implies "is evidence on the
+Compass axis," so responsiveness (§7.1) and coupling (§7.2) both continue to hold. The override is a
+**Read & Rank ranking-question concern only** — anywhere the Compass question is surfaced (Compass,
+Essentials) still shows the canonical Compass question.
 
 ---
 
