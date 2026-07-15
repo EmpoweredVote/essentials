@@ -277,11 +277,21 @@ resumable. Same standalone-county / by-district city deep-seed shape as 193-195.
   5. Marana surfaced in `src/lib/coverage.js` with a DB-honest chip
 
 **Plans**: 4 plans
-
 Plans:
+**Wave 1**
+
 - [ ] 196-01-PLAN.md — Structural migration: greenfield Town of Marana government + Town Council chamber + LOCAL_EXEC Mayor + shared LOCAL council district + 7 offices (party NULL); BLOCKING roster-currency re-verify (July 21 primary) + apply
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 196-02-PLAN.md — 600×750 headshots for all 7 officials (Ballotpedia-first WAF fallback via Playwright); audit-only politician_images migration
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 196-03-PLAN.md — Evidence-only compass stances, one official at a time, 36 non-judicial topics, 100% cited, honest blanks (7 audit migrations)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 196-04-PLAN.md — Licensed Tortolita/non-Catalina community banner (cities/marana.jpg) wired into buildingImages.js + Marana chip appended to the existing Arizona coverage.js block + end-to-end address-routing verify
 
 #### Phase 197: Sahuarita Deep-Seed
@@ -462,6 +472,7 @@ Plans:
 **Wave 6**
 
 - [x] 203-06-PLAN.md — Full production audit (geofences/roster/titles/headshots/stances/section-split=0/coverage/banner) + live per-district routing + banner-render operator sign-off.
+
 **UI hint**: yes
 
 ### Progress

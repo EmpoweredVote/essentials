@@ -1,11 +1,13 @@
 ---
 phase: 196
 slug: marana-deep-seed
-status: draft
-nyquist_compliant: false
+status: approved
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-07-15
 ---
+
+> **Plan-checker disposition (2026-07-15):** Plans 196-01..04 verified — every non-checkpoint task carries a fast automated `<automated>` verify (grep/psql, no watch-mode), every migration has a BLOCKING apply-and-row-assert checkpoint, no unresolved Wave-0/MISSING references. The Per-Task Verification Map below is representative; execute-phase tracks the concrete 11-task status.
 
 # Phase 196 — Validation Strategy
 
@@ -71,6 +73,6 @@ created: 2026-07-15
 - [ ] Wave 0 covers geo_id + greenfield pre-checks
 - [ ] No watch-mode flags
 - [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-07-15 (plan-checker VERIFICATION PASSED)
