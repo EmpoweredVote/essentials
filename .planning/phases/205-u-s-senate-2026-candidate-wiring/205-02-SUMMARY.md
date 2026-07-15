@@ -42,12 +42,28 @@ Executed the exact contents of `supabase/migrations/878_link_us_senate_2026_race
 `SELECT position_name FROM essentials.races WHERE position_name ILIKE 'U.S. Senate %' AND office_id IS NULL` → **empty (0 rows)**. Matches the authored skip report: 0 states skipped.
 
 ## Task 2 — BLOCKING live address surfacing check (REQ-3)
-Directed the user to enter in-state addresses on essentials.empowered.vote for MN, TX, TN (regular) and OH (SPECIAL) and confirm the 2026 Senate race + candidates surface with House parity.
+Directed the user to enter in-state addresses on essentials.empowered.vote for MN, TX, TN (regular) and OH (SPECIAL) and confirm the 2026 Senate race + candidates surface.
 
-**HUMAN VERIFICATION SIGNAL:** _(recorded below after checkpoint)_
+**HUMAN VERIFICATION SIGNAL: "Both now surface" — all 4 states confirmed ✅** (2026-07-15).
+- **Texas** ✅ — Senate race + candidates surfaced (first attempt).
+- **Ohio** (SPECIAL, Husted seat) ✅ — Senate race + candidates surfaced (first attempt); special-election case confirmed live.
+- **Minnesota** ✅ — surfaced on retry with `350 South 5th Street, Minneapolis, MN 55415`.
+- **Tennessee** ✅ — surfaced on retry with `2400 West End Avenue, Nashville, TN 37203`.
+
+### Diagnosis of the initial MN/TN "nothing" (resolved, not a phase defect)
+First-attempt MN/TN addresses (`100 Nicollet Mall`, `600 Dr Martin Luther King Jr Blvd`) returned nothing. Root cause was **address geocoding failure of those specific strings**, NOT a linkage or coverage gap:
+- DB parity proved MN and TN general Senate races are linked identically to TX/OH (NATIONAL_UPPER, correct state, candidates present: MN general 2, TN general 8).
+- State-level geofence boundaries exist for all four states (MN=27, TN=47, TX=48, OH=39, `geofence_boundaries.has_boundary = true`).
+- Cleaner street addresses surfaced both immediately.
+
+### Caveat on the plan's "House parity" wording (RESEARCH assumption was wrong)
+The plan/RESEARCH asserted "House parity in the same response" for MN/TX/TN/OH, but **none of those 4 states have U.S. House races in the DB** — U.S. House coverage exists only for MA, MD, ME, OR, UT, VA (45 House races across 6 states). The 4 sample states therefore correctly surface the Senate race **standalone**; there is no House race to appear beside it for these states. This does not affect the Senate-wiring correctness (the actual REQ-3 outcome — Senate candidates surface by address — is confirmed for all 4). Logged as a research/scoping note for any future House-parity phase.
+
+## Task 2 outcome
+REQ-3 satisfied: ≥3 mapped states + the OH special surface the 2026 U.S. Senate race with candidates by address. No non-surfacing state remains once addresses geocode.
 
 ## Key files
 - applied (not newly created): `supabase/migrations/878_link_us_senate_2026_races.sql`
 - No files modified by this plan (production data-only apply + read-only verification).
 
-## Self-Check: PASSED (Task 1)
+## Self-Check: PASSED (Task 1 + Task 2)
