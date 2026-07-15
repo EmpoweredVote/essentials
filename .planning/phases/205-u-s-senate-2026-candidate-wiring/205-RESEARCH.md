@@ -246,14 +246,14 @@ None — this phase requires no new test infrastructure; all verification is dir
 | A1 | The 35-state seat map (which senator occupies each state's Class-2/special seat) is accurate as of 2026-07-15 | `## The Derived 2026 Seat Map` | Low — office_ids are stable regardless of incumbent-name churn (see Pitfall 2); D-04's mandatory human checkpoint is the actual safety net here, not this research |
 | A2 | Whether the new migration should also get a `supabase_migrations.schema_migrations` ledger row (as some prior "structural" migrations do) vs. staying "audit-only" (as most prior data-only fixes do) is unresolved | `## Migration Mechanics` | Low — cosmetic/tracking-only; does not affect correctness of the actual data fix |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should this migration register a `schema_migrations` ledger row?**
    - What we know: prior *structural* migrations (e.g. `pomona_reconcile`/926, `downey_complete`/991) got named ledger rows; many prior *data-only* fixes did not.
    - What's unclear: whether a single-column `UPDATE` across 35 states counts as "structural" for this project's convention.
-   - Recommendation: default to **not** registering (treat as audit-only, matching the majority of comparable single-purpose data fixes in STATE.md history) unless the plan author has a strong reason otherwise; this is a low-stakes convention choice, not a correctness question.
+   - **RESOLVED (in plan):** Plan 205-01/205-02 default to **audit-only — no ledger row** (matching the majority of comparable single-purpose data fixes in STATE.md history). Low-stakes convention choice, not a correctness question.
 
 2. **Execution-time DB access path**
    - What we know: this research used a Supabase-CLI-issued short-lived credential via direct `psql` because `mcp__supabase-local` was not exposed to this research subagent's toolset.
    - What's unclear: whether the execution-phase agent will have `mcp__supabase-local` available (per CONTEXT.md's stated canonical access path) or will need the same `psql`-via-CLI-credential fallback documented here.
-   - Recommendation: plan should note both paths are viable; the SQL is identical either way (the migration file itself is what actually gets committed and applied — the live verification queries can run through either channel).
+   - **RESOLVED (in plan):** Plan 205-02's `<interfaces>` block records that **both paths are viable** — `mcp__supabase-local__execute_sql` (canonical) OR the documented `psql`-via-CLI-credential fallback. The SQL is identical either way; the committed migration file is the artifact that gets applied.
