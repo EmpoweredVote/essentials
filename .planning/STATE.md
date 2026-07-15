@@ -3,15 +3,14 @@ gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
 status: completed
-stopped_at: Phase 205 context gathered
-last_updated: "2026-07-15T17:34:21.563Z"
+last_updated: "2026-07-15T22:23:52.262Z"
 last_activity: 2026-07-15 -- Phase 205 marked complete
 progress:
-  total_phases: 16
+  total_phases: 48
   completed_phases: 11
   total_plans: 48
   completed_plans: 48
-  percent: 69
+  percent: 23
 ---
 
 # State
@@ -545,9 +544,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-15T07:28:34.018Z
-Stopped at: Phase 205 context gathered
-Resume file: .planning/phases/205-u-s-senate-2026-candidate-wiring/205-CONTEXT.md
+Last session: 2026-07-15T22:23:52.247Z
+Stopped at: Phase 196 context gathered
+Resume file: .planning/phases/196-marana-deep-seed/196-CONTEXT.md
 
 ## Performance Metrics
 
