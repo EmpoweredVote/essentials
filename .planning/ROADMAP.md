@@ -584,7 +584,7 @@ candidates already do.
 
 **Wave 1**
 
-- [ ] 205-01-PLAN.md — Author idempotent migration 878 from the verified 35-row seat map + skip report; BLOCKING D-04 human seat-map approval checkpoint (specials OH/FL flagged) before any write (REQ-1, REQ-4)
+- [x] 205-01-PLAN.md — Author idempotent migration 878 from the verified 35-row seat map + skip report; BLOCKING D-04 human seat-map approval checkpoint (specials OH/FL flagged) before any write (REQ-1, REQ-4)
 
 **Wave 2** *(blocked on Wave 1 approval)*
 
