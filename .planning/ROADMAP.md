@@ -276,7 +276,13 @@ resumable. Same standalone-county / by-district city deep-seed shape as 193-195.
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) sourced and wired into `src/lib/buildingImages.js`
   5. Marana surfaced in `src/lib/coverage.js` with a DB-honest chip
 
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 196-01-PLAN.md — Structural migration: greenfield Town of Marana government + Town Council chamber + LOCAL_EXEC Mayor + shared LOCAL council district + 7 offices (party NULL); BLOCKING roster-currency re-verify (July 21 primary) + apply
+- [ ] 196-02-PLAN.md — 600×750 headshots for all 7 officials (Ballotpedia-first WAF fallback via Playwright); audit-only politician_images migration
+- [ ] 196-03-PLAN.md — Evidence-only compass stances, one official at a time, 36 non-judicial topics, 100% cited, honest blanks (7 audit migrations)
+- [ ] 196-04-PLAN.md — Licensed Tortolita/non-Catalina community banner (cities/marana.jpg) wired into buildingImages.js + Marana chip appended to the existing Arizona coverage.js block + end-to-end address-routing verify
 
 #### Phase 197: Sahuarita Deep-Seed
 
@@ -476,7 +482,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 193. Pima County Board of Supervisors Deep-Seed | 6/6 | Complete    | 2026-07-10 |
 | 194. City of Tucson Deep-Seed | 6/6 | Complete   | 2026-07-10 |
 | 195. Oro Valley Deep-Seed | 4/4 | Complete    | 2026-07-11 |
-| 196. Marana Deep-Seed | 0/TBD | Not started | - |
+| 196. Marana Deep-Seed | 0/4 | Planned | - |
 | 197. Sahuarita Deep-Seed | 0/TBD | Not started | - |
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
