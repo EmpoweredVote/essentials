@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   fetchTopics,
+  fetchLenses,
   fetchUserAnswers,
   fetchSelectedTopics,
   fetchPoliticiansWithStances,
@@ -13,6 +14,13 @@ import {
   saveGuestVerdicts,
   loadGuestVerdicts,
   clearGuestVerdicts,
+  LENS_FALLBACKS,
+  normalizeApiLens,
+  isLensCalibrated,
+  saveLensSelection,
+  loadLensSelection,
+  loadLensPending,
+  clearLensPending,
 } from "../lib/compass";
 import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
 import { fetchMyRepresentatives } from "../lib/api";
@@ -60,11 +68,52 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
   // per-office default, which avoids the stale-global-toggle confusion.
   const [lensOverride, setLensOverride] = useState(null); // null | true | false
 
+  // Available lenses — live source is GET /compass/lenses; LENS_FALLBACKS (name +
+  // description + color/topicIds/autoDistrictTypes) is the offline fallback until
+  // the fetch resolves.
+  const [lenses, setLenses] = useState(() => LENS_FALLBACKS);
+
+  // ── Global lens selection (Req 11) ──────────────────────────────────────
+  // Persisted, explicit lens key applied to every card on the grid. Default
+  // 'custom' (Best Match). Unknown/stale persisted values degrade to 'custom'
+  // (T-204-01 — loadLensSelection validates against the live lens-key set).
+  const [activeLensKey, setActiveLensKey] = useState(() =>
+    loadLensSelection(['custom', ...LENS_FALLBACKS.map((l) => l.key)])
+  );
+
+  const setActiveLens = useCallback((key) => {
+    setActiveLensKey(key);
+    saveLensSelection(key);
+  }, []);
+
   // Effective lens for a given office scope. Consumers that know the politician's
   // districtScope (CompassCard, MiniCompass via Results/ElectionsView) call this.
+  // Kept boolean (Local Lens on/off) for the elections grid + toggle.
+  //
+  // NOTE (Phase 204 / Req 8): the results GRID no longer consumes this per-office
+  // auto-lensing — it now reads the single global `activeLensKey` instead (wired
+  // in Plan 04). getEffectiveLens/getEffectiveLensKey/toggleLens/toggleLocalLens/
+  // setLocalLens are kept exported and fully functional here ONLY as shims for the
+  // out-of-scope profile CompassCard and ElectionsView consumers — do not remove.
   const getEffectiveLens = useCallback(
     (districtScope) => (lensOverride != null ? lensOverride : districtScope === 'local'),
     [lensOverride]
+  );
+
+  // Effective lens KEY for a given office scope: 'local' | 'federal' | null.
+  // Auto-applies per office (local offices → Local, U.S. House/Senate → Federal),
+  // honoring the session toggle. Judicial offices keep their dedicated section.
+  const getEffectiveLensKey = useCallback(
+    (districtScope) => {
+      if (lensOverride === false) return null;               // user turned the lens off
+      if (districtScope === 'federal') {
+        return lenses.some((l) => l.key === 'federal') ? 'federal' : null;
+      }
+      if (lensOverride === true) return 'local';             // legacy force-on (grid)
+      if (districtScope === 'local') return 'local';
+      return null;
+    },
+    [lensOverride, lenses]
   );
 
   // Flip the lens relative to whatever the caller currently sees (its effective value).
@@ -84,6 +133,13 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       const topics = await fetchTopics();
 
       setAllTopics(topics);
+
+      // Hydrate lenses from the API (non-blocking; keep fallback constants on failure).
+      // Normalize each row so name/description/icon are guaranteed and color is
+      // sanitized before it ever reaches an inline style (T-204-02).
+      fetchLenses()
+        .then((rows) => { if (Array.isArray(rows) && rows.length > 0) setLenses(rows.map(normalizeApiLens)); })
+        .catch(() => { /* keep fallback */ });
 
       let answers = [];
       let selected = [];
@@ -381,6 +437,24 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     return unsub;
   }, [compassDataLoaded, isLoggedIn, allTopics]);
 
+  // Auto-select the lens on return from calibration (D-12). The grid's onCalibrate
+  // handler (Plan 04) writes `ev:compassLensPending` right before routing out to
+  // compass.empowered.vote. Once compass data has loaded, if a pending lens is now
+  // calibrated, adopt it as the active selection and clear the marker. If it's
+  // still not calibrated, leave the marker for a later visit — do NOT auto-select.
+  // clearLensPending() is the loop guard: once applied, the effect is a no-op on
+  // every subsequent run until a new pending marker is written.
+  useEffect(() => {
+    if (!compassDataLoaded) return;
+    const pendingKey = loadLensPending();
+    if (!pendingKey) return;
+    const pendingLens = lenses.find((l) => l.key === pendingKey);
+    if (pendingLens && isLensCalibrated(pendingLens, userAnswers)) {
+      setActiveLens(pendingKey);
+      clearLensPending();
+    }
+  }, [compassDataLoaded, userAnswers, lenses, setActiveLens]);
+
   const toggleInversion = useCallback((shortTitle) => {
     setInvertedSpokes((prev) => ({ ...prev, [shortTitle]: !prev[shortTitle] }));
   }, []);
@@ -451,10 +525,16 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       // getEffectiveLens(districtScope) instead of reading localLensActive directly.
       lensOverride,
       localLensActive: lensOverride === true,
+      lenses,
       getEffectiveLens,
+      getEffectiveLensKey,
       toggleLens,
       toggleLocalLens,
       setLocalLens,
+      // Global lens selection (Req 11) — the grid's single source of truth.
+      activeLensKey,
+      setActiveLens,
+      isLensCalibrated,
       logout,
     }),
     [
@@ -479,10 +559,14 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       toggleInversion,
       batchInvertSpokes,
       lensOverride,
+      lenses,
       getEffectiveLens,
+      getEffectiveLensKey,
       toggleLens,
       toggleLocalLens,
       setLocalLens,
+      activeLensKey,
+      setActiveLens,
     ]
   );
 

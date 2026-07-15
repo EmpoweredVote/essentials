@@ -55,10 +55,10 @@ completed: 2026-07-10
 - Both modules parse (`node import`), `buildingImages.test.js` green (11/11).
 
 ## Banner Attribution
-**View of Tucson from Sentinel Peak (horizon leveled)** | John Diebolt | **Public domain**
-Source: Wikimedia Commons `File:View of Tucson from Sentinel Peak 2.jpg` (4000×3000 → rotated −1.5° to level the horizon → cropped to show the downtown building bases → 1700×540)
+**Tucson May 2019 28 (Hotel Congress)** | Michael Barera | **CC BY-SA 4.0**
+Source: Wikimedia Commons `File:Tucson May 2019 28 (Hotel Congress).jpg` (6000×4000 → cropped to 1700×540 @ vertical-anchor 0.45)
 CDN: `https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tucson.jpg`
-_Note: replaced the original palm-framed downtown shot (Bill Morrow, CC BY 2.0) per operator request during UAT — the Sentinel Peak vista shows the downtown skyline with building bases; horizon leveled via a −1.5° rotation, then re-cropped full-width for a maximally zoomed-out framing (the widest FOV that fits the 3.15:1 banner). Storage overwrite = live instantly._
+_Note (revised 2026-07-12, during Phase 201): the banner was refreshed twice post-original-UAT. (1) The original palm-framed downtown shot (Bill Morrow, CC BY 2.0) was replaced during Phase-194 UAT with a Sentinel Peak skyline (John Diebolt, PD). (2) The operator later flagged the skyline as still tilted (left too high); it was re-leveled −3.0° and pushed, then replaced entirely per operator request with this ground-level **Hotel Congress** street scene (the iconic downtown historic-district landmark) — a real, level, non-aerial photo distinct from the Pima County (Catalinas/saguaro) and AZ-state (Phoenix) banners. Storage overwrite = live instantly._
 
 ## Task Commits
 1. **Task 1: Source+process+upload+approve banner** — orchestrator-run; human-approved ("Approved — wire it")

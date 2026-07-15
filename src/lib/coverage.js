@@ -23,11 +23,13 @@ export const COVERAGE_STATES = [
       { label: 'Gardena', browseGovernmentList: ['0628168'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Glendale', browseGovernmentList: ['0630000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Hawthorne', browseGovernmentList: ['0632548'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Indio', browseGovernmentList: ['0636448'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Inglewood', browseGovernmentList: ['0636546'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Lancaster', browseGovernmentList: ['0640130'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Long Beach', browseGovernmentList: ['0643000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Los Angeles', browseGovernmentList: ['0644000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Norwalk', browseGovernmentList: ['0652526'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Palm Springs', browseGovernmentList: ['0655254'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Palmdale', browseGovernmentList: ['0655156'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Pasadena', browseGovernmentList: ['0656000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Pomona', browseGovernmentList: ['0658072'], browseStateAbbrev: 'CA', hasContext: true },
@@ -203,6 +205,10 @@ export const COVERAGE_STATES = [
     name: 'Arizona', abbrev: 'AZ',
     areas: [
       { label: 'Tucson', browseGovernmentList: ['0477000'], browseStateAbbrev: 'AZ', hasContext: true },
+      // Oro Valley (Phase 195). Appended to the EXISTING Arizona block (not a second
+      // block). hasContext:true is DB-honest — Plan 03 seeded evidence-only compass
+      // stances for the 7 Oro Valley officials. Pima County stays in COVERAGE_COUNTIES.
+      { label: 'Oro Valley', browseGovernmentList: ['0451600'], browseStateAbbrev: 'AZ', hasContext: true },
     ],
   },
 ];
@@ -255,6 +261,7 @@ export const COVERAGE_COUNTIES = [
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
   { label: 'Pima County', browseGovernmentList: ['04019'], browseStateAbbrev: 'AZ', hasContext: true },
+  { label: 'Riverside County', browseGovernmentList: ['06065'], browseStateAbbrev: 'CA', hasContext: true },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on

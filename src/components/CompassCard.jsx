@@ -50,6 +50,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     compassLoading,
     compassDataLoaded,
     getEffectiveLens,
+    getEffectiveLensKey,
+    lenses,
     toggleLens,
   } = useCompass();
   const location = useLocation();
@@ -58,6 +60,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // Lens by default, everything else shows the user's regular compass. An explicit
   // session toggle overrides this (see CompassContext.getEffectiveLens).
   const localLensActive = getEffectiveLens(districtScope);
+
+  // Effective lens key ('local' | 'federal' | null). For federal offices (U.S.
+  // House/Senate) the Federal lens auto-applies its curated 8-topic set as the
+  // comparison spokes. Local keeps its applies_local scoping below.
+  const lensKey = getEffectiveLensKey(districtScope);
+  const federalLens = lensKey === 'federal' ? (lenses || []).find((l) => l.key === 'federal') : null;
+  const lensTopicIds = federalLens ? federalLens.topicIds : null;
 
   // Topic pool for the comparison + stance breakdown:
   //   • Local Lens ON  → local-scoped topics (the lens is about local issues).
@@ -123,6 +132,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       scopedTopics,
       maxSpokes: MAX_SPOKES,
       localLensActive,
+      lensTopicIds,
     });
     hasEnoughSpokes = result.hasEnoughSpokes;
     replacedSpokes = result.replacedSpokes;
@@ -277,12 +287,12 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         >
           Compass &amp; Issues
         </h2>
-        {/* Local Lens toggle — always visible (loading, empty, and data states) so
+        {/* Lens toggle — always visible (loading, empty, and data states) so
             users can switch comparison topics even when the default view is sparse. */}
         {hasUserCompass && (
           <button
             type="button"
-            title={localLensActive ? 'Exit Local Lens' : 'Local Lens — focus on local issues'}
+            title={localLensActive ? 'Exit lens — compare on your full compass' : 'Lens — focus this race on its key issues'}
             aria-pressed={localLensActive}
             onClick={() => { posthog?.capture('essentials_compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
             style={{
@@ -297,10 +307,10 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-              <circle cx="12" cy="9" r="2.5" />
+              <path d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5" />
+              <circle cx="12" cy="12" r="3" />
             </svg>
-            Local Lens
+            Lens
           </button>
         )}
       </div>

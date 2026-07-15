@@ -8,6 +8,18 @@ export async function fetchTopics() {
   if (!res || !res.ok) throw new Error(`fetchTopics failed: ${res?.status ?? 'network error'}`);
   return res.json();
 }
+// Compass lenses: [{ key, name, description, color, icon, autoDistrictTypes, topicIds }]
+// publicFetch — lenses are public reference data. Returns [] on any failure so
+// callers fall back to the bundled *_LENS_TOPICS constants below.
+export async function fetchLenses() {
+  try {
+    const res = await publicFetch('/compass/lenses');
+    if (!res || !res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
 // Politician answers: [{ topic_id, value }, ...]
 // Uses publicFetch — politician stances are public and must not redirect unauthenticated guests.
 export async function fetchPoliticianAnswers(politicianId) {
@@ -403,6 +415,22 @@ export const JUDICIAL_LENS_TOPICS = [
 ];
 
 /**
+ * Federal Lens — 8 issues most U.S. House & Senate members and candidates have answered.
+ * Mirrors FEDERAL_LENS.topicIds in EV-CompassV2/src/lib/lenses.js. Offline fallback;
+ * live source is GET /compass/lenses.
+ */
+export const FEDERAL_LENS_TOPICS = [
+  'e8dad4a8-eb93-4931-91f5-d8fb5d7dd529', // Healthcare
+  'f7e5678d-dadd-4556-a2fc-446e24642ceb', // Taxes
+  '4e2c69ce-591e-4197-9cd5-7aceff79d390', // Immigration
+  'af2fdfd6-02c4-49df-b09c-cf8536f4773f', // Abortion
+  'f1e44d66-5d27-4b51-b54f-b7ace86f6a3c', // Climate Change
+  '44905f3b-e105-4f6c-afc7-5d223813dbac', // Deportation
+  'cab61e8a-64fe-4bbd-bc08-fe9914d0091b', // Medicare/aid
+  'a22215c3-6693-4bc2-b248-01aebba14570', // Fossil Fuels
+];
+
+/**
  * Persists Local Lens activation state and pre-lens snapshot to localStorage.
  * @param {boolean} isActive
  * @param {{ selectedTopics: string[], invertedSpokes: object } | null} snapshot
@@ -432,6 +460,161 @@ export function loadLocalLensState() {
   }
 }
 
+// ─── Lens metadata, calibration, and persisted-selection helpers ────────────
+
+/**
+ * Per-lens display metadata fallback (name/description/color) — mirrors
+ * EV-CompassV2's LOCAL_LENS/FEDERAL_LENS/JUDICIAL_LENS objects verbatim.
+ * This is the offline fallback; the live source of truth is GET /compass/lenses.
+ */
+export const LENS_FALLBACKS = [
+  {
+    key: 'local',
+    name: 'Local Lens',
+    description: '8 questions most local candidates have already answered',
+    color: '#5A9A6E',
+    topicIds: LOCAL_LENS_TOPICS,
+    autoDistrictTypes: ['LOCAL', 'LOCAL_EXEC', 'COUNTY', 'SCHOOL'],
+  },
+  {
+    key: 'federal',
+    name: 'Federal Lens',
+    description: '8 issues most U.S. House & Senate members and candidates have answered',
+    color: '#1E3A5F',
+    topicIds: FEDERAL_LENS_TOPICS,
+    autoDistrictTypes: ['NATIONAL_EXEC', 'NATIONAL_UPPER', 'NATIONAL_LOWER'],
+  },
+  {
+    key: 'judicial',
+    name: 'Judicial Lens',
+    description: '8 questions for judicial and DA candidates',
+    color: '#C2440A',
+    topicIds: JUDICIAL_LENS_TOPICS,
+    autoDistrictTypes: ['JUDICIAL', 'NATIONAL_JUDICIAL'],
+  },
+];
+
+/** Default fallback color used when an API-supplied lens color is missing or invalid. */
+const DEFAULT_LENS_COLOR = '#94A3B8';
+
+/** Matches #RGB or #RRGGBB hex colors only. */
+const HEX_COLOR_RE = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
+
+/**
+ * Returns `color` only when it is a valid #RGB/#RRGGBB hex string; otherwise
+ * returns `fallback`. Guards against non-hex/injection strings (e.g.
+ * `javascript:alert(1)`, `url(...)`) from reaching an inline style (T-204-02).
+ */
+export function sanitizeLensColor(color, fallback = DEFAULT_LENS_COLOR) {
+  return typeof color === 'string' && HEX_COLOR_RE.test(color) ? color : fallback;
+}
+
+/** Title-cases a lens key (e.g. 'federal' -> 'Federal') for use as a name fallback. */
+function titleCaseKey(key) {
+  return String(key || '')
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
+/**
+ * Normalizes a GET /compass/lenses API row into a defensive, render-safe shape.
+ * Mirrors EV-CompassV2's lenses.js normalizeApiLens (name/description/color/icon
+ * + array-coerced topicIds/autoDistrictTypes), plus hex color sanitization.
+ */
+export function normalizeApiLens(l) {
+  return {
+    key: l?.key,
+    name: l?.name || titleCaseKey(l?.key),
+    description: l?.description || '',
+    color: sanitizeLensColor(l?.color),
+    icon: l?.icon,
+    topicIds: Array.isArray(l?.topicIds) ? l.topicIds : [],
+    autoDistrictTypes: Array.isArray(l?.autoDistrictTypes) ? l.autoDistrictTypes : [],
+  };
+}
+
+/**
+ * A lens is "calibrated" (ready/LIT) once the user has answered (value > 0)
+ * at least min(8, lens.topicIds.length) of its topics (Req 4).
+ * Custom/"Best Match" readiness (>=3 answers) is decided by the caller — this
+ * function is only for named lenses that carry a topicIds array.
+ */
+export function isLensCalibrated(lens, userAnswers) {
+  const topicIds = Array.isArray(lens?.topicIds) ? lens.topicIds : [];
+  if (topicIds.length === 0) return false;
+  const idSet = new Set(topicIds.map(String));
+  const answered = Array.isArray(userAnswers) ? userAnswers : [];
+  let count = 0;
+  for (const a of answered) {
+    if (a && a.value > 0 && idSet.has(String(a.topic_id))) count += 1;
+  }
+  return count >= Math.min(8, topicIds.length);
+}
+
+/** localStorage keys for the persisted lens selection (Req 11). */
+export const LENS_SELECTION_KEY = 'ev:compassLens';
+export const LENS_PENDING_KEY = 'ev:compassLensPending';
+
+/**
+ * Persists the user's explicitly-selected lens key.
+ * @param {string} key
+ */
+export function saveLensSelection(key) {
+  try {
+    localStorage.setItem(LENS_SELECTION_KEY, key);
+  } catch { /* storage unavailable — non-fatal */ }
+}
+
+/**
+ * Reads the persisted lens selection, validated against a set of known keys.
+ * Falls back to 'custom' (Best Match) when the stored value is missing or is
+ * not one of `knownKeys` (T-204-01 — never trust a persisted key blindly).
+ * @param {string[]} knownKeys
+ * @returns {string}
+ */
+export function loadLensSelection(knownKeys) {
+  try {
+    const stored = localStorage.getItem(LENS_SELECTION_KEY);
+    const known = Array.isArray(knownKeys) ? knownKeys : [];
+    return stored && known.includes(stored) ? stored : 'custom';
+  } catch {
+    return 'custom';
+  }
+}
+
+/**
+ * Persists a "pending calibration" lens key — set right before the user is
+ * routed out to compass.empowered.vote for a specific lens, so the app can
+ * auto-select that lens on return (D-12) once it reflects as calibrated.
+ * @param {string} key
+ */
+export function saveLensPending(key) {
+  try {
+    localStorage.setItem(LENS_PENDING_KEY, key);
+  } catch { /* storage unavailable — non-fatal */ }
+}
+
+/**
+ * Reads the pending-calibration lens key, or null if none is set.
+ * @returns {string|null}
+ */
+export function loadLensPending() {
+  try {
+    return localStorage.getItem(LENS_PENDING_KEY) || null;
+  } catch {
+    return null;
+  }
+}
+
+/** Clears the pending-calibration lens key. */
+export function clearLensPending() {
+  try {
+    localStorage.removeItem(LENS_PENDING_KEY);
+  } catch { /* storage unavailable — non-fatal */ }
+}
+
 // ─── Shared spoke-selection algorithm ────────────────────────────────────────
 
 /**
@@ -449,6 +632,15 @@ export function loadLocalLensState() {
  * @param {number}    [params.maxSpokes=8]     - Hard cap on displayed spokes (default 8)
  * @param {boolean}   [params.localLensActive=false] - When true, preferredIds = LOCAL_LENS_TOPICS
  *
+ * Best Match (Req 9): when neither an explicit `lensTopicIds` nor `localLensActive`
+ * is set and the user has `selectedTopics`, candidates = topics both sides answered,
+ * within scope. If more than `maxSpokes` such candidates exist, the user's own
+ * selectedTopics (both-answered, in-scope) come first in selectedTopics order, then
+ * remaining slots are filled from the other both-answered in-scope topics ordered by
+ * descending |userValue - polValue| (biggest disagreement first), ties broken by
+ * `scopedTopics` display order. The explicit-lens and localLensActive branches, and
+ * the no-preferred-set fallback, are unaffected by this fill pass.
+ *
  * @returns {{
  *   displayTopicIds: string[],
  *   replacedSpokes: { [short_title]: boolean },
@@ -462,6 +654,7 @@ export function computeDisplaySpokes({
   scopedTopics,
   maxSpokes = 8,
   localLensActive = false,
+  lensTopicIds = null,
 }) {
   // Fast path: no politician answers or no scoped topics
   if (!polAnswers || scopedTopics.length === 0) {
@@ -487,7 +680,18 @@ export function computeDisplaySpokes({
   // and it's within the provided scope. When too few overlap, the caller renders the
   // "not enough shared topics" state — that is the intended, honest outcome.
   let preferredIds = null;
-  if (localLensActive) {
+  // True only for the "Best Match" (custom overlap) case: no explicit lens, local
+  // lens off, and the user has a selected compass — this is the sole branch the
+  // Req 9 biggest-disagreement fill pass applies to.
+  const isBestMatchCase =
+    !(lensTopicIds && lensTopicIds.length > 0) &&
+    !localLensActive &&
+    !!(selectedTopics && selectedTopics.length > 0);
+
+  if (lensTopicIds && lensTopicIds.length > 0) {
+    // Explicit lens (e.g. Federal) — its curated topic set defines the spokes.
+    preferredIds = lensTopicIds.slice(0, maxSpokes);
+  } else if (localLensActive) {
     preferredIds = LOCAL_LENS_TOPICS.slice(0, maxSpokes);
   } else if (selectedTopics && selectedTopics.length > 0) {
     // Cap at maxSpokes — post-calibration bug can set all 36 topics as selected.
@@ -519,6 +723,32 @@ export function computeDisplaySpokes({
         displayTopicIds.push(sid);
       }
       if (displayTopicIds.length >= maxSpokes) break;
+    }
+  }
+
+  // Best Match fill pass (Req 9): the compass-first collection above may leave
+  // room under maxSpokes — fill remaining slots from other both-answered,
+  // in-scope candidates, biggest disagreement first, ties by scopedTopics order.
+  if (isBestMatchCase && displayTopicIds.length < maxSpokes) {
+    const userValueById = new Map(userAnswers.map((a) => [String(a.topic_id), a.value]));
+    const polValueById = new Map(
+      polAnswers.filter((a) => a.value > 0).map((a) => [String(a.topic_id), a.value])
+    );
+
+    const remaining = [];
+    scopedTopics.forEach((t, idx) => {
+      const sid = String(t.id);
+      if (chosen.has(sid) || !userAnsweredSet.has(sid) || !polAnsweredSet.has(sid)) return;
+      const diff = Math.abs((userValueById.get(sid) ?? 0) - (polValueById.get(sid) ?? 0));
+      remaining.push({ sid, diff, idx });
+    });
+
+    remaining.sort((a, b) => (b.diff !== a.diff ? b.diff - a.diff : a.idx - b.idx));
+
+    for (const candidate of remaining) {
+      if (displayTopicIds.length >= maxSpokes) break;
+      chosen.add(candidate.sid);
+      displayTopicIds.push(candidate.sid);
     }
   }
 

@@ -38,7 +38,7 @@ community banner → surface in `src/lib/coverage.js`.
 - [ ] **TUC-01**: City of Tucson deep-seed (flagship) — Mayor + 6 ward council members (verify
   ward-elected vs at-large and AZ partisan-election handling at plan time) → roster → 600×750 headshots →
   evidence-only compass stances → licensed community banner → surfaced in `src/lib/coverage.js`.
-- [ ] **SUB-01**: Oro Valley deep-seed — government + roster → 600×750 headshots → evidence-only stances
+- [x] **SUB-01**: Oro Valley deep-seed — government + roster → 600×750 headshots → evidence-only stances
   → licensed community banner → surfaced in `src/lib/coverage.js`.
 - [ ] **SUB-02**: Marana deep-seed — same deep-seed unit.
 - [ ] **SUB-03**: Sahuarita deep-seed — same deep-seed unit.
@@ -63,6 +63,27 @@ community banner → surface in `src/lib/coverage.js`.
 - [ ] **AZ-RETRO-01**: `src/lib/coverage.js` chips reconciled (DB-honest purple chip for every metro
   jurisdiction carrying ≥1 stance), Arizona GOTCHAs + Quick Reference added to `LOCATION-ONBOARDING.md`,
   DB-verified milestone audit written, and milestone closed.
+
+### Coachella Valley, CA (appended 2026-07-12)
+
+Local-layer deep-seed appended to v22.0, independent of the Arizona phases (CA TIGER city+county
+boundaries already loaded). All three bodies are 5-member and by-district; both cities have a
+rotational mayor (title on a seat). Reuses the standalone-county / by-district city deep-seed unit.
+
+- [x] **CV-01**: Riverside County seeded as a standalone county government (geo_id 06065) with a
+  5-member by-district Board of Supervisors (D1-D5, "Chair" as a seat title) — **board only,
+  constitutional officers deferred** (Phase 201 D-01, matching Pima/Clark/WashCo precedent) —
+  supervisorial-district X-geofences from the county ArcGIS Hub, 600×750 headshots, evidence-only
+  compass stances, and a Riverside County entry in `coverage.js` COVERAGE_COUNTIES.
+- [x] **CV-02**: City of Palm Springs (geo_id 0655254) deep-seeded — 5-member by-district council with
+  rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
+  evidence-only stances, and a `coverage.js` chip.
+- [ ] **CV-03**: City of Indio (geo_id 0636448) deep-seeded — 5-member by-district council with
+  rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
+  evidence-only stances, and a `coverage.js` chip.
+
+BANR-01 (above) extends to cover all three appended jurisdictions — each carries a licensed
+community banner sourced one at a time.
 
 ---
 
@@ -94,13 +115,18 @@ community banner → surface in `src/lib/coverage.js`.
 | AZ-LEG-01 | Phase 192 | Complete |
 | PIMA-01 | Phase 193 | Complete |
 | TUC-01 | Phase 194 | Pending |
-| SUB-01 | Phase 195 | Pending |
+| SUB-01 | Phase 195 | Complete |
 | SUB-02 | Phase 196 | Pending |
 | SUB-03 | Phase 197 | Pending |
 | SUB-04 | Phase 198 | Pending |
 | BANR-01 | Phases 193, 194, 195, 196, 197, 198 | Complete |
 | AZ-ELEC-01 | Phase 199 | Pending |
 | AZ-RETRO-01 | Phase 200 | Pending |
+| CV-01 | Phase 201 | Complete |
+| CV-02 | Phase 202 | Complete |
+| CV-03 | Phase 203 | Pending |
+| BANR-01 (appended) | Phases 201, 202, 203 | Pending |
 
-**Coverage:** 13/13 v22.0 requirements mapped. No orphans, no duplicates (BANR-01 intentionally spans
-the 6 deep-seed phases as a cross-cutting deliverable).
+**Coverage:** 13/13 core v22.0 requirements mapped + 3 appended Coachella Valley, CA requirements
+(CV-01/02/03 → Phases 201/202/203). No orphans, no duplicates (BANR-01 intentionally spans the 6 AZ
+deep-seed phases and the 3 appended CA deep-seed phases as a cross-cutting deliverable).

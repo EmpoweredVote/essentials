@@ -417,14 +417,43 @@ const CURATED_LOCAL = {
   // match coverage.js browse_label 'Pima County'; storage file is hyphenated.
   //   pima county   - Santa Catalina Mountains from West Saguaro National Park near Tucson | WClarke | CC BY-SA 4.0
   'pima county': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pima-county.jpg' },
-  // Arizona CITY banner (Phase 194). Downtown Tucson skyline viewed from Sentinel
-  // Peak (the downtown high-rise cluster with the Santa Catalina Mountains behind),
-  // horizon leveled and cropped to show the base of the downtown buildings — reads as
+  // California COUNTY banner (Phase 201, second county-tier CURATED_LOCAL key). Reads
+  // as Riverside County the place — the historic Mission Inn facade in downtown
+  // Riverside (the county seat civic landmark), deliberately distinct from the future
+  // Palm Springs (Phase 202) and Indio (Phase 203) CITY banners in the same Coachella
+  // Valley track. Key is space-form to match coverage.js browse_label 'Riverside
+  // County'; storage file is hyphenated.
+  //   riverside county - Mission Inn Hotel in Riverside, California | Maliagould | CC BY-SA 4.0
+  'riverside county': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverside-county.jpg' },
+  // Coachella Valley / Riverside County CITY banners (surface on address search via
+  // representingCity; no coverage chip). Longest-key-first matching keeps 'riverside county'
+  // (county browse) distinct from 'riverside' (city address). All CA, state-scoped.
+  //   riverside     - Fox Theater, Riverside, California | John Margolies | Public domain
+  'riverside': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverside.jpg' },
+  //   temecula      - Old Town Temecula | John Ward (jdubphoto.com) | CC BY-SA 3.0
+  'temecula': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/temecula.jpg' },
+  //   palm springs  - Palm Springs Palm Canyon Dr | R. Haupt (Renhau) | CC BY-SA 3.0
+  'palm springs': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/palm-springs.jpg' },
+  //   indio         - "Welcome to Indio" sign on the palm-lined city boulevard | Northwalker | CC0
+  'indio': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/indio.jpg' },
+  // Arizona CITY banner (Phase 194; banner image refreshed post-UAT). The historic
+  // Hotel Congress corner on Congress Street in downtown Tucson (rooftop "HOTEL
+  // CONGRESS 100" sign, Mission-Revival brick facade, streetcar wires) — a real,
+  // level, ground-level street scene of the downtown historic district, reads as
   // Tucson the CITY, deliberately distinct from the Pima COUNTY landscape banner
   // (Catalinas + saguaro) and the AZ STATE banner (the Phoenix skyline). Single-variant
   // key (no same-named-city collision in the covered set); storage file cities/tucson.jpg.
-  //   tucson        - View of Tucson from Sentinel Peak (leveled) | John Diebolt | Public domain
+  //   tucson        - Tucson May 2019 28 (Hotel Congress) | Michael Barera | CC BY-SA 4.0
   tucson: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tucson.jpg' },
+  // Oro Valley community banner (Phase 195). The Cañada del Oro (CDO) Riverfront Park
+  // pedestrian trail bridge — a distinctive rust-colored arched truss over the wash,
+  // deliberately distinct from the Pima COUNTY Catalina/Pusch-Ridge landscape banner,
+  // the Tucson CITY downtown streetscape, and the AZ STATE Phoenix skyline (its
+  // mountains sit small in the far background; the bridge is the subject). Single-variant
+  // key (no same-named-city collision); storage file cities/oro-valley.jpg (hyphenated),
+  // coverage.js label is space-form 'Oro Valley'.
+  //   oro valley    - Oro Valley CDO Trail Bridge | Djmaschek | CC BY-SA 3.0
+  'oro valley': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/oro-valley.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape

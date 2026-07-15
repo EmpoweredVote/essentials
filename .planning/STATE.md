@@ -2,26 +2,33 @@
 gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
-status: completed
-stopped_at: Phase 194 context gathered
-last_updated: "2026-07-10T08:16:58.212Z"
-last_activity: 2026-07-10 -- Phase 194 marked complete
+status: executing
+last_updated: "2026-07-14T20:15:12.827Z"
+last_activity: 2026-07-14 -- Phase 204 execution started
 progress:
-  total_phases: 11
-  completed_phases: 5
-  total_plans: 20
-  completed_plans: 20
-  percent: 45
+  total_phases: 47
+  completed_phases: 9
+  total_plans: 46
+  completed_plans: 42
+  percent: 19
 ---
 
 # State
 
 ## Current Position
 
-Phase: 194 — COMPLETE
-Plan: 1 of 6
-Status: Phase 194 complete
-Last activity: 2026-07-10 -- Phase 194 marked complete
+Phase: 204 (compass-lens-switcher) — EXECUTING
+Plan: 1 of 4
+Status: Executing Phase 204
+Last activity: 2026-07-14 -- Phase 204 execution started
+
+**Arizona resume point:** Phase 196 (Marana Deep-Seed). Phases 196-200 remain planned and resumable;
+the Coachella Valley, CA work (201-203) is an independent append and does not block or alter them.
+
+**Side-track — Phase 204 (Compass Lens Switcher):** standalone compass-UI phase on branch
+`feat/federal-lens`, independent of the Tucson/Coachella deep-seed tracks (not counted in the v22.0
+progress totals above). SPEC + CONTEXT gathered 2026-07-13.
+Resume: `.planning/phases/204-compass-lens-switcher/204-CONTEXT.md` → next `/gsd:plan-phase 204`.
 
 ## Deferred Items
 
@@ -84,6 +91,27 @@ Deep-seed unit (193-198): government + chamber -> roster -> 600x750 headshots ->
 stances (one agent at a time, 100% cited, no defaults, honest blanks) -> licensed community banner
 (street-scene/skyline, no AI/aerial, sourced one at a time) -> surface in src/lib/coverage.js.
 Phases 191-198 all depend only on Phase 190; suggested execution order mirrors NV/OR-WashCo shape.
+
+### Phase 201 Plan 02 outcome (Riverside County BoS structural, mig 1314) — COMPLETE 2026-07-12
+
+- Migration 1314 (STRUCTURAL, registered — ledger version 1314 count=1) applied to production. Standalone
+  'Riverside County, California, US' government (geo_id 06065, type County, NOT under State of CA) + 'Board of
+  Supervisors' chamber (official_count=5) + 5 LOCAL X0021 districts (riverside-ca-supervisor-district-1..5,
+  lowercase 'ca') + 5 by-district supervisor offices/politicians. Board-only (D-01) — no constitutional officers.
+
+- In-transaction post-verify gate PASSED: gov=1, offices=5, appointed=0, split=0, chair_on=-4010002. Task 3
+  independent assertions all green (distinct state='ca', distinct mtfcc='X0021', section-split=0). governments
+  table has no parent column → standalone by construction.
+
+- Roster + chair operator-re-verified current at Task 2 checkpoint (rivco district sites / Ballotpedia /
+  KVCR-KESQ / June-2026 results): D1 Medina / D2 Spiegel (2026 Chair) / D3 Washington / D4 Perez / D5 Gutierrez.
+  All incumbents, no resignations/appointments/vacancies, no June-2026 certification delta. All is_appointed=false.
+
+- Chair (D-02): Spiegel D2 title annotation 'Supervisor, District 2 (Chair)' only; no separate office; role_canonical NULL.
+- **5 UUID manifest for Plans 03/04:** -4010001 Medina ea521b54 / -4010002 Spiegel 9c4ae0c3 / -4010003 Washington
+  8770fed4 / -4010004 Perez c986a6af / -4010005 Gutierrez 26d3fdd0.
+
+- Commit 93cbbc6b (migration, C:/EV-Accounts master). Next migration disk-MAX now 1314. Next: 201-03 headshots.
 
 ### v21.0 roadmap (created 2026-07-07)
 
@@ -414,7 +442,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 194 — city-of-tucson-deep-seed
+**Current focus:** Phase 204 — compass-lens-switcher
 
 ## v15.0 Roadmap Summary
 
@@ -448,6 +476,15 @@ See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 - Next migration: 777
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- 2026-07-12 — Appended 3 phases (201 Riverside County BoS, 202 Palm Springs, 203 Indio) for a
+  Coachella Valley, CA local-layer deep-seed. Independent of Arizona (CA TIGER city+county boundaries
+  already loaded: Riverside County 06065, Palm Springs 0655254, Indio 0636448). New requirement
+  category CV-01/02/03; BANR-01 extended to cover 201-203. Arizona PAUSED at Phase 196 (resumable).
+  Recon confirmed all three greenfield (no existing governments); all three are 5-member by-district
+  bodies; both cities have a rotational mayor; all three primary .gov domains are WAF-403.
 
 ### Key Decisions (carry forward)
 
@@ -507,9 +544,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-10T05:05:19.759Z
-Stopped at: Phase 194 context gathered
-Resume file: .planning/phases/194-city-of-tucson-deep-seed/194-CONTEXT.md
+Last session: 2026-07-13T15:36:39.827Z
+Stopped at: Phase 203 context gathered
+Resume file: .planning/phases/203-indio-deep-seed/203-CONTEXT.md
 
 ## Performance Metrics
 
@@ -589,6 +626,8 @@ Resume file: .planning/phases/194-city-of-tucson-deep-seed/194-CONTEXT.md
 | Phase 191 P01 | 14min | - tasks | - files |
 | Phase 191 P02 | 12min | 2 tasks | 2 files |
 | Phase 191 P03 | 20min | 2 tasks | 2 files |
+| Phase 201 P01 | 6min | 2 tasks | 1 files |
+| Phase 201 P03 | 45m | 3 tasks | 2 files |
 
 ## Decisions
 
@@ -681,6 +720,9 @@ Resume file: .planning/phases/194-city-of-tucson-deep-seed/194-CONTEXT.md
 - [Phase ?]: Corporation Commission office guard uses (district_id, politician_id) not (district_id, chamber_id) — required for 5 officials sharing 1 district+chamber
 - [Phase 191]: Runtime UUID resolution via external_id lookup (not hardcoded) mitigates wrong-photo binding for AZ US House headshots — Threat T-191-07 mitigation; matches NV 1051 analog pattern
 - [Phase 191]: 191-03: Presmyk headshot processed (not deferred) via operator-supplied local file; migration 1285 audit-only, photo_license='operator_supplied' — Closes AZ-STATE-01's last open item; operator explicitly chose to upload rather than accept the NV-159-style carry-forward deferral
+- [Phase 201]: Confirmed Riverside ArcGIS DISTRICT attribute field works directly (no fallback needed); X0021 confirmed unused pre-load; 5/5 geofences valid WGS84
+- [Phase 201]: Chuck Washington sourced from Ballotpedia (press_use) instead of his own off-center-framed district-site portrait
+- [Phase 201]: Added RGBA-to-white-composite fix ahead of crop/resize (Rule 1 bug fix) to prevent black backdrops on transparent-PNG sources
 
 ## Operator Next Steps
 
