@@ -1517,7 +1517,13 @@ export default function Results() {
     const userAnsweredIds = new Set((rawUserAnswers || []).map((a) => String(a.topic_id)));
     const polAnsweredIds = new Set((polAnswersForMini || []).filter((a) => a.value > 0).map((a) => String(a.topic_id)));
     const scopedIdsForPol = new Set((scopedTopicsForPol || []).map((t) => String(t.id)));
-    const preferredForPol = (activeLensKey === 'custom' ? selectedTopics : activeLensTopicIds) || [];
+    // Best Match (custom) is drawn by computeDisplaySpokes' Req 9 fill, which pulls
+    // from ALL both-answered in-scope topics — not just selectedTopics. Gating on
+    // selectedTopics alone hid the overlay whenever the user's selected compass had
+    // <3 topics in common with an official, even when a strong best match existed in
+    // the wider pool. Use the empty-preferred (full both-answered) count for custom so
+    // the gate matches what actually renders. Named lenses keep their curated set.
+    const preferredForPol = (activeLensKey === 'custom' ? [] : activeLensTopicIds) || [];
     let matchCount;
     if (preferredForPol.length > 0) {
       matchCount = preferredForPol.filter(
