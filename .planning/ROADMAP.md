@@ -553,6 +553,35 @@ to a per-politician **Custom (overlap)** lens when none is selected.
 
 **UI hint**: yes
 
+## Appended: U.S. Senate 2026 Candidate Wiring (Phase 205)
+
+Standalone national federal-data-repair phase — **independent of the Tucson/Arizona and Coachella Valley
+deep-seed tracks and of the Phase 204 compass work**. The 2026 U.S. Senate races and candidates were
+seeded but never linked to an office, so they don't surface by address.
+
+#### Phase 205: U.S. Senate 2026 Candidate Wiring
+
+**Goal**: Link every orphaned 2026 U.S. Senate race to the correct `NATIONAL_UPPER` office (the specific
+Class seat up for election in that state) so its candidates surface by address exactly like House
+candidates already do.
+**Depends on**: Nothing (data-repair only; federal incumbents + geofences already seeded). No code changes expected — the address→district→office→race→candidates path already works for the House.
+**Requirements**: TBD (spec-phase)
+**Diagnosis (verified on prod 2026-07-15)**:
+
+  - `essentials.races` where `position_name ILIKE 'U.S. Senate %'`: **51 races, all with `office_id = NULL`**, **189 candidates** across **35 states**; multi-race states are legit primary(per-party)/general splits, not duplicates.
+  - House (NATIONAL_LOWER) is correctly wired for comparison (447 races / 50 states / ~1,547 candidates, `office_id` set).
+  - Exactly **one** `NATIONAL_UPPER` district per state (statewide), but ~152 `NATIONAL_UPPER` office rows across 50 states (2 seats/state + historical/vacant) — so linking requires choosing the *correct* seat, not just any.
+
+**Success Criteria** (what must be TRUE):
+
+  1. Every 2026 U.S. Senate race has a non-null `office_id` pointing to the correct state's `NATIONAL_UPPER` office for the 2026 Class seat
+  2. Entering an address in a state with a 2026 Senate race surfaces that race's candidates, same as House candidates
+  3. No House race linkage or federal incumbent data is altered as a side effect
+
+**Out of scope (candidate)**: candidate headshots and compass stances (follow-on; not required to surface).
+
+**UI hint**: no
+
 ## Phases (shipped milestones)
 
 <details>
