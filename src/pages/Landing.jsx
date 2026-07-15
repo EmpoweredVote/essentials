@@ -12,7 +12,7 @@ import { getAutoOpenMyLocation } from '../lib/locationPref';
 
 
 const STEPS = [
-  { n: '01', heading: 'Choose Your Area', body: 'Pick an Alpha Area or enter your address — we\'ll find everyone who represents you.', active: true },
+  { n: '01', heading: 'Choose Your Area', body: 'Enter your address anywhere in the U.S. — or pick an Alpha Community for the full local-to-Congress view.', active: true },
   { n: '02', heading: 'See Their Stances', body: 'Browse each official\'s verified positions on the issues that shape your community.' },
   { n: '03', heading: 'Vote with Confidence', body: 'Know every name on your ballot before you step into the booth.' },
 ];
@@ -257,7 +257,7 @@ export default function Landing() {
                 Most voters can't name half the people on their ballot — let alone where they stand on the issues.
               </p>
               <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-6">
-                Our Alpha Communities show exactly where we're headed: your full government, from city hall to Congress, all in one place.
+                Enter your address anywhere in the U.S. to meet your members of Congress and the candidates running for the House. In our Alpha Communities, you get the full picture — every office from city hall to Congress — and we're expanding it all the time.
               </p>
               {/* width constrained so right edge aligns with Berkeley column below */}
               <div className="lg:max-w-[calc(50vw-5rem)]">
@@ -284,7 +284,7 @@ export default function Landing() {
                     onChange={(e) => setAddressInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                     aria-label="Enter your street address"
-                    placeholder="If you reside in an Alpha Community, enter your street address"
+                    placeholder="Enter your street address — anywhere in the U.S."
                     className="flex-1 min-w-0 px-3 py-4 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 shadow-sm"
                   />
                   <button
@@ -365,7 +365,7 @@ export default function Landing() {
         {fromSearch && (
           <div className="mb-6 px-4 py-3 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-white dark:bg-ev-navy-card text-sm text-gray-700 dark:text-gray-200">
             {isUncovered ? (
-              <>We don't cover <span className="font-semibold">{fromSearch}</span> yet. Here are the Alpha Communities we currently cover — or enter a full street address inside one of them.</>
+              <>We don't have full local coverage for <span className="font-semibold">{fromSearch}</span> yet — but enter your street address and we'll still show your representatives in Congress and who's running for the House. For the complete local-to-Congress view, explore an Alpha Community below.</>
             ) : (
               <>We don't have an exact match for <span className="font-semibold">{fromSearch}</span>. Here are the areas we cover{coverageStateParam ? ` in ${COVERAGE_STATES.find(s => s.abbrev === coverageStateParam.toUpperCase())?.name || 'your state'}` : ''} — pick one, or enter your full street address for your specific representatives.</>
             )}
