@@ -225,6 +225,35 @@ Rules:
   they call project labor agreements" (1 mark) — two contiguous sentences; "the unions, labor unions"
   is a silent self-correction.*
 
+### 4.6 Differentiation — prefer the HOW
+
+Responsiveness (§7.1) only guarantees a quote *answers the question*. Among quotes that clear that
+gate, prefer the one that shows **how** the candidate would pursue the goal — the mechanism,
+approach, or means — not merely that the goal is desirable. Showing the differences in the *how* is
+a core purpose of Read & Rank; a quote everyone would nod at manufactures no legible contrast.
+
+This is a **preference, not a gate.** It never disqualifies a quote on its own and never overrides
+responsiveness. It flags one narrow case, and only when **both** conditions hold:
+
+1. **Non-differentiating** — no candidate in the race would plausibly *disagree* with the goal the
+   quote states ("who wouldn't want safe, beautiful streets?").
+2. **Mechanism-free** — the quote names no approach, means, or *how* the goal would be pursued.
+
+A **contested or directional** goal is fine even without a stated mechanism — a directional stance
+("prioritize enforcement over services for street camping") is contestable and creates legible
+contrast, so it is rankable as-is. Both conditions are required; either one alone passes.
+
+**Guardrail against editorializing.** This is not a "substance police" test — do not use it to
+reject positions you find thin, and do not demand a policy white-paper. It triggers only on the
+agreeable-*and*-mechanism-free intersection. When a candidate has no HOW-bearing on-question quote,
+they may simply be **absent** from the topic (§3) — do not manufacture depth.
+
+*Worked example (real).* "My dream … is that we can make it safer and easier for people to move
+around outside of their cars … a pleasant and beautiful experience to get around this city." This
+is on-question (it favors non-car mobility) but states a goal no one contests, with no mechanism —
+flag it, and prefer a quote that says *how* (dedicated bus lanes, road-diet tradeoffs, parking
+policy).
+
 ---
 
 ## 5. Source principles
@@ -369,6 +398,9 @@ positions aren't mutually exclusive, so preferring one doesn't reject the other.
 the precondition for a valid ranking; responsiveness guarantees it.** Distinctiveness only makes a
 contrast *legible* — among non-comparable answers it manufactures a *false* one.
 
+**After the gate:** among quotes that clear responsiveness, prefer the one that shows the HOW, not
+just an agreeable goal no one would contest (§4.6).
+
 *When a candidate's most distinctive quote is off-question:*
 - **(a)** Prefer their best **on-question, verbatim** quote, even if less distinctive.
 - **(b)** **Re-home** the strong off-question quote under the topic whose question it *does* answer.
@@ -407,7 +439,9 @@ Bias can hide in *which topics a race surfaces*, not just in the quotes.
 
 - **Responsiveness precedes parity (§7.1).** Only on-question quotes are eligible; comparability is
   the precondition for a fair comparison. Never manufacture a head-to-head from quotes answering
-  different questions, and never reach for an off-question quote to fill a topic.
+  different questions, and never reach for an off-question quote to fill a topic. Among the eligible
+  on-question quotes, prefer the one that shows the HOW (§4.6) — but that is a selection preference,
+  never a lever to engineer outcome balance.
 - **Selection driver = voter salience + the shared Compass taxonomy, never candidate advantage.**
 - **Neutral, evenly-applied availability filter** — the ≥2-qualifying-quotes rule (§3) is applied
   with **equal curation effort** across candidates and topics; you don't dig harder for one side.
