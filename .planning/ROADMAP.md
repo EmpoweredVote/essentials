@@ -588,7 +588,7 @@ candidates already do.
 
 **Wave 2** *(blocked on Wave 1 approval)*
 
-- [ ] 205-02-PLAN.md — Apply migration 878 to production (gated, autonomous:false) + DB parity/before-after diff + BLOCKING live in-state address check for MN/TX/TN + OH special (REQ-2, REQ-3, REQ-4, REQ-5)
+- [x] 205-02-PLAN.md — Apply migration 878 to production (gated, autonomous:false) + DB parity/before-after diff + BLOCKING live in-state address check for MN/TX/TN + OH special (REQ-2, REQ-3, REQ-4, REQ-5)
 
 **UI hint**: no
 
