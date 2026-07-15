@@ -565,7 +565,7 @@ seeded but never linked to an office, so they don't surface by address.
 Class seat up for election in that state) so its candidates surface by address exactly like House
 candidates already do.
 **Depends on**: Nothing (data-repair only; federal incumbents + geofences already seeded). No code changes expected — the address→district→office→race→candidates path already works for the House.
-**Requirements**: TBD (spec-phase)
+**Requirements**: REQ-1, REQ-2, REQ-3, REQ-4, REQ-5 (locked in 205-SPEC.md)
 **Diagnosis (verified on prod 2026-07-15)**:
 
   - `essentials.races` where `position_name ILIKE 'U.S. Senate %'`: **51 races, all with `office_id = NULL`**, **189 candidates** across **35 states**; multi-race states are legit primary(per-party)/general splits, not duplicates.
@@ -579,6 +579,16 @@ candidates already do.
   3. No House race linkage or federal incumbent data is altered as a side effect
 
 **Out of scope (candidate)**: candidate headshots and compass stances (follow-on; not required to surface).
+
+**Plans**: 2 plans in 2 waves
+
+**Wave 1**
+
+- [ ] 205-01-PLAN.md — Author idempotent migration 878 from the verified 35-row seat map + skip report; BLOCKING D-04 human seat-map approval checkpoint (specials OH/FL flagged) before any write (REQ-1, REQ-4)
+
+**Wave 2** *(blocked on Wave 1 approval)*
+
+- [ ] 205-02-PLAN.md — Apply migration 878 to production (gated, autonomous:false) + DB parity/before-after diff + BLOCKING live in-state address check for MN/TX/TN + OH special (REQ-2, REQ-3, REQ-4, REQ-5)
 
 **UI hint**: no
 
