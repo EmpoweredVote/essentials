@@ -209,6 +209,10 @@ export const COVERAGE_STATES = [
       // block). hasContext:true is DB-honest — Plan 03 seeded evidence-only compass
       // stances for the 7 Oro Valley officials. Pima County stays in COVERAGE_COUNTIES.
       { label: 'Oro Valley', browseGovernmentList: ['0451600'], browseStateAbbrev: 'AZ', hasContext: true },
+      // Marana (Phase 196). Appended to the EXISTING Arizona block (not a second block);
+      // Plan 03 seeded 21 evidence-only compass stances across the 7 Marana officials, so
+      // hasContext:true is honest. Pima County stays in COVERAGE_COUNTIES (untouched).
+      { label: 'Marana', browseGovernmentList: ['0444270'], browseStateAbbrev: 'AZ', hasContext: true },
     ],
   },
 ];

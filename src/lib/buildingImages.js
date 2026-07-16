@@ -454,6 +454,15 @@ const CURATED_LOCAL = {
   // coverage.js label is space-form 'Oro Valley'.
   //   oro valley    - Oro Valley CDO Trail Bridge | Djmaschek | CC BY-SA 3.0
   'oro valley': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/oro-valley.jpg' },
+  // Marana community banner (Phase 196). Hole #3 at The Golf Club at Dove Mountain
+  // (Saguaro) — a real, ground-level Sonoran-desert golf scene (green fairway, water
+  // hazard, saguaros) with the LOW distant Tortolita/Tucson ranges on the horizon.
+  // Deliberately by the Tortolita range, NOT the Catalinas — so it does not collide
+  // with the Pima COUNTY Catalina/Pusch-Ridge landscape banner, the Oro Valley CDO
+  // Trail Bridge, the Tucson CITY downtown streetscape, or the AZ STATE Phoenix skyline.
+  // Single-variant single-word key (no same-named-city collision); storage cities/marana.jpg.
+  //   marana        - The Golf Club at Dove Mountain (Saguaro) no 3 | Bernard Gagnon | CC BY-SA 3.0
+  marana: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/marana.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
