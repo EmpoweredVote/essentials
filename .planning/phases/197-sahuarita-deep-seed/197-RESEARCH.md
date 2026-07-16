@@ -496,7 +496,7 @@ confirmed open seat) is the single highest-risk claim in this research; A2 (the 
 Mayor-selection-mechanism finding) is the single highest-IMPACT claim, since it changes the migration
 shape from the CONTEXT.md default expectation.
 
-## Open Questions
+## Open Questions (RESOLVED — deferred to execution-time checkpoints: Q1 → Plan 01 Task 2, Q2 → Plan 04 Task 1, Q3 → informational only)
 
 1. **Will the July 21, 2026 primary outright resolve all 3 open seats, or force a November 3, 2026
    general?**
