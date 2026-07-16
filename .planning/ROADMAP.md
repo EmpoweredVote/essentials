@@ -74,7 +74,7 @@ milestone starts at **Phase 190**.
 - [x] **Phase 193: Pima County Board of Supervisors Deep-Seed** - Standalone county government + roster + headshots + stances + banner (completed 2026-07-10)
 - [ ] **Phase 194: City of Tucson Deep-Seed** - Flagship: Mayor + 6 wards + roster + headshots + stances + banner
 - [x] **Phase 195: Oro Valley Deep-Seed** - Government + roster + headshots + stances + banner (completed 2026-07-11)
-- [ ] **Phase 196: Marana Deep-Seed** - Government + roster + headshots + stances + banner
+- [x] **Phase 196: Marana Deep-Seed** - Government + roster + headshots + stances + banner (completed 2026-07-16)
 - [ ] **Phase 197: Sahuarita Deep-Seed** - Government + roster + headshots + stances + banner
 - [ ] **Phase 198: South Tucson Deep-Seed** - Government + roster + headshots + stances + banner
 - [ ] **Phase 199: AZ 2026 Elections & Discovery** - Race shells, confirmed candidates, discovery pipeline armed
