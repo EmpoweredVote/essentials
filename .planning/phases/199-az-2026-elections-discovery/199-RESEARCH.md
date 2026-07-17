@@ -151,9 +151,9 @@ All race shells: `primary_party = NULL`, anchor to `election_id = e21f5757-071e-
 ### 4c. Corporation Commission race shell (2 of 5 seats, at-large)
 | position_name | seats | office_id | note |
 |---------------|------:|-----------|------|
-| `Arizona Corporation Commission` | **2** | *ambiguous — see Open Q1* | At-large 2-winner statewide race. 5 commissioner offices exist (office_ids: `686d5bbc…` Márquez Peterson, `c1f6279e…` Lopez, `a1af9a2f…` Thompson, `…Myers -4004003`, `…Walden -4004004`). |
+| `Arizona Corporation Commission` | **2** | *anchor to a STATE_EXEC commissioner office — see Open Q1 (RESOLVED)* | At-large 2-winner statewide race. 5 commissioner offices exist (office_ids: `686d5bbc…` Márquez Peterson, `c1f6279e…` Lopez, `a1af9a2f…` Thompson, `…Myers -4004003`, `…Walden -4004004`). |
 
-> The two seats up in 2026 are the seats whose terms expire Jan 2027 (the seats last filled in 2022). Because commissioners run at-large (no per-seat district), model as **one race with `seats=2`**. `office_id` anchoring is a design decision — see Open Q1.
+> The two seats up in 2026 are the seats whose terms expire Jan 2027 (the seats last filled in 2022). Because commissioners run at-large (no per-seat district), model as **one race with `seats=2`**. `office_id` anchoring is resolved in Open Q1 (RESOLVED): anchor to a deterministic **STATE_EXEC** commissioner office so `fetchStatewideRaceRows` surfaces it.
 
 ### 4d. Legislative race shells (60 total: 30 Senate + 30 House)
 Resolve `office_id` by subquery per district:
@@ -190,9 +190,9 @@ Resolve `office_id` by subquery per district:
 | **Marana** | `Marana Town Council` | 4 | one of 6 Marana council offices (geo_id `0444270`) | at-large 4-winner |
 | **Sahuarita** | `Sahuarita Town Council` | 3 | one of 5 Sahuarita council offices (geo_id `0462140`) | at-large 3-winner (no mayor race) |
 
-> **Local shell count: 7 races** (0 Pima, 0 Tucson, 1 South Tucson, 2 Oro Valley, 2 Marana, 1 Sahuarita). At-large council `office_id` anchoring is ambiguous (multiple undifferentiated council offices per body) — see Open Q1/Q2. Mayor offices are unambiguous singletons.
+> **Local shell count: 6 races** (0 Pima, 0 Tucson, 1 South Tucson, 2 Oro Valley, 2 Marana, 1 Sahuarita). At-large council `office_id` anchoring is ambiguous (multiple undifferentiated council offices per body) — see Open Q1/Q2 (RESOLVED). Mayor offices are unambiguous singletons — but per Open Q1 the anchor MUST chain to the correct government geo_id or the race is invisible in `fetchGovernmentRaceRows`.
 
-**Total new race shells:** 6 statewide + 1 corp + 30 senate + 30 house + 7 local = **74 race shells** (plus the pre-existing 9 US House = 83 races under the AZ general when done).
+**Total new race shells:** 6 statewide + 1 corp + 30 senate + 30 house + 6 local = **73 race shells** (plus the pre-existing 9 US House = 82 races under the AZ general when done).
 
 ## 5. Confirmed Candidate Slate (D-01 hand-seed tier)
 
@@ -225,7 +225,7 @@ Filed fields captured this session (all [CITED: Ballotpedia state-executive 2026
   - `1372_az_2026_primary_election.sql` — bare primary row (D-05, date `2026-07-21`).
   - `1373_az_2026_statewide_races.sql` — 6 statewide + 1 corp commission (seats=2).
   - `1374_az_2026_legislative_races.sql` — 30 Senate + 30 House (seats=2). Generate with a PowerShell helper like the `generate_or_legislative_races.ps1` precedent, or a single `DO $$` loop over geo_ids `04001`–`04030`.
-  - `1375_az_2026_local_races.sql` — 7 local shells.
+  - `1375_az_2026_local_races.sql` — 6 local shells.
   - `1376_az_2026_discovery.sql` — 4 discovery rows.
 - **Every migration** (elections/races/discovery — NOT the image/stance class) MUST include a ledger entry `INSERT INTO supabase_migrations.schema_migrations (version) VALUES ('137X') ON CONFLICT (version) DO NOTHING;` and a companion `_apply-migration-137X.ts` with smoke tests (copy the VA 322/324/325 apply-script structure).
 - **Idempotency:** elections `ON CONFLICT (name, election_date, state) DO NOTHING`; races `ON CONFLICT (election_id, position_name) WHERE primary_party IS NULL DO NOTHING`; discovery `ON CONFLICT (jurisdiction_geoid, election_date) DO NOTHING` (or `WHERE NOT EXISTS` per the 241 exemplar — both valid).
@@ -285,12 +285,13 @@ Filed fields captured this session (all [CITED: Ballotpedia state-executive 2026
 | Criterion | Automated check |
 |-----------|-----------------|
 | Primary election row exists w/ correct date | `SELECT election_date FROM essentials.elections WHERE name='AZ 2026 Statewide Primary' AND state='AZ'` = `2026-07-21`; count AZ elections = 2 |
-| 6 statewide + 1 corp race shells, zero NULL office_id (single-winner) | `COUNT` of the 6 statewide position_names = 6; each `office_id IS NOT NULL`; corp race exists w/ `seats=2` |
+| 6 statewide + 1 corp race shells, zero NULL office_id (single-winner) | `COUNT` of the 6 statewide position_names = 6; each `office_id IS NOT NULL`; corp race exists w/ `seats=2` AND its office → district district_type = STATE_EXEC (visibility) |
 | 30 Senate + 30 House shells | `COUNT` where position_name LIKE `State Senate District %` = 30 AND LIKE `State House District %` = 30; House rows all `seats=2` |
 | Zero NULL office_id for legislative + mayor shells | `SELECT COUNT(*) … WHERE office_id IS NULL AND position_name IN (…legislative+mayor…)` = 0 |
-| Local shells: exactly the 7 confirmed; **zero Pima BoS, zero Tucson** | assert 7 local rows present; assert `NOT EXISTS` any race with position_name LIKE `%Pima%Supervisor%` or `%Tucson Ward%`/`Tucson Mayor` under the 2026 general |
+| Local shells: exactly the 6 confirmed; **zero Pima BoS, zero Tucson** | assert 6 local rows present, each office chains to its government geo_id; assert `NOT EXISTS` any race with position_name LIKE `%Pima%Supervisor%` or `%Tucson Ward%`/`Tucson Mayor` under the 2026 general |
 | 4 discovery rows w/ 5-element allowlist + corrected dates | `COUNT(*) discovery WHERE jurisdiction_geoid IN ('04','04019')` = 4; `array_length(allowed_domains,1)=5`; dates ∈ {`2026-07-21`,`2026-11-03`}; **no `cron_active` reference** |
-| Race-count-per-election assertion | `SELECT COUNT(*) FROM races WHERE election_id='e21f5757…'` = 9 (existing) + 74 (new) = **83** after all plans |
+| Race-count-per-election assertion | `SELECT COUNT(*) FROM races WHERE election_id='e21f5757…'` = 9 (existing) + 73 (new) = **82** after all plans |
+| seats=2 renders + attaches end-to-end (Open Q2) | seats=2 race surfaces (STATE_EXEC/geo_id anchor), rolled-back race_candidates attach round-trips through the feed query, `/results` human-check confirms no single-winner mis-render |
 | Idempotency | re-run every apply script → all counts unchanged |
 | Ledger entries | `schema_migrations` contains `'1372'…'1376'` |
 
@@ -304,6 +305,7 @@ Filed fields captured this session (all [CITED: Ballotpedia state-executive 2026
 - **Seeding Tucson city shells.** Odd-year; no 2026 race. Do NOT seed.
 - **Modeling AZ House as 60 shells.** Violates the `(election_id, position_name) WHERE primary_party IS NULL` partial-unique index and misrepresents the 2-winner contest. Use 30 shells `seats=2`.
 - **Seeding all 5 Corp Commission seats.** Only 2 are up. One race, `seats=2`.
+- **Non-NULL office_id that is INVISIBLE.** A non-NULL anchor is necessary but NOT sufficient. Statewide/Corp surface via `fetchStatewideRaceRows` ONLY when the office → district district_type ∈ {STATE_EXEC, NATIONAL_UPPER, NATIONAL_EXEC} (electionService.ts ~118-121). Local shells surface via `fetchGovernmentRaceRows` ONLY when the office chains office→chamber→government to the resident's geo_id. Anchor Corp to a STATE_EXEC office; anchor mayors/councils to offices that chain to the correct city geo_id.
 - **Anchoring statewide races to the primary election.** All race shells anchor to the **general** (`e21f5757…`); the primary row is bare (VA Plan 01 lesson).
 - **Forgetting the ledger row.** elections/races/discovery migrations must write `schema_migrations` (apply script RAISEs if missing) — unlike the image/stance migration class which bypasses it.
 - **Verify-grep false positives.** Ph202 lesson: verification greps that forbid a token (e.g., `cron_active`) fail if the token appears even in a comment. Keep migration comments clean of forbidden tokens.
@@ -319,12 +321,14 @@ Filed fields captured this session (all [CITED: Ballotpedia state-executive 2026
 | A4 | The 39 existing US House candidates are a complete filed field (spot-check only, not enumerated) | §5b | LOW — D-01 says verify/complete, not re-seed |
 | A5 | At-large council `office_id` anchoring via deterministic `LIMIT 1` pick is acceptable | §4e / Open Q2 | MEDIUM — depends on how discovery cron maps candidates to shells |
 
-## 12. Open Questions
+## 12. Open Questions (RESOLVED)
 
-1. **office_id anchoring for at-large multi-winner races (Corp Commission + town/city councils).** These bodies have N undifferentiated offices and no per-seat district, so a single race can only FK one `office_id`. **Options:** (a) anchor to a deterministic office (`LIMIT 1` by a stable order) to preserve a zero-NULL quality bar; (b) leave `office_id` NULL for at-large council/corp shells (the column is nullable) and rely on the discovery cron's jurisdiction-geoid matching. **Recommendation:** confirm how the discovery cron maps discovered candidates to race shells (by `office_id`? by jurisdiction geo? by `position_name`?) before choosing — this determines whether a `LIMIT 1` anchor is harmless or misleading. Single-winner races (statewide, mayors, senate) are unaffected (unambiguous office_id).
-2. **House seats=2 vs 60 individual shells.** Recommended: 30 races `seats=2`. Confirm the frontend/profile rendering and the discovery cron both handle a `seats>1` race correctly (US House shells are all `seats=1`, so `seats=2` is a first for AZ). If the cron/UI assumes 1 seat, an alternative is per-seat naming — but AZ has no seat letters, so `seats=2` is the honest model.
-3. **Hand-seed filed statewide candidates now, or ship shells + reconcile after 07-21?** (§5). Genuine decision; recommend shells-only default given the imminent primary. Needs user/planner confirmation.
-4. **Primary election row value.** With the primary 4 days out, the `2026-07-21` primary discovery rows arm only briefly. Confirm the discovery cron won't error on a near-past election_date; if it might, consider seeding only the general-date discovery rows and still seeding the bare primary election row for record-keeping (D-05 satisfied). Low stakes.
+> All four open questions were resolved during planning (Plans 199-02/03/04). Dispositions below; no open items remain.
+
+1. **office_id anchoring for at-large multi-winner races (Corp Commission + town/city councils).** **RESOLVED — Option (a), with a visibility guard.** Anchor to a deterministic office (`ORDER BY o.id LIMIT 1`) to preserve the zero-NULL quality bar — but non-NULL alone is not sufficient. Per verified `electionService.ts`, the office MUST also chain correctly: Corp Commission surfaces via `fetchStatewideRaceRows` ONLY when its office → district district_type is STATE_EXEC (lines ~118-121), so 199-02 anchors Corp to a **STATE_EXEC** commissioner office and asserts it. Local councils/mayors surface via `fetchGovernmentRaceRows` ONLY when the office chains office→chamber→government to the resident's geo_id, so 199-03 resolves each anchor by the chamber→government join and asserts the mayor offices chain to geo_ids 0451600 (Oro Valley) / 0444270 (Marana). Option (b) (NULL office_id) is rejected — a NULL breaks the INNER JOIN in the district/government paths and makes the race invisible.
+2. **House seats=2 vs 60 individual shells.** **RESOLVED — 30 races `seats=2`.** `seats` is never used as a filter in any `electionService` fetch path, so a `seats>1` shell surfaces and attaches candidates (via `rc.race_id`) exactly like a `seats=1` shell. 199-04 Task 2 adds an explicit executor step confirming a seats=2 race (Corp Commission or an AZ House shell) renders correctly at `/results` (does not mis-render as single-winner) and can attach candidates end-to-end (rolled-back attach-path round-trip) — the VALIDATION.md manual-only check elevated to an explicit, gated plan step.
+3. **Hand-seed filed statewide candidates now, or ship shells + reconcile after 07-21?** **RESOLVED — shells-only.** CONTEXT D-01 REVISED (post-research): this phase ships as PURE STRUCTURE with NO hand-seeded candidates (statewide/Corp included); the primary is 4 days out so filed fields are contested primary fields that go stale immediately. A post-07-21 reconcile phase (already owed for Ph197/198) seeds general nominees; the existing 39 US House candidates stay as-is.
+4. **Primary election row value (near-past election_date).** **RESOLVED — execute-time confirmation; both primary rows still seeded.** 199-04 Task 1 read_first directs the executor to confirm in `discoveryCron.ts` that a near-past `election_date` (primary ~4 days out) does not throw, and to note the low-stakes finding in the SUMMARY. Both primary discovery rows (2026-07-21) and the bare primary election row are seeded per D-05/D-06 regardless (record-keeping + date-window consistency).
 
 ## Environment Availability
 

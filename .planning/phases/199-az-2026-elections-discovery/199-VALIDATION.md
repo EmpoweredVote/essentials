@@ -44,8 +44,8 @@ created: 2026-07-17
 | Primary election row | elections | 1 | AZ-ELEC-01 | N/A (read-only civic data) | in-migration assert | `election_date='2026-07-21'` for `AZ 2026 Statewide Primary`; AZ election count = 2 | ⬜ pending |
 | Statewide + Corp shells | races | 2 | AZ-ELEC-01 | N/A | in-migration assert | 6 statewide position_names, each `office_id NOT NULL`; 1 corp race `seats=2` | ⬜ pending |
 | Legislative shells | races | 2 | AZ-ELEC-01 | N/A | in-migration assert | 30 `State Senate District %` + 30 `State House District %` (House `seats=2`); zero NULL office_id | ⬜ pending |
-| Local shells (7) | races | 2 | AZ-ELEC-01 | N/A | in-migration assert | exactly 7 local rows; `NOT EXISTS` any `%Pima%Supervisor%` or `%Tucson Ward%`/`Tucson Mayor` | ⬜ pending |
-| Race-count total | races | 2 | AZ-ELEC-01 | N/A | in-migration assert | `COUNT(*) races WHERE election_id='e21f5757…'` = 83 (9 existing + 74 new) | ⬜ pending |
+| Local shells (6) | races | 2 | AZ-ELEC-01 | N/A | in-migration assert | exactly 6 local rows; `NOT EXISTS` any `%Pima%Supervisor%` or `%Tucson Ward%`/`Tucson Mayor` | ⬜ pending |
+| Race-count total | races | 2 | AZ-ELEC-01 | N/A | in-migration assert | `COUNT(*) races WHERE election_id='e21f5757…'` = 82 (9 existing + 73 new) | ⬜ pending |
 | Discovery rows (4) | discovery | 3 | AZ-ELEC-01 | allowlist bounds cron sources | in-migration assert | 4 rows geoid ∈ {`04`,`04019`}; `array_length(allowed_domains,1)=5`; dates ∈ {`2026-07-21`,`2026-11-03`}; no `cron_active` ref | ⬜ pending |
 | Ledger + idempotency | all | all | AZ-ELEC-01 | N/A | apply-script | `schema_migrations` has each migration number; re-run → counts unchanged | ⬜ pending |
 
