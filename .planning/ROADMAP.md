@@ -75,7 +75,7 @@ milestone starts at **Phase 190**.
 - [ ] **Phase 194: City of Tucson Deep-Seed** - Flagship: Mayor + 6 wards + roster + headshots + stances + banner
 - [x] **Phase 195: Oro Valley Deep-Seed** - Government + roster + headshots + stances + banner (completed 2026-07-11)
 - [x] **Phase 196: Marana Deep-Seed** - Government + roster + headshots + stances + banner (completed 2026-07-16)
-- [ ] **Phase 197: Sahuarita Deep-Seed** - Government + roster + headshots + stances + banner
+- [x] **Phase 197: Sahuarita Deep-Seed** - Government + roster + headshots + stances + banner
 - [ ] **Phase 198: South Tucson Deep-Seed** - Government + roster + headshots + stances + banner
 - [ ] **Phase 199: AZ 2026 Elections & Discovery** - Race shells, confirmed candidates, discovery pipeline armed
 - [ ] **Phase 200: Arizona Playbook Retrospective & Close** - coverage.js reconciled, GOTCHAs documented, milestone closed
@@ -312,7 +312,7 @@ Plans:
 - [x] 197-01-PLAN.md — Structural migration: greenfield Town of Sahuarita govt + Town Council chamber + 1 shared LOCAL district (NO LOCAL_EXEC) + 7 at-large council with Mayor/Vice-Mayor as title annotations; BLOCKING roster+title re-verify + apply
 - [x] 197-02-PLAN.md — 7 headshots (600×750), sahuaritaaz.gov soft-block Playwright fallback; audit migration
 - [x] 197-03-PLAN.md — Evidence-only compass stances (one agent at a time, 36 non-judicial topics; Copper World/water/data-center/growth salient); 7 audit migrations — 14 rows, 100% cited, honest blanks, tenure rule enforced
-- [ ] 197-04-PLAN.md — Licensed Sahuarita banner (distinct southern/Santa-Cruz-Valley identity) + coverage.js chip appended to existing Arizona block; end-to-end address-routing verify
+- [x] 197-04-PLAN.md — Licensed Sahuarita banner (Sahuarita Lake + Santa Rita Mtns, CC BY-SA 3.0) + coverage.js chip appended to existing Arizona block; end-to-end address-routing verify (7/7 council returned)
 
 #### Phase 198: South Tucson Deep-Seed
 
@@ -499,7 +499,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 194. City of Tucson Deep-Seed | 6/6 | Complete   | 2026-07-10 |
 | 195. Oro Valley Deep-Seed | 4/4 | Complete    | 2026-07-11 |
 | 196. Marana Deep-Seed | 0/4 | Planned | - |
-| 197. Sahuarita Deep-Seed | 3/4 | In Progress|  |
+| 197. Sahuarita Deep-Seed | 4/4 | Complete|  |
 | 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
