@@ -359,8 +359,8 @@ Plans:
 
 - [ ] 199-01-PLAN.md — Seed bare AZ 2026 Statewide Primary election row (2026-07-21) + confirm general FK anchor (migration 1372)
 - [ ] 199-02-PLAN.md — Statewide (6) + Corp Commission (seats=2) + legislative (30 Senate seats=1 + 30 House seats=2) race shells (migrations 1373-1374)
-- [ ] 199-03-PLAN.md — 7 confirmed Tucson-metro local shells (South Tucson, Oro Valley, Marana, Sahuarita); zero Pima BoS, zero Tucson city (migration 1375)
-- [ ] 199-04-PLAN.md — Arm 4 discovery_jurisdictions rows (5-domain allowlist) + phase race-count gate (83 races) (migration 1376)
+- [ ] 199-03-PLAN.md — 6 confirmed Tucson-metro local shells (South Tucson, Oro Valley, Marana, Sahuarita); zero Pima BoS, zero Tucson city (migration 1375)
+- [ ] 199-04-PLAN.md — Arm 4 discovery_jurisdictions rows (5-domain allowlist) + phase race-count gate (82 races) (migration 1376)
 
 **UI hint**: yes (no code change — AZ cities already surfaced in src/lib/coverage.js)
 
