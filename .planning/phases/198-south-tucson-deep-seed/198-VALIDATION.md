@@ -65,6 +65,7 @@ Marana (196), and Oro Valley (195).
 |----------|-------------|------------|-------------------|
 | BLOCKING roster-currency re-verify | SUB-04 | Live web state (southtucsonaz.gov, Cloudflare-blocked) + **July 21 2026 primary (4 days out)** + the **sitting Mayor is herself an incumbent candidate** + council re-votes Mayor/Vice-Mayor/Acting-Mayor titles — none assertable from a static file | Immediately before applying the roster migration, re-fetch the official council roster AND confirm the current Mayor / Vice-Mayor / Acting-Mayor title holders; block if membership or titles changed |
 | Banner is a real licensed street-scene (no AI, no aerial; NOT Catalina/Tortolita mountains, NOT downtown Tucson) | BANR-01 | Visual + licensing judgment; mural front-runner subject has no confirmed Commons photo yet | Human reviews sourced candidate(s) + attribution before upload; attempt mural/streetscape first, fall back to verified City Hall / welcome-sign candidates |
+| End-to-end address routing (in-South-Tucson address surfaces the South Tucson council, not swallowed by Tucson) | SUB-04 | Live candidates-search API + rendered result requires human confirmation of the full user-facing flow (Plan 04 Task 3) | After coverage chip is wired, query the live candidates-search API with a known in-South-Tucson address and confirm the South Tucson government + council surface (not Tucson) |
 
 ---
 

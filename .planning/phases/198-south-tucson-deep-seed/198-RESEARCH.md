@@ -595,7 +595,7 @@ sitting Mayor is a candidate) is the single highest-risk claim in this research;
 structural finding) is the single highest-IMPACT claim, since it changes the migration shape from the
 CONTEXT.md default expectation and extends even Sahuarita's precedent by one additional title.
 
-## Open Questions (deferred to execution-time checkpoints: Q1 → banner-sourcing pass, Q2 → Plan 01 Task 2, Q3 → informational only)
+## Open Questions (RESOLVED — deferred to execution-time checkpoints: Q1 → Plan 04 Task 1 banner-sourcing pass, Q2 → Plan 01 Task 2, Q3 → informational only)
 
 1. **Is there a licensable, high-resolution photo of a specific South Tucson mural (La Tusa/Tattoo Mural,
    Amor Querido, or El Pueblo Viejo Salsa) that this session did not surface?**
