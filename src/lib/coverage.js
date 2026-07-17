@@ -213,6 +213,10 @@ export const COVERAGE_STATES = [
       // Plan 03 seeded 21 evidence-only compass stances across the 7 Marana officials, so
       // hasContext:true is honest. Pima County stays in COVERAGE_COUNTIES (untouched).
       { label: 'Marana', browseGovernmentList: ['0444270'], browseStateAbbrev: 'AZ', hasContext: true },
+      // Sahuarita (Phase 197). Appended to the EXISTING Arizona block (not a second block);
+      // Plan 03 seeded 14 evidence-only compass stances across the 7 Sahuarita officials, so
+      // hasContext:true is honest. Pima County stays in COVERAGE_COUNTIES (untouched).
+      { label: 'Sahuarita', browseGovernmentList: ['0462140'], browseStateAbbrev: 'AZ', hasContext: true },
     ],
   },
 ];

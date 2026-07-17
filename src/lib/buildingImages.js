@@ -463,6 +463,17 @@ const CURATED_LOCAL = {
   // Single-variant single-word key (no same-named-city collision); storage cities/marana.jpg.
   //   marana        - The Golf Club at Dove Mountain (Saguaro) no 3 | Bernard Gagnon | CC BY-SA 3.0
   marana: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/marana.jpg' },
+  // Sahuarita community banner (Phase 197). Sahuarita Lake (Rancho Sahuarita) in the
+  // foreground with the Santa Rita Mountains (Mount Wrightson, due south) on the horizon —
+  // a real, ground-level Santa-Cruz-Valley lakeshore scene. Deliberately the Santa Ritas
+  // (SOUTH), NOT the Catalinas — so it does not collide with the Pima COUNTY Catalina/
+  // Pusch-Ridge landscape banner or the Oro Valley CDO Trail Bridge; also distinct from the
+  // Marana Tortolita/Dove-Mountain shot, the Tucson CITY downtown streetscape, and the AZ
+  // STATE Phoenix skyline. Southern/Santa-Cruz-Valley identity (D-03 — no Catalinas, no
+  // Tortolita). Single-variant single-word key (no same-named-city collision); storage
+  // cities/sahuarita.jpg.
+  //   sahuarita     - View from the northern edge of Sahuarita Lake (winter 2007) | Brian Basgen | CC BY-SA 3.0
+  sahuarita: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/sahuarita.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
