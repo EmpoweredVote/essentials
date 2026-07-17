@@ -474,6 +474,19 @@ const CURATED_LOCAL = {
   // cities/sahuarita.jpg.
   //   sahuarita     - View from the northern edge of Sahuarita Lake (winter 2007) | Brian Basgen | CC BY-SA 3.0
   sahuarita: { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/sahuarita.jpg' },
+  // South Tucson community banner (Phase 198). The South Tucson Municipal Complex / City Hall
+  // — the arched "Administration" civic building with the blue "SOUTH TUCSON MUNICIPAL COMPLEX
+  // 1601" monument sign and city seal — a real, ground-level CIVIC/URBAN streetscape (the sign
+  // + seal make the jurisdiction unambiguous). This is the milestone's ONE non-landscape banner
+  // (D-04): deliberately people/street/civic, NOT landscape. It avoids the Pima COUNTY
+  // Catalinas, the Oro Valley CDO Trail Bridge, the Marana Tortolita/Dove-Mountain shot, the
+  // Tucson CITY downtown/Hotel-Congress streetscape, the Sahuarita Lake/Santa-Ritas, and the
+  // AZ STATE Phoenix skyline. (Operator-selected 2026-07-17 over a Star Motel roadside-signage
+  // alt, for unambiguous civic identity.) QUOTED key (contains a space — mirrors the
+  // 'oro valley' style, NOT the unquoted single-word marana:/sahuarita: style); single-variant
+  // (no same-named-city collision); storage cities/south-tucson.jpg.
+  //   south tucson  - South Tucson City Hall / Municipal Complex (Southtucson1.JPG) | Rgper22008 (Wikimedia Commons) | Public Domain
+  'south tucson': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-tucson.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape

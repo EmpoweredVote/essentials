@@ -217,6 +217,12 @@ export const COVERAGE_STATES = [
       // Plan 03 seeded 14 evidence-only compass stances across the 7 Sahuarita officials, so
       // hasContext:true is honest. Pima County stays in COVERAGE_COUNTIES (untouched).
       { label: 'Sahuarita', browseGovernmentList: ['0462140'], browseStateAbbrev: 'AZ', hasContext: true },
+      // South Tucson (Phase 198). Appended to the EXISTING Arizona block (not a second block);
+      // Plan 03 seeded 14 evidence-only compass stances across the 7 South Tucson officials, so
+      // hasContext:true is honest. South Tucson is a full enclave (donut hole) inside Tucson —
+      // the geofence (geo_id 0468850) routes an in-limits address to South Tucson exclusively,
+      // NOT Tucson. Pima County stays in COVERAGE_COUNTIES (untouched); this is NOT a county entry.
+      { label: 'South Tucson', browseGovernmentList: ['0468850'], browseStateAbbrev: 'AZ', hasContext: true },
     ],
   },
 ];
