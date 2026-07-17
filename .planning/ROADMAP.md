@@ -76,7 +76,7 @@ milestone starts at **Phase 190**.
 - [x] **Phase 195: Oro Valley Deep-Seed** - Government + roster + headshots + stances + banner (completed 2026-07-11)
 - [x] **Phase 196: Marana Deep-Seed** - Government + roster + headshots + stances + banner (completed 2026-07-16)
 - [x] **Phase 197: Sahuarita Deep-Seed** - Government + roster + headshots + stances + banner
-- [ ] **Phase 198: South Tucson Deep-Seed** - Government + roster + headshots + stances + banner
+- [x] **Phase 198: South Tucson Deep-Seed** - Government + roster + headshots + stances + banner
 - [ ] **Phase 199: AZ 2026 Elections & Discovery** - Race shells, confirmed candidates, discovery pipeline armed
 - [ ] **Phase 200: Arizona Playbook Retrospective & Close** - coverage.js reconciled, GOTCHAs documented, milestone closed
 
@@ -334,15 +334,15 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 198-02-PLAN.md — 600x750 headshots for the 7 officials (southtucsonaz.gov Cloudflare-challenge → Playwright fallback; honest blanks; per-image license)
+- [x] 198-02-PLAN.md — 600x750 headshots for the 7 officials (southtucsonaz.gov Cloudflare-challenge → Playwright fallback; honest blanks; per-image license)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 198-03-PLAN.md — Evidence-only compass stances, one official at a time, 36 non-judicial topics (public safety/policing, budget, Mercado/South-4th-Ave corridor); 7 audit migrations, 100% cited, honest blanks, no defaults
+- [x] 198-03-PLAN.md — Evidence-only compass stances, one official at a time, 36 non-judicial topics (public safety/policing, budget, Mercado/South-4th-Ave corridor); 7 audit migrations, 100% cited, honest blanks, no defaults
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 198-04-PLAN.md — Licensed cultural/urban banner (mural / South-4th-Ave streetscape, NOT landscape) + coverage.js chip appended to existing Arizona block; end-to-end address-routing verify (7/7 council, not swallowed by Tucson)
+- [x] 198-04-PLAN.md — Licensed cultural/urban banner (mural / South-4th-Ave streetscape, NOT landscape) + coverage.js chip appended to existing Arizona block; end-to-end address-routing verify (7/7 council, not swallowed by Tucson)
 
 #### Phase 199: AZ 2026 Elections & Discovery
 

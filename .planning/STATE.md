@@ -2,28 +2,33 @@
 gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
-status: executing
-last_updated: "2026-07-17T07:52:41.862Z"
-last_activity: 2026-07-17 -- Phase 198 execution started
+status: completed
+stopped_at: Phase 198 complete (verified 5/5) — Tucson-metro track closed
+last_updated: "2026-07-17T17:02:03.782Z"
+last_activity: 2026-07-17 -- Phase 198 marked complete
 progress:
-  total_phases: 48
-  completed_phases: 13
+  total_phases: 16
+  completed_phases: 14
   total_plans: 60
-  completed_plans: 56
-  percent: 27
+  completed_plans: 60
+  percent: 88
 ---
 
 # State
 
 ## Current Position
 
-Phase: 198 (south-tucson-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 198
-Last activity: 2026-07-17 -- Phase 198 execution started
+Phase: 198 — COMPLETE
+Plan: 4 of 4
+Status: Phase 198 complete (verifier 5/5); Tucson-metro deep-seed track (193–198) CLOSED
+Last activity: 2026-07-17 -- Phase 198 marked complete
 
-**Arizona resume point:** Phase 196 (Marana Deep-Seed). Phases 196-200 remain planned and resumable;
-the Coachella Valley, CA work (201-203) is an independent append and does not block or alter them.
+**Arizona resume point:** Phase 199 (AZ elections). Phases 193–198 (Tucson-metro deep-seeds) are DONE;
+Phase 199 is the next planned AZ phase. The Coachella Valley, CA work (201-203) is an independent append
+and does not block or alter them.
+⚠️ POST-JULY-21 RECONCILE owed for Sahuarita (197) + South Tucson (198): after the July 21, 2026 primary
+is certified and the new councils hold their post-canvass title re-votes, re-verify membership + title
+holders (Mayor/Vice-Mayor/Acting-Mayor) and patch any changed seat / re-bind headshots + stances.
 
 **Side-track — Phase 204 (Compass Lens Switcher):** standalone compass-UI phase on branch
 `feat/federal-lens`, independent of the Tucson/Coachella deep-seed tracks (not counted in the v22.0
