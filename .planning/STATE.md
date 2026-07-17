@@ -2,25 +2,25 @@
 gsd_state_version: 1.0
 milestone: v22.0
 milestone_name: Tucson & Arizona
-status: executing
-last_updated: "2026-07-16T23:35:17.791Z"
-last_activity: 2026-07-16 -- Phase 197 execution started
+status: phase-complete
+last_updated: "2026-07-17T02:15:00.000Z"
+last_activity: 2026-07-17 -- Phase 197 (Sahuarita) COMPLETE — verifier PASS 6/6
 progress:
   total_phases: 48
-  completed_phases: 12
+  completed_phases: 13
   total_plans: 56
-  completed_plans: 52
-  percent: 25
+  completed_plans: 56
+  percent: 27
 ---
 
 # State
 
 ## Current Position
 
-Phase: 197 (sahuarita-deep-seed) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 197
-Last activity: 2026-07-16 -- Phase 197 execution started
+Phase: 197 (sahuarita-deep-seed) — COMPLETE (verifier PASS 6/6)
+Plan: 4 of 4 complete
+Status: Phase 197 complete — next is Phase 198
+Last activity: 2026-07-17 -- Phase 197 (Sahuarita) COMPLETE — 14 stances + Sahuarita Lake banner; ⚠ post-July-21 roster reconcile owed
 
 **Arizona resume point:** Phase 196 (Marana Deep-Seed). Phases 196-200 remain planned and resumable;
 the Coachella Valley, CA work (201-203) is an independent append and does not block or alter them.
