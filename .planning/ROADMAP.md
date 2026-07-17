@@ -79,6 +79,7 @@ milestone starts at **Phase 190**.
 - [x] **Phase 198: South Tucson Deep-Seed** - Government + roster + headshots + stances + banner
 - [x] **Phase 199: AZ 2026 Elections & Discovery** - Race shells, confirmed candidates, discovery pipeline armed
 - [ ] **Phase 200: Arizona Playbook Retrospective & Close** - coverage.js reconciled, GOTCHAs documented, milestone closed
+- [ ] **Phase 206: AZ 2026 Candidate Reconcile (post-07-21)** - ⛔ BLOCKED until 2026-07-21 - seed confirmed general-election nominees onto the Phase 199 AZ race shells once the primary certifies (depends on Phase 199)
 
 **Appended - Coachella Valley, CA continuation (Riverside County + 2 cities).** Independent of the
 Arizona phases above (CA TIGER city+county boundaries already loaded); Arizona 196-200 remain
@@ -380,6 +381,23 @@ Plans:
 
 **Plans**: TBD
 **UI hint**: yes
+
+### Phase 206: AZ 2026 Candidate Reconcile (post-07-21)
+
+**Goal**: Confirmed 2026 general-election nominees are seeded onto the Phase 199 AZ race shells (6 statewide + Arizona Corporation Commission seats=2 + 30 State Senate + 30 State House seats=2 + 6 Tucson-metro local), so any AZ resident sees their actual candidates — not empty shells — for the Nov 3, 2026 general.
+**Depends on**: Phase 199 (race shells + discovery already seeded under general election e21f5757)
+**Requirements**: AZ-ELEC-01 (candidate-population portion)
+**⛔ BLOCKED until 2026-07-21** — the AZ primary must run and certify before general-election nominees are known. Do NOT start before the primary results settle (dated reminder set for 2026-07-22).
+
+**Scope (AZ 2026 only):**
+- Seed evidence-based confirmed nominees onto the existing Ph199 shells. Sources: AZ SoS official canvass + county (Pima et al.) results. Pure-structure shells already exist — this phase only attaches `race_candidates` (by race_id) + headshots; it does NOT create races/offices.
+- Sahuarita (Ph197) and South Tucson (Ph198) roster reconciles are tracked separately, NOT bundled here.
+- On completion, run the deferred **seats=2 render human-check**: load an AZ `/results?view=elections` and confirm a seats=2 race (Arizona Corporation Commission or a State House District) shows the `2 seats` badge and does not mis-render as single-winner (first AZ seats>1 races to carry candidates). See [[project_elections_view_display_rules.md]] — empty shells are hidden, so this check only becomes possible once candidates attach.
+
+**Plans:** 0 plans (run /gsd-plan-phase 206 after 2026-07-21)
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 206 to break down — only after the 2026-07-21 primary certifies)
 
 ---
 
