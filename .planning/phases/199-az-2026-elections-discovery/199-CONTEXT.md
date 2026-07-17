@@ -154,7 +154,37 @@ No new external specs/ADRs introduced by this discussion.
 
 </deferred>
 
+<post_research_updates>
+## Post-Research Decision Updates (2026-07-17, after 199-RESEARCH.md)
+
+Research (HIGH confidence; SQL-verified DB facts + multi-source cycle facts) corrected several
+locked decisions. User confirmed "use corrected facts" + "shells now + post-07-21 reconcile".
+**These OVERRIDE the conflicting items above.**
+
+- **D-05 CORRECTED:** AZ 2026 primary is **2026-07-21** (HB 2022, signed 2026-02-06), NOT
+  2026-08-04. Seed the primary election row + both primary discovery rows with `2026-07-21`.
+- **D-03 CORRECTED (Pima BoS):** Pima County Board of Supervisors is **NOT on the 2026 ballot**
+  (AZ county supervisors run in presidential years; all 5 elected Nov 2024 → next 2028).
+  **Seed ZERO Pima BoS race shells.**
+- **D-03 CONFIRMED (South Tucson):** South Tucson **does** have 2026 races (3 council seats) →
+  seed those shells. Tucson city council remains odd-year → **zero** Tucson city shells.
+- **Corporation Commission:** only **2 of 5** seats up in 2026 (at-large 2-winner) → seed the
+  confirmed on-ballot seats only, not all 5 (see RESEARCH.md seed manifest for exact anchoring).
+- **AZ House multi-member:** the `(election_id, position_name) WHERE primary_party IS NULL`
+  partial-unique index forbids 60 identically-shaped House shells → model House as **30 races
+  with `seats=2`** (first `seats=2` races for AZ; planner must confirm frontend/cron tolerate it).
+- **D-01 REVISED — candidates:** Ship this phase as **pure structure** — elections rows + all
+  race shells + discovery arming, with **NO hand-seeded candidates** (statewide/Corp-Commission
+  included). Rationale: primary is 4 days out, so filed slates are contested primary fields that
+  go stale immediately. A **post-07-21 reconcile phase** (already owed for Ph197/198) seeds
+  general-election nominees once resolved. The existing 39 US House candidates stay as-is.
+- **Migration location/number:** cross-repo `C:/EV-Accounts/backend/migrations/`, next number
+  **1372** (disk-authoritative — re-confirm at execute time). No `src/pages/Landing.jsx` /
+  coverage.js edit needed (AZ cities already surfaced per research).
+
+</post_research_updates>
+
 ---
 
 *Phase: 199-az-2026-elections-discovery*
-*Context gathered: 2026-07-17*
+*Context gathered: 2026-07-17 · Updated post-research: 2026-07-17*
