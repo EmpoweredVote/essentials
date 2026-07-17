@@ -330,7 +330,7 @@ Plans:
 **Plans**: 4 plans (4 waves)
 **Wave 1**
 
-- [ ] 198-01-PLAN.md — Structural migration: greenfield City of South Tucson government (type=City) + City Council chamber + 1 shared LOCAL district (NO LOCAL_EXEC) + 7 at-large officials (Mayor/Vice-Mayor/Acting-Mayor as title annotations); D-03 enclave donut-hole pre-flight + BLOCKING roster-currency re-verify (July 21 primary; sitting Mayor is a candidate)
+- [x] 198-01-PLAN.md — Structural migration: greenfield City of South Tucson government (type=City) + City Council chamber + 1 shared LOCAL district (NO LOCAL_EXEC) + 7 at-large officials (Mayor/Vice-Mayor/Acting-Mayor as title annotations); D-03 enclave donut-hole pre-flight + BLOCKING roster-currency re-verify (July 21 primary; sitting Mayor is a candidate)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -515,7 +515,7 @@ any relative order among themselves, but the suggested sequence (state/federal �
 | 195. Oro Valley Deep-Seed | 4/4 | Complete    | 2026-07-11 |
 | 196. Marana Deep-Seed | 0/4 | Planned | - |
 | 197. Sahuarita Deep-Seed | 4/4 | Complete|  |
-| 198. South Tucson Deep-Seed | 0/TBD | Not started | - |
+| 198. South Tucson Deep-Seed | 1/4 | In Progress|  |
 | 199. AZ 2026 Elections & Discovery | 0/TBD | Not started | - |
 | 200. Arizona Playbook Retrospective & Close | 0/TBD | Not started | - |
 | 201. Riverside County Board of Supervisors Deep-Seed (CA) | 6/6 | Complete    | 2026-07-13 |
