@@ -327,7 +327,11 @@ Plans:
   4. A licensed community banner (real street-scene/skyline photo, no AI, no aerial) sourced and wired into `src/lib/buildingImages.js`
   5. South Tucson surfaced in `src/lib/coverage.js` with a DB-honest chip
 
-**Plans**: TBD
+**Plans**: 4 plans (4 waves)
+- [ ] 198-01-PLAN.md — Structural migration: greenfield City of South Tucson government (type=City) + City Council chamber + 1 shared LOCAL district (NO LOCAL_EXEC) + 7 at-large officials (Mayor/Vice-Mayor/Acting-Mayor as title annotations); D-03 enclave donut-hole pre-flight + BLOCKING roster-currency re-verify (July 21 primary; sitting Mayor is a candidate)
+- [ ] 198-02-PLAN.md — 600x750 headshots for the 7 officials (southtucsonaz.gov Cloudflare-challenge → Playwright fallback; honest blanks; per-image license)
+- [ ] 198-03-PLAN.md — Evidence-only compass stances, one official at a time, 36 non-judicial topics (public safety/policing, budget, Mercado/South-4th-Ave corridor); 7 audit migrations, 100% cited, honest blanks, no defaults
+- [ ] 198-04-PLAN.md — Licensed cultural/urban banner (mural / South-4th-Ave streetscape, NOT landscape) + coverage.js chip appended to existing Arizona block; end-to-end address-routing verify (7/7 council, not swallowed by Tucson)
 
 #### Phase 199: AZ 2026 Elections & Discovery
 
