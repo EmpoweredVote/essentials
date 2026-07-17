@@ -28,7 +28,13 @@
 - [x] Prod: 4 rows in ('04','04019'); every row array_length=5
 - [x] Phase gate assertions 1–5 emitted as grep-able `PHASE GATE …` lines
 - [x] seats=2 attach path proven via rolled-back INSERT; nothing committed
-- [ ] **seats=2 render `<human-check>` at `/results`** — OWED. Programmatic attach-path + seats=2 storage are proven, and `seats` is never a fetch filter (electionService.ts), so render risk is low, but a visual confirmation that a Corp Commission / State House District race displays as a multi-winner (not single-winner) contest for an AZ address is still owed to the user.
+- [~] **seats=2 render `<human-check>` at `/results`** — attempted 2026-07-17; **structurally blocked until AZ candidates are seeded** (deferred reconcile). Two independent reasons, both confirmed by live testing + code:
+  1. The elections view **deliberately hides races with zero candidates** (`src/components/ElectionsView.jsx:398-402` — "rendering a wall of 'No candidates have filed' cards is noise"). AZ's pure-structure shells have no candidates, so they don't appear yet. Verified live: an Oro Valley AZ `/results?view=elections` shows only the AZ-6 US House race (which has candidates); the Corp Commission + State House/Senate + local shells are correctly hidden.
+  2. The view shows only the **single nearest upcoming election** (`src/pages/Results.jsx:1241-1250`). Every covered address has the Nov 3 2026 general as nearest-upcoming; all *existing* seats>1 races that have candidates live in **past** elections (2026 Texas Municipal General 05-02, 2026 Indiana Primary 05-05, 2026 LA County Primary 06-02), so they can never be the displayed election. AZ's seats=2 races are the first seats>1 races in any *upcoming* election.
+
+  **Render path confirmed correct by code (same shared path AZ-6 rendered on):** `ElectionsView.jsx:421` passes `seats` through; `:668` `isUnopposed = activeCandidates.length > 0 && activeCandidates.length <= seats` (seats-aware multi-winner logic); `:808` renders `${seats} seats` badge when `seats > 1`. DB proof: 31 seats=2 races stored; attach-path round-trips.
+
+  **Owed to the reconcile phase:** once candidates attach to a seats=2 AZ race, load an AZ `/results?view=elections` and confirm the Corp Commission (or a State House District) shows the `2 seats` badge and does not mis-render as single-winner. Did NOT seed a throwaway candidate to force the render — that would pollute live civic data and break the candidates-unchanged (39) invariant.
 
 ## Deviations
 - Idempotency uses `WHERE NOT EXISTS` (no unique constraint on the geoid/date pair).
