@@ -2,7 +2,7 @@ import { Fragment, useDeferredValue, useEffect, useMemo, useRef, useState } from
 import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
-import { computeVariant } from '../lib/classify';
+import { computeVariant, classifyBucket } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
@@ -1347,27 +1347,84 @@ export default function Results() {
     });
   }, [federalFiltered]);
 
+  // Phase 208 (TAB-01/TAB-02): partition deduped into three buckets via
+  // classifyBucket (Phase 207, src/lib/classify.js) — the single source of
+  // truth for tab routing. This is the ONLY place classifyBucket is called;
+  // never add a parallel keyword check here or elsewhere (207-D-06/208-D-06 —
+  // tab membership must not drift from list grouping).
+  const bucketed = useMemo(() => {
+    const buckets = { representative: [], educator: [], judge: [] };
+    for (const pol of deduped) {
+      buckets[classifyBucket(pol)].push(pol);
+    }
+    return buckets;
+  }, [deduped]);
+
   const hierarchy = useMemo(
-    () => groupIntoHierarchy(deduped),
-    [deduped]
+    () => groupIntoHierarchy(bucketed.representative),
+    [bucketed]
+  );
+  const educatorsHierarchy = useMemo(
+    () => groupIntoHierarchy(bucketed.educator),
+    [bucketed]
+  );
+  const judgesHierarchy = useMemo(
+    () => groupIntoHierarchy(bucketed.judge),
+    [bucketed]
   );
 
-  const filteredHierarchy = useMemo(() => {
-    if (appointedFilter === 'All') return hierarchy;
+  // D-11: the elected/appointed ("All types") filter layer, generalized into a
+  // reusable helper so it can be applied per-bucket without triplicating the
+  // map/filter body. matchesAppointedFilter (below) is reused unchanged.
+  function applyAppointedFilter(hier, filter) {
+    if (filter === 'All') return hier;
 
-    return hierarchy
+    return hier
       .map(({ tier, bodies }) => ({
         tier,
         bodies: bodies.map((body) => ({
           ...body,
           subgroups: body.subgroups.map((sg) => ({
             ...sg,
-            pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, appointedFilter)),
+            pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, filter)),
           })).filter((sg) => sg.pols.length > 0),
         })).filter((body) => body.subgroups.length > 0),
       }))
       .filter(({ bodies }) => bodies.length > 0);
-  }, [hierarchy, appointedFilter]);
+  }
+
+  const filteredHierarchy = useMemo(
+    () => applyAppointedFilter(hierarchy, appointedFilter),
+    [hierarchy, appointedFilter]
+  );
+  const educatorsFilteredHierarchy = useMemo(
+    () => applyAppointedFilter(educatorsHierarchy, appointedFilter),
+    [educatorsHierarchy, appointedFilter]
+  );
+  const judgesFilteredHierarchy = useMemo(
+    () => applyAppointedFilter(judgesHierarchy, appointedFilter),
+    [judgesHierarchy, appointedFilter]
+  );
+
+  // D-05: hide Educators/Judges tabs when the location has 0 office-holders of
+  // that bucket — computed PRE-appointed-filter, so an active "All types"
+  // narrowing never hides a tab that genuinely has data.
+  const hasEducators = bucketed.educator.length > 0;
+  const hasJudges = bucketed.judge.length > 0;
+
+  // D-08 / T-208-01/T-208-02: never trust the raw `?view=` param. Validate
+  // against the known tab set and fall back to Representatives when the
+  // active tab is unknown OR empty for this location (covers both a stale
+  // bookmarked URL and an in-session location change that empties the
+  // current tab).
+  const PEOPLE_TABS = ['representatives', 'educators', 'judges'];
+  const KNOWN_VIEWS = [...PEOPLE_TABS, 'elections'];
+  const effectiveActiveView = useMemo(() => {
+    if (!KNOWN_VIEWS.includes(activeView)) return 'representatives';
+    if (activeView === 'educators' && !hasEducators) return 'representatives';
+    if (activeView === 'judges' && !hasJudges) return 'representatives';
+    return activeView;
+  }, [activeView, hasEducators, hasJudges]);
 
 
   const handlePoliticianClick = (id) => {
