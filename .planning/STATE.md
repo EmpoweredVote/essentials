@@ -2,24 +2,25 @@
 gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
-status: verifying
-last_updated: "2026-07-18T03:26:18.699Z"
+status: ready_to_plan
+last_updated: 2026-07-18T03:37:09.439Z
 last_activity: 2026-07-18
 progress:
   total_phases: 37
   completed_phases: 1
   total_plans: 1
-  completed_plans: 1
+  completed_plans: 217
   percent: 3
+stopped_at: Phase 207 complete (1/1) — ready to discuss Phase 208
 ---
 
 # State
 
 ## Current Position
 
-Phase: 207 (officials-classification) — EXECUTING
-Plan: 1 of 1
-Status: Phase complete — ready for verification
+Phase: 208
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-07-18
 
 **Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
@@ -463,7 +464,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 207 — officials-classification
+**Current focus:** Phase 208 — educators & judges tabs
 
 ## v15.0 Roadmap Summary
 

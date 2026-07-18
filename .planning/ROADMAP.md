@@ -709,7 +709,7 @@ v22.0 phases above are preserved untouched.
 - Integer phases (207, 208, 209...): planned milestone work, continuing from v22.0 (highest phase 206)
 - Decimal phases (207.1, 207.2): urgent insertions (marked INSERTED)
 
-- [ ] **Phase 207: Officials Classification** - Reliably bucket every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data
+- [x] **Phase 207: Officials Classification** - Reliably bucket every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data (completed 2026-07-18)
 - [ ] **Phase 208: Educators & Judges Tabs** - New tabs beside Representatives & Elections; school-board + judicial officials leave Representatives; grey-out on no-data
 - [ ] **Phase 209: Education Lens Scaffolding** - Data-driven Education lens entry (parallel to Judicial); greyed / Custom fallback until its 8 topics are authored later
 - [ ] **Phase 210: Per-Tab Compass Integration** - Compass button + overlay work inside the new tabs; default lens shifts per tab (Judges to Judicial, Educators to Education); explicit selection overrides
@@ -805,7 +805,7 @@ lens) has no hard dependency but must precede Phase 210, which depends on both 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 207. Officials Classification | 1/1 | Complete   | 2026-07-18 |
+| 207. Officials Classification | 1/1 | Complete    | 2026-07-18 |
 | 208. Educators & Judges Tabs | 0/TBD | Not started | - |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 0/TBD | Not started | - |
