@@ -545,7 +545,7 @@ exist until Phase 208).
 **If this table is empty:** N/A — see above. All three assumptions are low-risk-if-wrong per
 D-09's safe-default catch-all design, and are flagged for planner awareness rather than blocking.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should the Judicial compass lens's `autoDistrictTypes` (`compass.js` line 493, currently
    `['JUDICIAL', 'NATIONAL_JUDICIAL']` only) be extended to include `COUNTY`/`LOCAL_EXEC` so DA/PD
@@ -557,7 +557,7 @@ D-09's safe-default catch-all design, and are flagged for planner awareness rath
    - What's unclear: whether this is in scope for Phase 207 (classification only) or Phase 210
      (per-tab lens defaults) — CONTEXT.md's deferred list assigns "per-tab default compass-lens
      shift" to Phase 210, suggesting this is 210's concern, not 207's.
-   - Recommendation: leave `compass.js` untouched in Phase 207 (no compass/lens file changes are
+   - RESOLVED: leave `compass.js` untouched in Phase 207 (no compass/lens file changes are
      in this phase's boundary); flag for Phase 210's research so the per-tab Judicial-lens default
      doesn't silently exclude DA/PD cards that Phase 207's Judges tab now includes.
 2. **Does the `CITY_COUNCIL` district_type (DC's council, 15 rows) need any handling at all in
@@ -568,7 +568,7 @@ D-09's safe-default catch-all design, and are flagged for planner awareness rath
      assume every `district_type` seen in production is in `classifyCategory`'s switch — it isn't
      (confirmed: falls to `{tier:'Unknown', group:'Uncategorized'}`), which could affect DC's
      current *display* grouping (a pre-existing, out-of-scope issue) but not the 3-bucket outcome.
-   - Recommendation: no action needed for CLASS-01 itself; worth a one-line note in the plan so a
+   - RESOLVED: no action needed for CLASS-01 itself; worth a one-line note in the plan so a
      future DC-display-grouping bug isn't mistaken for a Phase 207 regression.
 
 ## Sources
