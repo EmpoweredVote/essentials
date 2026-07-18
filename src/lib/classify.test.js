@@ -250,3 +250,86 @@ describe('classifyBucket', () => {
     });
   });
 });
+
+describe('classifyBucket — live location fixtures (SC-05)', () => {
+  // LA (Los Angeles, CA) — exercises SCHOOL base bucket (LAUSD), the D-02
+  // county DA override, and confirms ordinary reps stay in Representatives.
+  // Does NOT exercise district_type === 'JUDICIAL' (CA has none seeded) —
+  // see Bloomington/Monroe County IN below for that (Pitfall 4).
+  describe('LA (Los Angeles, CA)', () => {
+    it('LAUSD board member (district_type SCHOOL) classifies as educator', () => {
+      expect(
+        classifyBucket(
+          makePol({ district_type: 'SCHOOL', office_title: 'Board Member, District 4', chamber_name: 'Los Angeles Unified School District' })
+        )
+      ).toBe('educator');
+    });
+    it('LA County District Attorney Nathan Hochman (district_type COUNTY) classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'District Attorney' }))
+      ).toBe('judge');
+    });
+    it.each([
+      ['Mayor', 'LOCAL_EXEC'],
+      ['City Council Member', 'LOCAL'],
+      ['State Senator', 'STATE_UPPER'],
+      ['U.S. Representative', 'NATIONAL_LOWER'],
+    ])('LA %s (district_type %s) classifies as representative', (title, dt) => {
+      expect(classifyBucket(makePol({ district_type: dt, office_title: title }))).toBe('representative');
+    });
+  });
+
+  // Bloomington / Monroe County, Indiana — the true JUDICIAL base-case
+  // location LA cannot exercise (Pitfall 4).
+  describe('Bloomington / Monroe County, Indiana', () => {
+    it('Monroe Circuit Court judge (district_type JUDICIAL) classifies as judge', () => {
+      expect(
+        classifyBucket(
+          makePol({ district_type: 'JUDICIAL', office_title: 'Judge', chamber_name: 'Monroe Circuit Court' })
+        )
+      ).toBe('judge');
+    });
+    it('Monroe County Community School Corporation board member (district_type SCHOOL) classifies as educator', () => {
+      expect(
+        classifyBucket(
+          makePol({ district_type: 'SCHOOL', office_title: 'Board Member', chamber_name: 'Monroe County Community School Corporation' })
+        )
+      ).toBe('educator');
+    });
+  });
+
+  // A representatives-only AZ city (Marana / Oro Valley / Sahuarita) — AZ has
+  // zero SCHOOL/JUDICIAL/SCHOOL_BOARD/STATE_BOARD rows statewide. State/local
+  // rows must stay representative, and the 9 nationwide SCOTUS rows every US
+  // address receives must still land in judge (true-positive check).
+  describe('AZ city (reps-only statewide, plus nationwide SCOTUS)', () => {
+    it.each([
+      ['Mayor', 'LOCAL_EXEC'],
+      ['Council Member', 'LOCAL'],
+      ['State Representative', 'STATE_LOWER'],
+    ])('AZ %s (district_type %s) classifies as representative', (title, dt) => {
+      expect(classifyBucket(makePol({ district_type: dt, office_title: title }))).toBe('representative');
+    });
+    it('nationwide SCOTUS justice (district_type NATIONAL_JUDICIAL) classifies as judge', () => {
+      expect(
+        classifyBucket(
+          makePol({ district_type: 'NATIONAL_JUDICIAL', office_title: 'Associate Justice', chamber_name: 'Supreme Court of the United States' })
+        )
+      ).toBe('judge');
+    });
+  });
+
+  // Live-data-correction guards (RESEARCH.md Common Pitfalls #1/#2).
+  describe('Live-data-correction guards', () => {
+    it('DC State Board of Education member (district_type SCHOOL_BOARD) classifies as educator', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'SCHOOL_BOARD', office_title: 'SBOE Member (Ward 4)' }))
+      ).toBe('educator');
+    });
+    it('SF District Attorney Brooke Jenkins (district_type LOCAL_EXEC) classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'LOCAL_EXEC', office_title: 'District Attorney' }))
+      ).toBe('judge');
+    });
+  });
+});
