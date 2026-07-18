@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
-status: planning
-last_updated: "2026-07-18T00:44:38.855Z"
-last_activity: 2026-07-18
+status: Defining requirements
+last_updated: "2026-07-18T01:27:06.884Z"
+last_activity: 2026-07-18 — Milestone v23.0 started
 progress:
-  total_phases: 5
+  total_phases: 37
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -35,8 +35,10 @@ The following remain OPEN and are held until the AZ primary certifies on **2026-
 
 - **Phase 200 — AZ Playbook Retrospective & Close:** coverage.js reconcile, fold AZ GOTCHAs into
   `LOCATION-ONBOARDING.md`, DB-verified audit, close the milestone. (No phase dir yet.)
+
 - **Phase 206 — AZ 2026 Candidate Reconcile:** seed confirmed general-election nominees onto the
   Phase 199 AZ race shells once the primary certifies. (⛔ BLOCKED until 2026-07-21.)
+
 - **Sahuarita (197) + South Tucson (198) reconcile:** after the post-canvass title re-votes, re-verify
   council membership + title holders (Mayor/Vice-Mayor/Acting-Mayor), patch any changed seat, re-bind
   headshots + stances.
@@ -563,9 +565,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-17T18:26:12.747Z
-Stopped at: Phase 199 context gathered
-Resume file: .planning/phases/199-az-2026-elections-discovery/199-CONTEXT.md
+Last session: 2026-07-18T01:27:06.870Z
+Stopped at: Phase 207 context gathered
+Resume file: .planning/phases/207-officials-classification/207-CONTEXT.md
 
 ## Performance Metrics
 
