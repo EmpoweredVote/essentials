@@ -134,9 +134,12 @@ describe('classifyBucket', () => {
     expect(classifyBucket(makePol({ district_type: dt, office_title: 'Council Member' }))).toBe(expected);
   });
 
-  // D-02 / Pitfall 1: DA/prosecutor/public-defender titles route to 'judge' under
-  // BOTH COUNTY and LOCAL_EXEC (SF's DA/PD/City Prosecutor are LOCAL_EXEC, not COUNTY).
-  describe('DA / prosecutor / public defender title override (D-02)', () => {
+  // 208-02 (reverses 207-D-02): the "Judges" tab is for adjudicators only.
+  // Prosecutors and public defenders are lawyers in the justice system, not
+  // judges, so they route to the 'representative' catch-all — NOT 'judge'.
+  // These cases guard against the override being reintroduced or a DA leaking
+  // into the judge bucket via some other path.
+  describe('prosecutors / public defenders are representatives, not judges (208-02)', () => {
     const titles = [
       'District Attorney',
       'County Attorney',
@@ -145,53 +148,30 @@ describe('classifyBucket', () => {
       'City Prosecutor',
       'Public Defender',
     ];
-    it.each(titles)('"%s" under district_type COUNTY classifies as judge', (title) => {
-      expect(classifyBucket(makePol({ district_type: 'COUNTY', office_title: title }))).toBe('judge');
+    it.each(titles)('"%s" under district_type COUNTY classifies as representative', (title) => {
+      expect(classifyBucket(makePol({ district_type: 'COUNTY', office_title: title }))).toBe('representative');
     });
-    it.each(titles)('"%s" under district_type LOCAL_EXEC classifies as judge', (title) => {
-      expect(classifyBucket(makePol({ district_type: 'LOCAL_EXEC', office_title: title }))).toBe('judge');
-    });
-  });
-
-  // WR-01: state-specific elected-prosecutor titles not in the original
-  // whitelist — Florida's bare "State Attorney" (no apostrophe-s) and
-  // VA/KY's "Commonwealth's Attorney".
-  describe('State-specific prosecutor titles (WR-01)', () => {
-    it('Florida bare "State Attorney" (district_type COUNTY) classifies as judge', () => {
-      expect(
-        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'State Attorney' }))
-      ).toBe('judge');
-    });
-    it('VA/KY "Commonwealth\'s Attorney" (district_type COUNTY) classifies as judge', () => {
-      expect(
-        classifyBucket(makePol({ district_type: 'COUNTY', office_title: "Commonwealth's Attorney" }))
-      ).toBe('judge');
+    it.each(titles)('"%s" under district_type LOCAL_EXEC classifies as representative', (title) => {
+      expect(classifyBucket(makePol({ district_type: 'LOCAL_EXEC', office_title: title }))).toBe('representative');
     });
   });
 
-  // WR-02: state's/commonwealth's attorney apostrophe handling must accept
-  // the ASCII straight apostrophe, the typographic/curly apostrophe (common
-  // in web-scraped titles), and the missing-apostrophe form.
-  describe('State\'s / Commonwealth\'s Attorney apostrophe variants (WR-02)', () => {
-    it('curly-apostrophe "State’s Attorney" classifies as judge', () => {
+  // State-specific elected-prosecutor titles (Florida's bare "State Attorney",
+  // VA/KY's "Commonwealth's Attorney") and their apostrophe variants: all are
+  // prosecutors, so all classify as 'representative' after the 208-02 reversal.
+  describe('state-specific prosecutor titles are representatives (208-02)', () => {
+    const prosecutorTitles = [
+      'State Attorney',
+      "Commonwealth's Attorney",
+      'State’s Attorney',        // curly apostrophe
+      'States Attorney',         // missing apostrophe
+      'Commonwealth’s Attorney', // curly apostrophe
+      'Commonwealths Attorney',  // missing apostrophe
+    ];
+    it.each(prosecutorTitles)('"%s" (district_type COUNTY) classifies as representative', (title) => {
       expect(
-        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'State’s Attorney' }))
-      ).toBe('judge');
-    });
-    it('missing-apostrophe "States Attorney" classifies as judge', () => {
-      expect(
-        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'States Attorney' }))
-      ).toBe('judge');
-    });
-    it('curly-apostrophe "Commonwealth’s Attorney" classifies as judge', () => {
-      expect(
-        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'Commonwealth’s Attorney' }))
-      ).toBe('judge');
-    });
-    it('missing-apostrophe "Commonwealths Attorney" classifies as judge', () => {
-      expect(
-        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'Commonwealths Attorney' }))
-      ).toBe('judge');
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: title }))
+      ).toBe('representative');
     });
   });
 
@@ -327,10 +307,10 @@ describe('classifyBucket — live location fixtures (SC-05)', () => {
         )
       ).toBe('educator');
     });
-    it('LA County District Attorney Nathan Hochman (district_type COUNTY) classifies as judge', () => {
+    it('LA County District Attorney Nathan Hochman (district_type COUNTY) classifies as representative (208-02)', () => {
       expect(
         classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'District Attorney' }))
-      ).toBe('judge');
+      ).toBe('representative');
     });
     it.each([
       ['Mayor', 'LOCAL_EXEC'],
@@ -389,10 +369,10 @@ describe('classifyBucket — live location fixtures (SC-05)', () => {
         classifyBucket(makePol({ district_type: 'SCHOOL_BOARD', office_title: 'SBOE Member (Ward 4)' }))
       ).toBe('educator');
     });
-    it('SF District Attorney Brooke Jenkins (district_type LOCAL_EXEC) classifies as judge', () => {
+    it('SF District Attorney Brooke Jenkins (district_type LOCAL_EXEC) classifies as representative (208-02)', () => {
       expect(
         classifyBucket(makePol({ district_type: 'LOCAL_EXEC', office_title: 'District Attorney' }))
-      ).toBe('judge');
+      ).toBe('representative');
     });
   });
 });
