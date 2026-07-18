@@ -744,9 +744,18 @@ v22.0 phases above are preserved untouched.
   1. On the results/officials view, a user can switch among Representatives, Educators, and Judges tabs alongside the existing Elections tab
   2. The Educators tab lists the location's school-board office-holders; the Judges tab lists its judicial office-holders
   3. School-board and judicial officials no longer appear under Representatives — that list is decluttered (no more wading through every LA school-board district)
-  4. A tab is greyed out / disabled with a clear empty-affordance (not an empty tab) when the location has no office-holders of that type — no school-board members greys Educators; no judges greys Judges
+  4. (Revised by 208-CONTEXT.md D-05/D-06) An Educators/Judges tab is HIDDEN entirely — not greyed/disabled — when the location has 0 office-holders of that type; the active tab falls back to Representatives for an empty or stale ?view=. Representatives always shows.
 
-**Plans**: TBD
+**Plans**: 2 plans in 2 waves
+
+**Wave 1**
+
+- [ ] 208-01-PLAN.md — Extend Results.jsx to 4 tabs: classifyBucket partition of `deduped` + three per-bucket hierarchies, renderPeopleTab helper called 3x (full parity + compass slot), Educators/Judges tab buttons hidden-when-empty, effectiveActiveView fallback (D-08), plain "Elections" label + election summary relocated to the location-header row
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 208-02-PLAN.md — Human-verify checkpoint: 4-tab order, classifyBucket routing, decluttered Representatives, hidden-when-empty Educators/Judges, stale-?view= fallback, relocated election summary vs mockup, compass on all people-tabs, 280px reachability
+
 **UI hint**: yes
 
 #### Phase 209: Education Lens Scaffolding
@@ -806,7 +815,7 @@ lens) has no hard dependency but must precede Phase 210, which depends on both 2
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 207. Officials Classification | 1/1 | Complete    | 2026-07-18 |
-| 208. Educators & Judges Tabs | 0/TBD | Not started | - |
+| 208. Educators & Judges Tabs | 0/2 | Planned | - |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 0/TBD | Not started | - |
 | 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 0/TBD | Not started | - |
