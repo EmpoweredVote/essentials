@@ -364,6 +364,18 @@ function simplifyForBody(title, pol) {
 
 const SHORTCUTS = [];
 
+// Phase 208 (D-01/D-05/D-06): shared active/inactive className for all four tab
+// buttons (Representatives, Educators, Judges, Elections) — avoids 4x copy-paste
+// drift of the identical ternary. Every caller passes an isActive boolean derived
+// from effectiveActiveView, never raw activeView.
+function tabButtonClass(isActive) {
+  return `px-2 sm:px-4 py-3 text-sm min-h-[44px] transition-colors whitespace-nowrap ${
+    isActive
+      ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
+      : 'text-[#718096] dark:text-[#8b949e] font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
+  }`;
+}
+
 export default function Results() {
   const { isDark } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -1416,14 +1428,22 @@ export default function Results() {
   // against the known tab set and fall back to Representatives when the
   // active tab is unknown OR empty for this location (covers both a stale
   // bookmarked URL and an in-session location change that empties the
-  // current tab).
-  const PEOPLE_TABS = ['representatives', 'educators', 'judges'];
-  const KNOWN_VIEWS = [...PEOPLE_TABS, 'elections'];
+  // current tab). A switch (rather than repeated equality comparisons on the
+  // raw param) keeps this the single legitimate reader of the raw param —
+  // every render branch and tab button downstream reads effectiveActiveView.
   const effectiveActiveView = useMemo(() => {
-    if (!KNOWN_VIEWS.includes(activeView)) return 'representatives';
-    if (activeView === 'educators' && !hasEducators) return 'representatives';
-    if (activeView === 'judges' && !hasJudges) return 'representatives';
-    return activeView;
+    switch (activeView) {
+      case 'representatives':
+        return 'representatives';
+      case 'educators':
+        return hasEducators ? 'educators' : 'representatives';
+      case 'judges':
+        return hasJudges ? 'judges' : 'representatives';
+      case 'elections':
+        return 'elections';
+      default:
+        return 'representatives';
+    }
   }, [activeView, hasEducators, hasJudges]);
 
 
@@ -1817,6 +1837,28 @@ export default function Results() {
                     Tribal Land — {tribalLand.name || 'Reservation'}
                   </span>
                 )}
+                {/* Phase 208 (D-02/D-03): election summary relocated here from the
+                    Elections tab button — location-level, so it renders once and
+                    stays visible across all four tabs. Guarded on electionsLabelSuffix
+                    truthy, mirroring the old tab-button conditional. */}
+                {electionsLabelSuffix && (
+                  <span className="inline-flex items-center whitespace-nowrap">
+                    <span className="text-sm text-gray-700 dark:text-gray-300" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                      <span className="sm:hidden">Elections</span>
+                      <span className="hidden sm:inline">{`Elections - ${electionsLabelSuffix}`}</span>
+                    </span>
+                    {electionsDaysAway && (
+                      <span
+                        className="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0"
+                        style={{ backgroundColor: '#FED12E', color: '#1a1a1a' }}
+                      >
+                        {/* compact on mobile (e.g. "3d"), full text from sm up */}
+                        <span className="sm:hidden">{electionsDaysAway.replace(/ days? (away|ago)$/, 'd').replace(/^Yesterday$/, '1d')}</span>
+                        <span className="hidden sm:inline">{electionsDaysAway}</span>
+                      </span>
+                    )}
+                  </span>
+                )}
                 <button
                   type="button"
                   onClick={() => setEditingSearch(true)}
@@ -1988,40 +2030,34 @@ export default function Results() {
           {/* Tab toggle + inline filters — tabs left, filters right */}
           {(activeQuery || browseResults) && (
             <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-y-2 border-b border-[#E2EBEF] dark:border-gray-800 px-4 sm:px-12">
-              <div className="flex">
+              <div className="flex overflow-x-auto">
                 <button
-                  className={`px-2 sm:px-4 py-3 text-sm min-h-[44px] transition-colors ${
-                    activeView === 'representatives'
-                      ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
-                      : 'text-[#718096] dark:text-[#8b949e] font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
-                  }`}
+                  className={tabButtonClass(effectiveActiveView === 'representatives')}
                   onClick={() => switchView('representatives')}
                 >
                   Representatives
                 </button>
+                {hasEducators && (
+                  <button
+                    className={tabButtonClass(effectiveActiveView === 'educators')}
+                    onClick={() => switchView('educators')}
+                  >
+                    Educators
+                  </button>
+                )}
+                {hasJudges && (
+                  <button
+                    className={tabButtonClass(effectiveActiveView === 'judges')}
+                    onClick={() => switchView('judges')}
+                  >
+                    Judges
+                  </button>
+                )}
                 <button
-                  className={`px-2 sm:px-4 py-3 text-sm min-h-[44px] transition-colors flex items-center gap-1 ${
-                    activeView === 'elections'
-                      ? 'text-[#00657C] dark:text-ev-teal-light font-semibold border-b-2 border-[#00657C] dark:border-ev-teal-light'
-                      : 'text-[#718096] dark:text-[#8b949e] font-normal hover:text-[#4A5568] dark:hover:text-gray-300'
-                  }`}
+                  className={tabButtonClass(effectiveActiveView === 'elections')}
                   onClick={() => switchView('elections')}
                 >
-                  <span className="sm:hidden">Elections</span>
-                  <span className="hidden sm:inline">
-                    {electionsLabelSuffix ? `Elections - ${electionsLabelSuffix}` : 'Elections'}
-                  </span>
-                  {electionsDaysAway && (
-                    <span
-                      className="ml-1.5 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0"
-                      style={{ backgroundColor: '#FED12E', color: '#1a1a1a' }}
-                    >
-                      {/* compact on mobile (e.g. "3d"), full text from sm up — both
-                          directions collapse to "Nd" so the tab row fits at 280px */}
-                      <span className="sm:hidden">{electionsDaysAway.replace(/ days? (away|ago)$/, 'd').replace(/^Yesterday$/, '1d')}</span>
-                      <span className="hidden sm:inline">{electionsDaysAway}</span>
-                    </span>
-                  )}
+                  Elections
                 </button>
               </div>
               <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
