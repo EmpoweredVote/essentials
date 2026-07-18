@@ -264,19 +264,12 @@ const JUDGE_DISTRICT_TYPES = new Set(["JUDICIAL", "NATIONAL_JUDICIAL"]);
 // literal, not STATE_BOARD).
 const EDUCATOR_DISTRICT_TYPES = new Set(["SCHOOL", "STATE_BOARD", "SCHOOL_BOARD"]);
 
-// D-02 / Pitfall 1: DA/prosecutor/public-defender titles -> judge, regardless
-// of base district_type (live data has these under both COUNTY and
-// LOCAL_EXEC, e.g. San Francisco's DA/PD/City Prosecutor). Whitelist, not a
-// broad /attorney/ match — must NOT catch "Attorney General" or "City
-// Attorney" (Pitfall 3). Also covers Florida's bare "State Attorney" (no
-// apostrophe-s) and VA/KY's "Commonwealth's Attorney" — both are real
-// elected-prosecutor titles, distinct from "Attorney General"/"City
-// Attorney" as substrings, so the negative guards still hold. The `['’]?`
-// character class accepts the ASCII straight apostrophe (U+0027), the
-// typographic/curly apostrophe (U+2019 — common in web-scraped titles),
-// or no apostrophe at all ("states attorney"/"commonwealths attorney").
-const PROSECUTOR_DEFENDER_TITLE_RE =
-  /\b(district attorney|county attorney|prosecuting attorney|state['’]?s attorney|state attorney|commonwealth['’]?s attorney|city prosecutor|public defender)\b/i;
+// 208-02 operator punch-list: prosecutors and public defenders (DA / county
+// attorney / state's attorney / public defender) are lawyers in the justice
+// system, NOT adjudicators, so they no longer route to the judge bucket
+// (reverses 207-D-02). They fall through to the 'representative' catch-all and
+// group under County/Local Officials. The former PROSECUTOR_DEFENDER_TITLE_RE
+// whitelist was removed with the override it fed.
 
 // D-03: title-detected judge/justice fallback for missing/mistyped
 // district_type.
@@ -316,7 +309,9 @@ export function classifyBucket(pol) {
 
   // Additive overrides (D-07/D-08) — only reachable when the base bucket is
   // still 'representative'.
-  if (PROSECUTOR_DEFENDER_TITLE_RE.test(title)) return "judge"; // D-02
+  // 208-02: prosecutors/public defenders are NOT adjudicators — no longer
+  // routed to judge (reverses 207-D-02, see note above). Only genuine
+  // judge/justice titles fall through to the judge bucket here.
   if (JUDGE_TITLE_RE.test(title)) return "judge"; // D-03
   if (SCHOOL_SUPERINTENDENT_TITLE_RE.test(title)) return "educator"; // D-05
   if (SCHOOL_BOARD_TEXT_RE.test(title) || SCHOOL_BOARD_TEXT_RE.test(chamber))

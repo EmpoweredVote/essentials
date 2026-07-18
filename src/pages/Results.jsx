@@ -2,7 +2,7 @@ import { Fragment, useDeferredValue, useEffect, useMemo, useRef, useState } from
 import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
-import { computeVariant, classifyBucket } from '../lib/classify';
+import { computeVariant, classifyBucket, classifyCategory } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
@@ -1369,6 +1369,20 @@ export default function Results() {
     for (const pol of deduped) {
       buckets[classifyBucket(pol)].push(pol);
     }
+    // 208-02 operator punch-list: the U.S. Supreme Court (Federal Judiciary)
+    // exists for EVERY location, so it must not by itself summon a Judges tab.
+    // Require a non-federal (state/local) judge to warrant the tab. When the
+    // only judges are federal, fold them back into Representatives — their
+    // pre-208 home under Federal → Federal Judiciary — so SCOTUS still renders
+    // but the Judges tab stays hidden. When state/local judges DO exist, the
+    // tab shows and keeps the federal judges alongside them.
+    const hasNonFederalJudge = buckets.judge.some(
+      (pol) => classifyCategory(pol).tier !== 'Federal'
+    );
+    if (!hasNonFederalJudge && buckets.judge.length > 0) {
+      buckets.representative.push(...buckets.judge);
+      buckets.judge = [];
+    }
     return buckets;
   }, [deduped]);
 
@@ -1818,31 +1832,37 @@ export default function Results() {
             {/* Collapsed chip — shown when we have a result and not actively editing */}
             {(formattedAddress || (searchMode === 'browse' && browseResults)) && !editingSearch && (
               <div className="flex items-center gap-2">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#00657c' }}>
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                <span className="text-sm text-gray-700 dark:text-gray-300 truncate" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                  {formattedAddress ? toAddressTitleCase(formattedAddress) : addressInput}
-                </span>
-                {/* SCHEMA-03 (Phase 133 D-09): tribal_land badge in ev-coral.
-                    Renders only when API response.tribal_land.on_reservation === true.
-                    Non-jurisdictional — federal/state/local officials still render normally. */}
-                {tribalLand?.on_reservation && (
-                  <span
-                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap"
-                    style={{ backgroundColor: '#ff5740', color: '#fff', fontFamily: "'Manrope', sans-serif" }}
-                    title={`On tribal land: ${tribalLand.name || 'Reservation'}`}
-                  >
-                    Tribal Land — {tribalLand.name || 'Reservation'}
+                {/* LEFT zone: location (pin + address + tribal badge). flex-1 so the
+                    center zone is genuinely centered in the row (208-02 operator:
+                    location top-left, election info top-center). min-w-0 lets the
+                    address truncate instead of shoving the center off-screen. */}
+                <div className="flex-1 min-w-0 flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" style={{ color: '#00657c' }}>
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span className="text-sm text-gray-700 dark:text-gray-300 truncate" style={{ fontFamily: "'Manrope', sans-serif" }}>
+                    {formattedAddress ? toAddressTitleCase(formattedAddress) : addressInput}
                   </span>
-                )}
-                {/* Phase 208 (D-02/D-03): election summary relocated here from the
-                    Elections tab button — location-level, so it renders once and
-                    stays visible across all four tabs. Guarded on electionsLabelSuffix
-                    truthy, mirroring the old tab-button conditional. */}
+                  {/* SCHEMA-03 (Phase 133 D-09): tribal_land badge in ev-coral.
+                      Renders only when API response.tribal_land.on_reservation === true.
+                      Non-jurisdictional — federal/state/local officials still render normally. */}
+                  {tribalLand?.on_reservation && (
+                    <span
+                      className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap shrink-0"
+                      style={{ backgroundColor: '#ff5740', color: '#fff', fontFamily: "'Manrope', sans-serif" }}
+                      title={`On tribal land: ${tribalLand.name || 'Reservation'}`}
+                    >
+                      Tribal Land — {tribalLand.name || 'Reservation'}
+                    </span>
+                  )}
+                </div>
+                {/* CENTER zone: election summary. Relocated from the Elections tab
+                    button (208-D-02/D-03) — location-level, renders once and stays
+                    visible across all four tabs. Guarded on electionsLabelSuffix.
+                    Centered per 208-02 operator feedback. */}
                 {electionsLabelSuffix && (
-                  <span className="inline-flex items-center whitespace-nowrap">
+                  <span className="inline-flex items-center whitespace-nowrap shrink-0">
                     <span className="text-sm text-gray-700 dark:text-gray-300" style={{ fontFamily: "'Manrope', sans-serif" }}>
                       <span className="sm:hidden">Elections</span>
                       <span className="hidden sm:inline">{`Elections - ${electionsLabelSuffix}`}</span>
@@ -1859,18 +1879,22 @@ export default function Results() {
                     )}
                   </span>
                 )}
-                <button
-                  type="button"
-                  onClick={() => setEditingSearch(true)}
-                  aria-label="Edit search"
-                  className="ml-1 inline-flex items-center justify-center w-11 h-11 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors"
-                  style={{ color: '#00657c' }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 20h9" />
-                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-                  </svg>
-                </button>
+                {/* RIGHT zone: edit pencil. flex-1 + justify-end balances the LEFT
+                    zone so the center election stays centered. */}
+                <div className="flex-1 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => setEditingSearch(true)}
+                    aria-label="Edit search"
+                    className="inline-flex items-center justify-center w-11 h-11 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors shrink-0"
+                    style={{ color: '#00657c' }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 20h9" />
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                    </svg>
+                  </button>
+                </div>
                 {/* Sticky CompassKey is positioned floating at top of <main>;
                     it visually overlaps this row at scroll = 0, then pins as the user scrolls. */}
               </div>
