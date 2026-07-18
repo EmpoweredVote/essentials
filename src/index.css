@@ -320,13 +320,19 @@ body {
    styles, so geometry/color overrides here require specificity / !important).
    ========================================================================== */
 
-/* R2-1 (M1): header hamburger renders ~40×18 — enlarge the hit area to ≥44×44. */
-.ev-header-mobile-toggle {
-  min-width: 44px;
-  min-height: 44px;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
+/* Hamburger removed (208-02 operator). essentials passes navItems=[], so the
+   mobile hamburger only re-listed the Account menu + theme toggle already in
+   the header's right-side cluster — pure redundancy. On mobile ev-ui hides
+   that cluster (inline style) and exposes everything through the hamburger, so
+   we do the inverse: hide the hamburger and reveal the cluster inline. Both
+   need !important because ev-ui controls display via inline styles. The cluster
+   is selected by the div that wraps the "Profile menu" toggle (:has), matching
+   only the desktop cluster — the mobile-menu list has no such aria-label. */
+@media (max-width: 768px) {
+  .ev-header-mobile-toggle { display: none !important; }
+  header div:has(> div > button[aria-label="Profile menu"]) {
+    display: flex !important;
+  }
 }
 
 /* Dark mode: ev-ui Header child text overrides — ev-ui hardcodes the old palette
