@@ -92,7 +92,14 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| _(filled by roadmapper)_ | | |
+| CLASS-01 | Phase 207 | Pending |
+| TAB-01 | Phase 208 | Pending |
+| TAB-02 | Phase 208 | Pending |
+| TAB-03 | Phase 208 | Pending |
+| EDU-01 | Phase 209 | Pending |
+| EDU-02 | Phase 209 | Pending |
+| CMP-01 | Phase 210 | Pending |
+| CMP-02 | Phase 210 | Pending |
+| RES-01 | Phase 211 | Pending |
 
-**Coverage:** to be validated by the roadmapper — every v23.0 requirement (TAB-01/02/03, CLASS-01,
-CMP-01/02, EDU-01/02, RES-01) mapped to exactly one phase, phases numbered from **207**.
+**Coverage:** 9/9 v23.0 requirements mapped to exactly one phase (207–211). No orphans, no duplicates.
