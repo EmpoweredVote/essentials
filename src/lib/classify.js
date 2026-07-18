@@ -247,6 +247,72 @@ export function classifyCategory(pol) {
   return { tier: "Unknown", group: "Uncategorized" };
 }
 
+// classifyBucket(pol) — CLASS-01 single source of truth: buckets every
+// office-holder into exactly one of 'representative' | 'educator' | 'judge'.
+// Both today's Results grouping and Phase 208's Educators & Judges tabs call
+// this same function so classification can never drift (D-06). Precedence is
+// district_type base + additive-only overrides (D-07/D-08) — a clean
+// JUDICIAL/SCHOOL/STATE_BOARD/SCHOOL_BOARD row is decided before any override
+// regex runs and can never be pulled back out. See 207-RESEARCH.md.
+
+// D-01: whole JUDICIAL/NATIONAL_JUDICIAL district_type -> judge (no
+// judge-vs-court-staff special-casing).
+const JUDGE_DISTRICT_TYPES = new Set(["JUDICIAL", "NATIONAL_JUDICIAL"]);
+
+// D-04: SCHOOL/STATE_BOARD -> educator, plus SCHOOL_BOARD (live-DB
+// correction: DC's 9 elected State Board of Education members use this
+// literal, not STATE_BOARD).
+const EDUCATOR_DISTRICT_TYPES = new Set(["SCHOOL", "STATE_BOARD", "SCHOOL_BOARD"]);
+
+// D-02 / Pitfall 1: DA/prosecutor/public-defender titles -> judge, regardless
+// of base district_type (live data has these under both COUNTY and
+// LOCAL_EXEC, e.g. San Francisco's DA/PD/City Prosecutor). Whitelist, not a
+// broad /attorney/ match — must NOT catch "Attorney General" or "City
+// Attorney" (Pitfall 3).
+const PROSECUTOR_DEFENDER_TITLE_RE =
+  /\b(district attorney|county attorney|prosecuting attorney|state'?s attorney|city prosecutor|public defender)\b/i;
+
+// D-03: title-detected judge/justice fallback for missing/mistyped
+// district_type.
+const JUDGE_TITLE_RE = /\b(judge|justice)\b/i;
+
+// D-05 / Pitfall 5: school-superintendent override, guarded so it does not
+// catch non-education superintendent titles (police, public works, streets).
+const SCHOOL_SUPERINTENDENT_TITLE_RE = /superintendent\s+of\s+(public instruction|schools)\b/i;
+
+// D-04: chamber/title "school board" / "board of education" catches
+// LOCAL-mistyped school boards (live case: Portland, ME).
+const SCHOOL_BOARD_TEXT_RE = /school board|board of education/i;
+
+/**
+ * classifyBucket(pol) -> 'representative' | 'educator' | 'judge'
+ *
+ * CLASS-01: every office-holder returned for a location resolves to exactly
+ * one of the three buckets. Null-safe (D-09/T-207-01): a null/missing row
+ * falls through to 'representative' without throwing.
+ */
+export function classifyBucket(pol) {
+  const dt = pol?.district_type || "";
+  const title = pol?.office_title || "";
+  const chamber = pol?.chamber_name_formal || pol?.chamber_name || "";
+
+  // Base: district_type (D-07). Clean JUDICIAL/NATIONAL_JUDICIAL/SCHOOL/
+  // STATE_BOARD/SCHOOL_BOARD rows are decided here and never pulled back out
+  // by a keyword below (D-08).
+  if (JUDGE_DISTRICT_TYPES.has(dt)) return "judge";
+  if (EDUCATOR_DISTRICT_TYPES.has(dt)) return "educator";
+
+  // Additive overrides (D-07/D-08) — only reachable when the base bucket is
+  // still 'representative'.
+  if (PROSECUTOR_DEFENDER_TITLE_RE.test(title)) return "judge"; // D-02
+  if (JUDGE_TITLE_RE.test(title)) return "judge"; // D-03
+  if (SCHOOL_SUPERINTENDENT_TITLE_RE.test(title)) return "educator"; // D-05
+  if (SCHOOL_BOARD_TEXT_RE.test(title) || SCHOOL_BOARD_TEXT_RE.test(chamber))
+    return "educator"; // D-04
+
+  return "representative"; // D-09 catch-all
+}
+
 export function orderedEntries(obj, order) {
   const keys = Object.keys(obj);
   const ranked = keys.sort(
