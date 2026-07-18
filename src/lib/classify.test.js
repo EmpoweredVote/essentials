@@ -153,6 +153,22 @@ describe('classifyBucket', () => {
     });
   });
 
+  // WR-01: state-specific elected-prosecutor titles not in the original
+  // whitelist — Florida's bare "State Attorney" (no apostrophe-s) and
+  // VA/KY's "Commonwealth's Attorney".
+  describe('State-specific prosecutor titles (WR-01)', () => {
+    it('Florida bare "State Attorney" (district_type COUNTY) classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'State Attorney' }))
+      ).toBe('judge');
+    });
+    it('VA/KY "Commonwealth\'s Attorney" (district_type COUNTY) classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: "Commonwealth's Attorney" }))
+      ).toBe('judge');
+    });
+  });
+
   // Pitfall 3: negative attorney guards — civil-counsel titles must NOT be swept
   // into 'judge' by an over-broad /attorney/ match.
   describe('Attorney General / City Attorney negative guards (Pitfall 3)', () => {

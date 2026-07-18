@@ -268,9 +268,12 @@ const EDUCATOR_DISTRICT_TYPES = new Set(["SCHOOL", "STATE_BOARD", "SCHOOL_BOARD"
 // of base district_type (live data has these under both COUNTY and
 // LOCAL_EXEC, e.g. San Francisco's DA/PD/City Prosecutor). Whitelist, not a
 // broad /attorney/ match — must NOT catch "Attorney General" or "City
-// Attorney" (Pitfall 3).
+// Attorney" (Pitfall 3). Also covers Florida's bare "State Attorney" (no
+// apostrophe-s) and VA/KY's "Commonwealth's Attorney" — both are real
+// elected-prosecutor titles, distinct from "Attorney General"/"City
+// Attorney" as substrings, so the negative guards still hold.
 const PROSECUTOR_DEFENDER_TITLE_RE =
-  /\b(district attorney|county attorney|prosecuting attorney|state'?s attorney|city prosecutor|public defender)\b/i;
+  /\b(district attorney|county attorney|prosecuting attorney|state'?s attorney|state attorney|commonwealth'?s attorney|city prosecutor|public defender)\b/i;
 
 // D-03: title-detected judge/justice fallback for missing/mistyped
 // district_type.
