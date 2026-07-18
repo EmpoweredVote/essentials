@@ -287,7 +287,13 @@ const JUDGE_TITLE_RE = /\b(judge|justice)\b/i;
 const SCHOOL_SUPERINTENDENT_TITLE_RE = /superintendent\s+of\s+(public instruction|schools)\b/i;
 
 // D-04: chamber/title "school board" / "board of education" catches
-// LOCAL-mistyped school boards (live case: Portland, ME).
+// mistyped school boards regardless of base district_type — this mirrors
+// D-02's DA/prosecutor override precedent (also dt-independent). Confirmed
+// live case: Portland, ME uses district_type LOCAL, but the check is
+// intentionally NOT scoped to dt === 'LOCAL' — any row still in the base
+// 'representative' bucket (STATE_EXEC, LOCAL_EXEC, COUNTY, NATIONAL_EXEC,
+// etc.) is eligible, so a data source that mistypes a school-board seat
+// under a different district_type is still rescued into 'educator'.
 const SCHOOL_BOARD_TEXT_RE = /school board|board of education/i;
 
 /**

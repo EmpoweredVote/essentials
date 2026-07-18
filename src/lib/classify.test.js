@@ -251,6 +251,27 @@ describe('classifyBucket', () => {
     });
   });
 
+  // WR-03: the school-board chamber/title text fallback is intentionally
+  // dt-independent (mirrors D-02's DA override precedent), not scoped to
+  // district_type === 'LOCAL' as the pre-fix comment implied. Any row still
+  // in the base 'representative' bucket is eligible.
+  describe('School-board text fallback is dt-independent (WR-03)', () => {
+    it('district_type STATE_EXEC with office_title containing "Board of Education" classifies as educator', () => {
+      expect(
+        classifyBucket(
+          makePol({ district_type: 'STATE_EXEC', office_title: 'Liaison, State Board of Education' })
+        )
+      ).toBe('educator');
+    });
+    it('district_type COUNTY with chamber_name "School Board" classifies as educator', () => {
+      expect(
+        classifyBucket(
+          makePol({ district_type: 'COUNTY', office_title: 'Member', chamber_name: 'County School Board' })
+        )
+      ).toBe('educator');
+    });
+  });
+
   // D-03: title-detected judge/justice fallback fires when district_type is
   // missing or mistyped — proves the fallback actually fires, not just D-08.
   describe('Title-detected judge/justice fallback (D-03)', () => {
