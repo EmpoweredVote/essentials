@@ -1,39 +1,48 @@
 ---
 gsd_state_version: 1.0
-milestone: v22.0
-milestone_name: Tucson & Arizona
-status: completed
-stopped_at: Phase 199 context gathered
-last_updated: "2026-07-17T21:14:50.292Z"
-last_activity: 2026-07-17 -- Phase 199 marked complete
+milestone: v23.0
+milestone_name: Educators & Judges Tabs
+status: planning
+last_updated: "2026-07-18T00:44:38.855Z"
+last_activity: 2026-07-18
 progress:
-  total_phases: 16
-  completed_phases: 15
-  total_plans: 64
-  completed_plans: 64
-  percent: 94
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 199 — COMPLETE
-Plan: 1 of 4
-Status: Phase 199 complete
-Last activity: 2026-07-17 -- Phase 199 marked complete
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-18 — Milestone v23.0 started
 
-**Arizona resume point:** Phase 199 (AZ elections). Phases 193–198 (Tucson-metro deep-seeds) are DONE;
-Phase 199 is the next planned AZ phase. The Coachella Valley, CA work (201-203) is an independent append
-and does not block or alter them.
-⚠️ POST-JULY-21 RECONCILE owed for Sahuarita (197) + South Tucson (198): after the July 21, 2026 primary
-is certified and the new councils hold their post-canvass title re-votes, re-verify membership + title
-holders (Mayor/Vice-Mayor/Acting-Mayor) and patch any changed seat / re-bind headshots + stances.
+**Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
+school-board + judicial office-holders into their own compass-integrated tabs, grey-out on no-data,
+per-tab default-lens shift (Judges → Judicial lens; Educators → Education-lens scaffolding, greyed
+until 8 topics authored later) + a full-compass deep-dive stance research phase for Trump/Vance/Rubio.
+Phases continue at **207+**. Next: define requirements → roadmap.
 
-**Side-track — Phase 204 (Compass Lens Switcher):** standalone compass-UI phase on branch
-`feat/federal-lens`, independent of the Tucson/Coachella deep-seed tracks (not counted in the v22.0
-progress totals above). SPEC + CONTEXT gathered 2026-07-13.
-Resume: `.planning/phases/204-compass-lens-switcher/204-CONTEXT.md` → next `/gsd:plan-phase 204`.
+### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
+
+v22.0 Tucson & Arizona is substantively complete (Phases 190–203 shipped) but **not formally closed**.
+The following remain OPEN and are held until the AZ primary certifies on **2026-07-21**:
+
+- **Phase 200 — AZ Playbook Retrospective & Close:** coverage.js reconcile, fold AZ GOTCHAs into
+  `LOCATION-ONBOARDING.md`, DB-verified audit, close the milestone. (No phase dir yet.)
+- **Phase 206 — AZ 2026 Candidate Reconcile:** seed confirmed general-election nominees onto the
+  Phase 199 AZ race shells once the primary certifies. (⛔ BLOCKED until 2026-07-21.)
+- **Sahuarita (197) + South Tucson (198) reconcile:** after the post-canvass title re-votes, re-verify
+  council membership + title holders (Mayor/Vice-Mayor/Acting-Mayor), patch any changed seat, re-bind
+  headshots + stances.
+
+v23.0 runs alongside this held close (same side-track pattern as Phases 204/205). The v22.0 phase
+directories were intentionally NOT cleared during the milestone switch so this work survives.
 
 ## Deferred Items
 

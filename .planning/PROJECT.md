@@ -20,28 +20,39 @@ Both are wired identically into Results and Elections through one shared `buildB
 title-only banner when a location has neither links nor stats. Frontend-only — no backend/DB changes.
 See the v21.0 shipped block below + `milestones/v21.0-*`.
 
-**Active milestone: v22.0 Tucson & Arizona.** Opening Arizona as a fully-covered new
-state and deep-seeding the Tucson metro. See Current Milestone below.
+**v22.0 Tucson & Arizona — substantively complete, held for formal close.** All Arizona foundation +
+Tucson-metro + Coachella Valley deep-seeds shipped (Phases 190–203); the milestone's remaining Phase 200
+(retrospective/close) and Phase 206 (2026 candidate reconcile) are **held until 2026-07-21**, when the AZ
+primary certifies. Sahuarita (197) + South Tucson (198) also owe a post-07-21 membership/title reconcile.
 
-## Current Milestone: v22.0 Tucson & Arizona
+**Active milestone: v23.0 Educators & Judges Tabs.** Adding Educators (school-board leads) and Judges as
+first-class, compass-integrated tabs beside Representatives & Elections — filtering those office-holders
+out of the Representatives list, greying out where no data exists, and shifting the default compass lens
+per tab. Runs alongside the held v22.0 close. See Current Milestone below.
 
-**Goal:** Open Arizona as a fully-covered new state and deep-seed the Tucson metro — every AZ
-resident routes to their federal / state / county / city representatives, and Tucson-metro city +
-county officials carry a compass.
+## Current Milestone: v23.0 Educators & Judges Tabs
+
+**Goal:** Add **Educators** (school-board leads) and **Judges** as first-class tabs on the
+results/officials view — beside Representatives & Elections — that filter school-board and judicial
+office-holders into their own compass-integrated tabs, decluttering Representatives, with graceful
+grey-out where a location has no such data and an automatic default-lens shift per tab.
 
 **Target features:**
-- Arizona TIGER geofences — all tiers (G4110 cities, G4020 counties, CDs, SLDU/SLDL); section-split clean
-- State of Arizona government — Gov. Hobbs + constitutional officers + 2 US Senators + 9 US House reps, with headshots
-- Arizona Legislature — 30 senators + 60 house reps seeded with 600×750 headshots (**compass stances deferred** — NV v18.0 pattern)
-- Pima County Board of Supervisors — standalone county government (5 districts), roster + headshots + evidence-only stances
-- City of Tucson deep-seed — flagship (Mayor + 6 wards); roster → headshots → evidence-only stances
-- Tucson-metro suburb deep-seeds — Oro Valley, Marana, Sahuarita, South Tucson
-- AZ 2026 elections + discovery — race shells + confirmed candidate slate + armed discovery cron
-- Arizona playbook retrospective + close — coverage.js chips, AZ GOTCHAs, DB-verified audit
+- Educators & Judges tabs — school-board leads and judges pulled out of the Representatives list into their own tabs (fixes the "wade through LA school-board districts" problem)
+- Officials classification — a reliable way to bucket each office-holder as Representative / Educator / Judge to drive the split
+- Tab grey-out — a tab disables when the current location has no educators / judges
+- Compass per tab — the Compass button works inside each new tab, same as today
+- Per-tab default lens shift — Judges → existing **Judicial lens**; Educators → **Education lens (scaffolding)**
+- Education lens scaffolding — the lens exists structurally, greys out / falls back to Custom until its 8 topics are authored later
+- Deep-dive stance research — Trump, Vance, Rubio: full compass, 100% evidence-cited (own phase)
 
-**Deferred by design (future milestones):** full AZ legislature compass stances; TUSD + metro
-school-district boards. New-state → major version bump to v22.0; phase numbering continues from
-v21.0 (closed at 189), so phases start at 190.
+**Deferred by design (future milestones):** authoring the 8 Education-lens topics (book bans, religious
+texts in public schools, trans athletes, …); the Elections "ballot hub" build-out (sample ballots,
+propositions, when/where/what-is-on-my-ballot); broad school-board stance research. Feature milestone →
+major version bump to v23.0; phase numbering continues from v22.0, so phases start at **207**.
+
+**Runs alongside held v22.0 close** (Phase 200 + Phase 206 + Sahuarita/South Tucson reconcile, all
+gated on the 2026-07-21 AZ primary certification) — same side-track pattern as Phases 204/205.
 
 ## Requirements
 
@@ -363,15 +374,27 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-08 — **v22.0 Tucson & Arizona OPENED.** New-state coverage milestone: Arizona
-foundation (TIGER geofences + Hobbs/constitutional officers + 2 US Senators + 9 US House + 90-member
-legislature seed & headshots, stances deferred) → Pima County Board of Supervisors → City of Tucson
-flagship deep-seed → 4 Tucson-metro suburbs (Oro Valley, Marana, Sahuarita, South Tucson) → AZ 2026
-elections + discovery → playbook retrospective + close. Each city/county deep-seed carries a licensed
-community banner (street-scene/skyline, no AI/aerial). Legislature compass stances + TUSD/metro school
-boards deferred by design. Phases continue from v21.0 (closed at 189), starting at 190. Reuses the
-`LOCATION-ONBOARDING.md` playbook + NV (v18.0) / OR-WashCo (v20.0) new-state precedent. Prior close:
-v21.0 Smart Banners (2026-07-08).*
+*Last updated: 2026-07-17 — **v23.0 Educators & Judges Tabs OPENED.** Feature milestone: add Educators
+(school-board leads) and Judges as first-class, compass-integrated tabs beside Representatives & Elections,
+filtering those office-holders out of the Representatives list (fixes the LA school-board-district clutter),
+greying out where no data exists, and shifting the default compass lens per tab (Judges → existing Judicial
+lens; Educators → Education-lens scaffolding, greyed until its 8 topics are authored later). Includes a
+deep-dive full-compass evidence-cited stance research phase for Trump, Vance & Rubio. Authoring the 8
+Education topics + the Elections "ballot hub" build-out deferred by design. Phases continue from v22.0,
+starting at 207. Runs alongside the **held v22.0 close** (Phase 200 + Phase 206 + Sahuarita/South Tucson
+reconcile, gated on the 2026-07-21 AZ primary certification). Prior milestone: v22.0 Tucson & Arizona
+(substantively complete; formal close held for 07-21).*
+
+<details>
+<summary>Earlier footer — v22.0 open (2026-07-08)</summary>
+
+*v22.0 Tucson & Arizona OPENED. New-state coverage milestone: Arizona foundation (TIGER geofences +
+Hobbs/constitutional officers + 2 US Senators + 9 US House + 90-member legislature seed & headshots,
+stances deferred) → Pima County Board of Supervisors → City of Tucson flagship deep-seed → 4 Tucson-metro
+suburbs (Oro Valley, Marana, Sahuarita, South Tucson) → AZ 2026 elections + discovery → playbook
+retrospective + close. Phases continue from v21.0 (closed at 189), starting at 190.*
+
+</details>
 
 <details>
 <summary>Earlier footer — v21.0 close (2026-07-08)</summary>
