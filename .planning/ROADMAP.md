@@ -391,6 +391,7 @@ Plans:
 **⛔ BLOCKED until 2026-07-21** — the AZ primary must run and certify before general-election nominees are known. Do NOT start before the primary results settle (dated reminder set for 2026-07-22).
 
 **Scope (AZ 2026 only):**
+
 - Seed evidence-based confirmed nominees onto the existing Ph199 shells. Sources: AZ SoS official canvass + county (Pima et al.) results. Pure-structure shells already exist — this phase only attaches `race_candidates` (by race_id) + headshots; it does NOT create races/offices.
 - Sahuarita (Ph197) and South Tucson (Ph198) roster reconciles are tracked separately, NOT bundled here.
 - On completion, run the deferred **seats=2 render human-check**: load an AZ `/results?view=elections` and confirm a seats=2 race (Arizona Corporation Commission or a State House District) shows the `2 seats` badge and does not mis-render as single-winner (first AZ seats>1 races to carry candidates). See [[project_elections_view_display_rules.md]] — empty shells are hidden, so this check only becomes possible once candidates attach.
@@ -398,6 +399,7 @@ Plans:
 **Plans:** 0 plans (run /gsd-plan-phase 206 after 2026-07-21)
 
 Plans:
+
 - [ ] TBD (run /gsd-plan-phase 206 to break down — only after the 2026-07-21 primary certifies)
 
 ---
@@ -729,6 +731,7 @@ v22.0 phases above are preserved untouched.
   5. Classification is verified across at least two contrasting locations — one with school-board + judicial officials (e.g. LA) and one with representatives only
 
 **Plans**: 1 plan
+
 - [ ] 207-01-PLAN.md — Add single-source-of-truth classifyBucket(pol) to src/lib/classify.js + unit & 3-location fixture tests
 
 #### Phase 208: Educators & Judges Tabs
@@ -823,7 +826,6 @@ All 9 v23.0 requirements mapped to exactly one phase. No orphans, no duplicates.
 | CMP-01 | 210 |
 | CMP-02 | 210 |
 | RES-01 | 211 |
-
 
 ## Phases (shipped milestones)
 
