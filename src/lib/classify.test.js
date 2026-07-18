@@ -169,6 +169,32 @@ describe('classifyBucket', () => {
     });
   });
 
+  // WR-02: state's/commonwealth's attorney apostrophe handling must accept
+  // the ASCII straight apostrophe, the typographic/curly apostrophe (common
+  // in web-scraped titles), and the missing-apostrophe form.
+  describe('State\'s / Commonwealth\'s Attorney apostrophe variants (WR-02)', () => {
+    it('curly-apostrophe "State’s Attorney" classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'State’s Attorney' }))
+      ).toBe('judge');
+    });
+    it('missing-apostrophe "States Attorney" classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'States Attorney' }))
+      ).toBe('judge');
+    });
+    it('curly-apostrophe "Commonwealth’s Attorney" classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'Commonwealth’s Attorney' }))
+      ).toBe('judge');
+    });
+    it('missing-apostrophe "Commonwealths Attorney" classifies as judge', () => {
+      expect(
+        classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'Commonwealths Attorney' }))
+      ).toBe('judge');
+    });
+  });
+
   // Pitfall 3: negative attorney guards — civil-counsel titles must NOT be swept
   // into 'judge' by an over-broad /attorney/ match.
   describe('Attorney General / City Attorney negative guards (Pitfall 3)', () => {
