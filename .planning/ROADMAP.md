@@ -728,7 +728,8 @@ v22.0 phases above are preserved untouched.
   4. Ordinary representatives (mayor, council, legislators, federal delegation) are never misfiled into the Educators or Judges buckets
   5. Classification is verified across at least two contrasting locations — one with school-board + judicial officials (e.g. LA) and one with representatives only
 
-**Plans**: TBD
+**Plans**: 1 plan
+- [ ] 207-01-PLAN.md — Add single-source-of-truth classifyBucket(pol) to src/lib/classify.js + unit & 3-location fixture tests
 
 #### Phase 208: Educators & Judges Tabs
 
@@ -801,7 +802,7 @@ lens) has no hard dependency but must precede Phase 210, which depends on both 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 207. Officials Classification | 0/TBD | Not started | - |
+| 207. Officials Classification | 0/1 | Not started | - |
 | 208. Educators & Judges Tabs | 0/TBD | Not started | - |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 0/TBD | Not started | - |
