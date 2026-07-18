@@ -44,6 +44,11 @@ The following remain OPEN and are held until the AZ primary certifies on **2026-
 v23.0 runs alongside this held close (same side-track pattern as Phases 204/205). The v22.0 phase
 directories were intentionally NOT cleared during the milestone switch so this work survives.
 
+**v22.0 REQUIREMENTS pre-archived:** the live `.planning/REQUIREMENTS.md` is now v23.0's. v22.0's
+requirements were copied to `.planning/milestones/v22.0-REQUIREMENTS.md` on 2026-07-17 before the
+switch. When closing v22.0 on/after 07-21, reference that archived copy — do NOT let
+`/gsd:complete-milestone` re-archive the (v23.0) live file over it.
+
 ## Deferred Items
 
 Re-acknowledged and deferred again at v21.0 milestone close on 2026-07-08 (unchanged from the

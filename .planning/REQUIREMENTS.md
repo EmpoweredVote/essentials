@@ -1,107 +1,90 @@
-# Requirements — v22.0 Tucson & Arizona
+# Requirements — v23.0 Educators & Judges Tabs
 
-**Milestone goal:** Open Arizona as a fully-covered new state and deep-seed the Tucson metro — every
-AZ resident routes to their federal / state / county / city representatives, and Tucson-metro city +
-county officials carry a compass.
+**Milestone goal:** Add **Educators** (school-board leads) and **Judges** as first-class tabs on the
+results/officials view — beside Representatives & Elections — that filter school-board and judicial
+office-holders into their own compass-integrated tabs, decluttering Representatives, with graceful
+grey-out where a location has no such data and an automatic default compass-lens shift per tab.
 
-**Pattern:** New-state coverage milestone. Reuses the `LOCATION-ONBOARDING.md` playbook + NV (v18.0) /
-OR-WashCo (v20.0) precedent. Foundation first (geofences → state/federal government → legislature seed),
-then the local layer (Pima County → City of Tucson → 4 suburbs), then elections + close.
+**Pattern:** Frontend feature milestone on an existing codebase. Builds on the Phase 204 data-driven
+lens switcher (`CompassControlsBar`, `LensChipRow`, `CompassContext.lenses`), the existing Results tab
+model (Representatives + Elections in `Results.jsx`), and the `FilterBar` / office-classification data.
+No new geographic data. Includes one evidence-based stance-research phase reusing the established
+one-agent-at-a-time / 100%-cited / no-defaults workflow.
 
-**Deep-seed unit (Pima County + 5 cities):** government + chamber → roster → 600×750 headshots →
-evidence-only compass stances (one agent at a time, 100% cited, no defaults, honest blanks) → licensed
-community banner → surface in `src/lib/coverage.js`.
+> **v22.0 still held-open:** v22.0 (Tucson & Arizona) is substantively complete but not formally closed —
+> Phase 200 (close), Phase 206 (candidate reconcile), and the Sahuarita/South Tucson reconcile are gated
+> on the 2026-07-21 AZ primary certification. Its requirements are archived at
+> `.planning/milestones/v22.0-REQUIREMENTS.md`. This file scopes v23.0 only.
 
 ---
 
-## Milestone v22.0 Requirements
+## Milestone v23.0 Requirements
 
-### Arizona Foundation
+### Tabs & Filtering
 
-- [ ] **AZ-GEO-01**: Any Arizona address routes to the correct federal, state, county, and city
-  representatives via TIGER geofences loaded for all tiers (G4110 cities, G4020 counties, CDs, SLDU,
-  SLDL); section-split scan clean.
-- [x] **AZ-STATE-01**: State of Arizona government seeded — Gov. Katie Hobbs + constitutional officers
-  (per AZ constitution: some voter-elected, some appointed) with chambers, offices, STATE_EXEC districts,
-  and 600×750 headshots.
-- [x] **AZ-STATE-02**: Arizona federal delegation seeded — 2 US Senators (Kelly + Gallego) as
-  NATIONAL_UPPER + 9 US House reps as NATIONAL_LOWER on CD geofences, all with 600×750 headshots.
-- [x] **AZ-LEG-01**: 30 Arizona state senators + 60 house reps (2 per legislative district) seeded with
-  offices linked to SLDU/SLDL district geofences and 600×750 headshots. **Compass stances deferred by
-  design** (NV v18.0 pattern) to a follow-up milestone.
+- [ ] **TAB-01**: On the results/officials view, a user can switch among **Representatives**,
+  **Educators**, and **Judges** tabs (alongside the existing **Elections** tab). The Educators tab lists
+  school-board office-holders for the location; the Judges tab lists judicial office-holders.
+- [ ] **TAB-02**: School-board and judicial office-holders **no longer appear in the Representatives
+  tab** — they surface only under their Educators / Judges tab, so Representatives is decluttered (fixes
+  the "wade through every LA school-board district" problem).
+- [ ] **TAB-03**: A tab is **greyed out / disabled** when the current location has no office-holders of
+  that type (no school-board members → Educators greyed; no judges → Judges greyed), with a clear
+  empty-affordance rather than an empty tab.
 
-### Tucson-Metro Local Layer
+### Officials Classification
 
-- [x] **PIMA-01**: Pima County Board of Supervisors seeded as a standalone county government (5
-  supervisor districts on LOCAL geofences), NOT nested under State of AZ — roster → 600×750 headshots →
-  evidence-only compass stances → licensed community banner → surfaced in `src/lib/coverage.js`.
-- [ ] **TUC-01**: City of Tucson deep-seed (flagship) — Mayor + 6 ward council members (verify
-  ward-elected vs at-large and AZ partisan-election handling at plan time) → roster → 600×750 headshots →
-  evidence-only compass stances → licensed community banner → surfaced in `src/lib/coverage.js`.
-- [x] **SUB-01**: Oro Valley deep-seed — government + roster → 600×750 headshots → evidence-only stances
-  → licensed community banner → surfaced in `src/lib/coverage.js`.
-- [ ] **SUB-02**: Marana deep-seed — same deep-seed unit.
-- [ ] **SUB-03**: Sahuarita deep-seed — same deep-seed unit.
-- [ ] **SUB-04**: South Tucson deep-seed — same deep-seed unit.
+- [ ] **CLASS-01**: Every office-holder returned for a location is **reliably classified** as
+  Representative, Educator (school board), or Judge from existing data (chamber / office / geo type),
+  driving which tab it appears in — ordinary representatives are never misfiled into the Educators or
+  Judges buckets, and school-board / judicial officials are never left in Representatives.
 
-### Community Banners
+### Compass Integration
 
-- [x] **BANR-01**: Every deep-seeded Tucson-metro jurisdiction (City of Tucson + Oro Valley + Marana +
-  Sahuarita + South Tucson + Pima County) carries a licensed community banner — real street-scene or
-  skyline photo, no AI-generated and no aerial imagery, sourced one at a time, processed to the banner
-  spec (`scripts/banners/`), uploaded to Storage, and wired into `src/lib/buildingImages.js`. (Arizona
-  STATE banner already exists in production — Downtown Phoenix skyline — no re-sourcing needed.)
+- [ ] **CMP-01**: The **Compass button + overlay work inside the Educators and Judges tabs** exactly as
+  in Representatives — cards render their compass and the lens switcher is available.
+- [ ] **CMP-02**: Switching tabs **shifts the default compass lens for that group** — Judges → the
+  existing **Judicial lens**; Educators → the **Education lens**; returning to Representatives restores
+  the Custom/prior default. An explicit user lens selection still overrides the per-tab default.
 
-### Elections
+### Education Lens Scaffolding
 
-- [ ] **AZ-ELEC-01**: Arizona 2026 election race shells seeded (statewide + US House + legislative +
-  Tucson-metro local), confirmed candidate slate populated where filing is closed, and
-  `discovery_jurisdictions` rows armed with the AZ election-authority domain allowlist and cron.
+- [ ] **EDU-01**: An **Education lens exists as a data-driven lens entry** (parallel to Judicial),
+  recognized by the lens switcher and the per-tab default-lens logic, so authoring its 8 topics later is
+  a **data-only change** (no code change) — mirroring the Phase 204 "adding a lens is a data change"
+  guarantee.
+- [ ] **EDU-02**: Until the Education lens has enough authored topics, it renders in its
+  **needs-calibration / greyed** state and the Educators tab **gracefully falls back to the Custom
+  overlap** — no broken or empty compass, no fabricated spokes (honest blanks).
 
-### Retrospective & Close
+### Deep-Dive Stance Research
 
-- [ ] **AZ-RETRO-01**: `src/lib/coverage.js` chips reconciled (DB-honest purple chip for every metro
-  jurisdiction carrying ≥1 stance), Arizona GOTCHAs + Quick Reference added to `LOCATION-ONBOARDING.md`,
-  DB-verified milestone audit written, and milestone closed.
-
-### Coachella Valley, CA (appended 2026-07-12)
-
-Local-layer deep-seed appended to v22.0, independent of the Arizona phases (CA TIGER city+county
-boundaries already loaded). All three bodies are 5-member and by-district; both cities have a
-rotational mayor (title on a seat). Reuses the standalone-county / by-district city deep-seed unit.
-
-- [x] **CV-01**: Riverside County seeded as a standalone county government (geo_id 06065) with a
-  5-member by-district Board of Supervisors (D1-D5, "Chair" as a seat title) — **board only,
-  constitutional officers deferred** (Phase 201 D-01, matching Pima/Clark/WashCo precedent) —
-  supervisorial-district X-geofences from the county ArcGIS Hub, 600×750 headshots, evidence-only
-  compass stances, and a Riverside County entry in `coverage.js` COVERAGE_COUNTIES.
-- [x] **CV-02**: City of Palm Springs (geo_id 0655254) deep-seeded — 5-member by-district council with
-  rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
-  evidence-only stances, and a `coverage.js` chip.
-- [ ] **CV-03**: City of Indio (geo_id 0636448) deep-seeded — 5-member by-district council with
-  rotational Mayor/Mayor Pro Tem as seat titles, council-district X-geofences, 600×750 headshots,
-  evidence-only stances, and a `coverage.js` chip.
-
-BANR-01 (above) extends to cover all three appended jurisdictions — each carries a licensed
-community banner sourced one at a time.
+- [ ] **RES-01**: Evidence-based **full-compass stance research** is completed and applied for **Donald
+  Trump, JD Vance, and Marco Rubio** — every applicable compass topic answered with **100% citations**,
+  **no default values**, and honest blank spokes where no evidence exists.
 
 ---
 
 ## Future Requirements (deferred)
 
-- **AZ legislature compass stances** — evidence-only stances for all 90 AZ legislators (the OR v8→v9 /
-  Utah v16.0 legislature-wide stance pattern); deferred to a dedicated follow-up milestone.
-- **Tucson-metro school boards** — TUSD (Tucson Unified) + Amphitheater / Sunnyside / other metro
-  district boards (G5420 geofences + roster + headshots, 0 stances by design); deferred to a later wave.
-- **Additional Pima County / southern-AZ cities** — e.g. beyond the metro core; candidates for a future
-  Arizona wave.
+- **Author the 8 Education-lens topics** — the actual education spectrums (e.g. book banning, religious
+  texts in public schools, transgender athletes, curriculum standards, school choice/vouchers, …) with
+  their 1–5 answer chairs; seeded as live compass topics so EDU-01's data-only path lights the lens.
+- **Elections "ballot hub" build-out** — sample-ballot download, propositions/measures exploration,
+  when/where your next election is and exactly what is on the ballot; the Elections tab becomes the
+  catch-all for everything a citizen votes on.
+- **Broad school-board & judicial stance research** — evidence-only stances for seeded educators/judges
+  beyond the three deep-dive federal figures.
+- **Judicial roster expansion** — seeding elected judges for more jurisdictions so the Judges tab lights
+  up in more locations.
 
 ## Out of Scope
 
-- **Phoenix / Maricopa County coverage** — this milestone is the Tucson metro only; Phoenix is a separate
-  future milestone.
-- **Statewide AZ city coverage beyond the Tucson metro** — deferred.
-- Party affiliation on candidate display — antipartisan mission (project-wide, unchanged).
+- **Per-card lens controls** — the lens switcher stays one global control (unchanged from Phase 204).
+- **Building the calibration quiz inside essentials** — reuse the Compass app handoff (unchanged).
+- **Authoring Education-lens topic content this milestone** — scaffolding only; topics are deferred.
+- **The Elections ballot-hub features** — deferred; Elections stays the current unified ballot list.
+- Party affiliation on candidate/official display — antipartisan mission (project-wide, unchanged).
 
 ---
 
@@ -109,24 +92,7 @@ community banner sourced one at a time.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AZ-GEO-01 | Phase 190 | Pending |
-| AZ-STATE-01 | Phase 191 | Complete |
-| AZ-STATE-02 | Phase 191 | Complete |
-| AZ-LEG-01 | Phase 192 | Complete |
-| PIMA-01 | Phase 193 | Complete |
-| TUC-01 | Phase 194 | Pending |
-| SUB-01 | Phase 195 | Complete |
-| SUB-02 | Phase 196 | Pending |
-| SUB-03 | Phase 197 | Pending |
-| SUB-04 | Phase 198 | Pending |
-| BANR-01 | Phases 193, 194, 195, 196, 197, 198 | Complete |
-| AZ-ELEC-01 | Phase 199 | Pending |
-| AZ-RETRO-01 | Phase 200 | Pending |
-| CV-01 | Phase 201 | Complete |
-| CV-02 | Phase 202 | Complete |
-| CV-03 | Phase 203 | Pending |
-| BANR-01 (appended) | Phases 201, 202, 203 | Pending |
+| _(filled by roadmapper)_ | | |
 
-**Coverage:** 13/13 core v22.0 requirements mapped + 3 appended Coachella Valley, CA requirements
-(CV-01/02/03 → Phases 201/202/203). No orphans, no duplicates (BANR-01 intentionally spans the 6 AZ
-deep-seed phases and the 3 appended CA deep-seed phases as a cross-cutting deliverable).
+**Coverage:** to be validated by the roadmapper — every v23.0 requirement (TAB-01/02/03, CLASS-01,
+CMP-01/02, EDU-01/02, RES-01) mapped to exactly one phase, phases numbered from **207**.
