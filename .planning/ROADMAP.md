@@ -754,7 +754,7 @@ v22.0 phases above are preserved untouched.
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 208-02-PLAN.md — Human-verify checkpoint: 4-tab order, classifyBucket routing, decluttered Representatives, hidden-when-empty Educators/Judges, stale-?view= fallback, relocated election summary vs mockup, compass on all people-tabs, 280px reachability
+- [x] 208-02-PLAN.md — Human-verify checkpoint: 4-tab order, classifyBucket routing, decluttered Representatives, hidden-when-empty Educators/Judges, stale-?view= fallback, relocated election summary vs mockup, compass on all people-tabs, 280px reachability
 
 **UI hint**: yes
 
@@ -815,7 +815,7 @@ lens) has no hard dependency but must precede Phase 210, which depends on both 2
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 207. Officials Classification | 1/1 | Complete    | 2026-07-18 |
-| 208. Educators & Judges Tabs | 1/2 | In Progress|  |
+| 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 0/TBD | Not started | - |
 | 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 0/TBD | Not started | - |
