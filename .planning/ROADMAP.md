@@ -732,7 +732,7 @@ v22.0 phases above are preserved untouched.
 
 **Plans**: 1 plan
 
-- [ ] 207-01-PLAN.md — Add single-source-of-truth classifyBucket(pol) to src/lib/classify.js + unit & 3-location fixture tests
+- [x] 207-01-PLAN.md — Add single-source-of-truth classifyBucket(pol) to src/lib/classify.js + unit & 3-location fixture tests
 
 #### Phase 208: Educators & Judges Tabs
 
@@ -805,7 +805,7 @@ lens) has no hard dependency but must precede Phase 210, which depends on both 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 207. Officials Classification | 0/1 | Not started | - |
+| 207. Officials Classification | 1/1 | Complete   | 2026-07-18 |
 | 208. Educators & Judges Tabs | 0/TBD | Not started | - |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 0/TBD | Not started | - |

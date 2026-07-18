@@ -2,25 +2,25 @@
 gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
-status: executing
-last_updated: "2026-07-18T02:09:06.188Z"
-last_activity: 2026-07-18 -- Phase 207 planning complete
+status: verifying
+last_updated: "2026-07-18T03:26:18.699Z"
+last_activity: 2026-07-18
 progress:
   total_phases: 37
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 1
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 3
 ---
 
 # State
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Ready to execute
-Last activity: 2026-07-18 -- Phase 207 planning complete
+Phase: 207 (officials-classification) — EXECUTING
+Plan: 1 of 1
+Status: Phase complete — ready for verification
+Last activity: 2026-07-18
 
 **Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
 school-board + judicial office-holders into their own compass-integrated tabs, grey-out on no-data,
@@ -463,7 +463,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 199 — az-2026-elections-discovery
+**Current focus:** Phase 207 — officials-classification
 
 ## v15.0 Roadmap Summary
 
@@ -565,9 +565,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-18T01:27:06.870Z
-Stopped at: Phase 207 context gathered
-Resume file: .planning/phases/207-officials-classification/207-CONTEXT.md
+Last session: 2026-07-18T03:26:18.686Z
+Stopped at: Completed 207-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -649,6 +649,7 @@ Resume file: .planning/phases/207-officials-classification/207-CONTEXT.md
 | Phase 191 P03 | 20min | 2 tasks | 2 files |
 | Phase 201 P01 | 6min | 2 tasks | 1 files |
 | Phase 201 P03 | 45m | 3 tasks | 2 files |
+| Phase 207 P01 | 3min | 3 tasks | 2 files |
 
 ## Decisions
 
@@ -744,6 +745,9 @@ Resume file: .planning/phases/207-officials-classification/207-CONTEXT.md
 - [Phase 201]: Confirmed Riverside ArcGIS DISTRICT attribute field works directly (no fallback needed); X0021 confirmed unused pre-load; 5/5 geofences valid WGS84
 - [Phase 201]: Chuck Washington sourced from Ballotpedia (press_use) instead of his own off-center-framed district-site portrait
 - [Phase 201]: Added RGBA-to-white-composite fix ahead of crop/resize (Rule 1 bug fix) to prevent black backdrops on transparent-PNG sources
+- [Phase 207]: SCHOOL_BOARD added to classifyBucket's Educator district_type set alongside SCHOOL/STATE_BOARD (live-DB correction to D-04 -- DC's 9 SBOE members)
+- [Phase 207]: classifyBucket's DA/prosecutor/public-defender override checked regardless of base district_type, not scoped to COUNTY only (SF's DA/PD/City Prosecutor are LOCAL_EXEC)
+- [Phase 207]: classifyBucket reads district_type/office_title/chamber_name(_formal) directly rather than calling classifyCategory/getBranch/getTier, avoiding unrelated display-module imports
 
 ## Operator Next Steps
 

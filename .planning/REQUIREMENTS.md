@@ -34,7 +34,7 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 
 ### Officials Classification
 
-- [ ] **CLASS-01**: Every office-holder returned for a location is **reliably classified** as
+- [x] **CLASS-01**: Every office-holder returned for a location is **reliably classified** as
   Representative, Educator (school board), or Judge from existing data (chamber / office / geo type),
   driving which tab it appears in — ordinary representatives are never misfiled into the Educators or
   Judges buckets, and school-board / judicial officials are never left in Representatives.
@@ -92,7 +92,7 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CLASS-01 | Phase 207 | Pending |
+| CLASS-01 | Phase 207 | Complete |
 | TAB-01 | Phase 208 | Pending |
 | TAB-02 | Phase 208 | Pending |
 | TAB-03 | Phase 208 | Pending |
