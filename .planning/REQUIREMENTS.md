@@ -22,13 +22,13 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 
 ### Tabs & Filtering
 
-- [ ] **TAB-01**: On the results/officials view, a user can switch among **Representatives**,
+- [x] **TAB-01**: On the results/officials view, a user can switch among **Representatives**,
   **Educators**, and **Judges** tabs (alongside the existing **Elections** tab). The Educators tab lists
   school-board office-holders for the location; the Judges tab lists judicial office-holders.
-- [ ] **TAB-02**: School-board and judicial office-holders **no longer appear in the Representatives
+- [x] **TAB-02**: School-board and judicial office-holders **no longer appear in the Representatives
   tab** — they surface only under their Educators / Judges tab, so Representatives is decluttered (fixes
   the "wade through every LA school-board district" problem).
-- [ ] **TAB-03**: An Educators/Judges tab is **hidden entirely** when the current location has no
+- [x] **TAB-03**: An Educators/Judges tab is **hidden entirely** when the current location has no
   office-holders of that type (no school-board members → no Educators tab; no judges → no Judges tab).
   Representatives always shows as the catch-all; a stale/empty `?view=` falls back to Representatives.
   (Revised from "greyed out / disabled" per Phase 208 CONTEXT.md D-05/D-06: most locations lack
@@ -96,9 +96,9 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | CLASS-01 | Phase 207 | Complete |
-| TAB-01 | Phase 208 | Pending |
-| TAB-02 | Phase 208 | Pending |
-| TAB-03 | Phase 208 | Pending |
+| TAB-01 | Phase 208 | Complete |
+| TAB-02 | Phase 208 | Complete |
+| TAB-03 | Phase 208 | Complete |
 | EDU-01 | Phase 209 | Pending |
 | EDU-02 | Phase 209 | Pending |
 | CMP-01 | Phase 210 | Pending |

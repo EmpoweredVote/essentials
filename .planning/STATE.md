@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
 status: executing
-last_updated: "2026-07-18T07:36:44.708Z"
-last_activity: 2026-07-18 -- Phase 208 planning complete
+last_updated: "2026-07-18T17:16:08.925Z"
+last_activity: 2026-07-18
 progress:
   total_phases: 37
   completed_phases: 1
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 3
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 208
-Plan: Not started
+Phase: 208 (educators-judges-tabs) — EXECUTING
+Plan: 2 of 2
 Status: Ready to execute
-Last activity: 2026-07-18 -- Phase 208 planning complete
+Last activity: 2026-07-18
 
 **Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
 school-board + judicial office-holders into their own compass-integrated tabs, grey-out on no-data,
@@ -463,7 +463,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 208 — educators & judges tabs
+**Current focus:** Phase 208 — educators-judges-tabs
 
 ## v15.0 Roadmap Summary
 
@@ -565,9 +565,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-18T07:03:58.860Z
-Stopped at: Phase 208 context gathered
-Resume file: .planning/phases/208-educators-judges-tabs/208-CONTEXT.md
+Last session: 2026-07-18T17:16:08.911Z
+Stopped at: Completed 208-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -650,6 +650,7 @@ Resume file: .planning/phases/208-educators-judges-tabs/208-CONTEXT.md
 | Phase 201 P01 | 6min | 2 tasks | 1 files |
 | Phase 201 P03 | 45m | 3 tasks | 2 files |
 | Phase 207 P01 | 3min | 3 tasks | 2 files |
+| Phase 208 P01 | 11min | 3 tasks | 1 files |
 
 ## Decisions
 
@@ -748,6 +749,8 @@ Resume file: .planning/phases/208-educators-judges-tabs/208-CONTEXT.md
 - [Phase 207]: SCHOOL_BOARD added to classifyBucket's Educator district_type set alongside SCHOOL/STATE_BOARD (live-DB correction to D-04 -- DC's 9 SBOE members)
 - [Phase 207]: classifyBucket's DA/prosecutor/public-defender override checked regardless of base district_type, not scoped to COUNTY only (SF's DA/PD/City Prosecutor are LOCAL_EXEC)
 - [Phase 207]: classifyBucket reads district_type/office_title/chamber_name(_formal) directly rather than calling classifyCategory/getBranch/getTier, avoiding unrelated display-module imports
+- [Phase 208]: effectiveActiveView implemented as a switch statement (not repeated activeView === comparisons) to remain the sole legitimate reader of the raw ?view= param
+- [Phase 208]: renderPeopleTab helper extracted for byte-identical Representatives/Educators/Judges parity; tier-empty wording gated on viewName to avoid 'representative data' leaking onto Educators/Judges tabs
 
 ## Operator Next Steps
 
