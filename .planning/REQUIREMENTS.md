@@ -28,9 +28,12 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 - [ ] **TAB-02**: School-board and judicial office-holders **no longer appear in the Representatives
   tab** — they surface only under their Educators / Judges tab, so Representatives is decluttered (fixes
   the "wade through every LA school-board district" problem).
-- [ ] **TAB-03**: A tab is **greyed out / disabled** when the current location has no office-holders of
-  that type (no school-board members → Educators greyed; no judges → Judges greyed), with a clear
-  empty-affordance rather than an empty tab.
+- [ ] **TAB-03**: An Educators/Judges tab is **hidden entirely** when the current location has no
+  office-holders of that type (no school-board members → no Educators tab; no judges → no Judges tab).
+  Representatives always shows as the catch-all; a stale/empty `?view=` falls back to Representatives.
+  (Revised from "greyed out / disabled" per Phase 208 CONTEXT.md D-05/D-06: most locations lack
+  school-board/judicial data, so hiding empty tabs keeps the UI honest rather than showing dead
+  greyed tabs.)
 
 ### Officials Classification
 
