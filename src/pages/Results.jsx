@@ -2038,162 +2038,181 @@ export default function Results() {
             </div>
           )}
 
-          {activeView === 'representatives' ? (
-          <>
-
-          {/* Error message — only for the current address query; never leak into a browse/locality view */}
-          {error && activeQuery && (
-            <div className="mx-8 mt-4 mb-4 text-center text-red-600 bg-red-50 border border-red-200 rounded p-4">
-              {error === 'address_not_found'
-                ? 'We couldn\'t find that address. Please enter a full street address (e.g. "123 Main St, Los Angeles, CA").'
-                : error}
-            </div>
-          )}
-
-          {/* ADR-0001 precision banner — results are city-wide, not parcel-specific */}
-          {fromLocality && (
-            <div className="mx-6 md:mx-12 mt-4 mb-2 px-4 py-3 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-ev-navy-card text-sm text-gray-700 dark:text-gray-200">
-              Showing representatives across {localityLabel ? <span className="font-semibold">{localityLabel}</span> : 'this city'}. Enter your full street address for your exact representatives.
-            </div>
-          )}
-
-          {/* Compass controls / CTA — placed after the banner so the overlay never covers it */}
-          {(activeQuery || browseResults) && compassTopSlot}
-
-          {/* Loading skeletons */}
-          {phase === 'loading' && (
-            <div className="px-6 md:px-12 pt-6">
-              <SkeletonSection />
-              <SkeletonSection />
-              <SkeletonSection />
-            </div>
-          )}
-
-          {/* Results */}
-          {phase !== 'loading' && (
-              <div className="px-6 md:px-12 pt-6 pb-8">
-                {/* Empty states for tiers with no data — suppressed on error (the error card already explains it) */}
-                {phase !== 'loading' && activeQuery && !error && ['Local', 'School', 'State'].map((tier) => {
-                  const tierKey = tier.toLowerCase();
-                  const tierStyle = tierColors[tierKey];
-                  const hasTier = filteredHierarchy.some(h => h.tier === tier);
-                  if (hasTier) return null;
-
-                  const emptyMessage = appointedFilter !== 'All'
-                    ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
-                    : `${tier} representative data is not yet available for this area.`;
-
-                  return (
-                    <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
-                      <p className="mt-4 dark:text-[#8b949e] text-gray-500">{emptyMessage}</p>
-                    </div>
-                  );
-                })}
-
-                {/* Name-search no-matches state */}
-                {trimmedSearch && Array.isArray(visibleList) && visibleList.length === 0 && Array.isArray(list) && list.length > 0 && (
-                  <p className="mt-4 text-gray-500 dark:text-[#8b949e] text-center">
-                    No matches for &ldquo;{searchQuery}&rdquo;. Clear the search box to see all results.
-                  </p>
+          {(() => {
+            // Phase 208 (D-09): Representatives, Educators, and Judges reuse this
+            // single render pipeline byte-identical — only the hierarchy and the
+            // zero-results fallback length vary per tab. compassTopSlot (D-10)
+            // stays present on all three people-tabs. The error/precision banners
+            // are location-level, so they only render once, on the Representatives
+            // tab (the tab that's always present per D-07).
+            const renderPeopleTab = (hier, fallbackListLength, viewName) => (
+              <>
+                {/* Error message — only for the current address query; never leak into a browse/locality view */}
+                {viewName === 'representatives' && error && activeQuery && (
+                  <div className="mx-8 mt-4 mb-4 text-center text-red-600 bg-red-50 border border-red-200 rounded p-4">
+                    {error === 'address_not_found'
+                      ? 'We couldn\'t find that address. Please enter a full street address (e.g. "123 Main St, Los Angeles, CA").'
+                      : error}
+                  </div>
                 )}
 
-                {filteredHierarchy.map(({ tier, bodies }) => {
-                  const tierKey = tier.toLowerCase();
-                  const tierStyle = tierColors[tierKey] ?? tierColors['local'];
-                  if (!tierStyle) return null;
+                {/* ADR-0001 precision banner — results are city-wide, not parcel-specific */}
+                {viewName === 'representatives' && fromLocality && (
+                  <div className="mx-6 md:mx-12 mt-4 mb-2 px-4 py-3 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-ev-navy-card text-sm text-gray-700 dark:text-gray-200">
+                    Showing representatives across {localityLabel ? <span className="font-semibold">{localityLabel}</span> : 'this city'}. Enter your full street address for your exact representatives.
+                  </div>
+                )}
 
-                  const tierBanner = tier === 'Local'
-                    ? <SectionBanner {...buildBannerProps('city', bannerCtx)} />
-                    : tier === 'State'
-                    ? <SectionBanner {...buildBannerProps('state', bannerCtx)} />
-                    : tier === 'Federal'
-                    ? <SectionBanner {...buildBannerProps('federal', bannerCtx)} />
-                    : null;
+                {/* Compass controls / CTA — placed after the banner so the overlay never covers it */}
+                {(activeQuery || browseResults) && compassTopSlot}
 
-                  return (
-                    <Fragment key={tier}>
-                      {tierBanner}
-                    <div data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
-                      {bodies.map((body) => {
-                        const isJudicialBody = body.subgroups.some(sg =>
-                          sg.pols.some(p => p.district_type === 'JUDICIAL')
-                        );
-                        // Disambiguate the treasury entity by state so a Utah city never
-                        // links to a same-named entity in another state (Salem UT → salem-ma).
-                        // Prefer the body's own politicians' state; fall back to the view state.
-                        const bodyState = body.subgroups
-                          .flatMap((sg) => sg.pols)
-                          .find((p) => p?.representing_state)?.representing_state || userState;
-                        const treasuryMatch = (tier === 'Local' && !isJudicialBody)
-                          ? findMatchingMunicipality(body.title, treasuryCities, bodyState)
-                          : null;
+                {/* Loading skeletons */}
+                {phase === 'loading' && (
+                  <div className="px-6 md:px-12 pt-6">
+                    <SkeletonSection />
+                    <SkeletonSection />
+                    <SkeletonSection />
+                  </div>
+                )}
+
+                {/* Results */}
+                {phase !== 'loading' && (
+                    <div className="px-6 md:px-12 pt-6 pb-8">
+                      {/* Empty states for tiers with no data — suppressed on error (the error card already explains it) */}
+                      {phase !== 'loading' && activeQuery && !error && ['Local', 'School', 'State'].map((tier) => {
+                        const tierKey = tier.toLowerCase();
+                        const tierStyle = tierColors[tierKey];
+                        const hasTier = hier.some(h => h.tier === tier);
+                        if (hasTier) return null;
+
+                        const emptyMessage = appointedFilter !== 'All'
+                          ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
+                          : `${tier} ${viewName === 'representatives' ? 'representative' : 'official'} data is not yet available for this area.`;
+
                         return (
-                          <GovernmentBodySection
-                            key={body.key}
-                            title={body.title}
-                            websiteUrl={body.url || undefined}
-                            tier={tierKey}
-                          >
-                            {treasuryMatch && (
-                              <div className="mb-3">
-                                <a
-                                  href={`${TREASURY_URL}/?entity=${encodeURIComponent(toTreasurySlug(treasuryMatch))}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#00c8d7] dark:hover:text-[#7ec8d8] transition-colors"
-                                  style={{ fontFamily: "'Manrope', sans-serif" }}
-                                >
-                                  Explore {treasuryMatch.name} revenue and expenses
-                                  <svg viewBox="0 0 16 16" className="w-3 h-3 ml-1" fill="currentColor" aria-hidden="true">
-                                    <path fillRule="evenodd" d="M4.22 11.78a.75.75 0 010-1.06L9.44 5.5H5.75a.75.75 0 010-1.5h5.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0V6.56l-5.22 5.22a.75.75 0 01-1.06 0z" clipRule="evenodd"/>
-                                  </svg>
-                                </a>
-                              </div>
-                            )}
-                            {body.subgroups.map((sg) => {
-                              const maxCols = isWideForThree ? 3 : isWideForVertical ? 2 : 1;
-                              const cols = Math.min(maxCols, sg.pols.length || 1);
-                              const gridCols = `repeat(${cols}, minmax(0, 450px))`;
-                              return (
-                                <SubGroupSection
-                                  key={sg.key}
-                                  title={body.subgroups.length > 1 ? sg.label : undefined}
-                                  websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
-                                  gridTemplateColumns={gridCols}
-                                  gap="16px"
-                                  justifyContent="start"
-                                >
-                                  {sg.pols.map((pol) =>
-                                    renderSeatGroup(pol)
-                                  )}
-                                </SubGroupSection>
-                              );
-                            })}
-                          </GovernmentBodySection>
+                          <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
+                            <p className="mt-4 dark:text-[#8b949e] text-gray-500">{emptyMessage}</p>
+                          </div>
                         );
                       })}
+
+                      {/* Name-search no-matches state */}
+                      {trimmedSearch && Array.isArray(visibleList) && visibleList.length === 0 && Array.isArray(list) && list.length > 0 && (
+                        <p className="mt-4 text-gray-500 dark:text-[#8b949e] text-center">
+                          No matches for &ldquo;{searchQuery}&rdquo;. Clear the search box to see all results.
+                        </p>
+                      )}
+
+                      {hier.map(({ tier, bodies }) => {
+                        const tierKey = tier.toLowerCase();
+                        const tierStyle = tierColors[tierKey] ?? tierColors['local'];
+                        if (!tierStyle) return null;
+
+                        const tierBanner = tier === 'Local'
+                          ? <SectionBanner {...buildBannerProps('city', bannerCtx)} />
+                          : tier === 'State'
+                          ? <SectionBanner {...buildBannerProps('state', bannerCtx)} />
+                          : tier === 'Federal'
+                          ? <SectionBanner {...buildBannerProps('federal', bannerCtx)} />
+                          : null;
+
+                        return (
+                          <Fragment key={tier}>
+                            {tierBanner}
+                          <div data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
+                            {bodies.map((body) => {
+                              const isJudicialBody = body.subgroups.some(sg =>
+                                sg.pols.some(p => p.district_type === 'JUDICIAL')
+                              );
+                              // Disambiguate the treasury entity by state so a Utah city never
+                              // links to a same-named entity in another state (Salem UT → salem-ma).
+                              // Prefer the body's own politicians' state; fall back to the view state.
+                              const bodyState = body.subgroups
+                                .flatMap((sg) => sg.pols)
+                                .find((p) => p?.representing_state)?.representing_state || userState;
+                              const treasuryMatch = (tier === 'Local' && !isJudicialBody)
+                                ? findMatchingMunicipality(body.title, treasuryCities, bodyState)
+                                : null;
+                              return (
+                                <GovernmentBodySection
+                                  key={body.key}
+                                  title={body.title}
+                                  websiteUrl={body.url || undefined}
+                                  tier={tierKey}
+                                >
+                                  {treasuryMatch && (
+                                    <div className="mb-3">
+                                      <a
+                                        href={`${TREASURY_URL}/?entity=${encodeURIComponent(toTreasurySlug(treasuryMatch))}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#00c8d7] dark:hover:text-[#7ec8d8] transition-colors"
+                                        style={{ fontFamily: "'Manrope', sans-serif" }}
+                                      >
+                                        Explore {treasuryMatch.name} revenue and expenses
+                                        <svg viewBox="0 0 16 16" className="w-3 h-3 ml-1" fill="currentColor" aria-hidden="true">
+                                          <path fillRule="evenodd" d="M4.22 11.78a.75.75 0 010-1.06L9.44 5.5H5.75a.75.75 0 010-1.5h5.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0V6.56l-5.22 5.22a.75.75 0 01-1.06 0z" clipRule="evenodd"/>
+                                        </svg>
+                                      </a>
+                                    </div>
+                                  )}
+                                  {body.subgroups.map((sg) => {
+                                    const maxCols = isWideForThree ? 3 : isWideForVertical ? 2 : 1;
+                                    const cols = Math.min(maxCols, sg.pols.length || 1);
+                                    const gridCols = `repeat(${cols}, minmax(0, 450px))`;
+                                    return (
+                                      <SubGroupSection
+                                        key={sg.key}
+                                        title={body.subgroups.length > 1 ? sg.label : undefined}
+                                        websiteUrl={body.subgroups.length > 1 ? (sg.url || undefined) : undefined}
+                                        gridTemplateColumns={gridCols}
+                                        gap="16px"
+                                        justifyContent="start"
+                                      >
+                                        {sg.pols.map((pol) =>
+                                          renderSeatGroup(pol)
+                                        )}
+                                      </SubGroupSection>
+                                    );
+                                  })}
+                                </GovernmentBodySection>
+                              );
+                            })}
+                          </div>
+                          </Fragment>
+                        );
+                      })}
+
+                      {fallbackListLength === 0 && phase !== 'loading' && activeQuery && !error && (
+                        <p className="text-center text-gray-600 dark:text-gray-400 mt-8">
+                          No results found for this location.
+                        </p>
+                      )}
+
+                      {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
+                      {fallbackListLength > 0 && appointedFilter !== 'All' &&
+                        hier.length === 0 && (
+                        <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
+                          No {appointedFilter.toLowerCase()} officials found for this area.
+                        </p>
+                      )}
                     </div>
-                    </Fragment>
-                  );
-                })}
+                  )}
+              </>
+            );
 
-                {federalFiltered.length === 0 && phase !== 'loading' && activeQuery && !error && (
-                  <p className="text-center text-gray-600 dark:text-gray-400 mt-8">
-                    No results found for this location.
-                  </p>
-                )}
-
-                {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
-                {federalFiltered.length > 0 && appointedFilter !== 'All' &&
-                  filteredHierarchy.length === 0 && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
-                    No {appointedFilter.toLowerCase()} officials found for this area.
-                  </p>
-                )}
-              </div>
-            )}
-          </>
-          ) : (
+            if (effectiveActiveView === 'representatives') {
+              return renderPeopleTab(filteredHierarchy, federalFiltered.length, 'representatives');
+            }
+            if (effectiveActiveView === 'educators') {
+              return renderPeopleTab(educatorsFilteredHierarchy, bucketed.educator.length, 'educators');
+            }
+            if (effectiveActiveView === 'judges') {
+              return renderPeopleTab(judgesFilteredHierarchy, bucketed.judge.length, 'judges');
+            }
+            return null;
+          })()}
+          {effectiveActiveView === 'elections' && (
             <div className="px-6 md:px-12 pt-6 pb-8">
               {searchMode === 'address' && activeQuery && (
                 <VoterResourcesCard
