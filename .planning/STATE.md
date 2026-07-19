@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
 status: verifying
-last_updated: "2026-07-19T18:01:45.770Z"
+last_updated: "2026-07-19T18:50:17.358Z"
 last_activity: 2026-07-19
 progress:
-  total_phases: 38
-  completed_phases: 3
-  total_plans: 5
-  completed_plans: 5
-  percent: 8
+  total_phases: 39
+  completed_phases: 4
+  total_plans: 6
+  completed_plans: 6
+  percent: 10
 ---
 
 # State
@@ -20,6 +20,8 @@ progress:
 Phase: 210 (per-tab-compass-integration) — COMPLETE
 Plan: 2 of 2 (both complete)
 Status: Phase complete — CMP-01/CMP-02 confirmed live via human-verify sign-off (Bloomington, IN); ready for verification/next phase
+Gap closure: Phase 210.1 (fix-calibration-lens-revert) — COMPLETE. Plan 210.1-01 resolved
+code-review finding CR-01 (calibrate-and-return lens revert); build clean, 211/211 tests green.
 Last activity: 2026-07-19
 
 **Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
@@ -565,8 +567,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-19T18:01:21.827Z
-Stopped at: Completed 210-02-PLAN.md (human-verify sign-off) — Phase 210 fully complete
+Last session: 2026-07-19T18:49:49.477Z
+Stopped at: Completed 210.1-01-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -653,6 +655,7 @@ Resume file: None
 | Phase 208 P01 | 11min | 3 tasks | 1 files |
 | Phase 210 P01 | 6min | 2 tasks | 3 files |
 | Phase 210 P02 | 3min | 1 tasks | 1 files |
+| Phase 210.1 P01 | 20min | 1 tasks | 1 files |
 
 ## Decisions
 
@@ -756,6 +759,7 @@ Resume file: None
 - [Phase 210]: resolveTabLens composes isLensCalibrated rather than re-deriving lens readiness; any tab-default key absent from lenses (e.g. today's unauthored 'education') or uncalibrated degrades generically to 'custom'
 - [Phase 210]: Tab-entry effect deps exclude activeLensKey but include rawUserAnswers, so async compass calibration re-fires the effect once (idempotent) without creating a feedback loop with handleSelectLens
 - [Phase 210]: Human-verify performed at Bloomington, IN (not LA County, CA) — All 504 CA JUDICIAL districts have a NULL geo_id and never surface a Judges tab (pre-existing gap, tracked as ROADMAP backlog Phase 999.1)
+- [Phase 210.1]: CR-01 fix: seed tabLensMemory[activeView] from loadLensPending() on mount-once effect, keyed on raw activeView param, without clearing the marker (CompassContext still owns clearLensPending).
 
 ## Operator Next Steps
 

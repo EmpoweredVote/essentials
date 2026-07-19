@@ -933,10 +933,10 @@ Coachella Valley, CA). See the expanded roadmap above. Per-milestone progress ta
 
 **Goal:** Resolve Phase 210 code-review finding CR-01 — the per-tab tab-entry effect could revert a lens the user just calibrated (calibrate flow does a full-page nav, so tabLensMemory is empty on return; a later async rawUserAnswers/lenses tick re-fired the effect and reset to the tab default). Fix seeds tabLensMemory[activeView] from the pending-calibration marker on the return mount.
 **Requirements:** CMP-02
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 210.1-01 — Seed tabLensMemory from the pending-calibration marker on return-mount
+- [x] 210.1-01 — Seed tabLensMemory from the pending-calibration marker on return-mount
 
 ## Backlog
 
