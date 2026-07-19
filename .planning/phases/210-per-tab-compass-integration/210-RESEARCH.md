@@ -430,9 +430,9 @@ instead documents the phase's own precedent evolution within this codebase:
 manually verify during plan execution (a live browser check) rather than requiring upstream
 decisions from the user.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Should `tabLensMemory` be seeded with `TAB_DEFAULTS` on mount, or computed lazily by
+1. **RESOLVED: Should `tabLensMemory` be seeded with `TAB_DEFAULTS` on mount, or computed lazily by
    `resolveTabLens` reading `TAB_DEFAULTS` as a fallback when the memory map has no entry yet?**
    - What we know: Both produce identical observable behavior on first render.
    - What's unclear: Whether the planner prefers an explicit `{ representatives: 'custom',
@@ -444,9 +444,11 @@ decisions from the user.
      any values the user didn't explicitly choose, which simplifies later debugging/telemetry
      ("is this tab on its default, or did the user pick this?" is answerable by checking key
      presence in the memory object).
+   - RESOLVED: Plan 210-01 Task 2 adopts the lazy-fallback form (no default seeding of
+     `tabLensMemory`); `resolveTabLens` reads `TAB_DEFAULTS` as the fallback.
 
-2. **Does the Education lens key ever appear in the live `GET /compass/lenses` response today
-   (e.g. as a not-yet-calibrated placeholder row), or is it entirely absent until Phase 209?**
+2. **RESOLVED: Does the Education lens key ever appear in the live `GET /compass/lenses` response
+   today (e.g. as a not-yet-calibrated placeholder row), or is it entirely absent until Phase 209?**
    - What we know: `LENS_FALLBACKS` (the offline fallback constant) has exactly 3 entries
      (`local`, `federal`, `judicial`) — no `education`. The live API (`compassService.ts` in the
      separate `EV-Accounts` backend repo, per Phase 204's research) was confirmed to return
@@ -462,6 +464,9 @@ decisions from the user.
      !isLensCalibrated(...)` check handles both cases identically. Flag for a quick manual
      `curl`/browser-devtools check during execution if the planner wants to know which chip-row
      appearance to expect on the live Educators tab.
+   - RESOLVED: Non-blocking; the plan relies on `resolveTabLens`'s `!lens || !isLensCalibrated(...)`
+     guard, which degrades identically whether or not an `education` placeholder row exists
+     server-side. No planning dependency on the answer.
 
 ## Environment Availability
 
