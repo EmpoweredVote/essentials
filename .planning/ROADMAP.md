@@ -790,7 +790,7 @@ v22.0 phases above are preserved untouched.
 **Plans**: 2 plans
 
 - [x] 210-01-PLAN.md — resolveTabLens pure helper + unit tests, and per-tab lens memory (state + tab-entry effect + explicit-pick interception) in Results.jsx
-- [ ] 210-02-PLAN.md — live human-verify of per-tab default-lens shift, explicit-pick memory, cross-location persistence, and reset-on-reload
+- [x] 210-02-PLAN.md — live human-verify of per-tab default-lens shift, explicit-pick memory, cross-location persistence, and reset-on-reload
 **UI hint**: yes
 
 #### Phase 211: Deep-Dive Stance Research (Trump, Vance, Rubio)
@@ -823,7 +823,7 @@ independent and may run at any time.
 | 207. Officials Classification | 1/1 | Complete    | 2026-07-18 |
 | 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
-| 210. Per-Tab Compass Integration | 1/2 | In Progress|  |
+| 210. Per-Tab Compass Integration | 2/2 | Complete   | 2026-07-19 |
 | 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 0/TBD | Not started | - |
 
 ### Coverage

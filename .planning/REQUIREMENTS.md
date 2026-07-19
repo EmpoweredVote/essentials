@@ -44,9 +44,9 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 
 ### Compass Integration
 
-- [ ] **CMP-01**: The **Compass button + overlay work inside the Educators and Judges tabs** exactly as
+- [x] **CMP-01**: The **Compass button + overlay work inside the Educators and Judges tabs** exactly as
   in Representatives — cards render their compass and the lens switcher is available.
-- [ ] **CMP-02**: Switching tabs **shifts the default compass lens for that group** — Judges → the
+- [x] **CMP-02**: Switching tabs **shifts the default compass lens for that group** — Judges → the
   existing **Judicial lens**; Educators → the **Education lens**; returning to Representatives restores
   the Custom/prior default. An explicit user lens selection still overrides the per-tab default.
 
@@ -101,8 +101,8 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 | TAB-03 | Phase 208 | Complete |
 | EDU-01 | Phase 209 | Pending |
 | EDU-02 | Phase 209 | Pending |
-| CMP-01 | Phase 210 | Pending |
-| CMP-02 | Phase 210 | Pending |
+| CMP-01 | Phase 210 | Complete |
+| CMP-02 | Phase 210 | Complete |
 | RES-01 | Phase 211 | Pending |
 
 **Coverage:** 9/9 v23.0 requirements mapped to exactly one phase (207–211). No orphans, no duplicates.
