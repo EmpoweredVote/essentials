@@ -30,6 +30,8 @@ import {
   saveLensPending,
   loadLensPending,
   clearLensPending,
+  resolveTabLens,
+  TAB_DEFAULTS,
 } from './compass.js';
 
 const topic = (id, short_title) => ({ id, short_title });
@@ -236,6 +238,50 @@ describe('isLensCalibrated', () => {
 
     const answers5 = lens6.topicIds.slice(0, 5).map((id) => ans(id, 3));
     expect(isLensCalibrated(lens6, answers5)).toBe(false);
+  });
+});
+
+describe('resolveTabLens', () => {
+  const judicialLens = { key: 'judicial', topicIds: JUDICIAL_LENS_TOPICS };
+  const calibratedJudicialAnswers = JUDICIAL_LENS_TOPICS.map((id) => ans(id, 3));
+  const lenses = [judicialLens];
+
+  it('returns TAB_DEFAULTS[tabKey] when the default is a real, calibrated lens (judges -> judicial)', () => {
+    expect(TAB_DEFAULTS.judges).toBe('judicial');
+    expect(resolveTabLens('judges', {}, lenses, calibratedJudicialAnswers)).toBe('judicial');
+  });
+
+  it("returns 'custom' without a lens lookup when the candidate is 'custom' (representatives default)", () => {
+    expect(TAB_DEFAULTS.representatives).toBe('custom');
+    expect(resolveTabLens('representatives', {}, lenses, calibratedJudicialAnswers)).toBe('custom');
+  });
+
+  it("returns 'custom' when the tab default key is absent from lenses (education today)", () => {
+    // 'education' is TAB_DEFAULTS.educators but not present in the passed lenses array.
+    expect(TAB_DEFAULTS.educators).toBe('education');
+    expect(resolveTabLens('educators', {}, lenses, calibratedJudicialAnswers)).toBe('custom');
+  });
+
+  it("returns 'custom' when the default key is present but uncalibrated for this user", () => {
+    const fewAnswers = JUDICIAL_LENS_TOPICS.slice(0, 3).map((id) => ans(id, 3));
+    expect(resolveTabLens('judges', {}, lenses, fewAnswers)).toBe('custom');
+  });
+
+  it('returns the default key unchanged when present AND calibrated', () => {
+    expect(resolveTabLens('judges', {}, lenses, calibratedJudicialAnswers)).toBe('judicial');
+  });
+
+  it('prefers an explicitly-remembered pick over TAB_DEFAULTS, even resolving to custom', () => {
+    // Remembered 'custom' on judges wins even though the tab default is 'judicial'.
+    expect(resolveTabLens('judges', { judges: 'custom' }, lenses, calibratedJudicialAnswers)).toBe('custom');
+  });
+
+  it('returns a remembered calibrated real key unchanged', () => {
+    expect(resolveTabLens('representatives', { representatives: 'judicial' }, lenses, calibratedJudicialAnswers)).toBe('judicial');
+  });
+
+  it("returns 'custom' for an unknown tabKey with no TAB_DEFAULTS entry and no memory", () => {
+    expect(resolveTabLens('elections', {}, lenses, calibratedJudicialAnswers)).toBe('custom');
   });
 });
 
