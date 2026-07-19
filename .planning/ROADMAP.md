@@ -711,8 +711,8 @@ v22.0 phases above are preserved untouched.
 
 - [x] **Phase 207: Officials Classification** - Reliably bucket every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data (completed 2026-07-18)
 - [x] **Phase 208: Educators & Judges Tabs** - New tabs beside Representatives & Elections; school-board + judicial officials leave Representatives; hide-when-empty (D-06); operator-approved on live
-- [ ] **Phase 209: Education Lens Scaffolding** - Data-driven Education lens entry (parallel to Judicial); greyed / Custom fallback until its 8 topics are authored later
-- [ ] **Phase 210: Per-Tab Compass Integration** - Compass button + overlay work inside the new tabs; default lens shifts per tab (Judges to Judicial, Educators to Education); explicit selection overrides
+- [ ] **Phase 209: Education Lens Scaffolding** *(DEFERRED — blocked on educator stance research, undefined 5-notch spectrum values, and a viable topic set)* - Data-driven Education lens entry (parallel to Judicial); greyed / best-available fallback until its topics are authored later
+- [ ] **Phase 210: Per-Tab Compass Integration** - Compass button + overlay work inside the new tabs; default lens shifts per tab (Judges to Judicial, Educators to Education with best-available fallback until 209 lights it); explicit selection overrides. Ships independently of 209.
 - [ ] **Phase 211: Deep-Dive Stance Research (Trump, Vance, Rubio)** - Full-compass, 100%-cited, no-defaults evidence-based stance research
 
 ### Phase Details
@@ -760,8 +760,9 @@ v22.0 phases above are preserved untouched.
 
 #### Phase 209: Education Lens Scaffolding
 
-**Goal**: An Education lens exists as a data-driven lens entry parallel to Judicial — recognized by the switcher and per-tab default-lens logic — that greys out and falls back to Custom until its topics are authored.
-**Depends on**: Nothing hard (builds on the Phase 204 lens switcher; can proceed independently, but must land before Phase 210 can default Educators to it)
+**Status**: DEFERRED (2026-07-19) — blocked upstream: no educator stance research exists, the 5-notch spectrum values ("chairs") are undefined for education topics, and only a few viable topics exist (sourcing more is unresolved). Revisit once that groundwork is ready.
+**Goal**: An Education lens exists as a data-driven lens entry parallel to Judicial — recognized by the switcher and per-tab default-lens logic — that greys out and falls back to best-available until its topics are authored.
+**Depends on**: Nothing hard (builds on the Phase 204 lens switcher). Does NOT need to precede Phase 210 — 210 references the `education` key defensively and falls back to best-available while unlit, then auto-upgrades (data-only) when this lands.
 **Requirements**: EDU-01, EDU-02
 **Success Criteria** (what must be TRUE):
 
@@ -776,7 +777,7 @@ v22.0 phases above are preserved untouched.
 #### Phase 210: Per-Tab Compass Integration
 
 **Goal**: The compass works inside the Educators and Judges tabs exactly as in Representatives, and the default lens shifts per tab while an explicit user selection still overrides.
-**Depends on**: Phase 208 (tabs exist) and Phase 209 (Education lens entry exists)
+**Depends on**: Phase 208 (tabs exist). Phase 209 is a soft/data dependency only — 210 defaults Educators to the `education` lens but falls back to best-available while it is unlit, so 210 ships now and auto-upgrades (data-only) when 209 lands.
 **Requirements**: CMP-01, CMP-02
 **Success Criteria** (what must be TRUE):
 
@@ -806,11 +807,13 @@ v22.0 phases above are preserved untouched.
 ### Progress
 
 **Execution Order:**
-Phases execute in numeric order: 207 → 208 → 209 → 210 → 211
+Revised order (2026-07-19): 207 → 208 → **210** → 211, with **209 deferred**.
 
-Phase 207 (classification) is the foundation; Phase 208 (tabs) depends on it. Phase 209 (Education
-lens) has no hard dependency but must precede Phase 210, which depends on both 208 and 209. Phase 211
-(stance research) is fully independent and may run at any time.
+Phase 207 (classification) is the foundation; Phase 208 (tabs) depends on it and is COMPLETE. Phase 209
+(Education lens) is DEFERRED (blocked on educator stance/topic groundwork) and no longer gates Phase 210:
+210 defaults Educators to the Education lens but falls back to best-available while it is unlit, so 210
+ships now and auto-upgrades data-only when 209 eventually lands. Phase 211 (stance research) is fully
+independent and may run at any time.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
