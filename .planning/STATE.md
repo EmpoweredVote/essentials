@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
-status: completed
-last_updated: "2026-07-19T05:07:40.379Z"
-last_activity: 2026-07-18
+status: executing
+last_updated: "2026-07-19T09:00:17.377Z"
+last_activity: 2026-07-19
 progress:
   total_phases: 37
   completed_phases: 2
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 4
   percent: 5
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 208 (educators-judges-tabs) — EXECUTING
+Phase: 210 (per-tab-compass-integration) — EXECUTING
 Plan: 2 of 2
-Status: Phase 208 complete — four-tab officials view live & operator-approved
-Last activity: 2026-07-18
+Status: Ready to execute
+Last activity: 2026-07-19
 
 **Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
 school-board + judicial office-holders into their own compass-integrated tabs, grey-out on no-data,
@@ -463,7 +463,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 208 — educators-judges-tabs
+**Current focus:** Phase 210 — per-tab-compass-integration
 
 ## v15.0 Roadmap Summary
 
@@ -565,9 +565,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-19T05:07:40.356Z
-Stopped at: Phase 210 context gathered
-Resume file: .planning/phases/210-per-tab-compass-integration/210-CONTEXT.md
+Last session: 2026-07-19T09:00:17.360Z
+Stopped at: Completed 210-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -651,6 +651,7 @@ Resume file: .planning/phases/210-per-tab-compass-integration/210-CONTEXT.md
 | Phase 201 P03 | 45m | 3 tasks | 2 files |
 | Phase 207 P01 | 3min | 3 tasks | 2 files |
 | Phase 208 P01 | 11min | 3 tasks | 1 files |
+| Phase 210 P01 | 6min | 2 tasks | 3 files |
 
 ## Decisions
 
@@ -751,6 +752,8 @@ Resume file: .planning/phases/210-per-tab-compass-integration/210-CONTEXT.md
 - [Phase 207]: classifyBucket reads district_type/office_title/chamber_name(_formal) directly rather than calling classifyCategory/getBranch/getTier, avoiding unrelated display-module imports
 - [Phase 208]: effectiveActiveView implemented as a switch statement (not repeated activeView === comparisons) to remain the sole legitimate reader of the raw ?view= param
 - [Phase 208]: renderPeopleTab helper extracted for byte-identical Representatives/Educators/Judges parity; tier-empty wording gated on viewName to avoid 'representative data' leaking onto Educators/Judges tabs
+- [Phase 210]: resolveTabLens composes isLensCalibrated rather than re-deriving lens readiness; any tab-default key absent from lenses (e.g. today's unauthored 'education') or uncalibrated degrades generically to 'custom'
+- [Phase 210]: Tab-entry effect deps exclude activeLensKey but include rawUserAnswers, so async compass calibration re-fires the effect once (idempotent) without creating a feedback loop with handleSelectLens
 
 ## Operator Next Steps
 
