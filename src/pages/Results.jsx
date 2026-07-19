@@ -3,7 +3,7 @@ import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant, classifyBucket, classifyCategory } from '../lib/classify';
-import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending } from '../lib/compass';
+import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -548,6 +548,11 @@ export default function Results() {
   // Compass integration — context provides politician IDs with stances + user data
   const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, activeLensKey, setActiveLens, lenses, isLensCalibrated, enableCompass } = useCompass();
 
+  // Per-tab compass-lens memory (Req CMP-02, D-02): in-memory only, never
+  // localStorage-persisted, never seeded with defaults — resolveTabLens falls
+  // back to TAB_DEFAULTS/'custom' for any tab with no explicit remembered pick.
+  const [tabLensMemory, setTabLensMemory] = useState({});
+
   // Auto-enable compass for calibrated users who haven't set an explicit preference
   useEffect(() => {
     if (!rawUserAnswers || rawUserAnswers.length < 3) return;
@@ -582,7 +587,11 @@ export default function Results() {
   }, [lenses, rawUserAnswers, isLensCalibrated]);
 
   const handleSelectLens = (key) => {
-    posthog?.capture('essentials_compass_lens_selected', { lens: key });
+    posthog?.capture('essentials_compass_lens_selected', { lens: key, tab: effectiveActiveView });
+    // D-04: record the explicit pick into the active tab's memory slot BEFORE
+    // applying it — this re-fires the tab-entry effect below with the same
+    // resolved key, a benign idempotent no-op (Pattern 2), not a loop.
+    setTabLensMemory((prev) => ({ ...prev, [effectiveActiveView]: key }));
     setActiveLens(key);
   };
 
@@ -1460,6 +1469,19 @@ export default function Results() {
     }
   }, [activeView, hasEducators, hasJudges]);
 
+  // Per-tab default lens shift (Req CMP-02): entering a people-tab applies that
+  // tab's remembered-or-default lens to the global switcher. Elections is not a
+  // people-tab and has no TAB_DEFAULTS entry (compassTopSlot also renders there)
+  // — the guard below keeps this effect from ever resetting the switcher on an
+  // Elections visit. Deps never include activeLensKey (would create a feedback
+  // loop with handleSelectLens); rawUserAnswers IS included so async compass
+  // calibration (CompassContext's cross-subdomain live-sync) re-fires this once
+  // calibration data arrives, e.g. on a deep-link straight to ?view=judges.
+  useEffect(() => {
+    if (effectiveActiveView === 'elections') return;
+    const resolvedKey = resolveTabLens(effectiveActiveView, tabLensMemory, lenses, rawUserAnswers);
+    setActiveLens(resolvedKey);
+  }, [effectiveActiveView, tabLensMemory, lenses, rawUserAnswers, setActiveLens]);
 
   const handlePoliticianClick = (id) => {
     // Save scroll position before navigating to profile
