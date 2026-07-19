@@ -44,6 +44,14 @@
 **User's choice:** Build 210 now, stub Educators to Custom until 209 lands
 **Notes:** The flip to Education must require no 210 code change (data-only).
 
+**POST-DISCUSSION REVISION (2026-07-18):** User realized the Education lens is
+blocked by missing groundwork — no educator stance research, undefined 5-notch
+spectrum values, and only a few viable topics (sourcing more unresolved). Decision
+revised: **drop the Education-lens target entirely for 210.** Educators uses
+"best available" (Best Match/Custom, same as Representatives). Phase 209 is
+**deferred**, and Phase 210 no longer depends on it — 210 is now standalone. See
+CONTEXT.md D-03/D-06 (authoritative).
+
 ---
 
 ## Representatives default + uncalibrated fallback

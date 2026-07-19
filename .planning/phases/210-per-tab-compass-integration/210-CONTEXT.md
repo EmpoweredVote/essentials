@@ -8,12 +8,11 @@
 
 The compass button/overlay operates inside the Educators & Judges tabs (parity
 with Representatives, carried from Phase 208 D-10), and the compass **lens
-defaults shift per tab**: Judges → Judicial, Educators → Education,
-Representatives → today's Best Match/Custom. An explicit lens selection
+default shifts per tab**: Judges → Judicial; Educators and Representatives →
+today's Best Match/Custom ("best available"). An explicit lens selection
 overrides the per-tab default. This phase changes only lens-selection behavior
-across the existing four-tab officials view — it does NOT author new lens
-topics (Education topics are Phase 209 + authoring) and does NOT add new compass
-capabilities.
+across the existing four-tab officials view — it does NOT introduce an Education
+lens (deferred — see D-06 / Deferred) and does NOT add new compass capabilities.
 
 </domain>
 
@@ -36,25 +35,29 @@ capabilities.
   **No localStorage persistence** (unlike Local Lens, which does persist).
 
 ### Per-tab defaults + override
-- **D-03:** Defaults — Representatives → current Best Match/Custom behavior
-  (UNCHANGED, no fixed lens assigned); Judges → Judicial lens; Educators →
-  Education lens.
+- **D-03:** Defaults — **Judges → Judicial lens** (the only tab with a special
+  default); **Educators → "best available" (Best Match/Custom), same as
+  Representatives** — NO Education lens for now (deferred; see D-06);
+  Representatives → current Best Match/Custom (UNCHANGED). Only Judges assigns a
+  fixed per-tab lens; the other two share today's best-available behavior.
 - **D-04:** An explicit user lens selection overrides that tab's default and
   becomes the tab's remembered lens for the lifetime in D-02.
 
 ### Fallback (honest blanks)
-- **D-05:** If a tab's default lens is not available / not calibrated / not yet
-  authored (Judicial uncalibrated for the user, Education lens unlit), fall back
-  to Custom / Best Match with **honest blanks — never fabricate spokes.**
-  Mirrors Phase 209 success-criterion #4.
+- **D-05:** "Best available" and any uncalibrated default fall back to Custom /
+  Best Match with **honest blanks — never fabricate spokes.** For Educators this
+  is the norm today: there is no educator stance data, so the Educators compass
+  shows honest blanks (no-stances plate) until stance work exists. For Judges,
+  an uncalibrated Judicial lens likewise degrades to Custom.
 
-### Sequencing (Phase 209 dependency)
-- **D-06:** Build 210 **now**. Judges → Judicial ships fully. The Educators
-  default **targets** the Education lens but degrades to Custom until Phase 209
-  (Education lens entry) + topic authoring land. The upgrade to Education must
-  be **data-only** — no 210 code change when the lens lights up. 210 must
-  reference the Education lens key **defensively**: an absent/unlit `education`
-  key resolves to Custom (per D-05), never an error or empty compass.
+### Scope (Education lens deferred — Phase 210 is standalone)
+- **D-06:** **No Education lens in 210, and NO dependency on Phase 209.** The
+  Education lens is on hold: there is no educator stance data yet, the 5-notch
+  spectrum values ("chairs") are undefined, and only a few viable education
+  topics exist (sourcing more is unresolved). Until that groundwork is done, the
+  Educators tab uses "best available" (D-03) with honest blanks (D-05).
+  Promoting Educators from best-available to a real Education lens is FUTURE work
+  (the deferred Phase 209), not part of 210. This makes 210 shippable on its own.
 
 ### Claude's Discretion
 - Exact state shape and location of the per-tab lens map (e.g. inside
@@ -93,13 +96,15 @@ capabilities.
 - `src/lib/classify.js` — `classifyBucket` (tab routing) and `computeVariant`
   (judicial → `'judicial'` plate); note interaction between the Judicial LENS
   (switcher topic set) and the judicial-compass card.
-- `.planning/phases/209*/` — Education Lens Scaffolding (NOT yet built; 210's
-  Educators default depends on it; see D-06).
+- Phase 209 (Education Lens) is **deferred** and is **NOT a 210 dependency** —
+  Educators uses best-available (D-06). Do not build against an Education lens.
 
 ### Requirements
-- `.planning/REQUIREMENTS.md` — Phase 210 requirement rows (compass/lens). Also
-  EDU-01/EDU-02 (Phase 209) which gate the Educators→Education upgrade.
-- `.planning/ROADMAP.md` § Phase 210 — canonical goal statement.
+- `.planning/REQUIREMENTS.md` — Phase 210 requirement rows (compass/lens).
+  (EDU-01/EDU-02 belong to the deferred Phase 209 and are out of scope here.)
+- `.planning/ROADMAP.md` § Phase 210 — canonical goal statement (note: the
+  roadmap line's "Educators to Education" is superseded by D-03/D-06 —
+  Educators uses best-available in 210).
 
 </canonical_refs>
 
@@ -135,8 +140,9 @@ capabilities.
   spokes rather than the no-compass plate.
 - Confirm the compass comparison overlay (`CompassCardVertical`) behaves
   identically on Educators/Judges (parity carried from 208 D-10).
-- Determine whether the Education lens key exists in `lenses` today (expected:
-  no, until Phase 209) and that a missing key resolves to Custom (D-05/D-06).
+- Educators uses best-available (no Education lens) — verify the Educators tab
+  compass renders honest blanks (no-stances plate) gracefully given zero
+  educator stance data today.
 
 </code_context>
 
@@ -151,10 +157,16 @@ capabilities.
 </specifics>
 
 <deferred>
-## Deferred Ideas
-
-- Authoring the Education lens's 8 topics — Phase 209 + content authoring, not
-  210. 210 only wires the default + graceful fallback.
+- **Education lens (deferred Phase 209)** — on hold, blocked by upstream
+  groundwork the user flagged:
+  - No stance research exists for educators (school-board officials).
+  - The 5-notch spectrum values ("chairs", per the stance model) are not yet
+    defined for education topics.
+  - Only a few education topics currently make sense; **how to source more is an
+    open question.**
+  Once educator stance work + spectrum notches + a viable topic set exist, revisit
+  Phase 209 (Education lens entry) and then a follow-up to default Educators to
+  it. Until then, Educators = best-available (D-06).
 - Persisting per-tab lens picks across sessions (localStorage) — explicitly
   rejected for 210 (D-02: in-memory, reset on reload). Revisit only if users ask
   for sticky lens preferences.
