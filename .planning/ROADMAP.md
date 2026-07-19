@@ -928,3 +928,14 @@ This deferred scope is what v21.0 filled.
 **v22.0 Tucson & Arizona is the active milestone** â Phases 190-203 (11 AZ + 3 appended
 Coachella Valley, CA). See the expanded roadmap above. Per-milestone progress tables are archived to
 `.planning/milestones/v{X.Y}-ROADMAP.md` at close.
+
+## Backlog
+
+### Phase 999.1: Link CA judicial districts to geofences (BACKLOG)
+
+**Goal:** [Captured for future planning] All 504 California JUDICIAL districts (LA County Superior Court, CA Courts of Appeal, CA Supreme Court; ~502 active judge records) have a NULL `essentials.districts.geo_id`, so they are unlinked to any geofence and structurally unreachable from an address search — they never surface in the Judges tab. This is a data-completeness gap, NOT a frontend filter or intentional suppression (verified in Phase 210: `classifyBucket` → Judges tab would show them if present). Indiana's 70 judicial districts all have geo_ids and surface correctly. Fix = link CA judicial districts to geofences (county-level for LA County Superior Court, statewide for CA appellate/supreme). Low priority — judges provide limited value at this stage. Discovered 2026-07-19 during Phase 210 verification.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd:review-backlog when ready)
