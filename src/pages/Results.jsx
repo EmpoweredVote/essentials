@@ -3,7 +3,7 @@ import { usePostHog } from 'posthog-js/react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant, classifyBucket, classifyCategory } from '../lib/classify';
-import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens } from '../lib/compass';
+import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -1468,6 +1468,27 @@ export default function Results() {
         return 'representatives';
     }
   }, [activeView, hasEducators, hasJudges]);
+
+  // CR-01 fix (210-REVIEW.md): seed tabLensMemory from a pending-calibration marker
+  // on the return mount from handleCalibrateLens's full-page redirect. Without this,
+  // CompassContext's own pending-lens effect (CompassContext.jsx:447-456) applies the
+  // calibrated lens via setActiveLens but never records it into tabLensMemory — so a
+  // later async rawUserAnswers/lenses tick re-fires the tab-entry effect below, which
+  // recomputes resolveTabLens against still-empty tabLensMemory and reverts to the tab
+  // default, silently discarding the calibration the user just completed.
+  // Keys on the RAW activeView URL param (not effectiveActiveView, which downgrades to
+  // 'representatives' while hasJudges/hasEducators are still resolving on this fresh
+  // mount). Runs once on mount only ([] deps) — handleCalibrateLens always does a
+  // full-page navigation, so return is always a fresh mount, never a re-render. Does
+  // NOT clear the marker — CompassContext owns clearLensPending() once it actually
+  // adopts the lens; this effect only mirrors the intent into tabLensMemory so the
+  // tab-entry effect resolves to the calibrated key instead of reverting it.
+  useEffect(() => {
+    const pendingKey = loadLensPending();
+    if (pendingKey) {
+      setTabLensMemory((prev) => ({ ...prev, [activeView]: pendingKey }));
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Per-tab default lens shift (Req CMP-02): entering a people-tab applies that
   // tab's remembered-or-default lens to the global switcher. Elections is not a
