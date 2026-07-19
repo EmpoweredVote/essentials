@@ -558,6 +558,39 @@ export const LENS_SELECTION_KEY = 'ev:compassLens';
 export const LENS_PENDING_KEY = 'ev:compassLensPending';
 
 /**
+ * Static per-tab default lens keys for the four-tab officials view (Req CMP-02).
+ * 'education' has no LENS_FALLBACKS entry yet (scaffolding-only, Phase 209 deferred) —
+ * resolveTabLens degrades that to 'custom' generically via its missing-lens check.
+ */
+export const TAB_DEFAULTS = {
+  representatives: 'custom',
+  educators: 'education',
+  judges: 'judicial',
+};
+
+/**
+ * Resolves the compass lens key that should be active for a given people-tab —
+ * an explicitly-remembered pick (tabMemory[tabKey]) takes precedence over the
+ * tab's static default (TAB_DEFAULTS[tabKey]); either way, the resolved candidate
+ * must be a real, calibrated lens present in `lenses` or it degrades to 'custom'
+ * (Best Match) so the switcher/chip row always has a valid, lit key (T-210-01).
+ * Pure — composes isLensCalibrated (defined just above) rather than re-deriving
+ * its readiness threshold, and adds no localStorage/sessionStorage of its own.
+ * @param {string} tabKey
+ * @param {Record<string, string>} tabMemory
+ * @param {Array<{key: string, topicIds?: string[]}>} lenses
+ * @param {Array<{topic_id: string, value: number}>} userAnswers
+ * @returns {string} a lens key guaranteed to exist in `lenses`, or 'custom'
+ */
+export function resolveTabLens(tabKey, tabMemory, lenses, userAnswers) {
+  const candidate = tabMemory?.[tabKey] ?? TAB_DEFAULTS[tabKey] ?? 'custom';
+  if (candidate === 'custom') return 'custom';
+  const lens = (lenses || []).find((l) => l.key === candidate);
+  if (!lens || !isLensCalibrated(lens, userAnswers)) return 'custom';
+  return candidate;
+}
+
+/**
  * Persists the user's explicitly-selected lens key.
  * @param {string} key
  */
