@@ -712,7 +712,7 @@ v22.0 phases above are preserved untouched.
 - [x] **Phase 207: Officials Classification** - Reliably bucket every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data (completed 2026-07-18)
 - [x] **Phase 208: Educators & Judges Tabs** - New tabs beside Representatives & Elections; school-board + judicial officials leave Representatives; hide-when-empty (D-06); operator-approved on live
 - [ ] **Phase 209: Education Lens Scaffolding** *(DEFERRED — blocked on educator stance research, undefined 5-notch spectrum values, and a viable topic set)* - Data-driven Education lens entry (parallel to Judicial); greyed / best-available fallback until its topics are authored later
-- [ ] **Phase 210: Per-Tab Compass Integration** - Compass button + overlay work inside the new tabs; default lens shifts per tab (Judges to Judicial, Educators to Education with best-available fallback until 209 lights it); explicit selection overrides. Ships independently of 209.
+- [x] **Phase 210: Per-Tab Compass Integration** - Compass button + overlay work inside the new tabs; default lens shifts per tab (Judges to Judicial, Educators to Education with best-available fallback until 209 lights it); explicit selection overrides. Ships independently of 209. (2/2 plans + gap-closure 210.1 for CR-01; human-verified on Bloomington IN; one optional CR-01 calibrate-return live re-check outstanding)
 - [ ] **Phase 211: Deep-Dive Stance Research (Trump, Vance, Rubio)** - Full-compass, 100%-cited, no-defaults evidence-based stance research
 
 ### Phase Details
