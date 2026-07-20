@@ -231,3 +231,11 @@ None - no external service configuration required. This plan performed a scripte
 ---
 *Phase: 212-backend-place-name-resolver-national-fallback*
 *Completed: 2026-07-20*
+
+## Self-Check: PASSED
+
+- FOUND: .planning/phases/212-backend-place-name-resolver-national-fallback/212-03-SUMMARY.md
+- FOUND: commit f258d264 (EV-Accounts repo — tab-delimiter fix)
+- FOUND: commit 87269859 (EV-Accounts repo — Windows isMainModule fix)
+- FOUND: commit d6ff8381 (EV-Accounts repo — counties UNNEST fix)
+- FOUND: commit 30ee636d (essentials repo — this SUMMARY)
