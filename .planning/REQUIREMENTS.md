@@ -62,7 +62,7 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 
 ### Deep-Dive Stance Research
 
-- [ ] **RES-01**: Evidence-based **full-compass stance research** is completed and applied for **Donald
+- [x] **RES-01**: Evidence-based **full-compass stance research** is completed and applied for **Donald
   Trump, JD Vance, and Marco Rubio** — every applicable compass topic answered with **100% citations**,
   **no default values**, and honest blank spokes where no evidence exists.
 
@@ -103,6 +103,6 @@ one-agent-at-a-time / 100%-cited / no-defaults workflow.
 | EDU-02 | Phase 209 | Pending |
 | CMP-01 | Phase 210 | Complete |
 | CMP-02 | Phase 210 | Complete |
-| RES-01 | Phase 211 | Pending |
+| RES-01 | Phase 211 | Complete |
 
 **Coverage:** 9/9 v23.0 requirements mapped to exactly one phase (207–211). No orphans, no duplicates.
