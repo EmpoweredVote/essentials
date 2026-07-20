@@ -28,7 +28,7 @@ A DB-truth backend place-name search endpoint (`GET /essentials/location-search`
 
 ### Candidate ranking & labeling (RSLV-01)
 - **D-05:** **Label format** per candidate row = `Name, ST · <City|County|State>` (e.g. `Springfield, IL · City`, `Baltimore, MD · County`, `Illinois · State`). Area-type tag is mandatory — it is the disambiguator for city/county collisions (Baltimore city vs. county) that a bare `Name, ST` cannot resolve.
-- **D-06:** **Ranking** = trigram similarity as the base score, with **curated/deep-seeded places boosted above bare Gazetteer-only matches** (typing "Tucson" surfaces the fully-seeded Tucson first). Ties broken by exact-match, then population.
+- **D-06:** **Ranking** = trigram similarity as the base score, with **curated/deep-seeded places boosted above bare Gazetteer-only matches** (typing "Tucson" surfaces the fully-seeded Tucson first). Ties broken by exact-match, then name (A→Z). *(Amended 2026-07-20 during planning: original tertiary tiebreak was "population", but the Census Gazetteer Places/Counties files carry no population column and sourcing one requires a separate Census dataset ingest — disproportionate for a rare tertiary tiebreak. User approved switching the tiebreak to alphabetical name.)*
 
 ### Response contract / coverage signal (RSLV-01)
 - **D-07:** Extend the RSLV-01 candidate shape (`{geo_id, mtfcc, label, state}`) with a **per-candidate coverage signal** now — e.g. `has_local_data: boolean` (or `coverage: "local" | "fallback"`), where `local` = a seeded roster exists and `fallback` = state + federal only. Nearly free (ranking already computes curated status) and prevents a Phase 214 contract re-do. Finer stances-badge / `hasContext` styling is deferred to Phase 214.
