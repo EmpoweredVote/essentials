@@ -809,7 +809,7 @@ v22.0 phases above are preserved untouched.
 
 **Wave 1**
 
-- [ ] 211-01-PLAN.md — Foundation: capture live active topics + 5 chairs from inform.compass_topics/compass_stances (not the stale md), snapshot Trump+Vance answers for reversibility (D-04), author the reconcile apply script (upsert + delete-unsourced, single-politician scoped, parseInt/D-12)
+- [x] 211-01-PLAN.md — Foundation: capture live active topics + 5 chairs from inform.compass_topics/compass_stances (not the stale md), snapshot Trump+Vance answers for reversibility (D-04), author the reconcile apply script (upsert + delete-unsourced, single-politician scoped, parseInt/D-12)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -844,7 +844,7 @@ independent and may run at any time.
 | 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 2/2 | Complete   | 2026-07-19 |
-| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 0/5 | Planned | - |
+| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 1/5 | In Progress|  |
 
 ### Coverage
 
