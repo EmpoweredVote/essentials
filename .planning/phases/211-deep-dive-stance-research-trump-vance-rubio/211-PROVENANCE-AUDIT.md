@@ -10,11 +10,13 @@ bundle entry, (b) has a non-null value, and (c) the live value equals the bundle
 
 ## Per-official cross-check
 
-| Official | Pre-pass | Live DB | Bundle cited | Uncited (must=0) | Null values (must=0) | Value drift (must=0) | Legacy overwritten | Legacy deleted | Answered | Honest blanks |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Donald Trump (President) | 21 | **27** | 27 | **0** | **0** | **0** | 19 | 2 | 27 | 17 |
-| J.D. Vance (VP) | 24 | **20** | 20 | **0** | **0** | **0** | 20 | 4 | 20 | 24 |
-| Marco Rubio (Sec. of State) | 0 | **21** | 21 | **0** | **0** | **0** | 0 | 0 | 21 | 23 |
+*Numbers below reflect the final state **after the gap re-check** (see addendum). Initial-pass counts were Trump 27 / Vance 20 / Rubio 21.*
+
+| Official | Pre-pass | Live DB | Bundle cited | Uncited (must=0) | Null values (must=0) | Value drift (must=0) | Answered | Honest blanks |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Donald Trump (President) | 21 | **30** | 30 | **0** | **0** | **0** | 30 | 14 |
+| J.D. Vance (VP) | 24 | **28** | 28 | **0** | **0** | **0** | 28 | 16 |
+| Marco Rubio (Sec. of State) | 0 | **24** | 24 | **0** | **0** | **0** | 24 | 20 |
 
 **Every live row for all three officials maps to a bundle entry carrying a `source_url` + verbatim
 `quote_text`, with the DB value equal to the bundle's assigned chair.** Zero uncited rows, zero
@@ -49,3 +51,24 @@ defaulted/null values, zero polarity drift.
 
 `npx tsx scripts/_audit-federal-provenance.ts` (from `C:\EV-Accounts\backend`) — reproduces the table
 above from live DB + the three bundles + the snapshot.
+
+## Gap re-check addendum (2026-07-19, post-sign-off)
+
+Operator asked whether the honest-blanks were too aggressive (esp. for Trump). Ran a targeted
+additive gap-audit — one agent per official over ONLY that official's blank topics — that either
+found chair-matchable cited evidence a prior pass missed, or confirmed a documented reason each stays
+blank. New finds were merged into the CSV/bundle and applied via the reconcile script with a keep-set
+that is a superset of what was live, so **0 existing rows were deleted** (Trump +3 / Vance +8 /
+Rubio +3 upserted, 0 deleted each). Re-audit after merge: 0 uncited / 0 null / 0 drift, all three.
+
+**Newly answered (14 total):**
+- **Trump (+3):** judicial-interpretation 5 (originalism), judicial-criminal-justice 5 (EO 14164 death penalty), transportation-priorities 4 (DOT "Freedom to Drive", federal-applied-to-local).
+- **Vance (+8):** housing 4, residential-zoning 4 (flagged 3↔4), campaign-finance 4 (named plaintiff NRSC v. FEC), redistricting 5, public-safety-approach 4, local-immigration 5, judicial-government-deference 5, judicial-criminal-justice 5. *(Several were previously mis-blanked as "the President's action" when Vance has his own attributable record.)*
+- **Rubio (+3):** ai-regulation 2, public-safety-approach 4, judicial-interpretation 5.
+
+**Notable confirmed blanks (evidence checked, no clean chair match — not gaps):**
+- **Trump campaign-finance** — genuinely contradictory (anti-Citizens-United rhetoric vs. 2025 super-PAC reliance; no chair-matchable policy action).
+- **Trump same-sex-marriage, residential-zoning** — contradictory records; **judicial-*** (5 of 7) — no on-point jurist evidence.
+- **Rubio housing** (mixed 3↔4), **judicial-government-deference** (anti-Chevron doctrinally neutral vs. rhetoric); most hyper-local for all three (community-scale chairs with no convincing federal analog).
+
+This resolves the operator's doubt: the remaining blanks are evidence-checked chair-matching decisions, not un-researched gaps.
