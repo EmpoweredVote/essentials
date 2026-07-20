@@ -821,7 +821,7 @@ v22.0 phases above are preserved untouched.
 
 **Wave 4** *(blocked on Wave 1; own wave to keep research sequential — D-10)*
 
-- [ ] 211-04-PLAN.md — Marco Rubio full-compass research (one agent, SecState-led + Senate backfill D-08, attribution guardrail D-09) + clean-insert apply; 100% cited, honest blanks
+- [x] 211-04-PLAN.md — Marco Rubio full-compass research (one agent, SecState-led + Senate backfill D-08, attribution guardrail D-09) + clean-insert apply; 100% cited, honest blanks
 
 **Wave 5** *(blocked on 211-02/03/04)*
 
@@ -844,7 +844,7 @@ independent and may run at any time.
 | 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 2/2 | Complete   | 2026-07-19 |
-| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 3/5 | In Progress|  |
+| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 4/5 | In Progress|  |
 
 ### Coverage
 
