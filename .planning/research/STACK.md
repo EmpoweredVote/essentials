@@ -1,294 +1,132 @@
-# Technology Stack — v5.0 Location Onboarding: Cambridge, MA
+# Stack Research
 
-**Project:** Essentials (empowered.vote) — Add Cambridge, MA coverage
-**Researched:** 2026-05-15
-**Milestone:** v5.0 Location Onboarding Playbook (subsequent milestone)
+**Domain:** Unified location search (combobox + address/coordinate/place-name resolution) for an existing React 19 + Express/PostGIS civic app
+**Researched:** 2026-07-20
+**Confidence:** HIGH
 
----
+## Headline Finding
 
-## Executive Summary
+**This milestone needs at most ONE new npm dependency (frontend) and ZERO new Postgres extensions.**
+`pg_trgm` + `unaccent` are already enabled in production (migration `040_pg_trgm_search.sql`) and already
+power a mature fuzzy-name-search pattern (`campaignFinanceSearchService.ts` — `word_similarity()` +
+`public.f_unaccent()` + length-calibrated threshold + GIN index) that should be extended, not reinvented,
+for place names. Coordinate lookup should reuse the existing PostGIS `ST_Covers` pattern
+(`getElectionsByCoordinate`) — no geocoder involved at all for lat/lng input. The only real gap is
+**national fallback coverage for places we haven't deep-seeded** — solved with a build-time Census
+Gazetteer ingest (same philosophy as the existing `scripts/gen-population.mjs` ACS5 bundle), not a live
+third-party geocoder.
 
-Adding Massachusetts (FIPS 25) and Cambridge, MA requires zero new npm packages. The
-`load-state-tiger-boundaries.ts` generalized loader already supports sldu/sldl/place/county/cd
-and the FIPS_TO_STATE map already contains entry `'25': 'ma'`. The only code change is a
-one-line addition to `STATE_LAYER_ALLOWLIST`. All boundary download URLs follow the exact
-same `tl_{vintage}_{fips}_{layer}.zip` pattern used for TX, CA, IN, UT.
+## Recommended Stack
 
-Cambridge officials data comes from three sources, all requiring manual SQL migration (no
-public APIs or bulk downloads exist): cambridge.ma.gov for council/school committee rosters,
-sec.state.ma.us for state legislative candidate lists (HTML-only, no CSV/Excel export), and
-malegislature.gov for confirming district-to-representative mapping.
+### Core Technologies
 
----
+| Technology | Version | Purpose | Why Recommended |
+|------------|---------|---------|-----------------|
+| `@headlessui/react` | `^2.2.10` | Accessible `Combobox` primitive for the unified search field | `ev-ui@0.9.8` exports **no** combobox/listbox/autocomplete primitive (verified — enumerated the full named-export list: `AuthForm`, `PoliticianCard`, `FilterSidebar`, `Header`, `SiteHeader`, etc. — nothing combobox-shaped). Hand-rolling a WAI-ARIA-APG-correct combobox (role management, `aria-activedescendant`, roving focus, listbox popup, keyboard nav, screen-reader announcements) is high-risk to get right for a one-off. Headless UI is built by the Tailwind CSS team specifically to compose with Tailwind (already the project's styling system) and ships unstyled, so it slots under existing Tailwind/ev-ui visual tokens with zero design-system conflict. `2.2.10`'s peer dep is `react: "^18 \|\| ^19 \|\| ^19.0.0-rc"` — confirmed compatible with the pinned `react@^19.1.1`. |
+| PostgreSQL `pg_trgm` extension | already enabled (Postgres core `contrib`) | Trigram similarity for fuzzy place-name matching | **Already live** — `CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA extensions;` ran in migration 040. Currently indexes only `essentials.politicians.full_name`; the identical index/query pattern needs to be added for `essentials.governments.name` (a new migration, not a new extension). |
+| PostgreSQL `unaccent` extension + `public.f_unaccent()` | already enabled | Accent-insensitive matching | **Already live** — same migration 040 created the `IMMUTABLE` wrapper `public.f_unaccent(text)`, required because raw `unaccent()` is `STABLE` and can't be used in a GIN index expression. Reuse verbatim; do not create a second wrapper. |
+| PostGIS `ST_Covers` point-in-polygon | already in use | Coordinate → jurisdiction resolution | `getElectionsByCoordinate` (`electionService.ts`) already runs `ST_Covers(geometry, ST_SetSRID(ST_MakePoint($lng,$lat),4326))` against `essentials.geofence_boundaries`. The new coordinate-lookup endpoint should reuse this exact geometry-matching pattern for officials — no geocoder needed for lat/lng input at all, since it's already a point, not text to resolve. |
+| US Census one-line address geocoder | already in use, keep scope unchanged | Full street-address → lat/lng | `geocodingService.ts::geocodeAddress()` already does this well and is free/no-key. **Do not widen its use** to city/county/state-only queries — there's a Key Decision already on record (v2.0): "Census Geocoder unreliable with city+state; also returns wrong-district races," which is why `elections/me` avoids it for Connected users. Keep it scoped to genuine street addresses (leading house number) exactly as it works today. |
+| US Census Gazetteer Files (Places + Counties, current vintage) | static data, ingested once (one-time script/migration) | National place-name + centroid coverage beyond our curated catalog — the actual mechanism for "any resolvable US input" | **New**, but zero-dependency: free, no API key, official (`www2.census.gov/geo/docs/maps-data/data/gazetteer/2025_Gazetteer/2025_Gaz_place_national.zip` + `..._counties_national.zip`, pipe-delimited text). Ingest once into a small new reference table (e.g. `essentials.gazetteer_places(geoid, name, state, lat, lng)`) with the same `pg_trgm` GIN pattern. This is what makes "Springfield, IL" (a state Essentials hasn't deep-seeded) resolve to *at least* IL's state+federal officials — the curated `essentials.governments`/`coverage.js` catalog only covers ~20 states, but the Gazetteer covers all ~29,000 incorporated US places + all 3,143 counties. Same build-time-bundle philosophy already established for `scripts/gen-population.mjs` (Census ACS5 → committed bundle; Key Decision v21.0/STAT-02) — a DB table instead of a JS bundle here specifically because the fuzzy match itself needs to run in Postgres via `pg_trgm`, not in the browser. |
 
-## 1. TIGER Boundary Files for Massachusetts
+### Supporting Libraries
 
-### MTFCC Codes (CONFIRMED — matches TX/CA/IN pattern exactly)
+| Library | Version | Purpose | When to Use |
+|---------|---------|---------|-------------|
+| *(none — hand-write)* | — | Coordinate string parsing (`"39.1, -86.5"`, `"39.1 -86.5"`, optional N/S/E/W suffix) | A ~30-line regex-based parser (split on comma/whitespace, trim, `parseFloat`, range-validate `-90..90`/`-180..180`, optional N/S/E/W suffix strip) is simpler, more testable, and carries no supply-chain risk versus a micro-package. See "What NOT to Use" for the packages considered and rejected. |
+| *(none — hand-write)* | — | Debounce the combobox's as-you-type DB query | A ~10-line `useDebouncedValue` hook is standard React and avoids adding `lodash.debounce`/`use-debounce` for one call site. The already-installed `@floating-ui/react` (used for the Treasury-chip tooltip) is not needed for combobox positioning either — Headless UI v2's `ComboboxOptions` ships its own built-in `anchor` prop (confirmed via docs: uses its own CSS-anchor-based positioning, not `@floating-ui/react`, for that feature). |
+| `fastest-levenshtein` | `^1.0.16` (already a backend dependency) | Optional secondary distance check | Already installed for the discovery pipeline's `NAME_MATCH_THRESHOLD=0.85` politician matching. Not required for place-name search — `pg_trgm`'s `word_similarity()` already ranks server-side — but available if a specific edge case (e.g. transposed city/state word order) ever needs a tie-break. Do not add a second Levenshtein package. |
 
-| Layer | MTFCC | District Type | Field for District # | Skip Codes |
-|-------|-------|--------------|----------------------|------------|
-| sldu  | G5210 | STATE_UPPER  | SLDUST               | ZZZ, 000   |
-| sldl  | G5220 | STATE_LOWER  | SLDLST               | ZZZ, 000   |
-| place | G4110 | LOCAL        | (uses GEOID)         | —          |
-| county| G4020 | COUNTY       | COUNTYFP             | —          |
-| cd    | G5200 | NATIONAL_LOWER | CD119FP             | ZZ, ZZZ, 00, 000 |
+### Development Tools
 
-G5210 = State Senate (upper chamber). G5220 = State House (lower chamber). Same as TX.
-Confirmed by proximity1.com SLDL metadata and the existing LAYER_DISPATCH in load-state-tiger-boundaries.ts.
+| Tool | Purpose | Notes |
+|------|---------|-------|
+| *(none new)* | — | No new dev tooling required. Existing Vitest (`^4.1.4` frontend, `^2.1.0` backend) covers unit tests for the coordinate parser and the resolver's threshold/ranking logic, mirroring the existing 13-case Vitest matrix precedent used for `resolvePopulation`. |
 
-### Download URLs (2024 vintage, FIPS 25)
+## Installation
 
-```
-MA State Senate (SLDU):
-https://www2.census.gov/geo/tiger/TIGER2024/SLDU/tl_2024_25_sldu.zip
-— 818 KB, confirmed fetchable (directory listing returned this file)
+```bash
+# Frontend (essentials/) — the only new npm dependency this milestone needs
+npm install @headlessui/react@^2.2.10
 
-MA State House (SLDL):
-https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_25_sldl.zip
-— ~1.8 MB, confirmed fetchable (binary shapefile verified in-session)
+# Also remove the dead Google Places remnant while touching this area (see "What NOT to Use"):
+npm uninstall @googlemaps/js-api-loader
 
-MA Place boundaries (Cambridge city):
-https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_25_place.zip
-
-MA County (Middlesex):
-https://www2.census.gov/geo/tiger/TIGER2024/COUNTY/tl_2024_us_county.zip
-— national file, filtered by STATEFP=25 at runtime
-
-MA Congressional Districts (119th):
-https://www2.census.gov/geo/tiger/TIGER2024/CD/tl_2024_25_cd119.zip
-```
-
-URL pattern: `https://www2.census.gov/geo/tiger/TIGER{vintage}/{LAYER}/tl_{vintage}_{fips}_{layer}.zip`
-County is the exception: always `tl_{vintage}_us_county.zip` (national file).
-
-### Loader Code Change Required
-
-`load-state-tiger-boundaries.ts` line 34–39: add MA to STATE_LAYER_ALLOWLIST.
-
-```typescript
-MA: new Set(['cd', 'sldu', 'sldl', 'place', 'county']),
+# Backend (EV-Accounts/backend/) — no new npm packages.
+# pg_trgm / unaccent / f_unaccent already live (migration 040). New work is:
+#   1. a migration adding a GIN trgm index on essentials.governments.name
+#      (mirror idx_politicians_full_name_trgm exactly)
+#   2. a one-time ingest script/migration loading the Census Gazetteer
+#      Places + Counties files into a new small reference table
 ```
 
-No cousub layer needed for MA. Cambridge is an incorporated city (place-level); cousub is
-used for Indiana because IN uses civil townships as the sub-county unit. Massachusetts cities
-and towns are place-level in TIGER; the `place` layer suffices.
+No `npm install -D` additions — existing Vitest/ESLint/TypeScript tooling covers this feature.
 
-FIPS_TO_STATE already has `'25': 'ma'` at line 74. No change needed there.
+## Alternatives Considered
 
----
+| Recommended | Alternative | When to Use Alternative |
+|-------------|-------------|--------------------------|
+| `@headlessui/react` `Combobox` | Hand-rolled ARIA combobox on top of the already-installed `@floating-ui/react` | Only if the team wants literally zero new npm packages and is willing to own full WAI-ARIA APG combobox correctness (roving `aria-activedescendant`, listbox semantics, screen-reader announcements) in-house. Higher implementation + QA cost for a one-field feature; not recommended given how thin the win is. |
+| `@headlessui/react` `Combobox` | `downshift` (`^9.4.0`, hooks-only, unstyled) | If the team specifically wants a lower-level, render-prop-style primitive with a narrower dependency tree (`downshift` has zero runtime deps, vs. Headless UI's five transitive deps — `@react-aria/focus`, `@react-aria/interactions`, `@floating-ui/react`, `@tanstack/react-virtual`, `use-sync-external-store`). Reasonable second choice; Headless UI is preferred here mainly because it's from the same team as Tailwind (already the styling system) and its docs/examples are Tailwind-native. |
+| `@headlessui/react` `Combobox` | `react-aria`/`react-aria-components` (`useComboBox`) | If accessibility rigor needs to go beyond WAI-ARIA APG basics (Adobe's React Aria has the deepest cross-screen-reader test matrix in the ecosystem). Heavier to adopt piecemeal; overkill for one field in an otherwise Tailwind-first codebase. |
+| Census Gazetteer build-time/DB ingest | Nominatim (OpenStreetMap) live geocoding for city/county/state text | Only if/when a genuinely different capability is needed later (e.g., free-text fuzzy geocoding of places *not* in the Gazetteer, like informal neighborhood names). The public Nominatim instance's usage policy caps at ~1 req/sec and requires attribution — not suitable as a production-path dependency for this milestone; self-hosting Nominatim is a real infra project, out of scope here. |
+| `pg_trgm` fuzzy match on `essentials.governments` + Gazetteer table | Postgres full-text search (`tsvector`/`tsquery`) | If place names needed multi-word relevance ranking beyond typo-tolerance (they don't — city/county/state names are short, low-cardinality strings; trigram similarity is the standard, already-proven-in-this-codebase tool for exactly this). |
+| Server-side `pg_trgm` ranking | Client-side fuzzy search (`fuse.js`, `match-sorter`) over a shipped place list | Only if the candidate list were small enough to ship to the browser (it isn't — the Gazetteer alone is ~29K places). Shipping the whole catalog client-side to fuzzy-match in JS would also duplicate ranking logic the DB already does well and bloat the bundle for no benefit. |
 
-## 2. Massachusetts FIPS and GEOIDs
+## What NOT to Use
 
-| Entity | FIPS / GEOID | Notes |
-|--------|-------------|-------|
-| Massachusetts (state) | 25 | Standard 2-digit state FIPS |
-| Middlesex County | 25017 | Full GEOID = state + county |
-| Cambridge city (place) | 2511000 | STATEFP(25) + PLACEFP(11000) |
+| Avoid | Why | Use Instead |
+|-------|-----|--------------|
+| Google Places Autocomplete / Places API | Explicit project decision (already dead — no API key, `loadError`) and the milestone explicitly drops it: paid, carries Google branding/ToS attribution requirements on results, antithetical to "no third-party ads/branding on our forms." **`@googlemaps/js-api-loader@^2.0.2` is still present in `essentials/package.json` dependencies right now — this is the dead Google Places remnant and should be removed as part of this milestone's cleanup**, not carried forward. | `@headlessui/react` `Combobox` + our own DB-backed resolver |
+| Mapbox Geocoding API / any other paid geocoder (HERE, LocationIQ paid tier, Geocodio, SmartyStreets, etc.) | All are paid-tier-gated at any meaningful volume and/or carry branding requirements on free tiers — same objection as Google. | US Census one-line geocoder (addresses, already in use) + Census Gazetteer (places/counties, new ingest) + our own `pg_trgm` catalog |
+| Nominatim (OSM) as a live, request-time dependency for this milestone | Public instance ToS limits to ~1 req/sec with mandatory attribution; not designed to sit behind user-facing production traffic without self-hosting, which is out of scope here. | Census Gazetteer static ingest (answers exactly the "does this US place exist, what state is it in" question this milestone needs) |
+| `coordinate-parser` (npm, `1.0.7`) / `parse-dms` (npm, `0.0.5`) | Both are effectively unmaintained micro-packages (years-old last publish; `parse-dms` is pre-1.0/alpha-quality). Not worth the supply-chain surface for a ~30-line parsing problem. | Hand-written regex-based coordinate parser (decimal `"lat,lng"` / `"lat lng"`, optional N/S/E/W suffix, range validation) |
+| `react-select`, `react-select-async-paginate`, MUI `Autocomplete`, `cmdk` (command-palette pattern) | All impose their own visual design system, or (in `cmdk`'s case) a command-palette UX model that doesn't match a single inline search field; `react-select`/MUI would need substantial override work to look native inside the existing Tailwind + ev-ui design language. | `@headlessui/react` `Combobox` (unstyled, Tailwind-native) |
+| A dedicated search engine (Algolia, Typesense, Elasticsearch/OpenSearch, Meilisearch) | Enormous operational overkill for a catalog in the low tens-of-thousands of rows that Postgres `pg_trgm` already handles at sub-100ms per the existing SRCH-01 precedent (same data-scale class, GIN-indexed). Adds a whole new managed service + billing surface for a problem already solved in-place. | `pg_trgm` GIN index on `essentials.governments.name` (+ new Gazetteer reference table) |
+| Repurposing the Census one-line address geocoder for city/county/state-only text queries | Already burned once — Key Decision on record: "Census Geocoder unreliable with city+state; also returns wrong-district races." This is exactly the class of input the new unified search must also accept, so don't re-introduce the same known failure mode. | Server-side fuzzy match against `essentials.governments` (curated) → Gazetteer reference table (national fallback), text-based, never re-hitting Census for non-address input |
 
-Cambridge's place GEOID `2511000` is what the `place` layer loader writes as `geo_id`.
-Confirmed via census.gov QuickFacts and Geocodio's GEOID lookup.
+## Stack Patterns by Variant
 
----
+**If the input string parses cleanly as `lat,lng` (or `lat lng`, decimal, in-range):**
+- Skip all name/address resolution entirely.
+- Go straight to the PostGIS `ST_Covers` coordinate-lookup endpoint (mirrors `getElectionsByCoordinate`'s geometry-matching pattern, but for officials).
+- Because coordinates are already a point — geocoding a point would be a category error; there is nothing left to resolve except which polygon(s) it falls inside.
 
-## 3. Massachusetts Secretary of State — Candidate and Election Data
+**If the input string looks like a full street address (leading house number + street-suffix-ish token):**
+- Route to the existing `geocodeAddress()` (US Census one-line geocoder) — unchanged, already reliable for this exact input shape.
+- Then feed the returned `{lat, lng, state}` into the same `ST_Covers` polygon match used above.
+- Because this is the one input shape Census's geocoder is actually designed for and proven (in this codebase) to handle well.
 
-**URL:** https://www.sec.state.ma.us/divisions/elections/
+**Otherwise (bare city / "city, state" / county / state name):**
+- Try `essentials.governments` first via the extended `pg_trgm` + `f_unaccent` pattern (curated catalog — gets `hasContext`-quality routing for anywhere already deep-seeded).
+- On no confident match, fall through to the new Gazetteer reference table (national — resolves to *at minimum* a state abbreviation, enough for the required "state + federal officials" fallback).
+- On no match anywhere, fail gracefully with a plain "we couldn't find that location" message — do not chain to a third, paid API as a last resort.
+- Because this input class is precisely where Census's address geocoder is known-unreliable, and precisely the shape our own curated + Gazetteer data is built to answer without any network call.
 
-**Candidate lists:** https://www.sec.state.ma.us/divisions/elections/research-and-statistics/candidate-list-archive.htm
+## Version Compatibility
 
-**What is published:**
-- Candidate lists by election year, 2002–2024
-- Fields: candidate name, street address, city, party affiliation, office sought, district
-- Organized hierarchically: statewide offices → US Senate/House → MA Senate → MA House → County offices
-- Format: HTML table pages only. No CSV, Excel, or JSON export. No bulk download API.
-- 2024 state election: https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2024_state_election_candidates.htm
-
-**Election results:** https://electionstats.state.ma.us/
-- Contains 29,574 elections, 11,011 candidates, data from 1970–2026
-- Web-only search interface. No bulk export, no API documented.
-- Searchable by year, office, district, candidate name.
-
-**Recommendation:** Use sec.state.ma.us HTML pages to manually identify state legislative
-candidates by district for Cambridge's three House and three Senate districts.
-Seed politicians via SQL migration (same pattern as TX/CA/IN). No automation possible
-without scraping.
-
----
-
-## 4. Cambridge Official Sources
-
-### City Council
-
-**Official roster:** https://www.cambridgema.gov/Departments/citycouncil/members
-
-- 9 at-large members (no wards or districts)
-- Current members (elected November 2025, seated January 2026):
-  1. Marc C. McGovern (Mayor) — mmcgovern@cambridgema.gov
-  2. Sumbul Siddiqui — ssiddiqui@cambridgema.gov
-  3. Burhan Azeem — bazeem@cambridgema.gov
-  4. Jivan Sobrinho-Wheeler — jsobrinhowheeler@cambridgema.gov
-  5. E. Denise Simmons — dsimmons@cambridgema.gov
-  6. Patricia M. Nolan — pnolan@cambridgema.gov
-  7. Catherine Zusy — czusy@cambridgema.gov
-  8. Ayah A. Al-Zubi — aal-zubi@cambridgema.gov
-  9. Timothy R. Flaherty — tflaherty@cambridgema.gov
-- 2-year terms; next election November 2027
-- Elected via STV (Single Transferable Vote proportional representation) — at-large, 9 seats
-- Headshots present on the roster page
-
-### School Committee
-
-**Official roster:** https://www.cpsd.us/school-committee/school-committee-members-subcommittees
-
-- 7 members: 6 elected at-large via STV (same election as City Council) + Mayor ex officio
-- Current members (elected November 2025):
-  1. David Weinstein (Chair) — dweinstein@cpsd.us
-  2. Caitlin Dube (Vice Chair) — cadube@cpsd.us
-  3. Luisa de Paula Santos — ldepaulasantos@cpsd.us
-  4. Richard Harding, Jr. — harding4cambridge@gmail.com
-  5. Elizabeth Hudson — ehudson@cpsd.us
-  6. Arjun Jaikumar — ajaikumar@cpsd.us
-  7. Mayor Sumbul Siddiqui (ex officio) — ssiddiqui@cambridgema.gov
-- 2-year terms aligned with City Council
-
-### Election Commission
-
-**URL:** https://www.cambridgema.gov/Departments/electioncommission
-
-**Election results:** https://www.cambridgema.gov/Departments/electioncommission/electionresults
-- Results published as web pages and PDFs (2001–present)
-- STV count-by-count detail: HTML pages (e.g. https://www.cambridgema.gov/Election2025/Council%20Round2.htm)
-- No machine-readable formats (CSV, XML, JSON). PDF only for official results.
-- Contact: elections@cambridgema.gov
-
-**Municipal elections page:** https://www.cambridgema.gov/departments/electioncommission/cambridgemunicipalelections
-- Specimen ballots (PDF), voter guides (8 languages), election calendar
-
----
-
-## 5. STV / RCV Election Data — Machine-Readability Assessment
-
-Cambridge uses STV (Single Transferable Vote) for both City Council (9 seats) and School
-Committee (6 elected seats). This has been in use since 1941.
-
-**Is candidate data machine-readable?** No.
-- Candidate lists are published as PDF specimen ballots on the city's election commission page
-- No API, no CSV, no structured download
-- The STV tabulation software is ChoicePlus Pro (Voting Solutions Inc.)
-- Round-by-round results are published as HTML pages on the city website after each election
-
-**Implication for seeding:** Cambridge candidates must be seeded manually from the HTML
-roster pages. This is identical to the approach used for all other cities in the app.
-The STV system affects how we describe the election to users (all 9 council seats filled
-from one at-large citywide ballot) but does not affect data ingestion mechanics.
-
----
-
-## 6. Massachusetts Legislative Districts Covering Cambridge
-
-### State House (3 districts fully or partially in Cambridge)
-
-| District | Representative | Party |
-|----------|---------------|-------|
-| 24th Middlesex | David M. Rogers | D |
-| 25th Middlesex | Marjorie C. Decker | D |
-| 26th Middlesex | Mike Connolly | D |
-
-Source: malegislature.gov profile pages, confirmed via 2024 election results coverage.
-
-### State Senate (3 districts partially covering Cambridge)
-
-| District | Senator | Party | Notes |
-|----------|---------|-------|-------|
-| Middlesex and Suffolk | Sal DiDomenico | D | Includes parts of Cambridge + Charlestown, Chelsea, Everett |
-| Suffolk and Middlesex | William Brownsberger | D | Includes Cambridge Ward 8 Precinct 2, Ward 9; also Watertown, Belmont |
-| Third Middlesex (or similar) | TBD | — | Cambridge GIS confirms 3 senate districts; third requires address lookup at malegislature.gov/Search/FindMyLegislator |
-
-Cambridge straddles 3 senate districts. The Cambridge GIS data dictionary
-(https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_StateSenateDistricts)
-confirms exactly 3 elective senate districts cover the city. The third must be verified
-via the MA legislature's Find My Legislator tool using a Cambridge address in Ward 1–7
-(not covered by the two named districts above).
-
-### US Congressional (2 districts in Cambridge)
-
-| District | Representative | Party |
-|----------|---------------|-------|
-| MA-05 | Katherine Clark | D |
-| MA-08 | Stephen Lynch | D |
-
-Cambridge is split between MA-05 and MA-08 per the Cambridge GIS data dictionary
-(https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_CongressionalDistricts).
-
-### US Senate (statewide — both cover Cambridge)
-
-| Senator | Party |
-|---------|-------|
-| Elizabeth Warren | D |
-| Ed Markey | D |
-
----
-
-## 7. New npm Packages Required
-
-None. The existing stack handles everything:
-
-| Capability | Package | Already Present |
-|-----------|---------|-----------------|
-| Shapefile parsing | `shapefile` | Yes (used in load-state-tiger-boundaries.ts) |
-| ZIP extraction | `adm-zip` | Yes |
-| HTTP download | Node `https` built-in | Yes |
-| PostGIS upsert | `pg` + SQL | Yes |
-| GeoJSON geometry | PostGIS ST_GeomFromGeoJSON | Yes |
-
-No new tools for MA-specific data ingestion. All data sources require manual migration
-scripts (SQL INSERT statements), not new ingest pipelines.
-
----
-
-## 8. MassGIS as an Alternative Boundary Source
-
-MassGIS (https://www.mass.gov/info-details/massgis-data-massachusetts-house-legislative-districts-2021)
-publishes its own state legislative district shapefiles updated January 2025 for post-November-2024
-member changes. This is a valid alternative if TIGER 2024 boundaries don't reflect post-redistricting
-changes. However:
-
-- The existing loader is built around TIGER URLs and formats
-- TIGER 2024 SLDU/SLDL files reflect boundaries submitted by MA to Census Bureau by May 31, 2024
-- MassGIS files would require testing for format compatibility (projection, field names)
-
-**Recommendation:** Use TIGER 2024 files first (consistent with existing CA/TX/IN/UT pattern).
-Fall back to MassGIS only if TIGER boundaries are outdated post-redistricting.
-
----
-
-## 9. Next Migration Number
-
-Per project context: next migration is ~122.
-
----
+| Package A | Compatible With | Notes |
+|-----------|------------------|-------|
+| `@headlessui/react@2.2.10` | `react@^19.1.1`, `react-dom@^19.1.1` | Peer dep is `"react": "^18 \|\| ^19 \|\| ^19.0.0-rc"` — verified via `npm view`; no conflict with the pinned versions. |
+| `@headlessui/react@2.2.10` (transitive `@floating-ui/react@^0.26.16`) | project's own `@floating-ui/react@^0.27.19` | Not a peer dependency — npm resolves/nests both ranges independently, no version-conflict error. The two won't collide because Headless UI's `Combobox` positioning is self-contained (its own `anchor` prop, confirmed via docs to not be floating-ui-backed for that feature) and shares no instance with the app's existing `@floating-ui/react` usage (Treasury-chip tooltip). |
+| `pg_trgm` / `unaccent` (Postgres contrib extensions) | Any Postgres ≥ 9.1 (already running in production since migration 040) | Ships in Postgres core `contrib`; no version-pinning risk. Both already installed under the `extensions` schema (the exact schema qualifier used throughout `campaignFinanceSearchService.ts`). |
+| Census Gazetteer 2025 vintage | No code dependency — pure static data | Use the same-or-adjacent vintage year as the most recent TIGER geofence load already in the repo for internal consistency (project currently on `TIGER2024`/`cd119`); a one-year gap between Gazetteer and TIGER vintages is immaterial here (only centroid + state/GEOID are needed, not precise boundaries). |
 
 ## Sources
 
-- TIGER SLDU directory listing (live fetch): https://www2.census.gov/geo/tiger/TIGER2024/SLDU/
-- TIGER SLDL file confirmed (live fetch): https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_25_sldl.zip
-- SLDL attribute reference: https://proximityone.com/dataresources/guide/tl_year_st_sldl.htm
-- MA candidate list archive: https://www.sec.state.ma.us/divisions/elections/research-and-statistics/candidate-list-archive.htm
-- MA election stats DB: https://electionstats.state.ma.us/
-- Cambridge city council roster: https://www.cambridgema.gov/Departments/citycouncil/members
-- Cambridge school committee: https://www.cpsd.us/school-committee/school-committee-members-subcommittees
-- Cambridge election results: https://www.cambridgema.gov/Departments/electioncommission/electionresults
-- Cambridge municipal elections: https://www.cambridgema.gov/departments/electioncommission/cambridgemunicipalelections
-- Cambridge 2025 official results: https://www.cambridgema.gov/Departments/electioncommission/news/2025/11/2025municipalelectionofficialresultsnovember14thupdate
-- Cambridge GIS senate districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_StateSenateDistricts
-- Cambridge GIS congressional districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_CongressionalDistricts
-- Cambridge legislative districts PDF: https://www.cambridgema.gov/-/media/Files/electioncommission/mapsandpollinglocations/legislativedistricts.pdf
-- Middlesex County FIPS 25017: https://www.geocod.io/geoids/massachusetts/middlesex-county-25017
-- Cambridge GEOID 2511000: https://datacommons.org/place/geoId/2511000
-- MassGIS House districts: https://www.mass.gov/info-details/massgis-data-massachusetts-house-legislative-districts-2021
-- MA House 24th Middlesex: https://malegislature.gov/Legislators/Profile/DMR1/District
-- MA House 25th Middlesex: https://malegislature.gov/Legislators/Profile/MCD1/District
-- MA House 26th Middlesex: https://malegislature.gov/Legislators/Profile/M_C1/District
-- Sal DiDomenico (Middlesex and Suffolk Senate): https://malegislature.gov/Legislators/Profile/SND0/Biography
-- Cambridge STV description: https://opavote.com/methods/cambridge-stv-rules
-- ChoicePlus Pro STV software: https://www.votingsolutions.com/Cambridge.htm
+- `C:\EV-Accounts\backend\migrations\040_pg_trgm_search.sql` — confirmed `pg_trgm` + `unaccent` + `public.f_unaccent()` already live in production (HIGH — direct repo read)
+- `C:\EV-Accounts\backend\src\lib\campaignFinanceSearchService.ts` — confirmed the exact production-proven `word_similarity()` + length-calibrated threshold + GIN-index fuzzy search pattern to extend (HIGH — direct repo read)
+- `C:\EV-Accounts\backend\src\lib\geocodingService.ts` — confirmed current Census one-line geocoder usage/scope, PO Box/timeout/error handling already in place (HIGH — direct repo read)
+- `C:\EV-Accounts\backend\src\lib\electionService.ts` (`getElectionsByCoordinate`) — confirmed existing `ST_Covers` coordinate-lookup pattern to reuse (HIGH — direct repo read)
+- `node_modules/@empoweredvote/ev-ui` (`package.json` v0.9.8, full named-export enumeration via Node) — confirmed no combobox/autocomplete primitive exists in ev-ui today (HIGH — direct inspection)
+- `essentials/package.json` — confirmed `@googlemaps/js-api-loader@^2.0.2` still present as a dead Google Places remnant to remove (HIGH — direct repo read)
+- `npm view @headlessui/react@latest version peerDependencies dependencies` — v2.2.10, React 18/19 peer support, transitive deps enumerated (HIGH — live registry query)
+- `npm view downshift@latest version peerDependencies` — v9.4.0, `react: ">=16.12.0"` (HIGH — live registry query)
+- `npm view @floating-ui/react@latest` / `npm view coordinate-parser@latest` / `npm view parse-dms@latest` — version currency checks (HIGH — live registry query)
+- https://headlessui.com/react/combobox — confirmed `Combobox`/`ComboboxInput`/`ComboboxOptions`/`ComboboxOption` API and built-in `anchor` positioning prop (MEDIUM — WebFetch of official docs; registry `dependencies` field cross-confirmed it is not floating-ui-backed for that feature)
+- https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html — confirmed official Gazetteer Files download location, `2025_Gaz_place_national.zip` / `2025_Gaz_counties_national.zip` URL pattern, pipe-delimited format (HIGH — official government source)
+- Project `.planning/PROJECT.md` Key Decisions table — "Census Geocoder unreliable with city+state; also returns wrong-district races" (v2.0) — the specific prior-art reason city/county text queries must not be routed through the address geocoder (HIGH — internal project record)
+
+---
+*Stack research for: Essentials Results-Page Search & Header Overhaul (v24.0) — unified location search*
+*Researched: 2026-07-20*
