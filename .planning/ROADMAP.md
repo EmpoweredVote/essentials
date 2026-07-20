@@ -813,7 +813,7 @@ v22.0 phases above are preserved untouched.
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 211-02-PLAN.md — Donald Trump full-compass research (one agent) + full-overwrite reconcile apply (replaces 21 legacy uncited, deletes unsourced per D-05); 100% cited, honest blanks
+- [x] 211-02-PLAN.md — Donald Trump full-compass research (one agent) + full-overwrite reconcile apply (replaces 21 legacy uncited, deletes unsourced per D-05); 100% cited, honest blanks
 
 **Wave 3** *(blocked on Wave 1; own wave to keep research sequential — D-10)*
 
@@ -844,7 +844,7 @@ independent and may run at any time.
 | 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 2/2 | Complete   | 2026-07-19 |
-| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 1/5 | In Progress|  |
+| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 2/5 | In Progress|  |
 
 ### Coverage
 
