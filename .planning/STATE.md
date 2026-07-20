@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
-status: verifying
-last_updated: "2026-07-19T22:37:07.138Z"
-last_activity: 2026-07-19
+status: executing
+last_updated: "2026-07-20T00:08:07.859Z"
+last_activity: 2026-07-20 -- Phase 211 planning complete
 progress:
   total_phases: 39
   completed_phases: 4
-  total_plans: 6
+  total_plans: 11
   completed_plans: 6
   percent: 10
 ---
@@ -19,10 +19,10 @@ progress:
 
 Phase: 210 (per-tab-compass-integration) — COMPLETE
 Plan: 2 of 2 (both complete)
-Status: Phase complete — CMP-01/CMP-02 confirmed live via human-verify sign-off (Bloomington, IN); ready for verification/next phase
+Status: Ready to execute
 Gap closure: Phase 210.1 (fix-calibration-lens-revert) — COMPLETE. Plan 210.1-01 resolved
 code-review finding CR-01 (calibrate-and-return lens revert); build clean, 211/211 tests green.
-Last activity: 2026-07-19
+Last activity: 2026-07-20 -- Phase 211 planning complete
 
 **Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
 school-board + judicial office-holders into their own compass-integrated tabs, grey-out on no-data,
