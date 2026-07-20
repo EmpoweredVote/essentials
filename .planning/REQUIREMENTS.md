@@ -24,7 +24,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 - [ ] **RSLV-02**: A build-time ingest of the free US Census Gazetteer Files (Places + Counties) populates a reference table, giving nationwide place-name coverage beyond the curated `coverage.js` catalog.
 - [ ] **RSLV-03**: An anonymous, stateless coordinate lookup endpoint returns officials for a decimal lat/lng via PostGIS `ST_Covers`, with US bounding-box validation and a swapped-lat/lng guard, performing no writes.
 - [ ] **RSLV-04**: The US Census one-line geocoder is used only for full street addresses — never for bare place-name queries.
-- [ ] **RSLV-05**: National fallback — any resolved US location returns at minimum US Senators + Governor/state executives + county officials; the exact US House rep is returned when a precise point (address or coordinates) is available.
+- [ ] **RSLV-05**: National fallback — any resolved US location returns at minimum US Senators + Governor/state executives + US House (every overlapping congressional district, backed by a nationwide `cd119` geofence load), plus county officials **where a county government exists** (best-effort, not gated — county rosters are not seeded nationwide); the exact single US House rep is returned when a precise point (address or coordinates) is available.
 - [ ] **RSLV-06**: A city/county-name location profile lists every US House rep whose district overlaps the area, with an in-section note: "We need an exact address to tell you which one."
 - [ ] **RSLV-07**: Wrong-state guard — a resolved location never returns officials bound to a different state (candidate-list + explicit state binding; regression guard against the prior browse `?q=` state-leak and `representing_city` hijack).
 
