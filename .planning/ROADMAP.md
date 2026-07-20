@@ -825,7 +825,7 @@ v22.0 phases above are preserved untouched.
 
 **Wave 5** *(blocked on 211-02/03/04)*
 
-- [ ] 211-05-PLAN.md — Provenance cross-check (0 uncited / 0 defaults across all three vs bundle.json) + live compass render human-verify (SC-4)
+- [x] 211-05-PLAN.md — Provenance cross-check (0 uncited / 0 defaults across all three vs bundle.json) + live compass render human-verify (SC-4)
 
 ### Progress
 
@@ -844,7 +844,7 @@ independent and may run at any time.
 | 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 2/2 | Complete   | 2026-07-19 |
-| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 4/5 | In Progress|  |
+| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 5/5 | Complete   | 2026-07-20 |
 
 ### Coverage
 
