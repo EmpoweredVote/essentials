@@ -85,7 +85,24 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
   5. No resolved location ever returns officials bound to a different state than the one actually matched (regression-tested against the prior browse `?q=` state-leak and `representing_city` banner-hijack incidents)
   6. The Census one-line geocoder is never invoked for a bare place-name query — only for input already classified as a full street address
 
-**Plans**: TBD
+**Plans**: 5 plans in 4 waves
+
+**Wave 1**
+
+- [ ] 212-01-PLAN.md — DB pre-flight audit (verify, not re-ingest, the nationwide G5200 CD/House data per D-02) + author migrations 1377 (trgm indexes on governments.name + geofence_boundaries.name) and 1378 (Gazetteer places/counties tables + trgm indexes)
+- [ ] 212-02-PLAN.md — Idempotent Census Gazetteer Places+Counties ingest script (D-08/09/10/11) + parsing/idempotency unit test
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 212-03-PLAN.md — [BLOCKING] Apply migrations 1377+1378 to the live DB + run the Gazetteer ingest live (~3143 counties, tens of thousands of places) + prove net-zero-new re-run
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 212-04-PLAN.md — locationSearchService.searchPlaceNames resolver (pg_trgm UNION, D-05 label, D-06 ranking, D-07 coverage signal, RSLV-07 wrong-state/disambiguation guard) + getCongressionalOverlapNote helper (RSLV-06) — TDD
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 212-05-PLAN.md — New route file GET /api/essentials/location-search (candidates) + /resolve (national-fallback floor via reused getStatewideOfficials/getFederalOfficials, RSLV-05) + index.ts mount + [BLOCKING] live curl/psql smoke test (Springfield/Baltimore/Franklin, EXPLAIN index scan)
 
 #### Phase 213: Anonymous Coordinate Lookup Endpoint
 
@@ -136,7 +153,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 212. Backend Place-Name Resolver & National Fallback | 0/TBD | Not started | - |
+| 212. Backend Place-Name Resolver & National Fallback | 0/5 | Planned | - |
 | 213. Anonymous Coordinate Lookup Endpoint | 0/TBD | Not started | - |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
