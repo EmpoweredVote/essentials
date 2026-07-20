@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: planning
-last_updated: "2026-07-20T18:35:06.474Z"
+last_updated: "2026-07-20T19:00:00.000Z"
 last_activity: 2026-07-20
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-07-20 — Milestone v24.0 started
+Phase: 212 of 215 (Backend Place-Name Resolver & National Fallback) — ready to plan
+Plan: — (roadmap created, no plans yet)
+Status: Roadmap created — ready for /gsd:plan-phase 212
+Last activity: 2026-07-20 — ROADMAP.md created for v24.0 (Phases 212-215, 18/18 requirements mapped)
 
 ### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
 
@@ -68,6 +68,34 @@ leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0
 | verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+
+### v24.0 roadmap (created 2026-07-20)
+
+Frontend+backend feature milestone. 4 phases (212-215), continuing numbering from v23.0 (closed at
+211). 18/18 requirements mapped 1:1 — no orphans, no duplicates. Backend-before-frontend hard
+dependency: 212 + 213 (accounts-api) must ship + be smoke-tested live before 214 (essentials) starts
+consuming them; 215 (header declutter) is decoupled and can be planned/built in parallel with 212-214.
+
+- **212 Backend Place-Name Resolver & National Fallback** — RSLV-01/02/04/05/06/07 (pg_trgm place-name
+  search over geofence_boundaries/governments + Census Gazetteer ingest + disambiguation + wrong-state
+  guard + nationwide state+federal fallback + US House district-overlap note)
+
+- **213 Anonymous Coordinate Lookup Endpoint** — RSLV-03 (stateless lat/lng -> officials via
+  ST_Covers; US bounding-box + swapped-coordinate validation; no writes, no raw-coordinate echo/logging)
+
+- **214 Unified Location Combobox & Google Places Removal** — SRCH-01/02/03/04/05/06/08 (single
+  WAI-ARIA combobox on Results + Landing sharing one component; address/place/coordinate
+  auto-classification; disambiguation picker; full Google Places + @googlemaps/js-api-loader removal,
+  zero google/pac-container hits). Depends on Phases 212 + 213.
+
+- **215 Header Declutter** — SRCH-07 + HDR-01/02/03 (type filter defaults Elected with atomic Judges
+  appointed-exception; compass lenses -> icon buttons w/ aria-labels + gavel for Judicial; remove
+  "Search by name" filter). No dependency on 212-214.
+
+Research flags: Phase 212's disambiguation-candidate contract + Gazetteer ingest schema/ranking need
+concrete design decisions during planning (not just "extend the existing pattern"); Phase 214's
+debounce/live-typeahead contract with the backend + the 3-state visual treatment (full local match vs.
+national fallback vs. DB-only-no-local-data) need explicit design before build.
 
 ### v22.0 roadmap (created 2026-07-08)
 

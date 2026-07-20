@@ -62,19 +62,32 @@ Explicitly excluded for v24.0.
 
 ## Traceability
 
-Populated during roadmap creation (Step 10).
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SRCH-01..08 | TBD | Pending |
-| RSLV-01..07 | TBD | Pending |
-| HDR-01..03 | TBD | Pending |
+| RSLV-01 | 212 | Pending |
+| RSLV-02 | 212 | Pending |
+| RSLV-04 | 212 | Pending |
+| RSLV-05 | 212 | Pending |
+| RSLV-06 | 212 | Pending |
+| RSLV-07 | 212 | Pending |
+| RSLV-03 | 213 | Pending |
+| SRCH-01 | 214 | Pending |
+| SRCH-02 | 214 | Pending |
+| SRCH-03 | 214 | Pending |
+| SRCH-04 | 214 | Pending |
+| SRCH-05 | 214 | Pending |
+| SRCH-06 | 214 | Pending |
+| SRCH-08 | 214 | Pending |
+| SRCH-07 | 215 | Pending |
+| HDR-01 | 215 | Pending |
+| HDR-02 | 215 | Pending |
+| HDR-03 | 215 | Pending |
 
 **Coverage:**
 - v1 requirements: 18 total (SRCH 8, RSLV 7, HDR 3)
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 18 ⚠️ (filled by roadmapper)
+- Mapped to phases: 18/18 — Phase 212 (6), Phase 213 (1), Phase 214 (7), Phase 215 (4)
+- Unmapped: 0 — no orphans, no duplicates
 
 ---
 *Requirements defined: 2026-07-20*
-*Last updated: 2026-07-20 after initial definition (milestone v24.0 opened)*
+*Last updated: 2026-07-20 — roadmap created, all 18 requirements mapped to Phases 212-215*
