@@ -6,6 +6,12 @@ import {
   toTreasurySlug,
   TREASURY_URL,
 } from './treasury';
+import {
+  findMatchingCityCollection,
+  findStateCollection,
+  findFederalCollection,
+  TRIVIA_URL,
+} from './trivia';
 
 /**
  * Fixed-order product registry for the tethered feature-icon row (D-01/D-03).
@@ -42,6 +48,33 @@ export const PRODUCT_REGISTRY = [
       };
     },
   },
+  {
+    key: 'trivia',
+    label: 'Civic Trivia Championship',
+    iconSrc: '/trivia-symbol.svg',
+    // Rendered to the right of the treasury chip. A community "has a collection"
+    // when CTC exposes a matching collection for this tier; the deep-link opens
+    // the CTC Dashboard with that collection pre-selected (?collection=<slug>),
+    // ready for the user to press Play Now.
+    resolve({ tier, representingCity, userState, stateName, triviaCollections }) {
+      let entity = null;
+      if (tier === 'city') {
+        entity = findMatchingCityCollection(representingCity, userState, triviaCollections);
+      } else if (tier === 'state') {
+        entity = findStateCollection(stateName, triviaCollections);
+      } else if (tier === 'federal') {
+        entity = findFederalCollection(triviaCollections);
+      }
+      if (!entity) return null;
+      const slug = encodeURIComponent(entity.slug);
+      return {
+        key: 'trivia',
+        href: `${TRIVIA_URL}/?collection=${slug}`,
+        label: 'Civic Trivia Championship',
+        iconSrc: '/trivia-symbol.svg',
+      };
+    },
+  },
   // Reserved slots — NOT rendered (no per-location contract yet, D-02):
   // { key: 'compass', label: 'Compass', iconSrc: '/compass-symbol-dark.svg', resolve: () => null },
   // { key: 'readrank', label: 'Read & Rank', iconSrc: '/readrank-symbol-dark.svg', resolve: () => null },
@@ -55,13 +88,16 @@ export const PRODUCT_REGISTRY = [
  * with no matching entity for a product yields an omitted entry, never a
  * null/placeholder push (TETH-03).
  *
- * @param {{ representingCity?: string, userState?: string, treasuryCities?: Array }} ctx
+ * @param {{ representingCity?: string, userState?: string, stateName?: string,
+ *           treasuryCities?: Array, triviaCollections?: Array }} ctx
  * @returns {{ Local: Array, State: Array, Federal: Array }}
  */
 export function resolveFeatureIcons({
   representingCity = null,
   userState = null,
+  stateName = null,
   treasuryCities = [],
+  triviaCollections = [],
 } = {}) {
   const tiers = { Local: 'city', State: 'state', Federal: 'federal' };
   const result = { Local: [], State: [], Federal: [] };
@@ -72,7 +108,9 @@ export function resolveFeatureIcons({
         tier,
         representingCity,
         userState,
+        stateName,
         treasuryCities,
+        triviaCollections,
       });
       if (icon) result[mapKey].push(icon);
     }

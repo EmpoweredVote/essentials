@@ -30,6 +30,7 @@ import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
 import SectionBanner from '../components/SectionBanner.jsx';
 import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
+import { fetchTriviaCollections } from '../lib/trivia';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
 import { buildBannerProps } from '../lib/bannerProps';
@@ -544,6 +545,8 @@ export default function Results() {
   // Treasury CTA — one-shot fetch of available municipalities on mount
   const [treasuryCities, setTreasuryCities] = useState([]);
   useEffect(() => { fetchTreasuryCities().then(setTreasuryCities); }, []);
+  const [triviaCollections, setTriviaCollections] = useState([]);
+  useEffect(() => { fetchTriviaCollections().then(setTriviaCollections); }, []);
 
   // Compass integration — context provides politician IDs with stances + user data
   const { isLoggedIn, userId, politicianIdsWithStances, allTopics, userAnswers: rawUserAnswers, selectedTopics, userJurisdiction, myRepresentatives, myRepresentativesAddress, compassLoading, suggestedSaveAddress, dismissSuggestedSaveAddress, invertedSpokes, batchInvertSpokes, activeLensKey, setActiveLens, lenses, isLensCalibrated, enableCompass } = useCompass();
@@ -1225,8 +1228,14 @@ export default function Results() {
   );
 
   const featureIconMap = useMemo(
-    () => resolveFeatureIcons({ representingCity, userState, treasuryCities }),
-    [representingCity, userState, treasuryCities]
+    () => resolveFeatureIcons({
+      representingCity,
+      userState,
+      stateName: userState ? (STATE_NAMES[userState] || null) : null,
+      treasuryCities,
+      triviaCollections,
+    }),
+    [representingCity, userState, treasuryCities, triviaCollections]
   );
 
   const populationMap = useMemo(() => {

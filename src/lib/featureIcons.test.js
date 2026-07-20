@@ -11,6 +11,7 @@
 import { describe, it, expect } from 'vitest';
 import { PRODUCT_REGISTRY, resolveFeatureIcons } from './featureIcons';
 import { TREASURY_URL } from './treasury';
+import { TRIVIA_URL } from './trivia';
 
 const ds = [{ fiscal_year: 2024, dataset_type: 'revenue' }];
 
@@ -26,9 +27,15 @@ describe('PRODUCT_REGISTRY', () => {
     expect(PRODUCT_REGISTRY[0].iconSrc).toBe('/treasury-symbol.svg');
   });
 
-  it('never rendered non-treasury products today (no compass/readrank live entries)', () => {
+  it('lists treasury then trivia, in that order (no compass/readrank live entries)', () => {
     const liveKeys = PRODUCT_REGISTRY.map((p) => p.key);
-    expect(liveKeys).toEqual(['treasury']);
+    expect(liveKeys).toEqual(['treasury', 'trivia']);
+  });
+
+  it('lists trivia second with the correct iconSrc', () => {
+    const trivia = PRODUCT_REGISTRY.find((p) => p.key === 'trivia');
+    expect(PRODUCT_REGISTRY[1].key).toBe('trivia');
+    expect(trivia.iconSrc).toBe('/trivia-symbol.svg');
   });
 });
 
@@ -89,7 +96,7 @@ describe('resolveFeatureIcons', () => {
     expect(result).toEqual({ Local: [], State: [], Federal: [] });
   });
 
-  it('only the treasury product ever appears in output today', () => {
+  it('resolves only treasury when triviaCollections is absent', () => {
     const result = resolveFeatureIcons({
       representingCity: 'Plano',
       userState: 'TX',
@@ -97,5 +104,63 @@ describe('resolveFeatureIcons', () => {
     });
     const allKeys = [...result.Local, ...result.State, ...result.Federal].map((i) => i.key);
     expect(allKeys.every((k) => k === 'treasury')).toBe(true);
+  });
+});
+
+const COLLECTIONS = [
+  { slug: 'los-angeles-ca', tier: 'city', localeName: 'Los Angeles, California' },
+  { slug: 'california-state', tier: 'state', localeName: 'California' },
+  { slug: 'federal', tier: 'federal', localeName: 'United States' },
+];
+
+describe('resolveFeatureIcons — Civic Trivia Championship', () => {
+  it('adds a trivia chip AFTER treasury when a collection matches the tier', () => {
+    const result = resolveFeatureIcons({
+      representingCity: 'Los Angeles',
+      userState: 'CA',
+      stateName: 'California',
+      treasuryCities: [
+        { name: 'Los Angeles', state: 'CA', entity_type: 'municipality', available_datasets: ds },
+        { name: 'California', state: 'CA', entity_type: 'state', available_datasets: ds },
+        { name: 'United States', state: 'US', entity_type: 'federal', available_datasets: ds },
+      ],
+      triviaCollections: COLLECTIONS,
+    });
+
+    // Order: treasury first, trivia second (D-01/D-03 fixed order).
+    expect(result.Local.map((i) => i.key)).toEqual(['treasury', 'trivia']);
+    expect(result.Local[1].href).toBe(`${TRIVIA_URL}/?collection=los-angeles-ca`);
+
+    expect(result.State.map((i) => i.key)).toContain('trivia');
+    expect(result.State.find((i) => i.key === 'trivia').href).toBe(
+      `${TRIVIA_URL}/?collection=california-state`
+    );
+
+    expect(result.Federal.find((i) => i.key === 'trivia').href).toBe(
+      `${TRIVIA_URL}/?collection=federal`
+    );
+  });
+
+  it('omits the trivia chip for a city with no matching collection (TETH-03)', () => {
+    const result = resolveFeatureIcons({
+      representingCity: 'Nowheresville',
+      userState: 'ZZ',
+      stateName: 'Nowhere',
+      triviaCollections: COLLECTIONS,
+    });
+    expect(result.Local).toEqual([]);
+    expect(result.State).toEqual([]);
+    // Federal collection is location-independent, so its trivia chip still resolves.
+    expect(result.Federal.map((i) => i.key)).toEqual(['trivia']);
+  });
+
+  it('strips a "City of" prefix before matching the collection slug', () => {
+    const result = resolveFeatureIcons({
+      representingCity: 'City of Los Angeles',
+      userState: 'CA',
+      triviaCollections: COLLECTIONS,
+    });
+    expect(result.Local.map((i) => i.key)).toEqual(['trivia']);
+    expect(result.Local[0].href).toBe(`${TRIVIA_URL}/?collection=los-angeles-ca`);
   });
 });

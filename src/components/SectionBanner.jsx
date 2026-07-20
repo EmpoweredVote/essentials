@@ -101,7 +101,14 @@ function FeatureIconChip({ icon }) {
         }}
         {...getReferenceProps()}
       >
-        <img src={icon.iconSrc} alt="" aria-hidden="true" style={{ width: '20px', height: '20px' }} />
+        {/* objectFit:contain keeps non-square glyphs (e.g. the tall CTC symbol)
+            from being distorted while the square treasury symbol still fills the box. */}
+        <img
+          src={icon.iconSrc}
+          alt=""
+          aria-hidden="true"
+          style={{ width: '20px', height: '20px', objectFit: 'contain' }}
+        />
       </a>
 
       {isOpen && (
@@ -141,9 +148,10 @@ function FeatureIconChip({ icon }) {
  *                                              renders a mid-left scrim (189 D-05) only when shouldRenderStat(stats)
  *                                              is true; null/undefined/0/NaN/non-number renders nothing (STAT-03)
  *   featureIcons  {array|null}                optional — [{key,href,label,iconSrc}]; renders a
- *                                              bottom-right circular-chip row with an accessible
- *                                              hover+focus tooltip per entry; [] or absent renders
- *                                              nothing (ICON-01/02/03, TETH-03, Phase 187)
+ *                                              circular-chip row immediately right of the population
+ *                                              stat (or in its place when stats is absent), with an
+ *                                              accessible hover+focus tooltip per entry; [] or absent
+ *                                              renders nothing (ICON-01/02/03, TETH-03, Phase 187)
  */
 
 /**
@@ -233,75 +241,77 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
         </div>
       </div>
 
-      {/* Population stat scrim (STAT-01/STAT-03, Phase 188; repositioned mid-left per
-          189 D-05, superseding 188 D-11/D-12's top-right placement) — floated above the
-          location title, left-aligned to the title's own px-6/md:px-12 margin. Responsive
-          vertical anchor (upper-left on mobile, vertically centered on desktop) requires
-          Tailwind's md: breakpoint, which inline styles cannot express — hence the
-          className on this outer wrapper (the only such deviation from this component's
-          otherwise all-inline-style convention). Omits entirely when stats does not
-          resolve to a positive number. */}
-      {shouldRenderStat(stats) && (
-        <div className="px-6 md:px-12 absolute left-0 top-4 md:top-1/2 md:-translate-y-1/2">
-          <div
-            data-slot="stats"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '4px',
-              background: 'rgba(13,17,23,0.55)',
-              backdropFilter: 'blur(2px)',
-              borderRadius: '10px',
-              padding: '4px 12px',
-            }}
-          >
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '11px',
-                fontWeight: 600,
-                lineHeight: '13px',
-                letterSpacing: '1px',
-                textTransform: 'uppercase',
-                color: 'var(--color-ev-text-muted)',
-              }}
-            >
-              {stats.label}
-            </span>
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '14px',
-                fontWeight: 700,
-                lineHeight: '16px',
-                color: 'var(--color-ev-text-primary)',
-              }}
-            >
-              {stats.value.toLocaleString()}
-            </span>
-          </div>
-        </div>
-      )}
+      {/* Left-anchored info row: population stat scrim (STAT-01/STAT-03, Phase 188)
+          followed by the feature-icon chips (Treasury, then Civic Trivia Championship).
+          The chips were previously a standalone bottom-right cluster; they now sit
+          immediately to the RIGHT of the population stat — or, when the stat is absent,
+          in the position the stat would occupy — so the products read as attributes of
+          the community rather than a detached corner control.
 
-      {/* Feature-icon row (ICON-01/02/03, D-05/D-06) — bottom-right, never overlaps the
-          bottom-left title. Empty/absent array renders nothing (TETH-03). Top-right stays
-          free for Phase 188's population stat (D-07). */}
-      {shouldRenderIcons(featureIcons) && (
-        <div
-          data-slot="feature-icons"
-          style={{
-            position: 'absolute',
-            bottom: '16px',
-            right: '16px',
-            display: 'flex',
-            gap: '8px',
-            alignItems: 'center',
-          }}
-        >
-          {featureIcons.map((icon) => (
-            <FeatureIconChip key={icon.key} icon={icon} />
-          ))}
+          Left-aligned to the title's own px-6/md:px-12 margin; responsive vertical anchor
+          (upper-left on mobile, vertically centered on desktop) needs Tailwind's md:
+          breakpoint, which inline styles cannot express — hence the className on this
+          wrapper (the sole deviation from this component's all-inline-style convention).
+          Renders only when there is at least a stat or an icon to show. */}
+      {(shouldRenderStat(stats) || shouldRenderIcons(featureIcons)) && (
+        <div className="px-6 md:px-12 absolute left-0 top-4 md:top-1/2 md:-translate-y-1/2">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {shouldRenderStat(stats) && (
+              <div
+                data-slot="stats"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  gap: '4px',
+                  background: 'rgba(13,17,23,0.55)',
+                  backdropFilter: 'blur(2px)',
+                  borderRadius: '10px',
+                  padding: '4px 12px',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    lineHeight: '13px',
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase',
+                    color: 'var(--color-ev-text-muted)',
+                  }}
+                >
+                  {stats.label}
+                </span>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-sans)',
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    lineHeight: '16px',
+                    color: 'var(--color-ev-text-primary)',
+                  }}
+                >
+                  {stats.value.toLocaleString()}
+                </span>
+              </div>
+            )}
+
+            {shouldRenderIcons(featureIcons) && (
+              <div
+                data-slot="feature-icons"
+                style={{
+                  display: 'flex',
+                  gap: '8px',
+                  alignItems: 'center',
+                }}
+              >
+                {featureIcons.map((icon) => (
+                  <FeatureIconChip key={icon.key} icon={icon} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
