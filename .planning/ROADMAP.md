@@ -844,7 +844,7 @@ independent and may run at any time.
 | 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
 | 209. Education Lens Scaffolding | 0/TBD | Not started | - |
 | 210. Per-Tab Compass Integration | 2/2 | Complete   | 2026-07-19 |
-| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 0/TBD | Not started | - |
+| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 0/5 | Planned | - |
 
 ### Coverage
 
