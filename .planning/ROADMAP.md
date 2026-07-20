@@ -6,7 +6,7 @@ shipped milestones are collapsed into `<details>` blocks.
 
 ## Milestones
 
-- 🔨 **v23.0 Educators & Judges Tabs** — Phases 207–211 (active, opened 2026-07-17; runs alongside held v22.0 close)
+- ✅ **v23.0 Educators & Judges Tabs** — Phases 207–211 (shipped 2026-07-20; Phase 209 deferred by design)
 - ð§ **v22.0 Tucson & Arizona** â Phases 190â203 (substantively complete; Phases 200 + 206 held for close until 2026-07-21; 201-203 appended Coachella Valley, CA)
 - â **v21.0 Smart Banners** â Phases 187â189 (shipped 2026-07-08)
 - â **v20.0 West-Metro Washington County, OR** â Phases 174â186 (shipped 2026-07-05)
@@ -658,209 +658,29 @@ candidates already do.
 
 **UI hint**: no
 
-## Roadmap: v23.0 Educators & Judges Tabs
+<details>
+<summary>✅ v23.0 Educators & Judges Tabs (Phases 207–211) — SHIPPED 2026-07-20</summary>
 
-### Overview
+Full detail: `.planning/milestones/v23.0-ROADMAP.md` · requirements: `.planning/milestones/v23.0-REQUIREMENTS.md` · audit: `.planning/milestones/v23.0-MILESTONE-AUDIT.md`
 
-Frontend feature milestone on the existing results/officials view. Adds **Educators** (school-board
-leads) and **Judges** as first-class, compass-integrated tabs beside the existing **Representatives**
-and **Elections** tabs — pulling school-board and judicial office-holders out of the Representatives
-list (fixing the "wade through every LA school-board district" clutter), greying a tab out where the
-location has no such data, and shifting the default compass lens per tab. Builds directly on the
-Phase 204 data-driven lens switcher (`CompassControlsBar`, `LensChipRow`, `CompassContext.lenses`
-hydrated from `GET /compass/lenses`) and the existing `Results.jsx` Representatives + Elections tab
-model. **No new geographic/seeding data** — classification comes from existing chamber/office/geo-type
-data (school-district G5420 geofences / school-board chambers, judicial offices). One evidence-based
-deep-dive stance-research phase (Trump, Vance, Rubio) reuses the established one-agent-at-a-time /
-100%-cited / no-defaults workflow. Phase numbering continues from v22.0 (highest existing phase 206) —
-this milestone starts at **Phase 207**.
+Frontend feature milestone on the results/officials view: added **Educators** (school-board) and
+**Judges** as first-class, compass-integrated tabs beside **Representatives** and **Elections**,
+pulling school-board/judicial office-holders out of the Representatives list, hiding empty tabs, and
+shifting the default compass lens per tab. Built on the Phase 204 data-driven lens switcher. One
+evidence-based deep-dive stance-research phase (Trump/Vance/Rubio). No new geographic/seeding data.
 
-**Runs alongside the held v22.0 close** (Phase 200 + Phase 206 + Sahuarita/South Tucson reconcile,
-gated on the 2026-07-21 AZ primary certification) — same side-track pattern as Phases 204/205. The
-v22.0 phases above are preserved untouched.
+- [x] Phase 207: Officials Classification (1/1) — completed 2026-07-18
+- [x] Phase 208: Educators & Judges Tabs (2/2) — completed 2026-07-18
+- [~] Phase 209: Education Lens Scaffolding — **DEFERRED by design** (blocked on educator stance/topic groundwork; carried to a future milestone)
+- [x] Phase 210: Per-Tab Compass Integration (2/2) — completed 2026-07-19
+- [x] Phase 210.1: Fix calibration lens revert (CR-01 gap closure, 1/1) — completed 2026-07-19
+- [x] Phase 211: Deep-Dive Stance Research — Trump/Vance/Rubio (5/5) — completed 2026-07-20
 
-### Milestone-wide conventions
+In-scope requirements 7/7 satisfied (CLASS-01, TAB-01/02/03, CMP-01/02, RES-01); EDU-01/02 deferred
+with Phase 209. Cross-phase integration PASS; build clean; 211/211 tests. One optional CR-01
+calibrate-return live re-check remains as accepted tech debt.
 
-- **Frontend/data only, no new seeding** — classification and tab routing use existing
-  chamber/office/geo-type data (school-district G5420 geofences / school-board chambers, judicial
-  offices). No geographic ingestion this milestone.
-
-- **Build on Phase 204, don't fork it** — the lens switcher, `CompassContext.lenses` hydration, and
-  `computeDisplaySpokes` are the substrate. A **Judicial lens already exists** (8 judicial topics);
-  the Education lens is added as a lens *entry* the same way, and per-tab defaults reuse the existing
-  switcher selection model (explicit user selection always overrides).
-
-- **Data-only lens lighting** — the Education lens must light purely by authoring its 8 topics later
-  (deferred), mirroring Phase 204's "adding a lens is a data change" guarantee. No code change to
-  light it; until authored it renders greyed / needs-calibration and the Educators tab falls back to
-  the Custom overlap (honest blanks, no fabricated spokes).
-
-- **Stance research** — evidence-only, one research agent at a time, all applicable compass topics,
-  100% citation, no default values, honest blank spokes. Applies to RES-01 (Trump/Vance/Rubio) only —
-  broad school-board/judicial stance research is deferred.
-
-- **Deferred by design (future milestones):** authoring the 8 Education-lens topics; the Elections
-  "ballot hub" build-out; broad school-board/judicial stance research; judicial roster expansion.
-
-### Phases
-
-**Phase Numbering:**
-
-- Integer phases (207, 208, 209...): planned milestone work, continuing from v22.0 (highest phase 206)
-- Decimal phases (207.1, 207.2): urgent insertions (marked INSERTED)
-
-- [x] **Phase 207: Officials Classification** - Reliably bucket every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data (completed 2026-07-18)
-- [x] **Phase 208: Educators & Judges Tabs** - New tabs beside Representatives & Elections; school-board + judicial officials leave Representatives; hide-when-empty (D-06); operator-approved on live
-- [ ] **Phase 209: Education Lens Scaffolding** *(DEFERRED — blocked on educator stance research, undefined 5-notch spectrum values, and a viable topic set)* - Data-driven Education lens entry (parallel to Judicial); greyed / best-available fallback until its topics are authored later
-- [x] **Phase 210: Per-Tab Compass Integration** - Compass button + overlay work inside the new tabs; default lens shifts per tab (Judges to Judicial, Educators to Education with best-available fallback until 209 lights it); explicit selection overrides. Ships independently of 209. (2/2 plans + gap-closure 210.1 for CR-01; human-verified on Bloomington IN; one optional CR-01 calibrate-return live re-check outstanding)
-- [x] **Phase 211: Deep-Dive Stance Research (Trump, Vance, Rubio)** - Full-compass, 100%-cited, no-defaults evidence-based stance research
-
-### Phase Details
-
-#### Phase 207: Officials Classification
-
-**Goal**: Every office-holder returned for a location is reliably classified as Representative, Educator (school board), or Judge from existing data, so the tab split has a trustworthy engine.
-**Depends on**: Nothing (uses existing chamber/office/geo-type data; no new seeding)
-**Requirements**: CLASS-01
-**Success Criteria** (what must be TRUE):
-
-  1. Every office-holder returned for a location resolves to exactly one of three buckets — Representative, Educator (school board), or Judge — derived from existing chamber/office/geo-type data (no new seeding)
-  2. School-board office-holders (e.g. LA school-board districts, G5420 school chambers) classify as Educators and are never left in the Representatives bucket
-  3. Judicial office-holders classify as Judges and are never left in the Representatives bucket
-  4. Ordinary representatives (mayor, council, legislators, federal delegation) are never misfiled into the Educators or Judges buckets
-  5. Classification is verified across at least two contrasting locations — one with school-board + judicial officials (e.g. LA) and one with representatives only
-
-**Plans**: 1 plan
-
-- [x] 207-01-PLAN.md — Add single-source-of-truth classifyBucket(pol) to src/lib/classify.js + unit & 3-location fixture tests
-
-#### Phase 208: Educators & Judges Tabs
-
-**Goal**: Users can switch among Representatives, Educators, and Judges tabs beside Elections, with school-board/judicial officials surfacing only under their own tab and empty tabs cleanly greyed out.
-**Depends on**: Phase 207 (classification drives which tab each official appears in)
-**Requirements**: TAB-01, TAB-02, TAB-03
-**Success Criteria** (what must be TRUE):
-
-  1. On the results/officials view, a user can switch among Representatives, Educators, and Judges tabs alongside the existing Elections tab
-  2. The Educators tab lists the location's school-board office-holders; the Judges tab lists its judicial office-holders
-  3. School-board and judicial officials no longer appear under Representatives — that list is decluttered (no more wading through every LA school-board district)
-  4. (Revised by 208-CONTEXT.md D-05/D-06) An Educators/Judges tab is HIDDEN entirely — not greyed/disabled — when the location has 0 office-holders of that type; the active tab falls back to Representatives for an empty or stale ?view=. Representatives always shows.
-
-**Plans**: 2 plans in 2 waves
-
-**Wave 1**
-
-- [x] 208-01-PLAN.md — Extend Results.jsx to 4 tabs: classifyBucket partition of `deduped` + three per-bucket hierarchies, renderPeopleTab helper called 3x (full parity + compass slot), Educators/Judges tab buttons hidden-when-empty, effectiveActiveView fallback (D-08), plain "Elections" label + election summary relocated to the location-header row
-
-**Wave 2** *(blocked on Wave 1)*
-
-- [x] 208-02-PLAN.md — Human-verify checkpoint: 4-tab order, classifyBucket routing, decluttered Representatives, hidden-when-empty Educators/Judges, stale-?view= fallback, relocated election summary vs mockup, compass on all people-tabs, 280px reachability
-
-**UI hint**: yes
-
-#### Phase 209: Education Lens Scaffolding
-
-**Status**: DEFERRED (2026-07-19) — blocked upstream: no educator stance research exists, the 5-notch spectrum values ("chairs") are undefined for education topics, and only a few viable topics exist (sourcing more is unresolved). Revisit once that groundwork is ready.
-**Goal**: An Education lens exists as a data-driven lens entry parallel to Judicial — recognized by the switcher and per-tab default-lens logic — that greys out and falls back to best-available until its topics are authored.
-**Depends on**: Nothing hard (builds on the Phase 204 lens switcher). Does NOT need to precede Phase 210 — 210 references the `education` key defensively and falls back to best-available while unlit, then auto-upgrades (data-only) when this lands.
-**Requirements**: EDU-01, EDU-02
-**Success Criteria** (what must be TRUE):
-
-  1. An Education lens is present as a data-driven lens entry (parallel to the existing Judicial lens), recognized by the Phase-204 lens switcher and by the per-tab default-lens logic
-  2. Authoring the lens's 8 topics later is a data-only change — no code change is needed to light it (mirrors Phase 204's "adding a lens is a data change")
-  3. Until enough topics are authored, the Education lens renders in its needs-calibration / greyed state
-  4. With the Education lens unlit, the Educators tab gracefully falls back to the Custom overlap — no broken or empty compass, no fabricated spokes (honest blanks)
-
-**Plans**: TBD
-**UI hint**: yes
-
-#### Phase 210: Per-Tab Compass Integration
-
-**Goal**: The compass works inside the Educators and Judges tabs exactly as in Representatives, and the default lens shifts per tab while an explicit user selection still overrides.
-**Depends on**: Phase 208 (tabs exist). Phase 209 is a soft/data dependency only — 210 defaults Educators to the `education` lens but falls back to best-available while it is unlit, so 210 ships now and auto-upgrades (data-only) when 209 lands.
-**Requirements**: CMP-01, CMP-02
-**Success Criteria** (what must be TRUE):
-
-  1. The Compass button + overlay work inside the Educators and Judges tabs exactly as in Representatives — cards render their compass and the lens switcher is available
-  2. Switching to the Judges tab defaults the compass lens to the existing Judicial lens
-  3. Switching to the Educators tab defaults the compass lens to the Education lens (falling back to the Custom overlap while the Education lens is unlit, per Phase 209)
-  4. Returning to the Representatives tab restores the Custom / prior default lens
-  5. An explicit user lens selection still overrides the per-tab default
-
-**Plans**: 2 plans
-
-- [x] 210-01-PLAN.md — resolveTabLens pure helper + unit tests, and per-tab lens memory (state + tab-entry effect + explicit-pick interception) in Results.jsx
-- [x] 210-02-PLAN.md — live human-verify of per-tab default-lens shift, explicit-pick memory, cross-location persistence, and reset-on-reload
-**UI hint**: yes
-
-#### Phase 211: Deep-Dive Stance Research (Trump, Vance, Rubio)
-
-**Goal**: Full-compass, evidence-cited stance research is completed and applied for Donald Trump, JD Vance, and Marco Rubio so their compasses render from real, sourced positions.
-**Depends on**: Nothing (data phase; the three are federal figures already in the DB; independent of the tabs/lens work)
-**Requirements**: RES-01
-**Success Criteria** (what must be TRUE):
-
-  1. Every applicable compass topic is answered for Donald Trump, JD Vance, and Marco Rubio
-  2. Every stance carries a citation (100% cited) — no default values
-  3. Topics with no supporting evidence are left as honest blank spokes (never fabricated)
-  4. Each of the three officials' compasses renders on their profile/cards, reflecting the researched stances
-
-**Plans**: 5 plans in 5 waves (research sequential per official — D-10 one agent at a time)
-
-**Wave 1**
-
-- [x] 211-01-PLAN.md — Foundation: capture live active topics + 5 chairs from inform.compass_topics/compass_stances (not the stale md), snapshot Trump+Vance answers for reversibility (D-04), author the reconcile apply script (upsert + delete-unsourced, single-politician scoped, parseInt/D-12)
-
-**Wave 2** *(blocked on Wave 1)*
-
-- [x] 211-02-PLAN.md — Donald Trump full-compass research (one agent) + full-overwrite reconcile apply (replaces 21 legacy uncited, deletes unsourced per D-05); 100% cited, honest blanks
-
-**Wave 3** *(blocked on Wave 1; own wave to keep research sequential — D-10)*
-
-- [x] 211-03-PLAN.md — J.D. Vance full-compass research (one agent) + full-overwrite reconcile apply (replaces 24 legacy uncited); 100% cited, honest blanks
-
-**Wave 4** *(blocked on Wave 1; own wave to keep research sequential — D-10)*
-
-- [x] 211-04-PLAN.md — Marco Rubio full-compass research (one agent, SecState-led + Senate backfill D-08, attribution guardrail D-09) + clean-insert apply; 100% cited, honest blanks
-
-**Wave 5** *(blocked on 211-02/03/04)*
-
-- [x] 211-05-PLAN.md — Provenance cross-check (0 uncited / 0 defaults across all three vs bundle.json) + live compass render human-verify (SC-4)
-
-### Progress
-
-**Execution Order:**
-Revised order (2026-07-19): 207 → 208 → **210** → 211, with **209 deferred**.
-
-Phase 207 (classification) is the foundation; Phase 208 (tabs) depends on it and is COMPLETE. Phase 209
-(Education lens) is DEFERRED (blocked on educator stance/topic groundwork) and no longer gates Phase 210:
-210 defaults Educators to the Education lens but falls back to best-available while it is unlit, so 210
-ships now and auto-upgrades data-only when 209 eventually lands. Phase 211 (stance research) is fully
-independent and may run at any time.
-
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 207. Officials Classification | 1/1 | Complete    | 2026-07-18 |
-| 208. Educators & Judges Tabs | 2/2 | Complete   | 2026-07-18 |
-| 209. Education Lens Scaffolding | 0/TBD | Not started | - |
-| 210. Per-Tab Compass Integration | 2/2 | Complete   | 2026-07-19 |
-| 211. Deep-Dive Stance Research (Trump, Vance, Rubio) | 5/5 | Complete   | 2026-07-20 |
-
-### Coverage
-
-All 9 v23.0 requirements mapped to exactly one phase. No orphans, no duplicates.
-
-| Requirement | Phase |
-|-------------|-------|
-| CLASS-01 | 207 |
-| TAB-01 | 208 |
-| TAB-02 | 208 |
-| TAB-03 | 208 |
-| EDU-01 | 209 |
-| EDU-02 | 209 |
-| CMP-01 | 210 |
-| CMP-02 | 210 |
-| RES-01 | 211 |
+</details>
 
 ## Phases (shipped milestones)
 
@@ -948,15 +768,6 @@ This deferred scope is what v21.0 filled.
 **v22.0 Tucson & Arizona is the active milestone** â Phases 190-203 (11 AZ + 3 appended
 Coachella Valley, CA). See the expanded roadmap above. Per-milestone progress tables are archived to
 `.planning/milestones/v{X.Y}-ROADMAP.md` at close.
-
-### Phase 210.1: Fix calibration lens revert (gap closure — CR-01)
-
-**Goal:** Resolve Phase 210 code-review finding CR-01 — the per-tab tab-entry effect could revert a lens the user just calibrated (calibrate flow does a full-page nav, so tabLensMemory is empty on return; a later async rawUserAnswers/lenses tick re-fired the effect and reset to the tab default). Fix seeds tabLensMemory[activeView] from the pending-calibration marker on the return mount.
-**Requirements:** CMP-02
-**Plans:** 1/1 plans complete
-
-Plans:
-- [x] 210.1-01 — Seed tabLensMemory from the pending-calibration marker on return-mount
 
 ## Backlog
 

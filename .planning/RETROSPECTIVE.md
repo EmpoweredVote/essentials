@@ -1,5 +1,50 @@
 # Retrospective
 
+## Milestone: v23.0 — Educators & Judges Tabs
+
+**Shipped:** 2026-07-20
+**Phases:** 5 executed (207, 208, 210, 210.1, 211) + 1 deferred (209) | **Plans:** 11
+
+### What Was Built
+
+- `classifyBucket(pol)` single-source classifier in `src/lib/classify.js` — `district_type` base + additive-only title/chamber overrides (DA/prosecutor, school superintendent, LOCAL-mistyped school boards), null-safe, 54 unit tests across 3 real locations
+- Four-tab officials view in `Results.jsx` — one `classifyBucket` call site partitions the live roster; shared `renderPeopleTab` pipeline gives Representatives/Educators/Judges full parity; empty tabs hidden; stale-`?view=` falls back to Representatives; election summary relocated to the location-header row
+- Per-tab compass lens shift — pure `resolveTabLens` + `TAB_DEFAULTS` in `compass.js`, wired via `tabLensMemory` state + tab-entry effect; explicit picks remembered per tab, reset on reload; deferred `education` key degrades to Custom overlap without throwing
+- CR-01 gap-closure (210.1) — seed `tabLensMemory` from the pending-calibration marker on return-mount so an async tick can't revert a just-calibrated lens
+- Trump / Vance / Rubio full-compass evidence-cited stances (211) — 27/20/21 live rows, 0 uncited/null/drift, honest blanks
+
+### What Worked
+
+- Phase 207's classifier shipped test-first as a pure function with live-DB-verified fixtures (LA, Bloomington IN, AZ) — Phase 208 consumed it at a single call site with zero classification drift
+- Deferring Phase 209 (Education lens) honestly rather than fabricating a lens — 210 was written to reference the `education` key defensively and fall back to best-available, so it shipped independently and will auto-upgrade data-only when 209 eventually lands
+- Sequential-inline stance research (one agent at a time, no worktree) for 211 kept within quota and produced 100%-cited compasses with a clean provenance audit (0 uncited/null/drift)
+- The 211-05 provenance cross-check + live render sign-off doubled as the phase's verification (Phase-189 pattern) — no separate verify phase needed
+
+### What Was Inefficient
+
+- Milestone-close ran while v22.0 was still open and sharing the live ROADMAP.md — the standard `milestone.complete` CLI would have bundled v22.0's active content into the v23.0 archive (the same class of miscount flagged in v21.0's retrospective), so archival had to be done manually and surgically
+- Phase 211 SUMMARYs left `requirements-completed` frontmatter empty and produced no `211-VERIFICATION.md`, so RES-01 read as "Pending" at audit time despite being shipped + operator-signed-off — a checkbox/frontmatter sync gap fixed at close
+- Nyquist VALIDATION.md was only produced for 207 and 210 (208/210.1/211 skipped) — acceptable for a frontend/data milestone but leaves the Nyquist picture partial
+
+### Patterns Established
+
+- **Deferred-lens defensive wiring:** a per-tab default can name a lens key that doesn't exist yet; resolve it against the live lens list and degrade to Custom — lets a dependent phase ship before its data phase and auto-upgrade with no code change
+- **Single classification call site:** one `classifyBucket` invocation partitioning the roster, with a code comment forbidding a second call site — prevents parallel/divergent classification logic
+- **Concurrent-milestone close:** when two milestones share the live ROADMAP.md, archive the shipping one manually (extract only its section) rather than trusting the whole-file CLI archive
+
+### Key Lessons
+
+- When a phase's verification is folded into its final wave (211-05) instead of a standalone VERIFICATION.md, still sync the REQUIREMENTS.md traceability checkbox at phase close — the milestone audit's 3-source cross-reference will otherwise flag the requirement as unsatisfied
+- Manual milestone close is the safe path whenever milestones overlap on shared planning files — the completion CLI assumes one active milestone
+
+### Cost Observations
+
+- Frontend + data milestone; one stance-research agent per official (sequential, no parallel fan-out) for 211 per the one-at-a-time quota rule
+- 70 commits, 55 files (6 source), +8,362/−265 over 3 days (2026-07-17 → 2026-07-20)
+- Notable: test-first pure logic (classify.js, compass.js resolvers) made the Results.jsx wiring cheap; deferring 209 avoided sinking cost into an un-authored lens
+
+---
+
 ## Milestone: v21.0 — Smart Banners
 
 **Shipped:** 2026-07-08

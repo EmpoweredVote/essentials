@@ -1,5 +1,25 @@
 # Milestones
 
+## v23.0 Educators & Judges Tabs (Shipped: 2026-07-20)
+
+**Phases completed:** 5 executed (207, 208, 210, 210.1, 211), 11 plans. Phase 209 (Education Lens Scaffolding) **deferred by design**.
+
+**Stats:** 70 commits · 55 files changed (6 source: `classify.js`/`classify.test.js`/`compass.js`/`compass.test.js`/`Results.jsx`/`index.css`) · +8,362 / −265 · 3 days (2026-07-17 → 2026-07-20) · git range `d1598b1f` → `821b3ee1`
+
+**Delivered:** Added **Educators** (school-board) and **Judges** as first-class, compass-integrated tabs beside **Representatives** and **Elections** on the results/officials view. School-board and judicial office-holders are pulled out of the Representatives list (decluttering the LA-style school-board sprawl), tabs hide entirely when a location has none, and the default compass lens shifts per tab. Frontend/data only — no new geographic/seeding data; classification runs off existing chamber/office/geo-type data. Ran alongside the still-open v22.0 (Tucson & Arizona) close. In-scope requirements 7/7 satisfied; EDU-01/02 deferred with Phase 209. Cross-phase integration PASS; build clean; 211/211 tests. DB-verified at close in the [v23.0 milestone audit](milestones/v23.0-MILESTONE-AUDIT.md).
+
+**Key accomplishments:**
+
+- **Single-source classifier (207):** `classifyBucket(pol)` in `src/lib/classify.js` buckets every office-holder into representative/educator/judge via a `district_type` base plus additive-only title/chamber overrides (DA/prosecutor, school superintendent, LOCAL-mistyped school boards), null-safe, verified with 54 new unit tests across 3 real contrasting locations (LA, Bloomington/Monroe County IN, an AZ city). CLASS-01.
+- **Educators & Judges tabs (208):** `Results.jsx` partitions the live `deduped` roster through `classifyBucket` at a single call site, renders four tabs (Representatives · Educators · Judges · Elections) via one shared `renderPeopleTab` pipeline for full parity, hides empty Educators/Judges tabs, falls back to Representatives on stale/unknown `?view=`, and relocates the election summary + day-pill to the location-header row. Operator-approved on live. TAB-01/02/03.
+- **Per-tab compass lens shift (210 + 210.1):** pure `resolveTabLens` + `TAB_DEFAULTS` in `compass.js`, wired via a `tabLensMemory` state + tab-entry effect that shifts the global lens switcher per tab (Judges → Judicial, Educators → Education-scaffolding with honest best-available fallback, Representatives → Best Match), explicit picks remembered per tab and reset on reload; the deferred `education` lens key degrades to Custom overlap without throwing. Gap-closure 210.1 fixed the CR-01 calibrate-and-return revert race. CMP-01/02.
+- **Deep-dive federal stances (211):** full-compass, evidence-based, 100%-cited stance research applied for Trump / Vance / Rubio (27 / 20 / 21 live rows) — 0 uncited, 0 null, 0 value drift vs the citation bundle; honest blank spokes for hyper-local/judicial topics; all three compasses render live (Rubio's was empty before). RES-01.
+- **Education lens deferred honestly (209):** rather than ship a fabricated Education lens, Phase 209 was deferred (no educator stance research, undefined 5-notch spectrum values, thin topic set). The Educators tab already degrades gracefully; lighting the lens later is a data-only change. EDU-01/02 carried to a future milestone.
+
+**Deferred by design:** Phase 209 / EDU-01 / EDU-02 (Education lens authoring). **Accepted tech debt:** one optional CR-01 calibrate-return live re-check (fix applied + unit/build-verified); RES-01 doc checkbox synced at close; Nyquist VALIDATION.md absent for 208/210.1/211 (optional for a frontend/data milestone).
+
+---
+
 ## v21.0 Smart Banners (Shipped: 2026-07-08)
 
 **Phases completed:** 3 phases (187–189), 8 plans
