@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v23.0
 milestone_name: Educators & Judges Tabs
 status: executing
-last_updated: "2026-07-20T00:08:07.859Z"
-last_activity: 2026-07-20 -- Phase 211 planning complete
+last_updated: "2026-07-20T00:20:02.895Z"
+last_activity: 2026-07-20 -- Phase 211 execution started
 progress:
   total_phases: 39
   completed_phases: 4
@@ -17,12 +17,12 @@ progress:
 
 ## Current Position
 
-Phase: 210 (per-tab-compass-integration) — COMPLETE
-Plan: 2 of 2 (both complete)
-Status: Ready to execute
+Phase: 211 (deep-dive-stance-research-trump-vance-rubio) — EXECUTING
+Plan: 1 of 5
+Status: Executing Phase 211
 Gap closure: Phase 210.1 (fix-calibration-lens-revert) — COMPLETE. Plan 210.1-01 resolved
 code-review finding CR-01 (calibrate-and-return lens revert); build clean, 211/211 tests green.
-Last activity: 2026-07-20 -- Phase 211 planning complete
+Last activity: 2026-07-20 -- Phase 211 execution started
 
 **Milestone v23.0 (active):** Educators & Judges tabs beside Representatives & Elections — filter
 school-board + judicial office-holders into their own compass-integrated tabs, grey-out on no-data,
@@ -465,7 +465,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 210 — per-tab-compass-integration
+**Current focus:** Phase 211 — deep-dive-stance-research-trump-vance-rubio
 
 ## v15.0 Roadmap Summary
 
