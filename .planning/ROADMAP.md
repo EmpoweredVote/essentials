@@ -805,7 +805,27 @@ v22.0 phases above are preserved untouched.
   3. Topics with no supporting evidence are left as honest blank spokes (never fabricated)
   4. Each of the three officials' compasses renders on their profile/cards, reflecting the researched stances
 
-**Plans**: TBD
+**Plans**: 5 plans in 5 waves (research sequential per official — D-10 one agent at a time)
+
+**Wave 1**
+
+- [ ] 211-01-PLAN.md — Foundation: capture live active topics + 5 chairs from inform.compass_topics/compass_stances (not the stale md), snapshot Trump+Vance answers for reversibility (D-04), author the reconcile apply script (upsert + delete-unsourced, single-politician scoped, parseInt/D-12)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 211-02-PLAN.md — Donald Trump full-compass research (one agent) + full-overwrite reconcile apply (replaces 21 legacy uncited, deletes unsourced per D-05); 100% cited, honest blanks
+
+**Wave 3** *(blocked on Wave 1; own wave to keep research sequential — D-10)*
+
+- [ ] 211-03-PLAN.md — J.D. Vance full-compass research (one agent) + full-overwrite reconcile apply (replaces 24 legacy uncited); 100% cited, honest blanks
+
+**Wave 4** *(blocked on Wave 1; own wave to keep research sequential — D-10)*
+
+- [ ] 211-04-PLAN.md — Marco Rubio full-compass research (one agent, SecState-led + Senate backfill D-08, attribution guardrail D-09) + clean-insert apply; 100% cited, honest blanks
+
+**Wave 5** *(blocked on 211-02/03/04)*
+
+- [ ] 211-05-PLAN.md — Provenance cross-check (0 uncited / 0 defaults across all three vs bundle.json) + live compass render human-verify (SC-4)
 
 ### Progress
 
