@@ -1,34 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v23.0
-milestone_name: Educators & Judges Tabs
-status: shipped
-stopped_at: v23.0 milestone closed
-last_updated: "2026-07-20T16:00:00.000Z"
-last_activity: 2026-07-20 -- v23.0 milestone shipped, archived, and tagged
+milestone: v24.0
+milestone_name: Results-Page Search & Header Overhaul
+status: planning
+last_updated: "2026-07-20T18:35:06.474Z"
+last_activity: 2026-07-20
 progress:
-  total_phases: 24
-  completed_phases: 20
-  total_plans: 75
-  completed_plans: 75
-  percent: 83
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Milestone: **v23.0 Educators & Judges Tabs — SHIPPED 2026-07-20** (archived + tagged).
-Status: closed. In-scope requirements 7/7 satisfied (CLASS-01, TAB-01/02/03, CMP-01/02, RES-01);
-EDU-01/02 deferred by design with Phase 209 (Education lens authoring) to a future milestone.
-Archived to `milestones/v23.0-ROADMAP.md` / `-REQUIREMENTS.md` / `-MILESTONE-AUDIT.md`.
-Last activity: 2026-07-20 -- v23.0 shipped, archived, and tagged.
-
-**Accepted tech debt at close:** one optional CR-01 calibrate-return live re-check (Phase 210 fix
-applied + unit/build-verified); Nyquist VALIDATION.md absent for 208/210.1/211 (optional).
-
-**Next:** either close the HELD v22.0 (below) once the 2026-07-21 AZ primary certifies, or
-`/gsd-new-milestone` for the next body of work.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-20 — Milestone v24.0 started
 
 ### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
 
