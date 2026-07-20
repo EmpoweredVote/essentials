@@ -115,3 +115,11 @@ None - no external service configuration required.
 ---
 *Phase: 212-backend-place-name-resolver-national-fallback*
 *Completed: 2026-07-20*
+
+## Self-Check: PASSED
+
+- FOUND: C:/EV-Accounts/backend/migrations/1377_location_search_trgm_indexes.sql
+- FOUND: C:/EV-Accounts/backend/migrations/1378_gazetteer_places_counties.sql
+- FOUND: .planning/phases/212-backend-place-name-resolver-national-fallback/212-01-SUMMARY.md
+- FOUND: commit d94c3b97 (EV-Accounts repo)
+- FOUND: commit dedf28ba (essentials repo)
