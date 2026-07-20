@@ -10,49 +10,22 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ## Current State
 
-**Shipped v21.0 Smart Banners (2026-07-08).** The section banners built in v19.0 are now
-location-aware hubs. A tethered EV-product icon row deep-links each banner's *own* location (never
-the user's) into other EV products — Treasury Tracker today, resolved per tier (municipal / state
-General Fund / federal), context-aware with no dead links. A Census-sourced population strip shows a
-legible fact per tier, keyed to the location's FIPS/geo identifier with clean omission on any miss.
-Both are wired identically into Results and Elections through one shared `buildBannerProps` helper
-(single source of truth, promotable to `@empoweredvote/ev-ui`), degrading gracefully to the v19.0
-title-only banner when a location has neither links nor stats. Frontend-only — no backend/DB changes.
-See the v21.0 shipped block below + `milestones/v21.0-*`.
+**Shipped v23.0 Educators & Judges Tabs (2026-07-20).** The results/officials view now carries
+**Educators** (school-board) and **Judges** as first-class, compass-integrated tabs beside
+**Representatives** and **Elections**. A single-source `classifyBucket` engine partitions every
+office-holder into representative/educator/judge from existing chamber/office/geo-type data; school-board
+and judicial office-holders are pulled out of the Representatives list (fixing the LA school-board
+sprawl), empty tabs hide entirely, and the default compass lens shifts per tab (Judges → Judicial,
+Educators → Education-scaffolding with honest best-available fallback, Reps → Best Match) with explicit
+picks remembered per tab. A deep-dive stance pass gave Trump / Vance / Rubio full, 100%-cited compasses.
+Frontend/data only — no new geographic/seeding data. Phase 209 (Education lens authoring) was deferred
+by design. See the v23.0 block below + `milestones/v23.0-*`.
 
 **v22.0 Tucson & Arizona — substantively complete, held for formal close.** All Arizona foundation +
 Tucson-metro + Coachella Valley deep-seeds shipped (Phases 190–203); the milestone's remaining Phase 200
 (retrospective/close) and Phase 206 (2026 candidate reconcile) are **held until 2026-07-21**, when the AZ
 primary certifies. Sahuarita (197) + South Tucson (198) also owe a post-07-21 membership/title reconcile.
-
-**Active milestone: v23.0 Educators & Judges Tabs.** Adding Educators (school-board leads) and Judges as
-first-class, compass-integrated tabs beside Representatives & Elections — filtering those office-holders
-out of the Representatives list, greying out where no data exists, and shifting the default compass lens
-per tab. Runs alongside the held v22.0 close. See Current Milestone below.
-
-## Current Milestone: v23.0 Educators & Judges Tabs
-
-**Goal:** Add **Educators** (school-board leads) and **Judges** as first-class tabs on the
-results/officials view — beside Representatives & Elections — that filter school-board and judicial
-office-holders into their own compass-integrated tabs, decluttering Representatives, with graceful
-grey-out where a location has no such data and an automatic default-lens shift per tab.
-
-**Target features:**
-- Educators & Judges tabs — school-board leads and judges pulled out of the Representatives list into their own tabs (fixes the "wade through LA school-board districts" problem)
-- Officials classification — a reliable way to bucket each office-holder as Representative / Educator / Judge to drive the split
-- Tab grey-out — a tab disables when the current location has no educators / judges
-- Compass per tab — the Compass button works inside each new tab, same as today
-- Per-tab default lens shift — Judges → existing **Judicial lens**; Educators → **Education lens (scaffolding)**
-- Education lens scaffolding — the lens exists structurally, greys out / falls back to Custom until its 8 topics are authored later
-- Deep-dive stance research — Trump, Vance, Rubio: full compass, 100% evidence-cited (own phase)
-
-**Deferred by design (future milestones):** authoring the 8 Education-lens topics (book bans, religious
-texts in public schools, trans athletes, …); the Elections "ballot hub" build-out (sample ballots,
-propositions, when/where/what-is-on-my-ballot); broad school-board stance research. Feature milestone →
-major version bump to v23.0; phase numbering continues from v22.0, so phases start at **207**.
-
-**Runs alongside held v22.0 close** (Phase 200 + Phase 206 + Sahuarita/South Tucson reconcile, all
-gated on the 2026-07-21 AZ primary certification) — same side-track pattern as Phases 204/205.
+This is the next thing to close once the primary certifies.
 
 ## Requirements
 
@@ -60,6 +33,10 @@ gated on the 2026-07-21 AZ primary certification) — same side-track pattern as
 
 <!-- Shipped and confirmed valuable. -->
 
+- ✓ Officials classification engine — single-source `classifyBucket(pol)` buckets every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data (additive-only overrides; null-safe; verified across 3 real locations) — v23.0 (CLASS-01)
+- ✓ Educators & Judges tabs — school-board and judicial office-holders pulled into their own compass-integrated tabs beside Representatives & Elections, Representatives decluttered, empty tabs hidden, stale-`?view=` fallback to Representatives — v23.0 (TAB-01/02/03)
+- ✓ Per-tab compass integration — Compass works identically in Educators/Judges tabs; default lens shifts per tab (Judges → Judicial, Educators → Education-scaffolding/best-available fallback, Reps → Best Match); explicit pick overrides + remembered per tab, resets on reload — v23.0 (CMP-01/02)
+- ✓ Deep-dive federal stances — Trump / Vance / Rubio full-compass, 100%-cited, no-defaults, honest blank spokes; all three compasses render live — v23.0 (RES-01)
 - ✓ Tethered feature-icon row on section banners — per-tier Treasury deep-links carrying the banner's own location, accessible hover/focus tooltip, context-aware (no dead links / no greyed placeholders) — v21.0 (ICON-01/02/03, TETH-01/02/03/04)
 - ✓ Census-sourced population strip on city/state banners — build-time ACS5 bundle keyed to FIPS/geo identifier, pure `resolvePopulation` with graceful null-on-miss omission — v21.0 (STAT-01/02/03)
 - ✓ Shared smart-banner integration — `buildBannerProps` single source of truth consumed identically by Results + Elections across all three tiers; empty-state parity with v19.0 (no empty containers, layout shift, or console errors) — v21.0 (SBAN-01/02/03/04)
@@ -237,6 +214,12 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
+- **Education lens authoring (deferred from v23.0 / Phase 209 — EDU-01/EDU-02):** author the ~8
+  Education-lens compass topics (book bans, religious texts in public schools, trans athletes,
+  curriculum standards, school choice/vouchers, …) with their 1–5 answer chairs, seeded as live compass
+  topics so the Educators-tab lens lights via the existing data-only path (no code change). Blocked on
+  educator stance research + defined spectrum values; the Educators tab already degrades gracefully to
+  Custom overlap until this lands.
 - **v22.0 Tucson & Arizona (ACTIVE, opened 2026-07-08)** — Arizona new-state foundation (geofences +
   state/federal government + 90-member legislature seed) + Tucson-metro deep-seed (Pima County + City of
   Tucson + Oro Valley + Marana + Sahuarita + South Tucson) + 2026 elections + close. Each city/county
@@ -374,16 +357,25 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-17 — **v23.0 Educators & Judges Tabs OPENED.** Feature milestone: add Educators
-(school-board leads) and Judges as first-class, compass-integrated tabs beside Representatives & Elections,
-filtering those office-holders out of the Representatives list (fixes the LA school-board-district clutter),
-greying out where no data exists, and shifting the default compass lens per tab (Judges → existing Judicial
-lens; Educators → Education-lens scaffolding, greyed until its 8 topics are authored later). Includes a
-deep-dive full-compass evidence-cited stance research phase for Trump, Vance & Rubio. Authoring the 8
-Education topics + the Elections "ballot hub" build-out deferred by design. Phases continue from v22.0,
-starting at 207. Runs alongside the **held v22.0 close** (Phase 200 + Phase 206 + Sahuarita/South Tucson
-reconcile, gated on the 2026-07-21 AZ primary certification). Prior milestone: v22.0 Tucson & Arizona
-(substantively complete; formal close held for 07-21).*
+*Last updated: 2026-07-20 after v23.0 milestone — **v23.0 Educators & Judges Tabs SHIPPED.** Educators
+(school-board) and Judges are now first-class, compass-integrated tabs beside Representatives & Elections,
+driven by a single-source `classifyBucket` engine; Representatives decluttered, empty tabs hidden, default
+compass lens shifts per tab, and Trump/Vance/Rubio carry full 100%-cited compasses. Frontend/data only.
+In-scope requirements 7/7 satisfied (CLASS-01, TAB-01/02/03, CMP-01/02, RES-01); EDU-01/02 (Education lens
+authoring, Phase 209) deferred by design to a future milestone. Archived to `milestones/v23.0-*` and
+tagged v23.0. **Next:** close the held v22.0 (Phase 200 + Phase 206 + Sahuarita/South Tucson reconcile)
+once the 2026-07-21 AZ primary certifies, or start a new milestone.*
+
+<details>
+<summary>Earlier footer — v23.0 opened (2026-07-17)</summary>
+
+*v23.0 Educators & Judges Tabs OPENED (2026-07-17). Feature milestone: add Educators (school-board leads)
+and Judges as first-class, compass-integrated tabs beside Representatives & Elections, filtering those
+office-holders out of the Representatives list, greying out where no data exists, and shifting the default
+compass lens per tab. Includes a deep-dive full-compass evidence-cited stance research phase for Trump,
+Vance & Rubio. Ran alongside the held v22.0 close.*
+
+</details>
 
 <details>
 <summary>Earlier footer — v22.0 open (2026-07-08)</summary>
