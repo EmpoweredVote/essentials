@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
-status: "Roadmap created — ready for /gsd:plan-phase 212"
-last_updated: "2026-07-20T20:39:53.150Z"
-last_activity: 2026-07-20 — ROADMAP.md created for v24.0 (Phases 212-215, 18/18 requirements mapped)
+status: executing
+last_updated: "2026-07-20T22:27:34.695Z"
+last_activity: 2026-07-20 -- Phase 212 planning complete
 progress:
   total_phases: 59
   completed_phases: 20
-  total_plans: 75
+  total_plans: 80
   completed_plans: 75
   percent: 34
 ---
@@ -19,8 +19,8 @@ progress:
 
 Phase: 212 of 215 (Backend Place-Name Resolver & National Fallback) — ready to plan
 Plan: — (roadmap created, no plans yet)
-Status: Roadmap created — ready for /gsd:plan-phase 212
-Last activity: 2026-07-20 — ROADMAP.md created for v24.0 (Phases 212-215, 18/18 requirements mapped)
+Status: Ready to execute
+Last activity: 2026-07-20 -- Phase 212 planning complete
 
 ### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
 
