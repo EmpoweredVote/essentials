@@ -1,5 +1,5 @@
 import { Fragment, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
-import { usePostHog } from 'posthog-js/react';
+import { track } from '@empoweredvote/analytics';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
 import { computeVariant, classifyBucket, classifyCategory } from '../lib/classify';
@@ -381,7 +381,6 @@ export default function Results() {
   const { isDark } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const posthog = usePostHog();
   const queryFromUrl = searchParams.get('q') || '';
   const activeView = searchParams.get('view') || 'representatives';
   // ADR-0001: arrived here from a city-level (locality) search, so results are the
@@ -531,7 +530,7 @@ export default function Results() {
     try { return localStorage.getItem('ev:compassMode') === 'true'; } catch { return false; }
   });
   const handleCompassModeChange = (val) => {
-    posthog?.capture('essentials_compass_mode_toggled', { enabled: val });
+    track('essentials_compass_mode_toggled', { enabled: val });
     setCompassMode(val);
     try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
     if (val) enableCompass();
@@ -590,7 +589,7 @@ export default function Results() {
   }, [lenses, rawUserAnswers, isLensCalibrated]);
 
   const handleSelectLens = (key) => {
-    posthog?.capture('essentials_compass_lens_selected', { lens: key, tab: effectiveActiveView });
+    track('essentials_compass_lens_selected', { lens: key, tab: effectiveActiveView });
     // D-04: record the explicit pick into the active tab's memory slot BEFORE
     // applying it — this re-fires the tab-entry effect below with the same
     // resolved key, a benign idempotent no-op (Pattern 2), not a loop.
@@ -626,14 +625,14 @@ export default function Results() {
 
   const handleStanceMax = () => {
     if (!rawUserAnswers || !allTopics) return;
-    posthog?.capture('essentials_stance_alignment_set', { alignment: 'max' });
+    track('essentials_stance_alignment_set', { alignment: 'max' });
     const newMap = computeStanceSpokes('max', rawUserAnswers, allTopics, invertedSpokes || {});
     batchInvertSpokes(newMap);
   };
 
   const handleStanceMin = () => {
     if (!rawUserAnswers || !allTopics) return;
-    posthog?.capture('essentials_stance_alignment_set', { alignment: 'min' });
+    track('essentials_stance_alignment_set', { alignment: 'min' });
     const newMap = computeStanceSpokes('min', rawUserAnswers, allTopics, invertedSpokes || {});
     batchInvertSpokes(newMap);
   };
@@ -954,7 +953,7 @@ export default function Results() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const switchView = (view) => {
-    posthog?.capture('essentials_tab_switched', { from: activeView, to: view });
+    track('essentials_tab_switched', { from: activeView, to: view });
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
       if (view === 'representatives') {
@@ -1006,7 +1005,7 @@ export default function Results() {
   const addressInputRef = useRef(null);
   useGooglePlacesAutocomplete(addressInputRef, {
     onPlaceSelected: (addr) => {
-      posthog?.capture('essentials_address_searched', { method: 'autocomplete' });
+      track('essentials_address_searched', { method: 'autocomplete' });
       setAddressInput(addr);
       handleAddressSearch(addr);
     },
@@ -1521,7 +1520,7 @@ export default function Results() {
     if (pol) {
       const dt = pol.district_type || '';
       const level = dt.startsWith('NATIONAL') ? 'federal' : dt.startsWith('STATE') ? 'state' : 'local';
-      posthog?.capture('essentials_politician_viewed', {
+      track('essentials_politician_viewed', {
         level,
         district_type: pol.district_type,
         office_title: pol.office_title,
@@ -2027,7 +2026,7 @@ export default function Results() {
                   query={addressInput}
                   inputRef={addressInputRef}
                   onSelect={(area) => {
-                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
+                    track('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
                     navigate(coverageAreaToPath(area));
                     setEditingSearch(false);
                   }}
@@ -2139,7 +2138,7 @@ export default function Results() {
               <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
                 <FilterBar
                   appointedFilter={appointedFilter}
-                  onAppointedFilterChange={(v) => { posthog?.capture('essentials_filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
+                  onAppointedFilterChange={(v) => { track('essentials_filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
                   searchQuery={searchQuery}
                   onSearchChange={setSearchQuery}
                   compassMode={compassMode}
@@ -2345,7 +2344,7 @@ export default function Results() {
                 isDark={isDark}
                 hideWithdrawn={true}
                 onCandidateClick={(id) => {
-                  posthog?.capture('essentials_candidate_clicked', { candidate_id: id });
+                  track('essentials_candidate_clicked', { candidate_id: id });
                   sessionStorage.setItem('ev:scrollTop', String(window.scrollY));
                   sessionStorage.setItem('ev:fromView', 'elections');
                   navigate(`/candidate/${id}`);

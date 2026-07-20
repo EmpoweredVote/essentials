@@ -1,6 +1,6 @@
 // src/components/BioClamp.jsx
 import React from "react";
-import { usePostHog } from 'posthog-js/react';
+import { track } from '@empoweredvote/analytics';
 
 /**
  * Presentational bio block that uses height clamping.
@@ -8,7 +8,6 @@ import { usePostHog } from 'posthog-js/react';
  */
 export default function BioClamp({ text, hook, className = "" }) {
   const { bioRef, expanded, setExpanded, isClamped, bioMax } = hook;
-  const posthog = usePostHog();
 
   // Show the button only if we computed a clamp and either overflow exists or we're expanded
   const showToggle = bioMax != null && (isClamped || expanded);
@@ -37,7 +36,7 @@ export default function BioClamp({ text, hook, className = "" }) {
           <button
             onClick={() => {
               const next = !expanded;
-              posthog?.capture(next ? 'essentials_bio_expanded' : 'essentials_bio_collapsed');
+              track(next ? 'essentials_bio_expanded' : 'essentials_bio_collapsed');
               setExpanded(next);
               if (
                 typeof requestAnimationFrame !== "undefined" &&
