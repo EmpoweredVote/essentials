@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: executing
-last_updated: "2026-07-20T22:27:34.695Z"
-last_activity: 2026-07-20 -- Phase 212 planning complete
+last_updated: "2026-07-20T22:43:26.538Z"
+last_activity: 2026-07-20 -- Phase 212 execution started
 progress:
   total_phases: 59
   completed_phases: 20
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 212 of 215 (Backend Place-Name Resolver & National Fallback) — ready to plan
-Plan: — (roadmap created, no plans yet)
-Status: Ready to execute
-Last activity: 2026-07-20 -- Phase 212 planning complete
+Phase: 212 (backend-place-name-resolver-national-fallback) — EXECUTING
+Plan: 1 of 5
+Status: Executing Phase 212
+Last activity: 2026-07-20 -- Phase 212 execution started
 
 ### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
 
@@ -485,7 +485,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 211 — deep-dive-stance-research-trump-vance-rubio
+**Current focus:** Phase 212 — backend-place-name-resolver-national-fallback
 
 ## v15.0 Roadmap Summary
 

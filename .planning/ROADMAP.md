@@ -89,8 +89,8 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 1**
 
-- [ ] 212-01-PLAN.md — DB pre-flight audit (verify, not re-ingest, the nationwide G5200 CD/House data per D-02) + author migrations 1377 (trgm indexes on governments.name + geofence_boundaries.name) and 1378 (Gazetteer places/counties tables + trgm indexes)
-- [ ] 212-02-PLAN.md — Idempotent Census Gazetteer Places+Counties ingest script (D-08/09/10/11) + parsing/idempotency unit test
+- [x] 212-01-PLAN.md — DB pre-flight audit (verify, not re-ingest, the nationwide G5200 CD/House data per D-02) + author migrations 1377 (trgm indexes on governments.name + geofence_boundaries.name) and 1378 (Gazetteer places/counties tables + trgm indexes)
+- [x] 212-02-PLAN.md — Idempotent Census Gazetteer Places+Counties ingest script (D-08/09/10/11) + parsing/idempotency unit test
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -153,7 +153,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 212. Backend Place-Name Resolver & National Fallback | 0/5 | Planned | - |
+| 212. Backend Place-Name Resolver & National Fallback | 2/5 | In Progress|  |
 | 213. Anonymous Coordinate Lookup Endpoint | 0/TBD | Not started | - |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
