@@ -25,6 +25,7 @@ import {
 import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
 import { fetchMyRepresentatives } from "../lib/api";
 import { evContext } from "@empoweredvote/ev-ui";
+import { identify } from "@empoweredvote/analytics";
 
 const CompassContext = createContext(null);
 
@@ -345,7 +346,12 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
           if (!cancelled) {
             setIsLoggedIn(true);
             setUserName(authedUser.display_name ?? null);
-            if (authedUser.id) setUserId(authedUser.id);
+            if (authedUser.id) {
+              setUserId(authedUser.id);
+              // Stitch this person across every EV app via the Connected
+              // Account UUID (see @empoweredvote/analytics identity model).
+              identify(authedUser.id);
+            }
             setUserJurisdiction(authedUser.jurisdiction ?? null);
           }
 

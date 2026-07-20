@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { usePostHog } from 'posthog-js/react';
+import { track } from '@empoweredvote/analytics';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
@@ -37,7 +37,6 @@ export default function Landing() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { isLoggedIn, myRepresentatives, myLocationNotSet, compassLoading } = useCompass();
-  const posthog = usePostHog();
 
   // ADR-0001 locality fallback: when a city/county/state search couldn't resolve to
   // covered reps, the user lands here with a hint about what we cover.
@@ -50,7 +49,7 @@ export default function Landing() {
   useGooglePlacesAutocomplete(addressInputRef, {
     onPlaceSelected: (addr) => {
       setAddressInput(addr);
-      posthog?.capture('essentials_address_searched', { method: 'autocomplete' });
+      track('essentials_address_searched', { method: 'autocomplete' });
       navigate(`/results?q=${encodeURIComponent(addr)}`);
     },
   });
@@ -88,7 +87,7 @@ export default function Landing() {
     // of truth; fall back to state only if the ref isn't mounted.
     const q = (addressInputRef.current?.value ?? addressInput).trim();
     if (!q || searching) return;
-    posthog?.capture('essentials_address_searched', { method: 'manual' });
+    track('essentials_address_searched', { method: 'manual' });
     setSearching(true);
     try {
       // ADR-0001: classify the query — a covered city/state/county routes to
@@ -111,7 +110,7 @@ export default function Landing() {
 
   const handleAreaClick = (area) => {
     const areaType = area.browseGovernmentList ? 'government_list' : area.browseGeoId ? 'geo' : 'address';
-    posthog?.capture('essentials_browse_area_clicked', {
+    track('essentials_browse_area_clicked', {
       label: area.label,
       type: areaType,
       state: area.browseStateAbbrev || area.state || null,
@@ -308,7 +307,7 @@ export default function Landing() {
                   query={addressInput}
                   inputRef={addressInputRef}
                   onSelect={(area) => {
-                    posthog?.capture('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
+                    track('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
                     navigate(coverageAreaToPath(area));
                   }}
                 />

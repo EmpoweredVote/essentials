@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
-import { usePostHog } from 'posthog-js/react';
+import { track } from '@empoweredvote/analytics';
 import { RadarChartCore, StanceAccordion, PlaceholderRadar } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
@@ -35,7 +35,6 @@ function stanceLabel(shortTitle, value, topics) {
  */
 export default function CompassCard({ politicianId, politicianName, politicianTitle, districtScope }) {
   const { isDark } = useTheme();
-  const posthog = usePostHog();
   const {
     isLoggedIn,
     politicianIdsWithStances,
@@ -230,7 +229,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // Min/Max batch handlers — operate on what the user currently *sees* (display value),
   // not the raw stored value, so they work correctly on already-inverted spokes.
   function handleStanceMax() {
-    posthog?.capture('essentials_compass_stance_alignment_set', { alignment: 'max', context: 'profile' });
+    track('essentials_compass_stance_alignment_set', { alignment: 'max', context: 'profile' });
     const next = { ...invertedSpokes };
     for (const topic of topicsFiltered) {
       const val = userData[topic.short_title];
@@ -246,7 +245,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   }
 
   function handleStanceMin() {
-    posthog?.capture('essentials_compass_stance_alignment_set', { alignment: 'min', context: 'profile' });
+    track('essentials_compass_stance_alignment_set', { alignment: 'min', context: 'profile' });
     const next = { ...invertedSpokes };
     for (const topic of topicsFiltered) {
       const val = userData[topic.short_title];
@@ -294,7 +293,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             type="button"
             title={localLensActive ? 'Exit lens — compare on your full compass' : 'Lens — focus this race on its key issues'}
             aria-pressed={localLensActive}
-            onClick={() => { posthog?.capture('essentials_compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
+            onClick={() => { track('essentials_compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
             style={{
               display: 'flex', alignItems: 'center', gap: 6,
               height: 32, padding: '0 12px',

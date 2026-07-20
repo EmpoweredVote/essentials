@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { usePostHog } from 'posthog-js/react';
+import { track } from '@empoweredvote/analytics';
 import ConfidenceDot from './ConfidenceDot';
 
 const API_BASE = import.meta.env.VITE_API_URL
@@ -16,7 +16,6 @@ const API_BASE = import.meta.env.VITE_API_URL
  *                         That politician's group is pinned to the top.
  */
 export default function DonorSearch({ currentPoliticianId }) {
-  const posthog = usePostHog();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -65,7 +64,7 @@ export default function DonorSearch({ currentPoliticianId }) {
           return b.total_donated - a.total_donated;
         });
 
-        posthog?.capture('essentials_donor_searched', { query_length: val.length, has_results: sorted.length > 0 });
+        track('essentials_donor_searched', { query_length: val.length, has_results: sorted.length > 0 });
         setResults({ ...data, politicians: sorted });
       } catch (err) {
         setError(err.message || 'Search failed. Please try again.');

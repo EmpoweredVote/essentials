@@ -2,7 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { loadUserAddressFromContext } from "./lib/compass";
-import { usePostHog } from "posthog-js/react";
+import { pageview, pageleave, reset } from "@empoweredvote/analytics";
 import Landing from "./pages/Landing";
 import Results from "./pages/Results";
 import Profile from "./pages/Profile";
@@ -24,10 +24,9 @@ localStorage.removeItem('lastZip');
 
 function PostHogPageview() {
   const location = useLocation();
-  const posthog = usePostHog();
   useEffect(() => {
-    posthog?.capture('$pageview');
-    return () => posthog?.capture('$pageleave');
+    pageview();
+    return () => pageleave();
   }, [location.pathname]);
   return null;
 }
@@ -83,7 +82,12 @@ function App() {
       if (document.visibilityState !== 'visible') return;
       try {
         const res = await fetch(SESSION_URL, { credentials: 'include' });
-        if (res.status === 401) clearToken();
+        if (res.status === 401) {
+          clearToken();
+          // Logged out (session cleared, possibly by another app) — drop the
+          // PostHog identity so a shared device doesn't blend two people.
+          reset();
+        }
       } catch {
         // Network error — don't log out
       }
