@@ -232,11 +232,16 @@ export default function LocationCombobox({
           spellCheck={false}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          onFocus={(e) => e.target.select()}
-          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           className="min-w-0 flex-1 bg-transparent text-base leading-[1.5] text-gray-900 outline-none placeholder:text-gray-400 dark:text-gray-100 dark:placeholder:text-gray-500"
-          {...getReferenceProps()}
+          // Handlers MUST be passed INTO getReferenceProps so floating-ui composes
+          // them with its own listbox onKeyDown (arrows/Escape). Declaring them as
+          // standalone props before the spread lets getReferenceProps()'s onKeyDown
+          // clobber handleKeyDown, silently killing Enter-to-submit/select (SRCH-02).
+          {...getReferenceProps({
+            onKeyDown: handleKeyDown,
+            onFocus: (e) => e.target.select(),
+          })}
         />
         {loading && <SpinnerIcon />}
         <button

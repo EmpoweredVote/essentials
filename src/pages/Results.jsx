@@ -920,7 +920,17 @@ export default function Results() {
       setBrowseResults(filtered);
       setBrowseLoading(false);
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // Keyed on the browse-target param VALUES (not the searchParams object, which
+    // changes on every tab switch) so selecting a new candidate from the in-page
+    // combobox (Results→Results navigation, no remount) actually re-fetches instead
+    // of leaving the prior location's officials on screen (214 combobox re-search).
+  }, [
+    searchParams.get('browse_geo_id'),
+    searchParams.get('browse_mtfcc'),
+    searchParams.get('browse_label'),
+    searchParams.get('browse_city_filter'),
+    searchParams.get('browse_school_filter'),
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle ?browse_state_officials=CA — statewide officials (executives + US
   // Senators + federal). The "browse a state" entry point from the typeahead.
