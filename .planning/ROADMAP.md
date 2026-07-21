@@ -94,7 +94,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 212-03-PLAN.md — [BLOCKING] Apply migrations 1377+1378 to the live DB + run the Gazetteer ingest live (~3143 counties, tens of thousands of places) + prove net-zero-new re-run
+- [x] 212-03-PLAN.md — [BLOCKING] Apply migrations 1377+1378 to the live DB + run the Gazetteer ingest live (~3143 counties, tens of thousands of places) + prove net-zero-new re-run
 
 **Wave 3** *(blocked on Wave 2)*
 
@@ -153,7 +153,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 212. Backend Place-Name Resolver & National Fallback | 2/5 | In Progress|  |
+| 212. Backend Place-Name Resolver & National Fallback | 3/5 | In Progress|  |
 | 213. Anonymous Coordinate Lookup Endpoint | 0/TBD | Not started | - |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
