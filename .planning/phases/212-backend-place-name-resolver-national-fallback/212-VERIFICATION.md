@@ -1,7 +1,7 @@
 ---
 phase: 212-backend-place-name-resolver-national-fallback
 verified: 2026-07-21T02:30:00Z
-status: resolved
+status: passed
 score: 7/7 must-haves verified (2 gaps closed by gap-closure 212-07)
 overrides_applied: 0
 resolution: >
