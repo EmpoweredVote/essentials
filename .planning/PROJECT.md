@@ -41,6 +41,8 @@ This is the next thing to close once the primary certifies.
 
 Spans essentials (frontend) + accounts-api (backend), both auto-deploy from their default branch on Render. Continues phase numbering after v23.0's Phase 211.
 
+**Progress:** Backend search stack landing first. Phase 212 (place-name resolver + national fallback) shipped live; **Phase 213 (anonymous coordinate-lookup endpoint) complete 2026-07-21** — `POST /api/essentials/coordinate-lookup` is live on accounts-api.empowered.vote, resolving officials for raw lat/lng via PostGIS `ST_Covers` with US bbox + swap-guard validation, the state+federal floor, zero auth, zero writes, and no coordinate echo/logging (smoke-verified against production, operator signed off). Frontend combobox + Google Places removal is Phase 214 (next).
+
 ## Requirements
 
 ### Validated
@@ -377,7 +379,7 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-20 — **v24.0 Results-Page Search & Header Overhaul OPENED.** Feature milestone:
+*Last updated: 2026-07-21 — **v24.0 in progress: Phase 213 (anonymous coordinate-lookup endpoint) complete + live.** v24.0 Results-Page Search & Header Overhaul OPENED.** Feature milestone:
 replace the cluttered multi-row results header with one compact, always-editable location search that
 routes anyone in the US to a location profile from an address, a city/state/county, or coordinates — with
 a national fallback to state + federal (Senate/House) officials. Drops Google Places for our own typeahead
