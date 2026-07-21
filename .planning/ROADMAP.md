@@ -66,7 +66,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 - [ ] **Phase 212: Backend Place-Name Resolver & National Fallback** - DB-truth place-name search (pg_trgm + Census Gazetteer ingest) with disambiguation, wrong-state guard, and nationwide state+federal fallback
 - [x] **Phase 213: Anonymous Coordinate Lookup Endpoint** - Stateless, privacy-reviewed lat/lng → officials endpoint with US bounding-box + swapped-coordinate validation (completed 2026-07-21)
-- [ ] **Phase 214: Unified Location Combobox & Google Places Removal** - One accessible combobox on Results + Landing; Google Places, its hook, and its dependency fully retired
+- [x] **Phase 214: Unified Location Combobox & Google Places Removal** - One accessible combobox on Results + Landing; Google Places, its hook, and its dependency fully retired (completed 2026-07-21)
 - [ ] **Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal** - Type filter defaults to Elected with a Judges exception, compass lenses become icon buttons, name-search filter removed
 
 ### Phase Details
@@ -163,7 +163,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 214-06-PLAN.md — [CHECKPOINT] Human-verify combobox keyboard/ARIA, all three input paths, disambiguation, coordinate privacy label, dark mode on Results + Landing
+- [x] 214-06-PLAN.md — [CHECKPOINT] Human-verify combobox keyboard/ARIA, all three input paths, disambiguation, coordinate privacy label, dark mode on Results + Landing
 
 #### Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal
 
@@ -188,7 +188,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
 | 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
-| 214. Unified Location Combobox & Google Places Removal | 5/6 | In Progress|  |
+| 214. Unified Location Combobox & Google Places Removal | 6/6 | Complete    | 2026-07-21 |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 
 ### Coverage
