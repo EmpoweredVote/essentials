@@ -142,7 +142,28 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
   4. The exact same combobox component powers the Landing-page search bar (one shared component, not a parallel implementation)
   5. A full-repo grep for `google`/`pac-container`/`window.google` returns zero hits outside deleted files, and the `@googlemaps/js-api-loader` dependency is uninstalled
 
-**Plans**: TBD
+**Plans**: 6 plans in 5 waves
+
+**Wave 1**
+
+- [ ] 214-01-PLAN.md — Pure input classifier (SRCH-03) + searchLocationsByName/lookupCoordinate api clients (SRCH-04/05) with colocated Vitest unit tests (Wave 0 gaps)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 214-02-PLAN.md — Shared accessible `<LocationCombobox>` (@floating-ui virtual list-nav, SRCH-02/04) + localitySearch.js Google-free refactor (browseAreaRoute)
+
+**Wave 3** *(blocked on Wave 2; parallel — disjoint files)*
+
+- [ ] 214-03-PLAN.md — Results.jsx: swap toggle+LocationBrowser for the combobox (SRCH-01) + coordinate render path with D-05 label + representingCity banner-hijack guard (SRCH-05)
+- [ ] 214-04-PLAN.md — Landing.jsx: adopt the same shared combobox (SRCH-06), preserve coverage list + candidate-by-name search
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 214-05-PLAN.md — Delete Google modules + non-contiguous .pac CSS block + uninstall @googlemaps + scoped SRCH-08 grep gate
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 214-06-PLAN.md — [CHECKPOINT] Human-verify combobox keyboard/ARIA, all three input paths, disambiguation, coordinate privacy label, dark mode on Results + Landing
 
 #### Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal
 
@@ -167,7 +188,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
 | 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
-| 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
+| 214. Unified Location Combobox & Google Places Removal | 0/6 | Planned | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 
 ### Coverage
