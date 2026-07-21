@@ -102,7 +102,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 212-05-PLAN.md — New route file GET /api/essentials/location-search (candidates) + /resolve (national-fallback floor via reused getStatewideOfficials/getFederalOfficials, RSLV-05) + index.ts mount + [BLOCKING] live curl/psql smoke test (Springfield/Baltimore/Franklin, EXPLAIN index scan)
+- [x] 212-05-PLAN.md — New route file GET /api/essentials/location-search (candidates) + /resolve (national-fallback floor via reused getStatewideOfficials/getFederalOfficials, RSLV-05) + index.ts mount + [BLOCKING] live curl/psql smoke test (Springfield/Baltimore/Franklin, EXPLAIN index scan)
 
 #### Phase 213: Anonymous Coordinate Lookup Endpoint
 
@@ -153,7 +153,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 212. Backend Place-Name Resolver & National Fallback | 4/5 | In Progress|  |
+| 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
 | 213. Anonymous Coordinate Lookup Endpoint | 0/TBD | Not started | - |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
