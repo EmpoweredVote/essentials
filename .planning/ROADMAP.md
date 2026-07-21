@@ -150,7 +150,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 214-02-PLAN.md — Shared accessible `<LocationCombobox>` (@floating-ui virtual list-nav, SRCH-02/04) + localitySearch.js Google-free refactor (browseAreaRoute)
+- [x] 214-02-PLAN.md — Shared accessible `<LocationCombobox>` (@floating-ui virtual list-nav, SRCH-02/04) + localitySearch.js Google-free refactor (browseAreaRoute)
 
 **Wave 3** *(blocked on Wave 2; parallel — disjoint files)*
 
@@ -188,7 +188,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
 | 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
-| 214. Unified Location Combobox & Google Places Removal | 1/6 | In Progress|  |
+| 214. Unified Location Combobox & Google Places Removal | 2/6 | In Progress|  |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 
 ### Coverage

@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: executing
-last_updated: "2026-07-21T17:48:21.977Z"
+last_updated: "2026-07-21T18:07:15.957Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 59
   completed_phases: 22
   total_plans: 89
-  completed_plans: 86
+  completed_plans: 87
   percent: 37
 ---
 
@@ -18,7 +18,7 @@ progress:
 ## Current Position
 
 Phase: 214 (unified-location-combobox-google-places-removal) — EXECUTING
-Plan: 2 of 6
+Plan: 3 of 6
 Status: Ready to execute
 Last activity: 2026-07-21
 
@@ -606,8 +606,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T17:48:21.960Z
-Stopped at: Completed 214-01-PLAN.md
+Last session: 2026-07-21T18:07:15.939Z
+Stopped at: Completed 214-02-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -698,6 +698,7 @@ Resume file: None
 | Phase 213 P01 | 12min | 2 tasks | 3 files |
 | Phase 213 P02 | 3m | 2 tasks | 3 files |
 | Phase 214 P01 | 22min | 2 tasks | 4 files |
+| Phase 214 P02 | 10min | 2 tasks | 2 files |
 
 ## Decisions
 
@@ -809,6 +810,9 @@ Resume file: None
 - [Phase 213]: 213-02: supertest suite mocks only getRepresentativesByCoordinate; classifyCoordinate exercised unmocked (pure/DB-free) to prove 422 taxonomy end-to-end
 - [Phase 214]: ADDRESS_LEADING_DIGIT_RE widened to include an optional decimal group — Comma-less coordinate pairs (e.g. 39.17 -86.52) must classify as address per the plan's documented-gap acceptance criterion; RESEARCH.md's manual regex trace was incorrect for the integer-only version
 - [Phase 214]: Guarded api.jsx top-level window reference for non-browser import contexts — Vitest's default node test environment lacks window; importing api.jsx threw before Task 2's api.test.js could run at all
+- [Phase 214]: resolveLocalityRoute() refactored in place (not deleted): Results.jsx/Landing.jsx still call it before Plans 03/04 rewire them — Google Geocoder classification replaced with classifyInput()+live resolver; outer {kind,to} contract unchanged so current call sites keep working
+- [Phase 214]: coordinateRoute(lat,lng,raw) cross-page hand-off contract param names locked — Exact URL param names lat/lng/coord_raw via URLSearchParams; Plans 03/04 must wire against these exact names
+- [Phase 214]: LocationCombobox candidate rows render candidate.label alone, no separate ', state' append — Live /location-search label already bakes in state+area-type suffix; area-type tag and Stances badge still rendered as distinct elements
 
 ## Operator Next Steps
 
