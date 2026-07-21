@@ -2,16 +2,15 @@
 gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
-status: ready_to_plan
-last_updated: 2026-07-21T08:10:28.282Z
+status: planning
+last_updated: "2026-07-21T15:28:51.518Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 59
-  completed_phases: 21
+  completed_phases: 22
   total_plans: 83
-  completed_plans: 237
-  percent: 36
-stopped_at: Phase 213 complete (3/3) — ready to discuss Phase 214
+  completed_plans: 85
+  percent: 37
 ---
 
 # State
@@ -28,13 +27,17 @@ Last activity: 2026-07-21
 - **Live on accounts-api.empowered.vote** (Render deploy from master; push 3337495c..0d4745c7, HEAD 0d4745c7).
   No new code commit needed for 213-03 — Plan 01/02 commits (5120214c/8b7fe341/a1ab5738/79f715cc/0d4745c7)
   were already on master; Task 1 was push-only.
+
 - **Live smoke PASS (SMOKE_OK):** Bloomington IN (39.17,-86.52) → 200, EXACTLY 1 NATIONAL_LOWER (Erin Houchin
   IN-9, geo_id 1809) + Senators Banks/Young + Gov Braun + state execs, matchedAddress "", no coord echo in body.
   Three distinct 422s: swapped→SWAPPED_COORDINATES, London→OUTSIDE_US_BOUNDS, "abc"→INVALID_COORDINATES.
+
 - **Zero writes:** production psql before/after delta 0 across essentials.politicians (84471)/offices (82869)/
   districts (6871); SELECT-only source assertion on the coordinate code path.
+
 - **No coordinate leak:** source-level assertion only (no Render live-log access this session) — handler logs
   only (err as Error).message; no telemetry in the route file. Follow-up: optional live-log grep for 39.17/-86.52.
+
 - **RSLV-03 COMPLETE** end-to-end (lib core → route → live smoke). Operator typed "approved" at the blocking
   checkpoint. ⚠ Phase-level verification/close is the orchestrator's job — do NOT advance to Phase 214 here.
 
@@ -603,9 +606,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T07:49:23.627Z
-Stopped at: Completed 213-02-PLAN.md
-Resume file: 213-03-PLAN.md
+Last session: 2026-07-21T15:28:51.492Z
+Stopped at: Phase 214 context gathered
+Resume file: .planning/phases/214-unified-location-combobox-google-places-removal/214-CONTEXT.md
 
 ## Performance Metrics
 
