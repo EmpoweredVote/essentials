@@ -11,9 +11,9 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 - [ ] **SRCH-01**: The Results header shows a single location field, pre-filled with the current location and click-to-edit, replacing the Address/Browse mode toggle and the state→county→city LocationBrowser tree.
 - [ ] **SRCH-02**: The field is an accessible combobox typeahead (WAI-ARIA combobox semantics + full keyboard support) that suggests covered-area and DB place-name matches as the user types.
-- [ ] **SRCH-03**: Typed input auto-classifies (full address / place name / decimal coordinates) and dispatches to the correct resolver with no manual mode switch.
-- [ ] **SRCH-04**: Ambiguous place names surface a candidate list that always shows the state qualifier (`City, ST` / `County, ST` / `ST`); the user picks — no silent best-guess.
-- [ ] **SRCH-05**: Decimal-degree coordinate input (`lat, lng`) resolves to a location profile.
+- [x] **SRCH-03**: Typed input auto-classifies (full address / place name / decimal coordinates) and dispatches to the correct resolver with no manual mode switch.
+- [x] **SRCH-04**: Ambiguous place names surface a candidate list that always shows the state qualifier (`City, ST` / `County, ST` / `ST`); the user picks — no silent best-guess.
+- [x] **SRCH-05**: Decimal-degree coordinate input (`lat, lng`) resolves to a location profile.
 - [ ] **SRCH-06**: The same location combobox powers the Landing-page search bar (one shared component).
 - [ ] **SRCH-07**: The "Search by name" results-filter box is removed.
 - [ ] **SRCH-08**: Google Places autocomplete is fully removed from Results + Landing, the dead `@googlemaps/js-api-loader` dependency is removed, and there are zero remaining `google`/`pac-container` references (acceptance grep).
@@ -73,9 +73,9 @@ Explicitly excluded for v24.0.
 | RSLV-03 | 213 | Complete |
 | SRCH-01 | 214 | Pending |
 | SRCH-02 | 214 | Pending |
-| SRCH-03 | 214 | Pending |
-| SRCH-04 | 214 | Pending |
-| SRCH-05 | 214 | Pending |
+| SRCH-03 | 214 | Complete |
+| SRCH-04 | 214 | Complete |
+| SRCH-05 | 214 | Complete |
 | SRCH-06 | 214 | Pending |
 | SRCH-08 | 214 | Pending |
 | SRCH-07 | 215 | Pending |

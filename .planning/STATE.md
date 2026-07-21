@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: executing
-last_updated: "2026-07-21T17:18:32.984Z"
-last_activity: 2026-07-21 -- Phase 214 planning complete
+last_updated: "2026-07-21T17:48:21.977Z"
+last_activity: 2026-07-21
 progress:
   total_phases: 59
   completed_phases: 22
   total_plans: 89
-  completed_plans: 85
+  completed_plans: 86
   percent: 37
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 214
-Plan: Not started
+Phase: 214 (unified-location-combobox-google-places-removal) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-07-21 -- Phase 214 planning complete
+Last activity: 2026-07-21
 
 ### Phase 213 outcome (POST /api/essentials/coordinate-lookup) — PLANS COMPLETE 2026-07-21
 
@@ -504,7 +504,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 214 — unified location combobox & google places removal
+**Current focus:** Phase 214 — unified-location-combobox-google-places-removal
 
 ## v15.0 Roadmap Summary
 
@@ -606,9 +606,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T15:37:42.170Z
-Stopped at: Phase 214 UI-SPEC approved
-Resume file: .planning/phases/214-unified-location-combobox-google-places-removal/214-UI-SPEC.md
+Last session: 2026-07-21T17:48:21.960Z
+Stopped at: Completed 214-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -697,6 +697,7 @@ Resume file: .planning/phases/214-unified-location-combobox-google-places-remova
 | Phase 210.1 P01 | 20min | 1 tasks | 1 files |
 | Phase 213 P01 | 12min | 2 tasks | 3 files |
 | Phase 213 P02 | 3m | 2 tasks | 3 files |
+| Phase 214 P01 | 22min | 2 tasks | 4 files |
 
 ## Decisions
 
@@ -806,6 +807,8 @@ Resume file: .planning/phases/214-unified-location-combobox-google-places-remova
 - [Phase 213]: pickHouseRep inlined in essentialsService.ts (not imported from routes/) to keep lib/ -> routes/ one-way; getFederalOfficials() never called on the coordinate path
 - [Phase 213]: 213-02: coordinate-lookup route mounted before /api/essentials catch-all; body-only (req.body never req.query); express-rate-limit 60s/30 keyed on req.ip
 - [Phase 213]: 213-02: supertest suite mocks only getRepresentativesByCoordinate; classifyCoordinate exercised unmocked (pure/DB-free) to prove 422 taxonomy end-to-end
+- [Phase 214]: ADDRESS_LEADING_DIGIT_RE widened to include an optional decimal group — Comma-less coordinate pairs (e.g. 39.17 -86.52) must classify as address per the plan's documented-gap acceptance criterion; RESEARCH.md's manual regex trace was incorrect for the integer-only version
+- [Phase 214]: Guarded api.jsx top-level window reference for non-browser import contexts — Vitest's default node test environment lacks window; importing api.jsx threw before Task 2's api.test.js could run at all
 
 ## Operator Next Steps
 

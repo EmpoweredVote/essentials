@@ -146,7 +146,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 1**
 
-- [ ] 214-01-PLAN.md — Pure input classifier (SRCH-03) + searchLocationsByName/lookupCoordinate api clients (SRCH-04/05) with colocated Vitest unit tests (Wave 0 gaps)
+- [x] 214-01-PLAN.md — Pure input classifier (SRCH-03) + searchLocationsByName/lookupCoordinate api clients (SRCH-04/05) with colocated Vitest unit tests (Wave 0 gaps)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -188,7 +188,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
 | 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
-| 214. Unified Location Combobox & Google Places Removal | 0/6 | Planned | - |
+| 214. Unified Location Combobox & Google Places Removal | 1/6 | In Progress|  |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 
 ### Coverage
