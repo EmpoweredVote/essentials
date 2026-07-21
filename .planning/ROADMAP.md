@@ -127,7 +127,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 213-03-PLAN.md — [BLOCKING] commit/push to Render + live curl/psql smoke test (exact US House rep + floor, 3 distinct 422 codes, zero writes, no coordinate leak) + operator sign-off
+- [x] 213-03-PLAN.md — [BLOCKING] commit/push to Render + live curl/psql smoke test (exact US House rep + floor, 3 distinct 422 codes, zero writes, no coordinate leak) + operator sign-off
 
 #### Phase 214: Unified Location Combobox & Google Places Removal
 
@@ -166,7 +166,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
-| 213. Anonymous Coordinate Lookup Endpoint | 2/3 | In Progress|  |
+| 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Plans Complete | 2026-07-21 |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 

@@ -22,7 +22,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 - [ ] **RSLV-01**: A DB place-name resolver endpoint returns ranked candidate locations `{geo_id, mtfcc, label, state}` for a city/county/state query, via pg_trgm/`f_unaccent` over `essentials.geofence_boundaries` + `essentials.governments`, with GIN trigram indexes added.
 - [ ] **RSLV-02**: A build-time ingest of the free US Census Gazetteer Files (Places + Counties) populates a reference table, giving nationwide place-name coverage beyond the curated `coverage.js` catalog.
-- [ ] **RSLV-03**: An anonymous, stateless coordinate lookup endpoint returns officials for a decimal lat/lng via PostGIS `ST_Covers`, with US bounding-box validation and a swapped-lat/lng guard, performing no writes.
+- [x] **RSLV-03**: An anonymous, stateless coordinate lookup endpoint returns officials for a decimal lat/lng via PostGIS `ST_Covers`, with US bounding-box validation and a swapped-lat/lng guard, performing no writes. — 213 (live smoke-verified 2026-07-21)
 - [ ] **RSLV-04**: The US Census one-line geocoder is used only for full street addresses — never for bare place-name queries.
 - [ ] **RSLV-05**: National fallback — any resolved US location returns at minimum US Senators + Governor/state executives + US House (every overlapping congressional district, backed by a nationwide `cd119` geofence load), plus county officials **where a county government exists** (best-effort, not gated — county rosters are not seeded nationwide); the exact single US House rep is returned when a precise point (address or coordinates) is available.
 - [ ] **RSLV-06**: A city/county-name location profile lists every US House rep whose district overlaps the area, with an in-section note: "We need an exact address to tell you which one."
@@ -70,7 +70,7 @@ Explicitly excluded for v24.0.
 | RSLV-05 | 212 | Pending |
 | RSLV-06 | 212 | Pending |
 | RSLV-07 | 212 | Pending |
-| RSLV-03 | 213 | Pending |
+| RSLV-03 | 213 | Complete |
 | SRCH-01 | 214 | Pending |
 | SRCH-02 | 214 | Pending |
 | SRCH-03 | 214 | Pending |
