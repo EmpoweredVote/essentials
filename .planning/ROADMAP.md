@@ -115,7 +115,19 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
   2. Coordinates outside the US bounding box, or with lat/lng swapped, are rejected with a clear, specific error — never silently queried as if valid
   3. The response never echoes raw submitted coordinates back verbatim, and no raw coordinates appear in server logs or analytics events
 
-**Plans**: TBD
+**Plans**: 3 plans in 3 waves
+
+**Wave 1**
+
+- [ ] 213-01-PLAN.md — Coordinate-validation module (US bbox + swap guard + 422 taxonomy) + coordinate-only service core getRepresentativesByCoordinate (no geocode, 212 state+federal floor, empty matchedAddress)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 213-02-PLAN.md — POST /api/essentials/coordinate-lookup route (body {lat,lng}, distinct 422 codes, rate-limit, no coordinate logging) + index.ts mount + supertest suite
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 213-03-PLAN.md — [BLOCKING] commit/push to Render + live curl/psql smoke test (exact US House rep + floor, 3 distinct 422 codes, zero writes, no coordinate leak) + operator sign-off
 
 #### Phase 214: Unified Location Combobox & Google Places Removal
 
@@ -154,7 +166,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
-| 213. Anonymous Coordinate Lookup Endpoint | 0/TBD | Not started | - |
+| 213. Anonymous Coordinate Lookup Endpoint | 0/3 | Planned | - |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 
