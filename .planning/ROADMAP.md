@@ -98,7 +98,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 212-04-PLAN.md — locationSearchService.searchPlaceNames resolver (pg_trgm UNION, D-05 label, D-06 ranking, D-07 coverage signal, RSLV-07 wrong-state/disambiguation guard) + getCongressionalOverlapNote helper (RSLV-06) — TDD
+- [x] 212-04-PLAN.md — locationSearchService.searchPlaceNames resolver (pg_trgm UNION, D-05 label, D-06 ranking, D-07 coverage signal, RSLV-07 wrong-state/disambiguation guard) + getCongressionalOverlapNote helper (RSLV-06) — TDD
 
 **Wave 4** *(blocked on Wave 3)*
 
@@ -153,7 +153,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 212. Backend Place-Name Resolver & National Fallback | 3/5 | In Progress|  |
+| 212. Backend Place-Name Resolver & National Fallback | 4/5 | In Progress|  |
 | 213. Anonymous Coordinate Lookup Endpoint | 0/TBD | Not started | - |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
