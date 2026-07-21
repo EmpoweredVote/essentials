@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import ConfidenceDot from './ConfidenceDot';
 import DonorList from './DonorList';
+import CompositionBar from './CompositionBar';
+import PacList from './PacList';
+import { formatCurrency, formatPercent } from '../../utils/format';
 
 /**
  * ExpandedView — full campaign finance breakdown shown when card is expanded.
@@ -11,19 +14,6 @@ import DonorList from './DonorList';
  *   onFetchContributions — function to trigger initial contribution fetch
  *   onFetchMore          — function to load next page of contributions
  */
-
-function formatCurrency(amount) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(amount || 0);
-}
-
-function formatPercent(numerator, denominator) {
-  if (!denominator || denominator === 0) return '0%';
-  return `${Math.round((numerator / denominator) * 100)}%`;
-}
 
 const CONFIDENCE_LEVELS = [
   {
@@ -69,46 +59,55 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
   return (
     <div className="border-t border-gray-100 dark:border-gray-700 px-5 pb-5 pt-4 space-y-6">
 
-      {/* Section 1: Individual vs PAC proportion bar */}
-      <div>
-        <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
-          Source Breakdown
-        </h4>
+      {/* Section 1: Where the money came from.
+          Prefer the full grassroots composition bar (authoritative FEC breakdown, quick-032);
+          fall back to the simpler Individual/PAC proportion bar for non-FEC politicians. */}
+      {summary.composition ? (
+        <CompositionBar composition={summary.composition} />
+      ) : (
+        <div>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+            Source Breakdown
+          </h4>
 
-        {/* Stacked proportion bar */}
-        <div className="flex rounded-full overflow-hidden h-3 mb-3 bg-gray-100 dark:bg-gray-700">
-          {individualPct > 0 && (
-            <div
-              className="bg-blue-500 h-full transition-all duration-500"
-              style={{ width: `${individualPct}%` }}
-            />
-          )}
-          {pacPct > 0 && (
-            <div
-              className="bg-purple-500 h-full transition-all duration-500"
-              style={{ width: `${pacPct}%` }}
-            />
-          )}
-        </div>
+          {/* Stacked proportion bar */}
+          <div className="flex rounded-full overflow-hidden h-3 mb-3 bg-gray-100 dark:bg-gray-700">
+            {individualPct > 0 && (
+              <div
+                className="bg-blue-500 h-full transition-all duration-500"
+                style={{ width: `${individualPct}%` }}
+              />
+            )}
+            {pacPct > 0 && (
+              <div
+                className="bg-purple-500 h-full transition-all duration-500"
+                style={{ width: `${pacPct}%` }}
+              />
+            )}
+          </div>
 
-        {/* Labels */}
-        <div className="flex flex-wrap gap-x-5 gap-y-1">
-          <div className="flex items-center gap-1.5 text-sm">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0" />
-            <span className="text-gray-700 dark:text-gray-300">Individual:</span>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(individualTotal)}</span>
-            <span className="text-gray-500 dark:text-gray-400">({formatPercent(individualTotal, totalRaised)})</span>
-            <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
-          </div>
-          <div className="flex items-center gap-1.5 text-sm">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-purple-500 flex-shrink-0" />
-            <span className="text-gray-700 dark:text-gray-300">PAC/Committee:</span>
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(pacTotal)}</span>
-            <span className="text-gray-500 dark:text-gray-400">({formatPercent(pacTotal, totalRaised)})</span>
-            <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+          {/* Labels */}
+          <div className="flex flex-wrap gap-x-5 gap-y-1">
+            <div className="flex items-center gap-1.5 text-sm">
+              <span className="inline-block w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0" />
+              <span className="text-gray-700 dark:text-gray-300">Individual:</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(individualTotal)}</span>
+              <span className="text-gray-500 dark:text-gray-400">({formatPercent(individualTotal, totalRaised)})</span>
+              <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+            </div>
+            <div className="flex items-center gap-1.5 text-sm">
+              <span className="inline-block w-2.5 h-2.5 rounded-full bg-purple-500 flex-shrink-0" />
+              <span className="text-gray-700 dark:text-gray-300">PAC/Committee:</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(pacTotal)}</span>
+              <span className="text-gray-500 dark:text-gray-400">({formatPercent(pacTotal, totalRaised)})</span>
+              <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Section 1b: PACs & committees detail (drill-down of the composition bar's PAC segment) */}
+      {summary.pac_contributions && <PacList pacList={summary.pac_contributions} />}
 
       {/* Section 2: Top donors */}
       {summary.top_donors && summary.top_donors.length > 0 && (
