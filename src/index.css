@@ -57,50 +57,6 @@ body {
   color: #e6edf3;
 }
 
-/* Google Places Autocomplete dropdown */
-.pac-container {
-  font-family: 'Manrope', sans-serif;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-top: 4px;
-  z-index: 9999;
-}
-
-.pac-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  border-top: 1px solid #f0f0f0;
-  font-size: 14px;
-  color: #374151;
-  /* R2-6 (M12): the dropdown width tracks the (narrow) input, so Google's default
-     nowrap+ellipsis truncates addresses at 320px ("654 East 770th So…"). Let them
-     wrap so the full suggestion is readable before the user taps. */
-  white-space: normal !important;
-  line-height: 1.4;
-}
-
-.pac-item:first-child {
-  border-top: none;
-}
-
-.pac-item:hover {
-  background-color: var(--ev-bg-light, #f0f8fa);
-}
-
-.pac-item-selected {
-  background-color: var(--ev-bg-light, #f0f8fa);
-}
-
-.pac-matched {
-  color: var(--ev-teal, #00657c);
-  font-weight: 600;
-}
-
-.pac-icon {
-  display: none;
-}
-
 /* Candidate card entrance animation */
 @keyframes ev-candidate-enter {
   from {
@@ -115,11 +71,6 @@ body {
 
 .ev-candidate-enter {
   animation: ev-candidate-enter 0.3s ease-out var(--delay, 0ms) both;
-}
-
-.pac-item-query {
-  font-size: 14px;
-  color: #111827;
 }
 
 /* Politician card: never truncate names — allow wrap to 2 lines */

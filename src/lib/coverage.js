@@ -316,7 +316,7 @@ const ALL_COVERAGE_AREAS = [
  * Search covered cities/areas by name for the search-box typeahead. Returns
  * ranked matches (name-prefix first, then stance-seeded, then alphabetical).
  * Returns [] for queries that look like a street address (leading digit) so the
- * Google address autocomplete owns that path and the two dropdowns don't collide.
+ * address-lookup path owns that input and the two result lists don't collide.
  */
 export function searchCoverageAreas(query, limit = 6) {
   const raw = (query || '').trim();

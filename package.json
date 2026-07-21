@@ -19,7 +19,6 @@
     "@floating-ui/react": "^0.27.19",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
-    "@googlemaps/js-api-loader": "^2.0.2",
     "@react-spring/web": "^10.0.2",
     "posthog-js": "^1.376.4",
     "react": "^19.1.1",
