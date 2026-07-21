@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: executing
-last_updated: "2026-07-21T18:07:15.957Z"
+last_updated: "2026-07-21T18:30:51.778Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 59
   completed_phases: 22
   total_plans: 89
-  completed_plans: 87
+  completed_plans: 88
   percent: 37
 ---
 
@@ -18,7 +18,7 @@ progress:
 ## Current Position
 
 Phase: 214 (unified-location-combobox-google-places-removal) — EXECUTING
-Plan: 3 of 6
+Plan: 4 of 6
 Status: Ready to execute
 Last activity: 2026-07-21
 
@@ -606,8 +606,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T18:07:15.939Z
-Stopped at: Completed 214-02-PLAN.md
+Last session: 2026-07-21T18:30:51.758Z
+Stopped at: Completed 214-03-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -699,6 +699,7 @@ Resume file: None
 | Phase 213 P02 | 3m | 2 tasks | 3 files |
 | Phase 214 P01 | 22min | 2 tasks | 4 files |
 | Phase 214 P02 | 10min | 2 tasks | 2 files |
+| Phase 214 P03 | 20m | 3 tasks | 1 files |
 
 ## Decisions
 
@@ -813,6 +814,8 @@ Resume file: None
 - [Phase 214]: resolveLocalityRoute() refactored in place (not deleted): Results.jsx/Landing.jsx still call it before Plans 03/04 rewire them — Google Geocoder classification replaced with classifyInput()+live resolver; outer {kind,to} contract unchanged so current call sites keep working
 - [Phase 214]: coordinateRoute(lat,lng,raw) cross-page hand-off contract param names locked — Exact URL param names lat/lng/coord_raw via URLSearchParams; Plans 03/04 must wire against these exact names
 - [Phase 214]: LocationCombobox candidate rows render candidate.label alone, no separate ', state' append — Live /location-search label already bakes in state+area-type suffix; area-type tag and Stances badge still rendered as distinct elements
+- [Phase 214]: 214-03: no pill->input toggle (D-03) — removed editingSearch chip entirely, not just the mode-toggle buttons; tribal/elections info moved to an unconditional secondary row
+- [Phase 214]: 214-03: coordinate results reuse browseResults/browseLoading direct-injection as a third searchMode value ('coordinate'); representingCity returns null for coordinate mode rather than deriving a banner label
 
 ## Operator Next Steps
 

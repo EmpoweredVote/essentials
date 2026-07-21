@@ -154,7 +154,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 3** *(blocked on Wave 2; parallel — disjoint files)*
 
-- [ ] 214-03-PLAN.md — Results.jsx: swap toggle+LocationBrowser for the combobox (SRCH-01) + coordinate render path with D-05 label + representingCity banner-hijack guard (SRCH-05)
+- [x] 214-03-PLAN.md — Results.jsx: swap toggle+LocationBrowser for the combobox (SRCH-01) + coordinate render path with D-05 label + representingCity banner-hijack guard (SRCH-05)
 - [ ] 214-04-PLAN.md — Landing.jsx: adopt the same shared combobox (SRCH-06), preserve coverage list + candidate-by-name search
 
 **Wave 4** *(blocked on Wave 3)*
@@ -188,7 +188,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
 | 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
-| 214. Unified Location Combobox & Google Places Removal | 2/6 | In Progress|  |
+| 214. Unified Location Combobox & Google Places Removal | 3/6 | In Progress|  |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 
 ### Coverage
