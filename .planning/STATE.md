@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: executing
-last_updated: "2026-07-21T18:40:28.314Z"
+last_updated: "2026-07-21T18:55:55.027Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 59
   completed_phases: 22
   total_plans: 89
-  completed_plans: 89
+  completed_plans: 90
   percent: 37
 ---
 
@@ -18,7 +18,7 @@ progress:
 ## Current Position
 
 Phase: 214 (unified-location-combobox-google-places-removal) — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-07-21
 
@@ -606,7 +606,7 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T18:40:28.292Z
+Last session: 2026-07-21T18:52:02.950Z
 Stopped at: Completed 214-04-PLAN.md
 Resume file: None
 
@@ -701,6 +701,7 @@ Resume file: None
 | Phase 214 P02 | 10min | 2 tasks | 2 files |
 | Phase 214 P03 | 20m | 3 tasks | 1 files |
 | Phase 214 P04 | 12min | 1 tasks | 1 files |
+| Phase 214 P05 | 25min | 2 tasks | 8 files |
 
 ## Decisions
 
@@ -819,6 +820,7 @@ Resume file: None
 - [Phase 214]: 214-03: coordinate results reuse browseResults/browseLoading direct-injection as a third searchMode value ('coordinate'); representingCity returns null for coordinate mode rather than deriving a banner label
 - [Phase ?]: 214-04: Wrapper-div ref + querySelector('input') used to focus LocationCombobox's internal input (component doesn't forward refs; out of this plan's edit scope)
 - [Phase ?]: 214-04: Landing coordinate-submit telemetry uses essentials_coordinate_searched {method:'landing_handoff'} with no lat/lng and no outcome — outcome capture stays on Results' reading side (Plan 03)
+- [Phase 214]: SRCH-08 secondary sanity grep allow-list treated as exact enforcement, not illustrative — reworded 2 stray Google comment references in localitySearch.js/Landing.jsx outside the documented allow-list (Rule 1)
 
 ## Operator Next Steps
 

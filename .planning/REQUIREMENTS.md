@@ -16,7 +16,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 - [x] **SRCH-05**: Decimal-degree coordinate input (`lat, lng`) resolves to a location profile.
 - [x] **SRCH-06**: The same location combobox powers the Landing-page search bar (one shared component).
 - [ ] **SRCH-07**: The "Search by name" results-filter box is removed.
-- [ ] **SRCH-08**: Google Places autocomplete is fully removed from Results + Landing, the dead `@googlemaps/js-api-loader` dependency is removed, and there are zero remaining `google`/`pac-container` references (acceptance grep).
+- [x] **SRCH-08**: Google Places autocomplete is fully removed from Results + Landing, the dead `@googlemaps/js-api-loader` dependency is removed, and there are zero remaining `google`/`pac-container` references (acceptance grep).
 
 ### RSLV — Location Resolution (backend)
 
@@ -77,7 +77,7 @@ Explicitly excluded for v24.0.
 | SRCH-04 | 214 | Complete |
 | SRCH-05 | 214 | Complete |
 | SRCH-06 | 214 | Complete |
-| SRCH-08 | 214 | Pending |
+| SRCH-08 | 214 | Complete |
 | SRCH-07 | 215 | Pending |
 | HDR-01 | 215 | Pending |
 | HDR-02 | 215 | Pending |
