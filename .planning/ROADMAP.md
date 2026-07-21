@@ -123,7 +123,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 213-02-PLAN.md — POST /api/essentials/coordinate-lookup route (body {lat,lng}, distinct 422 codes, rate-limit, no coordinate logging) + index.ts mount + supertest suite
+- [x] 213-02-PLAN.md — POST /api/essentials/coordinate-lookup route (body {lat,lng}, distinct 422 codes, rate-limit, no coordinate logging) + index.ts mount + supertest suite
 
 **Wave 3** *(blocked on Wave 2)*
 
@@ -166,7 +166,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
-| 213. Anonymous Coordinate Lookup Endpoint | 1/3 | In Progress|  |
+| 213. Anonymous Coordinate Lookup Endpoint | 2/3 | In Progress|  |
 | 214. Unified Location Combobox & Google Places Removal | 0/TBD | Not started | - |
 | 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
 

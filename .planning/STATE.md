@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: executing
-last_updated: "2026-07-21T07:35:12.214Z"
+last_updated: "2026-07-21T07:49:23.650Z"
 last_activity: 2026-07-21
 progress:
   total_phases: 59
   completed_phases: 21
   total_plans: 83
-  completed_plans: 83
+  completed_plans: 84
   percent: 36
 ---
 
@@ -18,7 +18,7 @@ progress:
 ## Current Position
 
 Phase: 213 (anonymous-coordinate-lookup-endpoint) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-07-21
 
@@ -587,9 +587,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T07:35:12.187Z
-Stopped at: Completed 213-01-PLAN.md
-Resume file: None
+Last session: 2026-07-21T07:49:23.627Z
+Stopped at: Completed 213-02-PLAN.md
+Resume file: 213-03-PLAN.md
 
 ## Performance Metrics
 
@@ -677,6 +677,7 @@ Resume file: None
 | Phase 210 P02 | 3min | 1 tasks | 1 files |
 | Phase 210.1 P01 | 20min | 1 tasks | 1 files |
 | Phase 213 P01 | 12min | 2 tasks | 3 files |
+| Phase 213 P02 | 3m | 2 tasks | 3 files |
 
 ## Decisions
 
@@ -784,6 +785,8 @@ Resume file: None
 - [Phase 213]: resolveOfficialsAtPoint extracted as private shared core; getRepresentativesByAddress and getRepresentativesByCoordinate both call it
 - [Phase 213]: State-scoped floor (getStatewideOfficials) only invoked as a fallback when the shared core returns zero state-scoped rows -- avoids redundant round-trip
 - [Phase 213]: pickHouseRep inlined in essentialsService.ts (not imported from routes/) to keep lib/ -> routes/ one-way; getFederalOfficials() never called on the coordinate path
+- [Phase 213]: 213-02: coordinate-lookup route mounted before /api/essentials catch-all; body-only (req.body never req.query); express-rate-limit 60s/30 keyed on req.ip
+- [Phase 213]: 213-02: supertest suite mocks only getRepresentativesByCoordinate; classifyCoordinate exercised unmocked (pure/DB-free) to prove 422 taxonomy end-to-end
 
 ## Operator Next Steps
 
