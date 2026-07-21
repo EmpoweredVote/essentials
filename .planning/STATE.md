@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
-status: completed
-last_updated: "2026-07-21T05:13:35.530Z"
-last_activity: 2026-07-21 -- Phase 212 marked complete
+status: executing
+last_updated: "2026-07-21T07:35:12.214Z"
+last_activity: 2026-07-21
 progress:
   total_phases: 59
   completed_phases: 21
-  total_plans: 80
-  completed_plans: 82
+  total_plans: 83
+  completed_plans: 83
   percent: 36
 ---
 
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: 212 — COMPLETE
-Plan: 1 of 5
-Status: Phase 212 complete
-Last activity: 2026-07-21 -- Phase 212 marked complete
+Phase: 213 (anonymous-coordinate-lookup-endpoint) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-07-21
 
 ### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
 
@@ -485,7 +485,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 212 — backend-place-name-resolver-national-fallback
+**Current focus:** Phase 213 — anonymous-coordinate-lookup-endpoint
 
 ## v15.0 Roadmap Summary
 
@@ -587,9 +587,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T05:13:35.512Z
-Stopped at: Phase 213 context gathered
-Resume file: .planning/phases/213-anonymous-coordinate-lookup-endpoint/213-CONTEXT.md
+Last session: 2026-07-21T07:35:12.187Z
+Stopped at: Completed 213-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -676,6 +676,7 @@ Resume file: .planning/phases/213-anonymous-coordinate-lookup-endpoint/213-CONTE
 | Phase 210 P01 | 6min | 2 tasks | 3 files |
 | Phase 210 P02 | 3min | 1 tasks | 1 files |
 | Phase 210.1 P01 | 20min | 1 tasks | 1 files |
+| Phase 213 P01 | 12min | 2 tasks | 3 files |
 
 ## Decisions
 
@@ -780,6 +781,9 @@ Resume file: .planning/phases/213-anonymous-coordinate-lookup-endpoint/213-CONTE
 - [Phase 210]: Tab-entry effect deps exclude activeLensKey but include rawUserAnswers, so async compass calibration re-fires the effect once (idempotent) without creating a feedback loop with handleSelectLens
 - [Phase 210]: Human-verify performed at Bloomington, IN (not LA County, CA) — All 504 CA JUDICIAL districts have a NULL geo_id and never surface a Judges tab (pre-existing gap, tracked as ROADMAP backlog Phase 999.1)
 - [Phase 210.1]: CR-01 fix: seed tabLensMemory[activeView] from loadLensPending() on mount-once effect, keyed on raw activeView param, without clearing the marker (CompassContext still owns clearLensPending).
+- [Phase 213]: resolveOfficialsAtPoint extracted as private shared core; getRepresentativesByAddress and getRepresentativesByCoordinate both call it
+- [Phase 213]: State-scoped floor (getStatewideOfficials) only invoked as a fallback when the shared core returns zero state-scoped rows -- avoids redundant round-trip
+- [Phase 213]: pickHouseRep inlined in essentialsService.ts (not imported from routes/) to keep lib/ -> routes/ one-way; getFederalOfficials() never called on the coordinate path
 
 ## Operator Next Steps
 
