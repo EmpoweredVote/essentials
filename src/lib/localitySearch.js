@@ -1,8 +1,8 @@
 // Locality search routing (ADR-0001 -> Phase 214 refactor).
 //
-// Google Places' Geocoder classification is retired (D-09) in favor of the
-// Phase 214 client heuristic (src/lib/inputClassifier.js) plus the live
-// Phase 212 place-name resolver (searchLocationsByName). Two Google-free
+// The third-party geocoder-based classification is retired (D-09) in favor of
+// the Phase 214 client heuristic (src/lib/inputClassifier.js) plus the live
+// Phase 212 place-name resolver (searchLocationsByName). Two dependency-free
 // routing helpers are exported for the host pages (Plans 03/04):
 //   - browseAreaRoute(candidate)     -> /results?browse_geo_id=...&browse_mtfcc=...&browse_label=...&from_locality=1
 //   - coordinateRoute(lat, lng, raw) -> /results?lat=...&lng=...&coord_raw=...
@@ -14,7 +14,7 @@
 // ({ kind: 'address' | 'browse' | 'coverage', to }) so Results.jsx/Landing.jsx's
 // current call sites (unchanged by this plan; refactored in Plans 03/04) keep
 // working end to end, but its classification step is now classifyInput() plus
-// the live resolver instead of the Google Geocoder.
+// the live resolver instead of the retired third-party geocoder.
 
 import { classifyInput } from './inputClassifier';
 import { searchLocationsByName } from './api';

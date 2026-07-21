@@ -69,8 +69,8 @@ export default function Landing() {
 
   // LocationCombobox is fully controlled and classifies input itself (SRCH-06,
   // RESEARCH Dispatch Wiring) — an address-classified submit skips the old
-  // resolveLocalityRoute Google detour entirely and goes straight to the Results
-  // address path; a name-classified selection dispatches via browseAreaRoute; a
+  // resolveLocalityRoute third-party-geocoder detour entirely and goes straight
+  // to the Results address path; a name-classified selection dispatches via browseAreaRoute; a
   // coordinate-classified submit hands off to Results via the Plan 02
   // coordinateRoute contract (SRCH-05) — Results reads lat/lng/coord_raw on mount.
   const handleSubmitAddress = (raw) => {
