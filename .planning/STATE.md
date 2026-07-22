@@ -3,28 +3,28 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 current_phase: 215
-current_phase_name: header-declutter-elected-default-compass-icons-search-by-nam
-status: verifying
-stopped_at: 215-02-PLAN.md Tasks 1-3 complete (commits 8ff603c6/0f2a5ce9/28ecef45); Task 4 (blocking human-verify checkpoint at Bloomington, IN) PENDING
-last_updated: "2026-07-22T06:54:43.200Z"
-last_activity: 2026-07-21
-last_activity_desc: Phase 215 execution started
+status: completed
+stopped_at: Phase 215 complete — all 3 plans shipped; Checkpoint B (215-02) verified live at Bloomington, IN (desktop + mobile); Checkpoint A (215-03) accepted on passing code/build, live lens-row spot-check deferred to user
+last_updated: "2026-07-22T16:26:01.161Z"
+last_activity: 2026-07-22
+last_activity_desc: Phase 215 marked complete
 progress:
   total_phases: 4
   completed_phases: 4
   total_plans: 17
   completed_plans: 17
   percent: 100
+current_phase_name: header-declutter-elected-default-compass-icons-search-by-nam
 ---
 
 # State
 
 ## Current Position
 
-Phase: 215 (header-declutter-elected-default-compass-icons-search-by-nam) — EXECUTING
+Phase: 215 — COMPLETE
 Plan: 3 of 3
-Status: Phase complete — ready for verification
-Last activity: 2026-07-21 — Phase 215 execution started
+Status: Phase 215 complete
+Last activity: 2026-07-22 — Phase 215 marked complete
 
 ### Phase 213 outcome (POST /api/essentials/coordinate-lookup) — PLANS COMPLETE 2026-07-21
 

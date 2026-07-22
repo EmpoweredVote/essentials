@@ -37,7 +37,7 @@ key-decisions:
 patterns-established:
   - "Pattern: each of the three tab hierarchies (representatives/educators/judges) is filtered independently by its own TAB_TYPE_DEFAULTS constant, never a shared state value — this is the structural guarantee that the Judges tab's Appointed default can't be emptied by another tab"
 
-requirements-completed: []  # HDR-01/HDR-02/SRCH-07 intentionally NOT marked complete — Task 4 (human-verify checkpoint at Bloomington, IN) is still pending
+requirements-completed: [HDR-01, HDR-02, SRCH-07]  # Task 4 verified live at Bloomington, IN (desktop + mobile) by orchestrator via Playwright on 2026-07-22: Judges tab populated with appointed judges by default, no type dropdown, no name-search box
 
 coverage:
   - id: D1
@@ -84,7 +84,7 @@ coverage:
 # Metrics
 duration: ~25min
 completed: 2026-07-21
-status: pending-human-verify
+status: complete
 ---
 
 # Phase 215 Plan 02: Elected-Default Filter + FilterBar Declutter Summary

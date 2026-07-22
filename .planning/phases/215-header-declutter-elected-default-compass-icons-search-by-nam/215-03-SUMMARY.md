@@ -33,7 +33,7 @@ key-decisions:
 patterns-established:
   - "Pattern: per-item floating-ui tooltip wrapping an existing interactive element (button) directly via refs.setReference, no extra wrapping span, so the element's existing focusability/handlers are preserved"
 
-requirements-completed: []  # HDR-03 intentionally NOT marked complete — Task 2 (human-verify checkpoint) is still pending
+requirements-completed: [HDR-03]  # Task 2 accepted on passing code + build (greps: title removed, aria-label present, floating-ui import, handler merge); user opted to spot-check the live lens row / screen-reader pass later (2026-07-22)
 
 coverage:
   - id: D1
@@ -53,7 +53,7 @@ coverage:
 # Metrics
 duration: ~20min
 completed: 2026-07-21
-status: pending-human-verify
+status: complete
 ---
 
 # Phase 215 Plan 03: Icon-Only Desktop Lens Buttons + Accessible Tooltip Summary

@@ -15,7 +15,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 - [x] **SRCH-04**: Ambiguous place names surface a candidate list that always shows the state qualifier (`City, ST` / `County, ST` / `ST`); the user picks — no silent best-guess.
 - [x] **SRCH-05**: Decimal-degree coordinate input (`lat, lng`) resolves to a location profile.
 - [x] **SRCH-06**: The same location combobox powers the Landing-page search bar (one shared component).
-- [ ] **SRCH-07**: The "Search by name" results-filter box is removed.
+- [x] **SRCH-07**: The "Search by name" results-filter box is removed.
 - [x] **SRCH-08**: Google Places autocomplete is fully removed from Results + Landing, the dead `@googlemaps/js-api-loader` dependency is removed, and there are zero remaining `google`/`pac-container` references (acceptance grep).
 
 ### RSLV — Location Resolution (backend)
@@ -32,7 +32,7 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 - [x] **HDR-01**: The officials type filter defaults to Elected and the All/Appointed dropdown is removed.
 - [x] **HDR-02**: The Judges tab still shows appointed officials (per-tab override so the Elected default does not empty it).
-- [ ] **HDR-03**: Compass lens controls collapse to icon buttons with accessible tooltips (gavel icon for Judicial), reclaiming the header's empty space.
+- [x] **HDR-03**: Compass lens controls collapse to icon buttons with accessible tooltips (gavel icon for Judicial), reclaiming the header's empty space.
 
 ## v2 Requirements
 
@@ -78,10 +78,10 @@ Explicitly excluded for v24.0.
 | SRCH-05 | 214 | Complete |
 | SRCH-06 | 214 | Complete |
 | SRCH-08 | 214 | Complete |
-| SRCH-07 | 215 | Pending |
+| SRCH-07 | 215 | Complete |
 | HDR-01 | 215 | Complete |
 | HDR-02 | 215 | Complete |
-| HDR-03 | 215 | Pending |
+| HDR-03 | 215 | Complete |
 
 **Coverage:**
 
