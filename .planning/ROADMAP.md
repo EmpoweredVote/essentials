@@ -612,6 +612,22 @@ Plans:
 
 - [ ] TBD (run /gsd-plan-phase 206 to break down — only after the 2026-07-21 primary certifies)
 
+### Phase 216: Unincorporated Locality Label — show 'Unincorporated {County}' when a searched point falls outside any incorporated place (gated to place-loaded states)
+
+**Goal:** When a searched point (address OR anonymous coordinate) falls outside any incorporated place but within a county, the results-page locality banner reads "Unincorporated {County}, {ST}" (e.g. "Unincorporated Pima County, AZ") — gated to place-loaded states so a place-less-looking city in an un-loaded state never false-positives.
+**Requirements**: LOC-01, LOC-02, LOC-03, LOC-04
+**Depends on:** Phase 215 (no code dependency; cross-repo backend→frontend ordering is internal to this phase)
+**Plans:** 4 plans in 4 waves
+
+**Execution Order:** backend impl (216-01) → backend deploy + live smoke (216-02, BLOCKING) → frontend impl (216-03) → frontend deploy + live UAT (216-04, BLOCKING). Hard backend-before-frontend: the frontend consumes the live `locality` field, so 216-03 depends on 216-02 shipping + smoke-verifying it in production.
+
+Plans:
+
+- [ ] 216-01-PLAN.md — [accounts-api] Backend locality probe: two ST_Covers probes (place G4110/G4120 + county G4020) + buildLocality() gate (11-state PLACE_LOADED_STATES, MO excluded) + locality on AddressSearchResult + /candidates/search subset (LOC-01/02/03; TDD)
+- [ ] 216-02-PLAN.md — [accounts-api, BLOCKING] Confirm live G4110 coverage vs gate list, push to Render master, live smoke of unincorporated/incorporated/un-loaded fixtures × address+coordinate paths, zero-write assertion, operator sign-off
+- [ ] 216-03-PLAN.md — [essentials] Frontend threading: unincorporatedLabel() helper + locality unwrap in api.jsx (both entry points) + usePoliticianData + coordLocality state + representingCity branches for both modes (LOC-04)
+- [ ] 216-04-PLAN.md — [essentials, BLOCKING] Full suite + build, push to Render main, live UAT of "Unincorporated {County}, ST" in BOTH address and coordinate modes + incorporated/un-loaded controls + tribal/county/browse regression checks
+
 ---
 
 ## Appended: Coachella Valley, CA (Phases 201-203)
