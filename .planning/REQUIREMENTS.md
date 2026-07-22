@@ -41,7 +41,7 @@ Appended after the four v24.0 phases (212–215). Cross-repo (accounts-api backe
 - [x] **LOC-01**: Backend locality probe in the shared core `resolveOfficialsAtPoint` — two dedicated `ST_Covers` geofence probes (place `mtfcc IN ('G4110','G4120')`, county `mtfcc = 'G4020'`) run in the existing `Promise.all`, mirroring the `tribal_land` precedent, attached at both return points.
 - [x] **LOC-02**: Place-loaded-state gating — `incorporated` is `false`/`true` only in the 11 place-loaded states (`AZ, CA, IN, ME, MD, MA, NV, OR, TX, UT, VA`; MO excluded — 1 incidental place); elsewhere `incorporated: null` and the frontend suppresses the label. `county_name` is always populated (D-03, county loaded nationwide).
 - [x] **LOC-03**: `locality` field added to the `/candidates/search` explicit subset object and inherited verbatim by the anonymous coordinate-lookup route.
-- [ ] **LOC-04**: Frontend threads `locality` (api.jsx → hook for address mode + a parallel `coordLocality` state for coordinate mode → `representingCity`) and renders "Unincorporated {County}, ST" for both address and coordinate searches at unincorporated points in place-loaded states.
+- [x] **LOC-04**: Frontend threads `locality` (api.jsx → hook for address mode + a parallel `coordLocality` state for coordinate mode → `representingCity`) and renders "Unincorporated {County}, ST" for both address and coordinate searches at unincorporated points in place-loaded states.
 
 ## v2 Requirements
 
@@ -94,7 +94,7 @@ Explicitly excluded for v24.0.
 | LOC-01 | 216 | Complete |
 | LOC-02 | 216 | Complete |
 | LOC-03 | 216 | Complete |
-| LOC-04 | 216 | Pending |
+| LOC-04 | 216 | Complete |
 
 **Coverage:**
 

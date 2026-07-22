@@ -5,8 +5,8 @@ milestone_name: Results-Page Search & Header Overhaul
 current_phase: 216
 current_phase_name: unincorporated-locality-label
 status: executing
-stopped_at: Completed 216-02-PLAN.md (backend locality deployed live + smoke-verified, operator approved)
-last_updated: "2026-07-22T23:38:17.652Z"
+stopped_at: Completed 216-03-PLAN.md (frontend locality threading, LOC-04)
+last_updated: "2026-07-22T23:46:08.492Z"
 last_activity: 2026-07-22
 last_activity_desc: Phase 216 execution started
 progress:
@@ -22,7 +22,7 @@ progress:
 ## Current Position
 
 Phase: 216 (unincorporated-locality-label) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-07-22 — Phase 216 execution started
 
@@ -638,8 +638,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-22T23:38:17.626Z
-Stopped at: Completed 216-02-PLAN.md (backend locality deployed live + smoke-verified, operator approved)
+Last session: 2026-07-22T23:46:08.464Z
+Stopped at: Completed 216-03-PLAN.md (frontend locality threading, LOC-04)
 Resume file: None
 
 ## Performance Metrics
@@ -743,6 +743,7 @@ Resume file: None
 | Phase 215 P02 | 25min | 3 tasks | 5 files |
 | Phase 216 P01 | 8min | 3 tasks | 5 files |
 | Phase 216 P02 | 15min | 3 tasks | 0 files |
+| Phase 216 P03 | 5min | 3 tasks | 7 files |
 
 ## Decisions
 
@@ -872,6 +873,9 @@ Resume file: None
 - [Phase ?]: county_name always computed unconditionally from countyRow, never gated by PLACE_LOADED_STATES (D-03)
 - [Phase ?]: essentialsCoordinateLookup.ts left untouched -- inherits locality via verbatim res.json(result) passthrough
 - [Phase ?]: 216-02: live G4110 coverage matched the committed 11-state PLACE_LOADED_STATES gate exactly (MO correctly excluded); deployed to production (accounts-api.empowered.vote, commit b0842f57) and live-smoke-verified on 3 fixtures x 2 entry paths with zero writes; operator approved, unblocking 216-03 frontend threading
+- [Phase ?]: Coordinate mode's locality is NOT threaded through usePoliticianData — a dedicated coordLocality state populated in resolveCoordinate() is the coordinate-mode parallel, since the hook is never enabled for coordinate searches
+- [Phase ?]: Hook's locality field destructured as incorporationInfo in Results.jsx to avoid colliding with the pre-existing fromLocality/localityLabel locals
+- [Phase ?]: tribal_land unwrap in lookupCoordinate() intentionally NOT added — remains deferred per 216-01 planner decision, out of LOC-04 scope
 
 ## Operator Next Steps
 
