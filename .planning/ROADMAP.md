@@ -623,7 +623,7 @@ Plans:
 
 Plans:
 
-- [ ] 216-01-PLAN.md — [accounts-api] Backend locality probe: two ST_Covers probes (place G4110/G4120 + county G4020) + buildLocality() gate (11-state PLACE_LOADED_STATES, MO excluded) + locality on AddressSearchResult + /candidates/search subset (LOC-01/02/03; TDD)
+- [x] 216-01-PLAN.md — [accounts-api] Backend locality probe: two ST_Covers probes (place G4110/G4120 + county G4020) + buildLocality() gate (11-state PLACE_LOADED_STATES, MO excluded) + locality on AddressSearchResult + /candidates/search subset (LOC-01/02/03; TDD)
 - [ ] 216-02-PLAN.md — [accounts-api, BLOCKING] Confirm live G4110 coverage vs gate list, push to Render master, live smoke of unincorporated/incorporated/un-loaded fixtures × address+coordinate paths, zero-write assertion, operator sign-off
 - [ ] 216-03-PLAN.md — [essentials] Frontend threading: unincorporatedLabel() helper + locality unwrap in api.jsx (both entry points) + usePoliticianData + coordLocality state + representingCity branches for both modes (LOC-04)
 - [ ] 216-04-PLAN.md — [essentials, BLOCKING] Full suite + build, push to Render main, live UAT of "Unincorporated {County}, ST" in BOTH address and coordinate modes + incorporated/un-loaded controls + tribal/county/browse regression checks

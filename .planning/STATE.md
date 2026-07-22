@@ -2,29 +2,29 @@
 gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
-current_phase: 215
-status: completed
-stopped_at: Phase 215 complete — all 3 plans shipped; Checkpoint B (215-02) verified live at Bloomington, IN (desktop + mobile); Checkpoint A (215-03) accepted on passing code/build, live lens-row spot-check deferred to user
-last_updated: "2026-07-22T16:26:01.161Z"
+current_phase: 216
+current_phase_name: unincorporated-locality-label
+status: executing
+stopped_at: Completed 216-01-PLAN.md (backend locality probe, buildLocality + ST_Covers probes wired, /candidates/search subset exposed)
+last_updated: "2026-07-22T22:37:09.887Z"
 last_activity: 2026-07-22
-last_activity_desc: Phase 215 marked complete
+last_activity_desc: Phase 216 execution started
 progress:
   total_phases: 4
   completed_phases: 4
   total_plans: 17
   completed_plans: 17
   percent: 100
-current_phase_name: header-declutter-elected-default-compass-icons-search-by-nam
 ---
 
 # State
 
 ## Current Position
 
-Phase: 215 — COMPLETE
-Plan: 3 of 3
-Status: Phase 215 complete
-Last activity: 2026-07-22 — Phase 215 marked complete
+Phase: 216 (unincorporated-locality-label) — EXECUTING
+Plan: 2 of 4
+Status: Ready to execute
+Last activity: 2026-07-22 — Phase 216 execution started
 
 ### Phase 213 outcome (POST /api/essentials/coordinate-lookup) — PLANS COMPLETE 2026-07-21
 
@@ -508,7 +508,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 215 — header-declutter-elected-default-compass-icons-search-by-nam
+**Current focus:** Phase 216 — unincorporated-locality-label
 
 ## v15.0 Roadmap Summary
 
@@ -610,9 +610,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-22T06:54:43.177Z
-Stopped at: 215-02-PLAN.md Tasks 1-3 complete (commits 8ff603c6/0f2a5ce9/28ecef45); Task 4 (blocking human-verify checkpoint at Bloomington, IN) PENDING
-Resume file: 215-02-SUMMARY.md
+Last session: 2026-07-22T22:37:09.861Z
+Stopped at: Completed 216-01-PLAN.md (backend locality probe, buildLocality + ST_Covers probes wired, /candidates/search subset exposed)
+Resume file: None
 
 ## Performance Metrics
 
@@ -713,6 +713,7 @@ Resume file: 215-02-SUMMARY.md
 | Phase 215 P01 | 10min | 1 tasks | 2 files |
 | Phase 215 P03 | 20min | 1 tasks | 1 files |
 | Phase 215 P02 | 25min | 3 tasks | 5 files |
+| Phase 216 P01 | 8min | 3 tasks | 5 files |
 
 ## Decisions
 
@@ -838,6 +839,9 @@ Resume file: 215-02-SUMMARY.md
 - [Phase ?]: Tooltip is gated to render only when isDesktop && isOpen && !showPrompt so it never stacks with the needs-calibration purple prompt (Pitfall 3)
 - [Phase ?]: 215-02: Did not import resolveIsAppointed into Results.jsx (unused after inline-fn deletion; would trip no-unused-vars lint gate)
 - [Phase ?]: 215-02: filteredPols simplified to a plain alias of list (no more name-search memo chain)
+- [Phase ?]: PLACE_LOADED_STATES hardcoded 11-state allowlist (AZ,CA,IN,ME,MD,MA,NV,OR,TX,UT,VA; MO excluded) per 216-CONTEXT.md live DB ground truth
+- [Phase ?]: county_name always computed unconditionally from countyRow, never gated by PLACE_LOADED_STATES (D-03)
+- [Phase ?]: essentialsCoordinateLookup.ts left untouched -- inherits locality via verbatim res.json(result) passthrough
 
 ## Operator Next Steps
 
