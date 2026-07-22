@@ -5,8 +5,8 @@ milestone_name: Results-Page Search & Header Overhaul
 current_phase: 216
 current_phase_name: unincorporated-locality-label
 status: executing
-stopped_at: Completed 216-01-PLAN.md (backend locality probe, buildLocality + ST_Covers probes wired, /candidates/search subset exposed)
-last_updated: "2026-07-22T22:37:09.887Z"
+stopped_at: Completed 216-02-PLAN.md (backend locality deployed live + smoke-verified, operator approved)
+last_updated: "2026-07-22T23:38:17.652Z"
 last_activity: 2026-07-22
 last_activity_desc: Phase 216 execution started
 progress:
@@ -22,9 +22,37 @@ progress:
 ## Current Position
 
 Phase: 216 (unincorporated-locality-label) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-07-22 — Phase 216 execution started
+
+### Phase 216 Plan 02 outcome (backend deploy + live smoke) — COMPLETE 2026-07-22
+
+- Live G4110 FIPS coverage re-confirmed against production DB matched the committed 11-state
+  `PLACE_LOADED_STATES` gate exactly (AZ,CA,IN,ME,MD,MA,NV,OR,TX,UT,VA); MO (fips 29) correctly
+  present at count=1 and correctly excluded. No divergence — no code correction needed.
+
+- **Deployed live:** `git -C "C:/EV-Accounts" push origin master` — deployed commit
+  `b0842f57af68c2d2970f2ae7dd45071d7e200efe` on accounts-api.empowered.vote. `origin/master..HEAD`
+  empty after push. Deploy carried the 216-01 commits (f8874a5c/92f9ed51/76301dbe) plus two
+  pre-existing, already-local P1 index-migration commits (d2ad1161/67befbf6) that were ahead of
+  origin before this plan started — disclosed to and accepted by the operator at the Task 3
+  checkpoint (not rebased/isolated, no history rewrite on the shared branch).
+
+- **Live smoke PASS**, 3 fixtures × 2 entry paths (address + coordinate), all on
+  accounts-api.empowered.vote: (a) Unincorporated Pima County AZ →
+  `incorporated:false, county_name:"Pima County"`; (b) Tucson city AZ →
+  `incorporated:true, place_name:"Tucson city"`; (c) Chicago IL (un-loaded state) →
+  `incorporated:null, county_name:"Cook County"`. `/candidates/search` returns `locality` directly;
+  `/coordinate-lookup` inherits it verbatim on every fixture. No raw lat/lng echoed anywhere.
+
+- **Zero writes:** production psql before/after delta 0 across essentials.politicians (84479)/
+  offices (82869)/districts (6871).
+
+- **LOC-01/02/03 end-to-end COMPLETE** (lib core → route → live production). Operator typed
+  "approved" at the blocking checkpoint, explicitly informed of and accepting the P1-commit side
+  effect. Backend-before-frontend gate (v24.0 convention) satisfied — **216-03 (frontend
+  threading, LOC-04) may now begin.**
 
 ### Phase 213 outcome (POST /api/essentials/coordinate-lookup) — PLANS COMPLETE 2026-07-21
 
@@ -610,8 +638,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-22T22:37:09.861Z
-Stopped at: Completed 216-01-PLAN.md (backend locality probe, buildLocality + ST_Covers probes wired, /candidates/search subset exposed)
+Last session: 2026-07-22T23:38:17.626Z
+Stopped at: Completed 216-02-PLAN.md (backend locality deployed live + smoke-verified, operator approved)
 Resume file: None
 
 ## Performance Metrics
@@ -714,6 +742,7 @@ Resume file: None
 | Phase 215 P03 | 20min | 1 tasks | 1 files |
 | Phase 215 P02 | 25min | 3 tasks | 5 files |
 | Phase 216 P01 | 8min | 3 tasks | 5 files |
+| Phase 216 P02 | 15min | 3 tasks | 0 files |
 
 ## Decisions
 
@@ -842,6 +871,7 @@ Resume file: None
 - [Phase ?]: PLACE_LOADED_STATES hardcoded 11-state allowlist (AZ,CA,IN,ME,MD,MA,NV,OR,TX,UT,VA; MO excluded) per 216-CONTEXT.md live DB ground truth
 - [Phase ?]: county_name always computed unconditionally from countyRow, never gated by PLACE_LOADED_STATES (D-03)
 - [Phase ?]: essentialsCoordinateLookup.ts left untouched -- inherits locality via verbatim res.json(result) passthrough
+- [Phase ?]: 216-02: live G4110 coverage matched the committed 11-state PLACE_LOADED_STATES gate exactly (MO correctly excluded); deployed to production (accounts-api.empowered.vote, commit b0842f57) and live-smoke-verified on 3 fixtures x 2 entry paths with zero writes; operator approved, unblocking 216-03 frontend threading
 
 ## Operator Next Steps
 
