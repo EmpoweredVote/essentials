@@ -30,8 +30,8 @@ Requirements for this milestone. Each maps to exactly one roadmap phase.
 
 ### HDR — Header Declutter
 
-- [ ] **HDR-01**: The officials type filter defaults to Elected and the All/Appointed dropdown is removed.
-- [ ] **HDR-02**: The Judges tab still shows appointed officials (per-tab override so the Elected default does not empty it).
+- [x] **HDR-01**: The officials type filter defaults to Elected and the All/Appointed dropdown is removed.
+- [x] **HDR-02**: The Judges tab still shows appointed officials (per-tab override so the Elected default does not empty it).
 - [ ] **HDR-03**: Compass lens controls collapse to icon buttons with accessible tooltips (gavel icon for Judicial), reclaiming the header's empty space.
 
 ## v2 Requirements
@@ -79,11 +79,12 @@ Explicitly excluded for v24.0.
 | SRCH-06 | 214 | Complete |
 | SRCH-08 | 214 | Complete |
 | SRCH-07 | 215 | Pending |
-| HDR-01 | 215 | Pending |
-| HDR-02 | 215 | Pending |
+| HDR-01 | 215 | Complete |
+| HDR-02 | 215 | Complete |
 | HDR-03 | 215 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 18 total (SRCH 8, RSLV 7, HDR 3)
 - Mapped to phases: 18/18 — Phase 212 (6), Phase 213 (1), Phase 214 (7), Phase 215 (4)
 - Unmapped: 0 — no orphans, no duplicates

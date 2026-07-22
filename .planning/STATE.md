@@ -3,15 +3,17 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 current_phase: 215
-status: ready_to_plan
-stopped_at: Phase 215 context gathered
-last_updated: "2026-07-21T23:14:38.420Z"
+current_phase_name: header-declutter-elected-default-compass-icons-search-by-nam
+status: executing
+stopped_at: Completed 215-01-PLAN.md
+last_updated: "2026-07-22T06:40:50.584Z"
 last_activity: 2026-07-21
+last_activity_desc: Phase 215 execution started
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 14
-  completed_plans: 14
+  total_plans: 17
+  completed_plans: 15
   percent: 75
 ---
 
@@ -19,10 +21,10 @@ progress:
 
 ## Current Position
 
-Phase: 215
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-07-21
+Phase: 215 (header-declutter-elected-default-compass-icons-search-by-nam) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-07-21 — Phase 215 execution started
 
 ### Phase 213 outcome (POST /api/essentials/coordinate-lookup) — PLANS COMPLETE 2026-07-21
 
@@ -506,7 +508,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 215 — header declutter — elected default, compass icons, search by name removal
+**Current focus:** Phase 215 — header-declutter-elected-default-compass-icons-search-by-nam
 
 ## v15.0 Roadmap Summary
 
@@ -608,9 +610,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-21T23:14:38.382Z
-Stopped at: Phase 215 context gathered
-Resume file: .planning/phases/215-header-declutter-elected-default-compass-icons-search-by-nam/215-CONTEXT.md
+Last session: 2026-07-22T06:40:50.554Z
+Stopped at: Completed 215-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -704,6 +706,11 @@ Resume file: .planning/phases/215-header-declutter-elected-default-compass-icons
 | Phase 214 P03 | 20m | 3 tasks | 1 files |
 | Phase 214 P04 | 12min | 1 tasks | 1 files |
 | Phase 214 P05 | 25min | 2 tasks | 8 files |
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 215 P01 | 10min | 1 tasks | 2 files |
 
 ## Decisions
 
@@ -823,6 +830,8 @@ Resume file: .planning/phases/215-header-declutter-elected-default-compass-icons
 - [Phase ?]: 214-04: Wrapper-div ref + querySelector('input') used to focus LocationCombobox's internal input (component doesn't forward refs; out of this plan's edit scope)
 - [Phase ?]: 214-04: Landing coordinate-submit telemetry uses essentials_coordinate_searched {method:'landing_handoff'} with no lat/lng and no outcome — outcome capture stays on Results' reading side (Plan 03)
 - [Phase 214]: SRCH-08 secondary sanity grep allow-list treated as exact enforcement, not illustrative — reworded 2 stray Google comment references in localitySearch.js/Landing.jsx outside the documented allow-list (Rule 1)
+- [Phase ?]: TAB_TYPE_DEFAULTS.judges='Appointed' is the exact value that keeps the Judges tab non-empty under the Elected-by-default policy (HDR-02)
+- [Phase ?]: resolveIsAppointed/matchesAppointedFilter moved verbatim into classify.js as exports; inline copies left in Results.jsx for Plan 02 to remove (explicit scope boundary)
 
 ## Operator Next Steps
 

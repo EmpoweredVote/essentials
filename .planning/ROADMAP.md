@@ -42,18 +42,23 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 - **Backend-before-frontend is a hard dependency.** Phases 212 and 213 (both accounts-api) must be
   pushed to `master` and smoke-tested live (curl/Postman) before Phase 214 (essentials) starts
   consuming them.
+
 - **Never route bare place-name queries through the Census address geocoder.** It is an address
   matcher, not a places/administrative-boundary API — city/county/state classification is the DB
   resolver's job (Phase 212), not Census's.
+
 - **Ambiguity always surfaces a candidate list, never a silent best guess.** Every disambiguation
   point (same-named cities across states, city/county collisions like Baltimore) must return ranked,
   state-qualified candidates — this is the direct regression guard against this codebase's two prior
   wrong-state-officials incidents.
+
 - **The Elected-default + Judges-appointed-exception ship together, atomically**, in Phase 215 —
   never as a default now / exception later sequence.
+
 - **Landing.jsx rides along inside Phase 214**, not a separate later phase — it shares the exact
   Google-bound modules being retired, so a partial removal breaks it or leaves Google Places only
   half-dropped.
+
 - **Google Places removal is audited at the end of Phase 214** with a full-repo grep for
   `google`/`pac-container`/`window.google`, expecting zero hits outside deleted files.
 
@@ -178,7 +183,8 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
   4. The "Search by name" results-filter box no longer appears anywhere in the UI
 
 **Plans**: 3 plans
-- [ ] 215-01-PLAN.md — TAB_TYPE_DEFAULTS constant + extract appointed-filter functions to classify.js (TDD)
+
+- [x] 215-01-PLAN.md — TAB_TYPE_DEFAULTS constant + extract appointed-filter functions to classify.js (TDD)
 - [ ] 215-02-PLAN.md — Per-bucket Elected default + dropdown/name-search removal + dead-file cleanup (Results.jsx, FilterBar.jsx)
 - [ ] 215-03-PLAN.md — Icon-only compass lens buttons with accessible tooltips (LensChipRow.jsx)
 
@@ -982,4 +988,5 @@ Coachella Valley, CA). See the expanded roadmap above. Per-milestone progress ta
 **Plans:** 0 plans
 
 Plans:
+
 - [ ] TBD (promote with /gsd:review-backlog when ready)
