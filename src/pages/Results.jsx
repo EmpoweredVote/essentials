@@ -1993,7 +1993,7 @@ export default function Results() {
               {/* Compass lens/key controls occupy the slot the toggle used to sit in
                   (the toggle moved up to the election-chip row). Rendered only when
                   Compass is on; empty otherwise, so toggling doesn't shift the page. */}
-              <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
+              <div className="min-w-0 py-2 sm:py-0 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
                 {compassControls}
               </div>
             </div>
