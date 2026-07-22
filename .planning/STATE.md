@@ -5,15 +5,15 @@ milestone_name: Results-Page Search & Header Overhaul
 current_phase: 215
 current_phase_name: header-declutter-elected-default-compass-icons-search-by-nam
 status: executing
-stopped_at: Completed 215-01-PLAN.md
-last_updated: "2026-07-22T06:40:50.584Z"
+stopped_at: 215-03-PLAN.md Task 1 complete (commit 510b9e4e); Task 2 (blocking human-verify checkpoint) PENDING live desktop/mobile + a11y verification
+last_updated: "2026-07-22T06:46:35.668Z"
 last_activity: 2026-07-21
 last_activity_desc: Phase 215 execution started
 progress:
   total_phases: 4
   completed_phases: 3
   total_plans: 17
-  completed_plans: 15
+  completed_plans: 16
   percent: 75
 ---
 
@@ -22,7 +22,7 @@ progress:
 ## Current Position
 
 Phase: 215 (header-declutter-elected-default-compass-icons-search-by-nam) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-07-21 — Phase 215 execution started
 
@@ -610,8 +610,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-22T06:40:50.554Z
-Stopped at: Completed 215-01-PLAN.md
+Last session: 2026-07-22T06:46:35.648Z
+Stopped at: 215-03-PLAN.md Task 1 complete (commit 510b9e4e); Task 2 (blocking human-verify checkpoint) PENDING live desktop/mobile + a11y verification
 Resume file: None
 
 ## Performance Metrics
@@ -711,6 +711,7 @@ Resume file: None
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 215 P01 | 10min | 1 tasks | 2 files |
+| Phase 215 P03 | 20min | 1 tasks | 1 files |
 
 ## Decisions
 
@@ -832,6 +833,8 @@ Resume file: None
 - [Phase 214]: SRCH-08 secondary sanity grep allow-list treated as exact enforcement, not illustrative — reworded 2 stray Google comment references in localitySearch.js/Landing.jsx outside the documented allow-list (Rule 1)
 - [Phase ?]: TAB_TYPE_DEFAULTS.judges='Appointed' is the exact value that keeps the Judges tab non-empty under the Elected-by-default policy (HDR-02)
 - [Phase ?]: resolveIsAppointed/matchesAppointedFilter moved verbatim into classify.js as exports; inline copies left in Results.jsx for Plan 02 to remove (explicit scope boundary)
+- [Phase ?]: Built a LensButton child component (one useFloating/useInteractions instance per lens) mirroring the in-repo IconWithTooltip precedent, rather than a shared open-key in the parent
+- [Phase ?]: Tooltip is gated to render only when isDesktop && isOpen && !showPrompt so it never stacks with the needs-calibration purple prompt (Pitfall 3)
 
 ## Operator Next Steps
 
