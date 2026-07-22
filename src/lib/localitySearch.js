@@ -20,16 +20,31 @@ import { classifyInput } from './inputClassifier';
 import { searchLocationsByName } from './api';
 
 /**
+ * Strip the resolver's trailing " · {area_type}" segment from a candidate label
+ * (e.g. "Los Angeles County, California, US, CA · County" -> "…, US, CA"). The
+ * area_type it appends duplicates the type pill shown in the combobox and the
+ * results-page header, so it is dropped for display everywhere the label is
+ * surfaced. Falls back to the untouched label when area_type is absent or the
+ * suffix isn't present.
+ */
+export function stripAreaTypeSuffix(label, areaType) {
+  if (!label || !areaType) return label;
+  const suffix = ` · ${areaType}`;
+  return label.endsWith(suffix) ? label.slice(0, -suffix.length) : label;
+}
+
+/**
  * Build a browse-by-area route from a /location-search candidate
- * ({ geo_id, mtfcc, label, state, has_local_data }). `label` is already the
- * resolver's clean display string (212 D-05/D-07) — no TIGER-suffix stripping
- * needed here, unlike the old static-catalog area shape this helper replaces.
+ * ({ geo_id, mtfcc, label, state, area_type, has_local_data }). The redundant
+ * " · {area_type}" display suffix is stripped from browse_label so the results
+ * header/banner/combobox all read the clean place string; the type is conveyed
+ * by the pill instead.
  */
 export function browseAreaRoute(candidate) {
   const params = new URLSearchParams({
     browse_geo_id: candidate.geo_id,
     browse_mtfcc: candidate.mtfcc,
-    browse_label: candidate.label,
+    browse_label: stripAreaTypeSuffix(candidate.label, candidate.area_type),
     from_locality: '1',
   });
   return `/results?${params.toString()}`;

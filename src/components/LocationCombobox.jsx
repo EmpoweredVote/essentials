@@ -5,6 +5,7 @@ import {
 } from '@floating-ui/react';
 import { classifyInput } from '../lib/inputClassifier';
 import { searchLocationsByName } from '../lib/api';
+import { stripAreaTypeSuffix } from '../lib/localitySearch';
 
 // LocationCombobox — SRCH-02/03/04, D-01/02/03/04/08 (214-unified-location-combobox)
 //
@@ -267,6 +268,10 @@ export default function LocationCombobox({
           >
             {candidates.map((candidate, i) => {
               const kindTag = candidateKindTag(candidate.mtfcc);
+              // The resolver appends " · {area_type}" to the label, which duplicates the
+              // type pill shown beside it. Strip it for display — the pill is the single
+              // type indicator (shared with browseAreaRoute's browse_label).
+              const displayLabel = stripAreaTypeSuffix(candidate.label, candidate.area_type);
               return (
                 <li
                   key={candidate.geo_id ?? `${candidate.label}-${i}`}
@@ -278,27 +283,27 @@ export default function LocationCombobox({
                     type="button"
                     ref={(node) => { listRef.current[i] = node; }}
                     onMouseDown={(e) => e.preventDefault()}
-                    className={`flex min-h-[44px] w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors ${
+                    className={`flex min-h-[44px] w-full items-center justify-start gap-3 px-4 py-3 text-left transition-colors ${
                       i === activeIndex ? 'bg-[var(--ev-bg-light)] dark:bg-gray-800' : 'hover:bg-[var(--ev-bg-light)] dark:hover:bg-gray-800'
                     }`}
                     {...getItemProps({ onClick: () => handleSelectCandidate(candidate) })}
                   >
-                    <span className="min-w-0 truncate">
-                      <span className="font-semibold text-[var(--ev-teal)] dark:text-[var(--color-ev-teal-light)]">
-                        {candidate.label}
-                      </span>
-                    </span>
-                    <span className="flex shrink-0 items-center gap-2">
+                    <span className="flex w-36 shrink-0 items-center justify-end gap-2">
                       {kindTag !== 'city' && (
                         <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                           {kindTag}
                         </span>
                       )}
                       {candidate.has_local_data && (
-                        <span className="rounded-full bg-[var(--ev-bg-light)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--ev-teal)] dark:bg-gray-800 dark:text-[var(--color-ev-teal-light)]">
+                        <span className="rounded-full border border-dotted border-purple-400 bg-transparent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-purple-700 dark:border-purple-500 dark:text-purple-300">
                           Stances
                         </span>
                       )}
+                    </span>
+                    <span className="min-w-0 truncate">
+                      <span className="font-semibold text-[var(--ev-teal)] dark:text-[var(--color-ev-teal-light)]">
+                        {displayLabel}
+                      </span>
                     </span>
                   </button>
                 </li>
