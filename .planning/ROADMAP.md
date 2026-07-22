@@ -177,7 +177,10 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
   3. Compass lens controls render as icon-only buttons with accessible `aria-label`s and a keyboard/touch-usable tooltip affordance (gavel icon for Judicial), reclaiming the header's empty space
   4. The "Search by name" results-filter box no longer appears anywhere in the UI
 
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 215-01-PLAN.md — TAB_TYPE_DEFAULTS constant + extract appointed-filter functions to classify.js (TDD)
+- [ ] 215-02-PLAN.md — Per-bucket Elected default + dropdown/name-search removal + dead-file cleanup (Results.jsx, FilterBar.jsx)
+- [ ] 215-03-PLAN.md — Icon-only compass lens buttons with accessible tooltips (LensChipRow.jsx)
 
 ### Progress
 
@@ -189,7 +192,7 @@ Phases 212 → 213 (backend, either order relative to each other) → 214 (front
 | 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
 | 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
 | 214. Unified Location Combobox & Google Places Removal | 6/6 | Complete    | 2026-07-21 |
-| 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/TBD | Not started | - |
+| 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 0/3 | Not started | - |
 
 ### Coverage
 
