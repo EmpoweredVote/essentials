@@ -116,3 +116,12 @@ None - no external service configuration required.
 ---
 *Phase: 215-header-declutter-elected-default-compass-icons-search-by-nam*
 *Completed: 2026-07-22*
+
+## Self-Check: PASSED
+
+- FOUND: src/lib/classify.js
+- FOUND: src/lib/classify.test.js
+- FOUND: .planning/phases/215-header-declutter-elected-default-compass-icons-search-by-nam/215-01-SUMMARY.md
+- FOUND commit: c47dda6e (test RED)
+- FOUND commit: 264ff94e (feat GREEN)
+- FOUND commit: ed9a2e3d (docs SUMMARY)
