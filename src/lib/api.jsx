@@ -113,11 +113,13 @@ export async function searchPoliticians(query) {
     // responses (legacy /candidates/search) leave tribal_land undefined.
     let politicians = data;
     let tribal_land;
+    let locality;
     if (data && !Array.isArray(data) && Array.isArray(data.politicians)) {
       politicians = data.politicians;
       tribal_land = data.tribal_land;
+      locality = data.locality;
     }
-    return { status: status || "fresh", data: politicians, formattedAddress, tribal_land };
+    return { status: status || "fresh", data: politicians, formattedAddress, tribal_land, locality };
   } catch (error) {
     console.error("Search error:", error);
     return { status: "error", data: [], error: error.message, formattedAddress: "" };
@@ -530,22 +532,31 @@ export async function lookupCoordinate(lat, lng) {
       method: 'POST',
       body: JSON.stringify({ lat, lng }),
     });
-    if (!res) return { data: [], error: null, code: null, formattedAddress: '' };
+    if (!res) return { data: [], error: null, code: null, formattedAddress: '', locality: null };
     if (res.status === 422) {
       let code = 'INVALID_COORDINATES';
       try {
         const errJson = await res.json();
         if (errJson?.code) code = errJson.code;
       } catch { /* fall through to default code */ }
-      return { data: [], error: 'validation', code, formattedAddress: '' };
+      return { data: [], error: 'validation', code, formattedAddress: '', locality: null };
     }
-    if (!res.ok) return { data: [], error: `${res.status}`, code: null, formattedAddress: '' };
+    if (!res.ok) return { data: [], error: `${res.status}`, code: null, formattedAddress: '', locality: null };
     const data = await res.json();
     // Mirrors AddressSearchResult shape: { politicians, ... } or a flat array.
     const politicians = Array.isArray(data) ? data : (data.politicians || []);
-    return { data: politicians, error: null, code: null, formattedAddress: data.matchedAddress ?? '' };
+    // LOC-04 (Phase 216-03): surface locality alongside politicians. Coordinate
+    // route inherits `locality` verbatim from the shared core (216-01/216-02);
+    // tribal_land unwrap here is DEFERRED per 216-01 planner decision — do not add.
+    return {
+      data: politicians,
+      error: null,
+      code: null,
+      formattedAddress: data.matchedAddress ?? '',
+      locality: Array.isArray(data) ? null : (data.locality ?? null),
+    };
   } catch (err) {
     console.error('lookupCoordinate error:', err);
-    return { data: [], error: err.message, code: null, formattedAddress: '' };
+    return { data: [], error: err.message, code: null, formattedAddress: '', locality: null };
   }
 }

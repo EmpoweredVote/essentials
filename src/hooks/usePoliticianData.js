@@ -17,12 +17,14 @@ let instanceCounter = 0;
  * @param {Array} options.initialData - Pre-populated data from sessionStorage (default: [])
  * @param {number} options.key - Increment to force re-fetch even when query is unchanged (default: 0)
  *
- * @returns {Object} { data, phase, error, dataStatus, formattedAddress }
+ * @returns {Object} { data, phase, error, dataStatus, formattedAddress, tribalLand, locality }
  * - data: Array of politicians
  * - phase: "idle" | "loading" | "fresh" | "error"
  * - error: Error message string or null
  * - dataStatus: "fresh" | "no-geofence-data" | null
  * - formattedAddress: Backend-validated formatted address string
+ * - tribalLand: { on_reservation, name? } | null
+ * - locality: { incorporated: boolean|null, place_name: string|null, county_name: string|null } | null
  */
 export function usePoliticianData(query, options = {}) {
   const {
@@ -40,6 +42,10 @@ export function usePoliticianData(query, options = {}) {
   // shape (`{ on_reservation, name? }`). Undefined when backend returns legacy flat
   // politicians array.
   const [tribalLand, setTribalLand] = useState(null);
+  // LOC-04 (Phase 216-03): locality surfaces from /candidates/search response shape
+  // (`{ incorporated, place_name, county_name }`), mirroring tribalLand. Address
+  // mode only — coordinate mode never enables this hook (see Results.jsx coordLocality).
+  const [locality, setLocality] = useState(null);
 
   const controllerRef = useRef(null);
 
@@ -65,6 +71,7 @@ export function usePoliticianData(query, options = {}) {
         setError(null);
         setFormattedAddress("");
         setTribalLand(null);
+        setLocality(null);
         setData(initialData);
         setPhase("loading");
 
@@ -83,6 +90,8 @@ export function usePoliticianData(query, options = {}) {
         setFormattedAddress(result.formattedAddress || "");
         // SCHEMA-03 (Phase 133 D-09): expose tribal_land for badge rendering.
         setTribalLand(result.tribal_land || null);
+        // LOC-04 (Phase 216-03): expose locality for the "Unincorporated {County}" banner label.
+        setLocality(result.locality || null);
         setPhase("fresh");
         console.log(`[usePoliticianData] #${id} complete — ${(result.data || []).length} officials`);
       } catch (err) {
@@ -104,5 +113,5 @@ export function usePoliticianData(query, options = {}) {
     };
   }, [query, enabled, key]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { data, phase, error, dataStatus, formattedAddress, tribalLand };
+  return { data, phase, error, dataStatus, formattedAddress, tribalLand, locality };
 }

@@ -78,7 +78,7 @@ describe('lookupCoordinate (SRCH-05)', () => {
 
     const result = await lookupCoordinate(39.17, -86.52);
 
-    expect(result).toEqual({ data: politicians, error: null, code: null, formattedAddress: '' });
+    expect(result).toEqual({ data: politicians, error: null, code: null, formattedAddress: '', locality: null });
     expect(publicFetch).toHaveBeenCalledWith('/essentials/coordinate-lookup', {
       method: 'POST',
       body: JSON.stringify({ lat: 39.17, lng: -86.52 }),
@@ -95,6 +95,25 @@ describe('lookupCoordinate (SRCH-05)', () => {
     expect(result.error).toBeNull();
   });
 
+  it('LOC-04: passes through locality on success ({ politicians, locality } shape)', async () => {
+    const politicians = [{ id: 'p1', office_title: 'County Supervisor' }];
+    const locality = { incorporated: false, place_name: null, county_name: 'Pima County' };
+    publicFetch.mockResolvedValue(mockResponse({ json: { politicians, matchedAddress: '', locality } }));
+
+    const result = await lookupCoordinate(32.056939603926, -110.616578348179);
+
+    expect(result.locality).toEqual(locality);
+  });
+
+  it('LOC-04: locality is null on a flat-array success response (no locality field to unwrap)', async () => {
+    const flat = [{ id: 'p2', office_title: 'Governor' }];
+    publicFetch.mockResolvedValue(mockResponse({ json: flat }));
+
+    const result = await lookupCoordinate(39.17, -86.52);
+
+    expect(result.locality).toBeNull();
+  });
+
   it.each([
     ['SWAPPED_COORDINATES'],
     ['OUTSIDE_US_BOUNDS'],
@@ -104,7 +123,7 @@ describe('lookupCoordinate (SRCH-05)', () => {
 
     const result = await lookupCoordinate(-86.52, 39.17);
 
-    expect(result).toEqual({ data: [], error: 'validation', code, formattedAddress: '' });
+    expect(result).toEqual({ data: [], error: 'validation', code, formattedAddress: '', locality: null });
   });
 
   it('defaults code to INVALID_COORDINATES on a 422 with an unparseable body', async () => {
@@ -116,7 +135,7 @@ describe('lookupCoordinate (SRCH-05)', () => {
 
     const result = await lookupCoordinate(999, 999);
 
-    expect(result).toEqual({ data: [], error: 'validation', code: 'INVALID_COORDINATES', formattedAddress: '' });
+    expect(result).toEqual({ data: [], error: 'validation', code: 'INVALID_COORDINATES', formattedAddress: '', locality: null });
   });
 
   it('defaults code to INVALID_COORDINATES on a 422 with a missing code field', async () => {
@@ -124,7 +143,7 @@ describe('lookupCoordinate (SRCH-05)', () => {
 
     const result = await lookupCoordinate(999, 999);
 
-    expect(result).toEqual({ data: [], error: 'validation', code: 'INVALID_COORDINATES', formattedAddress: '' });
+    expect(result).toEqual({ data: [], error: 'validation', code: 'INVALID_COORDINATES', formattedAddress: '', locality: null });
   });
 
   it('returns { data: [], error: "500", code: null } on a non-422 non-ok response', async () => {
@@ -132,7 +151,7 @@ describe('lookupCoordinate (SRCH-05)', () => {
 
     const result = await lookupCoordinate(39.17, -86.52);
 
-    expect(result).toEqual({ data: [], error: '500', code: null, formattedAddress: '' });
+    expect(result).toEqual({ data: [], error: '500', code: null, formattedAddress: '', locality: null });
   });
 
   it('returns { data: [], error: <message>, code: null } when fetch throws', async () => {
@@ -140,7 +159,7 @@ describe('lookupCoordinate (SRCH-05)', () => {
 
     const result = await lookupCoordinate(39.17, -86.52);
 
-    expect(result).toEqual({ data: [], error: 'network down', code: null, formattedAddress: '' });
+    expect(result).toEqual({ data: [], error: 'network down', code: null, formattedAddress: '', locality: null });
   });
 
   it('never calls apiFetch / triggers no login-redirect path (uses publicFetch only)', async () => {
