@@ -29,6 +29,7 @@ import { fetchTriviaCollections } from '../lib/trivia';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
 import { buildBannerProps } from '../lib/bannerProps';
+import { unincorporatedLabel } from '../lib/localityLabel';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -399,6 +400,11 @@ export default function Results() {
   // Browse results injected directly into the list
   const [browseResults, setBrowseResults] = useState(null);
   const [browseLoading, setBrowseLoading] = useState(false);
+  // LOC-04 (Phase 216-03): coordinate-mode parallel to usePoliticianData's address-mode
+  // `locality` state. The hook is never enabled for coordinate searches (RESEARCH
+  // Pitfall 1) — resolveCoordinate() populates this directly, mirroring how
+  // browseResults is a second data channel alongside the hook.
+  const [coordLocality, setCoordLocality] = useState(null);
   // Currently-browsed area (geo_id + mtfcc), captured from URL shortcut params.
   // Used to drive elections-by-area fetch.
   const [browseArea, setBrowseArea] = useState(() => {
@@ -467,6 +473,10 @@ export default function Results() {
     error,
     formattedAddress,
     tribalLand,
+    // LOC-04 (Phase 216-03): destructured under a DISTINCT local name — a bare
+    // `locality` collides with the pre-existing fromLocality/localityLabel
+    // (browse_label URL param) already declared above (ADR-0001, Pitfall 2).
+    locality: incorporationInfo,
   } = usePoliticianData(activeQuery, {
     enabled: !!activeQuery && !cachedResult,
     initialData: [],
@@ -1043,18 +1053,20 @@ export default function Results() {
 
     // T-214-02: capture method/outcome (+ the 422 code, an enum string) only — never
     // the raw {lat, lng} pair, on either entry point.
-    const { data, error, code } = await lookupCoordinate(lat, lng);
+    const { data, error, code, locality } = await lookupCoordinate(lat, lng);
     setBrowseLoading(false);
 
     if (error) {
       track('essentials_coordinate_searched', { method, outcome: 'error', code: code || 'unknown' });
       setCoordError(COORDINATE_ERROR_MESSAGES[code] || COORDINATE_ERROR_MESSAGES.INVALID_COORDINATES);
       setBrowseResults(null);
+      setCoordLocality(null);
       return;
     }
 
     track('essentials_coordinate_searched', { method, outcome: 'success' });
     setBrowseResults(data);
+    setCoordLocality(locality || null);
   }
 
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
@@ -1155,6 +1167,12 @@ export default function Results() {
     // boundary-straddling point (the same hijack the 'browse' branch above guards
     // against).
     if (searchMode === 'coordinate') {
+      // LOC-04 (Phase 216-03): an unincorporated coordinate point still has an
+      // authoritative backend-derived label ("Unincorporated {County}") even
+      // though no address/place name can be derived — check it before falling
+      // through to the "no trustworthy label" null below.
+      const lbl = unincorporatedLabel(coordLocality);
+      if (lbl) return lbl;
       return null;
     }
     const src = Array.isArray(list) ? list : [];
@@ -1180,12 +1198,17 @@ export default function Results() {
         if (cityOf) return cityOf[1].trim();
       }
     }
+    // LOC-04 (Phase 216-03): an unincorporated point is authoritatively backend-flagged
+    // — check it BEFORE the postal-city guess below, which would otherwise mislabel an
+    // unincorporated parcel with its nearest postal city (e.g. "Tucson").
+    const lbl = unincorporatedLabel(incorporationInfo);
+    if (lbl) return lbl;
     // Fallback 2: parse the city out of the typed address ("…, Bloomington, IN 47404").
     // Reliable for address searches where politician data lacks representing_city.
     const fromAddress = parseCityFromAddress(addressInput);
     if (fromAddress) return fromAddress;
     return null;
-  }, [list, addressInput, searchMode, searchParams]);
+  }, [list, addressInput, searchMode, searchParams, incorporationInfo, coordLocality]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"
