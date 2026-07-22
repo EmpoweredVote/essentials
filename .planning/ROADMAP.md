@@ -185,7 +185,7 @@ Phase numbering continues from v23.0 (closed at 211) — this milestone starts a
 **Plans**: 3 plans
 
 - [x] 215-01-PLAN.md — TAB_TYPE_DEFAULTS constant + extract appointed-filter functions to classify.js (TDD)
-- [ ] 215-02-PLAN.md — Per-bucket Elected default + dropdown/name-search removal + dead-file cleanup (Results.jsx, FilterBar.jsx)
+- [x] 215-02-PLAN.md — Per-bucket Elected default + dropdown/name-search removal + dead-file cleanup (Results.jsx, FilterBar.jsx)
 - [x] 215-03-PLAN.md — Icon-only compass lens buttons with accessible tooltips (LensChipRow.jsx)
 
 ### Progress
