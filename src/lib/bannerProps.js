@@ -36,9 +36,22 @@ export function buildBannerProps(tier, ctx = {}) {
 
   let locationName;
   if (tier === 'city') {
-    locationName = representingCity && userState
-      ? `${representingCity}, ${userState}`
-      : (representingCity || 'Your City');
+    if (!representingCity) {
+      locationName = 'Your City';
+    } else if (userState) {
+      // In browse mode representingCity is the resolver's full label, which already
+      // ends in the state (e.g. "…, California, US, CA") — appending userState again
+      // would double it ("…US, CA, CA"). Only append when the label's trailing
+      // comma-segment isn't already the state abbrev or full name. Address mode
+      // (representingCity = a bare city like "Plano") still gets ", TX" appended.
+      const trailing = representingCity.split(',').pop().trim().toLowerCase();
+      const alreadyHasState =
+        trailing === userState.toLowerCase() ||
+        trailing === (stateNames[userState] || '').toLowerCase();
+      locationName = alreadyHasState ? representingCity : `${representingCity}, ${userState}`;
+    } else {
+      locationName = representingCity;
+    }
   } else if (tier === 'state') {
     locationName = (userState && stateNames[userState]) || userState || 'Your State';
   } else {
