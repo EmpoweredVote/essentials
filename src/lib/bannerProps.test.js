@@ -34,6 +34,11 @@ describe('buildBannerProps', () => {
     expect(buildBannerProps('city', ctx).locationName).toBe('Springfield, Illinois');
   });
 
+  it('does not double the state for the "Unincorporated {County}" label (LOC-04)', () => {
+    const ctx = { ...CTX, representingCity: 'Unincorporated Pima County', userState: 'AZ', stateNames: { AZ: 'Arizona' } };
+    expect(buildBannerProps('city', ctx).locationName).toBe('Unincorporated Pima County, AZ');
+  });
+
   it('falls back to the state abbreviation when stateNames has no entry', () => {
     expect(buildBannerProps('state', { ...CTX, stateNames: {} }).locationName).toBe('TX');
   });
