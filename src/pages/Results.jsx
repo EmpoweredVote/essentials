@@ -1,8 +1,8 @@
-import { Fragment, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
-import { computeVariant, classifyBucket, classifyCategory } from '../lib/classify';
+import { computeVariant, classifyBucket, classifyCategory, TAB_TYPE_DEFAULTS, matchesAppointedFilter } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
@@ -500,38 +500,6 @@ export default function Results() {
     ? (browseLoading ? 'loading' : (browseResults ? 'fresh' : 'idle'))
     : (cachedResult ? 'fresh' : hookPhase);
 
-  // Initialize appointedFilter from cache if available (defaults to 'All' per FILT-03)
-  const [appointedFilter, setAppointedFilter] = useState(
-    cachedResult?.appointedFilter || 'All'
-  );
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Defer the search term that feeds the expensive filter→dedup→group→render chain.
-  // The input itself stays bound to `searchQuery` (updates immediately, so typing feels
-  // instant), while the heavy grid recompute reads `deferredQuery` and runs at low
-  // priority — React can interrupt it to keep the page (and the mouse) responsive.
-  const deferredQuery = useDeferredValue(searchQuery);
-
-  // Client-side name filter — applied only to the grid (not to non-display logic like locationLabel).
-  // Memoized so the downstream cascade (filteredPols → federalFiltered → deduped → hierarchy)
-  // only recomputes when the term or the underlying list actually changes.
-  const trimmedSearch = useMemo(
-    () => (deferredQuery || '').trim().toLowerCase(),
-    [deferredQuery]
-  );
-  const visibleList = useMemo(() => {
-    if (!trimmedSearch || !Array.isArray(list)) return list;
-    return list.filter((p) => {
-      const name = (p?.full_name || '').toLowerCase();
-      const first = (p?.first_name || '').toLowerCase();
-      const last = (p?.last_name || '').toLowerCase();
-      return name.includes(trimmedSearch)
-          || first.includes(trimmedSearch)
-          || last.includes(trimmedSearch);
-    });
-  }, [trimmedSearch, list]);
-
   // Compass mode toggle — persisted across sessions; off by default for dense view
   const [compassMode, setCompassMode] = useState(() => {
     try { return localStorage.getItem('ev:compassMode') === 'true'; } catch { return false; }
@@ -766,12 +734,11 @@ export default function Results() {
         sessionStorage.setItem('ev:results', JSON.stringify({
           query: queryFromUrl,
           list,
-          appointedFilter: appointedFilter,
           timestamp: Date.now(),
         }));
       }
     }
-  }, [list, phase, appointedFilter, queryFromUrl]);
+  }, [list, phase, queryFromUrl]);
 
   // Restore scroll position when returning from a profile page
   useEffect(() => {
@@ -1092,30 +1059,9 @@ export default function Results() {
     setBrowseResults(data);
   }
 
-  // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
-  function resolveIsAppointed(pol) {
-    // politician.is_appointed=true is an individual override (e.g. interim appointment)
-    if (pol.is_appointed === true) return true;
-    // Otherwise fall back to office-level: is_elected derives from !is_appointed_position
-    return !pol.is_elected;
-  }
-
-  // Filter logic per CONTEXT D-06
-  function matchesAppointedFilter(pol, filter) {
-    if (filter === 'All') return true;
-    const resolved = resolveIsAppointed(pol);
-    if (filter === 'Elected') {
-      return !resolved || pol.faces_retention_vote === true;
-    }
-    if (filter === 'Appointed') {
-      return resolved === true;
-    }
-    return true;
-  }
-
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
-  // Uses visibleList (name-filtered) so the grid narrows when user types in FilterBar search.
-  const filteredPols = useMemo(() => visibleList, [visibleList]); // eslint-disable-line react-hooks/exhaustive-deps
+  // No name-search anymore (SRCH-07) — filteredPols reads the raw list directly.
+  const filteredPols = list;
 
   // Per-politician stances cache for CompassCardVertical comparison overlay (compass mode only)
   const [stancesByPolId, setStancesByPolId] = useState({});
@@ -1528,16 +1474,16 @@ export default function Results() {
   }
 
   const filteredHierarchy = useMemo(
-    () => applyAppointedFilter(hierarchy, appointedFilter),
-    [hierarchy, appointedFilter]
+    () => applyAppointedFilter(hierarchy, TAB_TYPE_DEFAULTS.representatives),
+    [hierarchy]
   );
   const educatorsFilteredHierarchy = useMemo(
-    () => applyAppointedFilter(educatorsHierarchy, appointedFilter),
-    [educatorsHierarchy, appointedFilter]
+    () => applyAppointedFilter(educatorsHierarchy, TAB_TYPE_DEFAULTS.educators),
+    [educatorsHierarchy]
   );
   const judgesFilteredHierarchy = useMemo(
-    () => applyAppointedFilter(judgesHierarchy, appointedFilter),
-    [judgesHierarchy, appointedFilter]
+    () => applyAppointedFilter(judgesHierarchy, TAB_TYPE_DEFAULTS.judges),
+    [judgesHierarchy]
   );
 
   // D-05: hide Educators/Judges tabs when the location has 0 office-holders of
@@ -2067,10 +2013,6 @@ export default function Results() {
               </div>
               <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
                 <FilterBar
-                  appointedFilter={appointedFilter}
-                  onAppointedFilterChange={(v) => { track('essentials_filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
-                  searchQuery={searchQuery}
-                  onSearchChange={setSearchQuery}
                   compassMode={compassMode}
                   onCompassModeChange={handleCompassModeChange}
                   isDark={isDark}
@@ -2126,9 +2068,7 @@ export default function Results() {
                         const hasTier = hier.some(h => h.tier === tier);
                         if (hasTier) return null;
 
-                        const emptyMessage = appointedFilter !== 'All'
-                          ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
-                          : `${tier} ${viewName === 'representatives' ? 'representative' : 'official'} data is not yet available for this area.`;
+                        const emptyMessage = `No ${TAB_TYPE_DEFAULTS[viewName].toLowerCase()} officials found at the ${tier.toLowerCase()} level.`;
 
                         return (
                           <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
@@ -2136,13 +2076,6 @@ export default function Results() {
                           </div>
                         );
                       })}
-
-                      {/* Name-search no-matches state */}
-                      {trimmedSearch && Array.isArray(visibleList) && visibleList.length === 0 && Array.isArray(list) && list.length > 0 && (
-                        <p className="mt-4 text-gray-500 dark:text-[#8b949e] text-center">
-                          No matches for &ldquo;{searchQuery}&rdquo;. Clear the search box to see all results.
-                        </p>
-                      )}
 
                       {hier.map(({ tier, bodies }) => {
                         const tierKey = tier.toLowerCase();
@@ -2230,11 +2163,10 @@ export default function Results() {
                         </p>
                       )}
 
-                      {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
-                      {fallbackListLength > 0 && appointedFilter !== 'All' &&
-                        hier.length === 0 && (
+                      {/* Filter-aware empty state — when the per-tab type default yields no results but location has politicians */}
+                      {fallbackListLength > 0 && hier.length === 0 && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
-                          No {appointedFilter.toLowerCase()} officials found for this area.
+                          No {TAB_TYPE_DEFAULTS[viewName].toLowerCase()} officials found for this area.
                         </p>
                       )}
                     </div>
