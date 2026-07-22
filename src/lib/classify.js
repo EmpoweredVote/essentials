@@ -44,6 +44,37 @@ export const LOCAL_ORDER = [
 
 export const STATE_JUDICIARY_ORDER = ["State Supreme Court", "State Court of Appeals", "State Tax Court"];
 
+// Phase 215 (HDR-01/HDR-02, decision D-05): single source of truth for the
+// per-tab type-filter default. Judges defaults to 'Appointed' — the exact
+// value that keeps the Judges tab populated (most judges are appointed, not
+// elected), while representatives/educators default to 'Elected'.
+export const TAB_TYPE_DEFAULTS = {
+  representatives: "Elected",
+  educators: "Elected",
+  judges: "Appointed",
+};
+
+// Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
+export function resolveIsAppointed(pol) {
+  // politician.is_appointed=true is an individual override (e.g. interim appointment)
+  if (pol.is_appointed === true) return true;
+  // Otherwise fall back to office-level: is_elected derives from !is_appointed_position
+  return !pol.is_elected;
+}
+
+// Filter logic per CONTEXT D-06
+export function matchesAppointedFilter(pol, filter) {
+  if (filter === 'All') return true;
+  const resolved = resolveIsAppointed(pol);
+  if (filter === 'Elected') {
+    return !resolved || pol.faces_retention_vote === true;
+  }
+  if (filter === 'Appointed') {
+    return resolved === true;
+  }
+  return true;
+}
+
 const BODY_LEGIS_UPPER = ["senate"];
 const BODY_LEGIS_LOWER = ["house", "assembly"];
 const BODY_AGENCY = [
