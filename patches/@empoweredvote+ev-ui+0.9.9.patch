@@ -1,0 +1,44 @@
+diff --git a/node_modules/@empoweredvote/ev-ui/dist/index.js b/node_modules/@empoweredvote/ev-ui/dist/index.js
+index a7821fa..d6f4d20 100644
+--- a/node_modules/@empoweredvote/ev-ui/dist/index.js
++++ b/node_modules/@empoweredvote/ev-ui/dist/index.js
+@@ -160,7 +160,7 @@ function RadarChartCore({
+     const max = ((_a = topic == null ? void 0 : topic.stances) == null ? void 0 : _a.length) || 10;
+     const pct = Math.min(value / max * 10, 10);
+     const angle = 2 * Math.PI * index / numSpokes;
+-    const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? 11 - pct : pct;
++    const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? (max + 1) * 10 / max - pct : pct;
+     const r = adjusted / 10 * radius;
+     const x = centerX + r * Math.sin(angle);
+     const y = centerY - r * Math.cos(angle);
+@@ -185,7 +185,7 @@ function RadarChartCore({
+       const max = ((_b = topic == null ? void 0 : topic.stances) == null ? void 0 : _b.length) || 10;
+       const pct = Math.min(value / max * 10, 10);
+       const angle = 2 * Math.PI * index / numSpokes;
+-      const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? 11 - pct : pct;
++      const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? (max + 1) * 10 / max - pct : pct;
+       const r = adjusted / 10 * radius;
+       const x = centerX + r * Math.sin(angle);
+       const y = centerY - r * Math.cos(angle);
+diff --git a/node_modules/@empoweredvote/ev-ui/dist/index.mjs b/node_modules/@empoweredvote/ev-ui/dist/index.mjs
+index 24dd19b..6146e1c 100644
+--- a/node_modules/@empoweredvote/ev-ui/dist/index.mjs
++++ b/node_modules/@empoweredvote/ev-ui/dist/index.mjs
+@@ -65,7 +65,7 @@ function RadarChartCore({
+     const max = ((_a = topic == null ? void 0 : topic.stances) == null ? void 0 : _a.length) || 10;
+     const pct = Math.min(value / max * 10, 10);
+     const angle = 2 * Math.PI * index / numSpokes;
+-    const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? 11 - pct : pct;
++    const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? (max + 1) * 10 / max - pct : pct;
+     const r = adjusted / 10 * radius;
+     const x = centerX + r * Math.sin(angle);
+     const y = centerY - r * Math.cos(angle);
+@@ -90,7 +90,7 @@ function RadarChartCore({
+       const max = ((_b = topic == null ? void 0 : topic.stances) == null ? void 0 : _b.length) || 10;
+       const pct = Math.min(value / max * 10, 10);
+       const angle = 2 * Math.PI * index / numSpokes;
+-      const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? 11 - pct : pct;
++      const adjusted = value === 0 ? 0 : invertedSpokes[shortTitle] ? (max + 1) * 10 / max - pct : pct;
+       const r = adjusted / 10 * radius;
+       const x = centerX + r * Math.sin(angle);
+       const y = centerY - r * Math.cos(angle);
