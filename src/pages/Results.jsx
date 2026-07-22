@@ -1117,55 +1117,24 @@ export default function Results() {
     return () => { cancelled = true; };
   }, [compassMode, filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleBuildCompass = () => {
-    const returnUrl = window.location.href;
-    window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
-  };
-
-  // Compass top-slot: rendered after each view's full-width banner so it never overlaps it.
-  // Calibrated (>=3 answers) → the controls bar; uncalibrated → a CTA to take the quiz,
-  // since with no stances the per-card compasses can't render and the toggle would
-  // otherwise appear to do nothing. While answers are still loading, render neither.
-  const compassCalibrated = (rawUserAnswers?.length ?? 0) >= 3;
-  const compassControlsSlot = (
-    // The bar renders in normal flow (right-aligned on desktop) so it sits above the
-    // section banner instead of floating over it.
-    <div style={{ position: 'relative' }}>
-      <CompassControlsBar
-        userAnswers={rawUserAnswers}
-        lenses={augmentedLenses}
-        activeLensKey={activeLensKey}
-        onSelectLens={handleSelectLens}
-        onCalibrate={handleCalibrateLens}
-        onStanceMin={handleStanceMin}
-        onStanceMax={handleStanceMax}
-        isDesktop={isDesktop}
-      />
-    </div>
+  // Compass controls rendered INLINE in the tab row's right slot (where the
+  // Compass toggle used to live) so toggling Compass never shifts the page.
+  // The lens chips show whether or not the user has calibrated — clicking an
+  // un-calibrated lens opens a "calibrate these N topics?" confirmation dialog
+  // (LensChipRow). The old below-tabs "Set your stances" CTA banner is retired.
+  const compassControls = !compassMode ? null : (
+    <CompassControlsBar
+      inline
+      userAnswers={rawUserAnswers}
+      lenses={augmentedLenses}
+      activeLensKey={activeLensKey}
+      onSelectLens={handleSelectLens}
+      onCalibrate={handleCalibrateLens}
+      onStanceMin={handleStanceMin}
+      onStanceMax={handleStanceMax}
+      isDesktop={isDesktop}
+    />
   );
-  const compassCtaSlot = (
-    <div className="mx-6 md:mx-12 mt-4 mb-2 px-4 py-4 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-ev-navy-card flex flex-col sm:flex-row sm:items-center gap-3">
-      <p className="text-sm text-gray-700 dark:text-gray-200 flex-1">
-        Set your stances to see how you align with each official on the issues.
-      </p>
-      <button
-        type="button"
-        onClick={handleBuildCompass}
-        className="shrink-0 inline-flex items-center justify-center px-5 py-2.5 text-white font-semibold rounded-full text-sm transition-colors"
-        style={{ backgroundColor: '#00657c' }}
-        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
-      >
-        Set your stances
-      </button>
-    </div>
-  );
-  // Single slot used by both views; only one view is mounted at a time.
-  const compassTopSlot = !compassMode
-    ? null
-    : compassCalibrated
-      ? compassControlsSlot
-      : (compassLoading ? null : compassCtaSlot);
 
   // Derive representing city for building image selection — uses unfiltered list
   // so the building image doesn't disappear when search filter narrows the grid.
@@ -1935,7 +1904,11 @@ export default function Results() {
               errorRow={coordError}
             />
 
-            {(tribalLand?.on_reservation || electionsLabelSuffix) && (
+            {/* Secondary info row: tribal/elections badges (when present) plus the
+                Compass on/off toggle, right-aligned on the same line as the election
+                chip — moved up here (208→215 follow-up) so turning Compass on swaps
+                the lens/key controls into the tab row without shifting the page. */}
+            {(activeQuery || browseResults) && (
               <div className="mt-2 flex items-center gap-2 flex-wrap">
                 {/* SCHEMA-03 (Phase 133 D-09): tribal_land badge in ev-coral.
                     Renders only when API response.tribal_land.on_reservation === true.
@@ -1970,8 +1943,16 @@ export default function Results() {
                     )}
                   </span>
                 )}
-                {/* Sticky CompassKey is positioned floating at top of <main>;
-                    it visually overlaps this row at scroll = 0, then pins as the user scrolls. */}
+                {/* Compass on/off toggle — right-aligned, on the same plane as the
+                    election chip. When on, the lens/key controls render in the tab
+                    row's right slot below (no page shift). */}
+                <div className="ml-auto shrink-0">
+                  <FilterBar
+                    compassMode={compassMode}
+                    onCompassModeChange={handleCompassModeChange}
+                    isDark={isDark}
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -2009,12 +1990,11 @@ export default function Results() {
                   Elections
                 </button>
               </div>
+              {/* Compass lens/key controls occupy the slot the toggle used to sit in
+                  (the toggle moved up to the election-chip row). Rendered only when
+                  Compass is on; empty otherwise, so toggling doesn't shift the page. */}
               <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
-                <FilterBar
-                  compassMode={compassMode}
-                  onCompassModeChange={handleCompassModeChange}
-                  isDark={isDark}
-                />
+                {compassControls}
               </div>
             </div>
           )}
@@ -2043,9 +2023,6 @@ export default function Results() {
                     Showing representatives across {localityLabel ? <span className="font-semibold">{localityLabel}</span> : 'this city'}. Enter your full street address for your exact representatives.
                   </div>
                 )}
-
-                {/* Compass controls / CTA — placed after the banner so the overlay never covers it */}
-                {(activeQuery || browseResults) && compassTopSlot}
 
                 {/* Loading skeletons */}
                 {phase === 'loading' && (
@@ -2193,9 +2170,6 @@ export default function Results() {
                   stateCode={userState || null}
                 />
               )}
-
-              {/* Compass controls / CTA — after the voter-info card so the overlay never covers it */}
-              {compassTopSlot}
 
               <ElectionsView
                 elections={nearestElection}

@@ -89,13 +89,10 @@ function LensButton({
   lens,
   isActive,
   needsCalibration,
-  showPrompt,
   isDesktop,
   isDark,
   stateStyle,
   onClick,
-  onMouseEnter,
-  onMouseLeave,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -124,7 +121,7 @@ function LensButton({
         className="stance-btn"
         aria-label={lens.name}
         {...(needsCalibration ? {} : { 'aria-pressed': isActive })}
-        {...getReferenceProps({ onMouseEnter, onMouseLeave })}
+        {...getReferenceProps()}
         onClick={onClick}
         style={{
           width: 'auto',
@@ -140,7 +137,7 @@ function LensButton({
         )}
       </button>
 
-      {isDesktop && isOpen && !showPrompt && (
+      {isDesktop && isOpen && (
         <FloatingPortal>
           <div
             ref={refs.setFloating}
@@ -169,45 +166,25 @@ function LensButton({
 
 export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, isDesktop }) {
   const { isDark } = useTheme();
-  // Desktop hover state (which purple chip currently shows the prompt) and
-  // mobile first-tap state (which purple chip is awaiting its confirming
-  // second tap) are tracked separately — the two affordances never overlap
-  // on a single device (D-11).
-  const [hoveredKey, setHoveredKey] = useState(null);
-  const [tappedKey, setTappedKey] = useState(null);
+  // Clicking an un-calibrated lens opens a confirmation dialog ("Calibrate these
+  // N topics?") rather than jumping straight to the quiz. confirmLens holds the
+  // lens whose dialog is open (null = no dialog).
+  const [confirmLens, setConfirmLens] = useState(null);
 
   if (!Array.isArray(lenses) || lenses.length === 0) return null;
-
-  const dismissPrompt = () => {
-    setHoveredKey(null);
-    setTappedKey(null);
-  };
 
   const handleChipClick = (lens) => {
     if (lens.calibrated) {
       onSelectLens(lens.key);
       return;
     }
-    // Needs-calibration chip.
-    if (isDesktop) {
-      // Desktop already revealed the prompt on hover — a click confirms it.
-      onCalibrate(lens.key);
-      dismissPrompt();
-      return;
-    }
-    // Mobile: first tap reveals the prompt; second tap confirms (D-11).
-    if (tappedKey === lens.key) {
-      onCalibrate(lens.key);
-      dismissPrompt();
-    } else {
-      setTappedKey(lens.key);
-    }
+    // Needs calibration — confirm before leaving for the calibration flow.
+    setConfirmLens(lens);
   };
 
-  const handlePromptClick = (lens, e) => {
-    e.stopPropagation();
-    onCalibrate(lens.key);
-    dismissPrompt();
+  const confirmCalibrate = () => {
+    if (confirmLens) onCalibrate(confirmLens.key);
+    setConfirmLens(null);
   };
 
   return (
@@ -215,9 +192,6 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
       {lenses.map((lens) => {
         const isActive = activeLensKey === lens.key;
         const needsCalibration = lens.calibrated === false;
-        const showPrompt = needsCalibration && (
-          (isDesktop && hoveredKey === lens.key) || (!isDesktop && tappedKey === lens.key)
-        );
 
         // Chips overlay the location banner, so every state needs an OPAQUE
         // surface — a transparent/low-alpha fill lets the banner photo bleed
@@ -247,44 +221,76 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
               lens={lens}
               isActive={isActive}
               needsCalibration={needsCalibration}
-              showPrompt={showPrompt}
               isDesktop={isDesktop}
               isDark={isDark}
               stateStyle={stateStyle}
               onClick={() => handleChipClick(lens)}
-              onMouseEnter={() => { if (needsCalibration && isDesktop) setHoveredKey(lens.key); }}
-              onMouseLeave={() => { if (isDesktop) setHoveredKey((k) => (k === lens.key ? null : k)); }}
             />
-            {showPrompt && (
-              <div
-                role="button"
-                tabIndex={0}
-                onClick={(e) => handlePromptClick(lens, e)}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePromptClick(lens, e); }}
-                style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: 0,
-                  marginTop: 4,
-                  zIndex: 31,
-                  whiteSpace: 'nowrap',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  padding: '6px 10px',
-                  borderRadius: 8,
-                  cursor: 'pointer',
-                  background: isDark ? '#1f2937' : '#fff',
-                  color: isDark ? '#e5e7eb' : '#111827',
-                  border: '1.5px solid #7C3AED',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                }}
-              >
-                Calibrate this lens?
-              </div>
-            )}
           </div>
         );
       })}
+
+      {confirmLens && (
+        <FloatingPortal>
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Calibrate the ${confirmLens.name}`}
+            onClick={() => setConfirmLens(null)}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 1000,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'rgba(0,0,0,0.5)', padding: 16,
+            }}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                width: '100%', maxWidth: 380,
+                background: isDark ? '#161b22' : '#fff',
+                color: isDark ? '#e5e7eb' : '#111827',
+                borderRadius: 12,
+                padding: '20px 22px',
+                boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
+                border: `1.5px solid ${isDark ? '#30363d' : '#e5e7eb'}`,
+              }}
+            >
+              <h2 style={{ fontSize: 17, fontWeight: 700, margin: '0 0 8px', fontFamily: "'Manrope', sans-serif" }}>
+                Calibrate the {confirmLens.name}?
+              </h2>
+              <p style={{ fontSize: 14, lineHeight: 1.5, margin: '0 0 18px', color: isDark ? '#9da5b4' : '#4b5563' }}>
+                {confirmLens.topicCount
+                  ? `Answer ${confirmLens.topicCount} quick questions to see how you align with each official on these issues.`
+                  : 'Answer a few quick questions to see how you align with each official on these issues.'}
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
+                <button
+                  type="button"
+                  onClick={() => setConfirmLens(null)}
+                  style={{
+                    padding: '9px 16px', borderRadius: 8, fontSize: 14, fontWeight: 600, cursor: 'pointer',
+                    background: 'transparent',
+                    color: isDark ? '#9da5b4' : '#4b5563',
+                    border: `1px solid ${isDark ? '#30363d' : '#d1d5db'}`,
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmCalibrate}
+                  style={{
+                    padding: '9px 18px', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+                    background: '#7C3AED', color: '#fff', border: 'none',
+                  }}
+                >
+                  Calibrate
+                </button>
+              </div>
+            </div>
+          </div>
+        </FloatingPortal>
+      )}
     </div>
   );
 }
