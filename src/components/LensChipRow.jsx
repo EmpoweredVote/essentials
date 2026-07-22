@@ -1,4 +1,17 @@
 import { useState } from 'react';
+import {
+  useFloating,
+  useHover,
+  useFocus,
+  useDismiss,
+  useRole,
+  useInteractions,
+  FloatingPortal,
+  offset,
+  flip,
+  shift,
+  autoUpdate,
+} from '@floating-ui/react';
 import { useTheme } from '../hooks/useTheme';
 
 // Blend a #RGB/#RRGGBB hex toward white by `amount` (0..1). Used so a dark lens
@@ -57,6 +70,94 @@ function renderLensIcon(lens) {
     <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
       <circle cx="12" cy="12" r="4" />
     </svg>
+  );
+}
+
+// A single lens button with an accessible floating-ui tooltip (desktop only).
+// The button carries its own aria-label so the accessible name survives once
+// the visible text label is hidden on desktop. The tooltip is suppressed
+// whenever the needs-calibration prompt is showing for this lens (Pitfall 3)
+// so the two popups never stack, and the existing calibration hover handlers
+// are merged into getReferenceProps (Pitfall 2) rather than bare-spread.
+function LensButton({
+  lens,
+  isActive,
+  needsCalibration,
+  showPrompt,
+  isDesktop,
+  isDark,
+  stateStyle,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement: 'bottom',
+    middleware: [offset(8), flip(), shift({ padding: 8 })],
+    whileElementsMounted: autoUpdate,
+  });
+
+  const hover = useHover(context, { enabled: isDesktop });
+  const focus = useFocus(context, { enabled: isDesktop });
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: 'tooltip' });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
+
+  const tooltipText = lens.description || lens.name;
+
+  return (
+    <>
+      <button
+        ref={refs.setReference}
+        type="button"
+        className="stance-btn"
+        aria-label={lens.name}
+        {...(needsCalibration ? {} : { 'aria-pressed': isActive })}
+        {...getReferenceProps({ onMouseEnter, onMouseLeave })}
+        onClick={onClick}
+        style={{
+          width: 'auto',
+          height: 34,
+          padding: '0 12px',
+          gap: 6,
+          ...stateStyle,
+        }}
+      >
+        {renderLensIcon(lens)}
+        {!isDesktop && (
+          <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>{lens.name}</span>
+        )}
+      </button>
+
+      {isDesktop && isOpen && !showPrompt && (
+        <FloatingPortal>
+          <div
+            ref={refs.setFloating}
+            style={{
+              ...floatingStyles,
+              zIndex: 32,
+              background: isDark ? '#1f2937' : '#fff',
+              color: isDark ? '#e5e7eb' : '#111827',
+              padding: '6px 10px',
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+              pointerEvents: 'none',
+            }}
+            {...getFloatingProps()}
+          >
+            {tooltipText}
+          </div>
+        </FloatingPortal>
+      )}
+    </>
   );
 }
 
@@ -136,25 +237,18 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
 
         return (
           <div key={lens.key} style={{ position: 'relative', display: 'inline-flex' }}>
-            <button
-              type="button"
-              className="stance-btn"
+            <LensButton
+              lens={lens}
+              isActive={isActive}
+              needsCalibration={needsCalibration}
+              showPrompt={showPrompt}
+              isDesktop={isDesktop}
+              isDark={isDark}
+              stateStyle={stateStyle}
               onClick={() => handleChipClick(lens)}
               onMouseEnter={() => { if (needsCalibration && isDesktop) setHoveredKey(lens.key); }}
               onMouseLeave={() => { if (isDesktop) setHoveredKey((k) => (k === lens.key ? null : k)); }}
-              title={lens.description || lens.name}
-              {...(needsCalibration ? {} : { 'aria-pressed': isActive })}
-              style={{
-                width: 'auto',
-                height: 34,
-                padding: '0 12px',
-                gap: 6,
-                ...stateStyle,
-              }}
-            >
-              {renderLensIcon(lens)}
-              <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>{lens.name}</span>
-            </button>
+            />
             {showPrompt && (
               <div
                 role="button"
