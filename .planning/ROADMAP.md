@@ -71,38 +71,40 @@ already verified resolvable on 2026-07-23.
 - Integer phases (217, 218, 219, 220): Planned milestone work, continuing from v24.0 (closed at 216)
 - Decimal phases (217.1, 217.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 217: Browse Geo_ID Reconcile** - Fix the 5 hardcoded Collin browse geo_ids (Plano, Richardson, Prosper, Princeton, Van Alstyne) that currently resolve to no government
-- [ ] **Phase 218: Vacancies & Missing People** - Research and seat ~9 vacant offices across Blue Ridge, Nevada, Parker, Lowry Crossing, and Lucas; document genuine vacancies
-- [ ] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 9 zero-race governments and thicken thin coverage elsewhere
-- [ ] **Phase 220: Contact Data Backfill** - Populate `web_form_url`, missing emails, and `valid_to` term-end dates across the 18 resolving governments
+- [x] **Phase 217: Browse Geo_ID Reconcile** - ✅ COMPLETE 2026-07-23 (quick task 260723-lfc). Premise was STALE — all 23 browse geo_ids already resolved (coverage.js already correct); verified + documented mapping + COLLIN-BROWSE-01..04 met. No code/DB change needed.
+- [ ] **Phase 218: Vacancies & Missing People** - Research and seat / document ~21 unseated offices across 11 cities (re-verified live 2026-07-23): Anna(2), Blue Ridge(2), Fairview(3), Josephine(1), Lowry Crossing(1), Lucas(2), Nevada(3), Parker(3) + the 3 Ph217-reconciled cities Plano(1), Princeton(1), Van Alstyne(2). Covers ALL 23 govs (the 5 reconciled folded in per operator request).
+- [ ] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 12 zero-race governments (re-verified 2026-07-23): the original 9 (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) + the 3 Ph217-reconciled Plano, Richardson, Van Alstyne; thicken thin coverage elsewhere
+- [ ] **Phase 220: Contact Data Backfill** - Populate `web_form_url` (empty across ALL 23 govs), missing emails (Anna, Farmersville, Frisco, Lavon, Murphy, Celina + Ph217-reconciled Prosper, Princeton, Van Alstyne), and `valid_to` term-end dates across all 23 governments
 
 ### Phase Details
 
 #### Phase 217: Browse Geo_ID Reconcile
 
-**Goal**: Every one of the 23 Collin County governments in the browse list resolves to real officials data — the 5 currently-broken hardcoded geo_ids are corrected against `essentials.governments`, including the two largest cities.
+**Goal**: Every one of the 23 Collin County governments in the browse list resolves to real officials data.
 **Depends on**: Nothing (first phase; v24.0 closed at Phase 216)
-**Requirements**: COLLIN-BROWSE-01, COLLIN-BROWSE-02, COLLIN-BROWSE-03, COLLIN-BROWSE-04
-**Success Criteria** (what must be TRUE):
+**Requirements**: COLLIN-BROWSE-01, COLLIN-BROWSE-02, COLLIN-BROWSE-03, COLLIN-BROWSE-04 — all **Met**
+**Status**: ✅ COMPLETE 2026-07-23 via quick task 260723-lfc. **The premise was stale** — `src/lib/coverage.js` already carried the correct geo_ids (Plano `4858016`, Richardson `4861796`, Prosper `4859696`, Princeton `4859576`, Van Alstyne `4874924`); the phantom `4863000`-style codes existed only in an 82-day-old memory snapshot, never in current code. Live browse spot-check confirmed all 5 resolve with seated rosters. No code/DB change was required — this was verify + document.
+**Success Criteria** (all TRUE, verified):
 
-  1. Browsing Collin County shows Plano's officials (currently empty — hardcoded `4863000` resolves to nothing; correct place FIPS found and verified against `essentials.governments`)
-  2. Browsing Collin County shows Richardson's officials (currently empty)
-  3. Browsing Collin County shows officials for Prosper, Princeton, and Van Alstyne (currently empty)
-  4. All 23 Collin County browse entries (`COVERAGE_AREAS` / hardcoded geo_ids) resolve to a real government row, with the corrected geo_id mapping for the 5 fixed cities documented
-  5. The 5 newly-resolved governments are spot-checked for elections/contact/vacancy completeness; any gaps discovered are logged as a follow-up note rather than left silently unknown
+  1. ✅ Browsing Collin County shows Plano's officials (geo_id `4858016`, 8 seated)
+  2. ✅ Browsing Collin County shows Richardson's officials (geo_id `4861796`, 7 seated)
+  3. ✅ Browsing Collin County shows officials for Prosper (`4859696`), Princeton (`4859576`), and Van Alstyne (`4874924`)
+  4. ✅ All 23 Collin County browse entries resolve to a real government row; corrected geo_id mapping documented in `.planning/quick/260723-lfc-*/260723-lfc-GEOID-MAPPING.md`
+  5. ✅ The 5 reconciled governments were spot-checked; gaps folded into 218/219/220 per operator request (see re-verified gap lists in those phases)
 
-**Plans**: TBD
+**Plans**: 1 quick task (260723-lfc)
 
 #### Phase 218: Vacancies & Missing People
 
 **Goal**: Every Collin County office reflects who actually holds it today — researched incumbents are seated where a seat is genuinely filled, and truly empty seats are documented as vacant rather than left ambiguous.
-**Depends on**: Nothing (touches a disjoint set of governments from Phase 217; sequenced before 219/220 so newly-seated people carry forward)
+**Depends on**: Nothing. **Now spans all 23 govs** (the 5 Ph217-reconciled cities folded in per operator request 2026-07-23); sequenced before 219/220 so newly-seated people carry forward.
 **Requirements**: COLLIN-PEOPLE-01, COLLIN-PEOPLE-02
+**⚠ Re-verified live 2026-07-23** — the original gap list was itself incomplete (same stale-data cause as 217). True universe = **21 unseated offices (politician_id NULL) across 11 cities**. NOTE "unseated" = office row with no linked politician; 218 disambiguates each into genuine-vacancy (documented) vs needs-seeding (researched + seated with citation).
 **Success Criteria** (what must be TRUE):
 
-  1. Blue Ridge's 2 vacant offices show a researched, cited incumbent, or are explicitly documented as vacant
-  2. Nevada's 3 vacant offices, Parker's 2, Lowry Crossing's 1, and Lucas's 1 receive the same treatment (seated with evidence, or documented-vacant)
-  3. No office across the 18 resolving Collin County governments is left in an ambiguous empty state — every seat is either a real seated person or a clearly flagged vacancy
+  1. Each of these unseated offices shows a researched, cited incumbent OR is explicitly documented as genuinely vacant: **Anna (2), Blue Ridge (2), Fairview (3), Josephine (1), Lowry Crossing (1), Lucas (2), Nevada (3), Parker (3)** — 17 offices across the 8 originally-in-scope cities (note: Parker and Lucas each had one MORE unseated office than the original roadmap estimate; Anna, Fairview, Josephine were missing from the original list entirely)
+  2. The 3 Ph217-reconciled cities' unseated offices receive the same treatment: **Plano (1), Princeton (1), Van Alstyne (2)** — 4 offices
+  3. No office across all 23 resolving Collin County governments is left in an ambiguous empty state — every seat is either a real seated person or a clearly flagged vacancy
   4. Split-section SQL check runs clean after seeding
 
 **Plans**: TBD
@@ -110,26 +112,28 @@ already verified resolvable on 2026-07-23.
 #### Phase 219: Elections & Candidates Backfill
 
 **Goal**: Every Collin County government with a real municipal election shows its races and candidates on the ballot lookup — no zero-race governments, no thin coverage where seats have a known election.
-**Depends on**: Nothing (independent of Phase 217's disjoint government set; benefits from Phase 218 seating incumbents first, not a hard blocker)
+**Depends on**: Nothing. **Now spans all 23 govs** (the 3 Ph217-reconciled zero-race cities folded in per operator request); benefits from Phase 218 seating incumbents first, not a hard blocker.
 **Requirements**: COLLIN-ELECT-01, COLLIN-ELECT-02, COLLIN-ELECT-03
+**⚠ Re-verified live 2026-07-23** — zero-race count is **12, not 9**: the original 9 + the 3 Ph217-reconciled cities (Plano, Richardson, Van Alstyne) also have 0 races.
 **Success Criteria** (what must be TRUE):
 
-  1. The 9 zero-race governments (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) each show at least one seeded race with candidates where public records exist
+  1. The 12 zero-race governments (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston + **Plano, Richardson, Van Alstyne**) each show at least one seeded race with candidates where public records exist
   2. Thin cities are reviewed and backfilled so every seat with a known election has a corresponding race record
   3. Every seeded race links to the correct office and renders correctly on `/results` — no split-section defects, no zero-candidate shells masking a real race
-  4. A resident browsing any of the 18 resolving Collin County governments sees their actual current/next municipal race instead of an empty Elections section
+  4. A resident browsing any of the 23 resolving Collin County governments sees their actual current/next municipal race instead of an empty Elections section
 
 **Plans**: TBD
 
 #### Phase 220: Contact Data Backfill
 
 **Goal**: Every Collin County official's profile carries a real, working way to reach them, and an accurate term end-date where publicly known.
-**Depends on**: Nothing (independent of Phase 217's disjoint government set; benefits from Phase 218 seating incumbents first, not a hard blocker)
+**Depends on**: Nothing. **Now spans all 23 govs** (the 3 Ph217-reconciled cities folded in per operator request); benefits from Phase 218 seating incumbents first, not a hard blocker.
 **Requirements**: COLLIN-CONTACT-01, COLLIN-CONTACT-02, COLLIN-CONTACT-03
+**⚠ Re-verified live 2026-07-23** — `web_form_url` is empty across **all 23** govs (not just 18). Fully-missing email cities now include the 3 Ph217-reconciled (Prosper, Princeton, Van Alstyne); Celina is partial (1/7).
 **Success Criteria** (what must be TRUE):
 
-  1. `web_form_url` is populated for officials whose city publishes an official contact form or contact page (currently empty across all 18 resolving governments)
-  2. Email addresses are filled for Anna, Farmersville, Frisco, Lavon, Murphy, and Celina officials where publicly listed
+  1. `web_form_url` is populated for officials whose city publishes an official contact form or contact page (currently empty across all 23 resolving governments)
+  2. Email addresses are filled where publicly listed for the fully-missing cities — Anna, Farmersville, Frisco, Lavon, Murphy, **Prosper, Princeton, Van Alstyne** — plus partial-coverage cities (Celina 1/7, and any others below full)
   3. `valid_to` term-end dates are populated for seated officials where the term is publicly documented
   4. A resident viewing any Collin County official's profile sees at least one working contact method wherever the city publishes one
 
@@ -145,7 +149,7 @@ contact info too) — none is a hard blocker on the next.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 217. Browse Geo_ID Reconcile | 0/TBD | Not started | - |
+| 217. Browse Geo_ID Reconcile | 1/1 (quick) | Complete ✓ | 2026-07-23 |
 | 218. Vacancies & Missing People | 0/TBD | Not started | - |
 | 219. Elections & Candidates Backfill | 0/TBD | Not started | - |
 | 220. Contact Data Backfill | 0/TBD | Not started | - |
