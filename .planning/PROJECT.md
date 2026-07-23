@@ -46,9 +46,19 @@ written and execution-ready. See the v22.0 block below + `milestones/v22.0-*`.
 
 ## Current Focus
 
-**v24.0 and v22.0 both closed 2026-07-23.** No milestone is currently active — next is planning the
-next one. The one concrete scheduled follow-up is the **post-Aug-6 AZ 2026 candidate reconcile**
-(Phase 206, roster-only, no stances) once the state canvass certifies nominees.
+### v25.0 Collin County TX Data-Completeness (OPENED 2026-07-23 — first gsd-core milestone)
+
+**Goal:** Close the known data gaps in the already-seeded Collin County, TX coverage (23-government browse list) so every resolvable city shows complete, correct officials, elections, and contact data — and fix the browse entries that currently resolve to nothing.
+
+**Target features (all gaps verified against production DB 2026-07-23):**
+- **Browse geo_id reconcile (5 cities)** — Plano, Richardson, Prosper, Princeton, Van Alstyne resolve to **no government** under their hardcoded browse geo_ids (wrong FIPS, e.g. Plano is `4858016` not `4863000`); find the correct rows or seed the missing governments so the Collin browse button works for all 23, including the two largest cities.
+- **Elections & candidates** — 9 of 18 resolving governments have **zero races** (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston); backfill race + candidate data and thicken the thin cities.
+- **Contact data** — `web_form_url` is **empty across all 18**; email missing for Anna, Farmersville, Frisco, Lavon, Murphy (+ Celina 1/7). Populate both.
+- **Vacancies / missing people** — ~9 vacant offices (Blue Ridge 2, Nevada 3, Parker 2, Lowry Crossing 1, Lucas 1) need incumbents researched and seated.
+
+Data-only milestone (essentials + accounts-api DB via Supabase; no new UI surface). Headshot gaps for the 0-photo cities are **out of scope** — memory records no online source exists; those need manual operator sourcing. Continues phase numbering after v24.0's Phase 216.
+
+Restore point before first gsd-core command: tag `pre-gsd-core-2` (`git checkout pre-gsd-core-2 -- .planning`). Historical v12–v24 phase dirs archived to `milestones/pre-v25-phases/`.
 
 <details>
 <summary>v24.0 Results-Page Search & Header Overhaul — goal & target features (shipped)</summary>
