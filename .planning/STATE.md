@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
-current_phase: 216
-current_phase_name: unincorporated-locality-label
-status: verifying
+current_phase: 212
+current_phase_name: Backend Place-Name Resolver & National Fallback
+status: planning
 stopped_at: Completed 216-04-PLAN.md (frontend deploy + live UAT, LOC-04 verified end-to-end; Phase 216 ready for /gsd-verify-work)
-last_updated: "2026-07-23T00:13:20.593Z"
+last_updated: "2026-07-23T00:16:46.443Z"
 last_activity: 2026-07-22
-last_activity_desc: Phase 216 execution started
+last_activity_desc: Phase 216 complete, transitioned to Phase 212
 progress:
   total_phases: 4
   completed_phases: 4
@@ -21,10 +21,10 @@ progress:
 
 ## Current Position
 
-Phase: 216 (unincorporated-locality-label) — EXECUTING
-Plan: 4 of 4
-Status: Phase complete — ready for verification
-Last activity: 2026-07-22 — Phase 216 execution started
+Phase: 212 — Backend Place-Name Resolver & National Fallback
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-07-22 — Phase 216 complete, transitioned to Phase 212
 
 ### Phase 216 Plan 02 outcome (backend deploy + live smoke) — COMPLETE 2026-07-22
 
