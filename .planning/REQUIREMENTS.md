@@ -8,14 +8,20 @@
 
 ### Browse geo_id reconcile (COLLIN-BROWSE)
 
-5 of the 23 hardcoded Collin browse geo_ids resolve to **no** `essentials.governments` row,
-so the Collin County browse button silently returns nothing for them — including the two
-largest cities. Root cause appears to be wrong FIPS place codes in the hardcoded list.
+**Correction (2026-07-23, Phase 217 quick task 260723-lfc):** The premise below was
+STALE. It was derived from an 82-day-old memory snapshot (`project_collin_county_browse`)
+recording old phantom-code-style geo_ids that no longer exist anywhere in current `src`.
+Verified against production on 2026-07-23: the geo_ids in `src/lib/coverage.js` were
+**already correct** — all 24 Texas `coverage.js` entries (23 Collin governments +
+Longview) resolve to a real `essentials.governments` row and return seated officials via
+the live browse path. See the corrected mapping (including the specific phantom codes
+that were retired) + live-verification evidence in
+`.planning/quick/260723-lfc-phase-217-verify-document-confirm-all-23/260723-lfc-GEOID-MAPPING.md`.
 
-- [ ] **COLLIN-BROWSE-01**: User browsing Collin County sees officials for **Plano** (currently empty — hardcoded `4863000` resolves to nothing; correct place FIPS ≈ `4858016`).
-- [ ] **COLLIN-BROWSE-02**: User browsing Collin County sees officials for **Richardson** (currently empty).
-- [ ] **COLLIN-BROWSE-03**: User browsing Collin County sees officials for **Prosper**, **Princeton**, and **Van Alstyne** (currently empty).
-- [ ] **COLLIN-BROWSE-04**: The Collin County browse list (`COVERAGE_AREAS` / hardcoded geo_ids) is reconciled against `essentials.governments` so all 23 governments resolve, with a documented mapping of any corrected geo_ids.
+- [x] **COLLIN-BROWSE-01**: User browsing Collin County sees officials for **Plano** (geo_id `4858016` resolves / renders 8 seated officials).
+- [x] **COLLIN-BROWSE-02**: User browsing Collin County sees officials for **Richardson** (geo_id `4861796` resolves / renders 7 seated officials).
+- [x] **COLLIN-BROWSE-03**: User browsing Collin County sees officials for **Prosper** (geo_id `4859696`), **Princeton** (geo_id `4859576`), and **Van Alstyne** (geo_id `4874924`) — all resolve / render seated officials.
+- [x] **COLLIN-BROWSE-04**: The Collin County browse list (`COVERAGE_STATES` Texas block in `src/lib/coverage.js`) is reconciled against `essentials.governments` — all 24 entries resolve, with the corrected geo_id mapping documented in `260723-lfc-GEOID-MAPPING.md`.
 
 ### Elections & candidates (COLLIN-ELECT)
 
@@ -59,10 +65,10 @@ All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no dup
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COLLIN-BROWSE-01 | Phase 217 | Pending |
-| COLLIN-BROWSE-02 | Phase 217 | Pending |
-| COLLIN-BROWSE-03 | Phase 217 | Pending |
-| COLLIN-BROWSE-04 | Phase 217 | Pending |
+| COLLIN-BROWSE-01 | Phase 217 | Met |
+| COLLIN-BROWSE-02 | Phase 217 | Met |
+| COLLIN-BROWSE-03 | Phase 217 | Met |
+| COLLIN-BROWSE-04 | Phase 217 | Met |
 | COLLIN-PEOPLE-01 | Phase 218 | Pending |
 | COLLIN-PEOPLE-02 | Phase 218 | Pending |
 | COLLIN-ELECT-01 | Phase 219 | Pending |
