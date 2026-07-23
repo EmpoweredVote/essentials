@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@empoweredvote/analytics": "^0.1.3",
-    "@empoweredvote/ev-ui": "^0.9.9",
+    "@empoweredvote/ev-ui": "^0.10.0",
     "@floating-ui/react": "^0.27.19",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
