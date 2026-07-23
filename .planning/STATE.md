@@ -21,10 +21,16 @@ progress:
 
 ## Current Position
 
-Phase: 217 (Browse Geo_ID Reconcile) — not yet planned
+Phase: 217 (Browse Geo_ID Reconcile) — satisfied via quick task 260723-lfc (verify+document)
 Plan: —
-Status: Planning
-Last activity: 2026-07-23 — v25.0 roadmap created (Phases 217–220, 12/12 requirements mapped)
+Status: Planning (218 next)
+Last activity: 2026-07-23 - Completed quick task 260723-lfc: Phase 217 browse geo_id verify+document (COLLIN-BROWSE-01..04 Met)
+
+## Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260723-lfc | Phase 217 verify+document: confirm all 23 Collin County TX browse geo_ids resolve (premise stale, already fixed in coverage.js), document corrected geo_id mapping, mark COLLIN-BROWSE-01..04 met, log 5-city gaps as follow-ups | 2026-07-23 | b4aff9ed | [260723-lfc-phase-217-verify-document-confirm-all-23](./quick/260723-lfc-phase-217-verify-document-confirm-all-23/) |
 
 ## Project Reference
 
