@@ -14,6 +14,16 @@ import {
 } from '@floating-ui/react';
 import { useTheme } from '../hooks/useTheme';
 
+// Plain-language, one-line summary of what each lens focuses the compass on,
+// shown under the lens name in the tooltip. Keyed by the lens `key`; falls back
+// to the API-supplied lens.description, then to no summary, for any future key.
+const LENS_SUMMARIES = {
+  custom: 'The issues you and this candidate have both weighed in on',
+  federal: 'How members of Congress vote on national issues',
+  judicial: 'How judges & DAs approach the law',
+  local: 'How city & county leaders handle local issues',
+};
+
 // Blend a #RGB/#RRGGBB hex toward white by `amount` (0..1). Used so a dark lens
 // color (e.g. federal navy #1E3A5F) stays legible as inactive text/border on the
 // dark chip surface — the raw color is near-invisible there.
@@ -111,7 +121,10 @@ function LensButton({
 
   const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
 
-  const tooltipText = lens.description || lens.name;
+  // Tooltip: lens name as the title, with a brief plain-language summary of
+  // what the lens focuses the compass on beneath it (falls back to the
+  // API-supplied description, then to just the title).
+  const tooltipSummary = LENS_SUMMARIES[lens.key] || lens.description || '';
 
   return (
     <>
@@ -146,17 +159,20 @@ function LensButton({
               zIndex: 32,
               background: isDark ? '#1f2937' : '#fff',
               color: isDark ? '#e5e7eb' : '#111827',
-              padding: '6px 10px',
+              padding: '7px 11px',
               borderRadius: 8,
-              fontSize: 12,
-              fontWeight: 600,
-              whiteSpace: 'nowrap',
+              maxWidth: 240,
               boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
               pointerEvents: 'none',
             }}
             {...getFloatingProps()}
           >
-            {tooltipText}
+            <div style={{ fontSize: 12.5, fontWeight: 700 }}>{lens.name}</div>
+            {tooltipSummary && (
+              <div style={{ fontSize: 11.5, fontWeight: 500, marginTop: 2, lineHeight: 1.35, color: isDark ? '#9da5b4' : '#4b5563' }}>
+                {tooltipSummary}
+              </div>
+            )}
           </div>
         </FloatingPortal>
       )}
