@@ -4,10 +4,9 @@ import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
-import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
-import { COVERAGE_STATES, coverageAreaToPath } from '../lib/coverage';
-import { resolveLocalityRoute } from '../lib/localitySearch';
-import LocalityMatches from '../components/LocalityMatches';
+import { COVERAGE_STATES } from '../lib/coverage';
+import { browseAreaRoute, coordinateRoute } from '../lib/localitySearch';
+import LocationCombobox from '../components/LocationCombobox';
 import { getAutoOpenMyLocation } from '../lib/locationPref';
 
 
@@ -31,8 +30,7 @@ const SearchIcon = () => (
 
 export default function Landing() {
   const [addressInput, setAddressInput] = useState('');
-  const [searching, setSearching] = useState(false);
-  const addressInputRef = useRef(null);
+  const comboboxWrapperRef = useRef(null);
   const coverageRef = useRef(null);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -43,16 +41,6 @@ export default function Landing() {
   const fromSearch = searchParams.get('from_search');
   const coverageStateParam = searchParams.get('coverage_state');
   const isUncovered = searchParams.get('uncovered') === '1';
-
-  // Bind Google Places autocomplete to the address input (same hook the results
-  // page uses). Selecting a suggestion navigates straight to the results page.
-  useGooglePlacesAutocomplete(addressInputRef, {
-    onPlaceSelected: (addr) => {
-      setAddressInput(addr);
-      track('essentials_address_searched', { method: 'autocomplete' });
-      navigate(`/results?q=${encodeURIComponent(addr)}`);
-    },
-  });
 
   // Connected-account auto-port to the user's saved home location is OPT-IN
   // (default OFF). Only redirect when the user has explicitly enabled "Default to
@@ -79,33 +67,35 @@ export default function Landing() {
     return () => document.removeEventListener('visibilitychange', handleVisible);
   }, [myLocationNotSet]);
 
-  const handleSearch = async () => {
-    // Read the live DOM value, not React state: Google Places Autocomplete writes
-    // directly to the input element, and not every write fires React's onChange, so
-    // `addressInput` state can lag/truncate behind what's actually in the box (the
-    // dropdown matches the full text but state may be stale). The ref is the source
-    // of truth; fall back to state only if the ref isn't mounted.
-    const q = (addressInputRef.current?.value ?? addressInput).trim();
-    if (!q || searching) return;
+  // LocationCombobox is fully controlled and classifies input itself (SRCH-06,
+  // RESEARCH Dispatch Wiring) — an address-classified submit skips the old
+  // resolveLocalityRoute third-party-geocoder detour entirely and goes straight
+  // to the Results address path; a name-classified selection dispatches via browseAreaRoute; a
+  // coordinate-classified submit hands off to Results via the Plan 02
+  // coordinateRoute contract (SRCH-05) — Results reads lat/lng/coord_raw on mount.
+  const handleSubmitAddress = (raw) => {
     track('essentials_address_searched', { method: 'manual' });
-    setSearching(true);
-    try {
-      // ADR-0001: classify the query — a covered city/state/county routes to
-      // Browse-by-Location; a street address (or anything we can't classify)
-      // falls through to the normal address search.
-      const route = await resolveLocalityRoute(q);
-      navigate(route.kind === 'address' ? `/results?q=${encodeURIComponent(q)}` : route.to);
-    } finally {
-      setSearching(false);
-    }
+    navigate(`/results?q=${encodeURIComponent(raw)}`);
+  };
+
+  const handleSubmitCoordinate = (lat, lng, raw) => {
+    // T-214-02: no raw {lat, lng} in telemetry — Results' own on-mount resolver
+    // captures method/outcome once it resolves the hand-off.
+    track('essentials_coordinate_searched', { method: 'landing_handoff' });
+    navigate(coordinateRoute(lat, lng, raw));
+  };
+
+  const handleSelectCandidate = (candidate) => {
+    track('essentials_locality_searched', { label: candidate.label, state: candidate.state });
+    navigate(browseAreaRoute(candidate));
   };
 
   // The active "Choose Your Area" step reads as a button — make it act like one
-  // by focusing the address input (scrolling it into view on mobile, where the
+  // by focusing the search field (scrolling it into view on mobile, where the
   // step cards sit below the search).
   const handleAreaStepClick = () => {
-    addressInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    addressInputRef.current?.focus({ preventScroll: true });
+    comboboxWrapperRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    comboboxWrapperRef.current?.querySelector('input')?.focus({ preventScroll: true });
   };
 
   const handleAreaClick = (area) => {
@@ -273,44 +263,21 @@ export default function Landing() {
                 </div>
                 {nameSearchResults}
 
-                {/* Address search — input takes the row; the Search button collapses to a
-                    magnifying-glass icon on mobile so the full address stays readable. */}
-                <div className="flex gap-2 mt-3">
-                  <input
-                    ref={addressInputRef}
-                    type="text"
+                {/* Location search — the shared LocationCombobox (SRCH-06): the same
+                    component instance powering the Results header. Address/place/
+                    coordinate submits are classified and dispatched by the combobox
+                    itself; Landing only supplies the navigation targets. */}
+                <div ref={comboboxWrapperRef} className="mt-3">
+                  <LocationCombobox
                     value={addressInput}
-                    onChange={(e) => setAddressInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                    aria-label="Enter your street address"
-                    placeholder="Enter your street address — anywhere in the U.S."
-                    className="flex-1 min-w-0 px-3 py-4 text-sm border-2 border-ev-yellow rounded-xl focus:outline-none focus:ring-2 focus:ring-ev-yellow bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-400 shadow-sm"
+                    onChange={setAddressInput}
+                    onSubmitAddress={handleSubmitAddress}
+                    onSubmitCoordinate={handleSubmitCoordinate}
+                    onSelectCandidate={handleSelectCandidate}
+                    placeholder="Address, city, or coordinates — anywhere in the U.S."
+                    ariaLabel="Enter your street address, city, county, state, or decimal coordinates"
                   />
-                  <button
-                    onClick={handleSearch}
-                    disabled={!addressInput.trim() || searching}
-                    aria-label="Search"
-                    className="shrink-0 flex items-center justify-center min-w-[52px] px-4 sm:px-5 py-4 text-base font-bold text-black bg-ev-yellow rounded-xl hover:bg-ev-yellow-dark disabled:opacity-50 disabled:cursor-not-allowed transition-colors whitespace-nowrap"
-                  >
-                    <svg
-                      className="w-5 h-5 sm:hidden" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <circle cx="11" cy="11" r="7" />
-                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                    <span className="hidden sm:inline">Search</span>
-                  </button>
                 </div>
-                <LocalityMatches
-                  query={addressInput}
-                  inputRef={addressInputRef}
-                  onSelect={(area) => {
-                    track('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
-                    navigate(coverageAreaToPath(area));
-                  }}
-                />
               </div>
               {!compassLoading && isLoggedIn && myLocationNotSet && (
                 <div className="mt-3 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">

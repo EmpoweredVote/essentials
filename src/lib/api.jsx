@@ -1,7 +1,9 @@
 import { apiFetch, publicFetch } from './auth';
 
-// Debug: log the API URL on first load
-if (!window.__API_LOGGED__) {
+// Debug: log the API URL on first load. Guarded for non-browser import
+// contexts (e.g. Vitest's default node environment for api.test.js) where
+// `window` does not exist.
+if (typeof window !== 'undefined' && !window.__API_LOGGED__) {
   console.log("API URL: (using apiFetch Bearer wrapper)");
   window.__API_LOGGED__ = true;
 }
@@ -111,11 +113,13 @@ export async function searchPoliticians(query) {
     // responses (legacy /candidates/search) leave tribal_land undefined.
     let politicians = data;
     let tribal_land;
+    let locality;
     if (data && !Array.isArray(data) && Array.isArray(data.politicians)) {
       politicians = data.politicians;
       tribal_land = data.tribal_land;
+      locality = data.locality;
     }
-    return { status: status || "fresh", data: politicians, formattedAddress, tribal_land };
+    return { status: status || "fresh", data: politicians, formattedAddress, tribal_land, locality };
   } catch (error) {
     console.error("Search error:", error);
     return { status: "error", data: [], error: error.message, formattedAddress: "" };
@@ -494,5 +498,65 @@ export async function searchPoliticiansByName(query) {
   } catch (error) {
     console.error('searchPoliticiansByName error:', error);
     return { status: 'error', data: [], error: error?.message || 'Network error' };
+  }
+}
+
+// SRCH-04 / SRCH-05 — combobox foundations (Phase 214). Both endpoints are
+// explicitly anonymous (Phase 212/213 CONTEXT.md) so both functions use
+// publicFetch, NOT apiFetch — apiFetch's 401->login redirect is wrong for a
+// typeahead that may fire while the user isn't logged in.
+
+/** Ranked place-name candidates from the Phase 212 resolver.
+ *  Response shape: [{ geo_id, mtfcc, label, state, has_local_data }] —
+ *  tolerates either a bare array or a { candidates: [...] } envelope. */
+export async function searchLocationsByName(query) {
+  try {
+    const res = await publicFetch(`/essentials/location-search?q=${encodeURIComponent(query)}`);
+    if (!res || !res.ok) return { data: [], error: `${res?.status ?? 'unknown'}` };
+    const data = await res.json();
+    return { data: Array.isArray(data) ? data : (data.candidates || []), error: null };
+  } catch (err) {
+    console.error('searchLocationsByName error:', err);
+    return { data: [], error: err.message };
+  }
+}
+
+/** Phase 213 anonymous coordinate lookup. Body: { lat, lng }.
+ *  Success response is AddressSearchResult-shaped (same as address search)
+ *  with an empty matchedAddress (never echoes the coordinate — 213 D-06/D-05
+ *  privacy contract) and a distinct 422 taxonomy: OUTSIDE_US_BOUNDS /
+ *  SWAPPED_COORDINATES / INVALID_COORDINATES. */
+export async function lookupCoordinate(lat, lng) {
+  try {
+    const res = await publicFetch('/essentials/coordinate-lookup', {
+      method: 'POST',
+      body: JSON.stringify({ lat, lng }),
+    });
+    if (!res) return { data: [], error: null, code: null, formattedAddress: '', locality: null };
+    if (res.status === 422) {
+      let code = 'INVALID_COORDINATES';
+      try {
+        const errJson = await res.json();
+        if (errJson?.code) code = errJson.code;
+      } catch { /* fall through to default code */ }
+      return { data: [], error: 'validation', code, formattedAddress: '', locality: null };
+    }
+    if (!res.ok) return { data: [], error: `${res.status}`, code: null, formattedAddress: '', locality: null };
+    const data = await res.json();
+    // Mirrors AddressSearchResult shape: { politicians, ... } or a flat array.
+    const politicians = Array.isArray(data) ? data : (data.politicians || []);
+    // LOC-04 (Phase 216-03): surface locality alongside politicians. Coordinate
+    // route inherits `locality` verbatim from the shared core (216-01/216-02);
+    // tribal_land unwrap here is DEFERRED per 216-01 planner decision — do not add.
+    return {
+      data: politicians,
+      error: null,
+      code: null,
+      formattedAddress: data.matchedAddress ?? '',
+      locality: Array.isArray(data) ? null : (data.locality ?? null),
+    };
+  } catch (err) {
+    console.error('lookupCoordinate error:', err);
+    return { data: [], error: err.message, code: null, formattedAddress: '', locality: null };
   }
 }

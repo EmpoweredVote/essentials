@@ -1,333 +1,176 @@
-# Research Summary: v5.0 Location Onboarding Playbook — Cambridge, MA
+# Project Research Summary
 
-**Project:** Essentials (empowered.vote) — Cambridge, MA civic coverage + reusable location playbook
-**Domain:** US city onboarding — government structure, officials data, geofences, elections, headshots
-**Researched:** 2026-05-15
+**Project:** Essentials — Results-Page Search & Header Overhaul (v24.0)
+**Domain:** Unified civic location search (single combobox resolving address / city-county-state name / coordinates → officials profile) + header/filter declutter, added to an existing React 19 + Express/PostGIS civic-officials app
+**Researched:** 2026-07-20
 **Confidence:** HIGH
-
----
 
 ## Executive Summary
 
-Cambridge, MA is the proof-of-concept city for the v5.0 Location Onboarding Playbook milestone. It uses a Council-Manager form of government with 9 at-large City Councillors (double-l) elected via Single Transferable Vote — the longest continuously-running STV jurisdiction in the US, in place since 1941. The Mayor is NOT a separately-elected office: it is a title given to the councillor who led first-choice votes in the preceding STV election, making it a derived ceremonial role with no independent executive authority. The City Manager (currently Yi-An Huang) is the actual chief executive. This is the single most important structural fact in the entire milestone and must drive every schema decision.
+v24.0 replaces Essentials' cluttered multi-row results header with one always-editable combobox that must silently dispatch any US-shaped input — full street address, bare city/county/state name, or raw coordinates — to the right resolver and land the user on a coherent location profile, guaranteeing at minimum state + federal officials anywhere in the US. This is not a single-geocoder problem: it is a **clean three-way branch**. Coordinates skip geocoding entirely and go straight to the existing PostGIS `ST_Covers` pattern (`getElectionsByCoordinate`). Full street addresses keep using the existing, proven, free US Census one-line geocoder unchanged. Bare city/county/state names — explicitly *not* street addresses — must NOT be routed through the Census address endpoint (already burned once, on record in Key Decisions: "Census Geocoder unreliable with city+state; also returns wrong-district races") and instead need a brand-new backend name-resolver querying the project's own `essentials.governments`/`geofence_boundaries` tables via the already-proven `pg_trgm`/`unaccent` fuzzy-match pattern from `campaignFinanceSearchService.ts`, extended with a one-time Census Gazetteer ingest for nationwide place coverage beyond the ~20 states already deep-seeded.
 
-The implementation path is low-friction on the technology side. No new npm packages are required, TIGER 2024 boundaries work for MA with a one-line allowlist addition to the existing loader, and every migration pattern needed (governments, chambers, offices, politicians, geofences) already exists in the codebase from TX/CA/IN. The main effort is data collection — all Cambridge and MA sources are HTML-only with no bulk-download APIs — and the careful handling of three Cambridge-specific quirks: (1) the non-elected Mayor, (2) the odd-year election cycle (next city election is November 2027, not 2026), and (3) the 3+ state legislative districts splitting the city, which require PostGIS geofences rather than a simple one-district assumption.
+The recommended approach requires almost no new infrastructure: zero new Postgres extensions (pg_trgm/unaccent are already live via migration 040), one new frontend dependency (`@headlessui/react` for an accessible Combobox — ev-ui ships no combobox primitive), a build-time ingest of the free US Census Gazetteer Files, and a handful of new/extracted backend functions that reuse existing SQL almost verbatim. The national-fallback promise is *mostly already free*: the statewide query (Senate + state execs) already runs unconditionally whenever a state is known, independent of whether local geofences exist. The one honest, documented gap is US House — it requires G5200 congressional-district geofences per state, and where those aren't loaded, House is correctly omitted (null-on-miss), not fabricated. This is a scope/caveat decision for the roadmapper, not a blocker.
 
-The v5.0 milestone also codifies a reusable LOCATION-ONBOARDING.md playbook and phase templates in .planning/. Cambridge surfaces several generalizable insights: open data portals rarely contain officials/contact data, LA data richness is an outlier not a baseline, and future cities must have their partisan/nonpartisan status and election-year type confirmed before seeding commences.
-
----
-
-## Critical Decisions
-
-These must be resolved before planning begins. Getting any one of them wrong corrupts the schema.
-
-| Decision | Answer | Rationale |
-|----------|--------|-----------|
-| **Mayor office type** | is_appointed_position = true on a LOCAL office row; share the politician row with one council seat | Mayor is NOT directly elected. Must not appear as a standalone elected executive. Do NOT use LOCAL_EXEC. |
-| **Mayor as School Committee member?** | NO — under the new 2025 charter, Mayor is no longer automatic School Committee member | The pre-2025 Plan E gave Mayor ex officio School Committee membership. The November 2025 charter change removed this. Do not model the Mayor as having a School Committee seat. |
-| **City Manager office type** | is_appointed_position = true; is_appointed = true on the politician row | Yi-An Huang is appointed by council; should appear in representative lookup results flagged as appointed. |
-| **Cambridge geo_id** | 2511000 (7-digit Census place code) | NOT 25017 (that is Middlesex County). Matches the project-wide pattern of 7-digit place codes for cities. |
-| **election_method enum** | stv_proportional — verify whether this value exists or needs adding | Cambridge STV is structurally unlike any prior city election method. Check the chambers table constraint before migrating. |
-| **Next Cambridge election** | November 2027 — seed election row with 2027 date | Massachusetts law requires municipal elections in odd-numbered years. There is NO Cambridge city election in 2026. Seeding a 2026 date is wrong. |
-| **Councillor spelling** | Double-l: Councillor | Cambridge official spelling. Hard-code in the offices title; do not normalize. |
-
----
+The dominant risk is not the technology — it's **repeating this codebase's own prior incidents**: silently rendering the wrong state's officials with full visual confidence (has already happened twice, for two different root causes), and silently emptying a tab via a shared filter-default when the milestone explicitly calls out an exception for it (the Judges tab). Both failure modes are well-understood and preventable with disambiguation-by-design and per-tab state, respectively — but only if the roadmap ships the guardrail in the *same* phase as the feature that creates the risk, not as a follow-up fix.
 
 ## Key Findings
 
-### From STACK.md
+### Recommended Stack
 
-Massachusetts (FIPS 25) requires zero new npm packages. The load-state-tiger-boundaries.ts script already handles MA MTFCC codes (G5210 = Senate, G5220 = House — identical to TX). FIPS_TO_STATE already contains 25: ma. The only code change needed is one line added to STATE_LAYER_ALLOWLIST:
+This milestone needs **at most one new npm dependency and zero new Postgres extensions.** `pg_trgm` + `unaccent` are already enabled in production and already power a mature fuzzy-name-search pattern that should be extended (not reinvented) to place names. Coordinate lookup reuses the existing `ST_Covers` pattern with no geocoder involved at all. The single real capability gap — national fallback for places outside the curated catalog — is solved with a build-time Census Gazetteer ingest, not a live third-party geocoder.
 
-```typescript
-MA: new Set(['cd', 'sldu', 'sldl', 'place']),
-```
+**Core technologies:**
+- `@headlessui/react` (^2.2.10) — accessible `Combobox` primitive for the unified field; ev-ui@0.9.8 exports no combobox/listbox primitive (verified by full named-export enumeration); built by the Tailwind team, so it slots under existing Tailwind/ev-ui tokens with zero design conflict; confirmed peer-compatible with React 19.
+- PostgreSQL `pg_trgm` + `unaccent`/`f_unaccent()` — already live since migration 040; reuse verbatim; extend the exact `word_similarity()` + GIN-index pattern from `campaignFinanceSearchService.ts` to `essentials.governments.name` and the new Gazetteer table (new migration, not a new extension).
+- PostGIS `ST_Covers` — already in use via `getElectionsByCoordinate`; the new coordinate endpoint reuses this exact geometry-matching pattern for officials, since coordinates are already a point with nothing left to geocode.
+- US Census one-line address geocoder — keep scope unchanged; already reliable for genuine street addresses; do not widen its use to city/county/state-only queries (burned once already, on record).
+- US Census Gazetteer Files (Places + Counties) — new, but free/no-key/zero-dependency; ingested once into a small reference table with the same pg_trgm GIN pattern; this is the actual mechanism that makes "Springfield, IL" (a state Essentials hasn't deep-seeded) resolve to at least IL's state+federal officials, since the curated catalog only covers ~20 states but the Gazetteer covers all ~29,000 incorporated places + all 3,143 counties.
+- Removal: `@googlemaps/js-api-loader` — dead Google Places remnant still present in `essentials/package.json`; uninstall as part of this milestone's cleanup.
+- Explicitly rejected: any paid geocoder (Mapbox/HERE/Geocodio/SmartyStreets), Nominatim as a live dependency, a dedicated search engine (Algolia/Typesense/Elasticsearch), `react-select`/MUI Autocomplete/`cmdk`, and micro-packages for coordinate parsing (hand-write a ~30-line parser instead).
 
-All candidate and officials data requires manual SQL migrations. The MA Secretary of State (sec.state.ma.us), Cambridge election commission, and malegislature.gov are HTML-only with no CSV exports or documented APIs.
+### Expected Features
 
-**Confirmed officials:**
-- City Council (9): McGovern (Mayor), Siddiqui, Azeem (Vice Mayor), Sobrinho-Wheeler, Simmons, Nolan, Zusy, Al-Zubi, Flaherty
-- School Committee (6 elected): Weinstein (Chair), Dube (Vice Chair), de Paula Santos, Harding Jr., Hudson, Jaikumar
-- State House (3 confirmed districts): 24th Middlesex (Rogers), 25th Middlesex (Decker), 26th Middlesex (Connolly)
-- US Congress: MA-05 (Clark) confirmed; MA-07 (Pressley) vs. MA-08 (Lynch) disputed — see Conflict Resolution below
-- US Senate: Warren, Markey
+**Must have (table stakes):**
+- Single field accepts address, city, city+state, county, state, and coordinates with no mode switch — requires an input classifier that routes before hitting any single resolver.
+- Typeahead suggestions while typing, debounced 200-300ms, capped ~5-8 results.
+- Disambiguation of duplicate place names with `City, ST` / `County, ST` / `ST` labels in every suggestion row — never a bare ambiguous name (the "Springfield problem": 41+ US Springfields).
+- Graceful "no match" state — never a silent blank result or crash.
+- Enter-to-submit raw text without requiring a dropdown click.
+- Pre-filled, instantly-editable "current location" affordance (the milestone's explicit design goal).
+- National fallback: any resolvable US input returns at least state + federal officials — flagged as a dependency gap pending 50-state CD/state geofence confirmation, not an assumption to bake in blindly.
+- Basic ARIA combobox semantics from day one (role, aria-expanded/controls/activedescendant, keyboard nav) — not a bolt-on.
 
-### From FEATURES.md
+**Should have (differentiators):**
+- One field truly unifying all input types with silent classification (the actual point of v24.0 — the field itself is the differentiator).
+- Coordinate paste support (decimal degrees now; DMS as a v1.x stretch).
+- Own-data typeahead replacing Google Places entirely (trust/privacy positioning, matches existing "No Google Places" constraint).
+- Anonymous-first — no forced geolocation prompt on load; opt-in icon only, consistent with the existing `ev:autoOpenMyLocation` opt-in precedent.
 
-Cambridge government uses Council-Manager form — a first for this project. The STV election system means 18-25 candidates per 9-seat council race and 12-20 candidates per 6-seat school committee race. Ballotpedia does not reliably cover Cambridge (population ~118K, below their threshold). The MMA Data Hub (mma.org) is the fastest cold-start source for any MA city form of government and key officials.
+**Defer (v2+):**
+- DMS coordinate parsing, opt-in "use my location" button, suggestion-list virtualization, cross-street/intersection parsing, promoting the component into `@empoweredvote/ev-ui`.
 
-**Table stakes** (Cambridge must have these to be usable):
-- Cambridge governments, chambers, offices rows
-- All 9 incumbents with headshots
-- All 6 school committee members with headshots
-- City boundary geofence (place layer, GEOID 2511000)
-- State legislative district geofences (2 confirmed senate + 3 confirmed house districts)
-- Federal district geofences (2 congressional districts)
-- State and federal politicians linked to Cambridge districts
+**Anti-features to explicitly avoid:** auto-triggering the browser geolocation prompt on load; requiring a suggestion pick before submit; ZIP-only as the primary input signal; re-adding "Search by name" inside the location field; restoring the old LocationBrowser tree "as a safety net"; international address support.
 
-**Differentiators** (valuable but not v5.0 MVP):
-- STV multi-round results display (round-by-round data exists as HTML; no prior UI art in codebase)
-- Cross-office politician linking (Azeem is simultaneously Councillor, Vice Mayor, and 2026 state senate candidate)
-- Charter change timeline display (2025 charter approved 73%)
-- Compass stances for Cambridge council members (housing/zoning is the dominant local issue)
+### Architecture Approach
 
-**Anti-features** (do NOT build in v5.0):
-- Mayor modeled as a separate elected office
-- All 6 house district geofences in phase 1 (ship senate + federal first)
-- STV round-by-round results visualization (high complexity, no precedent in codebase)
-- Real-time 2027 candidate discovery (filing not open until summer 2027)
+This is a refactor/integration question, not a greenfield build — all findings are grounded in direct reads of both repos. `LocationSearch.jsx` (new) becomes one component with one `onResolve({kind, ...})` callback replacing today's four coordinated moving parts (mode toggle, Google-bound address input, `LocalityMatches`, `LocationBrowser`); it is a **pure dispatcher** that decides which existing URL/fetch path applies and never fetches representatives itself for name/state matches, keeping `Results.jsx`'s large existing URL-param-driven fetch-effect hierarchy untouched. On the backend, `getRepresentativesByAddress` is split so job (2) — running the district/statewide/tribal PostGIS queries against a point — is factored into a new standalone `getRepresentativesByCoordinate(lat, lng, {state?})`, with `getRepresentativesByAddress` becoming a thin `geocodeAddress()` -> delegate wrapper. A new `locationSearchService.ts` (its own file, since it returns place names not politicians) runs the pg_trgm/word_similarity query over `geofence_boundaries` + `governments`, exposed via a new `GET /essentials/location-search` route, alongside a new dedicated `POST /candidates/by-coordinate` route (never overloading `/candidates/search`'s address-string-specific contract with shape-sniffing).
 
-### From ARCHITECTURE.md
+**Major components:**
+1. `LocationSearch.jsx` (frontend, new) — single combobox; classifies input; dispatches to name-resolver, coordinate endpoint, or address search; renders inline matches.
+2. `src/lib/placeSearch.js` (frontend, new) — pure input classifier (address-shaped vs. name-shaped heuristic, e.g. leading digit) + thin API wrappers; kept separate from `coverage.js` (the static, hand-curated Landing-page catalog) to avoid conflating "curated grid" with "live DB-truth search."
+3. `getRepresentativesByCoordinate()` (backend, new/extracted, in `essentialsService.ts`) — shares helpers/SQL with `getRepresentativesByAddress`; the enclave-alias correction (`ENCLAVE_CITY_ALIASES`) stays address-string-only since a raw coordinate or resolved place has no address string to pattern-match — a known, small, documented gap.
+4. `locationSearchService.ts` (backend, new) — pg_trgm-ranked place-name search over `geofence_boundaries` + `governments`, unioned with a static 50-state name/abbreviation list for exact state resolution.
+5. `essentialsBrowseService.ts` (`getStatewideOfficials`/`getFederalOfficials`, unchanged) — reused as-is as the national-fallback data source; the statewide query already runs unconditionally on state, independent of district-row results.
 
-All patterns needed for Cambridge already exist in the codebase. Key reuse:
-- Migration 087: government row template
-- Migration 088: city chambers + offices template
-- Migrations 091-096: politician seed template
-- load-state-tiger-boundaries.ts: handles MA with one-line change
-- Landing.jsx COVERAGE_AREAS: Cambridge uses browseGovernmentList pattern with geo_id 2511000
+**Suggested backend -> frontend build order** (from ARCHITECTURE.md, respecting the cross-repo Render-deploy dependency — backend must ship and be smoke-tested before frontend consumes it):
+1. Migration: pg_trgm GIN indexes on `geofence_boundaries.name` and `governments.name`.
+2. Extract `getRepresentativesByCoordinate()` from `getRepresentativesByAddress()`; regression-safe, no route change yet.
+3. New routes `POST /candidates/by-coordinate` and `GET /location-search`; deploy + curl/Postman smoke-test before any frontend work starts.
+4. Frontend library layer: `placeSearch.js` + 2 new `api.jsx` functions, unit-testable against the live backend with no UI changes.
+5. Build `LocationSearch.jsx` against the library layer; wire alongside (not yet replacing) the old header; add the new `?lat=&lng=` URL-param fetch branch.
+6. Swap-in + retire: replace the old header block, delete `LocalityMatches.jsx`/`LocationBrowser.jsx`/`useGooglePlacesAutocomplete.js`/`localitySearch.js`, remove the Google dependency + env var.
+7. `Landing.jsx` parity — point its search bar at the same `LocationSearch`/`placeSearch.js` stack (required, not optional — see Pitfalls/Anti-Pattern 1 below).
+8. Header-decluttering pass (can parallelize with 5-7, no dependency on the search rewrite): `FilterBar.jsx` default-Elected + Judges exception, remove "Search by name," compass lenses -> icon buttons + tooltips.
 
-**New patterns required:**
-- At-large seat numbering: 9 at-large council seats with no ward numbers. Use 9 individual office rows titled Councillor (same title, no Place numbers — unlike TX cities).
-- Mayor as derived role: One politician row (McGovern) linked to both a Councillor office and a Mayor office (is_appointed_position = true). Schema supports dual-office linkage.
-- MA government name: Use Commonwealth of Massachusetts (not State of Massachusetts).
-- County layer: Skip the county layer for MA government purposes. Middlesex County government was largely abolished in 1997. Load the county G4020 boundary only for congressional intersection support via browseCountyGeoId: 25017.
+### Critical Pitfalls
 
-Critical path: A (TIGER boundaries) to B (government DB foundation) to C (Cambridge city structure) to D (incumbents + headshots) to E (geofences + state/federal politicians) to F (election data) to G (2026 state races) to H (compass stances) to I (playbook documentation). Phases A and B have no blocking dependencies and can start immediately.
+1. **National fallback confidently shows the WRONG state's officials** — this exact failure mode has already happened *twice* in this codebase for two different root causes (stale-state URL-param bleed fixed 2026-06-28; stray `representing_city` banner hijack fixed 2026-07-12), both sharing the pattern "a fallback/default value silently wins when the correct value is empty or ambiguous." The name-resolver must return a confidence/ambiguity signal and force a disambiguation UI whenever more than one candidate exists — never derive the fallback state from a loose substring match. Test against "Franklin, VA" and "Baltimore" (dual-tier: G4110 city + G4020 county). Owned by the backend name-resolver / national-fallback phase; disambiguation UX must ship in the *same* phase as the resolver.
 
-### From PITFALLS.md
+2. **Defaulting the type filter to "Elected" silently empties the Judges tab** — Representatives/Educators/Judges share **one global `appointedFilter` state variable**; flipping the default to `'Elected'` without splitting per-tab state or force-overriding Judges to `'All'` will hide appointed judges (merit selection, interim, not-yet-facing-retention) with no indication anything was filtered. Must ship the per-tab exception in the *same phase* as the default change — this is explicitly called out in the milestone goal, so shipping one without the other is a same-phase regression, not a future fix. Test at Bloomington, IN (a location with real geo-linked judge data) — CA's Judges tab is empty regardless due to a separate NULL-`geo_id` gap and will mask this regression.
 
-Top 5 most dangerous pitfalls:
+3. **Census one-line geocoder can't classify bare city/county/state input** — it is an address matcher tuned to TIGER address ranges, not a places/administrative-boundary API; a naive swap-in for Google's structured Geocoder will silently degrade every non-address query to "no match" -> address-search fallback -> `ADDRESS_NOT_FOUND`, defeating the milestone's core promise. Classify input shape locally first (leading digit/street-suffix -> address; else -> DB place-name resolver); reserve Census strictly for street-address-shaped input. Test "Springfield, IL" (no street number) resolves usefully, not a 422.
 
-1. **Mayor = elected executive** — Cambridge Mayor is a council-internal title, not a separately elected role. Wrong modeling misleads voters about the city actual power structure. Prevention: LOCAL (not LOCAL_EXEC) district type; is_appointed_position = true on Mayor office row; no election race row for Mayor.
+4. **No `pg_trgm`/trigram index exists yet for name search** — the only existing name-lookup query does an exact state-scoped match; a naive nationwide `ILIKE '%query%'` sequential-scans the whole `geofence_boundaries` table on every keystroke-adjacent query, and this project has already hit and fixed a near-identical unindexed-query performance incident once (`project_geofence_overlap_perf`). Ship the GIN trgm index migration in the *same* phase/PR as the query that needs it, and use `word_similarity()`/`%>`-style trigram-idiomatic queries, not leading-wildcard `ILIKE`.
 
-2. **19-37 candidates in one election view** — Cambridge STV produces ~19 council candidates and ~18 school committee candidates. The current ElectionsView.jsx has no pagination or hard limit on candidate cards per race. Prevention: UI load-test at 19+ cards before shipping Cambridge election data; add show-all toggle if needed.
+5. **Anonymous coordinate endpoint reuses the wrong privacy model, or mishandles lat/lng order** — the existing coordinate-based RPC (`connect.resolve_user_local_officials`) is built entirely around already-vaulted, already-consented coordinates for a known Connected user; the new endpoint is a fundamentally different, anonymous, stateless surface and must never touch vault/write paths, must validate US bounding-box ranges server-side (catching swapped `lat`/`lng` — Census/PostGIS both expect `(lng, lat)` order, already a documented in-repo footgun), and should prefer POST body over `?lat=&lng=` query params to avoid coordinate leakage into logs/analytics/Referer headers.
 
-3. **2025 charter change — Mayor off School Committee** — Pre-2025 Plan E gave Mayor automatic School Committee membership. The November 2025 charter removes this. Prevention: seed School Committee as 6 elected members; do not add Mayor as automatic member.
+## Implications for Roadmap
 
-4. **Cambridge election is 2027, not 2026** — MA requires municipal elections in odd-numbered years. Last election was November 2025; next is November 2027. Prevention: seed election row with 2027 date; mark discovery jurisdiction inactive until 2027 filing opens.
+Based on combined research, the milestone naturally splits into a backend-first "own the search stack" track (highest risk, must be built and unit-tested before frontend consumes it) and a largely-independent header-declutter track (lower risk, can run in parallel).
 
-5. **Multi-district geofence complexity** — Cambridge spans 3+ state house districts and at least 2 senate districts. Use MassGIS 2021 shapefiles as verification source; confirm each district via FindMyLegislator before seeding geofences.
+### Phase 1: Backend name-resolver + Gazetteer ingest + pg_trgm indexing
+**Rationale:** This is the single highest-risk piece of the milestone (Pitfall 3) and the true "own the search stack" deliverable — it must exist and be unit-tested against a full input matrix (address/city/county/state/coords) before the frontend combobox has anything real to consume. Also the natural home for the pg_trgm index migration (Pitfall 4/10), which must ship in the same PR as the query that needs it.
+**Delivers:** `NNN_place_name_trgm_search.sql` migration (GIN indexes on `geofence_boundaries.name` and `governments.name`); one-time Census Gazetteer Places+Counties ingest into a new reference table; `locationSearchService.ts::searchPlaceNames()` returning ranked candidates with a confidence/ambiguity signal, disambiguated by state and area-type (Baltimore city vs. county; consolidated city-counties); `GET /essentials/location-search?q=` route, modeled on the existing `search-by-name` typeahead pattern.
+**Addresses:** Table-stakes disambiguation, national fallback place coverage, own-data typeahead (FEATURES.md).
+**Avoids:** Pitfall 1 (wrong-state fallback), Pitfall 3 (Census misclassification), Pitfall 4/10 (no trigram index), Pitfall 8 (Springfield/Baltimore collisions), Pitfall 9 (curated catalog divergence — must query the DB table directly, not a second hand-maintained list).
 
----
+### Phase 2: Coordinate lookup endpoint (own backend surface)
+**Rationale:** A structurally distinct anonymous, stateless surface from both the address path and the existing authenticated vaulted-coordinate RPC — deserves its own phase with privacy review and bounds-validation as explicit success criteria, not folded into Phase 1's name-resolver work.
+**Delivers:** `getRepresentativesByCoordinate()` extracted from `getRepresentativesByAddress()` in `essentialsService.ts` (same file, shared helpers, enclave-alias correction stays address-only); new `POST /candidates/by-coordinate` route; US bounding-box validation catching swapped lat/lng; no vault writes, no raw-coordinate logging/echoing, POST body (not query string) for the request.
+**Uses:** PostGIS `ST_Covers`, modeled directly on `getElectionsByCoordinate` (STACK.md, ARCHITECTURE.md Pattern 1/3).
+**Avoids:** Pitfall 6 (privacy-model misuse), Pitfall 7 (swapped/out-of-bounds coordinates).
 
-## Conflict Resolutions
+### Phase 3: Frontend unified combobox + Google Places removal (Results.jsx + Landing.jsx)
+**Rationale:** Cannot start meaningfully until Phase 1 and 2 are live and smoke-tested (cross-repo Render-deploy dependency). Must cover both `Results.jsx` and `Landing.jsx` in the same phase — they share the exact same Google-bound modules (`useGooglePlacesAutocomplete.js`, `localitySearch.js`, `LocalityMatches.jsx`); leaving `Landing.jsx` on the old stack means Google Places is not actually "dropped entirely" per the milestone goal, and `Landing.jsx` will break outright if those modules are deleted out from under it.
+**Delivers:** `LocationSearch.jsx` (`@headlessui/react` Combobox) wired into `Results.jsx`'s existing URL-param branching via `onResolve` + `navigate()`; new `?lat=&lng=` fetch branch; `placeSearch.js` input classifier; `searchPlaceNames()`/`fetchRepresentativesByCoordinate()` added to `api.jsx`; deletion of `LocalityMatches.jsx`, `LocationBrowser.jsx`, `useGooglePlacesAutocomplete.js`, `localitySearch.js`; `@googlemaps/js-api-loader` uninstalled; `Landing.jsx` search bar repointed at the same stack; full-repo grep for `google`/`pac-container`/`window.google` returning zero hits.
+**Implements:** ARCHITECTURE.md's "combobox as pure dispatcher" pattern; FEATURES.md's P1 table-stakes list (typeahead, disambiguation UI, Enter-to-submit, pre-filled/editable field, ARIA combobox semantics from day one).
+**Avoids:** Pitfall 5 (live Census calls per keystroke — debounce contract with the backend resolver must be explicit going in), Pitfall 11 (Google-specific hacks left behind: the keydown-race listener and `pac-container` CSS suppression built to fight Google's own dropdown), Pitfall 9 (must visually distinguish curated/deep-seeded matches from bare DB-only fallback matches).
 
-### 1. MA Boundary Source: TIGER 2024 vs. MassGIS 2021
+### Phase 4: Header/filter declutter (default Elected + Judges exception, compass lens icon buttons, remove Search-by-name)
+**Rationale:** Touches `FilterBar.jsx`/`CompassControlsBar.jsx`/`LensChipRow.jsx` only, with no dependency on the search rewrite — can be planned and built in parallel with Phases 1-3, but must ship the Elected-default and the Judges exception together (Pitfall 2) as a single atomic change, not sequenced as "default now, exception later."
+**Delivers:** Per-tab `appointedFilter` state (or a centralized force-override for `effectiveActiveView === 'judges'`); removed All/Appointed dropdown outside Judges; compass lens chips converted to icon-only buttons with explicit `aria-label`s (gavel already exists in `renderLensIcon` for Judicial — no new iconography needed) and a preserved tap-to-reveal/focus-tooltip affordance for touch and keyboard users; removed "Search by name" filter input.
+**Avoids:** Pitfall 2 (Judges tab silently emptied), Pitfall 12 (icon-only buttons losing accessible names/touch affordance).
 
-**Recommendation: Use TIGER 2024 as primary source (consistent with CA/TX/IN/UT), with MassGIS 2021 as the required verification and fallback for state legislative districts.**
+### Phase Ordering Rationale
 
-The existing load-state-tiger-boundaries.ts is built around TIGER URLs and formats. TIGER 2024 reflects boundaries MA submitted to Census by May 2024. MassGIS 2021 is the canonical effective source for post-redistricting MA district boundaries (enacted 2021, effective 2022 elections — the label year does not mean outdated). Use TIGER 2024 first. After loading, run FindMyLegislator verification on 4+ Cambridge addresses across different wards. If any address returns the wrong state representative, fall back to MassGIS shapefiles for that layer. Document this verification step as required in the phase plan.
+- **Backend-before-frontend is the one hard dependency** the research surfaces repeatedly: both new backend endpoints must ship and be Render-deployed before the frontend combobox can be meaningfully built or tested against them (cross-repo constraint already documented in PROJECT.md).
+- **Name-resolver before coordinate-endpoint, both before frontend:** the name-resolver is the highest-risk piece (Census can't classify bare place names; disambiguation is architecturally load-bearing) and should be proven with unit tests against a full input matrix before any UI depends on it. The coordinate endpoint is architecturally simpler (pure `ST_Covers`, no text classification) but has its own dedicated privacy/bounds-validation risk cluster, so it's cleaner as its own phase rather than folded into the resolver phase.
+- **Landing.jsx must ride along with the Results.jsx combobox phase, not a separate later phase** — see Anti-Pattern 1 in PITFALLS.md/ARCHITECTURE.md: both pages import the exact same Google-bound modules, so a partial removal leaves Landing.jsx broken or leaves Google Places only half-dropped.
+- **Header declutter is deliberately decoupled** so it doesn't block or get blocked by the search rewrite — it can be planned, built, and even shipped independently, as long as its own internal atomicity rule (Elected-default + Judges exception together) is respected.
 
-### 2. MA House District Count for Cambridge
+### Research Flags
 
-**Working assumption: 3 primary districts (24th, 25th, 26th Middlesex) with up to 3 additional partial-coverage districts — ship with 3 confirmed, verify edge cases before adding more.**
+Phases likely needing deeper research during planning (`/gsd:plan-phase --research-phase <N>`):
+- **Backend name-resolver phase (Phase 1):** the disambiguation-candidate contract (what fields/confidence signal the frontend needs), the exact Gazetteer ingest schema/vintage choice, and the ranking formula for curated-vs-Gazetteer-vs-exact-state matches all need concrete design decisions before coding, not just "extend the existing pattern."
+- **Frontend combobox phase (Phase 3):** the debounce/live-typeahead contract between frontend and backend (Pitfall 5) and the exact visual treatment for "this is a fallback, not a full local match" (UX Pitfalls table) need explicit design before build, since both are easy to get subtly wrong.
 
-The Stack researcher confirmed 3 districts via malegislature.gov (Rogers 24th, Decker 25th, Connolly 26th). The Features researcher (~6 districts) and Pitfalls researcher (29th Middlesex) reflect that Cambridge 11 wards have edge precincts crossing into additional districts at city boundaries. Ship phase 1 with the 3 confirmed districts. Before adding more, download the Cambridge Election Commission legislative district PDF and verify which wards/precincts fall in additional districts.
+Phases with standard, well-documented patterns (can skip a dedicated research-phase pass):
+- **Coordinate lookup endpoint (Phase 2):** directly modeled on `getElectionsByCoordinate`, an existing in-repo pattern; the main net-new work (bounds validation, privacy separation) is a checklist, not an open design question.
+- **Header/filter declutter (Phase 4):** the gavel icon and per-lens SVGs already exist (`renderLensIcon`); the filter-state fix is a known, bounded refactor with a clear regression test (Bloomington, IN Judges tab).
 
-### 3. MA Senate District Count for Cambridge
+## Open Questions for the Roadmapper
 
-**Working assumption: 2 confirmed + 1 probable = plan for 3, verify the third before migrating.**
-
-Features says 2 (Middlesex and Suffolk with DiDomenico; Second Middlesex with Jehlen/2026 successor). Stack found Cambridge GIS explicitly confirms 3 senate districts cover the city. The third district identity is unverified and requires running FindMyLegislator with a Cambridge Ward 1-7 address. This is a required pre-migration research step — do not assume 2 is the final count.
-
-### 4. Congressional Districts: MA-05/MA-08 vs. MA-05/MA-07
-
-**Verification required before seeding.** Stack researcher says MA-05 (Clark) and MA-08 (Lynch). Features researcher says MA-07 (Pressley) for the majority of Cambridge and MA-05 (Clark) for a portion. Cambridge GIS confirms 2 congressional districts cover the city. Run FindMyLegislator or check the Cambridge GIS congressional districts page to confirm the exact split before seeding congressional district politicians. Features researcher MA-07 (Pressley) is more likely correct for central Cambridge.
-
-### 5. Mayor Office — Critical Schema Decision
-
-Both Features and Pitfalls researchers agree: Mayor is NOT a separately elected office.
-
-Correct approach:
-- One offices row for Mayor with is_appointed_position = true
-- politician_id on that row points to Marc C. McGovern politician record (also linked to his Councillor office row)
-- No election race row for Cambridge Mayor
-- Profile page should include a description: Cambridge Mayor is selected from among the 9 City Councillors — the City Manager is the chief executive
-- Discovery agent allowlist for Cambridge must exclude any source that lists Mayor as a separate race
-
----
-
-## Feature Table
-
-| Feature | Category | Complexity | Ship in v5.0? |
-|---------|----------|------------|---------------|
-| Cambridge government + 2 chambers | Table stakes | Low | Yes — Phase 1 |
-| 9 Councillor offices (at-large) | Table stakes | Low | Yes — Phase 1 |
-| 6 School Committee offices | Table stakes | Low | Yes — Phase 1 |
-| Mayor office (derived, not elected) | Table stakes | Low | Yes — Phase 1 with correct schema |
-| City Manager (appointed) | Table stakes | Low | Yes — Phase 1 |
-| 9 council incumbents + headshots | Table stakes | Medium | Yes — Phase 2 |
-| 6 school committee incumbents + headshots | Table stakes | Medium | Yes — Phase 2 |
-| Cambridge city boundary geofence | Table stakes | Medium | Yes — Phase 3 |
-| 2 confirmed senate district geofences | Table stakes | Medium | Yes — Phase 3 |
-| 3 confirmed house district geofences | Table stakes | Medium | Yes — Phase 3 |
-| 2 congressional district geofences | Table stakes | Medium | Yes — Phase 3 |
-| State + federal politicians linked | Table stakes | Medium | Yes — Phase 3 |
-| Landing.jsx Cambridge entry | Table stakes | Low | Yes — Phase 3 |
-| 2025 election results as historical data | Table stakes | Low | Yes — Phase 4 |
-| 2027 election placeholder race | Table stakes | Low | Yes — Phase 4 |
-| 2026 MA state/federal races (Azeem senate bid) | Table stakes | Medium | Yes — Phase 5 |
-| Compass stances for Cambridge councillors | Differentiator | High | Yes — Phase 6 |
-| Cross-office Azeem linking (council + senate candidate) | Differentiator | Low | Yes — Phase 5 |
-| LOCATION-ONBOARDING.md playbook | Playbook artifact | Medium | Yes — Phase 7 |
-| STV round-by-round results display | Differentiator | High | No — post-v5.0 |
-| 6 house edge-precinct district geofences | Nice to have | High | No — follow-on |
-| 2027 candidate discovery (active) | Future | Low setup | No — activate summer 2027 |
-
----
-
-## Recommended Stack
-
-No new packages. No new ingest pipelines. Pure SQL migration + existing scripts.
-
-| Component | Tool/Pattern | Notes |
-|-----------|-------------|-------|
-| MA boundary ingestion | load-state-tiger-boundaries.ts + one-line MA allowlist | Reuse existing; TIGER 2024 primary |
-| Fallback boundary source | MassGIS 2021 shapefiles (mass.gov) | Use only if FindMyLegislator verification fails |
-| Government/officials seeding | SQL migration scripts (pattern from migrations 087-110) | Manual data entry; no API available |
-| State legislator discovery | malegislature.gov profile pages (HTML) | Use FindMyLegislator to verify districts first |
-| Candidate data source | cambridgema.gov election commission (HTML/PDF) | No CSV/API available |
-| Compass stances | Same approach as TX Phase 30 | Public statements, voting records, local news |
-| Headshots | cambridgema.gov/Departments/citycouncil/members (primary); vote.cambridgecivic.com (backup) | 600x750 Lanczos per project standard |
-| Campaign finance (future, not v5.0) | MA OCPF (ocpf.us) | Different format from LA Ethics Commission; research separately before pursuing |
-| Landing.jsx | browseGovernmentList: [2511000] pattern | Same as Collin County TX |
-| Discovery pipeline | discovery_jurisdictions row marked inactive until 2027 filing | Do not activate until summer 2027 |
-
----
-
-## Architecture Approach
-
-Cambridge slots cleanly into the existing multi-jurisdiction architecture. The address lookup pipeline (getRepresentativesByAddress), PostGIS geofence intersection, and essentialsService.ts statewide query all work automatically once geofences and district rows are loaded. Code changes required: (1) one-line MA allowlist in load-state-tiger-boundaries.ts, (2) Landing.jsx COVERAGE_AREAS entry, (3) new SQL migration files.
-
-**Suggested phase structure:**
-
-Phase A — MA TIGER boundary load (no blocking dependencies, start immediately)
-  - One-line code change to STATE_LAYER_ALLOWLIST
-  - Run: --state MA --fips 25 --layers cd,sldu,sldl,place
-
-Phase B — MA + Cambridge government DB foundation (no blocking dependencies)
-  - Commonwealth of Massachusetts government row
-  - Middlesex County government row (for congressional intersection)
-  - City of Cambridge government row (geo_id = 2511000)
-  - MA state legislative chambers (Senate, House)
-
-Phase C — Cambridge city structure (depends on Phase B)
-  - City Council chamber + 9 Councillor office rows
-  - School Committee chamber + 6 member office rows
-  - Mayor office row (is_appointed_position = true)
-  - City Manager office row (is_appointed_position = true)
-
-Phase D — Cambridge incumbents + headshots (depends on Phase C)
-  - 9 City Councillors with headshots (600x750, Lanczos)
-  - 6 School Committee members with headshots
-  - City Manager (appointed)
-
-Phase E — Geofences + state/federal politicians (depends on Phases A and B)
-  - Cambridge place geofence verified
-  - 2 senate + 3 house + 2 congressional geofences loaded
-  - Statewide officials (Warren, Markey, Governor, AG, Secretary of State)
-  - Congressional, senate, house politicians linked to Cambridge districts
-  - Landing.jsx COVERAGE_AREAS entry added
-
-Phase F — 2025 election historical data + 2027 placeholder (depends on Phase D)
-  - 2025 council + school committee races as completed
-  - All 20 council candidates + 18 school committee candidates as race_candidate rows
-  - 2027 placeholder election row; discovery jurisdiction marked inactive
-
-Phase G — 2026 MA state/federal races (depends on Phase E)
-  - Second Middlesex Senate primary (Azeem vs. 4 others; Sept 1, 2026)
-  - MA-05 House primary
-  - Azeem linked as candidate in senate race + existing council record
-
-Phase H — Compass stances (depends on Phase D)
-  - Research Cambridge councillors on housing/zoning, transit, development
-  - Apply via existing apply-*.ts pattern; run one at a time per memory guidance
-
-Phase I — LOCATION-ONBOARDING.md playbook (depends on all phases complete)
-  - Codify Cambridge learnings into reusable checklist
-  - Phase templates in .planning/templates/
-
-Critical path: A to B to C to D to E (parallel: F, G, H) to I
-
----
-
-## Top Pitfalls with Prevention
-
-| Pitfall | Severity | Prevention |
-|---------|----------|------------|
-| Mayor seeded as LOCAL_EXEC elected office | Critical | is_appointed_position = true; no race row for Mayor; LOCAL type only |
-| Mayor as automatic School Committee member | Critical | 2025 charter removed this — do NOT add School Committee office for Mayor |
-| Seeding 2026 Cambridge election date | Critical | Next city election is November 2027; mark discovery inactive until 2027 filing |
-| Cambridge geo_id = 25017 (county) | High | City geo_id = 2511000 (7-digit place code); 25017 is Middlesex County |
-| 19+ candidates breaking ElectionsView | High | Load-test UI at 19 cards before shipping election data; add show-all toggle |
-| Wrong boundary year for MA districts | High | Use MassGIS 2021 as verification; confirm with FindMyLegislator after TIGER load |
-| Congressional district uncertainty (MA-05/07/08) | High | Run FindMyLegislator or check Cambridge GIS before seeding congressional politicians |
-| Third senate district unverified | Medium | Required pre-migration: test Cambridge Ward 1-7 address at FindMyLegislator |
-| Councillor vs. Councilor spelling | Low | Hard-code Councillor (double-l); no auto-normalization |
-| Discovery cron firing on 2027 election | Low | Mark Cambridge discovery_jurisdictions row inactive until summer 2027 |
-| Email addresses guessed from patterns | Low | Pull from cambridgema.gov/Departments/citycouncil/members at seeding time; NULL if unverifiable |
-
----
+1. **Nationwide congressional-district (G5200) coverage — gate vs. caveat?** The "any resolvable US input returns at least state + federal officials" claim is only *fully* true for US House where CD geofences are already loaded; for states without them, House is honestly omitted (null-on-miss, matching existing `tribal_land`/`resolvePopulation` convention) while Senate + state execs still render. Decide explicitly: ship with an honest Senate-only fallback caveat in ungeofenced states now, or treat full 50-state CD coverage as a pre-flight gate before claiming "guaranteed state + federal" in the milestone's own language. This is a data-completeness decision, not a code dependency, and research strongly recommends *not* silently assuming coverage is complete.
+2. **Does `Landing.jsx` get its own phase, or ride along inside the combobox-removal phase?** Both approaches are defensible from a planning-granularity standpoint, but architecturally it must NOT be deferred past the phase that deletes the shared Google-bound modules — whichever phase structure the roadmapper picks, `Landing.jsx` parity must complete in the same milestone, ideally the same phase as the `Results.jsx` swap-in.
+3. **What happens to `hasContext`/Stances badge fate for DB-only (non-curated) matches?** FEATURES.md and PITFALLS.md both flag that suggesting a place with no local officials (a skeletal government row surfaced only via the Gazetteer/DB fallback) needs a clearly-labeled, honest landing experience distinct from a full local match — but the exact UI treatment (badge copy, chip styling, whether it reuses the existing purple "coverage chip" convention inverted, or is a wholly new visual state) is not settled by research and should be a roadmap/design decision, not left implicit.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | TIGER 2024 URLs confirmed fetchable; FIPS_TO_STATE already has MA; MTFCC codes verified against codebase; zero new packages needed |
-| Features | HIGH | Government structure verified from official cambridge.gov + MMA Data Hub + Harvard Crimson; STV mechanics well-documented |
-| Architecture | HIGH | Based on direct codebase inspection of migrations 087-110, essentialsService.ts, Landing.jsx; all patterns exist |
-| Pitfalls | HIGH | 10 of 13 pitfalls confirmed HIGH confidence; 3 MEDIUM (UI performance at scale, Middlesex County G4020 decision, Mayor dual-office pattern) |
+| Stack | HIGH | Every recommendation is grounded in direct reads of the live production codebase (migration 040, `campaignFinanceSearchService.ts`, `geocodingService.ts`, `electionService.ts`) plus live npm-registry version/peer-dependency checks; the one external addition (`@headlessui/react`) was verified for React 19 compatibility directly. |
+| Features | MEDIUM | WAI-ARIA/geocoding mechanics are HIGH (W3C/Census official docs); competitive-UX conclusions (typeahead debounce timing, disambiguation norms, ZIP-accuracy risk) rest on multiple corroborating secondary sources (5 Calls, house.gov, UX pattern libraries) rather than a single authoritative spec — reasonable but not primary-source-grade for every claim. |
+| Architecture | HIGH | All findings are direct reads of both repos' current source (essentials frontend + accounts-api backend); this was an integration/refactor question answerable entirely from the existing codebase, not an external-ecosystem question. |
+| Pitfalls | HIGH | Every pitfall is grounded in this project's own source code and, notably, its own documented prior incidents (two real live bugs matching the exact new failure-mode shape, one real prior performance incident matching the exact new query-pattern risk) — not generic web-search advice. |
 
-**Overall confidence: HIGH**
+**Overall confidence:** HIGH
 
----
+### Gaps to Address
 
-## Gaps to Address in Planning
-
-| Gap | How to Handle |
-|-----|---------------|
-| Third MA senate district (Cambridge Ward 1-7) | Required pre-migration step: run FindMyLegislator; identify senator name and district before seeding |
-| Exact ward/precinct to house district mapping beyond 3 confirmed | Download Cambridge Election Commission legislative districts PDF; confirm edge districts before adding geofences |
-| Congressional district split (MA-05/07/08) | Verify at Cambridge GIS congressional districts page before seeding congressional politicians |
-| TIGER 2024 vs. MassGIS accuracy for MA state districts | Load TIGER first; run FindMyLegislator on 4+ Cambridge addresses; fall back to MassGIS if mismatch |
-| election_method enum value | Check chambers table constraint before migration; add stv_proportional if absent |
-| Cambridge GEOID 2511000 format confirmation | Verify against TIGER 2024 place shapefile before first migration |
-| Mayor ex officio School Committee status post-2025 charter | Confirm: is Mayor fully removed from School Committee, or still ex officio in some capacity? |
-| Migration next number | Run SELECT max(version) FROM supabase_migrations.schema_migrations before writing any migration |
-| UI performance at 19+ candidate cards | Load-test ElectionsView before shipping election data; add pagination/toggle if needed |
-| Middlesex County G4020 boundary decision | Decide whether to load for congressional intersection support; recommend loading for completeness |
-
----
+- **50-state congressional-district (G5200) geofence coverage is not confirmed complete** — FEATURES.md and ARCHITECTURE.md both flag this as the single biggest hidden dependency for the "guaranteed state + federal" claim. Treat as a pre-flight audit item in Phase 1's planning, not an assumption; resolve via Open Question 1 above.
+- **Exact API response shape for disambiguation candidates** (what the name-resolver returns when multiple matches exist — field names, confidence scoring, ranking tie-breaks for city/county collisions) is described conceptually across STACK/ARCHITECTURE/PITFALLS but not fully specified as a contract; needs to be nailed down at the start of Phase 1's planning so the frontend combobox (Phase 3) isn't guessing at a moving target.
+- **Visual/copy treatment for national-fallback vs. full-local-match vs. DB-only-no-local-data states** is identified as necessary (three distinct UX states) but not designed; flagged as a Phase 3 research item.
+- **Debounce/rate-limit contract between frontend typeahead and backend** (which calls are safe to fire per-keystroke vs. submit-only) is described as an architectural constraint that must be *stated* going into the frontend phase, not discovered during build — no concrete numbers are locked yet beyond industry-convention ranges (200-300ms, min 2-3 chars).
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- Cambridge City Council members: https://www.cambridgema.gov/Departments/citycouncil/members
-- Cambridge School Committee: https://www.cpsd.us/school-committee/school-committee-members-subcommittees
-- Cambridge Election Commission: https://www.cambridgema.gov/Departments/electioncommission
-- Cambridge 2025 official election results: https://www.cambridgema.gov/Departments/electioncommission/news/2025/11/2025municipalelectionofficialresultsnovember14thupdate
-- Cambridge Plan E Charter: https://www.cambridgema.gov/publications/documents/p/planecharter
-- Cambridge GIS senate districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_StateSenateDistricts
-- Cambridge GIS congressional districts: https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_CongressionalDistricts
-- MassGIS House Districts (2021, current effective): https://www.mass.gov/info-details/massgis-data-massachusetts-house-legislative-districts-2021
-- MA legislature profile pages: https://malegislature.gov (Rogers 24th, Decker 25th, Connolly 26th)
-- TIGER SLDU MA confirmed: https://www2.census.gov/geo/tiger/TIGER2024/SLDU/tl_2024_25_sldu.zip
-- TIGER SLDL MA confirmed: https://www2.census.gov/geo/tiger/TIGER2024/SLDL/tl_2024_25_sldl.zip
-- MA Secretary of State elections: https://www.sec.state.ma.us/divisions/elections/
-- MMA Cambridge profile: https://www.mma.org/community/cambridge/
-- 2025 charter ballot result: https://www.thecrimson.com/article/2025/11/5/cambridge-updates-charter/
-- Burhan Azeem senate bid: https://www.thecrimson.com/article/2026/2/18/azeem-state-senate/
+- Direct repo reads: `C:\EV-Accounts\backend\migrations\040_pg_trgm_search.sql`, `src\lib\campaignFinanceSearchService.ts`, `src\lib\geocodingService.ts`, `src\lib\essentialsService.ts`, `src\lib\electionService.ts`, `src\lib\essentialsBrowseService.ts`, `src\routes\{essentialsCandidates,essentialsBrowse}.ts`
+- Direct repo reads: `C:\Transparent Motivations\essentials\src\pages\{Results,Landing}.jsx`, `src\lib\{coverage,api,localitySearch}.js`, `src\hooks\useGooglePlacesAutocomplete.js`, `src\components\{LocalityMatches,LocationBrowser,FilterBar,CompassControlsBar,LensChipRow}.jsx`
+- `node_modules/@empoweredvote/ev-ui` package inspection (v0.9.8, full named-export enumeration)
+- `npm view` live registry queries for `@headlessui/react`, `downshift`, `@floating-ui/react`, `coordinate-parser`, `parse-dms`
+- US Census Geocoding Services API official docs; Census Gazetteer Files official download page
+- `.planning/PROJECT.md` — Key Decisions table, milestone goal/scope, constraint history
 
 ### Secondary (MEDIUM confidence)
-- Cambridge GEOID 2511000: https://datacommons.org/place/geoId/2511000
-- Middlesex County FIPS 25017: https://www.geocod.io/geoids/massachusetts/middlesex-county-25017
-- Additional Cambridge house districts (Moran, Owens, Ryan): MMA Data Hub listing — exact ward/precinct mapping unverified
+- W3C WAI-ARIA APG Combobox Pattern + MDN ARIA combobox role (HIGH for spec, cited here for feature-completeness cross-check)
+- 5 Calls / house.gov / My Reps (DataMade) / Common Cause competitor documentation — ZIP-accuracy risk, opt-in geolocation norms, national-fallback expectations
+- Map UI Patterns, UXmatters, Yext — location-search UX convention corroboration
+- SystemDesignSchool / Atomic Object — typeahead debounce/minLength industry conventions
 
-### Tertiary (LOW confidence / requires verification)
-- Third MA senate district covering Cambridge Ward 1-7: confirmed to exist by Cambridge GIS; senator identity requires FindMyLegislator address test
-- Azeem council status if he wins senate seat: not yet determined; depends on September 1, 2026 primary result
+### Tertiary (LOW confidence)
+- None flagged — all research legs cite HIGH or MEDIUM sources; no single-source/unverified claims were carried into this summary's roadmap implications.
 
 ---
-
-*Research completed: 2026-05-15*
+*Research completed: 2026-07-20*
 *Ready for roadmap: yes*

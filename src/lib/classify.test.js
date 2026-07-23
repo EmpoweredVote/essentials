@@ -4,7 +4,14 @@
  */
 
 import { describe, it, expect, test } from 'vitest';
-import { computeVariant, classifyCategory, classifyBucket } from './classify.js';
+import {
+  computeVariant,
+  classifyCategory,
+  classifyBucket,
+  TAB_TYPE_DEFAULTS,
+  resolveIsAppointed,
+  matchesAppointedFilter,
+} from './classify.js';
 
 function makePol(overrides) {
   return {
@@ -373,6 +380,58 @@ describe('classifyBucket — live location fixtures (SC-05)', () => {
       expect(
         classifyBucket(makePol({ district_type: 'LOCAL_EXEC', office_title: 'District Attorney' }))
       ).toBe('representative');
+    });
+  });
+});
+
+// Phase 215 (HDR-01/HDR-02, decision D-05): per-tab type-filter default policy
+// and the two pure filter functions moved verbatim out of Results.jsx so the
+// Judges=Appointed exception is proven by an automated assertion, not just
+// code inspection.
+describe('TAB_TYPE_DEFAULTS + appointed-filter logic', () => {
+  it('TAB_TYPE_DEFAULTS.representatives is "Elected"', () => {
+    expect(TAB_TYPE_DEFAULTS.representatives).toBe('Elected');
+  });
+  it('TAB_TYPE_DEFAULTS.educators is "Elected"', () => {
+    expect(TAB_TYPE_DEFAULTS.educators).toBe('Elected');
+  });
+  it('TAB_TYPE_DEFAULTS.judges is "Appointed" (HDR-02: keeps the Judges tab populated)', () => {
+    expect(TAB_TYPE_DEFAULTS.judges).toBe('Appointed');
+  });
+
+  describe('resolveIsAppointed', () => {
+    it('returns true when pol.is_appointed is true (individual override wins)', () => {
+      expect(resolveIsAppointed({ is_appointed: true })).toBe(true);
+    });
+    it('returns false when pol.is_elected is true', () => {
+      expect(resolveIsAppointed({ is_elected: true })).toBe(false);
+    });
+    it('returns true when pol.is_elected is false', () => {
+      expect(resolveIsAppointed({ is_elected: false })).toBe(true);
+    });
+  });
+
+  describe('matchesAppointedFilter', () => {
+    it('Elected filter matches an elected pol', () => {
+      expect(matchesAppointedFilter({ is_elected: true }, 'Elected')).toBe(true);
+    });
+    it('Elected filter excludes an appointed pol', () => {
+      expect(matchesAppointedFilter({ is_elected: false }, 'Elected')).toBe(false);
+    });
+    it('Elected filter includes a retention-vote judge (appointed but faces_retention_vote)', () => {
+      expect(
+        matchesAppointedFilter({ is_elected: false, faces_retention_vote: true }, 'Elected')
+      ).toBe(true);
+    });
+    it('Appointed filter matches an appointed judge', () => {
+      expect(matchesAppointedFilter({ is_elected: false }, 'Appointed')).toBe(true);
+    });
+    it('Appointed filter excludes an elected pol', () => {
+      expect(matchesAppointedFilter({ is_elected: true }, 'Appointed')).toBe(false);
+    });
+    it('"All" filter matches regardless of appointed/elected status', () => {
+      expect(matchesAppointedFilter({ is_elected: true }, 'All')).toBe(true);
+      expect(matchesAppointedFilter({ is_elected: false }, 'All')).toBe(true);
     });
   });
 });

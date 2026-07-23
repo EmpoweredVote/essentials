@@ -1,34 +1,77 @@
 ---
 gsd_state_version: 1.0
-milestone: v23.0
-milestone_name: Educators & Judges Tabs
-status: shipped
-stopped_at: v23.0 milestone closed
-last_updated: "2026-07-20T16:00:00.000Z"
-last_activity: 2026-07-20 -- v23.0 milestone shipped, archived, and tagged
+milestone: v24.0
+milestone_name: Results-Page Search & Header Overhaul
+current_phase: 212
+current_phase_name: Backend Place-Name Resolver & National Fallback
+status: planning
+stopped_at: Completed 216-04-PLAN.md (frontend deploy + live UAT, LOC-04 verified end-to-end; Phase 216 ready for /gsd-verify-work)
+last_updated: "2026-07-23T00:16:46.443Z"
+last_activity: 2026-07-22
+last_activity_desc: Phase 216 complete, transitioned to Phase 212
 progress:
-  total_phases: 24
-  completed_phases: 20
-  total_plans: 75
-  completed_plans: 75
-  percent: 83
+  total_phases: 4
+  completed_phases: 4
+  total_plans: 17
+  completed_plans: 17
+  percent: 100
 ---
 
 # State
 
 ## Current Position
 
-Milestone: **v23.0 Educators & Judges Tabs — SHIPPED 2026-07-20** (archived + tagged).
-Status: closed. In-scope requirements 7/7 satisfied (CLASS-01, TAB-01/02/03, CMP-01/02, RES-01);
-EDU-01/02 deferred by design with Phase 209 (Education lens authoring) to a future milestone.
-Archived to `milestones/v23.0-ROADMAP.md` / `-REQUIREMENTS.md` / `-MILESTONE-AUDIT.md`.
-Last activity: 2026-07-20 -- v23.0 shipped, archived, and tagged.
+Phase: 212 — Backend Place-Name Resolver & National Fallback
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-07-22 — Phase 216 complete, transitioned to Phase 212
 
-**Accepted tech debt at close:** one optional CR-01 calibrate-return live re-check (Phase 210 fix
-applied + unit/build-verified); Nyquist VALIDATION.md absent for 208/210.1/211 (optional).
+### Phase 216 Plan 02 outcome (backend deploy + live smoke) — COMPLETE 2026-07-22
 
-**Next:** either close the HELD v22.0 (below) once the 2026-07-21 AZ primary certifies, or
-`/gsd-new-milestone` for the next body of work.
+- Live G4110 FIPS coverage re-confirmed against production DB matched the committed 11-state
+  `PLACE_LOADED_STATES` gate exactly (AZ,CA,IN,ME,MD,MA,NV,OR,TX,UT,VA); MO (fips 29) correctly
+  present at count=1 and correctly excluded. No divergence — no code correction needed.
+
+- **Deployed live:** `git -C "C:/EV-Accounts" push origin master` — deployed commit
+  `b0842f57af68c2d2970f2ae7dd45071d7e200efe` on accounts-api.empowered.vote. `origin/master..HEAD`
+  empty after push. Deploy carried the 216-01 commits (f8874a5c/92f9ed51/76301dbe) plus two
+  pre-existing, already-local P1 index-migration commits (d2ad1161/67befbf6) that were ahead of
+  origin before this plan started — disclosed to and accepted by the operator at the Task 3
+  checkpoint (not rebased/isolated, no history rewrite on the shared branch).
+
+- **Live smoke PASS**, 3 fixtures × 2 entry paths (address + coordinate), all on
+  accounts-api.empowered.vote: (a) Unincorporated Pima County AZ →
+  `incorporated:false, county_name:"Pima County"`; (b) Tucson city AZ →
+  `incorporated:true, place_name:"Tucson city"`; (c) Chicago IL (un-loaded state) →
+  `incorporated:null, county_name:"Cook County"`. `/candidates/search` returns `locality` directly;
+  `/coordinate-lookup` inherits it verbatim on every fixture. No raw lat/lng echoed anywhere.
+
+- **Zero writes:** production psql before/after delta 0 across essentials.politicians (84479)/
+  offices (82869)/districts (6871).
+
+- **LOC-01/02/03 end-to-end COMPLETE** (lib core → route → live production). Operator typed
+  "approved" at the blocking checkpoint, explicitly informed of and accepting the P1-commit side
+  effect. Backend-before-frontend gate (v24.0 convention) satisfied — **216-03 (frontend
+  threading, LOC-04) may now begin.**
+
+### Phase 213 outcome (POST /api/essentials/coordinate-lookup) — PLANS COMPLETE 2026-07-21
+
+- **Live on accounts-api.empowered.vote** (Render deploy from master; push 3337495c..0d4745c7, HEAD 0d4745c7).
+  No new code commit needed for 213-03 — Plan 01/02 commits (5120214c/8b7fe341/a1ab5738/79f715cc/0d4745c7)
+  were already on master; Task 1 was push-only.
+
+- **Live smoke PASS (SMOKE_OK):** Bloomington IN (39.17,-86.52) → 200, EXACTLY 1 NATIONAL_LOWER (Erin Houchin
+  IN-9, geo_id 1809) + Senators Banks/Young + Gov Braun + state execs, matchedAddress "", no coord echo in body.
+  Three distinct 422s: swapped→SWAPPED_COORDINATES, London→OUTSIDE_US_BOUNDS, "abc"→INVALID_COORDINATES.
+
+- **Zero writes:** production psql before/after delta 0 across essentials.politicians (84471)/offices (82869)/
+  districts (6871); SELECT-only source assertion on the coordinate code path.
+
+- **No coordinate leak:** source-level assertion only (no Render live-log access this session) — handler logs
+  only (err as Error).message; no telemetry in the route file. Follow-up: optional live-log grep for 39.17/-86.52.
+
+- **RSLV-03 COMPLETE** end-to-end (lib core → route → live smoke). Operator typed "approved" at the blocking
+  checkpoint. ⚠ Phase-level verification/close is the orchestrator's job — do NOT advance to Phase 214 here.
 
 ### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
 
@@ -76,6 +119,34 @@ leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0
 | verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+
+### v24.0 roadmap (created 2026-07-20)
+
+Frontend+backend feature milestone. 4 phases (212-215), continuing numbering from v23.0 (closed at
+211). 18/18 requirements mapped 1:1 — no orphans, no duplicates. Backend-before-frontend hard
+dependency: 212 + 213 (accounts-api) must ship + be smoke-tested live before 214 (essentials) starts
+consuming them; 215 (header declutter) is decoupled and can be planned/built in parallel with 212-214.
+
+- **212 Backend Place-Name Resolver & National Fallback** — RSLV-01/02/04/05/06/07 (pg_trgm place-name
+  search over geofence_boundaries/governments + Census Gazetteer ingest + disambiguation + wrong-state
+  guard + nationwide state+federal fallback + US House district-overlap note)
+
+- **213 Anonymous Coordinate Lookup Endpoint** — RSLV-03 (stateless lat/lng -> officials via
+  ST_Covers; US bounding-box + swapped-coordinate validation; no writes, no raw-coordinate echo/logging)
+
+- **214 Unified Location Combobox & Google Places Removal** — SRCH-01/02/03/04/05/06/08 (single
+  WAI-ARIA combobox on Results + Landing sharing one component; address/place/coordinate
+  auto-classification; disambiguation picker; full Google Places + @googlemaps/js-api-loader removal,
+  zero google/pac-container hits). Depends on Phases 212 + 213.
+
+- **215 Header Declutter** — SRCH-07 + HDR-01/02/03 (type filter defaults Elected with atomic Judges
+  appointed-exception; compass lenses -> icon buttons w/ aria-labels + gavel for Judicial; remove
+  "Search by name" filter). No dependency on 212-214.
+
+Research flags: Phase 212's disambiguation-candidate contract + Gazetteer ingest schema/ranking need
+concrete design decisions during planning (not just "extend the existing pattern"); Phase 214's
+debounce/live-typeahead contract with the backend + the 3-state visual treatment (full local match vs.
+national fallback vs. DB-only-no-local-data) need explicit design before build.
 
 ### v22.0 roadmap (created 2026-07-08)
 
@@ -465,7 +536,7 @@ Per-city (officials / photos / stances): SLC 8/7/59 · WVC 7/7/18 · West Jordan
 See: .planning/PROJECT.md (updated 2026-06-14 after v13.0 milestone close)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 211 — deep-dive-stance-research-trump-vance-rubio
+**Current focus:** Phase 216 — unincorporated-locality-label
 
 ## v15.0 Roadmap Summary
 
@@ -567,9 +638,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-19T22:37:07.120Z
-Stopped at: Phase 211 context gathered
-Resume file: .planning/phases/211-deep-dive-stance-research-trump-vance-rubio/211-CONTEXT.md
+Last session: 2026-07-23T00:13:20.566Z
+Stopped at: Completed 216-04-PLAN.md (frontend deploy + live UAT, LOC-04 verified end-to-end; Phase 216 ready for /gsd-verify-work)
+Resume file: None
 
 ## Performance Metrics
 
@@ -656,6 +727,24 @@ Resume file: .planning/phases/211-deep-dive-stance-research-trump-vance-rubio/21
 | Phase 210 P01 | 6min | 2 tasks | 3 files |
 | Phase 210 P02 | 3min | 1 tasks | 1 files |
 | Phase 210.1 P01 | 20min | 1 tasks | 1 files |
+| Phase 213 P01 | 12min | 2 tasks | 3 files |
+| Phase 213 P02 | 3m | 2 tasks | 3 files |
+| Phase 214 P01 | 22min | 2 tasks | 4 files |
+| Phase 214 P02 | 10min | 2 tasks | 2 files |
+| Phase 214 P03 | 20m | 3 tasks | 1 files |
+| Phase 214 P04 | 12min | 1 tasks | 1 files |
+| Phase 214 P05 | 25min | 2 tasks | 8 files |
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 215 P01 | 10min | 1 tasks | 2 files |
+| Phase 215 P03 | 20min | 1 tasks | 1 files |
+| Phase 215 P02 | 25min | 3 tasks | 5 files |
+| Phase 216 P01 | 8min | 3 tasks | 5 files |
+| Phase 216 P02 | 15min | 3 tasks | 0 files |
+| Phase 216 P03 | 5min | 3 tasks | 7 files |
+| Phase 216 P04 | ~10min | 2 tasks | 0 files |
 
 ## Decisions
 
@@ -760,6 +849,36 @@ Resume file: .planning/phases/211-deep-dive-stance-research-trump-vance-rubio/21
 - [Phase 210]: Tab-entry effect deps exclude activeLensKey but include rawUserAnswers, so async compass calibration re-fires the effect once (idempotent) without creating a feedback loop with handleSelectLens
 - [Phase 210]: Human-verify performed at Bloomington, IN (not LA County, CA) — All 504 CA JUDICIAL districts have a NULL geo_id and never surface a Judges tab (pre-existing gap, tracked as ROADMAP backlog Phase 999.1)
 - [Phase 210.1]: CR-01 fix: seed tabLensMemory[activeView] from loadLensPending() on mount-once effect, keyed on raw activeView param, without clearing the marker (CompassContext still owns clearLensPending).
+- [Phase 213]: resolveOfficialsAtPoint extracted as private shared core; getRepresentativesByAddress and getRepresentativesByCoordinate both call it
+- [Phase 213]: State-scoped floor (getStatewideOfficials) only invoked as a fallback when the shared core returns zero state-scoped rows -- avoids redundant round-trip
+- [Phase 213]: pickHouseRep inlined in essentialsService.ts (not imported from routes/) to keep lib/ -> routes/ one-way; getFederalOfficials() never called on the coordinate path
+- [Phase 213]: 213-02: coordinate-lookup route mounted before /api/essentials catch-all; body-only (req.body never req.query); express-rate-limit 60s/30 keyed on req.ip
+- [Phase 213]: 213-02: supertest suite mocks only getRepresentativesByCoordinate; classifyCoordinate exercised unmocked (pure/DB-free) to prove 422 taxonomy end-to-end
+- [Phase 214]: ADDRESS_LEADING_DIGIT_RE widened to include an optional decimal group — Comma-less coordinate pairs (e.g. 39.17 -86.52) must classify as address per the plan's documented-gap acceptance criterion; RESEARCH.md's manual regex trace was incorrect for the integer-only version
+- [Phase 214]: Guarded api.jsx top-level window reference for non-browser import contexts — Vitest's default node test environment lacks window; importing api.jsx threw before Task 2's api.test.js could run at all
+- [Phase 214]: resolveLocalityRoute() refactored in place (not deleted): Results.jsx/Landing.jsx still call it before Plans 03/04 rewire them — Google Geocoder classification replaced with classifyInput()+live resolver; outer {kind,to} contract unchanged so current call sites keep working
+- [Phase 214]: coordinateRoute(lat,lng,raw) cross-page hand-off contract param names locked — Exact URL param names lat/lng/coord_raw via URLSearchParams; Plans 03/04 must wire against these exact names
+- [Phase 214]: LocationCombobox candidate rows render candidate.label alone, no separate ', state' append — Live /location-search label already bakes in state+area-type suffix; area-type tag and Stances badge still rendered as distinct elements
+- [Phase 214]: 214-03: no pill->input toggle (D-03) — removed editingSearch chip entirely, not just the mode-toggle buttons; tribal/elections info moved to an unconditional secondary row
+- [Phase 214]: 214-03: coordinate results reuse browseResults/browseLoading direct-injection as a third searchMode value ('coordinate'); representingCity returns null for coordinate mode rather than deriving a banner label
+- [Phase ?]: 214-04: Wrapper-div ref + querySelector('input') used to focus LocationCombobox's internal input (component doesn't forward refs; out of this plan's edit scope)
+- [Phase ?]: 214-04: Landing coordinate-submit telemetry uses essentials_coordinate_searched {method:'landing_handoff'} with no lat/lng and no outcome — outcome capture stays on Results' reading side (Plan 03)
+- [Phase 214]: SRCH-08 secondary sanity grep allow-list treated as exact enforcement, not illustrative — reworded 2 stray Google comment references in localitySearch.js/Landing.jsx outside the documented allow-list (Rule 1)
+- [Phase ?]: TAB_TYPE_DEFAULTS.judges='Appointed' is the exact value that keeps the Judges tab non-empty under the Elected-by-default policy (HDR-02)
+- [Phase ?]: resolveIsAppointed/matchesAppointedFilter moved verbatim into classify.js as exports; inline copies left in Results.jsx for Plan 02 to remove (explicit scope boundary)
+- [Phase ?]: Built a LensButton child component (one useFloating/useInteractions instance per lens) mirroring the in-repo IconWithTooltip precedent, rather than a shared open-key in the parent
+- [Phase ?]: Tooltip is gated to render only when isDesktop && isOpen && !showPrompt so it never stacks with the needs-calibration purple prompt (Pitfall 3)
+- [Phase ?]: 215-02: Did not import resolveIsAppointed into Results.jsx (unused after inline-fn deletion; would trip no-unused-vars lint gate)
+- [Phase ?]: 215-02: filteredPols simplified to a plain alias of list (no more name-search memo chain)
+- [Phase ?]: PLACE_LOADED_STATES hardcoded 11-state allowlist (AZ,CA,IN,ME,MD,MA,NV,OR,TX,UT,VA; MO excluded) per 216-CONTEXT.md live DB ground truth
+- [Phase ?]: county_name always computed unconditionally from countyRow, never gated by PLACE_LOADED_STATES (D-03)
+- [Phase ?]: essentialsCoordinateLookup.ts left untouched -- inherits locality via verbatim res.json(result) passthrough
+- [Phase ?]: 216-02: live G4110 coverage matched the committed 11-state PLACE_LOADED_STATES gate exactly (MO correctly excluded); deployed to production (accounts-api.empowered.vote, commit b0842f57) and live-smoke-verified on 3 fixtures x 2 entry paths with zero writes; operator approved, unblocking 216-03 frontend threading
+- [Phase ?]: Coordinate mode's locality is NOT threaded through usePoliticianData — a dedicated coordLocality state populated in resolveCoordinate() is the coordinate-mode parallel, since the hook is never enabled for coordinate searches
+- [Phase ?]: Hook's locality field destructured as incorporationInfo in Results.jsx to avoid colliding with the pre-existing fromLocality/localityLabel locals
+- [Phase ?]: tribal_land unwrap in lookupCoordinate() intentionally NOT added — remains deferred per 216-01 planner decision, out of LOC-04 scope
+- [Phase ?]: No isolation needed for the 216-04 push — git log origin/main..HEAD contained only intended 216-03 commits before push, unlike 216-02's backend deploy which carried unrelated P1 side-effect commits
+- [Phase ?]: Live UAT (not a unit test) served as the phase gate for LOC-04 — representingCity has no automated component test, and the coordinate-mode path (RESEARCH Pitfall 1) required live confirmation that the hook-bypass path renders correctly
 
 ## Operator Next Steps
 

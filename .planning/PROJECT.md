@@ -27,6 +27,22 @@ Tucson-metro + Coachella Valley deep-seeds shipped (Phases 190–203); the miles
 primary certifies. Sahuarita (197) + South Tucson (198) also owe a post-07-21 membership/title reconcile.
 This is the next thing to close once the primary certifies.
 
+## Current Milestone: v24.0 Results-Page Search & Header Overhaul
+
+**Goal:** Replace the cluttered multi-row results header with a single compact, always-editable location search so anyone in the US can reach a location profile from an address, a city/state/county, or coordinates — with a national fallback to state + federal officials — while decluttering the type filter and compass controls.
+
+**Target features:**
+- **Unified location search** — one field, pre-filled + click-to-edit; accepts full address / city-state-county / lat-lng → routes to the correct location profile
+- **National fallback** — any resolvable US input returns at least state + federal (Senate/House) officials
+- **Own the search stack** — drop Google Places entirely; our own typeahead (DB place-names + curated catalog) + free US Census geocoder + a new backend name resolver + a coordinate lookup endpoint; no third-party ads/branding on our forms
+- **Type filter** — default Elected, remove the All/Appointed dropdown, *except* keep appointed on the Judges tab
+- **Compass lenses → icon buttons + tooltips** (gavel for Judicial); reclaim the header's "unorganized space"
+- **Remove "Search by name"** results filter (for now)
+
+Spans essentials (frontend) + accounts-api (backend), both auto-deploy from their default branch on Render. Continues phase numbering after v23.0's Phase 211.
+
+**Progress:** Backend search stack landing first. Phase 212 (place-name resolver + national fallback) shipped live; **Phase 213 (anonymous coordinate-lookup endpoint) complete 2026-07-21** — `POST /api/essentials/coordinate-lookup` is live on accounts-api.empowered.vote, resolving officials for raw lat/lng via PostGIS `ST_Covers` with US bbox + swap-guard validation, the state+federal floor, zero auth, zero writes, and no coordinate echo/logging (smoke-verified against production, operator signed off). Frontend combobox + Google Places removal is Phase 214 (next).
+
 ## Requirements
 
 ### Validated
@@ -214,6 +230,12 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
+- **v24.0 Results-Page Search & Header Overhaul (ACTIVE, opened 2026-07-20)** — unified single-field
+  location search (address / city-state-county / coordinates → location profile) with a national fallback
+  to state + federal officials; drop Google Places for our own typeahead + US Census geocoder + a new
+  backend place-name resolver + coordinate lookup; default Elected (remove All/Appointed dropdown, except
+  Judges tab); compass lenses → icon buttons + tooltips (gavel for Judicial); remove "Search by name".
+  Requirements defined below; spans essentials + accounts-api (both Render).
 - **Education lens authoring (deferred from v23.0 / Phase 209 — EDU-01/EDU-02):** author the ~8
   Education-lens compass topics (book bans, religious texts in public schools, trans athletes,
   curriculum standards, school choice/vouchers, …) with their 1–5 answer chairs, seeded as live compass
@@ -357,14 +379,28 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-20 after v23.0 milestone — **v23.0 Educators & Judges Tabs SHIPPED.** Educators
-(school-board) and Judges are now first-class, compass-integrated tabs beside Representatives & Elections,
-driven by a single-source `classifyBucket` engine; Representatives decluttered, empty tabs hidden, default
-compass lens shifts per tab, and Trump/Vance/Rubio carry full 100%-cited compasses. Frontend/data only.
-In-scope requirements 7/7 satisfied (CLASS-01, TAB-01/02/03, CMP-01/02, RES-01); EDU-01/02 (Education lens
-authoring, Phase 209) deferred by design to a future milestone. Archived to `milestones/v23.0-*` and
-tagged v23.0. **Next:** close the held v22.0 (Phase 200 + Phase 206 + Sahuarita/South Tucson reconcile)
-once the 2026-07-21 AZ primary certifies, or start a new milestone.*
+*Last updated: 2026-07-21 — **v24.0 in progress: Phase 213 (anonymous coordinate-lookup endpoint) complete + live.** v24.0 Results-Page Search & Header Overhaul OPENED.** Feature milestone:
+replace the cluttered multi-row results header with one compact, always-editable location search that
+routes anyone in the US to a location profile from an address, a city/state/county, or coordinates — with
+a national fallback to state + federal (Senate/House) officials. Drops Google Places for our own typeahead
++ US Census geocoder + a new backend place-name resolver + a coordinate lookup endpoint (no third-party
+ads/branding on our forms). Also: default Elected (remove All/Appointed dropdown, except Judges tab),
+compass lenses → icon buttons + tooltips (gavel for Judicial), and remove "Search by name". Spans
+essentials + accounts-api (both Render); continues phase numbering after v23.0's Phase 211. Runs alongside
+the still-held v22.0 close (Phase 200 + 206 + Sahuarita/South Tucson reconcile, gated on the 2026-07-21 AZ
+primary).*
+
+<details>
+<summary>Earlier footer — v23.0 close (2026-07-20)</summary>
+
+*v23.0 Educators & Judges Tabs SHIPPED. Educators (school-board) and Judges are now first-class,
+compass-integrated tabs beside Representatives & Elections, driven by a single-source `classifyBucket`
+engine; Representatives decluttered, empty tabs hidden, default compass lens shifts per tab, and
+Trump/Vance/Rubio carry full 100%-cited compasses. Frontend/data only. In-scope requirements 7/7 satisfied
+(CLASS-01, TAB-01/02/03, CMP-01/02, RES-01); EDU-01/02 (Education lens authoring, Phase 209) deferred by
+design. Archived to `milestones/v23.0-*` and tagged v23.0.*
+
+</details>
 
 <details>
 <summary>Earlier footer — v23.0 opened (2026-07-17)</summary>

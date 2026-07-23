@@ -24,6 +24,21 @@ describe('buildBannerProps', () => {
     });
   });
 
+  it('does not double the state when representingCity already ends in the state abbrev (browse mode)', () => {
+    const browseCtx = { ...CTX, representingCity: 'Los Angeles County, California, US, CA', userState: 'CA', stateNames: { CA: 'California' } };
+    expect(buildBannerProps('city', browseCtx).locationName).toBe('Los Angeles County, California, US, CA');
+  });
+
+  it('does not double the state when representingCity ends in the full state name', () => {
+    const ctx = { ...CTX, representingCity: 'Springfield, Illinois', userState: 'IL', stateNames: { IL: 'Illinois' } };
+    expect(buildBannerProps('city', ctx).locationName).toBe('Springfield, Illinois');
+  });
+
+  it('does not double the state for the "Unincorporated {County}" label (LOC-04)', () => {
+    const ctx = { ...CTX, representingCity: 'Unincorporated Pima County', userState: 'AZ', stateNames: { AZ: 'Arizona' } };
+    expect(buildBannerProps('city', ctx).locationName).toBe('Unincorporated Pima County, AZ');
+  });
+
   it('falls back to the state abbreviation when stateNames has no entry', () => {
     expect(buildBannerProps('state', { ...CTX, stateNames: {} }).locationName).toBe('TX');
   });

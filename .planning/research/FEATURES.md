@@ -1,299 +1,180 @@
-# Feature Landscape — Cambridge MA Location Onboarding (v5.0)
+# Feature Research
 
-**Domain:** Civic coverage expansion — adding Cambridge, MA as a covered location
-**Researched:** 2026-05-15
-**Scope:** Features for milestone v5.0 — Cambridge, MA onboarding + reusable location playbook
-**Supersedes:** Previous FEATURES.md (v2.1 AI Candidate Discovery System, 2026-04-23)
+**Domain:** Unified civic location search ("one field to a location profile") for an address→officials lookup app
+**Researched:** 2026-07-20
+**Confidence:** MEDIUM (WAI-ARIA/geocoding mechanics HIGH via W3C/Census docs; competitive UX patterns MEDIUM via multiple corroborating sources; no Context7 library applicable to this domain)
 
----
+## Feature Landscape
 
-## Cambridge Government Structure (Verified)
+### Table Stakes (Users Expect These)
 
-Understanding the government structure is prerequisite to knowing what to build.
-Every item in this section is sourced from official city or MMA sources.
+Features users assume exist in any "type where you live, get your officials" flow. Missing these makes the new search feel broken relative to Google/Zillow-caliber search boxes users already know.
 
-### Form of Government
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| Single field accepts address, city, city+state, county, state, and ZIP without a mode switch | Users don't self-classify their input type — Google/Zillow/Redfin search boxes all do free-text-in, disambiguate-behind-the-scenes | MEDIUM | Requires an input classifier (regex/heuristic pass: pure digits → ZIP or lat/lng; comma-separated two-number pair → coordinates; contains a number + street suffix → address; else → place name) that routes to the right backend resolver before or instead of Census geocode |
+| Typeahead suggestions while typing | Users expect a dropdown of candidates, not a "search" button they must click blind — this is the baseline UX of every modern location box | MEDIUM | Debounce 200–300ms; minLength 2–3 chars; cap suggestions at ~5–8 to avoid overwhelming (industry convention, not a hard standard) — [Autocomplete system design](https://systemdesignschool.io/problems/typeahead/solution), [Debounce timing](https://spin.atomicobject.com/2018/06/04/automplete-timing-debouncing/) |
+| Disambiguation of duplicate place names with state (e.g. "Springfield" → Springfield, IL / Springfield, MA / Springfield, OH…) | Springfield is not a joke — there are 41+ US Springfields; any city-name search WILL collide | MEDIUM | Standard geocoder behavior is to return a ranked candidate list, not force a single guess: "geocoders already return multiple results for ambiguous queries" — [Geocode disambiguation discussion](https://groups.google.com/g/google-maps-js-api-v3/c/UAyUg1BWyoo). Suggestion rows must always show `City, ST` (or `County, ST` / `ST`) — never bare city name — so the user disambiguates by reading, not by guessing |
+| Graceful "no match" / "not found" state with a next step | Every search box eventually gets garbage input; users expect an explicit message, not a silent blank result or a crash | LOW | Show a "We couldn't find that location — try a full street address or city, state" message; never route to an empty/broken profile page |
+| Pressing Enter (without picking a suggestion) still resolves to a best-guess result | Power users type-and-Enter; forcing a dropdown click-only interaction is a common and frustrating anti-pattern | MEDIUM | Standard combobox behavior: Enter either commits the currently-highlighted suggestion or, if none is highlighted, submits the raw text to the resolver for a best-effort match |
+| Editable "current location" is pre-filled and instantly editable (not a separate "change location" flow) | This is the milestone's explicit design goal, and it matches best-in-class location bars (Airbnb, Google Maps, Zillow) that always show *where you are* and let you type over it directly | LOW–MEDIUM | Click/tap or focus selects-all or opens edit mode instantly — no extra "edit" button click required first |
+| National fallback: any resolvable US input returns *something* (state + federal reps) even where local/city data is thin | Users in a not-yet-deep-seeded city must not hit a dead end — matches the project's own explicit v24.0 goal and the general civic-tech norm (ProPublica/5 Calls/Common Cause all guarantee at least federal-level results from a ZIP) | HIGH | **Dependency gap** — nationwide federal fallback requires TIGER congressional-district (CD) and state-boundary geofences for *every* state, not just the ones already deep-seeded. Confirm 50-state CD/state coverage exists before promising this; if any states lack CD/state geofences, fallback will itself be thin for those states. Coordinate this with the roadmapper explicitly. |
+| Loading/pending state on the field while resolving | Any async network round-trip (geocode, name resolver, coordinate lookup) needs a visible pending indicator or the box feels unresponsive | LOW | Simple spinner/skeleton in the suggestion panel is sufficient |
+| Keyboard-only operability (arrow keys, Enter, Escape) | Table stakes for any interactive listbox, not just an accessibility nicety — this is baseline expected behavior for anyone who tabs into a form | MEDIUM | Implement per WAI-ARIA APG Combobox pattern (see Accessibility below) |
+| Mobile-friendly input (large tap target, no zoom-jump, numeric keyboard hinting where useful) | Majority-mobile traffic for a "look up my rep" tool; a field that's fussy on a phone kills the core use case | LOW | Standard responsive input styling; `inputmode` hints not required but helpful for ZIP-only entry |
 
-Cambridge uses a **Council-Manager** form with a ceremonial/legislative Mayor.
-This differs from all prior covered locations (Monroe County IN uses county council,
-LA County uses Board of Supervisors, Collin County TX uses city mayors).
+### Differentiators (Competitive Advantage)
 
-| Role | Who fills it | How chosen |
-|------|-------------|-----------|
-| City Manager | Yi-An Huang (appointed 2022) | Appointed by City Council; chief executive of all city operations |
-| Mayor | Marc C. McGovern (as of Jan 2026) | Elected **by** the 9 City Councilors from among themselves each January; chairs council + sits on School Committee |
-| Vice Mayor | Burhan Azeem (as of Jan 2026, now running for state senate) | Also elected by councilors from among themselves |
-| City Council (9 members) | Al-Zubi, Azeem, Flaherty, McGovern, Nolan, Simmons, Sobrinho-Wheeler, Zusy + one more (see below) | At-large, STV proportional representation, biennial |
-
-**Current 9 councilors (elected November 2025, serving 2026-2027 term):**
-1. Ayah A. Al-Zubi
-2. Burhan Azeem (also Vice Mayor; running for MA State Senate 2026)
-3. Tim Flaherty
-4. Marc C. McGovern (also Mayor)
-5. Patricia M. Nolan
-6. E. Denise Simmons
-7. Jivan G. Sobrinho-Wheeler
-8. Catherine Zusy
-9. Sumbul Siddiqui (confirmed member; also previously served as Mayor)
-
-Note: Azeem's state senate run (primary September 1, 2026) may trigger a council vacancy mid-term if he wins. The DB should track this; the city charter governs vacancy filling procedures.
-
-### School Committee
-
-| Fact | Detail |
-|------|--------|
-| Size | 7 members (6 elected + Mayor ex officio) |
-| Election method | STV proportional representation, same ballot as City Council |
-| Term | 2 years, biennial with council |
-| Chair | Elected by members (new charter 2025: no longer automatic Mayor) |
-
-**Current School Committee members (elected November 2025):**
-1. David Weinstein (Chair)
-2. Caitlin Dube (Vice Chair)
-3. Luisa de Paula Santos
-4. Richard Harding Jr.
-5. Elizabeth Hudson
-6. Arjun Jaikumar
-7. Mayor Marc C. McGovern (ex officio)
-
-18 candidates ran for 6 elected seats in 2025 — the most in 20 years.
-
-### State Legislative Districts Covering Cambridge
-
-Cambridge is split across multiple districts. This means geofences are required —
-a Cambridge address near Harvard may have different state reps than one near Inman Square.
-
-**State Senate (Cambridge is split between two districts):**
-- Middlesex and Suffolk District — Senator Sal DiDomenico (covers portions of Cambridge including wards 1, 3, 4 partial, 6, 7, 8 plus Charlestown, Chelsea, Everett)
-- Second Middlesex District — Senator Pat Jehlen (retiring 2026; covers Cambridge, Somerville, Medford, Winchester portions). 2026 primary: Burhan Azeem vs Christine Barber vs Tom Hopcroft vs Matt McLaughlin vs Erika Uyterhoeven (September 1, 2026)
-
-**State House (Cambridge spans ~6 districts — confirmed district names):**
-- 24th Middlesex — Rep. David Rogers
-- 25th Middlesex — Rep. Marjorie Decker
-- 26th Middlesex — Rep. Mike Connolly
-- Additional Middlesex districts (partial coverage): Michael Moran, Steven Owens, Daniel Joseph Ryan
-  (Exact ward/precinct mapping requires the Cambridge Election Commission district PDF)
-
-**Federal Congress (Cambridge is split between two districts):**
-- MA-7 (majority of Cambridge) — Rep. Ayanna Pressley
-- MA-5 (portion of Cambridge) — Rep. Katherine Clark
-  (Clark running in 2026 primary vs Jonathan Paz and Tarik Samman, September 1, 2026)
-
-**US Senators (statewide, all Cambridge residents):**
-- Sen. Edward J. Markey
-- Sen. Elizabeth Warren
-
-### Elections Schedule
-
-Cambridge holds municipal elections **biennially in November of odd-numbered years**.
-- Last election: November 4, 2025 (9 council seats, 6 school committee seats, charter ballot question)
-- Next election: November 2027 (next biennial cycle)
-- State/federal: Massachusetts general elections in November of even-numbered years; primaries September 2026
-
-**Charter update (November 2025):** Voters approved a new charter 73% yes. Key changes:
-- STV proportional representation system now codified in the charter (was previously referenced by a now-repealed state law still in effect by court order)
-- School Committee chair now elected by members instead of being automatic Mayor
-- Board of Election Commissioners given authority to modernize tabulation process
-
-### STV Election Mechanics (Cambridge-Specific)
-
-Cambridge has used STV continuously since 1941 — the longest-running STV jurisdiction in the US.
-
-| Parameter | City Council | School Committee |
-|-----------|-------------|-----------------|
-| Seats | 9 | 6 |
-| Typical candidate count | 18-25 (2025: 20 ran) | 12-20 (2025: 18 ran) |
-| Max rankings on ballot | 15 (per ballot instructions) | 15 |
-| Quota formula | Droop: floor(ballots / (seats+1)) + 1 | Same |
-| Surplus transfer method | Cincinnati Method (random sampling with mathematical formula) | Same |
-| Result reporting | Multi-round HTML report published by Election Commission | Same |
-| Ballotpedia coverage | Outside standard coverage (Cambridge <100K population) | Same |
-
----
-
-## Table Stakes
-
-Features a Cambridge resident must encounter for the location to be usable.
-Missing any of these makes Cambridge feel half-built compared to Monroe County or LA County.
-
-| Feature | Why Required | Complexity | Schema Notes |
-|---------|-------------|------------|-------------|
-| Cambridge city government entity | `governments` row for City of Cambridge, MA | Low | Same as Collin County city pattern |
-| Cambridge chambers: City Council, School Committee | Two `chambers` rows with correct seat counts and election method | Low | `election_method = 'stv_proportional'` — new value needed or expand enum |
-| All 9 City Council offices | One `offices` row per seat; at-large (no districts) | Low | `district = NULL`, `at_large = true` |
-| All 6 School Committee offices | Six `offices` rows; at-large | Low | Same pattern as council |
-| Current council member politicians | 9 politician rows with term end 2027-12-31 | Medium | Headshots required per project standard |
-| Current School Committee politician rows | 6 elected + 1 ex officio (Mayor) = 7 total | Medium | Ex officio linkage may require note |
-| Mayor/Vice Mayor titles | Stored as role flags or separate office rows; not a separate elected office | Low | Mayor is selected from council — model as `title` not a separate `office` |
-| City Manager record | Yi-An Huang as appointed (not elected) official | Low | `is_elected = false`; include for completeness |
-| Cambridge geofence boundary | PostGIS polygon for city boundary | Medium | City boundaries available via MassGIS; needed for address matching |
-| State legislative district geofences | Cambridge spans 2 senate + ~6 house districts — all need geofences | High | Cambridge GIS publishes district shapefiles; MassGIS is canonical source |
-| Federal district geofences | Cambridge splits MA-5 and MA-7 | Medium | Requires splitting city boundary correctly |
-| State/federal politicians linked | Azeem, DiDomenico, Jehlen (+ 2026 successor), Rogers, Decker, Connolly, Pressley, Clark, Markey, Warren | Medium | Many already exist if MA covered elsewhere; verify before adding |
-| 2027 council election race records | Placeholder races for November 2027 | Low | No candidates yet; races table row + date is sufficient |
-| 2026 state/federal races | MA-7 (Pressley), MA-5 (Clark primary), 2nd Middlesex Senate primary | Medium | Azeem is a candidate in the senate race — cross-reference with his council record |
-
----
-
-## Differentiators
-
-What makes Cambridge coverage genuinely useful beyond the basics.
-These are the features that justify Cambridge as a showcase location.
+Features that set this specific search apart from a generic address box, aligned with Essentials' antipartisan/anonymous-first Core Value.
 
 | Feature | Value Proposition | Complexity | Notes |
-|---------|------------------|------------|-------|
-| STV multi-round results display | Show the elimination rounds, not just the winner — Cambridge publishes round-by-round HTML; this is civically educational | High | Round data available at cambridgema.gov/Election2025/Council%20Round.htm; requires new UI component |
-| 20-candidate ballot representation | When 20 people run for 9 seats, display all candidates with their first-round vote totals and final status (elected/eliminated) | Medium | DB supports this; UI needs to handle large candidate lists gracefully |
-| Mayor-as-council-member clarity | Prominently explain that Cambridge's Mayor is not an independently-elected executive — the City Manager runs the city | Low | Tooltip or explainer card on politician profile; no data model change |
-| School Committee + Council on one ballot | Show both races together in the Elections view for Cambridge — they appear on the same physical ballot | Low | UI grouping change; no schema change |
-| Cross-office politician linking | Azeem is simultaneously a City Councilor, Vice Mayor, and 2026 state senate candidate — link these in the profile | Medium | `race_candidates` row in 2026 MA State Senate race + existing council record |
-| Charter change timeline | Show the 2025 charter ballot question result as context for how Cambridge elections work | Low | `races` row with `type = 'ballot_question'`; results already known |
-| Compass stances for local issues | Cambridge politics is dominated by housing/zoning (Azeem's upzoning passed 2025), transit, and university relations | High | Stance research follows Phase 30 pattern; STV means more candidates to research |
-| Cambridge Day as canonical local source | This nonprofit paper is the primary local civic journalism outlet; cite it for candidate research | Low | Playbook documentation item; no data model change |
+|---------|-------------------|------------|-------|
+| One field truly unifies address / city / county / state / coordinates — no mode toggle at all | Most civic tools (5 Calls, My Reps, house.gov) still ask you to choose ZIP vs. address vs. use-my-location as separate affordances; collapsing this into one intelligent field with silent classification is the actual milestone differentiator | HIGH | This is the whole point of v24.0 — the field itself IS the differentiator, not any single input type. Complexity lives in the backend classifier + fallback chain (name resolver → Census geocode → coordinate parser), not in any one path alone |
+| Coordinate paste support (`38.9072, -77.0369`, `38.9072 -77.0369`, or DMS `38°54'25.9"N 77°02'11.7"W`) | Power users copy/paste coordinates from Google Maps, GPS devices, or a "share location" link; almost no civic-lookup competitor accepts raw lat/lng directly in the main search box | MEDIUM | Parse both decimal-degrees (comma OR space separated) and DMS with N/S/E/W suffixes; convert DMS→decimal before hitting the coordinate lookup endpoint. Regex patterns are well-documented — [geo-coordinates-parser npm](https://www.npmjs.com/package/geo-coordinates-parser), [DMS/DD regex gist](https://gist.github.com/pjobson/8f44ea79d1852900457bc257a4c9fcd5) |
+| Own-data typeahead (DB place-names + curated catalog) replacing Google Places entirely | No third-party branding, no Google ToS/billing dependency, no ad-tech data leakage on a civic tool that markets itself as antipartisan and privacy-respecting — matches the existing "No Google Places autocomplete" constraint already in PROJECT.md | MEDIUM–HIGH | This is explicitly called out in the milestone; the differentiator is trust/privacy positioning, not novel UX. Suggestion ranking should prioritize (a) exact place-name matches in already-covered geo_ids, then (b) the broader nationwide place-name catalog, then (c) raw address candidates from Census |
+| Consistent single profile destination regardless of input granularity | Typing "Texas", "Collin County", or a full Plano street address all land on a coherent, appropriately-scoped profile (state page vs. county page vs. individual address results) rather than three different UI paradigms | MEDIUM | Requires a routing decision table: state name/abbrev → state browse page; county name → county browse page; city/city+state → city browse (existing browse-by-government-list); full address → existing PostGIS address lookup. This reuses existing browse-by-geo_id infrastructure rather than building new pages |
+| Anonymous-first — no account, no saved-location requirement, no forced geolocation permission prompt on load | Matches Core Value ("without creating an account") and the project's own EDOC-01 constraint (never re-prompt Connected users); an unsolicited browser geolocation permission popup on page load is a known dark-pattern users resent | LOW | Geolocation (if offered at all) should be an explicit opt-in affordance (an icon/button in the field), never auto-triggered — consistent with the existing `ev:autoOpenMyLocation` opt-in memory pattern already in place for Connected users |
 
----
+### Anti-Features (Commonly Requested, Often Problematic)
 
-## Anti-Features
+Features that seem good but create problems for this specific field, or actively conflict with existing project constraints.
 
-Things to deliberately skip for Cambridge.
-
-| Anti-Feature | Why Avoid | What to Do Instead |
-|-------------|-----------|-------------------|
-| Modeling Mayor as a separate elected office | Mayor is chosen by council from themselves — it is a title, not an independently-elected office. Modeling it as a separate `offices` row creates false "who's running for Mayor" races | Store as a `title` or `role` flag on the politician record; document clearly in the DB |
-| City Manager in elections data | Yi-An Huang is appointed, not elected. Users asking "who are my representatives" don't need to see the City Manager prominently | Include in city government listing but exclude from elections/ballot flow |
-| STV round-by-round display in v5.0 | Full round visualization is high complexity and has no prior art in this codebase | Flag as future differentiator; ship flat candidate list with vote totals first |
-| Modeling all 6 Cambridge House districts as separate geofences in phase 1 | 6 different state rep districts is the hardest geofencing problem in this project — more districts than Monroe County or Collin County combined | Ship city council + 2 senate districts first; add house districts in a follow-on phase |
-| Scraping Cambridge election round reports | Round-by-round HTML reports exist but change format each election | Ingest only final results (elected/not-elected, first-round votes) for v5.0 |
-| Real-time 2027 candidate discovery | Filing doesn't open until summer 2027 | Add 2027 placeholder races; run discovery when filing opens |
-
----
-
-## Playbook Items (Process Steps for Cambridge + Future Locations)
-
-These are the procedural discoveries from researching Cambridge — steps that apply when onboarding any new MA city, and the broader lessons for the playbook.
-
-### MA-Specific Sources and Quirks
-
-| Source | What It Provides | How to Use |
-|--------|-----------------|-----------|
-| `cambridgema.gov/Departments/electioncommission` | Official candidate lists (PDF), election results by round (HTML), district maps | Primary source for candidates; PDF list published after nomination papers filed |
-| `cambridgema.gov/GIS` | State rep, state senate, congressional district shapefiles | Download shapefiles for geofence boundary ingestion |
-| MassGIS (`gis.data.mass.gov`) | Statewide authoritative boundary data for all legislative districts | Use for district boundaries when city GIS is not enough |
-| `malegislature.gov/Search/FindMyLegislator` | Address → district + legislator lookup | Use to verify which districts touch Cambridge before ingesting |
-| MMA Data Hub (`mma.org`) | Form of government, key officials, legislators per community for all 351 MA cities | Cold-start discovery — tells you gov structure and legislators for any MA city. Web directory, not API |
-| `cambridgeday.com` | Primary local journalism; covers all council votes and election coverage | Candidate research and stance sourcing |
-| `rwinters.com` (Cambridge Civic Journal) | Unofficial but comprehensive archive of all Cambridge elections since 1941, round reports | Historical context and election data verification |
-| MA SoS Elections Division (`electionstats.state.ma.us`) | Historical MA election results, 1970-present | State/federal race results |
-| OpenStates | State legislative data (bills, legislators) for MA | Does not cover municipal offices |
-
-### Key MA Quirks vs Prior Locations
-
-| Quirk | Impact on Playbook |
-|-------|-------------------|
-| STV ballots with 15-20+ candidates | The `race_candidates` table must handle large candidate counts per race; UI must paginate or collapse losers |
-| Mayor is not independently elected | Any MA city using Council-Manager form (common in MA) must not model the Mayor as a standalone election |
-| Municipal elections in odd years only | No Cambridge races in 2026; state/federal in 2026 are on separate ballot and separate election date |
-| District splits within a single city | Cambridge splits across 2 senate + 6 house + 2 federal districts. Cold-start: always check `malegislature.gov/FindMyLegislator` with multiple Cambridge addresses before assuming one district |
-| Ballotpedia does not cover Cambridge | Cambridge (population ~118K) is below Ballotpedia's 100K-largest-city threshold for scheduled updates. Do not rely on Ballotpedia for current Cambridge data |
-| MMA Data Hub has key officials | For any MA city, MMA lists the current form of government, key officials, and legislators — this is the fastest cold-start source before going to the city website |
-| Charter variations | MA cities have wide charter variation. Cambridge's STV system is unique; other MA cities may use standard plurality. Always verify charter before modeling elections |
-
-### Cold-Start Playbook for Any New MA City
-
-1. **MMA Data Hub first.** `mma.org/community/[cityname]/` gives form of government, key official names, and legislators in 60 seconds.
-2. **City website election commission.** Find official candidate list PDFs and district map PDFs.
-3. **MassGIS for district boundaries.** `gis.data.mass.gov` for authoritative shapefiles; supplement with city GIS.
-4. **`malegislature.gov/FindMyLegislator` spot-check.** Test 3-4 addresses across the city to confirm which districts are present and whether there are splits.
-5. **OpenStates for legislators.** Once district names are confirmed, OpenStates has structured legislator data for MA House and Senate.
-6. **MA SoS `electionstats.state.ma.us` for election history.** Verify past results and upcoming election dates.
-7. **Local newspaper.** Every sizeable MA city has one — Cambridge Day for Cambridge; use for candidate research and stances.
-8. **Never assume Ballotpedia.** Only Boston is reliably covered. All other MA cities require going to official sources.
-
----
+| Feature | Why Requested | Why Problematic | Alternative |
+|---------|---------------|------------------|-------------|
+| Auto-triggering the browser geolocation prompt on page load | "Just detect where I am automatically, it's more convenient" | Permission-prompt-on-load is a well-documented dark pattern; most users decline or are startled by it, and it conflicts with the project's own opt-in-only geolocation precedent (`ev:autoOpenMyLocation`) and anonymous-first framing | Offer a small optional "use my location" icon/button inside the field that the user must click; never fire it automatically |
+| Requiring the user to pick a suggestion before submitting (no free-text Enter) | "Forces clean data, avoids garbage geocode requests" | Breaks the basic combobox contract users expect (type-and-Enter); frustrates power users who know exactly what they want to type and don't want to wait for/click a dropdown | Allow Enter to submit raw text through the same resolver chain used for suggestion clicks; treat it as a "zero-th" suggestion |
+| ZIP-code-only lookup as the primary input method | "ZIPs are what everyone remembers" | ZIP codes routinely straddle multiple congressional/state-legislative districts and even multiple cities/counties — a documented low-accuracy source ("zip codes... are very likely to produce low-accuracy results" — [5 Calls API docs](https://5calls.org/representatives-api/)); using ZIP as the *primary* signal risks silently wrong officials, which is especially bad for an antipartisan civic-accuracy product | Accept ZIP as one of several inputs, but weight full street address highest for accuracy, and always disambiguate ZIP-only input to the geographic centroid with a visible caveat that results may span multiple districts |
+| Re-adding "Search by name" (politician name filter) inside the location field | "Users might want both in one box" | Explicitly being removed this milestone; conflating politician-name search with location search doubles the field's job and re-introduces exactly the clutter this milestone is designed to eliminate | Keep name-based politician search out of scope entirely (already decided); if ever revisited, it should be a wholly separate control, not merged into the location combobox |
+| Restoring the old state→county→city LocationBrowser tree as a "fallback" UI alongside the new field | "Keep the old flow as a safety net" | Reintroduces the exact multi-row, multi-mode clutter this milestone exists to remove; a tree-picker and a smart combobox solving the same problem is redundant surface area to maintain | Fully replace the tree with browse-by-geo_id destinations reached *through* the unified field (typing a state/county/city name routes there) |
+| International address support / non-US geocoding | "Might as well be global" | Out of scope — this is explicitly a US civic-officials lookup (Census geocoder is US-only, TIGER geofences are US-only, all seeded government data is US-only); building for international inputs adds classifier complexity for zero addressable users | Explicitly scope the classifier and all resolvers to US-only inputs; return the "not found" state for anything that looks non-US |
+| Third-party ad-supported/branded autocomplete widgets (Google Places, Mapbox Search, etc.) | "Fastest way to get good typeahead quality" | Explicitly ruled out this milestone — third-party ads/branding on the form, external billing dependency, and a data-sharing relationship inconsistent with an antipartisan/privacy-respecting positioning (already an enforced anti-pattern in PROJECT.md: "No Google Places autocomplete") | Own the stack: DB place-names + curated catalog + free US Census geocoder + a new backend name resolver + coordinate lookup endpoint (as the milestone already specifies) |
 
 ## Feature Dependencies
 
 ```
-Cambridge city geofence boundary
-  └── address matching → routes user to Cambridge officials
+Unified location search field (one input, free text)
+    ├──requires──> Input classifier (address vs place-name vs ZIP vs coordinates)
+    │                  ├──requires──> Coordinate parser (decimal + DMS, comma/space separated)
+    │                  │                  └──requires──> NEW coordinate lookup endpoint (reverse-geocode coords → PostGIS ST_Covers)
+    │                  ├──requires──> NEW backend place-name resolver (city/city+state/county/state → geo_id)
+    │                  │                  └──requires──> DB place-name catalog (own data, replaces Google Places)
+    │                  └──enhances-existing──> US Census geocoder (already used for full-address lookup)
+    │
+    ├──requires──> Disambiguation UI (ranked suggestion list, always shows City, ST / County, ST / ST)
+    │
+    └──requires──> National fallback (state + federal officials guaranteed for any resolvable US input)
+                       └──requires──> Nationwide TIGER congressional-district + state-boundary geofences
+                                          [GAP: only confirmed complete for states already onboarded —
+                                           verify 50-state CD/state coverage before roadmap commits to
+                                           "any US input" as a launch claim]
 
-State legislative district geofences (2 senate + 6 house + 2 federal)
-  └── address matching → routes user to correct state rep / senator / rep in congress
+Editable pre-filled current-location affordance ──enhances──> Unified location search field
+    (same input widget, just seeded with the resolved location's display string on load)
 
-Cambridge governments + chambers
-  └── offices (9 council + 6 school committee)
-       └── politicians (incumbents, with headshots)
-            └── races (2027 council placeholder; 2025 completed results)
-                 └── race_candidates (all 20 council + 18 school committee from 2025)
+Accessible combobox (ARIA) ──wraps──> Unified location search field
+    (not a separate feature — the field's implementation must satisfy this from day one,
+     not bolted on after)
 
-2026 MA state races
-  └── Azeem → linked to existing council politician record + new senate race_candidate row
-  └── 2nd Middlesex Senate primary (Sept 2026 primary)
-  └── MA-5 House primary (Sept 2026)
+"Search by name" removal ──conflicts-would-be-wrong-to-combine-with──> Unified location search field
+    (keeping them separate is the correct call; do not merge in a later phase)
+
+Browse-by-government-list (geo_id) [EXISTING] ──consumed-by──> Place-name resolver's routing layer
+Address→reps via Census geocode + PostGIS ST_Covers [EXISTING] ──consumed-by──> Input classifier's address path
+Curated city/state typeahead (coverage.js) [EXISTING, LIMITED] ──superseded-by──> DB place-name catalog + curated catalog (broader)
 ```
 
-**Critical path for Cambridge to be usable:**
-`Cambridge geofence → governments/chambers/offices → 9 incumbents → state/federal politicians`
+### Dependency Notes
 
----
+- **Input classifier requires a coordinate parser, a place-name resolver, and the existing Census geocoder to coexist:** the field's core intelligence is *routing*, not any single lookup. Build the classifier as a thin dispatcher so each path (address / place / coordinates) can be developed and tested independently before wiring them together.
+- **National fallback requires nationwide CD + state geofences, which may not fully exist yet:** this is the single biggest hidden dependency for the roadmap. The project has deep-seeded roughly a dozen states in detail, but "any resolvable US input returns at least state + federal officials" implies congressional-district and state-boundary polygon coverage for **all 50 states**, not just the deep-seeded ones. If any states are missing CD/state TIGER geofences, the national-fallback promise is false for those states until that gap is closed — flag this explicitly for the roadmapper as a pre-flight audit item, not an assumption.
+- **DB place-name catalog supersedes coverage.js, but should absorb it rather than discard it:** the existing curated typeahead already encodes hand-verified "this place is actually covered end-to-end" knowledge. The new catalog should be a superset (nationwide place names for routing/fallback + the existing curated list surfaced with higher suggestion-ranking priority, since those are the areas with full local depth).
+- **Accessible combobox is not a bolt-on:** ARIA roles/states (`combobox`, `listbox`, `aria-expanded`, `aria-activedescendant`, `aria-autocomplete`) must be present in the first implementation, because retrofitting ARIA onto a working-but-inaccessible custom dropdown is materially harder than building it in from the WAI-ARIA APG example pattern.
+- **"Search by name" removal is independent, not a merge target:** the milestone's decision to remove politician-name search rather than fold it into the location field is correct and should not be revisited inside this same field's design — combining "where do I live" and "who is this person" search semantics in one box would recreate the ambiguity problem this milestone is solving.
 
-## MVP Recommendation
+## MVP Definition
 
-**Phase 1 — Government structure + incumbents (no elections)**
-Create Cambridge government, two chambers (council + school committee), offices, and politician rows for all 9 incumbents. No geofence yet — test with hardcoded Cambridge address. Headshots required per project standard.
+### Launch With (v1)
 
-**Phase 2 — Geofence + address routing**
-Ingest city boundary geofence from MassGIS. Wire address lookup to return Cambridge officials. Test with 5 representative Cambridge addresses.
+Minimum viable set for the v24.0 milestone's own stated scope.
 
-**Phase 3 — State/federal legislators**
-Map the 2 senate and at least 2 confirmed house districts. Ingest or verify existing politician records for Azeem (senate candidate), DiDomenico, Rogers, Decker, Connolly, Pressley, Clark, Markey, Warren.
+- [ ] Single field accepting full street address, city/city+state/county/state name, and lat/lng — this is the milestone's explicit deliverable
+- [ ] Typeahead suggestions from DB place-names + curated catalog, ranked with covered/deep-seeded areas first
+- [ ] Disambiguation via `City, ST` / `County, ST` / `ST` labels in every suggestion row — non-negotiable given the Springfield problem
+- [ ] Coordinate input support for decimal-degrees (comma- or space-separated); DMS is a stretch goal, not MVP-blocking
+- [ ] National fallback to state + federal officials for any resolvable US input (pending the 50-state CD/state geofence audit above)
+- [ ] Pre-filled, click-to-edit current-location affordance replacing the old multi-row header
+- [ ] Enter-to-submit raw text (best-effort resolve) in addition to suggestion-click
+- [ ] "Not found" graceful state with a retry hint
+- [ ] Basic ARIA combobox semantics (role, aria-expanded, aria-controls, aria-activedescendant, keyboard arrow/Enter/Escape)
 
-**Phase 4 — 2025 completed election data**
-Ingest the November 2025 council and school committee results as completed races. All 20 council candidates + all 18 school committee candidates as race_candidate rows with vote totals and elected/eliminated status.
+### Add After Validation (v1.x)
 
-**Phase 5 — 2026 state/federal races**
-Add September 2026 primary races for 2nd Middlesex Senate and MA-5 House. Link Azeem as a candidate.
+- [ ] DMS coordinate format support (`40°42'51"N 74°00'21"W`) — add once decimal-degree support is confirmed working and real user paste-behavior is observed
+- [ ] "Use my location" opt-in geolocation icon inside the field (explicit click, never auto-fire)
+- [ ] Suggestion-list virtualization/windowing if the place-name catalog grows large enough that render performance degrades (unlikely at launch scale, per typeahead system-design guidance capping visible results at 5–10)
 
-**Defer post-MVP:**
-- 6 house district geofences (complex, do senate + federal first)
-- STV round-by-round results display
-- Compass stances for Cambridge candidates (follows Phase 30 pattern after incumbents are ingested)
-- 2027 council race candidates (filing not open until summer 2027)
+### Future Consideration (v2+)
 
----
+- [ ] "Near me" fuzzy disambiguation (e.g., ranking "Springfield" candidates by proximity to a previously-known location) — defer until there's a signal for what proximity data is even available anonymously
+- [ ] Cross-street/intersection input parsing — a 5 Calls-documented accuracy improvement over ZIP-only, but a new input grammar not requested in this milestone's scope
+- [ ] Promoting the unified search component into `@empoweredvote/ev-ui` for reuse by sibling EV apps — defer until the pattern is proven and stable inside Essentials, matching the project's own precedent of promoting shared components only after in-app validation (see `buildBannerProps`/`SectionBanner` decision history)
 
-## Confidence Assessment
+## Feature Prioritization Matrix
 
-| Area | Confidence | Source |
-|------|-----------|--------|
-| Government structure (Council-Manager, 9 council, 7 school committee) | HIGH | cambridgema.gov official pages + MMA Data Hub |
-| Current council member names | HIGH | cambridgema.gov/Departments/citycouncil/members |
-| Current School Committee names | HIGH | cpsd.us + Harvard Crimson election results |
-| STV system mechanics | HIGH | cambridgema.gov Election Commission + rcvresources.org |
-| 2025 election results (7 incumbents + 2 challengers) | HIGH | Harvard Crimson + The Tech (MIT) post-election reporting |
-| State senate districts (DiDomenico, Jehlen/2026 successor) | HIGH | MMA Data Hub + malegislature.gov |
-| State house districts (Rogers 24th, Decker 25th, Connolly 26th) | HIGH | Multiple sources agree |
-| Additional house districts (Moran, Owens, Ryan) | MEDIUM | MMA Data Hub lists these for Cambridge; exact ward/precinct mapping requires district PDF |
-| Congressional split (MA-7 majority, MA-5 portion) | HIGH | Cambridge GIS + multiple sources confirm split |
-| Next election date (November 2027) | HIGH | Biennial pattern confirmed; MMA lists 2027 |
-| 2026 Azeem senate race (primary Sept 1, 2026) | HIGH | Harvard Crimson + Cambridge Day reporting, 5-way race confirmed |
-| Azeem current council status (will he resign before election?) | LOW | Not yet determined; depends on primary result |
+| Feature | User Value | Implementation Cost | Priority |
+|---------|------------|---------------------|----------|
+| Single unified field (address/place/coords, no mode toggle) | HIGH | HIGH | P1 |
+| Disambiguation via City/County, ST labels | HIGH | LOW | P1 |
+| Typeahead from own DB place-names + curated catalog | HIGH | MEDIUM | P1 |
+| National fallback (state + federal guaranteed) | HIGH | HIGH (contingent on geofence audit) | P1 |
+| Pre-filled, click-to-edit current-location affordance | HIGH | LOW | P1 |
+| ARIA combobox semantics + keyboard nav | HIGH (accessibility is non-negotiable) | MEDIUM | P1 |
+| Enter-to-submit raw text without dropdown selection | MEDIUM | LOW | P1 |
+| Decimal-degree coordinate parsing | MEDIUM | LOW | P1 |
+| DMS coordinate parsing | LOW–MEDIUM | LOW | P2 |
+| Opt-in "use my location" geolocation button | MEDIUM | LOW | P2 |
+| Suggestion-list virtualization | LOW (at current scale) | LOW | P3 |
+| Cross-street/intersection parsing | LOW | MEDIUM | P3 |
+| Promote component to `@empoweredvote/ev-ui` | LOW (now), MEDIUM (later) | MEDIUM | P3 |
 
----
+**Priority key:**
+- P1: Must have for launch
+- P2: Should have, add when possible
+- P3: Nice to have, future consideration
+
+## Competitor Feature Analysis
+
+| Feature | house.gov "Find Your Representative" | 5 Calls | My Reps (DataMade) | Our Approach |
+|---------|----------------------------------------|---------|----------------------|--------------|
+| Input types accepted | ZIP code only | Address, ZIP, or browser geolocation | Full address (Google Civic API) | One field: address, city/county/state name, ZIP, or lat/lng — broadest of all four |
+| Disambiguation | N/A (ZIP maps to a single district lookup form) | Notes ZIP inaccuracy explicitly in docs; recommends address/cross-streets for accuracy | Relies on Google Civic's address parsing | Explicit `City, ST` / `County, ST` disambiguation rows; never a bare ambiguous name |
+| Geolocation | Not offered | Offered, opt-in ("finds your location for you, or enter manually") | Not offered | Opt-in-only geolocation icon inside the field (v1.x), never auto-triggered on load |
+| National/fallback coverage | Federal only (by design — house.gov's own scope) | Federal + state, nationwide (their API's whole purpose) | Federal + state + county + local, wherever Google Civic has data | Federal + state guaranteed nationwide (pending geofence audit); local depth wherever a city/county has been deep-seeded |
+| Accessibility | Basic form, not a rich combobox | Standard web form | Standard web form | Full WAI-ARIA APG combobox pattern (role, aria-expanded/controls/activedescendant, keyboard nav) — none of the three competitors surfaced ARIA-combobox-level detail in available docs, this is a chance to lead |
+| Branding/privacy | Government site, no ads | Explicitly "never sells data," privacy-first | Powered by Google Civic API (third-party dependency) | Zero third-party autocomplete branding; own DB + free Census geocoder — strongest privacy/antipartisan positioning of the group |
 
 ## Sources
 
-- [Cambridge City Council members page](https://www.cambridgema.gov/Departments/citycouncil/members) — current 9 councilors, Mayor confirmed
-- [Cambridge Election Commission — Municipal Elections](https://www.cambridgema.gov/departments/electioncommission/cambridgemunicipalelections) — biennial schedule, STV mechanics, offices on ballot
-- [Cambridge School Committee members](https://www.cpsd.us/school-committee/school-committee-members-subcommittees) — 7 members confirmed
-- [Cambridge School Committee 2025 results — Cambridge Day](https://www.cambridgeday.com/2025/11/05/cambridge-elects-school-committee-newcomers-bringing-back-only-harding-and-hudson/) — 2025 election outcome
-- [Cambridge City Council 2025 results — The Tech (MIT)](https://thetech.com/2025/11/06/2025-cambridge-city-council-election) — 20 candidates, 7 incumbents + 2 challengers elected
-- [Charter ballot question passed 73% — Harvard Crimson](https://www.thecrimson.com/article/2025/11/5/cambridge-updates-charter/) — charter modernization confirmed
-- [RCV Resources — Cambridge MA in practice](https://www.rcvresources.org/in-practice-cambridge-ma) — Droop quota, Cincinnati Method surplus transfer
-- [MMA Cambridge community profile](https://www.mma.org/community/cambridge/) — form of government, key officials, legislators listed
-- [Senator Pat Jehlen — Second Middlesex](https://malegislature.gov/Legislators/Profile/PDJ0/District) — retiring 2026
-- [Burhan Azeem state senate bid — Harvard Crimson](https://www.thecrimson.com/article/2026/2/18/azeem-state-senate/) — 5-way Democratic primary September 2026
-- [Cambridge GIS — State Rep Districts](https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_StateRepDistricts) — district shapefiles available
-- [Cambridge GIS — Congressional Districts](https://www.cambridgema.gov/GIS/gisdatadictionary/Elections/ELECTIONS_CongressionalDistricts) — MA-5/MA-7 split confirmed
-- [MMA Data Hub announcement](https://www.mma.org/mma-launches-mass-municipal-data-hub/) — web directory (not API) covering all 351 MA cities
-- [Cambridge Day — local civic journalism](https://www.cambridgeday.com/) — nonprofit news; primary local source for candidate research
+- [W3C WAI-ARIA APG — Combobox Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) — HIGH confidence, authoritative spec
+- [W3C WAI-ARIA APG — Editable Combobox With List Autocomplete Example](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/) — HIGH confidence, reference implementation
+- [MDN — ARIA combobox role](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/combobox_role) — HIGH confidence
+- [US Census Geocoding Services API](https://geocoding.geo.census.gov/geocoder/Geocoding_Services_API.html) — HIGH confidence, official docs; confirms city+state-without-street partial-address handling and batch limits
+- [Census Geocoder FAQ](https://www2.census.gov/geo/pdfs/maps-data/data/Census_Geocoder_FAQ.pdf) — HIGH confidence, official
+- [5 Calls Representatives API docs](https://5calls.org/representatives-api/) — MEDIUM confidence; explicitly documents ZIP-code low-accuracy risk and address/cross-street accuracy improvement
+- [5 Calls Getting Started](https://5calls.org/getting-started/) — MEDIUM confidence; confirms opt-in geolocation + privacy stance
+- [My Reps (DataMade) — GitHub](https://github.com/datamade/my-reps) — MEDIUM confidence; example of address-only civic lookup powered by (deprecated) Google Civic Information API
+- [house.gov — Find Your Representative](https://www.house.gov/representatives/find-your-representative) — MEDIUM confidence; ZIP-only baseline competitor
+- [Common Cause — Find Your Representatives](https://www.commoncause.org/find-your-representative/) — MEDIUM confidence
+- [Google Maps JS API forum — geocode disambiguation](https://groups.google.com/g/google-maps-js-api-v3/c/UAyUg1BWyoo) — MEDIUM confidence; corroborates ranked-candidate-list disambiguation norm
+- [Wikipedia — Address geocoding](https://en.wikipedia.org/wiki/Address_geocoding) — MEDIUM confidence; corroborates the "41 Springfields" ambiguity problem and city+state disambiguation need
+- [Map UI Patterns — Search](https://mapuipatterns.com/search/) and [Location finder](https://mapuipatterns.com/location-finder/) — MEDIUM confidence, curated UX pattern library
+- [UXmatters — Understanding Location](https://www.uxmatters.com/mt/archives/2018/03/understanding-location.php) — MEDIUM confidence; source for "allow lots of methods of specifying location" and don't-require-ZIP guidance
+- [Yext — 4 Tips to Improve Geolocation UX](https://www.yext.com/blog/2019/02/4-tips-to-improve-geolocation-ux) — MEDIUM confidence
+- [geo-coordinates-parser (npm)](https://www.npmjs.com/package/geo-coordinates-parser) — MEDIUM confidence; practical DMS/DD parsing reference
+- [Lat/Long DMS/DDM/DD regex gist](https://gist.github.com/pjobson/8f44ea79d1852900457bc257a4c9fcd5) — MEDIUM confidence, community reference
+- [SystemDesignSchool — Typeahead/Autocomplete solution](https://systemdesignschool.io/problems/typeahead/solution) and [Atomic Object — Autocomplete timing/debouncing](https://spin.atomicobject.com/2018/06/04/automplete-timing-debouncing/) — MEDIUM confidence; corroborate debounce (~150–300ms) and minLength (2–3 char) conventions
+- Internal project context: `.planning/PROJECT.md` — existing constraints (No Google Places, EDOC-01 no re-prompt for Connected users, antipartisan display rules, `ev:autoOpenMyLocation` opt-in precedent)
+
+---
+*Feature research for: unified civic location search / "one field to a location profile"*
+*Researched: 2026-07-20*

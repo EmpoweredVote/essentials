@@ -1,394 +1,349 @@
-# Architecture: Cambridge, MA + Massachusetts Integration
+# Architecture Research
 
-**Dimension:** Location Onboarding — v5.0 milestone
-**Researched:** 2026-05-15
-**Overall confidence:** HIGH — all conclusions drawn from direct codebase inspection
+**Domain:** Unified location search & header overhaul — civic-lookup app (essentials frontend + accounts-api backend)
+**Researched:** 2026-07-20
+**Confidence:** HIGH (all findings grounded in direct reads of the current codebase in both repos — no external ecosystem research was needed; this is an integration/refactor question, not a "what exists in the wild" question)
 
----
+## Standard Architecture
 
-## How This Document Is Organized
-
-This file answers the seven architecture questions for Cambridge, MA onboarding. Each section states the conclusion first, then the evidence. A build-order diagram and integration matrix close the document.
-
----
-
-## 1. Government Type Mapping (City Council, School Committee)
-
-**Conclusion: Use `LOCAL` for both Cambridge City Council and School Committee. No new `district_type` value is needed.**
-
-### Evidence
-
-The `district_type` field lives on `essentials.districts` and maps to MTFCC codes in `essentialsService.ts` lines 566-578. The relevant mappings for local government are:
-
-```sql
-(gb.mtfcc = 'G4040' AND d.district_type IN ('LOCAL', 'LOCAL_EXEC'))
-OR (gb.mtfcc IN ('G4110', 'G4120') AND d.district_type IN ('LOCAL', 'LOCAL_EXEC'))
-```
-
-`LOCAL` already covers city councils across all three existing jurisdictions (Monroe County IN, LA County CA, Collin County TX). The migration 088 pattern confirms: every city council office uses `LOCAL` regardless of whether seats are placed (Plano), district-based (McKinney), or at-large (Allen). Cambridge's 9-member at-large STV council is structurally identical to Allen's 6-member at-large council from the schema's perspective.
-
-For School Committee: the existing `SCHOOL` district type (`G5420` MTFCC) is for geofenced unified school districts (unsd layer), not for school board seats that co-occupy the same city boundary. In every existing city with a school committee/board, it has been seeded under `LOCAL` within the city's government row, not as a separate SCHOOL-type entity. Follow that pattern.
-
-**There is no `COUNCIL_MANAGER` district type and none is needed.** The `type` column on `essentials.governments` (not `district_type`) distinguishes `LOCAL` vs `STATE` vs `County`. Cambridge just gets `type = 'LOCAL'` on its government row.
-
-### Cambridge-Specific Office Mapping
-
-| Cambridge Role | DB Pattern | district_type | Notes |
-|---|---|---|---|
-| City Council Member (9 seats) | `essentials.offices.title = 'City Council Member'` | LOCAL | At-large; no place numbers — use ordinal or simple index |
-| School Committee Member (6 seats) | `essentials.offices.title = 'School Committee Member'` | LOCAL | Same chamber pattern; separate chamber row under same government |
-| Mayor | `essentials.offices.title = 'Mayor'` | LOCAL | See section 3 for the structural quirk |
-| City Manager | `essentials.offices.title = 'City Manager'` | LOCAL | See section 2 for appointed treatment |
-
----
-
-## 2. City Manager Office (Appointed, Non-Elected)
-
-**Conclusion: Seed the City Manager in `essentials.politicians` with `is_appointed = true` and a corresponding office row with `is_appointed_position = true`. This is the correct and fully supported pattern.**
-
-### Evidence
-
-The `is_appointed_position` column on `essentials.offices` exists exactly for this case. From `audit-is-appointed.ts` line 268:
+### System Overview
 
 ```
-is_elected is derived as NOT COALESCE(o.is_appointed_position, false)
+┌───────────────────────────────────────────────────────────────────────────┐
+│  essentials (frontend, React 19 + Vite, Render)                           │
+│                                                                             │
+│  ┌───────────────────────────┐   ┌─────────────────────────────────────┐  │
+│  │ LocationSearch (NEW)      │   │ Results.jsx (MODIFIED, not rewritten)│  │
+│  │ single combobox            │──▶│  URL-param-driven fetch effects:    │  │
+│  │  - address heuristic       │   │   ?q=            -> address branch  │  │
+│  │  - name-resolver calls     │   │   ?browse_geo_id= -> area branch    │  │
+│  │  - "use my location"       │   │   ?browse_government_list=          │  │
+│  │  - inline match dropdown   │   │   ?browse_state_officials=          │  │
+│  └───────────┬────────────────┘   │   ?lat=&lng=      -> NEW coord branch│  │
+│              │                    └───────────────┬─────────────────────┘  │
+│              ▼                                    ▼                        │
+│  ┌───────────────────────────┐   ┌─────────────────────────────────────┐  │
+│  │ src/lib/placeSearch.js     │   │ src/lib/api.jsx (MODIFIED: 2 new fns)│  │
+│  │ (NEW) input classifier:    │   │  searchPlaceNames()                 │  │
+│  │  digit-leading -> address  │   │  fetchRepresentativesByCoordinate() │  │
+│  │  else -> name resolver     │   └───────────────┬─────────────────────┘  │
+│  └────────────────────────────┘                   │                        │
+│  RETIRED: useGooglePlacesAutocomplete.js,          │                        │
+│  localitySearch.js, LocalityMatches.jsx,           │                        │
+│  LocationBrowser.jsx                               │                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                                     │ HTTPS (publicFetch/apiFetch)
+                                                     ▼
+┌───────────────────────────────────────────────────────────────────────────┐
+│  accounts-api (backend, Express/TS, Render, C:\EV-Accounts)               │
+│                                                                             │
+│  ┌────────────────────────────────┐  ┌───────────────────────────────┐    │
+│  │ essentialsCandidates.ts         │  │ essentialsBrowse.ts (existing)│    │
+│  │  POST /candidates/search        │  │  GET  /browse/states/:s/areas │    │
+│  │  POST /candidates/by-coordinate │  │  GET  /browse/states/:s/officials│ │
+│  │  (NEW)                          │  │  GET  /browse/federal/officials│   │
+│  │  GET  /location-search (NEW,    │  │  POST /browse/by-area          │  │
+│  │   or new route file)            │  │  POST /browse/by-government-list│ │
+│  └──────────────┬───────────────────┘  └───────────────┬────────────────┘  │
+│                 ▼                                       │                  │
+│  ┌────────────────────────────────┐                     │                  │
+│  │ essentialsService.ts            │                     │                  │
+│  │  geocodeAddress() [Census]      │                     │                  │
+│  │  getRepresentativesByAddress()  │                     │                  │
+│  │    -> thin wrapper (MODIFIED)   │                     │                  │
+│  │  getRepresentativesByCoordinate │                     │                  │
+│  │    (NEW — factored out)         │                     │                  │
+│  └──────────────┬───────────────────┘                     ▼                 │
+│                 ▼                          ┌───────────────────────────┐    │
+│  ┌────────────────────────────────┐        │ essentialsBrowseService.ts│    │
+│  │ locationSearchService.ts (NEW)  │        │  getStatewideOfficials()  │    │
+│  │  searchPlaceNames() — pg_trgm   │        │  getFederalOfficials()    │    │
+│  │  ILIKE/word_similarity over     │        │  getAreasForState()       │    │
+│  │  geofence_boundaries + governments│      │  (existing — national     │    │
+│  └──────────────┬───────────────────┘        │  fallback reuses these)  │    │
+│                 ▼                             └───────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────────────────────┐   │
+│  │ Postgres/PostGIS — essentials.geofence_boundaries, .governments,      │   │
+│  │ .districts, .offices, .politicians  (+ NEW: pg_trgm GIN indexes on    │   │
+│  │ geofence_boundaries.name / governments.name)                          │   │
+│  └──────────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-From `essentialsService.ts` line 683:
+### Component Responsibilities
+
+| Component | Repo | Responsibility | New / Modified |
+|-----------|------|-----------------|-----------------|
+| `LocationSearch.jsx` | essentials | Single always-editable combobox; classifies input, dispatches to the right fetch path, renders inline typeahead matches | **NEW** |
+| `src/lib/placeSearch.js` | essentials | Pure input classifier (address-shaped vs name-shaped) + thin wrappers for the 2 new backend calls | **NEW** |
+| `Results.jsx` header block (~1955–2104) | essentials | Hosts the combobox; owns the URL-param → fetch-effect branching that already exists | **MODIFIED** (extend, not rewrite) |
+| `FilterBar.jsx` | essentials | Type dropdown + name search + compass toggle | **MODIFIED** (default Elected, hide dropdown except Judges tab, drop name search) |
+| `GET /essentials/location-search` | accounts-api | Place-name → ranked `{geo_id, mtfcc, label, state, kind}` candidates | **NEW** route |
+| `POST /essentials/candidates/by-coordinate` | accounts-api | `{lat,lng,state?}` → representatives, same response contract as `/search` | **NEW** route |
+| `locationSearchService.ts` | accounts-api | pg_trgm/ILIKE query over `geofence_boundaries` + `governments` | **NEW** service |
+| `getRepresentativesByCoordinate()` | accounts-api | Point-in-polygon district/statewide/tribal query, factored out of the address path | **NEW** function (extraction) |
+| `getRepresentativesByAddress()` | accounts-api | Geocode → delegate to `getRepresentativesByCoordinate` | **MODIFIED** (becomes thin wrapper) |
+| `getStatewideOfficials()` / `getFederalOfficials()` | accounts-api | Statewide (Senate + state exec) / all-federal rosters | **UNCHANGED** — reused as the national-fallback data source |
+| `useGooglePlacesAutocomplete.js`, `localitySearch.js`, `LocalityMatches.jsx`, `LocationBrowser.jsx` | essentials | Google Places binding, Google-Geocoder-based classifier, keyboard-capture typeahead, cascading dropdowns | **RETIRED** (deleted) |
+
+## Recommended Project Structure
+
+```
+essentials/src/
+├── components/
+│   ├── LocationSearch.jsx        # NEW — replaces mode-toggle + address input +
+│   │                             #   LocalityMatches + LocationBrowser as one unit
+│   ├── FilterBar.jsx              # MODIFIED — per-tab type-filter default, drop name search
+│   ├── LocalityMatches.jsx        # DELETE (folded into LocationSearch's match list)
+│   └── LocationBrowser.jsx        # DELETE (folded into LocationSearch + existing coverage catalog)
+├── lib/
+│   ├── placeSearch.js             # NEW — isAddressLike(query), searchPlaceNames(), routing helper
+│   ├── coverage.js                 # KEEP, narrowed scope — still backs the Landing page grid;
+│   │                               #   its typeahead role (searchCoverageAreas) is superseded by
+│   │                               #   the DB-backed resolver
+│   ├── localitySearch.js          # DELETE (classifyQuery/resolveLocalityRoute — Google-based)
+│   └── api.jsx                     # MODIFIED — + searchPlaceNames(), + fetchRepresentativesByCoordinate()
+├── hooks/
+│   └── useGooglePlacesAutocomplete.js  # DELETE
+└── pages/
+    ├── Results.jsx                 # MODIFIED — swap header block; add coordinate fetch branch
+    └── Landing.jsx                 # MODIFIED (same-scope necessity — see Anti-Pattern note below)
+
+accounts-api (C:/EV-Accounts/backend)/src/
+├── routes/
+│   ├── essentialsCandidates.ts      # MODIFIED — + POST /candidates/by-coordinate
+│   ├── essentialsLocationSearch.ts  # NEW — GET /location-search?q=  (or fold into essentialsBrowse.ts)
+│   └── essentialsBrowse.ts          # UNCHANGED — already provides the national-fallback endpoints
+├── lib/
+│   ├── essentialsService.ts         # MODIFIED — extract getRepresentativesByCoordinate()
+│   ├── locationSearchService.ts     # NEW — searchPlaceNames(query, limit)
+│   ├── essentialsBrowseService.ts   # UNCHANGED — getStatewideOfficials/getFederalOfficials reused
+│   └── geocodingService.ts          # UNCHANGED — Census one-line geocoder, already Google-free
+└── migrations/
+    └── NNN_place_name_trgm_search.sql  # NEW — pg_trgm GIN indexes (models migration 040)
+```
+
+### Structure Rationale
+
+- **`LocationSearch.jsx` as one new component, not three:** the current header has 4 moving parts (mode toggle, address input + Google autocomplete, `LocalityMatches`, `LocationBrowser`) coordinated entirely by `Results.jsx`'s local state (`searchMode`, `editingSearch`, `browseResults`). Collapsing them into one component with one `onResolve({kind, ...})` callback keeps `Results.jsx`'s existing URL-param branching (the real architecture of the page) untouched — the combobox only decides *which* URL to navigate to or *which* fetch to trigger; it does not own results rendering.
+- **`placeSearch.js` separate from `coverage.js`:** `coverage.js` is a static, hand-maintained catalog (`COVERAGE_STATES`/`COVERAGE_COUNTIES`/`COVERAGE_SCHOOL_DISTRICTS`) that has drifted from the DB before (see "coverage.js reconciled" line items in project history) and is also the Landing-page grid's data source — a separate, legitimate use. The new name-resolver is DB-truth and typeahead-only; keeping it in its own module avoids conflating "curated landing grid" with "live search."
+- **`getRepresentativesByCoordinate()` lives in `essentialsService.ts`, not a new file:** it shares `AddressSearchResult`, `PoliticianFlatRecord`, `pickCountyFromDistrictRows`, `pickJurisdictionFromDistrictRows`, `ENCLAVE_CITY_ALIASES`, and the district/statewide/tribal SQL text with `getRepresentativesByAddress` — same file as today, same precedent as `getElectionsByCoordinate` sitting next to `getElectionsByGeoIds` in `electionService.ts`.
+- **`locationSearchService.ts` as its own file:** it queries different tables (`geofence_boundaries`, `governments`) than `essentialsService.ts`'s district/office/politician joins, and is conceptually closer to `essentialsBrowseService.ts` (browse/catalog concerns) — but since it returns raw *names*, not politicians, a dedicated small file avoids bloating either existing service file.
+
+## Architectural Patterns
+
+### Pattern 1: Factor "resolve identity" out of "resolve representatives"
+
+**What:** `getRepresentativesByAddress(address)` currently does two jobs in one function: (1) turn an address string into `{lat, lng, state, city}` via `geocodeAddress()`, then (2) run the district/statewide/tribal PostGIS queries against that point. Split job (2) into `getRepresentativesByCoordinate(lat, lng, {state?, includeChallengers?})` and make job (1) a thin caller.
+**When to use:** Any time multiple *input types* (address, coordinate, resolved place) need to reach the same *output* (representatives for a point). This is the same shape as `electionService.ts` already uses: `getElectionsByCoordinate(lat, lng)` exists standalone and `fetchDistrictRaceRows`/`fetchStatewideRaceRows` are shared helpers underneath it — precedent already lives in this codebase.
+**Trade-offs:** The enclave-alias correction (`ENCLAVE_CITY_ALIASES`) is keyed on the *raw address string* ("if the address text names Maywood Park but Census returned Portland, substitute coordinates") — this logic is address-specific and must stay in `getRepresentativesByAddress`, not move into the coordinate function. A raw-coordinate or name-resolved input has no address string to pattern-match, so enclave correction is honestly skipped for those paths in v24.0 — a known, small, documented gap (enclave cities are rare; flag as a follow-up if a report surfaces).
+
+**Example:**
 ```typescript
-is_elected: !row.is_appointed_position,
-is_appointed: row.is_appointed ?? false,
-```
+// essentialsService.ts — AFTER
+export async function getRepresentativesByCoordinate(
+  lat: number, lng: number,
+  { state, includeChallengers = false }: { state?: string; includeChallengers?: boolean } = {}
+): Promise<AddressSearchResult> {
+  // districtQueryText / statewideQueryText / tribalQueryText — UNCHANGED SQL,
+  // just parameterized directly on (lng, lat, state) instead of derived from geocodeAddress().
+  const [districtResult, statewideResult, tribalResult] = await Promise.all([
+    pool.query(districtQueryText, [lng, lat]),
+    state ? pool.query(statewideQueryText, [state]) : Promise.resolve({ rows: [] }),
+    pool.query(tribalQueryText, [lng, lat]),
+  ]);
+  // ... identical row-mapping / county / jurisdiction logic as today, returns AddressSearchResult
+}
 
-The `PoliticianFlatRecord` interface exposes both `is_elected` (boolean) and `is_appointed` (boolean) separately to the frontend. The frontend already renders these distinctions.
-
-The City Manager will appear in address-based representative lookups because the office row will be linked to a district row covering Cambridge's city boundary, and the geofence query pulls all politicians attached to matching geofences — it does not filter out appointed positions. This is the intended behavior: residents should see their City Manager in results.
-
-**No schema changes required.** Just set `is_appointed_position = true` on the office row and `is_appointed = true` on the politician row. This is the audit-proven correct pairing.
-
-### Cambridge City Manager Seed Pattern
-
-```sql
-INSERT INTO essentials.offices (chamber_id, title, representing_city, representing_state,
-  normalized_position_name, seats, partisan_type, is_appointed_position)
-VALUES (v_chamber_id, 'City Manager', 'Cambridge', 'MA',
-  'City Manager', 1, NULL, true);  -- true = appointed, not elected
-```
-
----
-
-## 3. Mayor Role (Derived from Council, Not Separately Elected)
-
-**Conclusion: Seed the Mayor as a separate office row with `is_appointed_position = true` and a note in the bio/description. Do NOT create a separate election race for Mayor.**
-
-### Rationale
-
-In Cambridge, the Mayor is the council member who received the most first-choice STV votes in the previous council election. The Mayor chairs council sessions but has no additional executive authority (the City Manager has that). The Mayor is:
-- Not elected on a separate ballot line
-- Not appointed by the council in a formal vote
-- Determined by STV vote count ordering after the election
-
-**Best fit in the schema:** Treat Mayor as a derived/ceremonial role. The council member who is currently Mayor should have:
-- A `politicians` row (same person) linked to the `City Council Member` office (their actual elected seat)
-- A separate `offices` row for `Mayor` with `is_appointed_position = true` (since it is not a direct election)
-- The politician row linked to **both** offices via the `politician_id` FK on each office, OR handle it as a separate politician record for the ceremonial role only
-
-**Simpler approach (recommended):** Seed the Mayor as an additional office that shares the same politician. The `politician_id` on the Mayor office row points to the same politician as one of the council member office rows. This is clean and requires no schema changes.
-
-The mayor office row title should be `'Mayor'` with a brief `office_description` noting the STV-derived role to prevent misleading users into thinking it is a directly elected executive position.
-
-**Do not create a separate election race row for Mayor** — there is no Cambridge Mayor ballot line to discover. The discovery agent's domain allowlist for Cambridge should exclude any source that lists "Mayor" as a separate race.
-
----
-
-## 4. Massachusetts Geofences (TIGER MTFCC Codes)
-
-**Conclusion: MA uses the identical MTFCC mapping as Texas. G5210 = Senate (STATE_UPPER), G5220 = House (STATE_LOWER). The `load-state-tiger-boundaries.ts` script handles MA with a one-line allowlist addition.**
-
-### Evidence
-
-From `load-state-tiger-boundaries.ts` lines 34-39, the current allowlist is:
-```typescript
-const STATE_LAYER_ALLOWLIST: Record<string, Set<string>> = {
-  CA: new Set(['cd', 'sldu', 'sldl', 'unsd', 'place']),
-  TX: new Set(['cd', 'sldu', 'sldl', 'county']),
-  UT: new Set(['cd119', 'sldu', 'sldl', 'unsd', 'place', 'county']),
-  IN: new Set(['cd', 'sldu', 'sldl', 'unsd', 'place', 'cousub']),
-};
-```
-
-MA is not in the allowlist yet. Adding it requires:
-
-```typescript
-MA: new Set(['cd', 'sldu', 'sldl']),
-```
-
-And optionally `'place'` if city boundary geofences are needed (they are, for Cambridge). So the full MA entry should be:
-
-```typescript
-MA: new Set(['cd', 'sldu', 'sldl', 'place']),
-```
-
-### MTFCC Codes (from LAYER_DISPATCH, lines 165-232)
-
-| Layer | MTFCC | district_type | Notes |
-|---|---|---|---|
-| `cd` | G5200 | NATIONAL_LOWER | MA-7 (Ayanna Pressley's district) |
-| `sldu` | G5210 | STATE_UPPER | MA Senate (40 districts) |
-| `sldl` | G5220 | STATE_LOWER | MA House (160 districts) |
-| `place` | G4110 | LOCAL | Cambridge city boundary |
-
-### MA FIPS Code
-
-Massachusetts FIPS state code is `25`. The run command:
-```bash
-npx tsx scripts/load-state-tiger-boundaries.ts --state MA --fips 25 --layers cd,sldu,sldl,place
-```
-
-The FIPS_TO_STATE map (line 70) already includes `'25': 'ma'`, so the round-trip state↔FIPS check passes automatically once MA is added to the allowlist.
-
-### MA-Specific Consideration: Cambridge Is a City Within Middlesex County
-
-Cambridge's Census place GEOID is `2511000` (FIPS: MA state 25 + place code 11000). When the `place` layer is loaded for MA, Cambridge's G4110 boundary will be inserted into `geofence_boundaries`, and the address lookup will match it. This is identical to how Texas cities work.
-
-For Middlesex County itself, load the `county` layer (`G4020`, MTFCC = 'G4020') if Middlesex County government representation is needed. Cambridge is in Middlesex County (FIPS: `25017`). Whether to include county government depends on scope — Middlesex County does not have elected county commissioners in MA (the county government was largely abolished in 1997). **Skip county layer for MA.**
-
----
-
-## 5. Coverage Area Entry in Landing.jsx
-
-**Conclusion: Cambridge uses the `browseGovernmentList` pattern, identical to Collin County TX. A single COVERAGE_AREAS entry is all that is needed on the frontend.**
-
-### Evidence
-
-The current `COVERAGE_AREAS` array (Landing.jsx lines 8-12):
-```javascript
-const COVERAGE_AREAS = [
-  { county: 'Monroe County', state: 'Indiana', address: '100 W Kirkwood Ave, Bloomington, IN 47404' },
-  { county: 'Los Angeles County', state: 'California', browseGovernmentList: ['0644000', '06037', '0622710'], browseStateAbbrev: 'CA', browseCountyGeoId: '06037' },
-  { county: 'Collin County', state: 'Texas', browseStateAbbrev: 'TX', browseCountyGeoId: '48085', browseGovernmentList: [...23 city geo_ids...] },
-];
-```
-
-Two patterns exist:
-1. `address` — single representative address (Monroe County, no geofences loaded yet)
-2. `browseGovernmentList` + `browseStateAbbrev` + optional `browseCountyGeoId` — for geofence-backed browsing (LA, TX)
-
-Cambridge should use the `browseGovernmentList` pattern. The entry:
-
-```javascript
-{
-  county: 'Middlesex County',
-  state: 'Massachusetts',
-  browseStateAbbrev: 'MA',
-  browseGovernmentList: ['2511000'],  // Cambridge place GEOID
-  browseCountyGeoId: '25017'         // Middlesex County FIPS (for congressional intersection)
+export async function getRepresentativesByAddress(
+  address: string,
+  opts: { includeChallengers?: boolean } = {}
+): Promise<AddressSearchResult> {
+  const { lat, lng, matchedAddress, state, city } = await geocodeAddress(address);
+  const { lat: rLat, lng: rLng } = applyEnclaveAlias(address, lat, lng, matchedAddress, city); // address-only correction stays here
+  const result = await getRepresentativesByCoordinate(rLat, rLng, { state, includeChallengers: opts.includeChallengers });
+  return { ...result, matchedAddress };
 }
 ```
 
-**Notes on `county` field name:** The label `county` in the object is display-only (used in the UI as the button label and `browse_label` URL param). For Cambridge, showing "Middlesex County, Massachusetts" is reasonable since users may recognize it. Alternatively, "Cambridge" as the label is more direct since it is a single city. Either works — the label is cosmetic.
+### Pattern 2: Name resolver as a thin, dedicated ranked-search endpoint (not folded into `/candidates/search`)
 
-**`browseCountyGeoId`:** This drives the PostGIS county boundary intersection to find US House members. Middlesex County FIPS `25017` would need a `G4020` boundary loaded for the intersection to work. Since MA county government is largely abolished, consider whether to add county geofence just for congressional lookup (useful) vs. skip it (simpler). The TX pattern shows it is worthwhile — load Middlesex County `G4020` boundary, set `browseCountyGeoId: '25017'`.
+**What:** A `GET /essentials/location-search?q=` endpoint that returns *places*, not *politicians* — modeled directly on the existing `GET /essentials/candidates/search-by-name?q=` (politician typeahead) and the pg_trgm pattern already proven in `campaignFinanceSearchService.ts` / migration `040_pg_trgm_search.sql`.
+**When to use:** Any typeahead-shaped lookup where the caller types partial text and expects ranked candidates back on every keystroke (as opposed to a single geocode-and-commit action like address search).
+**Trade-offs:** Requires a new pg_trgm GIN index (cheap, proven pattern already in this DB) on `geofence_boundaries.name` and `governments.name`. ILIKE alone (no index) would work correctly but degrade badly at scale as more states/cities get seeded — given the project has been adding ~10–30 new place rows per phase for over a year, indexing from day one avoids a future perf-pitfall phase.
 
----
-
-## 6. Existing Scripts to Reuse
-
-### Directly Reusable Without Modification
-
-| Script | What to reuse | Notes |
-|---|---|---|
-| `load-state-tiger-boundaries.ts` | All of it, with one-line MA allowlist addition | Add `MA: new Set(['cd', 'sldu', 'sldl', 'place'])` to STATE_LAYER_ALLOWLIST |
-| `load-collin-county-boundary.ts` | Pattern for county G4020 load | Use as template for Middlesex County G4020 |
-| Migration 087 | Pattern for `governments` seed (state + county + city) | Template: INSERT state government + county government + city government |
-| Migration 088 | Pattern for city chambers + offices | Template: one government row + N chamber rows + N office rows per chamber |
-| Migration 091-096 | Pattern for politician seeds | Template: politicians with office_id backfill, email_addresses, urls |
-| Migration 103 | Pattern for state/federal executives | Template: Governor, Lt. Governor, AG, etc. |
-| Migration 108-110 | Pattern for legislative chambers + politicians | Template: Senate chamber, House chamber, 40 senators, 160 reps |
-| `apply-*.ts` scripts | Pattern for compass stances | Template: csv-parse + pg Pool + upsert ON CONFLICT DO UPDATE |
-| `importCambridge.ts` | Already imports Cambridge treasury data | Budget data import already works; no changes needed for v5.0 |
-
-### Needs New Code
-
-| Need | New Script Required |
-|---|---|
-| MA TIGER boundary load | Add MA to `STATE_LAYER_ALLOWLIST` in existing script (one line change, not a new script) |
-| Cambridge city structure migration | New migration (e.g., `150_cambridge_ma_governments.sql`) |
-| Cambridge incumbents migration | New migration (e.g., `151_cambridge_ma_politicians.sql`) |
-| MA state officials migration | New migration (e.g., `152_ma_state_officials.sql`) |
-| MA state legislature migrations | New migrations for chambers, senators (40), reps (160) |
-| Cambridge discovery jurisdiction | New row in `discovery_jurisdictions` (can be a small migration or script) |
-
-### Migration Number
-
-Per STATE.md: "Next migration is 111" — but the list shows migrations up to 149 as of the last update (2026-05-15). Verify the actual next migration number with:
+**Example (query shape, modeled on `campaignFinanceSearchService.ts`):**
 ```sql
-SELECT max(version) FROM supabase_migrations.schema_migrations;
+SELECT geo_id, name AS label, mtfcc, state, 'geofence' AS source,
+       extensions.word_similarity(public.f_unaccent(lower($1)), public.f_unaccent(lower(name))) AS sim
+FROM essentials.geofence_boundaries
+WHERE mtfcc IN ('G4020','G4110','G4120','G4040','X0001','X0002','X0003')  -- same AREA_SEED_MTFCCS as getAreasForState
+  AND public.f_unaccent(lower(name)) operator(extensions.%>) public.f_unaccent(lower($1))
+UNION ALL
+SELECT geo_id, name AS label, NULL AS mtfcc, state, 'government' AS source,
+       extensions.word_similarity(public.f_unaccent(lower($1)), public.f_unaccent(lower(name))) AS sim
+FROM essentials.governments
+WHERE public.f_unaccent(lower(name)) operator(extensions.%>) public.f_unaccent(lower($1))
+ORDER BY sim DESC
+LIMIT 10;
 ```
-The Cambridge structure migration should be numbered sequentially from whatever is actually next.
+Plus a hardcoded 50-state (+DC) name/abbreviation list (already exists client-side as `STATE_NAME_TO_ABBREV` in `coverage.js`; the equivalent constant already exists server-side in `essentialsBrowse.ts` as `STATE_FIPS`) unioned in or checked first, so "Texas" / "TX" resolves to `kind: 'state'` without needing a DB row.
 
----
+### Pattern 3: National fallback = "statewide query already runs unconditionally" (mostly free)
 
-## 7. Playbook Document Location
+**What:** In `getRepresentativesByAddress` today, the statewide query (`d.district_type IN ('NATIONAL_UPPER','NATIONAL_EXEC','STATE_EXEC','NATIONAL_JUDICIAL','JUDICIAL')`) runs *whenever `state` is known*, completely independent of whether the district/geofence query found any local rows. This means **Senate + state executives already come back "for free" as a fallback** in any state whose government has been seeded, even for a point with zero local geofence coverage — no new code needed for that half of "state + federal."
+**When to use:** This is the shape to preserve in `getRepresentativesByCoordinate` — do not gate the statewide query on `districtResult.rows.length > 0`.
+**Trade-offs — the real gap:** `getStatewideOfficials`/the statewide query intentionally **exclude `NATIONAL_LOWER` (US House)** because House membership is district-specific and can only be resolved via a congressional-district (G5200) point-in-polygon match — which is already inside the *district* query, not the *statewide* query. So:
+  - If a state's CD (G5200) geofences ARE loaded, a point inside one already returns its House member through the normal district query — "no local rows" essentially can't happen there.
+  - If a state's CD geofences are NOT loaded (true for many not-yet-onboarded states), House is honestly omitted — same "null-on-miss" convention already used for `tribal_land` and `resolvePopulation`. Do not fabricate a House member without geometry.
+  - **This is a data-completeness dependency, not a code dependency.** If the roadmap's "at least state + federal (Senate/House)" claim must hold for literally any resolvable US address, nationwide CD geofence coverage becomes a prerequisite — flag this explicitly for the roadmapper as a scope decision (ship with honest Senate-only fallback in ungeofenced states now vs. gate on CD backfill first).
 
-**Conclusion: `LOCATION-ONBOARDING.md` and phase templates live in `.planning/` in the essentials repo. Not in a separate `docs/` folder.**
+### Pattern 4: Combobox as a pure dispatcher over existing fetch paths
 
-### Rationale
+**What:** `LocationSearch` does not fetch representatives itself for name/state matches — it only figures out *which existing URL/fetch path* applies and either navigates (`coverageAreaToPath`-style, for browse targets) or calls one of `searchPoliticians()` / the new `fetchRepresentativesByCoordinate()` (for address/coordinate targets), exactly mirroring what `resolveLocalityRoute` + `handleAddressSearch` + `LocationBrowser.handleBrowse` do today, just unified behind one input.
+**When to use:** Whenever a UI consolidation must not touch a large, already-correct downstream pipeline (here: `Results.jsx`'s 2,368-line hierarchy/tab/compass/filter machinery, which reads only `list`/`phase`/`browseResults`/`browseArea` — the combobox's job ends at producing those).
+**Trade-offs:** Requires the combobox to replicate today's client-side heuristic for "does this look like a street address" (`/^\d/.test(raw)` in `coverage.js`) since name-resolver calls should not fire on every keystroke of a full address (wasted DB queries) and address-geocode calls should not fire on every keystroke of a place name (Census rate limits / latency). Keep this heuristic in `placeSearch.js`, not duplicated in the component.
 
-The existing planning structure at `C:\Transparent Motivations\essentials\.planning\` already contains:
-- `PROJECT.md` — project definition and validated requirements
-- `STATE.md` — running accumulated context
-- `ROADMAP.md` — milestone phase structure
-- `phases/` — phase plans (15-xx, 18-xx, 19-xx, etc.)
-- `milestones/` — milestone summaries
-- `research/` — research files (this file)
+## Data Flow
 
-A new `docs/` folder would scatter documentation across two locations. Playbook documents are planning artifacts and belong in `.planning/`.
-
-**Proposed structure:**
-```
-.planning/
-  LOCATION-ONBOARDING.md          ← the master playbook checklist
-  templates/
-    phase-template-officials.md   ← seed politicians for a new city
-    phase-template-headshots.md   ← headshot pipeline
-    phase-template-discovery.md   ← discovery jurisdiction setup
-    phase-template-stances.md     ← compass stance research
-    phase-template-geofences.md   ← TIGER boundary load
-```
-
-The playbook file name `LOCATION-ONBOARDING.md` (already referenced in PROJECT.md requirements) is correct. It should live directly in `.planning/`, not in a subfolder, since it is a first-class project document alongside `PROJECT.md` and `STATE.md`.
-
-Phase templates belong in `.planning/templates/` since they are reusable skeletons, not specific to any single phase.
-
----
-
-## Build Order
-
-The dependency graph for Cambridge/MA is:
+### Input Type 1 — Full street address
 
 ```
-Phase A: MA TIGER Boundaries (no blocking deps — can start immediately)
-  ├── Add MA to STATE_LAYER_ALLOWLIST in load-state-tiger-boundaries.ts
-  ├── Run: --state MA --fips 25 --layers cd,sldu,sldl,place
-  └── Load Middlesex County G4020 boundary (for congressional intersection)
-
-Phase B: MA Government DB Foundation (no blocking deps)
-  ├── Seed State of Massachusetts government row (type=STATE, geo_id='25')
-  ├── Seed Middlesex County government row (type=County, geo_id='25017')
-  ├── Seed City of Cambridge government row (type=LOCAL, geo_id='2511000')
-  └── Seed MA state legislative chambers (Senate, House)
-
-Phase C: MA + Federal Officials (depends on Phase B + Phase A)
-  ├── MA Governor + Lt. Gov + AG + Secretary of State (statewide, STATE_EXEC)
-  ├── US Senators (Warren, Markey — NATIONAL_UPPER)
-  ├── US House MA-7 (Pressley) ← use TIGER cd layer from Phase A
-  ├── MA state senators (40) ← use TIGER sldu layer from Phase A
-  └── MA state reps (160) ← use TIGER sldl layer from Phase A
-
-Phase D: Cambridge City Structure (depends on Phase B)
-  ├── City Council chamber (9 at-large seats)
-  ├── School Committee chamber (6 seats)
-  ├── City Manager office (is_appointed_position=true)
-  └── Mayor office (is_appointed_position=true, linked to a council member)
-
-Phase E: Cambridge Incumbents (depends on Phase D)
-  ├── 9 City Council members (is_incumbent=true, is_active=true)
-  ├── 6 School Committee members
-  ├── City Manager (appointed)
-  └── Mayor (links to existing council member politician)
-
-Phase F: Headshots (depends on Phase E)
-  └── 9 council + 6 school committee + City Manager photos at 600x750
-
-Phase G: Landing.jsx Entry (depends on Phase A — needs county boundary loaded)
-  └── Add Cambridge/Middlesex entry to COVERAGE_AREAS
-
-Phase H: Discovery Setup (depends on Phase D)
-  ├── Seed Cambridge election row (cambridge.gov/elections is the source)
-  ├── Seed races for next Cambridge election cycle
-  └── Seed discovery_jurisdictions row for Cambridge
-
-Phase I: Compass Stances (depends on Phase E — needs politician IDs)
-  └── Research + apply stances for council members (housing, development, transportation priority)
-
-Phase J: Playbook Retrospective (depends on all phases complete)
-  └── Update LOCATION-ONBOARDING.md with learnings
+User types "123 Main St, Bloomington, IN"
+    ↓ (Enter / debounced heuristic: leading digit -> address-shaped, skip name-resolver calls)
+LocationSearch -> api.jsx searchPoliticians(query)
+    ↓ POST /essentials/candidates/search  { query }        [UNCHANGED — already Google-free]
+essentialsCandidates.ts -> getRepresentativesByAddress(query)
+    ↓ geocodeAddress(query)  [Census one-line geocoder]     [UNCHANGED]
+    ↓ getRepresentativesByCoordinate(lat, lng, {state})     [NEW factoring, same SQL]
+    ↓ district + statewide + tribal PostGIS queries
+Response: { politicians, tribal_land, county, jurisdiction } + X-Formatted-Address header
+Results.jsx: same ?q= URL param branch as today, unchanged downstream rendering
 ```
 
-**Critical path:** A → B → D → E → (F, G, H, I in parallel) → J
+### Input Type 2 — City / state / county name ("Bloomington", "Texas", "Pima County")
 
-**Phases A and B have no dependencies** — either can start immediately after research.
-
----
-
-## Integration Points Matrix
-
-| Existing System | How Cambridge Uses It | What Changes |
-|---|---|---|
-| `load-state-tiger-boundaries.ts` | Add MA allowlist entry; run with --state MA --fips 25 | 1-line code change in STATE_LAYER_ALLOWLIST |
-| `essentials.geofence_boundaries` | Receives MA sldu/sldl/cd/place boundaries | No schema change; same columns |
-| `essentials.districts` | Receives MA STATE_UPPER/STATE_LOWER/NATIONAL_LOWER rows | No schema change |
-| `essentials.governments` | Receives State of MA + Middlesex County + City of Cambridge | Standard INSERT |
-| `essentials.chambers` | Receives MA Senate + MA House + Cambridge City Council + School Committee + Admin chamber | Standard INSERT |
-| `essentials.offices` | Receives all MA/federal/Cambridge office rows | Standard INSERT; `is_appointed_position=true` for City Manager + Mayor |
-| `essentials.politicians` | Receives MA officials + Cambridge council/committee members | Standard INSERT with `is_appointed=true` for City Manager |
-| `getRepresentativesByAddress` | Works automatically once geofences + districts + offices linked via `district_id` FK | No code change to query |
-| `statewideQueryText` in essentialsService | Picks up MA STATE_EXEC + MA NATIONAL_UPPER automatically via `d.state = $1` filter | No code change; state = 'MA' |
-| `Landing.jsx COVERAGE_AREAS` | Add Cambridge entry with `browseGovernmentList: ['2511000']` | Small frontend change |
-| `essentials.discovery_jurisdictions` | Add Cambridge row | Standard INSERT |
-| Migration numbering | Continue sequentially from current max | Verify with DB query before writing migration |
-
----
-
-## New DB Patterns Required for Cambridge
-
-### 1. At-Large STV Seat Numbering
-
-Cambridge has 9 at-large council seats with no geographic districts and no place numbers. The TX pattern uses "Place 1–8" for Plano. For Cambridge, use positional seat names like `'Council Member Seat 1'` through `'Council Member Seat 9'` OR simply `'City Council Member'` with `seats = 9` on a single office row.
-
-**Recommendation:** Follow the TX cities pattern with individual office rows — one per seat — even for at-large seats. This allows linking individual politician rows to individual offices (required for the `politician_id` FK on offices). Title them `'City Council Member'` uniformly (all 9 seats have the same title under STV — no numbered places). Each gets a unique office row.
-
-### 2. Mayor as Derived Role
-
-The Mayor office row has `is_appointed_position = true` even though the mayor emerged from an elected process (STV). Set `politician_id` on the Mayor office to point to the same politician as one of the 9 City Council Member offices. This creates a dual-office link for one politician, which the schema supports (no unique constraint on `offices.politician_id`).
-
-### 3. MA State Government Row
-
-```sql
-INSERT INTO essentials.governments (name, type, state, city, geo_id)
-VALUES ('Commonwealth of Massachusetts', 'STATE', 'MA', '', '25');
+```
+User types "Bloomington" (debounced ~250ms, non-digit-leading)
+    ↓
+LocationSearch -> api.jsx searchPlaceNames(query)
+    ↓ GET /essentials/location-search?q=Bloomington          [NEW]
+essentialsLocationSearch.ts -> locationSearchService.searchPlaceNames()
+    ↓ pg_trgm/ILIKE over geofence_boundaries + governments + static state list
+Response: ranked [{ geo_id, mtfcc, label, state, kind }]
+LocationSearch renders inline matches (replaces LocalityMatches' role)
+    ↓ user selects a match
+  kind === 'state'                -> navigate(/results?browse_state_officials=<abbrev>)      [UNCHANGED endpoint]
+  kind in {city,county,township…} -> navigate(/results?browse_geo_id=&browse_mtfcc=)          [UNCHANGED endpoint]
+                                   -> or browse_government_list= for government-only rows       [UNCHANGED endpoint]
+Results.jsx: existing browse-by-area / browse-by-government-list / browse-by-state
+             URL-param branches, unchanged downstream rendering
 ```
 
-Note: Massachusetts officially calls itself a "Commonwealth" — use that full name.
+### Input Type 3 — Raw coordinates ("Use my location" / lat,lng paste)
+
+```
+User clicks "Use my location"
+    ↓ navigator.geolocation.getCurrentPosition()
+LocationSearch -> api.jsx fetchRepresentativesByCoordinate(lat, lng)
+    ↓ POST /essentials/candidates/by-coordinate  { lat, lng }      [NEW]
+essentialsCandidates.ts -> getRepresentativesByCoordinate(lat, lng, {state: undefined})
+    ↓ district query runs immediately (no geocode network round-trip needed)
+    ↓ state derived the same way getElectionsByCoordinate derives it today:
+       SELECT DISTINCT d.state FROM geofence_boundaries JOIN districts
+       WHERE ST_Covers(geometry, ST_MakePoint(lng,lat))  LIMIT 1
+    ↓ statewide query runs once state is known
+Response: same wrapped shape as /candidates/search (no X-Formatted-Address — no address string exists;
+          frontend uses a client-side reverse label or a generic "Your Location" chip)
+Results.jsx: NEW ?lat=&lng= URL param branch, feeds the SAME list/phase state as the address branch
+```
+
+### Input Type 4 — National fallback (point/name resolves to a state, no local rows)
+
+```
+Any of the 3 flows above resolves lat/lng + state, but the district query returns 0 rows
+    ↓ (this already happens automatically — statewide query is unconditional on state, not on district rows)
+Response already includes: NATIONAL_UPPER (2 Senators) + STATE_EXEC + NATIONAL_EXEC + NATIONAL_JUDICIAL
+Gap: NATIONAL_LOWER (US House) requires the SAME point to also fall inside a loaded G5200
+     congressional-district geofence — if that geofence doesn't exist for this state, House
+     is honestly omitted (matches tribal_land / resolvePopulation null-on-miss convention).
+For NAME-ONLY state input (no point at all, e.g. typed "Texas" with no address):
+     -> reuses the EXISTING browseByState() -> GET /browse/states/:state/officials
+        (getStatewideOfficials) path unchanged — no new backend code needed for this sub-case.
+```
+
+## Scaling Considerations
+
+| Scale | Architecture Adjustments |
+|-------|--------------------------|
+| Current (~8,000+ geofence rows, ~30 states partially seeded) | ILIKE + a GIN trigram index is more than sufficient; typeahead latency dominated by network round-trip, not query cost |
+| All 50 states + DC seeded (project's stated long-term direction) | Same index scales fine (trigram GIN indexes are designed for exactly this — the politician full_name index already proves the pattern at comparable row counts) |
+| Nationwide CD-geofence completion (needed for guaranteed House fallback) | Not a scaling concern — a data-completeness milestone, independent of the search architecture |
+
+### Scaling Priorities
+
+1. **First bottleneck:** none expected from this feature at current scale — the new endpoints are read-only, cached-header-friendly (`Cache-Control: public, max-age=30-60`, same convention as `search-by-name`), and reuse existing connection pooling.
+2. **Second bottleneck (future):** if the name resolver's `governments` UNION branch grows to thousands of rows without a dedicated index (today it likely has none, since it wasn't previously queried by name at typeahead speed) — add a matching GIN trgm index on `governments.name` in the same migration as the geofence index, not as an afterthought.
+
+## Anti-Patterns
+
+### Anti-Pattern 1: Retiring the shared Google-Places infrastructure from Results.jsx only
+
+**What people do:** Treat this as a "Results-page" milestone and leave `Landing.jsx` on the old `useGooglePlacesAutocomplete` / `resolveLocalityRoute` / `LocalityMatches` stack because it wasn't named in the milestone title.
+**Why it's wrong:** `Landing.jsx` imports the exact same three modules (`useGooglePlacesAutocomplete`, `localitySearch.js`, `LocalityMatches.jsx`) as `Results.jsx`. If those modules are deleted (per the milestone's explicit "drop Google Places entirely" goal), `Landing.jsx` breaks. If they're kept "just for Landing," the milestone has NOT actually dropped Google Places — the `VITE_GOOGLE_MAPS_API_KEY`/`@googlemaps/js-api-loader` dependency and cost/ToS exposure remain.
+**Do this instead:** Fold `Landing.jsx`'s search bar onto the same new `LocationSearch` component (or a shared subset of it) in this milestone. This is a small addition to build order, not a new feature — it is the other caller of the exact code being deleted.
+
+### Anti-Pattern 2: Making the coordinate path re-derive an address string
+
+**What people do:** Reverse-geocode every coordinate back to a formatted address (via Census or another service) just so `matchedAddress`/`X-Formatted-Address` keeps working identically for the "Use my location" flow.
+**Why it's wrong:** Adds a network round-trip and a new failure mode (reverse-geocode timeout) to a flow whose entire value proposition is *skipping* address entry. `getElectionsByCoordinate` already proves the codebase is comfortable returning coordinate-driven results without a formatted-address string.
+**Do this instead:** Let the coordinate response omit `matchedAddress` (or return an empty string) and have the frontend show a neutral label ("Your Location") or the resolved place name if the coordinate came from a name-resolver selection (which already has a `label`). Never block the response on a reverse-geocode call.
+
+### Anti-Pattern 3: Overloading `/candidates/search`'s body shape for coordinates
+
+**What people do:** Add an optional `{lat, lng}` alternative to the existing `POST /candidates/search { query }` contract to avoid adding a new route.
+**Why it's wrong:** `/candidates/search`'s response contract (`X-Formatted-Address` header, `ADDRESS_NOT_FOUND`/`PO_BOX_REJECTED` error codes) is address-string-specific and consumed by `api.jsx`'s `searchPoliticians()` in several places (including `fetchCandidates`). Branching the same endpoint on body shape silently couples two different semantics and risks regressing the well-tested address path.
+**Do this instead:** A new dedicated route (`POST /candidates/by-coordinate`), exactly as `/browse/by-area` is separate from `/candidates/search` today — this codebase already prefers one route per input shape over shape-sniffing a shared route.
+
+## Integration Points
+
+### External Services
+
+| Service | Integration Pattern | Notes |
+|---------|---------------------|-------|
+| US Census Geocoder (`geocoding.geo.census.gov/geocoder/locations/onelineaddress`) | Existing `geocodingService.ts`, 24h Redis cache, 5s timeout | **UNCHANGED** — already the sole address-geocoding path since Phase 38 replaced Google Maps Geocoding; this milestone finishes the Google removal on the *frontend typeahead* side (Places Autocomplete), not the backend geocode side (already Census) |
+| Google Maps Places Autocomplete (`@googlemaps/js-api-loader`) | Currently bound via `useGooglePlacesAutocomplete.js` in both `Results.jsx` and `Landing.jsx` | **RETIRED this milestone** — remove the hook, the npm dependency (after confirming no other call sites), and `VITE_GOOGLE_MAPS_API_KEY` |
+| Browser Geolocation API (`navigator.geolocation`) | New, frontend-only, no backend dependency until a coordinate is produced | Standard permission-prompt UX; must handle denial/timeout gracefully (fall back to manual entry, do not block the combobox) |
+
+### Internal Boundaries
+
+| Boundary | Communication | Notes |
+|----------|---------------|-------|
+| `essentials` (frontend) ↔ `accounts-api` (backend) | HTTPS via `apiFetch`/`publicFetch` wrappers in `src/lib/auth.js` | Backend changes require a push to `master` at `C:\EV-Accounts` for Render auto-deploy — **backend endpoints must ship and be verified live before the frontend combobox can be wired to them** (standard cross-repo dependency already documented in PROJECT.md constraints) |
+| `getRepresentativesByAddress` ↔ `getRepresentativesByCoordinate` | Direct in-process function call, same file | No network hop; keeps enclave-alias correction address-side only |
+| `essentialsCandidates.ts` (routes) ↔ `essentialsService.ts` / `locationSearchService.ts` (lib) | Direct import, no service-role client in routes (architecture.test.ts already enforces this — new code must follow it) | New route file(s) must go through `lib/`, never query Postgres directly |
+| `LocationSearch.jsx` ↔ `Results.jsx` | Callback prop (`onResolve`) + `navigate()` for browse targets; no shared state beyond what `Results.jsx` already reads from URL params | Keeps the combobox stateless with respect to `Results.jsx`'s hierarchy/tab/compass pipeline — the single biggest risk-reducer for this refactor |
+| `LocationSearch.jsx` ↔ `Landing.jsx` | Same component (or shared sub-module), separate call sites | See Anti-Pattern 1 — must be addressed in the same milestone to fully retire Google Places |
+
+## Suggested Build Order (backend → frontend, per repo constraint)
+
+1. **Migration:** pg_trgm GIN indexes on `geofence_boundaries.name` and `governments.name` (models migration `040_pg_trgm_search.sql`) — accounts-api, ships to Render first, zero behavior change until queried.
+2. **Backend — factor the coordinate path:** extract `getRepresentativesByCoordinate()` from `getRepresentativesByAddress()` in `essentialsService.ts`; verify `getRepresentativesByAddress` still passes existing behavior (regression-safe, no route change yet).
+3. **Backend — new routes:** `POST /candidates/by-coordinate` and `GET /location-search`; deploy and smoke-test both directly (curl/Postman) before any frontend work starts — this is the natural verification gate given the cross-repo Render-deploy dependency.
+4. **Frontend — new library layer:** `src/lib/placeSearch.js` (input classifier) + 2 new `api.jsx` functions, unit-testable against the now-live backend endpoints with no UI changes yet.
+5. **Frontend — `LocationSearch.jsx`:** build the combobox against the library layer; wire into `Results.jsx` alongside (not yet replacing) the old header block behind a feature check, add the new `?lat=&lng=` URL-param fetch branch.
+6. **Frontend — swap-in + retire:** replace the old header block in `Results.jsx`, delete `LocalityMatches.jsx`/`LocationBrowser.jsx`/`useGooglePlacesAutocomplete.js`/`localitySearch.js`, remove the Google Maps dependency + env var.
+7. **Frontend — `Landing.jsx` parity:** point its search bar at the same `LocationSearch`/`placeSearch.js` stack (required to actually finish "drop Google Places entirely" — see Anti-Pattern 1).
+8. **Frontend — decluttering pass (lower risk, can parallelize with 5–7):** `FilterBar.jsx` default-Elected + Judges-tab exception, remove "Search by name" input, convert compass-lens bar to icon buttons + tooltips (gavel icon for Judicial) — these touch `FilterBar.jsx`/`CompassControlsBar.jsx` only and have no dependency on the search work, so they can be built as an independent phase/track.
+
+This order respects the one hard dependency in the milestone (backend endpoints must exist and be deployed before the frontend can call them) while keeping the header-decluttering items (step 8) decoupled so they don't block or get blocked by the search rewrite.
+
+## Sources
+
+- Direct reads of `C:\Transparent Motivations\essentials\src\pages\Results.jsx`, `src\lib\coverage.js`, `src\lib\api.jsx`, `src\lib\localitySearch.js`, `src\hooks\useGooglePlacesAutocomplete.js`, `src\components\{LocalityMatches,LocationBrowser,FilterBar}.jsx`, `src\pages\Landing.jsx` — HIGH confidence, current code.
+- Direct reads of `C:\EV-Accounts\backend\src\routes\{essentialsCandidates,essentialsBrowse}.ts`, `src\lib\{geocodingService,essentialsService,essentialsBrowseService,electionService,campaignFinanceSearchService}.ts`, `migrations\040_pg_trgm_search.sql` — HIGH confidence, current code.
+- `.planning/PROJECT.md` — milestone goal, constraints, and cross-repo deploy model.
 
 ---
-
-## Confidence Assessment
-
-| Area | Confidence | Basis |
-|---|---|---|
-| district_type mapping (LOCAL for city council) | HIGH | Direct inspection of migrations 088-098, essentialsService.ts |
-| is_appointed_position for City Manager | HIGH | Direct inspection of audit-is-appointed.ts, essentialsService.ts |
-| Mayor as appointed-position office | MEDIUM | Derived from schema constraints + Cambridge government structure; no direct precedent in existing data for this exact pattern |
-| TIGER MTFCC codes for MA | HIGH | load-state-tiger-boundaries.ts LAYER_DISPATCH table + FIPS_TO_STATE map |
-| MA allowlist addition (one-line change) | HIGH | Direct inspection of STATE_LAYER_ALLOWLIST code |
-| Landing.jsx COVERAGE_AREAS pattern | HIGH | Direct inspection of Landing.jsx + handleCountyClick logic |
-| Migration template reuse | HIGH | Direct inspection of migrations 087-110 |
-| Cambridge place GEOID (2511000) | MEDIUM | Standard FIPS formula (MA=25, place=11000); verify against TIGER before loading |
-| Middlesex County G4020 usefulness | MEDIUM | Pattern established with Collin County; MA county government is largely abolished so county rep lookup has limited scope |
-| .planning/ location for playbook | HIGH | Matches existing .planning/ structure and PROJECT.md requirements |
-
----
-
-## Open Questions for Phase-Level Research
-
-1. **Cambridge election cycle:** Cambridge holds city elections in odd years (2023, 2025, etc.). The next election is November 2025 (already past) or November 2027. Verify whether to seed a past or future election for the discovery pipeline. If 2027, the discovery pipeline will be idle for ~18 months after setup.
-
-2. **Cambridge city website URL structure:** The election authority URL for the discovery agent needs verification. `cambridge.gov/elections` or `cambridgema.gov/elections` — confirm the correct domain before seeding `discovery_jurisdictions`.
-
-3. **Middlesex County G4020:** Confirm whether to load the county boundary. If Cambridge is the only target city in Middlesex County, the county boundary is only needed for US House member intersection. Worth doing for completeness but not strictly required if the `place` boundary (G4110) alone is sufficient for the Cambridge address lookup.
-
-4. **School Committee election status:** Cambridge School Committee is elected, not appointed. Verify the term length and next election cycle before seeding races.
-
-5. **Cambridge GEOID:** Confirm `2511000` against the TIGER 2024 shapefile. The Census place code for Cambridge MA is standard but worth verifying the 7-digit format before migration.
+*Architecture research for: Essentials v24.0 Results-Page Search & Header Overhaul*
+*Researched: 2026-07-20*

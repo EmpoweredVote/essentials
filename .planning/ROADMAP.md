@@ -6,6 +6,7 @@ shipped milestones are collapsed into `<details>` blocks.
 
 ## Milestones
 
+- 🚧 **v24.0 Results-Page Search & Header Overhaul** — Phases 212–215 (opened 2026-07-20)
 - ✅ **v23.0 Educators & Judges Tabs** — Phases 207–211 (shipped 2026-07-20; Phase 209 deferred by design)
 - ð§ **v22.0 Tucson & Arizona** â Phases 190â203 (substantively complete; Phases 200 + 206 held for close until 2026-07-21; 201-203 appended Coachella Valley, CA)
 - â **v21.0 Smart Banners** â Phases 187â189 (shipped 2026-07-08)
@@ -14,6 +15,215 @@ shipped milestones are collapsed into `<details>` blocks.
 - â **v19.0 Dark-Mode Redesign & Section Banners** â Phases 169â172 (shipped 2026-06-28, formally closed 2026-07-05)
 - â **v17.0 LA County City Coverage Wave 2** â Phases 142â157 (shipped 2026-06-22)
 - â earlier milestones v2.0âv16.0 â see `.planning/milestones/` archives + `MILESTONES.md`
+
+## Roadmap: v24.0 Results-Page Search & Header Overhaul
+
+### Overview
+
+Replaces the cluttered multi-row Results header with one always-editable location combobox that
+silently classifies address / bare place-name / decimal-coordinate input and routes to a coherent
+location profile — guaranteeing at minimum US Senators + Governor/state executives + county officials
+anywhere in the US, with the exact US House rep returned whenever a precise point is available. The
+milestone "owns the search stack": Google Places is dropped entirely (frontend) in favor of a new
+backend DB place-name resolver (pg_trgm over `geofence_boundaries`/`governments`, backed by a
+build-time US Census Gazetteer ingest for nationwide coverage) plus a new anonymous, stateless
+coordinate-lookup endpoint. The Census one-line address geocoder keeps its existing, narrow scope —
+full street addresses only — and is never asked to classify bare place names. A decoupled second
+track declutters the header: the type filter defaults to Elected (with an explicit, same-phase Judges
+exception so the default never silently empties that tab), compass lens controls collapse to
+accessible icon buttons, and the redundant "Search by name" filter is removed. Spans both repos —
+essentials (frontend, Render on push to `main`) and accounts-api (backend, Render on push to
+`master`) — with a hard backend-before-frontend dependency: both new backend endpoints must ship and
+be smoke-tested live before the frontend combobox (Phase 214) can be meaningfully built against them.
+Phase numbering continues from v23.0 (closed at 211) — this milestone starts at **Phase 212**.
+
+### Milestone-wide conventions (carry into every phase)
+
+- **Backend-before-frontend is a hard dependency.** Phases 212 and 213 (both accounts-api) must be
+  pushed to `master` and smoke-tested live (curl/Postman) before Phase 214 (essentials) starts
+  consuming them.
+
+- **Never route bare place-name queries through the Census address geocoder.** It is an address
+  matcher, not a places/administrative-boundary API — city/county/state classification is the DB
+  resolver's job (Phase 212), not Census's.
+
+- **Ambiguity always surfaces a candidate list, never a silent best guess.** Every disambiguation
+  point (same-named cities across states, city/county collisions like Baltimore) must return ranked,
+  state-qualified candidates — this is the direct regression guard against this codebase's two prior
+  wrong-state-officials incidents.
+
+- **The Elected-default + Judges-appointed-exception ship together, atomically**, in Phase 215 —
+  never as a default now / exception later sequence.
+
+- **Landing.jsx rides along inside Phase 214**, not a separate later phase — it shares the exact
+  Google-bound modules being retired, so a partial removal breaks it or leaves Google Places only
+  half-dropped.
+
+- **Google Places removal is audited at the end of Phase 214** with a full-repo grep for
+  `google`/`pac-container`/`window.google`, expecting zero hits outside deleted files.
+
+### Phases
+
+**Phase Numbering:**
+
+- Integer phases (212, 213, 214, 215): Planned milestone work, continuing from v23.0 (closed at 211)
+- Decimal phases (212.1, 212.2): Urgent insertions (marked with INSERTED)
+
+- [ ] **Phase 212: Backend Place-Name Resolver & National Fallback** - DB-truth place-name search (pg_trgm + Census Gazetteer ingest) with disambiguation, wrong-state guard, and nationwide state+federal fallback
+- [x] **Phase 213: Anonymous Coordinate Lookup Endpoint** - Stateless, privacy-reviewed lat/lng → officials endpoint with US bounding-box + swapped-coordinate validation (completed 2026-07-21)
+- [x] **Phase 214: Unified Location Combobox & Google Places Removal** - One accessible combobox on Results + Landing; Google Places, its hook, and its dependency fully retired (completed 2026-07-21)
+- [x] **Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal** - Type filter defaults to Elected with a Judges exception, compass lenses become icon buttons, name-search filter removed
+
+### Phase Details
+
+#### Phase 212: Backend Place-Name Resolver & National Fallback
+
+**Goal**: Anyone can look up a bare city, county, or state name against the API and get back accurate, disambiguated location data with a guaranteed national fallback to state + federal officials — backed by nationwide Census place coverage, never a different state's officials by mistake.
+**Depends on**: Nothing (first phase; v23.0 closed at Phase 211)
+**Requirements**: RSLV-01, RSLV-02, RSLV-04, RSLV-05, RSLV-06, RSLV-07
+**Success Criteria** (what must be TRUE):
+
+  1. Querying the new location-search endpoint with a bare city/county/state name (e.g. "Bloomington") returns ranked candidates with state qualifiers via pg_trgm over `geofence_boundaries`/`governments`, not a single silent guess
+  2. Same-named-place collisions ("Springfield" across states) and city/county collisions ("Baltimore") each return multiple disambiguated candidates labeled by state and area type, never an auto-picked result
+  3. A resolved city/county/state name outside the curated `coverage.js` catalog — reachable only via the new Census Gazetteer ingest — still returns at least US Senators + Governor/state executives + county officials
+  4. A city/county-name profile lists every US House district whose boundary overlaps the area, with an explicit "we need an exact address to tell you which one" note when no single district can be determined
+  5. No resolved location ever returns officials bound to a different state than the one actually matched (regression-tested against the prior browse `?q=` state-leak and `representing_city` banner-hijack incidents)
+  6. The Census one-line geocoder is never invoked for a bare place-name query — only for input already classified as a full street address
+
+**Plans**: 5 plans in 4 waves
+
+**Wave 1**
+
+- [x] 212-01-PLAN.md — DB pre-flight audit (verify, not re-ingest, the nationwide G5200 CD/House data per D-02) + author migrations 1377 (trgm indexes on governments.name + geofence_boundaries.name) and 1378 (Gazetteer places/counties tables + trgm indexes)
+- [x] 212-02-PLAN.md — Idempotent Census Gazetteer Places+Counties ingest script (D-08/09/10/11) + parsing/idempotency unit test
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [x] 212-03-PLAN.md — [BLOCKING] Apply migrations 1377+1378 to the live DB + run the Gazetteer ingest live (~3143 counties, tens of thousands of places) + prove net-zero-new re-run
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [x] 212-04-PLAN.md — locationSearchService.searchPlaceNames resolver (pg_trgm UNION, D-05 label, D-06 ranking, D-07 coverage signal, RSLV-07 wrong-state/disambiguation guard) + getCongressionalOverlapNote helper (RSLV-06) — TDD
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [x] 212-05-PLAN.md — New route file GET /api/essentials/location-search (candidates) + /resolve (national-fallback floor via reused getStatewideOfficials/getFederalOfficials, RSLV-05) + index.ts mount + [BLOCKING] live curl/psql smoke test (Springfield/Baltimore/Franklin, EXPLAIN index scan)
+
+#### Phase 213: Anonymous Coordinate Lookup Endpoint
+
+**Goal**: Anyone can submit raw decimal coordinates and get back officials for that point with zero authentication, zero persistence, and no privacy exposure.
+**Depends on**: Nothing (structurally independent of Phase 212's text-search surface; can build in parallel once planned)
+**Requirements**: RSLV-03
+**Success Criteria** (what must be TRUE):
+
+  1. Posting a valid US decimal lat/lng to the new endpoint returns officials for that point via PostGIS `ST_Covers`, with no account/auth required and no rows written to any table
+  2. Coordinates outside the US bounding box, or with lat/lng swapped, are rejected with a clear, specific error — never silently queried as if valid
+  3. The response never echoes raw submitted coordinates back verbatim, and no raw coordinates appear in server logs or analytics events
+
+**Plans**: 3 plans in 3 waves
+
+**Wave 1**
+
+- [x] 213-01-PLAN.md — Coordinate-validation module (US bbox + swap guard + 422 taxonomy) + coordinate-only service core getRepresentativesByCoordinate (no geocode, 212 state+federal floor, empty matchedAddress)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [x] 213-02-PLAN.md — POST /api/essentials/coordinate-lookup route (body {lat,lng}, distinct 422 codes, rate-limit, no coordinate logging) + index.ts mount + supertest suite
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [x] 213-03-PLAN.md — [BLOCKING] commit/push to Render + live curl/psql smoke test (exact US House rep + floor, 3 distinct 422 codes, zero writes, no coordinate leak) + operator sign-off
+
+#### Phase 214: Unified Location Combobox & Google Places Removal
+
+**Goal**: Users on both the Results page and the Landing page search from one accessible, always-editable field that silently classifies address / place-name / coordinate input and dispatches to the right resolver — with Google Places fully retired from the codebase.
+**Depends on**: Phase 212, Phase 213 (both backend endpoints must be live and smoke-tested before this phase starts)
+**Requirements**: SRCH-01, SRCH-02, SRCH-03, SRCH-04, SRCH-05, SRCH-06, SRCH-08
+**Success Criteria** (what must be TRUE):
+
+  1. The Results header shows a single pre-filled, click-to-edit location field with full WAI-ARIA combobox semantics and keyboard support, replacing the Address/Browse mode toggle and the state→county→city LocationBrowser tree
+  2. Typing a full street address, a bare place name, or decimal-degree coordinates (`lat, lng`) each resolves to the correct location profile with no manual mode switch
+  3. Ambiguous place-name matches present a picker showing the state qualifier (`City, ST` / `County, ST` / `ST`) before navigating anywhere — never a silent best guess
+  4. The exact same combobox component powers the Landing-page search bar (one shared component, not a parallel implementation)
+  5. A full-repo grep for `google`/`pac-container`/`window.google` returns zero hits outside deleted files, and the `@googlemaps/js-api-loader` dependency is uninstalled
+
+**Plans**: 6 plans in 5 waves
+
+**Wave 1**
+
+- [x] 214-01-PLAN.md — Pure input classifier (SRCH-03) + searchLocationsByName/lookupCoordinate api clients (SRCH-04/05) with colocated Vitest unit tests (Wave 0 gaps)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [x] 214-02-PLAN.md — Shared accessible `<LocationCombobox>` (@floating-ui virtual list-nav, SRCH-02/04) + localitySearch.js Google-free refactor (browseAreaRoute)
+
+**Wave 3** *(blocked on Wave 2; parallel — disjoint files)*
+
+- [x] 214-03-PLAN.md — Results.jsx: swap toggle+LocationBrowser for the combobox (SRCH-01) + coordinate render path with D-05 label + representingCity banner-hijack guard (SRCH-05)
+- [x] 214-04-PLAN.md — Landing.jsx: adopt the same shared combobox (SRCH-06), preserve coverage list + candidate-by-name search
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [x] 214-05-PLAN.md — Delete Google modules + non-contiguous .pac CSS block + uninstall @googlemaps + scoped SRCH-08 grep gate
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [x] 214-06-PLAN.md — [CHECKPOINT] Human-verify combobox keyboard/ARIA, all three input paths, disambiguation, coordinate privacy label, dark mode on Results + Landing
+
+#### Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal
+
+**Goal**: The results header carries only what matters — an honest Elected-by-default type filter that never silently empties the Judges tab, compact accessible compass-lens icon buttons, and no redundant name-search box.
+**Depends on**: Nothing (touches `FilterBar.jsx`/`CompassControlsBar.jsx`/`LensChipRow.jsx` only; no dependency on the search-rewrite phases — can be planned/built in parallel with 212–214)
+**Requirements**: SRCH-07, HDR-01, HDR-02, HDR-03
+**Success Criteria** (what must be TRUE):
+
+  1. The Representatives and Educators tabs default to Elected officials, with the All/Appointed dropdown removed
+  2. The Judges tab still shows appointed officials by default in the same release — verified at a location with real geo-linked judges (e.g. Bloomington, IN), not just visually inspected in code
+  3. Compass lens controls render as icon-only buttons with accessible `aria-label`s and a keyboard/touch-usable tooltip affordance (gavel icon for Judicial), reclaiming the header's empty space
+  4. The "Search by name" results-filter box no longer appears anywhere in the UI
+
+**Plans**: 3 plans
+
+- [x] 215-01-PLAN.md — TAB_TYPE_DEFAULTS constant + extract appointed-filter functions to classify.js (TDD)
+- [x] 215-02-PLAN.md — Per-bucket Elected default + dropdown/name-search removal + dead-file cleanup (Results.jsx, FilterBar.jsx)
+- [x] 215-03-PLAN.md — Icon-only compass lens buttons with accessible tooltips (LensChipRow.jsx)
+
+### Progress
+
+**Execution Order:**
+Phases 212 → 213 (backend, either order relative to each other) → 214 (frontend, depends on both) — with Phase 215 (header declutter) planned/built independently in parallel, no ordering dependency on 212–214.
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
+| 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
+| 214. Unified Location Combobox & Google Places Removal | 6/6 | Complete    | 2026-07-21 |
+| 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 3/3 | Complete    | 2026-07-22 |
+
+### Coverage
+
+All 18 v24.0 requirements mapped 1:1 to exactly one phase — no orphans, no duplicates.
+
+| Requirement | Phase |
+|-------------|-------|
+| RSLV-01 | 212 |
+| RSLV-02 | 212 |
+| RSLV-04 | 212 |
+| RSLV-05 | 212 |
+| RSLV-06 | 212 |
+| RSLV-07 | 212 |
+| RSLV-03 | 213 |
+| SRCH-01 | 214 |
+| SRCH-02 | 214 |
+| SRCH-03 | 214 |
+| SRCH-04 | 214 |
+| SRCH-05 | 214 |
+| SRCH-06 | 214 |
+| SRCH-08 | 214 |
+| SRCH-07 | 215 |
+| HDR-01 | 215 |
+| HDR-02 | 215 |
+| HDR-03 | 215 |
 
 ## Roadmap: v22.0 Tucson & Arizona
 
@@ -402,6 +612,22 @@ Plans:
 
 - [ ] TBD (run /gsd-plan-phase 206 to break down — only after the 2026-07-21 primary certifies)
 
+### Phase 216: Unincorporated Locality Label — show 'Unincorporated {County}' when a searched point falls outside any incorporated place (gated to place-loaded states)
+
+**Goal:** When a searched point (address OR anonymous coordinate) falls outside any incorporated place but within a county, the results-page locality banner reads "Unincorporated {County}, {ST}" (e.g. "Unincorporated Pima County, AZ") — gated to place-loaded states so a place-less-looking city in an un-loaded state never false-positives.
+**Requirements**: LOC-01, LOC-02, LOC-03, LOC-04
+**Depends on:** Phase 215 (no code dependency; cross-repo backend→frontend ordering is internal to this phase)
+**Plans:** 4 plans in 4 waves
+
+**Execution Order:** backend impl (216-01) → backend deploy + live smoke (216-02, BLOCKING) → frontend impl (216-03) → frontend deploy + live UAT (216-04, BLOCKING). Hard backend-before-frontend: the frontend consumes the live `locality` field, so 216-03 depends on 216-02 shipping + smoke-verifying it in production.
+
+Plans:
+
+- [x] 216-01-PLAN.md — [accounts-api] Backend locality probe: two ST_Covers probes (place G4110/G4120 + county G4020) + buildLocality() gate (11-state PLACE_LOADED_STATES, MO excluded) + locality on AddressSearchResult + /candidates/search subset (LOC-01/02/03; TDD)
+- [x] 216-02-PLAN.md — [accounts-api, BLOCKING] Confirm live G4110 coverage vs gate list, push to Render master, live smoke of unincorporated/incorporated/un-loaded fixtures × address+coordinate paths, zero-write assertion, operator sign-off
+- [x] 216-03-PLAN.md — [essentials] Frontend threading: unincorporatedLabel() helper + locality unwrap in api.jsx (both entry points) + usePoliticianData + coordLocality state + representingCity branches for both modes (LOC-04)
+- [x] 216-04-PLAN.md — [essentials, BLOCKING] Full suite + build, push to Render main, live UAT of "Unincorporated {County}, ST" in BOTH address and coordinate modes + incorporated/un-loaded controls + tribal/county/browse regression checks
+
 ---
 
 ## Appended: Coachella Valley, CA (Phases 201-203)
@@ -778,4 +1004,5 @@ Coachella Valley, CA). See the expanded roadmap above. Per-milestone progress ta
 **Plans:** 0 plans
 
 Plans:
+
 - [ ] TBD (promote with /gsd:review-backlog when ready)

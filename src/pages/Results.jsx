@@ -1,30 +1,25 @@
-import { Fragment, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
-import { computeVariant, classifyBucket, classifyCategory } from '../lib/classify';
+import { computeVariant, classifyBucket, classifyCategory, TAB_TYPE_DEFAULTS, matchesAppointedFilter } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
-import LocalFilterSidebar from '../components/LocalFilterSidebar';
 import FilterBar, { StickyCompassKey } from '../components/FilterBar';
-import SegmentedControl from '../components/SegmentedControl';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress, parseCityFromAddress, stateAbbrevFromGeoId } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, browseFederalOfficials, fetchVoterInfo } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, browseFederalOfficials, fetchVoterInfo, lookupCoordinate } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import MiniCompass from '../components/MiniCompass';
-import useGooglePlacesAutocomplete from '../hooks/useGooglePlacesAutocomplete';
-import { resolveLocalityRoute } from '../lib/localitySearch';
-import LocalityMatches from '../components/LocalityMatches';
-import { coverageAreaToPath } from '../lib/coverage';
-import LocationBrowser from '../components/LocationBrowser';
+import { resolveLocalityRoute, browseAreaRoute } from '../lib/localitySearch';
+import LocationCombobox from '../components/LocationCombobox';
 import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
@@ -34,6 +29,7 @@ import { fetchTriviaCollections } from '../lib/trivia';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
 import { buildBannerProps } from '../lib/bannerProps';
+import { unincorporatedLabel } from '../lib/localityLabel';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -363,7 +359,15 @@ function simplifyForBody(title, pol) {
 }
 
 
-const SHORTCUTS = [];
+// D-08 coordinate 422 -> coral message map (214-UI-SPEC.md Copywriting Contract).
+// Keyed by the Phase 213 error taxonomy (OUTSIDE_US_BOUNDS/SWAPPED_COORDINATES/
+// INVALID_COORDINATES); an unrecognized/missing code falls back to the generic
+// invalid-coordinate copy.
+const COORDINATE_ERROR_MESSAGES = {
+  INVALID_COORDINATES: "That doesn't look like a valid coordinate. Use decimal degrees, like 39.17, -86.52.",
+  OUTSIDE_US_BOUNDS: 'Those coordinates are outside the United States. Enter a US location.',
+  SWAPPED_COORDINATES: 'Latitude and longitude look swapped — try lat, lng, like 39.17, -86.52.',
+};
 
 // Phase 208 (D-01/D-05/D-06): shared active/inactive className for all four tab
 // buttons (Representatives, Educators, Judges, Elections) — avoids 4x copy-paste
@@ -388,14 +392,21 @@ export default function Results() {
   const fromLocality = searchParams.get('from_locality') === '1';
   const localityLabel = searchParams.get('browse_label') || '';
 
-  // Search mode: 'address' or 'browse'
+  // Search mode: 'address' | 'browse' | 'coordinate' (SRCH-05 — coordinate results
+  // reuse the same browseResults/browseLoading direct-injection mechanism as 'browse').
   const [searchMode, setSearchMode] = useState('address');
-  const [editingSearch, setEditingSearch] = useState(false);
+  // Coordinate 422 message rendered inline in the LocationCombobox's errorRow slot (D-08).
+  const [coordError, setCoordError] = useState('');
   // Browse results injected directly into the list
   const [browseResults, setBrowseResults] = useState(null);
   const [browseLoading, setBrowseLoading] = useState(false);
-  // Currently-browsed area (geo_id + mtfcc), captured from URL shortcut params
-  // OR from the LocationBrowser callback. Used to drive elections-by-area fetch.
+  // LOC-04 (Phase 216-03): coordinate-mode parallel to usePoliticianData's address-mode
+  // `locality` state. The hook is never enabled for coordinate searches (RESEARCH
+  // Pitfall 1) — resolveCoordinate() populates this directly, mirroring how
+  // browseResults is a second data channel alongside the hook.
+  const [coordLocality, setCoordLocality] = useState(null);
+  // Currently-browsed area (geo_id + mtfcc), captured from URL shortcut params.
+  // Used to drive elections-by-area fetch.
   const [browseArea, setBrowseArea] = useState(() => {
     const g = searchParams.get('browse_geo_id');
     const m = searchParams.get('browse_mtfcc');
@@ -462,6 +473,10 @@ export default function Results() {
     error,
     formattedAddress,
     tribalLand,
+    // LOC-04 (Phase 216-03): destructured under a DISTINCT local name — a bare
+    // `locality` collides with the pre-existing fromLocality/localityLabel
+    // (browse_label URL param) already declared above (ADR-0001, Pitfall 2).
+    locality: incorporationInfo,
   } = usePoliticianData(activeQuery, {
     enabled: !!activeQuery && !cachedResult,
     initialData: [],
@@ -486,44 +501,12 @@ export default function Results() {
   // cache): an empty/unseeded browse must show "no results", not bleed the prior
   // address search's officials through (e.g. a stale Los Angeles list surfacing
   // under a Nevada browse). browseResults is null only while loading.
-  const list = searchMode === 'browse'
+  const list = (searchMode === 'browse' || searchMode === 'coordinate')
     ? (browseResults || [])
     : (cachedResult ? cachedResult.list : hookData);
-  const phase = searchMode === 'browse'
+  const phase = (searchMode === 'browse' || searchMode === 'coordinate')
     ? (browseLoading ? 'loading' : (browseResults ? 'fresh' : 'idle'))
     : (cachedResult ? 'fresh' : hookPhase);
-
-  // Initialize appointedFilter from cache if available (defaults to 'All' per FILT-03)
-  const [appointedFilter, setAppointedFilter] = useState(
-    cachedResult?.appointedFilter || 'All'
-  );
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Defer the search term that feeds the expensive filter→dedup→group→render chain.
-  // The input itself stays bound to `searchQuery` (updates immediately, so typing feels
-  // instant), while the heavy grid recompute reads `deferredQuery` and runs at low
-  // priority — React can interrupt it to keep the page (and the mouse) responsive.
-  const deferredQuery = useDeferredValue(searchQuery);
-
-  // Client-side name filter — applied only to the grid (not to non-display logic like locationLabel).
-  // Memoized so the downstream cascade (filteredPols → federalFiltered → deduped → hierarchy)
-  // only recomputes when the term or the underlying list actually changes.
-  const trimmedSearch = useMemo(
-    () => (deferredQuery || '').trim().toLowerCase(),
-    [deferredQuery]
-  );
-  const visibleList = useMemo(() => {
-    if (!trimmedSearch || !Array.isArray(list)) return list;
-    return list.filter((p) => {
-      const name = (p?.full_name || '').toLowerCase();
-      const first = (p?.first_name || '').toLowerCase();
-      const last = (p?.last_name || '').toLowerCase();
-      return name.includes(trimmedSearch)
-          || first.includes(trimmedSearch)
-          || last.includes(trimmedSearch);
-    });
-  }, [trimmedSearch, list]);
 
   // Compass mode toggle — persisted across sessions; off by default for dense view
   const [compassMode, setCompassMode] = useState(() => {
@@ -743,7 +726,7 @@ export default function Results() {
   // stored coordinates with a different address.
   const savedAddressRef = useRef(null);
   useEffect(() => {
-    if (!isLoggedIn || !formattedAddress || phase !== 'fresh' || searchMode === 'browse') return;
+    if (!isLoggedIn || !formattedAddress || phase !== 'fresh' || searchMode === 'browse' || searchMode === 'coordinate') return;
     if (compassLoading || (myRepresentatives && myRepresentatives.length > 0)) return; // location already on file
     if (savedAddressRef.current === formattedAddress) return;
     savedAddressRef.current = formattedAddress;
@@ -759,12 +742,11 @@ export default function Results() {
         sessionStorage.setItem('ev:results', JSON.stringify({
           query: queryFromUrl,
           list,
-          appointedFilter: appointedFilter,
           timestamp: Date.now(),
         }));
       }
     }
-  }, [list, phase, appointedFilter, queryFromUrl]);
+  }, [list, phase, queryFromUrl]);
 
   // Restore scroll position when returning from a profile page
   useEffect(() => {
@@ -913,7 +895,17 @@ export default function Results() {
       setBrowseResults(filtered);
       setBrowseLoading(false);
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // Keyed on the browse-target param VALUES (not the searchParams object, which
+    // changes on every tab switch) so selecting a new candidate from the in-page
+    // combobox (Results→Results navigation, no remount) actually re-fetches instead
+    // of leaving the prior location's officials on screen (214 combobox re-search).
+  }, [
+    searchParams.get('browse_geo_id'),
+    searchParams.get('browse_mtfcc'),
+    searchParams.get('browse_label'),
+    searchParams.get('browse_city_filter'),
+    searchParams.get('browse_school_filter'),
+  ]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle ?browse_state_officials=CA — statewide officials (executives + US
   // Senators + federal). The "browse a state" entry point from the typeahead.
@@ -952,6 +944,24 @@ export default function Results() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Handle ?lat + ?lng + ?coord_raw — the Plan 02 coordinateRoute Landing->Results
+  // coordinate hand-off contract (SRCH-05). Reads once on mount and resolves through
+  // the SAME shared resolveCoordinate the in-page combobox submit uses below — no
+  // duplicated lookup/injection/label logic. Runs once per mount ([] deps, mirroring
+  // every other browse_* on-mount reader above) so a stale coordinate is never
+  // re-resolved once the user starts editing the field.
+  useEffect(() => {
+    const latParam = searchParams.get('lat');
+    const lngParam = searchParams.get('lng');
+    if (!latParam || !lngParam) return;
+    const lat = Number(latParam);
+    const lng = Number(lngParam);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+    const coordRawParam = searchParams.get('coord_raw');
+    const raw = coordRawParam ?? `${latParam}, ${lngParam}`;
+    resolveCoordinate(lat, lng, raw, { method: 'url_handoff' });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const switchView = (view) => {
     track('essentials_tab_switched', { from: activeView, to: view });
     setSearchParams((prev) => {
@@ -967,11 +977,10 @@ export default function Results() {
 
   const handleAddressSearch = async (overrideAddress) => {
     const isOverride = typeof overrideAddress === 'string';
-    // Manual submit reads the live input DOM value, not React state: Google Places
-    // Autocomplete writes to the input element and not every write fires onChange, so
-    // `addressInput` state can lag/truncate behind the box. The ref is the source of
-    // truth (same fix as Landing handleSearch). Autocomplete picks pass an override.
-    const addr = (isOverride ? overrideAddress : (addressInputRef.current?.value ?? addressInput)).trim();
+    // LocationCombobox is fully controlled (value/onChange only, no imperative DOM
+    // writes — RESEARCH Pitfall 2) — read the controlled addressInput state directly,
+    // never a DOM ref. A candidate-select or coordinate submit passes an override.
+    const addr = (isOverride ? overrideAddress : addressInput).trim();
     if (!addr) return;
     // Manual submit (not an autocomplete pick): apply the ADR-0001 locality
     // fallback. A covered city/state/county routes to Browse-by-Location; a
@@ -985,9 +994,10 @@ export default function Results() {
     setCachedResult(null);
     sessionStorage.removeItem('ev:results');
     setSearchKey(k => k + 1);
-    // Switching to address search clears any prior browse-by-area state so the
-    // URL doesn't end up with both ?browse_geo_id=... and ?q=...
+    // Switching to address search clears any prior browse-by-area / coordinate
+    // state so the URL doesn't end up with both ?browse_geo_id=... and ?q=...
     setBrowseResults(null);
+    setCoordError('');
     setSearchMode('address');
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
@@ -998,43 +1008,70 @@ export default function Results() {
       next.delete('browse_city_filter');
       next.delete('browse_school_filter');
       next.delete('from_locality');
+      next.delete('lat');
+      next.delete('lng');
+      next.delete('coord_raw');
       return next;
     });
   };
 
-  const addressInputRef = useRef(null);
-  useGooglePlacesAutocomplete(addressInputRef, {
-    onPlaceSelected: (addr) => {
-      track('essentials_address_searched', { method: 'autocomplete' });
-      setAddressInput(addr);
-      handleAddressSearch(addr);
-    },
-  });
+  // Shared coordinate resolution path (SRCH-05) — BOTH the in-page LocationCombobox
+  // onSubmitCoordinate callback (below) AND the on-mount lat/lng/coord_raw URL reader
+  // (above) call this SAME function; no duplicated lookup/injection/label logic.
+  // Coordinate results reuse the browseResults/browseLoading direct-injection state —
+  // the same mechanism 'browse' mode uses to render a list without the
+  // address-geocode hook — since a raw point has no geo_id to browse-by-area with.
+  async function resolveCoordinate(lat, lng, raw, { method = 'combobox' } = {}) {
+    // D-05: capture the literal typed text BEFORE the fetch — the resting label and
+    // the banner label-of-record derive from this, never from the server response
+    // (Phase 213 deliberately never echoes the coordinate back in matchedAddress).
+    const label = (raw != null && raw !== '') ? raw : `${lat}, ${lng}`;
+    setCoordError('');
+    setCachedResult(null);
+    sessionStorage.removeItem('ev:results');
+    setSearchMode('coordinate');
+    setAddressInput(label);
+    setBrowseLoading(true);
+    setBrowseResults(null);
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      // No geo_id for a raw point — clear any conflicting address/browse/hand-off
+      // params so they don't leak into this location.
+      next.delete('q');
+      next.delete('browse_geo_id');
+      next.delete('browse_mtfcc');
+      next.delete('browse_label');
+      next.delete('browse_government_list');
+      next.delete('browse_state_officials');
+      next.delete('browse_federal_officials');
+      next.delete('from_locality');
+      next.delete('lat');
+      next.delete('lng');
+      next.delete('coord_raw');
+      return next;
+    }, { replace: true });
 
-  // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
-  function resolveIsAppointed(pol) {
-    // politician.is_appointed=true is an individual override (e.g. interim appointment)
-    if (pol.is_appointed === true) return true;
-    // Otherwise fall back to office-level: is_elected derives from !is_appointed_position
-    return !pol.is_elected;
-  }
+    // T-214-02: capture method/outcome (+ the 422 code, an enum string) only — never
+    // the raw {lat, lng} pair, on either entry point.
+    const { data, error, code, locality } = await lookupCoordinate(lat, lng);
+    setBrowseLoading(false);
 
-  // Filter logic per CONTEXT D-06
-  function matchesAppointedFilter(pol, filter) {
-    if (filter === 'All') return true;
-    const resolved = resolveIsAppointed(pol);
-    if (filter === 'Elected') {
-      return !resolved || pol.faces_retention_vote === true;
+    if (error) {
+      track('essentials_coordinate_searched', { method, outcome: 'error', code: code || 'unknown' });
+      setCoordError(COORDINATE_ERROR_MESSAGES[code] || COORDINATE_ERROR_MESSAGES.INVALID_COORDINATES);
+      setBrowseResults(null);
+      setCoordLocality(null);
+      return;
     }
-    if (filter === 'Appointed') {
-      return resolved === true;
-    }
-    return true;
+
+    track('essentials_coordinate_searched', { method, outcome: 'success' });
+    setBrowseResults(data);
+    setCoordLocality(locality || null);
   }
 
   // Filter and classify (no longer filtering VACANT names — vacant offices come via is_vacant flag)
-  // Uses visibleList (name-filtered) so the grid narrows when user types in FilterBar search.
-  const filteredPols = useMemo(() => visibleList, [visibleList]); // eslint-disable-line react-hooks/exhaustive-deps
+  // No name-search anymore (SRCH-07) — filteredPols reads the raw list directly.
+  const filteredPols = list;
 
   // Per-politician stances cache for CompassCardVertical comparison overlay (compass mode only)
   const [stancesByPolId, setStancesByPolId] = useState({});
@@ -1043,7 +1080,7 @@ export default function Results() {
   // this, stancesByPolId accumulated every politician's stances across every
   // location click and never evicted — 250+ entries after a handful of browses —
   // which is what made the app get progressively slower over a session.
-  const locationKey = `${searchMode}|${activeQuery || ''}|${browseArea?.geo_id || ''}|${browseArea?.mtfcc || ''}`;
+  const locationKey = `${searchMode}|${activeQuery || ''}|${browseArea?.geo_id || ''}|${browseArea?.mtfcc || ''}|${searchMode === 'coordinate' ? addressInput : ''}`;
   useEffect(() => {
     setStancesByPolId({});
   }, [locationKey]);
@@ -1092,55 +1129,24 @@ export default function Results() {
     return () => { cancelled = true; };
   }, [compassMode, filteredPols, allTopics, politicianIdsWithStances]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleBuildCompass = () => {
-    const returnUrl = window.location.href;
-    window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
-  };
-
-  // Compass top-slot: rendered after each view's full-width banner so it never overlaps it.
-  // Calibrated (>=3 answers) → the controls bar; uncalibrated → a CTA to take the quiz,
-  // since with no stances the per-card compasses can't render and the toggle would
-  // otherwise appear to do nothing. While answers are still loading, render neither.
-  const compassCalibrated = (rawUserAnswers?.length ?? 0) >= 3;
-  const compassControlsSlot = (
-    // The bar renders in normal flow (right-aligned on desktop) so it sits above the
-    // section banner instead of floating over it.
-    <div style={{ position: 'relative' }}>
-      <CompassControlsBar
-        userAnswers={rawUserAnswers}
-        lenses={augmentedLenses}
-        activeLensKey={activeLensKey}
-        onSelectLens={handleSelectLens}
-        onCalibrate={handleCalibrateLens}
-        onStanceMin={handleStanceMin}
-        onStanceMax={handleStanceMax}
-        isDesktop={isDesktop}
-      />
-    </div>
+  // Compass controls rendered INLINE in the tab row's right slot (where the
+  // Compass toggle used to live) so toggling Compass never shifts the page.
+  // The lens chips show whether or not the user has calibrated — clicking an
+  // un-calibrated lens opens a "calibrate these N topics?" confirmation dialog
+  // (LensChipRow). The old below-tabs "Set your stances" CTA banner is retired.
+  const compassControls = !compassMode ? null : (
+    <CompassControlsBar
+      inline
+      userAnswers={rawUserAnswers}
+      lenses={augmentedLenses}
+      activeLensKey={activeLensKey}
+      onSelectLens={handleSelectLens}
+      onCalibrate={handleCalibrateLens}
+      onStanceMin={handleStanceMin}
+      onStanceMax={handleStanceMax}
+      isDesktop={isDesktop}
+    />
   );
-  const compassCtaSlot = (
-    <div className="mx-6 md:mx-12 mt-4 mb-2 px-4 py-4 rounded-lg border border-[var(--ev-teal)] dark:border-ev-teal-light bg-[var(--ev-bg-light)] dark:bg-ev-navy-card flex flex-col sm:flex-row sm:items-center gap-3">
-      <p className="text-sm text-gray-700 dark:text-gray-200 flex-1">
-        Set your stances to see how you align with each official on the issues.
-      </p>
-      <button
-        type="button"
-        onClick={handleBuildCompass}
-        className="shrink-0 inline-flex items-center justify-center px-5 py-2.5 text-white font-semibold rounded-full text-sm transition-colors"
-        style={{ backgroundColor: '#00657c' }}
-        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
-      >
-        Set your stances
-      </button>
-    </div>
-  );
-  // Single slot used by both views; only one view is mounted at a time.
-  const compassTopSlot = !compassMode
-    ? null
-    : compassCalibrated
-      ? compassControlsSlot
-      : (compassLoading ? null : compassCtaSlot);
 
   // Derive representing city for building image selection — uses unfiltered list
   // so the building image doesn't disappear when search filter narrows the grid.
@@ -1152,6 +1158,22 @@ export default function Results() {
     if (searchMode === 'browse') {
       const label = searchParams.get('browse_label');
       if (label && label.trim()) return label.trim();
+    }
+    // Coordinate-mode guard (T-214-06 / RESEARCH Pitfall 3): a raw lat/lng has no
+    // resolved place name — the server never echoes an address (D-05) — so there is
+    // no trustworthy label-of-record to derive here. Return null explicitly rather
+    // than falling through to the "derive from politician records" branches below,
+    // which can surface a neighboring jurisdiction's stray representing_city for a
+    // boundary-straddling point (the same hijack the 'browse' branch above guards
+    // against).
+    if (searchMode === 'coordinate') {
+      // LOC-04 (Phase 216-03): an unincorporated coordinate point still has an
+      // authoritative backend-derived label ("Unincorporated {County}") even
+      // though no address/place name can be derived — check it before falling
+      // through to the "no trustworthy label" null below.
+      const lbl = unincorporatedLabel(coordLocality);
+      if (lbl) return lbl;
+      return null;
     }
     const src = Array.isArray(list) ? list : [];
     // Only local-government officials may set the local city banner. A statewide or
@@ -1176,12 +1198,17 @@ export default function Results() {
         if (cityOf) return cityOf[1].trim();
       }
     }
+    // LOC-04 (Phase 216-03): an unincorporated point is authoritatively backend-flagged
+    // — check it BEFORE the postal-city guess below, which would otherwise mislabel an
+    // unincorporated parcel with its nearest postal city (e.g. "Tucson").
+    const lbl = unincorporatedLabel(incorporationInfo);
+    if (lbl) return lbl;
     // Fallback 2: parse the city out of the typed address ("…, Bloomington, IN 47404").
     // Reliable for address searches where politician data lacks representing_city.
     const fromAddress = parseCityFromAddress(addressInput);
     if (fromAddress) return fromAddress;
     return null;
-  }, [list, addressInput, searchMode, searchParams]);
+  }, [list, addressInput, searchMode, searchParams, incorporationInfo, coordLocality]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"
@@ -1437,16 +1464,16 @@ export default function Results() {
   }
 
   const filteredHierarchy = useMemo(
-    () => applyAppointedFilter(hierarchy, appointedFilter),
-    [hierarchy, appointedFilter]
+    () => applyAppointedFilter(hierarchy, TAB_TYPE_DEFAULTS.representatives),
+    [hierarchy]
   );
   const educatorsFilteredHierarchy = useMemo(
-    () => applyAppointedFilter(educatorsHierarchy, appointedFilter),
-    [educatorsHierarchy, appointedFilter]
+    () => applyAppointedFilter(educatorsHierarchy, TAB_TYPE_DEFAULTS.educators),
+    [educatorsHierarchy]
   );
   const judgesFilteredHierarchy = useMemo(
-    () => applyAppointedFilter(judgesHierarchy, appointedFilter),
-    [judgesHierarchy, appointedFilter]
+    () => applyAppointedFilter(judgesHierarchy, TAB_TYPE_DEFAULTS.judges),
+    [judgesHierarchy]
   );
 
   // D-05: hide Educators/Judges tabs when the location has 0 office-holders of
@@ -1878,40 +1905,49 @@ export default function Results() {
               </button>
             </div>
           )}
-          {/* Search Bar — collapsed chip when address is set, full input otherwise. */}
+          {/* Search Bar — a single always-editable LocationCombobox (SRCH-01, D-03).
+              No pill->input display/edit toggle: the field itself IS the resting
+              state (pre-filled with the current location label; focus selects-all).
+              Tribal-land badge + elections summary render as a secondary info row
+              once a location has resolved (address, browse-by-area, or coordinate
+              direct-injection). */}
           <div className="px-6 sm:px-12 py-3 bg-[var(--ev-bg-light)] dark:bg-ev-navy">
-            {/* Collapsed chip — shown when we have a result and not actively editing */}
-            {(formattedAddress || (searchMode === 'browse' && browseResults)) && !editingSearch && (
-              <div className="flex items-center gap-2">
-                {/* LEFT zone: location (pin + address + tribal badge). flex-1 so the
-                    center zone is genuinely centered in the row (208-02 operator:
-                    location top-left, election info top-center). min-w-0 lets the
-                    address truncate instead of shoving the center off-screen. */}
-                <div className="flex-1 min-w-0 flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0" style={{ color: '#00657c' }}>
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                    <circle cx="12" cy="10" r="3" />
-                  </svg>
-                  <span className="text-sm text-gray-700 dark:text-gray-300 truncate" style={{ fontFamily: "'Manrope', sans-serif" }}>
-                    {formattedAddress ? toAddressTitleCase(formattedAddress) : addressInput}
+            <LocationCombobox
+              value={addressInput}
+              onChange={(next) => {
+                setAddressInput(next);
+                if (coordError) setCoordError('');
+              }}
+              onSubmitAddress={(raw) => handleAddressSearch(raw)}
+              onSubmitCoordinate={(lat, lng, raw) => resolveCoordinate(lat, lng, raw, { method: 'combobox' })}
+              onSelectCandidate={(candidate) => {
+                track('essentials_locality_searched', { label: candidate.label, state: candidate.state });
+                navigate(browseAreaRoute(candidate));
+              }}
+              errorRow={coordError}
+            />
+
+            {/* Secondary info row: tribal/elections badges (when present) plus the
+                Compass on/off toggle, right-aligned on the same line as the election
+                chip — moved up here (208→215 follow-up) so turning Compass on swaps
+                the lens/key controls into the tab row without shifting the page. */}
+            {(activeQuery || browseResults) && (
+              <div className="mt-2 flex items-center gap-2 flex-wrap">
+                {/* SCHEMA-03 (Phase 133 D-09): tribal_land badge in ev-coral.
+                    Renders only when API response.tribal_land.on_reservation === true.
+                    Non-jurisdictional — federal/state/local officials still render normally. */}
+                {tribalLand?.on_reservation && (
+                  <span
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap shrink-0"
+                    style={{ backgroundColor: '#ff5740', color: '#fff', fontFamily: "'Manrope', sans-serif" }}
+                    title={`On tribal land: ${tribalLand.name || 'Reservation'}`}
+                  >
+                    Tribal Land — {tribalLand.name || 'Reservation'}
                   </span>
-                  {/* SCHEMA-03 (Phase 133 D-09): tribal_land badge in ev-coral.
-                      Renders only when API response.tribal_land.on_reservation === true.
-                      Non-jurisdictional — federal/state/local officials still render normally. */}
-                  {tribalLand?.on_reservation && (
-                    <span
-                      className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap shrink-0"
-                      style={{ backgroundColor: '#ff5740', color: '#fff', fontFamily: "'Manrope', sans-serif" }}
-                      title={`On tribal land: ${tribalLand.name || 'Reservation'}`}
-                    >
-                      Tribal Land — {tribalLand.name || 'Reservation'}
-                    </span>
-                  )}
-                </div>
-                {/* CENTER zone: election summary. Relocated from the Elections tab
-                    button (208-D-02/D-03) — location-level, renders once and stays
-                    visible across all four tabs. Guarded on electionsLabelSuffix.
-                    Centered per 208-02 operator feedback. */}
+                )}
+                {/* Election summary. Relocated from the Elections tab button
+                    (208-D-02/D-03) — location-level, renders once and stays visible
+                    across all four tabs. Guarded on electionsLabelSuffix. */}
                 {electionsLabelSuffix && (
                   <span className="inline-flex items-center whitespace-nowrap shrink-0">
                     <span className="text-sm text-gray-700 dark:text-gray-300" style={{ fontFamily: "'Manrope', sans-serif" }}>
@@ -1930,176 +1966,18 @@ export default function Results() {
                     )}
                   </span>
                 )}
-                {/* RIGHT zone: edit pencil. flex-1 + justify-end balances the LEFT
-                    zone so the center election stays centered. */}
-                <div className="flex-1 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => setEditingSearch(true)}
-                    aria-label="Edit search"
-                    className="inline-flex items-center justify-center w-11 h-11 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors shrink-0"
-                    style={{ color: '#00657c' }}
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 20h9" />
-                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-                    </svg>
-                  </button>
+                {/* Compass on/off toggle — right-aligned, on the same plane as the
+                    election chip. When on, the lens/key controls render in the tab
+                    row's right slot below (no page shift). */}
+                <div className="ml-auto shrink-0">
+                  <FilterBar
+                    compassMode={compassMode}
+                    onCompassModeChange={handleCompassModeChange}
+                    isDark={isDark}
+                  />
                 </div>
-                {/* Sticky CompassKey is positioned floating at top of <main>;
-                    it visually overlaps this row at scroll = 0, then pins as the user scrolls. */}
               </div>
             )}
-
-            {/* Full search form — always in the DOM so the autocomplete ref stays attached.
-                Hidden via CSS when the chip is visible to preserve the Google Places binding. */}
-            <div className={(formattedAddress || (searchMode === 'browse' && browseResults)) && !editingSearch ? 'hidden' : ''}>
-              {/* Mode toggle */}
-              <div className="flex gap-2 mb-3">
-                <button
-                  onClick={() => { setSearchMode('address'); setBrowseResults(null); }}
-                  className={`px-3 py-1 text-sm rounded-full transition-colors ${
-                    searchMode === 'address'
-                      ? 'bg-[var(--ev-teal)] text-white'
-                      : 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  Search by Address
-                </button>
-                <button
-                  onClick={() => setSearchMode('browse')}
-                  className={`px-3 py-1 text-sm rounded-full transition-colors ${
-                    searchMode === 'browse'
-                      ? 'bg-[var(--ev-teal)] text-white'
-                      : 'bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  Browse by Location
-                </button>
-              </div>
-
-              {/* Address input — always in the DOM so the Google Places autocomplete ref
-                  stays attached regardless of which mode is active. Hidden via CSS in browse mode. */}
-              <div className={searchMode !== 'address' ? 'hidden' : 'flex gap-3'}>
-                <input
-                  ref={addressInputRef}
-                  type="text"
-                  value={addressInput}
-                  onChange={(e) => setAddressInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && (handleAddressSearch(), setEditingSearch(false))}
-                  aria-label="Enter your full street address"
-                  placeholder="Enter your full street address"
-                  className="flex-1 min-w-0 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg
-                             focus:outline-none focus:ring-2 focus:ring-[var(--ev-teal)]
-                             bg-white dark:bg-gray-900 dark:text-white dark:placeholder-gray-500"
-                />
-                <button
-                  onClick={() => { handleAddressSearch(); setEditingSearch(false); }}
-                  disabled={!addressInput.trim()}
-                  aria-label="Search"
-                  className="shrink-0 flex items-center justify-center min-w-[48px] min-h-[44px] px-4 sm:px-6 py-2 font-bold text-white bg-[var(--ev-teal)] rounded-lg
-                             hover:bg-[var(--ev-teal-dark)] disabled:opacity-50 transition-colors"
-                >
-                  <svg
-                    className="w-5 h-5 sm:hidden" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="11" cy="11" r="7" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                  </svg>
-                  <span className="hidden sm:inline">Search</span>
-                </button>
-                {(formattedAddress || (searchMode === 'browse' && browseResults)) && (
-                  <button
-                    type="button"
-                    onClick={() => setEditingSearch(false)}
-                    className="px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-                  >
-                    Cancel
-                  </button>
-                )}
-              </div>
-
-              {searchMode === 'address' && (
-                <LocalityMatches
-                  query={addressInput}
-                  inputRef={addressInputRef}
-                  onSelect={(area) => {
-                    track('essentials_locality_searched', { label: area.label, state: area.stateAbbrev || area.browseState, kind: area.kind });
-                    navigate(coverageAreaToPath(area));
-                    setEditingSearch(false);
-                  }}
-                />
-              )}
-
-              {/* Quick-access shortcuts for anonymous users */}
-              {searchMode === 'address' && SHORTCUTS.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {SHORTCUTS.map((sc) => (
-                    <button
-                      key={sc.label}
-                      type="button"
-                      onClick={() => {
-                        const params = new URLSearchParams({
-                          browse_government_list: sc.browseGovernmentList,
-                          browse_label: sc.browseLabel,
-                        });
-                        if (sc.browseState) params.set('browse_state', sc.browseState);
-                        navigate(`/results?${params}`);
-                      }}
-                      className="border border-[var(--ev-teal)] dark:border-ev-teal-light text-[var(--ev-teal)] dark:text-ev-teal-light px-3 py-1.5 rounded text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-60"
-                    >
-                      {sc.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {searchMode !== 'address' && (
-                <LocationBrowser
-                  onResults={(data, areaName, state, area) => {
-                    setBrowseResults(data);
-                    if (area && area.geo_id && area.mtfcc) {
-                      setBrowseArea({ geo_id: area.geo_id, mtfcc: area.mtfcc });
-                      setSearchParams((prev) => {
-                        const next = new URLSearchParams(prev);
-                        next.set('browse_geo_id', area.geo_id);
-                        next.set('browse_mtfcc', area.mtfcc);
-                        if (areaName) next.set('browse_label', areaName);
-                        else next.delete('browse_label');
-                        next.delete('browse_city_filter');
-                        next.delete('browse_school_filter');
-                        // Clear params owned by the other (mutually exclusive) browse
-                        // modes so a prior selection can't leak into this one — e.g.
-                        // Springfield's browse_government_list + browse_state=MO
-                        // surviving into an LA geo browse and mislabeling it "Missouri".
-                        next.delete('browse_government_list');
-                        next.delete('browse_state_officials');
-                        next.delete('browse_federal_officials');
-                        next.delete('browse_county_geo_id');
-                        next.delete('browse_skip_overlap');
-                        // Drop the address query too: it is mutually exclusive with
-                        // browse mode. Left in place, ?q= survives into the browse URL
-                        // and on reload re-runs the address fetch — whose officials then
-                        // bleed through if the browse target is empty/unseeded (the
-                        // "Los Angeles, NV + California politicians" leak).
-                        next.delete('q');
-                        // Set this area's real state (drives the State-tier label/banner);
-                        // selectedState from LocationBrowser is a 2-letter abbreviation.
-                        if (state && /^[A-Za-z]{2}$/.test(state)) next.set('browse_state', state.toUpperCase());
-                        else next.delete('browse_state');
-                        next.set('mode', 'browse');
-                        return next;
-                      }, { replace: true });
-                    }
-                    if (areaName) setAddressInput(`${areaName}, ${state}`);
-                    setEditingSearch(false);
-                  }}
-                  onLoading={setBrowseLoading}
-                />
-              )}
-            </div>
           </div>
 
           {/* Tab toggle + inline filters — tabs left, filters right */}
@@ -2135,16 +2013,11 @@ export default function Results() {
                   Elections
                 </button>
               </div>
-              <div className="min-w-0 py-2 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
-                <FilterBar
-                  appointedFilter={appointedFilter}
-                  onAppointedFilterChange={(v) => { track('essentials_filter_changed', { filter_type: 'appointed', value: v }); setAppointedFilter(v); }}
-                  searchQuery={searchQuery}
-                  onSearchChange={setSearchQuery}
-                  compassMode={compassMode}
-                  onCompassModeChange={handleCompassModeChange}
-                  isDark={isDark}
-                />
+              {/* Compass lens/key controls occupy the slot the toggle used to sit in
+                  (the toggle moved up to the election-chip row). Rendered only when
+                  Compass is on; empty otherwise, so toggling doesn't shift the page. */}
+              <div className="min-w-0 py-2 sm:py-0 w-full sm:flex sm:flex-1 sm:justify-end sm:pl-4 sm:w-auto">
+                {compassControls}
               </div>
             </div>
           )}
@@ -2174,9 +2047,6 @@ export default function Results() {
                   </div>
                 )}
 
-                {/* Compass controls / CTA — placed after the banner so the overlay never covers it */}
-                {(activeQuery || browseResults) && compassTopSlot}
-
                 {/* Loading skeletons */}
                 {phase === 'loading' && (
                   <div className="px-6 md:px-12 pt-6">
@@ -2196,9 +2066,7 @@ export default function Results() {
                         const hasTier = hier.some(h => h.tier === tier);
                         if (hasTier) return null;
 
-                        const emptyMessage = appointedFilter !== 'All'
-                          ? `No ${appointedFilter.toLowerCase()} officials found at the ${tier.toLowerCase()} level.`
-                          : `${tier} ${viewName === 'representatives' ? 'representative' : 'official'} data is not yet available for this area.`;
+                        const emptyMessage = `No ${TAB_TYPE_DEFAULTS[viewName].toLowerCase()} officials found at the ${tier.toLowerCase()} level.`;
 
                         return (
                           <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
@@ -2206,13 +2074,6 @@ export default function Results() {
                           </div>
                         );
                       })}
-
-                      {/* Name-search no-matches state */}
-                      {trimmedSearch && Array.isArray(visibleList) && visibleList.length === 0 && Array.isArray(list) && list.length > 0 && (
-                        <p className="mt-4 text-gray-500 dark:text-[#8b949e] text-center">
-                          No matches for &ldquo;{searchQuery}&rdquo;. Clear the search box to see all results.
-                        </p>
-                      )}
 
                       {hier.map(({ tier, bodies }) => {
                         const tierKey = tier.toLowerCase();
@@ -2300,11 +2161,10 @@ export default function Results() {
                         </p>
                       )}
 
-                      {/* Filter-aware empty state — when appointed filter yields no results but location has politicians */}
-                      {fallbackListLength > 0 && appointedFilter !== 'All' &&
-                        hier.length === 0 && (
+                      {/* Filter-aware empty state — when the per-tab type default yields no results but location has politicians */}
+                      {fallbackListLength > 0 && hier.length === 0 && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
-                          No {appointedFilter.toLowerCase()} officials found for this area.
+                          No {TAB_TYPE_DEFAULTS[viewName].toLowerCase()} officials found for this area.
                         </p>
                       )}
                     </div>
@@ -2333,9 +2193,6 @@ export default function Results() {
                   stateCode={userState || null}
                 />
               )}
-
-              {/* Compass controls / CTA — after the voter-info card so the overlay never covers it */}
-              {compassTopSlot}
 
               <ElectionsView
                 elections={nearestElection}

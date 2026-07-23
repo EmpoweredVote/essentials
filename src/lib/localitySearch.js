@@ -1,132 +1,101 @@
-// Locality search fallback (ADR-0001).
+// Locality search routing (ADR-0001 -> Phase 214 refactor).
 //
-// When a user submits a free-text query that isn't a precise street address,
-// classify it with the Google Geocoder and route it usefully instead of erroring:
-//   - street address  -> normal backend search (caller handles)
-//   - covered city     -> Browse-by-Location for that city + precision banner
-//   - state / county / uncovered city -> the landing coverage list for that state
-//                                         (or an honest "not covered yet" banner)
+// The third-party geocoder-based classification is retired (D-09) in favor of
+// the Phase 214 client heuristic (src/lib/inputClassifier.js) plus the live
+// Phase 212 place-name resolver (searchLocationsByName). Two dependency-free
+// routing helpers are exported for the host pages (Plans 03/04):
+//   - browseAreaRoute(candidate)     -> /results?browse_geo_id=...&browse_mtfcc=...&browse_label=...&from_locality=1
+//   - coordinateRoute(lat, lng, raw) -> /results?lat=...&lng=...&coord_raw=...
+//     (SRCH-05 cross-page coordinate hand-off contract — Landing navigates
+//     here, Results reads lat/lng/coord_raw on mount and resolves through the
+//     SAME shared coordinate path its own onSubmitCoordinate uses.)
 //
-// True county-wide browse isn't supported (we have no county name -> geo_id map),
-// so a county query resolves to "covered areas in that county's state".
+// resolveLocalityRoute() keeps its pre-existing outer contract
+// ({ kind: 'address' | 'browse' | 'coverage', to }) so Results.jsx/Landing.jsx's
+// current call sites (unchanged by this plan; refactored in Plans 03/04) keep
+// working end to end, but its classification step is now classifyInput() plus
+// the live resolver instead of the retired third-party geocoder.
 
-import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
-import { normalizePlace, STATE_NAME_TO_ABBREV } from './coverage';
-import { fetchBrowseAreas } from './api';
+import { classifyInput } from './inputClassifier';
+import { searchLocationsByName } from './api';
 
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-function ensureConfigured() {
-  if (API_KEY && !window.google?.maps?.importLibrary) {
-    setOptions({ key: API_KEY });
-  }
-}
-
-function comp(components, type) {
-  return components?.find((c) => c.types.includes(type)) || null;
+/**
+ * Strip the resolver's trailing " · {area_type}" segment from a candidate label
+ * (e.g. "Los Angeles County, California, US, CA · County" -> "…, US, CA"). The
+ * area_type it appends duplicates the type pill shown in the combobox and the
+ * results-page header, so it is dropped for display everywhere the label is
+ * surfaced. Falls back to the untouched label when area_type is absent or the
+ * suffix isn't present.
+ */
+export function stripAreaTypeSuffix(label, areaType) {
+  if (!label || !areaType) return label;
+  const suffix = ` · ${areaType}`;
+  return label.endsWith(suffix) ? label.slice(0, -suffix.length) : label;
 }
 
 /**
- * Classify a free-text query into { kind, cityName, countyName, stateAbbrev, stateName }.
- * kind is one of: 'address' | 'city' | 'county' | 'state' | 'unknown'.
- * Throws if the geocoder is unavailable or returns no results — callers should
- * treat a throw as "fall back to normal address search".
+ * Build a browse-by-area route from a /location-search candidate
+ * ({ geo_id, mtfcc, label, state, area_type, has_local_data }). The redundant
+ * " · {area_type}" display suffix is stripped from browse_label so the results
+ * header/banner/combobox all read the clean place string; the type is conveyed
+ * by the pill instead.
  */
-export async function classifyQuery(query) {
-  if (!API_KEY) throw new Error('no maps key');
-  ensureConfigured();
-  const { Geocoder } = await importLibrary('geocoding');
-  const geocoder = new Geocoder();
-  const { results } = await geocoder.geocode({
-    address: query,
-    componentRestrictions: { country: 'US' },
-  });
-  const top = results?.[0];
-  if (!top) throw new Error('no geocode result');
-
-  const types = top.types || [];
-  const components = top.address_components || [];
-  const stateComp = comp(components, 'administrative_area_level_1');
-  const countyComp = comp(components, 'administrative_area_level_2');
-  const localityComp = comp(components, 'locality') || comp(components, 'postal_town') || comp(components, 'sublocality');
-
-  const out = {
-    cityName: localityComp?.long_name || '',
-    countyName: countyComp?.long_name || '',
-    stateName: stateComp?.long_name || '',
-    stateAbbrev: stateComp?.short_name || STATE_NAME_TO_ABBREV[(stateComp?.long_name || '').toLowerCase()] || '',
-  };
-
-  const hasStreet = !!comp(components, 'street_number')
-    || types.some((t) => ['street_address', 'premise', 'subpremise', 'route'].includes(t));
-
-  if (hasStreet) out.kind = 'address';
-  else if (types.includes('postal_code')) out.kind = 'address'; // ZIP works with the backend
-  else if (types.includes('locality') || types.includes('postal_town') || types.includes('sublocality')) out.kind = 'city';
-  else if (types.includes('administrative_area_level_2')) out.kind = 'county';
-  else if (types.includes('administrative_area_level_1')) out.kind = 'state';
-  else out.kind = 'unknown';
-
-  return out;
-}
-
-// TIGER place names carry a type suffix ("Payson city", "Alta town"); strip it for
-// matching/labelling against the geocoded locality name ("Payson").
-function cleanAreaName(name) {
-  return (name || '').replace(/\s+(city|town|village|CDP|borough|municipality)$/i, '').trim();
-}
-
-/** Build a browse-by-area route from a coverage area ({ geo_id, mtfcc, name }). */
-function browseAreaRoute(area) {
+export function browseAreaRoute(candidate) {
   const params = new URLSearchParams({
-    browse_geo_id: area.geo_id,
-    browse_mtfcc: area.mtfcc,
-    browse_label: cleanAreaName(area.name),
+    browse_geo_id: candidate.geo_id,
+    browse_mtfcc: candidate.mtfcc,
+    browse_label: stripAreaTypeSuffix(candidate.label, candidate.area_type),
     from_locality: '1',
   });
   return `/results?${params.toString()}`;
 }
 
 /**
- * Resolve a query to a navigation action. Returns one of:
+ * SRCH-05 cross-page coordinate hand-off contract. `raw` is the LITERAL text
+ * the user typed (e.g. "39.17, -86.52"), carried purely so Results can
+ * reconstruct the D-05 resting label from the user's own keystrokes — never
+ * from a server response. Phase 213 deliberately never echoes coordinates
+ * back; this URL is built entirely from client-sourced input placed in the
+ * user's own browser URL, preserving that no-echo privacy contract.
+ * URLSearchParams percent-encodes every value — never string-concatenate
+ * untrusted input into this path (T-214-05, open-redirect/injection guard).
+ */
+export function coordinateRoute(lat, lng, raw) {
+  const params = new URLSearchParams({
+    lat: String(lat),
+    lng: String(lng),
+    coord_raw: raw,
+  });
+  return `/results?${params.toString()}`;
+}
+
+/**
+ * Resolve a free-text query to a navigation action. Returns one of:
  *   { kind: 'address' }      -> caller runs the normal /results?q= search
- *   { kind: 'browse', to }   -> navigate(to): Browse-by-Location for the matched city/county + banner
+ *   { kind: 'browse', to }   -> navigate(to): Browse-by-Location for the top-ranked candidate
  *   { kind: 'coverage', to } -> navigate(to): landing coverage list / "not covered yet" banner
  * Never throws — any failure resolves to { kind: 'address' }.
  *
- * Coverage is read live from the browse-areas endpoint (the source of truth), not a
- * static list: an empty areas response means the state isn't covered.
+ * Classification is now classifyInput() (D-02): address/coordinate-shaped
+ * queries skip the resolver entirely and fall straight through to the address
+ * path; only name-like queries hit the live /location-search resolver.
  */
 export async function resolveLocalityRoute(query) {
-  let c;
+  const classified = classifyInput(query);
+  if (classified.kind !== 'name') return { kind: 'address' };
+
+  const trimmed = query.trim();
   try {
-    c = await classifyQuery(query);
+    const { data } = await searchLocationsByName(trimmed);
+    const candidates = Array.isArray(data) ? data : [];
+    if (candidates.length > 0) {
+      return { kind: 'browse', to: browseAreaRoute(candidates[0]) };
+    }
   } catch {
     return { kind: 'address' };
   }
 
-  if (!c || c.kind === 'address' || c.kind === 'unknown' || !c.stateAbbrev) return { kind: 'address' };
-
-  const areas = await fetchBrowseAreas(c.stateAbbrev);
-  const place = c.cityName || c.countyName || c.stateName || query;
-
-  // No browseable areas => we don't cover this state.
-  if (!areas.length) {
-    return { kind: 'coverage', to: `/?uncovered=1&from_search=${encodeURIComponent(place)}` };
-  }
-
-  // Prefer the exact city, then fall back to the county.
-  const cityTarget = normalizePlace(c.cityName);
-  const countyTarget = normalizePlace(c.countyName);
-  let match = null;
-  if (cityTarget) {
-    match = areas.find((a) => a.area_type === 'city' && normalizePlace(cleanAreaName(a.name)) === cityTarget);
-  }
-  if (!match && countyTarget) {
-    match = areas.find((a) => a.area_type === 'county' && normalizePlace(a.name) === countyTarget);
-  }
-  if (match) return { kind: 'browse', to: browseAreaRoute(match) };
-
-  // Covered state, but the specific place isn't a browseable area — show the state's list.
-  return { kind: 'coverage', to: `/?coverage_state=${c.stateAbbrev}&from_search=${encodeURIComponent(place)}` };
+  // No candidates from the live resolver — honest "not covered yet" fallback
+  // to the landing coverage list rather than a silent address-search miss.
+  return { kind: 'coverage', to: `/?uncovered=1&from_search=${encodeURIComponent(trimmed)}` };
 }

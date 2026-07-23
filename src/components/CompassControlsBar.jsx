@@ -10,16 +10,17 @@ export default function CompassControlsBar({
   onStanceMin,
   onStanceMax,
   isDesktop,
+  inline = false,
 }) {
   const showStanceButtons = (userAnswers?.length ?? 0) >= 3;
+  const hasLenses = Array.isArray(lenses) && lenses.length > 0;
   return (
     <div
       style={{
-        // The bar sits in normal document flow ABOVE the section banner (right-aligned
-        // on desktop), rather than floating over it. An earlier version used
-        // position:absolute to avoid layout shift when toggling Compass, but that
-        // dropped the bar on top of the first tier's full-width city banner. Reserving
-        // its own row keeps the lens chips / COMPASS KEY clear of the banner photo.
+        // Renders in normal flow. When `inline`, it sits in the tab row's right
+        // slot (no outer padding) so toggling Compass swaps this into the space
+        // the toggle used to occupy — no vertical page shift. When not inline it
+        // keeps its own full-width row padding (legacy callers).
         position: 'static',
         zIndex: 30,
         display: 'flex',
@@ -27,20 +28,24 @@ export default function CompassControlsBar({
         alignItems: 'center',
         gap: 8,
         justifyContent: isDesktop ? 'flex-end' : 'flex-start',
-        paddingTop: 8,
-        paddingLeft: isDesktop ? 48 : 24,
-        paddingRight: isDesktop ? 48 : 24,
-        marginBottom: 8,
+        ...(inline
+          ? {}
+          : {
+              paddingTop: 8,
+              paddingLeft: isDesktop ? 48 : 24,
+              paddingRight: isDesktop ? 48 : 24,
+              marginBottom: 8,
+            }),
         pointerEvents: 'auto',
       }}
     >
       <div style={{ pointerEvents: 'auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
-        {showStanceButtons && (
+        {hasLenses && (
           <>
-            {/* Global lens chip row — replaces the old binary Lens toggle.
-                Desktop: chips flow inside this bar's existing flexWrap:'wrap'
-                row (D-08). Mobile: wrapped below in a nowrap/overflowX:auto
-                strip so it becomes a single-row horizontal scroll (D-09). */}
+            {/* Global lens chip row. Shown whether or not the user has calibrated:
+                clicking an un-calibrated lens opens a "calibrate these N topics?"
+                confirmation (LensChipRow). Desktop: chips flow in this wrap row.
+                Mobile: nowrap/overflowX:auto horizontal-scroll strip. */}
             {isDesktop ? (
               <LensChipRow
                 lenses={lenses}
@@ -60,6 +65,14 @@ export default function CompassControlsBar({
                 />
               </div>
             )}
+            {/* First-run hint: nudge uncalibrated users to click a lens. */}
+            {!showStanceButtons && (
+              <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                Pick a lens to calibrate
+              </span>
+            )}
+            {/* Stance Min/Max only make sense once the user has stances. */}
+            {showStanceButtons && (
             <div style={{ display: 'flex', gap: 4 }}>
               <button className="stance-btn" onClick={onStanceMin} style={{ width: 34, height: 34 }} title="Stance Min — pull strong spokes inward">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width="14" height="14">
@@ -72,6 +85,7 @@ export default function CompassControlsBar({
                 </svg>
               </button>
             </div>
+            )}
           </>
         )}
         <CompassKey compact={!isDesktop} />
