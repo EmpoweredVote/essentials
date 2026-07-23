@@ -86,6 +86,10 @@ export default function LocationCombobox({
   const [noMatchQuery, setNoMatchQuery] = useState(null);
   const listRef = useRef([]);
   const debounceRef = useRef(null);
+  // True only after a real keystroke. A programmatically prefilled `value`
+  // (browse mode seeds the input with the location name) must NOT open the
+  // suggestions dropdown at load — it only opens when the user actually types.
+  const userEditedRef = useRef(false);
   const listboxId = useId();
 
   const classified = classifyInput(value);
@@ -124,6 +128,11 @@ export default function LocationCombobox({
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
+    // Never auto-search/open for a prefilled or otherwise programmatic value —
+    // only in direct response to the user typing (fixes the browse-mode load
+    // where the dropdown opened over a prefilled city name).
+    if (!userEditedRef.current) return;
+
     const kind = classifyInput(value).kind;
     const trimmed = value.trim();
 
@@ -158,6 +167,9 @@ export default function LocationCombobox({
     setIsOpen(false);
     setCandidates([]);
     setNoMatchQuery(null);
+    // The host updates `value` to the canonical label after a selection; clear
+    // the edited flag so that programmatic update does not reopen the dropdown.
+    userEditedRef.current = false;
     onSelectCandidate?.(candidate);
   }
 
@@ -232,7 +244,7 @@ export default function LocationCombobox({
           autoComplete="off"
           spellCheck={false}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => { userEditedRef.current = true; onChange(e.target.value); }}
           placeholder={placeholder}
           className="min-w-0 flex-1 bg-transparent text-base leading-[1.5] text-gray-900 outline-none placeholder:text-gray-400 dark:text-gray-100 dark:placeholder:text-gray-500"
           // Handlers MUST be passed INTO getReferenceProps so floating-ui composes
