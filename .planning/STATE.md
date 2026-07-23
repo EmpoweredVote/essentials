@@ -2,29 +2,55 @@
 gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
-current_phase: 212
-current_phase_name: Backend Place-Name Resolver & National Fallback
-status: planning
-stopped_at: Completed 216-04-PLAN.md (frontend deploy + live UAT, LOC-04 verified end-to-end; Phase 216 ready for /gsd-verify-work)
-last_updated: "2026-07-23T00:16:46.443Z"
-last_activity: 2026-07-22
-last_activity_desc: Phase 216 complete, transitioned to Phase 212
+status: Awaiting next milestone
+stopped_at: v24.0 closed & tagged (Phases 212–216 verified; both close-time fixes shipped + live-verified)
+last_updated: "2026-07-23T17:48:18.699Z"
+last_activity: 2026-07-23
+last_activity_desc: Milestone v24.0 completed, archived, and tagged
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 17
-  completed_plans: 17
+  total_phases: 5
+  completed_phases: 5
+  total_plans: 21
+  completed_plans: 21
   percent: 100
+current_phase: —
+current_phase_name: Awaiting next milestone
 ---
 
 # State
 
 ## Current Position
 
-Phase: 212 — Backend Place-Name Resolver & National Fallback
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-07-22 — Phase 216 complete, transitioned to Phase 212
+Phase: Milestone v24.0 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-23 — Milestone v24.0 completed, archived, and tagged
+
+## Project Reference
+
+See: `.planning/PROJECT.md` (updated 2026-07-23)
+
+**Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
+**Current focus:** Planning the next milestone. The still-held **v22.0 Tucson & Arizona** close (Phase 200 retrospective + Phase 206 candidate reconcile + Sahuarita/South Tucson post-primary reconcile) remains the other outstanding milestone-close item.
+
+## Deferred Items
+
+Items acknowledged and deferred at the v24.0 milestone close on 2026-07-23 (override_closeout). None are v24.0 (212–216) phase gaps — they are prior-milestone leftovers or explicit follow-up todos:
+
+| Category | Item | Status |
+|----------|------|--------|
+| debug | cambridge-locals-missing | diagnosed (Cambridge offices have district_id = NULL) — v13.0-era MA |
+| uat | Phase 103 (103-HUMAN-UAT.md) | partial — 3 pending scenarios (v13.0 MA) |
+| verification | Phase 103 | human_needed (v13.0 MA) |
+| verification | Phase 106 | human_needed (v13.0 MA) |
+| verification | Phase 108 | human_needed (v13.0 MA) |
+| verification | Phase 110 | human_needed (v13.0 MA) |
+| verification | Phase 126 | human_needed |
+| verification | Phase 199 | human_needed (v22.0 AZ — milestone still held for close) |
+| verification | Phase 210 | human_needed (v23.0 — shipped) |
+| todo | locationcombobox-search-refinements (low) | pending follow-up |
+| todo | locationcombobox-type-color-coding (medium) | pending follow-up |
+| todo | phase212-gazetteer-data-audit (high) | pending follow-up — audit Gazetteer place data quality |
 
 ### Phase 216 Plan 02 outcome (backend deploy + live smoke) — COMPLETE 2026-07-22
 

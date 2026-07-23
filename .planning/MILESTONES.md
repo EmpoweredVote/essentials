@@ -1,5 +1,37 @@
 # Milestones
 
+## v24.0 Results-Page Search & Header Overhaul (Shipped: 2026-07-23)
+
+**Phases completed:** 5 phases (212–216), 21 plans
+
+**Closeout:** override_closeout — 12 pre-existing items acknowledged & deferred (see STATE.md → Deferred Items). All v24.0 phases (212–216) verified passed.
+
+**Key accomplishments:**
+
+- Verified nationwide US House CD data is already complete in production (436 G5200 boundaries, 437 NATIONAL_LOWER tiger_geoid districts) and authored the two migrations the place-name resolver needs — GIN trgm indexes (1377) + Gazetteer reference tables (1378) — with zero live-DB writes.
+- `C:/EV-Accounts/backend/scripts/ingest-gazetteer-places-counties.ts`
+- Applied migrations 1377 (4 trgm GIN indexes) + 1378 (gazetteer_places/gazetteer_counties tables) to the live production Supabase DB, then ran the nationwide Census Gazetteer ingest live — discovering and fixing 3 real bugs in the Plan 02 script along the way (tab- vs. pipe-delimited parsing, a Windows-broken isMainModule guard, and a counties UNNEST missing a column param) — and proved D-11 idempotency with an identical second run (32,333 places / 3,222 counties, delta == 0).
+- New `searchPlaceNames()` pg_trgm resolver (curated `essentials.governments` UNION nationwide Gazetteer, D-05 labels, D-06 curated-boost/name-A-Z ranking, D-07 live has_local_data, RSLV-07 wrong-state guard) plus a `getCongressionalOverlapNote()` helper that reuses the existing overlap machinery to surface the "needs exact address" ambiguity signal — both fully TDD'd (RED commit before GREEN), 29 new tests green, zero new PostGIS queries.
+- New `essentialsLocationSearch.ts` Express router exposing `GET /` (ranked place-name candidates) and `GET /resolve` (national-fallback floor: Governor/state execs + US Senators always, single-CD US House rep via reuse of `getPoliticiansByArea`, CD-overlap ambiguity note, best-effort county), mounted before the `/api/essentials` catch-all, `tsc` build green — Task 2 (live deploy + smoke-test) intentionally left unstarted for operator approval.
+- Fixed two live-smoke-test defects in the Phase 212 place-name resolver: `/resolve` now returns the actual NATIONAL_LOWER US House member (not an arbitrary overlapping local/state official), and curated governments with `geo_id IS NULL` now resolve their real place geo_id via a LATERAL district lookup, eliminating unresolvable + duplicate candidates.
+- Fixed two verifier-confirmed blockers in the place-name resolver's national-fallback path: state-tier resolves no longer 422 (missing 'G4000' MTFCC), and Gazetteer-only places (CDPs/incorporated places with no geofence polygon) now resolve their single overlapping US House district via a point-in-polygon fallback against the place's Census Gazetteer centroid.
+- US-bbox + swap-guard `classifyCoordinate` (with Aleutian-antimeridian support) plus a geocode-free `getRepresentativesByCoordinate` that reuses the existing `ST_Covers` politician query and Phase 212 state-scoped floor.
+- POST /api/essentials/coordinate-lookup — a body-only, rate-limited, anonymous HTTP endpoint that classifies a submitted `{lat, lng}` and either returns a 422 with one of three distinct rejection codes or the officials at that point via the Plan 01 `getRepresentativesByCoordinate`, with zero coordinate echo/logging.
+- Shipped the anonymous `POST /api/essentials/coordinate-lookup` endpoint to production (Render, from master) and proved its full privacy + correctness contract against the LIVE host — exactly one US House rep + state/federal floor, three distinct 422 codes, zero DB writes, and no coordinate echo/log — with operator sign-off.
+- Pure `classifyInput()` combobox classifier plus `searchLocationsByName`/`lookupCoordinate` anonymous `api.jsx` client functions, both live-curl-verified against the real Phase 212/213 endpoints and fully covered by 29 new colocated Vitest cases.
+- Shared, fully-controlled `<LocationCombobox>` (WAI-ARIA combobox + `useListNavigation({virtual:true})`) wired to the Plan 01 classifier/API client, plus a Google-free `localitySearch.js` exposing `browseAreaRoute` and the new `coordinateRoute` cross-page hand-off contract (`lat`/`lng`/`coord_raw`).
+- Results header rewired to one always-editable `<LocationCombobox>` (Address/Browse toggle, address `<input>`, `<LocalityMatches>`, and `<LocationBrowser>` all removed) plus a single shared `resolveCoordinate()` that serves both the in-page coordinate submit and the on-mount `lat`/`lng`/`coord_raw` Landing hand-off, direct-injecting officials into the existing `browseResults` state with a client-sourced (D-05) resting label and banner guard.
+- Landing.jsx's search bar now renders the identical shared `<LocationCombobox>` instance powering Results, with its coordinate submit handing off to Results via the Plan 02 `coordinateRoute(lat,lng,raw)` contract; Google Places autocomplete and `LocalityMatches` usage fully removed from Landing, coverage list and candidate-by-name search untouched.
+- Deleted the three now-orphaned Google Places modules (`useGooglePlacesAutocomplete.js`, `LocationBrowser.jsx`, `LocalityMatches.jsx`), removed the non-contiguous `.pac-container` CSS block from `index.css` while preserving the unrelated `.ev-candidate-enter` animation, uninstalled `@googlemaps/js-api-loader` via `npm uninstall`, and ran the SRCH-08 scoped + secondary sanity grep gates (fixing two stray comment references outside the documented Civic-API allow-list) — full build and 256/256 test suite green.
+- Operator sign-off: APPROVED.
+- Added TAB_TYPE_DEFAULTS constant and extracted resolveIsAppointed/matchesAppointedFilter from Results.jsx into classify.js as unit-tested exports, proving the Judges=Appointed exception with an automated assertion instead of code inspection.
+- Results.jsx now filters each of the three tab hierarchies (representatives/educators/judges) independently by its own fixed TAB_TYPE_DEFAULTS constant instead of one shared appointedFilter state, FilterBar.jsx is reduced to only the Compass toggle, and three dead filter component files are deleted — verified live at Bloomington, IN (desktop + mobile), operator-approved 2026-07-23.
+- LensChipRow.jsx lens buttons go icon-only on desktop with a @floating-ui/react hover/focus tooltip and per-button aria-label, replacing the unreliable native `title` attribute — verified live (desktop/mobile), operator-approved 2026-07-23.
+- Phase 216 — Unincorporated locality label: the results banner reads "Unincorporated {County}, {ST}" for a searched point (address or coordinate) outside any incorporated place but within a county, gated to the 11 place-loaded states; shipped + live-verified (accounts-api `b0842f57`, essentials `95dda22f`).
+- Close-time polish (folded into v24.0): bare place-name labels — "Bloomington, IN" instead of "City of Bloomington, Indiana, US, IN" — via `cleanPlaceName()` in the Phase 212 resolver (accounts-api `37365399`), and lens tooltips now show the lens name + a plain-language focus summary, e.g. "Judicial Lens — How judges & DAs approach the law" (essentials `f3c02a9d`). Both live-verified at Bloomington, IN.
+
+---
+
 ## v23.0 Educators & Judges Tabs (Shipped: 2026-07-20)
 
 **Phases completed:** 5 executed (207, 208, 210, 210.1, 211), 11 plans. Phase 209 (Education Lens Scaffolding) **deferred by design**.

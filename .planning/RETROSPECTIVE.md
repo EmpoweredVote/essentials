@@ -1,5 +1,56 @@
 # Retrospective
 
+## Milestone: v24.0 — Results-Page Search & Header Overhaul
+
+**Shipped:** 2026-07-23
+**Phases:** 5 (212–216) | **Plans:** 21
+
+### What Was Built
+One always-editable `<LocationCombobox>` that silently classifies address / bare place-name /
+decimal-coordinate input and routes to the right resolver, replacing the multi-row header + Google
+Places. Backend "owns the search stack": a pg_trgm place-name resolver over `governments`/
+`geofence_boundaries` backed by a nationwide Census Gazetteer ingest (32,333 places / 3,222 counties),
+a national fallback floor (US Senators + Governor/state execs + county + single-CD House when
+determinable), and a new anonymous, stateless `POST /api/essentials/coordinate-lookup`. Header
+declutter: Elected-default with the atomic Judges-appointed exception, compass lenses as accessible
+icon buttons, name-search removed. Phase 216 added the "Unincorporated {County}, {ST}" locality label.
+
+### What Worked
+- **Backend-before-frontend as a hard gate** — 212/213 shipped + live-smoked before the 214 combobox
+  consumed them, so the frontend was never built against a moving contract.
+- **Disambiguation-always-returns-a-list** as an explicit regression guard against the two prior
+  wrong-state-officials incidents; the "Bloomington" picker across 10 states is the visible proof.
+- **Single `browse_label` source** meant the close-time bare-label fix (`cleanPlaceName`) corrected the
+  combobox, banner, and heading in one backend change — no frontend redeploy needed for the label.
+
+### What Was Inefficient
+- The verbose resolver label ("City of Bloomington, Indiana, US, IN") shipped unnoticed because the
+  Phase 212 unit tests used idealized mock names ("City of Bloomington") rather than the real
+  `governments.name` shape — the defect only surfaced during the owed Phase 215 live UAT. Tests now use
+  the production name shape.
+- Phase 215's two human-verify checkpoints were left unrecorded at execution time, so the milestone sat
+  "done but unverified" until this close-out UAT. The verify step is where a milestone actually earns
+  "shipped."
+
+### Patterns Established
+- `cleanPlaceName()` normalization at label-build time (strip "City of"/", {state}, US"/Census suffix;
+  preserve County/Township/Unified + mid-name capitals like "Kansas City").
+- Per-lens frontend copy map (`LENS_SUMMARIES`) for tooltip summaries, falling back to the API
+  description for unknown keys — keeps voter-facing copy out of the compass data layer.
+- Per-bucket `TAB_TYPE_DEFAULTS` constants filtered independently per tab hierarchy — structurally
+  prevents one tab's filter from emptying another (the Judges-not-empty guarantee).
+
+### Key Lessons
+- Unit-test fixtures must mirror the real column shape, not a cleaned ideal — a display defect that
+  greps clean in code can still be live in production.
+- Record human-verify checkpoints when they're performed; an unrecorded live check is indistinguishable
+  from an un-done one at close time.
+
+### Cost Observations
+- Close-out session (this one) folded two live-surfaced polish fixes (bare labels + lens tooltips) into
+  the milestone rather than deferring — cheap because both were single-file changes with existing test
+  seams; the backend deploy also carried 26 pre-existing Phase-173 commits (disclosed + operator-approved).
+
 ## Milestone: v23.0 — Educators & Judges Tabs
 
 **Shipped:** 2026-07-20

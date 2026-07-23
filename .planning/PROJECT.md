@@ -10,6 +10,19 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ## Current State
 
+**Shipped v24.0 Results-Page Search & Header Overhaul (2026-07-23).** The cluttered multi-row results
+header is replaced by one always-editable `<LocationCombobox>` that silently classifies address /
+bare place-name / decimal-coordinate input and routes to the right resolver. The milestone "owns the
+search stack": Google Places is fully retired in favor of a backend DB place-name resolver (pg_trgm
+over `governments`/`geofence_boundaries` + a nationwide Census Gazetteer ingest) and a new anonymous,
+stateless `POST /api/essentials/coordinate-lookup` endpoint — with a national fallback guaranteeing at
+least US Senators + Governor/state execs + county officials anywhere in the US. The header also
+declutters: the type filter defaults to Elected (Judges keep Appointed so that tab is never emptied),
+compass lenses became accessible icon buttons with name + plain-language focus-summary tooltips, and
+the redundant name-search box is gone. Phase 216 added the "Unincorporated {County}, {ST}" locality
+label. Bare place-name labels ("Bloomington, IN") and the lens-tooltip summaries were the final polish.
+Spans essentials (frontend) + accounts-api (backend). See the v24.0 block + `milestones/v24.0-*`.
+
 **Shipped v23.0 Educators & Judges Tabs (2026-07-20).** The results/officials view now carries
 **Educators** (school-board) and **Judges** as first-class, compass-integrated tabs beside
 **Representatives** and **Elections**. A single-source `classifyBucket` engine partitions every
@@ -27,7 +40,14 @@ Tucson-metro + Coachella Valley deep-seeds shipped (Phases 190–203); the miles
 primary certifies. Sahuarita (197) + South Tucson (198) also owe a post-07-21 membership/title reconcile.
 This is the next thing to close once the primary certifies.
 
-## Current Milestone: v24.0 Results-Page Search & Header Overhaul
+## Current Focus
+
+**v24.0 shipped 2026-07-23 (see Current State above).** Next: planning the next milestone. Note the
+**v22.0 Tucson & Arizona** close is still pending (Phases 200 + 206 held for the post-primary
+reconcile) — that bookkeeping is the other outstanding milestone-close item.
+
+<details>
+<summary>v24.0 Results-Page Search & Header Overhaul — goal & target features (shipped)</summary>
 
 **Goal:** Replace the cluttered multi-row results header with a single compact, always-editable location search so anyone in the US can reach a location profile from an address, a city/state/county, or coordinates — with a national fallback to state + federal officials — while decluttering the type filter and compass controls.
 
@@ -41,7 +61,9 @@ This is the next thing to close once the primary certifies.
 
 Spans essentials (frontend) + accounts-api (backend), both auto-deploy from their default branch on Render. Continues phase numbering after v23.0's Phase 211.
 
-**Progress:** Backend search stack landing first. Phase 212 (place-name resolver + national fallback) shipped live; **Phase 213 (anonymous coordinate-lookup endpoint) complete 2026-07-21** — `POST /api/essentials/coordinate-lookup` is live on accounts-api.empowered.vote, resolving officials for raw lat/lng via PostGIS `ST_Covers` with US bbox + swap-guard validation, the state+federal floor, zero auth, zero writes, and no coordinate echo/logging (smoke-verified against production, operator signed off). Frontend combobox + Google Places removal is Phase 214 (next).
+**Outcome:** All six target features shipped and live-verified (Phases 212–216). Backend search stack (place-name resolver + national fallback + anonymous coordinate lookup) landed first on accounts-api; the shared `<LocationCombobox>` + Google Places removal followed on essentials; header declutter (Elected default, icon lenses, name-search removal) and the unincorporated-locality label completed the set.
+
+</details>
 
 ## Requirements
 
@@ -49,6 +71,12 @@ Spans essentials (frontend) + accounts-api (backend), both auto-deploy from thei
 
 <!-- Shipped and confirmed valuable. -->
 
+- ✓ Backend place-name resolver + national fallback — `searchPlaceNames()` pg_trgm over `governments`/`geofence_boundaries` + nationwide Census Gazetteer, ranked/disambiguated candidates, wrong-state guard, `/resolve` floor (US Senators + Governor/state execs + county + single-CD House when determinable) — v24.0 (RSLV-01/02/04/05/06/07)
+- ✓ Anonymous coordinate-lookup endpoint — `POST /api/essentials/coordinate-lookup`, PostGIS `ST_Covers`, US bbox + swap-guard, zero auth/writes/coordinate-echo — v24.0 (RSLV-03)
+- ✓ Unified location combobox + Google Places removal — one shared WAI-ARIA `<LocationCombobox>` on Results + Landing classifying address/place-name/coordinate input; `@googlemaps/js-api-loader` fully retired — v24.0 (SRCH-01/02/03/04/05/06/08)
+- ✓ Header declutter — type filter defaults to Elected (Judges keep Appointed, never emptied), compass lenses as accessible icon buttons with name + focus-summary tooltips (gavel for Judicial), "Search by name" filter removed — v24.0 (SRCH-07, HDR-01/02/03)
+- ✓ Unincorporated locality label — results banner reads "Unincorporated {County}, {ST}" for a point outside any incorporated place, gated to the 11 place-loaded states — v24.0 (LOC-01/02/03/04)
+- ✓ Bare place-name labels — resolver labels read "Bloomington, IN" (not "City of Bloomington, Indiana, US, IN") via `cleanPlaceName()` — v24.0 (close-time polish)
 - ✓ Officials classification engine — single-source `classifyBucket(pol)` buckets every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data (additive-only overrides; null-safe; verified across 3 real locations) — v23.0 (CLASS-01)
 - ✓ Educators & Judges tabs — school-board and judicial office-holders pulled into their own compass-integrated tabs beside Representatives & Elections, Representatives decluttered, empty tabs hidden, stale-`?view=` fallback to Representatives — v23.0 (TAB-01/02/03)
 - ✓ Per-tab compass integration — Compass works identically in Educators/Judges tabs; default lens shifts per tab (Judges → Judicial, Educators → Education-scaffolding/best-available fallback, Reps → Best Match); explicit pick overrides + remembered per tab, resets on reload — v23.0 (CMP-01/02)
@@ -230,12 +258,6 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 
 ### Active
 
-- **v24.0 Results-Page Search & Header Overhaul (ACTIVE, opened 2026-07-20)** — unified single-field
-  location search (address / city-state-county / coordinates → location profile) with a national fallback
-  to state + federal officials; drop Google Places for our own typeahead + US Census geocoder + a new
-  backend place-name resolver + coordinate lookup; default Elected (remove All/Appointed dropdown, except
-  Judges tab); compass lenses → icon buttons + tooltips (gavel for Judicial); remove "Search by name".
-  Requirements defined below; spans essentials + accounts-api (both Render).
 - **Education lens authoring (deferred from v23.0 / Phase 209 — EDU-01/EDU-02):** author the ~8
   Education-lens compass topics (book bans, religious texts in public schools, trans athletes,
   curriculum standards, school choice/vouchers, …) with their 1–5 answer chairs, seeded as live compass
@@ -360,6 +382,12 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 | `resolvePopulation` null-on-any-miss with an injectable maps seam | Pure resolver returns null on any lookup miss so `shouldRenderStat` omits cleanly (no zeros/undefined/broken labels); the maps seam makes it fixture-testable (13-case Vitest matrix) | ✓ Good — v21.0 (STAT-03) |
 | `buildBannerProps(tier, ctx)` as the single banner-prop assembly point | Replaced 6 hand-assembled `<SectionBanner>` call sites (3 per page) with uniform one-liners; folds locationName construction in too — closes SBAN-03 (single source of truth) and eliminates Results/Elections divergence, promotable to `@empoweredvote/ev-ui` | ✓ Good — v21.0 (SBAN-03) |
 | Population stat repositioned mid-left (supersedes 188's top-right D-11) | Mid-left placement avoids collision with both the location title and the bottom-right feature-icon chip; decided in Phase 189 after both slots coexisted | ✓ Good — v21.0 (D-05) |
+| Bare place-name queries never touch the Census address geocoder | Census one-line geocoder is an address matcher, not a places API; place/county/state classification is the DB resolver's job — keeps wrong-state guarantees intact | ✓ Good — v24.0 (RSLV) |
+| Disambiguation always returns a ranked, state-qualified candidate list — never a silent best guess | Direct regression guard against two prior wrong-state-officials incidents; same-named cities and city/county collisions surface every match | ✓ Good — v24.0 (RSLV-07) |
+| Anonymous coordinate lookup is stateless — zero auth, zero writes, no coordinate echo/log | Privacy contract: a raw lat/lng must never be persisted or reflected; response is officials-only | ✓ Good — v24.0 (RSLV-03) |
+| Elected-default + Judges-appointed-exception ship together, atomically | Defaulting to Elected without the Judges exception would silently empty the Judges tab; per-bucket TAB_TYPE_DEFAULTS constants filter each hierarchy independently (no shared state) | ✓ Good — v24.0 (HDR-01/02) |
+| `cleanPlaceName()` normalizes both source name shapes at label-build time | Curated `governments.name` ("City of Bloomington, Indiana, US") and Census gazetteer names ("Bloomington city") both over-qualify; strip in the resolver so the label reads "Bloomington, IN" everywhere (combobox/banner/heading read one `browse_label`); County/Township/Unified + mid-name capitals ("Kansas City") preserved | ✓ Good — v24.0 (close-time) |
+| Lens tooltip = lens name + plain-language focus summary (frontend copy map) | The API description alone ("8 questions for judicial and DA candidates") reads as jargon; a keyed `LENS_SUMMARIES` map gives "Judicial Lens — How judges & DAs approach the law", falling back to the API description for unknown keys | ✓ Good — v24.0 (close-time) |
 
 ## Evolution
 
@@ -379,16 +407,16 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-21 — **v24.0 in progress: Phase 213 (anonymous coordinate-lookup endpoint) complete + live.** v24.0 Results-Page Search & Header Overhaul OPENED.** Feature milestone:
-replace the cluttered multi-row results header with one compact, always-editable location search that
-routes anyone in the US to a location profile from an address, a city/state/county, or coordinates — with
-a national fallback to state + federal (Senate/House) officials. Drops Google Places for our own typeahead
-+ US Census geocoder + a new backend place-name resolver + a coordinate lookup endpoint (no third-party
-ads/branding on our forms). Also: default Elected (remove All/Appointed dropdown, except Judges tab),
-compass lenses → icon buttons + tooltips (gavel for Judicial), and remove "Search by name". Spans
-essentials + accounts-api (both Render); continues phase numbering after v23.0's Phase 211. Runs alongside
-the still-held v22.0 close (Phase 200 + 206 + Sahuarita/South Tucson reconcile, gated on the 2026-07-21 AZ
-primary).*
+*Last updated: 2026-07-23 — **v24.0 Results-Page Search & Header Overhaul SHIPPED (Phases 212–216).**
+One always-editable `<LocationCombobox>` classifies address / place-name / coordinate input; the backend
+"owns the search stack" (pg_trgm place-name resolver + nationwide Census Gazetteer + national fallback +
+anonymous stateless coordinate-lookup endpoint), Google Places fully retired. Header decluttered: Elected
+default with the Judges-appointed exception, compass lenses as icon buttons with name + focus-summary
+tooltips, name-search removed. Phase 216 added the "Unincorporated {County}, {ST}" label; close-time polish
+gave bare place-name labels ("Bloomington, IN") and the lens-tooltip summaries. All phases verified passed;
+override_closeout with 12 pre-existing items deferred (STATE.md → Deferred Items). Next: plan the next
+milestone. The still-held **v22.0** close (Phase 200 + 206 + Sahuarita/South Tucson reconcile) remains the
+other outstanding milestone-close item.*
 
 <details>
 <summary>Earlier footer — v23.0 close (2026-07-20)</summary>
