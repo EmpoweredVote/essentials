@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v24.0
 milestone_name: Results-Page Search & Header Overhaul
 status: Awaiting next milestone
-stopped_at: v24.0 closed & tagged (Phases 212–216 verified; both close-time fixes shipped + live-verified)
-last_updated: "2026-07-23T17:48:18.699Z"
+stopped_at: v24.0 AND v22.0 both closed + tagged 2026-07-23. One scheduled follow-up: AZ 2026 candidate reconcile (Phase 206, roster-only) gated on ~Aug-6 AZ certification.
+last_updated: "2026-07-23T18:44:19.136Z"
 last_activity: 2026-07-23
-last_activity_desc: Milestone v24.0 completed, archived, and tagged
+last_activity_desc: Milestones v24.0 and v22.0 both completed, archived, and tagged
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 21
-  completed_plans: 21
+  total_phases: 4
+  completed_phases: 4
+  total_plans: 17
+  completed_plans: 17
   percent: 100
 current_phase: —
 current_phase_name: Awaiting next milestone
@@ -21,21 +21,28 @@ current_phase_name: Awaiting next milestone
 
 ## Current Position
 
-Phase: Milestone v24.0 complete
+Phase: Milestones v24.0 + v22.0 complete
 Plan: —
 Status: Awaiting next milestone
-Last activity: 2026-07-23 — Milestone v24.0 completed, archived, and tagged
+Last activity: 2026-07-23 — Milestones v24.0 and v22.0 both completed, archived, and tagged
 
 ## Project Reference
 
 See: `.planning/PROJECT.md` (updated 2026-07-23)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Planning the next milestone. The still-held **v22.0 Tucson & Arizona** close (Phase 200 retrospective + Phase 206 candidate reconcile + Sahuarita/South Tucson post-primary reconcile) remains the other outstanding milestone-close item.
+**Current focus:** No milestone active — planning the next one. One concrete scheduled follow-up: the **post-Aug-6 AZ 2026 candidate reconcile** (Phase 206, roster-only, no stances) — RESEARCH.md + CONTEXT.md written, execution-ready once the AZ state canvass (~Aug 6) certifies nominees.
+
+## Scheduled Follow-Up — AZ 2026 Candidate Reconcile (Phase 206)
+
+Deferred at the v22.0 close (2026-07-23) because the AZ primary (held 2026-07-21) does not certify until the ~Aug-6 state canvass (challenges due Aug 11). Roster-only, NO stances. Execution-ready:
+- `.planning/phases/206-az-2026-candidate-reconcile/206-CONTEXT.md` — locked decisions + 73-shell breakdown.
+- `.planning/phases/206-az-2026-candidate-reconcile/206-RESEARCH.md` — sources, idempotent seeding recipe (WHERE NOT EXISTS, migration 1296 pattern), incumbent-reuse UUID manifests, nonpartisan-municipal caveat (some local shells legitimately empty).
+- Next step post-Aug-6: `/gsd-plan-phase 206` (research already present) → `/gsd-execute-phase 206`. Folds in the 197/198 (Sahuarita/South Tucson) title reconcile.
 
 ## Deferred Items
 
-Items acknowledged and deferred at the v24.0 milestone close on 2026-07-23 (override_closeout). None are v24.0 (212–216) phase gaps — they are prior-milestone leftovers or explicit follow-up todos:
+Items acknowledged and deferred at the v24.0 + v22.0 milestone closes on 2026-07-23 (override_closeout). None are v24.0 (212–216) or v22.0 (190–203) phase gaps — they are prior-milestone leftovers, follow-up todos, or the scheduled Phase 206 reconcile above:
 
 | Category | Item | Status |
 |----------|------|--------|
@@ -46,8 +53,9 @@ Items acknowledged and deferred at the v24.0 milestone close on 2026-07-23 (over
 | verification | Phase 108 | human_needed (v13.0 MA) |
 | verification | Phase 110 | human_needed (v13.0 MA) |
 | verification | Phase 126 | human_needed |
-| verification | Phase 199 | human_needed (v22.0 AZ — milestone still held for close) |
+| verification | Phase 199 | human_needed (v22.0 AZ — milestone now closed; discovery shipped, nominee reconcile = Phase 206 follow-up) |
 | verification | Phase 210 | human_needed (v23.0 — shipped) |
+| phase (scheduled) | Phase 206 AZ 2026 candidate reconcile + 197/198 title reconcile | deferred to post-Aug-6 certification (see Scheduled Follow-Up above) |
 | todo | locationcombobox-search-refinements (low) | pending follow-up |
 | todo | locationcombobox-type-color-coding (medium) | pending follow-up |
 | todo | phase212-gazetteer-data-audit (high) | pending follow-up — audit Gazetteer place data quality |
@@ -99,30 +107,21 @@ Items acknowledged and deferred at the v24.0 milestone close on 2026-07-23 (over
 - **RSLV-03 COMPLETE** end-to-end (lib core → route → live smoke). Operator typed "approved" at the blocking
   checkpoint. ⚠ Phase-level verification/close is the orchestrator's job — do NOT advance to Phase 214 here.
 
-### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
+### ✅ RESOLVED — v22.0 formally closed 2026-07-23 (was: HELD gated on AZ primary)
 
-v22.0 Tucson & Arizona is substantively complete (Phases 190–203 shipped) but **not formally closed**.
-The following remain OPEN and are held until the AZ primary certifies on **2026-07-21**:
+v22.0 Tucson & Arizona is **closed + tagged** (2026-07-23) on its shipped scope (Phases 190–203).
+Disposition of what was held:
+- **Phase 200 — AZ Playbook Retrospective & Close:** folded into the v22.0 close (audit archived to
+  `milestones/v22.0-MILESTONE-AUDIT.md`; retrospective in RETROSPECTIVE.md).
+- **Phase 206 — AZ 2026 Candidate Reconcile + Sahuarita/South Tucson (197/198) title reconcile:**
+  DEFERRED to a post-Aug-6 pass — the primary held 2026-07-21 does not certify until the ~Aug-6 state
+  canvass (challenges due Aug 11), so seeding nominees now would write data that can still change.
+  Execution-ready (RESEARCH.md + CONTEXT.md written) — see "Scheduled Follow-Up" above.
 
-- **Phase 200 — AZ Playbook Retrospective & Close:** coverage.js reconcile, fold AZ GOTCHAs into
-  `LOCATION-ONBOARDING.md`, DB-verified audit, close the milestone. (No phase dir yet.)
+v22.0 REQUIREMENTS were pre-archived to `milestones/v22.0-REQUIREMENTS.md` (2026-07-17) and were NOT
+clobbered at close (there was no live REQUIREMENTS.md — v24.0's was already git-rm'd).
 
-- **Phase 206 — AZ 2026 Candidate Reconcile:** seed confirmed general-election nominees onto the
-  Phase 199 AZ race shells once the primary certifies. (⛔ BLOCKED until 2026-07-21.)
-
-- **Sahuarita (197) + South Tucson (198) reconcile:** after the post-canvass title re-votes, re-verify
-  council membership + title holders (Mayor/Vice-Mayor/Acting-Mayor), patch any changed seat, re-bind
-  headshots + stances.
-
-v23.0 runs alongside this held close (same side-track pattern as Phases 204/205). The v22.0 phase
-directories were intentionally NOT cleared during the milestone switch so this work survives.
-
-**v22.0 REQUIREMENTS pre-archived:** the live `.planning/REQUIREMENTS.md` is now v23.0's. v22.0's
-requirements were copied to `.planning/milestones/v22.0-REQUIREMENTS.md` on 2026-07-17 before the
-switch. When closing v22.0 on/after 07-21, reference that archived copy — do NOT let
-`/gsd:complete-milestone` re-archive the (v23.0) live file over it.
-
-## Deferred Items
+## Deferred Items (historical — v21.0 close, 2026-07-08)
 
 Re-acknowledged and deferred again at v21.0 milestone close on 2026-07-08 (unchanged from the
 v20.0 close; 12 open artifacts — none belong to v21.0, which had zero open items and closed on

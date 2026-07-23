@@ -34,17 +34,21 @@ picks remembered per tab. A deep-dive stance pass gave Trump / Vance / Rubio ful
 Frontend/data only — no new geographic/seeding data. Phase 209 (Education lens authoring) was deferred
 by design. See the v23.0 block below + `milestones/v23.0-*`.
 
-**v22.0 Tucson & Arizona — substantively complete, held for formal close.** All Arizona foundation +
-Tucson-metro + Coachella Valley deep-seeds shipped (Phases 190–203); the milestone's remaining Phase 200
-(retrospective/close) and Phase 206 (2026 candidate reconcile) are **held until 2026-07-21**, when the AZ
-primary certifies. Sahuarita (197) + South Tucson (198) also owe a post-07-21 membership/title reconcile.
-This is the next thing to close once the primary certifies.
+**Shipped v22.0 Tucson & Arizona (2026-07-23).** Arizona opened as a fully-covered new state (TIGER
+geofences → state/federal government → 90-member legislature) with Tucson-metro (Pima County + Tucson +
+Oro Valley + Marana + Sahuarita + South Tucson) and Coachella Valley (Riverside County + Palm Springs +
+Indio) deep-seeded end-to-end, plus AZ 2026 race discovery (82 shells). Formally closed on its shipped
+scope (Phases 190–203). **One follow-up is scheduled, not done:** the AZ 2026 candidate reconcile
+(Phase 206) + the Sahuarita/South Tucson (197/198) title reconcile are deferred to a **post-Aug-6**
+pass — the primary held 2026-07-21 doesn't certify until the ~Aug-6 state canvass, so seeding nominees
+now would write data that can still change through Aug 11. Phase 206's RESEARCH.md + CONTEXT.md are
+written and execution-ready. See the v22.0 block below + `milestones/v22.0-*`.
 
 ## Current Focus
 
-**v24.0 shipped 2026-07-23 (see Current State above).** Next: planning the next milestone. Note the
-**v22.0 Tucson & Arizona** close is still pending (Phases 200 + 206 held for the post-primary
-reconcile) — that bookkeeping is the other outstanding milestone-close item.
+**v24.0 and v22.0 both closed 2026-07-23.** No milestone is currently active — next is planning the
+next one. The one concrete scheduled follow-up is the **post-Aug-6 AZ 2026 candidate reconcile**
+(Phase 206, roster-only, no stances) once the state canvass certifies nominees.
 
 <details>
 <summary>v24.0 Results-Page Search & Header Overhaul — goal & target features (shipped)</summary>
@@ -77,6 +81,9 @@ Spans essentials (frontend) + accounts-api (backend), both auto-deploy from thei
 - ✓ Header declutter — type filter defaults to Elected (Judges keep Appointed, never emptied), compass lenses as accessible icon buttons with name + focus-summary tooltips (gavel for Judicial), "Search by name" filter removed — v24.0 (SRCH-07, HDR-01/02/03)
 - ✓ Unincorporated locality label — results banner reads "Unincorporated {County}, {ST}" for a point outside any incorporated place, gated to the 11 place-loaded states — v24.0 (LOC-01/02/03/04)
 - ✓ Bare place-name labels — resolver labels read "Bloomington, IN" (not "City of Bloomington, Indiana, US, IN") via `cleanPlaceName()` — v24.0 (close-time polish)
+- ✓ Arizona new-state coverage — TIGER geofences + state/federal government + 90-member legislature, so any AZ address routes to its federal/state/county/city reps — v22.0 (AZ-GEO-01, AZ-STATE-01/02, AZ-LEG-01)
+- ✓ Tucson-metro + Coachella Valley deep-seeds — Pima County + Tucson + Oro Valley + Marana + Sahuarita + South Tucson + Riverside County + Palm Springs + Indio, each with roster + headshots + evidence-only compass + licensed community banner — v22.0
+- ✓ AZ 2026 election race discovery — 82 Nov-2026 race shells seeded (nominee reconcile deferred to a post-Aug-6 pass, Phase 206) — v22.0 (AZ-ELEC-01, discovery portion)
 - ✓ Officials classification engine — single-source `classifyBucket(pol)` buckets every office-holder as Representative / Educator / Judge from existing chamber/office/geo-type data (additive-only overrides; null-safe; verified across 3 real locations) — v23.0 (CLASS-01)
 - ✓ Educators & Judges tabs — school-board and judicial office-holders pulled into their own compass-integrated tabs beside Representatives & Elections, Representatives decluttered, empty tabs hidden, stale-`?view=` fallback to Representatives — v23.0 (TAB-01/02/03)
 - ✓ Per-tab compass integration — Compass works identically in Educators/Judges tabs; default lens shifts per tab (Judges → Judicial, Educators → Education-scaffolding/best-available fallback, Reps → Best Match); explicit pick overrides + remembered per tab, resets on reload — v23.0 (CMP-01/02)
@@ -264,11 +271,10 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
   topics so the Educators-tab lens lights via the existing data-only path (no code change). Blocked on
   educator stance research + defined spectrum values; the Educators tab already degrades gracefully to
   Custom overlap until this lands.
-- **v22.0 Tucson & Arizona (ACTIVE, opened 2026-07-08)** — Arizona new-state foundation (geofences +
-  state/federal government + 90-member legislature seed) + Tucson-metro deep-seed (Pima County + City of
-  Tucson + Oro Valley + Marana + Sahuarita + South Tucson) + 2026 elections + close. Each city/county
-  deep-seed carries a licensed community banner (street-scene/skyline, no AI/aerial). Legislature compass
-  stances + school boards deferred by design.
+- **AZ 2026 candidate reconcile (Phase 206, deferred from v22.0 → post-Aug-6):** seed the certified
+  Nov-2026 general-election nominees onto the 73 empty AZ race shells (roster-only, NO stances); fold in
+  the Sahuarita/South Tucson (197/198) title reconcile. Gated on the ~Aug-6 state canvass (primary held
+  2026-07-21; challenge window closes Aug 11). RESEARCH.md + CONTEXT.md written and execution-ready.
 - **Candidate for a next milestone — reciprocal + richer smart banners (deferred from v21.0):** reciprocal
   tethering (the Essentials icon on *other* EV apps' banners), per-location Compass / Read & Rank contracts
   once those apps accept a location URL, richer per-tier stats beyond population, and promoting the
@@ -414,9 +420,10 @@ anonymous stateless coordinate-lookup endpoint), Google Places fully retired. He
 default with the Judges-appointed exception, compass lenses as icon buttons with name + focus-summary
 tooltips, name-search removed. Phase 216 added the "Unincorporated {County}, {ST}" label; close-time polish
 gave bare place-name labels ("Bloomington, IN") and the lens-tooltip summaries. All phases verified passed;
-override_closeout with 12 pre-existing items deferred (STATE.md → Deferred Items). Next: plan the next
-milestone. The still-held **v22.0** close (Phase 200 + 206 + Sahuarita/South Tucson reconcile) remains the
-other outstanding milestone-close item.*
+override_closeout with 12 pre-existing items deferred (STATE.md → Deferred Items). **v22.0 Tucson &
+Arizona also formally closed 2026-07-23** on its shipped scope (190–203) — the AZ 2026 candidate
+reconcile (Phase 206) + 197/198 title reconcile are the one scheduled follow-up, gated on the ~Aug-6 AZ
+certification. No milestone is currently active; next is planning the next one.*
 
 <details>
 <summary>Earlier footer — v23.0 close (2026-07-20)</summary>

@@ -51,6 +51,48 @@ icon buttons, name-search removed. Phase 216 added the "Unincorporated {County},
   the milestone rather than deferring — cheap because both were single-file changes with existing test
   seams; the backend deploy also carried 26 pre-existing Phase-173 commits (disclosed + operator-approved).
 
+## Milestone: v22.0 — Tucson & Arizona
+
+**Shipped:** 2026-07-23 (formally closed; substantively complete since mid-July)
+**Phases:** 190–203 shipped (14) | **Plans:** 68
+
+### What Was Built
+Arizona opened as a fully-covered new state — TIGER geofences → state/federal government → 90-member
+legislature — then Tucson-metro deep-seeds (Pima County + Tucson + Oro Valley + Marana + Sahuarita +
+South Tucson) and an appended Coachella Valley track (Riverside County + Palm Springs + Indio), each with
+roster + 600×750 headshots + evidence-only compass + a licensed community banner. AZ 2026 race discovery
+seeded 82 Nov-2026 shells.
+
+### What Worked
+- The LOCATION-ONBOARDING playbook + NV/OR-WashCo precedent made the per-city deep-seeds highly
+  repeatable; the by-district relabel + rotational-mayor patterns carried straight over.
+- Race **discovery** (shells) was correctly separated from nominee **seeding** — so the milestone could
+  ship its coverage value without waiting on an election calendar it doesn't control.
+
+### What Was Inefficient
+- The milestone carried a "held for close" tail for ~2 weeks against a **wrong gate date**: the note said
+  "certifies 2026-07-21" but that was the primary *election* date; actual certification is the ~Aug-6
+  state canvass. The reconcile could never have been done on 07-21. Gate dates should be the canvass/
+  certification date, not election day.
+- Phase 200 (retrospective/close) and Phase 206 (reconcile) were scaffolded as roadmap phases but sat
+  unstarted; the milestone dragged as "substantively complete but not closed" while newer milestones
+  (v23.0, v24.0) shipped and closed around it.
+
+### Patterns Established
+- **Election-data phases gate on certification (canvass), not election day.** Encode the canvass date.
+- Roster reconcile ≠ deep-seed: a post-primary "who's actually on the ballot" pass is roster-only (no
+  stances) and can defer cleanly from the coverage milestone that discovered the races.
+
+### Key Lessons
+- Close a milestone on its *shipped* scope and schedule genuinely-gated follow-ups as their own dated work
+  item, rather than holding the whole milestone open indefinitely. (This close finally did that: v22.0
+  closed on 190–203; Phase 206 became an execution-ready, post-Aug-6 follow-up.)
+
+### Cost Observations
+- Closed in the same session as v24.0. The Phase 206 researcher (sonnet, ~130k tokens) paid for itself by
+  catching the certification-timing error before any production writes — the cheapest possible place to
+  catch it.
+
 ## Milestone: v23.0 — Educators & Judges Tabs
 
 **Shipped:** 2026-07-20

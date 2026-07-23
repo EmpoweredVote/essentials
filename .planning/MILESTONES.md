@@ -1,5 +1,66 @@
 # Milestones
 
+## v22.0 Tucson & Arizona (Shipped: 2026-07-23)
+
+**Phases completed:** 190–203 shipped (AZ foundation + Tucson-metro + Coachella Valley deep-seeds + 2026 race discovery), 68 plans. **Deferred at close:** Phase 206 (AZ 2026 candidate reconcile) + Phases 197/198 title reconcile → scheduled post-Aug-6-certification follow-up (see below); Phase 200 retrospective folded into this close.
+
+**Closeout:** override_closeout. AZ 2026 nominee reconcile deferred because the primary (held 2026-07-21) does not certify until the state canvass ~Aug 6 — seeding certified nominees earlier would write data that can still change through the Aug-11 challenge window. Phase 206 RESEARCH.md + CONTEXT.md are written and execution-ready for a post-Aug-6 pass. See STATE.md → Deferred Items.
+
+**Key accomplishments:**
+
+- Seeded the 7 missing AZ statewide elected officials (Superintendent, State Mine Inspector, 5-member Corporation Commission) via structural migration 1282, then uploaded 6/7 headshots via migration 1283 — Presmyk deferred to a checkpoint.
+- 8 net-new 600x750 headshots for AZ US House reps sourced from unitedstates.github.io (public_domain, resize-only), completing federal-delegation headshot coverage for all 9 CDs.
+- Full SQL audit confirmed AZ-STATE-01/02 pass 11/11; operator approved the live render and supplied a local headshot file for Les Presmyk, closing the phase's last open item via audit-only migration 1285.
+- 5 Pima County Board of Supervisors district boundaries sourced from the county ArcGIS MapServer (outSR=4326) and loaded as clean WGS84 LOCAL geofences (X0019, lowercase az), enabling true one-supervisor-per-address routing.
+- Standalone Pima County government (geo_id 04019, not nested under State of Arizona) with a Board of Supervisors chamber holding 5 by-district supervisor offices — each bound to its own LOCAL X0019 district — Allen's D3 seat carrying the rotational-Chair title annotation and Cano's D5 seat flagged appointed.
+- All 5 Pima County supervisors serve a 600×750 (crop-first, Lanczos q90) headshot from the CDN, sourced from official pima.gov CivicPlus portraits and bound to the current roster politician rows via audit-only migration 1289.
+- 53 evidence-only, 100%-cited compass stances seeded for the 5 Pima County supervisors against the 36 non-judicial live topics — the first Arizona jurisdiction with stances, establishing the AZ evidence-only / honest-blank / discrete-chairs template.
+- Licensed Santa Catalina Mountains / Sonoran-desert banner (real ground-level photo, 1700×540) sourced one-at-a-time from Wikimedia Commons, uploaded to cities/pima-county.jpg, and wired into buildingImages.js CURATED_LOCAL (first county-tier key) + a DB-honest hasContext:true coverage chip that browses geo_id 04019.
+- Full production audit is all-green across geofences, standalone government/roster, headshots, evidence-only stances, section-split, banner, and coverage chip — PIMA-01 + BANR-01 proven end-to-end in live production; frontend deployed via push.
+- 6 City of Tucson ward LOCAL geofences (X0020, lowercase az) loaded to production via the full multi-ring winding-classification ETL — Ward 4/5 faithful MultiPolygons, Ward 4 self-intersection auto-repaired.
+- Greenfield City of Tucson government + City Council chamber + 7 offices (at-large Mayor on a NEW LOCAL_EXEC/G4110 district + 6 ward members on LOCAL X0020 districts) applied to production; Vice Mayor is a title annotation on the Ward 1 seat, no 8th office.
+- All 7 City of Tucson officials serve a 600×750 CDN headshot bound to their current politician row — sourced from non-WAF hosts (Wikimedia PD, Ballotpedia S3, UCLA Luskin) via Playwright because the official city host is Akamai-WAF-blocked.
+- 37 evidence-only, 100%-cited compass stances seeded for all 7 City of Tucson officials against the 36 non-judicial live topics — no neutral defaults, no judicial rows, honest blanks throughout.
+- Licensed downtown-Tucson streetscape banner (cities/tucson.jpg) processed, uploaded, and wired; City of Tucson surfaced via a brand-new Arizona COVERAGE_STATES block with a DB-honest hasContext:true chip.
+- All 5 ROADMAP success criteria TRUE end-to-end in production — full audit all-green and operator live-browse sign-off confirmed. TUC-01 + BANR-01 satisfied; the City of Tucson deep-seed is complete.
+- Greenfield **Town of Marana, Arizona, US** (`geo_id='0444270'`, `type='Town'`, `state='AZ'`)
+- All 7 seated officials now serve a **600×750** (4:5, Lanczos q90) headshot from the
+- 21 evidence-only compass stances seeded across the 7 Town of Marana officials against the
+- Marana has its licensed community banner (BANR-01) live at `cities/marana.jpg`, wired into
+- ✅ Complete — applied to production 2026-07-16
+- ✅ Complete — applied to production 2026-07-16
+- ✅ Complete — applied to production 2026-07-16
+- ✅ Complete — banner live + frontend wired 2026-07-16
+- 198-01 — City of South Tucson structural migration
+- 198-02 — City of South Tucson council headshots
+- 198-03 — City of South Tucson evidence-only compass stances
+- 198-04 — City of South Tucson community banner (BANR-01) + coverage chip
+- ✅ Complete
+- ✅ Complete
+- ✅ Complete
+- ✅ Complete (one manual render human-check owed — see below)
+- Authored and ran a one-time ArcGIS ETL loader that pulled Riverside County's 5 official Board of Supervisors district boundaries (f=geojson + outSR=4326) and inserted them as 5 valid WGS84 X0021/state=ca LOCAL geofences in production, gating Plan 02's structural migration.
+- Authored and applied to production the structural migration seeding Riverside County as a standalone county government (geo_id 06065, NOT nested under State of CA), a single Board of Supervisors chamber, 5 LOCAL X0021 supervisor-district rows on the Plan 01 geofences, and 5 by-district supervisor offices/politicians (Spiegel D2 carrying the 2026 Chair title annotation, board-only, no appointee) — post-verify gate PASSED and the 5 politician UUIDs captured for Plans 03/04.
+- Sourced, processed (crop-first 4:5 -> 600x750 Lanczos q90), and uploaded all 5 Riverside County Board of Supervisors headshots to the politician_photos Storage bucket, then applied the audit-only politician_images migration (1315) -- all 4 official-district-site sources bind license='us_government_work', Ballotpedia-sourced Chuck Washington binds 'press_use'; all 5 CDN URLs verified HTTP 200 at exactly 600x750.
+- 202-01 | **Wave:** 1 | **Status:** ✅ Complete | **Date:** 2026-07-12
+- 202-02 | **Wave:** 2 | **Status:** ✅ Complete | **Date:** 2026-07-12
+- 202-03 | **Wave:** 3 | **Status:** ✅ Complete | **Date:** 2026-07-12
+- 202-04 | **Wave:** 3 (deliberately serialized) | **Status:** ✅ Complete | **Date:** 2026-07-12
+- 202-05 | **Wave:** 4 | **Status:** ✅ Complete | **Date:** 2026-07-12
+- 202-06 | **Wave:** 5 | **Status:** ✅ Complete | **Date:** 2026-07-12
+- Lens metadata fallbacks + defensive API normalizer, min(8,size) calibration check, validated `ev:compassLens` persistence, and the Best Match biggest-disagreement fill in `computeDisplaySpokes`, all in `src/lib/compass.js` with 27 new/updated unit tests.
+- Turned the latent per-office lens data model into an explicit, persisted, global `activeLensKey` in `CompassContext`, with normalized API hydration and a calibration-return auto-select effect (D-12), while leaving the legacy per-office shims (`getEffectiveLens`/`getEffectiveLensKey`/`toggleLens`) fully functional for out-of-scope profile/elections consumers.
+- Data-driven `LensChipRow.jsx` rendering N lens pills (active lens-color fill / LIT-outlined / grey+purple-rim needs-calibration) with mirrored EV-CompassV2 iconography and a desktop-hover / mobile-two-tap "Calibrate this lens?" affordance.
+- MiniCompass now honors an explicit lens topic set, CompassControlsBar renders the data-driven LensChipRow in place of the binary Lens toggle, and Results.jsx is rebuilt around the global `activeLensKey` — retiring per-office grid auto-lensing and adding the calibration handoff. Verified live on essentials.empowered.vote and approved.
+- ✅ Complete
+- ✅ Complete (Task 1 applied+verified; Task 2 live-check approved)
+- Added a `locality` signal (incorporated/place_name/county_name) to accounts-api's shared `resolveOfficialsAtPoint`, gated to an 11-state PLACE_LOADED_STATES allowlist, and exposed it on both `/candidates/search` and `/coordinate-lookup`.
+- accounts-api locality field deployed to production (commit b0842f57) and live-verified against real Pima County/Tucson/Chicago fixtures on both address and coordinate entry paths, with zero writes — operator approved.
+- Threaded the live backend `locality` field through api.jsx (both entry points), usePoliticianData, and Results.jsx's representingCity resolution — via a new pure `unincorporatedLabel()` helper and a dedicated `coordLocality` state for the coordinate-only path — so unincorporated points now render "Unincorporated {County}, ST" in both address and coordinate search modes, instead of a misleading nearest-postal-city guess.
+- "Unincorporated {County}, ST" locality label deployed to production (essentials, commit 95dda22f) and live-verified end-to-end in BOTH address and coordinate search modes against real Pima County/Tucson/Chicago fixtures, with full regression sweep — operator approved.
+
+---
+
 ## v24.0 Results-Page Search & Header Overhaul (Shipped: 2026-07-23)
 
 **Phases completed:** 5 phases (212–216), 21 plans
