@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-07-23T20:03:12.990Z"
 last_activity: 2026-07-23
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,10 +17,10 @@ progress:
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 217 (Browse Geo_ID Reconcile) — not yet planned
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-23 — Milestone v25.0 started
+Status: Planning
+Last activity: 2026-07-23 — v25.0 roadmap created (Phases 217–220, 12/12 requirements mapped)
 
 ## Project Reference
 
@@ -143,6 +143,36 @@ leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0
 | verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+
+### v25.0 roadmap (created 2026-07-23)
+
+Data-only milestone closing verified gaps in the already-seeded Collin County, TX coverage
+(23-government browse list). 4 phases (217-220), continuing numbering from v24.0 (closed at 216).
+12/12 requirements mapped 1:1 — no orphans, no duplicates. No new frontend feature surface beyond
+wiring the corrected browse geo_ids into the existing hardcoded list; compass stance research and
+headshot sourcing for the 5 zero-photo cities (Blue Ridge, Farmersville, Lowry Crossing, Nevada,
+Saint Paul) are explicitly out of scope this milestone.
+
+- **217 Browse Geo_ID Reconcile** — COLLIN-BROWSE-01/02/03/04 (fix 5 hardcoded browse geo_ids that
+  resolve to no government at all — Plano, Richardson, Prosper, Princeton, Van Alstyne — including
+  the county's two largest cities)
+
+- **218 Vacancies & Missing People** — COLLIN-PEOPLE-01/02 (research + seat ~9 vacant offices across
+  Blue Ridge, Nevada, Parker, Lowry Crossing, Lucas; document genuine vacancies rather than leaving
+  ambiguous empty seats)
+
+- **219 Elections & Candidates Backfill** — COLLIN-ELECT-01/02/03 (seed races + candidates for the 9
+  zero-race governments — Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada,
+  Saint Paul, Weston — and thicken thin coverage elsewhere)
+
+- **220 Contact Data Backfill** — COLLIN-CONTACT-01/02/03 (populate `web_form_url` across all 18
+  resolving governments, missing emails for Anna/Farmersville/Frisco/Lavon/Murphy/Celina, and
+  `valid_to` term-end dates)
+
+Phase 217 touches a disjoint set of 5 governments from 218-220's shared 18-government set; suggested
+execution order is 217 first (highest-value fix, unblocks the 2 largest cities), then 218 → 219 → 220
+(vacancies seated before elections/candidates and contact backfill so newly-seated officials carry
+forward), though none is a hard blocker on the others.
 
 ### v24.0 roadmap (created 2026-07-20)
 

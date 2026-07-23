@@ -54,3 +54,20 @@ largest cities. Root cause appears to be wrong FIPS place codes in the hardcoded
 ## Traceability
 
 <!-- Filled by roadmap: REQ-ID → Phase. -->
+
+All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no duplicates.
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| COLLIN-BROWSE-01 | Phase 217 | Pending |
+| COLLIN-BROWSE-02 | Phase 217 | Pending |
+| COLLIN-BROWSE-03 | Phase 217 | Pending |
+| COLLIN-BROWSE-04 | Phase 217 | Pending |
+| COLLIN-PEOPLE-01 | Phase 218 | Pending |
+| COLLIN-PEOPLE-02 | Phase 218 | Pending |
+| COLLIN-ELECT-01 | Phase 219 | Pending |
+| COLLIN-ELECT-02 | Phase 219 | Pending |
+| COLLIN-ELECT-03 | Phase 219 | Pending |
+| COLLIN-CONTACT-01 | Phase 220 | Pending |
+| COLLIN-CONTACT-02 | Phase 220 | Pending |
+| COLLIN-CONTACT-03 | Phase 220 | Pending |
