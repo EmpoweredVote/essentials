@@ -137,3 +137,10 @@ None - no external service configuration required.
 ---
 *Phase: 219-elections-candidates-backfill*
 *Completed: 2026-07-24*
+
+## Self-Check: PASSED
+
+- FOUND: `.planning/phases/219-elections-candidates-backfill/219-PREFLIGHT.md`
+- FOUND: `.planning/phases/219-elections-candidates-backfill/219-01-SUMMARY.md`
+- FOUND: commit `3f5c443f` (Task 2)
+- FOUND: commit `ab2739e6` (SUMMARY)
