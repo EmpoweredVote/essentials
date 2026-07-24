@@ -137,7 +137,7 @@ already verified resolvable on 2026-07-23.
 **Plans**: 9 plans
 **Wave 1**
 
-- [ ] 219-01-PLAN.md — Pre-flight: candidate_staging probe + migration counter + shared election_id + resolve open cities (Lavon/Saint Paul/Melissa) & runoff finals (Wave 1)
+- [x] 219-01-PLAN.md — Pre-flight: candidate_staging probe + migration counter + shared election_id + resolve open cities (Lavon/Saint Paul/Melissa) & runoff finals (Wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

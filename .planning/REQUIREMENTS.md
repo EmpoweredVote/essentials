@@ -27,7 +27,7 @@ that were retired) + live-verification evidence in
 
 9 of the 18 resolving governments have **zero** races; others are thin (2–3 races vs 5–7 offices).
 
-- [ ] **COLLIN-ELECT-01**: The 9 zero-race governments (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) have their most-recent/next municipal races seeded with candidates where public records exist.
+- [x] **COLLIN-ELECT-01**: The 9 zero-race governments (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) have their most-recent/next municipal races seeded with candidates where public records exist.
 - [ ] **COLLIN-ELECT-02**: Cities with thin race coverage are reviewed and backfilled so seats with a known election have a corresponding race record.
 - [ ] **COLLIN-ELECT-03**: Every seeded race links to the correct office and shows on the `/results` elections view (no split-section or zero-candidate shells), verified per [[section_split_check]] and [[elections_view_display_rules]].
 
@@ -71,7 +71,7 @@ All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no dup
 | COLLIN-BROWSE-04 | Phase 217 | Met |
 | COLLIN-PEOPLE-01 | Phase 218 | Complete |
 | COLLIN-PEOPLE-02 | Phase 218 | Complete |
-| COLLIN-ELECT-01 | Phase 219 | Pending |
+| COLLIN-ELECT-01 | Phase 219 | Complete |
 | COLLIN-ELECT-02 | Phase 219 | Pending |
 | COLLIN-ELECT-03 | Phase 219 | Pending |
 | COLLIN-CONTACT-01 | Phase 220 | Pending |

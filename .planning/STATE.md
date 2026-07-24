@@ -5,15 +5,15 @@ milestone_name: Collin County TX Data-Completeness
 current_phase: 219
 current_phase_name: Elections & Candidates Backfill
 status: executing
-stopped_at: Phase 219 context gathered
-last_updated: "2026-07-24T04:43:19.423Z"
+stopped_at: Completed 219-01-PLAN.md
+last_updated: "2026-07-24T06:35:58.806Z"
 last_activity: 2026-07-23
-last_activity_desc: Phase 218 complete, transitioned to Phase 219
+last_activity_desc: Phase 219 execution started
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 14
+  completed_plans: 6
   percent: 25
 ---
 
@@ -21,10 +21,10 @@ progress:
 
 ## Current Position
 
-Phase: 219 — Elections & Candidates Backfill
-Plan: Not started
+Phase: 219 (Elections & Candidates Backfill) — EXECUTING
+Plan: 2 of 9
 Status: Ready to execute
-Last activity: 2026-07-23 — Phase 218 complete, transitioned to Phase 219
+Last activity: 2026-07-23 — Phase 219 execution started
 
 ## Quick Tasks Completed
 
@@ -37,7 +37,7 @@ Last activity: 2026-07-23 — Phase 218 complete, transitioned to Phase 219
 See: `.planning/PROJECT.md` (updated 2026-07-23)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 218 — vacancies-missing-people
+**Current focus:** Phase 219 — Elections & Candidates Backfill
 
 ## Scheduled Follow-Up — AZ 2026 Candidate Reconcile (Phase 206)
 
@@ -702,9 +702,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-24T03:52:46.664Z
-Stopped at: Phase 219 context gathered
-Resume file: .planning/phases/219-elections-candidates-backfill/219-CONTEXT.md
+Last session: 2026-07-24T06:35:58.770Z
+Stopped at: Completed 219-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -814,6 +814,7 @@ Resume file: .planning/phases/219-elections-candidates-backfill/219-CONTEXT.md
 | Phase 218 P03 | 55min | 2 tasks | 1 files |
 | Phase 218 P04 | 45min | 2 tasks | 1 files |
 | Phase 218 P05 | 40min | 2 tasks | 2 files |
+| Phase 219 P01 | 45min | 2 tasks | 2 files |
 
 ## Decisions
 
@@ -959,6 +960,10 @@ Resume file: .planning/phases/219-elections-candidates-backfill/219-CONTEXT.md
 - [Phase ?]: 12 headshots sourced/uploaded for Collin County TX newly-seated officials via curl+PIL+Node-fetch (Playwright/Supabase-MCP/AskUserQuestion unavailable to this executor); 2 honest blanks (Jessica Walden - no bio-page photo widget; Zach Williams - membershipware blob WAF/access-denied on every fetch variant)
 - [Phase ?]: Discovered and documented an undiscovered Plano Council Member Place 6 vacancy during Plan 05's full-23-gov sweep (migration 1392) — resolved via D-04 evidence exhaustion, not a placeholder
 - [Phase ?]: Weston chambers.official_count (5) still stale vs actual 6 office rows — logged as non-blocking data-hygiene note, does not trigger any missing-seat gate
+- [Phase ?]: 219-01: Melissa's May-2026 ballot confirmed props/ISD-only (migration 100 correct); competing WebSearch signal rejected
+- [Phase ?]: 219-01: Lavon's real reference cycle is 2025-11-04 (own election row), not shared 2026-05-02
+- [Phase ?]: 219-01: Saint Paul splits across two cycles - Seat1/Seat2 on 2025-05-03 (own row), Mayor/Seat3/4/5 on 2026-05-02 (cancelled, unopposed)
+- [Phase ?]: 219-01: RESEARCH.md corrections - Richardson Mayor is Amir Omar not Voelker; Place 6 was a 2-way Shamsul-Kupfer race with no runoff; McKinney At-Large 1 runoff winner Ernest Lynch confirmed
 
 ## Operator Next Steps
 
