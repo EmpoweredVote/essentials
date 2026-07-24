@@ -117,7 +117,7 @@ already verified resolvable on 2026-07-23.
 
 - [x] 218-01-PLAN.md — Structural migration: add 6 missing office rows (Blue Ridge +1, Lowry Crossing +4, Weston +1) after blocking live seat-count re-verify
 - [x] 218-02-PLAN.md — Idempotent data migration seating the 20 directly-cited incumbents (party NULL, no stances, `politician_id IS NULL` guard) + post-seed SQL gates
-- [ ] 218-03-PLAN.md — Deeper D-04 re-verify of the 7 flagged seats (Fairview Seat 4, Van Alstyne Place 6, Nevada trio, Lucas Place 1/2) → seat-or-document `is_vacant=true`
+- [x] 218-03-PLAN.md — Deeper D-04 re-verify of the 7 flagged seats (Fairview Seat 4, Van Alstyne Place 6, Nevada trio, Lucas Place 1/2) → seat-or-document `is_vacant=true`
 - [ ] 218-04-PLAN.md — `/find-headshots` 600×750 pipeline for newly-seated people where a source exists; honest blank for Blue Ridge/Lowry Crossing/Nevada; audit-only image migration
 - [ ] 218-05-PLAN.md — Full SQL verification battery (0 ambiguous seats across all 23 govs, D-02 seat-count spot-check on the other 12) + split-section + blocking live-browse spot-check
 

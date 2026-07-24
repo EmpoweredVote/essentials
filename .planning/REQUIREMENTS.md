@@ -44,7 +44,7 @@ that were retired) + live-verification evidence in
 ~9 offices have no seated politician (offices > people).
 
 - [x] **COLLIN-PEOPLE-01**: Vacant offices in Blue Ridge (2), Nevada (3), Parker (2), Lowry Crossing (1), and Lucas (1) are researched; current incumbents are seated where the seat is filled in reality.
-- [ ] **COLLIN-PEOPLE-02**: Offices that are genuinely vacant (no current officeholder) are documented as such rather than left as ambiguous empty seats.
+- [x] **COLLIN-PEOPLE-02**: Offices that are genuinely vacant (no current officeholder) are documented as such rather than left as ambiguous empty seats.
 
 ## Future Requirements (deferred)
 
@@ -70,7 +70,7 @@ All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no dup
 | COLLIN-BROWSE-03 | Phase 217 | Met |
 | COLLIN-BROWSE-04 | Phase 217 | Met |
 | COLLIN-PEOPLE-01 | Phase 218 | Complete |
-| COLLIN-PEOPLE-02 | Phase 218 | Pending |
+| COLLIN-PEOPLE-02 | Phase 218 | Complete |
 | COLLIN-ELECT-01 | Phase 219 | Pending |
 | COLLIN-ELECT-02 | Phase 219 | Pending |
 | COLLIN-ELECT-03 | Phase 219 | Pending |
