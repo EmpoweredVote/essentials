@@ -38,13 +38,14 @@ mixed-case duplicate from mig 1407's append → collapsed to the single mixed-ca
 - Case-duplicate emails remaining: **0**
 - All 16 offices point at the correct current holder with a plausible term-end and (where published) a contact method.
 
-## Held for human decision — Plano "Council Place 6"
-DB still shows this office as **VACANT**. Research (MEDIUM, Wikipedia/Ballotpedia; plano.gov
-JS-blocked) indicates Plano numbers the **Mayor** as "Place 6" — i.e. there is **no separate
-Place-6 councilmember**. Fixing this changes the data model (merge/alias Place 6 to the Mayor
-office, or remove the phantom office), so it was deliberately NOT auto-applied. **Operator
-decision needed** + a Playwright/operator confirmation of plano.gov before altering the office
-structure. Also: Plano Place 6 email remains GAP.
+## Plano "Council Place 6" — RESOLVED (aliased, mig 1413)
+Research (MEDIUM, Wikipedia/Ballotpedia; plano.gov JS-blocked) indicates Plano numbers the
+**Mayor** as "Place 6" (8 members occupy Places 1–8, mayor at Place 6). **Operator decision:
+alias.** Mig 1413 points the phantom VACANT Place 6 office at Mayor **John B. Muns**
+(`5584e869`). This is an **INTENTIONAL reciprocal-FK mismatch** (Place 6 office → Muns, but
+Muns.office_id stays on the Mayor office) — a future half-seated scan will flag it; it must NOT
+be reseated. Muns now displays under both Mayor and Place 6. ⏳ Still owed: a Playwright/operator
+confirm of plano.gov to validate the model on a primary source; Plano Place 6 email remains GAP.
 
 ## Still owed (unchanged from Phase 220)
 - Murphy councilmember emails (none published anywhere — confirmed GAP; web_form_url covers them).
