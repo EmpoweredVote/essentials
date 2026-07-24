@@ -638,11 +638,25 @@ Plans:
 **Execution Order:** live audit (221-01) → Batch A sourcing (221-02) → Batch B sourcing (221-03) → after-audit + confirmed-blank register + close (221-04). Sourcing is interactive + quota-sensitive (`/find-headshots` approves one person at a time), so the two sourcing batches are chained sequential waves, never parallel.
 
 Plans:
+**Wave 1**
 
 - [ ] 221-01-PLAN.md — Live DB audit: derive the authoritative in-scope missing-photo set (stale memo NOT trusted) + BEFORE coverage counts + batched worklist; confirm Brandon Smith & Gopal Ponangi present (Wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 221-02-PLAN.md — Batch A sourcing (higher-source cities + Ponangi/Smith) via `/find-headshots`, 600×750 4:5 crop-only, honest blanks where none; blocking spec spot-check (Wave 2)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 221-03-PLAN.md — Batch B sourcing (small-town/low-source cities incl. the 5 zero-source cities) via `/find-headshots`; attempt every person, expect many honest blanks; blocking spec spot-check (Wave 3)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 221-04-PLAN.md — After-audit coverage delta + PIL 600×750 dimension check + `221-CONFIRMED-BLANK.md` register + blocking phase-close spot-check (Wave 4)
+
+**Cross-cutting constraints:**
+
+- Every attached image is crop-only-then-resized to 600x750 (4:5), eyes ~1/3 from top, head+shoulders, no text/graphics on the face (COLLIN-HEADSHOT-02)
 
 ### Phase 222: Collin County Stances
 
