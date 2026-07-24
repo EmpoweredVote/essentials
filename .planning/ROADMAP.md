@@ -81,6 +81,8 @@ already verified resolvable on 2026-07-23.
 - [x] **Phase 218: Vacancies & Missing People** - Research and seat / document ~21 unseated offices across 11 cities (re-verified live 2026-07-23): Anna(2), Blue Ridge(2), Fairview(3), Josephine(1), Lowry Crossing(1), Lucas(2), Nevada(3), Parker(3) + the 3 Ph217-reconciled cities Plano(1), Princeton(1), Van Alstyne(2). Covers ALL 23 govs (the 5 reconciled folded in per operator request). (completed 2026-07-23)
 - [x] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 12 zero-race governments (re-verified 2026-07-23): the original 9 (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) + the 3 Ph217-reconciled Plano, Richardson, Van Alstyne; thicken thin coverage elsewhere — ✅ EXECUTED 2026-07-24 (migs 1393-1399, 37 races/54 candidates; Melissa documented-open; operator browse spot-check owed)
 - [ ] **Phase 220: Contact Data Backfill** - Populate `web_form_url` (empty across ALL 23 govs), missing emails (Anna, Farmersville, Frisco, Lavon, Murphy, Celina + Ph217-reconciled Prosper, Princeton, Van Alstyne), and `valid_to` term-end dates across all 23 governments
+- [ ] **Phase 221: Collin County Headshots** - Source + attach real photos for officials missing one (~31 from prior audit + Brandon Smith & Gopal Ponangi from the 219 seating fixes); `/find-headshots`, evidence-only, 600×750 4:5 crop-only, blank where none exists
+- [ ] **Phase 222: Collin County Stances** - Evidence-only compass stance research for Collin officeholders; one politician at a time, all topics, blank spoke where no evidence, antipartisan (the heavy phase; do after profiles are fleshed out)
 
 ### Phase Details
 
@@ -616,6 +618,31 @@ Plans:
 - [x] 216-02-PLAN.md — [accounts-api, BLOCKING] Confirm live G4110 coverage vs gate list, push to Render master, live smoke of unincorporated/incorporated/un-loaded fixtures × address+coordinate paths, zero-write assertion, operator sign-off
 - [x] 216-03-PLAN.md — [essentials] Frontend threading: unincorporatedLabel() helper + locality unwrap in api.jsx (both entry points) + usePoliticianData + coordLocality state + representingCity branches for both modes (LOC-04)
 - [x] 216-04-PLAN.md — [essentials, BLOCKING] Full suite + build, push to Render main, live UAT of "Unincorporated {County}, ST" in BOTH address and coordinate modes + incorporated/un-loaded controls + tribal/county/browse regression checks
+
+### Phase 221: Collin County Headshots
+
+**Goal:** Every Collin County officeholder whose photo is publicly available carries a real, correctly-sized headshot; anyone with no available photo stays blank (never a placeholder or AI face).
+**Scope:** ~31 seated officials missing a photo (prior audit) + the 2 newly seated by the Phase-219 seating fixes — Brandon Smith (Longview D3, mig 1400) and Gopal Ponangi (Frisco Place 4, mig 1404).
+**Constraints:** use the `/find-headshots` skill; real licensed/public-source photos only; 600×750 (4:5), crop-only (never stretch), eyes ~1/3 from top, head+shoulders, no text/graphics on faces.
+**Requirements**: COLLIN-HEADSHOT-01 (audit + source missing headshots), COLLIN-HEADSHOT-02 (correct sizing/crop, no graphics/placeholders)
+**Depends on:** Nothing hard; benefits from 218/219 (people seated) + 220 (profiles fleshed out) first.
+**Plans:** TBD (run `/gsd-plan-phase 221`)
+
+Plans:
+
+- [ ] TBD (run /gsd-plan-phase 221 to break down)
+
+### Phase 222: Collin County Stances
+
+**Goal:** Each researched Collin County officeholder carries evidence-cited compass stances where their positions are documented, and blank spokes where not.
+**Constraints (heavy phase):** research ONE politician at a time (parallel burns quota); ALL compass topics per politician; evidence-only — no evidence = blank spoke, never default a stance; stances are discrete 1–5 "chairs"; antipartisan (party never displays).
+**Requirements**: COLLIN-STANCE-01 (per-politician all-topic evidence-only research), COLLIN-STANCE-02 (apply 1–5 stances, blank where unsourced)
+**Depends on:** Phase 221 (soft — do after profiles have photos/contacts).
+**Plans:** TBD (run `/gsd-plan-phase 222`)
+
+Plans:
+
+- [ ] TBD (run /gsd-plan-phase 222 to break down)
 
 ---
 
