@@ -119,7 +119,7 @@ already verified resolvable on 2026-07-23.
 - [x] 218-02-PLAN.md — Idempotent data migration seating the 20 directly-cited incumbents (party NULL, no stances, `politician_id IS NULL` guard) + post-seed SQL gates
 - [x] 218-03-PLAN.md — Deeper D-04 re-verify of the 7 flagged seats (Fairview Seat 4, Van Alstyne Place 6, Nevada trio, Lucas Place 1/2) → seat-or-document `is_vacant=true`
 - [x] 218-04-PLAN.md — `/find-headshots` 600×750 pipeline for newly-seated people where a source exists; honest blank for Blue Ridge/Lowry Crossing/Nevada; audit-only image migration
-- [ ] 218-05-PLAN.md — Full SQL verification battery (0 ambiguous seats across all 23 govs, D-02 seat-count spot-check on the other 12) + split-section + blocking live-browse spot-check
+- [x] 218-05-PLAN.md — Full SQL verification battery (0 ambiguous seats across all 23 govs, D-02 seat-count spot-check on the other 12) + split-section + blocking live-browse spot-check
 
 #### Phase 219: Elections & Candidates Backfill
 
@@ -162,7 +162,7 @@ contact info too) — none is a hard blocker on the next.
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 217. Browse Geo_ID Reconcile | 1/1 (quick) | Complete ✓ | 2026-07-23 |
-| 218. Vacancies & Missing People | 0/5 | Planned | - |
+| 218. Vacancies & Missing People | 5/5 | In Progress | - |
 | 219. Elections & Candidates Backfill | 0/TBD | Not started | - |
 | 220. Contact Data Backfill | 0/TBD | Not started | - |
 

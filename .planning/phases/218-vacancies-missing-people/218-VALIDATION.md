@@ -3,7 +3,7 @@ phase: 218
 slug: vacancies-missing-people
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
 status: draft
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-07-23
 ---
@@ -68,11 +68,11 @@ created: 2026-07-23
 
 ## Validation Sign-Off
 
-- [ ] Every unseated target office either seated (cited) or `is_vacant=true` (documented)
-- [ ] `politician_id IS NULL AND is_vacant IS NOT TRUE` returns 0 rows across all 23 govs
-- [ ] 6 missing-seat office rows added (Blue Ridge +1, Lowry Crossing +4, Weston +1)
-- [ ] Split-section check clean after every migration
-- [ ] Live browse spot-check green for ≥3 target cities
-- [ ] `nyquist_compliant: true` set once gates pass
+- [x] Every unseated target office either seated (cited) or `is_vacant=true` (documented) — including the undiscovered Plano Council Member Place 6, found by Plan 05's full-23-gov sweep and documented via migration 1392
+- [x] `politician_id IS NULL AND is_vacant IS NOT TRUE` returns 0 rows across all 23 govs
+- [x] 6 missing-seat office rows added (Blue Ridge +1, Lowry Crossing +4, Weston +1)
+- [x] Split-section check clean after every migration
+- [x] Live browse spot-check green for ≥3 target cities — human-approved for Parker, Princeton, Van Alstyne, Lowry Crossing, and Plano
+- [x] `nyquist_compliant: true` set once gates pass
 
-**Approval:** pending
+**Approval:** approved
