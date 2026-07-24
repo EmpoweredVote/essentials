@@ -126,3 +126,11 @@ No blockers. Split-section gate clean; no new office row has a premature `politi
 ---
 *Phase: 218-vacancies-missing-people*
 *Completed: 2026-07-24*
+
+## Self-Check: PASSED
+
+- FOUND: `C:/EV-Accounts/backend/migrations/1388_collin_missing_office_rows.sql`
+- FOUND: `C:/EV-Accounts/backend/scripts/_apply-migration-1388_collin_missing_office_rows.ts` (gitignored, on disk)
+- FOUND: `.planning/phases/218-vacancies-missing-people/218-01-SUMMARY.md`
+- FOUND commit `0c738e90` (C:/EV-Accounts, pushed to origin/master)
+- FOUND commit `dcf7dc3d` (essentials, SUMMARY.md)

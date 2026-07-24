@@ -2,29 +2,29 @@
 gsd_state_version: 1.0
 milestone: v25.0
 milestone_name: Collin County TX Data-Completeness
-current_phase: 217
-current_phase_name: Browse Geo_ID Reconcile
-status: planning
-stopped_at: Phase 217 context gathered
-last_updated: "2026-07-23T22:22:47.819Z"
+current_phase: 218
+current_phase_name: vacancies-missing-people
+status: executing
+stopped_at: Completed 218-01-PLAN.md
+last_updated: "2026-07-24T01:55:58.991Z"
 last_activity: 2026-07-23
-last_activity_desc: v25.0 roadmap created (Phases 217–220, 12/12 requirements mapped)
+last_activity_desc: Phase 218 execution started
 progress:
   total_phases: 4
-  completed_phases: 1
-  total_plans: 0
-  completed_plans: 0
-  percent: 25
+  completed_phases: 0
+  total_plans: 5
+  completed_plans: 1
+  percent: 0
 ---
 
 # State
 
 ## Current Position
 
-Phase: 218 (Vacancies & Missing People) — PLANNED (5 plans, 5 waves); 217 complete via quick task 260723-lfc
-Plan: 218-01..05 ready to execute
-Status: Planned — ready for /gsd-execute-phase 218
-Last activity: 2026-07-23 - Phase 218 planned: research (39bb3fd8) + 5-wave plan (d3cb86d0); 21 unseated offices + 6 missing seats, headshots-in, deeper-vacancy-search
+Phase: 218 (vacancies-missing-people) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-07-23 — Phase 218 execution started
 
 ## Quick Tasks Completed
 
@@ -37,7 +37,7 @@ Last activity: 2026-07-23 - Phase 218 planned: research (39bb3fd8) + 5-wave plan
 See: `.planning/PROJECT.md` (updated 2026-07-23)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** No milestone active — planning the next one. One concrete scheduled follow-up: the **post-Aug-6 AZ 2026 candidate reconcile** (Phase 206, roster-only, no stances) — RESEARCH.md + CONTEXT.md written, execution-ready once the AZ state canvass (~Aug 6) certifies nominees.
+**Current focus:** Phase 218 — vacancies-missing-people
 
 ## Scheduled Follow-Up — AZ 2026 Candidate Reconcile (Phase 206)
 
@@ -702,9 +702,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-23T22:22:47.792Z
-Stopped at: Phase 217 context gathered
-Resume file: .planning/phases/217-browse-geo-id-reconcile/217-CONTEXT.md
+Last session: 2026-07-24T01:55:25.988Z
+Stopped at: Completed 218-01-PLAN.md
+Resume file: None
 
 ## Performance Metrics
 
@@ -809,6 +809,7 @@ Resume file: .planning/phases/217-browse-geo-id-reconcile/217-CONTEXT.md
 | Phase 216 P02 | 15min | 3 tasks | 0 files |
 | Phase 216 P03 | 5min | 3 tasks | 7 files |
 | Phase 216 P04 | ~10min | 2 tasks | 0 files |
+| Phase 218 P01 | 35min | 2 tasks | 1 files |
 
 ## Decisions
 
@@ -943,6 +944,10 @@ Resume file: .planning/phases/217-browse-geo-id-reconcile/217-CONTEXT.md
 - [Phase ?]: tribal_land unwrap in lookupCoordinate() intentionally NOT added — remains deferred per 216-01 planner decision, out of LOC-04 scope
 - [Phase ?]: No isolation needed for the 216-04 push — git log origin/main..HEAD contained only intended 216-03 commits before push, unlike 216-02's backend deploy which carried unrelated P1 side-effect commits
 - [Phase ?]: Live UAT (not a unit test) served as the phase gate for LOC-04 — representingCity has no automated component test, and the coordinate-mode path (RESEARCH Pitfall 1) required live confirmation that the hook-bypass path renders correctly
+- [Phase ?]: Blue Ridge Place 5 confirmed genuine 5th seat (live council1-5 email numbering), not a rename
+- [Phase ?]: Lowry Crossing Place 5-8 locked as parallel continuation of existing Place numbering (not a new ward-seat naming scheme); Place8 vs Place4 Hijazen/Simpson assignment deferred to Plan 02
+- [Phase ?]: Weston Place 5 (Marla Johnston) re-confirmed still current 6th alderman via live fetch, ~14 months after original migration note
+- [Phase ?]: COLLIN-PEOPLE-01 requirement NOT marked complete after 218-01 — shared across all 5 phase plans (218-02..05 also list it); this plan only added structural office rows, not seated incumbents; mark-complete deferred to 218-05 (verification wave)
 
 ## Operator Next Steps
 

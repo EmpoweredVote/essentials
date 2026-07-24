@@ -48,17 +48,23 @@ already verified resolvable on 2026-07-23.
 
 - **Data-only.** No new frontend feature surface beyond wiring the corrected browse geo_ids into the
   existing hardcoded list; no code paths change shape.
+
 - **No compass stance research this milestone.** Deferred pending finalization of the proposed local
   compass questions — do not seed stances as a side effect of any phase here.
+
 - **Split-section SQL check after every seeding phase** (218–220 write rows) — verify zero
   split-section defects before closing.
+
 - **Elections view hides zero-candidate shells** — a seeded race with no candidates yet is expected
   and correct during an open filing period; do not fabricate candidates to fill a shell.
+
 - **Headshot gaps out of scope.** Blue Ridge, Farmersville, Lowry Crossing, Nevada, and Saint Paul
   have 0 headshots and no known online source — do not attempt automated sourcing.
+
 - **Evidence-only, cited research** for both the vacancy-fill (218) and candidate-backfill (219)
   passes — no fabricated incumbents, no guessed candidates; document genuine vacancies/empty races as
   such rather than leaving them ambiguous.
+
 - **Gaps surfaced in the 5 newly-reconciled governments (217) are documented, not silently absorbed**
   into 218–220's scope — they weren't part of the verified-gap list this milestone's requirements
   were built from, so any new findings become an explicit follow-up note, not an unplanned scope
@@ -109,7 +115,7 @@ already verified resolvable on 2026-07-23.
 
 **Plans**: 5 plans in 5 sequential waves (planned 2026-07-23)
 
-- [ ] 218-01-PLAN.md — Structural migration: add 6 missing office rows (Blue Ridge +1, Lowry Crossing +4, Weston +1) after blocking live seat-count re-verify
+- [x] 218-01-PLAN.md — Structural migration: add 6 missing office rows (Blue Ridge +1, Lowry Crossing +4, Weston +1) after blocking live seat-count re-verify
 - [ ] 218-02-PLAN.md — Idempotent data migration seating the 20 directly-cited incumbents (party NULL, no stances, `politician_id IS NULL` guard) + post-seed SQL gates
 - [ ] 218-03-PLAN.md — Deeper D-04 re-verify of the 7 flagged seats (Fairview Seat 4, Van Alstyne Place 6, Nevada trio, Lucas Place 1/2) → seat-or-document `is_vacant=true`
 - [ ] 218-04-PLAN.md — `/find-headshots` 600×750 pipeline for newly-seated people where a source exists; honest blank for Blue Ridge/Lowry Crossing/Nevada; audit-only image migration
