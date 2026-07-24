@@ -139,3 +139,28 @@ Prosper's real geo_id is **4859696** (Town of Prosper). Earlier drafts (219-07's
 *Phase: 219-elections-candidates-backfill*
 *Coverage roll-up authored: 2026-07-24*
 *Verify script: `C:/EV-Accounts/backend/scripts/_verify-219-coverage.ts` (read-only, re-runnable)*
+
+---
+
+## Post-Close Sourcing Reconcile (2026-07-24, operator-approved)
+
+After phase close, the operator approved sourcing the documented-[OPEN] inference-only seats via live WebSearch (Collin/Denton County official canvass exports + city certifications), evidence-only. Seeded as migrations 1401-1403:
+
+| Migration | Scope | Races / Candidates |
+|-----------|-------|--------------------|
+| 1400 | Longview D3 seating: reseat Brandon Smith (runoff winner), retire hold-over Wray Wade | — (seating fix) |
+| 1401 | Melissa city council (was the one zero-race city) — 5 sourced seats (Mayor + P1/2/3/4); P5/P6 [OPEN] | 5 / 8 |
+| 1402 | Allen/Anna/Lucas/Murphy/Prosper — all 24 inference-only seats sourced from official canvass | 24 / 44 |
+| 1403 | Celina/Frisco/Lowry Crossing — 14 sourced seats | 14 / 22 |
+| **Reconcile total** | | **43 / 74** |
+
+**Grand phase total (219 proper + reconcile): ~80 races / ~128 candidates across 24 governments.**
+
+### Data-correction flag (surfaced, NOT auto-applied)
+- **Frisco Place 4**: official Collin County June-7-2025 runoff canvass (double-verified) shows **Gopal Ponangi won** (53.89%–46.11%) over Jared Elad. The DB seats **Jared Elad** (the loser). Migration 1403 seeds the race correctly (Ponangi winner name-only, Elad loser linked) but does NOT change `offices.politician_id`. **Operator decision owed**: reseat Ponangi / retire Elad (a Phase-218-style seating action, like the Wade→Smith fix in 1400).
+
+### Remaining documented-[OPEN] after reconcile (honest gaps, not defects)
+- **Parker P1/P2/P4** — sourced (2025-05-03 at-large: Bogdan/Sharpe/Halbert won top-3 of 6) but Parker uses a single vote-for-N at-large contest that doesn't map to the per-Place office model without confusing duplicate data; deferred rather than mis-modeled.
+- **Fairview Mayor/Seat 1/3/5** — sourcing too weak for the SOURCED-ONLY bar (canvass-absence + LegiStorm term dates, no primary cancellation/certification doc); needs a Town Secretary records request.
+- **Melissa Place 5 / Place 6 (2024)** — absent from county canvass (unopposed-cancellation signature) but no independently-cited candidate name found; needs a City Secretary records request.
+- **Genuinely off-cycle seats** from 219 proper (Blue Ridge P2/3/4, Nevada P3-5, Farmersville's other seats, etc.) — staggered terms not up in the seeded reference window; not reconcilable (no recent election exists to source).

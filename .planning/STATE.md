@@ -26,12 +26,18 @@ Plan: 9 of 9 complete
 Status: All plans executed; migs 1393-1399 applied to prod + pushed (Render deploying); verify script green
 Last activity: 2026-07-24 — Phase 219 executed: 37 races/54 candidates across 24 govs
 
-## Phase 219 Owed / Decisions
+## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
-- **Operator browse spot-check** (the one human step): `/results?browse_geo_id=4808872` (Blue Ridge), `?browse_geo_id=4845744` (McKinney), `?browse_geo_id=4843888` (Longview) — confirm real races render.
-- **Longview D3 seating gap**: `offices.politician_id` still = hold-over Wray Wade vs. confirmed runoff winner Brandon Smith. Seeding the winner is a Phase-218-style action, left for operator decision (surfaced, not auto-resolved).
-- **Future reconcile candidates**: Melissa (7 offices, ISD-only 2026; real 2024/2025 cycles unsourced) + ~41 inference-only [OPEN] offices (operator ruled SOURCED-ONLY) → need live-WebSearch canvass sourcing.
-- **Prosper geo_id correction**: real geo_id = 4859696 (docs' 4863276 was stale).
+- ✅ **Browse spot-check APPROVED** by operator 2026-07-24 (Blue Ridge/McKinney/Longview).
+- ✅ **Longview D3 seating FIXED** (mig 1400): Brandon Smith seated, Wray Wade retired.
+- ✅ **Sourcing reconcile DONE** (migs 1401-1403, operator-approved): Melissa 5 races (was the one zero-race city), Allen/Anna/Lucas/Murphy/Prosper 24 races, Celina/Frisco/Lowry Crossing 14 races — all from official Collin/Denton canvass exports. Reconcile total 43 races/74 candidates. Grand phase total ~80 races/~128 candidates.
+
+## Phase 219 — Still Owed (operator decisions / records requests)
+
+- ⚠ **Frisco Place 4 seating correction**: official canvass shows **Gopal Ponangi** won the June-2025 runoff; DB seats **Jared Elad** (the loser). Race seeded correctly (1403); reseat/retire is a Phase-218-style action left for operator decision (like Wade→Smith).
+- **Parker P1/P2/P4** — sourced (2025 at-large Bogdan/Sharpe/Halbert) but deferred [OPEN] (at-large model doesn't map to per-Place offices cleanly).
+- **Fairview Mayor/Seat1/3/5** + **Melissa Place 5/6** — [OPEN], need City/Town Secretary records requests (no primary cited election found).
+- **Prosper geo_id**: real = 4859696 (docs' 4863276 stale).
 
 ## Quick Tasks Completed
 
