@@ -633,11 +633,16 @@ Plans:
 **Constraints:** use the `/find-headshots` skill; real licensed/public-source photos only; 600×750 (4:5), crop-only (never stretch), eyes ~1/3 from top, head+shoulders, no text/graphics on faces.
 **Requirements**: COLLIN-HEADSHOT-01 (audit + source missing headshots), COLLIN-HEADSHOT-02 (correct sizing/crop, no graphics/placeholders)
 **Depends on:** Nothing hard; benefits from 218/219 (people seated) + 220 (profiles fleshed out) first.
-**Plans:** TBD (run `/gsd-plan-phase 221`)
+**Plans:** 4 plans in 4 sequential waves (planned 2026-07-24)
+
+**Execution Order:** live audit (221-01) → Batch A sourcing (221-02) → Batch B sourcing (221-03) → after-audit + confirmed-blank register + close (221-04). Sourcing is interactive + quota-sensitive (`/find-headshots` approves one person at a time), so the two sourcing batches are chained sequential waves, never parallel.
 
 Plans:
 
-- [ ] TBD (run /gsd-plan-phase 221 to break down)
+- [ ] 221-01-PLAN.md — Live DB audit: derive the authoritative in-scope missing-photo set (stale memo NOT trusted) + BEFORE coverage counts + batched worklist; confirm Brandon Smith & Gopal Ponangi present (Wave 1)
+- [ ] 221-02-PLAN.md — Batch A sourcing (higher-source cities + Ponangi/Smith) via `/find-headshots`, 600×750 4:5 crop-only, honest blanks where none; blocking spec spot-check (Wave 2)
+- [ ] 221-03-PLAN.md — Batch B sourcing (small-town/low-source cities incl. the 5 zero-source cities) via `/find-headshots`; attempt every person, expect many honest blanks; blocking spec spot-check (Wave 3)
+- [ ] 221-04-PLAN.md — After-audit coverage delta + PIL 600×750 dimension check + `221-CONFIRMED-BLANK.md` register + blocking phase-close spot-check (Wave 4)
 
 ### Phase 222: Collin County Stances
 
