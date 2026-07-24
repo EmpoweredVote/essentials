@@ -36,7 +36,7 @@ that were retired) + live-verification evidence in
 `web_form_url` is empty across all 18 resolving governments; email is missing for several.
 
 - [x] **COLLIN-CONTACT-01**: `web_form_url` is populated for Collin County officials where the city publishes a contact form or official contact page.
-- [ ] **COLLIN-CONTACT-02**: Email addresses are filled for the cities currently at zero or near-zero (Anna, Farmersville, Frisco, Lavon, Murphy, Celina) where publicly listed.
+- [x] **COLLIN-CONTACT-02**: Email addresses are filled for the cities currently at zero or near-zero (Anna, Farmersville, Frisco, Lavon, Murphy, Celina) where publicly listed.
 - [ ] **COLLIN-CONTACT-03**: `valid_to` / term-end dates are populated for seated officials where the term is publicly known (data-quality follow-up from earlier phases).
 
 ### Vacancies / missing people (COLLIN-PEOPLE)
@@ -75,5 +75,5 @@ All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no dup
 | COLLIN-ELECT-02 | Phase 219 | Pending |
 | COLLIN-ELECT-03 | Phase 219 | Pending |
 | COLLIN-CONTACT-01 | Phase 220 | Complete |
-| COLLIN-CONTACT-02 | Phase 220 | Pending |
+| COLLIN-CONTACT-02 | Phase 220 | Complete |
 | COLLIN-CONTACT-03 | Phase 220 | Pending |
