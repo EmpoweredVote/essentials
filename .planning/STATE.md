@@ -34,7 +34,7 @@ Last activity: 2026-07-24 — Phase 219 executed: 37 races/54 candidates across 
 
 ## Phase 219 — Still Owed (operator decisions / records requests)
 
-- ⚠ **Frisco Place 4 seating correction**: official canvass shows **Gopal Ponangi** won the June-2025 runoff; DB seats **Jared Elad** (the loser). Race seeded correctly (1403); reseat/retire is a Phase-218-style action left for operator decision (like Wade→Smith).
+- ✅ **Frisco Place 4 seating FIXED** (mig 1404): Gopal Ponangi (actual June-2025 runoff winner) seated, loser Jared Elad retired.
 - **Parker P1/P2/P4** — sourced (2025 at-large Bogdan/Sharpe/Halbert) but deferred [OPEN] (at-large model doesn't map to per-Place offices cleanly).
 - **Fairview Mayor/Seat1/3/5** + **Melissa Place 5/6** — [OPEN], need City/Town Secretary records requests (no primary cited election found).
 - **Prosper geo_id**: real = 4859696 (docs' 4863276 stale).
