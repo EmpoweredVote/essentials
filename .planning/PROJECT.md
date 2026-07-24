@@ -10,6 +10,15 @@ A resident can look up who represents them — and who is on their ballot — wi
 
 ## Current State
 
+**Completed v25.0 Phase 218 — Vacancies & Missing People (2026-07-23).** Every office across all 23
+resolving Collin County, TX governments now reflects reality: 6 previously-unmodeled office rows added
+(Blue Ridge +1, Lowry Crossing +4, Weston +1), 27 offices seated with cited, nonpartisan incumbents,
+and the one genuine gap found (Plano Council Member Place 6) documented as a flagged vacancy — 0
+ambiguous empty seats DB-wide (157 seated + 1 documented vacant of 158 offices), split-section clean,
+12 sourced 600×750 headshots with honest blanks where no source exists. COLLIN-PEOPLE-01/02 satisfied;
+human live-browse spot-check approved. Migrations 1388–1392 shipped via accounts-api → Render. Next:
+Phase 219 (Elections & Candidates Backfill). See ROADMAP §"Phase 218".
+
 **Shipped v24.0 Results-Page Search & Header Overhaul (2026-07-23).** The cluttered multi-row results
 header is replaced by one always-editable `<LocationCombobox>` that silently classifies address /
 bare place-name / decimal-coordinate input and routes to the right resolver. The milestone "owns the
