@@ -3,28 +3,28 @@ gsd_state_version: 1.0
 milestone: v25.0
 milestone_name: Collin County TX Data-Completeness
 current_phase: 221
-current_phase_name: Collin County Headshots
-status: executing
+status: completed
 stopped_at: Completed 220-05-PLAN.md
-last_updated: "2026-07-24T22:18:18.805Z"
+last_updated: "2026-07-24T23:33:41.355Z"
 last_activity: 2026-07-24
-last_activity_desc: Phase 220 complete, transitioned to Phase 221
+last_activity_desc: Phase 221 marked complete
 progress:
   total_phases: 6
-  completed_phases: 3
-  total_plans: 20
-  completed_plans: 20
-  percent: 50
+  completed_phases: 4
+  total_plans: 24
+  completed_plans: 24
+  percent: 67
+current_phase_name: collin-county-headshots-source-and-attach-photos-for-officia
 ---
 
 # State
 
 ## Current Position
 
-Phase: 221 — Collin County Headshots
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-07-24 — Phase 220 complete, transitioned to Phase 221
+Phase: 221 — COMPLETE
+Plan: 1 of 4
+Status: Phase 221 complete
+Last activity: 2026-07-24 — Phase 221 marked complete
 
 ## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
@@ -50,7 +50,7 @@ Last activity: 2026-07-24 — Phase 220 complete, transitioned to Phase 221
 See: `.planning/PROJECT.md` (updated 2026-07-23)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 219 — Elections & Candidates Backfill
+**Current focus:** Phase 221 — collin-county-headshots-source-and-attach-photos-for-officia
 
 ## Scheduled Follow-Up — AZ 2026 Candidate Reconcile (Phase 206)
 

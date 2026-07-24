@@ -81,7 +81,7 @@ already verified resolvable on 2026-07-23.
 - [x] **Phase 218: Vacancies & Missing People** - Research and seat / document ~21 unseated offices across 11 cities (re-verified live 2026-07-23): Anna(2), Blue Ridge(2), Fairview(3), Josephine(1), Lowry Crossing(1), Lucas(2), Nevada(3), Parker(3) + the 3 Ph217-reconciled cities Plano(1), Princeton(1), Van Alstyne(2). Covers ALL 23 govs (the 5 reconciled folded in per operator request). (completed 2026-07-23)
 - [x] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 12 zero-race governments (re-verified 2026-07-23): the original 9 (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) + the 3 Ph217-reconciled Plano, Richardson, Van Alstyne; thicken thin coverage elsewhere — ✅ EXECUTED 2026-07-24 (migs 1393-1399, 37 races/54 candidates; Melissa documented-open; operator browse spot-check owed)
 - [x] **Phase 220: Contact Data Backfill** - Populate `web_form_url` (empty across ALL 23 govs), missing emails (Anna, Farmersville, Frisco, Lavon, Murphy, Celina + Ph217-reconciled Prosper, Princeton, Van Alstyne), and `valid_to` term-end dates across all 23 governments (completed 2026-07-24)
-- [ ] **Phase 221: Collin County Headshots** - Source + attach real photos for officials missing one (~31 from prior audit + Brandon Smith & Gopal Ponangi from the 219 seating fixes); `/find-headshots`, evidence-only, 600×750 4:5 crop-only, blank where none exists
+- [x] **Phase 221: Collin County Headshots** - Source + attach real photos for officials missing one (~31 from prior audit + Brandon Smith & Gopal Ponangi from the 219 seating fixes); `/find-headshots`, evidence-only, 600×750 4:5 crop-only, blank where none exists
 - [ ] **Phase 222: Collin County Stances** - Evidence-only compass stance research for Collin officeholders; one politician at a time, all topics, blank spoke where no evidence, antipartisan (the heavy phase; do after profiles are fleshed out)
 
 ### Phase Details
@@ -640,19 +640,19 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 221-01-PLAN.md — Live DB audit: derive the authoritative in-scope missing-photo set (stale memo NOT trusted) + BEFORE coverage counts + batched worklist; confirm Brandon Smith & Gopal Ponangi present (Wave 1)
+- [x] 221-01-PLAN.md — Live DB audit: derive the authoritative in-scope missing-photo set (stale memo NOT trusted) + BEFORE coverage counts + batched worklist; confirm Brandon Smith & Gopal Ponangi present (Wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 221-02-PLAN.md — Batch A sourcing (higher-source cities + Ponangi/Smith) via `/find-headshots`, 600×750 4:5 crop-only, honest blanks where none; blocking spec spot-check (Wave 2)
+- [x] 221-02-PLAN.md — Batch A sourcing (higher-source cities + Ponangi/Smith) via `/find-headshots`, 600×750 4:5 crop-only, honest blanks where none; blocking spec spot-check (Wave 2)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 221-03-PLAN.md — Batch B sourcing (small-town/low-source cities incl. the 5 zero-source cities) via `/find-headshots`; attempt every person, expect many honest blanks; blocking spec spot-check (Wave 3)
+- [x] 221-03-PLAN.md — Batch B sourcing (small-town/low-source cities incl. the 5 zero-source cities) via `/find-headshots`; attempt every person, expect many honest blanks; blocking spec spot-check (Wave 3)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 221-04-PLAN.md — After-audit coverage delta + PIL 600×750 dimension check + `221-CONFIRMED-BLANK.md` register + blocking phase-close spot-check (Wave 4)
+- [x] 221-04-PLAN.md — After-audit coverage delta + PIL 600×750 dimension check + `221-CONFIRMED-BLANK.md` register + blocking phase-close spot-check (Wave 4)
 
 **Cross-cutting constraints:**
 
