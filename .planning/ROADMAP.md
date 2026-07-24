@@ -80,7 +80,7 @@ already verified resolvable on 2026-07-23.
 - [x] **Phase 217: Browse Geo_ID Reconcile** - ✅ COMPLETE 2026-07-23 (quick task 260723-lfc). Premise was STALE — all 23 browse geo_ids already resolved (coverage.js already correct); verified + documented mapping + COLLIN-BROWSE-01..04 met. No code/DB change needed.
 - [x] **Phase 218: Vacancies & Missing People** - Research and seat / document ~21 unseated offices across 11 cities (re-verified live 2026-07-23): Anna(2), Blue Ridge(2), Fairview(3), Josephine(1), Lowry Crossing(1), Lucas(2), Nevada(3), Parker(3) + the 3 Ph217-reconciled cities Plano(1), Princeton(1), Van Alstyne(2). Covers ALL 23 govs (the 5 reconciled folded in per operator request). (completed 2026-07-23)
 - [x] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 12 zero-race governments (re-verified 2026-07-23): the original 9 (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) + the 3 Ph217-reconciled Plano, Richardson, Van Alstyne; thicken thin coverage elsewhere — ✅ EXECUTED 2026-07-24 (migs 1393-1399, 37 races/54 candidates; Melissa documented-open; operator browse spot-check owed)
-- [ ] **Phase 220: Contact Data Backfill** - Populate `web_form_url` (empty across ALL 23 govs), missing emails (Anna, Farmersville, Frisco, Lavon, Murphy, Celina + Ph217-reconciled Prosper, Princeton, Van Alstyne), and `valid_to` term-end dates across all 23 governments
+- [x] **Phase 220: Contact Data Backfill** - Populate `web_form_url` (empty across ALL 23 govs), missing emails (Anna, Farmersville, Frisco, Lavon, Murphy, Celina + Ph217-reconciled Prosper, Princeton, Van Alstyne), and `valid_to` term-end dates across all 23 governments (completed 2026-07-24)
 - [ ] **Phase 221: Collin County Headshots** - Source + attach real photos for officials missing one (~31 from prior audit + Brandon Smith & Gopal Ponangi from the 219 seating fixes); `/find-headshots`, evidence-only, 600×750 4:5 crop-only, blank where none exists
 - [ ] **Phase 222: Collin County Stances** - Evidence-only compass stance research for Collin officeholders; one politician at a time, all topics, blank spoke where no evidence, antipartisan (the heavy phase; do after profiles are fleshed out)
 
@@ -179,7 +179,7 @@ already verified resolvable on 2026-07-23.
 - [x] 220-03-PLAN.md — Migration B1: seat-alias emails (Blue Ridge, Nevada, Melissa; D-02)
 - [x] 220-04-PLAN.md — Migration B2a: personal emails batch 1 (Frisco, Princeton, Prosper, Allen, Fairview, Celina)
 - [x] 220-05-PLAN.md — Migration B2b: personal emails batch 2 (Parker, Saint Paul, Weston, Lowry Crossing, Lucas)
-- [ ] 220-06-PLAN.md — Apply all + verification + valid_to spot-check (D-03) + honest-blank register + deferred Migration C (GAP cities Josephine/Plano/Richardson)
+- [x] 220-06-PLAN.md — Apply all + verification + valid_to spot-check (D-03) + honest-blank register + deferred Migration C (GAP cities Josephine/Plano/Richardson)
 
 ### Progress
 
@@ -194,7 +194,7 @@ contact info too) — none is a hard blocker on the next.
 | 217. Browse Geo_ID Reconcile | 1/1 (quick) | Complete ✓ | 2026-07-23 |
 | 218. Vacancies & Missing People | 5/5 | Complete    | 2026-07-23 |
 | 219. Elections & Candidates Backfill | 0/TBD | Not started | - |
-| 220. Contact Data Backfill | 0/6 | Planned | - |
+| 220. Contact Data Backfill | 6/6 | Complete    | 2026-07-24 |
 
 ### Coverage
 

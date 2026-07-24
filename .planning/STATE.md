@@ -2,29 +2,29 @@
 gsd_state_version: 1.0
 milestone: v25.0
 milestone_name: Collin County TX Data-Completeness
-current_phase: 219
-current_phase_name: Elections & Candidates Backfill
-status: executed
+current_phase: 221
+current_phase_name: Collin County Headshots
+status: planning
 stopped_at: Completed 220-05-PLAN.md
-last_updated: "2026-07-24T20:04:34.422Z"
+last_updated: "2026-07-24T20:15:46.583Z"
 last_activity: 2026-07-24
-last_activity_desc: "Phase 219 executed: 37 races/54 candidates across 24 govs"
+last_activity_desc: Phase 220 complete, transitioned to Phase 221
 progress:
   total_phases: 6
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 20
-  completed_plans: 19
-  percent: 33
+  completed_plans: 20
+  percent: 50
 ---
 
 # State
 
 ## Current Position
 
-Phase: 219 (Elections & Candidates Backfill) — EXECUTED (browse spot-check owed)
-Plan: 9 of 9 complete
-Status: All plans executed; migs 1393-1399 applied to prod + pushed (Render deploying); verify script green
-Last activity: 2026-07-24 — Phase 219 executed: 37 races/54 candidates across 24 govs
+Phase: 221 — Collin County Headshots
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-07-24 — Phase 220 complete, transitioned to Phase 221
 
 ## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
