@@ -177,7 +177,7 @@ already verified resolvable on 2026-07-23.
 - [x] 220-01-PLAN.md — Preflight: Frisco Place 4 officeholder resolution (RESEARCH Pitfall 3) + migration-number lock
 - [x] 220-02-PLAN.md — Migration A: web_form_url batch (11 form-publishing cities, one city-wide form per official, D-01)
 - [x] 220-03-PLAN.md — Migration B1: seat-alias emails (Blue Ridge, Nevada, Melissa; D-02)
-- [ ] 220-04-PLAN.md — Migration B2a: personal emails batch 1 (Frisco, Princeton, Prosper, Allen, Fairview, Celina)
+- [x] 220-04-PLAN.md — Migration B2a: personal emails batch 1 (Frisco, Princeton, Prosper, Allen, Fairview, Celina)
 - [ ] 220-05-PLAN.md — Migration B2b: personal emails batch 2 (Parker, Saint Paul, Weston, Lowry Crossing, Lucas)
 - [ ] 220-06-PLAN.md — Apply all + verification + valid_to spot-check (D-03) + honest-blank register + deferred Migration C (GAP cities Josephine/Plano/Richardson)
 
