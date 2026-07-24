@@ -148,3 +148,11 @@ No blockers. All 4 embedded gates clean on both runs; idempotency proven via a f
 ---
 *Phase: 218-vacancies-missing-people*
 *Completed: 2026-07-24*
+
+## Self-Check: PASSED
+
+- FOUND: `.planning/phases/218-vacancies-missing-people/218-04-SUMMARY.md`
+- FOUND: `C:/EV-Accounts/backend/migrations/1391_collin_headshots_audit.sql`
+- FOUND: `C:/EV-Accounts/backend/scripts/_apply-migration-1391_collin_headshots_audit.ts` (gitignored, on disk)
+- FOUND commit `50d2e37d` (C:/EV-Accounts, pushed to origin/master)
+- FOUND commit `3bc5cb79` (essentials, SUMMARY.md)
