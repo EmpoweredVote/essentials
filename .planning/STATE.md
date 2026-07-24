@@ -5,15 +5,15 @@ milestone_name: Collin County TX Data-Completeness
 current_phase: 219
 current_phase_name: Elections & Candidates Backfill
 status: executed
-stopped_at: Phase 220 context gathered
-last_updated: "2026-07-24T17:16:55.709Z"
+stopped_at: Completed 220-02-PLAN.md (migration 1405 authored)
+last_updated: "2026-07-24T19:36:11.643Z"
 last_activity: 2026-07-24
 last_activity_desc: "Phase 219 executed: 37 races/54 candidates across 24 govs"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 14
-  completed_plans: 14
+  total_plans: 20
+  completed_plans: 16
   percent: 33
 ---
 
@@ -715,9 +715,9 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-24T17:16:55.681Z
-Stopped at: Phase 220 context gathered
-Resume file: .planning/phases/220-contact-data-backfill/220-CONTEXT.md
+Last session: 2026-07-24T19:36:11.614Z
+Stopped at: Completed 220-02-PLAN.md (migration 1405 authored)
+Resume file: None
 
 ## Performance Metrics
 
@@ -828,6 +828,7 @@ Resume file: .planning/phases/220-contact-data-backfill/220-CONTEXT.md
 | Phase 218 P04 | 45min | 2 tasks | 1 files |
 | Phase 218 P05 | 40min | 2 tasks | 2 files |
 | Phase 219 P01 | 45min | 2 tasks | 2 files |
+| Phase 220 P02 | 22min | 1 tasks | 2 files |
 
 ## Decisions
 
@@ -977,6 +978,7 @@ Resume file: .planning/phases/220-contact-data-backfill/220-CONTEXT.md
 - [Phase ?]: 219-01: Lavon's real reference cycle is 2025-11-04 (own election row), not shared 2026-05-02
 - [Phase ?]: 219-01: Saint Paul splits across two cycles - Seat1/Seat2 on 2025-05-03 (own row), Mayor/Seat3/4/5 on 2026-05-02 (cancelled, unopposed)
 - [Phase ?]: 219-01: RESEARCH.md corrections - Richardson Mayor is Amir Omar not Voelker; Place 6 was a 2-way Shamsul-Kupfer race with no runoff; McKinney At-Large 1 runoff winner Ernest Lynch confirmed
+- [Phase ?]: Migration 1405 (web_form_url batch, 11 confirmed-form Collin cities) authored; apply-script mirrors 1393 gate shape; apply-script not committed to git per repo's backend/scripts/_* gitignore convention
 
 ## Operator Next Steps
 
