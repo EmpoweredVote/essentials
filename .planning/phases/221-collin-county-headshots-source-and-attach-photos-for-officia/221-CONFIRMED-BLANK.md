@@ -75,5 +75,30 @@ Evidence: Official elected-officials page (stpaultexas.us) carries no member por
 
 ---
 
+---
+
+## Addendum (post-close) — audit undercount fix: `is_vacant IS NULL`
+
+The 221-01 worklist query used `p.is_vacant = false`, which **excludes rows where `is_vacant IS NULL`**. That silently hid **7 active, imageless officeholders** (surfaced when Brittany Colberg showed a "BC" placeholder on the live Frisco browse). True imageless in-scope set was **56, not 49**. All 7 were then sourced:
+
+**Found & imported (2):**
+- **Brittany Colberg** — Frisco, Council Member Place 6 (`ddcb2d35-0f94-4956-ab65-ae56a900ac11`) — friscotexas.gov, press_use, 1500×2100 crisp.
+- **Doug Charles** — Prosper, Council Member Place 5 (`48500428-3421-4298-b618-613696ca644c`) — prospertx.gov, press_use, 400×400.
+
+**Confirmed blank (4):**
+- **Deborah Ison** — Murphy, Council Member Place 3 (`bb9bed2f-cf0c-4997-9676-e5314ee1d7e0`) — Murphy directory serves a single shared placeholder avatar (documentID=7764, not a raster image) for ALL members; no individual photos exist.
+- **Kevin Kelley** — Murphy, Council Member Place 5 (`4220560f-5c74-4c92-9a35-e2a7cecb69da`) — same shared-placeholder situation.
+- **Shea Scott** — Celina, Council Member Place 4 (`91128e4f-94f6-4119-8087-4449ee16964a`) — official council + staff directory carry no member portraits.
+- **Shane Lambert** — Celina, Council Member Place 5 (`2e8dc841-f8ea-42f0-b6a4-08e9c779a20e`) — same.
+
+**Still open (1) — worth a deeper dig, NOT a confirmed blank:**
+- **Chris Schulmeister** — Allen, Mayor (`698da6ca-eadd-46a0-8e27-94ae48d23279`) — the official Allen site (JS-rendered) surfaces only a group/family swearing-in photo, not a clean headshot. A big-city mayor headshot likely exists behind the JS or in a press kit; deferred pending a Playwright-render pass or a records request.
+
+**AFTER the fix:** with-image went 110 → **113** (Colberg + Doug Charles this addendum... note Colberg/Charles are Frisco/Prosper, both city-scope). Remaining true blanks incl. these = documented above; Schulmeister is the one open item.
+
+**LESSON:** headshot/coverage audits must use `(is_vacant = false OR is_vacant IS NULL)`, never `is_vacant = false` alone — NULL means "not marked vacant", i.e. a seated person.
+
+---
+
 ## Not a blank — out of scope
 - **Gopal Ponangi** (`d6e0d762-f7a2-4566-8718-452e4c33781b`) — live DB shows `is_active=false`, `office_id=NULL`. Un-seated by mig 1409 (which corrected mig 1404's erroneous Collin-only seating of the Frisco Place 4 *loser*). Not a current officeholder → no headshot required. Recorded so 221-04 does not count his absence as a coverage gap and a future phase does not re-source him.
