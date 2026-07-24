@@ -172,7 +172,13 @@ already verified resolvable on 2026-07-23.
   3. `valid_to` term-end dates are populated for seated officials where the term is publicly documented
   4. A resident viewing any Collin County official's profile sees at least one working contact method wherever the city publishes one
 
-**Plans**: TBD
+**Plans**: 6 plans (field-based migration grouping per RESEARCH.md)
+- [ ] 220-01-PLAN.md — Preflight: Frisco Place 4 officeholder resolution (RESEARCH Pitfall 3) + migration-number lock
+- [ ] 220-02-PLAN.md — Migration A: web_form_url batch (11 form-publishing cities, one city-wide form per official, D-01)
+- [ ] 220-03-PLAN.md — Migration B1: seat-alias emails (Blue Ridge, Nevada, Melissa; D-02)
+- [ ] 220-04-PLAN.md — Migration B2a: personal emails batch 1 (Frisco, Princeton, Prosper, Allen, Fairview, Celina)
+- [ ] 220-05-PLAN.md — Migration B2b: personal emails batch 2 (Parker, Saint Paul, Weston, Lowry Crossing, Lucas)
+- [ ] 220-06-PLAN.md — Apply all + verification + valid_to spot-check (D-03) + honest-blank register + deferred Migration C (GAP cities Josephine/Plano/Richardson)
 
 ### Progress
 
@@ -187,7 +193,7 @@ contact info too) — none is a hard blocker on the next.
 | 217. Browse Geo_ID Reconcile | 1/1 (quick) | Complete ✓ | 2026-07-23 |
 | 218. Vacancies & Missing People | 5/5 | Complete    | 2026-07-23 |
 | 219. Elections & Candidates Backfill | 0/TBD | Not started | - |
-| 220. Contact Data Backfill | 0/TBD | Not started | - |
+| 220. Contact Data Backfill | 0/6 | Planned | - |
 
 ### Coverage
 
