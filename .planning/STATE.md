@@ -21,10 +21,10 @@ progress:
 
 ## Current Position
 
-Phase: 217 (Browse Geo_ID Reconcile) — satisfied via quick task 260723-lfc (verify+document)
-Plan: —
-Status: Planning (218 next)
-Last activity: 2026-07-23 - Completed quick task 260723-lfc: Phase 217 browse geo_id verify+document (COLLIN-BROWSE-01..04 Met)
+Phase: 218 (Vacancies & Missing People) — PLANNED (5 plans, 5 waves); 217 complete via quick task 260723-lfc
+Plan: 218-01..05 ready to execute
+Status: Planned — ready for /gsd-execute-phase 218
+Last activity: 2026-07-23 - Phase 218 planned: research (39bb3fd8) + 5-wave plan (d3cb86d0); 21 unseated offices + 6 missing seats, headshots-in, deeper-vacancy-search
 
 ## Quick Tasks Completed
 
