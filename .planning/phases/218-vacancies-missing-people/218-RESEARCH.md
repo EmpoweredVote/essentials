@@ -436,9 +436,11 @@ execution time trying WAF bypasses here — the milestone has already establishe
 | A6 | Weston's missing 6th seat (Marla Johnston, from May-2026 migration comments) is still the correct current officeholder ~14 months later | Weston findings | Weston had "no May 2026 election" per the original research, but 14 months is enough time for a resignation/appointment; re-confirm via westontexas.com at execute time |
 | A7 | Josephine Place 5 (Gary Chappell) valid_from date (`2024-05-01` recommended, matching sibling seats) — not independently confirmed | Josephine findings | Cosmetic term-date-precision risk only; does not affect who is seated |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **Lowry Crossing's true target office count**
+> All three resolved during planning — inline `RESOLVED:` markers below (Dimension 11).
+
+1. **Lowry Crossing's true target office count** — **RESOLVED:** see Plan 218-01 Task 1 (Place 5–8 naming/mapping locked in-plan; blocking live seat-count re-verify).
    - What we know: the official city page confirms 8 real ward-council seats + Mayor (9 elected officials
      total), vs. the DB's 5 rows.
    - What's unclear: the exact naming convention the planner should use for the 4 new office rows (parallel
@@ -449,7 +451,7 @@ execution time trying WAF bypasses here — the milestone has already establishe
      for "Ward 4" seats — check `lowrycrossingtexas.org/operations/elections.php` for the exact seat count
      contested) which specific seat was the "already-modeled Place 4" vacancy vs. the brand-new one.
 
-2. **Blue Ridge's 5th seat — charter change or DB gap?**
+2. **Blue Ridge's 5th seat — charter change or DB gap?** — **RESOLVED:** see Plan 218-01 Task 1 (blocking re-verify decides charter vs. DB-undercount before adding the row).
    - What we know: the official council page currently lists 5 non-mayor names.
    - What's unclear: whether Blue Ridge's charter always had 5 council seats (making the original migration's
      4-seat model simply wrong from the start) or recently added a 5th.
@@ -457,7 +459,7 @@ execution time trying WAF bypasses here — the milestone has already establishe
      typically Mayor + 5 for this population tier) or a 2024-era Ballotpedia snapshot to determine if this
      is a pre-existing DB undercounting error (more likely) rather than a genuine 2026 change.
 
-3. **The other 12 non-target Collin governments — has D-02's seat-count check been done for them?**
+3. **The other 12 non-target Collin governments — has D-02's seat-count check been done for them?** — **RESOLVED:** see Plan 218-05 Task 1 (lightweight seat-count spot-check across the other 12 govs in the verification wave).
    - What we know: CONTEXT.md states these 12 have "zero unseated offices" (fully seated) but explicitly
      flags that seat-count-vs-real-body verification is still owed for them too.
    - What's unclear: whether any of the 12 (Allen, Celina, Frisco, Farmersville, Lavon, McKinney, Melissa,
