@@ -5,15 +5,15 @@ milestone_name: Collin County TX Data-Completeness
 current_phase: 218
 current_phase_name: vacancies-missing-people
 status: executing
-stopped_at: Completed 218-01-PLAN.md
-last_updated: "2026-07-24T01:55:58.991Z"
+stopped_at: Completed 218-02-PLAN.md
+last_updated: "2026-07-24T02:17:50.368Z"
 last_activity: 2026-07-23
 last_activity_desc: Phase 218 execution started
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
+  completed_plans: 2
   percent: 0
 ---
 
@@ -22,7 +22,7 @@ progress:
 ## Current Position
 
 Phase: 218 (vacancies-missing-people) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-07-23 — Phase 218 execution started
 
@@ -702,8 +702,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-24T01:55:25.988Z
-Stopped at: Completed 218-01-PLAN.md
+Last session: 2026-07-24T02:17:50.339Z
+Stopped at: Completed 218-02-PLAN.md
 Resume file: None
 
 ## Performance Metrics
@@ -810,6 +810,7 @@ Resume file: None
 | Phase 216 P03 | 5min | 3 tasks | 7 files |
 | Phase 216 P04 | ~10min | 2 tasks | 0 files |
 | Phase 218 P01 | 35min | 2 tasks | 1 files |
+| Phase 218 P02 | 75min | 2 tasks | 2 files |
 
 ## Decisions
 
@@ -948,6 +949,8 @@ Resume file: None
 - [Phase ?]: Lowry Crossing Place 5-8 locked as parallel continuation of existing Place numbering (not a new ward-seat naming scheme); Place8 vs Place4 Hijazen/Simpson assignment deferred to Plan 02
 - [Phase ?]: Weston Place 5 (Marla Johnston) re-confirmed still current 6th alderman via live fetch, ~14 months after original migration note
 - [Phase ?]: COLLIN-PEOPLE-01 requirement NOT marked complete after 218-01 — shared across all 5 phase plans (218-02..05 also list it); this plan only added structural office rows, not seated incumbents; mark-complete deferred to 218-05 (verification wave)
+- [Phase ?]: 6 offices reused pre-existing discovery-pipeline candidate rows (UPDATE in place) instead of INSERT, avoiding duplicate officeholders and preserving race_candidates/photo linkage
+- [Phase ?]: No-duplicate and no-stance-side-effect gates scoped to this migration's 20 target offices; 7 unrelated pre-existing duplicate-politician bugs (Indiana/MA) logged as deferred, not fixed
 
 ## Operator Next Steps
 
