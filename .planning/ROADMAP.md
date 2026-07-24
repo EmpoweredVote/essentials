@@ -79,7 +79,7 @@ already verified resolvable on 2026-07-23.
 
 - [x] **Phase 217: Browse Geo_ID Reconcile** - ✅ COMPLETE 2026-07-23 (quick task 260723-lfc). Premise was STALE — all 23 browse geo_ids already resolved (coverage.js already correct); verified + documented mapping + COLLIN-BROWSE-01..04 met. No code/DB change needed.
 - [x] **Phase 218: Vacancies & Missing People** - Research and seat / document ~21 unseated offices across 11 cities (re-verified live 2026-07-23): Anna(2), Blue Ridge(2), Fairview(3), Josephine(1), Lowry Crossing(1), Lucas(2), Nevada(3), Parker(3) + the 3 Ph217-reconciled cities Plano(1), Princeton(1), Van Alstyne(2). Covers ALL 23 govs (the 5 reconciled folded in per operator request). (completed 2026-07-23)
-- [ ] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 12 zero-race governments (re-verified 2026-07-23): the original 9 (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) + the 3 Ph217-reconciled Plano, Richardson, Van Alstyne; thicken thin coverage elsewhere
+- [x] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 12 zero-race governments (re-verified 2026-07-23): the original 9 (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) + the 3 Ph217-reconciled Plano, Richardson, Van Alstyne; thicken thin coverage elsewhere — ✅ EXECUTED 2026-07-24 (migs 1393-1399, 37 races/54 candidates; Melissa documented-open; operator browse spot-check owed)
 - [ ] **Phase 220: Contact Data Backfill** - Populate `web_form_url` (empty across ALL 23 govs), missing emails (Anna, Farmersville, Frisco, Lavon, Murphy, Celina + Ph217-reconciled Prosper, Princeton, Van Alstyne), and `valid_to` term-end dates across all 23 governments
 
 ### Phase Details
@@ -141,17 +141,17 @@ already verified resolvable on 2026-07-23.
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 219-02-PLAN.md — Shared-election zero-race tier: Blue Ridge, Farmersville, Nevada, Van Alstyne (Wave 2)
-- [ ] 219-03-PLAN.md — Off-cycle/open zero-race tier: Josephine, Lavon, Saint Paul, Melissa (Wave 2)
-- [ ] 219-04-PLAN.md — Fallback-year tier: McKinney (2025 + runoff), Richardson (2025) (Wave 2)
-- [ ] 219-05-PLAN.md — Staggered tier: Plano (per-seat + Jan-2026 special), Weston (November cycle) (Wave 2)
-- [ ] 219-06-PLAN.md — Runoff-closure tier: Longview D3 general + Princeton Place 4 runoff (Wave 2)
-- [ ] 219-07-PLAN.md — Thin backfill A: Allen, Anna, Lucas, Murphy, Prosper (Wave 2)
-- [ ] 219-08-PLAN.md — Thin backfill B: Parker, Celina, Frisco, Fairview, Lowry Crossing (Wave 2)
+- [x] 219-02-PLAN.md — Shared-election zero-race tier: Blue Ridge, Farmersville, Nevada, Van Alstyne (Wave 2)
+- [x] 219-03-PLAN.md — Off-cycle/open zero-race tier: Josephine, Lavon, Saint Paul, Melissa (Wave 2)
+- [x] 219-04-PLAN.md — Fallback-year tier: McKinney (2025 + runoff), Richardson (2025) (Wave 2)
+- [x] 219-05-PLAN.md — Staggered tier: Plano (per-seat + Jan-2026 special), Weston (November cycle) (Wave 2)
+- [x] 219-06-PLAN.md — Runoff-closure tier: Longview D3 general + Princeton Place 4 runoff (Wave 2)
+- [x] 219-07-PLAN.md — Thin backfill A: Allen, Anna, Lucas, Murphy, Prosper (Wave 2)
+- [x] 219-08-PLAN.md — Thin backfill B: Parker, Celina, Frisco, Fairview, Lowry Crossing (Wave 2)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 219-09-PLAN.md — Phase-close 24-government coverage sweep + browse spot-check (Wave 3)
+- [x] 219-09-PLAN.md — Phase-close 24-government coverage sweep + browse spot-check (Wave 3) *(machine gates green; operator browse spot-check owed)*
 
 **Cross-cutting constraints:**
 

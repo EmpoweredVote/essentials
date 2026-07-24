@@ -4,27 +4,34 @@ milestone: v25.0
 milestone_name: Collin County TX Data-Completeness
 current_phase: 219
 current_phase_name: Elections & Candidates Backfill
-status: executing
-stopped_at: Completed 219-01-PLAN.md
-last_updated: "2026-07-24T06:35:58.806Z"
-last_activity: 2026-07-23
-last_activity_desc: Phase 219 execution started
+status: executed
+stopped_at: Phase 219 executed (all 9 plans; migs 1393-1399 applied+pushed); operator browse spot-check owed
+last_updated: "2026-07-24T07:00:00.000Z"
+last_activity: 2026-07-24
+last_activity_desc: Phase 219 executed — 37 races/54 candidates across 24 govs; all machine gates green; Melissa documented-open
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 14
-  completed_plans: 6
-  percent: 25
+  completed_plans: 14
+  percent: 50
 ---
 
 # State
 
 ## Current Position
 
-Phase: 219 (Elections & Candidates Backfill) — EXECUTING
-Plan: 2 of 9
-Status: Ready to execute
-Last activity: 2026-07-23 — Phase 219 execution started
+Phase: 219 (Elections & Candidates Backfill) — EXECUTED (browse spot-check owed)
+Plan: 9 of 9 complete
+Status: All plans executed; migs 1393-1399 applied to prod + pushed (Render deploying); verify script green
+Last activity: 2026-07-24 — Phase 219 executed: 37 races/54 candidates across 24 govs
+
+## Phase 219 Owed / Decisions
+
+- **Operator browse spot-check** (the one human step): `/results?browse_geo_id=4808872` (Blue Ridge), `?browse_geo_id=4845744` (McKinney), `?browse_geo_id=4843888` (Longview) — confirm real races render.
+- **Longview D3 seating gap**: `offices.politician_id` still = hold-over Wray Wade vs. confirmed runoff winner Brandon Smith. Seeding the winner is a Phase-218-style action, left for operator decision (surfaced, not auto-resolved).
+- **Future reconcile candidates**: Melissa (7 offices, ISD-only 2026; real 2024/2025 cycles unsourced) + ~41 inference-only [OPEN] offices (operator ruled SOURCED-ONLY) → need live-WebSearch canvass sourcing.
+- **Prosper geo_id correction**: real geo_id = 4859696 (docs' 4863276 was stale).
 
 ## Quick Tasks Completed
 
