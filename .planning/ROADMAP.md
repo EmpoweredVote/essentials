@@ -134,7 +134,16 @@ already verified resolvable on 2026-07-23.
   3. Every seeded race links to the correct office and renders correctly on `/results` — no split-section defects, no zero-candidate shells masking a real race
   4. A resident browsing any of the 23 resolving Collin County governments sees their actual current/next municipal race instead of an empty Elections section
 
-**Plans**: TBD
+**Plans**: 9 plans
+- [ ] 219-01-PLAN.md — Pre-flight: candidate_staging probe + migration counter + shared election_id + resolve open cities (Lavon/Saint Paul/Melissa) & runoff finals (Wave 1)
+- [ ] 219-02-PLAN.md — Shared-election zero-race tier: Blue Ridge, Farmersville, Nevada, Van Alstyne (Wave 2)
+- [ ] 219-03-PLAN.md — Off-cycle/open zero-race tier: Josephine, Lavon, Saint Paul, Melissa (Wave 2)
+- [ ] 219-04-PLAN.md — Fallback-year tier: McKinney (2025 + runoff), Richardson (2025) (Wave 2)
+- [ ] 219-05-PLAN.md — Staggered tier: Plano (per-seat + Jan-2026 special), Weston (November cycle) (Wave 2)
+- [ ] 219-06-PLAN.md — Runoff-closure tier: Longview D3 general + Princeton Place 4 runoff (Wave 2)
+- [ ] 219-07-PLAN.md — Thin backfill A: Allen, Anna, Lucas, Murphy, Prosper (Wave 2)
+- [ ] 219-08-PLAN.md — Thin backfill B: Parker, Celina, Frisco, Fairview, Lowry Crossing (Wave 2)
+- [ ] 219-09-PLAN.md — Phase-close 24-government coverage sweep + browse spot-check (Wave 3)
 
 #### Phase 220: Contact Data Backfill
 
