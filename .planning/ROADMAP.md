@@ -681,7 +681,7 @@ Plans:
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
-- [ ] 222-04-PLAN.md — Tier 1: McKinney
+- [x] 222-04-PLAN.md — Tier 1: McKinney
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
