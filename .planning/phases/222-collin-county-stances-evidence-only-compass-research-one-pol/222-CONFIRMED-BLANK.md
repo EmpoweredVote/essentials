@@ -42,12 +42,13 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 144
+## Count: 154
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
-+ 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare).
-222-05 through 222-17 append their own per-government sections below as they execute.
++ 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
++ 10 by 222-05 (Allen).
+222-06 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status, all applied to production 2026-07-25 after operator approval:**
 
@@ -58,6 +59,7 @@ dropped), or a person present in both with the *same* topic recorded twice (an i
 | `1418_222_plano_gapfill_stances.sql` | 1 chair (Lavine residential-zoning=2) — revised down from 5; the 4 `taxes` rows were dropped by operator ruling, see below | APPLIED |
 | `1419_222_mckinney_gapfill_stances.sql` | 2 chairs (Lynch homelessness=4, Jones growth-and-development=3) | APPLIED |
 | `1420_222_barrios_healthcare_bio_only_remediation.sql` | 1 deletion (bio-page-only) | APPLIED |
+| `1421_222_allen_stances.sql` | 1 chair (Schulmeister residential-zoning=3) | AUTHORED — awaiting operator apply (222-05 Task 3) |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
 
@@ -1051,5 +1053,130 @@ approved for migration 1416). Verified after apply: absent from both tables; zer
 now remain anywhere in the 24-government Collin scope.
 
 - Dan Barrios — Richardson — `e8c863a7-d116-480e-a81f-47d26f45e264` — healthcare — **bio-page-only**: the row's sole source was `https://ballotpedia.org/Dan_Barrios`, a biography page with no stance content, so it could not support a chair on healthcare or anything else. It survived plan 222-02 because that plan's Class A1 signature required `sources IS NULL` — this row had a source, just a useless one. Barrios's other two defective rows (civil-rights, homelessness) were deleted by 222-02; this was the third and last in scope.
+
+---
+
+## City of Allen (4801924) — 222-05
+
+**Attempted:** 2026-07-25, the one un-stanced Allen officeholder on the 222-01 live worklist —
+Mayor Chris Schulmeister — against all 11 canonical compass topics. The other seated Allen
+officeholders already hold stances and were out of scope per D-07; none of their rows was read,
+re-reasoned, or modified by this plan (several were remediated earlier on 2026-07-25).
+
+**Evidence checked:** Community Impact Newspaper's Allen bureau — the March 17, 2026 pre-election
+mayoral candidate Q&A (the only genuine questionnaire found for this race), the May 12, 2026
+"Meet Allen's new mayor" Q&A, the May 2 result story, and the swearing-in coverage; KERA News
+(April 16, 2026 race preview and May 2, 2026 result story); Star Local Media / Allen American,
+"Allen Mayor Chris Schulmeister shares his vision, priorities," July 10, 2026; tx3dnews.com's Allen
+mayor-race candidate profile (April 2026); Bisnow Dallas-Fort Worth's September 2, **2019**
+multifamily-approvals feature, which carries his own account of a council vote; Texas Scorecard's two
+Allen high-density-development stories; cityofallen.org's City Council page (which confirmed him as
+mayor, term 2026–2029, with no bio text); League of Women Voters of Collin County / VOTE411. Allen,
+**Texas** was confirmed on every source used, and his identity as the Allen TX council member
+(Place 4, 2019–2025) and now Allen TX mayor was confirmed before the 2019 council vote below was
+accepted as his.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position: `chrisforallen.org` returned HTTP 404 to every fetch, at both the root and `/meet-chris/`
+and with and without the `www.` prefix, so **his campaign platform pages were never read**. This is
+the most significant gap: search-result snippets suggest that site carries specific claims about
+police and fire pay, training and equipment, and about parks and trails, either of which could bear
+on `public-safety-approach` or `transportation-priorities` if the actual page text could be read.
+No chair was assigned from a snippet. Also unreadable: `ballotpedia.org`'s individual candidate page
+for him resolved but returned an empty body (no Candidate Connection survey surfaced in search
+either); `lwvcollin.org/voters-guides` and `cityofallen.org/directory.aspx` both returned HTTP 403.
+A later pass with working access to the campaign site, Ballotpedia, and the LWV Collin voters guide
+may find additional evidence.
+
+### Chris Schulmeister — Mayor — `698da6ca-eadd-46a0-8e27-94ae48d23279`
+
+Sourced: `residential-zoning` = 3 (applied via migration 1421). The remaining 10 topics are blank:
+
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — housing — no position found
+  on government's role in housing affordability. His answer to Community Impact's March 17, 2026
+  question about uses for Allen's remaining land — "Regardless of the type of development, whether
+  it be housing, retail or commercial, we must focus on innovative solutions that complement the
+  neighborhood in which the development occurs" — is about development compatibility, not about
+  subsidies, rent regulation, inclusionary requirements, permitting reform, or public development.
+  His campaign's "affordability" theme, as he himself defines it in the same Q&A, is about property
+  tax bills and water and wastewater costs, not housing prices. His 2019 statement that "multifamily
+  is what millennials are seeking and we have to be able to compete against neighboring cities"
+  (Bisnow) is about market supply and regional competitiveness, and applying it to the housing
+  affordability scale would be cross-topic inference, which is prohibited.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — civil-rights — no on-topic
+  position found. Nothing in his campaign coverage, his two Community Impact Q&As, or the Star Local
+  Media interview addresses civil-rights enforcement, equity requirements, or race-conscious
+  programs. His support for the Community Engagement Advisory Board's "Table Talk" program
+  (Community Impact, March 17, 2026) is a civic-engagement initiative, not a civil-rights position.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — homelessness — no statement
+  found on public camping, encampments, enforcement, or homelessness response.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — economic-development — no
+  position found on incentives, abatements, or community-benefit conditions. His service on the
+  Allen Economic Development Corporation and Community Development Corporation boards
+  (Community Impact, May 12, 2026) is service history, not a position, and was deliberately not
+  used — that is the exact adjacency defect deleted from two other Allen records on this same topic
+  on 2026-07-25. Listing "Economic Development" among the areas he wants Allen to stay on a
+  "success trajectory" in (tx3dnews candidate profile) names the subject without locating a chair on
+  incentive aggressiveness.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — local-immigration — no
+  statement found on the Allen Police Department's relationship to federal immigration enforcement,
+  ICE detainers, or information sharing. Texas SB4's statewide bar on sanctuary policies is state
+  law, not his position, and was deliberately not used as a default — that is the A4 defect the
+  222-01 audit deleted from two Plano records.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — public-safety-approach — the
+  available language is real but too generic to locate a chair. He told tx3dnews he is running "to
+  ensure Allen stays on a success trajectory with regard to Public Safety, Economic Development,
+  Transportation, Water/Waste management and investing in our aging neighborhoods and
+  infrastructure, and doing so in a fiscally sound manner," and that profile summarises his platform
+  as maintaining fiscal discipline while supporting police, fire and emergency services. That does
+  not distinguish holding current funding from increasing staffing, equipment and pay, and it names
+  no crisis-response or co-responder component. Allen's $97M police headquarters, built during his
+  council tenure, was deliberately not used — a capital project completed while someone held office
+  is not that person's stated position, and that exact inference was deleted from another Allen
+  record on 2026-07-25. Search snippets indicate his campaign site claims credit for police and fire
+  pay, training and equipment levels, which could locate chair 4, but that site returned HTTP 404 and
+  the page text was never read, so nothing was assigned from it.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — transportation-priorities —
+  no statement found on mode priorities. "Transportation" appears in his list of focus areas
+  (tx3dnews) and among the 2045 Comprehensive Plan's subject headings he says he will work through
+  (Community Impact, May 12, 2026; Star Local Media, July 10, 2026), but nothing found sets roads and
+  traffic capacity against transit, bike or pedestrian investment. His term on the North Central
+  Texas Council of Governments Regional Transportation Council (2020–2024) is service history, not a
+  position, and was deliberately not used.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — taxes — **researched, no
+  chair written per the 2026-07-25 taxes ruling** (see "RULING: `taxes` is structurally
+  unanswerable for municipal officeholders" above). This is not an absence of evidence — his
+  evidence is among the most explicit found anywhere in this phase, and is preserved here verbatim
+  so it can be placed if the question is ever rewritten with municipal scope. Community Impact,
+  March 17, 2026, asked what the biggest challenge facing Allen residents is: *"The cost of living.
+  Increasing assessed values for property owners has become a struggle. This growth needs to be
+  balanced with a tax rate that provides Allen residents with the level of services they expect.
+  Additionally, managing the cost of water and wastewater impacts the cost of living."* Asked how he
+  would address it: *"During my six years on Council, I voted to reduce the tax rate every year. A
+  5% Homestead Exemption was adopted. The level of city services may need to be adjusted, and I will
+  work with City staff and citizens to prioritize services, continuing my efforts toward further tax
+  relief."* Six years of recorded rate-reduction votes, plus an explicit willingness to adjust
+  service levels and pursue further relief, would point at chair 4 on the current scale — but chair 4
+  reads "Cut taxes for everyone and scale back public services to match," and a uniform ad-valorem
+  city property-tax rate is not a tax "for everyone" in the sense chairs 1–5 are written around, so
+  the ruling stands and no row was written.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — growth-and-development — no
+  chair-locating statement found. His central and much-repeated theme is that Allen "transitioned
+  from decades of rapid growth to a mature city" (KERA, May 2, 2026; the same framing in Community
+  Impact's March 17 and May 12, 2026 Q&As and in Star Local Media, July 10, 2026), and that the 2045
+  Comprehensive Plan and reinvestment in aging neighborhoods and infrastructure are how he will
+  manage it. That is a description of where Allen is in its life cycle plus a commitment to
+  reinvestment, not a position on growth pace: it does not choose between allowing growth only where
+  infrastructure already supports it, investing in infrastructure ahead of growth, streamlining
+  permitting to recruit development, or capping growth outright. Notably absent is any
+  build-ahead-of-growth commitment of the kind that located this chair for another Collin mayor.
+- Chris Schulmeister — Allen — `698da6ca-eadd-46a0-8e27-94ae48d23279` — healthcare — no statement
+  found on healthcare access. Expected: all five chairs on this scale describe national healthcare
+  policy, which a mayor holds no position on by role. No health-adjacent remark was stretched into a
+  chair.
+
+**Allen reconcile:** the one worklist name appears in bucket 1 (an applied migration row for
+`residential-zoning`) and additionally lists his 10 unsourced topics here — the Allen worklist has no
+name in neither bucket, and no (person, topic) pair appears in both.
 
 ---
