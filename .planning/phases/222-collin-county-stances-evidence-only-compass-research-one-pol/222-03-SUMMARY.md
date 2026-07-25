@@ -43,7 +43,7 @@ coverage:
     requirement: "COLLIN-STANCE-02"
     verification:
       - kind: manual_procedural
-        ref: "Operator-run evidence-integrity gate against production (222-VALIDATION.md), zero rows returned for these politician_ids"
+        ref: "Orchestrator row-level integrity check against production for both politician_ids: 7 answer rows, each with a paired politician_context row, all values whole integers 1-5, every context row with >=1 source URL, zero reasoning rows matching party keywords, zero matching 'no record found'/'assumed'/'defaulted'. NOTE: this is an equivalent row-level check, NOT a run of the named 222-VALIDATION.md gate suite, which has not been executed for this plan."
         status: pass
       - kind: other
         ref: "Orchestrator independent re-fetch of markhill4mayor.com/policies/ and the Colberg DMN quote — all 7 quoted strings verbatim, Frisco TX confirmed, no party language"
@@ -54,18 +54,27 @@ coverage:
     requirement: "COLLIN-STANCE-01"
     verification:
       - kind: manual_procedural
-        ref: "Operator-run exactly-one-bucket reconcile: 22 pairs = 7 applied + 15 blank, both people complete at every topic"
+        ref: "Orchestrator exactly-one-bucket reconcile: 22 pairs = 7 applied + 15 blank, both people complete at every topic (2 people x 11 topics = 22)"
         status: pass
     human_judgment: false
   - id: D3
-    description: "Migration 1417 applied to production live, evidence-integrity gate clean, live Frisco browse view renders compass spokes for a newly-stanced officeholder"
+    description: "Migration 1417 applied to production live and confirmed present by row-level query"
     requirement: "COLLIN-STANCE-02"
     verification:
       - kind: manual_procedural
-        ref: "Operator applied via mcp__supabase-local__execute_sql on 2026-07-25; browse-view screenshot captured at the Task 3 checkpoint"
+        ref: "Orchestrator applied via mcp__supabase-local__execute_sql on 2026-07-25 after operator approval; post-apply query confirmed all 7 answer+context pairs present with the intended values"
         status: pass
     human_judgment: true
-    rationale: "Live production apply and visual browse-view rendering require the operator's Supabase MCP binding and human visual confirmation — gsd-executor has no DB access in this session"
+    rationale: "Live production apply requires the orchestrator's Supabase MCP binding — MCP tools are unbound in subagent sessions"
+  - id: D3b
+    description: "Live Frisco browse-view visual confirmation that a newly-stanced officeholder renders compass spokes"
+    requirement: "COLLIN-STANCE-02"
+    verification:
+      - kind: manual_procedural
+        ref: "NOT PERFORMED. No browse view was loaded and no screenshot was captured for this plan. Owed: /results?browse_government_list=4827684&browse_label=Frisco&browse_state=TX"
+        status: pending
+    human_judgment: true
+    rationale: "Visual browse confirmation is owed and was not done — recorded honestly as outstanding rather than assumed from the successful DB apply. Carry into 222-18's browse spot-check."
 
 # Metrics
 duration: N/A (executor session; apply performed by orchestrator on 2026-07-25)
@@ -134,7 +143,7 @@ Each task was committed atomically:
 
 1. **Task 1: Research every un-stanced Frisco officeholder** — no file writes (research held for Task 2 per plan design; working note carried forward)
 2. **Task 2: Author the Frisco migration, self-audit, append blank register, commit** — essentials: `a6384d54` (docs(222-03): record Frisco blank register, 15 person/topic pairs); EV-Accounts: `89d8ab99` (docs(222-03): author Frisco evidence-only stance migration 1417) — **committed locally, not pushed**
-3. **Task 3: [BLOCKING] Operator applies migration and runs evidence-integrity gate** — satisfied 2026-07-25 by the orchestrator: migration applied to production via `mcp__supabase-local__execute_sql`, evidence-integrity gate returned zero rows, exactly-one-bucket reconcile passed, live Frisco browse view screenshot captured showing rendered compass spokes
+3. **Task 3: [BLOCKING] Operator applies migration** — satisfied 2026-07-25: operator approved, orchestrator applied to production via `mcp__supabase-local__execute_sql`, post-apply row-level integrity check passed (7 answer+context pairs, whole integers, sourced, no party language, no forbidden phrases), exactly-one-bucket reconcile passed (22 = 7 + 15). **The named `222-VALIDATION.md` gate suite was NOT run, and no browse-view screenshot was captured** — see coverage item D3b, carried as owed into 222-18.
 
 **Register correction commit (orchestrator, same session):** `c57239d7` (docs(222-02): mark remediation migration as applied in blank register) — corrected a stale "not yet applied" line in the 222-02 section of the same `222-CONFIRMED-BLANK.md` file; not part of this plan's own deliverable but landed adjacent to it.
 
@@ -166,7 +175,7 @@ Each task was committed atomically:
 **2. [Rule 3 - Blocking] All production SQL executed orchestrator-side, not in this executor's session**
 - **Found during:** Task 3
 - **Issue:** MCP tools (`mcp__supabase-local__*`) are unbound in subagent sessions; the plan's own Task 3 anticipates and gates on this.
-- **Fix:** Migration authored and committed by the executor; apply, evidence-integrity gate, and browse-screenshot verification performed by the orchestrator per the plan's blocking-checkpoint design.
+- **Fix:** Migration authored and committed by the executor; the apply and the post-apply row-level integrity check were performed by the orchestrator per the plan's blocking-checkpoint design. Browse-view visual confirmation was NOT performed (see D3b).
 - **Files modified:** none
 - **Verification:** Verification table above, reported by the orchestrator.
 - **Committed in:** n/a (production apply, not a git commit)
