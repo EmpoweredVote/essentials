@@ -56,8 +56,10 @@ public compass — a deeper hand-review (222-01 county-wide integrity audit + th
 hand-review of the Class B2 rows) found the recorded reasoning did not clear the D-04 evidence bar
 (no citable, explicit, on-topic statement/vote/questionnaire answer by that specific person), so the
 chair was deleted via migration `1416_222_collin_stance_integrity_remediation.sql`
-(C:/EV-Accounts, AUDIT-ONLY, committed locally, **not yet applied to production** — pending the
-Task 3 operator checkpoint). These are "searched, evidence found insufficient, chair removed," per
+(C:/EV-Accounts, AUDIT-ONLY, **APPLIED to production 2026-07-25** after operator approval at the
+Task 3 checkpoint — verified: 0 of 27 target pairs remain in either table, all 4 kept rows intact,
+Collin-scope answer rows 220 → 193, zero orphaned answers created). These are "searched, evidence
+found insufficient, chair removed," per
 D-08 and matching 222-01-INTEGRITY-AUDIT.md's own closing framing — not a skipped research step.
 
 Office titles below are not re-verified this session (no DB access in this executor) —
