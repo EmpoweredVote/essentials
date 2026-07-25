@@ -80,7 +80,7 @@ A blank spoke on all 27 profiles is the intended, successful outcome of this pla
 
 - 12 Class A rows (A1 no-evidence-found-yet-chaired, A2 party-in-reasoning, A3 identity-inference, A4 city-wide-policy-defaulted) deleted — these flatly violated D-04 with no ambiguity.
 - 15 of 19 Class B2 weak-adjacency rows deleted after a genuine per-row read of stored reasoning and sources; 4 kept because they cite the specific person's own recorded vote, quote, or dated forum statement.
-- AUDIT-ONLY migration `1416_222_collin_stance_integrity_remediation.sql` authored, revised, committed (not pushed), and applied to production by the operator at the Task 3 blocking checkpoint.
+- AUDIT-ONLY migration `1416_222_collin_stance_integrity_remediation.sql` authored, revised, committed, pushed to `origin/master`, and applied to production at the Task 3 blocking checkpoint after operator approval.
 - `222-CONFIRMED-BLANK.md` "Phase 222 integrity remediation" section logs all 27 deletions at (person, topic) granularity with explicit "searched, evidence found insufficient, chair removed" framing — not "never searched."
 - Post-apply verification confirmed the migration matched its own audit trail exactly, with zero collateral changes outside the 27 targeted pairs.
 
@@ -88,10 +88,11 @@ A blank spoke on all 27 profiles is the intended, successful outcome of this pla
 
 1. **Task 1: Confirm the Class A defect set and decide the 19 Class B2 rows** — no file writes (decision table carried into Task 2); executor applied the plan's uncertainty tie-breaker and marked all 19 Class B2 rows DELETE, explicitly flagging the need for a DB-access re-read (see Deviation 1 below).
 2. **Task 2: Author the remediation migration, append the blank register, and commit** —
-   - EV-Accounts: `54364e12` (initial migration authoring, 31 pairs) — repo `C:/EV-Accounts`, not pushed.
+   - EV-Accounts: `54364e12` (initial migration authoring, 31 pairs) — repo `C:/EV-Accounts`.
    - essentials: `18b7204f` (register append, 31 deletions) — `docs(222): log 31 stance-integrity deletions to blank register`.
    - Revision after Deviation 1 re-read:
-     - EV-Accounts: `89d576f7` — `fix(222-02): per-row re-read of Class B2 — keep 4, delete 27 not 31` — not pushed.
+     - EV-Accounts: `89d576f7` — `fix(222-02): per-row re-read of Class B2 — keep 4, delete 27 not 31`.
+   - Both EV-Accounts commits were pushed to `origin/master` (`905a6514..89d576f7`) on 2026-07-25 with operator approval, triggering a Render redeploy. The deploy is a no-op behaviourally — `backend/migrations/*.sql` is never executed by the deploy, and this migration is audit-only.
      - essentials: `0d3ccc3b` — `docs(222-02): correct blank register to 27 deletions after per-row Class B2 re-read`.
 3. **Task 3: [BLOCKING] Operator applies the deletion migration** — operator approved 2026-07-25; orchestrator applied via `mcp__supabase-local__execute_sql`; migration correctly NOT registered in `schema_migrations` (audit-only by design).
 
