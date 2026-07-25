@@ -303,9 +303,9 @@ in 222-08/222-09.
 
 | Plan | Scope | Live count |
 |---|---|---|
-| 222-02 | Plano (4858016) | **0 — NO WORK** |
+| 222-02 | **County-wide stance-integrity remediation** — delete 12 Class A rows, review 19 Class B2 rows (see 222-01-INTEGRITY-AUDIT.md) | n/a (remediation on the already-stanced 57, not the 107 worklist) |
 | 222-03 | Frisco (4827684) — Brittany Colberg, Mark Hill | 2 |
-| 222-04 | McKinney (4845744) | **0 — NO WORK** |
+| 222-04 | **Plano + McKinney topic-gap fill** — ~93 unfilled topic slots across 15 people, re-derived live | n/a (gap-fill on the already-stanced 57, not the 107 worklist) |
 | 222-05 | Allen (4801924) — Chris Schulmeister | 1 |
 | 222-06 | Richardson (4861796) — Curtis Dorian | 1 |
 | 222-07 | Prosper (Doug Charles, 1) + Celina (Shea Scott, Shane Lambert, 2) + Longview (Derrick Conley, Shannon Moore, Brandon Smith, John Nustad, Sidney Allen, 5) | 8 |
@@ -320,6 +320,15 @@ in 222-08/222-09.
 | 222-16 | Lowry Crossing councils (Pitchure, Hodges, Trujillo, Hijazen, Madrid, Rios, Cash, Simpson — 8) + Nevada councils (Laye, Baker, Wilson, Laughter, Little — 5) | 13 |
 | 222-17 | Saint Paul councils (Nail, Dryden, Pierson, Bewley, Simmons — 5) + Van Alstyne councils (Neal, Butler, Williams, Thomas, Arsenault, Williams — 6) | 11 |
 | **TOTAL** | | **107** |
+
+**Note — coverage of the 107 is unchanged by the 222-02/222-04 re-scope.** The 107-name research
+worklist above is untouched: it is still fully and exclusively covered by plans 222-03 and
+222-05..222-17 (222-02 and 222-04 always contributed 0 of the 107, both before and after their
+re-scope — see 222-01-INTEGRITY-AUDIT.md). The 222-02 remediation and 222-04 gap-fill work operate
+on the *already-stanced* 57-person cohort, a disjoint population from the 107. Re-scoping those two
+plans therefore adds work; it does not remove any of the 107 from coverage. The exhaustiveness
+assertion below (107 = 107) still holds exactly as derived, and 222-18's reconciliation of the 107
+against plans 222-03 + 222-05..222-17 is unaffected by 222-02/222-04's new scope.
 
 ### Exhaustiveness assertion
 
@@ -337,38 +346,41 @@ below as `Operator decisions required`, not as unassigned names.
 
 ## Operator decisions required
 
-These three items diverge from the plan's design-time assumptions and require an explicit operator
-decision before wave 2 (222-02) unlocks. See Task 3 for the formal checkpoint.
+**All four items below are RESOLVED.** The operator reviewed these at the Task 3 blocking
+checkpoint on 2026-07-25 and approved the plan with amendments (see 222-01-SUMMARY.md for the full
+sign-off record and the county-wide integrity audit this checkpoint triggered).
 
-1. **222-02 (Plano) and 222-04 (McKinney) have zero un-stanced officeholders.** Both cities are fully
-   covered under the zero-rows definition — every active officeholder in Plano and McKinney already
-   holds at least one stance. As written, these two plans have no work to do.
-   **Decision needed:** close them as no-op plans (mark COVERED with 0 people, no migration file), or
-   repurpose their wave slots.
-   **Recommendation:** close as no-op — re-verify at each plan's own execution start (per the
-   idempotency principle) and record "0 un-stanced, no migration authored" in each SUMMARY. No
-   re-purposing needed; wave 2 already has 15 other plans with real work.
+1. **RESOLVED — 222-02 (Plano) and 222-04 (McKinney) have zero *un-stanced* officeholders, but the
+   operator asked for both cities to be double-checked** (they were stanced early in the project,
+   before this phase's evidence bar was written down) rather than accepting the "close as no-op"
+   recommendation. That check was widened county-wide and found real reasoning/sourcing defects in
+   the already-stanced cohort (see `222-01-INTEGRITY-AUDIT.md`). Operator decision, 2026-07-25:
+   **222-02 is REPURPOSED into a county-wide stance-integrity remediation plan** (delete 12 Class A
+   defective rows, hand-review 19 Class B2 rows), and **222-04 is REPURPOSED into a Plano + McKinney
+   topic-gap fill** (evidence-only research for the ~93 unfilled topic slots across Plano's 8 and
+   McKinney's 7 officeholders — re-derived live at execution, since the Class A deletions shrink
+   several per-person counts). This is a narrowly-scoped exception covering exactly these two
+   cities, not a general reopening of the 57 already-stanced residual (item 3 below). See the
+   amended per-plan assignment table below.
 
-2. **Longview has 5 un-stanced (> the plan's own 3-person threshold for riding along in 222-07).**
-   Task 3 how-to-verify step 3 says Longview above 3 un-stanced needs its own plan rather than riding
-   along in 222-07.
-   **Decision needed:** keep Longview in 222-07 (making it an 8-person plan: Prosper 1 + Celina 2 +
-   Longview 5), or split Longview into its own new plan.
-   **Recommendation:** keep Longview in 222-07. 8 people in one plan is well within this phase's
-   demonstrated per-plan sizes elsewhere (222-16 is already 13), and Longview's evidence tier
-   (Tier 1, `hasContext: true` already) matches Prosper/Celina's Tier 1/Medium tier rather than the
-   small-town Tier 3/4 towns — splitting it out would not change evidence availability, only add a
-   19th plan and a 19th commit/checkpoint cycle for no material benefit.
+2. **RESOLVED — Longview has 5 un-stanced (> the plan's own 3-person threshold for riding along in
+   222-07).** Operator decision, 2026-07-25: **keep Longview in 222-07** as an 8-person plan
+   (Prosper 1 + Celina 2 + Longview 5). No 19th plan.
 
-3. **All 57 already-stanced in-scope people hold between 1 and 9 of the 11 topics — none holds all
-   11.** D-07 ("leave existing records as-is") and CONTEXT.md's Deferred Ideas (which explicitly
-   excludes "standardizing the existing already-stanced" cohort) keep them out of scope for this
-   phase, so every one of them retains at least 2 blank spokes after Phase 222 closes.
-   **Decision needed:** confirm this residual is accepted as-is, or record it as explicit follow-on
-   work for a future phase.
-   **Recommendation:** accept as-is for Phase 222 (consistent with the locked D-07 decision and the
-   CONTEXT.md deferral) and log "standardize/backfill the existing 57 to all 11 topics" as a named
-   follow-on candidate for a future phase, not a Phase 222 gap.
+3. **RESOLVED — All 57 already-stanced in-scope people hold between 1 and 9 of the 11 topics — none
+   holds all 11.** Operator decision, 2026-07-25: **the 57-person partially-stanced residual is
+   ACCEPTED as out of scope** for Phase 222 per D-07, **except for Plano and McKinney** (see item 1
+   above — those two cities' gaps are filled by the repurposed 222-04, not left as residual). The
+   remaining 41 already-stanced people across the other 22 governments are logged as named follow-on
+   work ("standardize/backfill the existing partially-stanced cohort to all 11 topics") for a future
+   phase, not a Phase 222 gap.
+
+4. **RESOLVED — blank-register contract granularity.** Operator decision, 2026-07-25: **CONFIRMED as
+   per-person-per-topic**, not per-person. A person may legitimately appear in both the applied-
+   migration bucket and the blank-register bucket — sourced topics land in an applied migration,
+   unsourced topics land in the register, for the *same* person. The per-person "never both" reading
+   is unsatisfiable in practice because nobody in this phase's scope reaches all 11 topics. 222-18
+   must reconcile completeness at (person, topic) granularity, not (person) granularity.
 
 ---
 
