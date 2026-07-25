@@ -46,9 +46,17 @@ that were retired) + live-verification evidence in
 - [x] **COLLIN-PEOPLE-01**: Vacant offices in Blue Ridge (2), Nevada (3), Parker (2), Lowry Crossing (1), and Lucas (1) are researched; current incumbents are seated where the seat is filled in reality.
 - [x] **COLLIN-PEOPLE-02**: Offices that are genuinely vacant (no current officeholder) are documented as such rather than left as ambiguous empty seats.
 
+### Compass stances (COLLIN-STANCE)
+
+Phase 222 promotes this out of the deferred backlog below — the Local Lens question set is locked
+and already in use by 57 existing already-stanced Collin officeholders (D-06).
+
+- [ ] **COLLIN-STANCE-01**: Every in-scope un-stanced Collin officeholder is individually researched across all applicable compass topics, evidence-only — a chair is assigned only where a cited source shows an explicit on-topic position, and every attempted person with no sourced position is recorded in the phase blank register.
+- [ ] **COLLIN-STANCE-02**: Every applied stance is a whole integer 1-5 on one of the 11 canonical topic IDs and carries a matching `inform.politician_context` row with reasoning citing a specific dated action, quote, or vote plus at least one real source URL.
+
 ## Future Requirements (deferred)
 
-- **Compass stances for Collin County** — deferred pending finalization of the proposed local compass questions (see [[local_compass_questions]] / Phase 18 in the old v3.0 track). No stance research until the question set is locked, per [[stance_research_all_topics]].
+- **SUPERSEDED 2026-07-25 (Phase 222):** Compass stances for Collin County — deferred pending finalization of the proposed local compass questions (see [[local_compass_questions]] / Phase 18 in the old v3.0 track). No stance research until the question set is locked, per [[stance_research_all_topics]]. **This deferral no longer applies:** the Local Lens question set is locked in `inform.compass_lenses` and is already in use by the existing already-stanced Collin officeholders (D-06). See the new `### Compass stances (COLLIN-STANCE)` section above.
 - **Headshots for 0-photo cities** — Blue Ridge, Farmersville, Lowry Crossing, Nevada, Saint Paul currently have 0 headshots; memory records no online source. Needs manual operator sourcing (drop into the crop pipeline), not automatable this milestone.
 
 ## Out of Scope
@@ -61,7 +69,7 @@ that were retired) + live-verification evidence in
 
 <!-- Filled by roadmap: REQ-ID → Phase. -->
 
-All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no duplicates.
+All 14 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no duplicates.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
@@ -77,3 +85,5 @@ All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no dup
 | COLLIN-CONTACT-01 | Phase 220 | Complete |
 | COLLIN-CONTACT-02 | Phase 220 | Complete |
 | COLLIN-CONTACT-03 | Phase 220 | Complete |
+| COLLIN-STANCE-01 | Phase 222 | Pending |
+| COLLIN-STANCE-02 | Phase 222 | Pending |
