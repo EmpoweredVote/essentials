@@ -667,25 +667,90 @@ Plans:
 **Plans:** 18 plans in 18 sequential waves (planned 2026-07-24). **Every stance-research plan owns its own wave** — `/gsd-execute-phase` runs same-wave plans concurrently, and D-03 forbids researching two politicians at once. All 16 research plans are `autonomous: false` with a `[BLOCKING]` apply-and-verify checkpoint, because gsd-executor has no Supabase MCP and authored-but-unapplied SQL is this phase's biggest false-positive risk.
 
 Plans:
+**Wave 1**
 
 - [ ] 222-01-PLAN.md — Pre-flight: live worklist + BEFORE snapshot (`is_vacant IS NULL`), topic-UUID verify, live migration number, per-plan assignment table, blank-register skeleton, COLLIN-STANCE-01/02 promoted into REQUIREMENTS.md
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 222-02-PLAN.md — Tier 1: Plano (D-02 first pass)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 222-03-PLAN.md — Tier 1: Frisco (incl. Place 4 seat resolution)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
 - [ ] 222-04-PLAN.md — Tier 1: McKinney
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
 - [ ] 222-05-PLAN.md — Tier 1: Allen
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
 - [ ] 222-06-PLAN.md — Tier 1: Richardson
+
+**Wave 7** *(blocked on Wave 6 completion)*
+
 - [ ] 222-07-PLAN.md — Tier 1: Prosper + Celina (+ explicit Longview disposition)
+
+**Wave 8** *(blocked on Wave 7 completion)*
+
 - [ ] 222-08-PLAN.md — D-02 mayors sweep A: Anna, Murphy, Fairview, Princeton, Melissa, Farmersville, Parker, Lucas
+
+**Wave 9** *(blocked on Wave 8 completion)*
+
 - [ ] 222-09-PLAN.md — D-02 mayors sweep B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne
+
+**Wave 10** *(blocked on Wave 9 completion)*
+
 - [ ] 222-10-PLAN.md — Councils: Anna + Murphy
+
+**Wave 11** *(blocked on Wave 10 completion)*
+
 - [ ] 222-11-PLAN.md — Councils: Fairview + Princeton
+
+**Wave 12** *(blocked on Wave 11 completion)*
+
 - [ ] 222-12-PLAN.md — Councils: Melissa + Farmersville
+
+**Wave 13** *(blocked on Wave 12 completion)*
+
 - [ ] 222-13-PLAN.md — Councils: Parker + Lucas
+
+**Wave 14** *(blocked on Wave 13 completion)*
+
 - [ ] 222-14-PLAN.md — Councils: Weston + Blue Ridge
+
+**Wave 15** *(blocked on Wave 14 completion)*
+
 - [ ] 222-15-PLAN.md — Councils: Josephine + Lavon
+
+**Wave 16** *(blocked on Wave 15 completion)*
+
 - [ ] 222-16-PLAN.md — Councils: Lowry Crossing + Nevada
+
+**Wave 17** *(blocked on Wave 16 completion)*
+
 - [ ] 222-17-PLAN.md — Councils: Saint Paul + Van Alstyne (closes every government)
+
+**Wave 18** *(blocked on Wave 17 completion)*
+
 - [ ] 222-18-PLAN.md — Close-out: AFTER snapshot + per-gov delta, evidence-integrity + split-section gates, exactly-one-bucket completeness reconcile, `coverage.js` `hasContext` reconcile, browse spot-check screenshots
+
+**Cross-cutting constraints:**
+
+- Every stance written carries a matching inform.politician_context row whose reasoning names a specific dated action, quote, vote, or questionnaire answer and whose sources array holds at least one real URL that was actually fetched (D-04, D-05)
+- Every value is a whole integer 1 through 5 — never fractional, never a defaulted middle value (COLLIN-STANCE-02/adjacency)
+- The migration has been APPLIED to production and the evidence-integrity gate returns zero rows for this plan's politician_ids — authored-but-unapplied SQL does not count as done
+- This plan writes only (politician_id, topic_id) pairs that had no prior row per the 222-01 do-not-overwrite set (COLLIN-STANCE-01/adjacency, D-07)
+- The migration is a single BEGIN/COMMIT transaction using ON CONFLICT (politician_id, topic_id) DO UPDATE on both tables (COLLIN-STANCE-02/idempotency, COLLIN-STANCE-02/concurrency)
+- Every mayor in this plan's scope appears in exactly one of {this plan's applied migration rows, 222-CONFIRMED-BLANK.md} — never neither, never both (COLLIN-STANCE-01)
+- 100% of any stance valued 1 or 5 was re-verified against its cited source before commit, and at least a 20% random sample of the remaining stances was re-verified (222-VALIDATION.md resample contract for Tiers 2 to 4)
+- A council member with no explicit on-topic evidence produces zero inform.politician_answers rows and exactly one blank-register entry naming the sources actually checked; an all-blank council is a SUCCESS outcome (COLLIN-STANCE-01/empty, COLLIN-STANCE-02/empty)
+- 100% of any stance valued 1 or 5 was re-verified against its cited source before commit, plus at least a 20% random sample of the rest (222-VALIDATION.md resample contract for Tiers 2 to 4)
+- A council member with no explicit on-topic evidence produces zero inform.politician_answers rows and exactly one blank-register entry naming the exact URLs checked; an all-blank plan is a SUCCESS outcome (COLLIN-STANCE-01/empty, COLLIN-STANCE-02/empty)
 
 ---
 
