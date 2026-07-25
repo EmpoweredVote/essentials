@@ -388,13 +388,28 @@ Q: *"Where should your city focus its transportation investment?"*
 
 ### The 3 legacy-tail topics (D-07, attempt-if-evidence-exists only)
 
-**9. Taxation & Public Spending** — `f7e5678d-dadd-4556-a2fc-446e24642ceb` (topic_key: `taxes`) — **REWRITTEN post-Plan-D; do not use the subagent's built-in scale for this topic**
+**9. Taxation & Public Spending** — `f7e5678d-dadd-4556-a2fc-446e24642ceb` (topic_key: `taxes`) — 🛑 **DO NOT ASSIGN A CHAIR. OPERATOR RULING 2026-07-25.** Research the topic and record findings in `222-CONFIRMED-BLANK.md`, but write **no `taxes` row** into any migration for plans 222-05 … 222-17.
+
+> **Why (settled — do not re-litigate).** Chairs 1–2 require raising taxes *specifically on wealthy people and large companies*; chairs 4–5 require *scaling public services back*. Texas cities levy a uniform ad-valorem property tax and do neither, so **chair 3 is the only structurally reachable chair** for a city officeholder. It therefore carries no discriminating information and actively misrepresents: in plan 222-04, Tu and Horne argued **for** Plano's 2025 rate increase, Quintanilla cast the **lone vote against** it, Downs campaigned on holding rates down, Cloutier pushed rate cuts, and Feltus **declined** an exemption increase to protect services — all eight would have rendered as the identical chair 3. Assigning the middle chair because the outer four are unreachable is defaulting to a middle value, which D-04 forbids even with a real dated quote behind it. Eight rows were dropped on this basis; their evidence is preserved verbatim in the register so they can be placed if this question is ever rewritten with municipal scope. Full reasoning in the header of `1418_222_plano_gapfill_stances.sql` and under "RULING: `taxes` is structurally unanswerable" in `222-CONFIRMED-BLANK.md`.
+>
+> **`healthcare` (`e8dad4a8-…`) has the same defect from the opposite direction** — all five of its chairs describe national healthcare policy (single-payer → pure private markets), which no city council member holds a position on by role. Search it honestly; expect a blank every time. Do not stretch a health-adjacent remark into a chair.
+
+**Original scale text, retained for reference and for any future municipal rewrite:**
 Q: *"How should government balance what it collects in taxes against what it spends on public services?"*
 1. Significantly raise taxes on wealthy people and large companies to fund more public services
 2. Moderately raise taxes on wealthy people and large companies to fund existing services
 3. Keep the current tax system mostly as-is with small adjustments to close unfair loopholes
 4. Cut taxes for everyone and scale back public services to match
 5. Drastically cut taxes and shrink government so people and businesses keep more of their money
+
+> ⚙️ **EXECUTION NOTES for plans 222-05 … 222-17 (added 2026-07-25 from waves 2–4).** These are environment facts, not preferences:
+> 1. **Dispatch research to a `general-purpose` agent, never `gsd-executor`.** `gsd-executor`'s tool grant is `Read, Write, Edit, Bash, Grep, Glob, Skill, mcp__context7__*` — it has **no `WebSearch`/`WebFetch`** and structurally cannot do stance research. Use `gsd-executor` only for file-authoring/closeout work.
+> 2. **MCP tools are unbound in every subagent session.** All production SQL — the live gap/worklist derivation *and* the migration apply — runs orchestrator-side or at an operator checkpoint. Never write a plan task that assumes the executing agent can query the DB.
+> 3. **Re-derive scope live at execution.** Plan 222-04's politician_ids were wrong for 4 of 15 people, and its ~93-pair estimate was actually 108 after 222-02's deletions changed the gaps.
+> 4. **Grep every subagent SUMMARY for verification claims before accepting it** — two agents this phase asserted checks that never ran (a "hand-review" of rows it couldn't read; a "browse-view screenshot captured" and a "gate returned zero rows"). A SUMMARY asserting a passed gate suppresses the real check permanently.
+> 5. **Migration numbers used so far: 1416–1420.** Re-check `ls /c/EV-Accounts/backend/migrations | grep -oE '^[0-9]+' | sort -n | tail -1` each time; a concurrent Oregon workstream also commits to that repo.
+> 6. **Do not push `C:/EV-Accounts`** without explicit per-push authorisation — it deploys Render, and the concurrent workstream's commits may be sitting ahead.
+> 7. **Blank rates are high and correct.** Waves 3–4 produced 10 chairs from 130 pairs attempted. `healthcare`, `local-immigration`, `civil-rights` and `growth-and-development` are near-total blanks for small-town officials. That is D-04 working.
 
 **10. Growth & Development Pace** — `fb25c1ac-91cc-49bf-8afc-c7fa22ef45e4` (topic_key: `growth-and-development`) — unchanged since before the rewrite; agrees with the subagent's built-in text
 Q: *"How should your city manage population growth and new development?"*
