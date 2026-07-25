@@ -1159,3 +1159,13 @@ at close.
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.2: National stance evidence-integrity audit (BACKLOG)
+
+**Goal:** [Captured for future planning] Roughly 8% of the 33,956 `inform.politician_context` rows carry an evidence-integrity defect, live on production profiles. Three signatures, measured 2026-07-25: (A1) **387 rows across 89 people** have NULL `sources` **and** reasoning that explicitly admits "no record found" — a chair value was written where the researcher documented finding nothing, directly violating no-default-stance; concentrated in TX (314 rows / 71 people), then IN (37 / 8). (A2) **2,348 rows across ~700 people in ~45 states** name a party in the reasoning text, which is **user-visible** (`src/pages/Citations.jsx:112`, StanceAccordion via `src/components/CompassCard.jsx:29`), contradicting the antipartisan display rule — top: TX 697, unattributed 512, blank-state 351, CA 172, MD 168, OR 135, UT 101. (A4) 17 rows say "has made no public statement" yet carry a chair. Fix = delete A1 and A4 (blank spoke is correct), triage A2 into inferential (delete) vs incidental (rewrite reasoning without party language), log every deletion in a blank register at (person, topic) granularity, then add a write-time guard against answer rows whose context row has NULL sources. Every write is production and outward-facing — deletions require a blocking operator apply checkpoint. Full detail and runnable signature definitions in `.planning/todos/pending/national-stance-evidence-integrity-audit.md`. Discovered 2026-07-25 during Phase 222 plan 222-01, after the operator rejected closing Plano/McKinney as no-op and asked for them to be double-checked.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
