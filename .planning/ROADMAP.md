@@ -673,7 +673,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 222-02-PLAN.md — Tier 1: Plano (D-02 first pass)
+- [x] 222-02-PLAN.md — Tier 1: Plano (D-02 first pass)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
