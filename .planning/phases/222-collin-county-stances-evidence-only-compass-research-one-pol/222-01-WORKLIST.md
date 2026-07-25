@@ -226,7 +226,13 @@ Debbie Fisher | Council Member Place 5 | `8d24cdb6-64d1-4597-a66e-71bc723391d7`
 Neil Peterson | Council Member Place 6 | `72c0de8c-38b0-4470-a0d0-9d7a71986be0`
 Dusty Kuykendall | Mayor | `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c`
 
-### City of McKinney (4845744) — 0 un-stanced of 7 active (fully stanced; NO WORK for 222-04)
+### City of McKinney (4845744) — 0 un-stanced of 7 active (zero rows on the 107 worklist)
+
+All 7 hold at least one stance, so none appears on the 107-name research worklist. **They are NOT
+"fully stanced":** each holds only 3–6 of the 11 topics (42 slots unfilled), and McKinney is 0/7 on
+`civil-rights`, `growth-and-development`, `healthcare`, `taxes`, and `local-immigration`. Per the
+2026-07-25 operator amendment, 222-04 is re-scoped to fill those gaps — see the assignment table
+below and `222-01-INTEGRITY-AUDIT.md`.
 
 ### City of Melissa (4847496) — 6 un-stanced of 7 active
 Preston Taylor | Council Member Place 1 | `3e377dbe-2c37-41ed-a65d-664de75318ae`
@@ -256,7 +262,13 @@ Darrel Sharpe | Council Member Place 4 | `aba6f016-e35d-4977-99e6-a2cfc079ad75`
 Billy Barron | Council Member Place 5 | `e136a517-1772-4f16-9bd5-785828f524e8`
 Lee Pettle | Mayor | `61f73b44-c46d-4f1b-91a7-0d35c83feecb`
 
-### City of Plano (4858016) — 0 un-stanced of 8 active (fully stanced; NO WORK for 222-02)
+### City of Plano (4858016) — 0 un-stanced of 8 active (zero rows on the 107 worklist)
+
+All 8 hold at least one stance, so none appears on the 107-name research worklist. **They are NOT
+"fully stanced":** each holds only 3–6 of the 11 topics (51 slots unfilled), and Plano is 0/8 on
+`growth-and-development` and `healthcare`. Plano also carries 6 of the 12 Class A defective rows.
+Per the 2026-07-25 operator amendment, remediation is assigned to 222-02 and the gap fill to 222-04 —
+see the assignment table below and `222-01-INTEGRITY-AUDIT.md`.
 
 ### City of Princeton (4859576) — 3 un-stanced of 8 active
 Cristina Todd | Council Member Place 2 | `3c8d7283-2387-47ff-8a29-1ef7a1e2a554`
