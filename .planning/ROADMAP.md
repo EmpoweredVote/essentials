@@ -669,7 +669,7 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 222-01-PLAN.md — Pre-flight: live worklist + BEFORE snapshot (`is_vacant IS NULL`), topic-UUID verify, live migration number, per-plan assignment table, blank-register skeleton, COLLIN-STANCE-01/02 promoted into REQUIREMENTS.md
+- [x] 222-01-PLAN.md — Pre-flight: live worklist + BEFORE snapshot (`is_vacant IS NULL`), topic-UUID verify, live migration number, per-plan assignment table, blank-register skeleton, COLLIN-STANCE-01/02 promoted into REQUIREMENTS.md
 
 **Wave 2** *(blocked on Wave 1 completion)*
 

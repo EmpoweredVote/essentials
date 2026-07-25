@@ -2,29 +2,29 @@
 gsd_state_version: 1.0
 milestone: v25.0
 milestone_name: Collin County TX Data-Completeness
-current_phase: 221
+current_phase: 222
+current_phase_name: collin-county-stances-evidence-only-compass-research-one-pol
 status: executing
-stopped_at: Completed 220-05-PLAN.md
-last_updated: "2026-07-25T02:33:41.633Z"
+stopped_at: Completed 222-01-PLAN.md (operator sign-off + integrity audit + re-scope)
+last_updated: "2026-07-25T16:06:13.638Z"
 last_activity: 2026-07-24
-last_activity_desc: Phase 221 marked complete
+last_activity_desc: Phase 222 execution started
 progress:
   total_phases: 6
-  completed_phases: 5
-  total_plans: 24
-  completed_plans: 24
-  percent: 83
-current_phase_name: collin-county-headshots-source-and-attach-photos-for-officia
+  completed_phases: 4
+  total_plans: 42
+  completed_plans: 25
+  percent: 60
 ---
 
 # State
 
 ## Current Position
 
-Phase: 221 — COMPLETE
-Plan: 1 of 4
+Phase: 222 (collin-county-stances-evidence-only-compass-research-one-pol) — EXECUTING
+Plan: 2 of 18
 Status: Ready to execute
-Last activity: 2026-07-24 — Phase 221 marked complete
+Last activity: 2026-07-24 — Phase 222 execution started
 
 ## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
@@ -50,7 +50,7 @@ Last activity: 2026-07-24 — Phase 221 marked complete
 See: `.planning/PROJECT.md` (updated 2026-07-23)
 
 **Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
-**Current focus:** Phase 221 — collin-county-headshots-source-and-attach-photos-for-officia
+**Current focus:** Phase 222 — collin-county-stances-evidence-only-compass-research-one-pol
 
 ## Scheduled Follow-Up — AZ 2026 Candidate Reconcile (Phase 206)
 
@@ -715,8 +715,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-24T20:04:34.393Z
-Stopped at: Completed 220-05-PLAN.md
+Last session: 2026-07-25T16:06:13.581Z
+Stopped at: Completed 222-01-PLAN.md (operator sign-off + integrity audit + re-scope)
 Resume file: None
 
 ## Performance Metrics
@@ -832,6 +832,7 @@ Resume file: None
 | Phase 220 P03 | 18min | 1 tasks | 2 files |
 | Phase 220 P04 | 32min | 1 tasks | 2 files |
 | Phase 220 P05 | 38min | 1 tasks | 2 files |
+| Phase 222 P01 | n/a | 3 tasks | 4 files |
 
 ## Decisions
 
@@ -982,6 +983,9 @@ Resume file: None
 - [Phase ?]: 219-01: Saint Paul splits across two cycles - Seat1/Seat2 on 2025-05-03 (own row), Mayor/Seat3/4/5 on 2026-05-02 (cancelled, unopposed)
 - [Phase ?]: 219-01: RESEARCH.md corrections - Richardson Mayor is Amir Omar not Voelker; Place 6 was a 2-way Shamsul-Kupfer race with no runoff; McKinney At-Large 1 runoff winner Ernest Lynch confirmed
 - [Phase ?]: Migration 1405 (web_form_url batch, 11 confirmed-form Collin cities) authored; apply-script mirrors 1393 gate shape; apply-script not committed to git per repo's backend/scripts/_* gitignore convention
+- [Phase ?]: 222-02 repurposed from Plano no-op into county-wide stance-integrity remediation (delete 12 Class A rows, review 19 Class B2 rows)
+- [Phase ?]: 222-04 repurposed from McKinney no-op into Plano+McKinney topic-gap fill (~93 unfilled slots, re-derived live)
+- [Phase ?]: Blank-register completeness contract confirmed per-person-per-topic; Longview stays in 222-07 as 8-person plan
 
 ## Operator Next Steps
 
