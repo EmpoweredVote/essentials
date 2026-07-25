@@ -10,6 +10,50 @@ resolves_phase: 999.2
 
 # National stance evidence-integrity audit
 
+## ⚠️ NOT A NEW DISCOVERY — merge with the existing EV-Accounts audit first
+
+**Read `C:/EV-Accounts/.planning/todos/2026-07-24-party-prior-stance-contamination-audit.md` before
+doing anything with this file.** That audit predates this one by a day, is more thorough, and already
+has working tooling. This file was written on 2026-07-25 during Phase 222 without knowledge of it;
+its "discovered during Phase 222" framing is wrong. Do not run a second sweep in parallel.
+
+What the existing audit already establishes (measured, not estimated):
+- **907 context rows across 293 politicians** are sourced *only* to a Ballotpedia **biography** URL
+  (`ballotpedia.org/<Name>`), which carries no stance content in either direction. By state:
+  (none) 137, OR 97, TX 23, VA 18, CA 11, MD 2, ME 2, MA 1, UT 1, AZ 1.
+- Oregon legislators + federal OR reps (n=96): 668 context rows, **293 (44%)** bio-page-only,
+  **zero quotes across the entire cohort**.
+- Party-prior inference with verbatim samples ("consistent progressive voting record from Portland
+  district"; "conservative Marion/Polk County district priorities").
+- A confabulation proof: Emerson Levy's civil-rights reasoning cites a "voting record from Lake
+  Oswego district" — Levy represents HD 53, Bend/Redmond/Sisters, ~130 miles away.
+- **A defect class this file missed entirely: stances citing votes cast before the member was
+  seated.** 7 of 8 bill-cited Oregon rows attribute a roll call from before the member took office.
+
+Tooling already built, in `C:/EV-Accounts/backend/scripts/`:
+`sweep-or-preseating.mjs`, `retire-or-preseating.mjs`, `check-source-supports.py`.
+
+Work already completed: **Oregon pre-seating sweep retired 102 fabricated rows across 39
+legislators** (commit `905a6514`), and a source-supports check run over Oregon found **153
+actionable rows** with an adjudication queue at
+`backend/.../or-bend-stateleg/adjudication-queue-OR.json` (commit `df8b0d44`).
+
+**That Oregon sweep is also the answer to the ~102-row mystery recorded further down this file** —
+`inform.politician_context` dropped 33,956 → 33,827 during Phase 222, and 102 of those rows were
+retired by the Oregon sweep, not lost. Treat that item as resolved.
+
+**What this file still adds** (verified 2026-07-25, not in the EV-Accounts audit):
+1. **921 `politician_answers` rows have no `politician_context` row at all** — a chair displayed with
+   zero reasoning and zero sources. Different signature from bio-page-only; needs its own pass.
+2. **2,304 rows carry party language in reasoning attached to a live stance**, table-wide count.
+3. The Collin County slice, now remediated by Phase 222 plan 222-02 (27 pairs deleted).
+4. Two schema gaps: `politician_answers_value_half_step` permits `x.5`; nothing prevents an answer
+   row without a context row.
+5. **One Collin row matches the bio-page-only signature and is still live:** Dan Barrios
+   (Richardson) `e8c863a7-d116-480e-a81f-47d26f45e264` / `healthcare`, sourced solely to
+   `https://ballotpedia.org/Dan_Barrios`. Phase 222's A1 signature required NULL sources so it was
+   missed; two of Barrios's other rows were deleted. **Not yet deleted — needs operator approval.**
+
 ## How this surfaced
 
 Phase 222 planned to close plans 222-02 (Plano) and 222-04 (McKinney) as no-op because
