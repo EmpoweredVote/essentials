@@ -81,9 +81,10 @@ Evidence: Official elected-officials page (stpaultexas.us) carries no member por
 
 The 221-01 worklist query used `p.is_vacant = false`, which **excludes rows where `is_vacant IS NULL`**. That silently hid **7 active, imageless officeholders** (surfaced when Brittany Colberg showed a "BC" placeholder on the live Frisco browse). True imageless in-scope set was **56, not 49**. All 7 were then sourced:
 
-**Found & imported (2):**
+**Found & imported (3):**
 - **Brittany Colberg** — Frisco, Council Member Place 6 (`ddcb2d35-0f94-4956-ab65-ae56a900ac11`) — friscotexas.gov, press_use, 1500×2100 crisp.
 - **Doug Charles** — Prosper, Council Member Place 5 (`48500428-3421-4298-b618-613696ca644c`) — prospertx.gov, press_use, 400×400.
+- **Chris Schulmeister** — Allen, Mayor (`698da6ca-eadd-46a0-8e27-94ae48d23279`) — cityofallen.org, press_use, 1303×1303 crisp. Extracted from a **CSS background-image** on the JS-rendered council page (`bus-directory/.../Mayor Chris Schulmeister - Copy.jpg`), not an `<img>` tag — plain HTTP/`<img>` scraping missed it; needed a Playwright render + `getComputedStyle().backgroundImage`.
 
 **Confirmed blank (4):**
 - **Deborah Ison** — Murphy, Council Member Place 3 (`bb9bed2f-cf0c-4997-9676-e5314ee1d7e0`) — Murphy directory serves a single shared placeholder avatar (documentID=7764, not a raster image) for ALL members; no individual photos exist.
@@ -91,12 +92,13 @@ The 221-01 worklist query used `p.is_vacant = false`, which **excludes rows wher
 - **Shea Scott** — Celina, Council Member Place 4 (`91128e4f-94f6-4119-8087-4449ee16964a`) — official council + staff directory carry no member portraits.
 - **Shane Lambert** — Celina, Council Member Place 5 (`2e8dc841-f8ea-42f0-b6a4-08e9c779a20e`) — same.
 
-**Still open (1) — worth a deeper dig, NOT a confirmed blank:**
-- **Chris Schulmeister** — Allen, Mayor (`698da6ca-eadd-46a0-8e27-94ae48d23279`) — the official Allen site (JS-rendered) surfaces only a group/family swearing-in photo, not a clean headshot. A big-city mayor headshot likely exists behind the JS or in a press kit; deferred pending a Playwright-render pass or a records request.
+**Still open: none.** All 7 undercounted officeholders are resolved — 3 imported, 4 confirmed blank.
 
-**AFTER the fix:** with-image went 110 → **113** (Colberg + Doug Charles this addendum... note Colberg/Charles are Frisco/Prosper, both city-scope). Remaining true blanks incl. these = documented above; Schulmeister is the one open item.
+**AFTER the fix (corrected scope `is_vacant = false OR IS NULL`):** total in-scope **157**, with-image **113** (110 + Colberg + Doug Charles + Schulmeister), without-image **44** (the 40 original blanks + Ison/Kelley/Scott/Lambert). The 4 Murphy/Celina blanks are the correct terminal state; **zero open items.**
 
-**LESSON:** headshot/coverage audits must use `(is_vacant = false OR is_vacant IS NULL)`, never `is_vacant = false` alone — NULL means "not marked vacant", i.e. a seated person.
+**LESSONS:**
+1. Headshot/coverage audits must use `(is_vacant = false OR is_vacant IS NULL)`, never `is_vacant = false` alone — NULL means "not marked vacant", i.e. a seated person.
+2. Some official sites (Allen) attach member photos as **CSS `background-image`**, not `<img>` — plain HTTP/`<img>` scraping misses them. Fallback: Playwright render + `getComputedStyle(el).backgroundImage`.
 
 ---
 
