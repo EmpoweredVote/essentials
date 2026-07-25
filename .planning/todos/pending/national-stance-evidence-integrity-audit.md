@@ -21,27 +21,56 @@ found 12 defective rows out of 220.
 Widening the same signature checks to the **whole** `inform.politician_context` table shows
 Collin is a small slice of a much larger problem.
 
-## Live national numbers (production, 2026-07-25)
+## Live national numbers (production)
 
-Total `inform.politician_context` rows: **33,956**
+> **CORRECTED 2026-07-25 after the 222-02 apply.** The first pass at these numbers counted
+> signature matches in `inform.politician_context` **without checking whether each row had a
+> paired `inform.politician_answers` row.** That conflated two very different things: a context
+> row WITH an answer row is a displayed stance (a real defect), while a context row WITHOUT an
+> answer row is a "searched, found nothing" note with no chair attached — which is the CORRECT
+> blank-spoke outcome this project wants, not a defect. The A1 count was overstated by ~190x as
+> a result. Corrected figures below; always join to `politician_answers` before calling a
+> context row a defect.
 
-| Signature | Rows | People | Meaning |
+Total `inform.politician_context` rows: **33,827** · total `inform.politician_answers` rows: **34,196**
+
+| Signature | Context rows | **With paired answer (REAL defect)** | No answer row (correct blank note) |
 |---|---|---|---|
-| **A1 — fabricated** | **387** | **89** | `sources` is NULL **and** reasoning explicitly admits "no record found" / "no public record" — a chair value was written where the researcher documented finding no evidence |
-| **A2 — party in displayed text** | **2,348** | ~700+ | Reasoning names a party (Democrat / Republican / GOP / Libertarian) |
-| A4 — no-statement default | 17 | ~15 | Reasoning says "has made no public statement" yet a chair was written |
-| (context) rows with no sources at all | 457 | — | superset of A1 |
+| A1 — reasoning admits "no record found", `sources` NULL | 382 | **2** | 380 |
+| A2 — party named in reasoning | 2,306 | **2,304** | 2 |
 
-**A1 by state:** TX 314 rows / 71 people · IN 37 / 8 · unattributed 36 / 10.
-The TX concentration is notable — the 12 Collin rows are a subset of TX's 314, so other
-TX cities and older TX seeding carry the rest.
+**Revised severity ranking:**
 
-**A2 by state (top):** TX 697 · unattributed 512 · blank-state 351 · CA 172 · MD 168 ·
-OR 135 · UT 101 · ME 47 · VA 39 · IN 22 · AZ 12 — present in ~45 states.
+1. **A2 — party language in displayed reasoning: 2,304 live rows.** This is the big one. The text
+   renders to users (`src/pages/Citations.jsx:112`, StanceAccordion via `CompassCard.jsx:29`) and
+   contradicts the antipartisan display rule ([[antipartisan_display]]). Some share is presumably
+   incidental/descriptive ("voted with the Republican majority to…") rather than inferential, so
+   2,304 is an upper bound on true violations — but every one is party text shown to a user.
+   Spread across ~45 states; top by state (pre-correction sample): TX 697, unattributed 512,
+   blank-state 351, CA 172, MD 168, OR 135, UT 101.
+2. **921 `politician_answers` rows have NO `politician_context` row at all.** A chair displayed on
+   a public profile with zero reasoning and zero sources. Found during the 222-02 post-apply
+   verification. Larger than A1 and previously unmeasured — needs its own triage pass.
+3. **A1 — only 2 rows remain nationally.** Was 7 before Phase 222; plan 222-02 deleted 5 of them
+   (the Collin slice). Small, and cheap to finish off.
 
-Roughly **8%** of all context rows carry at least one of these signatures.
+**Two schema gaps found while verifying:**
+- `politician_answers_value_half_step` CHECK permits `x.5` values (`value*2 = round(value*2)`), so
+  the whole-integer-1-to-5 rule is convention only. This is how the earlier fractional-stance
+  corruption got in ([[corrupted_fractional_stances]]). Consider tightening to whole integers.
+- Nothing prevents an answer row from existing without a context row (see item 2), and nothing
+  prevents a context row with NULL `sources` from pairing with an answer row (A1). Both want a
+  write-time guard or a CHECK/trigger.
 
-## Why A2 matters more than it looks
+**Unexplained, needs investigation:** `politician_context` measured 33,956 before the 222-02 apply
+and 33,827 after. The apply deleted exactly 27 (both tables are `PRIMARY KEY (politician_id,
+topic_id)`, so no duplicate-removal effect). That leaves ~102 rows unaccounted for. Collin scope
+reconciles exactly (220 → 193 answers), so the drift is outside the applied change. Candidate
+causes: concurrent writes on the production DB from another session, or a `compass_topics` row
+deletion cascading via `topic_id … ON DELETE CASCADE` on both tables. No baseline exists to
+confirm either — establish one before the 999.2 sweep so the sweep's own deltas are trustworthy.
+
+## Why A2 is the headline
 
 `politician_context.reasoning` is **user-visible**:
 - `src/pages/Citations.jsx:112-118` renders `topic.reasoning` directly.
@@ -55,30 +84,36 @@ majority to…") rather than inferential, so the count is an upper bound on the 
 not a confirmed violation count. It still needs triage: every one of them is party text
 rendered to a user.
 
-## Why A1 is the most serious
+## Why A1 still matters despite being small
 
-A1 rows are stances that exist on public profiles with no supporting evidence, where the
-stored reasoning itself says no evidence was found. This directly violates
-[[stance_no_default_value]] (no evidence = blank spoke, never a defaulted stance). Four of
-the five Collin instances were the `housing` topic and all were dated "Researched
-2026-05-11", suggesting one early pass filled `housing` for everyone regardless of
-evidence. Whether that pattern holds across the other 382 rows is unverified.
+An A1 row is a stance on a public profile with no supporting evidence, where the stored
+reasoning itself says no evidence was found — a direct violation of
+[[stance_no_default_value]]. Four of the five Collin instances were `housing` and all were
+dated "Researched 2026-05-11", suggesting one early pass filled `housing` for everyone
+regardless of evidence. Only 2 such rows remain nationally, so this is now a quick cleanup
+rather than a project.
 
-## Action
+## Action (revised priority order)
 
-1. Re-run the three signature queries table-wide and export the full row list
-   (`politician_id`, `topic_id`, state, value, reasoning) before changing anything.
-2. **A1 (387 rows):** delete both the `politician_answers` and `politician_context` rows —
-   blank spoke is the correct terminal state. Log every deletion in a blank register at
-   (person, topic) granularity, mirroring the Phase 221/222 pattern.
-3. **A2 (2,348 rows):** triage inferential vs. incidental. Inferential → delete the stance.
-   Incidental → rewrite the reasoning to remove party language while keeping the cited
-   action/vote. Do not silently strip text without re-reading the source.
-4. **A4 (17 rows):** delete — same rationale as A1.
-5. Add a DB-level or CI guard so a future pass cannot write an answer row whose paired
-   context row has NULL `sources`, and flag party keywords in reasoning at write time.
-6. Re-check `src/lib/coverage.js` `hasContext` chips afterwards — deletions may drop some
+1. **Establish a baseline row count** for both tables and investigate the unexplained ~102-row
+   `politician_context` drift before any bulk change, so the sweep's own deltas mean something.
+2. **A2 — 2,304 party-in-reasoning rows with live stances.** Export the full list, then triage
+   inferential vs. incidental. Inferential (party used to derive the chair) → delete the stance
+   and log the blank. Incidental (party named while describing a real vote) → rewrite the
+   reasoning to drop party language while keeping the cited action. Never strip text without
+   re-reading the source. This is the bulk of the work.
+3. **921 answers with no context row.** Decide per row: source it properly, or delete the chair.
+   A displayed stance with no reasoning and no citation cannot be defended.
+4. **A1 — 2 remaining rows.** Delete both sides, log the blanks. Trivial.
+5. **Add write-time guards** so this cannot recur: reject an answer row whose paired context row
+   has NULL `sources`; reject an answer row with no context row at all; flag party keywords in
+   reasoning at write time; and tighten `politician_answers_value_half_step` to whole integers.
+6. **Re-check `src/lib/coverage.js` `hasContext` chips** afterwards — deletions may drop some
    entries back to zero coverage.
+
+Always join `politician_context` to `politician_answers` before classifying a row as a defect.
+A context row with no answer row is a correct blank, not a problem — getting this wrong is what
+inflated the first version of this document.
 
 ## Scope notes
 
