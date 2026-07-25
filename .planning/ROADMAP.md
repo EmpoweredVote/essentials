@@ -664,11 +664,28 @@ Plans:
 **Constraints (heavy phase):** research ONE politician at a time (parallel burns quota); ALL compass topics per politician; evidence-only — no evidence = blank spoke, never default a stance; stances are discrete 1–5 "chairs"; antipartisan (party never displays).
 **Requirements**: COLLIN-STANCE-01 (per-politician all-topic evidence-only research), COLLIN-STANCE-02 (apply 1–5 stances, blank where unsourced)
 **Depends on:** Phase 221 (soft — do after profiles have photos/contacts).
-**Plans:** TBD (run `/gsd-plan-phase 222`)
+**Plans:** 18 plans in 18 sequential waves (planned 2026-07-24). **Every stance-research plan owns its own wave** — `/gsd-execute-phase` runs same-wave plans concurrently, and D-03 forbids researching two politicians at once. All 16 research plans are `autonomous: false` with a `[BLOCKING]` apply-and-verify checkpoint, because gsd-executor has no Supabase MCP and authored-but-unapplied SQL is this phase's biggest false-positive risk.
 
 Plans:
 
-- [ ] TBD (run /gsd-plan-phase 222 to break down)
+- [ ] 222-01-PLAN.md — Pre-flight: live worklist + BEFORE snapshot (`is_vacant IS NULL`), topic-UUID verify, live migration number, per-plan assignment table, blank-register skeleton, COLLIN-STANCE-01/02 promoted into REQUIREMENTS.md
+- [ ] 222-02-PLAN.md — Tier 1: Plano (D-02 first pass)
+- [ ] 222-03-PLAN.md — Tier 1: Frisco (incl. Place 4 seat resolution)
+- [ ] 222-04-PLAN.md — Tier 1: McKinney
+- [ ] 222-05-PLAN.md — Tier 1: Allen
+- [ ] 222-06-PLAN.md — Tier 1: Richardson
+- [ ] 222-07-PLAN.md — Tier 1: Prosper + Celina (+ explicit Longview disposition)
+- [ ] 222-08-PLAN.md — D-02 mayors sweep A: Anna, Murphy, Fairview, Princeton, Melissa, Farmersville, Parker, Lucas
+- [ ] 222-09-PLAN.md — D-02 mayors sweep B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne
+- [ ] 222-10-PLAN.md — Councils: Anna + Murphy
+- [ ] 222-11-PLAN.md — Councils: Fairview + Princeton
+- [ ] 222-12-PLAN.md — Councils: Melissa + Farmersville
+- [ ] 222-13-PLAN.md — Councils: Parker + Lucas
+- [ ] 222-14-PLAN.md — Councils: Weston + Blue Ridge
+- [ ] 222-15-PLAN.md — Councils: Josephine + Lavon
+- [ ] 222-16-PLAN.md — Councils: Lowry Crossing + Nevada
+- [ ] 222-17-PLAN.md — Councils: Saint Paul + Van Alstyne (closes every government)
+- [ ] 222-18-PLAN.md — Close-out: AFTER snapshot + per-gov delta, evidence-integrity + split-section gates, exactly-one-bucket completeness reconcile, `coverage.js` `hasContext` reconcile, browse spot-check screenshots
 
 ---
 
