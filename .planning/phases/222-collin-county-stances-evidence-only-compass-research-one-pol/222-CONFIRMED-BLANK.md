@@ -42,11 +42,24 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 143
+## Count: 144
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
-+ 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill).
++ 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
++ 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare).
 222-05 through 222-17 append their own per-government sections below as they execute.
+
+**Migration status, all applied to production 2026-07-25 after operator approval:**
+
+| Migration | Contents | Status |
+|---|---|---|
+| `1416_222_collin_stance_integrity_remediation.sql` | 27 deletions (12 Class A + 15 Class B2) | APPLIED |
+| `1417_222_frisco_stances.sql` | 7 chairs (Colberg 1, Hill 6) | APPLIED |
+| `1418_222_plano_gapfill_stances.sql` | 1 chair (Lavine residential-zoning=2) — revised down from 5; the 4 `taxes` rows were dropped by operator ruling, see below | APPLIED |
+| `1419_222_mckinney_gapfill_stances.sql` | 2 chairs (Lynch homelessness=4, Jones growth-and-development=3) | APPLIED |
+| `1420_222_barrios_healthcare_bio_only_remediation.sql` | 1 deletion (bio-page-only) | APPLIED |
+
+Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
 
 ---
 
@@ -977,5 +990,66 @@ only, with zero newly applied stances — a correct outcome under D-04, not a sk
 researched, written, or touched. All 7 previously-deleted McKinney pairs that fall in this scope
 were re-researched and all 7 remain blank; none was reinstated. Zero `taxes` rows were written; the
 four members with real tax evidence are marked above as pending the operator's methodology ruling.
+
+---
+
+## RULING: `taxes` is structurally unanswerable for municipal officeholders (2026-07-25)
+
+**Operator decision, 2026-07-25.** Every `taxes` entry in this register — the four Plano members
+(Maria Tu, Rick Horne, Chris Krupa Downs, Vidal Quintanilla) and the four McKinney members (Ernest
+Lynch, Michael Jones, Patrick Cloutier, Geré Feltus) who were marked "pending the taxes methodology
+ruling" above — is now a **CONFIRMED BLANK**. No `taxes` chair was applied for any of them, and none
+will be applied for the remaining plans 222-05 … 222-17.
+
+Why. The `taxes` scale (`f7e5678d-dadd-4556-a2fc-446e24642ceb`) reads:
+
+| Chair | Requires |
+|---|---|
+| 1 | Significantly raise taxes **on wealthy people and large companies** to fund more services |
+| 2 | Moderately raise taxes **on wealthy people and large companies** to fund existing services |
+| 3 | Keep the current tax system mostly as-is with small adjustments to close unfair loopholes |
+| 4 | Cut taxes for everyone **and scale back public services** to match |
+| 5 | Drastically cut taxes and shrink government |
+
+Texas cities levy a uniform ad-valorem property tax. They cannot tax by wealth or company size, so
+chairs 1–2 are outside municipal power; they do not cut services to match rate cuts, so chairs 4–5
+do not occur. Chair 3 is the only structurally reachable chair, which means it carries no
+discriminating information — and it actively misrepresents. Tu and Horne argued **for** Plano's 2025
+rate increase, Quintanilla cast the **lone vote against** it, Downs campaigned on holding rates down
+via commercial-base growth; Cloutier pushed rate cuts while Feltus **declined** a further exemption
+increase specifically to protect service funding. All eight would have rendered as the identical
+chair 3. Tu and Horne voted to *raise* the rate, which "keep the current system mostly as-is" does
+not describe at all — the scale has no chair for "raise uniform property taxes to fund existing
+services."
+
+Assigning the middle chair because the outer four are unreachable is defaulting to a middle value,
+which this phase's own prohibitions forbid even where each row cites a real, dated quote. Blank is
+therefore the correct terminal state, and it is a SUCCESS outcome under D-08.
+
+**The research is preserved, not discarded.** Each person's tax evidence is recorded verbatim in
+their entry above, so if the Local Lens `taxes` question is later rewritten with a municipal scope
+(e.g. chairs spanning "raise the rate to fund services" → "cut the rate and accept service
+reductions"), these eight can be placed from the existing evidence without re-researching.
+
+**Follow-on logged:** the Local Lens `taxes` question needs a municipal-scope rewrite before any
+city officeholder can be placed on it. Note `healthcare` has the same shape for the opposite reason
+— all five of its chairs describe national healthcare policy, which is why every `healthcare` pair
+in this phase is blank and correctly so.
+
+---
+
+## Follow-on integrity remediation — bio-page-only row (2026-07-25)
+
+One further defect was found after plan 222-02 closed, while cross-checking Phase 222 against the
+pre-existing `C:/EV-Accounts/.planning/todos/2026-07-24-party-prior-stance-contamination-audit.md`.
+That audit measures 907 rows nationally whose only source is a Ballotpedia **biography** URL — a
+page carrying no stance content in either direction. Exactly one such row existed in Collin scope.
+
+Deleted via `1420_222_barrios_healthcare_bio_only_remediation.sql` (C:/EV-Accounts, AUDIT-ONLY,
+**APPLIED to production 2026-07-25** on explicit operator authorisation, separate from the 27 pairs
+approved for migration 1416). Verified after apply: absent from both tables; zero bio-page-only rows
+now remain anywhere in the 24-government Collin scope.
+
+- Dan Barrios — Richardson — `e8c863a7-d116-480e-a81f-47d26f45e264` — healthcare — **bio-page-only**: the row's sole source was `https://ballotpedia.org/Dan_Barrios`, a biography page with no stance content, so it could not support a chair on healthcare or anything else. It survived plan 222-02 because that plan's Class A1 signature required `sources IS NULL` — this row had a source, just a useless one. Barrios's other two defective rows (civil-rights, homelessness) were deleted by 222-02; this was the third and last in scope.
 
 ---
