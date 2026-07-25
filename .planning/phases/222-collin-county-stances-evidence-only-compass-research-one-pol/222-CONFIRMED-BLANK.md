@@ -42,12 +42,11 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 96
+## Count: 143
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
-+ 54 by 222-04 part A (Plano topic-gap fill).
-222-04 part B (McKinney) through 222-17 append their own per-government sections below as
-they execute.
++ 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill).
+222-05 through 222-17 append their own per-government sections below as they execute.
 
 ---
 
@@ -561,5 +560,422 @@ Shun Thomas and John B. Muns appear in this register only, with zero newly appli
 correct outcome under D-04, not a skipped pass. No (person, topic) pair appears in both buckets, and
 no pair outside the 59-pair gap list was researched, written, or touched. All 8 previously-deleted
 pairs that fall in this scope were re-researched and all 8 remain blank; none was reinstated.
+
+---
+
+## City of McKinney (4845744) — 222-04 part B
+
+**Attempted:** 2026-07-25, one politician at a time (D-03), all 7 seated McKinney officeholders,
+each against exactly the topics that held no stance for them after plan 222-02's deletions
+(49 (person, topic) pairs). Pairs that already held a stance were not re-researched and were not
+touched (D-07) — including Michael Jones / `economic-development` and Rick Franklin /
+`residential-zoning`, which 222-02 reviewed and KEPT. **2 pairs were sourced** (Ernest Lynch /
+`homelessness` = 4 and Michael Jones / `growth-and-development` = 3, authored in migration
+`1419_222_mckinney_gapfill_stances.sql`); **the 47 below are honest blanks.**
+
+**Evidence checked (all 7 people):** Community Impact Newspaper's McKinney-bureau candidate Q&As
+(At Large 1, March 6 2025; District 3, March 5 2025; At Large 2, April 3 2023; the June 12 2023
+Jones get-to-know Q&A; the Feb 10 2022 Cloutier Q&A; the 2021 Beller/Feltus new-member profile;
+the 2019 Franklin candidate Q&A) plus Community Impact's McKinney government coverage of the
+Oct. 21 2025 public-sleeping and camping ordinances, the Aug. 19 2025 panhandling/camping
+work session, the Sept. 2 2025 FY 2025-26 budget and tax-rate adoption, the Aug. 6/Aug. 8 2025
+proposed rate, the June 17 2025 over-65 homestead-exemption decision, and the Oct. 28 2025 11-acre
+apartment rezoning; KERA News coverage of the McKinney field (Feb. 18 2025), the four-way mayoral
+race (March 25 2025), the June 2025 runoffs, the Sept. 3 2025 tax-rate adoption and the Dec. 29
+2025 county-wide public-camping/no-shelter story; NBC 5 DFW's report on McKinney's homelessness
+ordinance debate; WFAA's ordinance report; each officeholder's campaign or official site where one
+exists and resolves (michaelhjones.com and /my-vision; feltus4mckinney.com and /priorities;
+coxformayor.com and /about; patrickformckinney.com); their official mckinneytexas.org council
+member pages; GoodParty.org's Lynch candidate profile; TX 3rd Congressional District news; the
+McKinney Legistar agenda/legislation system; and searches against VOTE411 / League of Women Voters
+of Collin County. Targeted searches were also run for a McKinney 287(g) / ICE-detainer /
+information-sharing debate and for a McKinney civil-rights, equity or equal-rights resolution;
+neither exists in the public record. McKinney, **Texas** was confirmed on every source used.
+
+**Sources checked but unavailable this session:** Ballotpedia's individual candidate pages (Lynch,
+Feltus, Cox) resolved but returned no readable body content on repeated fetches — the same failure
+plans 222-03 and 222-04 part A recorded for Frisco and Plano; VOTE411's race-detail page for the
+At Large 1 runoff returned HTTP 403; Local Profile returned HTTP 403 on both its ordinance and its
+budget stories; WFAA timed out; `lynchformckinney.com` and `rickwithmckinney.com` no longer resolve
+or return HTTP 404 on every path tried; `patrickformckinney.com` resolves but is an empty default
+WordPress install; Star Local Media was not reachable. Community Impact's 2019 Franklin Q&A page
+resolved but its answer body did not render on either URL form. None was used as a source for any
+applied chair. A later pass with working access to Ballotpedia Candidate Connection, VOTE411 and
+Star Local Media may find additional evidence, particularly on the economic-development,
+public-safety and taxes topics.
+
+**McKinney-wide note on the Oct. 21 2025 ordinances.** These were the cohort's most on-topic
+recorded votes and they were *not* unanimous: Community Impact reports the downtown
+sitting-and-lying ordinance passed 6-1 (Justin Beller against) and the citywide camping ordinance
+passed 5-2 (Beller and Geré Feltus against), which identifies every member's side on both. Only two
+of the seven have `homelessness` in this plan's gap list (Lynch and Cox) — the other five already
+hold that topic. A member's vote on these ordinances was used **only** for `homelessness`; carrying
+it across to `public-safety-approach` is the exact cross-topic move that got Beller's public-safety
+row deleted by 222-02, and it was deliberately not repeated. TX 3rd Congressional District news
+reported a conflicting roll call for these votes (it places Michael Jones with the dissenters and
+Feltus with the majority); where the two accounts conflict, Community Impact's account was used and
+the other was discarded rather than averaged.
+
+**Note on `taxes` (7 pairs).** All 7 members were researched on this topic and **no `taxes` row was
+written**, pending an operator methodology ruling: the scale's chairs 1-2 require raising taxes
+specifically on wealthy people and large companies and its chairs 4-5 require scaling public
+services back, neither of which is a municipal power or practice, leaving chair 3 as the only
+structurally reachable chair for a city council member. Four members (Lynch, Jones, Cloutier,
+Feltus) have real, dated, on-topic tax evidence that would support chair 3 if the operator rules
+chair 3 acceptable; their entries below are marked **researched, chair pending methodology ruling**
+and record the evidence so nothing has to be re-researched. Beller, Franklin and Cox yielded no
+chair-locating tax evidence at all and are ordinary blanks.
+
+**Note on the McKinney Economic Development Corporation.** Four of these seven members are current
+or former MEDC board members or chairs (Lynch, Jones, Cloutier, Franklin) and Feltus works with the
+MEDC on workforce development. **EDC board service is not evidence of a position on economic-
+development incentives.** It is the adjacency defect 222-02 deleted from five McKinney records, and
+it was deliberately not used anywhere in this pass.
+
+### Ernest Lynch — Council Member At-Large Place 1 — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e`
+
+Sourced: `homelessness` = 4 (authored in migration 1419). The remaining 8 attempted topics are
+blank:
+
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — civil-rights — no on-topic
+  position found. Nothing in his candidate Q&A, his runoff coverage, his GoodParty profile or his
+  official council page states a position on civil-rights enforcement, equity requirements, or
+  race-conscious programs.
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — economic-development —
+  **previously deleted by 222-02 (B2: the quote was real but too generic — "policies that support
+  businesses of all sizes" — to locate the incentive-aggressiveness chair) and re-researched this
+  session; it stays blank.** The nearest material found is the same register: "As a former hospital
+  CEO, I know what it's like to operate a business in McKinney. We need a strong tax base, a growing
+  vibrant economy, and an inviting business environment" (TX3D news, runoff preview), "supporting a
+  business-friendly environment" (Community Impact, March 6 2025) and "prioritizing smart
+  investments and public-private partnerships" (GoodParty profile). None of it states a posture on
+  incentives, abatements, community-benefit conditions or job-quality requirements, which is what
+  this topic's chairs distinguish. His chairmanship of the McKinney Economic Development Corporation
+  is service history, not a position, and was deliberately not used — re-deriving the same chair
+  from the same weak material would reinstate the defect just removed.
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — growth-and-development — no
+  chair-locating position found. "I'm running for City Council to ensure McKinney grows responsibly
+  while protecting our community values" and "The No. 1 challenge facing McKinney is managing rapid
+  growth while ensuring public safety and maintaining quality of life. I'll focus on workforce
+  development, improving infrastructure, and supporting a business-friendly environment" (Community
+  Impact, March 6 2025), plus "We are at a tipping point in terms of how we plan for growth. We need
+  to make the most of these opportunities, but we need to be practical, pragmatic, and listen"
+  (TX3D news, runoff preview), are genuinely about growth but state no position on the pace at which
+  growth should be approved, on gating approvals to infrastructure capacity, or on streamlining
+  permitting. "Grows responsibly" is the same formulation the 222-01 audit deleted from another
+  Collin record ("supports 'smart growth'"), so it was not used.
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — healthcare — no statement found
+  on the government's role in healthcare access. He is a retired hospital CEO and his homelessness
+  answer proposes "collaborating with healthcare providers," but professional background is
+  adjacency and a service-collaboration remark is not a position on how healthcare coverage should
+  be financed or provided.
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — local-immigration — no
+  statement found on McKinney PD's relationship to federal immigration enforcement, ICE detainers,
+  or information sharing. No such McKinney council debate exists in the public record.
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — residential-zoning — no
+  position found on housing density, rezoning, or neighborhood character. He is not quoted in the
+  Oct. 28 2025 11-acre apartment rezoning coverage and was recorded absent from a March 2026 zoning
+  vote.
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — taxes — **researched, chair
+  pending methodology ruling (would be 3).** KERA (Feb. 18 2025) reports his campaign site listed
+  "economic growth, transparency, public safety and lower taxes" as his priorities, and that "By
+  prioritizing smart investments and public-private partnerships, Ernest aims to expand the tax base
+  while reducing the financial strain on homeowners"; his GoodParty profile adds "implementing
+  strategic measures to lower the tax burden on families and businesses by fostering economic growth
+  and maximizing efficiencies within city operations." He seeks a lower burden achieved by growing
+  the tax base and finding efficiencies, and simultaneously commits to funding first responders and
+  expanding homeless services — he proposes no reduction in public services, which is what the
+  tax-cutting chairs require, and no increase aimed at wealthy people or large companies, which is
+  what the redistributive chairs require.
+- Ernest Lynch — McKinney — `c3e2d7a6-8096-4e91-9ee0-3cca445af72e` — transportation-priorities — no
+  chair-locating position found. "Improving infrastructure" (Community Impact, March 6 2025) is
+  about infrastructure generally, and his answer that the TKI airport expansion "should benefit all
+  residents and align with the community's needs" while he awaits "the necessary data and
+  projections" is explicitly a deferred judgment. Neither states where city transportation
+  investment should go as between roads, transit, and pedestrian and cycling infrastructure.
+
+### Michael Jones — Council Member At-Large Place 2 — `09dbafc2-9252-40e4-9a1c-afda5b069f2e`
+
+Sourced: `growth-and-development` = 3 (authored in migration 1419). The remaining 6 attempted
+topics are blank. His pre-existing `economic-development` row (KEPT by 222-02) was not touched.
+
+- Michael Jones — McKinney — `09dbafc2-9252-40e4-9a1c-afda5b069f2e` — civil-rights — no on-topic
+  position found. His stated interest in "meeting different, diverse people and seeing... what are
+  the issues in the community" (Community Impact, June 12 2023) is about how he intends to serve,
+  not a position on civil-rights enforcement, equity requirements, or race-conscious programs.
+  Nothing about his own background was used for this topic — that is the A3 identity-inference
+  defect the 222-01 audit deleted from four other Collin records.
+- Michael Jones — McKinney — `09dbafc2-9252-40e4-9a1c-afda5b069f2e` — healthcare — no statement
+  found on the government's role in healthcare access.
+- Michael Jones — McKinney — `09dbafc2-9252-40e4-9a1c-afda5b069f2e` — local-immigration — no
+  statement found on McKinney PD's relationship to federal immigration enforcement, ICE detainers,
+  or information sharing.
+- Michael Jones — McKinney — `09dbafc2-9252-40e4-9a1c-afda5b069f2e` — residential-zoning — no
+  position found on housing density or neighborhood character. His remark that on the MEDC board he
+  learned "what you can do with land and property rights; it's a big deal" (Community Impact, June
+  12 2023) is about what he learned, not a position on density or rezoning, and he is not quoted in
+  the Oct. 28 2025 apartment rezoning coverage.
+- Michael Jones — McKinney — `09dbafc2-9252-40e4-9a1c-afda5b069f2e` — taxes — **researched, chair
+  pending methodology ruling (would be 3).** "Maintaining low tax rates during the high inflationary
+  period we are facing will be a top issue to address for years to come" (Community Impact, April 3
+  2023); he says he will "work to ensure meaningful tax relief for our citizens, and work to
+  maintain our status as one of safest cities in America by supporting our first responders"
+  (Community Impact, June 2023); his campaign site pairs "Meaningful tax relief for citizens" with
+  supporting first responders, maintaining parks and funding infrastructure, and he argued the
+  airport expansion would deliver its benefits "without raising taxes." At the June 17 2025 meeting
+  he asked the CFO to examine a general homestead exemption for all McKinney homeowners. He holds
+  rates down while explicitly funding existing services rather than scaling them back, and seeks no
+  increase aimed at wealthy people or large companies.
+- Michael Jones — McKinney — `09dbafc2-9252-40e4-9a1c-afda5b069f2e` — transportation-priorities — no
+  chair-locating position found. His campaign site's "Infrastructure improvements for congestion
+  relief and road quality" is road-focused but does not state a position as between roads, transit,
+  and pedestrian and cycling investment; silence on transit is not opposition to it. His support for
+  commercial service at McKinney National Airport is about aviation and regional connectivity, not
+  about where local surface-transportation money should go.
+
+### Justin Beller — Council Member District 1 — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723`
+
+Sourced: none. All 8 attempted topics are blank. This is a correct outcome, not a skipped research
+pass — he ran unopposed in 2025 so no candidate questionnaire exists for that cycle, and his
+substantive public record in this window is concentrated on housing, zoning and homelessness, all
+three of which he already holds.
+
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — civil-rights — no on-topic
+  position found. "East McKinney has some unique needs that need to be quantified and advocated
+  for" (Community Impact, 2021 new-member profile) is about geographic equity in city investment,
+  not a position on civil-rights enforcement, equity requirements, or race-conscious programs.
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — economic-development —
+  **previously deleted by 222-02 (B2: profession plus bond-committee service plus a "suggests"
+  inference) and re-researched this session; it stays blank.** No statement or vote of his was found
+  that takes a position on incentives, abatements, community-benefit conditions or job-quality
+  requirements. His banking career and his service on the 2017 bond committee are adjacency and were
+  deliberately not used; his remark that McKinney sits in "a high-employment zone" was made about a
+  specific rezoning case and belongs to the zoning topic he already holds.
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — growth-and-development — no
+  chair-locating position found. "That growth is going to impact old McKinney and try to change the
+  culture and dynamics of old McKinney, and so [it's] just managing that in a way that the people
+  who live here will benefit" (Community Impact, 2021) describes who should benefit from growth, not
+  the pace at which it should be approved, whether infrastructure capacity should gate it, or
+  whether permitting should be streamlined. His Feb. 20 2026 strategic-goals emphasis on
+  "infrastructure" and community trust is a priority ranking, not a growth-pace position.
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — healthcare — no statement
+  found on the government's role in healthcare access.
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — local-immigration — no
+  statement found on McKinney PD's relationship to federal immigration enforcement, ICE detainers,
+  or information sharing.
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — public-safety-approach —
+  **previously deleted by 222-02 (B2: real dated votes, but homelessness-criminalization votes used
+  to set a public-safety chair — cross-topic inference) and re-researched this session; it stays
+  blank.** No statement of his was found on police funding levels, staffing, pay, or crisis-response
+  and co-responder teams. His Oct. 21 2025 dissents and the reasons he gave for them ("Until we have
+  resources in place that gives them an option, I think we are just pushing them further into that
+  hard place") are on-topic for homelessness — which he already holds — and were deliberately not
+  carried across to this topic, since doing so would reproduce exactly the defect just removed.
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — taxes — no chair-locating
+  position found. No statement or individually-attributed vote of his was located on the balance
+  between what the city collects and what it spends; he is not quoted in the FY 2025-26 budget or
+  tax-rate coverage or in the June 17 2025 homestead-exemption coverage.
+- Justin Beller — McKinney — `bcdbeae4-04c9-4ea1-8942-bac3ce1a8723` — transportation-priorities — no
+  chair-locating position found. His "infrastructure" emphasis at the Feb. 20 2026 strategic-goals
+  work session and his observation that a rezoning site sits "at the intersection of two arteries
+  near two major highways" are not positions on mode priority.
+
+### Patrick Cloutier — Council Member District 2 — `27578980-2e6c-4639-879a-70b510566d0f`
+
+Sourced: none applied. All 6 attempted topics are blank, one of them pending the taxes methodology
+ruling. His pre-existing rows on the five topics he already held were not touched.
+
+- Patrick Cloutier — McKinney — `27578980-2e6c-4639-879a-70b510566d0f` — civil-rights — no on-topic
+  position found. His concern that a quadrant of McKinney with "concentrations of poverty" and
+  residents without vehicle access has no grocery store (Community Impact, Feb. 10 2022) is a food-
+  access and land-use observation, not a position on civil-rights enforcement, equity requirements,
+  or race-conscious programs.
+- Patrick Cloutier — McKinney — `27578980-2e6c-4639-879a-70b510566d0f` — economic-development —
+  **previously deleted by 222-02 (B2: board membership plus profession plus "aligned with") and
+  re-researched this session; it stays blank.** No statement or vote of his was found stating a
+  posture on incentives, abatements, community-benefit conditions or job-quality requirements. His
+  MEDC board service and his career as a financial advisor are adjacency and were deliberately not
+  used. His observation that "When you see a lot of the development that we do, a lot of it is with
+  the thought of sales taxes, because if we can collect those, that puts downward pressure on our
+  property tax rates" (Community Impact, Sept. 3 2025) is a tax-base argument recorded under `taxes`
+  below, not an incentive posture, and reusing it here would be cross-topic inference.
+- Patrick Cloutier — McKinney — `27578980-2e6c-4639-879a-70b510566d0f` — growth-and-development — no
+  chair-locating position found. "Traffic strains are hard in growing areas" and "The state took
+  away our ability to restrict multifamily last year" are about traffic and about state pre-emption
+  of local zoning authority — and he already holds `residential-zoning`, so carrying the second
+  remark across would be cross-topic inference. His description of east McKinney redevelopment as
+  "a once-in-a-multigeneration opportunity" states no position on growth pace or permitting.
+- Patrick Cloutier — McKinney — `27578980-2e6c-4639-879a-70b510566d0f` — healthcare — no statement
+  found on the government's role in healthcare access.
+- Patrick Cloutier — McKinney — `27578980-2e6c-4639-879a-70b510566d0f` — local-immigration — no
+  statement found on McKinney PD's relationship to federal immigration enforcement, ICE detainers,
+  or information sharing.
+- Patrick Cloutier — McKinney — `27578980-2e6c-4639-879a-70b510566d0f` — taxes — **researched, chair
+  pending methodology ruling (would be 3).** Ahead of the Sept. 2 2025 vote adopting a $942M budget
+  and a rate cut from $0.415513 to $0.412284, Cloutier said "To me, it comes down to downward
+  pressure on the property tax rate is so important" and explained the mechanism: "When you see a
+  lot of the development that we do, a lot of it is with the thought of sales taxes, because if we
+  can collect those, that puts downward pressure on our property tax rates," adding "This is not a
+  decision that's really made in a day... some of them are really tough, and they mean saying no to
+  people" (Community Impact, Sept. 3 2025). At the June 17 2025 homestead-exemption item he said
+  "This is going to reduce the taxes for every homeowner and even more so for every over-65 and
+  disabled [homeowner]." He lowers the rate by broadening the sales-tax base inside a budget that
+  grew and added 27 staff — he scales no services back, which the tax-cutting chairs require, and
+  seeks no increase aimed at wealthy people or large companies.
+
+### Geré Feltus — Council Member District 3 — `23ba75d2-6eed-4b71-9669-78ab3bb82e98`
+
+Sourced: none applied. All 7 attempted topics are blank, one of them pending the taxes methodology
+ruling.
+
+- Geré Feltus — McKinney — `23ba75d2-6eed-4b71-9669-78ab3bb82e98` — civil-rights — no on-topic
+  position found. "The question I pose is, 'Who does McKinney want to be?' That we have to figure
+  out" (Community Impact, 2021) is about civic identity, not a position on civil-rights enforcement,
+  equity requirements, or race-conscious programs. Nothing about her own background was used — that
+  is the A3 identity-inference defect the 222-01 audit deleted from four other Collin records.
+- Geré Feltus — McKinney — `23ba75d2-6eed-4b71-9669-78ab3bb82e98` — economic-development —
+  **previously deleted by 222-02 (B2: EDC board membership plus a "suggesting"/"indicating" chain of
+  inference) and re-researched this session; it stays blank.** Her campaign priorities page does
+  contain a real, on-topic sentence — "I will support the aggressive recruitment of forward-thinking
+  companies in strategically targeted industries" (feltus4mckinney.com/priorities) — and she has
+  said "One way to balance that out is to have a larger corporate tax base. We still have to keep a
+  good focus on good economic development" (Community Impact, 2021). But "strategically targeted
+  industries" points at the targeted-incentives chair while "aggressive recruitment" points at the
+  compete-actively-for-major-employers chair, and she names no incentive or abatement posture, no
+  community-benefit agreement and no job-quality requirement that would separate them. Two adjacent
+  chairs remained live, so no chair was assigned; range-narrowed is not chair-located. Her MEDC work
+  was deliberately not used.
+- Geré Feltus — McKinney — `23ba75d2-6eed-4b71-9669-78ab3bb82e98` — growth-and-development — no
+  chair-locating position found. "We must work with state legislators to restore local control over
+  the 45 square miles left in our ETJ, where the population is growing without equitably
+  contributing to taxes that fund roads, libraries, and parks" (Community Impact, March 5 2025) is
+  about extraterritorial jurisdiction authority and tax equity, and her remark that the airport
+  expansion "will drive economic growth, attract new businesses, and create sustainable jobs" is
+  about one project. Neither states a position on the pace at which growth should be approved,
+  infrastructure gating, or permitting.
+- Geré Feltus — McKinney — `23ba75d2-6eed-4b71-9669-78ab3bb82e98` — healthcare — no statement found
+  on the government's role in healthcare access. She is a board-certified family physician and her
+  campaign priorities page carries pandemic-era remarks about vaccine allocation and using her
+  clinical experience to guide the city's recovery, but professional background is adjacency and a
+  vaccine-logistics remark is not a position on how healthcare coverage should be financed or
+  provided.
+- Geré Feltus — McKinney — `23ba75d2-6eed-4b71-9669-78ab3bb82e98` — local-immigration — no statement
+  found on McKinney PD's relationship to federal immigration enforcement, ICE detainers, or
+  information sharing.
+- Geré Feltus — McKinney — `23ba75d2-6eed-4b71-9669-78ab3bb82e98` — public-safety-approach —
+  **previously deleted by 222-02 (B2: "public safety is my top priority" does not distinguish this
+  chair from its neighbour, and the reasoning cited a vote pointing the other way) and re-researched
+  this session; it stays blank.** Her campaign priorities page says "It is imperative that we focus
+  on keeping McKinney the safest place for our children to flourish and for all of our residents to
+  thrive" and, per the same page, supports police and fire staffing, training and the Neighborhood
+  Police Officer program while collaborating with public safety officials on the community's growing
+  mental-health needs; her 2025 questionnaire adds only "we've strengthened public safety"
+  (Community Impact, March 5 2025). Expanding staffing points at the increase-staffing-and-equipment
+  chair while the mental-health collaboration points at the keep-current-funding-plus-crisis-
+  response chair, and the mental-health language is exploratory rather than a commitment to
+  co-responder or crisis teams. Two adjacent chairs remained live, so no chair was assigned.
+- Geré Feltus — McKinney — `23ba75d2-6eed-4b71-9669-78ab3bb82e98` — taxes — **researched, chair
+  pending methodology ruling (would be 3).** At the June 17 2025 over-65 homestead-exemption item
+  she gave her own reason for not increasing the exemption further: "I don't see the need for us
+  right now given how much we need to operate the city with the amount of growth that we have, with
+  the amount of roads that need to be constructed, with the number of city services that we have to
+  provide as people are moving in," while also saying "When we're looking at shifting tax burden
+  this is one of the things that we sort of weigh" and "We don't want seniors to be caught in a
+  position where they're struggling every year as taxes increase because their home values are
+  increasing" (Community Impact, June 19 2025). Her 2025 questionnaire records that over four years
+  the council "lowered property tax rates, increased senior homestead exemptions" (Community Impact,
+  March 5 2025). She declines to give up revenue precisely in order to keep funding existing
+  services — she scales nothing back, which the tax-cutting chairs require — and she seeks no
+  increase aimed at wealthy people or large companies.
+
+### Rick Franklin — Council Member District 4 (Mayor Pro Tem) — `6ee726c1-79af-4fef-abb8-fa7f4208ae14`
+
+Sourced: none. All 6 attempted topics are blank. His pre-existing `residential-zoning` row (KEPT by
+222-02) was not touched. He ran unopposed in 2023, so no candidate questionnaire exists for that
+cycle, and Community Impact's 2019 Q&A page would not render its answer body on either URL form.
+
+- Rick Franklin — McKinney — `6ee726c1-79af-4fef-abb8-fa7f4208ae14` — civil-rights — no on-topic
+  position found.
+- Rick Franklin — McKinney — `6ee726c1-79af-4fef-abb8-fa7f4208ae14` — economic-development —
+  **previously deleted by 222-02 (B2: board membership plus profession; "actively supports" asserted
+  without a quote or vote) and re-researched this session; it stays blank.** No statement or vote of
+  his was found stating a posture on incentives, abatements, community-benefit conditions or
+  job-quality requirements. His prior service on the McKinney Economic Development Corporation and
+  his career as a commercial real estate broker are adjacency and were deliberately not used —
+  re-deriving the same chair from the same material would reinstate the defect just removed.
+- Rick Franklin — McKinney — `6ee726c1-79af-4fef-abb8-fa7f4208ae14` — growth-and-development — no
+  chair-locating position found. His only on-record remark in the development coverage read this
+  session is case-specific praise for one applicant's mitigation work — "You've done an incredible
+  job of mitigating that for the residents out there. You've done an awesome job with this site
+  plan, and I'm in favor of it" (Community Impact, Oct. 28 2025) — which belongs to the zoning topic
+  he already holds and states no position on growth pace, infrastructure gating, or permitting.
+- Rick Franklin — McKinney — `6ee726c1-79af-4fef-abb8-fa7f4208ae14` — healthcare — no statement
+  found on the government's role in healthcare access.
+- Rick Franklin — McKinney — `6ee726c1-79af-4fef-abb8-fa7f4208ae14` — local-immigration — no
+  statement found on McKinney PD's relationship to federal immigration enforcement, ICE detainers,
+  or information sharing.
+- Rick Franklin — McKinney — `6ee726c1-79af-4fef-abb8-fa7f4208ae14` — taxes — no chair-locating
+  position found. No statement or individually-attributed vote of his was located on the balance
+  between what the city collects and what it spends; he is not quoted in the FY 2025-26 budget or
+  tax-rate coverage or in the June 17 2025 homestead-exemption coverage, and his campaign site no
+  longer resolves.
+
+### Bill Cox — Mayor — `1c31b159-d4c1-4756-ba81-a247dbf0af8f`
+
+Sourced: none. All 6 attempted topics are blank. His pre-existing rows on the five topics he already
+held were not touched.
+
+- Bill Cox — McKinney — `1c31b159-d4c1-4756-ba81-a247dbf0af8f` — civil-rights — no on-topic position
+  found. His campaign site's line that "His vision for McKinney includes fostering a vibrant,
+  inclusive, and prosperous community" that meets the needs of a "growing and diverse population"
+  (coxformayor.com/about) is a statement about civic tone and demographics, not a position on
+  civil-rights enforcement, equity requirements, or race-conscious programs.
+- Bill Cox — McKinney — `1c31b159-d4c1-4756-ba81-a247dbf0af8f` — growth-and-development — no
+  chair-locating position found. "I've seen it when it was a small town, and I've seen what it is
+  now, and I understand completely what it will take to take McKinney into the future" (KERA, March
+  25 2025) is about his own experience, and his campaign framing about ensuring development
+  "enhances — rather than diminishes — the qualities that make our city special" states no position
+  on the pace at which growth should be approved, on infrastructure gating, or on permitting. His
+  chairmanship of the Planning and Zoning Commission, and that body's January 2025 approval of the
+  airport expansion site plan, are service history and a body's action rather than his own stated
+  growth-pace position, and were deliberately not used.
+- Bill Cox — McKinney — `1c31b159-d4c1-4756-ba81-a247dbf0af8f` — healthcare — no statement found on
+  the government's role in healthcare access.
+- Bill Cox — McKinney — `1c31b159-d4c1-4756-ba81-a247dbf0af8f` — homelessness — **narrowed but not
+  located; blank.** He is genuinely on the record: "We are a fast-growth city and along with that
+  comes a population that needs addressing," "These questions about homeless and the unhoused are
+  not exclusive to McKinney," "We are getting out front and going to be active and implement
+  ordinances that ensure the safety of our citizens and the viability of our businesses" and "And at
+  the same time, you have to be compassionate. The question of homelessness looks very different to
+  many different people" (NBC 5 DFW), and he voted for both Oct. 21 2025 ordinances (Community
+  Impact: 6-1 and 5-2, with only Beller, and Beller plus Feltus, against). That rules out the chairs
+  that protect the right to sleep in public or decriminalize public sleeping, and — because McKinney
+  had no adequate shelter capacity when he voted — the chair permitting enforcement only once
+  adequate beds exist. But "you have to be compassionate" is not a shelter commitment, and no
+  statement of his was found on shelter capacity or on what services should accompany the ban, so
+  the prohibit-with-penalties-while-maintaining-shelter chair and the ban-and-rely-on-existing-
+  services chair both remain live. Range-narrowed is not chair-located, so no chair was assigned.
+  (This is the precise evidentiary difference from Ernest Lynch, whose own words do commit the city
+  to adding shelter capacity.)
+- Bill Cox — McKinney — `1c31b159-d4c1-4756-ba81-a247dbf0af8f` — local-immigration — no statement
+  found on McKinney PD's relationship to federal immigration enforcement, ICE detainers, or
+  information sharing.
+- Bill Cox — McKinney — `1c31b159-d4c1-4756-ba81-a247dbf0af8f` — taxes — no chair-locating position
+  found. KERA (Feb. 18 2025) lists "lowering property taxes" among his campaign priorities alongside
+  "smart corporate growth" and "preserving city charm", but that is an issue-list mention rather
+  than a statement of what he would do about the balance between collections and services; his
+  campaign site carries no tax position on the pages that resolve, and the FY 2025-26 rate cut he
+  presided over came with no statement of his own attributed in any coverage read this session. This
+  pair would remain blank whichever way the taxes methodology question is ruled.
+
+**McKinney reconcile:** 49 (person, topic) pairs attempted; 2 sourced and authored in migration
+`1419_222_mckinney_gapfill_stances.sql`; 47 blank-registered above. 2 + 47 = 49. Ernest Lynch and
+Michael Jones appear in both buckets (an applied row plus their unsourced topics listed here);
+Justin Beller, Patrick Cloutier, Geré Feltus, Rick Franklin and Bill Cox appear in this register
+only, with zero newly applied stances — a correct outcome under D-04, not a skipped pass. No
+(person, topic) pair appears in both buckets, and no pair outside the 49-pair gap list was
+researched, written, or touched. All 7 previously-deleted McKinney pairs that fall in this scope
+were re-researched and all 7 remain blank; none was reinstated. Zero `taxes` rows were written; the
+four members with real tax evidence are marked above as pending the operator's methodology ruling.
 
 ---
