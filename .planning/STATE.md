@@ -10,10 +10,10 @@ last_activity: 2026-07-24
 last_activity_desc: Phase 221 marked complete
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 24
   completed_plans: 24
-  percent: 67
+  percent: 83
 current_phase_name: collin-county-headshots-source-and-attach-photos-for-officia
 ---
 
