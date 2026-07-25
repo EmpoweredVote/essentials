@@ -42,10 +42,10 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 27
+## Count: 42
 
-27 (person, topic) pairs appended below by 222-02 (integrity remediation). 222-03 through 222-17
-append their own per-government sections below as they execute.
+27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco).
+222-04 through 222-17 append their own per-government sections below as they execute.
 
 ---
 
@@ -111,5 +111,115 @@ deletions and are listed below. Two of the 15 proved worse than adjacency and ar
 - Rick Franklin — McKinney — `6ee726c1-79af-4fef-abb8-fa7f4208ae14` — economic-development — B2: board membership plus profession; "actively supports" asserted without a quote or vote. (His residential-zoning row is KEPT above.)
 - Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — homelessness — B2: real campaign pledge quote, but about "wrap-around services for residents in need" generally — not an on-topic position on public camping / homelessness response.
 - Dan Barrios — Richardson — `e8c863a7-d116-480e-a81f-47d26f45e264` — homelessness — **A2/A4-grade, re-labelled**: chair derived from "his progressive Democratic lean" while reasoning admits "No direct policy statement on public camping found."
+
+---
+
+## Frisco — City of Frisco (4827684) — 222-03
+
+**Attempted:** 2026-07-25, one politician at a time (D-03), both un-stanced Frisco officeholders on
+the 222-01 live worklist, each against all 11 canonical compass topics. The other five seated Frisco
+officeholders (Jared Elad, Ann Anderson, Angelia Pelham, Laura Rummel, Burt Thakur) already hold
+stances and were out of scope per D-07. Gopal Ponangi is un-seated and was not attempted; Place 4 is
+Jared Elad (Pitfall 3), who is not in this plan's scope.
+
+**Evidence checked (both people):** Dallas Morning News Editorial Board recommendation + Voter Guide
+answers for the May 2026 Frisco races; Community Impact Newspaper's Frisco-bureau candidate Q&As
+(Place 6, March 24 2026; mayoral runoff, May 14 2026); each officeholder's campaign site
+(choosecolberg.com; markhill4mayor.com including its full `/policies/` platform page); their official
+friscotexas.gov council pages; Star Local Media / Frisco Enterprise; KERA, WFAA, CBS Texas, NBC 5
+DFW and Local Profile election coverage; Frisco Chronicles; Frisco Chamber of Commerce voter
+information; League of Women Voters of Collin County / VOTE411. Frisco, **Texas** was confirmed on
+every source used (Frisco also exists in CO and NC; "Mark Hill" is a common name — the Frisco TX
+mayor elected in the June 13 2026 runoff and sworn in July 7 2026 was confirmed specifically).
+
+**Sources checked but unavailable this session:** Ballotpedia's individual candidate pages for both
+people resolved but returned no readable body content on repeated fetches (no Candidate Connection
+survey surfaced for either person in search either); Star Local Media / Frisco Enterprise returned
+HTTP 429 on repeated attempts. Neither was used as a source for any applied chair. A later pass with
+working access to those two families may find additional evidence, particularly on the
+economic-development and public-safety topics.
+
+### Brittany Colberg — Council Member Place 6 — `ddcb2d35-0f94-4956-ab65-ae56a900ac11`
+
+Sourced: `housing` = 3 (applied via migration 1417). The remaining 10 topics are blank:
+
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — civil-rights — no on-topic
+  position found. The DMN recommendation quotes her Voter Guide line "My approach is to lead with
+  consistency, fairness, and a commitment to treating people with respect," which is a statement
+  about her leadership manner, not a position on civil-rights law, enforcement, or equity policy.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — homelessness — no statement
+  found on public camping, encampments, or homelessness response.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — economic-development — no
+  position found on incentives or abatements. The DMN board's own framing that she understands "the
+  best ways to promote commercial growth while preserving neighborhoods" is the board's
+  characterization, not her words, and does not locate an incentive-aggressiveness chair.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — local-immigration — no
+  statement found on Frisco PD's relationship to federal immigration enforcement or ICE detainers.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — public-safety-approach —
+  "ensuring first responders have what they need to keep residents safe" (Community Impact, March 24
+  2026) is real and on-topic but does not distinguish maintaining current funding from increasing
+  staffing and equipment, and names no crisis-response component. This is the same defect pattern
+  the 222-01 audit deleted elsewhere ("public safety is my top priority"), so it stays blank.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — residential-zoning — her
+  recorded opposition to Senate Bill 840 (DMN, April 16 2026) rules out the broad by-right-upzoning
+  chairs, but no statement of hers was found that separates strict neighborhood-character protection
+  from modest infill density from corridor-focused multifamily. Range-narrowed is not chair-located,
+  so it stays blank. Her eight years on the Frisco Planning & Zoning Commission is service history,
+  not a position, and was deliberately not used.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — transportation-priorities —
+  no statement found on transportation mode priorities; her "infrastructure that keeps up with
+  development" line is about infrastructure generally, not roads versus transit versus pedestrian
+  investment.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — taxes — "fiscal discipline"
+  and "protecting taxpayer dollars through clear, accountable decision-making" (Community Impact,
+  March 24 2026) is about spending accountability, not a position on the tax-and-spend balance.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — growth-and-development —
+  **demoted to blank in this plan's pre-commit self-audit.** Her Community Impact answers are
+  genuinely on-topic ("Managing growth responsibly while preserving the high quality of life…
+  intentional planning to protect neighborhoods and taxpayer dollars, as we approach build-out";
+  "I will focus on infrastructure that keeps up with development"), but the wording cannot separate
+  allowing growth only where existing infrastructure supports it from planning proactively and
+  investing ahead of growth — "keeps up with" points at neither exclusively. Two adjacent chairs
+  remained live, so no chair was assigned.
+- Brittany Colberg — Frisco — `ddcb2d35-0f94-4956-ab65-ae56a900ac11` — healthcare — no statement
+  found on healthcare access.
+
+### Mark Hill — Mayor — `3579e02c-d480-48ba-8d95-3eb7f002a5b0`
+
+Sourced: `housing` = 4, `residential-zoning` = 3, `growth-and-development` = 3,
+`public-safety-approach` = 4, `taxes` = 3, `transportation-priorities` = 3 (applied via migration
+1417). The remaining 5 topics are blank:
+
+- Mark Hill — Frisco — `3579e02c-d480-48ba-8d95-3eb7f002a5b0` — economic-development — **demoted to
+  blank in this plan's pre-commit self-audit.** His platform is explicit and on-topic but points at
+  two adjacent chairs at once: "Keep all incentives performance-based and phased, with no dollar
+  until delivery" and "Maintain and strengthen performance-based incentives only" are conditioned,
+  restrained incentives, while "The EDC is busier than it has ever been, and I will keep it that
+  way," "Leverage World Cup, Universal, and PGA," and his June 26 2026 NBC 5 interview ("I know I
+  intend to be extremely competitive… win a lot of those competitive battles") describe active
+  competition for major employers. Neither chair dominates, so none was assigned. His seat on the
+  Frisco EDC board is service history, not a position, and was deliberately not used — that is the
+  exact adjacency defect the 222-01 audit found on this topic in six other Collin records.
+- Mark Hill — Frisco — `3579e02c-d480-48ba-8d95-3eb7f002a5b0` — civil-rights — no on-topic position
+  found. His "Unite Frisco" platform pillar, and coverage of his campaign emphasizing unity and
+  inclusion and urging city leaders to "avoid rhetoric that makes residents feel unwelcome," are
+  statements about civic tone and leadership conduct, not positions on civil-rights enforcement,
+  equity requirements, or race-conscious programs. Assigning a chair from them — or from the
+  religious/ethnic framing that surrounded the 2026 runoff — would repeat the A3 identity-inference
+  defect, so this stays blank.
+- Mark Hill — Frisco — `3579e02c-d480-48ba-8d95-3eb7f002a5b0` — homelessness — no statement found on
+  public camping, encampments, or homelessness response. Confirmed absent from his full platform
+  page.
+- Mark Hill — Frisco — `3579e02c-d480-48ba-8d95-3eb7f002a5b0` — local-immigration — no statement
+  found on Frisco PD's relationship to federal immigration enforcement, ICE detainers, or
+  information sharing. Confirmed absent from his full platform page. His general remarks on
+  diversity and immigration in a FunAsia interview were not treated as a position on municipal
+  police cooperation.
+- Mark Hill — Frisco — `3579e02c-d480-48ba-8d95-3eb7f002a5b0` — healthcare — no statement found on
+  healthcare access. Confirmed absent from his full platform page.
+
+**Frisco reconcile:** both worklist names appear in bucket 1 (an applied migration row) and
+additionally list their unsourced topics here — no Frisco name is in neither bucket, and no
+(person, topic) pair appears in both.
 
 ---
