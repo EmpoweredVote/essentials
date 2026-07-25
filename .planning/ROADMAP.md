@@ -677,7 +677,7 @@ Plans:
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 222-03-PLAN.md — Tier 1: Frisco (incl. Place 4 seat resolution)
+- [x] 222-03-PLAN.md — Tier 1: Frisco (incl. Place 4 seat resolution)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 
