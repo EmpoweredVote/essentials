@@ -42,13 +42,13 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 164
+## Count: 175
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
-+ 10 by 222-05 (Allen) + 10 by 222-06 (Richardson).
-222-07 through 222-17 append their own per-government sections below as they execute.
++ 10 by 222-05 (Allen) + 10 by 222-06 (Richardson) + 11 by 222-07 (Prosper).
+222-08 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -1339,5 +1339,177 @@ authored in 1422 and pending operator apply) and additionally lists his 10 unsou
 the Richardson worklist has no name in neither bucket, and no (person, topic) pair appears in both.
 Once 1422 is applied, this reconcile holds against production; until then the name is honestly in
 bucket 2 for all 11 topics.
+
+---
+
+## Town of Prosper (4859696) — 222-07
+
+**Attempted:** 2026-07-25, the one un-stanced Prosper officeholder on the 222-01 live worklist —
+Councilmember Doug Charles (Place 5) — against all 11 canonical compass topics. The other seated
+Prosper officeholders already hold stances and were out of scope per D-07; none of their rows was
+read, re-reasoned, or modified by this plan.
+
+**Result: zero chairs. All 11 topics blank.** Prosper contributes no rows to migration 1423.
+
+**Evidence checked:** his own campaign site `dougcharles.com` (home page and `/priorities`, the only
+place any first-person policy language exists — "Listen. Plan. Protect.", Transparent Government,
+Responsible Growth, Fiscal Responsibility, Community Character, Strategic Commercial Development);
+his official Town of Prosper staff-directory profile (`prospertx.gov/directory.aspx?eid=68`, which
+loaded fine and confirmed Place 5, term ending May 2029); Community Impact Newspaper's
+Prosper–Celina desk (the January 2, 2026 "A completely different town" growth-and-density feature,
+the January 14, 2026 candidate-filing story, the February 13, 2026 "who is running" story, the
+June 11, 2026 Bella Prosper approval story); and — decisively — the **official Town of Prosper
+minutes for the June 9, 2026 Town Council regular meeting**, retrieved as the signed PDF attachment
+to the June 23, 2026 agenda on Municode and read in full (6 pages). Prosper, **TEXAS** was confirmed
+on every source used, and "Doug Charles" is a common name, so identity was pinned to the Place 5
+seat on the official town directory before any evidence was accepted as his.
+
+**HOMONYM / MISATTRIBUTION NEAR-MISS CAUGHT AND REJECTED — read this before any future pass.** A
+WebSearch result summary asserted that "Council Member Charles" made the motion to approve the Bella
+Prosper rezoning on June 9, 2026 and said *"I greatly appreciate the removal of the multifamily. That
+was my large hesitation."* That would have been a clean, dated, on-the-record `residential-zoning`
+chair. **It is false.** The official minutes read: *"Mayor Pro-Tem Bartley made a motion to approve a
+request for a rezoning of 61.7± acres…"*, *"Motion seconded by Deputy Mayor Pro-Tem Kern"*, and
+*"Councilmember **Ray** noted his appreciation for accommodating and the removal of the
+multi-family. He has no hesitations to the recommended changes. Councilmember Reeves and Charles
+shared their appreciation and hard work on the project."* The multifamily statement belongs to
+**Councilmember Marcus E. Ray**, and the motion to Bartley. Charles's only recorded participation is
+a shared expression of appreciation and a yes vote in a 6-0 tally. Do not re-import that quote onto
+Charles from a search snippet — go to the minutes.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position: `ballotpedia.org/Doug_Charles` returned an **empty body** (the same Ballotpedia
+empty-body failure seen throughout this phase — a fetch failure, not evidence of absence). No
+VOTE411 / League of Women Voters of Collin County questionnaire was found for Prosper Place 5, and
+none is likely to exist: **both 2026 Prosper Town Council races were uncontested** and Charles was
+the lone filer for Place 5, so Community Impact published no candidate Q&A for him (it did publish
+one for the contested Celina Place 5 race). His campaign Facebook page
+(`facebook.com/Doug4TownOfProsperPlace5/`) was not fetched — Facebook is not fetchable here and
+social posts are not treated as evidence of a policy position absent a direct citable quote. The
+`prospertx.new.swagit.com` meeting **video** for June 9 and June 23, 2026 was not watched (video is
+not readable by this pass); the written minutes were read instead. He took office in **May 2026**, so
+only two months of council record exist at all — a pass in 2027 will have far more voting record to
+work from.
+
+### Doug Charles — Council Member Place 5 — `48500428-3421-4298-b618-613696ca644c`
+
+Sourced: **none.** All 11 topics are blank:
+
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — residential-zoning — **the
+  closest call in this plan, and deliberately blanked.** Two pieces of real, on-topic material exist.
+  (a) His campaign platform's Strategic Commercial Development section names as its focus
+  *"Mixed-use commercial developments (retail, dining, office—NOT apartments)"*, and his Community
+  Character section says *"We have a character worth preserving… Every zoning decision, every
+  development approval, should strengthen what makes Prosper special—not dilute it."* (b) On
+  June 9, 2026 he voted, in a 6-0 tally, to approve the Bella Prosper rezoning (ZONE-24-0025, 61.7±
+  acres from Agricultural and PD-71 to a mixed-use Planned Development) whose Neighborhood
+  Subdistrict allows **86 townhomes by right** with a 1,300 sq ft minimum and 25 ft front setbacks.
+  These do not resolve to one chair. Excluding apartments from mixed-use commercial rules out chairs
+  3, 4 and 5 (chair 3 explicitly allows multifamily near commercial corridors). But chair 1 requires
+  *"require community votes before any rezoning"*, which his own practice contradicts — he voted to
+  rezone 61.7 acres with no such condition — and chair 2's operative content, *"allow modest density
+  increases (duplexes, accessory units)"*, is something he has never addressed in any source, even
+  though approving 86 attached townhomes with heavy design standards is closer to chair 2's subject
+  matter than to chair 1's. He is **not quoted giving any reason** for that vote, and a generic
+  unanimous rezoning approval with no stated reason is the exact defect the 222-01 audit deleted from
+  an Allen record on 2026-07-25 and the Richardson pass refused on 2026-07-25. "Strengthen what makes
+  Prosper special—not dilute it" is generically evaluative and locates nothing on its own. Suggestive
+  but not explicit is a blank. His 2021–2023 Planning & Zoning Commission service and the claim that
+  he "reviewed over 100 development applications" were deliberately **not** used — board service and
+  tenure are adjacency, not positions.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — growth-and-development — no
+  chair-locating position. His Responsible Growth section reads in full: *"Prosper is growing whether
+  we like it or not. The question is whether we manage that growth wisely. That means holding
+  developers accountable for the infrastructure their projects require, attracting businesses so
+  homeowners don't carry the full tax burden, and protecting the quality of life that brought us all
+  here. Growth should benefit existing residents, not just developers—and that includes ensuring our
+  fire and police have the capacity to keep pace with new rooftops."* Accepting that growth will
+  happen rules out chair 1 (growth limits / voter approval of annexations), but *"manage that growth
+  wisely"* is precisely the generically-evaluative formula this phase has repeatedly refused, and
+  making developers fund the infrastructure their own projects require is a cost-allocation position,
+  not a pace position: it is neither chair 2's *"allow growth only where existing infrastructure can
+  support it; slow approvals until capacity catches up"* nor chair 3's *"invest in infrastructure
+  ahead of growth"* — under his formulation the developer pays, not the town, and no approval is
+  slowed. His Fiscal Responsibility line *"Build it right the first time. Size projects correctly
+  from the start so we don't run out of money halfway through"* is about capital-project scoping. His
+  2020 Prosper Bond Committee service, which helped guide the Town's $210M infrastructure package,
+  is committee adjacency and capital-project attribution — both refused classes.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — economic-development — no
+  position on incentives, abatements, or community-benefit conditions, which is the axis all five
+  chairs are defined by. His platform says *"We can keep approving whatever developers bring us—or
+  Town Council can partner with the Chamber of Commerce, Economic Development Committee, and business
+  leaders to set a bold vision that attracts the investment, jobs, and destinations Prosper
+  deserves"*, and *"In the next few years, decisions about the Tollway corridor, downtown, and
+  commercial development will determine whether we become their destination of choice—or watch them
+  drive past."* That is a governance-and-vision argument for proactive recruitment; it never says
+  whether the town should offer tax abatements, attach job-quality or community-benefit strings, or
+  refuse subsidies altogether. Naming economic development as a priority area locates no chair.
+  Separately, at the same June 9, 2026 meeting the council voted 6-0 out of executive session to
+  authorize an Economic Development Incentive Agreement with Prosper Tollway Plaza LLC — Charles is
+  not quoted on it, the motion was Reeves's, the deal terms were negotiated in closed session, and a
+  silent yes vote on a unanimous incentive authorization is not a stated position on incentive
+  aggressiveness. His advocacy of partnering with the Chamber of Commerce and the Economic
+  Development Committee was deliberately not used: chamber/EDC adjacency was the basis of rows
+  deleted from two Allen records on 2026-07-25.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — public-safety-approach — no
+  chair-locating position. The only on-topic material is one clause inside his growth paragraph:
+  *"…that includes ensuring our fire and police have the capacity to keep pace with new rooftops."*
+  That is a growth-adequacy statement, and reading it onto this scale would be cross-topic inference:
+  it says nothing about police **funding level** relative to other municipal services, nothing about
+  staffing, pay or equipment as a means of improving response times or deterring crime (chair 4),
+  nothing about crisis-response or co-responder teams for mental-health and addiction calls
+  (chairs 2–3), and nothing about redirecting budget to social services (chair 1); it also lumps fire
+  in with police, and fire is not on this scale at all. The June 9, 2026 minutes contain no
+  public-safety item he spoke to; the May 19, 2026 agenda's purchase of three police speed trailers
+  is a procurement item with no recorded remark from him.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — housing — no position on housing
+  affordability found in any source. His only tax-and-housing-adjacent line, *"attracting businesses
+  so homeowners don't carry the full tax burden"*, is about the commercial share of the tax base, not
+  about whether or how government should make housing affordable. He has not addressed public
+  housing, rent caps, inclusionary requirements, subsidies, first-time-buyer assistance, permit
+  streamlining for affordability, or leaving housing to the market. His day job as a Rocket Mortgage
+  executive was deliberately not used — profession is adjacency, and mortgage-industry employment
+  says nothing about a housing-policy chair.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — transportation-priorities — no
+  statement found that sets any transportation mode against another. His Tollway-corridor and
+  *"destination of choice—or watch them drive past"* language is about commercial positioning, not
+  about road capacity versus transit, bike or pedestrian investment. The June 9, 2026 minutes record
+  a Capital Improvement subcommittee mention of a traffic-calming program, but by Mayor Pro-Tem
+  Bartley, not by him.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — homelessness — no statement found
+  on public camping, encampments, enforcement, citations, or shelter capacity. No such council item
+  appears in the Prosper record reachable this session.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — local-immigration — no statement
+  found on the Prosper Police Department's relationship to federal immigration enforcement, ICE
+  detainers, or information sharing. Texas SB4's statewide bar on sanctuary policies is state law,
+  not his position, and was deliberately not used as a default — that is the defect the 222-01 audit
+  deleted from two Plano records.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — civil-rights — no on-topic
+  position found anywhere. Nothing in his platform, his official bio, or any coverage addresses civil
+  rights enforcement, equity requirements, or race-conscious programs. No inference was drawn from
+  any identity or affiliation characteristic — that inference class is forbidden and was the basis of
+  deletions from two Richardson records on 2026-07-25.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling** (see "RULING: `taxes` is structurally unanswerable for
+  municipal officeholders" above). His material on this axis is preserved verbatim here so a future
+  municipal-scope rewrite can place it. From his platform: *"attracting businesses so homeowners
+  don't carry the full tax burden"*; and under Fiscal Responsibility, *"right-sizing projects from
+  the start"*, planning long-term maintenance, and being transparent about what things actually cost.
+  From his official bio and campaign material: in 2025 he **led the Windsong Ranch PISD annexation
+  petition**, which would redirect more than $6.5M in annual property taxes from Denton ISD to
+  Prosper ISD (pending state approval). Broadening the commercial tax base to relieve homeowners, and
+  moving an existing tax stream between two school districts, are both revenue-composition moves —
+  neither raises taxes on wealthy people or large companies (chairs 1–2) nor scales public services
+  back (chairs 4–5), so on this scale they can only render as the undiscriminating middle chair.
+  Prosper's adopted FY2025-26 rate is $0.505 per $100 of taxable value, but no statement by him on
+  that rate was found. No taxes row was written.
+- Doug Charles — Prosper — `48500428-3421-4298-b618-613696ca644c` — healthcare — no statement found
+  on healthcare access. Expected: all five chairs on this scale describe national healthcare policy,
+  which a town council member holds no position on by role. No health-adjacent remark was stretched
+  into a chair.
+
+**Prosper reconcile:** the one worklist name appears in bucket 2 for all 11 topics and in bucket 1
+for none — Prosper has no name in neither bucket, no name in both, and contributes no row to
+migration 1423.
 
 ---
