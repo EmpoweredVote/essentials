@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 314
+## Count: 325
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -3676,6 +3676,329 @@ confirmed in that seat by both the city's own governing-body page and the TML di
 none. He is the only Weston name in plan 222-09's scope and he is accounted for — not in neither
 bucket, not in both. Weston's alderman seats are out of this plan's scope and belong to
 222-14/222-15/222-16/222-17. **Weston therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
+
+---
+
+## City of Blue Ridge (4808872) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor Rhonda Williams** (`a9db2052-5fbd-4370-9f78-f8ba07b6e452`), the sole
+Blue Ridge officeholder in plan 222-09's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Scope: Blue Ridge —
+Mayor only.** Blue Ridge's council seats (Linda Braly as Mayor Pro-Tem, David Apple, Trenton Sissom,
+Wendy Mattingly, Keith Chitwood) are covered by plans **222-14/222-15/222-16/222-17** and are
+deliberately absent from this section.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** Blue Ridge is a 222-RESEARCH.md §C **Tier "very
+low"** town — the one town in the phase whose exclusion from Ballotpedia's coverage scope was
+*directly* confirmed at research time. **This zero is SETTLED, and it is the best-documented zero in
+this plan.** Blue Ridge turned out to have a *far* richer civic record than its tier predicted: an
+annual **State of the City** deck, a **297-document** agendas-and-minutes repository, verbatim
+narrative minutes that record who said what, and **YouTube recordings of council meetings**. Two
+complete sets of minutes and the full State of the City deck were read. The zero survives all of it.
+
+**⚠ ACCESS TECHNIQUE THAT UNLOCKED THIS CITY — reuse it for the Blue Ridge council plans.** Blue Ridge
+publishes its agendas and minutes on **eCode360 (General Code)** at customer ID **`BL6250`**, and
+`https://ecode360.com/BL6250/documents/Agendas_%26_Minutes` **returns HTTP 403 to WebFetch**. Two steps
+recover it:
+1. **`curl` with a normal browser `User-Agent` returns HTTP 200** on the same URL — the 403 is
+   UA-based, not auth-based. This alone confirms the customer record: eCode360's embedded JSON reads
+   `"county":"Collin"`, `"municipality":"Blue Ridge"`, `"state":"TX"`, `"govtypesub":"General Law"`,
+   `"population":1187` — a decisive identity anchor against the Georgia homonym.
+2. The **document list itself is JS-rendered**, so `curl` alone yields no file links. Rendering the page
+   in **Playwright** and reading the anchors exposes all 297 documents at the stable pattern
+   **`https://ecode360.com/BL6250/document/<id>.pdf`**, which then download cleanly with `curl` + a
+   browser UA and read directly with the `Read` tool.
+   Guessing `blueridgecity.com/documents/156/<MM.DD.YYYY>_Agendas___Packets.pdf` **does not work for
+   recent meetings** — those URLs return a **soft-404 HTML page with HTTP 200** (identical 39,729-byte
+   body for every date probed), which is exactly the failure mode that would otherwise be mistaken for
+   an empty archive. The 2019-era packets *do* live at that path; 2025–2026 documents do not.
+
+**⚠ THE STRUCTURAL FINDING FOR BLUE RIDGE: the Mayor presides and the councilmembers act.** Confirmed
+across both meetings read in full. In the **January 7, 2025** regular session, Williams *"called the
+meeting to order"*, *"opened the Public Hearing"*, *"asked those FOR ... to come forward"*, *"asked
+those OPPOSING to come forward"*, *"closed the Public Hearing"* and *"asked Council for their
+discussion"* — and **states no view of her own on any item**. In the **March 3, 2026** regular session
+she calls the meeting to order and calls roll, and **every one of the six motions is made and seconded
+by councilmembers** (Mattingly, Sissom, Braly, Apple). She signs the minutes as Mayor. Under this
+plan's rule 5, presiding — including opening and closing a public hearing and inviting testimony — is
+**not** a position.
+
+**⚠ AND A SECOND STRUCTURAL FINDING: Blue Ridge had NO contested 2026 election.** On March 3, 2026 the
+council adopted **Ordinance 2026-0303-002, "cancelling the May 2, 2026 General Election and declaring
+unopposed candidates be elected to office"** (Braly/Mattingly, unanimous), preceded by a **"Ballot
+Drawing Cancellation"** notice in February 2026. This is a *positive explanation* for the absence of
+candidate-questionnaire evidence rather than a search failure: **there was no contested race, so no
+forum, no VOTE411 race page, and no candidate Q&A could exist for this seat in 2026.**
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the City of Blue Ridge "State of the City 2025" deck, downloaded
+  (`https://ecode360.com/BL6250/document/753119705.pdf`, filed in the repository as *"State of the
+  City - 2024"*) and read in full (12 pages).** This is the single highest-value document located for
+  any of the eight towns in this plan. It carries: city governance (a mayor and five councilmembers on
+  **two-year terms**); an FY23-24 budget of **$1.8M** with tax rates **$0.50000 (FY23-24)** and
+  **$0.528548 (FY24-25)**, and the statement that *"The Blue Ridge City Council has held the tax rate in
+  the lower $0.50 cent range for the past 4 years consecutively"*; a growth snapshot (**Heritage Grove**,
+  52 homes, first permit binder Sept 2023; **Blue Ridge Crossing**, infrastructure begun March 2024
+  under a Development Agreement with **Fieldside Development**, LGI Home Builders); 2024 achievements
+  (SC Tracking Solutions backflow contract, a **Collin County Open Space Grant** for Mowery Park, the
+  Dollar General reopening, a wastewater bar screen); **2025 goals** (a comprehensive plan for
+  commercial zoning and future growth locations, Volunteer Fire Department funding assistance, water
+  storage tank upgrades, street upgrades via a **CDBG grant**, a Texas Water Development Board
+  reapplication, a Texas Parks and Wildlife grant); the mayor-and-council roster with **first-person
+  quotes**; and the **Blue Ridge Economic Development Board (4A)**, which purchased 3 lots on North
+  Business 78 totalling 4.1658 acres and contracted with developers Buttry & Brown.
+- **PRIMARY DOCUMENT — the Blue Ridge City Council minutes of January 7, 2025, downloaded
+  (`https://ecode360.com/BL6250/document/753136370.pdf`) and read in full (6 pages, bearing the City of
+  Blue Ridge seal, signed "Rhonda Williams, Mayor" and attested by City Secretary Edie Sims).** These
+  are **narrative minutes that record individual speakers by name** — the strongest minute format in
+  this plan — and they cover the **richest residential-zoning debate found anywhere in plan 222-09**:
+  a public hearing on establishing an **R-2 Multi-Family District** on three Morris Addition tracts
+  (0.92198 acres total) at S Morrow and S Main for a **duplex** development. Also: a Final Plat for
+  **78 Business Park** in the ETJ; an **FMS Bonds** agreement for **Public Improvement District #1
+  (Blue Ridge Crossing)**; a TLC NetCon network-services agreement; a Straka Realty audio/visual
+  agreement; and the **State of the City presentation**. This document also **confirms Williams was
+  Mayor in January 2025** and anchors her identity and term.
+- **PRIMARY DOCUMENT — the Blue Ridge City Council minutes of March 3, 2026, downloaded
+  (`https://ecode360.com/BL6250/document/753246387.pdf`) and read in full (3 pages, signed "Rhonda
+  Williams, Mayor" and attested by City Secretary Joni Lawrence).** Business: recognition of April as
+  Child Abuse Awareness Month; consent agenda; a second public hearing approving the **Final Plat of
+  the LaFon Addition** (a 10-acre ETJ replat into a 9-acre and a 1-acre lot, recommended by P&Z on
+  Feb 17, 2026); **Resolution 2026-0303-001** joining the **Atmos Cities Steering Committee**;
+  **Ordinance 2026-0303-002** cancelling the May 2, 2026 election; executive session on the Chief
+  Financial Officer appointment and the **former City Administrator's** separation terms, with **no
+  action taken**; and future-agenda requests from Mattingly, Apple and Braly.
+- **`https://blueridgecity.com/council`** — the official Council page, fetched. Confirms **Rhonda
+  Williams, Mayor, term ends May 2028** and the five current councilmembers with their term-end dates.
+  It carries a short personal statement from her — see the refusal analysis below — and the Council's
+  generic mission language about *"community growth to land use to finances and strategic planning."*
+- **`https://blueridgecity.com/city-hall`**, **`https://blueridgecity.com/comprehensive-plan-2025-2026`**
+  and **`https://blueridgecity.com/public-hearings-notices`** — all fetched. The Comprehensive Plan page
+  describes a 2025-2026 update with **MHS Planning & Design** of Tyler, Texas covering land-use
+  evaluation, growth opportunities, preservation of small-town character and recommendations to Council,
+  and links a **Townhall Presentation of 12.8.2025** (`/documents/156/Townhall_Presentation_12.8.2025.pdf`,
+  19 MB). **It contains no letter or statement from the Mayor and attributes nothing to her.** The
+  public-hearings page carries the **January 7, 2025 R-2 Multi-Family** zoning notice (published in the
+  *McKinney Courier Gazette* 12/22/2024), which is what led to the minutes above.
+- **`https://ecode360.com/BL6250/documents/Agendas_%26_Minutes`** — the full 297-document repository,
+  enumerated via Playwright. It exposes City Council, Planning & Zoning, **BREDC** and **BRCDC**
+  agendas and minutes for 2025 and 2026, plus **YouTube recordings** of the 2025.01.07, 2025.02.04,
+  2025.03.10, 2025.04.01 and 2025.05.13 meetings.
+- **`https://directory.tml.org/profile/city/1341`** (Texas Municipal League) — confirms Rhonda Williams
+  as Mayor of Blue Ridge, incorporated 1935, **General Law Type A**, and the council roster. Contact
+  information only, **no policy positions**.
+
+**⚠ THREE MISATTRIBUTION TRAPS IN BLUE RIDGE'S OWN PRIMARY DOCUMENTS, ALL CAUGHT AND REJECTED.** This
+city is a case study in why rule 5 exists:
+1. **The State of the City was presented by CITY SECRETARY EDIE SIMS, not by the Mayor.** The
+   January 7, 2025 minutes are explicit: *"City Secretary Edie Sims presented the State of the City for
+   the year 2024."* Every substantive claim in that 12-page deck is therefore **staff testimony**. Had
+   it been read as a mayoral address — the obvious assumption for a document titled "State of the
+   City" — it would have produced several confident, entirely wrong chairs. **The only content in the
+   deck attributable to Williams is her own explicitly-quoted personal statement**, analysed below.
+2. **The deck's most quotable line belongs to the MAYOR OF CLEBURNE, TEXAS.** Slide 3 reads: *"We take
+   the stewardship of taxpayer dollars very seriously, and our staff members work very hard to make sure
+   that our citizens get the most bang for the budget."* — attributed on the slide to **"-Cleburne, TX
+   Mayor Scott Cain"**, followed by *"This statement holds true for the City of Blue Ridge as well."*
+   The January 7, 2025 minutes independently confirm the attribution: *"A statement was made by the
+   Mayor of Cleburne who said…"* **A `taxes` chair built on that sentence would have been a quote from a
+   different city's mayor.** Rejected.
+3. **The single most chair-locating sentence in the entire Blue Ridge record belongs to STAFF, not to
+   any elected member.** In the January 7, 2025 zoning debate: *"Carefully and cautiously, Ms. Sims
+   stated the City is development driven and there may have to be a **moratorium on future builds**
+   AFTER the existing developments are locked in for sewer service. The future developers will have to
+   expand the sewer plant to accommodate any further growth beyond what has already been committed."*
+   That is a textbook **growth-and-development chair 2** proposition — allow growth only where existing
+   infrastructure can support it. **It is City Secretary Edie Sims speaking, not Rhonda Williams, and
+   not a councilmember.** Rejected, and recorded here so the Blue Ridge council plans do not attribute
+   it to a member either.
+
+**⚠ HOMONYM GATE — "BLUE RIDGE" IS A NAMED PHASE-LEVEL TRAP AND IT WAS HANDLED BY IDENTITY-ANCHORING
+EVERY SOURCE.** 222-RESEARCH.md Pitfall 2 records that a prior Blue Ridge search returned only
+*"Jacqueline Kiker Brown (Blue Ridge City Council Post 4, **Georgia**)"* — an unrelated Georgia
+municipality with its own city council. "Blue Ridge" is additionally a **mountain range**, a common
+place-name, and "Rhonda Williams" is a **very common name**. Mitigation actually applied: every source
+above is pinned to **Blue Ridge, Collin County, Texas** by an explicit marker — the `blueridgecity.com`
+domain, the **200 W. Tilton Street** / Blue Ridge Community Center meeting location, the **75424** ZIP,
+the City of Blue Ridge seal on the signed minutes, City Secretary **Edie Sims**' and **Joni
+Lawrence**'s attestations, eCode360's embedded `"county":"Collin","state":"TX"` customer record, or the
+TML directory's Collin County field. **No Georgia, no mountain-range, and no other-state source was
+used.** Separately, **Cleburne, TX Mayor Scott Cain** (see trap 2) is a genuine Texas mayor whose words
+sit inside Blue Ridge's own official deck — the nearest of all the near-misses.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **`https://ecode360.com/BL6250/documents/Agendas_%26_Minutes` returns HTTP 403 to WebFetch**, and
+  `https://blueridgecity.com/documents/156` also returns **403**. Both are recoverable — see the access
+  technique above. Recorded because a future pass that only tries WebFetch will wrongly conclude the
+  archive is closed.
+- **The YouTube council recordings were NOT watched** — `2025.01.07` (`watch?v=EdKk3kyt4bQ&t=1571s`),
+  `2025.02.04` (`watch?v=9h8iphH_aA8`), `2025.03.10` (`watch?v=gmTjeAfxbWM`), `2025.04.01`
+  (`watch?v=Ce2e6fUmjSw`) and `2025.05.13` (`watch?v=J0kZ-EgCrdY`). **This is the single
+  highest-value unread source for this officeholder in the whole plan.** Blue Ridge's minutes are
+  narrative and name speakers, which means the video would only add tone — but if Williams ever states a
+  policy view aloud, that is where it is, and unlike every other town in this plan Blue Ridge actually
+  published the video. A later pass with audio/transcript capability should start here.
+- **The `Townhall_Presentation_12.8.2025.pdf` comprehensive-plan deck (19 MB) was not opened.** It is a
+  **consultant (MHS Planning & Design) presentation**, not a statement by any officeholder, so it could
+  not locate an individual chair for Williams even if read — but it is the one remaining substantive
+  land-use document and is recorded for completeness.
+- **The great majority of the 297-document repository was not read**, including all Planning & Zoning,
+  **BREDC** and **BRCDC** minutes and the 2025 special sessions. Three documents were read in full
+  (State of the City 2025, and the Jan 7 2025 and Mar 3 2026 regular minutes) as the two most
+  substantive council meetings plus the one annual address. Given structural finding 1, additional
+  minutes are unlikely to change this person's result, but they will matter for the council plans.
+- **No Ballotpedia coverage** — directly confirmed at research time that Blue Ridge falls outside
+  Ballotpedia's stated "100 largest cities" scope. **No VOTE411 or LWV of Collin County questionnaire**;
+  `lwvcollin.org` has returned **HTTP 403** all phase and VOTE411 was not attempted per this plan's
+  standing instruction (it returns 403 titled *"Voter Guide Toolkit: Forbidden Page"* even to a real
+  browser). And per structural finding 2, **the May 2, 2026 election was cancelled for want of
+  opposition**, so no 2026 questionnaire could exist regardless.
+- **No Community Impact, Star Local Media, Herald-Banner, Farmersville Times or Princeton Herald
+  article naming Rhonda Williams was located.** **No campaign site.** The *McKinney Courier Gazette* is
+  confirmed as Blue Ridge's legal-notice paper but only notice text was found, not coverage.
+
+**⚠ ROSTER NOTE for the council plans (not a discrepancy for THIS person).** The current roster —
+Williams, Braly, Apple, Sissom, Mattingly, Chitwood — differs from the January 2025 roster in the
+minutes read: **Tammy Crosswhite, David Sturgeon and Colby Collinsworth** were then serving and are
+**not** on the current council page. Williams' own seat is consistent across every source (Mayor,
+2013–present per the State of the City, term ending May 2028), so **no roster-currency item exists for
+the subject of this section** — but 222-14/222-15/222-16/222-17 must not attribute Crosswhite's,
+Sturgeon's or Collinsworth's statements to any sitting Blue Ridge member.
+
+### Rhonda Williams — Mayor — `a9db2052-5fbd-4370-9f78-f8ba07b6e452`
+
+Sourced: **none.** All 11 topics blank. Mayor of Blue Ridge; the City's own State of the City 2025 deck
+records **"Years Served 2013 to Present"**, and her current term ends **May 2028**. She is also
+**Treasurer of the Blue Ridge Economic Development Board (4A)** — recorded as **adjacency, deliberately
+not used for any topic.**
+
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **growth-and-development** —
+  **no chair. This is the closest miss in Blue Ridge and the refusal is deliberate.** She *does* have a
+  genuine, first-person, signed-off quote in an official City document — State of the City 2025,
+  slide 7: *"Having strong roots in Blue Ridge, I feel it's an honor to be a part of the city
+  council/government. I care about the growth and the growth that is inevitable and try to help
+  maintain our 'small town' feel and make it a great place to live and raise our families."* **It
+  locates no chair, on two independent grounds this plan settles in advance.** (a) *"maintain our
+  'small town' feel"* is the **exact refused phrase class** — "preserve our small-town charm" is named
+  in the refusal list as language that locates no chair; and this quote is otherwise pure
+  self-introduction. (b) *"the growth that is inevitable"* **accepts** growth without naming any pace
+  mechanism, so it cannot separate chair 1 (growth limits / voter approval on annexations), chair 2
+  (infrastructure-gated approvals), chair 3 (invest ahead of growth), chair 4 (streamline permitting and
+  recruit development) or chair 5 (remove barriers entirely) — it is consistent with all five. Also
+  refused on this axis: the City's **2025 goals** and the **543 new homes across Heritage Grove, Blue
+  Ridge Crossing and Blue Ridge North**, which are the City's programme delivered by **staff** and
+  attributed to no individual; **Edie Sims'** sewer-capacity moratorium remark, which belongs to staff
+  (trap 3); the **LaFon Addition** and **78 Business Park** plats, which passed on councilmember
+  motions with Williams presiding; and the closing SOTC line *"We strive to keep the small town feel
+  amidst all the growth"*, which is **collective** (*"The Mayor, Council and City Staff"*), delivered
+  by staff, and generically evaluative.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **residential-zoning** — no
+  chair, **and this is the sharpest refusal in the plan.** Blue Ridge's January 7, 2025 R-2
+  Multi-Family public hearing is the richest density debate located in plan 222-09: whether to zone
+  three Morris Addition tracts for **duplexes** at S Morrow and S Main. The minutes name every speaker.
+  **Williams is recorded doing nothing but presiding** — she *"opened the Public Hearing at 7:32pm and
+  asked those FOR the zoning request to come forward"*, *"asked those OPPOSING to come forward"*, then
+  *"closed the Public Hearing at 7:37pm and asked Council for their discussion."* The substance belongs
+  to others: the applicants **Annette and Hugo Mondragon** (*"the goal is to provide affordable
+  housing"*; *"The City needs to grow to have more funds to provide more services"*), objectors
+  **Commeal Shinn** (traffic on a *"goat trail"* street; *"would prefer restrictions to one-story
+  houses"*) and **Juiquitta Morris** (*"she still does not want duplexes"*; *"would like to see the same
+  direction continue with single family homes"*), **Councilmember Tammy Crosswhite** (who *"defended her
+  position as a renter"*), **Councilmember Colby Collinsworth**, and **City Secretary Edie Sims**. The
+  item was **tabled for a rendering** on **Collinsworth's** motion, seconded by **Sturgeon**, carried
+  unanimously — a **procedural deferral**, not a density decision, and one Williams neither moved nor
+  spoke to. Her *"small town feel"* quote was **specifically refused** here too: per this phase's wave-8
+  ruling, a "character" word does **not** set `residential-zoning`, because every chair on that scale is
+  a **housing-density proposition** and she advances none. **Blue Ridge's existing single-family
+  character is the town's condition, not her position**, and was not used as a default.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **housing** — no position
+  found on what role government should play in housing affordability. The one affordability statement in
+  the record — *"the goal is to provide affordable housing"*, with rent *"somewhere around $1450-1500
+  per month"* — is the **developer/applicant Annette Mondragon's**, not the Mayor's, and was refused on
+  attribution grounds. Nothing found from Williams on public housing, rent caps, inclusionary
+  requirements, subsidy, first-time-buyer assistance, permit streamlining, or leaving prices to the
+  market. The **FMS Bonds / Public Improvement District #1** agreement for Blue Ridge Crossing was
+  examined and refused: it is **bond structuring** for a private development (*"No funds will come from
+  the City"*), approved on **Collinsworth's** motion, and carries no affordability policy.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **economic-development** — no
+  position found on incentives, abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. **Her service as Treasurer of the Blue Ridge Economic Development Board (4A) was
+  deliberately NOT used** — board and committee service is **adjacency**, explicitly refused, and this
+  is precisely the EDC-service pattern the 222-01 audit deleted rows for. The **BREDC's** purchase of
+  three lots on North Business 78 (4.1658 acres) and its contract with developers **Buttry & Brown** are
+  a **board's** actions, not her stated position, and the SOTC attributes them to the board
+  collectively. The Dollar General closure-and-reopening narrative — *"a huge sales tax provider"* whose
+  shutdown *"the City Council supported"* for contaminated food items — is a **code-enforcement and
+  public-health** matter presented by staff, not an incentives position, and is attributed to the
+  Council collectively.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **transportation-priorities**
+  — no statement found setting any transportation mode against another. Everything available is
+  **maintenance or jurisdiction**, both refused by rule 4: the CDBG street-upgrade goal, the Texas
+  Department of Agriculture street grant, Pruett Street concrete work funded by a developer, and the
+  SOTC's explanation that *"TxDOT roadways are the main sources of entry/exit of our City which are
+  funded and maintained by TxDOT"* while *"The City only takes responsibility of City streets within the
+  core of the City."* Residents' traffic and speeding complaints, and Mattingly's later request for a
+  *"No jake break"* signage item and a No Parking Ordinance, are **other people's** and are
+  maintenance/nuisance matters regardless. Nothing on transit, bike lanes, sidewalks, parking
+  requirements, or road capacity as a stated priority by Williams.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **public-safety-approach** —
+  no chair-locating position. Blue Ridge has **no city police department** in the record read; fire
+  service is a **Volunteer Fire Department** that is *"not under the City"*, and ambulance service is
+  contracted through **AMR / City of Princeton**. The Fire Department funding discussion — that *"The
+  County will not be increasing the Fire Department funding, even though the County is growing"* — is
+  presented by **staff**, concerns a county-funded volunteer department outside the City's control, and
+  is a **funding-source dispute**, not a position on how the city funds and operates public safety.
+  A resident's remark about *"the need for law enforcement"* is **relaying constituent perception**,
+  explicitly refused. Nothing found from Williams on staffing, pay, equipment, crisis-response teams,
+  mental-health co-responders, or redirecting police budget.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **homelessness** — no
+  statement or vote found on people sleeping or camping in public spaces. **The only mention of
+  homelessness anywhere in the Blue Ridge record is a resident's**: in the January 7, 2025 public
+  comment, Commeal Shinn noted *"There is a homeless man hanging out at Dollar General and at the Post
+  Office."* That is a **citizen observation in public comment**, on which the Council was legally
+  barred from acting or discussing, and **Williams made no response of any kind**. Relaying or hearing a
+  constituent's remark is explicitly not the member's own position. No Blue Ridge camping ordinance,
+  encampment policy or shelter decision exists in the record read.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **local-immigration** — no
+  statement found on any police relationship to federal immigration enforcement, ICE detainers, or
+  information sharing. Blue Ridge operates no police department in the record read. **Texas SB 4 is
+  state law, not her position**, and was not used as a default. **No inference was drawn from the
+  minutes' note that a translator extends public-comment time to six minutes** — a statutory
+  accommodation is not an immigration position.
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **civil-rights** — no
+  on-topic position found on racial or social inequality. Nothing in the two minutes read, the State of
+  the City deck, the official site, or any press engages that axis. **No inference was drawn from any
+  identity, demographic, religious or affiliation characteristic**, nor from the Council's recognition
+  of **Child Abuse Awareness Month** (a proclamation-style recognition, with *"No formal proclamation
+  presented"*, adopted collectively and not on this axis).
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **taxes** — **researched, no
+  chair written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was
+  found even for the register.** Blue Ridge has more tax material than any other town in this plan and
+  **none of it is hers.** The State of the City reports a **$1.8M FY23-24 budget**, tax rates of
+  **$0.50000** and **$0.528548**, and that *"The Blue Ridge City Council has held the tax rate in the
+  lower $0.50 cent range for the past 4 years consecutively"* — a **Council-collective** record
+  presented by **City Secretary Edie Sims**, with no Williams vote or statement recorded. The
+  stewardship quote that reads like a mayor's is **Cleburne Mayor Scott Cain's** (trap 2). The
+  **$26,000 in 2024 permit fees including $44,000 of impact fees for water and sewer infrastructure**
+  is a fee-revenue report, and **fee ratemaking is refused as taxes evidence** by this plan's rule 1.
+  A councilmember's remark that *"the people that live in this town today cannot pay the tax base
+  necessary to make the improvements"* is **Colby Collinsworth's**, not hers. Chairs 1–2 require
+  raising taxes specifically on wealthy people and large companies; chairs 4–5 require committing to
+  scale public services back. Nothing found does either. **No taxes row was written.**
+- Rhonda Williams — Blue Ridge — `a9db2052-5fbd-4370-9f78-f8ba07b6e452` — **healthcare** — no statement
+  found on healthcare access. Expected: all five chairs describe **national** healthcare policy, which
+  the mayor of a town of ~1,187 people holds no position on by role. The **AMR / City of Princeton
+  ambulance contract** and the **BRCDC-funded food pantry and Blue Ridge Resource Center** were examined
+  and refused — emergency-services contracting and a charity food pantry are neither healthcare-coverage
+  policy nor hers individually (the Resource Center is the **BRCDC's** project). **David Apple's**
+  request to look at placing a **defibrillator** outside City Hall is his, not hers, and is equipment
+  procurement in any case. No health-adjacent remark was stretched into a chair.
+
+**Blue Ridge reconcile:** Rhonda Williams appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. She is the only Blue Ridge name in plan 222-09's scope and she is accounted for — not in neither
+bucket, not in both. Blue Ridge's council seats are out of this plan's scope and belong to
+222-14/222-15/222-16/222-17. **Blue Ridge therefore does NOT flip to `hasContext: true` in
 `src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
 
 ---
