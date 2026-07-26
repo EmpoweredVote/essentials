@@ -42,12 +42,13 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 175
+## Count: 195
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
-+ 10 by 222-05 (Allen) + 10 by 222-06 (Richardson) + 11 by 222-07 (Prosper).
++ 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
++ 31 by 222-07 (11 Prosper + 20 Celina).
 222-08 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -62,6 +63,7 @@ operator approval; 1422 is authored and committed but **not yet applied**:
 | `1420_222_barrios_healthcare_bio_only_remediation.sql` | 1 deletion (bio-page-only) | APPLIED |
 | `1421_222_allen_stances.sql` | 1 chair (Schulmeister residential-zoning=3) | APPLIED |
 | `1422_222_richardson_stances.sql` | 1 chair (Dorian housing=3) | APPLIED |
+| `1423_222_prosper_celina_stances.sql` | Prosper + Celina blocks complete: 2 chairs (Shea Scott / Celina: economic-development=1, public-safety-approach=4); Prosper's Doug Charles and Celina's Shane Lambert yield zero rows. Longview block pending — that research had not yet run when this row was written. | AUTHORED (Prosper + Celina) — awaiting operator apply (222-07 Task 3) |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
 Migration 1422 is excluded from that total until the operator applies it.
@@ -1511,5 +1513,250 @@ Sourced: **none.** All 11 topics are blank:
 **Prosper reconcile:** the one worklist name appears in bucket 2 for all 11 topics and in bucket 1
 for none — Prosper has no name in neither bucket, no name in both, and contributes no row to
 migration 1423.
+
+---
+
+## City of Celina (4813684) — 222-07
+
+**Attempted:** 2026-07-25, the two un-stanced Celina officeholders on the 222-01 live worklist —
+Councilmember Shea Scott (Place 4) and Councilmember Shane Lambert (Place 5) — against all 11
+canonical compass topics. Both were elected on **May 2, 2026** in contested races and took office
+that month, so both have a candidate questionnaire on the record (Celina's best evidence source) but
+barely two months of council voting record. The other seated Celina officeholders already hold
+stances and were out of scope per D-07; none of their rows was read, re-reasoned, or modified by this
+plan (note that Mayor Ryan Tubbs's `housing` row was **deleted** by the 222-01 integrity remediation
+as a Class A defect — that deletion is not disturbed here).
+
+**Result: 2 chairs, both for Shea Scott** — `economic-development` = 1 and
+`public-safety-approach` = 4, migration 1423, **authored — awaiting operator apply**. Shane Lambert
+yields zero chairs. 20 of the 22 (person, topic) pairs are blank.
+
+**Evidence checked:** Community Impact Newspaper's Prosper–Celina desk, which is the richest source
+for this council — the **March 16, 2026 Place 4 candidate Q&A** and the **March 16, 2026 Place 5
+candidate Q&A** (both genuine candidate questionnaires, the D-05 gold standard, both from contested
+races), the February 13, 2026 "who is running" story, the February 23, 2026 candidate-withdrawal
+story, the May 2, 2026 results story, the February 17, 2026 story on the council amending Celina's
+zoning ordinance in response to state multifamily law SB 840, and the **July 15, 2026 story on the
+council's 5-2 approval of a $3.05M incentive package for the Trackside Junction downtown mixed-use
+project**, which is the only recorded council vote reachable this session in which either of these
+two members is quoted; **Star Local Media's Celina Record** candidate profile of April 17, 2026 for
+the Place 4 race (by Jack Hintze) — Star Local loaded on this attempt rather than returning its usual
+HTTP 429; Scott's campaign site `bluelineiq.com/sheaforcouncil` and its `/about` page; and both
+members' official City of Celina staff-directory profiles (`celina-tx.gov/directory.aspx`). Celina,
+**TEXAS** was confirmed on every source used (the Place 4 campaign site states the city population
+as 67,232), and both "Shea Scott" and "Shane Lambert" are common names, so each identity was pinned
+to its Place number on the official city directory and to the May 2, 2026 Collin County canvass
+before any evidence was accepted as theirs.
+
+**Note on the February 2026 SB 840 zoning amendment.** Celina's council unanimously amended its
+zoning ordinance at a **February 10, 2026** meeting (reported February 17) to allow heavy industrial
+uses by permit in nonresidential districts, a move framed in the press as limiting where the new
+state multifamily-by-right law could apply. That is genuinely on-topic for `residential-zoning` — but
+it happened **three months before either of these two people took office**, so it is not their vote
+and was deliberately not used for either of them. A future pass should check whether any
+already-stanced Celina member's `residential-zoning` row rests on it.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position: **both** Ballotpedia individual candidate pages resolved but returned an **empty body**
+(`/Shea_Scott_(Celina_City_Council_Place_4,_Texas,_candidate_2026)` and
+`/Shane_Lambert_(Celina_City_Council_Place_5,_Texas,_candidate_2026)`) — the known phase-wide
+Ballotpedia failure, a fetch failure and not evidence of absence. A constructed Star Local Media URL
+for a possible Place 5 candidate profile returned **HTTP 429**, and no Place 5 Star Local profile was
+located by search, so Lambert has no Star Local counterpart to Scott's April 17 profile. No VOTE411 /
+League of Women Voters of Collin County questionnaire was found for either seat. **Community Impact's
+Place 5 Q&A truncates three of Lambert's four answers mid-sentence with an ellipsis** — "Responsible
+growth means …", "…higher water bills and higher property …", "…unfair property taxes and excessive
+…" — and the full text could not be recovered from either URL variant of the article; this is a
+publisher truncation, and those three cut-off sentences are the single most likely place a Lambert
+chair is hiding. The **celinaradio.com interview with Shane Lambert (April 18, 2026)**, titled
+"Shane Lambert on Growth, Spending, and the Future of Celina," is **audio/video only with no
+published transcript** — podcast audio is not readable by this pass, and it is described as covering
+"rapid growth, responsible spending, protecting downtown," "taxes, infrastructure, water concerns";
+a pass able to transcribe it would very likely find real positions. Lambert's official city
+directory profile carries **no biography at all**, only a seat and an email. Council meeting video on
+`celinatx.new.swagit.com` was not watched, and no Celina agenda packet or minutes document was
+opened this session — every recorded vote below is known only through news coverage of it. Campaign
+Facebook pages were not fetched.
+
+### Shea Scott — Council Member Place 4 — `91128e4f-94f6-4119-8087-4449ee16964a`
+
+Sourced: `economic-development` = 1 and `public-safety-approach` = 4 (migration 1423, **authored —
+awaiting operator apply**). The remaining 9 topics are blank:
+
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — growth-and-development — **DEMOTED
+  TO BLANK BY THIS PLAN'S TIER-1 SELF-AUDIT.** A chair 2 was drafted from his March 16, 2026
+  questionnaire answers: *"Our biggest challenges are unsustainable growth and a staggering municipal
+  debt load approaching $1 billion. This rapid expansion is outpacing our public safety resources and
+  infrastructure, leading to issues like water rationing…"* and *"We must slow down incentive-driven
+  development and refocus our city's budget on core infrastructure and public safety."* The re-fetch
+  confirmed both quotes verbatim and confirmed he does call for development approvals to be slowed —
+  but it also surfaced, in the April 17, 2026 Star Local profile, an equally explicit statement of
+  the **opposite** chair: *"My vision is a Celina that grows smarter, not just bigger. A city where
+  infrastructure leads growth instead of chasing it,"* and *"I see a city where public safety is
+  planned ahead of growth, not responding after the fact,"* and from his campaign site, a pledge to
+  *"manage our growth sustainably without burdening future generations."* Building and planning ahead
+  of growth is chair 3's operative content; slowing approvals until capacity catches up is chair 2's.
+  He states both, and nothing resolves between them — his one slowing prescription is scoped to
+  *incentive-driven* development specifically, which is a subsidy objection already carried by his
+  `economic-development` chair, not a general pace rule. Suggestive but not explicit is a blank. His
+  diagnosis that growth is "unsustainable" does rule out chairs 4 and 5, and his silence on growth
+  caps and annexation votes rules out chair 1, but a blank spoke is the correct terminal state when
+  the remaining two chairs cannot be separated. A future pass with his council voting record on
+  specific development approvals should be able to place this.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — residential-zoning — no chair-locating
+  position. **Verified by targeted re-fetch of both of his questionnaire/profile sources: neither
+  mentions apartments, multifamily, duplexes, accessory dwelling units, density, or rezoning at all.**
+  His character language — *"the small-town character that makes this place special is protected by
+  policy, not just promises"* and, from his campaign bio, *"ensure that as we expand, we don't lose
+  the character that makes this city home"* — names neighbourhood character without saying what
+  housing types should be allowed where, and his transparency proposal of *"automated zoning-change
+  notifications and a resident feedback portal with guaranteed response timelines"* is a notice
+  mechanism, not the community-vote requirement that distinguishes chair 1, and not the modest-density
+  allowance that distinguishes chair 2. His July 14, 2026 remark that the Trackside Junction downtown
+  mixed-use project (which includes residential space) is *"great"* is praise for one project, not a
+  density position. The February 10, 2026 SB 840 zoning amendment predates his tenure.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — housing — no position on housing
+  affordability found. Re-fetch of the Place 4 questionnaire confirmed it contains nothing about
+  affordable housing, rent, or housing subsidies. He has not addressed public housing, rent caps,
+  inclusionary requirements, first-time-buyer assistance, permit streamlining for affordability, or
+  leaving housing to the market. His fiscal-affordability language is about municipal debt and the
+  tax burden, not about housing supply or price.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — transportation-priorities — no
+  statement found that sets any transportation mode against another. His repeated "core
+  infrastructure" framing, in a city whose named infrastructure crisis is **water rationing**, does
+  not choose between road capacity and transit, bicycle or pedestrian investment. Nothing about
+  sidewalks, bike lanes, transit, parking, or traffic flow appears in any source read.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — homelessness — no statement found on
+  public camping, encampments, enforcement, citations, or shelter capacity. Notably, 27 years in law
+  enforcement including service as Celina's assistant police chief is **exactly** the kind of
+  adjacency that must not be converted into an enforcement-side chair on this topic; it was
+  deliberately not used.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — local-immigration — no statement
+  found on the Celina Police Department's relationship to federal immigration enforcement, ICE
+  detainers, or information sharing. His law-enforcement career was deliberately not used — that
+  inference would be pure adjacency. Texas SB 4's statewide bar on sanctuary policies is state law,
+  not his position, and was not used as a default.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — civil-rights — no on-topic position
+  found anywhere. Nothing in either questionnaire, the Star Local profile, his campaign site, or the
+  July 2026 council coverage addresses civil-rights enforcement, equity requirements, or race-conscious
+  programs. No inference was drawn from any identity or affiliation characteristic.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling** (see "RULING: `taxes` is structurally unanswerable for
+  municipal officeholders" above). His material on this axis is the strongest in this plan and is
+  preserved verbatim here so a future municipal-scope rewrite can place it. From the March 16, 2026
+  questionnaire: *"Our biggest challenges are unsustainable growth and a staggering municipal debt
+  load approaching $1 billion… residents are sidelined without voter-approved bonds to help manage
+  these massive financial obligations."* And: *"I will demand absolute transparency in our finances
+  and fight the reliance on non-voter-approved Certificates of Obligation, returning the power of the
+  vote to citizens."* And: *"My top priorities are instituting strict fiscal responsibility to tackle
+  our $1 billion debt, ensuring public safety and infrastructure keep pace with growth and mandating
+  voter approval for all new municipal bonds."* From the April 17, 2026 Star Local profile: *"Celina
+  carries over $1 billion in total debt obligations, one of the highest per-capita debt loads among
+  comparable Texas cities, and nobody was talking about it."* From his campaign bio: *"prioritize
+  essential services and infrastructure before vanity projects"*; his campaign site's central feature
+  is a municipal **debt clock** benchmarking Celina against McKinney and Prosper. This is a
+  debt-instrument and fiscal-transparency platform — it neither raises taxes on wealthy people or
+  large companies (chairs 1–2) nor scales public services back (chairs 4–5); he in fact wants MORE
+  spending on services and infrastructure and LESS borrowing, a combination the scale has no chair
+  for. No taxes row was written.
+- Shea Scott — Celina — `91128e4f-94f6-4119-8087-4449ee16964a` — healthcare — no statement found on
+  healthcare access. Expected: all five chairs on this scale describe national healthcare policy,
+  which a city council member holds no position on by role. No health-adjacent remark was stretched
+  into a chair.
+
+### Shane Lambert — Council Member Place 5 — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e`
+
+Sourced: **none.** All 11 topics are blank. His single substantive source, Community Impact's
+March 16, 2026 Place 5 candidate Q&A, is **truncated by the publisher** in three of four answers, and
+his surviving policy language is generically evaluative.
+
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — economic-development — no
+  chair-locating position, and this is the closest call for him. He is explicitly pro-incentive: *"The
+  biggest challenges facing the city of Celina are properly managing our growth while preserving our
+  small town charm. Thoughtful incentives for new developers as well as our small business owners is
+  critical for sustainable growth."* That rules out chair 1 (no corporate tax incentives) and chair 2
+  (small-business support **only**, avoiding large corporate subsidies — he explicitly includes new
+  developers as well). But *"thoughtful"* is the entire qualifier, and it is generically evaluative:
+  he never says whether incentives should carry community-benefit agreements or job-quality
+  requirements (chair 3's operative content), nor whether the city should compete aggressively for
+  major employers with significant abatements (chair 4), nor that growth is the top city priority
+  (chair 5). Chair 3 is the middle chair, and assigning it on the strength of the word "thoughtful"
+  would be defaulting to a middle value, which D-04 forbids. His **recorded vote does not resolve it
+  either**: on July 14, 2026 he was one of two members to vote against the $3.05M Trackside Junction
+  incentive package (city land worth ~$1M sold for $1, a $1.7M TIRZ No. 11 grant, a $350K Celina EDC
+  grant) — but his stated reason was procedural and narrow: *"I would like to have a more robust
+  dialogue on the parking lot,"* referring to an 18-space parking-lot lease on Louisiana Drive, and
+  the coverage records that he expressed overall support for the development. A no vote cast over a
+  parking lot is not an anti-subsidy position and was deliberately not read as one. His **nearly two
+  years on the Celina Economic Development Corporation** — which he himself cites as qualifying
+  experience, *"Nearly two years on the Celina EDC has provided an understanding for the mechanics of
+  growth"* — was deliberately **not** used: EDC/chamber board service is adjacency, and it was the
+  basis of rows deleted from two Allen records on 2026-07-25.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — growth-and-development — no
+  chair-locating position. His language is *"properly managing our growth while preserving our small
+  town charm"*, *"I am an advocate for infrastructure. Responsible growth means …"* (the publisher
+  truncates the sentence at exactly the point where the position would appear), and, as his stated top
+  priority, *"1) Infrastructure: Growth must be managed with the proper foundation in order to create
+  a sustainable future for Celina."* "Responsible growth" and "managed with the proper foundation" are
+  precisely the generically-evaluative formulas this phase has repeatedly refused; neither says
+  whether approvals should be slowed until capacity catches up, whether the city should invest ahead
+  of growth, whether permitting should be streamlined, or whether growth should be capped. The
+  truncated "Responsible growth means …" sentence is the single most valuable missing piece of
+  evidence for this person.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — residential-zoning — no
+  chair-locating position. *"Preserving our small town charm"* names neighbourhood character without
+  addressing housing density at all — nothing about apartments, multifamily, duplexes, accessory
+  dwelling units, lot sizes, or rezoning process appears in any source read. The February 10, 2026
+  SB 840 zoning amendment, which is genuinely on-topic, predates his tenure by three months and is
+  not his vote. His July 14, 2026 no vote on Trackside Junction — a mixed-use project including
+  residential space — was cast over a parking-lot lease, not over the residential component, and he
+  supported the development overall.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — housing — no position on housing
+  affordability found. His third stated priority is *"Affordability. Protecting our residents from
+  unfair property taxes and excessive …"* — the sentence is truncated, and what survives is about tax
+  and utility burden on existing residents, not about housing supply, price, subsidy, or the
+  government's role in housing. Nothing on public housing, rent caps, inclusionary requirements,
+  buyer assistance, or deregulation.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — public-safety-approach — no
+  statement found on police funding, staffing, pay, equipment, response times, crisis-response teams,
+  co-responders, or redirecting police budget. He does not mention public safety in any of his four
+  published answers.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — transportation-priorities — no
+  statement found that sets any transportation mode against another. His infrastructure advocacy is
+  concretely about **water** — *"2) Water management: Stop the madness with those water bills! Working
+  to secure more water for future increases in demand"* — which is a utility-capacity position, not a
+  transportation-mode tradeoff. Reading it onto this scale would be cross-topic inference. Nothing
+  about roads, transit, sidewalks, bike lanes, or parking appears in any source read.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — homelessness — no statement found
+  on public camping, encampments, enforcement, citations, or shelter capacity.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — local-immigration — no statement
+  found on the Celina Police Department's relationship to federal immigration enforcement, ICE
+  detainers, or information sharing. Texas SB 4 is state law, not his position, and was not used as a
+  default.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — civil-rights — no on-topic
+  position found anywhere. Nothing addresses civil-rights enforcement, equity requirements, or
+  race-conscious programs. No inference was drawn from any identity or affiliation characteristic.
+  His self-description, *"My experience in the service industry makes me a listener by trade,"* is a
+  temperament claim and locates nothing.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling** (see the ruling above). His material is preserved verbatim
+  here: *"We will avoid passing initiatives that result in higher water bills and higher property …"*
+  (truncated by the publisher, presumably "taxes"), and *"3) Affordability. Protecting our residents
+  from unfair property taxes and excessive …"* (also truncated). Holding down the residential property
+  tax burden neither raises taxes on wealthy people or large companies (chairs 1–2) nor commits to
+  scaling public services back (chairs 4–5) — he simultaneously advocates more infrastructure and more
+  water supply — so it can only render as the undiscriminating middle chair. His **water-bill** relief
+  priority is separately refused as taxes evidence under the rule established in 222-06: utility,
+  water and wastewater rates are fee decisions, not tax-and-spend positions. No taxes row was written.
+- Shane Lambert — Celina — `2e8dc841-f8ea-42f0-b6a4-08e9c779a20e` — healthcare — no statement found
+  on healthcare access. Expected: all five chairs on this scale describe national healthcare policy,
+  which a city council member holds no position on by role. No health-adjacent remark was stretched
+  into a chair.
+
+**Celina reconcile:** Shea Scott appears in bucket 1 (two migration rows in 1423, pending operator
+apply) and additionally lists his 9 unsourced topics here; Shane Lambert appears in bucket 2 for all
+11 topics and in bucket 1 for none. Both Celina worklist names are accounted for — no name in neither
+bucket, and no (person, topic) pair in both. Until 1423 is applied, Scott is honestly in bucket 2 for
+all 11 topics.
 
 ---
