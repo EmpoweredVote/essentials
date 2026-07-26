@@ -689,7 +689,7 @@ Plans:
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
-- [ ] 222-06-PLAN.md — Tier 1: Richardson
+- [x] 222-06-PLAN.md — Tier 1: Richardson
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
