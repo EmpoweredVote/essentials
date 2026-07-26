@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 380
+## Count: 391
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -50,8 +50,11 @@ dropped), or a person present in both with the *same* topic recorded twice (an i
 + 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
 + 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview)
 + 55 by 222-08, COMPLETE (11 Anna + 11 Fairview + 11 Farmersville + 11 Parker + 11 Lucas —
-all five mayors fully blank, 55 of 55 attempted pairs).
-222-09 through 222-17 append their own per-government sections below as they execute.
+all five mayors fully blank, 55 of 55 attempted pairs)
++ 88 by 222-09, COMPLETE (11 Weston + 11 Blue Ridge + 11 Josephine + 11 Lavon + 11 Lowry Crossing
++ 11 Nevada + 11 Saint Paul + 11 Van Alstyne — all eight mayors fully blank, 88 of 88 attempted
+pairs; all eight zeros are SETTLED findings about the record, none an access failure).
+222-10 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -67,10 +70,12 @@ operator approval; 1422 is authored and committed but **not yet applied**:
 | `1422_222_richardson_stances.sql` | 1 chair (Dorian housing=3) | APPLIED |
 | `1423_222_prosper_celina_stances.sql` | 4 chairs across 3 of 8 people — Shea Scott (Celina): economic-development=1, public-safety-approach=4; Derrick Conley (Longview): homelessness=5; John Nustad (Longview): homelessness=5. Doug Charles (Prosper), Shane Lambert (Celina), Shannon Moore, Brandon Smith and Sidney Allen (Longview) yield zero rows — all 11 topics honest blanks each. | APPLIED |
 | **`1424_222_collin_mayors_a_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-08** (D-02 mayors sweep part A: Anna, Fairview, Farmersville, Parker, Lucas). **Zero chairs across all five mayors — 55 of 55 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan. There is no SQL for the operator to apply for 222-08; **Task 3's apply step is a no-op**, and the only operator action 222-08 requests is the VOTE411 403 retry described in the Lucas section. The next research plan should re-derive the next free migration number rather than assuming 1424 is taken. | **N/A — NO MIGRATION (all-blank outcome)** |
+| **`1424_222_collin_mayors_b_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-09** (D-02 mayors sweep part B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne). **Zero chairs across all eight mayors — 88 of 88 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan, and **no `git push` was executed against that remote.** There is no SQL for the operator to apply for 222-09; **Task 3's apply step is a no-op.** **1424 is therefore still free, having now been left unclaimed by both 222-08 and 222-09** — the next research plan must re-derive it. The operator actions 222-09 requests are: **(a)** close the Phase 221 **Saint Paul roster-currency item** in the DB's favour; **(b)** re-run every earlier Ballotpedia "empty body" with a browser `User-Agent`, starting with the Lee Pettle / Parker page 222-08 flagged as its top retry; **(c)** close, rather than retry, 222-08's `citizenportal.ai` lead (reachable but AI-generated); and **(d)** optionally review the three refusals named in the 222-09 outcome block. | **N/A — NO MIGRATION (all-blank outcome)** |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
-Migration 1422 is excluded from that total until the operator applies it. **Plan 222-08 changes
-production by nothing at all** — it adds 55 register blanks and two actionable retry leads.
+Migration 1422 is excluded from that total until the operator applies it. **Plans 222-08 and 222-09
+change production by nothing at all** — between them they add **143 register blanks** (55 + 88)
+covering **all 13 mayors** in the D-02 mayors sweep, plus the retry leads and corrections listed above.
 
 ---
 
@@ -3684,8 +3689,9 @@ bucket, not in both. Weston's alderman seats are out of this plan's scope and be
 
 **Attempted:** 2026-07-25 — **Mayor Rhonda Williams** (`a9db2052-5fbd-4370-9f78-f8ba07b6e452`), the sole
 Blue Ridge officeholder in plan 222-09's scope, against **all 11** canonical compass topics (11 pairs).
-Verified at `stance_count = 0` against production before any research began. **Scope: Blue Ridge —
-Mayor only.** Blue Ridge's council seats (Linda Braly as Mayor Pro-Tem, David Apple, Trenton Sissom,
+Verified at `stance_count = 0` against production before any research began.
+**Scope: Blue Ridge — Mayor only.**
+Blue Ridge's council seats (Linda Braly as Mayor Pro-Tem, David Apple, Trenton Sissom,
 Wendy Mattingly, Keith Chitwood) are covered by plans **222-14/222-15/222-16/222-17** and are
 deliberately absent from this section.
 
@@ -5369,5 +5375,461 @@ bucket, not in both. Saint Paul's alderman seats are out of this plan's scope an
 `src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances. **The
 Phase 221 roster-currency item for this town is CLOSED in the DB's favour** (see the table above) and
 requires no reseating.
+
+---
+
+## City of Van Alstyne (4874924) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor Jim Atchison** (`4e7bc81e-1b24-4113-a839-3d87a2637df1`), the sole Van
+Alstyne officeholder in plan 222-09's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Scope: Van Alstyne — Mayor
+only.** Van Alstyne's six council seats (Ryan Neal Place 1, Marla Butler Place 2, Dusty Williams Place 3,
+Lee Thomas Place 4 — elected Mayor Pro Tempore on June 9, 2026 — Katrina Arsenault Place 5, Zach Williams
+Place 6) are covered by plans **222-14/222-15/222-16/222-17** and are deliberately absent from this
+section.
+
+**Result: 0 chairs. All 11 topics are honest blanks — and this is the most important result in plan
+222-09.** Van Alstyne is the **best-evidenced officeholder in the entire plan by a wide margin**:
+- he **completed Ballotpedia's Candidate Connection survey in 2026** — the single highest-value D-05
+  source type, a candidate questionnaire in his own words;
+- he gave a **local-television interview with four verbatim direct quotes**;
+- he is a **voting member** of his council (unlike five of the seven other mayors here), and Van
+  Alstyne's minutes **name dissenters**, so his votes are individually attributable;
+- his city is **home rule**, with a Comprehensive Plan, a TIRZ, two PIDs, Certificates of Obligation and
+  two development agreements transacted in a single meeting.
+
+**Every one of those sources was obtained and read, and none of them locates a chair.** That is the
+strongest available demonstration that this phase's high blank rate is **the evidence bar working
+correctly, not a research shortfall** — when the bar is applied honestly, even a questionnaire-completing,
+interview-giving, vote-casting home-rule mayor returns zero, because *campaign messages name priorities
+and votes carry no reasons.* **No bar was lowered to put a number on the board.**
+
+**⚠ THE STRUCTURAL FINDING FOR VAN ALSTYNE, AND IT IS THE OPPOSITE OF EVERY OTHER TOWN IN THIS PLAN.**
+Van Alstyne is a **Home Rule** municipality (the June 9, 2026 minutes cite *"Section 3.08 of the Van
+Alstyne Home Rule Charter"*), and **its Mayor votes on ordinary business.** With six of seven members
+present, motions carry **"6 - 0"**; item VII.A carried **"5 - 0 … (abstained: Lee Thomas)"**; and item
+VII.C carried **"5 - 1 (opposed: Katrina Arsenault)"** — arithmetic that only works if Atchison is
+counted among the voters, and Van Alstyne **names the dissenter**. So unlike Weston, Lavon, Lowry
+Crossing, Nevada and Saint Paul, **an on-topic Atchison vote here IS attributable.** Ten such votes were
+found and read. They are refused not on attribution but because **not one of them carries a stated reason
+from him**, which is the rule-4 unexplained-vote bar.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — Jim Atchison's completed Ballotpedia Candidate Connection survey, 2026**,
+  recovered with the browser-UA technique from
+  `https://ballotpedia.org/Jim_Atchison_(Mayor_of_Van_Alstyne,_Texas,_candidate_2026)` and read in full.
+  The page states ***"Jim Atchison completed Ballotpedia's Candidate Connection survey in 2026"***, lists
+  him as **Nonpartisan**, **Profession: Retired**, **Incumbent officeholder: Yes**, and records that he and
+  **Kevin Soucie** ran in the general election for Mayor of Van Alstyne on **May 2, 2026**. His answers,
+  verbatim and in full:
+  > **Who are you? Tell us about yourself.** — *"Current Mayor of the City of Van Alstyne"*
+  >
+  > **Please list below 3 key messages of your campaign. What are the main points you want voters to
+  > remember about your goals for your time in office?** —
+  > 1. *"Responsible Leadership for Van Alstyne"*
+  > 2. *"We will invest to continue to make this the safest community in Texas"*
+  > 3. *"We will continue policies to manage the growth that is coming to southern Grayson County"*
+  >
+  > **What areas of public policy are you personally passionate about?** — *"The Texas model of local
+  > government control, responsible to the local community should continue to serve us well."*
+  Ballotpedia also records **"Ballotpedia did not identify endorsements for Atchison in this election."**
+- **PRIMARY DOCUMENT — the KTEN (Texoma) report *"Van Alstyne voters reelect Jim Atchison for Mayor"***
+  (`https://www.kten.com/news/van-alstyne-voters-reelect-jim-atchison-for-mayor/article_cd84d142-a2fa-4cd3-ba47-5f30bd1a634b.html`),
+  **read directly rather than from a search summary** (WebFetch returned **HTTP 429**; `curl` with a
+  browser UA returned the full article). His **verbatim direct quotes**, all four:
+  > *"I'm delighted to be reelected and want to thank our citizens who came out to vote."*
+  > *"We need a grocery store in Van Alstyne, and we need other shopping opportunities for general
+  > merchandise as well."*
+  > *"There are many opportunities for partnering in Collin County and Grayson County."*
+  > *"Going down to Austin at critical times is part of the job that I don't mind doing at all to
+  > represent our citizens, and it gives me a chance to talk about what a great thing we have going on
+  > here in Van Alstyne."*
+  The remaining relevant sentences are the **reporter's paraphrase**, and are marked as such throughout
+  the refusals below: *"Mayor Jim Atchison is returning to his council seat, continuing his mission to
+  move Van Alstyne forward"*, *"Heading into his third term, Atchison said he is focused on furthering
+  the city's growth, starting with retail development"*, and *"Atchison will hold the mayor's position
+  for the next three years"* (i.e. **three-year terms**).
+- **PRIMARY DOCUMENT — the Van Alstyne City Council minutes of Tuesday, June 9, 2026, downloaded as a
+  PDF (`https://cityofvanalstyne.civicweb.net/document/209362`) and read in full (4 pages, bearing the
+  **VA — Van Alstyne — PROUD PAST | BRIGHT FUTURE** logo and the Van Alstyne City Hall, 152 N Main Drive
+  header; *"Respectfully Submitted, Susan M Coffer, City Secretary"*; APPROVED **Jim Atchison, Mayor**).**
+  Present: Atchison, Zach Williams, Lee Thomas, Ryan Neal, Dusty Williams, Katrina Arsenault; absent:
+  Marla Butler. Every item, and Atchison's vote on each, is enumerated in the refusals below: a consent
+  agenda (minutes; a **Motorola Solutions Police Video System** renewal *"not to exceed $184,378, funded
+  through five annual installments of $36,875.60"* for fleet, body-worn cameras and interview rooms; a
+  **Chapter 42 speed-limit** ordinance recognising **TxDOT / Texas Transportation Commission** limits);
+  a **Plan of Finance to issue Certificates of Obligation**; a public hearing adopting **Comp Plan 2035**;
+  the **SOLARA** package on **±176 acres** north of FM 121 east of Hackberry Road (development agreement,
+  **voluntary annexation**, and rezoning to **Planned Development with underlying SF-65 Single-Family
+  Residential**); election of **Lee Thomas** as Mayor Pro Tempore; postponement of a **grease-trap**
+  ordinance; an **Impact Fees "Land Use Equivalency Table"** replacement carried **5-1**; a resolution
+  setting a **Tax Increment Reinvestment Zone** hearing on 176.603 acres under Tex. Tax Code §311.003
+  (SOLARA); acceptance of a petition to create the **Solara Public Improvement District** under Tex. Loc.
+  Gov't Code §372.009; and a **development agreement with Creekline Partners, Ltd** on **78.880 acres**.
+- **`https://cityofvanalstyne.civicweb.net/Portal/MeetingTypeList.aspx`** — the CivicWeb (iCompass /
+  Diligent) portal, enumerated in Playwright. It indexes City Council, **City Council Public Hearings**
+  (including **PH TIRZ #1**, **PH Solara PID**, **PH Solara TIRZ**, **PH NWC**, and upcoming **Creekline
+  PID** and **Martin Duke PD** hearings on Aug 11, 2026), Planning & Zoning, P&Z Public Hearings,
+  **Community Development Board**, **Economic Development Board**, **Architectural Review Panel**, and
+  **VA TIRZ #1**.
+- **`https://cityofvanalstyne.civicweb.net/filepro/documents/205279`** — the Document Center's **2026 City
+  Council Minutes** folder, enumerated. It holds the full 2026 series: Jun 23 (special), **Jun 09**
+  (regular and work session), May 20 (special), May 12, Apr 14 (Pdf and Adopted), Mar 24 (special and
+  work session), Mar 10 (regular, plus a **Joint City Council and Planning & Zoning Work Session**),
+  Feb 17 (special), Feb 10, Feb 04, Jan 13 — with sibling folders for 2025, 2024, 2023 and 2022 and for
+  P&Z, EDB, CDB, ZBA, Library Board and ARP.
+- **`https://www.cityofvanalstyne.us/council`** — the official Mayor-and-Council page, rendered in
+  Playwright. See the access note: **the roster widget did not render**, so this page yielded no names or
+  bios this session; the roster was established from the minutes instead.
+- **`https://directory.tml.org/profile/city/524`** — the Texas Municipal League entry for the City of Van
+  Alstyne, confirming Jim Atchison as Mayor. Contact information only, **no policy positions**.
+- **`https://www.localprofile.com/real-estate/van-alstyne-approves-453-home-development-as-regions-population-surges-12407887`**
+  and **`https://www.kxii.com/2026/06/10/texoma-officials-approve-new-development-after-public-hearing/`**
+  — surfaced in search and used only to corroborate that **SOLARA is a Skorburg Company master-planned
+  neighbourhood of 453 homes across three lot-size tiers** and that the public hearing drew resident
+  concerns about traffic, safety and privacy. **Neither was fetched directly and neither is relied on for
+  any Atchison attribution** — recorded honestly as search-summary-level only.
+
+**⚠ HOMONYM GATE — THIS PLAN'S SINGLE MOST DANGEROUS TRAP WAS HERE, AND IT WAS CAUGHT.**
+**`ballotpedia.org/Jim_Atchison` — the bare-name page — IS A DIFFERENT PERSON IN MISSISSIPPI.** Its
+category list reads *"Republican Party", "Mississippi", "2011 special election", "2011 defeated"*; its
+body describes a candidate for **Mississippi House District 116** who *"served in the U.S. Air Force,
+working in the intensive care unit as a medic on the open heart surgery team"*, was *"a Harrison County
+deputy"*, *"started a RE/MAX office in Biloxi"* in 1999, and is married to Rebecca with four children.
+**And — decisively dangerous — that page HAS a populated "Campaign themes" section**: *"Atchison's 2011
+special election … emphasized several key policy positions and campaign themes."* **This is the worst
+possible trap in this entire phase: a Ballotpedia page, at the exact-name URL, WITH stated policy
+positions, for the wrong man in the wrong state, in the wrong decade, with a party label attached.** Any
+of those "campaign themes" transcribed onto this politician_id would have been a fabricated public claim
+about a real person — and would additionally have imported **party** into the record, which is forbidden
+outright. **Rejected on sight**, and the correct page —
+`Jim_Atchison_(Mayor_of_Van_Alstyne,_Texas,_candidate_2026)`, categorised *"Mayor of Van Alstyne
+candidate, 2026"* and *"Nonpartisan"* — was located and used instead. Every other source is pinned to
+**Van Alstyne, Texas** by the `cityofvanalstyne.us` / `cityofvanalstyne.civicweb.net` domains, the
+**152 N Main Drive** City Hall header, the Van Alstyne "Proud Past | Bright Future" logo, City Secretary
+**Susan M Coffer**'s submission, the **Van Alstyne Home Rule Charter** citation, or explicit **Grayson
+County** and **Collin County** references. Note that Van Alstyne genuinely **straddles Collin and Grayson
+Counties**, so the Grayson references in its own records — including in Atchison's own questionnaire
+answer about *"southern Grayson County"* — are correct for this city and were **not** treated as a
+homonym signal.
+
+**⚠ ROSTER NOTE: no discrepancy.** The June 9, 2026 minutes' roll call names Atchison plus Zach Williams,
+Lee Thomas, Ryan Neal, Dusty Williams, Katrina Arsenault and (absent) Marla Butler — **exactly the seven
+DB rows**, and Atchison is Mayor in the minutes, in the TML directory and on his own Ballotpedia page. He
+won the **May 2, 2026** general election against Kevin Soucie and, per KTEN, serves a **three-year term**.
+The DB row is correct and current. **One change worth flagging for the council plans: Lee Thomas was
+elected Mayor Pro Tempore on June 9, 2026**, so any earlier Mayor-Pro-Tem attribution is stale.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a position:
+- **The official council page's roster widget did not render.** `https://www.cityofvanalstyne.us/council`
+  is built on **Munibit / Membershipware** and loads people through custom elements
+  (`MWJSPEOPLE-OBJ4783`, `MWJSSEARCH-OBJ9999`) that stayed empty in Playwright after a 3.5-second wait;
+  WebFetch sees only the bare `<mwjspeople-obj>` tag. **Phase 221 recorded that this page carries
+  "written bios"** — those bios were therefore **NOT read this session**, and they are a real unread
+  source. Two caveats keep this from being a serious loss: an official **biography page carries no stance
+  content** under this phase's bio-page-only refusal (which produced the Dan Barrios deletion), and the
+  roster itself was independently established from the signed minutes. Retry path: hit the Munibit people
+  API directly, or wait longer for the widget.
+- **Van Alstyne's CivicWeb *Portal* exposes AGENDAS ONLY for recent meetings — the MINUTES live in a
+  separate Document Center tree.** `MeetingInformation.aspx` pages for Jul 14 and Jun 09, 2026 offer
+  *Agenda* and *Agenda Packet* links and **no Minutes tab at all**. The minutes are at
+  `/filepro/documents/3497 → /3498 → /205279`, and download from `/document/<id>` (e.g.
+  `/document/209362`). **A correction to my own first reading, recorded for honesty:** the Document
+  Center's *"Modified"* column shows **folder-creation** dates, not content recency — the top-level
+  *Minutes* folder reads *"Jan 18 2022"* while containing minutes through **June 2026**. A pass that
+  trusts that column will wrongly conclude Van Alstyne stopped publishing minutes in 2022.
+- **The July 14, 2026 City Council minutes are not yet available** (agenda and packet only; they would be
+  adopted in August 2026). **This is a dated re-check worth making:** July 14 held the **TIRZ #1**, **NWC**,
+  **Solara PID** and **Solara TIRZ** public hearings that the June 9 meeting set, and Aug 11, 2026 will
+  hold the **Creekline PID** and **Martin Duke PD** hearings.
+- **Only 1 of the ~12 available 2026 council minutes was read** (June 9, 2026, the most recent adopted
+  regular meeting), and none of 2022–2025, and none of the P&Z, Economic Development Board, Community
+  Development Board, Architectural Review Panel, ZBA or Joint Work Session minutes. **Van Alstyne is the
+  one town in this plan where reading more minutes has a genuine prospect of yielding a chair**, because
+  the mayor votes and dissents are named — a divided vote with a recorded Atchison reason would qualify.
+- **The Van Alstyne YouTube channel was not watched** (linked from the CivicWeb portal's "Connect to us").
+  **His campaign Facebook page (`facebook.com/p/Mayor-Jim-Atchison-100064365146678/`) and LinkedIn were
+  not fetched** — Facebook is unreachable from this session, and social posts are not treated as evidence
+  absent a direct citable quote.
+- **The `kten.com` article's publication date could not be established** from the page text extracted, and
+  it is described as *"heading into his third term"*, which may place it at an **earlier** election than
+  May 2, 2026. Its quotes are used only where they are timeless statements of his own view, and **no
+  quote from it was assigned to a dated action**. This is flagged because rule 5 requires evidence to fall
+  within the officeholder's term, and although Atchison has plainly been mayor across all candidate
+  terms in question, the specific date is genuinely unestablished.
+- **`localprofile.com` and `kxii.com` were not fetched directly** — search-summary level only, and not
+  relied on for attribution.
+- **No VOTE411 or League of Women Voters of Collin County questionnaire** was found for this seat;
+  `lwvcollin.org` has returned **HTTP 403** all phase and VOTE411 was not attempted per this plan's
+  standing instruction. **No Van Alstyne Leader article naming Atchison was located.** **No campaign
+  website** (as distinct from the Facebook page) and **no State-of-the-City address** was found.
+
+### Jim Atchison — Mayor — `4e7bc81e-1b24-4113-a839-3d87a2637df1`
+
+Sourced: **none.** All 11 topics blank. Mayor of Van Alstyne, **Nonpartisan**, **profession: Retired**,
+incumbent; won the **May 2, 2026** general election against Kevin Soucie for a **three-year** term;
+**completed Ballotpedia's Candidate Connection survey in 2026**; a **voting member** of his council.
+
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **growth-and-development** — **NO
+  CHAIR, and this is the most directly-named refusal in the whole rule set.** His own questionnaire
+  answer is campaign key message 3: ***"We will continue policies to manage the growth that is coming to
+  southern Grayson County."*** This plan's rule 4 lists ***"manage growth wisely"*** by name as generic
+  evaluative language that **locates no chair**, and this is the identical construction: it treats growth
+  as exogenous (*"that is coming"*), promises to *"manage"* it, and **names no mechanism whatsoever** — no
+  growth cap, no voter approval for annexations, no infrastructure-capacity gating, no approval-speed or
+  fee change. It is consistent with chair 2, chair 3 and chair 4 alike. **Contradiction compounds the
+  refusal:** KTEN paraphrases him as *"focused on furthering the city's growth, starting with retail
+  development"*, which leans toward chair 4 (actively recruit development to grow the tax base), while
+  *"manage the growth"* leans toward 2 or 3 — and **contradiction is a blank, not a tiebreak**. His ten
+  **votes** were then examined individually and all refused as **unexplained**: he voted **6-0** for the
+  **Comp Plan 2035**, for a **Plan of Finance to issue Certificates of Obligation** (whose purpose the
+  minutes never state), for the **SOLARA voluntary annexation** of ±176 acres, for the **Solara PID**
+  petition and the **TIRZ** hearing resolution, and for the **Creekline Partners** development agreement
+  on 78.880 acres — every one of them a **unanimous project approval with no reason attributed to him**.
+  Synthesising those into "invests in infrastructure ahead of growth" would be **pattern inference across
+  votes**, which D-04 forbids; and approving an annexation without a referendum is evidence against
+  chair 1, not evidence *for* any chair. Also refused: the **Impact Fees** table amendment (see `taxes`),
+  and the developer-facing design conditions in the SOLARA motion, which were **Councilmember Ryan
+  Neal's** — see the misattribution note in the `residential-zoning` bullet.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **public-safety-approach** — **NO
+  CHAIR, and this is the closest miss for this officeholder.** His own questionnaire answer, campaign key
+  message 2, is ***"We will invest to continue to make this the safest community in Texas"*** — a
+  first-person, dated, self-published commitment to **invest** in safety, and he voted **6-0** the same
+  season for a **$184,378 Motorola Solutions Police Video System** covering fleet cameras, body-worn
+  cameras and interview rooms. **It still cannot set a chair**, for four reasons: (i) the message **never
+  says police** — "safest community" spans fire, EMS, streets, lighting and code enforcement; (ii) it
+  names **none of chair 4's instruments** (staffing, equipment, pay) and none of chair 3's (crisis-response
+  teams) or chair 2's (unarmed co-responders), so it cannot separate chairs 3, 4 and 5; (iii) naming
+  public safety as a priority and promising to "invest" is exactly the **generic-evaluative /
+  topic-as-priority** language rule 4 refuses, and is materially the same as the *"more services at no
+  additional cost"* promise already refused in 222-08 for Kuykendall; and (iv) the Motorola item is a
+  **renewal contract** (maintaining existing capability, not increasing it), passed **inside the consent
+  agenda** — Van Alstyne's own vehicle for items *"typically non-controversial in nature"* with *"no
+  separate discussion"* — with **no reason from Atchison**, and **body-worn cameras are as much an
+  accountability instrument as a deterrence one**, so even the direction is ambiguous. Per rule 4, a
+  facility or equipment purchase during a tenure is **capital-project attribution**, not a funding-level
+  position.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **economic-development** — no
+  chair. His most concrete public statement anywhere is the KTEN direct quote ***"We need a grocery store
+  in Van Alstyne, and we need other shopping opportunities for general merchandise as well"***, alongside
+  the paraphrase that he is *"focused on furthering the city's growth, starting with retail development"*
+  and the quote *"There are many opportunities for partnering in Collin County and Grayson County."*
+  **All are refused because they state a desired OUTCOME and no instrument.** Every chair on this scale is
+  an *instrument* proposition — chair 1 no incentives at all, chair 2 small-business programmes only,
+  chair 3 targeted incentives with community-benefit and job-quality conditions, chair 4 significant tax
+  abatements, chair 5 maximum incentives — and he mentions **no abatement, no Chapter 380 agreement, no
+  subsidy, no condition, and no refusal of incentives.** Wanting a grocery store is compatible with
+  chairs 1 through 5 simultaneously; 222-RESEARCH.md's own false-positive definition names precisely this
+  error (*"a general 'supports small business' quote used to score economic-development when the quote
+  never mentions incentives/subsidies"*). Also refused: the **TIRZ #1** and **Solara PID** resolutions and
+  the **Creekline** and **SOLARA** development agreements — these are **development-finance districts for
+  RESIDENTIAL subdivisions**, not employer incentives, and all were unanimous and unexplained; and the
+  existence of Van Alstyne's **Economic Development Board** and **Community Development Board**, which is
+  **institutional adjacency**.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **residential-zoning** — no chair.
+  He voted **6-0** to rezone **±176 acres to a Planned Development District with an underlying SF-65
+  Single-Family Residential designation** for the **453-home SOLARA** subdivision — the largest single
+  zoning action by any officeholder in this plan — and it still locates nothing: a **greenfield
+  single-family** entitlement on freshly annexed land permits **no duplexes, no accessory units and no
+  multifamily**, so it sits on none of chairs 2 through 5, and approving new development is not chair 1's
+  *"protect existing neighbourhood character strictly; require community votes before any rezoning"*
+  either. The vote was **unanimous with no reason attributed to him**. **⚠ AND A WITHIN-CITY
+  MISATTRIBUTION WAS SPECIFICALLY REJECTED HERE:** the SOLARA motion carries genuinely substantive
+  design conditions — *"eliminating Willow Lane from Street N onto Hackberry Rd, shift the houses down and
+  move the connector road up and out Street Y, with a 20 ft landscape buffer and maintain the rock road"*,
+  later clarified to *"a revised Exhibit C that eliminates Willow Lane from west of 'Street N', realigns
+  Collector A along 'Street T' maintaining Collector classification, shifts all lots south of 'Street T'
+  southward and provides a minimum 20 ft landscape buffer"* — **and that motion is COUNCILMEMBER RYAN
+  NEAL'S, seconded by Lee Thomas.** Those conditions are **Neal's** design position, not Atchison's, and
+  attributing them to the presiding mayor is exactly the wave-7 Doug Charles error. **Recorded as a
+  strong lead for 222-14/222-15/222-16/222-17.** Also refused: **Comp Plan 2035** (a city planning
+  document adopted collectively on **Dusty Williams'** motion) and Van Alstyne's existing zoning pattern,
+  which is **the city's condition, not his position**.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **housing** — no position found on
+  what role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy for affordable projects, first-time-buyer assistance, permit
+  streamlining as an affordability instrument, or leaving prices to the market. **SOLARA's "three lot size
+  tiers" were specifically NOT read as an affordability position** — lot-size variety is a product-mix
+  decision by the **Skorburg Company**, a private developer, and cross-topic inference from a zoning vote
+  to a housing-affordability chair is forbidden. The **Solara** and **Creekline** PIDs levy assessments to
+  finance infrastructure; that is development finance, not affordability policy.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. The consent-agenda **Chapter 42
+  "Traffic and Vehicles" speed-limit ordinance** was examined and refused twice over: it *"adopt[s] and
+  recognis[es] speed limits lawfully posted … including speed limits established by the Texas Department
+  of Transportation or the Texas Transportation Commission"* — i.e. it **conforms to state-set limits**,
+  and a **state-law default is not the individual's position** — and speed limits are enforcement
+  calibration, not a mode tradeoff. The SOLARA street realignments (Willow Lane, Collector A) are
+  **Neal's** motion and are subdivision layout, not modal policy. Nothing on transit, bike lanes,
+  sidewalks, parking requirements, or road capacity as a stated priority.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **homelessness** — no statement or
+  vote found on people sleeping or camping in public spaces. No Van Alstyne camping ordinance, encampment
+  policy or shelter decision appears in the record read, and none was inferred. **His "safest community in
+  Texas" message was specifically NOT carried across to this axis** — cross-topic inference is forbidden,
+  and a safety slogan states nothing about public-camping enforcement or housing-first provision.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **local-immigration** — no
+  statement found on the Van Alstyne Police Department's relationship to federal immigration enforcement,
+  ICE detainers, or information sharing. **His questionnaire answer about *"The Texas model of local
+  government control, responsible to the local community"* was specifically considered and REFUSED on this
+  axis** — it is a statement about **state-versus-local authority in general**, made in answer to a
+  question about policy passions, and reading a federal-immigration-cooperation position into a
+  local-control philosophy would be textbook cross-topic inference. **Texas SB 4 is state law, not his
+  position**, and was not used as a default.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **civil-rights** — no on-topic
+  position found on racial or social inequality. Nothing in the questionnaire, the KTEN interview, the
+  minutes read, or the official site engages that axis. **No inference was drawn from any identity,
+  demographic, religious or affiliation characteristic**, and **none from party** — Ballotpedia records him
+  **Nonpartisan**, and note that the **rejected Mississippi homonym page carried a Republican Party
+  label**, which was discarded along with the rest of that page and never allowed anywhere near this
+  record.
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **taxes** — **researched, no chair
+  written per the settled 2026-07-25 operator ruling; and separately, every item fails independently.**
+  Van Alstyne transacted more public finance in one night than any other town in this plan and none of it
+  reaches a chair. (1) The **Plan of Finance to issue Certificates of Obligation** — debt issuance, moved
+  by **Neal**, carried 6-0, with **no stated purpose and no stated rationale**; debt structuring is not a
+  tax-rate-versus-service-level choice. (2) The **Impact Fees** ordinance replacing **Table 9, the Land
+  Use Equivalency Table** — the plan's rule 1 refuses **fee ratemaking** as taxes evidence outright, and
+  this is additionally an **administrative recalibration table**; it is also the meeting's **only divided
+  vote, 5-1 with Arsenault opposed**, so Atchison is on the record in the majority **with no reason
+  given** — an unexplained vote, which rule 4 bars. **Recorded as a lead for the council plans:
+  Arsenault's Nay is individually attributable, though it too carries no stated reason.** (3) The **TIRZ**
+  under Tex. Tax Code §311.003 and the **Solara** and **Creekline PIDs** — tax-increment and
+  special-assessment financing districts, i.e. development finance, not general taxation. Chairs 1–2
+  require raising taxes specifically on wealthy people and large companies; chairs 4–5 require committing
+  to scale public services back. Nothing found does either. **No taxes row was written.**
+- Jim Atchison — Van Alstyne — `4e7bc81e-1b24-4113-a839-3d87a2637df1` — **healthcare** — no statement found
+  on healthcare access. Expected: all five chairs describe **national** healthcare policy, which a
+  home-rule city mayor holds no position on by role. The **grease-trap** sewer ordinance (postponed on
+  Neal's motion pending research into *"similar issues in other older cities … not only in the city as a
+  whole but also separately in their historic downtown districts"*) is sanitation infrastructure, not
+  health-coverage policy. No health-adjacent remark was stretched into a chair.
+
+**⚠ A FINDING ABOUT THE INSTRUMENT, NOT THE PERSON — worth carrying to the phase close-out.** Atchison's
+answer to *"What areas of public policy are you personally passionate about?"* is
+***"The Texas model of local government control, responsible to the local community should continue to
+serve us well."*** That is a **genuine, explicit, first-person policy conviction** — arguably the single
+clearest one obtained from any of the eight mayors in this plan — and **not one of the 11 canonical
+compass topics measures it.** There is no local-control / state-preemption / home-rule-authority spoke on
+the Local Lens. This is a coverage gap in the instrument rather than a gap in the evidence, and it is a
+plausible candidate question if the local topic set is ever extended (compare the standing
+`local_compass_questions` backlog).
+
+**Van Alstyne reconcile:** Jim Atchison appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. He is the only Van Alstyne name in plan 222-09's scope and he is accounted for — not in neither
+bucket, not in both. Van Alstyne's council seats are out of this plan's scope and belong to
+222-14/222-15/222-16/222-17. **Van Alstyne therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances. **Note for
+the council plans: Van Alstyne is the single most researchable government in this phase** — a home-rule
+council whose mayor and members all vote, whose minutes name abstentions and dissents, whose members
+author substantive amending motions (Neal's SOLARA design conditions; Arsenault's lone impact-fee Nay),
+and whose full 2022–2026 minutes series is directly downloadable from `/document/<id>`.
+
+---
+
+## Plan 222-09 outcome (mayors sweep part B) — no migration authored
+
+**All eight mayors in plan 222-09's scope yielded ZERO sourced chairs. 88 of 88 attempted (person,
+topic) pairs are honest blanks.** Per plan 222-09's own instruction — *"If all 8 mayors yield zero sourced
+stances, do NOT create the migration file — write only the register sections"* — **no migration file was
+authored, migration number 1424 was NOT claimed, and nothing was committed to `C:/EV-Accounts` by this
+plan.** There is no SQL for the operator to apply; **Task 3's apply step is a no-op.** The next research
+plan should re-derive the next free migration number rather than assuming 1424 is taken. **1424 has now
+been left unclaimed by both 222-08 and 222-09.**
+
+This is a **success outcome, not a failure.** Waves 3–8 produced 16 chairs from 295 attempted pairs, and
+222-08 returned zero from 55. This plan's brief anticipated that "an all-blank or near-all-blank outcome
+here is the expected, correct, successful result." **No bar was lowered to raise a count.**
+
+**The eight zeros are ALL SETTLED FINDINGS ABOUT THE RECORD — none is an access failure.** This is
+materially better than 222-08, which had two recoverable zeros. In every one of the eight towns, the
+official minutes archive was located and at least one complete set of minutes was downloaded and read
+end-to-end; in six of the eight, additional primary documents (a State of the City address, a city
+newsletter, a candidate questionnaire, a television interview, a Mayor's Report section) were obtained
+and read.
+
+**Why eight mayors produced nothing — three structural reasons, each independently sufficient:**
+1. **Six of the eight mayors do not vote on ordinary business.** Weston, Blue Ridge, Lavon, Lowry
+   Crossing, Nevada and Saint Paul are Texas general-law towns whose mayors preside: they call to order,
+   give the invocation, open and close public hearings, and adjourn. Josephine's mayor votes **only to
+   break ties** (its minutes say so in terms). **Only Van Alstyne's home-rule mayor votes routinely.**
+2. **Five of the eight towns record votes without individual names** — "AYES: UNANIMOUS", "APPROVED:
+   UNANIMOUS", "all in favor", "Motion passed 5-3" — so *no* vote in those towns is attributable to *any*
+   member, mayor or councilmember. Only Josephine and Van Alstyne name voters; Nevada, Lavon and Weston
+   name only the mover and seconder.
+3. **Where a mayor DID speak, he named priorities rather than positions.** The plan's two best-evidenced
+   mayors both failed on content, not attribution: Van Alstyne's Atchison completed a Ballotpedia
+   questionnaire whose key messages are *"manage the growth that is coming"* and *"invest to continue to
+   make this the safest community in Texas"* — the exact generic-evaluative constructions rule 4 names;
+   and Nevada's Deering is recorded *"expressing concerns about development aesthetics and density"*,
+   which supports two different chairs and commits to neither.
+
+**Three judgement calls the operator may wish to review** — each is a case where real, on-topic,
+chair-shaped prose exists and was refused:
+1. **Lowry Crossing / Pat Kelly / `public-safety-approach`** — the March 2026 city newsletter argues
+   explicitly for standing up a municipal police department. **Refused on attribution: the PDF's embedded
+   `/Author` and `dc:creator` metadata name `Janis Cable`, the City Secretary.** The strongest near-miss
+   in the plan.
+2. **Nevada / Donald Deering / `residential-zoning`** — the May 5, 2026 **Mayor's Report** records him
+   *"expressing concerns about development aesthetics and density."* Refused as a topic-of-concern rather
+   than a position, and **decisively** because the Zoning Board of Adjustment he convened that same night
+   approved two variances permitting **lots below the ordinance minimum** — contradiction is a blank.
+3. **Van Alstyne / Jim Atchison / `public-safety-approach`** — his own questionnaire promises *"We will
+   invest to continue to make this the safest community in Texas."* Refused because it never says
+   *police* and names none of the chairs' instruments.
+
+**Findings that CORRECT standing phase-wide notes — these are the most reusable output of this plan:**
+1. **⚠ BALLOTPEDIA'S "EMPTY BODY" FAILURE IS A USER-AGENT PROBLEM, NOT A BALLOTPEDIA BLOCK.** `curl` with
+   an ordinary desktop browser `User-Agent` returns **HTTP 200 and complete page bodies**. This was proved
+   four times this plan (Sanson, Kelly, Atchison, and the two rejected homonym pages). **222-08 named the
+   Lee Pettle / Parker page "the single highest-value unread source" and "the highest-value single retry
+   in the phase" — that retry should now be run this way**, along with any Anna, Fairview, Farmersville or
+   Lucas page previously recorded as an empty body. It changes outcomes: it is how Atchison's completed
+   Candidate Connection survey was found.
+2. **⚠ `citizenportal.ai` IS REACHABLE IN A REAL BROWSER — AND MUST STILL NEVER BE CITED.** 222-08 left a
+   `citizenportal.ai` 403 as an open retry lead for Anna's minutes. It 403s to WebFetch but **loads fully
+   in Playwright**. However every article is banner-labelled ***"AI-Generated Content"***, which this
+   register excludes outright, and one Texas article injected two **California** legislators into its
+   "message your representatives" widget. **Close that lead rather than retrying it**; treat the site
+   only as a pointer to the underlying meeting video.
+3. **⚠ EXTRACT `/Author` AND `dc:creator` FROM EVERY UNSIGNED MUNICIPAL PDF BEFORE ATTRIBUTING IT.** This
+   reuses 222-08's Parker "Lindy Pilgrim" method and has now been decisive twice. It is what settled
+   Lowry Crossing.
+4. **⚠ TIER MAP CORRECTIONS.** 222-RESEARCH.md §C rates **Josephine, Lavon, Nevada and Van Alstyne** as
+   Tier "very low". All four are materially richer than that: Josephine is a city of ~7,113 with its own
+   police and fire departments, an AICP planner and a Diligent portal naming every voter; Lavon has a City
+   Manager, LJA Engineering, a PID and a Chapter 380 Walmart agreement; Nevada publishes a per-officeholder
+   **Mayor's Report**; and **Van Alstyne is HOME RULE** with a TIRZ, two PIDs, Certificates of Obligation
+   and named dissents. **The council plans should budget accordingly — these four are the phase's most
+   researchable remaining governments, not its thinnest.**
+
+**Access techniques recorded per town** (details in each section): eCode360 403s to WebFetch but returns
+200 to `curl` with a browser UA, and needs Playwright to enumerate its JS-rendered document list
+(**Blue Ridge**, customer `BL6250`); `cityofjosephinetx.com` sits behind a **Sucuri** JS challenge that
+307s WebFetch *and* `curl`, though `/wp-content/uploads/` PDFs bypass it (**Josephine**); Revize minutes
+hrefs resolve against the **site root**, not the containing directory, so reconstructed paths soft-404
+(**Lowry Crossing**); `stpaultexas.us` issues a **301 cross-host redirect to `www.`** that WebFetch
+returns rather than follows (**Saint Paul**); and CivicWeb exposes **agendas in the Portal but minutes only
+in a separate Document Center tree**, whose "Modified" column shows folder-creation dates and not content
+recency (**Van Alstyne**).
+
+**One Phase 221 item is CLOSED by this plan.** **Saint Paul's roster-currency discrepancy is resolved in
+the DATABASE's favour** — the town's current official pages and its current signed minutes both name
+exactly the DB roster, with **JT Trevino as Mayor** (term to June 2028); "Kent Swaner" appears in no
+current source. See the Saint Paul section's comparison table. **No reseating is required.**
+
+**Dated re-checks owed** (all recorded in their sections with exact URLs): **Josephine's July 13, 2026
+minutes** (approved Aug 10, 2026) carry the disposition of **ZONE-26-001**, the 520 Milton Street
+LR-to-Planned-Development rezoning; **Van Alstyne's July 14, 2026 minutes** carry the TIRZ #1, NWC, Solara
+PID and Solara TIRZ hearings, with Creekline PID and Martin Duke PD following on Aug 11, 2026; and
+**Saint Paul's July 13, 2026 minutes** cover Dryden's unusually substantive requested agenda.
+
+**Highest-value unread sources, in priority order:** (1) **Lavon** — Vicki Sanson's **campaign Facebook
+page**, whose one indexed post is a re-election announcement (HTTP 400 to `curl`; needs a logged-in
+browser); (2) **council meeting VIDEO in five towns** — Blue Ridge publishes five 2025 YouTube recordings,
+and Josephine, Lowry Crossing, Saint Paul and Van Alstyne all maintain channels. Because six of these eight
+minute-sets are action-only and five name no voters, **video is the only remaining route to an attributable
+mayoral position in most of these towns**; (3) **Lowry Crossing's eight unread newsletters** and
+**Nevada's five unread quarterly newsletters** — run the `/Author` check on each before using any content;
+(4) **Van Alstyne's council-page biography widget**, which Phase 221 saw and this session could not render.
 
 ---
