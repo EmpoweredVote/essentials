@@ -42,14 +42,14 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 281
+## Count: 292
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
 + 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
 + 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview)
-+ 33 by 222-08 so far (11 Anna + 11 Fairview + 11 Farmersville).
++ 44 by 222-08 so far (11 Anna + 11 Fairview + 11 Farmersville + 11 Parker).
 222-09 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -2898,5 +2898,249 @@ for none. He is the only Farmersville name in plan 222-08's scope and he is acco
 neither bucket, not in both. Farmersville's five council seats are out of this plan's scope and belong
 to 222-11/222-12/222-13. **Farmersville therefore does NOT flip to `hasContext: true` in
 `src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
+
+---
+
+## City of Parker (4855152) — 222-08
+
+**Attempted:** 2026-07-25 — **Mayor Lee Pettle** (`61f73b44-c46d-4f1b-91a7-0d35c83feecb`), the sole
+Parker officeholder in plan 222-08's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Only the mayor is in
+scope here; Parker's council seats (Mayor Pro Tem Buddy Pilgrim, Billy Barron, Roxanne Bogdan, Colleen
+Halbert, Darrel Sharpe) are covered by plans 222-11/222-12/222-13** and are deliberately absent from
+this section. See the 222-08 preamble in the Anna section above for the Murphy/Princeton/Melissa scope
+cut.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** Parker is a 222-RESEARCH.md §C **Tier "Low"**
+city and this is the expected outcome — but, as with Farmersville and unlike Anna, the zero is a
+**finding about the record, not a fetch failure**: Parker's official minutes were obtained and read in
+full, and its single most contested civic controversy was traced to primary documents.
+
+**⚠ THE STRUCTURAL FINDING FOR PARKER, same shape as Farmersville: the Mayor of Parker does not vote
+on ordinary business.** In the July 7, 2026 minutes read in full, every motion carried **4-0** among
+the four councilmembers present, and Pettle appears exclusively **presiding** — calling the workshop
+and the regular meeting to order, turning the floor over to staff, reviewing the community-interest
+calendar, asking the P&Z chair to present a recommendation, recessing to and reconvening from executive
+session, asking for future agenda items, thanking donors, and adjourning. Under this plan's rule 5,
+**presiding is not a position.** Parker's evidence-rich controversy is likewise led by others (below),
+so the strongest evidence types are structurally unavailable for *this* person while remaining fully
+available for her council — which the council plans should expect.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the official City of Parker City Council minutes of July 7, 2026, read in full
+  (7 pages, `parkertexas.us/Archive.aspx?ADID=4331`, bearing the City of Parker, Collin County, Texas
+  seal, signed "Mayor Lee Pettle" and attested by City Secretary Patti Scott Hull, approved July 21,
+  2026).** This both **confirms Pettle's identity and seat** and covers: a "Budget 101" FY2026-2027
+  workshop; the **Green Meadows preliminary plat** approved with conditions and two variances (a
+  cul-de-sac exceeding the 600-foot maximum under §155.052(17), and the two-points-of-access
+  requirement under §155.049(1)(b)); the **McCreary Meadows final plat**; City Hall remodelling not to
+  exceed $23,000; **Resolution 2026-904** authorising an $8,769,420 Texas Water Development Board
+  Water Supply and Infrastructure Grant application (100% grant, no local match) for a new
+  1,000,000-gallon elevated storage tank on Whitestone Drive; **Ordinance No. 918** on fire prevention
+  (fireworks and open burning), on which **no action was taken**; **Resolution 2026-905**, Amendment #6
+  to the **Jail Services Agreement between the City of Parker and Collin County**; updates on FM2551,
+  the TCEQ wastewater-permit re-hearing, MUD discovery, Lewis Lane striping, drones, and Restore the
+  Grasslands; and a donations acceptance item.
+- **PRIMARY DOCUMENT — the City of Parker's "Open Letter to Residents" of March 12, 2026**
+  (`parkertexas.us/DocumentCenter/View/4108`), downloaded and read in full. See the refusal analysis
+  below — it is signed **"Your Parker City Council and Mayor"** collectively and states **no
+  substantive position**.
+- **The City's "Restore the Grasslands Transparency" page** (`parkertexas.us/468/...`), fetched and
+  interrogated specifically for Pettle attributions. It records the City's willingness to move toward
+  **170 detached single-family homes** rather than RTG's 624 lots and a commitment to preserving
+  Parker's *"rural character, infrastructure standards, and quality of life"*, notes the property lies
+  **outside city limits**, limiting direct influence, and links four documents (the Open Letter, the
+  List of Key Issues 03-12-2026, a Gregory Lane nonsuit update 04-12-2026, and a Revised List of Key
+  Issues 06-04-2026). **Asked directly: Mayor Lee Pettle is not named or quoted anywhere on it** — the
+  updates reference *"the Mayor and City Council"* collectively and attribute no statement to any
+  individual.
+- **Murphy Monitor** (`murphymonitor.com`, the Star Local Media title covering Parker), which is
+  fetchable and is the richest secondary source for this city — *"Restore the Grasslands plat approved
+  with conditions"* (**June 23, 2026**) fetched and read; *"New proposal for disputed development"*
+  (June 23, 2025), *"Murphy exits fight over disputed development"* (April 9, 2026), *"Parker council
+  reveals settlement offer for disputed development"* (April 24, 2024) and *"Community discusses
+  disputed development"* (March 21, 2024) surveyed.
+- **City of Parker official site** — the Elections page, the "City Election May 2, 2026 – List of
+  Candidates" news flash, the May 2, 2026 campaign-finance listing, and the City Council minutes
+  archive index (`Archive.aspx?AMID=40`, which exposes minutes back to 2009).
+- **NBC 5 Dallas-Fort Worth**'s Collin County May 2, 2026 ballot rundown, and the Change.org and
+  Communities & Creeks United petitions against the RTG development.
+
+**⚠ WITHIN-CITY MISATTRIBUTION REJECTED — this is the exact trap that produced the wave-7 Doug Charles
+error, and it was caught the same way.** Parker's Restore the Grasslands controversy is the single
+richest vein of civic-position evidence in this city: a 624-lot, ~100-acre development by Dallas
+developers Don and Phillip Huffines on unincorporated land between Parker and Murphy, with a proposed
+wastewater plant discharging into Maxwell Creek and a **Municipal Utility District**, opposed by
+residents through two petition drives, litigated, mediated, and conditionally approved 3-1 by the
+Collin County Commissioners Court on June 22, 2026. It would have been very easy — and wrong — to
+attribute the City's opposition to its mayor. **Every primary document says otherwise:**
+- The **March 12, 2026 Open Letter** names **"Darrel Sharpe and Buddy Pilgrim"** as *"the Parker City
+  Council representatives for discussions with RTG"*, and lists Pettle only among those who *"will all
+  be engaged at various points."* Pettle is not the negotiator.
+- The **Murphy Monitor's June 23, 2026** account of the plat approval quotes **Parker Mayor pro tem
+  Buddy Pilgrim**, **County Judge Chris Hill** (voting record only) and county staff **Clarence
+  Daugherty** and **Yoon Kim** — and **not Pettle at all**.
+- In the **July 7, 2026 minutes**, the RTG and TCEQ/MUD updates are delivered by **Mayor Pro Tem
+  Pilgrim** and **Councilmember Barron**; Pettle says nothing on them.
+- The **transparency page** attributes to *"the Mayor and City Council"* collectively and to no
+  individual.
+A chair assigned to Pettle from this controversy would have been a body's position mapped onto its
+presiding officer. **Rejected.**
+
+**⚠ HOMONYM GATE — "PARKER" IS THE WORST NAME IN THIS PLAN, AND SEVERAL TRAPS WERE HIT AND REJECTED.**
+"Parker" is simultaneously this Collin County city, a very common surname, and at least two other
+places with their own councils. Specifically encountered and rejected this session:
+- **Parker, COLORADO** (`parkerco.gov`) — a "Town of Parker" with its own **2026 Election Information**
+  page, its own town council, and its own candidate coverage (`coloradocommunitymedia.com`, *"Get to
+  know your candidates running for Parker town council"*, October 3, 2024). This is the most dangerous
+  trap here because it publishes *candidate questionnaires* — exactly the D-05 source type this phase
+  values most — for the wrong Parker.
+- **Parker COUNTY, Texas** (`parkercountytx.gov`), a different jurisdiction near Fort Worth, whose
+  election-information and campaign-finance pages and whose **Ballotpedia "Parker County, Texas,
+  elections, 2026"** page surface on nearly every search for this city.
+- **Mattie Parker**, Mayor of **Fort Worth**, and **Annise Parker**, former Mayor of Houston — surname
+  collisions that dominate any search for "Parker mayor" statements, State-of-the-City addresses or
+  priorities. A Fort Worth Chamber item headlined *"Mayor Parker Highlights Fort Worth's Progress and
+  Priorities at State of the City Address"* is **not** a Parker, TX source and was rejected on sight.
+Every source relied on above was pinned to **Parker, Collin County, Texas** by an explicit marker — the
+5700 E. Parker Road Municipal Complex, the City of Parker/Collin County/Texas seal on the minutes, City
+Secretary Patti Scott Hull's attestation, or Collin County Commissioners Court. Separately, **Pettle's
+prior service on the Parker Planning & Zoning Commission was deliberately not used for any topic** —
+commission service is adjacency, not a position.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **Ballotpedia's individual candidate page for Lee Pettle returned an EMPTY BODY** — the known
+  phase-wide Ballotpedia failure. This one is a genuine loss rather than a scope gap: Ballotpedia
+  **does** cover this race (a page exists for her opponent, *"Melissa Tierce (Mayor of Parker, Texas,
+  candidate 2026)"*), so a **Candidate Connection survey for Pettle may well exist and simply could not
+  be read.** That is the single highest-value unread source for this officeholder and a later pass
+  should retry it first.
+- **No candidate questionnaire or forum write-up was found for the contested May 2, 2026 mayoral
+  race**, which Pettle won with **451 votes** to Melissa Tierce's **338** and Marcos Arias's **16**.
+  The City announced that a **"Candidates' Night" was being planned for a date in April** 2026; no
+  published account of it, and no Murphy Monitor candidate Q&A for the mayoral race, could be located.
+  A three-way contested mayoral race with a candidates' forum is normally the richest possible source
+  for this phase, and its written record appears not to exist online.
+- **Council meeting VIDEO was not watched.** Parker streams through **Swagit/Granicus** (agenda packets
+  surfaced from `swagit-attachments.granicus.com`). Video is not readable by this pass, and because
+  Parker's minutes are action-oriented rather than verbatim, the video is where any actual Pettle
+  phrasing lives.
+- **Only 1 of the many available council meetings was read in full.** Parker's archive exposes minutes
+  back to 2009 and the council meets at least monthly with frequent special meetings (July 7, June 30,
+  June 22, June 16, June 2, May 19, May 12, April 21, April 7 and March 10, 2026 are all indexed). The
+  July 7, 2026 regular/workshop meeting was chosen as the most recent full meeting under the current
+  mayor. **The great majority of this council's record remains unread**, and the documents are directly
+  addressable — but see the "mayor does not vote" finding for why the yield for this person is likely
+  to stay low.
+- **No VOTE411 or League of Women Voters of Collin County questionnaire** was found for the Parker
+  mayoral seat; `lwvcollin.org` has returned **HTTP 403** all phase. **No Community Impact coverage** of
+  Parker exists. **No State-of-the-City address** by this mayor could be found. **No campaign site** for
+  Pettle was located, and any campaign Facebook page was not fetched (Facebook is not fetchable here,
+  and social posts are not treated as evidence of a policy position absent a direct citable quote).
+- The **List of Key Issues (03-12-2026)**, the **Revised List of Key Issues (06-04-2026)** and the
+  **Gregory Lane nonsuit update (04-12-2026)** were not individually opened. They are **City-drafted
+  negotiating documents**, not statements by any individual, and the Open Letter that transmits them
+  expressly calls the list *"a discussion guide only… not intended to represent final legal language"* —
+  so they could not have located an individual chair for Pettle even if read. Recorded for completeness.
+
+### Lee Pettle — Mayor — `61f73b44-c46d-4f1b-91a7-0d35c83feecb`
+
+Sourced: **none.** All 11 topics blank. Re-elected mayor on May 2, 2026 in a three-way contested race
+(451 votes to 338 to 16); previously a member of Parker's Planning & Zoning Commission.
+
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **residential-zoning** — no position
+  found on density or neighborhood character, **and this is the closest miss in Parker.** The City of
+  Parker is on record preferring **170 detached single-family homes** over RTG's **624 lots** and
+  committing to preserve its *"rural character, infrastructure standards, and quality of life."* That
+  is a genuine density position — **but it is the City's, not demonstrably hers.** The March 12, 2026
+  Open Letter that is the City's own public statement of the matter is signed **"Your Parker City
+  Council and Mayor"** with no individual signature, was authored by a third party (the PDF's creator
+  metadata reads "Lindy Pilgrim"), names Sharpe and Pilgrim as the negotiators, and — decisively — takes
+  **no substantive position at all**: it says *"no specific offers have been proposed or accepted by
+  either side, Parker has not agreed to any specific terms"*, that the accompanying list is *"a
+  discussion guide only"*, that *"all legal options remain on the table"*, and that *"there is no
+  guarantee that discussions will yield any particular outcome."* It is a **process letter**. The
+  transparency page's density figures are staff/City negotiating positions attributed to no individual.
+  A collective institutional position mapped onto the presiding officer is the banned pattern; and
+  **an existing city posture is not the individual's position** (the city-policy-default refusal).
+  Furthermore the site is **outside Parker's city limits** and was platted by **Collin County**, so
+  this was never a Parker zoning decision at all. The two plats Parker's own council did act on that
+  night — Green Meadows and McCreary Meadows — passed **4-0 with Pettle not voting and not speaking**,
+  and both were **housekeeping** matters (cul-de-sac length and points-of-access variances; a FEMA
+  Letter of Map Revision condition), not density-policy choices. Blank, not defaulted.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **growth-and-development** — no
+  chair-locating position on growth pace. Everything available is the same RTG material refused above,
+  plus the fact that Parker filed for a **TCEQ re-hearing on the wastewater-treatment-plant permit** and
+  is engaged in **MUD discovery** — municipal litigation strategy reported to council by **Mayor Pro Tem
+  Pilgrim**, not a Pettle statement, and adopted institutionally rather than argued individually.
+  Nothing found in which she states a view on annexation, approval speed, permitting fees, growth caps,
+  or infrastructure-ahead-of-growth sequencing. Parker's own low-density character (a former rural farm
+  area, D Magazine's #1 place to live in Collin County) is **the city's condition, not her position**,
+  and was not used as a default.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **housing** — no position found on what
+  role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, affordable-project subsidy, first-time-buyer assistance, permit
+  streamlining, or leaving prices to the market. The RTG dispute concerns **whether and at what density
+  a development proceeds**, not the affordability of housing, and was not carried across.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **public-safety-approach** — no
+  chair-locating position. On July 7, 2026 the council approved **Amendment #6 to the Jail Services
+  Agreement with Collin County** — Sharpe moved, Barron seconded, carried 4-0, **Pettle neither voting
+  nor speaking**, and with **no stated reason of any kind** in the record. Contracting jail bed space
+  from the county is an interlocal service arrangement, not a position on how the city funds and
+  operates public safety; and an unexplained (indeed non-participating) approval cannot separate chair 4
+  (increase staffing, equipment and pay), chair 3 (add crisis-response teams) or chair 1 (redirect
+  police budget). Nothing found on staffing levels, pay, equipment, mental-health co-responders, or
+  redirecting police budget. That the Police Sergeant, a Police Officer and the Fire Chief attend her
+  meetings is not a position.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. Her only transportation-adjacent
+  recorded act is procedural: on the **FM2551** update she *"noted this meeting will be held as soon as
+  possible"* about a TxDOT town hall for Parker residents — scheduling, not policy. The Lewis Lane
+  buttons-and-striping update came from the Public Works Director. Nothing found on transit, bike lanes,
+  sidewalks, parking requirements, or road capacity as a stated priority.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **economic-development** — no position
+  found on incentives, abatements, Chapter 380 agreements, community-benefit or job-quality conditions.
+  Nothing in the minutes read or in any Murphy Monitor coverage records her on a Parker incentive or
+  abatement decision. The **$8,769,420 Texas Water Development Board grant application** for an
+  elevated storage tank is the City pursuing 100%-grant state infrastructure funding with no local
+  match — **not a business-incentive position** — and she did not vote on it (Halbert moved, Barron
+  seconded, 4-0).
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **homelessness** — no statement or vote
+  found on people sleeping or camping in public spaces. No Parker camping ordinance, encampment policy
+  or shelter decision surfaced, and none was inferred. **Ordinance No. 918 on fire prevention
+  (fireworks and open burning) was examined and is not on this axis** — open-burning regulation is a
+  fire-safety matter, not a public-camping measure — and in any event **no action was taken** on it.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **local-immigration** — no statement
+  found on the Parker Police Department's relationship to federal immigration enforcement, ICE
+  detainers, or information sharing. **Texas SB 4 is state law, not her position**, and was not used as
+  a default. The Jail Services Agreement with Collin County was **specifically considered and refused**
+  as evidence on this axis: it is a bed-space contract with no immigration-detainer content whatsoever,
+  and reading detainer policy into it would be fabrication.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **civil-rights** — no on-topic position
+  found on racial or social inequality. Nothing in the minutes read, the City's letters, or any Murphy
+  Monitor coverage engages that axis. **No inference was drawn from any identity, demographic,
+  religious or affiliation characteristic** — that inference class is forbidden and was the basis of
+  deletions from two Richardson records on 2026-07-25.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **taxes** — **researched, no chair
+  written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was found
+  even for the register.** The July 7, 2026 workshop was a **"Budget 101"** session in which
+  Finance/Human Resources Director **Grant Savage** presented the FY2026-2027 budget calendar, the
+  City's fund structure, departmental staffing levels, general-fund revenues, property taxes and
+  historical information, and *"requested percentage of M&O and I&S"*. **That is staff testimony**;
+  Pettle's only recorded contributions were to turn the meeting over to Savage and to adjourn the
+  workshop at 6:21 p.m. She stated no view on the rate, on the maintenance-and-operations versus
+  interest-and-sinking split, or on service levels. Chairs 1–2 require raising taxes specifically on
+  wealthy people and large companies and chairs 4–5 require committing to scale public services back;
+  nothing found does either. No taxes row was written.
+- Lee Pettle — Parker — `61f73b44-c46d-4f1b-91a7-0d35c83feecb` — **healthcare** — no statement found on
+  healthcare access. Expected: all five chairs describe **national** healthcare policy, which a city
+  mayor holds no position on by role. No health-adjacent remark was stretched into a chair.
+
+**Parker reconcile:** Lee Pettle appears in **bucket 2 for all 11 topics** and in bucket 1 for none.
+She is the only Parker name in plan 222-08's scope and she is accounted for — not in neither bucket,
+not in both. Parker's council seats are out of this plan's scope and belong to 222-11/222-12/222-13.
+**Parker therefore does NOT flip to `hasContext: true` in `src/lib/coverage.js` from this plan**
+(RESEARCH.md Pitfall 5) — it remains at zero stances.
 
 ---
