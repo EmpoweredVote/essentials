@@ -419,6 +419,11 @@ export default function ElectionsView({
           shuffledCandidates: seededShuffle(race.candidates || [], sessionSeed),
           cleanedPosition: cleaned,
           seats: race.seats ?? 1,
+          // Non-null while this race's field is an unresolved pre-deadline placeholder;
+          // the value is the first date it can be re-verified (provisional_until, the
+          // convention from ev-accounts migration 1456). The API clears it on
+          // re-verification, never on the calendar.
+          provisionalUntil: race.provisional_until ?? null,
         });
       }
 
@@ -676,6 +681,46 @@ export default function ElectionsView({
                               paddingLeft: raceIdx % 2 === 1 ? '8px' : '6px',
                             }}
                           >
+                            {/*
+                              Candidate field not final. Rendered when the API reports a
+                              provisional_until date for this race — i.e. the field was
+                              captured before the jurisdiction's filing/withdrawal deadlines
+                              closed and has not been re-verified since. Sits ABOVE the
+                              subgroup label because SubGroupSection's children are grid
+                              cells (a note passed as a child would land in the card grid).
+                            */}
+                            {race.provisionalUntil && (
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  gap: '8px',
+                                  alignItems: 'flex-start',
+                                  backgroundColor: isDark ? '#1f1a08' : '#FFFBEB',
+                                  borderLeft: `3px solid ${isDark ? '#FED12E' : '#D9A800'}`,
+                                  borderRadius: '6px',
+                                  padding: '8px 12px',
+                                  margin: '0 0 10px 0',
+                                  maxWidth: '560px',
+                                }}
+                              >
+                                <span aria-hidden="true" style={{ fontSize: '13px', lineHeight: '18px', color: isDark ? '#FED12E' : '#8A6D00' }}>ⓘ</span>
+                                <p style={{ fontSize: '12.5px', lineHeight: '18px', color: isDark ? '#d9d2c0' : '#6B5A15', margin: 0 }}>
+                                  <strong style={{ fontWeight: 700 }}>Candidate field not final.</strong>{' '}
+                                  {/*
+                                    Two states, and the difference matters: provisional_until is the
+                                    first date the field can be re-verified. If it is still ahead of
+                                    us the deadlines are genuinely open; if it has passed, the
+                                    re-verification is OVERDUE and promising it "on or after <past
+                                    date>" would be a visibly broken promise. Say which it is.
+                                  */}
+                                  {race.provisionalUntil > new Date().toISOString().slice(0, 10) ? (
+                                    <>Filing or withdrawal deadlines are still open. We re-verify this ballot against the official source on or after {formatElectionDateLong(race.provisionalUntil)}.</>
+                                  ) : (
+                                    <>This field is past its {formatElectionDateLong(race.provisionalUntil)} re-verification date and may be out of date.</>
+                                  )}
+                                </p>
+                              </div>
+                            )}
                             <SubGroupSection
                               title={(() => {
                                 // Federal/State single-office races: the blue body header now names the
