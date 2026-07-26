@@ -59,7 +59,7 @@ dropped), or a person present in both with the *same* topic recorded twice (an i
 | `1418_222_plano_gapfill_stances.sql` | 1 chair (Lavine residential-zoning=2) — revised down from 5; the 4 `taxes` rows were dropped by operator ruling, see below | APPLIED |
 | `1419_222_mckinney_gapfill_stances.sql` | 2 chairs (Lynch homelessness=4, Jones growth-and-development=3) | APPLIED |
 | `1420_222_barrios_healthcare_bio_only_remediation.sql` | 1 deletion (bio-page-only) | APPLIED |
-| `1421_222_allen_stances.sql` | 1 chair (Schulmeister residential-zoning=3) | AUTHORED — awaiting operator apply (222-05 Task 3) |
+| `1421_222_allen_stances.sql` | 1 chair (Schulmeister residential-zoning=3) | APPLIED |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
 
