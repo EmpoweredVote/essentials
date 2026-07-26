@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 369
+## Count: 380
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -5136,5 +5136,238 @@ both. Nevada's council seats are out of this plan's scope and belong to 222-14/2
 unusually attributive** — they name movers, seconders, staff, citizens and a per-officeholder report
 section — so the council members are considerably more researchable here than the mayor, with the caveat
 that vote tallies carry no names.
+
+---
+
+## City of Saint Paul (4864220) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor J.T. Trevino** (`8dd71c1c-dea7-4fd9-bc52-39d4002ff537`), rendered
+**"JT Trevino"** on the town's own site and in his own signature, the sole Saint Paul officeholder in
+plan 222-09's scope, against **all 11** canonical compass topics (11 pairs). Verified at
+`stance_count = 0` against production before any research began. **Scope: Saint Paul — Mayor only.**
+Saint Paul's five alderman seats (Larry Nail Seat 1, David Dryden as Mayor Pro-tem Seat 2, Gregory
+Pierson Seat 3, Kristen Bewley Seat 4, Robert Simmons Seat 5) are covered by plans
+**222-14/222-15/222-16/222-17** and are deliberately absent from this section.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** **This zero is SETTLED, and it is the starkest in
+the plan: in the complete regular Town Council minutes read end-to-end, Mayor Trevino makes NO recorded
+statement, NO motion, NO second, and appears in NO vote. He is recorded present, and nothing else.**
+
+## ✅ THE PHASE 221 SAINT PAUL ROSTER-CURRENCY ITEM IS **RESOLVED IN THE DATABASE'S FAVOUR — CLOSE IT**
+
+This is the most immediately actionable finding in plan 222-09 and the operator should act on it.
+**Phase 221 recorded an open roster-currency item for this town**: *"the town's public roster (Mayor Kent
+Swaner; alderpersons Graham/Dryden/Trevino/Simmons) differs from our DB roster below — a separate
+roster-currency item to reconcile later."* Plan 222-09's own brief carried it forward as an open
+question. **It is now closed, and the DB was right.** The town's **current** official pages and its
+**current signed minutes** both name exactly the DB roster:
+
+| Source read this session | Names |
+|---|---|
+| `stpaultexas.us/local_government/elected_officials/mayor.php` | **JT Trevino, Mayor — term expires June 2028** |
+| `stpaultexas.us/local_government/elected_officials/seats_1-5.php` | Larry Nail (Seat 1, June 2027) · **David Dryden, Mayor Pro-tem** (Seat 2, June 2027) · Gregory Pierson (Seat 3, June 2028) · Kristen Bewley, Alderwoman (Seat 4, June 2028) · Robert Simmons (Seat 5, June 2028) |
+| Signed minutes of the June 8, 2026 Regular Town Council Meeting | Roll call: *"Present: Greg Pierson, **JT Trevino (Mayor)**, David Dryden (mayor pro-tem), Larry Nail. Absent: Kristen Bewly, Robert Simmons"*; signature block **"JT Trevino, Mayor"** |
+
+**"Kent Swaner" appears nowhere in any current source**, and Trevino is no longer an alderperson but the
+Mayor. Phase 221's snapshot was of a **stale page**. **No subject substitution was made at any point in
+this research** — the person researched is the worklist `politician_id`'s person, and the town's own
+documents confirm him in that seat. **Recommendation: mark the Phase 221 Saint Paul roster item closed,
+requiring no reseating.**
+
+**⚠ THE STRUCTURAL FINDING FOR SAINT PAUL — the most complete mayoral silence in the plan.** The
+June 8, 2026 regular meeting ran from 7:00 p.m. to **8:32 p.m.** and its approved minutes are **3 pages**.
+Every one of the four motions was **made and seconded by aldermen** — *"Mr. Dryden made a motion … Mr.
+Nail seconds"*, *"Mr. Pierson made a motion … Mr. Dryden seconds"*, *"Mr. Dryden made a motion to table
+item 6.3 … Mr. Pierson seconds"*, *"Mr. Nail made a motion to adjourn … Mr. Dryden seconds"* — each
+carried *"all in favor"* with **no individual names**. The future-agenda requests are **Dryden's**. Even
+the Announcements and Public Comments sections are written impersonally, with **no attribution to the
+Mayor**. Trevino signs the minutes and **the minutes record him doing nothing else**. This is a genuine
+finding about the record, not a thin read: the document is complete, approved on July 13, 2026, and read
+in its entirety.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the Town of St. Paul Regular Town Council Meeting minutes of Monday, June 8,
+  2026, downloaded as a PDF
+  (`https://www.stpaultexas.us/Minutes_6.8.2026_Approved.pdf`) and read in full (3 pages, bearing the
+  **TOWN OF ST. PAUL — INCORPORATED 1971** seal, Town Hall Council Room, **2505 Butscher's Block, St.
+  Paul, Texas**; *"The Town Council approved these minutes on July 13, 2026"*; signed **JT Trevino,
+  Mayor** and attested **Alexandra Stanley-Dake, Acting Town Secretary**).** Business: announcements
+  (the May 16, 2026 annual cleanup event; a new **Everbridge** emergency-notification contract; a
+  code-compliance reminder that *"Town code requires all grass and weeds to remain under 12 inches"*
+  with Code Violation Letters, fines, or town-contracted mowing at the owner's expense); public comments
+  from **five residents on drainage issues in Vista Oaks** (Stephen Lash, Monty McDougal, Larry Coursey,
+  Ernie Hoback) and **Stephanie Rogers on 2012 Parker Rd. and boundary issues**; a consent agenda (May
+  2026 financial report; May 11, 2026 minutes); **item 6.1**, the **preliminary budget and budget calendar
+  for FY 26-27**, on which *"Mr. Pierson made a motion to direct staff to work on the proposed budget"*;
+  **item 6.2, Ordinance No. 299-26-06-08 adopting the 2024 International Swimming Pool and Spa Code**,
+  which Dryden moved to **send to P&Z for review and recommendation**; **item 6.3, Ordinance No.
+  290-26-06-08 regulating fences**, which Dryden moved to **table**; and Dryden's requested July agenda
+  items (*"Policy discussions, capital improvements, staff related items, the fence ordinance, and a
+  road/drainage project update from KSA"*).
+- **`http://www.stpaultexas.us/local_government/elected_officials/mayor.php`** — the official Mayor page,
+  fetched. Confirms **JT Trevino, term expiring June 2028**, and carries **only his email address** —
+  **no biography, no statement of priorities, no policy position**.
+- **`http://www.stpaultexas.us/local_government/elected_officials/seats_1-5.php`** — the official
+  aldermen page, fetched. Names all five seats with titles, term-expiry dates and emails, and **no
+  biographical information or policy statements**; it links campaign **finance** reports for some members,
+  which carry no positions.
+- **`https://www.stpaultexas.us/docs/council.php`** — the Council document archive, enumerated in
+  Playwright. It exposes **268 PDF links** — paired Agenda / Packet / Minutes sets for 2026 meetings on
+  07.13, 06.08, 05.11, 04.13, 03.09 (plus a canceled 04.06 special meeting and a separate Executive
+  Session agenda for 07.13) and a deep back-archive. Companion archives exist for **Planning & Zoning**
+  (`docs/planning___zoning.php`) and the **Board of Adjustment** (`docs/board_of_adjustment.php`).
+- **`http://www.stpaultexas.us/docs/minutes___agendas.php`** and **`https://stpaultexas.us/`** — the
+  archive hub and site root, crawled for structure. The hub also links **Council Meeting Recordings** on
+  YouTube. The root additionally exposes `local_government/elections.php`,
+  `local_government/special_committees.php`, `local_government/departments/index.php`,
+  `local_government/town_administration/index.php`, `docs/code_of_ordinances.php`,
+  `docs/fee_schedule.php`, and a **budget page that is still labelled FY 2020-2021**.
+- **`https://directory.tml.org/profile/city/840`** — the Texas Municipal League entry for the **Town of
+  St. Paul**, confirming JT Trevino as Mayor. Contact information only, **no policy positions**.
+- **`https://ecode360.com/39721939`** — the Town of Saint Paul code of ordinances on eCode360, noted as
+  the code host. Ordinance text is **law, not an individual's position**, and was not used.
+- Targeted press searches for `"Trevino" mayor "St. Paul" Texas Collin County council statement /
+  drainage / development`. **No news article, interview, State-of-the-Town address, or questionnaire
+  naming this person was found.**
+
+**⚠ HOMONYM GATE — "SAINT PAUL" AND "TREVIÑO" ARE A DOUBLE COLLISION, AND THREE TEXAS TRAPS WERE
+REJECTED.** "Saint Paul" is a **major Minnesota city with a nationally covered mayor**, and there are
+St. Pauls in Oregon, Nebraska and Virginia. "Treviño" is a common South-Texas surname carried by at
+least two sitting Texas officials. Encountered and rejected this session:
+- **County Judge Eddie Treviño, Jr. of Cameron County, Texas** (`cameroncountytx.gov`) — a sitting Texas
+  county executive with the same surname.
+- **Mayor Dr. Victor D. Treviño of Laredo, Texas** (`cityoflaredo.com`) — **a sitting Texas MAYOR named
+  Treviño.** This is the most dangerous trap for this person: same surname, same office title, same
+  state.
+- **Eddie Treviño** (Wikipedia).
+No Minnesota source was used or even reached, because this town was researched **outward from its own
+official domain** rather than by name search. Every document relied on is pinned to **St. Paul, Collin
+County, Texas** by the `stpaultexas.us` domain, the **TOWN OF ST. PAUL — INCORPORATED 1971** seal, the
+**2505 Butscher's Block** Town Hall address, Acting Town Secretary **Alexandra Stanley-Dake**'s
+attestation, or the TML directory's own city field. Note also a harmless **naming variant, not a
+discrepancy**: the DB records this government as *"City of Saint Paul"* while the town styles itself
+*"Town of St. Paul"* — same entity, geo_id `4864220`.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **The Town of St. Paul YouTube channel (`https://www.youtube.com/@townofstpaultexas`) was NOT
+  watched.** The town publishes **Council Meeting Recordings** there, and the minutes hub links it
+  directly. Given that Saint Paul's minutes record the Mayor saying **nothing at all**, **video is the
+  only plausible route to any Trevino position and is by a wide margin the highest-value unread source
+  for this officeholder.**
+- **Only 1 of the ~268 archived Council documents was read**, and no Planning & Zoning or Board of
+  Adjustment minutes at all. June 8, 2026 was chosen as the most recent **approved** minutes (the
+  **July 13, 2026** meeting has an agenda, a packet and an Executive Session agenda posted but **no
+  approved minutes yet** — they would be approved in August 2026). **A dated re-check is owed: the
+  July 13, 2026 minutes, once approved, are the next place a Trevino statement could appear**, and
+  Dryden's requested July agenda — *"policy discussions, capital improvements … the fence ordinance, and
+  a road/drainage project update from KSA"* — is unusually substantive for this town.
+- **Ordinance No. 290-26-06-08 regulating fences was TABLED** and its text was not retrieved. Recorded
+  because a fence ordinance is the nearest thing Saint Paul has to a neighbourhood-character instrument;
+  but it was tabled on **Dryden's** motion, and an ordinance's text is law rather than an individual's
+  position in any case.
+- **No Ballotpedia candidate page exists for this person** — both `ballotpedia.org/J.T._Trevino` and
+  `ballotpedia.org/JT_Trevino` return **HTTP 404** even with the browser-UA technique that recovered the
+  Lavon and Lowry Crossing pages. A place page `ballotpedia.org/St._Paul,_Texas` returns 200 but carries
+  no candidate content for this seat. This is a settled negative, not a fetch failure.
+- **No VOTE411 or League of Women Voters of Collin County questionnaire** for this seat.
+  `lwvcollin.org` has returned **HTTP 403** all phase; VOTE411 was not attempted per this plan's
+  standing instruction. **No Community Impact, Star Local Media, Murphy Monitor, Princeton Herald,
+  Herald-Banner or Farmersville Times article naming Trevino was located. No campaign site. No
+  State-of-the-Town address. No town newsletter** was found for Saint Paul — unlike Lowry Crossing,
+  Nevada and Josephine, this town appears to publish none.
+- **A redirect gotcha worth recording:** `https://stpaultexas.us/...` issues a **301 to
+  `http://www.stpaultexas.us/...`**, a **cross-host redirect that WebFetch returns rather than follows**.
+  Every page must be re-requested at the `www.` host (or fetched with `curl -L` / Playwright). A pass
+  that stops at the 301 will wrongly record this town as unreachable.
+
+### J.T. Trevino — Mayor — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537`
+
+Sourced: **none.** All 11 topics blank. Mayor of the Town of St. Paul, term expiring **June 2028**;
+confirmed in that seat by the town's own Mayor page, by the June 8, 2026 roll call, and by his own
+signature on those minutes. **He is recorded making no statement of any kind in the meeting read.**
+
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **residential-zoning** — no
+  position found on housing density or neighbourhood character. **Ordinance No. 290-26-06-08 regulating
+  fences** is the only neighbourhood-character-adjacent item in the record and it was **tabled on
+  Alderman Dryden's motion** with no discussion recorded and no Trevino participation; a fence ordinance
+  is a **dimensional/aesthetic** regulation, not a housing-density proposition, so it could not set this
+  topic even if it had passed and even if he had moved it. No rezoning, upzoning, plat or density item
+  appears. **Saint Paul's existing large-lot, ~992-resident low-density character is the town's
+  condition, not his position**, and was not used as a default.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **growth-and-development** — no
+  chair-locating position on growth pace, annexation, approval speed, permitting fees, growth caps, or
+  infrastructure-ahead-of-growth sequencing. Nothing in the record read engages growth at all beyond
+  **Stephanie Rogers'** public comment *"on 2012 Parker Rd. and Boundary issues"* — a **resident's**
+  remark, on which the Council was legally barred from acting, with **no recorded response from anyone**.
+  Boundary questions are jurisdictional in any case.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **housing** — no position found on
+  what role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy, first-time-buyer assistance, permit streamlining, or leaving prices
+  to the market.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. The only transportation content is
+  **drainage and road maintenance**, refused by rule 4: **five residents spoke on drainage issues in Vista
+  Oaks**, and **Dryden** asked for a *"road/drainage project update from KSA"* on the July agenda.
+  **Relaying constituent perception is explicitly not the member's own position**, the requests are
+  Dryden's not Trevino's, and **a road-and-drainage project is not a transportation mode tradeoff** — the
+  refusal this phase already applied to bonds bundling roads with drainage. Nothing on transit, bike
+  lanes, sidewalks, parking requirements, or road capacity as a stated priority.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **public-safety-approach** — no
+  chair-locating position. Saint Paul has **no municipal police department** in the record read. The
+  **Everbridge** emergency-notification contract was examined and refused: it is a mass-notification
+  **service procurement**, announced impersonally with no vote recorded and no attribution to the Mayor,
+  and it is neither a police-funding nor a policing-model choice. The **grass-and-weeds code-compliance
+  announcement** — that overgrown grass *"creates safety hazards by hiding pests and blocking
+  visibility"* and that non-compliance leads to *"fines, or the town hiring a private contractor to mow
+  the property at the owner's expense"* — is **nuisance code enforcement**, not public-safety funding or
+  staffing, and is likewise unattributed. Nothing found on staffing, pay, equipment, crisis-response
+  teams, mental-health co-responders, or redirecting police budget.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **economic-development** — no
+  position found on incentives, tax abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. No incentive, abatement, EDC or business-recruitment item appears anywhere in the record
+  read. The site's `community_info/businesses.php` and `restaurants.php` pages are **directories**, not
+  positions.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **homelessness** — no statement or
+  vote found on people sleeping or camping in public spaces. Saint Paul has no camping ordinance,
+  encampment policy or shelter decision in the record read. The site links the **Amazing Grace Pantry**
+  (`amazinggracepantry.org`) among community resources; a **link to a food pantry is a service referral,
+  not a position**, and it was not used. Nothing was inferred.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **local-immigration** — no
+  statement found on any police relationship to federal immigration enforcement, ICE detainers, or
+  information sharing. The town operates no police department in the record read. **Texas SB 4 is state
+  law, not his position**, and was not used as a default. **No inference of any kind was drawn from this
+  officeholder's surname or presumed ethnicity** — that inference class is forbidden, and it is stated
+  explicitly here because a Hispanic surname on a `local-immigration` row is precisely the identity
+  inference the 222-01 audit deleted rows for.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **civil-rights** — no on-topic
+  position found on racial or social inequality. Nothing in the minutes read, the official site, or any
+  press engages that axis. **No inference was drawn from any identity, demographic, religious or
+  affiliation characteristic** — including, again, from this officeholder's surname, and including from
+  the town's name, which is ecclesiastical in origin and carries no religious position.
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **taxes** — **researched, no chair
+  written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was found
+  even for the register.** The FY 26-27 budget item produced only a procedural instruction — *"Mr. Pierson
+  made a motion to direct staff to work on the proposed budget for FY 26-27"*, seconded by Dryden, all in
+  favor — with **no rate discussion, no service-level discussion, and no Trevino statement**. The May 2026
+  monthly financial report passed on the consent agenda. The town's own **`docs/fee_schedule.php`** was
+  not opened, and **fee ratemaking is refused as taxes evidence** by rule 1 regardless. Note that the
+  town's public **budget page is still labelled FY 2020-2021**, so no current adopted-budget document is
+  published. Chairs 1–2 require raising taxes specifically on wealthy people and large companies;
+  chairs 4–5 require committing to scale public services back. Nothing found does either. **No taxes row
+  was written.**
+- J.T. Trevino — Saint Paul — `8dd71c1c-dea7-4fd9-bc52-39d4002ff537` — **healthcare** — no statement found
+  on healthcare access. Expected: all five chairs describe **national** healthcare policy, which the mayor
+  of a town of ~992 people holds no position on by role. The **2024 International Swimming Pool and Spa
+  Code** (sent to P&Z on Dryden's motion) was noted and refused as a **building-safety code**, not a
+  health-coverage position. No health-adjacent remark was stretched into a chair.
+
+**Saint Paul reconcile:** J.T. Trevino appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. He is the only Saint Paul name in plan 222-09's scope and he is accounted for — not in neither
+bucket, not in both. Saint Paul's alderman seats are out of this plan's scope and belong to
+222-14/222-15/222-16/222-17. **Saint Paul therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances. **The
+Phase 221 roster-currency item for this town is CLOSED in the DB's favour** (see the table above) and
+requires no reseating.
 
 ---
