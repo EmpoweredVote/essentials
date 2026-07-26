@@ -693,7 +693,7 @@ Plans:
 
 **Wave 7** *(blocked on Wave 6 completion)*
 
-- [ ] 222-07-PLAN.md — Tier 1: Prosper + Celina (+ explicit Longview disposition)
+- [x] 222-07-PLAN.md — Tier 1: Prosper + Celina (+ explicit Longview disposition)
 
 **Wave 8** *(blocked on Wave 7 completion)*
 
