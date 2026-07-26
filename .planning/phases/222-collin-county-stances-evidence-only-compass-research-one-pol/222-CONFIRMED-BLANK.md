@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 336
+## Count: 347
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -4294,5 +4294,282 @@ bucket, not in both. Josephine's council seats are out of this plan's scope and 
 for the council plans: Josephine is the single most promising un-mined city in this phase** — narrative
 minutes that name every voter, contested 3-2 and 2-1/3-1 divisions on real land-use questions, a live
 rezoning case, and archived meeting video.
+
+---
+
+## City of Lavon (4841800) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor Vicki Sanson** (`3ae0e255-7dca-486d-abbf-f8d2ebd5e7be`), the sole
+Lavon officeholder in plan 222-09's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Scope: Lavon — Mayor
+only.** Lavon's council seats (Mike Shepard Place 1 / Mayor Pro Tem, Mike Cook Place 2, Travis Jacob
+Place 3, Rachel Dumas Place 4, Lindsey Hedge Place 5) are covered by plans
+**222-14/222-15/222-16/222-17** and are deliberately absent from this section.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** **This zero is SETTLED — and Lavon is the one
+town in this plan where the negative is DEFINITIVE rather than merely thorough**, because Ballotpedia's
+own page for this person was recovered and read in full and it affirmatively records that she completed
+no survey, supplied no biography, and has no campaign themes on file (see the access finding below).
+Lavon is another §C **Tier "very low"** listing that is **wrong**: it is a fast-growing Collin County
+city with its own police department, a City Manager, LJA Engineering as planner, a Public Improvement
+District, an Economic Development Corporation, and a densely-loaded monthly council agenda.
+
+**⚠ ACCESS FINDING THAT CORRECTS A STANDING PHASE-WIDE NOTE — THE MOST REUSABLE OUTPUT OF THIS SECTION.
+Ballotpedia's "empty body" failure is a User-Agent problem, not a Ballotpedia block.** This register
+records phase-wide that "Ballotpedia individual pages return **empty bodies**", and plan 222-08 named
+Lee Pettle's Ballotpedia page as *"the single highest-value unread source"* and *"the highest-value
+single retry in the phase."* **That is now resolved.** `curl` with an ordinary desktop browser
+`User-Agent` returned **HTTP 200 and a complete 92 KB page body** for
+`https://ballotpedia.org/Vicki_L._Sanson_(Mayor_of_Lavon,_Texas,_candidate_2025)` on the first attempt,
+including the full Biography, Elections, Endorsements and Campaign-themes sections and the Candidate
+Connection survey block. **Every Ballotpedia "empty body" recorded earlier in Phase 222 should be
+re-attempted this way** — including the Pettle page (222-08 / Parker) and any Anna, Fairview,
+Farmersville or Lucas page. The technique is the same one that unlocked Blue Ridge's eCode360:
+`curl -A "<desktop browser UA>"`.
+
+**⚠ THE STRUCTURAL FINDING FOR LAVON — same shape as Weston, and it is doubly binding.** In the
+**July 7, 2026** minutes read in full, Mayor Sanson appears **exclusively presiding**: she *"CALLED THE
+MEETING TO ORDER AT 6:30 P.M. AND ANNOUNCED A QUORUM PRESENT"*, *"LED THE RECITATION OF THE PLEDGE OF
+ALLEGIANCE AND DELIVERED THE INVOCATION"*, opened and closed **four separate public hearings** (6:45,
+6:48, 6:58 and 7:01 p.m.), *"reconvened the regular meeting at 8:15 p.m., and stated that no action was
+taken in the executive session"*, and *"ADJOURNED THE CITY COUNCIL MEETING AT 8:16 P.M."* She states
+**no view on any item**. **Every one of the eleven motions was made and seconded by councilmembers**
+(Shepard, Cook, Jacob, Dumas, Hedge). And as in Weston, **Lavon records outcomes as `APPROVED:
+UNANIMOUS` with no individual names**, so no Lavon vote is attributable to any individual member at all
+— only the mover and seconder are. For a mayor who never moves or seconds, that leaves nothing. Under
+this plan's rule 5, opening and closing a public hearing is presiding, not a position.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the Lavon City Council minutes of July 7, 2026, downloaded as a PDF
+  (`https://lavontx.gov/wp-content/uploads/Public-Documents/City%20Council%20Minutes/2026-07-07-CC-Meeting-Minutes.pdf`)
+  and read in full (7 pages, bearing the City of Lavon, Texas "Founded 1884" seal, City Hall, 120 School
+  Road, Lavon, Texas; "DULY PASSED and APPROVED … on this 21st day of July 2026", signed by Vicki
+  Sanson, Mayor and attested by Rae Norton, City Secretary).** This is a heavy agenda and is described
+  item-by-item in the refusals below: a Collin County **Interlocal Jail Services Agreement** amendment; an
+  Elevon HOA right-of-way licence; acceptance of public infrastructure; a **Flex Industrial Park**
+  preliminary plat (3 commercial lots, 30.039 acres, ETJ); a **Lake Breeze Estates** replat; final plats
+  for **Hillstead Phase 2B-1** (44 residential + 4 non-residential lots) and **2B-2** (96 residential +
+  4 non-residential lots) in **Collin County MUD No. 5**; a **205-78 Addition** commercial plat; a final
+  plat for **Elevon Section 3 Phase 3B-2** (107 residential lots); a conditional use permit for a second
+  accessory structure at 246 Shoreview; a continued zoning case at 963 S. SH 78; **Ordinance 2026-07-02**
+  amending the Zoning Ordinance across seven divisions; **Ordinance 2026-07-03** amending the Subdivision
+  Ordinance; **Ordinance 2026-07-04** on sign variances; **Resolution 2026-07-03** on the **Heritage
+  Public Improvement District No. 1 (Residential)** assessment plan; appointment of Municipal Court
+  prosecutors; a **Municipal Development District** election discussion; **Ordinances 2026-07-05 through
+  -08** (peddlers and solicitors; prohibiting public urination and defecation; prohibiting interference
+  with city employees; prohibiting gate crashing); a budget introduction; an executive session under
+  §551.087(2) on business incentives for the **White Feather, Chalkboard 27, Ignite and Pathways** retail
+  projects; and **a Chapter 380 economic development incentive agreement with Wal-Mart Real Estate
+  Business Trust.**
+- **PRIMARY DOCUMENT — Ballotpedia's candidate page for this person, recovered via the browser-UA
+  technique and read in full:
+  `https://ballotpedia.org/Vicki_L._Sanson_(Mayor_of_Lavon,_Texas,_candidate_2025)`.** It confirms
+  **"Vicki L. Sanson … ran for election to the Mayor of Lavon in Texas. Sanson was on the ballot in the
+  general election on November 4, 2025"**, lists her as **Nonpartisan**, and then records four
+  affirmative negatives that close this source out: ***"Ballotpedia did not receive biographical
+  information for this candidate"***; ***"Ballotpedia did not identify endorsements for Sanson in this
+  election"***; ***"Vicki L. Sanson did not complete Ballotpedia's 2025 Candidate Connection survey"***;
+  and a **Campaign themes section with no content**. Contact on file: a campaign Facebook page and
+  `vickisanson4mayor@gmail.com`.
+- **`https://lavontx.gov/city-council/`** (and the legacy mirror `https://cityoflavon.com/city-council/`,
+  which serves the identical page) — the official Council page, fetched. Confirms **Mayor Vicki Sanson**
+  and the five council places, and that meetings are the **first and third Tuesday** at 6:30 p.m. in
+  Council Chambers at 120 School Rd. **No biography, no statement of priorities, and no policy position
+  for any member.**
+- **`https://lavontx.gov/lavon-city-council-agenda-minutes/`** — the archive index, fetched. It exposes
+  approved minutes for **2026-07-07, 06-16, 06-02, 05-19, 05-05, 04-15, 04-07, 03-17, 03-03 and 02-17**
+  and agenda packets through **2026-07-21**, plus a legacy archive on `cityoflavon.com` reaching back
+  through 2023–2025. The **2026-05-19** minutes were also downloaded.
+- **`https://lavontx.gov/2026-2028-lavon-strategic-plan/`** — fetched. The rendered page returned
+  **navigation and footer only**, with **no plan document link and no statement attributed to the
+  Mayor**; a follow-up scrape of the same page for `.pdf` hrefs returned nothing. Recorded as a partial
+  failure below.
+- **`https://directory.tml.org/profile/individual/89351`** and **`.../profile/city/428`** — Texas
+  Municipal League entries confirming **Vicki Sanson, Mayor, City of Lavon**. Contact information only,
+  **no policy positions**.
+- **`https://ecode360.com/LA6382/`** — Lavon's eCode360 customer record, noted as the code/ordinance
+  host. **`https://cityoflavon.com/wp-content/uploads/Public-Documents/Codes%20and%20Ordinances/2022-04-03-ORD-2022-Comprehensive-Plan-Update.pdf`**
+  — the **Lavon Comprehensive Plan, amended August 20, 2024**, identified but not opened (see below).
+- Targeted press searches for `"Vicki Sanson" Lavon mayor campaign priorities / statement / interview /
+  growth`. **No news article, interview, State-of-the-City address, or questionnaire naming this person
+  was found.**
+
+**⚠ HOMONYM GATE.** "Lavon" is also **Lake Lavon** (a large Collin County reservoir), and "Lavon" is a
+given name. No wrong-place source was relied on: every document above is pinned to **Lavon, Collin
+County, Texas** by the `lavontx.gov` / `cityoflavon.com` domains, the **120 School Road** City Hall
+address, the City of Lavon "Founded 1884" seal, City Secretary **Rae Norton**'s attestation, the
+eCode360 customer ID **`LA6382`**, or explicit "City of Lavon, Collin County, Texas" plat language.
+Ballotpedia's page title itself reads **"Mayor of Lavon, Texas"**, which is the strongest possible
+disambiguation for that source. No lake-related or given-name source was used.
+
+**⚠ ROSTER NOTE: no discrepancy.** Sanson is named Mayor by the city's own council page, by the TML
+directory, by Ballotpedia's 2025 election page, and by her own signature on the July 7, 2026 minutes
+approved July 21, 2026. The DB row is correct and current.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **The campaign Facebook page `https://www.facebook.com/vickisansonforlavonmayor/` and the specific
+  candidacy-announcement post `/posts/today-i-am-announcing-my-candidacy-for-re-election-as-the-mayor-of-the-city-of-l/114102720970819/`
+  returned HTTP 400 to `curl` with a browser UA.** Facebook is not fetchable from this session.
+  **This is the single highest-value unread source for this officeholder** — it is a *self-published
+  campaign channel* whose one indexed post is a re-election announcement, which is the document class
+  most likely to state priorities. It would need a logged-in browser. Note also the standing rule that
+  social-media posts are not treated as evidence of a policy position **absent a direct citable quote** —
+  a verbatim quoted announcement text would qualify; a photo or a like would not.
+- **The `2026-2028 Lavon Strategic Plan` document itself was not obtained.** Its page renders navigation
+  only and exposes no PDF link. This matters more than usual: the July 7, 2026 minutes record that
+  **Controller Patty Parks presented "budget goals and objectives as identified in the Strategic Plan"**,
+  so the Strategic Plan is the City's own priority document — but it is a **City/staff document adopted
+  institutionally**, so even if recovered it could not locate an individual chair for Sanson. Retry path:
+  a Lavon public-information request, or the July 7 / August 4, 2026 agenda packets (21–35 MB) which
+  likely embed it.
+- **The Lavon Comprehensive Plan (amended August 20, 2024) was NOT opened.** Same reasoning: a
+  consultant-drafted, council-adopted city plan is not an individual's stated position.
+- **9 of the 10 available 2026 minutes and the entire 2023–2025 legacy archive were not read.** July 7,
+  2026 was chosen as the most recent approved regular meeting. Recorded honestly — **but see the
+  structural finding: because Lavon records only `APPROVED: UNANIMOUS`, no additional minute can
+  attribute a vote to Sanson by name.**
+- **No council meeting video was located for Lavon.**
+- **No VOTE411 or League of Women Voters of Collin County questionnaire** for the Lavon mayoral seat.
+  `lwvcollin.org` has returned **HTTP 403** all phase; VOTE411 was not attempted per this plan's standing
+  instruction. **No Community Impact, Star Local Media, Princeton Herald, Murphy Monitor, Herald-Banner
+  or Farmersville Times article naming Sanson was located.** **No campaign website** (as distinct from
+  the Facebook page). **No State-of-the-City address.**
+
+### Vicki Sanson — Mayor — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be`
+
+Sourced: **none.** All 11 topics blank. Mayor of Lavon; on the ballot in the **November 4, 2025** general
+election for that office; signed the July 7, 2026 minutes as Mayor.
+
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **economic-development** — **no chair,
+  and this is the closest miss in Lavon and one of the closest in the plan.** On **July 7, 2026** the
+  Lavon council, immediately after an executive session held under **Tex. Gov't Code §551.087(2)** *"to
+  deliberate the offers of a financial or other incentive to business prospects … regarding the retail
+  projects White Feather, Chalkboard 27, Ignite, and Pathways in proximity to SH 78"*, adopted a **motion
+  to "APPROVE A CHAPTER 380 ECONOMIC DEVELOPMENT INCENTIVE AGREEMENT WITH WAL-MART REAL ESTATE BUSINESS
+  TRUST."** That is a genuine, dated, on-topic municipal incentive decision — precisely the axis this
+  topic measures. **It still cannot set a chair for Sanson, for four independent reasons:** (i) the motion
+  was **made by Cook and seconded by Shepard** — she neither moved nor seconded; (ii) the outcome is
+  recorded as **`APPROVED: UNANIMOUS` with no individual names**, so no vote is attributable to her at
+  all; (iii) as Lavon's presiding officer her only recorded act on the item was **reconvening the meeting
+  and stating that no action was taken in executive session**; and (iv) the deliberation itself was
+  **closed**, so no participant's reasoning exists in the public record and the chair could not be
+  distinguished between 3 (targeted incentives with community-benefit conditions), 4 (compete actively
+  for major employers with significant abatements) and 5 (maximum incentives) even for the members who
+  did vote. **Recorded prominently as a lead for 222-14/222-15/222-16/222-17: Cook and Shepard ARE
+  individually attributable as mover and seconder on a Chapter 380 Walmart incentive agreement.** Also
+  refused for Sanson: her **proclamation of Economic Development Week** on April 21, 2026 (a ceremonial
+  proclamation is not a position); the **Lavon Economic Development Corporation's** Texas Economic
+  Development Council recognition for 2025 (an award to a corporation, and EDC involvement is adjacency);
+  and the July 7 discussion of an election to create a **Municipal Development District**, which produced
+  only *"directed staff to bring the item back on the July 21, 2026 Meeting"* from the Council
+  collectively.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **residential-zoning** — no position
+  found on housing density or neighbourhood character, **despite Lavon transacting more residential
+  entitlement in one night than any other town in this plan.** Refused: the final plats for **Hillstead
+  Phase 2B-1** (44 residential lots), **Hillstead Phase 2B-2** (96 residential lots) and **Elevon
+  Section 3 Phase 3B-2** (107 residential lots) all passed **inside the CONSENT AGENDA** on a single
+  motion by **Shepard**, seconded by **Cook**, `UNANIMOUS` — consent-agenda plat approvals are, in
+  Lavon's own words, *"considered to be routine … and require little or no deliberation"*, they were
+  previously approved as part of Hillstead Phase 2B, and they carry no density-policy choice. The
+  **conditional use permit** for a 1,000 sq ft second accessory structure at 246 Shoreview is an
+  accessory-building dimensional variance, not a housing-density proposition (Cook/Hedge, unanimous; per
+  the wave-8 ruling a dimensional or structure-size dispute does not set this topic). **Ordinance
+  2026-07-02**'s zoning amendments concern the permitted-use table and minimum parking, notification-sign
+  requirements, use definitions, **home-occupation** standards, **farmers-market** standards, **dumpster**
+  regulations, site-plan expiry and off-street loading — administrative and largely non-residential, and
+  presented by **Abra Nusser of LJA Engineering, AICP**, i.e. consultant testimony. The continued zoning
+  case at **963 S. SH 78** (Retail to Planned Development for a drive-through oil-change establishment)
+  is **commercial**; Sanson *"opened the public hearing and continued it to a meeting scheduled on August
+  4, 2026"* — pure procedure. **Lavon's existing zoning pattern is the city's condition, not her
+  position**, and was not used as a default.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **growth-and-development** — no
+  chair-locating position on growth pace, annexation, approval speed, permitting fees, growth caps, or
+  infrastructure-ahead-of-growth sequencing. Refused: **Ordinance 2026-07-03**'s subdivision-ordinance
+  amendment to *"amend the expiration period of construction plans and to establish the expiration for
+  final plats"* — a genuinely approval-process item, but it is **administrative plan-expiry housekeeping**
+  presented by the consultant engineer, moved by **Cook** and seconded by **Dumas**, with no Sanson
+  participation and no stated rationale about pace; **acceptance of public infrastructure** for Elevon
+  Section 3 Phase 3B-1 (consent agenda); the **Flex Industrial Park** and **205-78** commercial plats;
+  the **Elevon HOA** right-of-way encroachment licence; and the sheer volume of **Collin County MUD No.
+  5** and **Heritage PID** activity, which is *development machinery*, not a stated view about how fast
+  the city should grow.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **housing** — no position found on what
+  role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy for affordable projects, first-time-buyer assistance, permit
+  streamlining as an affordability instrument, or leaving prices to the market. The **Heritage Public
+  Improvement District No. 1 (Residential)** assessment plan (Resolution 2026-07-03, presented by Jaime
+  Schulte of P3-Works, moved by **Dumas**) was examined and refused: a PID **levies assessments on
+  property owners to finance authorized improvements** — it is an infrastructure-finance mechanism, not
+  an affordability position, and she did not vote on it.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **homelessness** — **no chair, and the
+  nearest-looking item was specifically refused.** On July 7, 2026 the council adopted **Ordinance No.
+  2026-07-06 "adopting rules and regulations related to adding Article 7.05 Prohibiting Public Urination
+  and Defecation."** It is **not on this axis**: the compass topic asks how government should address
+  **people sleeping or camping in public spaces**, and all five of its chairs turn on sleeping/camping
+  enforcement versus housing-first provision. A public-sanitation offence addresses neither. Decisively,
+  **Police Chief Mike Jones explained that "a change in state law prompted the need for a local
+  ordinance"** — a **state-law-driven conforming ordinance**, which this plan's rule 4 refuses as a
+  default for any individual's position — and the motion was **made by Dumas, seconded by Shepard,
+  `UNANIMOUS` with no names**, with Sanson neither moving, seconding, nor speaking. Lavon has **no public
+  camping ordinance, encampment policy or shelter decision** in the record read, and none was inferred.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **public-safety-approach** — no
+  chair-locating position. Lavon has its own police department and its **Police Chief Mike Jones**
+  presented three of the July 7 ordinances, but **all are offence-definition items, not funding or
+  policing-model choices**: **Ordinance 2026-07-05** on peddlers and solicitors (developed *"in response
+  to residents' complaints regarding solicitors coming to their homes after dark and to address minors
+  applying for permits"* — which is additionally **relaying constituent perception**, explicitly
+  refused); **Ordinance 2026-07-07** prohibiting interference with city employees, *"most commonly first
+  responders and public works personnel"*; and **Ordinance 2026-07-08** prohibiting **gate crashing**,
+  i.e. trespassing in restricted areas. The **Collin County Interlocal Jail Services Agreement** amendment
+  (Resolution 2026-07-01, October 1 2026 – September 30 2027) passed **inside the consent agenda** and is
+  a bed-space service contract — refused on exactly the basis 222-08 refused Parker's identical item.
+  Appointment of **Rajish Jose, Paul Liston and Jeffrey Beltz** as deputy city attorneys serving as
+  Municipal Court Prosecutor is a **personnel appointment**. Nothing found from Sanson on staffing levels,
+  pay, equipment, response times, crisis-response teams, mental-health co-responders, or redirecting
+  police budget.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. The only transportation-adjacent
+  content in the record read is **off-street parking and loading regulations** and **minimum parking
+  requirements** inside Ordinance 2026-07-02's omnibus zoning amendment — presented by a consultant,
+  moved by Cook, with **no stated direction on whether parking minima were raised or lowered** and
+  therefore incapable of separating chair 1 (reduce parking requirements citywide) from chair 5
+  (abundant free parking). Nothing on transit, bike lanes, sidewalks, or road capacity as a stated
+  priority, and no road-maintenance item was allowed to stand in for a mode tradeoff.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **local-immigration** — no statement
+  found on the Lavon Police Department's relationship to federal immigration enforcement, ICE detainers,
+  or information sharing. **Texas SB 4 is state law, not her position**, and was not used as a default.
+  The **Jail Services Agreement with Collin County** was specifically considered and **refused** on this
+  axis, exactly as it was for Parker in 222-08: it is a bed-space contract with no detainer content
+  whatsoever, and reading detainer policy into it would be fabrication.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **civil-rights** — no on-topic position
+  found on racial or social inequality. Nothing in the minutes read, the official site, Ballotpedia's
+  page, or any press engages that axis. **No inference was drawn from any identity, demographic,
+  religious or affiliation characteristic** — including from the fact that she **delivered the
+  invocation**, which is a presiding-officer custom in Texas general-law cities and is not evidence of any
+  policy position. Ballotpedia records her as **Nonpartisan** and this register does not use party,
+  endorsement or donor information for inference in any case.
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **taxes** — **researched, no chair
+  written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was found
+  even for the register.** The July 7, 2026 **budget introduction** was delivered by **Controller Patty
+  Parks**, who *"provided an overview of the budget goals and objectives as identified in the Strategic
+  Plan noting budget priorities, new regulatory requirements, budget calendar, anticipated commitments,
+  status of tax rate, status of fee schedule, status of Capital Improvements Plan"* — **that is staff
+  testimony**, and Sanson is recorded saying nothing about the rate, the fee schedule, or service levels.
+  A Budget Public Hearing was **set for August 4, 2026**, i.e. after this research. The **Heritage PID
+  assessment roll** is a special-assessment financing device and **fee/assessment ratemaking is refused as
+  taxes evidence** by this plan's rule 1. Chairs 1–2 require raising taxes specifically on wealthy people
+  and large companies; chairs 4–5 require committing to scale public services back. Nothing found does
+  either. **No taxes row was written.**
+- Vicki Sanson — Lavon — `3ae0e255-7dca-486d-abbf-f8d2ebd5e7be` — **healthcare** — no statement found on
+  healthcare access. Expected: all five chairs describe **national** healthcare policy, which the mayor of
+  a Collin County general-law city holds no position on by role. No health-adjacent remark was stretched
+  into a chair.
+
+**Lavon reconcile:** Vicki Sanson appears in **bucket 2 for all 11 topics** and in bucket 1 for none. She
+is the only Lavon name in plan 222-09's scope and she is accounted for — not in neither bucket, not in
+both. Lavon's council seats are out of this plan's scope and belong to 222-14/222-15/222-16/222-17.
+**Lavon therefore does NOT flip to `hasContext: true` in `src/lib/coverage.js` from this plan**
+(RESEARCH.md Pitfall 5) — it remains at zero stances.
 
 ---
