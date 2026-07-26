@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 391
+## Count: 446
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -60,7 +60,10 @@ Thomas, Lavine) against Ballotpedia Candidate Connection surveys that were unrea
 ran, and **all 25 stay blank**. Every one of the 25 was **already counted inside 222-04 part A's 54**,
 so the total is deliberately unchanged and **no pair is double-counted**. See the section
 "City of Plano (4858016) — Ballotpedia gap-closure (post-222-09 UA discovery)" at the end of this file.
-222-10 through 222-17 append their own per-government sections below as they execute.
++ 55 by 222-10 part A (Anna council — 11 Toten + 11 Bryan + 11 Walden + 11 Baker + 11 Singh; all five
+council members fully blank, 55 of 55 attempted pairs; all five zeros are **SETTLED**, none an access
+failure — **222-10 cracked Anna's minutes archive**, closing the named retry path 222-08 opened).
+222-11 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -6226,3 +6229,439 @@ genuinely new passages land on topics that are already filled. 222-04's Plano re
 59 pairs was not an artifact of the block — it reflects what these officeholders have actually said.
 
 ---
+
+---
+
+## City of Anna (4803300) — 222-10
+
+**Scope, stated once.** Plan 222-10 researches **the five un-stanced COUNCIL MEMBERS only** of Anna
+and Murphy. **Anna's Mayor Pete Cain was handled in 222-08** (11 pairs, all blank) and was **not**
+re-researched, re-reasoned or modified here. **Kelly Patterson-Herndon (Place 4) is out of scope
+under D-07** — she already holds stances; none of her rows was read or touched. Anna's five in-scope
+council members were re-derived live against production by the orchestrator on 2026-07-25 and every
+one was confirmed at `stance_count = 0` before research began.
+
+**Attempted:** 2026-07-25 — **5 people × 11 canonical topics = 55 (person, topic) pairs.**
+
+| Person | Title | politician_id | Term |
+|---|---|---|---|
+| Kevin Toten | Council Member Place 1 | `38ba3e31-8b1d-4038-9c5a-e5b16c06aa8d` | 2024–2027 (on council since 2018) |
+| Nathan Bryan | Council Member Place 2 | `94d3e41c-60b6-4803-b937-1877aeae84df` | elected June 2025, term ends May 2028 (also served 2012–2020) |
+| Jessica Walden | Council Member Place 3 | `c84d87b3-aa64-4f73-aed8-2eb5f113a016` | elected May 2026, term ends 2030 |
+| Elden Baker | Council Member Place 5 | `3842838e-2015-4136-95d2-97f4f20366b1` | first elected May 2023; re-elected May 2026, term ends 2030 |
+| Manny Singh | Council Member Place 6 | `f920ca1a-8263-4662-aa21-1f5964dfa61d` | elected May 2025, term ends May 2028 |
+
+**Result: 0 chairs. All 55 pairs are honest blanks.** This is a **SETTLED** zero for all five people,
+not an access failure — and that is a change from 222-08, which had to record Anna's zero as an
+access failure because no Anna council minute could be opened. **This plan opened them.**
+
+---
+
+### ✅ ANNA'S MINUTES ARE READABLE — the 222-08 retry path is CLOSED. Here is exactly how.
+
+222-08 recorded that "**No Anna City Council minute was read this session**" and named this as the
+single reason Anna ended at zero: `annatexas.gov/AgendaCenter` **404s** (Anna does not use the
+CivicPlus AgendaCenter module), the Laserfiche WebLink at `publicdocs.annatexas.gov/WebLink/` returns
+*"Cookies are not enabled for this website"* on both the root and `Browse.aspx`, and the CivicClerk
+single-page app at `annatx.portal.civicclerk.com` renders only the string "Public Portal • CivicClerk"
+to a fetch. **All three of those findings are still true.** The fourth route is not:
+
+**The CivicClerk SPA has an unauthenticated OData API behind it, and it serves the documents.**
+
+```bash
+UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+
+# 1. Enumerate meetings (paginate via @odata.nextLink). Key access — Events(1474) — 404s;
+#    you MUST filter instead:  ?$filter=id eq 1474
+curl -s -A "$UA" "https://annatx.api.civicclerk.com/v1/Events?%24filter=categoryName+eq+%27City+Council%27&%24orderby=eventDate+desc&%24top=50"
+
+# 2. Each Event carries an INLINE publishedFiles[] array: {fileId, type, name}
+#    type is one of: "Agenda", "Agenda Packet", "Minutes", "Other"
+
+# 3. Fetch any document by fileId:
+curl -s -A "$UA" "https://annatx.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=3318,plainText=false)" -o packet.pdf
+pdftotext -layout packet.pdf packet.txt
+```
+
+Notes for whoever comes next:
+- **The minutes live inside the "Agenda Packet" PDFs**, not as separate files, for every meeting after
+  July 2024 — each packet carries the *previous* meeting's approved minutes as a consent-item
+  attachment. Packets are large (10–95 MB); `pdftotext -layout -f 1 -l 70` is enough to reach the
+  minutes and avoids extracting hundreds of pages of engineering exhibits.
+- Standalone `"Minutes"`-type files exist **only for 2024** (27 across all bodies, 17 for City
+  Council). **Those 2024 PDFs are scanned images with no text layer** — `pdftotext` returns 2–24
+  bytes, and `GetMeetingFileStream(...,plainText=true)` returns an empty body. Reading them needs OCR,
+  which this session did not have. **Recorded as a tooling limit, not as absence of a position.**
+- The `Search` entity set exists in `$metadata` (and its model includes `closedCaptions`, which would
+  be gold) but every query form tried — `$search=`, `keyword=`, `searchTerm=` — returns
+  `{"value":[]}` including for terms guaranteed to be present. Treat CivicClerk full-text search as
+  non-functional for Anna. The `Meetings` entity set 404s entirely.
+- 400 events were enumerated back to 2024-03-26; **60 City Council meetings carry an Agenda Packet.**
+
+**What the minutes actually contain, and why they still produce zero.** Anna's minutes are pure
+**action minutes**. They record the mover, the seconder and the tally, and nothing else — no member
+reasoning, no summary of debate, no attributed argument. Nine council packets were extracted and read
+(fileIds 2674, 2762, 2859, 2884, 3021, 3232, 3266, 3293, 3318, covering meetings from May 2025 to
+July 2026), plus all 119 City Council agendas from March 2024 to July 2026. Across that entire
+corpus, **exactly one sentence attributes any statement to an in-scope member** —
+*"Mayor Pro Tem Toten requested that Item 6f…"*, a procedural request — and one work-session note,
+*"Council Member Singh presented on the possible creation of an Urban Forest 2050 Master Plan"*
+(June 23, 2026), whose subject is not any of the 11 compass topics. Under this plan's rule that an
+**unexplained vote is not a chair**, action minutes cannot locate a chair no matter how many are read.
+
+**Every non-unanimous Anna vote in the corpus was examined and every one is refused.** They are:
+Toten's two lone dissents of September 9, 2025 (below, `taxes`, no row by ruling); a 6-1 procedural
+vote to enter closed session (Toten opposed); a 5-1 vote with Miller abstaining; a 5-1 vote with
+Carver opposed; a 5-2 disannexation with Baker and Singh **abstaining**; and a 6-1 auto-repair
+Specific Use Permit with **Mayor Cain** opposed (June 23, 2026 — the dissenter is the mayor, who is
+out of scope, and a single SUP is not a density-policy proposition in any case).
+
+---
+
+**Evidence checked** (every item below was fetched and read this session unless listed as unavailable):
+
+- **Anna City Council minutes and agendas via the CivicClerk OData API** — 119 agendas (2024-03-26 →
+  2026-07-14) and 9 agenda packets fully text-extracted, as described above. Keyword-swept for every
+  compass axis: `camping / homeless / panhandling / vagrancy` → **zero hits in 119 agendas**;
+  `immigration / sanctuary / ICE / 287(g)` → **zero hits**; `bike lane / bicycle / transit / DART /
+  multimodal` → 2 hits, both trail/park grant items; `affordable housing / multifamily / density /
+  ADU / minimum lot` → 11 agendas; `police station / additional officer / police staffing / SRO` → 3
+  agendas; `Chapter 380 / tax abatement / economic development agreement` → 12 agendas;
+  `tax rate / no-new-revenue` → 3 agendas. Every hit was opened. None carries an attributed member
+  position.
+- **`annatexas.gov` officeholder bio pages, all five, read in full** — `/1072/Kevin-Toten`,
+  `/1612/Nathan-Bryan`, `/1636/Jessica-Walden`, `/1426/Elden-Baker`, `/1607/Manny-Singh`. Every one is
+  **biography only** and carries no policy statement. The refusals this forced are itemised per person
+  below.
+- **Ballotpedia — checked for all five with a browser User-Agent via `curl`** (the method that
+  unblocked this source after seven waves). Findings, which answer a standing phase question:
+  - **`ballotpedia.org/Kevin_Toten` → HTTP 404 (51,236-byte stub). No page exists.**
+  - **Nathan Bryan** — a real page exists at
+    `Nathan_Bryan_(Anna_City_Council_Place_2,_Texas,_candidate_2025)`, 99,721 bytes. **He did not
+    complete the Candidate Connection survey.** No biography, no campaign themes, no endorsements.
+  - **Manny Singh** — real page, `..._(Anna_City_Council_Place_6,_Texas,_candidate_2025)`, 93,317
+    bytes. **Survey not completed.** No biography, no themes.
+  - **Jessica Walden** — real page, `..._(Anna_City_Council_Place_3,_Texas,_candidate_2026)`, 92,020
+    bytes. **Survey not completed.**
+  - **Elden Baker** — real page, `..._(Anna_City_Council_Place_5,_Texas,_candidate_2026)`, 94,222
+    bytes. **Survey not completed.**
+  - **Net: 4 of 5 have Ballotpedia pages; 0 of 5 completed a survey; 0 chairs available from
+    Ballotpedia for Anna.** The bare `ballotpedia.org/Jessica_Walden` and `ballotpedia.org/Kevin_Kelley`
+    URLs are homonym traps — see the rejections below.
+- **Nathan Bryan's campaign website, `annamatters.com`** — the domain is **dead** (`curl` returns
+  HTTP 000, DNS `ENOTFOUND`), but the Internet Archive holds **one** capture, of the root only:
+  `http://web.archive.org/web/20250329181136/https://annamatters.com/` (dated 2025-03-29, during his
+  campaign). It was fetched and **read in full**. It is the single richest first-person Anna source
+  found this session and it still yields no chair — see the Bryan entry.
+- **The Anna Progress (`theannaprogress.com`)** — an independent, community-run Anna news site that
+  **222-08 did not check and that no prior wave of this phase has used**. Its `?s=` search was run for
+  all five surnames and **every council-related article it has published was fetched and read in
+  full**: "Kevin Toten Appointed Mayor Pro-Tem After Tense Votes" (2025-07-02), "Council Approves
+  Resolutions and Projects" (2025-06-11), "Council Votes Marc Marchand Acting City Manager"
+  (2025-07-02), "Kroger Breaks Ground on New Anna Location" (2025-09-26), "City of Anna Election
+  Results (2025)" (2025-05-04) and "City of Anna Runoff Results (6/7/2025)" (2025-06-08). It carries
+  **genuine, attributed, verbatim quotes** from Toten, Bryan and Singh — which is why it was worth
+  finding — but every one of them is off-axis. They are quoted and refused individually below. The
+  site's last post is dated 2025-12-04; its `politics` and `anna` categories were both enumerated and
+  are exhausted.
+- **The June 19–20, 2026 Annual City Council Retreat agenda** (fileId 3235) — fetched and read. Item 4
+  is the bare word "Work Session" with no attached materials. No member priorities are published.
+- **Member-sponsored agenda items** — all 119 agendas were swept for the
+  `(Council Member <Name>)` sponsorship convention Anna uses. **The only member who sponsored an
+  agenda item in the entire corpus is Kelly Patterson-Herndon**, who is out of scope. No in-scope Anna
+  council member has sponsored an item.
+- **WebSearch** for each of the five by name against candidate questionnaires, forums, Community
+  Impact Newspaper, Star Local Media / Anna-Melissa Tribune, Local Profile, North Texas e-News and
+  DFW broadcast outlets. **No policy interview, questionnaire or State-of-the-City-style address
+  exists for any of the five that this session could find.**
+
+**Sources checked but unavailable this session** — recorded so a later pass can retry, **not** treated
+as absence of a position:
+
+- **`gathergov.com/municipalities/anna-tx/development-pipeline` → HTTP 403.** This surfaced high in a
+  search for Toten growth-policy quotes and its search-result summary characterises Toten as part of
+  an *"Expansionist Bloc"* that "generally supports industrial and commercial projects that bring jobs
+  and tax revenue, but demands high aesthetic quality." **No chair was placed on any of that**, for
+  three independent reasons: the body could not be opened; the "bloc" characterisation is a
+  **third-party synthesis label**, not a statement by Toten, and D-04 requires the officeholder's own
+  explicit position; and it is not attributable to a primary document. If a future pass can open
+  gathergov, **verify what it is before citing it** — its output reads like the same class of
+  AI-generated municipal synthesis as `citizenportal.ai`, which this phase has already ruled
+  non-citable under D-05.
+- **Anna's 17 standalone 2024 City Council `Minutes` PDFs are scanned images with no text layer.**
+  fileIds 2032, 2051, 2052, 2072, 2073, 2098, 2099, 2122, 2142, 2143, 2144, 2156, 2178, 2179, 2207,
+  2208, 2209 (meetings 2024-03-26 → 2024-07-30). `pdftotext` yields 2–24 bytes each and the API's
+  `plainText=true` variant returns an empty body. **Retry path: OCR.** Note that only Toten (and
+  Bryan, in his earlier 2012–2020 service) was in office for all of that window; Walden, Baker and
+  Singh were not.
+- **`annamatters.com/achievements-infrastructure-development` and
+  `annamatters.com/about-anna-city-council`** — Bryan's campaign sub-pages. The domain is dead and
+  the Wayback CDX index holds **only** `http://www.annamatters.com/ 20250329170339` — the root. The
+  sub-pages are unrecoverable. Their titles indicate infrastructure-achievement content, which would
+  be refused as capital-project attribution regardless.
+- **`annatx.new.swagit.com/views/445`** — Anna's council meeting video. **Not watched**; video is not
+  readable by this pass. Because Anna's written minutes are action-only, **the video is now the single
+  highest-value unread Anna source** — the deliberation exists, it is simply not transcribed. 222-08
+  said the same thing and it remains true.
+- **Facebook campaign pages** — Bryan (`facebook.com/nathanbryanplace2`), Singh
+  (`facebook.com/profile.php?id=61572578733626`), Baker (`facebook.com/eldenbaker511`). Facebook is
+  not fetchable from this environment, and social posts are not treated as evidence of a policy
+  position absent a direct citable quote.
+- **`lwvcollin.org` and VOTE411** — not retried. `lwvcollin.org` has returned **HTTP 403** for this
+  entire phase, and `onyourballot.vote411.org` was escalated to a real browser in wave 9 and returns
+  403 with the title "Voter Guide Toolkit: Forbidden Page" — post-election guides are decommissioned,
+  not gated. Anna is far below Ballotpedia's stated "100 largest cities" coverage scope.
+- **`annatexas.gov/Search?searchPhrase=…`** — the city's own site search is rendered client-side and
+  returns no results in the HTML body. Not usable from here.
+
+**⚠ HOMONYM TRAPS REJECTED.** Two, both caught before any evidence was used:
+
+- **`ballotpedia.org/Jessica_Walden`** resolves — HTTP 200, 144,025 bytes, a fully populated page with
+  election tables. **It is not the Anna, Texas council member.** It is *Jessica Walden (Democratic
+  Party), who ran for the **Georgia House of Representatives, District 144**, and lost to Danny Mathis
+  in the general election on November 6, 2018.* Read at face value it would have produced a fabricated
+  set of stances for an Anna council member from a Georgia legislative candidate — and a partisan
+  label, which must never touch a profile. The correct page is the disambiguated
+  `Jessica_Walden_(Anna_City_Council_Place_3,_Texas,_candidate_2026)`.
+- **`ballotpedia.org/Kevin_Kelley`** resolves — HTTP 200, but it is a **disambiguation page** listing
+  *Kevin J. Kelley (Ohio)* and *Kevin Kelley (Maine)*. Neither is the Murphy, Texas member (see the
+  Murphy section).
+
+**⚠ MISATTRIBUTION GUARD.** 222-08 already caught one Anna misattribution — the Bisnow
+*"Destination Anna"* growth quotes belong to **former mayor Nate Pike (March 3, 2021)**, not to any
+current officeholder. That article was **not** reused here. Every quote recorded below was taken from
+a document opened this session in which the speaker is named, and every date was checked against the
+speaker's term. Two Anna dates were checked and held: Bryan's campaign site is dated 2025-03-29,
+inside his 2025 candidacy; Singh's quotes are dated 2025-07-02 and 2025-09-26, after his May 2025
+election.
+
+**`taxes` (`f7e5678d-dadd-4556-a2fc-446e24642ceb`) — researched for all five, NO ROW WRITTEN FOR ANY
+OF THEM**, per the settled operator ruling of 2026-07-25. Findings preserved here so they can be
+placed if the question is ever rewritten with municipal scope:
+
+- **Kevin Toten cast the lone dissenting vote, twice, against Anna's FY2026 property-tax increase.**
+  At the September 9, 2025 regular meeting (minutes read in agenda packet fileId 2859), Herndon moved
+  and Bryan seconded a resolution ratifying a property-tax revenue increase of **$3,146,333, a 16.9%
+  increase over the prior budget** — *"Motion carried 6 - 1. Mayor Pro Tem Toten opposed."* Minutes
+  later, Deputy Mayor Pro Tem Carver moved, and **Baker seconded**, adoption of a tax rate of
+  **$0.525073 per $100, "effectively a 5.88% increase in the tax rate"** — *"Motion carried 6 - 1.
+  Mayor Pro Tem Toten opposed."* **Both dissents are entirely unexplained in the record**, which is an
+  independent second reason no chair could be placed even absent the ruling. The FY2026 budget itself
+  (which the same tax rate funds) was moved by **Baker**, seconded by Herndon, and **carried 7-0** —
+  so Toten voted *for* the budget and *against* the revenue increase and rate that fund it, without
+  stating why.
+- **Nathan Bryan** campaigned on *"Improving the taste and cost of our water is a priority — because
+  every family deserves access to affordable, high-quality essentials."* This is a **utility-rate**
+  position, which the ruling expressly refuses as taxes evidence.
+- **Jessica Walden's** official bio closes on *"fiscal responsibility"*; **Manny Singh's** bio cites a
+  *"data-driven approach to strategy"*. Both are generic and neither is a tax position.
+
+**`healthcare` (`e8dad4a8-…`)** — searched for all five and blank for all five, as expected: all five
+of its chairs describe national healthcare policy, which no Anna council member holds a position on
+by role. No health-adjacent remark was stretched into a chair.
+
+---
+
+### Kevin Toten — Council Member Place 1 — `38ba3e31-8b1d-4038-9c5a-e5b16c06aa8d`
+
+Sourced: **none. All 11 topics blank.** Anna's second-longest-serving member — first elected in a
+2018 runoff, re-elected twice, currently in his third term (2024–2027) and Mayor Pro Tem from July
+2025. Eight years on the dais and **no Ballotpedia page, no campaign website, no candidate
+questionnaire and no policy interview exist for him anywhere this session could reach.**
+
+**This blank CORROBORATES the independent found-nothing pass of 2026-05-12** that already left 8
+`inform.politician_context` notes on this person. That pass recorded checking `annatexas.gov` and
+campaign materials. This pass went where it did not: **the council minutes** (now readable, see
+above), **The Anna Progress**, and **Ballotpedia with a working User-Agent**. All three were
+productive as *sources* — Toten appears in all of them — and none yields a chair. The prior pass's
+conclusion was correct and is now materially better supported.
+
+- **housing** — no position found. Nothing on public housing, rent caps, inclusionary requirements,
+  subsidy, first-time-buyer assistance, permit streamlining, or leaving prices to the market.
+- **residential-zoning** — no position found. He moved approval of the Top Fun Ranch / Nevil Stone
+  **disannexation** on June 23, 2026 (carried 5-2, Baker and Singh abstaining) — a boundary action
+  removing 34 acres from the city limits, not a housing-density proposition, and the minutes record
+  no reasoning. He also seconded a routine auto-repair Specific Use Permit the same evening. Neither
+  discriminates between the five density chairs.
+- **growth-and-development** — no position found. His only recorded initiative in the entire minutes
+  corpus is a request to see the 2022 community-survey results alongside the 2025 ones:
+  *"I do have one ask, before we receive results for this year can we, can the council, see some new
+  and I-myself would like a reminder of the results from 2022 so we can kind of see the pattern"*
+  (The Anna Progress, June 11, 2025). That is a data request, not a growth-pace position.
+- **economic-development** — no position found. He is recorded on no incentive-policy statement.
+- **public-safety-approach** — no position found. **REFUSED — adjacency and volunteering.** His
+  official bio states he *"organizes the annual First Responders Feast for Thanksgiving and Christmas
+  and initiated the 'Light the Town Blue' as a sign of support for our local law enforcement."*
+  Organising a meal and a lighting campaign is **volunteering and symbolic support**, both named
+  refusal classes; neither says anything about police funding levels, crisis-response teams or
+  co-responders, which is what all five chairs on this scale are about. His term also spans Anna's
+  FY2026 police-station and officer expansion, but he stated no position on it and dissented only on
+  the revenue side, unexplained.
+- **transportation-priorities** — no position found. His stated route into public service, per his
+  bio, was *"experiencing waterline issues in his neighborhood and working with the city to resolve
+  the problems"* — a utility matter, not a transportation mode tradeoff.
+- **homelessness** — no position found. **Anna's 119-agenda corpus contains zero items on public
+  camping, encampments or homelessness.** Structural: the subject has not come before this council.
+- **local-immigration** — no position found. **Zero immigration or ICE-related items in the entire
+  agenda corpus.** Structural.
+- **civil-rights** — no position found. Nothing on equity requirements, civil-rights enforcement or
+  race-conscious programs.
+- **taxes** — **researched; no row written by operator ruling.** Two lone dissents, both unexplained.
+  Full detail in the `taxes` block above.
+- **healthcare** — no position found. All five chairs are national policy.
+
+### Nathan Bryan — Council Member Place 2 — `94d3e41c-60b6-4803-b937-1877aeae84df`
+
+Sourced: **none. All 11 topics blank.** Anna's longest-serving current member — eight years from 2012
+to 2020, then a comeback in the June 7, 2025 runoff (64% to Allison Inesta's 36%), term ending May
+2028. He is the **only one of the five with a campaign website**, and it was recovered from the
+Internet Archive and read in full.
+
+**This blank CORROBORATES the 2026-05-12 found-nothing pass** (8 prior context notes). That pass
+recorded checking campaign materials; `annamatters.com` has since gone dark, so this pass reached it
+by a route the earlier one would not have needed — and **reaches the same conclusion from the fuller
+document.**
+
+His campaign site's complete policy content, quoted verbatim from the 2025-03-29 capture, and the
+refusal for each:
+
+- *"We must also continue to invest in smart growth, ensuring Anna remains a great place to live while
+  attracting businesses that create jobs and opportunities."* — **REFUSED for
+  `growth-and-development`**: "smart growth" is the generically-evaluative class this phase refuses
+  by rule; it commits to no pace, no capacity gate, no permitting posture. **REFUSED for
+  `economic-development`**: "attracting businesses that create jobs" names no mechanism — it is
+  equally compatible with chair 1 (no incentives at all) and chair 5 (maximum incentives), so it
+  discriminates nothing.
+- *"From building critical infrastructure like Fire Station 1 and City Hall to securing the bond for
+  our library, I've worked tirelessly to ensure Anna's progress."* — **REFUSED: capital-project
+  attribution**, a named defect class. Building a fire station is not a public-safety-funding
+  position.
+- *"Improving the taste and cost of our water is a priority."* — **REFUSED: utility rate**, expressly
+  excluded from `taxes` by the operator ruling, and on no other axis.
+- *"Anna's heart lies in its people… I believe in preserving the rich history that defines us while
+  creating new opportunities for connection and celebration."* — **REFUSED: generic evaluative
+  language.** Note in particular that "preserving the rich history that defines us" is a **character
+  remark and must not be read across into `residential-zoning`**, whose every chair is a housing-
+  density proposition. This is the exact cross-topic inference this phase has already had to refuse
+  elsewhere.
+- *"I am committed to bringing our council back together again, as a unified team"* — council
+  comity, not a compass axis.
+- His one attributed quote in the local press is a nomination speech: *"(I) Think it's about time.
+  I've known the guy a long time and he's been up here and served well"* (The Anna Progress,
+  2025-07-02, nominating Toten for Mayor Pro Tem). Not a policy statement.
+
+- **housing** — no position found. **residential-zoning** — no position found; see the character-remark
+  refusal above. **growth-and-development** — refused, see above. **economic-development** — refused,
+  see above. **public-safety-approach** — no position found; Fire Station 1 is capital-project
+  attribution. **transportation-priorities** — no position found. **homelessness** — no position found;
+  no such item exists in Anna's agenda corpus. **local-immigration** — no position found; no such item
+  exists. **civil-rights** — no position found. **taxes** — researched, no row written; water rates are
+  refused as taxes evidence. **healthcare** — no position found.
+
+### Jessica Walden — Council Member Place 3 — `c84d87b3-aa64-4f73-aed8-2eb5f113a016`
+
+Sourced: **none. All 11 topics blank.** Newly elected on May 2, 2026, defeating Mike Olivarez
+271 votes to 112 (70.76%), for a term running to 2030. **Sworn in roughly eleven weeks before this
+research** — she has sat for at most four regular meetings, in none of which the minutes attribute a
+statement to her. Her Ballotpedia page exists but she completed no survey, no campaign website was
+found, and her only public text is her official bio.
+
+- **residential-zoning** — no position found. **REFUSED — adjacency, and it is the sharpest adjacency
+  temptation in this plan.** Her bio states she *"served as Chair of the Planning and Zoning
+  Commission, where she worked with residents, city staff, and fellow commissioners on issues related
+  to growth, development, and long-range planning."* **Chairing P&Z is board service — a named
+  refusal class — and it is not a position.** A P&Z chair may hold any of the five density chairs;
+  the office says nothing about which. This is precisely the adjacency defect the 222-01 integrity
+  audit deleted from other Collin records, and it is refused here deliberately and on the record.
+- **growth-and-development** — no position found. Same refusal: P&Z service is adjacency. Her bio's
+  *"thoughtful planning, fiscal responsibility, and community-focused leadership"* and *"responsible
+  community development"* are generically evaluative and name no pace.
+- **economic-development** — no position found. **REFUSED — profession.** Her construction-industry
+  career and her six years working for the City of Plano are occupational history, not positions.
+- **public-safety-approach** — no position found. Her bio's *"she is invested in ensuring Anna remains
+  a safe, welcoming, and thriving place for families"* is the generic-priority class that locates no
+  chair.
+- **housing** — no position found. **transportation-priorities** — no position found; her bio's
+  reference to "infrastructure" experience is professional background. **homelessness** — no position
+  found; no such item in the agenda corpus. **local-immigration** — no position found; no such item.
+  **civil-rights** — no position found; **no identity inference was made.** **taxes** — researched, no
+  row written; "fiscal responsibility" in a bio is not a tax position. **healthcare** — no position
+  found.
+
+### Elden Baker — Council Member Place 5 — `3842838e-2015-4136-95d2-97f4f20366b1`
+
+Sourced: **none. All 11 topics blank.** First elected May 2023, re-elected May 2, 2026 over Susan
+Jones (224 to 161, 58.18%) for a term to 2030, and Mayor Pro Tem as of 2026. Ballotpedia page exists;
+**survey not completed, and Ballotpedia explicitly records "did not receive biographical information
+for this candidate."** No campaign website was found for him — Ballotpedia lists only a Facebook page
+and a LinkedIn profile.
+
+- **public-safety-approach** — no position found. He **seconded** the September 9, 2025 motion
+  adopting the FY2026 tax rate, and **moved** adoption of the FY2026 budget itself, which funds Anna's
+  new police station and additional officers. **REFUSED.** Moving a whole-city annual appropriation is
+  not a position on the public-safety funding scale — the budget carries every department at once,
+  the minutes record no reasoning of his, and reading a police preference out of a 7-0 omnibus budget
+  vote would be exactly the capital-project-attribution and unexplained-vote inference this plan
+  forbids.
+- **residential-zoning** — no position found. He **abstained** (with Singh) on the June 23, 2026
+  disannexation. **An abstention is not a position, and the minutes give no reason for it.**
+- **civil-rights** — no position found. **REFUSED — adjacency and profession.** His bio's *"teaching
+  pastor and a founding director of the North Texas Grace Bible Fellowship"* and his service on the
+  Collin County Historical Commission are affiliation and board service. **No identity or affiliation
+  inference was made on this or any other axis.**
+- **growth-and-development** — no position found. **REFUSED — adjacency.** Parks Advisory Board
+  service and Anna Neighbor Academy graduation are participation, not positions; academy attendance is
+  a named refusal class.
+- **housing** — no position found. **economic-development** — no position found. **transportation-
+  priorities** — no position found; he is a "noted railroad historian" and "the Train Guy at the Anna
+  Depot," which is a hobby and **must not** be read as a rail-transit position — the temptation is
+  noted and refused explicitly. **homelessness** — no position found; no such item in the corpus.
+  **local-immigration** — no position found; no such item. **taxes** — researched, no row written; he
+  seconded the rate increase and moved the budget, both unexplained. **healthcare** — no position
+  found.
+
+### Manny Singh — Council Member Place 6 — `f920ca1a-8263-4662-aa21-1f5964dfa61d`
+
+Sourced: **none. All 11 topics blank.** Elected May 3, 2025 over Randy Atchley (741 to 255, 74%),
+term ending May 2028. Ballotpedia page exists; **survey not completed.** He is the most-quoted of the
+five in local press, and all of it is off-axis.
+
+**This blank CORROBORATES the 2026-05-12 found-nothing pass** (8 prior context notes). That pass
+checked `annatexas.gov` and campaign materials; this pass added the council minutes and The Anna
+Progress, both of which do contain his words — and neither yields a chair.
+
+His attributed quotes, and the refusal for each:
+
+- *"The future of Anna is bright and we're just getting started. Our doors are open, the vision is
+  clear, and our commitment to responsible, quality growth has never been stronger. Tonight I ask
+  that we continue to build a future that works for all of Anna together."* (The Anna Progress,
+  2025-07-02) — **REFUSED for `growth-and-development`: "responsible, quality growth" is verbatim the
+  generically-evaluative class this phase refuses by rule.** It is also a comity statement delivered
+  during a city-manager transition, not a policy proposal.
+- *"Can we add some questions about communication, how can we communicate better to the community?…
+  town halls, website, some type of communication… I think alongside with infrastructure there's a
+  opportunity there."* and *"For the data — can we take a look at the last three data sets and can
+  they provide variances…"* (The Anna Progress, 2025-06-11) — civic-communication and survey-
+  methodology requests. Off-axis entirely.
+- His June 23, 2026 work-session presentation *"on the possible creation of an Urban Forest 2050
+  Master Plan"* — urban forestry is not one of the 11 topics. Noted because it is the only
+  member-initiated policy item by an in-scope Anna member in the whole corpus.
+- Named as the council source for the Rosamond Crossing / Kroger tenant list (The Anna Progress,
+  2025-09-26) — relaying a project's tenant roster is not an incentive-policy position.
+
+- **economic-development** — no position found. **REFUSED — adjacency, explicitly.** His bio states he
+  *"first served the City of Anna as a board member of the Economic Development Corporation, where he
+  was elected Vice President by his peers to help steer the city's economic growth."* **EDC service is
+  a named refusal class in this phase.** Serving on an EDC board says nothing about where on the
+  incentives scale a person sits — chairs 1 and 5 are both held by people who serve on EDCs. No chair.
+- **growth-and-development** — refused, see the quote above.
+- **residential-zoning** — no position found. He **moved** approval of a single auto-repair Specific
+  Use Permit on June 23, 2026 (carried 6-1, Mayor Cain opposed) and **abstained** on the
+  disannexation the same night. A commercial SUP is not a residential-density proposition and an
+  abstention is not a position.
+- **housing** — no position found. **public-safety-approach** — no position found. **transportation-
+  priorities** — no position found. **homelessness** — no position found; no such item in the corpus.
+  **local-immigration** — no position found; no such item. **civil-rights** — no position found; **no
+  identity inference was made.** **taxes** — researched, no row written; his bio's "data-driven
+  approach" is not a tax position. **healthcare** — no position found.
+
