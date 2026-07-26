@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 347
+## Count: 358
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -4571,5 +4571,294 @@ is the only Lavon name in plan 222-09's scope and she is accounted for — not i
 both. Lavon's council seats are out of this plan's scope and belong to 222-14/222-15/222-16/222-17.
 **Lavon therefore does NOT flip to `hasContext: true` in `src/lib/coverage.js` from this plan**
 (RESEARCH.md Pitfall 5) — it remains at zero stances.
+
+---
+
+## City of Lowry Crossing (4844308) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor Pat Kelly** (`6f199ec9-ba4a-4c0d-b6e3-bae97e0da847`), full name
+**Patrick J. Kelly II** per his own signature on the minutes, the sole Lowry Crossing officeholder in
+plan 222-09's scope, against **all 11** canonical compass topics (11 pairs). Verified at
+`stance_count = 0` against production before any research began. **Scope: Lowry Crossing — Mayor only.**
+Lowry Crossing's eight council seats (Scott Pitchure and Chris Madrid, Ward 1; Tammy Hodges as Mayor Pro
+Tem and Agur Rios, Ward 2; Eusebio "Joe" Trujillo III and Cindy Cash, Ward 3; Muhanad "G" Hijazen and
+Ollie Simpson, Ward 4) are covered by plans **222-14/222-15/222-16/222-17** and are deliberately absent
+from this section.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** **This zero is SETTLED, and Lowry Crossing
+produced the single strongest near-miss in the entire plan — a document containing an explicit,
+sustained, on-topic argument for creating a municipal police department — which was refused because
+the document's own embedded metadata names a STAFF author, not the Mayor.** The refusal is argued in
+full below; it is the most consequential judgement call in this plan and the operator may wish to review
+it.
+
+**⚠ THE DECISIVE TECHNIQUE — PDF AUTHOR METADATA, reusing 222-08's Parker "Lindy Pilgrim" method.**
+The City of Lowry Crossing's **March 2026 "City of Lowry Crossing News"** newsletter carries **no
+byline, no "Mayor's Message" heading, and no name anywhere in its two pages**, yet is written in a
+confident first-person-plural advocacy voice. Rather than guess, its embedded metadata was extracted
+directly from the PDF byte stream. It reads:
+
+> `/Author(Janis Cable)` … `<dc:creator><rdf:Seq><rdf:li>Janis Cable</rdf:li></rdf:Seq></dc:creator>`
+> … `<pdf:Producer>Microsoft Publisher 2019</pdf:Producer>` … `/CreationDate(D:20260326102549-05'00')`
+
+**Janis Cable is the City Secretary** — she signs the June 9, 2026 council minutes in that capacity.
+The newsletter is therefore a **staff-authored city communication**, and its content cannot be
+attributed to Mayor Kelly. Two independent textual confirmations agree: the newsletter tells residents
+that ***"Council has to determine which are an immediate need and which can hold off a year"*** and
+closes ***"please call city hall for clarification, or contact your council representatives"*** — it
+speaks **as the city, to residents, about the Council**, in the third person. **Recommendation for the
+remaining plans: extract `/Author` and `dc:creator` from every unsigned municipal PDF before deciding
+attribution.** It is cheap and it has now been decisive twice in this phase.
+
+**⚠ THE STRUCTURAL FINDING FOR LOWRY CROSSING.** In the **June 9, 2026** minutes read in full, all six
+motions were **made and seconded by councilmembers** (Madrid, Trujillo, Hodges, Rios, Pitchure). Kelly
+is in the roll call and speaks several times, but never moves or seconds, and **Lowry Crossing records
+outcomes without individual names even on divided votes** — *"Motion passed 6-1-1"* and *"Motion passed
+5-3"* appear with **no indication of who was on which side**. That is a notable failure mode for the
+council plans too: Lowry Crossing has genuinely contested votes and *none of them is attributable to a
+person.* Only the mover and seconder are.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the Lowry Crossing City Council minutes of June 9, 2026, downloaded as a PDF
+  (`https://lowrycrossingtexas.org/CC%20Minutes%20%206%209%2026.pdf`) and read in full (2 pages, bearing
+  the "City of Lowry Crossing — Discover Our Country Charm" logo, "Approve and attest this 23rd day of
+  June, 2026", signed **Patrick J. Kelly II, Mayor** and **Janis Cable, City Secretary**).** Business:
+  consent items and May financials; a resident's flooding complaint; a Park Board update; a **fire code**
+  review with **Collin County Fire Marshal Jason Browning** comparing the 2021 and 2024 editions, COG
+  amendments and Appendix D, **tabled**; an RFP for concrete repairs; **Milligan Cemetery** signage bids
+  ($3,200 approved over $4,875, *"Motion passed 6-1-1"*); ditches and culverts; an **overnight closure of
+  Bridgefarmer** for an open-cut water line (*"Motion passed 5-3"*); **Resolution 160** on **Improvement
+  Area #2 of the Lowry Trails Public Improvement District** assessment plan, noticing a July 14, 2026
+  hearing; the **final plat for Lowry Trails Phase III**; **road erosion on Sunridge Lane**; municipal
+  judge interview panel selection; a **2Q26 donation and stipend to the Lowry Crossing Volunteer Fire
+  Department**; an **amended budget "ensuring the $100K for PD was on it"**; and a tabled master fee
+  schedule.
+- **PRIMARY DOCUMENT — the City of Lowry Crossing News, March 2026, downloaded
+  (`https://lowrycrossingtexas.org/March%202026.pdf`) and read in full (2 pages), with its author
+  metadata extracted.** Content: a 25-year **property-tax rate history** (2025: **$0.20**, up from
+  $0.147 in 2024, against $0.22978 held flat 2004–2016); 2025 income and expense charts; FY2026 estimates
+  of **$800K in building permits and $600K in inspections**; the note that the city nets *"about $1,000
+  on a new home build"* and receives **$2,500/lot** in development-agreement funds, including
+  **$1,350,000 from Meritage Homes for Simpson Crossing** and **$417,500 from Lowry Trails Phase I**; a
+  **$500,000 SIB loan** not yet drawn; 17 years of sales-tax revenue and 13 years of the voter-approved
+  **¼-cent road-maintenance sales tax** (**$553,652.91** cumulative, which *"paid for half of the
+  Bridgefarmer Road Phase I rehab last year"*); a **$2.5 million** culvert-upgrade bid; the arrival of
+  **TXB** and Highway 380 frontage businesses gaining sanitary sewer; and a sustained argument for
+  **exploring a municipal police department** — quoted and analysed in the `public-safety-approach`
+  bullet.
+- **`https://lowrycrossingtexas.org/operations/city_council.php`** — the official Council page, fetched.
+  Confirms **Mayor Pat Kelly** and all eight ward councilmembers with titles and emails, and that
+  meetings are the **second and fourth Tuesday** monthly. **No biography, no statement of priorities, and
+  no policy position for any member.**
+- **`https://lowrycrossingtexas.org/operations/meeting_minutes/index.php`** — the archive index. It
+  exposes **77 City Council**, **13 Planning & Zoning**, **21 Board of Adjustment** and **32 Park
+  Advisory Board** minutes documents reaching back to **October 2023**, with the note that *"minutes will
+  be uploaded after they have been approved on the following meeting."* The June 9, 2026 **work session**
+  minutes were also downloaded.
+- **`https://lowrycrossingtexas.org/community/newsletters.php`** — the newsletter index, enumerated via
+  Playwright. Nine issues: **March 2026, January 2026, November 2025**, and six 2024 issues including a
+  *Special Edition – Spring Storms*.
+- **PRIMARY DOCUMENT — Ballotpedia's candidate page for this person, recovered with the browser-UA
+  technique and read in full:
+  `https://ballotpedia.org/Pat_Kelly_(Mayor_of_Lowry_Crossing,_Texas,_candidate_2025)`.** It confirms
+  **"Pat Kelly … ran for election to the Mayor of Lowry Crossing in Texas. Kelly was on the ballot in the
+  general election on November 4, 2025"**, lists him as **Nonpartisan**, and records the same four
+  affirmative negatives that closed Lavon out: ***"Ballotpedia did not receive biographical information
+  for this candidate"***, ***"Ballotpedia did not identify endorsements for Kelly in this election"***,
+  ***"Pat Kelly did not complete Ballotpedia's 2025 Candidate Connection survey"***, and an **empty
+  Campaign themes section**.
+- **`https://ballotpedia.org/Lowry_Crossing,_Texas`** — fetched and read. Useful as a **positive
+  confirmation of scope exclusion**: the page states that Ballotpedia covers *"mayoral, city council, and
+  district attorney election coverage in state capitals outside of the 100 largest cities"* and that
+  **"This page is outside of that"** scope. So Ballotpedia's silence on Lowry Crossing policy is a
+  documented editorial boundary, not a gap this session failed to cross.
+- **`https://directory.tml.org/profile/city/1516`** — the Texas Municipal League entry confirming
+  **Patrick J. Kelly** in the Lowry Crossing roster. Contact information only, **no policy positions**.
+- Targeted press searches for `"Lowry Crossing" Texas mayor "Pat Kelly" OR "Patrick Kelly" growth /
+  water / development / statement`. **No news article, interview, State-of-the-City address, or
+  questionnaire naming this person was found.**
+
+**⚠ HOMONYM GATE — "PAT KELLY" IS THE WORST NAME IN THIS PLAN AND TWO TEXAS TRAPS WERE HIT AND
+REJECTED.** Both are Texan, both are municipal, and one has a Ballotpedia page that a name-only search
+returns first:
+- **`ballotpedia.org/Pat_Kelly_(Texas)` is a LUBBOCK CITY COUNCIL candidate**, not this person. Its
+  category list reads *"2018 challenger", "2022 challenger", "2026 challenger", "Lubbock City Council
+  candidate, 2018 / 2022 / 2026", "2018 general election (defeated)", "2022 general election
+  (defeated)", "2026 general election (defeated)"*, and its body opens *"Pat Kelly ran for election to
+  the Lubbock City Council…"* with a **last election of May 2, 2026**. **This is the single most
+  dangerous trap encountered in this plan**: it is a Ballotpedia page, for a Texas municipal candidate,
+  with the exact name, and the disambiguator `(Texas)` actively *invites* the mistake. **Rejected — and
+  the correct page, `Pat_Kelly_(Mayor_of_Lowry_Crossing,_Texas,_candidate_2025)`, was located and used
+  instead.**
+- **Councilmember Patrick Kelly of the City of Lewisville, Texas** (`cityoflewisville.com`) — a sitting
+  councilmember in a different Texas city with a published bio page. **Rejected.**
+- Also surfaced and rejected: **Kelly Downard** (Louisville, Kentucky).
+Every source relied on above is pinned to **Lowry Crossing, Collin County, Texas** by the
+`lowrycrossingtexas.org` domain, the "Discover Our Country Charm" city logo, City Secretary **Janis
+Cable**'s attestation, the Ballotpedia page title **"Mayor of Lowry Crossing, Texas"**, or the TML
+directory's own city field.
+
+**⚠ ROSTER NOTE: no discrepancy.** Kelly is named Mayor by the city's own council page, the TML
+directory, Ballotpedia's 2025 election page, and his own signature on the June 9, 2026 minutes approved
+June 23, 2026. The DB row is correct and current.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **The Lowry Crossing YouTube channel (`https://www.youtube.com/channel/UCkCSmmtBqLKr769AMG1sxvg`) was
+  NOT watched.** Because Lowry Crossing's minutes summarise rather than transcribe, and because its
+  divided votes are recorded without names, **video is the only route to an attributable Kelly position**
+  and is the highest-value unread source for this officeholder.
+- **8 of the 9 newsletters were not opened** (January 2026, November 2025 and the six 2024 issues).
+  March 2026 was chosen as the most recent. **This is the most worthwhile remaining read in this
+  section** — but note that if the other issues share the March issue's authorship, they are staff
+  documents too, and the `/Author` check should be run on each before any content is used.
+- **76 of the 77 available City Council minutes were not read**, nor any Planning & Zoning, Board of
+  Adjustment or Park Advisory Board minutes. June 9, 2026 was chosen as the most recent approved regular
+  meeting.
+- **A soft-404 trap worth recording:** Lowry Crossing runs **Revize**, and the minutes-index page renders
+  its document links as **relative hrefs that resolve against the site root, not the
+  `/operations/meeting_minutes/` directory**. Constructing
+  `…/operations/meeting_minutes/CC%20Minutes%20%206%209%2026.pdf` returns **HTTP 404**; the working URL
+  is `https://lowrycrossingtexas.org/CC%20Minutes%20%206%209%2026.pdf?t=…`. The href list must be read
+  from a rendered page (Playwright), not reconstructed. Note also the site's own **typo'd filenames**
+  (*"Newletter"* for several issues).
+- **No VOTE411 or League of Women Voters of Collin County questionnaire** for this seat.
+  `lwvcollin.org` has returned **HTTP 403** all phase; VOTE411 was not attempted per this plan's
+  standing instruction. **No Community Impact, Star Local Media, Princeton Herald, Herald-Banner or
+  Farmersville Times article naming Kelly was located. No campaign site.** A city **Facebook** page
+  exists (`facebook.com/p/City-of-Lowry-Crossing-100064760648626/`) and was not fetched — Facebook is not
+  reachable from this session, and social posts are not treated as evidence absent a direct citable
+  quote.
+
+### Pat Kelly — Mayor — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847`
+
+Sourced: **none.** All 11 topics blank. Mayor of Lowry Crossing, signing as **Patrick J. Kelly II**; on
+the ballot in the **November 4, 2025** general election for that office.
+
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **public-safety-approach** —
+  **NO CHAIR, and this is the strongest near-miss in plan 222-09. It was refused on attribution alone,
+  and the operator may wish to review the call.** The March 2026 city newsletter contains a sustained,
+  explicit, on-topic argument for **standing up a municipal police department where none exists**:
+  ***"Let's talk about exploring a police department. It takes months and possibly years to go through
+  the application process and get something in place. You have to list it on your budget as part of the
+  application process… It could take a couple years, but if we don't start now—it would take that amount
+  of time from when we really need to have it in place."*** It goes on: ***"Other than the obvious
+  reasons that a police presence would help with speeding, running stop signs, and illegal passing — we
+  would also be able to enforce our ordinances with keeping truck traffic off Bridgefarmer Road, noise,
+  and response time for 9-1-1 calls would be much quicker"***, and ***"Businesses deserve and will want
+  the security of a local police presence. The sales tax from these new businesses will support the cost
+  of a police department."*** **On the merits that is a clean `public-safety-approach` chair 4** —
+  increase police staffing and capability to improve response times and deter crime — with a named
+  funding mechanism and dated. **It is nonetheless a BLANK for this person**, because the compass
+  attributes positions to *people*: (i) the newsletter is **unbylined**, with no "Mayor's Message"
+  heading and no name in either page; (ii) its **embedded PDF metadata names `Janis Cable`, the City
+  Secretary**, as author (`/Author` and `dc:creator`), i.e. **staff**; (iii) the text itself speaks *about*
+  the Council in the third person — *"Council has to determine which are an immediate need"* — and
+  directs readers to *"contact your council representatives"*; and (iv) nothing in the June 9, 2026
+  minutes, the council page, Ballotpedia, or any press attributes this argument to Kelly. **Attributing
+  an unsigned staff-authored city newsletter to the presiding officer is exactly the pattern that
+  produced this phase's deleted rows.** Also refused on this axis: the amended budget *"ensuring the
+  $100K for PD was on it"* — that phrasing is **Councilmember Trujillo's motion language**, the vote was
+  unanimous with no names, Kelly neither moved nor seconded, and a budget line without a stated
+  policing-model rationale cannot separate chair 3 from chair 4; the **2Q26 donation and stipend to the
+  Lowry Crossing Volunteer Fire Department** (Trujillo/Hodges and Trujillo/Pitchure, both unanimous,
+  and fire-service funding is not the policing axis); Kelly's **membership on the municipal-judge
+  interview panel**, which is an appointment process, not a position; and the newsletter's account of
+  drinking, littering and late-night cars at **Wilson Chapel Cemetery** and the park, which is
+  **relaying observed nuisance**, explicitly refused. **Retry path if the operator wants this chair
+  resurrected: find a signed or attributed version of the same argument — a council minute in which
+  Kelly makes it, a newsletter issue with a Mayor's byline, or the council video.**
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **economic-development** — no
+  position found on incentives, tax abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. The newsletter's business-growth passages — *"With the entry of TXB and other highway
+  frontage properties having access to sanitary sewer, business development is eminent"*, *"we will have
+  a variety of new business growth to give our residents a place to shop, and work, keeping our hard
+  earned monies in our own community"*, *"Economic development will sustain these needs through
+  additional sales tax revenues"* — are refused **twice over**: they are **staff-authored** (see above),
+  and even taken at face value they describe **sewer availability attracting business organically** with
+  **no incentive instrument named at all**, so they could not separate chair 1 (no incentives; invest in
+  infrastructure to attract business organically) from chair 4 (compete with significant abatements).
+  The city's **EDC** and **MDD** pages exist on the site and were not used — board and district
+  existence is adjacency.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **transportation-priorities** —
+  no statement found setting any transportation mode against another. Kelly speaks on transportation
+  matters more than any other topic, and **every instance is maintenance or drainage**, which rule 4 bars
+  from standing as a mode tradeoff: on ditches and culverts he *"stated rain and wet soil make it
+  prohibitive"* and that the city needs to *"follow guidelines and go to the next step"*; on **Sunridge
+  Lane** road erosion, *"Mayor Kelly went to the area and stated erosion caused by blockage. Send Code
+  Enforcement and notify landowners to clear both sides."* Also refused: the **Bridgefarmer** overnight
+  closure for a water-line open cut (Madrid/Rios, *"Motion passed 5-3"* with no names, and a construction
+  traffic-control decision in any case); the concrete-repair RFP; the **¼-cent road-maintenance sales
+  tax** and the **$2.5 million culvert bid**, which are voter-approved and staff-reported respectively;
+  and truck traffic on Bridgefarmer. Nothing on transit, bike lanes, sidewalks, parking requirements, or
+  road capacity as a stated priority.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **growth-and-development** — no
+  chair-locating position on growth pace, annexation, approval speed, permitting fees, growth caps, or
+  infrastructure-ahead-of-growth sequencing. Refused: the **development agreements** under which the city
+  permits and inspects in its **ETJ** and receives **$2,500/lot** (including $1,350,000 from **Meritage
+  Homes** for Simpson Crossing and $417,500 from **Lowry Trails Phase I**) — described in the
+  staff-authored newsletter as a **revenue mechanism**, with the explicit disclaimer *"What we can't
+  control is when and how many homes are built during a given period"*, which is the opposite of a
+  pace-management position; **Resolution 160** on the Lowry Trails PID Improvement Area #2 assessment
+  plan (Trujillo/Madrid, unanimous); and the **fire code** debate, in which Kelly's only contribution is
+  a **question** — *"Pat asked about 2024 vs 2021 on sprinkling"* — answered by the County Fire Marshal,
+  with the item **tabled**. Asking which code edition applies is not a growth position, and the
+  companion **6,000 sq ft sprinkler-rule exclusion** question was **Councilmember Joe Trujillo's**, not
+  his.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **residential-zoning** — no
+  position found on housing density or neighbourhood character. The **final plat for Lowry Trails
+  Phase III** was moved by **Trujillo**, seconded by **Rios**, unanimous with no names — a plat approval
+  with no density-policy content and no Kelly participation. No rezoning, upzoning, density or
+  neighbourhood-character item appears in the record read. **Lowry Crossing's own low-density,
+  large-lot, "Country Charm" character was expressly NOT used as a default** — an existing city posture
+  is not the individual's position.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **housing** — no position found
+  on what role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy for affordable projects, first-time-buyer assistance, permit
+  streamlining as an affordability instrument, or leaving prices to the market. The **Lowry Trails
+  Public Improvement District** assessment machinery is infrastructure finance, not affordability policy.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **homelessness** — no statement
+  or vote found on people sleeping or camping in public spaces. Lowry Crossing has no camping ordinance,
+  encampment policy or shelter decision in the record read. The newsletter's account of **late-night cars
+  and littering at Wilson Chapel Cemetery and the park** was specifically considered and **refused**: it
+  describes nuisance and trespass, names no one sleeping or camping, proposes no enforcement or shelter
+  response, and is staff-authored. Nothing was inferred.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **local-immigration** — no
+  statement found on any police relationship to federal immigration enforcement, ICE detainers, or
+  information sharing. **Lowry Crossing has no police department at all** in the record read — which is
+  precisely what the newsletter argues about — so the topic's premise does not yet apply, and no view was
+  inferred. **Texas SB 4 is state law, not his position**, and was not used as a default.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **civil-rights** — no on-topic
+  position found on racial or social inequality. Nothing in the minutes read, the newsletter, the
+  official site, Ballotpedia's page, or any press engages that axis. **No inference was drawn from any
+  identity, demographic, religious or affiliation characteristic** of Kelly or of any colleague — noted
+  explicitly because this council's roster includes several distinctive names and that inference class is
+  forbidden and was the basis of deletions from two Richardson records on 2026-07-25. Ballotpedia records
+  him as **Nonpartisan**, and party, endorsement and donor information are never used for inference.
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **taxes** — **researched, no
+  chair written per the settled 2026-07-25 operator ruling; and separately, everything found fails
+  independently of the ruling.** Lowry Crossing publishes the most tax material of any town in this plan
+  and **none of it is attributable to Kelly.** The March 2026 newsletter carries a 25-year property-tax
+  rate table (**$0.20 in 2025**, up from **$0.147 in 2024**) and states that ***"The temporary increase
+  in property tax will be offset the increase in sales tax as a means to establishing and fulfilling the
+  needs of the citizens, road improvements and culvert repairs"*** — which is the closest thing to a
+  tax-and-spend argument found anywhere in this plan, and which fails **three** ways: it is
+  **staff-authored** (metadata: Janis Cable); it is a **rate-and-offset** argument about a uniform
+  ad-valorem levy and a sales tax, which reaches **no chair in either direction** under the settled
+  ruling; and it is materially the **"more services at no additional cost" promise** already refused in
+  222-08 for Kuykendall. Also refused: the **amended budget** (Trujillo's motion, unanimous, no names);
+  the **tabled master fee schedule**, and **fee ratemaking is refused as taxes evidence** by rule 1; the
+  voter-approved **¼-cent road sales tax** (a 2012 electorate decision, not his); and the undrawn
+  **$500,000 SIB loan**. **No taxes row was written.**
+- Pat Kelly — Lowry Crossing — `6f199ec9-ba4a-4c0d-b6e3-bae97e0da847` — **healthcare** — no statement
+  found on healthcare access. Expected: all five chairs describe **national** healthcare policy, which
+  the mayor of a Collin County town holds no position on by role. No health-adjacent remark was stretched
+  into a chair.
+
+**Lowry Crossing reconcile:** Pat Kelly appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. He is the only Lowry Crossing name in plan 222-09's scope and he is accounted for — not in neither
+bucket, not in both. Lowry Crossing's council seats are out of this plan's scope and belong to
+222-14/222-15/222-16/222-17. **Lowry Crossing therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
 
 ---
