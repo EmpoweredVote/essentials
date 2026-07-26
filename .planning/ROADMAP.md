@@ -705,7 +705,7 @@ Plans:
 
 **Wave 10** *(blocked on Wave 9 completion)*
 
-- [ ] 222-10-PLAN.md — Councils: Anna + Murphy
+- [x] 222-10-PLAN.md — Councils: Anna + Murphy
 
 **Wave 11** *(blocked on Wave 10 completion)*
 
