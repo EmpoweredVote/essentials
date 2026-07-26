@@ -42,14 +42,15 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 248
+## Count: 259
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
 + 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
-+ 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview).
-222-08 through 222-17 append their own per-government sections below as they execute.
++ 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview)
++ 11 by 222-08 so far (Anna).
+222-09 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -2235,5 +2236,216 @@ for none. All five Longview worklist names are accounted for — no name in neit
 (person, topic) pair in both. Until 1423 is applied, Conley and Nustad are honestly in bucket 2 for
 all 11 topics. Mayor Ishihara and District 5's Jody Berryhill are deliberately absent from this
 register: they are partially stanced and out of scope per D-07, not unsearched.
+
+---
+
+## City of Anna (4803300) — 222-08
+
+**Plan 222-08 preamble — scope, stated once for all five of this plan's cities.** 222-08 is the
+**D-02 mayors sweep, part A**. It researches **the mayor only** of five Collin cities — Anna,
+Fairview, Farmersville, Parker and Lucas. The **council members of all five cities are covered by
+plans 222-11, 222-12 and 222-13** and are deliberately absent from these five sections; their absence
+is a scope boundary, not an omission.
+
+**⚠ Murphy, Princeton and Melissa were cut from this plan's scope, deliberately.** The 222-08 PLAN's
+own `<objective>` prose names **eight** mayors. The correct live scope is **five**. The 222-01 live
+worklist and its per-plan assignment table cut **Murphy** (Mayor Scott Bradley, 1 stance held),
+**Princeton** (Mayor Eugene Escobar Jr., 3 stances held) and **Melissa** (Mayor Jay Northcut, 4
+stances held) because all three are **already stanced** and are therefore **out of scope under D-07**
+(no overwrite pass). This was re-verified against production by the orchestrator on 2026-07-25. None
+of their rows was read, re-reasoned or modified, and no Murphy, Princeton or Melissa mayoral section
+appears in this register from 222-08. The live worklist governs over the plan's prose.
+
+---
+
+**Attempted:** 2026-07-25 — **Mayor Pete Cain** (`d9710a3e-4679-44a5-8bfe-ddbb7b376ab5`), the sole
+Anna officeholder in plan 222-08's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. Anna's six at-large
+council members (Kevin Toten, Nathan Bryan, Jessica Walden, Kelly Patterson-Herndon, Elden Baker,
+Manny Singh) are **not** in this plan — see the preamble.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** Anna is a 222-RESEARCH.md §C **Tier "Medium"**
+city and this is a below-tier outcome; the reason is specific and recoverable — see "Sources checked
+but unavailable" below. Anna's council record is genuinely rich (a fast-growing city adopting large
+development agreements and a tax rate above the no-new-revenue rate to fund a police station), but
+**every route into the primary record was closed to this session**, and no chair was placed on the
+strength of a summary of a document that could not be opened.
+
+**Evidence checked:**
+- **Official City of Anna site** (`annatexas.gov`) — Mayor Cain's own officeholder page
+  (`/1354/Pete-Cain`), read in full: it is **biography only**. Born in Abilene, Marine Corps
+  1988–1994 (Desert Shield/Desert Storm), elected May 2024 for a term ending May 2027, three Anna ISD
+  graduate children, "Pete believes completely in servant leadership." It carries **no policy
+  statement of any kind**. His listed service — multiple terms as an Anna ISD trustee, board member
+  and chair of the Greater Anna Chamber of Commerce, ordained Elder at Pin Oaks Christian Fellowship,
+  and **service on the City of Anna's Diversity & Inclusion commission** — was deliberately NOT used
+  for any topic. Board and commission service is **adjacency**, not a position; in particular the
+  Diversity & Inclusion commission seat was **not** used to place `civil-rights`, which would have
+  been exactly the adjacency-plus-identity-inference defect the 222-01 audit deleted from Richardson
+  records.
+- **The city's own news releases** — ArchiveCenter item 1899, the June 27, 2025 release announcing
+  City Manager Ryan Henderson's departure, downloaded and read in full as a PDF. Cain is quoted at
+  length in it, but entirely in praise of a departing employee: *"Ryan's leadership came at a
+  fundamental time in our city's history… He guided Anna through a period of transformational growth
+  while keeping our organization grounded in the values of service, integrity and community."* That
+  is a personnel tribute, not a position on any compass axis.
+- **`collincounty.com/mayor-pete-cain`** — a full profile piece on Cain, fetched and read. Its two
+  substantive quotes were both examined and both refused:
+  *"We're going to grow, no doubt about it, but we need to grow in a way that keeps our community
+  spirit intact"* — **generically evaluative**, the exact class ("manage that growth wisely") that
+  locates no `growth-and-development` chair; and
+  *"I don't know that I can ever look at the budget to a point where I'm willing to not have a
+  firefighter, or not have a peace officer, or not have a librarian, so that I get paid"* — this is
+  about **council compensation** (Anna's mayor and council are unpaid and he is explaining why he
+  would not change that), and it ranks firefighter, peace officer and librarian **equally**, so it is
+  not a public-safety-funding preference either. No chair.
+- **North Texas e-News / Local Profile / Bisnow economic-development coverage of Anna**, searched and
+  sampled. See the misattribution rejection below.
+- **Star Local Media (Anna-Melissa Tribune), Community Impact (Prosper-Celina / Collin County
+  editions), Local Profile, WFAA** — searched for a Cain policy interview, candidate questionnaire or
+  State-of-the-City address. **None exists that this session could find.** Cain's May 2024 mayoral
+  election produced no discoverable candidate questionnaire.
+
+**⚠ MISATTRIBUTION REJECTED — wrong officeholder, wrong era.** Bisnow's *"Destination Anna: Why This
+Collin County Town Is On Developer Wish Lists"* surfaced high in searches for Anna growth-policy
+quotes and reads exactly like a mayoral growth-pace and economic-development source: *"We are one of
+the last blank canvases in Collin County. We have 61 square miles of [developable] planning area, and
+we want to grow."* **That is not Pete Cain.** The article is dated **March 3, 2021** and the speaker
+is **Mayor Nate Pike**, Cain's predecessor; the other quotes belong to a broker and to the Anna EDC
+director Joey Grisham. Read carelessly it would have produced a fabricated
+`growth-and-development` = 4 for Cain. The article was opened and the speakers confirmed by name
+before it was set aside — which is exactly what rule 5 of this plan requires.
+
+**Sources checked but unavailable this session** — recorded so a later pass can retry, **not** treated
+as absence of a position:
+- **Anna's council minutes are effectively unreadable from here, and this is the single reason Anna
+  ends at zero.** `annatexas.gov/AgendaCenter` returns **HTTP 404** — Anna does *not* use the
+  CivicPlus AgendaCenter module that most of Collin County uses. Its agendas and minutes live in
+  **Laserfiche WebLink** at `publicdocs.annatexas.gov/WebLink/`, which returns *"Cookies are not
+  enabled for this website. Cookies must be enabled in order to sign in to WebLink"* on both the root
+  and `Browse.aspx?id=1&dbid=0`, exposing **no folder listing and no document at all**. Recent
+  meetings are additionally served through a **CivicClerk** single-page app
+  (`annatx.portal.civicclerk.com/event/1091/files`) which renders only the string "Public Portal •
+  CivicClerk" to a fetch and lists no files. **No Anna City Council minute was read this session.**
+- **`citizenportal.ai` returned HTTP 403.** Its article "Anna adopts $29.7 million FY2026 budget and
+  raises property tax rate to fund police station" was visible only as a search-result summary. That
+  summary indicates the FY2026 general fund was set at $29.7M, the adopted rate of $0.525073 exceeds
+  the no-new-revenue rate of $0.495928, the increase funds a new police station plus five officers, a
+  detective, a lieutenant and two library custodians, and that "council members repeatedly tied the
+  tax increase to public-safety needs." **No chair was placed on any of that**, for three independent
+  reasons: the article body could not be opened (403); citizenportal.ai is an **AI-generated meeting
+  summary, not a primary document**, and rule 5 of this plan forbids attributing a motion, vote or
+  in-meeting quote from a summary; and the summary attributes the public-safety framing to "council
+  members" collectively, never to Cain by name. **If a future pass can read the Anna FY2026 budget
+  minutes, `public-safety-approach` is the most likely chair to be placed for this mayor** — that is
+  the highest-value unread source for Anna.
+- **Council meeting video** at `annatx.new.swagit.com/views/445` was **not watched** — video is not
+  readable by this pass. This is where Anna's actual deliberation lives, since the written record is
+  gated.
+- **No Ballotpedia individual candidate page** exists for a mayor of a ~35,000-person city — Anna is
+  far below Ballotpedia's "100 largest cities" scope. **No VOTE411 or League of Women Voters of Collin
+  County questionnaire** was found for the Anna mayoral seat, and `lwvcollin.org` has returned
+  **HTTP 403** for the entire phase.
+- Cain's **campaign Facebook page** was not fetched (Facebook is not fetchable here, and social posts
+  are not treated as evidence of a policy position absent a direct citable quote).
+
+### Pete Cain — Mayor — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5`
+
+Sourced: **none.** All 11 topics blank. Elected mayor in May 2024, term ending May 2027, in a city
+that grew from 16,896 (2020 census) to about 35,245 (2025) and projects 100,000 by 2050.
+
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **housing** — no position found on what
+  role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy for affordable projects, first-time-buyer assistance, permit
+  streamlining, or leaving prices to the market. Anna's development agreements (Liberty Hills, Sherley
+  Farms, Oak Ridge, Ana Capri North, Rockhill — more than 3,000 acres of planned residential and
+  commercial development, named in the city's own June 2025 release) are **staff-negotiated
+  agreements credited to the city manager in that release**, not statements of Cain's position on
+  housing affordability, and the release quotes him only on the manager's character.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **residential-zoning** — no position
+  found on density or neighborhood character. Anna's Planning & Zoning Commission and council
+  regularly act on plats, rezonings and planned-development districts (including a 1,127.6-acre
+  Sherley Farms annexation and PD zoning in February 2025, and a development agreement with NextMetro
+  Communities for a multifamily project), but **no minute recording Cain's vote or words on any of
+  them could be read** (Laserfiche gated — see above), and a P&Z commission action is not the mayor's
+  position in any case. Nothing was inferred from the city's existing zoning pattern; **city policy is
+  not the individual's position**.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **growth-and-development** — no
+  chair-locating position, and this is the closest miss. He plainly addresses growth — *"We're going
+  to grow, no doubt about it, but we need to grow in a way that keeps our community spirit intact"*
+  and, on a national fastest-growing-cities ranking, *"Anna is rising with purpose,"* a recognition
+  that "reflects the intentional growth, strong partnerships and long-term vision that are shaping our
+  city" — but every one of those is **generically evaluative**. "Grow in a way that keeps our
+  community spirit intact," "intentional growth" and "long-term vision" are compatible with chair 2
+  (slow approvals until infrastructure catches up), chair 3 (invest ahead of growth) and chair 4
+  (streamline permitting to grow the tax base) alike. He names no growth cap, no annexation vote
+  requirement, no approval-speed or fee position, and no infrastructure-before-growth sequencing
+  commitment. This is precisely the "responsible growth" defect class the 222-01 audit deleted from
+  production. Blank, not defaulted.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **economic-development** — no position
+  found on incentives, abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. His two on-topic remarks are **celebratory, not positional**: on the Rosamond Town
+  Center groundbreaking, *"It changes everything — the retail and tax base with 750 jobs coming to us
+  with this development,"* and on incoming retailers, *"It is so exciting to have these important
+  retailers coming so close to home, creating convenience and economic opportunity for our
+  community."* Welcoming a project that has already broken ground says nothing about whether he would
+  offer maximum incentives, targeted conditional incentives, small-business-only support, or none at
+  all — and no incentive instrument is mentioned in either quote. His years as a **board member and
+  chair of the Greater Anna Chamber of Commerce** were deliberately not used: **chamber service is
+  adjacency**, expressly refused.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **public-safety-approach** — no
+  chair-locating position, **and this is the blank most likely to be resolvable by a future pass**.
+  Anna adopted an FY2026 rate above no-new-revenue expressly to fund a police station and add five
+  officers, a detective and a lieutenant, and Cain necessarily presided over that adoption — but
+  **presiding is not a position** (a mayor calling a vote holds no chair by that fact), the primary
+  minutes could not be read, and the only account of the deliberation (citizenportal.ai) is an
+  AI-generated summary that returned 403 and attributes the public-safety framing to "council members"
+  collectively rather than to Cain. His one quotable public-safety-adjacent sentence — *"I don't know
+  that I can ever look at the budget to a point where I'm willing to not have a firefighter, or not
+  have a peace officer, or not have a librarian, so that I get paid"* — is about **council
+  compensation**, and it weights a librarian equally with a peace officer, so it does not locate
+  chair 4 (increase staffing, equipment and pay to improve response times), chair 5 (police above all
+  other municipal services), chair 3 (add crisis-response teams), or chair 1 (redirect police budget
+  to social services). Blank.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. Anna completed major roadway
+  expansions on Rosamond and Hackberry, but a capital roadway project is **not a mode tradeoff** and
+  Cain is not quoted on it; the city's own release credits those projects to the city manager. Nothing
+  found on transit, bike lanes, sidewalks, parking requirements, or road capacity as a stated
+  priority.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **homelessness** — no statement or vote
+  found on people sleeping or camping in public spaces. No Anna camping ordinance, encampment policy
+  or shelter decision surfaced in any readable source, and none was inferred.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **local-immigration** — no statement
+  found on the Anna Police Department's relationship to federal immigration enforcement, ICE
+  detainers, or information sharing. **Texas SB 4 is state law, not his position**, and was not used
+  as a default.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **civil-rights** — no on-topic position
+  found. **His service on the City of Anna's Diversity & Inclusion commission was deliberately not
+  used**: commission service is adjacency, and inferring a civil-rights chair from a diversity-body
+  seat is the same defect class as inferring one from identity — both are forbidden, and both were
+  deleted from real production rows earlier in this phase. His ordination as an Elder at Pin Oaks
+  Christian Fellowship was likewise not used in any direction; **religion is never a basis for
+  inference**.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **taxes** — **researched, no chair
+  written per the settled 2026-07-25 operator ruling.** The material found is preserved here verbatim
+  for any future municipal-scope rewrite of this question. Anna adopted an FY2026 general fund of
+  **$29.7 million** and a property-tax rate of **$0.525073**, which **exceeds** the state
+  no-new-revenue rate of **$0.495928**, raising roughly **$3.1 million** in additional revenue and
+  about **$98 per year** for the average homeowner, in order to fund a new police station and
+  additional public-safety staffing. Cain presided over that adoption. **None of this reaches a
+  chair**: chairs 1–2 require raising taxes specifically on wealthy people and large companies and
+  chairs 4–5 require scaling public services back, and a uniform ad-valorem municipal rate increase
+  that funds *more* service does neither. His only tax-adjacent quote is the council-compensation
+  remark above. Additionally, the underlying detail was available only through a **403** AI summary,
+  so even the factual account here is second-hand and is recorded as such. No taxes row was written.
+- Pete Cain — Anna — `d9710a3e-4679-44a5-8bfe-ddbb7b376ab5` — **healthcare** — no statement found on
+  healthcare access. Expected: all five chairs on this scale describe **national** healthcare policy,
+  which a city mayor holds no position on by role. No health-adjacent remark was stretched into a
+  chair.
+
+**Anna reconcile:** Pete Cain appears in **bucket 2 for all 11 topics** and in bucket 1 for none. He
+is the only Anna name in plan 222-08's scope and he is accounted for — not in neither bucket, not in
+both. Anna's six council members are out of this plan's scope and belong to 222-11/222-12/222-13.
 
 ---
