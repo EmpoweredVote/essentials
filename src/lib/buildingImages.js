@@ -191,6 +191,14 @@ const CURATED_LOCAL = {
     { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/portland-me.jpg' },
   ],
   troutdale: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/troutdale.jpg' },
+  // Bend, OR (2026-07-26, operator-certified). First Central Oregon banner — the city
+  // was deep-seeded 2026-07-24 (4 governments / 26 officials) but had no banner, so it
+  // had been falling through to the tier-gradient placeholder.
+  //   bend - Mirror Pond from The Emblem Club (Deschutes at Drake Park, Three Sisters on
+  //          the horizon) | Spencer Dahl | CC BY-SA 3.0. Centre crop of the 4510x2995
+  //          original: the snow peaks land in the upper third, clear of the render-time
+  //          gradient, and the pond gives a calm dark band under the title.
+  bend: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bend.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
