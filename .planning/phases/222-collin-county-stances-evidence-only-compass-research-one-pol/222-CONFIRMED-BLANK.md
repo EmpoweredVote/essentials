@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 325
+## Count: 336
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -4000,5 +4000,299 @@ none. She is the only Blue Ridge name in plan 222-09's scope and she is accounte
 bucket, not in both. Blue Ridge's council seats are out of this plan's scope and belong to
 222-14/222-15/222-16/222-17. **Blue Ridge therefore does NOT flip to `hasContext: true` in
 `src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
+
+---
+
+## City of Josephine (4838068) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor Jason Turney** (`f3eb38f1-a044-4c75-82c8-80750f40543e`), the sole
+Josephine officeholder in plan 222-09's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Scope: Josephine — Mayor
+only.** Josephine's council seats (April Aurand Place 1, Jane Ridgway Place 2, Alex Esquivel Place 3,
+Pam Sardo Place 4, Gary Chappell Place 5) are covered by plans **222-14/222-15/222-16/222-17** and are
+deliberately absent from this section.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** Josephine is listed in 222-RESEARCH.md §C at
+**Tier "very low"** and that tier assignment is **materially WRONG — record this correction.** Josephine
+is not a hamlet: it is a **fast-growing city of ~7,113** straddling **Collin and Hunt Counties**, with
+its own **police department**, its own **fire department**, a new **Public Safety Building**, a **City
+Administrator**, a **City Planner (AICP)**, two engineering consultancies, a **Municipal Development
+District**, a **Planning & Zoning Commission**, monthly glossy **city newsletters**, a **YouTube channel
+that livestreams and archives every city meeting**, and a **Diligent Community minutes portal whose
+minutes name every individual voter**. **This zero is SETTLED, and it is settled on the strongest
+evidence base in the plan** — not on absence of records.
+
+**⚠ THE STRUCTURAL FINDING FOR JOSEPHINE, AND IT IS THE CLEANEST DEMONSTRATION IN THE PHASE: the Mayor
+votes ONLY to break ties, and the minutes prove it.** Josephine's Diligent minutes enumerate voters by
+name, so this is directly observable rather than inferred. In the **June 8, 2026** regular meeting,
+**every** ordinary motion carried **4-0** with the recorded "For:" list reading *"Pam Sardo, Gary
+Chappell, April Aurand, and Jane Ridgway"* — **Turney is absent from all of them**. He appears in
+exactly **one** roll: item 4.5, where the minutes state in terms — ***"This was a tie, Mayor breaks tie
+by voting in favor."*** That is the classic Texas Type A general-law mayoral rule made explicit in the
+record. It means (a) a *substantive* Turney vote can only exist on a tied question, which is rare; and
+(b) unlike Weston, an on-topic Turney vote **would** be individually attributable if one ever occurred.
+Recorded for the council plans, for whom the same minutes are a rich, fully-attributable source.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the City Council minutes of June 8, 2026, read in full via the Diligent
+  Community portal's Accessible Web Version
+  (`https://city-of-josephine.community.highbond.com/document/18060`).** Present: Turney, Sardo,
+  Chappell, Aurand, Ridgway; absent: Esquivel. Business: department reports; a Dunaway engineering
+  report; a Resolution designating **Dunaway Associates as Floodplain Administrator**; two Resolutions
+  consenting to the inclusion of parts of the City's **ETJ**, and of an **Industrial District** in the
+  ETJ, in the proposed **Hunt County Emergency Services District No. 1**; a Professional Services
+  Agreement with **Miles Consulting LLC** for development-review costs on **Hunt County Municipal
+  Utility District No. 4** (item 4.5 — the tie-break, analysed below); the City Planner's monthly
+  report; **Case No. SW-26-001**, a subdivision waiver for a single access point on a two-lot commercial
+  subdivision on FM 1777, first **denied 2-1** then **approved 3-1** on a second motion; a Collin County
+  Parks and Open Space grant application for **City Park ADA Accessibility and Safety Improvements**
+  with **$39,589.40** in city matching funds; and **Case No. ZONE-26-001**, a rezoning of ±1.42 acres at
+  **520 Milton Street** from LR – Local Retail to a **Planned Development**, whose public hearing was
+  **continued to July 13, 2026**.
+- **PRIMARY DOCUMENT — the City Council minutes of April 14, 2025, downloaded as a PDF
+  (`https://cityofjosephinetx.com/wp-content/uploads/pdf/agenda/city-council/Minutes-City-Council-Regular-Meeting-April-14-2025.pdf`)
+  and read in full (3 pages, attested by City Secretary Patti Brooks, approved by Jason Turney,
+  Mayor).** Narrative minutes naming speakers. Business: introduction of City Planner Miguel Inclan;
+  citizen comments; a presentation on **Josephine Municipal Development District** by-laws by Economic
+  Development Consultant **Justin Weiss** (no action taken); a Public Safety Building construction
+  update from **AGCM**; Dunaway/DBI and **Kimley-Horn** engineering reports (including that **D.R.
+  Horton** would put **Wildflower, part of Riverfield, on hold for up to a year**); a **Resolution in
+  support of House Bill 4211**; a five-year **Rise Broadband** lease; two Resolutions consenting to
+  inclusion of the ETJ and of an industrial district in **Collin County Emergency Services District
+  No. 1**; receipt of a **Petition for Voluntary Annexation** from Lloyd D. Brown for 1.00 acre at 830
+  East St.; a Community Center use policy and rental-fee schedule; the **2024-2025 mid-year budget
+  amendment**; and a **food-truck pilot programme** presentation.
+- **`https://cityofjosephinetx.com/government/city-council/`** — the official Council page, rendered in
+  Playwright. Confirms **"Jason Turney – Mayor (Term expires November 2026)"**, the five council places
+  with term-expiry dates, that **"The City of Josephine is a Type A General Law Municipality utilizing a
+  Mayor-City Council form of government"**, and that meetings are the second Monday monthly at 6 p.m.
+  **No biography, no statement of priorities, and no policy position for any member.**
+- **`https://cityofjosephinetx.com/government/agendas-minutes/`** — the archive index, rendered. Exposes
+  ~40 City Council, Planning & Zoning, Board of Adjustment and **JCDC** agendas and minutes from
+  **July 2024 through April 28, 2025**, and then hands off to the Diligent portal.
+- **`https://city-of-josephine.community.highbond.com/Portal/`** — the live Diligent Community portal,
+  rendered. Indexes every 2026 meeting: City Council Jul 13, Jun 08, May 11, Apr 13, Mar 11, Mar 09,
+  Feb 09; Joint Work Sessions with P&Z on Jun 01 and Mar 26; a Feb 28 Work Session; and the Municipal
+  Development District and P&Z series.
+- **PRIMARY DOCUMENT — the City of Josephine May 2026 Newsletter, downloaded
+  (`https://cityofjosephinetx.com/wp-content/uploads/2026/04/May-Newsletter-1.pdf`) and read in full
+  (7 pages).** This was fetched specifically because a mayor's newsletter column is the one
+  small-town artefact most likely to carry a stated position. **It carries no mayor's column and no
+  statement by any elected official.** It is entirely events (Movie in the Park, Fireworks in the Park,
+  the Splash Pad opening May 22), Public Works notes (the **Milton and Caddo Street** paving bid
+  approved, **CR 642** complete, the gas-line project in final tie-in), Police and Fire department pages
+  (a 24/7 exterior call button to Collin County Dispatch, a **Soft Interview Room**, the Public Safety
+  Building grand opening), an employee spotlight on Public Works Operator **Rowdy Atchley**, and social
+  channels. The **June 2026 Newsletter** was also downloaded (15 MB) as a cross-check.
+- **`https://cityofjosephinetx.com/wp-content/uploads/2026/07/Notice-of-Annexation-5792-FM-6.pdf`** — a
+  July 2026 annexation notice, downloaded. A **statutory notice**, attributed to no individual.
+- **`https://directory.tml.org/profile/individual/83337`** and **`.../profile/city/994`** — the Texas
+  Municipal League entries confirming **Jason Turney, Mayor, City of Josephine**. Contact information
+  only, **no policy positions**.
+- **`https://citizenportal.ai/articles/6767197/...The-Meadow-development`** — the November 10, 2025
+  Josephine City Council write-up, read in full **via Playwright** (see the access note below). Refused
+  as evidence on two grounds; see the AI-content finding.
+
+**⚠ TWO ACCESS FINDINGS WORTH MORE THAN THIS SECTION'S RESULT — both correct standing phase notes:**
+1. **`cityofjosephinetx.com` sits behind a Sucuri CloudProxy JavaScript challenge that returns HTTP 307
+   to WebFetch and to plain `curl` on every HTML page** (`Server: Sucuri/Cloudproxy`, body =
+   *"You are being redirected… Javascript is required"*). **Playwright passes the challenge cleanly**,
+   and — importantly — **direct PDF URLs under `/wp-content/uploads/` are served without the challenge
+   and download fine with `curl`.** So: use Playwright to enumerate, `curl` to fetch. A pass that only
+   tries WebFetch will wrongly record this city as unreachable.
+2. **`citizenportal.ai` 403s to WebFetch but LOADS FULLY IN PLAYWRIGHT — and it must still not be used
+   as evidence.** Plan **222-08** recorded a `citizenportal.ai` 403 as an open retry lead for Anna's
+   budget minutes. **That lead is now resolved and should be closed rather than retried:** the site is
+   reachable with a real browser, but every article carries the banner ***"AI-Generated Content: All
+   content on this page was generated by AI to highlight key points from the meeting"***, which this
+   register's own search method excludes outright — *"AI-generated, stock, or placeholder content is
+   never used as evidence."* Corroborating its unreliability, the page injected a
+   *"Message your state representatives"* widget listing **Ben Allen (D-CA)** and **Al Muratsuchi
+   (D-CA)** — California legislators — into a Texas municipal article. **Treat citizenportal.ai strictly
+   as a pointer to the underlying meeting video, never as a citable source.**
+
+**⚠ HOMONYM GATE.** "Josephine" is a common **given name** and also **Josephine County, Oregon**;
+"Jason Turney" is a common name. Encountered and rejected: **St. Joseph, Missouri**'s agendas-and-minutes
+page, **Murray / Highland / Roy, Utah** council archives, and **`x.com/bigturney`** (a personal social
+account, not fetched and not used — social posts are not treated as evidence of a policy position absent
+a direct citable quote). Every source relied on above is pinned to **Josephine, Texas** by an explicit
+marker: the `cityofjosephinetx.com` domain, the **201 Main Street, Josephine, Texas 75173** City Hall
+address, City Secretary **Patti Brooks**' attestation, the Diligent customer record
+`city-of-josephine`, references to **Collin County** and **Hunt County** ESDs and MUDs, or the TML
+directory's own city field. Note that Josephine genuinely spans **two counties** (Collin and Hunt), so
+Hunt County references in its minutes are correct for this city and were not treated as a homonym.
+
+**⚠ ROSTER NOTE (flagged, not acted on; Turney's own seat is unaffected).** Search snapshots and the
+April 2025 minutes show a **different council** — **Doug Ewing** (then Mayor Pro Tem) and **Brad
+Ahlfinger** were serving. The current roster is **Aurand, Ridgway, Esquivel, Sardo, Chappell**, confirmed
+identically by the official Council page and by the Diligent portal's MEMBERS list. **Jason Turney is
+Mayor in every source across both rosters**, so there is **no roster-currency item for the subject of
+this section** — but 222-14/222-15/222-16/222-17 must not attribute Ewing's or Ahlfinger's statements to
+a sitting Josephine member. Turney's term expires **November 2026** and an **Election Packet for
+November 3, 2026** is posted, so a contested race and its questionnaires may exist *in future* — a
+genuine, dated re-check trigger for this person.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **The Josephine YouTube channel (`https://www.youtube.com/@CityofJosephine`) was NOT watched.** The
+  May 2026 newsletter states that *"All video recordings of all city meetings will be uploaded to our
+  YouTube channel. City meetings will be livestreamed, they will remain available for public access."*
+  **This is the single highest-value unread source for this officeholder** — Josephine's minutes are
+  action-and-vote records, so any spoken Turney position lives only in the video. A later pass with
+  audio/transcript capability should start here.
+- **The July 13, 2026 City Council minutes are NOT yet available.** The portal lists *Signed Minutes*
+  and *Accessible Web Version* tabs for that meeting but **both resolve to `#`** — consistent with
+  minutes awaiting approval at the **August 10, 2026** meeting. This matters: **ZONE-26-001, the
+  520 Milton Street LR-to-Planned-Development rezoning, had its public hearing continued to July 13,
+  2026**, so the *disposition of Josephine's live rezoning case is in the one document that does not yet
+  exist.* If that item ever produced a tie, Turney would have voted on it. **This is the single most
+  valuable dated re-check in this plan: re-read the July 13, 2026 minutes after August 10, 2026.**
+- **Only 2 of ~20 available 2026 and 2025 council meetings were read in full** (June 8, 2026 and
+  April 14, 2025), plus the two 2026 newsletters. All Planning & Zoning, Municipal Development District,
+  Board of Adjustment, JCDC and Joint Work Session records remain unread. Recorded honestly — but see
+  the structural finding for why additional minutes are unlikely to change *this person's* result.
+- **The November 10, 2025 meeting VIDEO was not watched**, only the excluded AI summary of it.
+- **No Ballotpedia candidate page for Jason Turney was found.** A *place* page,
+  `ballotpedia.org/Josephine,_Texas`, exists, but no individual candidate page for this officeholder.
+  **No VOTE411 or LWV of Collin County questionnaire**; `lwvcollin.org` has returned **HTTP 403** all
+  phase, and VOTE411 was not attempted per this plan's standing instruction. **No Community Impact,
+  Star Local Media, Herald-Banner or Farmersville Times article naming Turney was located.** **No
+  campaign site and no State-of-the-City address.**
+
+### Jason Turney — Mayor — `f3eb38f1-a044-4c75-82c8-80750f40543e`
+
+Sourced: **none.** All 11 topics blank. Mayor of Josephine, term expiring **November 2026**; confirmed
+in that seat by the official Council page, the Diligent portal MEMBERS list, the TML directory, and his
+own signature on the April 14, 2025 minutes.
+
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **growth-and-development** — **no
+  chair, and this is the most heavily-argued refusal in the plan** because Josephine's record contains
+  two things that look like evidence and are not.
+  **(a) His only recorded quote is a JURISDICTIONAL DISCLAIMER, which is the opposite of a position.**
+  On November 10, 2025, dozens of residents asked the council to press Collin County to pause the
+  **EPIC / Double R "The Meadow"** development; Turney is reported saying ***"This is not in the city
+  limits, not in our ETJ…we have no control, no authority over that development"***, urging residents to
+  take technical questions to the commissioners' court, and noting that the city *"cannot unilaterally
+  block county decisions."* He said the same thing at the April 14, 2025 meeting, where the **primary
+  minutes** record him reminding the room that EPIC *"is not in our city limits, it is not in Josephine's
+  ETJ and it is not in our utility service area. The city has no jurisdiction over this."* **Reciting the
+  limits of your jurisdiction states no view on growth pace.** The reported clause that *"the city shares
+  concerns"* is collective, unspecific, and paraphrased, and **the whole November account is excluded as
+  AI-generated in any case.** Council **took no action**.
+  **(b) His only individually-recorded vote is a PROCEDURAL TIE-BREAK with no stated reason.** On
+  June 8, 2026, item 4.5 — a Professional Services Agreement with Miles Consulting LLC for
+  **development-review costs on Hunt County MUD No. 4** — the minutes record: *"First motion to approve
+  agreement failed GC, there was no second. April motion to postpone - GC second. Pam Sardo and Jane
+  Ridgway voted against. **This was a tie, Mayor breaks tie by voting in favor.** Item will be postponed
+  to next meeting."* He voted to **postpone**, not on the MUD's merits; the minutes attribute **no reason
+  of any kind** to him; and this plan's rule 4 is explicit that an unexplained vote cannot locate a
+  chair. Postponement is consistent with chair 1, 2, 3, 4 and 5 alike.
+  Also refused: the two **Emergency Services District** consent resolutions (2025 and 2026), which are
+  service-district boundary consents he did not vote on; the **Lloyd D. Brown 1.00-acre voluntary
+  annexation petition**, which was merely *received* on **Ahlfinger's** motion; the **5792 FM 6**
+  annexation notice, a statutory notice attributed to no individual; and **D.R. Horton's** decision to
+  pause Wildflower/Riverfield, which is a **developer's** commercial choice reported by a consulting
+  engineer.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **residential-zoning** — no
+  position found on housing density or neighbourhood character. Josephine has a **live rezoning case** —
+  **ZONE-26-001**, ±1.42 acres at 520 Milton Street from LR – Local Retail to a Planned Development —
+  but its hearing was **continued to July 13, 2026, whose minutes are not yet published**, and the
+  June 8 record shows only the continuance. **Case No. SW-26-001**, the FM 1777 subdivision waiver that
+  was denied 2-1 and then approved 3-1, was examined and **refused**: it is a **two-lot COMMERCIAL**
+  subdivision and the waiver concerns **points of access** under Subdivision Ordinance §§3.1.B.4 and
+  3.1.O — an **access-and-approach-road** question, not a housing-density proposition — and the recorded
+  voters are Sardo, Ridgway, Chappell and Aurand, **not Turney**. Per this phase's wave-8 ruling, a
+  non-residential access or dimensional dispute does not set `residential-zoning`.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **housing** — no position found on
+  what role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy for affordable projects, first-time-buyer assistance, permit
+  streamlining, or leaving prices to the market. Josephine's abundant subdivision activity
+  (Riverfield/Wildflower, Fountain View, Magnolia, Lonesome Dove Ranch) is **development pipeline**, not
+  an affordability position, and none of it is attributed to him.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **public-safety-approach** — no
+  chair-locating position, **despite this being Josephine's most active area**. The City opened a
+  **Public Safety Building** (AGCM construction updates through 2025, grand opening by May 2026), runs
+  its own **Police** and **Fire** departments, installed a 24/7 exterior call button to Collin County
+  Dispatch and a **Soft Interview Room**, and consented to **two Emergency Services Districts**. **All of
+  it is refused:** a facility built or bought during a tenure is **capital-project attribution**,
+  explicitly barred from standing as a funding-level position; the call button and interview room are
+  **equipment and facilities** reported in a departmental newsletter; the ESD consents are **boundary
+  resolutions** moved by councilmembers; and **Turney voted on none of them.** A resident's question
+  about *"how will the first responders handle the growth"* and a retired police sergeant's ICMA
+  staffing benchmark of *"about 2.5 officers per 1,000 population"* are **other people's**, and relaying
+  or hearing constituent testimony is not the member's own position. Nothing found from Turney on
+  staffing levels, pay, equipment, crisis-response teams, mental-health co-responders, or redirecting
+  police budget.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. Everything available is
+  **maintenance, capital delivery or safety**, all refused by rule 4: the Milton and Caddo Street paving
+  bid, the completed **CR 642** construction, the East Street stop sign a resident thanked the council
+  for, new street signs, potholes reportable through the City App, and residents' concerns about
+  shoulderless **County Road 695**. The **SW-26-001** access waiver and its **TxDOT access
+  determination** are a driveway-permitting question, not a mode tradeoff, and he did not vote on it.
+  Nothing on transit, bike lanes, sidewalks, parking requirements, or road capacity as a stated
+  priority.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **economic-development** — no
+  position found on incentives, tax abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. Josephine has a **Municipal Development District** and formerly a **JCDC**, and an
+  Economic Development Consultant (**Justin Weiss**) presented MDD by-laws on April 14, 2025 — but
+  **no action was taken**, the only recorded contributions are **Dr. Sardo's** (asking for transparency
+  provisions and website posting), and **institutional existence plus consultant testimony is not an
+  individual position.** The city's own economic-development page language about growth attracting
+  business is **staff marketing copy**, attributed to no individual. The **Rise Broadband** lease and the
+  **food-truck pilot programme** were examined and refused: a five-year telecom site lease is a property
+  transaction (moved by **Esquivel**), and the food-truck item produced only a request for more
+  information about *"a designated place with hours of operation, permitting and guidelines"* from the
+  Council collectively, with no Turney statement.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **homelessness** — no statement or
+  vote found on people sleeping or camping in public spaces. No Josephine camping ordinance, encampment
+  policy or shelter decision appears in either meeting read, in the newsletters, or anywhere in the
+  archive index. None was inferred.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **local-immigration** — no
+  statement found on the Josephine Police Department's relationship to federal immigration enforcement,
+  ICE detainers, or information sharing. **Texas SB 4 is state law, not his position**, and was not used
+  as a default. That Josephine operates its own police department and contracts county dispatch is
+  organisational fact, not a detainer policy.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **civil-rights** — no on-topic
+  position found, **and this topic required the single most careful refusal in the whole plan.** The
+  November 10, 2025 public-comment period contained **overtly anti-Muslim testimony from residents** —
+  one speaker quoted as *"Islam is not truly a religion of peace… Today, we're talking about Islam"*,
+  others invoking an "explanatory memorandum" they attributed to the Muslim Brotherhood — directed at the
+  EPIC development's financing entities. **None of it is Turney's, and none of it may touch his record
+  in either direction.** Specifically refused: (i) attributing residents' statements to the presiding
+  officer — **speakers at a meeting are not the member**; (ii) inferring a civil-rights chair from the
+  fact that he presided over the meeting, allowed the comments under the Open Meetings Act's
+  public-comment right, or failed to rebut them — **silence is not a position**; and (iii) inferring
+  anything from the source's note that the allegations *"were disputed in tone and substance by other
+  attendees and were not substantiated by action at the meeting."* The entire account is additionally
+  excluded as **AI-generated**. **No inference was drawn from any identity, demographic, religious or
+  affiliation characteristic** of anyone involved. Nothing in the primary minutes read engages this axis
+  at all.
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **taxes** — **researched, no chair
+  written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was found
+  even for the register.** The **2024-2025 mid-year budget amendment** was moved by **Esquivel** and
+  seconded by **Ewing** with no Turney vote or statement; the **Community Center rental fees** added to
+  the Master Fee Schedule are **fee ratemaking**, refused as taxes evidence by this plan's rule 1; the
+  **$39,589.40 city match** for the Collin County parks grant is a capital match approved 4-0 without
+  him; and a resident's question about *"how do we plan to handle the growth without over taxing the
+  citizens"* is a **constituent's**, with no recorded Council answer. **Councilmember Ridgway's** remark
+  about council cell phones *"paid for by the city tax payers"* is hers, not his. Chairs 1–2 require
+  raising taxes specifically on wealthy people and large companies; chairs 4–5 require committing to
+  scale public services back. Nothing found does either. **No taxes row was written.**
+- Jason Turney — Josephine — `f3eb38f1-a044-4c75-82c8-80750f40543e` — **healthcare** — no statement found
+  on healthcare access. Expected: all five chairs describe **national** healthcare policy, which a
+  Type A general-law city mayor holds no position on by role. The **Emergency Services District**
+  consents and the **Soft Interview Room** were examined and refused — emergency-service districting and
+  a victim-interview facility are neither healthcare-coverage policy nor his individually. No
+  health-adjacent remark was stretched into a chair.
+
+**Josephine reconcile:** Jason Turney appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. He is the only Josephine name in plan 222-09's scope and he is accounted for — not in neither
+bucket, not in both. Josephine's council seats are out of this plan's scope and belong to
+222-14/222-15/222-16/222-17. **Josephine therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances. **But note
+for the council plans: Josephine is the single most promising un-mined city in this phase** — narrative
+minutes that name every voter, contested 3-2 and 2-1/3-1 divisions on real land-use questions, a live
+rezoning case, and archived meeting video.
 
 ---
