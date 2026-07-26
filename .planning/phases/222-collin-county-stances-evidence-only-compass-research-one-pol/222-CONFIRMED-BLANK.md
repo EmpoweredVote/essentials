@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 358
+## Count: 369
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -4860,5 +4860,281 @@ none. He is the only Lowry Crossing name in plan 222-09's scope and he is accoun
 bucket, not in both. Lowry Crossing's council seats are out of this plan's scope and belong to
 222-14/222-15/222-16/222-17. **Lowry Crossing therefore does NOT flip to `hasContext: true` in
 `src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
+
+---
+
+## City of Nevada (4850760) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor Donald Deering** (`47a5349c-ea03-4fcf-8719-948c259a3753`), the sole
+Nevada officeholder in plan 222-09's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Scope: Nevada — Mayor
+only.** Nevada's council seats (Mike Laye Place 1, Paul Baker Place 2, Amanda Wilson as Mayor Pro Tem
+Place 3, Clayton Laughter Place 4, Derrick Little Place 5) are covered by plans
+**222-14/222-15/222-16/222-17** and are deliberately absent from this section.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** **This zero is SETTLED — and Nevada produced the
+single richest *mayoral* record in this plan and the second-strongest near-miss**, because its minutes
+contain a standing **"Mayor's Report"** section that attributes activity to Deering by name. The
+refusal turns on the *content* of that report rather than on attribution, and is argued in full in the
+`residential-zoning` bullet. **The operator may wish to review that call.**
+
+**⚠ TWO STRUCTURAL FINDINGS FOR NEVADA — the second is unusual and matters for the council plans.**
+1. **Deering never moves, never seconds, and is never named in a vote.** In the **May 5, 2026** minutes
+   read in full, all eleven motions were made and seconded by councilmembers (**Wilson**, **Laughter**,
+   **Baker**), and every outcome is recorded as *"Motion passed unanimously"* with **no individual
+   names**. His recorded acts are presiding ones — calling to order, opening and closing four public
+   hearings, recessing the council and convening the **Zoning Board of Adjustment**, and **tabling**
+   three items.
+2. **But Nevada's mayor holds explicit AGENDA-SETTING power, stated verbatim in the minutes**: *"Future
+   agenda items shall be designated by the mayor. In addition, a motion and a second from any two
+   Councilpersons shall be sufficient to add an agenda item for a future meeting. Staff and council shall
+   have prior consent from the mayor to add an agenda item for a future meeting."* This is worth
+   recording because it means Deering's **tabling** of items is a substantive exercise of office rather
+   than mere procedure — and yet, as argued below, a tabling with a stated reason of *"pending
+   clarification of the agreement's purpose and necessity"* still locates no compass chair.
+
+**⚠ THE "MAYOR'S BLOG" — A GENUINELY USEFUL NEGATIVE.** Nevada's official site has a dedicated
+**`community/mayors_blog.php`** page — precisely the artefact most likely to carry a small-town mayor's
+stated positions, and the only one of the eight towns in this plan to have one. **It was rendered in
+Playwright and it is EMPTY.** The page's entire main-content text is 61 characters — the breadcrumb
+*"Home / Community / Mayor's Blog"* and the heading *"Mayor's Blog"* — with **no entries, no dates, no
+attachments and no author**. The city built the page and never posted to it. This is a *settled* absence
+rather than a fetch failure, and is exactly the kind of dead end D-08 exists to record so that a later
+phase does not re-chase it.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the City of Nevada City Council minutes of May 5, 2026, downloaded as a PDF
+  (`https://cityofnevadatx.org/Documents/Government/Agendas%20and%20Minutes/2026/Minutes/2026.05.05%20CITY%20COUNCIL%20MEETING%20MINUTES.pdf`)
+  and read in full (7 pages, bearing the "Nevada" Texas-outline logo and the **CITY OF NEVADA, TEXAS**
+  seal, City Hall, 424 E. FM 6, Nevada, Texas 75173; signed **Donald Deering, Mayor** and attested
+  **Heather Schell, City Secretary**).** The roll names all six elected members, four staff (City
+  Secretary Heather Schell, Assistant City Secretary Lana Carroll, Code Enforcement Officer Dennis
+  Wagner, City Attorney Jim Shepherd) and **17 named citizens**. Business: staff, attorney, code
+  enforcement, P&Z, **EDC**, financial, Mayor Pro Tem, **Mayor's** and **NVFD** reports; the **Legacy
+  Park Addition** Developers Agreement and Municipal Service Plan; a public hearing and **Ordinance No.
+  2026-4** annexing **57.174 acres in the James Osgood Survey** for **HNJN LLC**; three **Zoning Board of
+  Adjustment** variances (two for **Phillip Hooks**, one for **Abdul Muhammet**); **Ordinance No. 2026-5**
+  moving **$21,000** to Engineering Services for an **SJE Architects** inspection of a church property the
+  city is considering purchasing; **Resolution No. R2026-1**, a **Collin County Road & Bridge Interlocal
+  Cooperation Agreement** (tabled); a proposed **Heavy Truck Ordinance** (tabled); renewal of the
+  **Building Code Consulting Services LLC** agreement; **Ordinance No. 2026-6** revising the **Schedule of
+  Fees** for residential and commercial permitting; a volunteer **pothole-repair** programme (tabled); and
+  **TxDOT** matters (tabled).
+- **`https://cityofnevadatx.org/community/mayors_blog.php`** — rendered in Playwright. **Empty**; see the
+  finding above.
+- **`https://cityofnevadatx.org/government/city_council.php`** — the official Council page, fetched.
+  Confirms **Mayor Donald Deering** and the five council places, and that meetings are the **first
+  Tuesday** monthly at 7 p.m. at 424 E FM 6. **No biography, no policy position and no personal statement
+  from the Mayor or any councilmember**; the only quoted line is the site's generic invitation *"Your
+  voice matters—join us and be part of the conversation!"*, which is boilerplate and attributed to no one.
+- **`https://cityofnevadatx.org/government/agendas_and_minutes.php`** — the archive index, fetched. It
+  exposes roughly **148 minutes documents spanning 2018 to 2026**, including 2026 regular meetings on
+  07.13, 05.05, 04.07, 03.03, 02.03 and 01.06, a 03.10 special meeting, and **Q1 (02.24) and Q2 (05.14)
+  Strategy Meetings**.
+- **`https://cityofnevadatx.org/community/quarterly_newsletter.php`** — the newsletter index, fetched.
+  Five issues: **June 2025, September 2025, December 2025, March 2026 and June 2026**. The **June 2026**
+  issue was downloaded (9.4 MB) as the most recent.
+- **`https://cityofnevadatx.org/`** — the site root, crawled for structure. It also exposes
+  `government/nevada_economic_development_corporation.php`,
+  `government/planning_and_zoning_committee.php`,
+  `government/land_use_assumptions___capital_projects_committee.php`, `government/elections.php`,
+  `government/financial_reports.php`, `government/legal_notices.php`, a **MyGov** public portal
+  (`public.mygov.us/nevada_tx`), the **Nevada Volunteer Fire Department** (`nevadatxfd.org`), and
+  **Nextdoor** and **Facebook** channels.
+- **Ballotpedia:** `https://ballotpedia.org/Donald_Deering_(Mayor_of_Nevada,_Texas,_candidate_2025)`
+  returns **HTTP 404** even with the browser-UA technique that recovered the Lavon and Lowry Crossing
+  pages — i.e. **no Ballotpedia candidate page exists for this person**, which is consistent with
+  Ballotpedia's stated scope boundary and is a settled negative rather than a fetch failure.
+
+**⚠ HOMONYM GATE — "NEVADA" IS A US STATE AND THIS WAS THE PLAN'S HIGHEST-NOISE NAME. MITIGATION
+ACTUALLY APPLIED: the state was never searched around.** Rather than issue name searches that would have
+returned Nevada-the-state results, this town was researched **entirely from its own official domain
+`cityofnevadatx.org` outward** — the council page, the minutes archive, the Mayor's Blog and the
+newsletter index — so no Nevada-state source was ever a candidate. Every document relied on is pinned to
+**Nevada, Collin County, Texas** by the **CITY OF NEVADA, TEXAS** seal, the **424 E. FM 6, Nevada, Texas
+75173** City Hall address, City Secretary **Heather Schell**'s attestation, explicit *"Collin County,
+Texas"* survey and instrument references (James Osgood Survey Abstract No. 673; William Barker Survey
+Abstract No. 50; Old Donation to the Town of Nevada, Volume 36, Page 300), or the Collin County Sheriff
+and Community ISD. The one external political name in the record — **Candy Noble** — is a **Texas State
+Representative**, which corroborates rather than undermines the Texas context. **No Nevada-the-state
+source was used for anything.**
+
+**⚠ ROSTER NOTE (flagged, not acted on).** The May 5, 2026 minutes refer to a Developers Agreement that
+*"was never formally signed by **the former mayor**"*, confirming Deering succeeded a predecessor —
+consistent with the DB row, and the reason item 7.A existed at all. Deering himself is named Mayor by the
+city's own council page, by the minutes roll call, and by his own signature. **The DB row is correct and
+current; no roster-currency item exists for Nevada.**
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **The June 2026 quarterly newsletter was downloaded but NOT read**, and the other four issues were not
+  downloaded. This is the most worthwhile remaining read for this officeholder: a **quarterly city
+  newsletter** is the document class most likely to carry a mayor's column, and Nevada's Mayor's Blog
+  being empty makes the newsletter the only remaining candidate. **Note the standing caution from the
+  Lowry Crossing section: extract `/Author` and `dc:creator` from the PDF before attributing newsletter
+  content to the Mayor** — Lowry Crossing's newsletter turned out to be City-Secretary-authored.
+- **147 of the ~148 available minutes documents were not read**, including the **07.13.2026** regular
+  meeting (more recent than the one read) and both the **Q1 and Q2 2026 Strategy Meetings**. The Strategy
+  Meetings are the highest-value unread minutes: a strategy session is where a mayor's priorities would
+  be stated, and Nevada's minutes have already been shown to attribute statements to him by name.
+  May 5, 2026 was chosen because it was the most recent minute the archive index surfaced with a full URL.
+- **The MyGov portal (`public.mygov.us/nevada_tx`)**, the **Nevada EDC page**, the **P&Z Committee page**,
+  the **Land Use Assumptions & Capital Projects Committee page** and the **financial reports** were not
+  opened.
+- **No council meeting video was located for Nevada.** **Nextdoor and Facebook were not fetched** —
+  Facebook is unreachable from this session and social posts are not treated as evidence absent a direct
+  citable quote.
+- **No Ballotpedia candidate page exists** (404, confirmed with a browser UA). **No VOTE411 or League of
+  Women Voters of Collin County questionnaire** for this seat; `lwvcollin.org` has returned **HTTP 403**
+  all phase and VOTE411 was not attempted per this plan's standing instruction. **No Community Impact,
+  Star Local Media, Princeton Herald, Herald-Banner or Farmersville Times article naming Deering was
+  located. No campaign site. No State-of-the-City address.**
+
+### Donald Deering — Mayor — `47a5349c-ea03-4fcf-8719-948c259a3753`
+
+Sourced: **none.** All 11 topics blank. Mayor of Nevada, Texas; signed the May 5, 2026 minutes as Mayor;
+succeeded a former mayor.
+
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **residential-zoning** — **NO
+  CHAIR. This is the second-strongest near-miss in plan 222-09, it was refused on the CONTENT of the
+  evidence rather than on attribution, and the operator may wish to review the call.** The
+  **Mayor's Report** of **May 5, 2026** — a named section of signed official minutes, so attribution is
+  impeccable — records in full:
+  > *"Mayor Donald Deering reported on the CISD Luncheon where he connected with Candy Noble's
+  > representative regarding contesting a proposed mobile home park. He discussed coordination with
+  > Sheriff Skinner for increased traffic enforcement, particularly for heavy haul trucks. The mayor also
+  > mentioned an off-agenda meeting with MA Partners regarding potential Elevon expansion South of FM 6,
+  > **expressing concerns about development aesthetics and density**."*
+  Two density-restrictive signals about this mayor personally, dated, in a primary document. **It is
+  nonetheless a blank, for four reasons that compound:**
+  **(i) "Expressing concerns about … density" names a topic of concern, not a position on it.** D-04
+  requires an *explicit* on-topic position; hard rule 4 refuses language that merely names a topic as a
+  priority. Nothing here states what rule he favours, what density he would accept, or what he would do.
+  **(ii) It cannot separate chair 1 from chair 2.** Chair 1 is *protect existing neighbourhood character
+  strictly; require community votes before any rezoning*; chair 2 is *allow modest density increases with
+  strong design review and neighbourhood input*. The word "aesthetics" points toward design review
+  (chair 2) and "density" toward restriction (chair 1); the sentence supports both and commits to
+  neither. Picking one would be defaulting, which D-04 forbids even with a real dated source behind it.
+  **(iii) It is a third-person summary of what he "mentioned" about an off-agenda meeting — no words of
+  his survive.** There is no quotation, and the meeting itself was not a public proceeding.
+  **(iv) DECISIVELY, the same night's actual recorded actions point the OTHER way, and contradiction is a
+  blank rather than a tiebreak.** Presiding over the **Zoning Board of Adjustment** that he himself
+  convened at 7:36 p.m., the body approved **two Phillip Hooks variances that permit lots SMALLER than
+  Nevada's ordinance requires** — two single-family residences on 0.610 acres *"subdivided into two lots
+  each measuring 0.305 acres with a lot width of 63.715 feet, where zoning ordinance requires
+  quarter-acre lots and minimum lot width of 100 feet"*, and a merger of four lots into two 0.32-acre
+  lots. Those are **density-permissive** outcomes, carried unanimously with Deering presiding and not
+  dissenting. A mayor reported as privately concerned about density while the board he chairs grants
+  sub-minimum lot variances cannot be placed on this scale.
+  Separately, the **"contesting a proposed mobile home park"** clause was refused on its own terms: the
+  minute does not say Deering is contesting it — it says he *"connected with Candy Noble's representative
+  regarding"* it — the involvement of a **state representative** suggests the site is outside the city's
+  regulatory reach, and opposition to one project is not a statement of the general rule the compass
+  question asks about. Finally, **Nevada's existing large-lot ordinance is the city's condition, not his
+  position**, and was not used as a default.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **growth-and-development** — no
+  chair-locating position on growth pace, and the same Mayor's Report material is refused for the same
+  reasons. Also refused: **Ordinance No. 2026-4**, the **HNJN LLC annexation of 57.174 acres** — Deering
+  *"opened the public hearing at 7:26 PM"*, no public comments were received, he closed it, and the
+  motion was **Laughter's**, seconded by **Baker**, unanimous with no names. Chair 1 of this scale
+  requires *voter approval for major annexations*; he neither proposed nor opposed that, and presiding
+  over an annexation hearing is not a growth-pace position. The **Legacy Park Addition Developers
+  Agreement** was, on the record's own account, a purely **administrative** fix — *"the Developer's
+  Agreement had been previously approved by council but was never formally signed by the former mayor. All
+  civil plans and processes were completed, but this administrative step was missing"* — explained by
+  **Bart Carroll** and moved by **Laughter**. The companion **Municipal Service Plan** was moved by
+  **Wilson**, whose only recorded contribution was a question about the new **Emergency Service District**.
+  The **EDC President Bruce Mathews'** report of *"ongoing contact with two developers and one commercial
+  broker regarding properties within the city's ETJ, with discussions focused on potential annexation"* is
+  **his, not Deering's**.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. Everything available is **road
+  protection, enforcement or maintenance**, all refused by rule 4: his reported *"coordination with
+  Sheriff Skinner for increased traffic enforcement, particularly for heavy haul trucks"*; the proposed
+  **Heavy Truck Ordinance**, which the Council discussed *"to protect city roads from damage caused by
+  heavy commercial vehicles"* with a focus on *"weight limits and enforcement mechanisms"* and which
+  **Deering tabled**; **Resolution No. R2026-1**, the Collin County **Road & Bridge** interlocal, which
+  **Deering tabled** *"pending clarification of the agreement's purpose and necessity"* — a request for
+  information, not a position; the volunteer **pothole-repair** programme, which was tabled and whose only
+  named contribution was **Wilson's** mention of a *"Keep Nevada Beautiful"* tie-in; and the **TxDOT**
+  signal at FM 1138 and County Road 590 with a Fall 2026 completion estimate, reported by the City
+  Secretary and **tabled by Deering with "No action to take."** Nothing on transit, bike lanes,
+  sidewalks, parking requirements, or road capacity as a stated priority.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **public-safety-approach** — no
+  chair-locating position. **Nevada has no municipal police department** in the record read: it relies on
+  the **Collin County Sheriff** and the **Nevada Volunteer Fire Department**. His reported *"coordination
+  with Sheriff Skinner for increased traffic enforcement"* was specifically considered and **refused** —
+  every chair on this scale is about how **your city** funds and operates public safety (redirecting
+  police budget, co-responders, crisis teams, staffing and pay, budget priority), and asking a **county**
+  sheriff for more traffic patrols is neither a city funding decision nor a policing-model choice; it is
+  also a third-person summary of what he *"discussed"*. The **NVFD report** was not given (Chief Chavez
+  Wilson absent). The **Code Enforcement report** concerned vacant-property ownership and issues on Kerens
+  Street. Nothing found on staffing levels, pay, equipment, mental-health co-responders, crisis-response
+  teams, or redirecting police budget.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **economic-development** — no
+  position found on incentives, tax abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. Nevada has an **EDC**, but its activity is reported by **President Bruce Mathews** — the
+  developer and broker contacts, and **Retail Strategies** assisting *"in developing a sales pitch for
+  local landowners"* — and **EDC involvement is adjacency**, explicitly refused. On the **Abdul Muhammet**
+  variance permitting tire service and minor vehicle repair in a Commercial Corridor, the minutes record
+  that *"Council expressed enthusiasm for the business expansion"* — that is the **Council collectively**,
+  not Deering, and enthusiasm for one applicant's expansion is not a position on incentive policy; the
+  motion was **Wilson's**, seconded by **Baker**. **Mayor Pro Tem Wilson's** inquiry about a *"breakdown
+  of sales tax revenue by contributor"* is hers.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **housing** — no position found on
+  what role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy for affordable projects, first-time-buyer assistance, permit
+  streamlining as an affordability instrument, or leaving prices to the market. **The mobile-home-park
+  clause was specifically NOT carried across to this topic** — cross-topic inference is forbidden, and
+  opposition to a particular manufactured-housing project (by whoever was contesting it) states nothing
+  about the government's role in housing affordability.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **homelessness** — no statement or
+  vote found on people sleeping or camping in public spaces. Nevada has no camping ordinance, encampment
+  policy or shelter decision in the record read. The **Code Enforcement** report's *"ongoing efforts to
+  identify ownership of vacant properties within the city"* was examined and refused — vacant-property
+  title research is a code matter, not a public-camping response. The site's **`local_food_pantries.php`**
+  page was noted and not used: listing food pantries is a service directory, not a position.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **local-immigration** — no statement
+  found on any police relationship to federal immigration enforcement, ICE detainers, or information
+  sharing. **Nevada has no police department**, relying on the Collin County Sheriff, so the topic's
+  premise barely applies and nothing was inferred. **Texas SB 4 is state law, not his position**, and was
+  not used as a default.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **civil-rights** — no on-topic
+  position found on racial or social inequality. Nothing in the minutes read, the empty Mayor's Blog, the
+  official site, or any press engages that axis. **No inference was drawn from any identity, demographic,
+  religious or affiliation characteristic** — and this is worth stating explicitly for Nevada, because the
+  May 5, 2026 roll of attendees includes residents and applicants with visibly diverse names (among them
+  the applicant on variance 8.C). **No inference of any kind, in any direction, was drawn from any
+  person's name, ethnicity or religion**, for Deering or anyone else; that inference class is forbidden and
+  was the basis of deletions from two Richardson records on 2026-07-25. That **EDC President Bruce
+  Mathews led the invocation** is likewise not evidence of any position.
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **taxes** — **researched, no chair
+  written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was found
+  even for the register.** Deering's one budget-related contribution is administrative: he *"explained
+  that the $21,000 budget amendment was for SJE Architects to conduct an inspection of the church property
+  the city is considering purchasing"*, an inspection which *"revealed options for making the building
+  occupiable, including either installing fire sprinklers or building fire separation walls"* — that is a
+  **line-item transfer** from City Property Maintenance to Engineering Services for a **capital
+  acquisition due-diligence** step, moved by **Laughter**, and per rule 4 **capital-project attribution is
+  not a funding-level position**. **Ordinance No. 2026-6** revising the **Schedule of Fees** with
+  *"increases to OSSF-related fees and reinspection fees to ensure cost recovery for city services"* is
+  **fee ratemaking, refused as taxes evidence** by rule 1, was explained by the City Secretary and moved by
+  **Wilson**. **FY 2026-2027 Budget** appears only as a future agenda item. Chairs 1–2 require raising
+  taxes specifically on wealthy people and large companies; chairs 4–5 require committing to scale public
+  services back. Nothing found does either. **No taxes row was written.**
+- Donald Deering — Nevada — `47a5349c-ea03-4fcf-8719-948c259a3753` — **healthcare** — no statement found
+  on healthcare access. Expected: all five chairs describe **national** healthcare policy, which the mayor
+  of a Collin County town holds no position on by role. The **Emergency Service District** referenced in
+  the Legacy Park municipal-service-plan discussion is an emergency-services taxing district raised by
+  **Wilson**, not a healthcare-coverage position. No health-adjacent remark was stretched into a chair.
+
+**Nevada reconcile:** Donald Deering appears in **bucket 2 for all 11 topics** and in bucket 1 for none.
+He is the only Nevada name in plan 222-09's scope and he is accounted for — not in neither bucket, not in
+both. Nevada's council seats are out of this plan's scope and belong to 222-14/222-15/222-16/222-17.
+**Nevada therefore does NOT flip to `hasContext: true` in `src/lib/coverage.js` from this plan**
+(RESEARCH.md Pitfall 5) — it remains at zero stances. **Note for the council plans: Nevada's minutes are
+unusually attributive** — they name movers, seconders, staff, citizens and a per-officeholder report
+section — so the council members are considerably more researchable here than the mayor, with the caveat
+that vote tallies carry no names.
 
 ---
