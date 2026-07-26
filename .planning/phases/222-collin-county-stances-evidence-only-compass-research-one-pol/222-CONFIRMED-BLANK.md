@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 446
+## Count: 468
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -63,6 +63,9 @@ so the total is deliberately unchanged and **no pair is double-counted**. See th
 + 55 by 222-10 part A (Anna council — 11 Toten + 11 Bryan + 11 Walden + 11 Baker + 11 Singh; all five
 council members fully blank, 55 of 55 attempted pairs; all five zeros are **SETTLED**, none an access
 failure — **222-10 cracked Anna's minutes archive**, closing the named retry path 222-08 opened).
++ 22 by 222-10 part B (Murphy council — 11 Ison + 11 Kelley; both council members fully blank, 22 of
+22 attempted pairs; both zeros are **SETTLED**, and three on-topic near-misses were refused on the
+record rather than rounded up). **222-10 COMPLETE: 77 of 77 attempted pairs blank across 7 people.**
 222-11 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -81,6 +84,7 @@ operator approval; 1422 is authored and committed but **not yet applied**:
 | **`1424_222_collin_mayors_a_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-08** (D-02 mayors sweep part A: Anna, Fairview, Farmersville, Parker, Lucas). **Zero chairs across all five mayors — 55 of 55 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan. There is no SQL for the operator to apply for 222-08; **Task 3's apply step is a no-op**, and the only operator action 222-08 requests is the VOTE411 403 retry described in the Lucas section. The next research plan should re-derive the next free migration number rather than assuming 1424 is taken. | **N/A — NO MIGRATION (all-blank outcome)** |
 | **`1424_222_collin_mayors_b_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-09** (D-02 mayors sweep part B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne). **Zero chairs across all eight mayors — 88 of 88 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan, and **no `git push` was executed against that remote.** There is no SQL for the operator to apply for 222-09; **Task 3's apply step is a no-op.** **1424 is therefore still free, having now been left unclaimed by both 222-08 and 222-09** — the next research plan must re-derive it. The operator actions 222-09 requests are: **(a)** close the Phase 221 **Saint Paul roster-currency item** in the DB's favour; **(b)** re-run every earlier Ballotpedia "empty body" with a browser `User-Agent`, starting with the Lee Pettle / Parker page 222-08 flagged as its top retry; **(c)** close, rather than retry, 222-08's `citizenportal.ai` lead (reachable but AI-generated); and **(d)** optionally review the three refusals named in the 222-09 outcome block. | **N/A — NO MIGRATION (all-blank outcome)** |
 | **`1424_222_plano_ballotpedia_gapfill_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | The unplanned **Plano Ballotpedia gap-closure insert** of 2026-07-25 (post-222-09 User-Agent discovery). Re-researched **25** (person, topic) pairs for Bob Kehr, Maria Tu, Shun Thomas and Steve Lavine against the four Ballotpedia Candidate Connection surveys that plan 222-04 could not read. **Zero chairs — all four surveys are generic campaign copy — so per the insert's own instruction no migration file was created and 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` and **no `git push` was executed** against that remote; **no database query was run and nothing was applied.** **1424 is therefore STILL FREE, now unclaimed by 222-08, 222-09 and this insert.** Operator items it raises: **(a)** decide whether to read **Burt Thakur's 3 Ballotpedia surveys** (Frisco Place 2, already-stanced cohort, deliberately not touched); **(b)** optionally review the three refusals in the insert's self-audit, chiefly Lavine / growth-and-development; **(c)** note that new primary-source evidence was found on **five topics these people already hold** and no row was written for any of it (D-07). | **N/A — NO MIGRATION (all-blank outcome)** |
+| **`1424_222_anna_murphy_councils_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-10** (Anna council + Murphy council; the mayors of both cities were handled in 222-08 / are out of scope under D-07). **Zero chairs across all seven council members — 77 of 77 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan, **no `git push` was executed** against that remote, **no database query was run and nothing was applied.** There is no SQL to apply for 222-10; **Task 3's apply step is a no-op.** **1424 is therefore STILL FREE, now unclaimed by 222-08, 222-09, the Plano gap-closure insert, and 222-10** — the next research plan must re-derive it. Two standing phase questions are answered: **Anna's council minutes ARE readable** (via the CivicClerk OData API behind the SPA — full method in the Anna section; Anna's zeros move from *access failure* to **SETTLED**), and **Ballotpedia has pages for 6 of these 7 people but ZERO completed Candidate Connection surveys** (its verbatim reproduction of Murphy's two campaign-website platforms was still the most useful thing it gave). Operator items: **(a)** review the Ison / `growth-and-development` near-miss; **(b)** review the Kelley-moved, Ison-seconded police-FTE motion refused as a military-leave backfill; **(c)** OCR Anna's 17 scanned 2024 minutes PDFs; **(d)** Anna's Swagit council video is now the highest-value unread Anna source; **(e)** `votekevinkelley.com` fails TLS handshake with no Wayback capture; **(f)** `gathergov.com` (403) looks like another AI-synthesis site in the `citizenportal.ai` class — recommend closing rather than retrying. | **N/A — NO MIGRATION (all-blank outcome)** |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
 Migration 1422 is excluded from that total until the operator applies it. **Plans 222-08 and 222-09
@@ -90,6 +94,9 @@ covering **all 13 mayors** in the D-02 mayors sweep, plus the retry leads and co
 — it adds **0** register blanks (all 25 pairs it re-examined were already registered by 222-04 part A)
 and instead settles the open question of whether the phase-wide Ballotpedia User-Agent block cost the
 project real evidence in its highest-evidence city. It did not.
+**Plan 222-10 likewise changes production by nothing at all** — it adds **77 register blanks**
+(55 Anna council + 22 Murphy council) covering all seven un-stanced council members of the two
+cities, and it closes 222-08's named Anna-minutes retry path by cracking the archive.
 
 ---
 
@@ -6664,4 +6671,390 @@ His attributed quotes, and the refusal for each:
   **local-immigration** — no position found; no such item. **civil-rights** — no position found; **no
   identity inference was made.** **taxes** — researched, no row written; his bio's "data-driven
   approach" is not a tax position. **healthcare** — no position found.
+
+
+---
+
+## City of Murphy (4850100) — 222-10
+
+**Scope.** Plan 222-10 researches **the two un-stanced COUNCIL MEMBERS only** of Murphy. **Mayor
+Scott Bradley is out of scope under D-07** — he already holds a stance, was cut from 222-08's scope
+for exactly that reason, and none of his rows was read or modified. **Elizabeth Abraham (Place 1),
+W. Scott Smith (Mayor Pro Tem, Place 2), Ken Oltmann (Deputy Mayor Pro Tem, Place 4) and Jené Butler
+(Place 6) are likewise out of scope under D-07** — all four already hold stances and none of their
+rows was touched. Both in-scope people were re-derived live against production by the orchestrator on
+2026-07-25 and confirmed at `stance_count = 0` before research began.
+
+**Attempted:** 2026-07-25 — **2 people × 11 canonical topics = 22 (person, topic) pairs.**
+
+| Person | Title | politician_id | Term |
+|---|---|---|---|
+| Debbie Ison | Council Member Place 3 | `bb9bed2f-cf0c-4997-9676-e5314ee1d7e0` | elected May 2, 2026; sworn in May 19, 2026; 3-year term |
+| Kevin Kelley | Council Member Place 5 | `4220560f-5c74-4c92-9a35-e2a7cecb69da` | elected May 2, 2026; sworn in May 19, 2026; 3-year term |
+
+**Result: 0 chairs. All 22 pairs are honest blanks.** Both zeros are **SETTLED**, not access failures.
+Murphy is a 222-RESEARCH.md §C **Tier "Medium"** city and it behaved like one — this is the
+best-sourced small city in the phase so far. Both people have a Ballotpedia page, a campaign website
+whose issue platform Ballotpedia reproduces **verbatim**, a published local-newspaper candidate
+statement, a searchable CivicWeb minutes portal, and a full council voting record. **Every one of
+those was opened and read.** The evidence exists; it simply does not locate a chair on any of the 11
+scales, and three separate near-misses were refused on the record rather than rounded up.
+
+**A structural caveat that matters for interpreting this zero:** both members were **sworn in on
+May 19, 2026 — nine weeks before this research**. Their entire officeholding record consists of three
+regular council meetings (June 2, June 16, July 21) and three budget work sessions (May 27, June 30,
+July 7). Every one of those was located and every published document from all six was read. The
+governing record is genuinely thin because it is genuinely short, and their **campaign** record —
+which is the substantive part — was researched in full.
+
+---
+
+**Evidence checked** (every item was fetched and read this session unless listed as unavailable):
+
+- **Ballotpedia, via `curl` with a browser User-Agent, for both.** Answering the standing phase
+  question: **both have real, disambiguated, Texas-confirmed pages.**
+  - `ballotpedia.org/Debbie_Ison_(Murphy_City_Council_Place_3,_Texas,_candidate_2026)` — 95,883 bytes.
+  - `ballotpedia.org/Kevin_Kelley_(Murphy_City_Council_Place_5,_Texas,_candidate_2026)` — 98,108 bytes.
+  - **Neither completed the Candidate Connection survey.** However — and this is the useful part —
+    **Ballotpedia reproduces each candidate's campaign-website issue platform verbatim** under
+    "Campaign themes → Campaign website", both dated **April 13, 2026**, each closing with the note
+    *"This text is quoted verbatim from the original source."* Both blocks are quoted in full below.
+- **Debbie Ison's campaign website, `debbieformurphy.com`** — **live, fetched and read in full**, and
+  **independently re-fetched during the self-audit**. Its four-point "Debbie on the Issues" section
+  matches Ballotpedia's reproduction word for word, so the Ballotpedia excerpt was verified against
+  the primary source rather than trusted.
+- **The Murphy Monitor (`murphymonitor.com`, Star Local Media / C&S Media)** — searched for both
+  surnames and every council-related result read. **This is the most valuable Murphy source and it is
+  a genuine candidate-questionnaire equivalent**: the April 16, 2026 article "Early voting starts
+  April 20" carries a *"The following council candidates have submitted a brief biography to the
+  Murphy Monitor"* section giving each of the six council candidates several paragraphs of their own
+  attributed, quoted words. **Both Ison's and Kelley's entries were read in full and are quoted
+  below.** Also read: "City election set for May 2" (2026-02-19), "Council changes coming to City
+  Hall" (2026-05-07), "New councilmembers sworn in for 3-year terms" (2026-05-28), "Unofficial final
+  voting totals" (2026-05-02).
+- **Murphy's CivicWeb minutes portal, `murphytx.civicweb.net/Portal/`.** Murphy's CivicPlus
+  `AgendaCenter` is **empty** — its RSS feed (`RSSFeed.aspx?ModID=65&CID=All-agendacenter`) returns a
+  channel with **zero items** and the page itself renders results client-side — and its
+  `ArchiveCenter` stops in **2017**. The live record is on CivicWeb. All six meetings inside Ison's
+  and Kelley's terms were located via `MeetingTypeList.aspx` and their full packets downloaded and
+  text-extracted:
+  - City Council 02 Jun 2026 (Id 11067, 20.4 MB, 78 pp) · 16 Jun 2026 (Id 11068) · 21 Jul 2026 (Id 11084)
+  - Budget Work Session 27 May 2026 (Id 11075) · 30 Jun 2026 (Id 11070) · 07 Jul 2026 (Id 11090)
+  - As in Anna, **the minutes ride inside the packets** as consent-item attachments. Murphy's minutes
+    are likewise **action minutes**: mover, seconder, tally, no reasoning.
+- **Murphy's public Attendance & Voting portal, `/Portal/VotingRecords.aspx`.** Both members are
+  registered in it (Ison memberId `3323`, Kelley memberId `132`) and the ASP.NET postback was executed
+  for each with the member selected. **Both queries return an empty results panel** — Murphy publishes
+  no per-member roll-call data through this feature. Recorded as checked-and-empty, not as evidence.
+- **Murphy's official council roster, `murphytx.org/1961/City-Council`** — read; it lists Deborah Ison
+  Place 3 and Kevin Kelley Place 5, confirming the seat titles on the worklist. **There are no
+  individual officeholder bio pages** — Murphy publishes names and seats only, so there is no
+  bio-page content to refuse.
+- **The city's own election page** `murphytx.org/757/Elections` and **NBC 5 DFW's Collin County
+  May 2, 2026 ballot guide** — both read; both are ballot listings with no candidate positions.
+- **WebSearch** for both by name against Community Impact Newspaper, candidate forums, and DFW
+  broadcast outlets. **No candidate forum, no Community Impact Q&A and no policy interview exists for
+  either that this session could find.**
+
+**Sources checked but unavailable this session:**
+
+- **`https://www.votekevinkelley.com/` — UNREACHABLE.** `curl` over HTTPS fails with
+  `SSL routines:OPENSSL_internal:HANDSHAKE_FAILURE_ON_CLIENT_HELLO`; the `http://www.` form returns
+  **HTTP 409**; `WebFetch` fails with the same TLS handshake error. **The Internet Archive holds no
+  capture at all** (`archived_snapshots: {}`). **Retry path: a real browser with a modern TLS stack.**
+  **Mitigation, which is substantial:** Ballotpedia reproduces this site's complete "Key Issues"
+  section verbatim as of **April 13, 2026**, and that reproduction was read in full — so the site's
+  policy content is not actually missing from this analysis, only its live copy.
+- **Murphy Monitor articles are partially paywalled** — several council-meeting stories truncate at
+  *"Read the full story and stay informed — subscribe to Murphy Monitor."* The April 16 candidate-
+  statement article, which is the one that matters, is **not** truncated and was read complete.
+- **Kelley's campaign Facebook page** (`facebook.com/profile.php?id=61588621269922`) and **Ison's
+  campaign Facebook** — Facebook is not fetchable from this environment, and social posts are not
+  treated as evidence of a policy position absent a direct citable quote.
+- **`lwvcollin.org` / VOTE411** — not retried; `lwvcollin.org` has returned HTTP 403 for this entire
+  phase and VOTE411's post-election guides were confirmed decommissioned (403, "Voter Guide Toolkit:
+  Forbidden Page") in wave 9.
+- **The July 21, 2026 meeting's minutes are not yet published** — under Murphy's convention they will
+  appear in the August packet. Nothing in the July 21 *agenda* is on-topic for any of the 11 scales.
+
+**⚠ HOMONYM TRAP REJECTED — "Kevin Kelley" is a genuinely dangerous name.** The bare
+`ballotpedia.org/Kevin_Kelley` resolves with HTTP 200, but it is a **disambiguation page** reading
+*"Kevin Kelley may refer to: Kevin J. Kelley (Ohio) · Kevin Kelley (Maine)"* — neither is the Murphy,
+Texas member. Separately, the Murphy Monitor's archive surfaces a **high-school athlete named
+Kelley** in Plano East sports coverage from 2021–2022, and `bare ballotpedia.org/Debbie_Ison` and
+`Deborah_Ison` both return the 51 KB 404 stub. Only the disambiguated, Texas-confirmed
+`..._(Murphy_City_Council_Place_N,_Texas,_candidate_2026)` pages were used. Every source accepted
+below names **Murphy, Texas** explicitly — the homonym gate was applied deliberately given Murphy is
+also a city in North Carolina and Idaho and an extremely common surname.
+
+**⚠ MISATTRIBUTION GUARD.** The April 16, 2026 Murphy Monitor article carries statements from **six**
+council candidates in sequence — Chase, Ison, Deel, Varghese, Kelley, Fincanon. Attribution was
+checked candidate-by-candidate before any passage was used, because three of the four Place 5
+statements read superficially alike. In particular, **Laura Deel's** *"The city needs to stay
+proactive through smart planning, continued investment in aging infrastructure… By thinking ahead, we
+can manage growth"* and **Manoj Varghese's** *"sustainable growth"* platform are **not Kelley's** and
+were set aside; **Andrew Chase's** transportation material (*"Additional turn lanes and synchronized
+traffic lights should be considered"*) is **not Ison's** — Chase is the Place 3 **incumbent she
+defeated**, and his passage sits directly above hers on the page. Misreading that adjacency would
+have produced a fabricated transportation chair for Ison. Every date was also checked against the
+right term.
+
+---
+
+### ⚠ THREE NEAR-MISSES, ALL REFUSED — the most important output of this section
+
+**1. Kelley MOVED, and Ison SECONDED, the addition of a Police Department position (June 2, 2026).**
+This is the closest any evidence in this plan came to a chair, and reading the underlying staff report
+is what killed it. The June 2, 2026 minutes (read inside packet Id 11068) record:
+
+> *"F. Consider and/or Act on authorizing the addition of 1 full-time equivalent (FTE) position within
+> the Police Department… Police Chief Jeff Gibson presented the item. COUNCIL ACTION: APPROVED.
+> Council Member Kevin Kelley moved to approve the addition of 1 full-time equivalent (FTE) position
+> within the Police Department. Council Member Debbie Ison seconded the motion. For: Unanimous. The
+> motion carried by a vote of 7-0."*
+
+On its face that is an affirmative, sponsored, on-topic action toward `public-safety-approach` chair 4
+("Increase police staffing, equipment, and pay…"), and the phase already has a precedent for setting a
+chair on a recorded vote (migration 1423, Longview `homelessness` = 5). **It is refused, because the
+staff report in the June 2 agenda packet (Id 11067) says what the motion actually was:**
+
+> *"Currently, 1 Police Officer is on military leave expected to exceed twelve 12 months, which has
+> created a staffing gap affecting patrol operations. To maintain adequate staffing levels and support
+> operational continuity during this extended absence, staff requests authorization to add and fill 1
+> of the anticipated FTE positions in FY2026… **There is no anticipated financial impact to the
+> General Fund, as the position being filled corresponds to the employee currently on unpaid military
+> leave.**"*
+
+It is a **temporary backfill for an officer on military leave, with zero net budget impact** — a
+staffing-continuity action, not an increase in police strength. Chair 4 requires an actual increase;
+chair 3 requires crisis-response teams; neither is present. **Maintenance framing is a named refusal
+class in this plan**, and this is maintenance framing with the numbers to prove it. Refused for both
+members. *(The same report notes that "2 additional Police Officer positions have been informally
+supported for inclusion in FY2027" — staff characterising prior council discussion **collectively and
+unattributed**, at a time when neither Ison nor Kelley had been seated for the discussion. Refused as
+relaying a collective, and as outside their term.)*
+
+**2. Ison on growth and infrastructure — the strongest textual near-miss in the plan.** From her
+Murphy Monitor candidate statement (2026-04-16), verbatim:
+
+> *"Our roads, facilities, and public safety resources were built for a much smaller community, and
+> we're now feeling the strain… I believe the city needs proactive, long-term planning to ensure we
+> maintain the high quality of life residents expect staying ahead of regional growth pressures."*
+
+`growth-and-development` chair 3 reads *"Plan proactively — invest in infrastructure ahead of growth
+to support responsible expansion,"* and the verbal overlap ("proactive… planning", "staying ahead of…
+growth") is close enough that it deserves to be recorded rather than silently dropped. **It is
+refused on two independent grounds.** First, **it does not discriminate**: a holder of chair 2
+("Allow growth only where existing infrastructure can support it; slow approvals until capacity
+catches up") would say this sentence at least as readily as a holder of chair 3 — "built for a much
+smaller community and we're now feeling the strain" is, if anything, chair 2's diagnosis. A statement
+compatible with two chairs locates neither. Second, her subject is **maintaining existing assets
+against growth happening in *surrounding* cities** (her campaign site's own framing: *"With
+significant new development planned in surrounding areas…"*; Murphy is effectively built out and
+landlocked), which is **maintenance framing** — a named refusal class — and not a position on how
+Murphy should manage its own development pace. **Flagged for operator review as the single closest
+call in this plan.**
+
+**3. Kelley on growth, traffic and community character.** From the same article, verbatim:
+
+> *"Murphy is growing, and it is important that infrastructure, traffic management, and public safety
+> resources keep pace while protecting the character of our community."*
+
+**Refused on three scales at once.** For `growth-and-development`: "keep pace" is maintenance framing
+and names no pace, gate or permitting posture. For `transportation-priorities`: naming traffic
+management as important is a priority statement, and every one of that scale's five chairs is a
+**mode tradeoff** between road capacity and pedestrian/cycling/transit investment — he chooses
+neither. For `residential-zoning`: *"protecting the character of our community"* is a **character
+remark**, and this phase has already ruled that a character remark does not set `residential-zoning`,
+whose every chair is a housing-density proposition. Refusing all three is deliberate.
+
+---
+
+**`taxes` (`f7e5678d-dadd-4556-a2fc-446e24642ceb`) — researched for both, NO ROW WRITTEN FOR EITHER**,
+per the settled operator ruling of 2026-07-25. Findings preserved:
+
+- **Debbie Ison**, campaign website (2026-04-13) and Murphy Monitor (2026-04-16): *"Being fiscally
+  responsible means treating every tax dollar with care. We must support decisions that prioritize
+  essential services, maintain infrastructure, and invest in projects with long-term value"* and
+  *"I understand the importance of strong infrastructure, responsible budgeting and supporting our
+  first responders."* Generic fiscal-stewardship language; it neither raises taxes on the wealthy nor
+  scales services back, so only the structurally-unreachable middle chair would fit — the exact defect
+  the ruling exists to prevent.
+- **Kevin Kelley**, campaign website (2026-04-13): *"Fiscal Responsibility — Managing taxpayer dollars
+  wisely while maintaining essential city services."* Same class.
+- Neither has voted on a Murphy tax rate: the FY2027 rate had not been set as of July 25, 2026 (the
+  budget work sessions of May 27, June 30 and July 7, 2026 were all read and none adopts a rate). The
+  Murphy Monitor's June 4, 2026 "City proposes tax increase of less than 1 cent" describes a
+  **proposal**, not a recorded vote by either member.
+- Also refused as taxes evidence under the standing exclusions: the May 2, 2026 ballot proposition
+  reauthorising one-fourth of 1% of sales-tax receipts **for street maintenance and repair** — a
+  voter-approved dedication, not either member's position.
+
+**`healthcare` (`e8dad4a8-…`)** — searched for both; blank for both, as expected. All five chairs
+describe national healthcare policy, which no Murphy council member holds a position on by role.
+
+---
+
+### Debbie Ison — Council Member Place 3 — `bb9bed2f-cf0c-4997-9676-e5314ee1d7e0`
+
+Sourced: **none. All 11 topics blank.** Defeated two-term incumbent Andrew Chase on May 2, 2026,
+1,580 votes to 876 (64.33%), and was sworn in May 19, 2026. A 20-year Murphy resident, 25 years in
+the corporate financial sector including 22 at Bank of America.
+
+Her complete campaign platform, quoted verbatim from `debbieformurphy.com` (re-verified live during
+the self-audit) and reproduced identically by Ballotpedia as of 2026-04-13:
+
+> **01 CITY INFRASTRUCTURE — MAINTAIN OUR FOUNDATION.** *"Maintaining and reinvesting in Murphy's
+> existing city resources is essential. As our streets, municipal complex, and other core
+> infrastructure age, we must prioritize responsible planning to ensure these assets remain safe and
+> functional for our growing community."*
+> **02 CITY BUDGET — FISCAL RESPONSIBILITY.** *"Being fiscally responsible means treating every tax
+> dollar with care…"*
+> **03 SUPPORT FIRST RESPONDERS — BACKING FIRE & POLICE.** *"Our police and firefighters play an
+> essential role in keeping Murphy safe. Standing behind them is a commitment to the safety,
+> stability, and well-being of our entire city."*
+> **04 SMART DEVELOPMENT — MANAGE GROWTH.** *"With significant new development planned in surrounding
+> areas, we must proactively plan for the impacts this growth will have on Murphy's resources and
+> infrastructure."*
+
+- **public-safety-approach** — no position found. **REFUSED.** Point 03 is *"support our first
+  responders"*, which this plan names explicitly as a blank: it takes no position on funding levels,
+  crisis-response teams, co-responders or budget priority, which is what all five chairs measure. Her
+  **second** to Kelley's police-FTE motion is refused as a military-leave backfill — see near-miss 1.
+- **growth-and-development** — no position found. **REFUSED** — see near-miss 2, the plan's closest
+  call. Points 01 and 04 are maintenance framing about absorbing *other cities'* growth, and are
+  compatible with chairs 2 and 3 alike.
+- **residential-zoning** — no position found. Nothing on density, duplexes, ADUs, upzoning,
+  single-family zoning or community rezoning votes. She **recused herself** at 7:06 p.m. on May 19,
+  2026 for an investment-advisory contract item — a financial-sector conflict, unrelated to zoning and
+  not a position on anything.
+- **transportation-priorities** — no position found. Point 01 names "streets" as an asset to maintain;
+  every chair on this scale is a **mode tradeoff**, and she makes none. Andrew Chase's turn-lane and
+  signal-synchronisation material in the same article is **his, not hers** — see the misattribution
+  guard.
+- **economic-development** — no position found. She voted for a Chapter 380 Development Agreement on
+  June 2, 2026, **but only as one line inside a bundled consent agenda** moved by Butler and seconded
+  by Smith and carried 7-0. A bundled, unexplained consent vote is not a position on the incentives
+  scale.
+- **housing** — no position found. Nothing on affordability, subsidy, rent regulation or market
+  provision.
+- **homelessness** — no position found. **No Murphy council document inside her term mentions public
+  camping, encampments or homelessness.** Structural.
+- **local-immigration** — no position found. **No immigration, sanctuary, ICE or 287(g) item appears
+  in any Murphy document read.** Structural.
+- **civil-rights** — no position found. Nothing on equity requirements, civil-rights enforcement or
+  race-conscious programs. **No identity inference was made.** Her church Mission Committee chairmanship
+  and City of Murphy Community Involvement Committee service are **adjacency** and were refused.
+- **taxes** — **researched; no row written by operator ruling.** See the `taxes` block above.
+- **healthcare** — no position found.
+
+### Kevin Kelley — Council Member Place 5 — `4220560f-5c74-4c92-9a35-e2a7cecb69da`
+
+Sourced: **none. All 11 topics blank.** Won a four-way Place 5 race on May 2, 2026 with 1,490 votes
+(60.47%), unseating incumbent Laura Deel, and was sworn in May 19, 2026. A 14-year Murphy resident who
+**served 20 years with the Dallas Police Department** — community affairs, crime scene investigations,
+intelligence and the neighborhood policing unit — and now oversees emergency preparedness and security
+operations for a commercial real-estate company.
+
+His complete campaign platform, quoted verbatim as Ballotpedia reproduced `votekevinkelley.com` on
+2026-04-13 (the live site is unreachable — see unavailable sources):
+
+> **Key Issues.** *"One of the reasons I decided to run for Murphy City Council is my belief that
+> public service should never become a permanent career. I strongly support implementing term limits
+> for city council members… My philosophy is simple: leadership should be about service, not tenure.
+> That is why I support a two-term limit for council members."*
+> **Economic Development** — *"Supporting local Murphy businesses and creating quality jobs to
+> strengthen our local economy."*
+> **Fiscal Responsibility** — *"Managing taxpayer dollars wisely while maintaining essential city
+> services."*
+> **Public Safety** — *"Ensuring our neighborhoods are safe through community policing and emergency
+> preparedness."*
+
+**His term-limits advocacy is his clearest and most developed position, and it is not one of the 11
+compass topics.** Recorded here so the record shows it was found, weighed and correctly excluded
+rather than missed. He acted on it in office only in the procedural sense — on June 2, 2026 he moved
+to elect Ken Oltmann as Deputy Mayor Pro Tem, an officer election, not a term-limits measure.
+
+- **public-safety-approach** — no position found. **REFUSED on three independent grounds.** (a) *"safe
+  through community policing and emergency preparedness"* — none of the five chairs is about community
+  policing philosophy; they are about funding levels, co-responders, crisis teams and budget priority,
+  and he addresses none. (b) His 20 years at Dallas PD and his current security-operations role are
+  **profession**, a named refusal class — a career police officer may hold any of the five chairs.
+  (c) His police-FTE **motion** of June 2, 2026 is a military-leave backfill with explicitly zero net
+  General Fund impact — see near-miss 1. This is the single most tempting refusal in the plan and it
+  is refused deliberately.
+- **economic-development** — no position found. **REFUSED.** *"Supporting local Murphy businesses and
+  creating quality jobs"* names a priority, not a mechanism. Chair 2 requires small-business support
+  **"only; avoid large corporate subsidies"** and he says nothing about subsidies; chair 3 requires
+  **targeted incentives with community benefit agreements and job quality requirements** and he
+  proposes no incentive instrument. "Quality jobs" as an aspiration is not a job-quality requirement.
+  He also voted for the June 2, 2026 Chapter 380 Development Agreement **inside a bundled consent
+  agenda** — unexplained and bundled, therefore not a position.
+- **growth-and-development** — no position found. **REFUSED** — see near-miss 3, "keep pace" is
+  maintenance framing.
+- **transportation-priorities** — no position found. **REFUSED** — see near-miss 3. *"address traffic
+  congestion"* and *"traffic management"* name a problem; the scale requires choosing between road
+  capacity and multimodal investment, and he chooses neither. Laura Deel's and Manoj Varghese's
+  transportation material in the same article is **theirs, not his**.
+- **residential-zoning** — no position found. **REFUSED** — *"protecting the character of our
+  community"* is a character remark, not a density proposition; see near-miss 3.
+- **housing** — no position found. Nothing on affordability, subsidy, rent regulation or market
+  provision.
+- **homelessness** — no position found. No such item exists in any Murphy document inside his term.
+  Structural.
+- **local-immigration** — no position found. No immigration, sanctuary or ICE item appears in any
+  Murphy document read — notable given his police background, which was **not** used to infer
+  anything. Structural.
+- **civil-rights** — no position found. His Dallas PD "community affairs" assignment is **profession
+  and adjacency** and was refused; it is not a civil-rights position. No identity inference was made.
+- **taxes** — **researched; no row written by operator ruling.** See the `taxes` block above.
+- **healthcare** — no position found.
+
+---
+
+## Plan 222-10 outcome (Anna + Murphy councils) — no migration authored
+
+**7 people attempted, one at a time, in the order Toten → Bryan → Walden → Baker → Singh → Ison →
+Kelley. 77 (person, topic) pairs. 0 chairs. 77 honest blanks.**
+
+Per the plan's own instruction, **no migration file was created and migration number 1424 was NOT
+claimed.** **1424 is therefore still free, now left unclaimed by 222-08, 222-09, the 2026-07-25 Plano
+Ballotpedia gap-closure insert, and this plan.** The next research plan must re-derive it rather than
+assume it is taken. **Nothing was committed to `C:/EV-Accounts` by this plan and no `git push` was
+executed against that remote. No database query was run and nothing was applied** — this executor has
+no Supabase binding. **Task 3's apply step is a no-op**; the only thing to confirm at the checkpoint is
+that the register documents all seven people, which it does.
+
+**Self-audit.** The resample floor for two Medium-tier cities is 100% of any value-1 or value-5 stance
+plus a 20% sample of the rest. **No stance survived, so there was nothing to resample.** Instead, the
+three decisive primary documents behind the three refusals were **independently re-fetched with
+`curl`** (which bypasses WebFetch's 15-minute per-URL cache) and each cited passage confirmed present,
+correctly attributed and correctly dated: the Murphy Monitor candidate-statement article, the June 16
+CivicWeb packet containing the June 2 police-FTE motion, and Ison's live campaign site. All three
+passed. **Three refusals are reported above in place of demotions**, since nothing was ever promoted.
+
+**What this plan changes for the phase.** Two standing open questions are now answered:
+1. **Anna's minutes are readable.** The 222-08 retry path is closed, with a reproducible method
+   recorded in the Anna section. Anna's five council zeros move from *access failure* to **SETTLED**.
+2. **Ballotpedia coverage of these towns.** Six of the seven people have real Ballotpedia pages
+   (all but Kevin Toten); **zero of the seven completed a Candidate Connection survey.** For Murphy,
+   Ballotpedia's verbatim reproduction of both dead-or-unreachable campaign websites was nonetheless
+   the most useful thing it provided. Two homonym traps were caught on bare-name Ballotpedia URLs.
+
+**Operator items this plan raises:**
+- **(a)** Review near-miss 2 — **Ison / `growth-and-development`** — the closest call in the plan.
+- **(b)** Review near-miss 1 — **Kelley and Ison / `public-safety-approach`** — an affirmative, named,
+  on-topic motion and second, refused only because the staff report shows it is a military-leave
+  backfill with zero net budget impact.
+- **(c)** **Anna's 17 scanned 2024 `Minutes` PDFs need OCR** if anyone wants the pre-August-2024
+  record; only Toten (and Bryan, in his earlier service) was seated for it.
+- **(d)** **`annatx.new.swagit.com/views/445`** — Anna's council video — is now the single
+  highest-value unread Anna source, because the written minutes are action-only and the deliberation
+  is only on video.
+- **(e)** **`https://www.votekevinkelley.com/`** fails TLS handshake from this environment and has no
+  Wayback capture; a real browser could confirm whether it holds more than Ballotpedia's April 13,
+  2026 reproduction.
+- **(f)** **`gathergov.com` returned HTTP 403** and appears to be another AI-generated municipal
+  synthesis site in the `citizenportal.ai` class. Recommend **closing** it rather than retrying, and
+  recording it alongside `citizenportal.ai` as non-citable under D-05 — but verify before ruling.
 
