@@ -42,14 +42,14 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 270
+## Count: 281
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
 + 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
 + 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview)
-+ 22 by 222-08 so far (11 Anna + 11 Fairview).
++ 33 by 222-08 so far (11 Anna + 11 Fairview + 11 Farmersville).
 222-09 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -2669,6 +2669,234 @@ Sourced: **none.** All 11 topics blank. Elected mayor May 2025 after serving on 
 none. He is the only Fairview name in plan 222-08's scope and he is accounted for — not in neither
 bucket, not in both. Fairview's Town Council seats are out of this plan's scope and belong to
 222-11/222-12/222-13. **Fairview therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
+
+---
+
+## City of Farmersville (4825488) — 222-08
+
+**Attempted:** 2026-07-25 — **Mayor Craig Overstreet** (`e7f04a34-b8e7-4978-87d6-60ece59ced92`), the
+sole Farmersville officeholder in plan 222-08's scope, against **all 11** canonical compass topics (11
+pairs). Verified at `stance_count = 0` against production before any research began. **Only the mayor
+is in scope here; Farmersville's five council seats (Coleman Strickland Place 1, Russell Chandler
+Place 2, Kristi Mondy Place 3, Mike Henry Place 4, Tonya Fox Place 5) are covered by plans
+222-11/222-12/222-13** and are deliberately absent from this section. See the 222-08 preamble in the
+Anna section above for the Murphy/Princeton/Melissa scope cut.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** Farmersville is a 222-RESEARCH.md §C **Tier
+"Low"** city and this is the expected outcome — but unlike Anna, it is **not** the result of a fetch
+failure. Farmersville's official minutes were **obtained and read in full**, and the zero is a real
+finding about the record rather than a gap in access.
+
+**⚠ THE STRUCTURAL FINDING FOR FARMERSVILLE — read this before 222-11/222-12/222-13 spend budget
+here. The Mayor of Farmersville does not vote on ordinary business.** Across both full meetings read
+this session, every recorded vote is tallied among the five councilmembers only — "The motion was
+approved unanimously (5-0)" with all five present, "(3-0)" with three present — and Overstreet appears
+in the record exclusively in a **presiding** capacity: he calls the meeting to order, leads the
+pledges, reviews the calendar, opens and closes each item and each public hearing, reads ordinances
+and resolutions **into the record**, and asks clarifying questions of staff and consultants. Under
+this plan's rule 5, **presiding is not a position** — a mayor reading an ordinance into the record and
+calling the vote holds no chair by that fact. This structurally suppresses the strongest evidence type
+(a recorded vote) for this particular officeholder while leaving it fully available for his council,
+which is exactly why the council plans should expect a better hit rate in Farmersville than this
+mayoral pass achieved.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENTS — two complete sets of official Farmersville City Council minutes, downloaded
+  and read page by page, signed and attested by City Secretary Tabatha Monk:**
+  - **June 15, 2026 Regular Session** (9 pages, `farmersvilletx.com/media/10981`, signed "Craig
+    Overstreet, Mayor"): the Farmersville Community Development Corporation budget amendment; a
+    Resolution finding public necessity and **authorizing condemnation / eminent domain** to acquire
+    2.677 acres of right-of-way for +/- 3,400 feet of **Farmersville Parkway** east of Collin Parkway
+    and west of State Highway 78; a Farmersville Parkway construction update from Dunaway engineer
+    Jacob Dupuis; a **Collin County Outer Loop Segment 5 (Northeast)** route discussion; board
+    appointments; and the appointment of Dr. Angela Smith as City Manager.
+  - **September 15, 2025 Regular Session** (8+ pages, `farmersvilletx.com/media/8896`): the Master Fee
+    Schedule water and electrical rate amendment; adoption of the FY 2025-2026 tax appraisal roll; the
+    **public hearing on the tax rate**; the Atmos Energy Mid-Tex rate-review settlement; a TxDOT
+    safety-lighting agreement; the **$424,900 purchase of 111 North Johnson Street as a base of
+    operations for the Police Department** with $350,000 budgeted for improvements and a $340,000 loan
+    authorisation; two **opioid-manufacturer settlement** participation resolutions (including Purdue
+    Pharma); and a FEDC land/residential-structure purchase up to $215,000.
+  Both were reached through the city's Drupal meetings index
+  (`farmersvilletx.com/meetings/recent?...&boards-commissions=71`), which exposes agenda, packet and
+  minutes PDFs at plain `/media/NNNN` URLs — **a readable, date-filterable route worth reusing.**
+- **Official City of Farmersville site** (`farmersvilletx.com`) — Overstreet's directory listing
+  (`/mayor-council/directory-listing/craig-overstreet`) fetched and read: it is a **staff-directory
+  entry only** ("Position: Mayor" plus phone, email and the 205 South Main Street address). **No
+  biography and no policy statement of any kind** — this is not a bio-page-only stance source, it is
+  not even a bio page.
+- **The Farmersville Times** (`farmersvilletimes.com`), the town's own newspaper and the richest
+  potential secondary source, searched and sampled:
+  - *"School bond passes 2 to 1, Overstreet elected mayor"* (**May 4, 2024**) — Overstreet, a former
+    councilmember, defeated the incumbent Mayor Bryon Wiebold with **55.68% of 625 votes cast**. A
+    contested race, but no policy content.
+  - *"New mayor sets priorities"* (**May 23, 2024**) — fetched. Despite the headline, the accessible
+    text contains **no priorities and no positions**; the only quotation attributed to Overstreet is
+    *"I have a lot of questions that need answers."* The article defers the substance to the print /
+    digital edition.
+  - *"A year of tough choices, steady growth for Farmersville"* (**December 31, 2025**) — fetched and
+    interrogated directly for Overstreet quotes. It covers the council's 2025 decisions at length
+    (budget pressure, a tax rate adopted at 72.5 cents per $100, service reductions, infrastructure,
+    emergency services) and **mentions Overstreet exactly once, in a photograph caption** from the
+    February 18, 2025 ceremony honouring former mayor Joseph E. Helmberger. **No quotation and no
+    position.**
+  - *"City manager provides street projects update"* (November 21, 2024) and *"Council hears first look
+    at 2025-26 budget"* (June 19, 2025) — staff-reported items; no Overstreet position.
+- **TML City Officials Directory, Texas State Directory** — bare directory entries.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **Council meeting VIDEO was not watched.** Farmersville streams and archives its meetings on
+  **BoxCast** (`boxcast.tv/channel/pjlmoamwdrud0o6wncn9`). Video is not readable by this pass. Because
+  the written minutes **paraphrase** rather than transcribe, the video is where any actual Overstreet
+  phrasing lives; it is the highest-value unread Farmersville source.
+- **Only 2 of roughly 50 available council meetings were read.** Farmersville meets on the 1st and 3rd
+  Mondays plus frequent special and budget-work sessions, and the index exposes minutes back through at
+  least 2025. The two read were chosen as the highest-yield candidates (a full regular meeting under
+  the current mayor, and the tax-rate/public-safety-purchase meeting). **The great majority of this
+  council's record remains unread**, and a deeper pass is cheap here because the documents are directly
+  addressable — but see the "mayor does not vote" finding above for why the yield for *this* person is
+  likely to stay low.
+- **The Farmersville Times is effectively paywalled** for full article text — the two most promising
+  pieces both truncate to a teaser, and *"New mayor sets priorities"* explicitly directs readers to the
+  print or digital edition. The full May 23, 2024 edition would be the single best place to find this
+  mayor's stated priorities and **could not be obtained**.
+- **No Ballotpedia individual candidate page** — Farmersville's population is roughly 4,000, far below
+  Ballotpedia's "100 largest cities" scope, and per 222-08's instructions no fetch cycles were spent
+  guessing Ballotpedia URLs for this town. **No VOTE411 or League of Women Voters of Collin County
+  questionnaire** was found for the Farmersville mayoral seat; `lwvcollin.org` has returned **HTTP
+  403** all phase. **No Community Impact candidate Q&A** exists for Farmersville — Community Impact's
+  Collin County coverage does not extend to this city.
+- Overstreet's **campaign Facebook page** ("Craig Overstreet for Farmersville Mayor") was not fetched —
+  Facebook is not fetchable here, and social posts are not treated as evidence of a policy position
+  absent a direct citable quote. It is the most likely place a 2024 campaign platform survives.
+- **No State-of-the-City address** by this mayor could be found.
+
+### Craig Overstreet — Mayor — `e7f04a34-b8e7-4978-87d6-60ece59ced92`
+
+Sourced: **none.** All 11 topics blank. Elected mayor May 2024 after service as a councilmember,
+defeating the incumbent 55.68%–44.32% on a 625-vote turnout.
+
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **transportation-priorities**
+  — no chair-locating position, **and this is the closest miss for Farmersville.** He speaks at length
+  and on the record about roads. On the **Collin County Outer Loop Segment 5** item of June 15, 2026 the
+  minutes attribute to him: TxDOT and the Collin County Commissioners have narrowed four candidate
+  routes to two; *"what the Mayor has seen is the intersection with the outer loop as it relates to 380
+  right now… It looks like it's going to be very inconvenient for our residents or people getting off
+  the Collin County Loop to try and go either east or west"*; *"We don't need to be going east to be
+  able to turn back west, and that is what it appears to be now on the drawings they have. It maybe an
+  effort to save money on their side… but is not a workable situation for our residents"*; two of the
+  four routes come within about a mile of the 2194/Merit Street intersection at Brittany's Creek and
+  *"the main concern is the on and off ramps, we do not think that is a positive situation for
+  Farmersville."* He proposes to respond to the Commissioners by resolution. **This is interchange and
+  ramp geometry on a county highway project, not a mode tradeoff.** Every chair on this scale allocates
+  investment *between* modes — pedestrian/cycling/transit first (1), equal multimodal with mandatory
+  bike lanes and sidewalks (2), maintain roads while selectively adding transit and pedestrian
+  improvements (3), road capacity and traffic flow for the driving majority (4), highways and abundant
+  free parking as the foundation of policy (5). Arguing that a specific ramp configuration is
+  inconvenient for residents does not choose among those; he never sets roads against transit, bikes or
+  sidewalks, and he is not deciding Farmersville's own investment mix at all — the Outer Loop is a
+  county and TxDOT project. Likewise the **Farmersville Parkway** items: he presided over a
+  condemnation resolution and questioned the engineer on paving schedule (*"asked if assuming we don't
+  have a lot of weather days if he thinks they have another 30 days to pour the remaining thousand feet
+  up to Wilcoxson"*), which is **project management, not a policy position**; a roadway right-of-way
+  acquisition is a capital action, and per this phase's settled rules a road project bundled with
+  utilities, drainage and grading is **not** a transportation mode tradeoff. Blank, not defaulted.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **public-safety-approach**
+  — no chair-locating position. The September 15, 2025 meeting authorised a **$424,900 purchase of 111
+  North Johnson Street to serve as a base of operations for the Police Department**, with $350,000
+  budgeted for improvements and a $340,000 loan; the Police Chief and Fire Marshal attend council
+  meetings with members of their departments; and the Farmersville Times reports the council allowed
+  the fire marshal's office to pursue law-enforcement designation for independent arson investigations,
+  and that police calls for service rose from 6,134 in 2023 to 9,178 in 2024. **None of that is
+  Overstreet's position.** He did not vote on the purchase (the five councilmembers did, 5-0); his only
+  recorded contribution was to ask *"about improvements needed"* on the building. **Capital-project
+  attribution is an expressly refused defect class** — a facility acquired during a tenure is not a
+  funding-level position — and buying a police building says nothing about staffing, pay, equipment,
+  crisis-response teams, unarmed co-responders, or redirecting police budget. Blank.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **economic-development** —
+  no position found on incentives, abatements, community-benefit or job-quality conditions, **and this
+  blank was refused deliberately against a lot of tempting material.** Overstreet is the council's
+  **liaison to the Farmersville Economic Development Board (FEDC, Type A)** and reports its actions to
+  the council in detail: a $41,386.00 fire-suppression grant to Jinger McTee, a completed business
+  development grant to Main Street Antiques, a fire-suppression grant to Doug Lobby of Lake Lavon
+  Lakeland Properties, a pay application for 12 Stories Coffee at 206 McKinney Street, a $5,085.00
+  business development grant for the Edward Jones building, a Kodiak Fire Suppression pay application, a
+  billboard-leasing discussion, a downtown-strategies proposal on which the board took no action, and a
+  FEDC land-and-residential-structure purchase up to $215,000. **Liaison reporting is adjacency, and
+  relaying a board's decisions is not holding a position** — the grants are FEDC board actions, he does
+  not vote on them at council, and he is never recorded arguing for or against the practice of granting
+  them. Reading `economic-development` off an EDC liaison seat is precisely the adjacency defect the
+  222-01 audit deleted from production. Blank.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **residential-zoning** —
+  no position found on density or neighborhood character. Farmersville has a Planning & Zoning
+  Commission whose meetings are reported to council by Councilmember Henry as liaison, but no zoning
+  case with an Overstreet position appeared in either meeting read, and he does not vote. Nothing was
+  inferred from the city's existing zoning pattern; **city policy is not the individual's position.**
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **housing** — no position
+  found on what role government should play in housing affordability. Nothing on public housing, rent
+  caps, inclusionary requirements, affordable-project subsidy, first-time-buyer assistance, permit
+  streamlining, or leaving prices to the market. The FEDC's purchase of "land and residential
+  structures" up to $215,000 is a **business-development land assembly** under Texas Local Government
+  Code § 501.103, not a housing-affordability program, and was not stretched into one.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **growth-and-development**
+  — no chair-locating position on growth pace. Nothing found on growth caps, voter approval for large
+  developments, approval speed, permitting fees, or building infrastructure ahead of growth. The
+  Farmersville Times' framing of 2025 as *"a year of tough choices, steady growth"* is **the
+  newspaper's characterisation, not his statement**, and the one growth-adjacent sentence he is
+  recorded uttering — praising the incoming city manager's *"experience in capital planning,
+  comprehensive plan updates, and identifying new revenue opportunities"* and calling her *"the perfect
+  fit for our growing community"* — is a **hiring endorsement**, and generically evaluative besides.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **homelessness** — no
+  statement or vote found on people sleeping or camping in public spaces. No Farmersville camping
+  ordinance, encampment policy or shelter decision appeared in either meeting read or in any Times
+  coverage, and none was inferred.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **local-immigration** — no
+  statement found on the Farmersville Police Department's relationship to federal immigration
+  enforcement, ICE detainers, or information sharing. **Texas SB 4 is state law, not his position**,
+  and was not used as a default.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **civil-rights** — no
+  on-topic position found on racial or social inequality. Nothing in either set of minutes or in any
+  Times coverage engages that axis. **No inference was drawn from any identity, demographic, religious
+  or affiliation characteristic** — that inference class is forbidden and was the basis of deletions
+  from two Richardson records on 2026-07-25.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **taxes** — **researched,
+  no chair written per the settled 2026-07-25 operator ruling.** The material is preserved here verbatim
+  for any future municipal-scope rewrite. Farmersville held its **tax-rate public hearing on September
+  15, 2025**; the council then approved Resolution R-2025-0915-000 *"approving the proposed tax rate of
+  no new revenue at .827244 per $100 valuation"* unanimously (5-0), on Councilmember Henry's motion
+  seconded by Councilmember Mondy, and the Times reports a rate ultimately adopted at 72.5 cents per
+  $100 amid lower-than-expected ad valorem collections, reduced sales-tax revenue, rising expenses and
+  service reductions; Finance Manager John Lawrence told the council *"part of the problems we are
+  coming up against is through Collin County as property values have decreased."* **Overstreet's own
+  recorded contribution to that hearing was entirely procedural** — he opened the item, opened the
+  public hearing at 6:35 p.m., closed it at 6:48 p.m., and read the resolution into the record — and he
+  cast no vote. Nothing here reaches a chair on any reading: chairs 1–2 require raising taxes
+  specifically on wealthy people and large companies, chairs 4–5 require committing to scale public
+  services back, and adopting a **no-new-revenue** rate does neither. Three further refusals apply and
+  are recorded so a later pass does not relitigate them: the **appraisal-district value complaints**
+  aired at that hearing belong to resident **Jim Foy**, not to Overstreet, and an appraisal-value
+  grievance is expressly refused as taxes evidence in any case; resident **Randy Smith's** objection to
+  using the TIRZ district to back the general fund is likewise a resident's view; and the **Master Fee
+  Schedule water and electrical rate amendment** and the **Atmos Energy Mid-Tex rate-review settlement**
+  (9.27% residential / 6.56% commercial, about $7.83 more per residential month) are **fee and utility
+  ratemaking, separately refused as taxes evidence under the 222-06 rule**. No taxes row was written.
+- Craig Overstreet — Farmersville — `e7f04a34-b8e7-4978-87d6-60ece59ced92` — **healthcare** — no
+  statement found on healthcare access. Expected: all five chairs describe **national** healthcare
+  policy, which a city mayor holds no position on by role. Two health-adjacent items were examined and
+  **deliberately not stretched into a chair**: on September 15, 2025 the council authorised Overstreet
+  to execute participation and release forms in the **opioid-litigation settlements with eight
+  manufacturers and with Purdue Pharma, LP** — joining a multistate settlement as a political
+  subdivision is a litigation-administration act with no stated reasoning of any kind and locates no
+  chair on the government's role in coverage — and the purchase of 111 North Johnson Street from
+  Community Health Service Agency, Inc. d/b/a Carevide is a **real-estate transaction whose seller
+  happens to be a health provider**, which says nothing about anyone's healthcare-access position.
+
+**Farmersville reconcile:** Craig Overstreet appears in **bucket 2 for all 11 topics** and in bucket 1
+for none. He is the only Farmersville name in plan 222-08's scope and he is accounted for — not in
+neither bucket, not in both. Farmersville's five council seats are out of this plan's scope and belong
+to 222-11/222-12/222-13. **Farmersville therefore does NOT flip to `hasContext: true` in
 `src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
 
 ---
