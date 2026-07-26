@@ -701,7 +701,7 @@ Plans:
 
 **Wave 9** *(blocked on Wave 8 completion)*
 
-- [ ] 222-09-PLAN.md — D-02 mayors sweep B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne
+- [x] 222-09-PLAN.md — D-02 mayors sweep B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne
 
 **Wave 10** *(blocked on Wave 9 completion)*
 
