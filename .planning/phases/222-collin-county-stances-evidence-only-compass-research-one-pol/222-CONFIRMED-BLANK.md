@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 303
+## Count: 314
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -3439,5 +3439,243 @@ rather than housing density. It is argued in full in the Fairview section.
 **Two of the five zeros are settled findings about the record, not access failures:** Farmersville and
 Parker, where complete official minutes were read and the mayor is **structurally non-voting** and
 appears only presiding.
+
+---
+
+## City of Weston (4877740) — 222-09
+
+**Attempted:** 2026-07-25 — **Mayor Matthew Marchiori** (`42462d85-a9c8-4aef-9f62-21b11803d06b`), the
+sole Weston officeholder in plan 222-09's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Scope: Weston — Mayor
+only.** Weston's five aldermen (Jeff Metzger, Patti Harrington, Brian M. Roach as Mayor Pro Tem, Mike
+Hill, Marla Johnston) are covered by plans **222-14/222-15/222-16/222-17** and are deliberately absent
+from this section.
+
+**Result: 0 chairs. All 11 topics are honest blanks.** Weston is a 222-RESEARCH.md §C **Tier "very
+low"** town and this is the expected outcome. **This zero is SETTLED — a finding about the record, not
+an access failure.** Weston's official minutes archive was located, is complete and freely downloadable
+back to 2012, and two full 2026 meetings were downloaded as PDFs and read end-to-end.
+
+**⚠ TWO STRUCTURAL FINDINGS FOR WESTON, both of which make the strongest evidence types unavailable
+for *this person* while leaving them partly available for his aldermen:**
+1. **Weston is a Texas Type A general-law city with a Mayor-and-Aldermen body, and the Mayor appears
+   exclusively presiding.** Across both meetings read in full (June 9 and June 23, 2026), *every*
+   motion was **made and seconded by Aldermen** — Johnston, Roach, Harrington, Hill, Metzger — and
+   Marchiori's only recorded contributions are calling the meeting to order, **voicing the invocation**,
+   **leading the Pledges to the United States Flag and the Texas Flag**, and adjourning. Under this
+   plan's rule 5, presiding is not a position.
+2. **Weston records its votes as `AYES: UNANIMOUS` with no individual names.** This is decisive and
+   worth recording for the council plans too: even a genuinely on-topic recorded vote in Weston
+   **cannot be attributed to any individual member**, because the minutes never enumerate who voted
+   which way. The only individually-attributable acts in a Weston minute are the mover and the
+   seconder. For the Mayor, who never moves or seconds, that leaves nothing.
+
+**Evidence checked:**
+- **`http://www.westontexas.com/page/Mayor_Aldermen`** — the official Governing Body / Mayor & Aldermen
+  page, fetched. It confirms **Matthew Marchiori, Mayor, term expires Nov 2027** and the five aldermen
+  with their term-expiry dates and email addresses. **It carries no biography, no statement of
+  priorities, and no policy position of any kind** — names, titles, terms and emails only.
+- **`http://www.westontexas.com/page/Council_Meetings`** — the full agendas-and-minutes index, fetched.
+  It exposes 15 agenda/minutes pairs for 2026 alone (Jan 13, Jan 22, Jan 27, Feb 10, Feb 24, Mar 10,
+  Mar 24, Apr 14, Apr 28 cancelled, May 12, May 26, Jun 2, Jun 9, Jun 23, Jul 14) plus complete archives
+  for 2025 back to 2012. Minutes are posted only after approval at a subsequent meeting.
+- **PRIMARY DOCUMENT — the Weston City Council minutes of June 23, 2026, downloaded as a PDF
+  (`http://www.westontexas.com/upload/page/0044/Minutes%20-%206.23.26.pdf`) and read in full (3 pages,
+  bearing the WESTON TEXAS "Oldest City in Collin County" seal, 301 Main Street, Weston, Texas, and
+  certified by City Secretary Britt Murry).** All six members present. Business transacted: minutes
+  approval; an **Interlocal Cooperation Agreement with Collin County for road improvements** under Court
+  Order No. 2021-109-02-01 (moved by Roach, seconded by Harrington, unanimous); an **Interlocal
+  Agreement for animal shelter services with Collin County** (Metzger/Hill, unanimous); **Resolution
+  No. R-2026-06-02** authorising the Mayor to initiate protests, public comments and contested-case
+  hearing requests with the **TCEQ** over wastewater-treatment-plant and related permit applications
+  affecting the City and its sewer **CCN No. 20999** (Johnston/Roach, unanimous); no action on
+  executive-session items; executive session on contemplated litigation involving a former City
+  Secretary, on economic-development negotiations, and on a public-works job description.
+- **PRIMARY DOCUMENT — the Weston City Council minutes of June 9, 2026, downloaded as a PDF
+  (`http://www.westontexas.com/upload/page/0044/Minutes%20-%206.9.26.pdf`) and read in full (3 pages).**
+  Business transacted: minutes approval; **Resolution R-2026-06-01** authorising an interest-bearing
+  savings / FDIC-insured deposit-sweep account with Bank of Texas, BOKF, NA to earn a higher rate on
+  idle City funds (Harrington/Johnston, unanimous); renewal of the **delinquent-tax collection contract
+  with Abernathy, Roeder, Boyd & Hullett, PC** under Tex. Tax Code §6.30 (Johnston/Harrington,
+  unanimous); and a motion to **table all executive-session items indefinitely** (Harrington/Roach,
+  unanimous).
+- **`http://www.westontexas.com/`** — the city homepage, fetched, which surfaces the FY26 budget
+  documents and a property-tax-rate comparison showing a **maintained rate of $0.360000 per $100** with a
+  **5.42% increase to average homestead taxes**. This is the City's published rate, attributed to no
+  individual, and it is `taxes` material in any case — see the taxes bullet.
+- **`http://www.westontexas.com/page/Zoning`** — fetched. Procedural only: a zoning-request application,
+  a scale drawing, a **$750 fee**, a 45-day filing deadline before the second-Tuesday council meeting,
+  and a link to the Zoning Regulations. **No recent zoning change, no council zoning vote, and no
+  statement by the Mayor.**
+- **`https://directory.tml.org/profile/individual/127408`** and **`https://directory.tml.org/profile/city/1867`**
+  — the Texas Municipal League City Officials Directory entries, fetched. These independently confirm
+  **"Matt Marchiori, Mayor, City of Weston, Collin County, Texas"** and are the identity anchor for this
+  research. They contain contact information only and **no policy positions**.
+- **`https://www.westontexas.com/page/The%20Weston%20Post`** — the index of *The Weston Post*, fetched.
+  See the unavailable-sources list: this newsletter is the one "mayor's column"-shaped source Weston has
+  ever had, and it is **defunct and pre-dates this mayor**.
+- Targeted press searches for `"Matt Marchiori" OR "Matthew Marchiori" Weston mayor` and for
+  `Marchiori Weston growth / development / wastewater / annexation`. **No news article, interview,
+  State-of-the-Town address, campaign site, or questionnaire naming this person was found.**
+
+**⚠ HOMONYM GATE — "WESTON" IS A HEAVY COLLISION AND ONE NEAR-MISS WAS SUBSTANTIVE.** Encountered and
+rejected this session:
+- **A $500M "Dean Ranch" annexation battle** (`therealdeal.com/texas/2026/04/13/...`, April 13, 2026)
+  surfaced on a *Weston + annexation* search and looked, at first glance, like exactly the
+  growth-and-development evidence this town would never otherwise produce. **It is not about Weston,
+  Collin County at all.** Cross-checking it against `community-news.com`, `weatherforddemocrat.com` and
+  `weatherford-news.com` places Dean Ranch in **Parker County**, in an annexation fight between
+  **Aledo** and **Willow Park** near Fort Worth, involving Levens Capital Partners and D.R. Horton.
+  Marchiori is named nowhere in it. **Rejected.** (The Real Deal article itself returns **HTTP 403** to
+  this session and could not be read directly — but three independent Parker County outlets settle the
+  location, so this is a rejection on the merits, not a fetch failure.)
+- **The City of Weston Lakes, Texas** (`westonlakestexas.gov`) — a genuinely different Texas
+  municipality in **Fort Bend County** with its own mayor, council, and its own published
+  minutes-and-agendas archive. The single most dangerous trap here, because it is also Texan and also
+  publishes the exact source type this phase values.
+- **City of Weston, FLORIDA** (`westonfl.org`) — a large Broward County city with its own
+  agendas-and-minutes and planning-and-zoning pages. **Weston, MASSACHUSETTS** (`westonma.gov`), whose
+  DocumentCenter serves an "Amended and Restated Development Agreement" that surfaced on a Weston +
+  development-agreement search. **`cityofweston.org`** (Weston, Wisconsin). **Weston-super-Mare Town
+  Council** (England). **West University Place, TX** and the **City of West, TX**, both of which
+  surfaced on Weston agenda searches.
+- **Surname and given-name collisions:** **Cary Weston** (Bangor, Maine city councillor), **Weston
+  Wamp** (Mayor of Hamilton County, Tennessee), **Weston Ranch High School** and **Weston Ranch**
+  (California), and **Weston Solutions** (an environmental-engineering firm whose Texas water/wastewater
+  press release surfaced on a *Weston wastewater* search). Separately, **"Matt Marchiori, Service
+  Operations Director, Ciocca Automotive"** and **"Matthew Marchiori, Regional Fixed Operations
+  Director, Ciocca Dealership"** are a **same-named automotive executive** with a LinkedIn profile and a
+  podcast appearance — the most likely wrong-person source for this name, and rejected on sight.
+Every source relied on above is pinned to **Weston, Collin County, Texas** by an explicit marker: the
+`westontexas.com` domain, the 301 Main Street / Weston City Hall header, the "Oldest City in Collin
+County" seal, City Secretary Britt Murry's certification, or the TML directory's own
+"City of Weston, Collin County" field.
+
+**⚠ ROSTER NOTE (flagged, not acted on): Wikipedia is stale for this seat.** The Wikipedia article
+*"Weston, Texas"* names **Jerry Randall** as mayor, and a WebSearch summary repeated that. The **city's
+own Mayor & Aldermen page** and the **TML City Officials Directory** both name **Matthew Marchiori,
+term expiring Nov 2027**. The DB row is correct and the research subject was not switched. No
+DB-versus-official-roster discrepancy exists for Weston — the discrepancy is Wikipedia's alone, and it
+is recorded only so a later pass does not mistake it for a roster-currency item. *(A separate, real
+roster-currency item does exist for Saint Paul — see that section.)*
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **`http://www.westontexas.com/page/Agenda_List`, `/page/0183`, and `/page/Weston_Post` all return
+  HTTP 500** from this niche CMS. The working paths are `/page/Council_Meetings` and
+  `/page/The%20Weston%20Post` (note the literal space, URL-encoded as `%20`). Recorded so a later pass
+  does not read the 500s as "no archive exists" — **the archive exists and is complete.**
+- **`https://therealdeal.com/texas/2026/04/13/500m-dean-ranch-project-caught-in-annexation-fight/`
+  returns HTTP 403.** Unread — but shown above to be about Parker County, not Weston, so nothing is
+  lost.
+- **`https://www.westontexas.com/upload/page/0183/docs/The_Weston_Post_Winter20.pdf` exceeded the fetch
+  size limit** and was not read. More importantly, ***The Weston Post* is the wrong instrument for this
+  person on two independent grounds**: (a) it is published by **Classroom Counterpoints**, a local
+  501(c)(3) volunteer non-profit, and is **explicitly not affiliated with the City of Weston**; and
+  (b) its **last issue is Summer 2022**, whereas Marchiori's term runs to Nov 2027, so the newsletter
+  ceased publication before this mayoralty. Its Winter 2020 issue features *"Meeting Mayor Jim
+  Marischen"* — a **predecessor**. Attributing anything in it to Marchiori would be the exact
+  wrong-term error this plan's rule 5 forbids.
+- **13 of the 15 available 2026 Weston meetings, and all of 2012–2025, were not read.** June 9 and
+  June 23, 2026 were chosen as the two most recent approved regular meetings under this mayor. This is
+  a genuine partial read and is recorded honestly — **but see structural finding 2: because Weston
+  records only `AYES: UNANIMOUS`, no additional minute can attribute a vote to Marchiori by name.** The
+  retry path with actual yield potential is council **video** (none was located for Weston) or a mover /
+  seconder attribution, which does not apply to the Mayor.
+- **No Ballotpedia coverage.** Weston is far below Ballotpedia's stated "100 largest cities" scope and
+  no candidate page for this person was found; the phase-wide empty-body Ballotpedia failure was not
+  even reached.
+- **No VOTE411 or League of Women Voters of Collin County questionnaire** for the Weston mayoral seat.
+  `lwvcollin.org` has returned **HTTP 403** all phase; VOTE411 was not attempted, per this plan's
+  standing instruction that the orchestrator has already escalated it to a real browser and it returns
+  403 with the title *"Voter Guide Toolkit: Forbidden Page"* — decommissioned, not gated.
+- **No Community Impact, Star Local Media, Princeton Herald, Herald-Banner or Farmersville Times
+  coverage of Weston** naming this person was located. **No campaign site and no State-of-the-Town
+  address exists.** Marchiori's term expires **Nov 2027**, so he was **not on the May 2026 ballot** and
+  no 2026 candidate forum or questionnaire could exist for him.
+
+### Matthew Marchiori — Mayor — `42462d85-a9c8-4aef-9f62-21b11803d06b`
+
+Sourced: **none.** All 11 topics blank. Mayor of Weston with a term expiring **November 2027**;
+confirmed in that seat by both the city's own governing-body page and the TML directory.
+
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **housing** — no position found
+  on what role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, subsidy for affordable projects, first-time-buyer assistance, permit
+  streamlining, or leaving prices to the market. Weston transacted no housing item in either meeting
+  read.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **residential-zoning** — no
+  position found on housing density or neighbourhood character. The Zoning page was fetched and is
+  **purely procedural** (application form, scale drawing, $750 fee, 45-day deadline). No rezoning,
+  plat, subdivision or density item appears in either meeting read, and **Weston's own existing
+  large-lot, low-density rural character was expressly NOT used as a default** — an existing city
+  posture is not the individual's position (the city-policy-default refusal).
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **growth-and-development** — no
+  chair-locating position on growth pace, annexation, approval speed, permitting fees, growth caps, or
+  infrastructure-ahead-of-growth sequencing. **The strongest-looking candidate was specifically
+  refused twice over:** the "$500M Dean Ranch annexation battle" is a **Parker County** story (Aledo v.
+  Willow Park) and not about Weston at all; and **Resolution No. R-2026-06-02**, which authorises the
+  Mayor to protest **wastewater-treatment-plant permits** at the TCEQ, is (a) an authorisation *granted
+  to* the office by a motion **Alderman Johnston** made, not a position Marchiori argued, and (b) a
+  **utility/permit-jurisdiction matter**, not a stance on growth pace. That Weston is named in regional
+  coverage as one of the communities the Hurricane Creek Wastewater Treatment Plant is sized to serve
+  is a fact about infrastructure, not a Marchiori position.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **public-safety-approach** — no
+  chair-locating position. Nothing found on police staffing, pay, equipment, response times,
+  mental-health co-responders, crisis-response teams, or redirecting police budget. The **Collin County
+  animal-shelter interlocal agreement** approved June 23, 2026 was considered and **refused** as
+  evidence on this axis: it is a county service contract for animal sheltering, was moved by **Alderman
+  Metzger** and seconded by **Alderman Hill**, and carries no police-funding or policing-model content.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **transportation-priorities** —
+  no statement found setting any transportation mode against another. The **Interlocal Cooperation
+  Agreement with Collin County for road improvements** under Court Order No. 2021-109-02-01 was
+  examined and **refused**: it is **road maintenance/capital delivery**, which this plan's rule 4
+  explicitly bars from standing as a transportation *mode tradeoff*; and it was moved by **Alderman
+  Roach**, seconded by **Alderman Harrington**, and carried "unanimous" with no individual names.
+  Nothing found on transit, bike lanes, sidewalks, parking requirements, or road capacity as a stated
+  priority.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **economic-development** — no
+  position found on incentives, tax abatements, Chapter 380 agreements, community-benefit or
+  job-quality conditions, or small-business programmes. The June 23, 2026 **executive session** included
+  Tex. Gov't Code **§551.087 "economic development negotiations"** — *"Discuss commercial or financial
+  information received from development negotiations"* — but it is a **closed session with no reported
+  action**, no participant statements, and no outcome. A closed session cannot locate a chair, and
+  inferring one from the fact that a city held it would be fabrication.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **homelessness** — no statement
+  or vote found on people sleeping or camping in public spaces. Weston has no camping ordinance,
+  encampment policy or shelter decision in the record read, and none was inferred.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **local-immigration** — no
+  statement found on any police relationship to federal immigration enforcement, ICE detainers, or
+  information sharing. Weston contracts county services rather than operating its own police
+  department in the record read. **Texas SB 4 is state law, not his position**, and was not used as a
+  default.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **civil-rights** — no on-topic
+  position found on racial or social inequality. Nothing in the two minutes read, the official site, or
+  any press engages that axis. **No inference was drawn from any identity, demographic, religious or
+  affiliation characteristic** — including from the fact that he **voiced the invocation** at both
+  meetings, which is a presiding-officer custom in Texas general-law towns and is not evidence of any
+  policy position whatsoever.
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **taxes** — **researched, no
+  chair written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was
+  found even for the register.** Three tax-adjacent items were examined and all three fail
+  independently of the ruling. (1) The city homepage publishes a **maintained rate of $0.360000 per $100
+  with a 5.42% increase to average homestead taxes** — a City rate attributed to no individual, with no
+  recorded Marchiori vote or statement. (2) **Resolution R-2026-06-01** (June 9, 2026) moves idle City
+  funds into an interest-bearing/sweep account to earn a higher rate — **treasury management, not a
+  tax-and-spend position** — and was moved by **Alderman Harrington**. (3) Renewal of the
+  **delinquent-tax collection contract** with Abernathy, Roeder, Boyd & Hullett — **collections
+  administration**, not a rate or service-level choice — moved by **Alderman Johnston**. Chairs 1–2
+  require raising taxes specifically on wealthy people and large companies; chairs 4–5 require
+  committing to scale public services back. Nothing found does either. **No taxes row was written.**
+- Matthew Marchiori — Weston — `42462d85-a9c8-4aef-9f62-21b11803d06b` — **healthcare** — no statement
+  found on healthcare access. Expected: all five chairs describe **national** healthcare policy, which
+  the mayor of a Collin County town of a few hundred people holds no position on by role. No
+  health-adjacent remark was stretched into a chair.
+
+**Weston reconcile:** Matthew Marchiori appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. He is the only Weston name in plan 222-09's scope and he is accounted for — not in neither
+bucket, not in both. Weston's alderman seats are out of this plan's scope and belong to
+222-14/222-15/222-16/222-17. **Weston therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
 
 ---
