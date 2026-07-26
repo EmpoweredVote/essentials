@@ -685,7 +685,7 @@ Plans:
 
 **Wave 5** *(blocked on Wave 4 completion)*
 
-- [ ] 222-05-PLAN.md — Tier 1: Allen
+- [x] 222-05-PLAN.md — Tier 1: Allen
 
 **Wave 6** *(blocked on Wave 5 completion)*
 
