@@ -3381,6 +3381,33 @@ not in both. Lucas's council seats are out of this plan's scope and belong to 22
 places the `residential-zoning` chair**, in which case Lucas becomes the first of the twelve
 zero-coverage Texas entries to flip and 222-18 must reconcile it.
 
+> ### ⛔ VOTE411 RETRY ATTEMPTED AND FAILED — 2026-07-25, orchestrator
+>
+> **Do not spend more time on this URL.** The orchestrator escalated the 403 with strictly more
+> capability than the research agent had, and it still fails:
+>
+> | Attempt | Result |
+> |---|---|
+> | `WebFetch` → `onyourballot.vote411.org/m/race-detail.do?id=50429844` | **HTTP 403 Forbidden**, no body |
+> | `WebFetch` → same id on the non-mobile path `/race-detail.do?id=50429844` | **HTTP 403 Forbidden**, no body |
+> | **Real headless browser** (Playwright, full JS, normal browser headers) → `/m/race-detail.do?id=50429844` | **HTTP 403**, page title `Voter Guide Toolkit: Forbidden Page` |
+>
+> A real browser getting the same 403 with a *branded* forbidden page — not a bot wall — means this
+> is **VOTE411 taking the guide down after the election, not a scraping block**. The Lucas mayoral
+> race was decided in **May 2026**; `vote411.org/ballot` currently serves 8,252 races and 15,870
+> candidates scoped to *upcoming* elections, and the Wayback Machine has no snapshot (checked by the
+> research agent). **The page is very likely gone rather than gated**, so no amount of retrying or
+> credentialing will recover it.
+>
+> **Correction to the phase-wide inference.** 222-08's research agent reasonably read this as "VOTE411
+> race pages DO exist for Collin small towns; the blocker is a 403 on the host, so plans 222-09…222-17
+> should search `onyourballot.vote411.org/m/race-detail.do?id=<n>` per contested seat." That is now
+> **downgraded**: the host serves only current-cycle guides, so this source family is usable for
+> *upcoming* races and not for the past elections that seated the officials this phase is documenting.
+> Later plans should not budget time for it. **Kuykendall's `residential-zoning` stays blank** — the
+> only surviving trace is a search-index *paraphrase*, and D-05 forbids citing a URL never fetched.
+> Logged as named follow-on work, not as a Phase 222 gap.
+
 ---
 
 ## Plan 222-08 outcome (mayors sweep part A) — no migration authored
