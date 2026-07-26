@@ -53,7 +53,13 @@ dropped), or a person present in both with the *same* topic recorded twice (an i
 all five mayors fully blank, 55 of 55 attempted pairs)
 + 88 by 222-09, COMPLETE (11 Weston + 11 Blue Ridge + 11 Josephine + 11 Lavon + 11 Lowry Crossing
 + 11 Nevada + 11 Saint Paul + 11 Van Alstyne — all eight mayors fully blank, 88 of 88 attempted
-pairs; all eight zeros are SETTLED findings about the record, none an access failure).
+pairs; all eight zeros are SETTLED findings about the record, none an access failure)
++ **0 by the 2026-07-25 Plano Ballotpedia gap-closure insert (post-222-09 UA discovery)** — that
+unplanned insert re-examined **25** (person, topic) pairs for four Plano officeholders (Kehr, Tu,
+Thomas, Lavine) against Ballotpedia Candidate Connection surveys that were unreadable when 222-04
+ran, and **all 25 stay blank**. Every one of the 25 was **already counted inside 222-04 part A's 54**,
+so the total is deliberately unchanged and **no pair is double-counted**. See the section
+"City of Plano (4858016) — Ballotpedia gap-closure (post-222-09 UA discovery)" at the end of this file.
 222-10 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -71,11 +77,16 @@ operator approval; 1422 is authored and committed but **not yet applied**:
 | `1423_222_prosper_celina_stances.sql` | 4 chairs across 3 of 8 people — Shea Scott (Celina): economic-development=1, public-safety-approach=4; Derrick Conley (Longview): homelessness=5; John Nustad (Longview): homelessness=5. Doug Charles (Prosper), Shane Lambert (Celina), Shannon Moore, Brandon Smith and Sidney Allen (Longview) yield zero rows — all 11 topics honest blanks each. | APPLIED |
 | **`1424_222_collin_mayors_a_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-08** (D-02 mayors sweep part A: Anna, Fairview, Farmersville, Parker, Lucas). **Zero chairs across all five mayors — 55 of 55 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan. There is no SQL for the operator to apply for 222-08; **Task 3's apply step is a no-op**, and the only operator action 222-08 requests is the VOTE411 403 retry described in the Lucas section. The next research plan should re-derive the next free migration number rather than assuming 1424 is taken. | **N/A — NO MIGRATION (all-blank outcome)** |
 | **`1424_222_collin_mayors_b_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-09** (D-02 mayors sweep part B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne). **Zero chairs across all eight mayors — 88 of 88 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan, and **no `git push` was executed against that remote.** There is no SQL for the operator to apply for 222-09; **Task 3's apply step is a no-op.** **1424 is therefore still free, having now been left unclaimed by both 222-08 and 222-09** — the next research plan must re-derive it. The operator actions 222-09 requests are: **(a)** close the Phase 221 **Saint Paul roster-currency item** in the DB's favour; **(b)** re-run every earlier Ballotpedia "empty body" with a browser `User-Agent`, starting with the Lee Pettle / Parker page 222-08 flagged as its top retry; **(c)** close, rather than retry, 222-08's `citizenportal.ai` lead (reachable but AI-generated); and **(d)** optionally review the three refusals named in the 222-09 outcome block. | **N/A — NO MIGRATION (all-blank outcome)** |
+| **`1424_222_plano_ballotpedia_gapfill_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | The unplanned **Plano Ballotpedia gap-closure insert** of 2026-07-25 (post-222-09 User-Agent discovery). Re-researched **25** (person, topic) pairs for Bob Kehr, Maria Tu, Shun Thomas and Steve Lavine against the four Ballotpedia Candidate Connection surveys that plan 222-04 could not read. **Zero chairs — all four surveys are generic campaign copy — so per the insert's own instruction no migration file was created and 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` and **no `git push` was executed** against that remote; **no database query was run and nothing was applied.** **1424 is therefore STILL FREE, now unclaimed by 222-08, 222-09 and this insert.** Operator items it raises: **(a)** decide whether to read **Burt Thakur's 3 Ballotpedia surveys** (Frisco Place 2, already-stanced cohort, deliberately not touched); **(b)** optionally review the three refusals in the insert's self-audit, chiefly Lavine / growth-and-development; **(c)** note that new primary-source evidence was found on **five topics these people already hold** and no row was written for any of it (D-07). | **N/A — NO MIGRATION (all-blank outcome)** |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
 Migration 1422 is excluded from that total until the operator applies it. **Plans 222-08 and 222-09
 change production by nothing at all** — between them they add **143 register blanks** (55 + 88)
 covering **all 13 mayors** in the D-02 mayors sweep, plus the retry leads and corrections listed above.
+**The 2026-07-25 Plano Ballotpedia gap-closure insert likewise changes production by nothing at all**
+— it adds **0** register blanks (all 25 pairs it re-examined were already registered by 222-04 part A)
+and instead settles the open question of whether the phase-wide Ballotpedia User-Agent block cost the
+project real evidence in its highest-evidence city. It did not.
 
 ---
 
@@ -5831,5 +5842,387 @@ minute-sets are action-only and five name no voters, **video is the only remaini
 mayoral position in most of these towns**; (3) **Lowry Crossing's eight unread newsletters** and
 **Nevada's five unread quarterly newsletters** — run the `/Author` check on each before using any content;
 (4) **Van Alstyne's council-page biography widget**, which Phase 221 saw and this session could not render.
+
+---
+
+## City of Plano (4858016) — Ballotpedia gap-closure (post-222-09 UA discovery)
+
+**Attempted:** 2026-07-25, one politician at a time (D-03), in the order Kehr → Tu → Thomas →
+Lavine. **Zero chairs. All 25 attempted (person, topic) pairs stay blank. No migration was
+authored and migration number 1424 was NOT claimed — it remains free.**
+
+### Why this section exists
+
+Every plan in this phase from wave 3 onward recorded Ballotpedia individual candidate pages as
+returning **"empty bodies"** and treated that as absence of evidence. It was never a Ballotpedia
+block — **it was a User-Agent block.** The orchestrator proved it directly on 2026-07-25: the same
+URL returns **HTTP 403 / 919 bytes** to a default `curl` agent and **HTTP 200 / 105,487 bytes** to a
+desktop-browser `User-Agent`. `WebFetch` gets the 403 and cannot be used against ballotpedia.org at
+all. (222-09 first reported this; this insert is the remediation for the one city where it mattered.)
+
+An orchestrator sweep of all 22 Frisco / McKinney / Plano officeholders established that the damage
+is confined to **Plano**: McKinney's seven all return genuine 404 stubs, and Frisco's Colberg and
+Hill likewise have no page. But **four Plano officeholders have completed Ballotpedia Candidate
+Connection surveys that plan 222-04 never read** — and a candidate questionnaire is the single
+highest-quality evidence type the D-04 bar accepts. 222-04 produced only 1 chair from 59 Plano pairs
+and predicted this exact gap in its own "Sources checked but unavailable this session" note. This
+section reads those surveys and records the result.
+
+**Method actually used** (recorded so it is reproducible): each page was downloaded with
+`curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
+Chrome/124.0 Safari/537.36"`, de-tagged with a Node script that also decodes `&#39;` and `&#160;`
+(a naive phrase grep against the raw HTML misses survey text, which is broken across tags), and read
+in full. Every survey question on every page was enumerated and matched against the answers to
+confirm nothing was left collapsed or unread; the raw HTML was additionally checked for hidden
+survey containers and JSON blobs and contains none. Body sizes were 119,122 (Kehr), 118,935 (Tu),
+101,652 (Thomas) and 119,409 (Lavine) bytes — all real pages, none the ~51KB 404 stub.
+
+### Scope, and why this section adds ZERO to the register count
+
+Exactly four people, all City of Plano, politician_ids re-derived live against production by the
+orchestrator this session (222-04 carried **wrong ids** for several Plano people, which is why they
+were re-derived). Only topics that were **unfilled at derivation time** were researched; already-held
+topics were not touched, not re-reasoned and not overwritten (D-07).
+
+| Person | Title | politician_id | Survey(s) read | Topics researched |
+|---|---|---|---|---|
+| Bob Kehr | Council Member Place 2 | `de037c5c-9c00-40c5-ade2-3d322b4a0349` | 2 submissions, both 2025 (Mar 20 + Mar 22) | 7 |
+| Maria Tu | Council Member Place 1 | `d6bf8d34-5a59-419a-8ed7-9c9b4d865799` | 1 (2019); page states she did **not** complete the 2023 survey | 6 |
+| Shun Thomas | Council Member Place 7 | `4272e5cb-40cf-42d9-a493-ae5ca04301bb` | 1 (submitted 2025 for the Jan 31 2026 Place 7 special) | 7 |
+| Steve Lavine | Council Member Place 5 | `ecef0481-27c7-4955-b822-83d64c7ef63f` | 1 (2021); page states he did **not** complete the 2025 survey | 5 |
+
+**All 25 of these (person, topic) pairs were ALREADY registered as blanks by 222-04 part A** (and, for
+Tu's `taxes`, by the taxes ruling). This section **re-examines** them against a primary source that
+was unreachable then and **confirms every one of them stays blank**. It therefore contributes
+**0 new pairs** to the register count — the count stays at **391** and no pair is double-counted.
+`taxes` was excluded from all four topic lists before research began, per the settled operator ruling;
+the tax material the surveys do contain is preserved verbatim below and no `taxes` row was written.
+
+### What the surveys actually contained — the headline finding
+
+**Generic campaign copy, essentially without exception.** Across four surveys and 22 substantive
+answers, the content is: biography, three-key-messages laundry lists, "what characteristics matter in
+an elected official", "what was your very first job", endorsement lists, and one Isaac Asimov
+reference. Not one answer engages the mode-tradeoff, density, enforcement, incentive-posture or
+coverage axes that the compass scales actually discriminate on.
+
+**The UA block cost this phase almost nothing.** Two independent confirmations:
+1. **Kehr's Ballotpedia survey and the Community Impact Q&A 222-04 already read are the same three
+   key messages, in near-identical words.** 222-04 quoted "Addressing housing to keep growing families
+   in Plano, help our seniors retire here, and support young families build lives here" from Community
+   Impact; the primary questionnaire reads "Addressing housing is essential. With rising costs, we must
+   find ways to keep growing families in Plano, help our seniors who want to retire here, and support
+   young families who want to build lives here." 222-04 read the right content through a different door.
+2. **Tu's 2019 "diversity and unity" answer** — which 222-04 refused for `civil-rights` on the basis of
+   a Community Impact paraphrase — appears in the primary questionnaire in substantially the same
+   words, and the refusal was correct.
+
+The genuinely new material amounts to **four passages, three of which land on topics these people
+already hold** (reported below, no row written), and **one** — Lavine's 2021 growth/tax-base answer —
+which is the single closest call in this insert and is refused below on an in-city precedent.
+
+### Blanks — Bob Kehr, Council Member Place 2
+
+Kehr's 2025 survey exists in two submissions (March 20 and March 22, 2025), read in full and
+essentially identical; the March 20 version carries one extra question about useful skills, answered
+"The city is a business, so experience managing a business will be very helpful." Its three key
+messages are service value, retail/office renewal, and housing cost. Sourced: none.
+
+- Bob Kehr — Plano — `de037c5c-9c00-40c5-ade2-3d322b4a0349` — civil-rights — **re-confirmed blank
+  against the primary questionnaire.** The survey contains no civil-rights content of any kind: its
+  seven substantive answers cover city services, retail and office renewal, housing cost, economic
+  development, integrity and transparency, council-manager mechanics, and a first job on a farm.
+- Bob Kehr — Plano — `de037c5c-9c00-40c5-ade2-3d322b4a0349` — growth-and-development — **re-confirmed
+  blank.** "Renewal is vital. By refreshing our retail and office spaces, Plano will remain an
+  attractive destination for businesses and families" is redevelopment of a built-out city. Maintenance
+  and renewal framing is a standing refused defect class for this topic; the answer states no position
+  on the pace at which growth is approved, on gating approvals to infrastructure capacity, or on
+  permitting. Same determination 222-04 reached from the Community Impact text, now verified against
+  the source document.
+- Bob Kehr — Plano — `de037c5c-9c00-40c5-ade2-3d322b4a0349` — healthcare — **re-confirmed blank.**
+  Healthcare appears nowhere in either submission.
+- Bob Kehr — Plano — `de037c5c-9c00-40c5-ade2-3d322b4a0349` — homelessness — **re-confirmed blank.**
+  No mention of camping, encampments, sleeping in public, shelter, or homelessness in either submission.
+- Bob Kehr — Plano — `de037c5c-9c00-40c5-ade2-3d322b4a0349` — local-immigration — **re-confirmed
+  blank.** No mention of police, ICE, detainers or immigration status in either submission.
+- Bob Kehr — Plano — `de037c5c-9c00-40c5-ade2-3d322b4a0349` — residential-zoning — **re-confirmed
+  blank.** "Addressing housing is essential. With rising costs, we must find ways to keep growing
+  families in Plano, help our seniors who want to retire here, and support young families who want to
+  build lives here. This strengthens our schools, economy, and sense of community." Names *who* he
+  wants housed and *why*; takes no position on density, rezoning, design review, parking minimums or
+  single-family zoning, which is what this scale's five chairs distinguish.
+- Bob Kehr — Plano — `de037c5c-9c00-40c5-ade2-3d322b4a0349` — transportation-priorities —
+  **re-confirmed blank.** The survey's only transportation language is "well-kept roads and
+  infrastructure", the fifth item in a list of city services (alongside libraries and recreation
+  centers). Road upkeep inside a services list is maintenance framing, not a position on where
+  transportation investment should go as between roads, transit, and pedestrian and cycling networks.
+
+### Blanks — Maria Tu, Council Member Place 1
+
+Tu's 2019 survey is a five-question set for the Plano City Council Place 1 race she won on May 4,
+2019 (54.6%, over Daniel Long and Bill Lisle III) — the Plano, **Texas** race is stated on the page.
+The page separately records that she did **not** complete the 2023 survey, so 2019 is the only
+questionnaire that exists for her. A 2019 answer is still her stated position and is admissible, but
+it is seven years old and every determination below says so. Sourced: none.
+
+- Maria Tu — Plano — `d6bf8d34-5a59-419a-8ed7-9c9b4d865799` — civil-rights — **re-confirmed blank
+  against the primary questionnaire.** Her full 2019 answer: "Diversity and unity. A survey showed
+  that what Plano citizens appreciate most about our community is its diversity, and I'm passionate
+  about it, too. I hope to be a unifying force that can help heal some of the divisions in our
+  community." This is a statement about civic tone and her own motivation, not a position on
+  civil-rights enforcement, equity requirements, or race-conscious programs. 222-04 refused the
+  Community Impact version of the same answer and was right to.
+- Maria Tu — Plano — `d6bf8d34-5a59-419a-8ed7-9c9b4d865799` — growth-and-development — **considered
+  against new evidence and refused.** Her third 2019 priority reads "PROTECT THE QUALITY OF LIFE OF OUR
+  NEIGHBORHOODS - I've seen the dramatic increase of traffic in Plano and has seen how that can damage
+  our quality of life. I will work to protect the suburban atmosphere Plano residents moved here for. I
+  will also work tirelessly to ensure that the quality of life in our neighborhoods is maintained as
+  Plano grows." Growth appears only as the *context* in which quality of life must be maintained; she
+  proposes no growth limit, no voter approval requirement, no infrastructure-capacity gate on
+  approvals, and no streamlining. The "suburban atmosphere" clause is neighborhood-character language,
+  which belongs to `residential-zoning` — a topic she **already holds** — and carrying it across to
+  growth pace would be exactly the cross-topic inference this phase refused for Lavine's Haggard Farm
+  record in 222-04.
+- Maria Tu — Plano — `d6bf8d34-5a59-419a-8ed7-9c9b4d865799` — healthcare — **re-confirmed blank.**
+  Healthcare appears nowhere in the 2019 survey.
+- Maria Tu — Plano — `d6bf8d34-5a59-419a-8ed7-9c9b4d865799` — homelessness — **re-confirmed blank.**
+  No mention of camping, encampments, sleeping in public, shelter, or homelessness.
+- Maria Tu — Plano — `d6bf8d34-5a59-419a-8ed7-9c9b4d865799` — local-immigration — **re-confirmed
+  blank.** No mention of police cooperation with federal immigration enforcement, ICE detainers, or
+  information sharing. Her law practice includes immigration work; that is profession, i.e. adjacency,
+  and was deliberately not used — it is the precise defect 222-02 deleted from her record.
+- Maria Tu — Plano — `d6bf8d34-5a59-419a-8ed7-9c9b4d865799` — public-safety-approach — **re-confirmed
+  blank against new evidence.** The survey's only public-safety content sits inside her political-
+  philosophy answer: "I'm a fiscal conservative who will work my hardest to keep our taxes low while
+  maintaining the wonderful services we all love and enjoy in Plano: our parks, our libraries, our
+  reaction centers, and our excellent police, fire and EMTs" (the typo is hers; Ballotpedia does not
+  correct typographical errors). Police and fire are the last item in a five-item services list, the
+  verb is "maintaining", and no crisis-response team, co-responder program, staffing level, pay change
+  or budget priority is named. This does not separate keeping current public safety funding from
+  increasing staffing, equipment and pay, and "our excellent police, fire and EMTs" is generic
+  evaluative language of exactly the kind the 222-01 audit deleted elsewhere in Collin.
+
+### Blanks — Shun Thomas, Council Member Place 7
+
+Thomas's survey was submitted in 2025 ahead of the January 31, 2026 Place 7 special election, which
+she won 59.5% to 40.5% over Colleen Aguilar-Epstein. It is the shortest of the four: **three**
+substantive questions (key messages, policy passions, endorsements). Only one submission exists on
+the page. Sourced: none.
+
+- Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — civil-rights — **re-confirmed blank.**
+  No civil-rights content in the survey.
+- Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — economic-development — **re-confirmed
+  blank.** The nearest language is "keep the balance between businesses and neighborhoods that helps
+  maintain lower tax rates", plus the single word "economic" in her policy-passions list ("public
+  safety, economic, zoning reform, transportation"). Naming economic development as a passion locates
+  no chair; the scale distinguishes incentive postures — no incentives, small-business-only, targeted
+  with community-benefit conditions, aggressive abatement competition, maximum incentives — and she
+  states none of them.
+- Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — growth-and-development —
+  **re-confirmed blank.** No position on growth pace. "Promote responsible tourism that showcases
+  Plano" is about tourism, and "protect our parks and trails" is about parkland, neither of which is a
+  development-approval posture.
+- Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — healthcare — **re-confirmed blank.**
+  The word "hospitals" occurs once, inside a parenthetical list of institutions she would coordinate
+  services through. That is a service-delivery mechanism, not a position on the government's role in
+  healthcare access, and stretching it into a chair is expressly forbidden.
+- Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — homelessness — **re-confirmed blank,
+  and the primary source strengthens the earlier deletion.** Her full answer reads "I will support
+  coordinated wrap-around services for all citizens in need (i.e.. collaborative efforts to support
+  through schools, agencies, hospitals, workforce etc.)". 222-02 deleted a homelessness chair that
+  rested on a paraphrase of this clause, and 222-04 declined to reinstate it; the questionnaire text is
+  **broader** than that paraphrase — "for all citizens in need", with schools and workforce named as
+  the delivery channels — which independently vindicates the deletion. Camping, encampments, sleeping
+  in public, shelter capacity and enforcement appear nowhere in the survey.
+- Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — housing — **re-confirmed blank.**
+  Housing affordability, rent, public housing, subsidies and homeownership assistance appear nowhere in
+  the survey.
+- Shun Thomas — Plano — `4272e5cb-40cf-42d9-a493-ae5ca04301bb` — local-immigration — **re-confirmed
+  blank.** No mention of ICE, detainers, immigration status or federal-local police cooperation. Her
+  "community policing that builds trust, transparency, and strong relationships with residents" clause
+  is about police-community relations generally and names no immigration dimension; reading one in
+  would be inference, not evidence.
+
+**Endorsement answer deliberately refused.** Thomas's third survey answer is a list of endorsing
+organizations that includes two partisan political clubs. Endorsement-based and party-based inference
+is a standing refused defect class in this phase and party may never enter a stance's reasoning, so
+that answer was read and set aside; it contributed to no determination above.
+
+### Blanks — Steve Lavine, Council Member Place 5
+
+Lavine's survey was submitted March 9, 2021 for the Plano City Council Place 5 race he **lost** that
+year; he won the same seat in the May 3, 2025 special election, and the page records that he did
+**not** complete the 2025 survey. It is the most substantive of the four and the only one containing
+a passage that reached the assignment threshold before being refused. Sourced: none.
+
+- Steve Lavine — Plano — `ecef0481-27c7-4955-b822-83d64c7ef63f` — civil-rights — **re-confirmed
+  blank.** No civil-rights content. His remark that he is "concerned about outside influences from
+  extreme political groups pushing our City Council to make decisions that are not in Plano's best
+  interests" is about council process and political pressure, is party-adjacent, and was refused.
+- Steve Lavine — Plano — `ecef0481-27c7-4955-b822-83d64c7ef63f` — growth-and-development —
+  **THE CLOSEST CALL IN THIS INSERT. CONSIDERED, WEIGHED AGAINST AN IN-CITY PRECEDENT, AND REFUSED.**
+  His 2021 policy-passions answer is genuinely on this axis: "Our Council is presently divided on
+  comprehensive planning issues that will impact our community for decades to come. We must reach
+  consensus on our direction for growth and redevelopment in our mature and declining shopping areas
+  before opportunities pass us by on their way to other North Texas cities. Expanding our tax base by
+  attracting new businesses and their employees that will fill new homes in both new and redeveloped
+  areas of the city will help take the burden of increasing municipal costs off our homeowners."
+  The clause "expanding our tax base by attracting new businesses" tracks chair 4's operative phrase
+  ("actively recruit development to grow the city's tax base") closely, and the competitive-urgency
+  framing points the same way. It was refused for three cumulative reasons. **(a) In-city precedent.**
+  222-04 refused Chris Krupa Downs's materially identical formulation — "the Texas Research Quarter
+  [is a] great opportunit[y] to grow the commercial tax base" and "I will support expanding the
+  commercial tax base" — for this same topic, on the ground that growing the tax base through
+  redevelopment "is not a position on growth pace, infrastructure gating, or permitting." Assigning
+  Lavine a chair on the same words would make the register internally inconsistent within one city and
+  one wave. **(b) Two chairs stay live.** He says nothing about streamlining permitting or reducing
+  fees (the other two-thirds of chair 4), and his campaign identity is infrastructure-led ("ensure that
+  Plano does not see an infrastructure failure", "steady and strong infrastructure"), which is chair 3
+  territory. Chairs 3 and 4 both survive; range-narrowed is not chair-located, the standard on which
+  Rick Horne's chair was demoted in 222-04 and Shea Scott's in 222-07. **(c) Subject matter.** The
+  answer is explicitly about "our mature and declining shopping areas" — redevelopment of a built-out
+  city, the refused framing for this topic throughout the phase. Additionally, his opening sentence is
+  a call for the council to "reach consensus on our direction", i.e. a process statement that declines
+  to name the direction. Recorded here in full so the operator can overrule if desired.
+- Steve Lavine — Plano — `ecef0481-27c7-4955-b822-83d64c7ef63f` — healthcare — **CONSIDERED AND
+  REFUSED — the most tempting health-adjacent passage found in this phase.** His second key message
+  reads in full: "LET'S KEEP PLANO HEALTHY A healthy city is a prosperous city. I am committed to
+  working to help Plano come out of this pandemic stronger than ever. My opponent voted against
+  mandatory masks in retail and service businesses that keep customers and employees safe and
+  businesses open." This is a real, dated, first-person position — he is criticising his opponent for
+  opposing a municipal mask mandate, which implies he supported one — but it is **pandemic public-health
+  regulation, not healthcare access**. All five chairs of the `healthcare` scale describe who pays for
+  and administers coverage, from public single-payer to pure private markets; a mask ordinance is on
+  none of them. Stretching a health-adjacent remark into a healthcare chair is expressly forbidden, and
+  this is the exact shape of thing that prohibition exists to stop.
+- Steve Lavine — Plano — `ecef0481-27c7-4955-b822-83d64c7ef63f` — homelessness — **re-confirmed
+  blank.** No mention of camping, encampments, sleeping in public, shelter or homelessness in the
+  survey; 222-04 separately confirmed the topic absent from his full campaign site.
+- Steve Lavine — Plano — `ecef0481-27c7-4955-b822-83d64c7ef63f` — local-immigration — **re-confirmed
+  blank.** No mention of ICE, detainers, immigration status or federal-local police cooperation;
+  222-04 separately confirmed the topic absent from his full campaign site.
+
+### Evidence found on topics these people ALREADY HOLD — reported, NO ROW WRITTEN (D-07)
+
+D-07 forbids overwriting a held row, so none of the following was written anywhere. They are recorded
+because they are new primary-source material the operator may want to act on separately, and because
+a future pass should not have to re-find them. **Three of the four genuinely new passages in this
+insert land here** — which is itself part of the answer to "did the UA block cost the phase evidence":
+it cost it a little, but on topics that were already filled.
+
+- **Maria Tu — `residential-zoning` (held).** 2019 survey, third priority: "PROTECT THE QUALITY OF LIFE
+  OF OUR NEIGHBORHOODS - I've seen the dramatic increase of traffic in Plano and has seen how that can
+  damage our quality of life. **I will work to protect the suburban atmosphere Plano residents moved
+  here for.** I will also work tirelessly to ensure that the quality of life in our neighborhoods is
+  maintained as Plano grows." This is explicit neighborhood-character-protection language and is the
+  single most chair-shaped new passage found. It was **not** written.
+- **Maria Tu — `transportation-priorities` (held).** 2019 survey, first priority: "REDUCE TRAFFIC
+  CONGESTION - I'm just as frustrated with Plano traffic as you are—especially the traffic congestion
+  generated by commuters just 'passing through' Plano. I will work to improve our city infrastructure
+  (especially the outdated roads in the older parts of town) and get Plano moving again." Note for any
+  future pass: this is a **road-capacity and road-maintenance** statement and names no transit,
+  pedestrian or cycling tradeoff, so it would likely not have located a chair even had the topic been
+  open.
+- **Shun Thomas — `public-safety-approach` (held).** 2025 survey, first key message: "I will support
+  first responders with the staffing, training, and resources they need. Just as important is community
+  policing that builds trust, transparency, and strong relationships with residents." A staffing-and-
+  resources commitment paired with a community-policing commitment; genuinely new material.
+- **Steve Lavine — `public-safety-approach` (held).** 2021 survey, first key message: "LET'S KEEP PLANO
+  SAFE We must continue to invest in our police and fire departments to keep our city one of the safest
+  in America. My opponent is stripping away such investment, which will ultimately make Plano less
+  safe."
+- **Steve Lavine — `transportation-priorities` (held).** 2021 survey: "Plano is an integral part of a
+  regional transportation system and we must be prepared for the growth of cities to our North that
+  will strain the highways through to Dallas and beyond. I will embrace forward-thinking mobility
+  solutions to help ease congestion." ("Forward-thinking mobility solutions" names no mode and would
+  most likely not have located a chair on its own.)
+- **Bob Kehr — `economic-development` (held).** 2025 survey: "I'm passionate about economic
+  development. It is important to attract and retain businesses of all size to Plano. This helps with
+  our prosperity, and allows the tax burden to be carried 50% by businesses." (No incentive posture —
+  would most likely not have located a chair either.)
+- **Bob Kehr — `housing` (held).** The "Addressing housing is essential…" key message quoted in his
+  `residential-zoning` blank above is equally the nearest thing he says to a housing-affordability
+  position; it names beneficiaries, not a government role.
+- **Shun Thomas — `residential-zoning` and `transportation-priorities` (both held).** Her
+  policy-passions answer names "zoning reform" and "transportation" as bare list items. Naming a topic
+  as a priority locates no chair, so these would have been blanks had the topics been open.
+
+### `taxes` — quotes preserved verbatim, NO ROW WRITTEN FOR ANYONE
+
+Per the settled operator ruling of 2026-07-25 (see "RULING: `taxes` is structurally unanswerable for
+municipal officeholders" above), `taxes` was struck from all four topic lists before research began
+and no `taxes` row was written or considered. The surveys nevertheless contain real tax material,
+recorded here verbatim so it can be placed if the Local Lens `taxes` question is ever rewritten with
+municipal scope:
+
+- **Maria Tu (2019 survey), second priority:** "KEEP PROPERTY TAXES LOW - Our high property taxes harm
+  families. In Plano, we're fortunate to have one of the lowest tax rates in the Dallas area; I'm
+  committed to keeping our property taxes low."
+- **Maria Tu (2019 survey), political-philosophy answer:** "It's why we've managed to enjoy the best
+  amenities while paying one of the lowest tax rates in the Metroplex… I'm a fiscal conservative who
+  will work my hardest to keep our taxes low while maintaining the wonderful services we all love and
+  enjoy in Plano: our parks, our libraries, our reaction centers, and our excellent police, fire and
+  EMTs." (Note for a future municipal-scope rewrite: this is a *hold-the-rate-and-hold-the-services*
+  position, which the current national scale has no chair for.)
+- **Bob Kehr (2025 survey), second key message:** "Keeping our city vibrant and competitive also helps
+  our taxes from rising." **And, policy-passions answer:** "It is important to attract and retain
+  businesses of all size to Plano. This helps with our prosperity, and allows the tax burden to be
+  carried 50% by businesses."
+- **Shun Thomas (2025 survey), second key message:** "keep the balance between businesses and
+  neighborhoods that helps maintain lower tax rates."
+- **Steve Lavine (2021 survey), policy-passions answer:** "Expanding our tax base by attracting new
+  businesses and their employees that will fill new homes in both new and redeveloped areas of the city
+  will help take the burden of increasing municipal costs off our homeowners." (Lavine already holds
+  `taxes`; nothing was written or changed.)
+
+### Self-audit
+
+Plano is Tier-1, so 100% of any assigned stance was to be re-verified before commit. **No stance was
+assigned, so there was nothing to re-verify** — this is stated plainly rather than claiming a check
+that did not run. What *was* done: every page was fetched fresh with `curl` (which bypasses any
+`WebFetch` cache entirely), every survey answer was read in full in the primary document, every
+question on every page was enumerated to prove no answer was left collapsed, and the three passages
+that reached or approached the assignment threshold were demoted **before** any value was written:
+
+1. **Steve Lavine / growth-and-development = 4 — demoted to blank.** Chair-4 language present, but
+   chairs 3 and 4 both stay live, the subject is redevelopment of a built-out city, and 222-04 refused
+   Chris Krupa Downs's near-identical "expanding the commercial tax base" formulation for this same
+   topic in this same city.
+2. **Steve Lavine / healthcare — demoted to blank.** A genuine mask-mandate position, but the scale
+   measures coverage policy, not public-health regulation.
+3. **Maria Tu / growth-and-development — demoted to blank.** "Protect the suburban atmosphere Plano
+   residents moved here for" is neighborhood-character language belonging to `residential-zoning`, a
+   topic she already holds; carrying it to growth pace would be cross-topic inference.
+
+Direction was checked against the inversion-trap table in every case; no value was ever fractional
+because no value was ever written.
+
+### Out of scope, recorded for the operator
+
+- **Burt Thakur (Frisco, Place 2) has 3 completed Ballotpedia Candidate Connection surveys and was
+  NOT researched.** He sits in the already-stanced cohort of a city outside the Plano+McKinney
+  exception 222-04 operated under, so reading him needs a separate operator decision. He is the single
+  largest unread body of questionnaire evidence the UA fix has exposed in Collin.
+- **McKinney's seven officeholders genuinely have no Ballotpedia page** — all return 404 stubs, not
+  UA-blocked pages. The 47 McKinney blanks in 222-04 part B are unaffected by this discovery.
+- **Frisco's Colberg and Hill likewise have no page.** The 15 Frisco blanks from 222-03 are unaffected.
+- **The other four Plano officeholders** (Horne, Downs, Quintanilla, Muns) were not in the
+  orchestrator's derived scope for this insert; 222-04 named Quintanilla's page among the empty bodies,
+  and the orchestrator's sweep found no completed survey for him.
+
+### Outcome — no migration authored
+
+**Zero chairs from 25 pairs. Per this insert's own instruction, no migration file was created and
+migration number 1424 was NOT claimed; 1424 remains free, now having been left unclaimed by 222-08,
+222-09 and this insert.** Nothing was committed to `C:/EV-Accounts` by this insert and no `git push`
+was executed against that remote. There is no SQL for the operator to apply. **No database query was
+run and no migration was applied** — this executor has no Supabase binding.
+
+This is a **success outcome**. The question this insert existed to answer was whether the seven-wave
+Ballotpedia User-Agent block cost the phase real evidence. **The answer is: for Plano, essentially no.**
+The four surveys are candidate-questionnaire *format* wrapped around generic campaign copy; the one
+passage that came closest to a chair is refused by a precedent 222-04 itself set; and the three other
+genuinely new passages land on topics that are already filled. 222-04's Plano result of 1 chair from
+59 pairs was not an artifact of the block — it reflects what these officeholders have actually said.
 
 ---
