@@ -42,14 +42,14 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 259
+## Count: 270
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
 + 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
 + 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview)
-+ 11 by 222-08 so far (Anna).
++ 22 by 222-08 so far (11 Anna + 11 Fairview).
 222-09 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -2447,5 +2447,228 @@ that grew from 16,896 (2020 census) to about 35,245 (2025) and projects 100,000 
 **Anna reconcile:** Pete Cain appears in **bucket 2 for all 11 topics** and in bucket 1 for none. He
 is the only Anna name in plan 222-08's scope and he is accounted for — not in neither bucket, not in
 both. Anna's six council members are out of this plan's scope and belong to 222-11/222-12/222-13.
+
+---
+
+## Town of Fairview (4825224) — 222-08
+
+**Attempted:** 2026-07-25 — **Mayor John Hubbard** (`72b80f6a-82b3-4872-a10f-e95e2cd3f90f`), the sole
+Fairview officeholder in plan 222-08's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Only the mayor is in
+scope here; Fairview's Town Council seats are covered by plans 222-11/222-12/222-13** and are
+deliberately absent from this section. See the 222-08 preamble in the Anna section above for the
+Murphy/Princeton/Melissa scope cut.
+
+**Result: 0 chairs. All 11 topics are honest blanks — but this is by far the hardest zero in plan
+222-08, and the reasoning below should be read before any future pass re-searches Fairview.** Hubbard
+is the **best-documented person in this entire plan**: he holds a recorded, individually-named,
+contested **dissenting vote with a stated reason**, sustained over fourteen months into a named public
+campaign. It still does not land on any of the eleven compass axes, for the reason set out under
+`residential-zoning` below. **An operator who disagrees with that call should overrule it explicitly
+rather than have a later pass rediscover it** — the evidence is preserved here in full so that is
+possible.
+
+**Evidence checked:**
+- **PRIMARY DOCUMENT — the official Fairview Town Council minutes of April 29, 2025, read in full (6
+  pages, signed and attested).** Obtained by way of Fairview's **CivicClerk OData API**
+  (`fairviewtx.api.civicclerk.com/v1/Events`, then
+  `/v1/Meetings/GetMeetingFileStream(fileId=1877,plainText=false)`) after the public portal SPA proved
+  unreadable — **this API route is the single most useful technical finding for Fairview and should be
+  reused by 222-11/222-12/222-13.** The minutes establish, by name and beyond doubt:
+  - Council present: **Mayor Henry Lessner and Mayor Pro Tem John Hubbard**, and Councilmembers Rich
+    Connelly, Gregg Custer, Ricardo Doi, Larry Little, Ken Logsdon. (Hubbard was **Mayor Pro Tem** at
+    this meeting; he became mayor at the May 2025 election.)
+  - Item 4a: a public hearing on *"an ordinance for a request for approval of a Conditional Use Permit
+    (CUP) for a religious facility. The 8.1-acre site is located on the north side of Stacy Road, west
+    of Meandering Way and is zoned for the (RE-1) One-acre Ranch Estate District."*
+  - The mandatory conditions Mayor Lessner read into the record, including *"From ground level, the
+    steeple and spire and any other element of the temple structure cannot exceed 120'"* and a
+    44'-7" roof/façade cap, a 30,742 sq ft floor-area cap, 38.9% impervious coverage, and detailed
+    Dark-Skies lighting limits.
+  - **The roll call, verbatim: Mayor Henry Lessner — Aye; Mayor Pro Tem John Hubbard — Nay;
+    Councilmember Rich Connelly — Nay; Councilmember Gregg Custer — Aye; Councilmember Ricardo Doi —
+    Aye; Councilmember Larry Little — Aye; Councilmember Ken Logsdon — Aye.** *"…in a vote of Yes 5,
+    No 2, Abstained 0. Mayor Pro Tem Hubbard and Councilmember Connelly voting against."* The motion
+    was **Mayor Lessner's**, seconded by **Doi** — not Hubbard's. The meeting ran from 5:30 PM to
+    12:09 AM with roughly sixty members of the public present and 40-plus named speakers.
+  - The minutes were approved May 6, 2025 and are signed **"Dr. John Hubbard, Mayor."**
+- **Deseret News, June 15, 2026** — *"Town leaders launch campaign against Fairview Texas Temple
+  steeple"* — fetched and read. Hubbard's own words at that day's press conference launching the
+  **FairviewSpeaks** campaign: *"Some people think the issue was resolved when the Town Council
+  approved the temple permit last year. It wasn't."* · *"They have every right, right now, to build
+  (to) 120 feet. But… It just doesn't fit into the character of the town of Fairview. It's just too
+  big."* · *"I'm here today on behalf of my friends and neighbors who are upset with a 120-foot
+  steeple that will tower over our community once the temple is completed."* The article also records
+  the height history: an original 173-foot proposal, a **November 2024 mediated compromise at 120
+  feet which Hubbard joined**, and a residents' counter-proposal of 70 feet; ground was broken in
+  February 2026.
+- **CBS Texas (CBS News DFW), June 15, 2026** — fetched and read. Hubbard argues *"the 120-foot
+  steeple is taller than what Fairview's zoning ordinances typically allow"* and repeats *"It just
+  doesn't fit into the character of the town of Fairview. It's just too big"*; he would prefer **68
+  feet**. **Asked directly of this article: it contains no statement from Hubbard about housing
+  density, multifamily housing, or residential development generally.** That negative finding is the
+  hinge of the `residential-zoning` blank below.
+- **Deseret News, April 30, 2025** — the contemporaneous account of the CUP vote — fetched and read.
+  It quotes **Mayor Henry Lessner** (*"None of us are pleased with this… but this is what we feel we
+  have to do"*), **Councilman Gregg Custer** and **Councilmember Ricardo Doi** (*"I hope a future
+  council will change the ordinance and establish a maximum height for a church so no other council
+  has to face this again"*) — and **does not mention John Hubbard at all**. Hubbard's Nay was
+  therefore taken from the **official minutes**, not from any news account, exactly as rule 5 requires.
+- **Official Town of Fairview site** (`fairviewtexas.org`) — root navigation read. Several documented
+  paths return **HTTP 404** (`/index.php/government/town-council`, `/government.html`,
+  `/bondelection.html`); the working entry point for meetings is the CivicClerk portal.
+- **Fairview EDC** (`fairviewtexasedc.com`) and Fairview Crossing / Sloan Corners / Fairview Town
+  Center development coverage, searched. Hubbard is not quoted with a position in any of it.
+- **LegiStorm, TML City Officials Directory, LinkedIn** biography material — read; **bio only**.
+
+**⚠ HOMONYM AND ADJACENCY GATES APPLIED.** "Hubbard" is a common surname and there is also a **City of
+Hubbard, Texas** (Hill County) with its own TML directory entry, plus a **Fairview Fire Protection
+District** that is a **California** agency and dozens of other US Fairviews. Every source relied on
+above was pinned to **Fairview, Collin County, Texas** by an explicit marker — the 372 Town Place
+council chambers address, Stacy Road, the Town Secretary Joshua Stevenson's attestation, or the
+article's own statement of the county. Separately, Hubbard's **profession and board service were
+deliberately not used for any topic**: he holds a Ph.D. in Human Capital Development, is a university
+professor and consultant specialising in **economic development** and strategic planning, sits on the
+**Texas Economic Development Council** and the **Methodist Charlton Medical Center Advisory Board**,
+and previously worked as Assistant to the City Manager in Plano, Assistant Town Administrator in
+Fairview and **City Administrator in Lucas**. It would have been easy and wrong to read
+`economic-development` off the TEDC seat and the CEcD credential, or `healthcare` off the hospital
+advisory board. **Board service and profession are adjacency, not positions** — both are expressly
+refused defect classes, and both were declined here.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **Fairview's minutes are ACTION-ONLY, and that is the structural reason Fairview yields no chairs.**
+  Having read the April 29, 2025 minutes in full — a nearly seven-hour marathon meeting on the single
+  most contested item in the town's recent history — the record of the deliberation is exactly three
+  sentences: *"The Council and staff had discussion regarding this item"*, *"The Council, staff, and
+  multiple people from the applicant team had discussion regarding this item"*, and *"Council and the
+  applicant had continued discussion."* **Not one council member's words are recorded anywhere in the
+  document.** Fairview minutes list motions, seconds, roll calls and speaker names and nothing else.
+  This is the opposite of Longview's near-verbatim style (222-07), and it means **reading more
+  Fairview minutes cannot produce quotes** — it can only produce votes, and an unexplained vote cannot
+  locate a chair. A future pass should spend its budget on **audio**, not on minutes.
+- **Council meeting AUDIO exists and was not listened to.** Fairview publishes MP3 recordings of
+  council meetings directly (e.g.
+  `fairviewtexas.org/pdf/audio/Town%20Council/2024/02%20-%20February%206,%202024%20Regular%20Council%20Meeting.mp3`,
+  surfaced in the CivicClerk event payload as `externalMediaUrl`). **Audio is not readable by this
+  pass.** Given that the written minutes are action-only, this audio archive is the single highest-value
+  unread source for every Fairview officeholder, and it is directly addressable by URL — a genuinely
+  useful finding for 222-11/222-12/222-13.
+- **A podcast interview exists and could not be used:** *"A Conversation with Dr. John Hubbard, Mayor
+  of Fairview, Texas"* (Apple Podcasts, id1682941294). Audio-only with no published transcript;
+  podcast audio is not readable here. This is the most likely place a genuine multi-topic Hubbard
+  position statement exists.
+- **No Ballotpedia individual candidate page** — Fairview's population is roughly 11,000, far below
+  Ballotpedia's "100 largest cities" scope. **No VOTE411 or League of Women Voters of Collin County
+  questionnaire** was found for the Fairview mayoral seat; `lwvcollin.org` has returned **HTTP 403**
+  all phase. **No Community Impact or Star Local Media candidate Q&A** for the May 3, 2025 Fairview
+  general election (Mayor, Seats 1, 3 and 5) could be found.
+- Hubbard's **campaign Facebook page** (`facebook.com/HubbardforFairview`) was not fetched — Facebook
+  is not fetchable here, and social posts are not treated as evidence of a policy position absent a
+  direct citable quote.
+- **The May 1, 2026 letter Hubbard sent to every member of the First Presidency and Quorum of the
+  Twelve** asking for a further steeple reduction is referenced in coverage but its **text was not
+  located**, so nothing was attributed to it.
+
+### John Hubbard — Mayor — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f`
+
+Sourced: **none.** All 11 topics blank. Elected mayor May 2025 after serving on the Town Council from
+2020 and as Mayor Pro Tem from 2023.
+
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **residential-zoning** —
+  **THE CLOSEST CALL IN PLAN 222-08, DELIBERATELY LEFT BLANK.** The evidence is real, primary, dated,
+  individually attributed and repeatedly restated, and it is recorded here in full because a future
+  pass must not have to re-derive it:
+  on **April 29, 2025** Hubbard, then Mayor Pro Tem, cast one of two recorded **Nay** votes against
+  the ordinance granting a Conditional Use Permit for a 120-foot steeple on an 8.1-acre site zoned
+  **RE-1 One-acre Ranch Estate** (roll call named in the official minutes, 5-2); and on **June 15,
+  2026**, fourteen months later, he launched the **FairviewSpeaks** campaign, telling a press
+  conference *"They have every right, right now, to build (to) 120 feet. But… It just doesn't fit into
+  the character of the town of Fairview. It's just too big,"* that *"Some people think the issue was
+  resolved when the Town Council approved the temple permit last year. It wasn't,"* and that the
+  120-foot steeple *"is taller than what Fairview's zoning ordinances typically allow."* He wants 68
+  feet. So this is **not** the refused "unexplained dissenting vote" class (222-07, Shannon Moore) —
+  the reason is stated, in his own words, on the record.
+  **It is nevertheless a blank, and the reason is topic fit, not evidence quality.** All five chairs
+  on this scale are propositions about **how much housing of what type is allowed where**: chair 1
+  pairs strict character protection with *community votes before any rezoning*; chair 2 is duplexes
+  and accessory units with design review; chair 3 is multifamily and mixed-use near commercial
+  corridors; chair 4 is broad upzoning with reduced parking; chair 5 is eliminating single-family-only
+  zoning. Hubbard's position concerns **the maximum height of one non-residential structure under a
+  conditional use permit** — it is a building-height and CUP question, not a housing-density question.
+  He has **not** called for community votes before rezoning, and **CBS Texas's June 15, 2026 piece was
+  interrogated on exactly this point and contains no statement from him about housing density,
+  multifamily housing, or residential development at all.** Rendering him at chair 1 would publish a
+  housing-density claim he has never made, inferred from a religious-land-use dispute — which is the
+  banned **cross-topic inference** class ("a quote about topic X may not set topic Y"), and it is the
+  same shape of near-miss the 222-01 audit deleted from production. **Blank, not defaulted, and
+  flagged for operator review rather than quietly dropped.** Nothing was inferred in the opposite
+  direction either — no view was attributed to him about the religious institution itself, and
+  religion is never a basis for inference in this phase.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **growth-and-development** — no
+  chair-locating position. His campaign framing is *"committed to preserving Fairview's unique charm
+  while ensuring responsible growth, fiscal stewardship, and open, transparent governance"* — the
+  textbook **generically evaluative** formulation, indistinguishable across chairs 2, 3 and 4, and the
+  precise class the 222-01 audit deleted. The steeple dispute is about one structure's height, not
+  about growth pace, annexation, approval speed or permitting fees, and was not carried across. Nothing
+  found on growth caps, voter approval for large developments, or infrastructure-ahead-of-growth
+  sequencing. **Fairview's own low-density, one-acre-minimum zoning pattern is town policy, not
+  Hubbard's stated position**, and was not used as a default.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **housing** — no position found
+  on what role government should play in housing affordability. Nothing on public housing, rent caps,
+  inclusionary requirements, affordable-project subsidy, first-time-buyer assistance, permit
+  streamlining, or leaving prices to the market.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **economic-development** — no
+  position found on incentives, abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. **This is the blank most at risk of a bad inference and it was refused deliberately:**
+  Hubbard is a **Certified Economic Developer (CEcD)** who teaches and consults on economic
+  development and sits on the **Texas Economic Development Council**, and Fairview has an active EDC
+  with projects (Fairview Crossing, Sloan Corners, Fairview Town Center) he could plausibly be assumed
+  to have views on. **Credential, profession and board service are adjacency and set no chair**, and
+  no Hubbard statement about any actual Fairview incentive decision was found.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **public-safety-approach** — no
+  chair-locating position. Fairview runs its own police department (a chief plus 19 full-time
+  officers), but nothing was found in which Hubbard states a position on staffing levels, pay,
+  equipment, crisis-response or mental-health co-responders, or redirecting police budget. His service
+  alongside the Police and Fire Chiefs at council meetings is not a position.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **transportation-priorities** —
+  no statement found setting any transportation mode against another. The April 29, 2025 minutes
+  record a unanimous 7-0 authorisation for the Town Manager to settle a **right-of-way acquisition for
+  Fairview Parkway** — a real-property settlement taken out of executive session with no stated
+  reasoning of any kind, which locates nothing; and a roadway right-of-way purchase is not a mode
+  tradeoff. Nothing found on transit, bike lanes, sidewalks or parking requirements.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **homelessness** — no statement
+  or vote found on people sleeping or camping in public spaces. No Fairview camping ordinance,
+  encampment policy or shelter decision surfaced, and none was inferred.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **local-immigration** — no
+  statement found on the Fairview Police Department's relationship to federal immigration enforcement,
+  ICE detainers, or information sharing. **Texas SB 4 is state law, not his position**, and was not
+  used as a default.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **civil-rights** — no on-topic
+  position found on racial or social inequality. The temple dispute is a **land-use and building-height
+  matter** and was **deliberately not** read as a civil-rights or religious-liberty position in either
+  direction: doing so would require inferring a stance on institutional equity from a zoning vote,
+  which is both cross-topic inference and an identity-adjacent inference, and both are forbidden. No
+  inference was drawn from any religious, demographic or affiliation characteristic of anyone involved.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **taxes** — **researched, no
+  chair written per the settled 2026-07-25 operator ruling; and separately, nothing chair-locating was
+  found even for the register.** His only tax-adjacent language is the campaign phrase *"fiscal
+  stewardship"*, which is generically evaluative and reaches no chair on any scale. Fairview funds
+  infrastructure projects partly from sales-tax revenue, but that is a description of the town's
+  finance structure, not his position. Chairs 1–2 require raising taxes specifically on wealthy people
+  and large companies and chairs 4–5 require scaling public services back; nothing found does either.
+  No taxes row was written.
+- John Hubbard — Fairview — `72b80f6a-82b3-4872-a10f-e95e2cd3f90f` — **healthcare** — no statement
+  found on healthcare access. Expected: all five chairs describe **national** healthcare policy, which
+  a town mayor holds no position on by role. **His seat on the Methodist Charlton Medical Center
+  Advisory Board was deliberately not used** — hospital board service is adjacency, and it is not a
+  position on the government's role in coverage. No health-adjacent fact was stretched into a chair.
+
+**Fairview reconcile:** John Hubbard appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. He is the only Fairview name in plan 222-08's scope and he is accounted for — not in neither
+bucket, not in both. Fairview's Town Council seats are out of this plan's scope and belong to
+222-11/222-12/222-13. **Fairview therefore does NOT flip to `hasContext: true` in
+`src/lib/coverage.js` from this plan** (RESEARCH.md Pitfall 5) — it remains at zero stances.
 
 ---
