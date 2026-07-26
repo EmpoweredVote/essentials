@@ -42,15 +42,16 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 154
+## Count: 164
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
-+ 10 by 222-05 (Allen).
-222-06 through 222-17 append their own per-government sections below as they execute.
++ 10 by 222-05 (Allen) + 10 by 222-06 (Richardson).
+222-07 through 222-17 append their own per-government sections below as they execute.
 
-**Migration status, all applied to production 2026-07-25 after operator approval:**
+**Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
+operator approval; 1422 is authored and committed but **not yet applied**:
 
 | Migration | Contents | Status |
 |---|---|---|
@@ -60,8 +61,10 @@ dropped), or a person present in both with the *same* topic recorded twice (an i
 | `1419_222_mckinney_gapfill_stances.sql` | 2 chairs (Lynch homelessness=4, Jones growth-and-development=3) | APPLIED |
 | `1420_222_barrios_healthcare_bio_only_remediation.sql` | 1 deletion (bio-page-only) | APPLIED |
 | `1421_222_allen_stances.sql` | 1 chair (Schulmeister residential-zoning=3) | APPLIED |
+| `1422_222_richardson_stances.sql` | 1 chair (Dorian housing=3) | AUTHORED — awaiting operator apply (222-06 Task 3) |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
+Migration 1422 is excluded from that total until the operator applies it.
 
 ---
 
@@ -1178,5 +1181,163 @@ Sourced: `residential-zoning` = 3 (applied via migration 1421). The remaining 10
 **Allen reconcile:** the one worklist name appears in bucket 1 (an applied migration row for
 `residential-zoning`) and additionally lists his 10 unsourced topics here — the Allen worklist has no
 name in neither bucket, and no (person, topic) pair appears in both.
+
+---
+
+## City of Richardson (4861796) — 222-06
+
+**Attempted:** 2026-07-25, the one un-stanced Richardson officeholder on the 222-01 live worklist —
+Council Member Curtis Dorian (District 1 / Place 1) — against all 11 canonical compass topics. The
+other six seated Richardson officeholders already hold stances and were out of scope per D-07; none
+of their rows was read, re-reasoned, or modified by this plan (Omar's, Shamsul's and Barrios's rows
+were remediated earlier on 2026-07-25).
+
+**Evidence checked:** Community Impact Newspaper's Dallas-Fort Worth / Richardson desk, which is by
+far the richest source for this council — the May 14, 2026 Greenwood Park rezoning story, the
+May 26, 2026 CDBG story, the May 21, 2026 Unified Development Code story, the February 6, 2026
+comprehensive-zoning-ordinance story, the June 11, 2026 Interurban / Solow Garage story, the
+June 9, 2026 water and wastewater rate story, the October 7, 2025 bond-priorities story, the
+May 1, 2025 89-townhome approval, the February 11, 2025 downtown 279-apartment approval, the
+June 10, 2025 Amazon drone-hub split vote, the February 14, 2025 candidate-filing story, and the
+April 10, **2023** Place 1 candidate Q&A (the only genuine questionnaire found for him — he ran
+unopposed in 2025, so no 2025 questionnaire appears to exist); *The Wheel* (marksteger.com), the
+long-running Richardson council-recap blog, for the May 20, 2026 CDBG/UDC meeting, the
+February 23, 2026 DART meeting, the July 20, 2026 vacancy-appointment meeting and the October 2024
+comprehensive-plan review; and justinneth.substack.com's meeting write-ups, including the
+September 8, 2025 FY26 tax-rate public hearing. Richardson, **TEXAS** was confirmed on every source
+used — the homonym gate matters unusually much here, since "Richardson" is also a common surname and
+a city name in other states, and since Richardson TX spans Dallas and Collin counties. His identity
+as the Richardson TX Place 1 / District 1 council member (elected May 2023, re-elected unopposed
+May 3, 2025 with 8,009 votes) was confirmed before any evidence was accepted as his.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position: **every `www.cor.net` URL attempted returned HTTP 403**, including his official
+council-member page (`/government/city-council/who-are-our-city-council-members/curtis-dorian`) and
+the city's news / Week-in-Review pages, so the official City of Richardson site was never read and
+**no city agenda packet, minutes document, or meeting video was ever opened** — every recorded vote
+below is known only through news coverage of it. This is the single biggest gap: Richardson posts its
+agenda packets and meeting video, and a pass with working cor.net access would very likely find
+on-the-record remarks on public safety, the tax rate, and specific zoning cases that this pass could
+not reach. Also unreadable: `ballotpedia.org`'s individual candidate page for him
+(`/Curtis_Dorian_(Richardson_City_Council_Place_1,_Texas,_candidate_2025)`) resolved but returned an
+**empty body**, as did `/City_elections_in_Richardson,_Texas_(2025)` — the same Ballotpedia
+empty-body failure seen throughout this phase, which is a fetch failure and not evidence of absence.
+No Richardson Place 1 questionnaire was found on VOTE411 / League of Women Voters of Collin County.
+His campaign Facebook page (`facebook.com/CurtisDorianforRichardson`) was not fetched — social-media
+posts are not treated as evidence of a policy position absent a direct citable quote, and Facebook is
+not fetchable here.
+
+### Curtis Dorian — Council Member District 1 — `6b512b29-d3c1-4709-829f-df78664ffee1`
+
+Sourced: `housing` = 3 (migration 1422, **authored — awaiting operator apply**). The remaining 10
+topics are blank:
+
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — residential-zoning —
+  **DEMOTED TO BLANK BY THIS PLAN'S TIER-1 SELF-AUDIT.** A chair was drafted from his own remarks at
+  the May 11, 2026 unanimous Greenwood Park rezoning vote (40 compact single-family detached homes
+  with reduced lot areas, reduced setbacks and increased lot coverage, on the decommissioned
+  Cottonwood Creek nursing-home site on West Shore Drive) — "We're always taking into consideration
+  that we do need some middle ground housing. I don't want anyone thinking that we're walking away
+  from this as an opportunity because this is the right product for this particular area" — read
+  alongside his October 2024 comprehensive-plan remarks that "we do need to create new
+  infrastructure, new buildings, new mixed-use, new areas where people can call home." The re-fetch
+  of the source confirmed the quotes are genuine but also confirmed that he says **nothing** about
+  where middle housing should be allowed, nothing about multifamily, nothing about neighborhood
+  character, and nothing about community votes on rezoning. His affirmation of "middle ground
+  housing" is chair 2's subject matter (modest density increases such as duplexes and accessory
+  units); his support for new mixed-use districts is chair 3's subject matter (multifamily and
+  mixed-use near commercial corridors); nothing resolves between them, and chair 3's second clause —
+  protecting most residential zones — would have to be inferred from his silence rather than from
+  anything he said. Suggestive but not explicit is a blank. Separately, his two other rezoning votes
+  (89 townhomes at 3600 Shiloh Road, unanimous April 28, 2025; 279 downtown apartments on Polk
+  Street, February 10, 2025) were deliberately not used — he is not quoted in either, and a generic
+  unanimous rezoning approval with no stated reason is the exact defect deleted from an Allen record
+  on 2026-07-25. His profession — he is a land-development and design-build contractor and president
+  of the Dorian Bahr Company — was likewise not used; profession is adjacency, not a position.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — civil-rights — no on-topic
+  position found anywhere. Nothing in his council remarks, the 2023 candidate Q&A, or any coverage
+  addresses civil-rights enforcement, equity requirements, or race-conscious programs. Note that the
+  two other Richardson `civil-rights` rows in production (Omar, Shamsul) were **deleted** on
+  2026-07-25 for being inferred from ethnicity, religion or birthplace — that inference class is
+  forbidden and was not repeated here.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — homelessness — no statement
+  found on public camping, encampments, enforcement, citations, or shelter capacity. A targeted
+  search for a Richardson encampment or panhandling ordinance debate turned up no council item at
+  all in 2025–2026, let alone a Dorian remark on one.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — economic-development — no
+  position found on incentives, abatements, or community-benefit conditions. Richardson does use
+  Chapter 380 agreements, but no Dorian statement or attributed vote on any incentive deal was found.
+  Listing "Economic development, infrastructure and revitalization" as his top priorities in the
+  April 10, 2023 Community Impact Q&A names the subject without locating a chair on incentive
+  aggressiveness — exactly the generic-priority-list defect this phase has repeatedly refused. His
+  Richardson Chamber of Commerce membership was deliberately not used: membership is adjacency, and
+  chamber/EDC-board adjacency was the basis of rows deleted from two Allen records on 2026-07-25.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — local-immigration — no
+  statement found on the Richardson Police Department's relationship to federal immigration
+  enforcement, ICE detainers, or information sharing. Texas SB4's statewide bar on sanctuary policies
+  is state law, not his position, and was deliberately not used as a default — that is the A4 defect
+  the 222-01 audit deleted from two Plano records.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — public-safety-approach — no
+  chair-locating statement found. He is not quoted on police staffing, funding levels, pay,
+  equipment, or crisis-response or co-responder programs in any source reachable this session; the
+  October 6, 2025 bond work session listed a new Fire Station 7 among candidate projects but that
+  item is not attributed to him. His Citizens Police Academy and Citizens Fire Academy attendance and
+  his volunteering with the Richardson police and fire departments (2023 Q&A; his official bio) are
+  service history and civic participation, not positions, and were deliberately not used — that is
+  the adjacency defect deleted from Allen records on 2026-07-25. Because cor.net returned HTTP 403
+  throughout, the city's own budget-hearing packets and meeting video — the likeliest place for a
+  public-safety funding remark — were never read.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — transportation-priorities —
+  no statement found that sets any transportation mode against another. His one transportation-shaped
+  remark is about capital infrastructure generally: at the October 6, 2025 work session on a
+  potential $200M bond (of which roughly $130M was floated for streets and mobility) he said "The
+  most important thing to me is to continue building our infrastructure. It's something you don't
+  see, so it's not instant gratification, but it's super important for the growth of our city" —
+  which, in a discussion that also covered drainage and water, does not choose between road capacity
+  and transit, bike or pedestrian investment. He is not quoted at all in the February 23, 2026 DART
+  governance and General Mobility Fund items, which the council approved. The Interurban district's
+  stated aim of "reducing auto uses" refers to automotive **businesses** (repair garages), not to car
+  travel, and was deliberately not read as a mode-priority position.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — taxes — **researched, no
+  chair written per the 2026-07-25 taxes ruling** (see "RULING: `taxes` is structurally unanswerable
+  for municipal officeholders" above). Unlike Allen's, his evidence on this axis is genuinely thin as
+  well: **no statement on the Richardson property-tax rate was found at all**, and he is not
+  mentioned anywhere in the September 8, 2025 FY26 tax-rate public-hearing write-up. The nearest
+  material is about **utility rates, not taxes**, and is preserved here verbatim so a future
+  municipal-scope rewrite can consider it. At the June 8, 2026 council meeting on the water and
+  wastewater rate plan (an ~8% annual residential increase under the recommended
+  meter-equivalency option, driven by North Texas Municipal Water District increases and an $83.89M
+  five-year infrastructure requirement) he said: *"I don't think anyone wants to see an increase in
+  utility rates across the board, but it's inevitable that we take care of our infrastructure."* And:
+  *"The majority of our population is aging in place. I do want to protect that asset to where it's
+  affordable for them to maintain their living environment."* Accepting a rate increase to fund
+  infrastructure while asking that the burden on aging residents be limited is a utility-ratemaking
+  position, not a taxation-and-public-spending chair, and stretching it onto the taxes scale would be
+  cross-topic inference on top of a scale the operator has already ruled unanswerable. No taxes row
+  was written.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — growth-and-development — no
+  chair-locating statement found. His October 6, 2025 bond remark that continuing to build
+  infrastructure is "super important for the growth of our city" is an argument for capital
+  reinvestment in a city that is more than 95% built out (he himself framed Richardson's central
+  challenge in the 2023 Q&A as "Land use... We have less than 5% land mass"), not a position on
+  growth pace: it does not choose between allowing growth only where existing infrastructure can
+  already support it, investing ahead of growth, streamlining permitting to recruit development, or
+  capping growth outright. Most of his infrastructure language is about **maintaining and replacing
+  aging** systems (drainage, water, wastewater, neighborhood rehabilitation), which is not the
+  build-ahead-of-growth commitment that located this chair for another Collin officeholder — the same
+  distinction that kept the Allen mayor's record blank on this topic. His 2023 Q&A answer, "I plan to
+  work alongside the council and the people of Richardson to determine what is the best use of our
+  limited space," is a process commitment and locates nothing.
+- Curtis Dorian — Richardson — `6b512b29-d3c1-4709-829f-df78664ffee1` — healthcare — no statement
+  found on healthcare access. Expected: all five chairs on this scale describe national healthcare
+  policy, which a city council member holds no position on by role. His references to Richardson's
+  aging population, and the fact that the Greenwood Park site was a decommissioned nursing home, are
+  demographic and land-use facts; neither was stretched into a healthcare chair.
+
+**Richardson reconcile:** the one worklist name appears in bucket 1 (a migration row for `housing`,
+authored in 1422 and pending operator apply) and additionally lists his 10 unsourced topics here —
+the Richardson worklist has no name in neither bucket, and no (person, topic) pair appears in both.
+Once 1422 is applied, this reconcile holds against production; until then the name is honestly in
+bucket 2 for all 11 topics.
 
 ---
