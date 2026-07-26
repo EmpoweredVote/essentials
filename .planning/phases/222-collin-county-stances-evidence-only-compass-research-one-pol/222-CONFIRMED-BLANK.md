@@ -42,14 +42,15 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 292
+## Count: 303
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
 + 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
 + 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview)
-+ 44 by 222-08 so far (11 Anna + 11 Fairview + 11 Farmersville + 11 Parker).
++ 55 by 222-08, COMPLETE (11 Anna + 11 Fairview + 11 Farmersville + 11 Parker + 11 Lucas —
+all five mayors fully blank, 55 of 55 attempted pairs).
 222-09 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -65,9 +66,11 @@ operator approval; 1422 is authored and committed but **not yet applied**:
 | `1421_222_allen_stances.sql` | 1 chair (Schulmeister residential-zoning=3) | APPLIED |
 | `1422_222_richardson_stances.sql` | 1 chair (Dorian housing=3) | APPLIED |
 | `1423_222_prosper_celina_stances.sql` | 4 chairs across 3 of 8 people — Shea Scott (Celina): economic-development=1, public-safety-approach=4; Derrick Conley (Longview): homelessness=5; John Nustad (Longview): homelessness=5. Doug Charles (Prosper), Shane Lambert (Celina), Shannon Moore, Brandon Smith and Sidney Allen (Longview) yield zero rows — all 11 topics honest blanks each. | APPLIED |
+| **`1424_222_collin_mayors_a_stances.sql` — NOT AUTHORED, NO FILE EXISTS** | Plan **222-08** (D-02 mayors sweep part A: Anna, Fairview, Farmersville, Parker, Lucas). **Zero chairs across all five mayors — 55 of 55 attempted (person, topic) pairs are honest blanks — so per the plan's own instruction no migration file was created and migration number 1424 was NOT claimed.** Nothing was committed to `C:/EV-Accounts` by this plan. There is no SQL for the operator to apply for 222-08; **Task 3's apply step is a no-op**, and the only operator action 222-08 requests is the VOTE411 403 retry described in the Lucas section. The next research plan should re-derive the next free migration number rather than assuming 1424 is taken. | **N/A — NO MIGRATION (all-blank outcome)** |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
-Migration 1422 is excluded from that total until the operator applies it.
+Migration 1422 is excluded from that total until the operator applies it. **Plan 222-08 changes
+production by nothing at all** — it adds 55 register blanks and two actionable retry leads.
 
 ---
 
@@ -3142,5 +3145,272 @@ She is the only Parker name in plan 222-08's scope and she is accounted for — 
 not in both. Parker's council seats are out of this plan's scope and belong to 222-11/222-12/222-13.
 **Parker therefore does NOT flip to `hasContext: true` in `src/lib/coverage.js` from this plan**
 (RESEARCH.md Pitfall 5) — it remains at zero stances.
+
+---
+
+## City of Lucas (4845012) — 222-08
+
+**Attempted:** 2026-07-25 — **Mayor Dusty Kuykendall** (`0ea8bc33-1629-41b4-8ae9-da74c3e2b44c`), the
+sole Lucas officeholder in plan 222-08's scope, against **all 11** canonical compass topics (11 pairs).
+Verified at `stance_count = 0` against production before any research began. **Only the mayor is in
+scope here; Lucas's council seats (Mayor Pro Tem Debbie Fisher Seat 5, Jonathan Underhill Seat 1,
+Rebecca Orr Seat 2, Chris Bierman Seat 3, Phil Lawrence Seat 4, Neil Peterson Seat 6) are covered by
+plans 222-11/222-12/222-13** and are deliberately absent from this section. See the 222-08 preamble in
+the Anna section above for the Murphy/Princeton/Melissa scope cut.
+
+**Result: 0 chairs. All 11 topics are honest blanks — and this is the single most frustrating and most
+recoverable zero in the whole of plan 222-08.**
+
+> ### 🔴 ACTION FOR THE OPERATOR — one 403 is standing between this phase and a real chair
+>
+> **A VOTE411 candidate questionnaire EXISTS for a CONTESTED Lucas mayoral race, and it appears to
+> contain an explicit `residential-zoning` position in Kuykendall's own words. It could not be read
+> because the page returns HTTP 403 to this session's fetcher.**
+>
+> **URL:** `https://onyourballot.vote411.org/m/race-detail.do?id=50429844`
+> (title: *"Lucas Mayor — vote411 Voter Guide"*; candidates **Dusty Kuykendall** and **Kathleen A.
+> Peele**). Both the `/m/` mobile path and the non-mobile `race-detail.do` path return **403**.
+>
+> Search-index summaries of that page — **paraphrase, NOT verbatim, and explicitly recorded as such** —
+> render his answers as: Lucas *"is unique in that it has stuck to its core vision of 'Keeping Lucas
+> Country' by having low density, large lots and open spaces"*, and he is described as committing to
+> preserve *"the city's low density, large lots and open spaces through zoning requirements that
+> prevent high density"*; home lots in Lucas run around two acres with an average value of about $1.2
+> million, and the city has no multifamily or high-density neighborhoods. The same summaries render
+> his other priorities as roads and water: the city engineers use *"a data-driven road repair and
+> maintenance schedule"* with funding as the constraint, requiring *"scrutiny of the city budget and
+> working with fellow council members to allocate funds"*; Lake Lavon as the drinking-water source must
+> be protected, with citizen *"water wise"* education and storm-run-off measures; and increased sales
+> tax from commercial areas would let the city *"increase a higher percentage of its budget to roads
+> and water with no taxable increase to citizens"*; plus traffic minimisation and trash cleanup through
+> **Keep Lucas Beautiful**.
+>
+> **NO CHAIR WAS WRITTEN FROM ANY OF THAT, and that is deliberate, not an oversight.** Three
+> independent rules forbid it: rule 5 of this plan requires reading the primary document rather than a
+> search summary of it; the phase prohibits recording a source URL that was not actually fetched and
+> read; and the self-audit contract requires re-fetching the cited source to confirm the wording is
+> present, which a 403 makes impossible. A paraphrase also cannot settle whether the roads-and-water
+> material is chair 3 or chair 4 of `transportation-priorities`.
+>
+> **If the operator can open that URL in a browser, `residential-zoning` for Dusty Kuykendall is the
+> most likely chair in this plan to become real — very plausibly chair 1 — on the strongest source type
+> D-05 recognises: his own answer in a contested-race candidate questionnaire.** It should be placed by
+> a follow-on migration with the verbatim text, not by this plan.
+
+**⚠ PHASE-WIDE DISCOVERY, worth more than this one city: VOTE411 race pages DO exist for Collin
+County's small towns.** Phase 222 has been treating VOTE411 / League of Women Voters as a dead end
+because `lwvcollin.org` has returned **HTTP 403** for the entire phase, and no plan before this one had
+found a VOTE411 questionnaire for any Collin small-town seat. **This is the first one found.** The
+blocker is a **403 on the `onyourballot.vote411.org` host**, not the absence of the resource. Plans
+**222-09 through 222-17 should assume a VOTE411 race page may exist for every contested seat they
+touch**, search for `onyourballot.vote411.org` race pages by city and office, and escalate the 403 to
+the operator rather than recording "no questionnaire found." The race-detail URL takes the form
+`onyourballot.vote411.org/m/race-detail.do?id=<numeric id>`.
+
+**Evidence checked:**
+- **The official City of Lucas "A Message from the Mayor" page** (`lucastexas.us/417/...`) — fetched
+  and read in full. This is a genuine mayoral column, the strongest small-town source type, and it is
+  **entirely generically evaluative**: Lucas is *"at an exciting point in its history"*, evolving from
+  *"a quiet rural township into a thriving semi-rural suburban destination"*; the city is *"mindful of
+  the challenges and opportunities that come with growth"*; it *"continues to invest strategically in
+  roads, water systems, and essential public services"*; he is committed to *"preserving what makes
+  Lucas special while embracing opportunities for responsible growth"* and to maintaining *"our
+  community's rural character"*; and *"increasing traffic demands, infrastructure needs, and community
+  expectations call for careful planning and forward-thinking leadership."* Interrogated directly, the
+  page **does not address zoning, housing density, police or fire services, or taxes.** Every phrase
+  above is the refused *"responsible growth" / "careful planning"* class.
+- **The official City of Lucas site** — the City Council page (`/164/City-Council`, which confirms
+  Kuykendall as Mayor with a term ending 2027 and gives the full council roster), the staff directory
+  entry (`directory.aspx?EID=10`), the Planning & Zoning Commission pages, and the Agendas & Minutes /
+  Agenda Center modules (see the access failure below).
+- **TML City Officials Directory** and **Texas State Directory** — bare directory entries confirming
+  the seat. Biographical material: over 20 years in corporate finance and business consulting, for the
+  past 10 years CFO of a global software company (The Next Solutions, Inc.), and **former Chairman of
+  the Lucas Planning & Zoning Commission** before his election. **All of that is adjacency and was used
+  for nothing** — profession, tenure and commission service set no chair, and it would have been
+  particularly tempting and particularly wrong to read `residential-zoning` off a P&Z chairmanship or
+  `taxes`/`economic-development` off a CFO career.
+- **VOTE411** (`onyourballot.vote411.org`) — the Lucas Mayor race page located; **403 on every path
+  tried.** See the operator action box above.
+- **Wikipedia (Lucas, Texas)**, `grisak.com`'s Lucas-zoning explainer, and general Collin County
+  coverage — used only to confirm the city's factual profile (about 9,000–10,000 residents, roughly 18
+  square miles in southeastern Collin County, no multifamily or high-density neighborhoods, roughly
+  two-acre lots). **These describe the city, not the mayor.** Lucas's existing large-lot, low-density
+  zoning is **city policy and was expressly NOT used as a default for his position** — the 222-08
+  instructions single this exact trap out for Lucas, and it was declined.
+
+**⚠ HOMONYM GATE — "LUCAS" AND "KUYKENDALL" BOTH COLLIDE BADLY; SEVERAL TRAPS WERE HIT AND REJECTED.**
+- **Mayor Quinton Lucas of KANSAS CITY, Missouri.** This is the worst trap in this city, because he is
+  a sitting big-city mayor whose surname is this city's name, and searches for "Lucas mayor" plus
+  infrastructure, priorities or budget return him confidently and repeatedly. Specifically rejected
+  this session: Fox4KC's *"Mayor Lucas outlines priorities once infrastructure money comes to Kansas
+  City"*, KSHB's *"Kansas City Mayor Quinton Lucas reflects on 2025 achievements and 2026 priorities"*,
+  the KCMO press release on the federal infrastructure package, and the KSHB "KC Mayor Promise
+  Tracker." Any one of them, read carelessly, would have produced a fabricated infrastructure,
+  transportation or housing chair for Dusty Kuykendall.
+- **Lucas COUNTY, Ohio** (`co.lucas.oh.us`), which runs its own CivicEngage **Agenda Center** — i.e. a
+  minutes archive that looks exactly like the one being searched for — and **Springfield Township,
+  Lucas County, Ohio**, which publishes a **zoning resolution**. Rejected.
+- **Marlin Kuykendall**, former Mayor of Prescott, Arizona, and **"The Kuykendall Coalition"**
+  (`kuykendallcoalition.com`) — surname collisions, rejected.
+Every source relied on above was pinned to **Lucas, Collin County, Texas** by an explicit marker — the
+`lucastexas.us` official domain, the Collin County location statement, the Lake Lavon adjacency, or the
+named council roster.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+- **NO Lucas City Council minute was read this session, and Lucas's minutes could not be reached at
+  all.** `lucastexas.us/AgendaCenter` renders only the search interface to a fetch and lists no
+  documents; `AgendaCenter/City-Council-1` likewise; the search endpoint answers but returns **"No
+  results found in All categories"** for an empty term and **"No results found for zoning"** for a
+  dated 2025–2026 range across all categories; `/129/Agendas-Minutes` shows only navigation; and
+  `/city-council-meetings/` returns **HTTP 404**. Lucas is the second of this plan's five cities (with
+  Anna) whose written council record was **completely inaccessible**. A future pass should try the
+  CivicPlus `AgendaCenter/ViewFile/Minutes/_MMDDYYYY-NNNN` pattern by document id, which is how 222-07
+  eventually reached Longview's minutes after its search failed.
+- **The mayoral candidate interview is VIDEO and was not watched:** *"Dusty Kuykendall Mayoral
+  Candidate Interview – April 6th, 2024"* on YouTube (`watch?v=0loL5TZf90o`), promoted on LinkedIn by
+  Tom Grisak. **This is a dedicated, dated, candidate-specific policy interview** and is, after the
+  VOTE411 page, the richest known unread source for this officeholder. Video is not readable by this
+  pass and no transcript was published.
+- **Council meeting video / live meetings** (`/163/Public-Meetings-Agendas-Minutes`) — not watched.
+- **No Ballotpedia individual candidate page** — Lucas's population is under 10,000, far below
+  Ballotpedia's "100 largest cities" scope. **`lwvcollin.org` has returned HTTP 403 all phase.** **No
+  Community Impact coverage** of Lucas exists, and **no Star Local Media candidate profile** for the
+  Lucas mayoral race was found. **No State-of-the-City address.** Any campaign Facebook page was not
+  fetched (Facebook is not fetchable here, and social posts are not treated as evidence of a policy
+  position absent a direct citable quote).
+
+### Dusty Kuykendall — Mayor — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c`
+
+Sourced: **none.** All 11 topics blank. Mayor of Lucas with a term ending in 2027; previously Chairman
+of the Lucas Planning & Zoning Commission; by profession a corporate-finance consultant and, for the
+past decade, CFO of a global software company.
+
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **residential-zoning** —
+  **THE HIGHEST-VALUE BLANK IN PLAN 222-08, blank ONLY because its source returned 403.** See the
+  operator action box above for the full material and the exact URL. In short: a VOTE411 questionnaire
+  for a contested Lucas mayoral race appears to contain his own commitment to preserving Lucas's *"low
+  density, large lots and open spaces through zoning requirements that prevent high density"* under a
+  *"Keeping Lucas Country"* vision — which, if the verbatim text bears that out, is chair 1 (protect
+  existing neighborhood character strictly) and unlike the Fairview steeple case is squarely **on the
+  housing-density axis the topic measures**. **It is nevertheless blank here**, because the page was
+  never opened, a URL that was not fetched and read may not be cited, and a stance whose source cannot
+  be re-fetched cannot pass this plan's self-audit. Separately and independently: Lucas's *existing*
+  large-lot, low-density zoning, its ~2-acre average lots and its complete absence of multifamily
+  housing are **the city's policy and condition, not his stated position**, and were not used as a
+  default; and his prior **P&Z chairmanship is adjacency**, not a position. Blank, not defaulted — and
+  flagged for immediate retry rather than filed away.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **transportation-priorities** —
+  no chair-locating position, on two independent grounds. First, the only substantive material is the
+  unreadable VOTE411 page, known solely through paraphrase. Second, **even taken at face value the
+  paraphrase does not distinguish a chair**: a *"data-driven road repair and maintenance schedule"*
+  whose constraint is funding, a desire to *"minimize traffic"*, and trash cleanup through Keep Lucas
+  Beautiful are **road maintenance and traffic management, not a mode tradeoff** — this phase has
+  settled that *pothole repair is maintenance, not a mode tradeoff* — and "maintain roads" is the
+  opening clause of chair 3 as much as road-capacity focus is chair 4, so the paraphrase cannot
+  separate them. His mayoral column's *"increasing traffic demands, infrastructure needs, and community
+  expectations call for careful planning and forward-thinking leadership"* is generically evaluative.
+  He is never recorded setting roads against transit, bike lanes, sidewalks or parking requirements.
+  Blank.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **growth-and-development** — no
+  chair-locating position. His column addresses growth repeatedly and locates nothing: *"a quiet rural
+  township into a thriving semi-rural suburban destination"*, *"mindful of the challenges and
+  opportunities that come with growth"*, *"preserving what makes Lucas special while embracing
+  opportunities for responsible growth"*. **"Responsible growth" is the textbook refused formulation**
+  and is compatible with chair 2 (slow approvals until infrastructure catches up), chair 3 (invest
+  ahead of growth) and chair 4 (streamline permitting to grow the tax base) alike. Nothing found on
+  growth caps, voter approval for large developments, annexation, approval speed or permitting fees.
+  Note also that a **built-out or maintenance framing is not growth-pace management**, which is the
+  other reading his roads-and-water material might tempt. Blank.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **housing** — no position found
+  on what role government should play in housing **affordability**. This is a real distinction and not
+  a technicality: everything available concerns **density and lot size**, and the `housing` scale asks
+  instead about public housing, rent caps, inclusionary requirements, subsidy for affordable projects,
+  first-time-buyer assistance, permit streamlining, or leaving prices to the market. He addresses none
+  of those. The fact that Lucas's average home value is about $1.2 million is a **market fact about the
+  city**, not his position, and was not read as one in either direction.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **public-safety-approach** — no
+  chair-locating position. His column's reference to investing *"in roads, water systems, and essential
+  public services"* to maintain *"safety and sustainability"* names public safety only as part of a
+  bundle and is generically evaluative; interrogated directly, the page **does not address police or
+  fire services**. Nothing found on staffing levels, pay, equipment, crisis-response teams, unarmed
+  mental-health co-responders, or redirecting police budget. No Lucas budget or staffing vote could be
+  read (minutes inaccessible).
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **economic-development** — no
+  position found on incentives, abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. The nearest material is the VOTE411 paraphrase's observation that increased **sales tax
+  from commercial areas** would let the city put a higher share of its budget into roads and water
+  *"with no taxable increase to citizens"* — a **revenue-mix observation**, not a position on how the
+  city should attract business, and in any case known only through an unreadable source. **His career
+  as a corporate-finance consultant and software-company CFO was deliberately not used** — profession
+  is adjacency and sets no chair.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **homelessness** — no statement
+  or vote found on people sleeping or camping in public spaces. No Lucas camping ordinance, encampment
+  policy or shelter decision surfaced in any readable source, and none was inferred.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **local-immigration** — no
+  statement found on the Lucas Police Department's relationship to federal immigration enforcement,
+  ICE detainers, or information sharing. **Texas SB 4 is state law, not his position**, and was not
+  used as a default.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **civil-rights** — no on-topic
+  position found on racial or social inequality. Nothing in his column, the city site or any coverage
+  engages that axis. **No inference was drawn from any identity, demographic, religious or affiliation
+  characteristic** — that inference class is forbidden and was the basis of deletions from two
+  Richardson records on 2026-07-25.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **taxes** — **researched, no
+  chair written per the settled 2026-07-25 operator ruling.** The material is preserved here for any
+  future municipal-scope rewrite, clearly marked as **paraphrase from an unreadable source**: the
+  VOTE411 summaries render him as saying that with increased sales tax from commercial areas the city
+  can direct *"a higher percentage of its budget to roads and water with no taxable increase to
+  citizens"*, and that road funding *"will require scrutiny of the city budget and working with fellow
+  council members to allocate funds to address this need."* Holding the property-tax burden flat while
+  reallocating within an existing budget neither raises taxes specifically on wealthy people or large
+  companies (chairs 1–2) nor commits to scaling public services back (chairs 4–5) — indeed it promises
+  *more* road and water service at the same tax cost. No taxes row was written.
+- Dusty Kuykendall — Lucas — `0ea8bc33-1629-41b4-8ae9-da74c3e2b44c` — **healthcare** — no statement
+  found on healthcare access. Expected: all five chairs describe **national** healthcare policy, which
+  a city mayor holds no position on by role. His water-quality material — protecting Lake Lavon as the
+  drinking-water source, *"water wise"* citizen education, addressing storm run-off — is **drinking-water
+  and environmental protection, deliberately NOT stretched into a healthcare chair.**
+
+**Lucas reconcile:** Dusty Kuykendall appears in **bucket 2 for all 11 topics** and in bucket 1 for
+none. He is the only Lucas name in plan 222-08's scope and he is accounted for — not in neither bucket,
+not in both. Lucas's council seats are out of this plan's scope and belong to 222-11/222-12/222-13.
+**Lucas therefore does NOT flip to `hasContext: true` in `src/lib/coverage.js` from this plan**
+(RESEARCH.md Pitfall 5) — it remains at zero stances, **unless the operator reads the VOTE411 page and
+places the `residential-zoning` chair**, in which case Lucas becomes the first of the twelve
+zero-coverage Texas entries to flip and 222-18 must reconcile it.
+
+---
+
+## Plan 222-08 outcome (mayors sweep part A) — no migration authored
+
+**All five mayors in plan 222-08's scope yielded ZERO sourced chairs. 55 of 55 attempted (person,
+topic) pairs are honest blanks.** Per plan 222-08's own instruction — *"If all 5 mayors yield zero
+sourced stances, do NOT create the migration file — write only the register sections"* — **no migration
+file was authored, migration number 1424 was NOT claimed, and nothing was committed to
+`C:/EV-Accounts`.** The next research plan should re-derive the next free migration number rather than
+assuming 1424 is taken.
+
+This is a **success outcome, not a failure**, and it is consistent with the phase's record: waves 3–7
+produced 16 chairs from 240 attempted pairs, and 222-08's own brief anticipated that "a 5-mayor plan
+returning 0–2 chairs is a normal, successful outcome." No bar was lowered to raise a count.
+
+**Two of the five zeros are recoverable, and both are recorded above with exact URLs:**
+1. **Lucas / Dusty Kuykendall / `residential-zoning`** — a VOTE411 contested-race questionnaire at
+   `onyourballot.vote411.org/m/race-detail.do?id=50429844` that returns **403** to this session. The
+   highest-value single retry in the phase.
+2. **Anna / Pete Cain / `public-safety-approach`** — Anna's FY2026 budget minutes, gated behind
+   **Laserfiche WebLink** (cookies required) with `AgendaCenter` **404** and the only secondary account
+   (`citizenportal.ai`) returning **403**.
+
+**One zero is a deliberate judgement call the operator may wish to overturn:** **Fairview / John
+Hubbard / `residential-zoning`**, where a recorded, individually-named, contested Nay vote with a stated
+reason exists but concerns the height of a non-residential structure under a conditional use permit
+rather than housing density. It is argued in full in the Fairview section.
+
+**Two of the five zeros are settled findings about the record, not access failures:** Farmersville and
+Parker, where complete official minutes were read and the mayor is **structurally non-voting** and
+appears only presiding.
 
 ---
