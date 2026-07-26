@@ -697,7 +697,7 @@ Plans:
 
 **Wave 8** *(blocked on Wave 7 completion)*
 
-- [ ] 222-08-PLAN.md — D-02 mayors sweep A: Anna, Murphy, Fairview, Princeton, Melissa, Farmersville, Parker, Lucas
+- [x] 222-08-PLAN.md — D-02 mayors sweep A: Anna, Murphy, Fairview, Princeton, Melissa, Farmersville, Parker, Lucas
 
 **Wave 9** *(blocked on Wave 8 completion)*
 
