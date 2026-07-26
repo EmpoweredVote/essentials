@@ -1,30 +1,84 @@
 ---
 gsd_state_version: 1.0
-milestone: v24.0
-milestone_name: Results-Page Search & Header Overhaul
-current_phase: 212
-current_phase_name: Backend Place-Name Resolver & National Fallback
-status: planning
-stopped_at: Completed 216-04-PLAN.md (frontend deploy + live UAT, LOC-04 verified end-to-end; Phase 216 ready for /gsd-verify-work)
-last_updated: "2026-07-23T00:16:46.443Z"
-last_activity: 2026-07-22
-last_activity_desc: Phase 216 complete, transitioned to Phase 212
+milestone: v25.0
+milestone_name: Collin County TX Data-Completeness
+current_phase: 222
+current_phase_name: collin-county-stances-evidence-only-compass-research-one-pol
+status: executing
+stopped_at: Completed 222-04-PLAN.md (Plano + McKinney topic-gap-fill applied to production)
+last_updated: "2026-07-25T23:31:28.443Z"
+last_activity: 2026-07-25
+last_activity_desc: Phase 222 execution started
 progress:
-  total_phases: 4
+  total_phases: 6
   completed_phases: 4
-  total_plans: 17
-  completed_plans: 17
-  percent: 100
+  total_plans: 42
+  completed_plans: 28
+  percent: 67
 ---
 
 # State
 
 ## Current Position
 
-Phase: 212 — Backend Place-Name Resolver & National Fallback
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-07-22 — Phase 216 complete, transitioned to Phase 212
+Phase: 222 (collin-county-stances-evidence-only-compass-research-one-pol) — EXECUTING
+Plan: 1 of 18
+Status: Executing Phase 222
+Last activity: 2026-07-25 — Phase 222 execution started
+
+## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
+
+- ✅ **Browse spot-check APPROVED** by operator 2026-07-24 (Blue Ridge/McKinney/Longview).
+- ✅ **Longview D3 seating FIXED** (mig 1400): Brandon Smith seated, Wray Wade retired.
+- ✅ **Sourcing reconcile DONE** (migs 1401-1403, operator-approved): Melissa 5 races (was the one zero-race city), Allen/Anna/Lucas/Murphy/Prosper 24 races, Celina/Frisco/Lowry Crossing 14 races — all from official Collin/Denton canvass exports. Reconcile total 43 races/74 candidates. Grand phase total ~80 races/~128 candidates.
+
+## Phase 219 — Still Owed (operator decisions / records requests)
+
+- ✅ **Frisco Place 4 seating FIXED** (mig 1404): Gopal Ponangi (actual June-2025 runoff winner) seated, loser Jared Elad retired.
+- **Parker P1/P2/P4** — sourced (2025 at-large Bogdan/Sharpe/Halbert) but deferred [OPEN] (at-large model doesn't map to per-Place offices cleanly).
+- **Fairview Mayor/Seat1/3/5** + **Melissa Place 5/6** — [OPEN], need City/Town Secretary records requests (no primary cited election found).
+- **Prosper geo_id**: real = 4859696 (docs' 4863276 stale).
+
+## Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260723-lfc | Phase 217 verify+document: confirm all 23 Collin County TX browse geo_ids resolve (premise stale, already fixed in coverage.js), document corrected geo_id mapping, mark COLLIN-BROWSE-01..04 met, log 5-city gaps as follow-ups | 2026-07-23 | b4aff9ed | [260723-lfc-phase-217-verify-document-confirm-all-23](./quick/260723-lfc-phase-217-verify-document-confirm-all-23/) |
+
+## Project Reference
+
+See: `.planning/PROJECT.md` (updated 2026-07-23)
+
+**Core value:** A resident can look up who represents them — and who is on their ballot — without creating an account.
+**Current focus:** Phase 222 — collin-county-stances-evidence-only-compass-research-one-pol
+
+## Scheduled Follow-Up — AZ 2026 Candidate Reconcile (Phase 206)
+
+Deferred at the v22.0 close (2026-07-23) because the AZ primary (held 2026-07-21) does not certify until the ~Aug-6 state canvass (challenges due Aug 11). Roster-only, NO stances. Execution-ready:
+
+- `.planning/phases/206-az-2026-candidate-reconcile/206-CONTEXT.md` — locked decisions + 73-shell breakdown.
+- `.planning/phases/206-az-2026-candidate-reconcile/206-RESEARCH.md` — sources, idempotent seeding recipe (WHERE NOT EXISTS, migration 1296 pattern), incumbent-reuse UUID manifests, nonpartisan-municipal caveat (some local shells legitimately empty).
+- Next step post-Aug-6: `/gsd-plan-phase 206` (research already present) → `/gsd-execute-phase 206`. Folds in the 197/198 (Sahuarita/South Tucson) title reconcile.
+
+## Deferred Items
+
+Items acknowledged and deferred at the v24.0 + v22.0 milestone closes on 2026-07-23 (override_closeout). None are v24.0 (212–216) or v22.0 (190–203) phase gaps — they are prior-milestone leftovers, follow-up todos, or the scheduled Phase 206 reconcile above:
+
+| Category | Item | Status |
+|----------|------|--------|
+| debug | cambridge-locals-missing | diagnosed (Cambridge offices have district_id = NULL) — v13.0-era MA |
+| uat | Phase 103 (103-HUMAN-UAT.md) | partial — 3 pending scenarios (v13.0 MA) |
+| verification | Phase 103 | human_needed (v13.0 MA) |
+| verification | Phase 106 | human_needed (v13.0 MA) |
+| verification | Phase 108 | human_needed (v13.0 MA) |
+| verification | Phase 110 | human_needed (v13.0 MA) |
+| verification | Phase 126 | human_needed |
+| verification | Phase 199 | human_needed (v22.0 AZ — milestone now closed; discovery shipped, nominee reconcile = Phase 206 follow-up) |
+| verification | Phase 210 | human_needed (v23.0 — shipped) |
+| phase (scheduled) | Phase 206 AZ 2026 candidate reconcile + 197/198 title reconcile | deferred to post-Aug-6 certification (see Scheduled Follow-Up above) |
+| todo | locationcombobox-search-refinements (low) | pending follow-up |
+| todo | locationcombobox-type-color-coding (medium) | pending follow-up |
+| todo | phase212-gazetteer-data-audit (high) | pending follow-up — audit Gazetteer place data quality |
 
 ### Phase 216 Plan 02 outcome (backend deploy + live smoke) — COMPLETE 2026-07-22
 
@@ -73,30 +127,23 @@ Last activity: 2026-07-22 — Phase 216 complete, transitioned to Phase 212
 - **RSLV-03 COMPLETE** end-to-end (lib core → route → live smoke). Operator typed "approved" at the blocking
   checkpoint. ⚠ Phase-level verification/close is the orchestrator's job — do NOT advance to Phase 214 here.
 
-### ⚠️ HELD from v22.0 — do NOT lose (gated on 2026-07-21 AZ primary certification)
+### ✅ RESOLVED — v22.0 formally closed 2026-07-23 (was: HELD gated on AZ primary)
 
-v22.0 Tucson & Arizona is substantively complete (Phases 190–203 shipped) but **not formally closed**.
-The following remain OPEN and are held until the AZ primary certifies on **2026-07-21**:
+v22.0 Tucson & Arizona is **closed + tagged** (2026-07-23) on its shipped scope (Phases 190–203).
+Disposition of what was held:
 
-- **Phase 200 — AZ Playbook Retrospective & Close:** coverage.js reconcile, fold AZ GOTCHAs into
-  `LOCATION-ONBOARDING.md`, DB-verified audit, close the milestone. (No phase dir yet.)
+- **Phase 200 — AZ Playbook Retrospective & Close:** folded into the v22.0 close (audit archived to
+  `milestones/v22.0-MILESTONE-AUDIT.md`; retrospective in RETROSPECTIVE.md).
 
-- **Phase 206 — AZ 2026 Candidate Reconcile:** seed confirmed general-election nominees onto the
-  Phase 199 AZ race shells once the primary certifies. (⛔ BLOCKED until 2026-07-21.)
+- **Phase 206 — AZ 2026 Candidate Reconcile + Sahuarita/South Tucson (197/198) title reconcile:**
+  DEFERRED to a post-Aug-6 pass — the primary held 2026-07-21 does not certify until the ~Aug-6 state
+  canvass (challenges due Aug 11), so seeding nominees now would write data that can still change.
+  Execution-ready (RESEARCH.md + CONTEXT.md written) — see "Scheduled Follow-Up" above.
 
-- **Sahuarita (197) + South Tucson (198) reconcile:** after the post-canvass title re-votes, re-verify
-  council membership + title holders (Mayor/Vice-Mayor/Acting-Mayor), patch any changed seat, re-bind
-  headshots + stances.
+v22.0 REQUIREMENTS were pre-archived to `milestones/v22.0-REQUIREMENTS.md` (2026-07-17) and were NOT
+clobbered at close (there was no live REQUIREMENTS.md — v24.0's was already git-rm'd).
 
-v23.0 runs alongside this held close (same side-track pattern as Phases 204/205). The v22.0 phase
-directories were intentionally NOT cleared during the milestone switch so this work survives.
-
-**v22.0 REQUIREMENTS pre-archived:** the live `.planning/REQUIREMENTS.md` is now v23.0's. v22.0's
-requirements were copied to `.planning/milestones/v22.0-REQUIREMENTS.md` on 2026-07-17 before the
-switch. When closing v22.0 on/after 07-21, reference that archived copy — do NOT let
-`/gsd:complete-milestone` re-archive the (v23.0) live file over it.
-
-## Deferred Items
+## Deferred Items (historical — v21.0 close, 2026-07-08)
 
 Re-acknowledged and deferred again at v21.0 milestone close on 2026-07-08 (unchanged from the
 v20.0 close; 12 open artifacts — none belong to v21.0, which had zero open items and closed on
@@ -119,6 +166,36 @@ leftovers, 3 are v20.0 per-phase checkpoints superseded by the DB-verified v20.0
 | verification | phase 177 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 178 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
 | verification | phase 180 (v20.0) | human_needed — operator-approved live; DB-verified in milestone audit |
+
+### v25.0 roadmap (created 2026-07-23)
+
+Data-only milestone closing verified gaps in the already-seeded Collin County, TX coverage
+(23-government browse list). 4 phases (217-220), continuing numbering from v24.0 (closed at 216).
+12/12 requirements mapped 1:1 — no orphans, no duplicates. No new frontend feature surface beyond
+wiring the corrected browse geo_ids into the existing hardcoded list; compass stance research and
+headshot sourcing for the 5 zero-photo cities (Blue Ridge, Farmersville, Lowry Crossing, Nevada,
+Saint Paul) are explicitly out of scope this milestone.
+
+- **217 Browse Geo_ID Reconcile** — COLLIN-BROWSE-01/02/03/04 (fix 5 hardcoded browse geo_ids that
+  resolve to no government at all — Plano, Richardson, Prosper, Princeton, Van Alstyne — including
+  the county's two largest cities)
+
+- **218 Vacancies & Missing People** — COLLIN-PEOPLE-01/02 (research + seat ~9 vacant offices across
+  Blue Ridge, Nevada, Parker, Lowry Crossing, Lucas; document genuine vacancies rather than leaving
+  ambiguous empty seats)
+
+- **219 Elections & Candidates Backfill** — COLLIN-ELECT-01/02/03 (seed races + candidates for the 9
+  zero-race governments — Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada,
+  Saint Paul, Weston — and thicken thin coverage elsewhere)
+
+- **220 Contact Data Backfill** — COLLIN-CONTACT-01/02/03 (populate `web_form_url` across all 18
+  resolving governments, missing emails for Anna/Farmersville/Frisco/Lavon/Murphy/Celina, and
+  `valid_to` term-end dates)
+
+Phase 217 touches a disjoint set of 5 governments from 218-220's shared 18-government set; suggested
+execution order is 217 first (highest-value fix, unblocks the 2 largest cities), then 218 → 219 → 220
+(vacancies seated before elections/candidates and contact backfill so newly-seated officials carry
+forward), though none is a hard blocker on the others.
 
 ### v24.0 roadmap (created 2026-07-20)
 
@@ -638,8 +715,8 @@ None — v13.0 complete; v14.0 roadmap defined.
 
 ## Session Continuity
 
-Last session: 2026-07-23T00:13:20.566Z
-Stopped at: Completed 216-04-PLAN.md (frontend deploy + live UAT, LOC-04 verified end-to-end; Phase 216 ready for /gsd-verify-work)
+Last session: 2026-07-25T23:28:25.832Z
+Stopped at: Completed 222-04-PLAN.md (Plano + McKinney topic-gap-fill applied to production)
 Resume file: None
 
 ## Performance Metrics
@@ -745,6 +822,19 @@ Resume file: None
 | Phase 216 P02 | 15min | 3 tasks | 0 files |
 | Phase 216 P03 | 5min | 3 tasks | 7 files |
 | Phase 216 P04 | ~10min | 2 tasks | 0 files |
+| Phase 218 P01 | 35min | 2 tasks | 1 files |
+| Phase 218 P02 | 75min | 2 tasks | 2 files |
+| Phase 218 P03 | 55min | 2 tasks | 1 files |
+| Phase 218 P04 | 45min | 2 tasks | 1 files |
+| Phase 218 P05 | 40min | 2 tasks | 2 files |
+| Phase 219 P01 | 45min | 2 tasks | 2 files |
+| Phase 220 P02 | 22min | 1 tasks | 2 files |
+| Phase 220 P03 | 18min | 1 tasks | 2 files |
+| Phase 220 P04 | 32min | 1 tasks | 2 files |
+| Phase 220 P05 | 38min | 1 tasks | 2 files |
+| Phase 222 P01 | n/a | 3 tasks | 4 files |
+| Phase 222 P02 | multi-session | 3 tasks | 3 files |
+| Phase 222 P03 | N/A | 3 tasks | 2 files |
 
 ## Decisions
 
@@ -879,6 +969,29 @@ Resume file: None
 - [Phase ?]: tribal_land unwrap in lookupCoordinate() intentionally NOT added — remains deferred per 216-01 planner decision, out of LOC-04 scope
 - [Phase ?]: No isolation needed for the 216-04 push — git log origin/main..HEAD contained only intended 216-03 commits before push, unlike 216-02's backend deploy which carried unrelated P1 side-effect commits
 - [Phase ?]: Live UAT (not a unit test) served as the phase gate for LOC-04 — representingCity has no automated component test, and the coordinate-mode path (RESEARCH Pitfall 1) required live confirmation that the hook-bypass path renders correctly
+- [Phase ?]: Blue Ridge Place 5 confirmed genuine 5th seat (live council1-5 email numbering), not a rename
+- [Phase ?]: Lowry Crossing Place 5-8 locked as parallel continuation of existing Place numbering (not a new ward-seat naming scheme); Place8 vs Place4 Hijazen/Simpson assignment deferred to Plan 02
+- [Phase ?]: Weston Place 5 (Marla Johnston) re-confirmed still current 6th alderman via live fetch, ~14 months after original migration note
+- [Phase ?]: COLLIN-PEOPLE-01 requirement NOT marked complete after 218-01 — shared across all 5 phase plans (218-02..05 also list it); this plan only added structural office rows, not seated incumbents; mark-complete deferred to 218-05 (verification wave)
+- [Phase ?]: 6 offices reused pre-existing discovery-pipeline candidate rows (UPDATE in place) instead of INSERT, avoiding duplicate officeholders and preserving race_candidates/photo linkage
+- [Phase ?]: No-duplicate and no-stance-side-effect gates scoped to this migration's 20 target offices; 7 unrelated pre-existing duplicate-politician bugs (Indiana/MA) logged as deferred, not fixed
+- [Phase ?]: All 7 flagged seats resolved SEAT (0 documented vacancy) via deeper D-04 re-verify (city-site fetch + Collin County official canvass PDF)
+- [Phase ?]: Lucas Place<->Seat positional mapping upgraded from inference to proof via official canvass (Place1=Seat1=Underhill, Place2=Seat2=Orr)
+- [Phase ?]: 12 headshots sourced/uploaded for Collin County TX newly-seated officials via curl+PIL+Node-fetch (Playwright/Supabase-MCP/AskUserQuestion unavailable to this executor); 2 honest blanks (Jessica Walden - no bio-page photo widget; Zach Williams - membershipware blob WAF/access-denied on every fetch variant)
+- [Phase ?]: Discovered and documented an undiscovered Plano Council Member Place 6 vacancy during Plan 05's full-23-gov sweep (migration 1392) — resolved via D-04 evidence exhaustion, not a placeholder
+- [Phase ?]: Weston chambers.official_count (5) still stale vs actual 6 office rows — logged as non-blocking data-hygiene note, does not trigger any missing-seat gate
+- [Phase ?]: 219-01: Melissa's May-2026 ballot confirmed props/ISD-only (migration 100 correct); competing WebSearch signal rejected
+- [Phase ?]: 219-01: Lavon's real reference cycle is 2025-11-04 (own election row), not shared 2026-05-02
+- [Phase ?]: 219-01: Saint Paul splits across two cycles - Seat1/Seat2 on 2025-05-03 (own row), Mayor/Seat3/4/5 on 2026-05-02 (cancelled, unopposed)
+- [Phase ?]: 219-01: RESEARCH.md corrections - Richardson Mayor is Amir Omar not Voelker; Place 6 was a 2-way Shamsul-Kupfer race with no runoff; McKinney At-Large 1 runoff winner Ernest Lynch confirmed
+- [Phase ?]: Migration 1405 (web_form_url batch, 11 confirmed-form Collin cities) authored; apply-script mirrors 1393 gate shape; apply-script not committed to git per repo's backend/scripts/_* gitignore convention
+- [Phase ?]: 222-02 repurposed from Plano no-op into county-wide stance-integrity remediation (delete 12 Class A rows, review 19 Class B2 rows)
+- [Phase ?]: 222-04 repurposed from McKinney no-op into Plano+McKinney topic-gap fill (~93 unfilled slots, re-derived live)
+- [Phase ?]: Blank-register completeness contract confirmed per-person-per-topic; Longview stays in 222-07 as 8-person plan
+- [Phase ?]: 222-02: applied 27 evidence-integrity deletions (12 Class A + 15 Class B2) to production; 4 Class B2 rows kept after per-row re-read cleared the D-04 bar; 3 out-of-scope findings routed to backlog Phase 999.2
+- [Phase ?]: 222-03: Frisco stances applied (migration 1417) — 7 chairs, 15 blanks; sources independently re-verified by orchestrator; EV-Accounts commit not pushed (open item)
+- [Phase ?]: 222-04: taxes ruled structurally unanswerable for TX municipal officeholders (all outer chairs outside municipal power); binds 222-05..222-17
+- [Phase ?]: 222-04: bio-page-only sourcing (Ballotpedia bio URL, no stance content) identified as a new defect class; Barrios/healthcare remediated via migration 1420
 
 ## Operator Next Steps
 

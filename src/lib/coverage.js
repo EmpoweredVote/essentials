@@ -98,6 +98,14 @@ export const COVERAGE_STATES = [
     name: 'Oregon', abbrev: 'OR',
     areas: [
       { label: 'Beaverton',    browseGovernmentList: ['4105350'], browseStateAbbrev: 'OR', hasContext: true },
+      // Bend (2026-07-24 deep seed) — first Central Oregon city; the rest of this block is
+      // Portland west/east metro. browseGovernmentList = [place FIPS, Bend-La Pine SD GEOID];
+      // Bend Metro Park & Recreation District (synthetic geo_id 'bend-or-park-rec-district',
+      // mtfcc X0024) is NOT listed because browse geo-pair resolution only walks TIGER MTFCCs —
+      // its 5 directors still surface from an in-district address via the coordinate feed.
+      // hasContext:true is DB-honest: Mayor Kebler carries evidence-only compass stances.
+      // Deschutes County lives in COVERAGE_COUNTIES (unrelated array) — do NOT add it here.
+      { label: 'Bend',         browseGovernmentList: ['4105800', '4101980'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Cornelius',    browseGovernmentList: ['4115550'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Fairview',     browseGovernmentList: ['4124250'], browseStateAbbrev: 'OR' },
       { label: 'Forest Grove', browseGovernmentList: ['4126200'], browseStateAbbrev: 'OR', hasContext: true },
@@ -261,6 +269,11 @@ export const COVERAGE_COUNTIES = [
   { label: 'Los Angeles County', browseGovernmentList: ['06037'], browseStateAbbrev: 'CA', hasContext: true },
   { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
   { label: 'Greene County', browseGovernmentList: ['29077'], browseStateAbbrev: 'MO', hasContext: true },
+  // Deschutes County (2026-07-24 Bend deep seed): 3 at-large commissioners + 4 countywide row
+  // officers (Clerk, Assessor, Treasurer, Sheriff). No hasContext yet — the seeded compass
+  // stances belong to 2026 CANDIDATES for county seats, not to sitting officeholders, so
+  // claiming context here would not be DB-honest.
+  { label: 'Deschutes County', browseGovernmentList: ['41017'], browseStateAbbrev: 'OR' },
   { label: 'Multnomah County', browseGovernmentList: ['41051'], browseStateAbbrev: 'OR' },
   { label: 'Washington County, OR', browseGovernmentList: ['41067'], browseStateAbbrev: 'OR', hasContext: true },
   { label: 'Box Elder County', browseGovernmentList: ['49003'], browseStateAbbrev: 'UT' },

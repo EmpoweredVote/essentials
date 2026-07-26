@@ -241,7 +241,6 @@ function Profile() {
                 politicianId={id}
                 politicianName={pol.first_name ? `${pol.first_name} ${pol.last_name}` : ''}
                 politicianTitle={pol.office_title || ''}
-                districtScope={districtScope}
               />
             );
           })()}

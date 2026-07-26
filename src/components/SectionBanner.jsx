@@ -83,8 +83,6 @@ function FeatureIconChip({ icon }) {
       <a
         ref={refs.setReference}
         href={icon.href}
-        target="_blank"
-        rel="noopener noreferrer"
         aria-label={icon.label}
         style={{
           display: 'inline-flex',

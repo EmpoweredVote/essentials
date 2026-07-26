@@ -1,5 +1,98 @@
 # Retrospective
 
+## Milestone: v24.0 — Results-Page Search & Header Overhaul
+
+**Shipped:** 2026-07-23
+**Phases:** 5 (212–216) | **Plans:** 21
+
+### What Was Built
+One always-editable `<LocationCombobox>` that silently classifies address / bare place-name /
+decimal-coordinate input and routes to the right resolver, replacing the multi-row header + Google
+Places. Backend "owns the search stack": a pg_trgm place-name resolver over `governments`/
+`geofence_boundaries` backed by a nationwide Census Gazetteer ingest (32,333 places / 3,222 counties),
+a national fallback floor (US Senators + Governor/state execs + county + single-CD House when
+determinable), and a new anonymous, stateless `POST /api/essentials/coordinate-lookup`. Header
+declutter: Elected-default with the atomic Judges-appointed exception, compass lenses as accessible
+icon buttons, name-search removed. Phase 216 added the "Unincorporated {County}, {ST}" locality label.
+
+### What Worked
+- **Backend-before-frontend as a hard gate** — 212/213 shipped + live-smoked before the 214 combobox
+  consumed them, so the frontend was never built against a moving contract.
+- **Disambiguation-always-returns-a-list** as an explicit regression guard against the two prior
+  wrong-state-officials incidents; the "Bloomington" picker across 10 states is the visible proof.
+- **Single `browse_label` source** meant the close-time bare-label fix (`cleanPlaceName`) corrected the
+  combobox, banner, and heading in one backend change — no frontend redeploy needed for the label.
+
+### What Was Inefficient
+- The verbose resolver label ("City of Bloomington, Indiana, US, IN") shipped unnoticed because the
+  Phase 212 unit tests used idealized mock names ("City of Bloomington") rather than the real
+  `governments.name` shape — the defect only surfaced during the owed Phase 215 live UAT. Tests now use
+  the production name shape.
+- Phase 215's two human-verify checkpoints were left unrecorded at execution time, so the milestone sat
+  "done but unverified" until this close-out UAT. The verify step is where a milestone actually earns
+  "shipped."
+
+### Patterns Established
+- `cleanPlaceName()` normalization at label-build time (strip "City of"/", {state}, US"/Census suffix;
+  preserve County/Township/Unified + mid-name capitals like "Kansas City").
+- Per-lens frontend copy map (`LENS_SUMMARIES`) for tooltip summaries, falling back to the API
+  description for unknown keys — keeps voter-facing copy out of the compass data layer.
+- Per-bucket `TAB_TYPE_DEFAULTS` constants filtered independently per tab hierarchy — structurally
+  prevents one tab's filter from emptying another (the Judges-not-empty guarantee).
+
+### Key Lessons
+- Unit-test fixtures must mirror the real column shape, not a cleaned ideal — a display defect that
+  greps clean in code can still be live in production.
+- Record human-verify checkpoints when they're performed; an unrecorded live check is indistinguishable
+  from an un-done one at close time.
+
+### Cost Observations
+- Close-out session (this one) folded two live-surfaced polish fixes (bare labels + lens tooltips) into
+  the milestone rather than deferring — cheap because both were single-file changes with existing test
+  seams; the backend deploy also carried 26 pre-existing Phase-173 commits (disclosed + operator-approved).
+
+## Milestone: v22.0 — Tucson & Arizona
+
+**Shipped:** 2026-07-23 (formally closed; substantively complete since mid-July)
+**Phases:** 190–203 shipped (14) | **Plans:** 68
+
+### What Was Built
+Arizona opened as a fully-covered new state — TIGER geofences → state/federal government → 90-member
+legislature — then Tucson-metro deep-seeds (Pima County + Tucson + Oro Valley + Marana + Sahuarita +
+South Tucson) and an appended Coachella Valley track (Riverside County + Palm Springs + Indio), each with
+roster + 600×750 headshots + evidence-only compass + a licensed community banner. AZ 2026 race discovery
+seeded 82 Nov-2026 shells.
+
+### What Worked
+- The LOCATION-ONBOARDING playbook + NV/OR-WashCo precedent made the per-city deep-seeds highly
+  repeatable; the by-district relabel + rotational-mayor patterns carried straight over.
+- Race **discovery** (shells) was correctly separated from nominee **seeding** — so the milestone could
+  ship its coverage value without waiting on an election calendar it doesn't control.
+
+### What Was Inefficient
+- The milestone carried a "held for close" tail for ~2 weeks against a **wrong gate date**: the note said
+  "certifies 2026-07-21" but that was the primary *election* date; actual certification is the ~Aug-6
+  state canvass. The reconcile could never have been done on 07-21. Gate dates should be the canvass/
+  certification date, not election day.
+- Phase 200 (retrospective/close) and Phase 206 (reconcile) were scaffolded as roadmap phases but sat
+  unstarted; the milestone dragged as "substantively complete but not closed" while newer milestones
+  (v23.0, v24.0) shipped and closed around it.
+
+### Patterns Established
+- **Election-data phases gate on certification (canvass), not election day.** Encode the canvass date.
+- Roster reconcile ≠ deep-seed: a post-primary "who's actually on the ballot" pass is roster-only (no
+  stances) and can defer cleanly from the coverage milestone that discovered the races.
+
+### Key Lessons
+- Close a milestone on its *shipped* scope and schedule genuinely-gated follow-ups as their own dated work
+  item, rather than holding the whole milestone open indefinitely. (This close finally did that: v22.0
+  closed on 190–203; Phase 206 became an execution-ready, post-Aug-6 follow-up.)
+
+### Cost Observations
+- Closed in the same session as v24.0. The Phase 206 researcher (sonnet, ~130k tokens) paid for itself by
+  catching the certification-timing error before any production writes — the cheapest possible place to
+  catch it.
+
 ## Milestone: v23.0 — Educators & Judges Tabs
 
 **Shipped:** 2026-07-20

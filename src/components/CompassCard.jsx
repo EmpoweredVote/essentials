@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { track } from '@empoweredvote/analytics';
-import { RadarChartCore, StanceAccordion, PlaceholderRadar } from '@empoweredvote/ev-ui';
-import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes } from '../lib/compass';
+import { RadarChartCore, StanceAccordion, PlaceholderRadar, useMediaQuery } from '@empoweredvote/ev-ui';
+import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes, saveLensPending } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
+import LensChipRow from './LensChipRow';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
@@ -31,9 +32,11 @@ function stanceLabel(shortTitle, value, topics) {
  *   politicianId    — politician UUID
  *   politicianName  — display name for CTA text
  *   politicianTitle — office title (e.g., "U.S. Senator")
- *   districtScope   — 'local' | 'state' | 'federal' | 'judicial' | null (filters topics shown)
+ *
+ * The compass comparison honors the shared global lens selection (activeLensKey
+ * from CompassContext) — the same one the results/community grid drives.
  */
-export default function CompassCard({ politicianId, politicianName, politicianTitle, districtScope }) {
+export default function CompassCard({ politicianId, politicianName, politicianTitle }) {
   const { isDark } = useTheme();
   const {
     isLoggedIn,
@@ -48,24 +51,55 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     initialTopicId,
     compassLoading,
     compassDataLoaded,
-    getEffectiveLens,
-    getEffectiveLensKey,
     lenses,
-    toggleLens,
+    activeLensKey,
+    setActiveLens,
+    isLensCalibrated,
   } = useCompass();
   const location = useLocation();
+  const isDesktop = useMediaQuery('(min-width: 769px)');
 
-  // Lens default is derived from this office's scope: local offices show the Local
-  // Lens by default, everything else shows the user's regular compass. An explicit
-  // session toggle overrides this (see CompassContext.getEffectiveLens).
-  const localLensActive = getEffectiveLens(districtScope);
+  // Lens is the single, persisted global selection — the SAME one the results/
+  // community grid drives (activeLensKey / setActiveLens). Picking a lens here
+  // applies everywhere; default 'custom' (Best Match) uses the user's own compass.
+  const localLensActive = activeLensKey === 'local';
 
-  // Effective lens key ('local' | 'federal' | null). For federal offices (U.S.
-  // House/Senate) the Federal lens auto-applies its curated 8-topic set as the
-  // comparison spokes. Local keeps its applies_local scoping below.
-  const lensKey = getEffectiveLensKey(districtScope);
-  const federalLens = lensKey === 'federal' ? (lenses || []).find((l) => l.key === 'federal') : null;
-  const lensTopicIds = federalLens ? federalLens.topicIds : null;
+  // The selected lens's curated topic set defines the comparison spokes
+  // ('custom'/Best Match → null, i.e. the user's overlap-based Best Match).
+  const activeLens = activeLensKey === 'custom' ? null : (lenses || []).find((l) => l.key === activeLensKey);
+  const lensTopicIds = activeLens ? activeLens.topicIds : null;
+
+  // Lens chips for the header row — mirrors the results grid's lensesForRow:
+  // 'custom' (Best Match) first, then the API lenses, each annotated with its
+  // calibrated flag + topic count so LensChipRow can show the calibrate dialog.
+  const lensesForRow = useMemo(() => {
+    const custom = {
+      key: 'custom',
+      name: 'Best Match',
+      color: '#FF5740',
+      calibrated: (userAnswers?.length ?? 0) >= 3,
+      topicCount: 0,
+    };
+    const named = (lenses || []).map((lens) => ({
+      ...lens,
+      calibrated: isLensCalibrated(lens, userAnswers),
+      topicCount: Array.isArray(lens.topicIds) ? lens.topicIds.length : 0,
+    }));
+    return [custom, ...named];
+  }, [lenses, userAnswers, isLensCalibrated]);
+
+  const handleSelectLens = (key) => {
+    track('essentials_compass_lens_selected', { lens: key, context: 'profile' });
+    setActiveLens(key);
+  };
+
+  // Un-calibrated lens → route to the compass quiz for just that lens's topics,
+  // recording the pending key so CompassContext auto-selects it on return (D-12).
+  const handleCalibrateLens = (key) => {
+    const returnUrl = window.location.href;
+    saveLensPending(key);
+    window.location.assign(`${COMPASS_URL}/?calibrate=${encodeURIComponent(key)}&return=${encodeURIComponent(returnUrl)}`);
+  };
 
   // Topic pool for the comparison + stance breakdown:
   //   • Local Lens ON  → local-scoped topics (the lens is about local issues).
@@ -286,31 +320,30 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         >
           Compass &amp; Issues
         </h2>
-        {/* Lens toggle — always visible (loading, empty, and data states) so
-            users can switch comparison topics even when the default view is sparse. */}
-        {hasUserCompass && (
-          <button
-            type="button"
-            title={localLensActive ? 'Exit lens — compare on your full compass' : 'Lens — focus this race on its key issues'}
-            aria-pressed={localLensActive}
-            onClick={() => { track('essentials_compass_local_lens_toggled', { active: !localLensActive }); toggleLens(localLensActive); }}
-            style={{
-              display: 'flex', alignItems: 'center', gap: 6,
-              height: 32, padding: '0 12px',
-              borderRadius: 16, border: '1px solid',
-              fontSize: 13, fontWeight: 600, fontFamily: "'Manrope', sans-serif",
-              borderColor: localLensActive ? '#FF5740' : (isDark ? '#4b5563' : '#e2e8f0'),
-              backgroundColor: localLensActive ? '#FF5740' : (isDark ? '#1f2937' : '#fff'),
-              color: localLensActive ? '#fff' : (isDark ? '#d1d5db' : '#4b5563'),
-              cursor: 'pointer', flexShrink: 0,
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-            Lens
-          </button>
+        {/* Lens chip row — the same multi-lens switcher the community/results grid
+            uses (Best Match / Local / Federal / Judicial …), driving the shared
+            global lens selection. Desktop: chips wrap in this row (icon-only with
+            tooltips). Mobile: horizontal-scroll strip with text labels. */}
+        {isDesktop ? (
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-end', gap: 8, minWidth: 0 }}>
+            <LensChipRow
+              lenses={lensesForRow}
+              activeLensKey={activeLensKey}
+              onSelectLens={handleSelectLens}
+              onCalibrate={handleCalibrateLens}
+              isDesktop={isDesktop}
+            />
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', maxWidth: '100%' }}>
+            <LensChipRow
+              lenses={lensesForRow}
+              activeLensKey={activeLensKey}
+              onSelectLens={handleSelectLens}
+              onCalibrate={handleCalibrateLens}
+              isDesktop={isDesktop}
+            />
+          </div>
         )}
       </div>
 

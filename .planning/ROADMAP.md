@@ -6,9 +6,10 @@ shipped milestones are collapsed into `<details>` blocks.
 
 ## Milestones
 
-- 🚧 **v24.0 Results-Page Search & Header Overhaul** — Phases 212–215 (opened 2026-07-20)
+- **v25.0 Collin County TX Data-Completeness (ACTIVE)** — Phases 217–220 (planning; data-only, closes known gaps in the existing 23-government Collin County, TX browse list)
+- ✅ **v24.0 Results-Page Search & Header Overhaul** — Phases 212–216 (shipped 2026-07-23; detail archived to `.planning/milestones/v24.0-ROADMAP.md`)
 - ✅ **v23.0 Educators & Judges Tabs** — Phases 207–211 (shipped 2026-07-20; Phase 209 deferred by design)
-- ð§ **v22.0 Tucson & Arizona** â Phases 190â203 (substantively complete; Phases 200 + 206 held for close until 2026-07-21; 201-203 appended Coachella Valley, CA)
+- ✅ **v22.0 Tucson & Arizona** — Phases 190–203 (shipped 2026-07-23; 201–203 appended Coachella Valley, CA). Phase 206 AZ-2026 candidate reconcile + 197/198 title reconcile deferred to a post-Aug-6-certification follow-up. Detail archived to `.planning/milestones/v22.0-ROADMAP.md`.
 - â **v21.0 Smart Banners** â Phases 187â189 (shipped 2026-07-08)
 - â **v20.0 West-Metro Washington County, OR** â Phases 174â186 (shipped 2026-07-05)
 - â **v18.0 Las Vegas & Clark County, NV** â Phases 158â168, 173 (shipped 2026-06-30)
@@ -16,216 +17,213 @@ shipped milestones are collapsed into `<details>` blocks.
 - â **v17.0 LA County City Coverage Wave 2** â Phases 142â157 (shipped 2026-06-22)
 - â earlier milestones v2.0âv16.0 â see `.planning/milestones/` archives + `MILESTONES.md`
 
-## Roadmap: v24.0 Results-Page Search & Header Overhaul
+## Roadmap: v25.0 Collin County TX Data-Completeness
 
 ### Overview
 
-Replaces the cluttered multi-row Results header with one always-editable location combobox that
-silently classifies address / bare place-name / decimal-coordinate input and routes to a coherent
-location profile — guaranteeing at minimum US Senators + Governor/state executives + county officials
-anywhere in the US, with the exact US House rep returned whenever a precise point is available. The
-milestone "owns the search stack": Google Places is dropped entirely (frontend) in favor of a new
-backend DB place-name resolver (pg_trgm over `geofence_boundaries`/`governments`, backed by a
-build-time US Census Gazetteer ingest for nationwide coverage) plus a new anonymous, stateless
-coordinate-lookup endpoint. The Census one-line address geocoder keeps its existing, narrow scope —
-full street addresses only — and is never asked to classify bare place names. A decoupled second
-track declutters the header: the type filter defaults to Elected (with an explicit, same-phase Judges
-exception so the default never silently empties that tab), compass lens controls collapse to
-accessible icon buttons, and the redundant "Search by name" filter is removed. Spans both repos —
-essentials (frontend, Render on push to `main`) and accounts-api (backend, Render on push to
-`master`) — with a hard backend-before-frontend dependency: both new backend endpoints must ship and
-be smoke-tested live before the frontend combobox (Phase 214) can be meaningfully built against them.
-Phase numbering continues from v23.0 (closed at 211) — this milestone starts at **Phase 212**.
+Closes the known, DB-verified data gaps in the already-seeded Collin County, TX coverage — a
+23-government browse list first deep-seeded in v3.0 — with zero new UI surface and zero new
+geography. Four tracks, each touching its own set of governments: **(1)** reconcile 5 hardcoded
+browse geo_ids that currently resolve to no government at all, including the two largest cities
+(Plano, Richardson); **(2)** research and seat ~9 vacant offices across 5 smaller cities; **(3)**
+backfill races + candidates for the 9 governments with zero elections and thicken thin coverage
+elsewhere; **(4)** fill in contact data (`web_form_url` empty across all 18 resolving governments,
+email gaps in 6 cities, `valid_to` term-end dates missing). Compass stance research is explicitly
+**out of scope** this milestone (blocked on finalizing the proposed local compass questions);
+headshot gaps for the 5 zero-photo cities are also out of scope (no known online source — needs
+manual operator sourcing). Phase numbering continues from v24.0 (closed at 216) — this milestone
+starts at **Phase 217**.
+
+Phases 218–220 all operate on the same 18 already-resolving governments and are sequenced
+vacancies → elections → contacts so that newly-seated incumbents (218) inform election/re-election
+context (219) and pick up contact data too (220); none is a hard blocker on the others. Phase 217
+touches a completely disjoint set of 5 governments and has no data dependency on 218–220 — it's
+sequenced first only because it's the highest-value fix (unblocks 2 of the county's largest cities)
+and because any downstream gaps it surfaces in those 5 governments are captured as a Phase 217
+success criterion (spot-check + documentation) rather than spawning new phases, since
+REQUIREMENTS.md's COLLIN-ELECT/CONTACT/PEOPLE items are scoped to the 18 governments that were
+already verified resolvable on 2026-07-23.
 
 ### Milestone-wide conventions (carry into every phase)
 
-- **Backend-before-frontend is a hard dependency.** Phases 212 and 213 (both accounts-api) must be
-  pushed to `master` and smoke-tested live (curl/Postman) before Phase 214 (essentials) starts
-  consuming them.
+- **Data-only.** No new frontend feature surface beyond wiring the corrected browse geo_ids into the
+  existing hardcoded list; no code paths change shape.
 
-- **Never route bare place-name queries through the Census address geocoder.** It is an address
-  matcher, not a places/administrative-boundary API — city/county/state classification is the DB
-  resolver's job (Phase 212), not Census's.
+- **No compass stance research this milestone.** Deferred pending finalization of the proposed local
+  compass questions — do not seed stances as a side effect of any phase here.
 
-- **Ambiguity always surfaces a candidate list, never a silent best guess.** Every disambiguation
-  point (same-named cities across states, city/county collisions like Baltimore) must return ranked,
-  state-qualified candidates — this is the direct regression guard against this codebase's two prior
-  wrong-state-officials incidents.
+- **Split-section SQL check after every seeding phase** (218–220 write rows) — verify zero
+  split-section defects before closing.
 
-- **The Elected-default + Judges-appointed-exception ship together, atomically**, in Phase 215 —
-  never as a default now / exception later sequence.
+- **Elections view hides zero-candidate shells** — a seeded race with no candidates yet is expected
+  and correct during an open filing period; do not fabricate candidates to fill a shell.
 
-- **Landing.jsx rides along inside Phase 214**, not a separate later phase — it shares the exact
-  Google-bound modules being retired, so a partial removal breaks it or leaves Google Places only
-  half-dropped.
+- **Headshot gaps out of scope.** Blue Ridge, Farmersville, Lowry Crossing, Nevada, and Saint Paul
+  have 0 headshots and no known online source — do not attempt automated sourcing.
 
-- **Google Places removal is audited at the end of Phase 214** with a full-repo grep for
-  `google`/`pac-container`/`window.google`, expecting zero hits outside deleted files.
+- **Evidence-only, cited research** for both the vacancy-fill (218) and candidate-backfill (219)
+  passes — no fabricated incumbents, no guessed candidates; document genuine vacancies/empty races as
+  such rather than leaving them ambiguous.
+
+- **Gaps surfaced in the 5 newly-reconciled governments (217) are documented, not silently absorbed**
+  into 218–220's scope — they weren't part of the verified-gap list this milestone's requirements
+  were built from, so any new findings become an explicit follow-up note, not an unplanned scope
+  expansion.
 
 ### Phases
 
 **Phase Numbering:**
 
-- Integer phases (212, 213, 214, 215): Planned milestone work, continuing from v23.0 (closed at 211)
-- Decimal phases (212.1, 212.2): Urgent insertions (marked with INSERTED)
+- Integer phases (217, 218, 219, 220): Planned milestone work, continuing from v24.0 (closed at 216)
+- Decimal phases (217.1, 217.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 212: Backend Place-Name Resolver & National Fallback** - DB-truth place-name search (pg_trgm + Census Gazetteer ingest) with disambiguation, wrong-state guard, and nationwide state+federal fallback
-- [x] **Phase 213: Anonymous Coordinate Lookup Endpoint** - Stateless, privacy-reviewed lat/lng → officials endpoint with US bounding-box + swapped-coordinate validation (completed 2026-07-21)
-- [x] **Phase 214: Unified Location Combobox & Google Places Removal** - One accessible combobox on Results + Landing; Google Places, its hook, and its dependency fully retired (completed 2026-07-21)
-- [x] **Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal** - Type filter defaults to Elected with a Judges exception, compass lenses become icon buttons, name-search filter removed
+- [x] **Phase 217: Browse Geo_ID Reconcile** - ✅ COMPLETE 2026-07-23 (quick task 260723-lfc). Premise was STALE — all 23 browse geo_ids already resolved (coverage.js already correct); verified + documented mapping + COLLIN-BROWSE-01..04 met. No code/DB change needed.
+- [x] **Phase 218: Vacancies & Missing People** - Research and seat / document ~21 unseated offices across 11 cities (re-verified live 2026-07-23): Anna(2), Blue Ridge(2), Fairview(3), Josephine(1), Lowry Crossing(1), Lucas(2), Nevada(3), Parker(3) + the 3 Ph217-reconciled cities Plano(1), Princeton(1), Van Alstyne(2). Covers ALL 23 govs (the 5 reconciled folded in per operator request). (completed 2026-07-23)
+- [x] **Phase 219: Elections & Candidates Backfill** - Seed races + candidates for the 12 zero-race governments (re-verified 2026-07-23): the original 9 (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston) + the 3 Ph217-reconciled Plano, Richardson, Van Alstyne; thicken thin coverage elsewhere — ✅ EXECUTED 2026-07-24 (migs 1393-1399, 37 races/54 candidates; Melissa documented-open; operator browse spot-check owed)
+- [x] **Phase 220: Contact Data Backfill** - Populate `web_form_url` (empty across ALL 23 govs), missing emails (Anna, Farmersville, Frisco, Lavon, Murphy, Celina + Ph217-reconciled Prosper, Princeton, Van Alstyne), and `valid_to` term-end dates across all 23 governments (completed 2026-07-24)
+- [x] **Phase 221: Collin County Headshots** - Source + attach real photos for officials missing one (~31 from prior audit + Brandon Smith & Gopal Ponangi from the 219 seating fixes); `/find-headshots`, evidence-only, 600×750 4:5 crop-only, blank where none exists
+- [ ] **Phase 222: Collin County Stances** - Evidence-only compass stance research for Collin officeholders; one politician at a time, all topics, blank spoke where no evidence, antipartisan (the heavy phase; do after profiles are fleshed out)
 
 ### Phase Details
 
-#### Phase 212: Backend Place-Name Resolver & National Fallback
+#### Phase 217: Browse Geo_ID Reconcile
 
-**Goal**: Anyone can look up a bare city, county, or state name against the API and get back accurate, disambiguated location data with a guaranteed national fallback to state + federal officials — backed by nationwide Census place coverage, never a different state's officials by mistake.
-**Depends on**: Nothing (first phase; v23.0 closed at Phase 211)
-**Requirements**: RSLV-01, RSLV-02, RSLV-04, RSLV-05, RSLV-06, RSLV-07
+**Goal**: Every one of the 23 Collin County governments in the browse list resolves to real officials data.
+**Depends on**: Nothing (first phase; v24.0 closed at Phase 216)
+**Requirements**: COLLIN-BROWSE-01, COLLIN-BROWSE-02, COLLIN-BROWSE-03, COLLIN-BROWSE-04 — all **Met**
+**Status**: ✅ COMPLETE 2026-07-23 via quick task 260723-lfc. **The premise was stale** — `src/lib/coverage.js` already carried the correct geo_ids (Plano `4858016`, Richardson `4861796`, Prosper `4859696`, Princeton `4859576`, Van Alstyne `4874924`); the phantom `4863000`-style codes existed only in an 82-day-old memory snapshot, never in current code. Live browse spot-check confirmed all 5 resolve with seated rosters. No code/DB change was required — this was verify + document.
+**Success Criteria** (all TRUE, verified):
+
+  1. ✅ Browsing Collin County shows Plano's officials (geo_id `4858016`, 8 seated)
+  2. ✅ Browsing Collin County shows Richardson's officials (geo_id `4861796`, 7 seated)
+  3. ✅ Browsing Collin County shows officials for Prosper (`4859696`), Princeton (`4859576`), and Van Alstyne (`4874924`)
+  4. ✅ All 23 Collin County browse entries resolve to a real government row; corrected geo_id mapping documented in `.planning/quick/260723-lfc-*/260723-lfc-GEOID-MAPPING.md`
+  5. ✅ The 5 reconciled governments were spot-checked; gaps folded into 218/219/220 per operator request (see re-verified gap lists in those phases)
+
+**Plans**: 1 quick task (260723-lfc)
+
+#### Phase 218: Vacancies & Missing People
+
+**Goal**: Every Collin County office reflects who actually holds it today — researched incumbents are seated where a seat is genuinely filled, and truly empty seats are documented as vacant rather than left ambiguous.
+**Depends on**: Nothing. **Now spans all 23 govs** (the 5 Ph217-reconciled cities folded in per operator request 2026-07-23); sequenced before 219/220 so newly-seated people carry forward.
+**Requirements**: COLLIN-PEOPLE-01, COLLIN-PEOPLE-02
+**⚠ Re-verified live 2026-07-23** — the original gap list was itself incomplete (same stale-data cause as 217). True universe = **21 unseated offices (politician_id NULL) across 11 cities**. NOTE "unseated" = office row with no linked politician; 218 disambiguates each into genuine-vacancy (documented) vs needs-seeding (researched + seated with citation).
 **Success Criteria** (what must be TRUE):
 
-  1. Querying the new location-search endpoint with a bare city/county/state name (e.g. "Bloomington") returns ranked candidates with state qualifiers via pg_trgm over `geofence_boundaries`/`governments`, not a single silent guess
-  2. Same-named-place collisions ("Springfield" across states) and city/county collisions ("Baltimore") each return multiple disambiguated candidates labeled by state and area type, never an auto-picked result
-  3. A resolved city/county/state name outside the curated `coverage.js` catalog — reachable only via the new Census Gazetteer ingest — still returns at least US Senators + Governor/state executives + county officials
-  4. A city/county-name profile lists every US House district whose boundary overlaps the area, with an explicit "we need an exact address to tell you which one" note when no single district can be determined
-  5. No resolved location ever returns officials bound to a different state than the one actually matched (regression-tested against the prior browse `?q=` state-leak and `representing_city` banner-hijack incidents)
-  6. The Census one-line geocoder is never invoked for a bare place-name query — only for input already classified as a full street address
+  1. Each of these unseated offices shows a researched, cited incumbent OR is explicitly documented as genuinely vacant: **Anna (2), Blue Ridge (2), Fairview (3), Josephine (1), Lowry Crossing (1), Lucas (2), Nevada (3), Parker (3)** — 17 offices across the 8 originally-in-scope cities (note: Parker and Lucas each had one MORE unseated office than the original roadmap estimate; Anna, Fairview, Josephine were missing from the original list entirely)
+  2. The 3 Ph217-reconciled cities' unseated offices receive the same treatment: **Plano (1), Princeton (1), Van Alstyne (2)** — 4 offices
+  3. No office across all 23 resolving Collin County governments is left in an ambiguous empty state — every seat is either a real seated person or a clearly flagged vacancy
+  4. Split-section SQL check runs clean after seeding
 
-**Plans**: 5 plans in 4 waves
+**Plans**: 5 plans in 5 sequential waves (planned 2026-07-23)
 
+- [x] 218-01-PLAN.md — Structural migration: add 6 missing office rows (Blue Ridge +1, Lowry Crossing +4, Weston +1) after blocking live seat-count re-verify
+- [x] 218-02-PLAN.md — Idempotent data migration seating the 20 directly-cited incumbents (party NULL, no stances, `politician_id IS NULL` guard) + post-seed SQL gates
+- [x] 218-03-PLAN.md — Deeper D-04 re-verify of the 7 flagged seats (Fairview Seat 4, Van Alstyne Place 6, Nevada trio, Lucas Place 1/2) → seat-or-document `is_vacant=true`
+- [x] 218-04-PLAN.md — `/find-headshots` 600×750 pipeline for newly-seated people where a source exists; honest blank for Blue Ridge/Lowry Crossing/Nevada; audit-only image migration
+- [x] 218-05-PLAN.md — Full SQL verification battery (0 ambiguous seats across all 23 govs, D-02 seat-count spot-check on the other 12) + split-section + blocking live-browse spot-check
+
+#### Phase 219: Elections & Candidates Backfill
+
+**Goal**: Every Collin County government with a real municipal election shows its races and candidates on the ballot lookup — no zero-race governments, no thin coverage where seats have a known election.
+**Depends on**: Nothing. **Now spans all 23 govs** (the 3 Ph217-reconciled zero-race cities folded in per operator request); benefits from Phase 218 seating incumbents first, not a hard blocker.
+**Requirements**: COLLIN-ELECT-01, COLLIN-ELECT-02, COLLIN-ELECT-03
+**⚠ Re-verified live 2026-07-23** — zero-race count is **12, not 9**: the original 9 + the 3 Ph217-reconciled cities (Plano, Richardson, Van Alstyne) also have 0 races.
+**Success Criteria** (what must be TRUE):
+
+  1. The 12 zero-race governments (Blue Ridge, Farmersville, Josephine, Lavon, McKinney, Melissa, Nevada, Saint Paul, Weston + **Plano, Richardson, Van Alstyne**) each show at least one seeded race with candidates where public records exist
+  2. Thin cities are reviewed and backfilled so every seat with a known election has a corresponding race record
+  3. Every seeded race links to the correct office and renders correctly on `/results` — no split-section defects, no zero-candidate shells masking a real race
+  4. A resident browsing any of the 23 resolving Collin County governments sees their actual current/next municipal race instead of an empty Elections section
+
+**Plans**: 9 plans
 **Wave 1**
 
-- [x] 212-01-PLAN.md — DB pre-flight audit (verify, not re-ingest, the nationwide G5200 CD/House data per D-02) + author migrations 1377 (trgm indexes on governments.name + geofence_boundaries.name) and 1378 (Gazetteer places/counties tables + trgm indexes)
-- [x] 212-02-PLAN.md — Idempotent Census Gazetteer Places+Counties ingest script (D-08/09/10/11) + parsing/idempotency unit test
+- [x] 219-01-PLAN.md — Pre-flight: candidate_staging probe + migration counter + shared election_id + resolve open cities (Lavon/Saint Paul/Melissa) & runoff finals (Wave 1)
 
-**Wave 2** *(blocked on Wave 1)*
+**Wave 2** *(blocked on Wave 1 completion)*
 
-- [x] 212-03-PLAN.md — [BLOCKING] Apply migrations 1377+1378 to the live DB + run the Gazetteer ingest live (~3143 counties, tens of thousands of places) + prove net-zero-new re-run
+- [x] 219-02-PLAN.md — Shared-election zero-race tier: Blue Ridge, Farmersville, Nevada, Van Alstyne (Wave 2)
+- [x] 219-03-PLAN.md — Off-cycle/open zero-race tier: Josephine, Lavon, Saint Paul, Melissa (Wave 2)
+- [x] 219-04-PLAN.md — Fallback-year tier: McKinney (2025 + runoff), Richardson (2025) (Wave 2)
+- [x] 219-05-PLAN.md — Staggered tier: Plano (per-seat + Jan-2026 special), Weston (November cycle) (Wave 2)
+- [x] 219-06-PLAN.md — Runoff-closure tier: Longview D3 general + Princeton Place 4 runoff (Wave 2)
+- [x] 219-07-PLAN.md — Thin backfill A: Allen, Anna, Lucas, Murphy, Prosper (Wave 2)
+- [x] 219-08-PLAN.md — Thin backfill B: Parker, Celina, Frisco, Fairview, Lowry Crossing (Wave 2)
 
-**Wave 3** *(blocked on Wave 2)*
+**Wave 3** *(blocked on Wave 2 completion)*
 
-- [x] 212-04-PLAN.md — locationSearchService.searchPlaceNames resolver (pg_trgm UNION, D-05 label, D-06 ranking, D-07 coverage signal, RSLV-07 wrong-state/disambiguation guard) + getCongressionalOverlapNote helper (RSLV-06) — TDD
+- [x] 219-09-PLAN.md — Phase-close 24-government coverage sweep + browse spot-check (Wave 3) *(machine gates green; operator browse spot-check owed)*
 
-**Wave 4** *(blocked on Wave 3)*
+**Cross-cutting constraints:**
 
-- [x] 212-05-PLAN.md — New route file GET /api/essentials/location-search (candidates) + /resolve (national-fallback floor via reused getStatewideOfficials/getFederalOfficials, RSLV-05) + index.ts mount + [BLOCKING] live curl/psql smoke test (Springfield/Baltimore/Franklin, EXPLAIN index scan)
+- Every seeded race links to the correct existing office_id and renders on /results (COLLIN-ELECT-03).
 
-#### Phase 213: Anonymous Coordinate Lookup Endpoint
+#### Phase 220: Contact Data Backfill
 
-**Goal**: Anyone can submit raw decimal coordinates and get back officials for that point with zero authentication, zero persistence, and no privacy exposure.
-**Depends on**: Nothing (structurally independent of Phase 212's text-search surface; can build in parallel once planned)
-**Requirements**: RSLV-03
+**Goal**: Every Collin County official's profile carries a real, working way to reach them, and an accurate term end-date where publicly known.
+**Depends on**: Nothing. **Now spans all 23 govs** (the 3 Ph217-reconciled cities folded in per operator request); benefits from Phase 218 seating incumbents first, not a hard blocker.
+**Requirements**: COLLIN-CONTACT-01, COLLIN-CONTACT-02, COLLIN-CONTACT-03
+**⚠ Re-verified live 2026-07-23** — `web_form_url` is empty across **all 23** govs (not just 18). Fully-missing email cities now include the 3 Ph217-reconciled (Prosper, Princeton, Van Alstyne); Celina is partial (1/7).
 **Success Criteria** (what must be TRUE):
 
-  1. Posting a valid US decimal lat/lng to the new endpoint returns officials for that point via PostGIS `ST_Covers`, with no account/auth required and no rows written to any table
-  2. Coordinates outside the US bounding box, or with lat/lng swapped, are rejected with a clear, specific error — never silently queried as if valid
-  3. The response never echoes raw submitted coordinates back verbatim, and no raw coordinates appear in server logs or analytics events
+  1. `web_form_url` is populated for officials whose city publishes an official contact form or contact page (currently empty across all 23 resolving governments)
+  2. Email addresses are filled where publicly listed for the fully-missing cities — Anna, Farmersville, Frisco, Lavon, Murphy, **Prosper, Princeton, Van Alstyne** — plus partial-coverage cities (Celina 1/7, and any others below full)
+  3. `valid_to` term-end dates are populated for seated officials where the term is publicly documented
+  4. A resident viewing any Collin County official's profile sees at least one working contact method wherever the city publishes one
 
-**Plans**: 3 plans in 3 waves
+**Plans**: 6 plans (field-based migration grouping per RESEARCH.md)
 
-**Wave 1**
-
-- [x] 213-01-PLAN.md — Coordinate-validation module (US bbox + swap guard + 422 taxonomy) + coordinate-only service core getRepresentativesByCoordinate (no geocode, 212 state+federal floor, empty matchedAddress)
-
-**Wave 2** *(blocked on Wave 1)*
-
-- [x] 213-02-PLAN.md — POST /api/essentials/coordinate-lookup route (body {lat,lng}, distinct 422 codes, rate-limit, no coordinate logging) + index.ts mount + supertest suite
-
-**Wave 3** *(blocked on Wave 2)*
-
-- [x] 213-03-PLAN.md — [BLOCKING] commit/push to Render + live curl/psql smoke test (exact US House rep + floor, 3 distinct 422 codes, zero writes, no coordinate leak) + operator sign-off
-
-#### Phase 214: Unified Location Combobox & Google Places Removal
-
-**Goal**: Users on both the Results page and the Landing page search from one accessible, always-editable field that silently classifies address / place-name / coordinate input and dispatches to the right resolver — with Google Places fully retired from the codebase.
-**Depends on**: Phase 212, Phase 213 (both backend endpoints must be live and smoke-tested before this phase starts)
-**Requirements**: SRCH-01, SRCH-02, SRCH-03, SRCH-04, SRCH-05, SRCH-06, SRCH-08
-**Success Criteria** (what must be TRUE):
-
-  1. The Results header shows a single pre-filled, click-to-edit location field with full WAI-ARIA combobox semantics and keyboard support, replacing the Address/Browse mode toggle and the state→county→city LocationBrowser tree
-  2. Typing a full street address, a bare place name, or decimal-degree coordinates (`lat, lng`) each resolves to the correct location profile with no manual mode switch
-  3. Ambiguous place-name matches present a picker showing the state qualifier (`City, ST` / `County, ST` / `ST`) before navigating anywhere — never a silent best guess
-  4. The exact same combobox component powers the Landing-page search bar (one shared component, not a parallel implementation)
-  5. A full-repo grep for `google`/`pac-container`/`window.google` returns zero hits outside deleted files, and the `@googlemaps/js-api-loader` dependency is uninstalled
-
-**Plans**: 6 plans in 5 waves
-
-**Wave 1**
-
-- [x] 214-01-PLAN.md — Pure input classifier (SRCH-03) + searchLocationsByName/lookupCoordinate api clients (SRCH-04/05) with colocated Vitest unit tests (Wave 0 gaps)
-
-**Wave 2** *(blocked on Wave 1)*
-
-- [x] 214-02-PLAN.md — Shared accessible `<LocationCombobox>` (@floating-ui virtual list-nav, SRCH-02/04) + localitySearch.js Google-free refactor (browseAreaRoute)
-
-**Wave 3** *(blocked on Wave 2; parallel — disjoint files)*
-
-- [x] 214-03-PLAN.md — Results.jsx: swap toggle+LocationBrowser for the combobox (SRCH-01) + coordinate render path with D-05 label + representingCity banner-hijack guard (SRCH-05)
-- [x] 214-04-PLAN.md — Landing.jsx: adopt the same shared combobox (SRCH-06), preserve coverage list + candidate-by-name search
-
-**Wave 4** *(blocked on Wave 3)*
-
-- [x] 214-05-PLAN.md — Delete Google modules + non-contiguous .pac CSS block + uninstall @googlemaps + scoped SRCH-08 grep gate
-
-**Wave 5** *(blocked on Wave 4)*
-
-- [x] 214-06-PLAN.md — [CHECKPOINT] Human-verify combobox keyboard/ARIA, all three input paths, disambiguation, coordinate privacy label, dark mode on Results + Landing
-
-#### Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal
-
-**Goal**: The results header carries only what matters — an honest Elected-by-default type filter that never silently empties the Judges tab, compact accessible compass-lens icon buttons, and no redundant name-search box.
-**Depends on**: Nothing (touches `FilterBar.jsx`/`CompassControlsBar.jsx`/`LensChipRow.jsx` only; no dependency on the search-rewrite phases — can be planned/built in parallel with 212–214)
-**Requirements**: SRCH-07, HDR-01, HDR-02, HDR-03
-**Success Criteria** (what must be TRUE):
-
-  1. The Representatives and Educators tabs default to Elected officials, with the All/Appointed dropdown removed
-  2. The Judges tab still shows appointed officials by default in the same release — verified at a location with real geo-linked judges (e.g. Bloomington, IN), not just visually inspected in code
-  3. Compass lens controls render as icon-only buttons with accessible `aria-label`s and a keyboard/touch-usable tooltip affordance (gavel icon for Judicial), reclaiming the header's empty space
-  4. The "Search by name" results-filter box no longer appears anywhere in the UI
-
-**Plans**: 3 plans
-
-- [x] 215-01-PLAN.md — TAB_TYPE_DEFAULTS constant + extract appointed-filter functions to classify.js (TDD)
-- [x] 215-02-PLAN.md — Per-bucket Elected default + dropdown/name-search removal + dead-file cleanup (Results.jsx, FilterBar.jsx)
-- [x] 215-03-PLAN.md — Icon-only compass lens buttons with accessible tooltips (LensChipRow.jsx)
+- [x] 220-01-PLAN.md — Preflight: Frisco Place 4 officeholder resolution (RESEARCH Pitfall 3) + migration-number lock
+- [x] 220-02-PLAN.md — Migration A: web_form_url batch (11 form-publishing cities, one city-wide form per official, D-01)
+- [x] 220-03-PLAN.md — Migration B1: seat-alias emails (Blue Ridge, Nevada, Melissa; D-02)
+- [x] 220-04-PLAN.md — Migration B2a: personal emails batch 1 (Frisco, Princeton, Prosper, Allen, Fairview, Celina)
+- [x] 220-05-PLAN.md — Migration B2b: personal emails batch 2 (Parker, Saint Paul, Weston, Lowry Crossing, Lucas)
+- [x] 220-06-PLAN.md — Apply all + verification + valid_to spot-check (D-03) + honest-blank register + deferred Migration C (GAP cities Josephine/Plano/Richardson)
 
 ### Progress
 
 **Execution Order:**
-Phases 212 → 213 (backend, either order relative to each other) → 214 (frontend, depends on both) — with Phase 215 (header declutter) planned/built independently in parallel, no ordering dependency on 212–214.
+Phase 217 is independent of 218–220 (disjoint government sets) and can run in any relative order.
+218 → 219 → 220 is the suggested sequence within the shared 18-government set (vacancies seated
+first, then election/candidate backfill, then contact data last so newly-seated officials get
+contact info too) — none is a hard blocker on the next.
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 212. Backend Place-Name Resolver & National Fallback | 6/5 | Complete   | 2026-07-21 |
-| 213. Anonymous Coordinate Lookup Endpoint | 3/3 | Complete    | 2026-07-21 |
-| 214. Unified Location Combobox & Google Places Removal | 6/6 | Complete    | 2026-07-21 |
-| 215. Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal | 3/3 | Complete    | 2026-07-22 |
+| 217. Browse Geo_ID Reconcile | 1/1 (quick) | Complete ✓ | 2026-07-23 |
+| 218. Vacancies & Missing People | 5/5 | Complete    | 2026-07-23 |
+| 219. Elections & Candidates Backfill | 0/TBD | Not started | - |
+| 220. Contact Data Backfill | 6/6 | Complete    | 2026-07-24 |
 
 ### Coverage
 
-All 18 v24.0 requirements mapped 1:1 to exactly one phase — no orphans, no duplicates.
+All 12 v25.0 requirements mapped 1:1 to exactly one phase — no orphans, no duplicates.
 
 | Requirement | Phase |
 |-------------|-------|
-| RSLV-01 | 212 |
-| RSLV-02 | 212 |
-| RSLV-04 | 212 |
-| RSLV-05 | 212 |
-| RSLV-06 | 212 |
-| RSLV-07 | 212 |
-| RSLV-03 | 213 |
-| SRCH-01 | 214 |
-| SRCH-02 | 214 |
-| SRCH-03 | 214 |
-| SRCH-04 | 214 |
-| SRCH-05 | 214 |
-| SRCH-06 | 214 |
-| SRCH-08 | 214 |
-| SRCH-07 | 215 |
-| HDR-01 | 215 |
-| HDR-02 | 215 |
-| HDR-03 | 215 |
+| COLLIN-BROWSE-01 | 217 |
+| COLLIN-BROWSE-02 | 217 |
+| COLLIN-BROWSE-03 | 217 |
+| COLLIN-BROWSE-04 | 217 |
+| COLLIN-PEOPLE-01 | 218 |
+| COLLIN-PEOPLE-02 | 218 |
+| COLLIN-ELECT-01 | 219 |
+| COLLIN-ELECT-02 | 219 |
+| COLLIN-ELECT-03 | 219 |
+| COLLIN-CONTACT-01 | 220 |
+| COLLIN-CONTACT-02 | 220 |
+| COLLIN-CONTACT-03 | 220 |
 
 ## Roadmap: v22.0 Tucson & Arizona
+
+> ✅ **SHIPPED 2026-07-23** — Phases 190–203 (AZ foundation + Tucson-metro + Coachella Valley deep-seeds
+> + 2026 race discovery). Full detail archived to `.planning/milestones/v22.0-ROADMAP.md`; requirements
+> to `.planning/milestones/v22.0-REQUIREMENTS.md`; audit to `.planning/milestones/v22.0-MILESTONE-AUDIT.md`.
+> **Deferred to a post-Aug-6-certification follow-up:** Phase 206 (AZ 2026 candidate reconcile — the
+> primary held 2026-07-21 does not certify until the ~Aug-6 state canvass) and the Phases 197/198 title
+> reconcile. Phase 206 RESEARCH.md + CONTEXT.md are written and execution-ready. Phase 200 (retrospective)
+> was folded into this close.
 
 ### Overview
 
@@ -628,6 +626,132 @@ Plans:
 - [x] 216-03-PLAN.md — [essentials] Frontend threading: unincorporatedLabel() helper + locality unwrap in api.jsx (both entry points) + usePoliticianData + coordLocality state + representingCity branches for both modes (LOC-04)
 - [x] 216-04-PLAN.md — [essentials, BLOCKING] Full suite + build, push to Render main, live UAT of "Unincorporated {County}, ST" in BOTH address and coordinate modes + incorporated/un-loaded controls + tribal/county/browse regression checks
 
+### Phase 221: Collin County Headshots
+
+**Goal:** Every Collin County officeholder whose photo is publicly available carries a real, correctly-sized headshot; anyone with no available photo stays blank (never a placeholder or AI face).
+**Scope:** ~31 seated officials missing a photo (prior audit) + the 2 newly seated by the Phase-219 seating fixes — Brandon Smith (Longview D3, mig 1400) and Gopal Ponangi (Frisco Place 4, mig 1404).
+**Constraints:** use the `/find-headshots` skill; real licensed/public-source photos only; 600×750 (4:5), crop-only (never stretch), eyes ~1/3 from top, head+shoulders, no text/graphics on faces.
+**Requirements**: COLLIN-HEADSHOT-01 (audit + source missing headshots), COLLIN-HEADSHOT-02 (correct sizing/crop, no graphics/placeholders)
+**Depends on:** Nothing hard; benefits from 218/219 (people seated) + 220 (profiles fleshed out) first.
+**Plans:** 4 plans in 4 sequential waves (planned 2026-07-24)
+
+**Execution Order:** live audit (221-01) → Batch A sourcing (221-02) → Batch B sourcing (221-03) → after-audit + confirmed-blank register + close (221-04). Sourcing is interactive + quota-sensitive (`/find-headshots` approves one person at a time), so the two sourcing batches are chained sequential waves, never parallel.
+
+Plans:
+**Wave 1**
+
+- [x] 221-01-PLAN.md — Live DB audit: derive the authoritative in-scope missing-photo set (stale memo NOT trusted) + BEFORE coverage counts + batched worklist; confirm Brandon Smith & Gopal Ponangi present (Wave 1)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 221-02-PLAN.md — Batch A sourcing (higher-source cities + Ponangi/Smith) via `/find-headshots`, 600×750 4:5 crop-only, honest blanks where none; blocking spec spot-check (Wave 2)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [x] 221-03-PLAN.md — Batch B sourcing (small-town/low-source cities incl. the 5 zero-source cities) via `/find-headshots`; attempt every person, expect many honest blanks; blocking spec spot-check (Wave 3)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [x] 221-04-PLAN.md — After-audit coverage delta + PIL 600×750 dimension check + `221-CONFIRMED-BLANK.md` register + blocking phase-close spot-check (Wave 4)
+
+**Cross-cutting constraints:**
+
+- Every attached image is crop-only-then-resized to 600x750 (4:5), eyes ~1/3 from top, head+shoulders, no text/graphics on the face (COLLIN-HEADSHOT-02)
+
+### Phase 222: Collin County Stances
+
+**Goal:** Each researched Collin County officeholder carries evidence-cited compass stances where their positions are documented, and blank spokes where not.
+**Constraints (heavy phase):** research ONE politician at a time (parallel burns quota); ALL compass topics per politician; evidence-only — no evidence = blank spoke, never default a stance; stances are discrete 1–5 "chairs"; antipartisan (party never displays).
+**Requirements**: COLLIN-STANCE-01 (per-politician all-topic evidence-only research), COLLIN-STANCE-02 (apply 1–5 stances, blank where unsourced)
+**Depends on:** Phase 221 (soft — do after profiles have photos/contacts).
+**Plans:** 18 plans in 18 sequential waves (planned 2026-07-24). **Every stance-research plan owns its own wave** — `/gsd-execute-phase` runs same-wave plans concurrently, and D-03 forbids researching two politicians at once. All 16 research plans are `autonomous: false` with a `[BLOCKING]` apply-and-verify checkpoint, because gsd-executor has no Supabase MCP and authored-but-unapplied SQL is this phase's biggest false-positive risk.
+
+Plans:
+**Wave 1**
+
+- [x] 222-01-PLAN.md — Pre-flight: live worklist + BEFORE snapshot (`is_vacant IS NULL`), topic-UUID verify, live migration number, per-plan assignment table, blank-register skeleton, COLLIN-STANCE-01/02 promoted into REQUIREMENTS.md
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
+- [x] 222-02-PLAN.md — Tier 1: Plano (D-02 first pass)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
+- [x] 222-03-PLAN.md — Tier 1: Frisco (incl. Place 4 seat resolution)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+
+- [x] 222-04-PLAN.md — Tier 1: McKinney
+
+**Wave 5** *(blocked on Wave 4 completion)*
+
+- [x] 222-05-PLAN.md — Tier 1: Allen
+
+**Wave 6** *(blocked on Wave 5 completion)*
+
+- [x] 222-06-PLAN.md — Tier 1: Richardson
+
+**Wave 7** *(blocked on Wave 6 completion)*
+
+- [x] 222-07-PLAN.md — Tier 1: Prosper + Celina (+ explicit Longview disposition)
+
+**Wave 8** *(blocked on Wave 7 completion)*
+
+- [x] 222-08-PLAN.md — D-02 mayors sweep A: Anna, Murphy, Fairview, Princeton, Melissa, Farmersville, Parker, Lucas
+
+**Wave 9** *(blocked on Wave 8 completion)*
+
+- [x] 222-09-PLAN.md — D-02 mayors sweep B: Weston, Blue Ridge, Josephine, Lavon, Lowry Crossing, Nevada, Saint Paul, Van Alstyne
+
+**Wave 10** *(blocked on Wave 9 completion)*
+
+- [x] 222-10-PLAN.md — Councils: Anna + Murphy
+
+**Wave 11** *(blocked on Wave 10 completion)*
+
+- [ ] 222-11-PLAN.md — Councils: Fairview + Princeton
+
+**Wave 12** *(blocked on Wave 11 completion)*
+
+- [ ] 222-12-PLAN.md — Councils: Melissa + Farmersville
+
+**Wave 13** *(blocked on Wave 12 completion)*
+
+- [ ] 222-13-PLAN.md — Councils: Parker + Lucas
+
+**Wave 14** *(blocked on Wave 13 completion)*
+
+- [ ] 222-14-PLAN.md — Councils: Weston + Blue Ridge
+
+**Wave 15** *(blocked on Wave 14 completion)*
+
+- [ ] 222-15-PLAN.md — Councils: Josephine + Lavon
+
+**Wave 16** *(blocked on Wave 15 completion)*
+
+- [ ] 222-16-PLAN.md — Councils: Lowry Crossing + Nevada
+
+**Wave 17** *(blocked on Wave 16 completion)*
+
+- [ ] 222-17-PLAN.md — Councils: Saint Paul + Van Alstyne (closes every government)
+
+**Wave 18** *(blocked on Wave 17 completion)*
+
+- [ ] 222-18-PLAN.md — Close-out: AFTER snapshot + per-gov delta, evidence-integrity + split-section gates, exactly-one-bucket completeness reconcile, `coverage.js` `hasContext` reconcile, browse spot-check screenshots
+
+**Cross-cutting constraints:**
+
+- Every stance written carries a matching inform.politician_context row whose reasoning names a specific dated action, quote, vote, or questionnaire answer and whose sources array holds at least one real URL that was actually fetched (D-04, D-05)
+- Every value is a whole integer 1 through 5 — never fractional, never a defaulted middle value (COLLIN-STANCE-02/adjacency)
+- The migration has been APPLIED to production and the evidence-integrity gate returns zero rows for this plan's politician_ids — authored-but-unapplied SQL does not count as done
+- This plan writes only (politician_id, topic_id) pairs that had no prior row per the 222-01 do-not-overwrite set (COLLIN-STANCE-01/adjacency, D-07)
+- The migration is a single BEGIN/COMMIT transaction using ON CONFLICT (politician_id, topic_id) DO UPDATE on both tables (COLLIN-STANCE-02/idempotency, COLLIN-STANCE-02/concurrency)
+- Every mayor in this plan's scope appears in exactly one of {this plan's applied migration rows, 222-CONFIRMED-BLANK.md} — never neither, never both (COLLIN-STANCE-01)
+- 100% of any stance valued 1 or 5 was re-verified against its cited source before commit, and at least a 20% random sample of the remaining stances was re-verified (222-VALIDATION.md resample contract for Tiers 2 to 4)
+- A council member with no explicit on-topic evidence produces zero inform.politician_answers rows and exactly one blank-register entry naming the sources actually checked; an all-blank council is a SUCCESS outcome (COLLIN-STANCE-01/empty, COLLIN-STANCE-02/empty)
+- 100% of any stance valued 1 or 5 was re-verified against its cited source before commit, plus at least a 20% random sample of the rest (222-VALIDATION.md resample contract for Tiers 2 to 4)
+- A council member with no explicit on-topic evidence produces zero inform.politician_answers rows and exactly one blank-register entry naming the exact URLs checked; an all-blank plan is a SUCCESS outcome (COLLIN-STANCE-01/empty, COLLIN-STANCE-02/empty)
+
 ---
 
 ## Appended: Coachella Valley, CA (Phases 201-203)
@@ -885,6 +1009,34 @@ candidates already do.
 **UI hint**: no
 
 <details>
+<summary>✅ v24.0 Results-Page Search & Header Overhaul (Phases 212–216) — SHIPPED 2026-07-23</summary>
+
+Full detail: `.planning/milestones/v24.0-ROADMAP.md` · requirements: `.planning/milestones/v24.0-REQUIREMENTS.md`
+
+Replaced the cluttered multi-row Results header with one always-editable `<LocationCombobox>` that
+silently classifies address / bare place-name / decimal-coordinate input and routes to a coherent
+location profile — guaranteeing at minimum US Senators + Governor/state executives + county officials
+anywhere in the US. The milestone "owns the search stack": Google Places is dropped entirely in favor
+of a new backend DB place-name resolver (pg_trgm over `geofence_boundaries`/`governments` + a
+build-time US Census Gazetteer ingest) plus a new anonymous, stateless coordinate-lookup endpoint. The
+header also declutters — type filter defaults to Elected (Judges keep Appointed), compass lenses
+become accessible icon buttons, and the redundant "Search by name" filter is removed. Phase 216 added
+the "Unincorporated {County}, {ST}" locality label; close-time polish covered bare place-name labels
+and lens-tooltip focus summaries.
+
+- [x] Phase 212: Backend Place-Name Resolver & National Fallback (6/5) — completed 2026-07-21
+- [x] Phase 213: Anonymous Coordinate Lookup Endpoint (3/3) — completed 2026-07-21
+- [x] Phase 214: Unified Location Combobox & Google Places Removal (6/6) — completed 2026-07-21
+- [x] Phase 215: Header Declutter — Elected Default, Compass Icons, Search-by-Name Removal (3/3) — completed 2026-07-22
+- [x] Phase 216: Unincorporated Locality Label (4/4) — completed 2026-07-22
+
+All 18 v24.0 requirements mapped 1:1 — no orphans, no duplicates. Closeout: override_closeout — 12
+pre-existing cross-milestone items acknowledged & deferred (see STATE.md → Deferred Items); all
+v24.0 phases (212–216) verified passed.
+
+</details>
+
+<details>
 <summary>✅ v23.0 Educators & Judges Tabs (Phases 207–211) — SHIPPED 2026-07-20</summary>
 
 Full detail: `.planning/milestones/v23.0-ROADMAP.md` · requirements: `.planning/milestones/v23.0-REQUIREMENTS.md` · audit: `.planning/milestones/v23.0-MILESTONE-AUDIT.md`
@@ -991,15 +1143,26 @@ This deferred scope is what v21.0 filled.
 
 ## Progress
 
-**v22.0 Tucson & Arizona is the active milestone** â Phases 190-203 (11 AZ + 3 appended
-Coachella Valley, CA). See the expanded roadmap above. Per-milestone progress tables are archived to
-`.planning/milestones/v{X.Y}-ROADMAP.md` at close.
+**v25.0 Collin County TX Data-Completeness is the active milestone** — Phases 217–220 (data-only;
+closes known gaps in the existing 23-government Collin County, TX browse list). See the expanded
+roadmap above. Per-milestone progress tables are archived to `.planning/milestones/v{X.Y}-ROADMAP.md`
+at close.
 
 ## Backlog
 
 ### Phase 999.1: Link CA judicial districts to geofences (BACKLOG)
 
 **Goal:** [Captured for future planning] All 504 California JUDICIAL districts (LA County Superior Court, CA Courts of Appeal, CA Supreme Court; ~502 active judge records) have a NULL `essentials.districts.geo_id`, so they are unlinked to any geofence and structurally unreachable from an address search — they never surface in the Judges tab. This is a data-completeness gap, NOT a frontend filter or intentional suppression (verified in Phase 210: `classifyBucket` → Judges tab would show them if present). Indiana's 70 judicial districts all have geo_ids and surface correctly. Fix = link CA judicial districts to geofences (county-level for LA County Superior Court, statewide for CA appellate/supreme). Low priority — judges provide limited value at this stage. Discovered 2026-07-19 during Phase 210 verification.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.2: National stance evidence-integrity audit (BACKLOG)
+
+**Goal:** ⚠️ **NOT A NEW DISCOVERY — merge with `C:/EV-Accounts/.planning/todos/2026-07-24-party-prior-stance-contamination-audit.md` before planning.** That audit predates this entry by a day, is more thorough, already has tooling (`backend/scripts/sweep-or-preseating.mjs`, `retire-or-preseating.mjs`, `check-source-supports.py`), and has already retired 102 fabricated Oregon rows (commit `905a6514`) plus queued 153 more (commit `df8b0d44`). It measures **907 rows / 293 politicians sourced only to a Ballotpedia bio page** (TX 23, OR 97, VA 18, CA 11, unattributed 137) and documents a defect class this entry missed: **stances citing votes cast before the member was seated** (7 of 8 bill-cited Oregon rows). It also explains the ~102-row drift noted below — those rows were retired by the Oregon sweep, not lost. Do not run a parallel sweep. [Captured for future planning] Evidence-integrity defects live on production compass profiles, in `inform.politician_context` / `inform.politician_answers`. Figures CORRECTED 2026-07-25 after the 222-02 apply — the first pass counted signature matches in `politician_context` without joining to `politician_answers`, conflating displayed stances (real defects) with "searched, found nothing" notes that carry no chair (the correct blank outcome), overstating A1 by ~190x. Corrected, in priority order: (1) **2,304 rows name a party in reasoning text that is attached to a live displayed stance** — that text renders to users (`src/pages/Citations.jsx:112`, StanceAccordion via `src/components/CompassCard.jsx:29`) and contradicts the antipartisan display rule; spread over ~45 states (TX 697, unattributed 512, blank-state 351, CA 172, MD 168, OR 135, UT 101). Some share is incidental/descriptive rather than inferential, so 2,304 is an upper bound. (2) **921 `politician_answers` rows have NO `politician_context` row at all** — a chair shown publicly with zero reasoning and zero sources; found during 222-02 post-apply verification, previously unmeasured. (3) **2 A1 rows remain nationally** (NULL sources + reasoning admitting "no record found"); was 7, and 222-02 deleted the 5 Collin ones. Fix = triage A2 inferential (delete stance) vs incidental (rewrite reasoning, keep the cited action), decide the 921 (source properly or delete the chair), delete the last 2 A1, log every deletion in a blank register at (person, topic) granularity, and add write-time guards (reject answer rows with no context row or NULL-sources context; flag party keywords; tighten `politician_answers_value_half_step`, which currently permits x.5 and is how the earlier fractional corruption got in). ALSO unexplained: `politician_context` measured 33,956 before the 222-02 apply and 33,827 after, with only 27 deleted — ~102 rows unaccounted for; both tables are PK'd on (politician_id, topic_id) so it is not duplicate removal, and Collin scope reconciles exactly. Candidates: concurrent production writes, or a `compass_topics` deletion cascading via `ON DELETE CASCADE`. Establish a baseline before the sweep. Every write is production and outward-facing — deletions require a blocking operator apply checkpoint. Full detail in `.planning/todos/pending/national-stance-evidence-integrity-audit.md`. Discovered 2026-07-25 during Phase 222, after the operator rejected closing Plano/McKinney as no-op and asked for them to be double-checked.
 **Requirements:** TBD
 **Plans:** 0 plans
 
