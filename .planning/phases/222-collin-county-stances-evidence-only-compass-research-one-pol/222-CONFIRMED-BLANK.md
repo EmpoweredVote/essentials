@@ -42,13 +42,13 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 195
+## Count: 248
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
 + 1 by the 2026-07-25 bio-page-only follow-on remediation (Dan Barrios / healthcare)
 + 10 by 222-05 (Allen) + 10 by 222-06 (Richardson)
-+ 31 by 222-07 (11 Prosper + 20 Celina).
++ 84 by 222-07 (11 Prosper + 20 Celina + 53 Longview).
 222-08 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -63,7 +63,7 @@ operator approval; 1422 is authored and committed but **not yet applied**:
 | `1420_222_barrios_healthcare_bio_only_remediation.sql` | 1 deletion (bio-page-only) | APPLIED |
 | `1421_222_allen_stances.sql` | 1 chair (Schulmeister residential-zoning=3) | APPLIED |
 | `1422_222_richardson_stances.sql` | 1 chair (Dorian housing=3) | APPLIED |
-| `1423_222_prosper_celina_stances.sql` | Prosper + Celina blocks complete: 2 chairs (Shea Scott / Celina: economic-development=1, public-safety-approach=4); Prosper's Doug Charles and Celina's Shane Lambert yield zero rows. Longview block pending — that research had not yet run when this row was written. | AUTHORED (Prosper + Celina) — awaiting operator apply (222-07 Task 3) |
+| `1423_222_prosper_celina_stances.sql` | 4 chairs across 3 of 8 people — Shea Scott (Celina): economic-development=1, public-safety-approach=4; Derrick Conley (Longview): homelessness=5; John Nustad (Longview): homelessness=5. Doug Charles (Prosper), Shane Lambert (Celina), Shannon Moore, Brandon Smith and Sidney Allen (Longview) yield zero rows — all 11 topics honest blanks each. | AUTHORED — awaiting operator apply (222-07 Task 3) |
 
 Net effect on production so far: **28 defective rows removed, 10 evidence-cited chairs added.**
 Migration 1422 is excluded from that total until the operator applies it.
@@ -1758,5 +1758,482 @@ apply) and additionally lists his 9 unsourced topics here; Shane Lambert appears
 11 topics and in bucket 1 for none. Both Celina worklist names are accounted for — no name in neither
 bucket, and no (person, topic) pair in both. Until 1423 is applied, Scott is honestly in bucket 2 for
 all 11 topics.
+
+---
+
+## City of Longview (4843888) — 222-07
+
+**Longview's disposition is an explicit operator decision, not an omission.** Longview is a **Gregg
+County** city, not a Collin government; it is bundled into the Texas browse list in
+`src/lib/coverage.js` and already carries a `hasContext: true` chip. 222-RESEARCH.md Open Question 2
+expected the 222-01 BEFORE snapshot to show zero un-stanced Longview officeholders. It did not — it
+showed **five**, which exceeds plan 222-07's own three-person "ride along" threshold and would
+normally have triggered the plan's escalate-rather-than-thin clause. **On 2026-07-25 the operator
+decided to keep Longview inside 222-07 as an eight-person plan rather than open a nineteenth plan.**
+All five were therefore researched here under the identical D-04 rules, at full depth, with no
+thinning.
+
+**Attempted:** 2026-07-25, the five un-stanced Longview officeholders on the 222-01 live worklist —
+Derrick Conley (District 1), Shannon Moore (District 2), Brandon Smith (District 3), John Nustad
+(District 4) and Sidney Allen (District 6) — against all 11 canonical compass topics, 55 pairs in
+total. **Out of scope per D-07 and untouched:** Mayor **Kristen Ishihara** (9 topics already held)
+and **Jody Berryhill**, District 5 (2 topics already held) are partially stanced; none of their rows
+was read, re-reasoned or modified, which is also why no District 5 or mayoral entry appears below.
+
+**Result: 2 chairs.** `homelessness` = 5 for **Derrick Conley** and `homelessness` = 5 for **John
+Nustad**, both resting on the same contested, individually-recorded roll-call vote (migration 1423,
+**authored — awaiting operator apply**). Moore, Smith and Allen yield zero chairs. 53 of the 55 pairs
+are blank.
+
+**Evidence checked:** the **official City of Longview council minutes**, which are unusually valuable
+because Longview transcribes discussion items nearly verbatim rather than summarising them — the
+**May 23, 2024** regular meeting (12 pages, read in full: the camping ordinance roll call, the
+citizen comment period, the Swim Center vote), the **August 5, 2025** special called budget session
+(12 pages, read in full: the proposed 57.19-cent tax rate, the employee-raise debate, the fee
+resolution — every one of Conley, Moore, Nustad and Allen speaks at length here), and the **August
+14, 2025** regular meeting (20 pages, read in full: five zoning cases and the raise decision). The
+**Longview News-Journal** (`news-journal.com`), which is fetchable and is by far the richest
+secondary source for this council — the May 2024 story on the council strengthening camping rules,
+the Conley District 1 win story, the January 1, 2026 story on charges being dropped against the One
+Love Longview director, the 2023 Nustad District 4 profile, the March 6, 2026 story declaring Nustad
+re-elected unopposed, the April 16, 2026 Brandon Smith profile, the April 29, 2026 write-up of the
+NAACP District 3 candidate forum, the June 13, 2026 Smith runoff-win story, and the story on Sidney
+Allen taking District 6 unopposed. **KLTV** East Texas coverage, including the April 2024 District 2
+candidate story. The city's own official council-member pages for all five members
+(`longviewtexas.gov/220x/District-x`). Longview's Municode/AgendaCenter search index was used to
+locate the May 23, 2024 minutes by document ID (`_05232024-1872`) after a direct search failed.
+
+**⚠ LONGVIEW, WASHINGTON HOMONYM TRAP — CAUGHT AND REJECTED; READ BEFORE ANY FUTURE PASS.** There is
+a **Longview, Washington** with its own city council, and general searches for Longview council
+ordinance news surface it freely and confidently. Specifically rejected this session: a **tdn.com**
+(*The Daily News*, Longview WA) story headlined "Longview council narrowly OKs excessive storage
+ordinance," which a search summary presented as a Longview camping-ordinance revision and attributed
+to "council member **Ruth Kendall**" — there is no Ruth Kendall on the Longview **Texas** council,
+and that story is not about this city. Had it been used it would have produced a fabricated
+`homelessness` position for whoever it was attached to. Also rejected as Washington: OPB's "Longview
+City Council to select new mayor Jan. 8," klog.com's "Longview City Council Votes to Impose New 0.1%
+Sales Tax," and longviewlibrary.org's "What Your City Council Accomplished in 2025." Every Longview
+source relied on below was confirmed **Texan** by an explicit marker — the Gregg County Tax
+Assessor-Collector, the Gregg County appraisal district, the Jo Ann Metcalf Municipal Building at
+300 W. Cotton St., or the City of Longview, Texas seal on the minutes. Separately, **"Sidney Allen"
+of Longview District 6 must not be confused with the city of Allen, TX**, which is a different
+government covered by plan 222-05; and "Shannon Moore", "Brandon Smith" and "John Nustad" are all
+common names, so each identity was pinned to its district on the official city directory and to a
+named Longview News-Journal election result before any evidence was accepted.
+
+**The `homelessness` evidence, stated once.** On **May 23, 2024** the council adopted **Ordinance
+No. 4495**: *"AN ORDINANCE ... ADDING A NEW ARTICLE VIII TO CHAPTER 58 OF THE LONGVIEW CITY CODE
+REGARDING SLEEPING OUTSIDE ON PRIVATE PROPERTY; PROVIDING FOR THE IMPOSITION OF A CRIMINAL PENALTY
+NOT TO EXCEED $2,000 FOR EACH VIOLATION."* Longview's code already prohibited camping in the city
+and sleeping on public property; this closed the remaining place a person could lawfully sleep
+outdoors. It carries no graduated-warning scheme and imposes no obligation on the city to maintain
+shelter capacity. The minutes record the roll call by name — **MOTION** Pirtle, **SECOND** Gamboa;
+**Conley Yes · Moore No · Wade No · Nustad Yes · Gamboa Yes · Pirtle Yes · Ishihara Yes**; *"The
+motion carried (5, 2)."* Eight residents spoke against it that night, one stating she has cancer and
+cannot use a shelter for medical reasons and another that "there are many reason why someone could
+not go to one of the Longview Shelters"; two spoke for it on behalf of area businesses. Municipal
+court charges were later filed against the executive director of the nonprofit One Love Longview for
+allowing clients to sleep in front of its building at 1015 McCann Road, and dismissed "in the
+interest of justice" in January 2026. **Note a reporting discrepancy resolved in favour of the
+primary source:** one search summary rendered the tally as "4-2"; the signed official minutes say
+5-2 and name every vote, and the minutes govern. **Sidney Allen and Brandon Smith were not on the
+council for this vote** — the May 23, 2024 minutes list the members as Ishihara, Conley, Moore, Wade,
+Nustad, Gamboa and Pirtle — so neither receives anything from it.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position: Longview's own official council-member pages carry **no biography whatsoever** for any of
+these five members, only a photo, an election date, a term expiry and liaison assignments, so there
+is no official-bio source for this council at all. **No candidate questionnaire exists for Nustad**
+— his 2026 District 4 election was **cancelled** because he was the only filer — **or for Allen**,
+likewise unopposed and cancelled in 2025; and although District 3 in 2026 was a five-way contested
+race that went to a runoff, neither the News-Journal nor any other outlet published a policy
+questionnaire for it, only forum write-ups. Ballotpedia's individual candidate page for Brandon Smith
+was not readable (the phase-wide Ballotpedia empty-body failure). KLTV's 2024 candidate-forum items
+for Districts 1 and 2 and the Longview Chamber of Commerce and NAACP District 3 forums are
+**video/broadcast**, not readable by this pass — the NAACP forum was reached only through the
+News-Journal's written write-up of it. Council meeting **video** was not watched. **Sidney Allen's
+earlier nine years of service, which ended in 2016 under term limits, were deliberately not mined**
+— 2016-and-earlier statements are too stale to bear on a 2025-2028 term, and this is the single
+largest recoverable gap for him. Only the May 23 2024, August 5 2025 and August 14 2025 minutes were
+read in full; Longview holds roughly two meetings a month, so the great majority of this council's
+recorded discussion remains unread and a deeper pass would very likely place additional chairs —
+this is the most promising city in plan 222-07 for a future pass, precisely because its minutes are
+near-verbatim.
+
+### Derrick Conley — Council Member District 1 — `c723b079-c7db-4376-b8d3-72ac896fefe2`
+
+Sourced: `homelessness` = 5 (migration 1423, **authored — awaiting operator apply**), on his recorded
+Yes vote on Ordinance No. 4495 at the May 23, 2024 meeting — the same meeting at which he was sworn
+in, having won District 1 in May 2024 with 227 votes (58.21%) over Jim Cogar and Arthur Carter. He is
+**not individually quoted** on the item; the chair rests on the roll call and says so. The remaining
+10 topics are blank:
+
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — public-safety-approach — no
+  chair-locating position. His one on-topic remark, at the August 5, 2025 budget session, is a
+  balance statement: *"It's a balance of being able to make sure our people and public safety are not
+  neglected. I really appreciate more thought and being able to be creative, if we can do that in any
+  way where we don't raise taxes."* Saying public safety must not be "neglected" while holding taxes
+  flat locates nothing: it is not chair 4's increase in staffing, equipment or pay to improve
+  response times, not chair 3's addition of crisis-response teams, and not chair 1's redirection of
+  police budget to social services. The city manager's observation at that meeting that "two thirds
+  of our general operating budget is public safety" is staff testimony, not Conley's position. His
+  employer — he is an assistant superintendent at Pine Tree ISD — was deliberately not used;
+  profession is adjacency.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — residential-zoning — no
+  chair-locating position. He seconded the consent agenda and one Planned Development rezoning for a
+  gas station and convenience store at W. Loop 281 and McCann Road on August 14, 2025, and every one
+  of that meeting's five zoning cases passed **7-0 with no citizen speaking and no council member
+  saying anything at all**. A generic unanimous rezoning approval with no stated reason is the exact
+  defect the 222-01 audit deleted from an Allen record on 2026-07-25 and the Richardson pass refused;
+  moreover the cases were housekeeping (bringing non-conforming lots into compliance, a nonprofit
+  office building, a convenience store), not density-policy choices.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — housing — no position on
+  housing affordability found. His nearest remark, at the August 5, 2025 fee discussion, is
+  *"one thing we know taxes affects all of us, whether we own property or whether we rent
+  property"* — an observation that utility and tax costs reach renters as well as owners, not a
+  position on the government's role in making housing affordable. A resident at the May 23, 2024
+  meeting urged the city to address "the housing shortage in Longview," but no Conley response is
+  recorded.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — transportation-priorities — no
+  statement found that sets any transportation mode against another. His August 5, 2025 remarks about
+  city services concern water rates and trash collection; the 2018 bond's street projects are a
+  capital programme, not a mode choice, and he is not quoted on them.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — economic-development — no
+  position found on incentives, abatements, or community-benefit conditions. Nothing in the minutes
+  read or in any News-Journal coverage records him on a Longview incentive or abatement decision.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — growth-and-development — no
+  chair-locating position on growth pace. Nothing found on annexation, approval speed, permitting
+  fees, growth caps, or building infrastructure ahead of development.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — local-immigration — no
+  statement found on the Longview Police Department's relationship to federal immigration
+  enforcement, ICE detainers, or information sharing. Texas SB 4 is state law, not his position, and
+  was not used as a default.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — civil-rights — no on-topic
+  position found. His campaign statements as reported by the News-Journal are about accessibility and
+  temperament — *"It all starts with one handshake at a time and listening"*, *"I want to be
+  available, visible, approachable"*, *"I just feel like God's going to put me where I'm supposed to
+  be"* — and locate nothing. **No inference was drawn from any identity, demographic or affiliation
+  characteristic**; that inference class is forbidden and was the basis of deletions from two
+  Richardson records on 2026-07-25.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling.** His material is preserved verbatim here for a future
+  municipal-scope rewrite. At the August 5, 2025 budget session, on a proposed 57.19-cent rate: *"I
+  think it's like you mentioned that we want to obviously compensate our people fairly, make that
+  competitive, but we want to also take care of the taxpayers and not do what we can without raising
+  taxes… anytime you have the responsibility of taxpayer money we take that very seriously. It's a
+  balance of being able to make sure our people and public safety are not neglected. I really
+  appreciate more thought and being able to be creative, if we can do that in any way where we don't
+  raise taxes."* Wanting both fair employee pay and no tax increase neither raises taxes on wealthy
+  people or large companies (chairs 1–2) nor commits to scaling services back (chairs 4–5). His
+  interrogation of the water-rate increase at the same meeting — pressing the public works director
+  until he had the per-bill figure, "*So that's basically so typical so someone is normally paying if
+  you're paying $10.71 for water you're basically an increase of 21 cents*" — is utility ratemaking,
+  separately refused as taxes evidence under the 222-06 rule. No taxes row was written.
+- Derrick Conley — Longview — `c723b079-c7db-4376-b8d3-72ac896fefe2` — healthcare — no statement
+  found on healthcare access. Expected: all five chairs describe national healthcare policy, which a
+  city council member holds no position on by role. The city's employee health-insurance premium
+  discussion on August 5, 2025 is an employee-benefits matter and was not stretched into a chair.
+
+### Shannon Moore — Council Member District 2 — `d55159ff-7c27-4313-b464-722f653fd7b7`
+
+Sourced: **none.** All 11 topics are blank. She won District 2 in May 2024 against Natasha Harrell,
+succeeding the term-limited Nona Snoddy, and was sworn in at the May 23, 2024 meeting.
+
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — homelessness — **real evidence
+  of direction, but deliberately left blank, and this is the hardest blank in the plan.** She cast one
+  of the two recorded **NO** votes on Ordinance No. 4495 on May 23, 2024, opposing the criminal
+  prohibition on sleeping outside on private property; that vote is verified by name in the official
+  minutes and independently reported by the Longview News-Journal. But **no stated reason of any kind
+  was found** — she is not quoted in the minutes on the item, not quoted in the News-Journal's
+  coverage of the vote, not quoted in KLTV's coverage, and not quoted in the later coverage of the
+  ordinance's aftermath. A No vote establishes she rejects chairs 4 and 5 (prohibition backed by
+  penalties) but cannot separate chair 1 (protect the right to sleep in public and redirect
+  enforcement budgets to housing and mental-health services), chair 2 (decriminalise public sleeping
+  while investing in shelter capacity and outreach), and chair 3 (allow enforcement only when
+  adequate shelter beds exist, with citations diverting people to services). Critically, she has
+  **not** sought repeal of Longview's pre-existing ban on camping and sleeping on public property, so
+  chairs 1 and 2 cannot be assumed, and she said nothing about shelter capacity, so chair 3 cannot be
+  either. Assigning a chair by picking the middle of the three she did not rule out would be
+  defaulting to a middle value, which D-04 forbids. Her reason may well be on the meeting video,
+  which this pass could not watch — this is the highest-value single retry in the plan.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — economic-development — no
+  chair-locating position. Her one on-topic statement, from KLTV's April 18, 2026 District 2 candidate
+  story, is a geographic-equity complaint rather than a position on incentive policy: *"Everything is
+  literally being built and developed on the north side of Longview and we're just kind of left here
+  and everything is just kind of blank."* Wanting investment to reach the southwest side says nothing
+  about whether the city should offer tax abatements, attach community-benefit or job-quality
+  conditions, confine help to small business, or refuse subsidies — the axis all five chairs are
+  defined by.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — residential-zoning — no
+  chair-locating position. She **made the motion** on August 14, 2025 to rezone 601 West Avalon
+  Avenue, in her own district, from Multi Family (MF-2) to Office (O) for The Martin House — a
+  downzoning away from multifamily — and it passed 7-0. But she is **not quoted giving any reason**,
+  no citizen spoke, the applicant is a nonprofit wanting to build an office on a recreation field,
+  and staff had found the change consistent with adjacent uses and with a comprehensive-plan
+  designation of Public/Semi-Public. A silent motion on a housekeeping case is not a density
+  position; converting it into one would be the generic-unanimous-rezoning defect. She said nothing
+  about apartments, duplexes, accessory dwelling units, neighbourhood character, or rezoning process
+  in any source read.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — housing — no position on housing
+  affordability found. Her August 5, 2025 observation that a tax increase "affects renters" is about
+  who bears a tax, not about housing supply, price or subsidy.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — public-safety-approach — no
+  statement found on police funding levels, staffing, pay, equipment, response times,
+  crisis-response teams, co-responders, or redirecting police budget.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — transportation-priorities — no
+  statement found that sets any transportation mode against another.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — growth-and-development — no
+  chair-locating position on growth pace. Her "north side versus here" remark is about **where**
+  development happens, not about how fast it should be allowed to happen or what must be built first.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — local-immigration — no statement
+  found on the police department's relationship to federal immigration enforcement, ICE detainers, or
+  information sharing.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — civil-rights — no on-topic
+  position found. Her campaign framing — *"It needs to be a voice that is from this community and has
+  experienced the things we have experienced in this community"* and *"I want to be an advocate for
+  the people who often feel like they're not heard"* — is representational, not a position on civil
+  rights enforcement, equity mandates, or race-conscious programs, and locates no chair. **No
+  inference was drawn from her identity, her district's demographics, or her having spoken at an
+  NAACP-adjacent venue** — that is precisely the forbidden identity-inference class that was deleted
+  from two Richardson records on 2026-07-25.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling.** Her material is preserved verbatim here. At the August 5,
+  2025 budget session: *"I would just like to say that was our goal, I think, for most of the council
+  for us to look in deeper to see where we are at because when we totally say, 'Okay, we want to
+  raise property taxes specifically for a raise.' I think that is where we were all conflicted and
+  just like anybody said and we've all said around council that is not it not only affects
+  homeowners, it affects renters, it affects the employees that we're raising the taxes on."*
+  Objecting that a property-tax increase to fund employee raises falls on renters and on the very
+  employees being paid neither raises taxes on wealthy people or large companies nor scales services
+  back. She also questioned the city's health-insurance premium increase — *"I wanted to discuss the
+  health insurance premiums increase and the why. Is it more because they're getting more benefit or
+  is it more what are we raising it for?"* — which is an employee-benefits fee question, refused both
+  as taxes evidence and as healthcare evidence. No taxes row was written.
+- Shannon Moore — Longview — `d55159ff-7c27-4313-b464-722f653fd7b7` — healthcare — no statement found
+  on healthcare access. Expected: all five chairs describe national policy. Her question about the
+  city's own employee health-insurance premiums is a municipal benefits-cost question and was
+  deliberately **not** stretched into a healthcare-access chair — that stretch is exactly the defect
+  that got a Richardson-phase healthcare row deleted on 2026-07-25.
+
+### Brandon Smith — Council Member District 3 — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0`
+
+Sourced: **none.** All 11 topics are blank. He is the newest member in this plan: 42 years old, a
+lifelong Longview resident and 1998 Longview High School graduate, he led a five-way District 3 field
+on May 2, 2026 with 195 votes (37.28%) and won the **June 13, 2026 runoff** with 223 votes (52.22%)
+against Marlena Cooper's 204 (47.78%), succeeding Wray Wade. He has therefore held office for roughly
+six weeks and has **no recorded vote on any compass topic**; the May 2024 camping ordinance predates
+him by two years. Identity was pinned carefully because "Brandon Smith" is a very common name and
+because a residency challenge was raised against him during the campaign (he stated he does live in
+District 3).
+
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — transportation-priorities — no
+  chair-locating position, and this is his closest call. At the NAACP District 3 candidate forum on
+  April 14, 2026 he cited his own canvassing survey: *"54% of the people who did our survey want
+  street repairs such as potholes, complete roads, they want it fixed,"* and in his April 16, 2026
+  News-Journal profile, *"Roads are one of the top three issues."* Pothole and pavement repair is
+  **maintenance**, not a choice between competing modes: it is not chair 4's focus on road capacity
+  and traffic flow, and his separate concern about street **lighting** — elderly residents unable to
+  walk safely after dark, *"A lot of the time, they can't go out because they don't feel safe"* — is a
+  personal-safety and illumination point, not chair 2's or chair 3's sidewalk, bike-lane or transit
+  investment. The 222-06 rule that a bond bundling roads with drainage and water is not a
+  transportation mode tradeoff applies with equal force to a pothole-repair priority.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — public-safety-approach — no
+  chair-locating position. He reported a constituent perception rather than stating a funding or
+  staffing position: *"They don't really feel safe because they're not seeing a lot of patrolling."*
+  Relaying that residents notice fewer patrols is not a commitment to increase police staffing,
+  equipment or pay (chair 4), nor a position on crisis-response teams or co-responders (chairs 2–3),
+  nor on redirecting police budget (chair 1). Suggestive but not explicit is a blank; the phase
+  blanked an equivalent-strength "public safety must keep pace" statement for a Prosper member in
+  this same plan.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — growth-and-development — no
+  chair-locating position. His vision statements — *"District 3 needs someone strong who's going to
+  lead that district and help revitalize the district that has been left there unattended,
+  respectfully"* and *"I would love to see a neighborhood that thrived as well as in the past"* — are
+  revitalisation and restoration language about an older part of the city, not a position on growth
+  pace, approval speed, permitting fees, annexation, or building infrastructure ahead of development.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — residential-zoning — no
+  statement found on housing density, apartments, multifamily, duplexes, accessory dwelling units,
+  lot sizes, neighbourhood character or rezoning process. He has cast no zoning vote.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — housing — no position on
+  housing affordability found. His District 3 revitalisation framing does not address public housing,
+  rent, inclusionary requirements, subsidies, buyer assistance, or deregulation.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — homelessness — no statement
+  found on public camping, encampments, enforcement, citations, or shelter capacity, and he was not
+  on the council for Ordinance No. 4495. Notably, no Longview outlet appears to have asked the 2026
+  District 3 candidates about the camping ordinance despite its being live litigation in the city
+  that January.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — economic-development — no
+  position found on incentives, abatements, or community-benefit conditions, notwithstanding that one
+  of his campaign forums was hosted by the Longview Chamber of Commerce; a forum appearance is
+  adjacency, and that forum's content is not published in readable form.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — local-immigration — no
+  statement found on the police department's relationship to federal immigration enforcement, ICE
+  detainers, or information sharing.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — civil-rights — no on-topic
+  position found. He participated in a forum hosted by the Longview branch of the **NAACP**, and that
+  fact was deliberately **not** used: appearing at an organisation's candidate forum is adjacency and
+  says nothing about a person's position on civil-rights enforcement, equity mandates or
+  race-conscious programs. No inference was drawn from his identity or from his district's
+  demographics.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling**, and in his case there is genuinely nothing to preserve:
+  no statement by him on the Longview property-tax rate, the city budget, debt, or spending priorities
+  beyond streets, lighting and parks was found in any source. His parks position — *"I would like for
+  our parks to be more uniform"* and *"I would definitely advocate for at least a restroom at every
+  park"* — is a specific spending request too narrow to bear on a tax-and-spend chair even if the
+  scale were answerable. No taxes row was written.
+- Brandon Smith — Longview — `c6ec603a-3ba9-478b-a43d-35ef9bb5b0f0` — healthcare — no statement found
+  on healthcare access. Expected: all five chairs describe national healthcare policy.
+
+### John Nustad — Council Member District 4 — `94957758-20db-4590-8cc9-ce54c24e2449`
+
+Sourced: `homelessness` = 5 (migration 1423, **authored — awaiting operator apply**), on his recorded
+Yes vote on Ordinance No. 4495 on May 23, 2024. He has held District 4 since May 2023 and was
+**declared re-elected unopposed on March 6, 2026** when no one else filed and the election was
+cancelled; term to May 2029. He is **not individually quoted** on the ordinance; the chair rests on
+the roll call and says so. The remaining 10 topics are blank:
+
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — public-safety-approach — no
+  chair-locating position, despite being the most talkative member on the budget. His extensive
+  August 5, 2025 remarks are about **city labour costs in general**, not about police specifically:
+  he established from the city manager that labour is "close to 85%" of the budget and argued *"when
+  85% of your budget is labor, where we are at right now trying to raise do a 6% raise with a $1,000
+  kicker is not because we're feeling generous. It's because we're playing catchup."* A general
+  employee-raise argument is not a position on police funding relative to other municipal services,
+  and the compass scale here is specifically about policing. His fire-department remarks at the same
+  meeting are ratemaking: he backed charging assisted-living facilities for non-medical lift assists
+  after speaking to firefighters at stations two and five about their call volume, and separately
+  supported passing credit-card processing fees to payers. Fees are not funding-model positions, and
+  fire is not on this scale.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — residential-zoning — no
+  chair-locating position. He made the motion on August 14, 2025 to rezone 209 Northcutt Avenue from
+  Office (O) to Single Family (SF-5), and seconded the consent agenda; that case passed 7-0 with no
+  citizen speaking and no member explaining a reason, and it was pure housekeeping — an owner
+  bringing a non-conforming single-family home into compliance so it could be sold. A silent motion
+  on a housekeeping case is not a density position.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — economic-development — no
+  position found on incentives, abatements, or community-benefit conditions. His small-business
+  analogy at the August 5, 2025 session — *"it's like a small business owner, they're experiencing
+  higher cost of goods sold… The last thing the small business owner is going to want to do is raise
+  prices"* — is a rhetorical device for explaining municipal cost pressure, not a position on
+  business recruitment or subsidy, and reading it as one would be cross-topic inference.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — transportation-priorities — no
+  statement found that sets any transportation mode against another. His 2023 profile mentions
+  getting a specific intersection (Page Road and Delia Road) and a drainage issue addressed —
+  constituent casework, not a mode priority.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — growth-and-development — no
+  chair-locating position on growth pace. Nothing found on annexation, approval speed, permitting
+  fees, growth caps, or infrastructure sequencing.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — housing — no position on housing
+  affordability found.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — local-immigration — no statement
+  found on the police department's relationship to federal immigration enforcement, ICE detainers, or
+  information sharing.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — civil-rights — no on-topic
+  position found. His 2023 statement of approach — *"My hope is to lead with professionalism, with a
+  caring heart and … to help (residents) and be completely and fully accessible to them in whatever
+  they may need"* — locates nothing.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling**, and his is the richest tax material in the plan after
+  Scott's, preserved verbatim here for a future municipal-scope rewrite. At the August 5, 2025 budget
+  session he laid out the tradeoff explicitly: *"You cannot pass tax increases but to pay the labor
+  that we need to provide the services. So you have to look at two options. You either reduce staff
+  which can impact services or you provide less services."* And: *"So, it's either you do sensible
+  budgeting now, you go ahead and plan that cause the problems and reduction in staff and services
+  and you provide that stuff and you look at ways to do it. And I hope that we can do this without
+  increasing property tax."* And on state policy: *"The legislature is capping the revenue that we're
+  able to increase. So, yes, they're lowering property taxes or trying to do their property taxes,
+  but they're putting it at the expense of your school districts. They are putting it at the expense
+  of your municipalities."* Note carefully what this is and is not: he names service reduction as the
+  consequence of holding the rate flat, but he **advocates** the 6%-plus-$1,000 employee raise and
+  hopes to fund it without a rate increase — he does not propose scaling public services back as an
+  end (chairs 4–5), and he plainly does not propose raising taxes on wealthy people or large
+  companies (chairs 1–2). This is exactly the pattern the operator ruling describes: a real, dated,
+  substantive tax position that the scale can only render as the undiscriminating middle chair. No
+  taxes row was written.
+- John Nustad — Longview — `94957758-20db-4590-8cc9-ce54c24e2449` — healthcare — no statement found
+  on healthcare access. Expected: all five chairs describe national healthcare policy.
+
+### Sidney Allen — Council Member District 6 — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb`
+
+Sourced: **none.** All 11 topics are blank. He returned to District 6 in **May 2025** after nine
+earlier years on the council that ended in 2016 under term limits; he was **unopposed and his
+election was cancelled**, so no 2025 candidate questionnaire exists. Term expires May 2028. He was
+**not on the council** for the May 23, 2024 camping ordinance vote. His name is spelled "Sydney
+Allen" in parts of the August 5, 2025 minutes; the official city directory and the News-Journal both
+use **Sidney**. He must not be confused with the **city of Allen, TX**, a separate government covered
+by plan 222-05.
+
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — public-safety-approach — no
+  chair-locating position. Everything he is recorded saying about emergency services is **fee
+  ratemaking**, not funding level. At the August 5, 2025 fee discussion he pressed to charge
+  assisted-living facilities for non-medical lift assists and to remove the proposed grace period:
+  *"I don't see any reason in somebody having to keep track of that one free pickup. I think
+  effective tomorrow, we should notify the assisted living centers that if it's not a medical
+  situation and they call us to go out and assist, it's $250 effective within 30 days… I just see no
+  reason to give them one free pickup and had no idea and I want to thank the new fire chief for
+  looking at that."* That is a fire-department cost-recovery position; it is not about police
+  staffing, pay, equipment, response times, crisis-response teams, or the police budget's share of
+  city spending, and fire is not on this scale. He is the council liaison to the Zoning Board of
+  Adjustment, the Animal Shelter Advisory Committee and the Council Appointments Committee — liaison
+  assignments are adjacency and were not used for any topic.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — residential-zoning — no
+  chair-locating position. He made the motion on August 14, 2025 to approve a Planned Development for
+  a gas station and convenience store at W. Loop 281 and McCann Road — a **commercial** case,
+  approved 7-0 with no citizen comment and no stated reason from him — and the other case in his
+  district that night was a housekeeping Office-to-SF-5 rezone. Neither is a density-policy choice,
+  and being the Zoning Board of Adjustment liaison is adjacency, not a position.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — economic-development — no
+  position found on incentives, abatements, or community-benefit conditions. His August 5, 2025
+  argument that the nonprofit discount at the Maude Cobb complex should be cut only to 20% rather
+  than 15% — *"I think that if they were paying 30%, they can certainly pay 20%. And that's just a
+  little bit of revenue that the complex out there will have to operate on"* — is venue-rental
+  pricing for a city facility, not business attraction policy.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — homelessness — no statement
+  found on public camping, encampments, enforcement, citations, or shelter capacity. He was not on the
+  council for Ordinance No. 4495 and no later statement by him on it or on its 2026 aftermath was
+  found. **A Longview, WASHINGTON story about an "excessive storage" camping-ordinance revision was
+  specifically rejected as a source here** — see the homonym warning above.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — transportation-priorities — no
+  statement found that sets any transportation mode against another. His remarks on trash-truck
+  maintenance costs — *"when you're running trash trucks all over the city of Longview, you've got
+  terrible maintenance expense and these are running start and stop, start and stop"* — are about
+  fleet operating cost, not about transportation investment priorities.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — housing — no position on housing
+  affordability found.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — growth-and-development — no
+  chair-locating position on growth pace.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — local-immigration — no statement
+  found on the police department's relationship to federal immigration enforcement, ICE detainers, or
+  information sharing.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — civil-rights — no on-topic
+  position found. Nothing addresses civil-rights enforcement, equity requirements, or race-conscious
+  programs. No inference was drawn from any identity or affiliation characteristic.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — taxes — **researched, no chair
+  written per the 2026-07-25 taxes ruling.** His material is preserved verbatim here. At the August 5,
+  2025 budget session he pointed at appraisals rather than the rate: *"I think everyone here tonight,
+  everyone that's listening may be watching over the last two years, maybe at least two years, has
+  seen considerable increase in the taxable values of their home. Now, we have nothing to do with
+  that. That's your Gregg County appraisal district."* On the fee resolution he judged the utility
+  increases acceptable: *"With the water and the trash. I don't like to see the increases, but as we
+  all know, equipment, trash trucks, operations, not counting personnel… So I think if the water and
+  trash additional amounts are reasonable in my opinion."* And on payment fees: *"I still think 3.6 is
+  a little high. I think all of the companies that process these credit cards nowadays are reducing
+  their fees over a period of time."* Disclaiming responsibility for appraisal values and accepting
+  utility rate increases is neither a tax increase on wealthy people or large companies (chairs 1–2)
+  nor a commitment to scale services back (chairs 4–5); and **every one of these is a fee or rate
+  decision, which the 222-06 ruling separately refuses as taxes evidence**. No taxes row was written.
+- Sidney Allen — Longview — `2baab241-b3c5-48e9-b9a6-fd29b7b77beb` — healthcare — no statement found
+  on healthcare access. Expected: all five chairs describe national healthcare policy. His lift-assist
+  remarks concern who pays for a fire-department response to a fall in an assisted-living facility, a
+  municipal cost-recovery question, and were deliberately not stretched into a healthcare chair.
+
+**Longview reconcile:** Derrick Conley and John Nustad each appear in bucket 1 (one migration row in
+1423 for `homelessness`, pending operator apply) and additionally list their 10 unsourced topics here;
+Shannon Moore, Brandon Smith and Sidney Allen appear in bucket 2 for all 11 topics and in bucket 1
+for none. All five Longview worklist names are accounted for — no name in neither bucket, and no
+(person, topic) pair in both. Until 1423 is applied, Conley and Nustad are honestly in bucket 2 for
+all 11 topics. Mayor Ishihara and District 5's Jody Berryhill are deliberately absent from this
+register: they are partially stanced and out of scope per D-07, not unsearched.
 
 ---
