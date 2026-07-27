@@ -18,8 +18,8 @@ https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politi
 ```
 
 The bucket is **public and unauthenticated** — a plain HTTPS `GET` works from any origin, server
-or browser. No API key. Served with `Cache-Control: no-cache`, and Supabase's CDN purges on
-overwrite, so the URL is stable and always returns the current image.
+or browser. No API key. Served with `Cache-Control: no-cache`. Filenames are stable — but see
+§6 before assuming an overwrite is immediately visible; an edge cache outlived one on 2026-07-27.
 
 ### Folder / naming convention
 
@@ -124,11 +124,25 @@ attribution automatically, ask and we'll export one from the registry.
 
 ## 6. Updates & versioning
 
-- Filenames are **stable**; we update an image by **overwriting the object** in place. Because the
-  bucket is `no-cache` and the CDN purges on write, consumers get the new image on next load — no
-  action needed on your end, no cache-busting query string required.
+- Filenames are **stable**; we update an image by **overwriting the object** in place — *or, since
+  2026-07-27, by bumping a `-vN` suffix.* See the caveat below before relying on overwrite.
+- ⚠ **Overwrite-in-place is NOT reliably visible. Verified 2026-07-27.** This section previously said
+  the bucket is `no-cache` and "the CDN purges on write", so consumers get the new image on next
+  load. That did not hold: after overwriting `cities/bend.jpg`, the plain public URL kept returning
+  the **previous** 346 KB file while a cache-busted request (`?v=<ts>`) returned the new 309 KB one —
+  confirmed by sha256 on both responses, with `cache-control: no-cache` present in the headers. The
+  object *was* replaced; an edge copy simply persisted.
+  - **If you publish banners:** version the filename (`cities/bend-v2.jpg`) and update the reference,
+    rather than trusting a purge. Bend now does this.
+  - **If you consume banners:** a stale image after a known update is the cache, not a bad file.
+    Append a cache-busting query string to confirm before reporting it.
 - We will **not** silently repurpose a slug for a different place. A given `cities/<slug>.jpg`
   always means that city.
+- ⚠ **Crop to the middle, not the frame.** Essentials renders these into a **fixed-height** box
+  (`h-[120px] md:h-[180px]`) at full width, so `object-fit: cover` keeps only the **middle ~44%** of
+  the height on a desktop — rows 152–388 of 540. A subject in the top or bottom third will not be
+  visible there even though it is plainly in the file. Keep the subject inside the middle 44%, and
+  review banners at that crop rather than at the full 3.15:1 frame.
 
 ---
 

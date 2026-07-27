@@ -191,14 +191,40 @@ const CURATED_LOCAL = {
     { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/portland-me.jpg' },
   ],
   troutdale: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/troutdale.jpg' },
-  // Bend, OR (2026-07-26, operator-certified). First Central Oregon banner — the city
-  // was deep-seeded 2026-07-24 (4 governments / 26 officials) but had no banner, so it
-  // had been falling through to the tier-gradient placeholder.
-  //   bend - Mirror Pond from The Emblem Club (Deschutes at Drake Park, Three Sisters on
-  //          the horizon) | Spencer Dahl | CC BY-SA 3.0. Centre crop of the 4510x2995
-  //          original: the snow peaks land in the upper third, clear of the render-time
-  //          gradient, and the pond gives a calm dark band under the title.
-  bend: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bend.jpg' },
+  // Bend, OR — RE-CROPPED 2026-07-27. Same photograph, re-cut lower.
+  //   bend - Mirror Pond from The Emblem Club (Deschutes at Drake Park) | Spencer Dahl
+  //          | CC BY-SA 3.0. Full-width 4510x1433 window of the 4510x2995 original,
+  //          band-centred on original row 1950, downscaled 2.65x. Shows the Drake Park
+  //          footbridge, the white-columned house, and the pond.
+  //
+  // ⚠ WHY IT CHANGED — READ BEFORE RE-CROPPING ANY BANNER. The previous crop centred the
+  // Three Sisters in the upper third. That was framed against the 1700x540 FILE, but the
+  // file is not what renders: SectionBanner uses a fixed-height box (h-[120px]
+  // md:h-[180px]) at full width, so object-fit:cover keeps only the middle ~44% of the
+  // height on desktop — source rows 152-388 of 540. The peaks sat in rows 0-110 and were
+  // cut entirely, leaving a wall of trees. The old comment's claim that the peaks land
+  // "clear of the render-time gradient" was measuring the wrong frame.
+  //
+  // The original is 1.506:1, so a 3.148:1 crop keeps 1433 of its 2995 rows and the visible
+  // band covers only 626 source px. Peaks (rows ~699-1060) and pond (~1669-2263) are
+  // ~1300px apart, so they CANNOT both be in the band. This crop chooses the pond.
+  // Restoring the peaks instead means band-centring near row 1010.
+  //
+  // Filename is versioned (-v2) deliberately: overwriting cities/bend.jpg in place left a
+  // stale copy on the edge cache — the plain URL still served the old 346KB file while a
+  // cache-busted request returned the new one. docs/shared-banner-assets.md claims the CDN
+  // purges on overwrite; it did not here. Version the filename rather than trusting that.
+  // Previous file archived at cities/_archive/bend-mirrorpond-centrecrop-pre20260727.jpg.
+  bend: { state: 'OR', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bend-v2.jpg' },
+  // Madison, WI (2026-07-27). First Wisconsin city banner — WI's only local coverage had
+  // been Racine County, and Madison was falling through to the tier-gradient placeholder.
+  // State-scoped 'WI' because Madison is a city name in several states.
+  //   madison - Downtown skyline across Lake Monona, State Capitol dome centred | John
+  //             Benson | CC BY 2.5. Full-width window of the 2408x932 original at vertical
+  //             anchor .45, downscaled 1.42x. Chosen over a sharper CC0 aerial of the
+  //             isthmus because the aerial's subject is the isthmus SHAPE, which the
+  //             middle-44% desktop crop removes; this skyline sits inside the band.
+  madison: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/madison.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
