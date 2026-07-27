@@ -138,11 +138,16 @@ attribution automatically, ask and we'll export one from the registry.
     Append a cache-busting query string to confirm before reporting it.
 - We will **not** silently repurpose a slug for a different place. A given `cities/<slug>.jpg`
   always means that city.
-- ⚠ **Crop to the middle, not the frame.** Essentials renders these into a **fixed-height** box
-  (`h-[120px] md:h-[180px]`) at full width, so `object-fit: cover` keeps only the **middle ~44%** of
-  the height on a desktop — rows 152–388 of 540. A subject in the top or bottom third will not be
-  visible there even though it is plainly in the file. Keep the subject inside the middle 44%, and
-  review banners at that crop rather than at the full 3.15:1 frame.
+- ✅ **The whole frame is now visible in Essentials (fixed 2026-07-27).** `SectionBanner` used a
+  **fixed-height** box (`h-[120px] md:h-[180px]`) at full width, so `object-fit: cover` kept only the
+  **middle ~44%** of the height on desktop (rows 152–388 of 540) while a phone kept ~97% — the same
+  file rendered as two different pictures, and a banner reviewed on one was wrong on the other. The
+  box is now an aspect-ratio box set to the asset's own 1700/540, so nothing is cropped and the
+  visible fraction is identical at every width. Compose for the full 3.15:1 frame.
+  - **If you consume these in your own app:** whatever box you drop them in, know that
+    `object-fit: cover` into a box wider than 3.15:1 crops the top and bottom, and into a narrower
+    box crops the sides. Prefer an aspect-ratio box at 1700/540 if you want the composition the
+    banner was cropped for.
 
 ---
 

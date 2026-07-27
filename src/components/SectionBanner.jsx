@@ -47,6 +47,46 @@ const IMAGE_OVERLAY_GRADIENT =
   'linear-gradient(to top, rgba(13,17,23,0.90) 0%, rgba(13,17,23,0.40) 50%, rgba(13,17,23,0.10) 100%)';
 
 /**
+ * Banner box aspect ratio — the ONE number that decides how much of each asset is visible.
+ *
+ * Why this is an aspect ratio and not a fixed height (changed 2026-07-27)
+ * ----------------------------------------------------------------------
+ * This box used to be `h-[120px] md:h-[180px]` at full width. Because the <img> is
+ * `object-fit: cover`, a fixed height means the visible slice of the asset depends on the
+ * viewport: a 1296x180 desktop box covering a 1700x540 file kept only the middle 43.7%
+ * (source rows 152-388 of 540), while a ~390x120 phone box kept ~97%. Same file, two
+ * completely different pictures.
+ *
+ * That silently shipped a broken banner. Bend, OR was certified against the full 3.15:1
+ * frame with the Three Sisters in the upper third; those rows (0-110) were outside the
+ * desktop slice, so desktop users saw a wall of trees for a day. It reviewed fine on a
+ * phone, which is exactly why nobody caught it.
+ *
+ * An aspect-ratio box makes the visible fraction IDENTICAL at every width, so reviewing a
+ * banner once is valid everywhere. Set to the asset's own ratio (1700/540), so the whole
+ * file is visible and nothing is cropped at all.
+ *
+ * Trade-off, stated plainly: this makes desktop banners taller — ~412px at a 1296px
+ * container versus the old 180px — and Results/ElectionsView render one per tier, so up to
+ * three per page. If that is too heavy, widen this ratio rather than reverting to a fixed
+ * height; a fixed height brings the viewport-dependent cropping straight back. Reference
+ * points at a 1296px container:
+ *
+ *     '1700 / 540'  (3.148:1)  412px   100% of the asset visible   <- current
+ *     '4 / 1'                  324px    79%
+ *     '5 / 1'                  259px    63%
+ *     '36 / 5'      (7.2:1)    180px    44%   == the old desktop behaviour
+ *
+ * Assets stay 1700x540 (docs/shared-banner-assets.md) — other apps consume that bucket, so
+ * the asset spec is not ours to change unilaterally.
+ *
+ * No height fallback is needed: Tailwind v4's own browser baseline (Safari 16.4+, Chrome
+ * 111+) is already well past `aspect-ratio` support, so the box cannot collapse to zero on
+ * any browser that can render the rest of this app.
+ */
+export const BANNER_ASPECT = '1700 / 540';
+
+/**
  * FeatureIconChip — a single circular semi-transparent chip (D-05) wrapping an
  * accessible external deep-link, with a hover+keyboard-focus tooltip naming the
  * product (D-08). Reimplements the @floating-ui hover+focus+dismiss+role('tooltip')
@@ -182,7 +222,10 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
   const showImage = Boolean(imageUrl) && !imageFailed;
 
   return (
-    <div className="-mx-6 md:-mx-12 relative overflow-hidden h-[120px] md:h-[180px]">
+    <div
+      className="-mx-6 md:-mx-12 relative overflow-hidden"
+      style={{ aspectRatio: BANNER_ASPECT }}
+    >
 
       {showImage ? (
         <>

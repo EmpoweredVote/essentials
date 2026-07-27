@@ -205,10 +205,18 @@ const CURATED_LOCAL = {
   // cut entirely, leaving a wall of trees. The old comment's claim that the peaks land
   // "clear of the render-time gradient" was measuring the wrong frame.
   //
-  // The original is 1.506:1, so a 3.148:1 crop keeps 1433 of its 2995 rows and the visible
-  // band covers only 626 source px. Peaks (rows ~699-1060) and pond (~1669-2263) are
-  // ~1300px apart, so they CANNOT both be in the band. This crop chooses the pond.
-  // Restoring the peaks instead means band-centring near row 1010.
+  // The original is 1.506:1, so a 3.148:1 crop keeps 1433 of its 2995 rows. Under the old
+  // fixed-height box the visible band covered only 626 of those rows, and the peaks
+  // (~699-1060) and pond (~1669-2263) sit ~1300px apart — they could not both be shown, so
+  // this crop chose the pond.
+  //
+  // ⚠ THAT CONSTRAINT IS GONE. SectionBanner became an aspect-ratio box later the same day
+  // (see BANNER_ASPECT), so the full 3.148:1 frame is visible and a centre crop would now
+  // show the Three Sisters AND the pond together. bend-v2 is a workaround for a bug that no
+  // longer exists; re-cropping centred on the original is now a live option, and the
+  // pre-existing centre crop is archived at
+  // cities/_archive/bend-mirrorpond-centrecrop-pre20260727.jpg. Kept as-is because the pond
+  // framing was the operator's explicit choice — revisit, don't assume.
   //
   // Filename is versioned (-v2) deliberately: overwriting cities/bend.jpg in place left a
   // stale copy on the edge cache — the plain URL still served the old 346KB file while a

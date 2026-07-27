@@ -39,13 +39,26 @@ peaks (rows ~699-1060) and the pond (~1669-2263) are ~1300px apart and CANNOT bo
 sit in the band. bend-v2 chooses the pond; band-centring near row 1010 would choose
 the peaks instead.
 
-CONSEQUENCE FOR REVIEW: certify against the middle 44%, not the whole file. Any
-banner whose subject is distributed vertically has this latent problem -- the 50
-state panoramas included, none of which have been checked against a safe zone that
-is not documented anywhere.
+FIXED 2026-07-27: SectionBanner now uses an aspect-ratio box (BANNER_ASPECT,
+'1700 / 540') instead of a fixed height. Nothing is cropped any more, and the
+visible fraction is identical at every viewport -- so reviewing a banner once is
+valid everywhere, which was the actual defect.
 
-The real fix is upstream: give SectionBanner an aspect-ratio box instead of a fixed
-height. Until then, treat "subject inside the middle 44%" as the bar.
+CONSEQUENCE FOR REVIEW: certify against the FULL 3.15:1 frame. The "middle 44%"
+rule is retired; it described the old fixed-height behaviour.
+
+Note the cost: desktop banners are taller -- ~412px at a 1296px container versus
+the old 180px -- and Results/ElectionsView render one per tier, up to three per
+page. If that proves too heavy, WIDEN BANNER_ASPECT. Do NOT restore a fixed
+height; that brings the viewport-dependent cropping straight back. A regression
+test in SectionBanner.test.js fails if a fixed-height box reappears.
+
+STILL WORTH DOING: the 50 state panoramas were composed and certified under the
+old middle-44% crop, so some may now reveal sky or foreground that was never
+meant to be seen. They are not BROKEN -- they show more, not less -- but none has
+been re-reviewed at full frame. Bend (bend-v2) is also now re-checkable: with
+nothing cropped, the peaks AND the pond are both visible, so the either/or choice
+recorded above no longer binds and a centre crop may be preferable again.
 
 --- STALE EDGE CACHE ON OVERWRITE ---
 
