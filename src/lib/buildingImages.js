@@ -199,8 +199,8 @@ const CURATED_LOCAL = {
   //
   // ⚠ WHY IT CHANGED — READ BEFORE RE-CROPPING ANY BANNER. The previous crop centred the
   // Three Sisters in the upper third. That was framed against the 1700x540 FILE, but the
-  // file is not what renders: SectionBanner uses a fixed-height box (h-[120px]
-  // md:h-[180px]) at full width, so object-fit:cover keeps only the middle ~44% of the
+  // file is not what renders: SectionBanner used a fixed-height box (h-<120px>,
+  // md:h-<180px>) at full width, so object-fit:cover kept only the middle ~44% of the
   // height on desktop — source rows 152-388 of 540. The peaks sat in rows 0-110 and were
   // cut entirely, leaving a wall of trees. The old comment's claim that the peaks land
   // "clear of the render-time gradient" was measuring the wrong frame.

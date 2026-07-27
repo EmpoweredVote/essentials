@@ -47,35 +47,48 @@ const IMAGE_OVERLAY_GRADIENT =
   'linear-gradient(to top, rgba(13,17,23,0.90) 0%, rgba(13,17,23,0.40) 50%, rgba(13,17,23,0.10) 100%)';
 
 /**
- * Banner box aspect ratio — the ONE number that decides how much of each asset is visible.
+ * Banner box aspect ratios — these decide how much of each asset is visible.
  *
- * Why this is an aspect ratio and not a fixed height (changed 2026-07-27)
- * ----------------------------------------------------------------------
- * This box used to be `h-[120px] md:h-[180px]` at full width. Because the <img> is
- * `object-fit: cover`, a fixed height means the visible slice of the asset depends on the
- * viewport: a 1296x180 desktop box covering a 1700x540 file kept only the middle 43.7%
- * (source rows 152-388 of 540), while a ~390x120 phone box kept ~97%. Same file, two
- * completely different pictures.
+ * Why aspect ratios and not fixed heights (changed 2026-07-27)
+ * -----------------------------------------------------------
+ * This box used to be a fixed-height Tailwind box — h-<120px>, md:h-<180px> — at full width.
+ * (Written with angle brackets on purpose: in the real bracket syntax Tailwind's scanner
+ * finds these in the comment and emits dead utilities into the CSS bundle.) Because the
+ * <img> is `object-fit: cover`, a fixed height means the visible slice of the asset depends
+ * on how wide the window happens to be: a 1296x180 desktop box covering a 1700x540 file kept
+ * only the middle 43.7% (source rows 152-388 of 540), while a ~390x120 phone box kept ~97%.
+ * The same file rendered as two different pictures, on a continuum with no fixed points.
  *
  * That silently shipped a broken banner. Bend, OR was certified against the full 3.15:1
  * frame with the Three Sisters in the upper third; those rows (0-110) were outside the
  * desktop slice, so desktop users saw a wall of trees for a day. It reviewed fine on a
  * phone, which is exactly why nobody caught it.
  *
- * An aspect-ratio box makes the visible fraction IDENTICAL at every width, so reviewing a
- * banner once is valid everywhere. Set to the asset's own ratio (1700/540), so the whole
- * file is visible and nothing is cropped at all.
+ * Two ratios, not one, and why
+ * ----------------------------
+ * Cropping depends ONLY on the box's aspect ratio, never its absolute size. So a single
+ * ratio cannot reproduce the old design, because the old design was already two different
+ * ratios: mobile 390x120 is ~3.25:1 while desktop 1296x180 is ~7.2:1. Setting one global
+ * ratio slim enough for desktop (7.2:1) would collapse mobile to a 54px sliver; setting one
+ * generous enough to show the whole asset (3.148:1) makes desktop 412px tall, and
+ * Results/ElectionsView render one banner per tier — 1236px of banner per page.
  *
- * Trade-off, stated plainly: this makes desktop banners taller — ~412px at a 1296px
- * container versus the old 180px — and Results/ElectionsView render one per tier, so up to
- * three per page. If that is too heavy, widen this ratio rather than reverting to a fixed
- * height; a fixed height brings the viewport-dependent cropping straight back. Reference
- * points at a 1296px container:
+ * So: keep mobile exactly as it was, and widen desktop only as far as it needs to go. This
+ * still fixes the original defect. The bug was that a fixed HEIGHT made the crop vary
+ * continuously with window width, so reviewing a banner told you nothing. A per-breakpoint
+ * RATIO is stable inside its breakpoint — two known crops to review once each.
  *
- *     '1700 / 540'  (3.148:1)  412px   100% of the asset visible   <- current
- *     '4 / 1'                  324px    79%
- *     '5 / 1'                  259px    63%
- *     '36 / 5'      (7.2:1)    180px    44%   == the old desktop behaviour
+ *     breakpoint      ratio        height          asset visible
+ *     mobile          13 / 4       120px @390      96.9%   (unchanged from the old design)
+ *     md and up       6 / 1        216px @1296     52.5%   (was 180px / 43.7%)
+ *
+ * Visible fraction is (asset ratio / box ratio) whenever the box is wider than the asset:
+ * 3.1481/3.25 and 3.1481/6. Other desktop options, if 216px still reads too tall or too
+ * short: '36 / 5' = 180px/43.7% (pixel-identical to the old desktop, bug included),
+ * '5 / 1' = 259px/63%, '4 / 1' = 324px/79%, '1700 / 540' = 412px/100%.
+ *
+ * DO NOT go back to a fixed height to trim pixels — that restores the viewport-dependent
+ * crop. Change the ratio instead. A regression test asserts this.
  *
  * Assets stay 1700x540 (docs/shared-banner-assets.md) — other apps consume that bucket, so
  * the asset spec is not ours to change unilaterally.
@@ -84,7 +97,19 @@ const IMAGE_OVERLAY_GRADIENT =
  * 111+) is already well past `aspect-ratio` support, so the box cannot collapse to zero on
  * any browser that can render the rest of this app.
  */
-export const BANNER_ASPECT = '1700 / 540';
+// eslint-disable-next-line react-refresh/only-export-components
+export const BANNER_ASPECT = {
+  mobile: '13 / 4',
+  desktop: '6 / 1',
+};
+
+/**
+ * The Tailwind classes that apply BANNER_ASPECT. These must be literal strings — Tailwind's
+ * scanner cannot see a class name built at runtime — so they duplicate the numbers above.
+ * A test asserts the two stay in agreement, because that duplication is the obvious way for
+ * this to drift. `md:` is the same breakpoint the box already uses for its negative margin.
+ */
+export const BANNER_ASPECT_CLASS = 'aspect-[13/4] md:aspect-[6/1]';
 
 /**
  * FeatureIconChip — a single circular semi-transparent chip (D-05) wrapping an
@@ -222,10 +247,7 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
   const showImage = Boolean(imageUrl) && !imageFailed;
 
   return (
-    <div
-      className="-mx-6 md:-mx-12 relative overflow-hidden"
-      style={{ aspectRatio: BANNER_ASPECT }}
-    >
+    <div className={`-mx-6 md:-mx-12 relative overflow-hidden ${BANNER_ASPECT_CLASS}`}>
 
       {showImage ? (
         <>

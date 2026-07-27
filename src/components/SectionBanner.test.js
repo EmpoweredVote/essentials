@@ -8,7 +8,10 @@
 
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { FALLBACK_GRADIENTS, shouldRenderStat, shouldRenderIcons, BANNER_ASPECT } from './SectionBanner.jsx';
+import {
+  FALLBACK_GRADIENTS, shouldRenderStat, shouldRenderIcons,
+  BANNER_ASPECT, BANNER_ASPECT_CLASS,
+} from './SectionBanner.jsx';
 
 describe('BANNER_ASPECT — the box must stay aspect-driven, never fixed-height', () => {
   // Regression guard for the 2026-07-27 Bend incident. A fixed-height box + object-fit:cover
@@ -18,25 +21,56 @@ describe('BANNER_ASPECT — the box must stay aspect-driven, never fixed-height'
   // users got a wall of trees. Reverting to a fixed height silently restores that bug, so
   // these assertions exist to make that revert fail loudly.
   const SRC = readFileSync(new URL('./SectionBanner.jsx', import.meta.url), 'utf8');
+  const ASSET = 1700 / 540;
+  const ratio = (v) => {
+    const [w, h] = String(v).split('/').map((n) => parseFloat(n));
+    return w / h;
+  };
 
-  it('exports a CSS aspect-ratio value', () => {
-    expect(BANNER_ASPECT).toBeTruthy();
-    expect(String(BANNER_ASPECT)).toMatch(/^\s*\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?\s*$/);
+  it('exports a CSS ratio for each breakpoint', () => {
+    for (const key of ['mobile', 'desktop']) {
+      expect(BANNER_ASPECT[key], key).toBeTruthy();
+      expect(String(BANNER_ASPECT[key]), key).toMatch(/^\s*\d+(\.\d+)?\s*\/\s*\d+(\.\d+)?\s*$/);
+    }
   });
 
-  it('defaults to the 1700x540 asset ratio, so nothing is cropped', () => {
-    const [w, h] = String(BANNER_ASPECT).split('/').map((n) => parseFloat(n));
-    expect(w / h).toBeCloseTo(1700 / 540, 3);
+  it('never sets a box NARROWER than the asset — that would crop the sides', () => {
+    // A box narrower than 3.148:1 crops left/right instead of top/bottom, which would cut
+    // skylines off at the edges. Every ratio must be >= the asset ratio.
+    expect(ratio(BANNER_ASPECT.mobile)).toBeGreaterThanOrEqual(ASSET);
+    expect(ratio(BANNER_ASPECT.desktop)).toBeGreaterThanOrEqual(ASSET);
   });
 
-  it('applies the ratio to the banner box via aspectRatio', () => {
-    expect(SRC).toContain('aspectRatio: BANNER_ASPECT');
+  it('keeps mobile at the old ~97% visible and desktop wider', () => {
+    expect(ASSET / ratio(BANNER_ASPECT.mobile)).toBeGreaterThan(0.95);
+    expect(ratio(BANNER_ASPECT.desktop)).toBeGreaterThan(ratio(BANNER_ASPECT.mobile));
+  });
+
+  it('desktop still shows more of the asset than the old fixed height did', () => {
+    // The old desktop box was ~1296x180 => 7.2:1 => 43.7% visible. Any chosen desktop ratio
+    // should be at least that good, or the change bought nothing.
+    const OLD_DESKTOP_VISIBLE = ASSET / (1296 / 180);
+    expect(ASSET / ratio(BANNER_ASPECT.desktop)).toBeGreaterThanOrEqual(OLD_DESKTOP_VISIBLE);
+  });
+
+  it('the literal Tailwind classes agree with the constants (drift guard)', () => {
+    // The classes must be literal for Tailwind's scanner, so the numbers are duplicated.
+    const m = BANNER_ASPECT_CLASS.match(/(?:^|\s)aspect-\[([\d./]+)\]/);
+    const d = BANNER_ASPECT_CLASS.match(/md:aspect-\[([\d./]+)\]/);
+    expect(m, 'base aspect class').toBeTruthy();
+    expect(d, 'md aspect class').toBeTruthy();
+    expect(ratio(m[1])).toBeCloseTo(ratio(BANNER_ASPECT.mobile), 5);
+    expect(ratio(d[1])).toBeCloseTo(ratio(BANNER_ASPECT.desktop), 5);
+  });
+
+  it('applies the classes to the banner box', () => {
+    expect(SRC).toContain('${BANNER_ASPECT_CLASS}');
   });
 
   it('does not reintroduce a fixed-height banner box', () => {
-    // The old markup was: className="-mx-6 md:-mx-12 relative overflow-hidden h-[120px] md:h-[180px]"
-    expect(SRC).not.toMatch(/className="[^"]*\bh-\[\d+px\]/);
-    expect(SRC).not.toMatch(/className="[^"]*\bmd:h-\[\d+px\]/);
+    // The old markup was: className="-mx-6 md:-mx-12 relative overflow-hidden h-<120px> md:h-<180px>"
+    expect(SRC).not.toMatch(/className=(?:"|\{`)[^"`]*\bh-\[\d+px\]/);
+    expect(SRC).not.toMatch(/className=(?:"|\{`)[^"`]*\bmd:h-\[\d+px\]/);
   });
 });
 
