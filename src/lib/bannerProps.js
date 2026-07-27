@@ -42,12 +42,27 @@ export function buildBannerProps(tier, ctx = {}) {
       // In browse mode representingCity is the resolver's full label, which already
       // ends in the state (e.g. "…, California, US, CA") — appending userState again
       // would double it ("…US, CA, CA"). Only append when the label's trailing
-      // comma-segment isn't already the state abbrev or full name. Address mode
+      // comma-segment doesn't already carry the state. Address mode
       // (representingCity = a bare city like "Plano") still gets ", TX" appended.
       const trailing = representingCity.split(',').pop().trim().toLowerCase();
+      const stateName = (stateNames[userState] || '').toLowerCase();
+      // A statewide browse label has NO comma, so `.pop()` returns the whole
+      // string and the old equality test missed it: "State of Wisconsin" is not
+      // equal to "wisconsin", so it rendered as "State of Wisconsin, WI".
+      // Match the state name as a WHOLE WORD anywhere in the segment instead.
+      //
+      // Word boundaries are load-bearing, not decoration: a bare `includes`
+      // would treat "Indianapolis" as already containing "Indiana" and render
+      // it as "Indianapolis" with no ", IN". \b stops that — "indiana" inside
+      // "indianapolis" is followed by a word character, so it does not match,
+      // while "State of Wisconsin" does.
+      const containsStateName =
+        !!stateName &&
+        new RegExp(`\\b${stateName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(trailing);
       const alreadyHasState =
         trailing === userState.toLowerCase() ||
-        trailing === (stateNames[userState] || '').toLowerCase();
+        trailing === stateName ||
+        containsStateName;
       locationName = alreadyHasState ? representingCity : `${representingCity}, ${userState}`;
     } else {
       locationName = representingCity;

@@ -39,6 +39,32 @@ describe('buildBannerProps', () => {
     expect(buildBannerProps('city', ctx).locationName).toBe('Unincorporated Pima County, AZ');
   });
 
+  it('does not append the abbrev to a statewide "State of X" label', () => {
+    // A statewide browse label has no comma, so the old trailing-segment
+    // equality test missed it and rendered "State of Wisconsin, WI".
+    const ctx = { ...CTX, representingCity: 'State of Wisconsin', userState: 'WI', stateNames: { WI: 'Wisconsin' } };
+    expect(buildBannerProps('city', ctx).locationName).toBe('State of Wisconsin');
+  });
+
+  it('suppresses the abbrev for every "State of X" label, not just Wisconsin', () => {
+    for (const [abbrev, name] of [['CA', 'California'], ['NY', 'New York'], ['TX', 'Texas'], ['RI', 'Rhode Island']]) {
+      const ctx = { ...CTX, representingCity: `State of ${name}`, userState: abbrev, stateNames: { [abbrev]: name } };
+      expect(buildBannerProps('city', ctx).locationName).toBe(`State of ${name}`);
+    }
+  });
+
+  it('still appends the abbrev when a city merely CONTAINS the state name (word-boundary guard)', () => {
+    // "Indianapolis" contains the substring "Indiana". A bare `includes` check
+    // would wrongly suppress the state here; \b keeps this correct.
+    const ctx = { ...CTX, representingCity: 'Indianapolis', userState: 'IN', stateNames: { IN: 'Indiana' } };
+    expect(buildBannerProps('city', ctx).locationName).toBe('Indianapolis, IN');
+  });
+
+  it('still appends the abbrev for an ordinary city in the same state', () => {
+    const ctx = { ...CTX, representingCity: 'Madison', userState: 'WI', stateNames: { WI: 'Wisconsin' } };
+    expect(buildBannerProps('city', ctx).locationName).toBe('Madison, WI');
+  });
+
   it('falls back to the state abbreviation when stateNames has no entry', () => {
     expect(buildBannerProps('state', { ...CTX, stateNames: {} }).locationName).toBe('TX');
   });

@@ -356,6 +356,28 @@ function getAccordionUrl(pols, accordionKey) {
 
 const TIER_ORDER = ['Local', 'School', 'State', 'Federal'];
 
+/**
+ * Tier order for one render, optionally led by the tier the user actually asked
+ * for. Default is ascending scope (Local → Federal), which is right for an
+ * address lookup: "my city, then my state, then my country".
+ *
+ * It is wrong for a browse that names a tier. Searching "State of Wisconsin"
+ * and getting every covered city first buries the thing you asked for — the
+ * state section sits below Burlington, Racine and Madison.
+ *
+ * Hoisting is deliberately minimal: the lead tier moves to the front and every
+ * other tier keeps its existing relative order (State → Local → School →
+ * Federal), so only the requested tier moves. An unknown or absent leadTier
+ * returns the default order unchanged.
+ *
+ * @param {string|null} [leadTier] - e.g. 'State'
+ * @returns {string[]}
+ */
+export function tierOrderFor(leadTier) {
+  if (!leadTier || !TIER_ORDER.includes(leadTier)) return TIER_ORDER;
+  return [leadTier, ...TIER_ORDER.filter((t) => t !== leadTier)];
+}
+
 const LOCAL_BODY_TYPE_ORDER = ['LOCAL', 'City', 'Town', 'Township', 'School District', 'County'];
 // Judiciary bodies sorted last within local
 const isJudiciary = (pols) => pols.some(p => p.district_type === 'JUDICIAL');
@@ -625,7 +647,7 @@ function deduplicateLocalMultiOffice(politicians) {
  * @param {Array} politicians - Flat array of politician objects from the API
  * @returns {Array<{ tier: string, bodies: Array<{ key: string, title: string, url: string, subgroups: Array<{ key: string, label: string, url: string, pols: Array }> }> }>}
  */
-export function groupIntoHierarchy(politicians) {
+export function groupIntoHierarchy(politicians, { leadTier = null } = {}) {
   politicians = deduplicateLocalMultiOffice(politicians);
 
   // Step 1: Assign tier and accordion key to each politician
@@ -643,7 +665,7 @@ export function groupIntoHierarchy(politicians) {
   // Step 2: Build the hierarchy
   const result = [];
 
-  for (const tier of TIER_ORDER) {
+  for (const tier of tierOrderFor(leadTier)) {
     const accordions = tierMap[tier];
     if (!accordions) continue;
 

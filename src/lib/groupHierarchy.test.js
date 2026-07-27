@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { groupIntoHierarchy } from './groupHierarchy.js';
+import { groupIntoHierarchy, tierOrderFor } from './groupHierarchy.js';
 
 // Helper to build a minimal politician record
 function makePol(overrides) {
@@ -390,4 +390,50 @@ describe('Letter-district ordering (Clark County Commission A–G)', () => {
     expect(group.pols.map(p => p.last_name)).toEqual(['Brown', 'Zane', 'Adams']);
   });
 
+});
+
+describe('tierOrderFor — leading with the browsed tier', () => {
+  it('defaults to ascending scope when no lead tier is given', () => {
+    expect(tierOrderFor()).toEqual(['Local', 'School', 'State', 'Federal']);
+    expect(tierOrderFor(null)).toEqual(['Local', 'School', 'State', 'Federal']);
+  });
+
+  it('hoists the lead tier and preserves the relative order of the rest', () => {
+    expect(tierOrderFor('State')).toEqual(['State', 'Local', 'School', 'Federal']);
+    expect(tierOrderFor('Federal')).toEqual(['Federal', 'Local', 'School', 'State']);
+  });
+
+  it('ignores an unknown lead tier rather than dropping tiers', () => {
+    // A typo or a future tier name must never silently omit a section.
+    expect(tierOrderFor('Statewide')).toEqual(['Local', 'School', 'State', 'Federal']);
+    expect(tierOrderFor('')).toEqual(['Local', 'School', 'State', 'Federal']);
+  });
+
+  it('always returns every tier exactly once', () => {
+    for (const lead of [null, 'Local', 'School', 'State', 'Federal', 'nope']) {
+      const order = tierOrderFor(lead);
+      expect(order).toHaveLength(4);
+      expect(new Set(order).size).toBe(4);
+    }
+  });
+});
+
+describe('groupIntoHierarchy — leadTier option', () => {
+  const pols = [
+    { full_name: 'City Person', office_title: 'Mayor', district_type: 'LOCAL', representing_city: 'Burlington', representing_state: 'WI' },
+    { full_name: 'State Person', office_title: 'State Senator', district_type: 'STATE_UPPER', representing_state: 'WI' },
+    { full_name: 'Fed Person', office_title: 'U.S. Senator', district_type: 'NATIONAL_UPPER', representing_state: 'WI' },
+  ];
+
+  it('puts State first when leadTier is State, without losing Local or Federal', () => {
+    const tiers = groupIntoHierarchy(pols, { leadTier: 'State' }).map((h) => h.tier);
+    expect(tiers[0]).toBe('State');
+    expect(tiers).toContain('Local');
+    expect(tiers).toContain('Federal');
+  });
+
+  it('keeps Local first by default (address-lookup behaviour unchanged)', () => {
+    const tiers = groupIntoHierarchy(pols).map((h) => h.tier);
+    expect(tiers[0]).toBe('Local');
+  });
 });

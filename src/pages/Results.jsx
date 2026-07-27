@@ -1430,17 +1430,27 @@ export default function Results() {
     return buckets;
   }, [deduped]);
 
+  // Lead with the tier the user actually browsed for. Searching "State of
+  // Wisconsin" and getting every covered city first buries the state section
+  // below Burlington, Racine and Madison. MTFCC G4000 is the Census code for a
+  // state (the browse URL carries it verbatim); an address lookup has no
+  // browse_mtfcc, so it keeps the default Local → Federal order.
+  const leadTier = useMemo(
+    () => (searchParams.get('browse_mtfcc') === 'G4000' ? 'State' : null),
+    [searchParams]
+  );
+
   const hierarchy = useMemo(
-    () => groupIntoHierarchy(bucketed.representative),
-    [bucketed]
+    () => groupIntoHierarchy(bucketed.representative, { leadTier }),
+    [bucketed, leadTier]
   );
   const educatorsHierarchy = useMemo(
-    () => groupIntoHierarchy(bucketed.educator),
-    [bucketed]
+    () => groupIntoHierarchy(bucketed.educator, { leadTier }),
+    [bucketed, leadTier]
   );
   const judgesHierarchy = useMemo(
-    () => groupIntoHierarchy(bucketed.judge),
-    [bucketed]
+    () => groupIntoHierarchy(bucketed.judge, { leadTier }),
+    [bucketed, leadTier]
   );
 
   // D-11: the elected/appointed ("All types") filter layer, generalized into a
