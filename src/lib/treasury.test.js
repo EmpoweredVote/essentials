@@ -10,6 +10,7 @@ import { describe, it, expect } from 'vitest';
 import {
   findMatchingMunicipality,
   findStateTreasuryEntity,
+  findCountyTreasuryEntity,
   findFederalTreasuryEntity,
   toTreasurySlug,
 } from './treasury';
@@ -113,5 +114,61 @@ describe('findFederalTreasuryEntity', () => {
 
   it('returns null for non-array input (guard)', () => {
     expect(findFederalTreasuryEntity(null)).toBeNull();
+  });
+});
+
+describe('findCountyTreasuryEntity', () => {
+  const COUNTIES = [
+    { name: 'Dane County', state: 'WI', entity_type: 'county', available_datasets: [{ fiscal_year: 2024 }] },
+    { name: 'Los Angeles County', state: 'CA', entity_type: 'county', available_datasets: [{ fiscal_year: 2024 }] },
+    // A budget-less "grouper" county: getCities() returns these because they parent
+    // municipalities that DO have data, but linking one lands on an empty page.
+    { name: 'Orange County', state: 'CA', entity_type: 'county', available_datasets: [] },
+    // Same county name in another state — must not win on a state-scoped lookup.
+    { name: 'Dane County', state: 'MN', entity_type: 'county', available_datasets: [{ fiscal_year: 2024 }] },
+    // A municipality that happens to share the stem.
+    { name: 'Dane', state: 'WI', entity_type: 'city', available_datasets: [{ fiscal_year: 2024 }] },
+  ];
+
+  it('matches a bare county title', () => {
+    expect(findCountyTreasuryEntity('Dane County', COUNTIES, 'WI')?.state).toBe('WI');
+  });
+
+  it('matches a county title carrying body words', () => {
+    const m = findCountyTreasuryEntity('Dane County Board of Supervisors', COUNTIES, 'WI');
+    expect(m?.name).toBe('Dane County');
+    expect(m?.state).toBe('WI');
+  });
+
+  it('matches the inverted "County of X" form', () => {
+    expect(findCountyTreasuryEntity('County of Los Angeles', COUNTIES, 'CA')?.name).toBe('Los Angeles County');
+    expect(findCountyTreasuryEntity('County of Los Angeles Board of Supervisors', COUNTIES, 'CA')?.name)
+      .toBe('Los Angeles County');
+  });
+
+  it('never returns a budget-less grouper county', () => {
+    // Orange County parents cities that have data but has none itself.
+    expect(findCountyTreasuryEntity('Orange County', COUNTIES, 'CA')).toBeNull();
+  });
+
+  it('respects the state scope for same-named counties', () => {
+    expect(findCountyTreasuryEntity('Dane County', COUNTIES, 'MN')?.state).toBe('MN');
+    expect(findCountyTreasuryEntity('Dane County', COUNTIES, 'TX')).toBeNull();
+  });
+
+  it('does not match a city that shares the county stem', () => {
+    // "Dane" the city must not be returned for a county lookup, nor the county
+    // for a plain city title.
+    expect(findCountyTreasuryEntity('Dane Village Board', COUNTIES, 'WI')).toBeNull();
+  });
+
+  it('does not match a municipality title', () => {
+    expect(findCountyTreasuryEntity('Madison Common Council', COUNTIES, 'WI')).toBeNull();
+  });
+
+  it('returns null on empty/garbage input rather than throwing', () => {
+    expect(findCountyTreasuryEntity('', COUNTIES, 'WI')).toBeNull();
+    expect(findCountyTreasuryEntity('Dane County', null, 'WI')).toBeNull();
+    expect(() => findCountyTreasuryEntity('Dane County', COUNTIES)).not.toThrow();
   });
 });

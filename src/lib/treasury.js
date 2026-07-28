@@ -113,6 +113,65 @@ export function findMatchingMunicipality(bodyTitle, cities, state) {
 }
 
 /**
+ * Finds the county Treasury entity for a county government body title.
+ *
+ * Counties are Local-tier bodies but are NOT municipality-shaped, so
+ * findMatchingMunicipality deliberately excludes them (its entity_type guard,
+ * plus ENTITY_TYPE_WORDS rejecting "county" as the word after a city name so
+ * "Bloomington County" never matches the city of Bloomington). This is the
+ * county counterpart.
+ *
+ * Every county in treasury is stored as "<Name> County" (verified: 334 of 334),
+ * so rather than parse the body title — which comes in several shapes — each
+ * candidate's own name is tested against the title. That avoids guessing where
+ * the county name ends in "Dane County Board of Supervisors".
+ *
+ * Accepted title shapes, for a candidate named "Dane County":
+ *   "Dane County"                        exact
+ *   "Dane County Board of Supervisors"   name + body words
+ *   "County of Dane"                     inverted
+ *   "County of Dane Board of Supervisors"
+ *
+ * Requires available_datasets.length > 0. getCities() also returns budget-less
+ * "grouper" counties (a county with no budgets of its own that is the parent of
+ * municipalities that do have them); linking those would land the user on an
+ * empty Treasury page, so they are excluded here.
+ *
+ * @param {string} bodyTitle - e.g. "Dane County Board of Supervisors"
+ * @param {Array}  cities    - from fetchTreasuryCities()
+ * @param {string} [state]   - 2-letter abbrev to constrain the match
+ * @returns {object|null}
+ */
+export function findCountyTreasuryEntity(bodyTitle, cities, state) {
+  if (!bodyTitle || !Array.isArray(cities)) return null;
+
+  const t = normalize(bodyTitle);
+  const wantState = typeof state === 'string' && /^[A-Za-z]{2}$/.test(state)
+    ? state.toUpperCase()
+    : null;
+
+  const candidates = cities.filter((c) => {
+    if (c.entity_type !== 'county') return false;
+    if (!Array.isArray(c.available_datasets) || c.available_datasets.length === 0) return false;
+    if (wantState && (c.state || '').toUpperCase() !== wantState) return false;
+
+    const cn = normalize(c.name);              // "dane county"
+    if (!cn.endsWith(' county')) return false;
+    const bare = cn.slice(0, -' county'.length); // "dane"
+    const inverted = `county of ${bare}`;
+    return (
+      t === cn || t.startsWith(`${cn} `) ||
+      t === inverted || t.startsWith(`${inverted} `)
+    );
+  });
+
+  if (candidates.length === 0) return null;
+  // Longest name wins, mirroring findMatchingMunicipality: for adjacent names
+  // like "Saint Louis County" vs "Louis County" the more specific one is right.
+  return candidates.sort((a, b) => b.name.length - a.name.length)[0];
+}
+
+/**
  * Finds the state-tier Treasury entity for a 2-letter state abbreviation.
  * Unlike findMatchingMunicipality, this is a direct entity_type + state match —
  * state Treasury entities are singular per state and have unambiguous plain names.

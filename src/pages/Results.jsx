@@ -24,7 +24,7 @@ import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
 import SectionBanner from '../components/SectionBanner.jsx';
-import { fetchTreasuryCities, findMatchingMunicipality, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
+import { fetchTreasuryCities, findMatchingMunicipality, findCountyTreasuryEntity, findStateTreasuryEntity, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
 import { fetchTriviaCollections } from '../lib/trivia';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
@@ -2090,8 +2090,16 @@ export default function Results() {
                         const tierStyle = tierColors[tierKey] ?? tierColors['local'];
                         if (!tierStyle) return null;
 
+                        // On a statewide browse the Local tier is an aggregation of
+                        // every covered city, so a single city banner labelled with
+                        // the whole state ("State of Wisconsin") describes nothing and
+                        // has no image to show — no curated city matches a state name,
+                        // so it renders as a bare gradient. Omit it; the State banner
+                        // now leads and carries the state's own panorama.
                         const tierBanner = tier === 'Local'
-                          ? <SectionBanner {...buildBannerProps('city', bannerCtx)} />
+                          ? (leadTier === 'State'
+                              ? null
+                              : <SectionBanner {...buildBannerProps('city', bannerCtx)} />)
                           : tier === 'State'
                           ? <SectionBanner {...buildBannerProps('state', bannerCtx)} />
                           : tier === 'Federal'
@@ -2102,7 +2110,7 @@ export default function Results() {
                           <Fragment key={tier}>
                             {tierBanner}
                           <div data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
-                            {bodies.map((body) => {
+                            {bodies.map((body, bodyIdx) => {
                               const isJudicialBody = body.subgroups.some(sg =>
                                 sg.pols.some(p => p.district_type === 'JUDICIAL')
                               );
@@ -2112,9 +2120,23 @@ export default function Results() {
                               const bodyState = body.subgroups
                                 .flatMap((sg) => sg.pols)
                                 .find((p) => p?.representing_state)?.representing_state || userState;
-                              const treasuryMatch = (tier === 'Local' && !isJudicialBody)
-                                ? findMatchingMunicipality(body.title, treasuryCities, bodyState)
-                                : null;
+                              // Local tier carries two kinds of fiscal entity: municipalities and
+                              // counties. Try the municipality matcher first (it rejects
+                              // county-shaped titles by design), then the county one.
+                              //
+                              // State tier is different: a state has ONE fiscal entity, but many
+                              // government bodies (Senate, Assembly, Governor, AG...). Attaching
+                              // the same "Explore Wisconsin revenue and expenses" link under every
+                              // one of them would repeat it down the whole section, so it renders
+                              // once, on the tier's first body.
+                              const treasuryMatch = isJudicialBody
+                                ? null
+                                : tier === 'Local'
+                                  ? (findMatchingMunicipality(body.title, treasuryCities, bodyState)
+                                     || findCountyTreasuryEntity(body.title, treasuryCities, bodyState))
+                                  : (tier === 'State' && bodyIdx === 0)
+                                    ? findStateTreasuryEntity(bodyState || userState, treasuryCities)
+                                    : null;
                               return (
                                 <GovernmentBodySection
                                   key={body.key}
