@@ -94,17 +94,29 @@ Our own app returns `null` for uncovered places and renders a neutral tier-gradi
 **States — all 50** are available at `states/<ABBR>.jpg`:
 `AK AL AR AZ CA CO CT DE FL GA HI IA ID IL IN KS KY LA MA MD ME MI MN MO MS MT NC ND NE NH NJ NM NV NY OH OK OR PA RI SC SD TN TX UT VA VT WA WI WV WY`
 
-**Cities with a curated banner** (as of 2026-07-05):
+**Cities with a curated banner — 145 entries across 13 states** (recount 2026-07-28):
 
-| State | City | URL suffix |
-|---|---|---|
-| IN | Bloomington | `cities/bloomington.jpg` |
-| OR | Beaverton, Hillsboro, Tigard, Tualatin, Forest Grove, Sherwood, Cornelius | `cities/<slug>.jpg` |
-| CA | Long Beach, Glendale, Pasadena, West Covina, Downey, Burbank, Norwalk | `cities/<slug>.jpg` |
-| CA | Los Angeles, Pomona, Torrance, Carson | `la_county/building_photos/<geoid>.jpg` (legacy — will migrate to `cities/`) |
+| State | entries | State | entries |
+|---|---|---|---|
+| CA | 39 | AZ | 6 |
+| UT | 36 | NV | 4 |
+| TX | 20 | VA | 2 |
+| OR | 14 | IN, WI, MO, MD | 1 each |
+| MA | 14 | | |
+| ME | 6 | | |
 
-The CA city list is actively growing (San Francisco, San Diego, San Jose, Sacramento, Berkeley,
-Santa Monica, Fremont, and more are queued), followed by MA, UT, TX, OR-metro, ME, NV, and VA cities.
+**Do not hardcode this table** — it was ~19 cities as of 2026-07-05 and is 145 now. Read
+`CURATED_LOCAL` in `src/lib/buildingImages.js`, or ask us for a current export.
+
+Two things that will bite a consumer building URLs from a city name:
+
+- **Entries are STATE-SCOPED, and some slugs are ambiguous.** `CURATED_LOCAL` keys on the city name
+  but each entry carries a `state`, and a name that recurs across states (Portland OR vs Portland
+  ME; Sherwood OR vs Sherwood AR; Glendale CA vs Glendale AZ) stores an **array of variants**. You
+  must disambiguate by state — `cities/portland.jpg` alone is not well-defined. Where a
+  disambiguated file exists it is suffixed (`cities/portland-me.jpg`).
+- **A few CA cities are still on the legacy path** `la_county/building_photos/<geoid>.jpg`
+  (Los Angeles, Pomona, Torrance, Carson) pending migration to `cities/`.
 
 ---
 
@@ -138,16 +150,35 @@ attribution automatically, ask and we'll export one from the registry.
     Append a cache-busting query string to confirm before reporting it.
 - We will **not** silently repurpose a slug for a different place. A given `cities/<slug>.jpg`
   always means that city.
-- ✅ **The whole frame is now visible in Essentials (fixed 2026-07-27).** `SectionBanner` used a
-  **fixed-height** box (`h-[120px] md:h-[180px]`) at full width, so `object-fit: cover` kept only the
-  **middle ~44%** of the height on desktop (rows 152–388 of 540) while a phone kept ~97% — the same
-  file rendered as two different pictures, and a banner reviewed on one was wrong on the other. The
-  box is now an aspect-ratio box set to the asset's own 1700/540, so nothing is cropped and the
-  visible fraction is identical at every width. Compose for the full 3.15:1 frame.
-  - **If you consume these in your own app:** whatever box you drop them in, know that
-    `object-fit: cover` into a box wider than 3.15:1 crops the top and bottom, and into a narrower
-    box crops the sides. Prefer an aspect-ratio box at 1700/540 if you want the composition the
-    banner was cropped for.
+- 🔴 **THE FULL FRAME IS NOT WHAT USERS SEE. Compose for the SAFE ZONE, not the whole image.**
+  (Corrected 2026-07-28 — an earlier revision of this section claimed the box matches the asset's
+  1700/540 and "nothing is cropped." That described an intermediate fix and was never true of the
+  shipped code.)
+
+  `SectionBanner` originally used a **fixed-height** box (`h-[120px] md:h-[180px]`) at full width, so
+  `object-fit: cover` kept only the **middle ~44%** of the height on desktop while a phone kept ~97%
+  — the same file rendered as two different pictures, and a banner reviewed on a phone was wrong on
+  a desktop. That is not hypothetical: it shipped the Bend, OR banner as a wall of trees, because it
+  was certified on the full frame with its subject in the upper third.
+
+  It is now a **responsive aspect pair**, `aspect-[13/4] md:aspect-[6/1]`:
+
+  | breakpoint | box ratio | visible slice of the 1700×540 asset |
+  |---|---|---|
+  | mobile | 13/4 = 3.25:1 | **96.9%** (near the full frame) |
+  | `md`+ | 6/1 = 6.0:1 | **52.5%** (middle band only) |
+
+  **So on desktop, the top and bottom ~24% each are never seen.** Keep the subject in the
+  **middle ~52% horizontal band**. A subject distributed *vertically* (mountain peaks up top, water
+  at the bottom) will not survive; a subject that reads as a *horizontal band* (a skyline on a
+  horizon) survives any crop.
+
+  - **Cropping depends ONLY on the box's aspect ratio, never its pixel size.** A bigger box at the
+    same ratio shows exactly the same slice. Do not reason about heights.
+  - **If you consume these in your own app:** `object-fit: cover` into a box **wider** than 3.15:1
+    crops top and bottom; into a **narrower** box crops the sides. Choose deliberately — an
+    `aspect-[1700/540]` box shows the whole composition; anything wider trades frame for a slimmer
+    band. Judge a candidate image by the slice *your* box will render, not by the full file.
 
 ---
 
