@@ -613,7 +613,14 @@ const CURATED_LOCAL = {
 //   OR - Mount Hood over the forest (Mirror Lake), majestic Mt. Hood | Oregon's Mt. Hood Territory | Public Domain
 //        [2026-07-06: replaced the prior Portland-from-Pittock-Mansion skyline per operator -- state banner is now the mountain, Portland CITY banner is the Japanese Garden]
 //   PA - Pittsburgh skyline panorama | Cbaile19 | CC0
-//   RI - Providence, RI skyline | (Providence_RI_skyline) | CC BY-SA 2.0
+//   RI - Providence, RI skyline | boliyou | CC BY-SA 2.0
+//        [2026-07-29: author corrected — this line recorded the Commons FILENAME
+//         where the author belongs. Beware the comma: "Providence, RI skyline.jpg"
+//         (boliyou, CC BY-SA 2.0, river level, summer) is ours;
+//         "Providence RI skyline.jpg" (Quintin Soloviev, CC BY 4.0, aerial, winter)
+//         is a different photo -- and Soloviev shot our CO/KS/MD banners, so the
+//         wrong answer looks like the obvious one. Confirmed by matching states/RI.jpg
+//         against both: mean abs diff/channel 6.63 vs boliyou, 45.38 vs Soloviev.]
 //   SC - Arthur Ravenel Bridge (from water) | bbatsell | CC BY-SA 2.5
 //   SD - Mount Rushmore National Memorial | Nick Amoscato | CC BY 2.0
 //   TN - Nashville panorama | Kaldari | Public domain
