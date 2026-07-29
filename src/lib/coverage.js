@@ -341,9 +341,11 @@ export const COVERAGE_COUNTIES = [
   // compass stances seeded.
   { label: 'Racine County', browseGovernmentList: ['55101'], browseStateAbbrev: 'WI' },
   // Dane County (2026-07-29 seed): county executive + 37-member County Board +
-  // row officers + 17 Circuit Court branches. hasContext flips true when the
-  // stance push lands.
-  { label: 'Dane County', browseGovernmentList: ['55025'], browseStateAbbrev: 'WI' },
+  // row officers + 17 Circuit Court branches. hasContext is DB-honest: 170
+  // evidence-only answers across 42 officials (exec + officers + all 37
+  // supervisors researched; Treasurer + Register of Deeds have no evidenced
+  // positions; judges excluded by design).
+  { label: 'Dane County', browseGovernmentList: ['55025'], browseStateAbbrev: 'WI', hasContext: true },
   { label: 'Pima County', browseGovernmentList: ['04019'], browseStateAbbrev: 'AZ', hasContext: true },
   { label: 'Riverside County', browseGovernmentList: ['06065'], browseStateAbbrev: 'CA', hasContext: true },
 ];
