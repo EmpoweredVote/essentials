@@ -264,8 +264,10 @@ const CURATED_LOCAL = {
   'wind point': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/wind-point.jpg' },
   yorkville: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/yorkville.jpg' },
   'town of burlington': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-burlington.jpg' },
-  'town of dover': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-dover.jpg' },
-  'town of norway': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-norway.jpg' },
+  // Dover/Norway chips read plain (no namesake conflict) so their banner keys
+  // are plain too; storage paths keep the town-of- filenames.
+  dover: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-dover.jpg' },
+  norway: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-norway.jpg' },
   'town of waterford': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-waterford.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline

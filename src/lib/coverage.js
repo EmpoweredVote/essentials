@@ -264,9 +264,15 @@ export const COVERAGE_STATES = [
       { label: 'Raymond',            browseGovernmentList: ['5566350'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Rochester',          browseGovernmentList: ['5568550'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Sturtevant',         browseGovernmentList: ['5577925'], browseStateAbbrev: 'WI', hasContext: true },
+      // WI civil towns. Dover and Norway have no city/village namesake so they
+      // read plain; Burlington and Waterford keep the "Town of" prefix because
+      // the City of Burlington and Village of Waterford are SEPARATE
+      // governments with chips above — a plain duplicate label would be
+      // indistinguishable on the grid AND would key the wrong banner
+      // (buildingImages matches on the browse label).
+      { label: 'Dover',              browseGovernmentList: ['5510120625'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Norway',             browseGovernmentList: ['5510158600'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Town of Burlington', browseGovernmentList: ['5510111225'], browseStateAbbrev: 'WI', hasContext: true },
-      { label: 'Town of Dover',      browseGovernmentList: ['5510120625'], browseStateAbbrev: 'WI', hasContext: true },
-      { label: 'Town of Norway',     browseGovernmentList: ['5510158600'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Town of Waterford',  browseGovernmentList: ['5510183850'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Union Grove',        browseGovernmentList: ['5581775'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Waterford',          browseGovernmentList: ['5583825'], browseStateAbbrev: 'WI', hasContext: true },
