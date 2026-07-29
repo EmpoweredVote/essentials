@@ -279,6 +279,14 @@ const CURATED_LOCAL = {
   dover: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-dover.jpg' },
   norway: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-norway.jpg' },
   'town of waterford': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-waterford.jpg' },
+  // Wisconsin COUNTY banner (2026-07-29 Dane County seed; third county-tier
+  // CURATED_LOCAL key after Pima + Riverside). Reads as Dane County the place —
+  // the Driftless Area along the Ice Age National Scenic Trail near Berry
+  // (western Dane County), deliberately NOT the Capitol/Lake Monona skyline that
+  // is Madison the city's banner. Key is 'dane county' to match coverage.js
+  // browse_label 'Dane County'; storage file is hyphenated.
+  //   dane county - Driftless Area banner, Ice Age Trail near Berry | Corey Coyle | CC BY 3.0
+  'dane county': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/dane-county.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
