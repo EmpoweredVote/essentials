@@ -24,7 +24,7 @@ progress:
 Phase: 222 (collin-county-stances-evidence-only-compass-research-one-pol) — EXECUTING
 Plan: 1 of 18
 Status: Executing Phase 222
-Last activity: 2026-07-25 — Phase 222 execution started
+Last activity: 2026-07-29 - Completed quick task 260729-hdz: Seed Dane County WI - government, banner, stances, headshots
 
 ## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
@@ -44,6 +44,7 @@ Last activity: 2026-07-25 — Phase 222 execution started
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260723-lfc | Phase 217 verify+document: confirm all 23 Collin County TX browse geo_ids resolve (premise stale, already fixed in coverage.js), document corrected geo_id mapping, mark COLLIN-BROWSE-01..04 met, log 5-city gaps as follow-ups | 2026-07-23 | b4aff9ed | [260723-lfc-phase-217-verify-document-confirm-all-23](./quick/260723-lfc-phase-217-verify-document-confirm-all-23/) |
+| 260729-hdz | Seed Dane County WI (55025): migration 1491 — 3 chambers, 61 seated officials, 37 LTSB district polygons; Driftless banner; 59 headshots (60/61, Gallagher blank); 170 evidence stances / 42 officials; purple chip live; TT pinged | 2026-07-29 | a7b21886 | [260729-hdz-seed-dane-county-wi-government-banner-st](./quick/260729-hdz-seed-dane-county-wi-government-banner-st/) |
 
 ## Project Reference
 
