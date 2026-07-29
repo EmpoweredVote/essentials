@@ -233,6 +233,36 @@ export const COVERAGE_STATES = [
       { label: 'South Tucson', browseGovernmentList: ['0468850'], browseStateAbbrev: 'AZ', hasContext: true },
     ],
   },
+  {
+    // First Wisconsin block (2026-07-28): the Racine County cluster — 2 cities,
+    // 11 villages, 4 towns, all fully seeded. The "(Town)" labels disambiguate
+    // WI civil towns from their city/village namesakes (Town of Burlington ≠
+    // City of Burlington; Town of Waterford ≠ Village of Waterford). Towns use
+    // 10-digit county-subdivision geo_ids, not 7-digit place FIPS — fine here
+    // because by-government-list matches governments.geo_id directly (no TIGER
+    // MTFCC walk). No hasContext anywhere: zero WI compass stances seeded.
+    // Racine County itself lives in COVERAGE_COUNTIES (unrelated array).
+    name: 'Wisconsin', abbrev: 'WI',
+    areas: [
+      { label: 'Burlington',        browseGovernmentList: ['5511200'], browseStateAbbrev: 'WI' },
+      { label: 'Burlington (Town)', browseGovernmentList: ['5510111225'], browseStateAbbrev: 'WI' },
+      { label: 'Caledonia',         browseGovernmentList: ['5511950'], browseStateAbbrev: 'WI' },
+      { label: 'Dover (Town)',      browseGovernmentList: ['5510120625'], browseStateAbbrev: 'WI' },
+      { label: 'Elmwood Park',      browseGovernmentList: ['5523725'], browseStateAbbrev: 'WI' },
+      { label: 'Mount Pleasant',    browseGovernmentList: ['5554875'], browseStateAbbrev: 'WI' },
+      { label: 'North Bay',         browseGovernmentList: ['5557700'], browseStateAbbrev: 'WI' },
+      { label: 'Norway (Town)',     browseGovernmentList: ['5510158600'], browseStateAbbrev: 'WI' },
+      { label: 'Racine',            browseGovernmentList: ['5566000'], browseStateAbbrev: 'WI' },
+      { label: 'Raymond',           browseGovernmentList: ['5566350'], browseStateAbbrev: 'WI' },
+      { label: 'Rochester',         browseGovernmentList: ['5568550'], browseStateAbbrev: 'WI' },
+      { label: 'Sturtevant',        browseGovernmentList: ['5577925'], browseStateAbbrev: 'WI' },
+      { label: 'Union Grove',       browseGovernmentList: ['5581775'], browseStateAbbrev: 'WI' },
+      { label: 'Waterford',         browseGovernmentList: ['5583825'], browseStateAbbrev: 'WI' },
+      { label: 'Waterford (Town)',  browseGovernmentList: ['5510183850'], browseStateAbbrev: 'WI' },
+      { label: 'Wind Point',        browseGovernmentList: ['5587700'], browseStateAbbrev: 'WI' },
+      { label: 'Yorkville',         browseGovernmentList: ['5589550'], browseStateAbbrev: 'WI' },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
@@ -287,6 +317,10 @@ export const COVERAGE_COUNTIES = [
   { label: 'Washington County', browseGovernmentList: ['49053'], browseStateAbbrev: 'UT' },
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
+  // Racine County (2026-07-28 WI cluster): county executive + 21-member County
+  // Board + row officers + 10 Circuit Court judges. No hasContext — zero WI
+  // compass stances seeded.
+  { label: 'Racine County', browseGovernmentList: ['55101'], browseStateAbbrev: 'WI' },
   { label: 'Pima County', browseGovernmentList: ['04019'], browseStateAbbrev: 'AZ', hasContext: true },
   { label: 'Riverside County', browseGovernmentList: ['06065'], browseStateAbbrev: 'CA', hasContext: true },
 ];
