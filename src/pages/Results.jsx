@@ -2005,7 +2005,10 @@ export default function Results() {
                     className={tabButtonClass(effectiveActiveView === 'educators')}
                     onClick={() => switchView('educators')}
                   >
-                    Educators
+                    {/* Display label only. The view key stays 'educators' so existing
+                        ?view=educators links keep working — grep 'educators' for the
+                        bucket, classifier, and per-tab lens/filter defaults. */}
+                    School Board
                   </button>
                 )}
                 {hasJudges && (
