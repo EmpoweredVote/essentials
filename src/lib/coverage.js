@@ -256,8 +256,10 @@ export const COVERAGE_STATES = [
       // (Mayor + 20 alders, headshots included) and the banner, but the
       // governments/chambers wiring was never finished, so browse couldn't see
       // them. Repaired in-DB (government 5548000 + Mayor/Common Council
-      // chambers + office links). No hasContext — zero Madison stances yet.
-      { label: 'Madison',            browseGovernmentList: ['5548000'], browseStateAbbrev: 'WI' },
+      // chambers + office links). hasContext is DB-honest: the 2026-07-29
+      // Madison stance push landed 92 evidence-only answers across ALL 21
+      // officials (apply-madison-stances.ts).
+      { label: 'Madison',            browseGovernmentList: ['5548000'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Mount Pleasant',     browseGovernmentList: ['5554875'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'North Bay',          browseGovernmentList: ['5557700'], browseStateAbbrev: 'WI' },
       { label: 'Racine',             browseGovernmentList: ['5566000'], browseStateAbbrev: 'WI', hasContext: true },
