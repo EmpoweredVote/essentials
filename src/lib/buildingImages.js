@@ -105,6 +105,16 @@ const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/
 // Curated standalone-city banner art (cities/<slug>.jpg in Storage, D-05) +
 // LA-county skylines (la_county/building_photos/<geoid>.jpg). Attribution
 // (Wikimedia Commons) - title | author | license:
+//
+// ⚠ PUBLISHING SURFACE: Treasury Tracker transcribes these attribution comments
+// into user-visible per-image credit lines on its site (see TT's
+// ESSENTIALS-TEAM-NOTE-banner-attribution-2026-07-29). Treat every
+// "title | author | license" line as public copy: a wrong author here is a
+// wrong author displayed publicly, and swapping a banner's SOURCE IMAGE
+// without updating this block (and telling TT) leaves the old photographer
+// credited. Verify the author on the Commons File: page, not by filename —
+// near-identical filenames can belong to different photographers (the RI
+// comma-twin, fixed in bb2b05ba, is the canonical example).
 //   bloomington - Kirkwood Ave. in Bloomington, IN | Yahala | CC BY-SA 3.0
 //   beaverton - Beaverton Central and The Round, Beaverton, Oregon | M.O. Stevens | CC BY 3.0
 //   hillsboro - East end of Orenco Station Plaza with MAX train arriving (2016) | Steve Morgan | CC BY-SA 4.0
