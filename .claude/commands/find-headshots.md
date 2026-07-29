@@ -44,7 +44,20 @@ SELECT p.id AS politician_id, p.full_name, p.first_name, p.last_name,
        'politician' AS subject_type,
        NULL AS race_candidate_id, NULL AS position_name, NULL AS election_name
 FROM essentials.politicians p
-LEFT JOIN essentials.offices o ON o.id = p.office_id
+-- Occupancy comes from office_current_holder. Do NOT join essentials.offices on
+-- p.office_id: that column is DEPRECATED and NULL on all ~80k rows, so the join
+-- silently matched nothing and every result came back with role/state/city NULL —
+-- exactly the context needed to avoid attaching the wrong person's face.
+-- LATERAL + LIMIT 1 keeps this one row per politician: dual-office holders exist
+-- (e.g. Marc C. Laredo), and a plain join would offer them to you twice.
+LEFT JOIN LATERAL (
+  SELECT o.title, o.representing_state, o.representing_city
+  FROM essentials.office_current_holder och
+  JOIN essentials.offices o ON o.id = och.office_id
+  WHERE och.politician_id = p.id
+  ORDER BY o.title
+  LIMIT 1
+) o ON true
 LEFT JOIN essentials.politician_images pi ON pi.politician_id = p.id
 WHERE pi.id IS NULL
   AND p.photo_origin_url IS NULL
