@@ -242,26 +242,30 @@ export const COVERAGE_STATES = [
     // consistency. Towns use 10-digit county-subdivision geo_ids, not 7-digit
     // place FIPS — fine here because by-government-list matches
     // governments.geo_id directly (no TIGER MTFCC walk).
+    // hasContext is DB-honest per the 2026-07-29 stance push (126 evidence-only
+    // answers across 55 officials): every muni EXCEPT North Bay and Elmwood
+    // Park has at least one official with compass stances — those two yielded
+    // zero evidence rows and stay unflagged.
     // Racine County itself lives in COVERAGE_COUNTIES (unrelated array).
     name: 'Wisconsin', abbrev: 'WI',
     areas: [
-      { label: 'Burlington',         browseGovernmentList: ['5511200'], browseStateAbbrev: 'WI' },
-      { label: 'Caledonia',          browseGovernmentList: ['5511950'], browseStateAbbrev: 'WI' },
+      { label: 'Burlington',         browseGovernmentList: ['5511200'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Caledonia',          browseGovernmentList: ['5511950'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Elmwood Park',       browseGovernmentList: ['5523725'], browseStateAbbrev: 'WI' },
-      { label: 'Mount Pleasant',     browseGovernmentList: ['5554875'], browseStateAbbrev: 'WI' },
+      { label: 'Mount Pleasant',     browseGovernmentList: ['5554875'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'North Bay',          browseGovernmentList: ['5557700'], browseStateAbbrev: 'WI' },
-      { label: 'Racine',             browseGovernmentList: ['5566000'], browseStateAbbrev: 'WI' },
-      { label: 'Raymond',            browseGovernmentList: ['5566350'], browseStateAbbrev: 'WI' },
-      { label: 'Rochester',          browseGovernmentList: ['5568550'], browseStateAbbrev: 'WI' },
-      { label: 'Sturtevant',         browseGovernmentList: ['5577925'], browseStateAbbrev: 'WI' },
-      { label: 'Town of Burlington', browseGovernmentList: ['5510111225'], browseStateAbbrev: 'WI' },
-      { label: 'Town of Dover',      browseGovernmentList: ['5510120625'], browseStateAbbrev: 'WI' },
-      { label: 'Town of Norway',     browseGovernmentList: ['5510158600'], browseStateAbbrev: 'WI' },
-      { label: 'Town of Waterford',  browseGovernmentList: ['5510183850'], browseStateAbbrev: 'WI' },
-      { label: 'Union Grove',        browseGovernmentList: ['5581775'], browseStateAbbrev: 'WI' },
-      { label: 'Waterford',          browseGovernmentList: ['5583825'], browseStateAbbrev: 'WI' },
-      { label: 'Wind Point',         browseGovernmentList: ['5587700'], browseStateAbbrev: 'WI' },
-      { label: 'Yorkville',          browseGovernmentList: ['5589550'], browseStateAbbrev: 'WI' },
+      { label: 'Racine',             browseGovernmentList: ['5566000'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Raymond',            browseGovernmentList: ['5566350'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Rochester',          browseGovernmentList: ['5568550'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Sturtevant',         browseGovernmentList: ['5577925'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Town of Burlington', browseGovernmentList: ['5510111225'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Town of Dover',      browseGovernmentList: ['5510120625'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Town of Norway',     browseGovernmentList: ['5510158600'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Town of Waterford',  browseGovernmentList: ['5510183850'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Union Grove',        browseGovernmentList: ['5581775'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Waterford',          browseGovernmentList: ['5583825'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Wind Point',         browseGovernmentList: ['5587700'], browseStateAbbrev: 'WI', hasContext: true },
+      { label: 'Yorkville',          browseGovernmentList: ['5589550'], browseStateAbbrev: 'WI', hasContext: true },
     ],
   },
 ];
