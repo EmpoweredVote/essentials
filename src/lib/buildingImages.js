@@ -233,6 +233,40 @@ const CURATED_LOCAL = {
   //             isthmus because the aerial's subject is the isthmus SHAPE, which the
   //             middle-44% desktop crop removes; this skyline sits inside the band.
   madison: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/madison.jpg' },
+  // Racine County WI cluster (2026-07-28), sourced when the 17 Racine-cluster
+  // municipalities joined the landing page. All state-scoped 'WI'. The 'town of X'
+  // keys ride the longest-key-first match so the civil towns beat their
+  // city/village namesakes ("town of burlington" > "burlington"). No licensed
+  // Commons photo exists for North Bay, Elmwood Park, or Raymond (checked
+  // 2026-07-28) — those three intentionally fall through to the tier gradient.
+  //   racine             - Monument Square, downtown Racine | Jeremy Atherton | CC BY-SA 2.5 (anchor .85)
+  //   burlington-wi      - Downtown Historic District, WIS 36 | Royalbroil | CC BY-SA 3.0 (anchor 1.0)
+  //   caledonia          - John Collins House (Greek Revival, NRHP) | Jim Roberts (Boscophotos) | CC BY-SA 4.0
+  //   mount-pleasant     - Mount Pleasant Village Hall | Alinghi3 | CC BY-SA 3.0/GFDL (anchor .35)
+  //   rochester-wi       - Village of Rochester Village Hall | Librerink8 | CC BY-SA 4.0 (anchor .15)
+  //   sturtevant         - Western Union Junction Railroad Museum caboose | Znns | CC0
+  //   union-grove        - Downtown Union Grove, US 45 | TheCatalyst31 | CC BY-SA 4.0 (anchor .7, brightened g.65/b1.12)
+  //   waterford-wi       - Downtown Waterford Main St | TCP04 | CC BY 4.0 (anchor .7)
+  //   wind-point         - Wind Point Lighthouse at Sunrise panorama | Tunads (Daniel J Simanek) | CC BY 3.0
+  //   yorkville          - Yorkville #4 School (NRHP) | Porterhse | CC BY-SA 3.0
+  //   town-of-burlington - Burlington Town Hall complex | Wikideas1 | CC0 (anchor 1.0)
+  //   town-of-dover      - Dover Town Hall | Wikideas1 | CC0 (anchor .25)
+  //   town-of-norway     - Town of Norway Municipal Building | Wikideas1 | CC0
+  //   town-of-waterford  - Town of Waterford Municipal Building | Wikideas1 | CC0
+  racine: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/racine.jpg' },
+  burlington: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/burlington-wi.jpg' },
+  caledonia: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/caledonia.jpg' },
+  'mount pleasant': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/mount-pleasant.jpg' },
+  rochester: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/rochester-wi.jpg' },
+  sturtevant: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/sturtevant.jpg' },
+  'union grove': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/union-grove.jpg' },
+  waterford: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/waterford-wi.jpg' },
+  'wind point': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/wind-point.jpg' },
+  yorkville: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/yorkville.jpg' },
+  'town of burlington': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-burlington.jpg' },
+  'town of dover': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-dover.jpg' },
+  'town of norway': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-norway.jpg' },
+  'town of waterford': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/town-of-waterford.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
