@@ -252,6 +252,12 @@ export const COVERAGE_STATES = [
       { label: 'Burlington',         browseGovernmentList: ['5511200'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Caledonia',          browseGovernmentList: ['5511950'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Elmwood Park',       browseGovernmentList: ['5523725'], browseStateAbbrev: 'WI' },
+      // Madison (2026-07-29): the 2026-07-27 session created all 21 officials
+      // (Mayor + 20 alders, headshots included) and the banner, but the
+      // governments/chambers wiring was never finished, so browse couldn't see
+      // them. Repaired in-DB (government 5548000 + Mayor/Common Council
+      // chambers + office links). No hasContext — zero Madison stances yet.
+      { label: 'Madison',            browseGovernmentList: ['5548000'], browseStateAbbrev: 'WI' },
       { label: 'Mount Pleasant',     browseGovernmentList: ['5554875'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'North Bay',          browseGovernmentList: ['5557700'], browseStateAbbrev: 'WI' },
       { label: 'Racine',             browseGovernmentList: ['5566000'], browseStateAbbrev: 'WI', hasContext: true },
