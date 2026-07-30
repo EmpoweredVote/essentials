@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 564
+## Count: 630
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -74,7 +74,15 @@ proposed: Cristina Todd / growth-and-development = 2 and Bryan Washington / publ
 = 4**, 31 blanks; all 31 are **SETTLED**, with the unread council-video archive and three paywalled
 Herald article tails documented as retry paths rather than access-failure zeros). **222-11 COMPLETE:
 99 attempted pairs across 9 people in two cities, 3 chairs proposed, 96 register blanks.**
-222-12 through 222-17 append their own per-government sections below as they execute.
++ 66 by 222-12 Task 1 (Melissa council — 6 people × 11 topics = 66 attempted pairs, **0 chairs
+proposed**, 66 blanks; **all 66 are SETTLED**, and all **48** of the six members' 2026-05-12
+found-nothing notes are independently corroborated). Melissa's zeros rest on three structural facts —
+its 2025–2026 council minutes are strictly action-only ("There was no Council discussion."), every
+standalone Minutes PDF it publishes is a text-layerless Brother-scanner image (recovered instead from
+the following meeting's agenda packet), and its official site carries no officeholder bios at all.
+Five on-topic near-misses were refused on the record. **222-12 authors NO migration and claims NO
+migration number.**
+222-13 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -8002,3 +8010,586 @@ Rutledge/public-safety, Rutledge/economic-development) were refused on the recor
 chairs carry named operator-review flags — the relayed-support-message question for Todd and the
 prior-note-overwrite question for Washington — so the orchestrator can strike either without losing
 the underlying evidence, which is preserved verbatim above.
+
+
+## City of Melissa (4847496) — 222-12
+
+**Scope, stated once.** Plan 222-12 Task 1 researches **the six City Council members of Melissa**
+(Collin County, Texas). **Mayor Jay Northcut is already stanced and out of scope under D-07** and was
+not re-researched, re-reasoned or modified here. All six politician_ids were re-verified live against
+production by the orchestrator as 0 answer rows before research began. **All six carry 8
+`inform.politician_context` found-nothing rows from the 2026-05-12 pass** (the 8 Local Lens topics) —
+deliberate honest-blank notes, not defects.
+
+**Attempted:** 2026-07-30 — **6 people × 11 canonical topics = 66 (person, topic) pairs.**
+
+| Person | Title | politician_id | Term evidence |
+|---|---|---|---|
+| Preston Taylor | Council Member Place 1 | `3e377dbe-2c37-41ed-a65d-664de75318ae` | elected **May 4, 2024** (contested, vs Shannon Sweat); previously **Chairman of the Melissa Planning & Zoning Commission** through spring 2024; Place 1 next up May 2027 |
+| Rendell Hendrickson | Council Member Place 2 | `af2697d7-f766-4ddd-8b61-65e5d0c2df70` | **P&Z Chairman** through at least February 2023; on Council by **June 13, 2023** (recorded absent in those minutes); filed and elected **May 3, 2025**; Place 2 next up May 2028 |
+| Dana Conklin | Council Member Place 3 | `30680496-7464-495c-a9bc-eb44cc6b84b8` | seated by 2021; re-elected **May 4, 2024** (contested, vs Emeka Eluka); Place 3 next up May 2027 |
+| Joseph Armstrong | Council Member Place 4 | `12d3560f-3b07-4fe7-b8c4-c2466c13e7eb` | on Council since **May 2022**; filed and elected **May 3, 2025**; Place 4 next up May 2028 |
+| Craig Ackerman | Council Member Place 5, **Mayor Pro Tem** | `c5d9869d-6e7b-448d-bb48-43c2cd795d9a` | seated by 2021; re-elected **May 4, 2024**; Place 5 next up May 2027 |
+| Sean Lehr | Council Member Place 6 | `b3602d0c-9af7-4baf-a96c-a15be063c272` | seated by 2022; re-elected **May 4, 2024**; Place 6 next up May 2027 |
+
+**Result: ZERO chairs proposed. 66 of 66 attempted (person, topic) pairs are honest blanks.**
+**All 66 are SETTLED** — every one rests on a structural fact about the record, not on a source this
+pass could not reach. Five on-topic near-misses were refused on the record rather than rounded up
+(itemised below). **This corroborates all 48 of the 2026-05-12 found-nothing notes** (6 people × 8
+Local Lens topics), reached independently by a different method: the prior pass's blanks are correct.
+
+---
+
+### The three structural facts that produce Melissa's zeros
+
+**1. Melissa's City Council minutes changed format in 2025 and are now strictly action-only.**
+The 2025–2026 minutes record *only* mover, seconder, motion text and tally. Their "COUNCIL DISCUSSION"
+item literally reads **"There was no Council discussion."** in meeting after meeting, and the phrase
+`the following was discussed` — the marker Melissa's own clerk uses when narrating debate — appears
+**zero times** anywhere in the 2025–2026 council corpus. The **2023–2024** minutes, by contrast, *do*
+narrate member-attributed discussion, and that older window is where every quotation below comes from.
+Anything a member said in a 2025 or 2026 meeting is unrecoverable from the written record.
+
+**2. Every standalone Minutes PDF Melissa publishes is a Brother-scanner image with no text layer.**
+All 106 City Council "Minutes"-type files (fileIds 263 → 500, 2023-01 through 2026-04) and the P&Z
+Minutes files were downloaded and tested: `pdftotext` returns **1–15 bytes** on every single one, and
+`pdfinfo` reports `Creator: Brother Scanner System : ADS-2200` (one 2023 file: `RICOH MP C6004`).
+**RECOVERY — and a method note for any future Melissa pass:** the *Agenda* file for the following
+meeting is frequently a full **Agenda Packet**, CivicPlus-generated with a complete text layer, and it
+carries the **prior meeting's minutes as consent item 4A/5A**. Packet sizes range 0.2 MB (thin agenda,
+scanned) to **218 MB**; the large ones extract cleanly. 68 packets were downloaded and text-extracted
+this pass (64 council 2023–2025 + 7 P&Z + 1 2022 sample), yielding a **9.3 MB master text corpus**.
+Go straight to the packets; skip the scanned standalone minutes.
+
+**3. Melissa's official website carries no officeholder biographies at all.**
+`cityofmelissa.com/202/City-Council` is a name-and-photo roster with meeting times; each member's
+individual page (e.g. `/273/Jay-Northcut`, which is Armstrong's page) contains **only** name, place,
+term-expiry and an email link. There is no bio, no priorities statement, no committee list. This
+closes the "official bio" source class for all six at once.
+
+---
+
+**Evidence checked** (every item below was fetched and read this session unless listed as unavailable):
+
+- **The City Council minutes corpus, 2023-01 → 2026-07**, enumerated exhaustively via the AgendaCenter
+  year-scoped search endpoint
+  (`cityofmelissa.com/AgendaCenter/Search/?term=&CIDs=7&startDate=01/01/YYYY&endDate=12/31/YYYY`;
+  City Council is **CID 7**), then recovered from agenda packets per fact 2 above. Swept for every
+  compass axis with member-name attribution. Counts in the 9.3 MB corpus: `homeless*` **1 hit** (a
+  resident's public-comment letter from the Wellness Center for Older Adults — not a member);
+  `panhandl*`, `public camping`, `sanctuary`, `ICE detainer`, `civil rights`, `Juneteenth`,
+  `Martin Luther` — **zero hits each**; `immigration` **8 hits, all of them boilerplate indemnity
+  language in professional-services contracts** ("…CLAIMS THAT ARE BASED ON ANY FEDERAL IMMIGRATION
+  LAW…"); `healthcare`/`health care` **4 hits**, all in a public-servants proclamation, a zoning
+  definition of "assisted living facility", and the opioid-settlement resolution's recitals.
+- **The Planning & Zoning Commission corpus (CID 6), 2023–2024**, seven packets — this matters because
+  **two of the six chaired P&Z immediately before joining Council** (Hendrickson through early 2023,
+  Taylor through spring 2024), and **P&Z minutes narrate discussion in far more detail than Council
+  minutes do**. Every Taylor and Hendrickson P&Z statement recoverable from those packets was read.
+- **The Crime Control and Prevention District and the Fire Control, Prevention & EMS District**
+  temporary-board minutes (January 9, January 23 and February 13, 2024). The sitting Council appointed
+  **itself** as both temporary boards in October 2023, adopted a two-year crime-control plan and
+  budget, and called the funding election. **Conklin was elected President and Ackerman Vice President
+  of the Crime Control board; Lehr President and Armstrong Vice President of the Fire Control board.**
+  See the `public-safety-approach` block below for why this on-topic institutional action still yields
+  no chair for anyone.
+- **Melissa's four Legislative-position pages** — `/543/SB-15` (state preemption of minimum
+  single-family lot sizes), `/541/SB-673` (ADUs by right on all lots), `/550/HB-23` (third-party
+  development review), `/536/HB-3299` (exterior building materials) — plus the `/508/Legislative`
+  89th-session priorities page. These are the most on-axis `residential-zoning` and
+  `growth-and-development` text anywhere on the Melissa domain, and **every one of them is written in
+  the city's institutional voice** ("The City feels like this type of land use decision is one best
+  left to individual communities…", "City officials have expressed concern…"). No council member is
+  named or quoted on any of them, and `SB 15` / `SB 673` / `HB 3299` return **zero hits** in the
+  minutes corpus, so no member ever put a position on the record. Refused for all six under the
+  **Lowry Crossing precedent** (a city's institutional voice is not an officeholder's position).
+- **The City of Melissa YouTube channel** (`youtube.com/@cityofmelissatx`, 30 videos). The recurring
+  civic-content series is **"Council Connect: Monthly Recap"** — 15 episodes, June 2025 → May 2026,
+  each ~3 minutes. Video metadata was read directly: the description of the May 2026 episode reads
+  *"Mayor Jay Northcut, shares highlights from the May's City Council meetings"*, and one episode is
+  titled outright **"Council Connect: Mayor Northcut February 2025"**. The channel is
+  **mayor-narrated**; no in-scope member speaks in it, and under attribution control 14 the mayor
+  recapping the body's action is not a member's position. Also on the channel: two State-of-the-City
+  addresses and two Citizen Survey videos, all Northcut. **No full council-meeting recordings exist.**
+- **Ballotpedia — checked for all six with a browser User-Agent via `curl`, and re-checked during the
+  self-audit.** `Preston_Taylor`, `Rendell_Hendrickson`, `Dana_Conklin`, `Craig_Ackerman` and
+  `Sean_Lehr` all return the **HTTP 404 stub** (51,204–51,364 bytes, title present, no election
+  tables). `Municipal_elections_in_Collin_County,_Texas_(2025)` and `…(2026)` were both fetched
+  (147 KB and 308 KB) and **contain none of the six names and no Melissa race at all**. Melissa is
+  below Ballotpedia's municipal coverage scope. **Yield: zero, as note 11 predicts.**
+- **Campaign websites.** `prestonformelissa.com` is expired (Squarespace 404 live) but was **recovered
+  in full from the Wayback Machine** — see Taylor's entry; it is the single richest candidate document
+  this pass found for any of the six. Wayback CDX was queried for `ackermanformelissa.com`,
+  `seanlehr.com`, `lehrformelissa.com`, `conklinformelissa.com`, `armstrongformelissa.com`,
+  `hendricksonformelissa.com` and `votehendrickson.com` — **no captures exist for any of them.**
+- **The City Secretary's Campaign Finance Reports page** (`/503`) and **Archive Center** (`Archive.aspx`)
+  were read in full: they establish the May 4, 2024 and May 3, 2025 candidate fields (and thus which
+  races were contested) but contain **only treasurer appointments and contribution/expenditure
+  reports** — no policy content of any kind.
+- **`dallasexpress.com/city/70-of-local-candidates-dodge-election-survey/`** — a genuine multi-city
+  Collin/Dallas candidate survey, fetched and read. It **lists Melissa, but only two school-board
+  races**, names none of the six, and in any case reports only non-response: it contains no candidate
+  answers at all.
+- **News sweeps** per person against Community Impact, Star Local Media, Local Profile,
+  NBC5/WFAA/Fox4, the Melissa Area Chamber of Commerce and the McKinney/Collin County market.
+  **No candidate questionnaire, forum transcript, Q&A or policy interview exists for any of the six
+  that this session could find.** The only third-party pages that surfaced are directory entries —
+  `directory.tml.org` (Texas Municipal League, contact data only) and `legistorm.com/person/bio/…`
+  (fetched for Taylor and Armstrong; the body is navigation chrome and a job-title line, no policy
+  content) — plus `txdirectory.com`.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position. **None of these blocks a chair**, which is why every zero below is still classified settled:
+
+- **Facebook is unfetchable from this environment — HTTP 400 on every attempt**, including
+  `www.facebook.com/…`, the `/p/…` page form and `mbasic.facebook.com`. Four of the six have campaign
+  or officeholder Facebook pages (`PrestonForMelissaCityCouncilPlace1`,
+  `Dana-Conklin-Melissa-City-Council-Place-3`, `Joseph-Armstrong-Place-4-Melissa-City-Council`,
+  `Ackermanmelissacitycouncil`), and **Wayback holds no captures of any of them.** Mitigation: social
+  posts are not evidence of a policy position absent a direct citable quote, so this closes no
+  documented chair — but it is the largest single unread surface for this city and is named here as
+  the top retry if the operator ever gains a real logged-in browser.
+- **`amtrib.com` (the Anna-Melissa Tribune) is geo-blocked**, returning a 206-byte
+  *"Sorry, you are connecting from a region that is not allowed to browse these sites"* body to both
+  WebFetch and `curl` with a browser UA, on the homepage and on article URLs alike. This is the one
+  outlet with a Melissa-specific masthead. Retry path: a non-blocked egress region, or Wayback
+  captures of specific article URLs. Mitigation: the only article that surfaced is from **2017**,
+  before any of the six can be shown to have held their current seat.
+- **`melissatx.portal.civicclerk.com` is a dead CivicClerk tenant, not a gated archive** — and this
+  was settled rather than left open. `curl` returns the SPA shell; the OData API 404s on
+  `/v1/Events`, `/v1/Meetings`, `/v1/$metadata` and every `$filter` form, on four candidate tenant
+  slugs. Escalated to a **real headless browser (Playwright)**: the page hangs on "Loading page
+  content" and the console shows `melissatx.api.civicclerk.com/v1/Settings/GetIdentityServerConfiguration`
+  → **404**, then `Error: Unable to load store.` The tenant is **unprovisioned**. Melissa's live
+  archive is AgendaCenter, which this pass read exhaustively. **This is a settled negative, not an
+  access failure.**
+- **The 2021–2022 council packets were sampled, not swept.** Every one is 30–80 MB and there are 27 of
+  them; one (September 27, 2022, 32 MB) was downloaded and extracted in full to characterise the
+  format. Its minutes are **action-only with staff narration and essentially no member-attributed
+  speech** (the FY2023 budget/tax-rate item runs to record votes with no member reasoning at all), so
+  the format that produces Melissa's zeros held in 2022 as well. Named retry path: the remaining 26
+  packets, `_01112022-201` through `_12132022-262`, if a future pass wants the pre-2023 window.
+- **`lwvcollin.org` / VOTE411** — not retried; both confirmed CLOSED for this phase (403;
+  post-election guides decommissioned). **`communityimpact.com/search`** — 403 phase-wide.
+
+**⚠ HOMONYM TRAP REJECTED — one, caught before any evidence was used.**
+`ballotpedia.org/Joseph_Armstrong` resolves HTTP 200 but is a **disambiguation page** (Massachusetts /
+Tennessee / Texas). The Texas entry, `ballotpedia.org/Joseph_Armstrong_(Texas)` (111,721 bytes), is a
+**real, populated page with a full campaign-themes section** — and it is **a 2017 Richardson
+Independent School District, Place 3 school-board candidate** who was defeated on May 6, 2017 with
+12.41% of the vote. Different office, different jurisdiction, different county, seven years earlier,
+and nothing on the page ties the subject to Melissa. **Not one word of it was used.** This is exactly
+the hazard note 10 describes: under the old 403 this page was unreachable and harmless; unlocked, it
+returns confidently and in depth. A separate check: `danaconklin.com` has Wayback captures from
+**2004** and `craigackerman.com` from 2009/2018 — neither is confirmed as the Melissa officeholder and
+the 2018 capture is an empty parking iframe; both rejected.
+
+**⚠ MISATTRIBUTION GUARD.** Melissa's minutes attribute a large share of recorded speech to the
+**mayor**, and this pass refused all of it for the six: Northcut's *"giving up that much in park fees
+is insurmountable"* (January 14, 2025), his *"it is an odd location for a convenience store"*
+(September 26, 2023), his *"while he is not opposed to storage style projects, but is apprehensive
+with this being in the Commercial Corridor Overlay District"*, his statement that he *"intends to vote
+in opposition"* to the UNB Investments rezone **"after reading the emails, talking to residents"**
+(July 23, 2024 — which is additionally the refused relaying-constituent-perception class), and the
+entire Council Connect video series. Speech by **former** members Jennifer Clark and Chad Taylor, and
+by P&Z commissioners **Tracy Hailey, Adam Porter, Clayton Coe, Dave Minton, Lawrence Silver, Dan
+Mathews, Marcus Snyder, Danielle Dorman-Chapa** and **Ben Ivy**, was likewise excluded. City Manager
+**Jason Little**, Executive Director of Development **Tyler Brewer**, Assistant Director **Tyra
+LaVerne**, Police Chief **Erik Stokes**, Fire Chief **Nix**, Finance Director **Gail Dansby** and City
+Engineer **Nolan Harvey** account for most of the substantive content in these minutes and are staff.
+Every quotation used below names its speaker in a primary document read this session, and every date
+was checked against that person's term.
+
+---
+
+**`taxes` (`f7e5678d-dadd-4556-a2fc-446e24642ceb`) — researched for all six, NO ROW WRITTEN FOR ANY OF
+THEM**, per the settled operator ruling of 2026-07-25. Findings preserved:
+
+- The **May 28, 2024** work session is the single most tax-active item in the corpus, and it is a
+  **homestead-exemption** debate — squarely inside the extended refusal list (note 19: exemption and
+  rate decisions are not positions on taxing the wealthy or scaling services back). **Rendell
+  Hendrickson** *"stated that he was in support of both"* exemptions; **Joseph Armstrong** asked the
+  anticipated cost and *"stated that he was in support"*; **Dana Conklin** *"stated that an option
+  could be to not go this route and watch to see what would have happened"* and separately noted
+  *"there are other exemptions available but they are more specific to a certain portion of the
+  population… there are some communities that do exemptions for veterans and spouses of veterans"*;
+  **Craig Ackerman** asked *"how big of a curve could the City sustain and still maintain funding
+  needed before the contingency plans are exhausted."* Every one of these is a general-homestead /
+  senior-freeze mechanics discussion, and chair 3 would be the only reachable chair for all four.
+- **FY2023 tax-rate adoption (September 13, 2022)**: Ackerman moved and Lehr seconded the ordinance
+  levying taxes, and Ackerman moved the M&O rate including the sentence *"I move that the property tax
+  rate be increased by the adoption of a tax rate of $0.456168 which is effectively a 3.5% percent
+  increase in the tax rate"* — the statutory motion language, carried 6-0 by record vote with **no
+  reasoning recorded from anyone**. Procedural, unexplained, whole-city appropriation class.
+- **Preston Taylor's** campaign platform contains nothing tax-relevant.
+- No member anywhere in the corpus argues for raising taxes on wealthy people or large companies, or
+  for scaling public services back. The ruling's premise holds exactly in Melissa.
+
+**`healthcare` (`e8dad4a8-eb93-4931-91f5-d8fb5d7dd529`)** — searched for all six; **blank for all
+six**, as expected: all five chairs describe national healthcare policy, which no city council member
+holds a position on by role. The corpus's only health-adjacent text is a proclamation recital, a
+zoning definition of "assisted living facility" and the opioid-settlement resolution's boilerplate.
+No health-adjacent remark was stretched into a chair.
+
+**`homelessness` (`4938766b-…`), `local-immigration` (`b9ccee94-…`) and `civil-rights`
+(`0bc588c6-…`) are STRUCTURALLY absent from Melissa's entire public record** — the same finding
+222-10 recorded for Anna and Murphy, reached here independently. Across a 9.3 MB corpus spanning
+2022–2026: one `homeless` hit and it is a resident's letter; eight `immigration` hits and all eight
+are contract indemnity boilerplate; **zero** hits for `panhandl*`, `public camping`, `sanctuary`,
+`ICE detainer`, `civil rights`, `Juneteenth`, `Martin Luther` or `Black History`. **No such item has
+ever come before this council.** These 18 (person, topic) pairs are the most securely settled zeros
+in the section.
+
+---
+
+### The five on-topic near-misses, refused on the record
+
+All five come from the 2023–2025 window when Melissa's minutes still narrated discussion. They are
+recorded here in full so a later pass does not re-derive them and reach a different answer.
+
+1. **Craig Ackerman — `residential-zoning`, July 11, 2023.** On the Skorburg Company request to rezone
+   19.25 acres from Agricultural to **PD/Multi-Family Residential** with variances for **up to 22.9
+   units/acre, four stories and 1.67 parking spaces/unit**, Ackerman *"stated that this multi-family
+   developments looks like a good quality product, but this is the second multi-family development has
+   been looked at for this tract and he doesn't believe it could be the highest and best use for this
+   tract"*, and later *"stated that he was not sure if a 1-acre commercial development within this
+   property would sway him."* **Refused.** "Highest and best use" is a real-estate valuation judgment
+   about **one tract**; he expressly compliments the product's quality and states no view on housing
+   density, neighborhood character, or where multifamily belongs in Melissa generally. Every chair on
+   this scale is a **citywide density proposition** — the Lakia Works chair (222-11) turned on a
+   platform statement naming *"low-density, residential character"* plus a zoning mechanism, and
+   Ackerman's statement has neither. **The closest call for this person; flagged for operator review.**
+2. **Rendell Hendrickson — `residential-zoning`, same item, same night.** Hendrickson *"stated that in
+   order for him to move forward, he would need to see a commercial aspect"*, and after inspecting the
+   site *"stated that he has looked at the property and the topography near the pond is significant,
+   but near the intersection, it would be ideal for commercial… commercial development would be great,
+   but it would have to make sense for the City."* **Refused.** Chair 3 ("Allow multifamily and
+   mixed-use near commercial corridors while protecting most residential zones") is superficially
+   tempting, but this is a **negotiating condition on a single application** — the applicant withdrew
+   and no vote was ever taken — not an endorsement of multifamily-near-corridors as policy. He never
+   says what should happen to density anywhere else in the city.
+3. **Dana Conklin — `residential-zoning`, same item, same night.** *"Dana Conklin stated that she
+   would prefer a mixed-use development with something that is unique and different, not
+   cookie-cutter."* **Refused** — an aesthetic and site-specific preference. "Not cookie-cutter" is
+   the generically-evaluative class; it locates no chair on a density scale.
+4. **Preston Taylor — `housing`, March 14, 2024** (as **Chairman of the Planning & Zoning
+   Commission**, inside his tenure). On **Dominium's** PD rezone of 24.51 acres for an
+   income-and-rent-restricted development — the only genuine **affordable-housing** application in the
+   whole corpus, supported at the podium by Housing Connector and others and opposed by residents
+   worried about school capacity — the minutes record: *"Tracy Hailey expressed that she liked the
+   idea of affordable housing in Melissa, but that she had concerns regarding the variances requested.
+   **Preston Taylor agreed and stated that he is not sure this is the best use for this location.**"*
+   P&Z then recommended **denial 7-0**. **Refused.** The `housing` scale measures *government's role
+   in affordability* — public housing, rent caps and inclusionary requirements, targeted subsidy and
+   permit easing, deregulation, or staying out. A statement that one **site** is not the best location,
+   attached to a colleague's **variance** concern, engages none of those five. Note also that Council
+   never reached the merits: a related **Housing Finance Corporation** item (July 23, 2024, item 5B)
+   was automatically removed when the companion rezone was withdrawn, so no member ever voted on it.
+   **The second-closest call of the section; flagged for operator review.**
+5. **Joseph Armstrong — `growth-and-development`, January 14, 2025.** On the Ashton Woods "Tranquility"
+   annexation and development agreement, Armstrong *"stated that he is not used to see the waiving of
+   park fees and asked the applicant to address the request"*, and when Mayor Northcut said giving up
+   that much in park fees was insurmountable, *"Joseph Armstrong agreed."* Council then declined to
+   authorise the agreement 5-2. **Refused.** Chair 4 is *"streamline permitting, reduce fees, and
+   actively recruit development"*; opposing one developer's fee waiver is its mirror image but does
+   **not** thereby locate chairs 1, 2 or 3, which require a growth cap, an infrastructure-capacity
+   gate, or a proactive infrastructure-investment commitment respectively. A fiscal objection inside a
+   single negotiation is not a growth-pace posture.
+
+**Every non-unanimous vote in the corpus involving the six was examined; all are refused.** They are:
+the **January 14, 2025** Ashton Woods motion (5-2, **Hendrickson and Ackerman** voting against the
+motion *not* to authorise — no reason recorded for either, and Hendrickson had voiced concerns
+minutes earlier, so the vote and the speech point opposite ways: **contradiction is a blank, not a
+tiebreak**); a **3/3 tie** on a C-1 → PD/C-2 commercial rezone (**Taylor, Conklin and Ackerman**
+against, unexplained, and commercial rezoning is off-axis for all 11 topics); two **4/2** procedural
+votes on revisiting an item (**Ackerman and Conklin** against — they *did* state a reason, *"expressed
+concern with revisiting and voting on an item with the developer not at the meeting"*, which is
+process, not policy); a **6/1** signage-variance vote; and the **September 26, 2023** convenience-store
+denial (4-2, **Hendrickson and Lehr** in opposition — Hendrickson's stated reason was commercial
+viability, *"the specific location has struggled to keep anything in business"*, and Lehr gave none).
+
+**`public-safety-approach` — the on-topic institutional action that still yields nothing, for all
+six.** In October 2023 the Council adopted two ordinances creating a **Crime Control and Prevention
+District** and a **Fire Control, Prevention and EMS District**, appointed itself as both temporary
+boards, adopted a two-year crime-control plan built around *"investment in technology, specialized
+divisions, personnel, and equipment"*, and called the funding election. On the merits that is chair-4
+territory — and **not one member states a reason for any of it** anywhere in the January 9, January 23
+or February 13, 2024 minutes. The complete member content of those meetings is: Conklin asking
+*"if there were specific meeting requirements"*; Conklin and Ackerman each stating they *"would be
+willing to serve as the President or Vice President"*; Conklin asking whether previously purchased
+tasers would be moved from the General Fund to the Crime Control fund; and Conklin asking whether a
+mid-year budget pivot returns to the board. Officer appointments (**Conklin** CCPD President,
+**Ackerman** CCPD Vice President, **Lehr** Fire District President, **Armstrong** Fire District Vice
+President) are **board service — the named adjacency class** — and every substantive vote was
+unanimous and unexplained. Per attribution control 16, an agenda line states what was voted on, not
+what it means.
+
+---
+
+### Preston Taylor — Council Member Place 1 — `3e377dbe-2c37-41ed-a65d-664de75318ae`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** A commercial real-estate broker with Appian
+Commercial Realty, a seventh-generation Collin County family, and **Chairman of the Melissa Planning &
+Zoning Commission** immediately before winning Place 1 on May 4, 2024. He has the **fullest documented
+record of the six** — a recovered campaign platform plus roughly eighteen months of narrated P&Z
+discussion — and it still reaches no chair.
+
+- **His 2024 campaign website was recovered in full from the Wayback Machine**
+  (`web.archive.org/web/20240308194111/http://www.prestonformelissa.com/`) and is quoted here in its
+  entirety on the policy side, because it is the only campaign document any of the six produced:
+  *"Preston is running for Melissa City Council Place 1. Once elected, he is motivated to bring
+  strategies and growth into the city with a balance between residential and commercial space. He
+  takes great pride and passion for the City of Melissa and wants to maintain the hometown feel while
+  providing positive economic development. He will encourage the community to participate and be
+  involved in the city's government and growth strategies."* The site's navigation is Home / Contact
+  Me / Endorsements / Signs / Donate — **there is no issues page**; the text above is the whole
+  platform. Refused across every axis it brushes: *"balance between residential and commercial space"*
+  names no density level and no mechanism (`residential-zoning`); *"maintain the hometown feel"* is the
+  settled character-remark class, which this phase has now refused six times, and unlike the Works
+  plank it names no density subject (`residential-zoning`, `growth-and-development`); *"positive
+  economic development"* names no incentive instrument, and every chair on that scale is an incentive
+  proposition (`economic-development`); *"encourage the community to participate"* is a participation
+  commitment, not a growth-pace position (`growth-and-development`). **Endorsements were not read and
+  would not have been used** — endorsement is never evidence in this phase.
+- **`housing`** — no position found. **NEAR-MISS, REFUSED** — the Dominium affordable-housing item of
+  March 14, 2024, full text and reasoning in near-miss 4 above.
+- **`residential-zoning`** — no position found. Beyond the platform, his P&Z speech is uniformly
+  **site-plan design detail**: *"Preston Taylor mentioned Building A could be oriented towards Dallas
+  Street since the road has a smaller traffic volume"*; *"stated that he is unsure of how this plan
+  would work at this location"*; *"stated he would like to see a living screening wall, but would want
+  the trees to be fully mature at time of planting"*; *"mentioned that screened parking was his
+  biggest concern… to cover any overnight parking"*; *"stated that he has concerns about the land use
+  in the downtown area"* and *"his concerns regarding this land use in the Downtown Overlay
+  District"*. Screening walls, dumpster placement, building orientation and Downtown-Overlay character
+  are **non-residential commercial site design**; none is a housing-density proposition. His P&Z
+  **chairmanship itself is board service — adjacency** — and was not used as evidence on any axis.
+- **`growth-and-development`** — no position found; nothing on pace, capacity gates, annexation,
+  approval speed or permitting fees. **`economic-development`** — no position found; his commercial
+  real-estate career is **profession**, a named refusal class. **`transportation-priorities`** — no
+  position found; asking *"if there is a timeline for constructing Dallas Street"* and whether a
+  *"Regional Trail System"* on an exhibit was existing or future are informational questions choosing
+  no mode. **`public-safety-approach`** — no position found (see the district block above).
+  **`homelessness` / `local-immigration` / `civil-rights`** — no position found; all three
+  structurally absent from the city record. **`taxes`** — researched, no row by ruling; nothing
+  tax-relevant found regardless. **`healthcare`** — no position found.
+- His **July 23, 2024** UNB Investments vote is explicitly unexplained: *"Preston Taylor also echoed
+  his intentions of voting in opposition"* — echoing an intention is not stating a reason, and the
+  rezone was denied 7-0.
+
+### Rendell Hendrickson — Council Member Place 2 — `af2697d7-f766-4ddd-8b61-65e5d0c2df70`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** **Chairman of the Planning & Zoning Commission**
+through at least February 2023 before joining Council; the **second-most-quoted** of the six across
+the 2023–2025 window. No Ballotpedia page, no campaign website (none captured by Wayback under seven
+tested domains), no press quote found.
+
+- **`residential-zoning`** — no position found. **NEAR-MISS, REFUSED** (near-miss 2, July 11, 2023,
+  Skorburg multifamily PD). Two further refusals: his **January 14, 2025** Ashton Woods remarks —
+  *"he also has some concerns along the lines of highest and best use for the area… because North
+  Creek to the south… there's some value to some sort of transition, but he would like to know if
+  townhomes would be lining the North Creek Estates property line"*, closing with *"he feels like he
+  does not have enough information yet"* — are a **request for information** about one concept map,
+  and land-use *transition* between a subdivision and its neighbour is not a position on citywide
+  density; and his **April 25, 2023** *"he likes the product, but not the location"* concerned a
+  **self-storage facility**, which is not housing at all.
+- **`economic-development`** — no position found. His **March 26, 2024** Downtown Overlay remarks
+  (*"this request is a big deviation from the DOD vision, and while some modifications were made and
+  the idea is great, it still looks different"*, asking for a *"Welcome to Downtown Melissa"* monument,
+  awning or lighting *"to make it feel like it is part of the DOD and not just another strip mall"*)
+  are **architectural design feedback**; every chair on this scale is an **incentive** proposition
+  (abatements, subsidies, community-benefit agreements), which he never touches. His **September 26,
+  2023** convenience-store remark is commercial-viability speculation about one lot. His question about
+  Collin County bond-program submission approaches is a process question about someone else's bond.
+- **`transportation-priorities`** — no position found. *"Rendell Hendrickson asked where the City's
+  stands on improvements to Telephone Road"* (July 11, 2023) is a **jurisdiction/maintenance** question
+  — Telephone Road is split with Collin County — and maintenance framing is a named refusal class. His
+  trail question on January 14, 2025 (*"would the plan be to connect to the trail system that is open
+  to the community or is it more intended for a specific residential community only"*) concerns public
+  **access** to a private amenity, not where the city should put transportation money.
+- **`public-safety-approach`** — no position found. His towing-ordinance questions (*"asked if there
+  was already a code regarding this or if we are just adding to"*) and his ambulance-interlocal
+  questions (*"asked if it is common practice to leverage and partner with other cities"*) are
+  informational; neither touches staffing, pay, equipment levels or budget priority.
+- **`growth-and-development` / `housing`** — no position found on either. **`homelessness` /
+  `local-immigration` / `civil-rights`** — no position found; structurally absent. **`taxes`** —
+  researched, no row by ruling; he is a named subject of the block above. **`healthcare`** — no
+  position found.
+- One near-lead closed: on **July 23, 2024** he *"asked if the public hearing was still open… stated
+  that he would speak after the public hearing closed."* **He never did** — the minutes carry no
+  further Hendrickson statement that night and the item was denied 7-0. Recorded so a later pass does
+  not chase it.
+
+### Dana Conklin — Council Member Place 3 — `30680496-7464-495c-a9bc-eb44cc6b84b8`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** The **most frequently quoted of the six** (60
+attributed statements across the corpus) and the only one whose 2024 race was contested by a candidate
+with any online footprint — and every one of those statements is a clarifying question or a design
+preference. **President of the Crime Control and Prevention District temporary board.** No Ballotpedia
+page; a Facebook officeholder page exists but Facebook is unfetchable here and has no Wayback capture.
+
+- **`residential-zoning`** — no position found. **NEAR-MISS, REFUSED** (near-miss 3). A second
+  refusal: her rezone-**process** position, stated twice on the Scooter's Coffee item — *"her concerns
+  with rezoning the entire tract of the land with only a portion of the tract having development plans
+  submitted. With only one portion submitted, Council has no indication of what a future development
+  on the remainder of the tract would look like"*, and *"in the past a concept plan or planned
+  development has been requested during a rezone so that Council has an idea of what could be
+  developed."* This is a real, repeated, principled position — but it is about **entitlement process
+  and information**, on a **commercial** tract, and it is compatible with every chair on a
+  housing-density scale. A statement compatible with five chairs locates none. Her January 14, 2025
+  remark that she *"had concerns with residential on the Collin County Outer Loop as it would be
+  better suited for commercial retail"* is the same single-tract highest-and-best-use class refused
+  for Ackerman.
+- **`economic-development`** — no position found. Her contribution to the Downtown Overlay negotiation
+  is aesthetic and regulatory (*"there are physical screening and landscape screening requirements
+  which could help with the safety of Melissa Road"*; *"Council wants this to look like the DOD"*;
+  thanking a developer *"for working with Council… to help achieve the look of the Downtown Overlay
+  District"*), and her light-industrial-rezone concern was expressly *"with the facades… wanted to
+  ensure quality of the look of the site."* Design standards are not incentive policy.
+- **`public-safety-approach`** — no position found, despite presiding over the Crime Control District's
+  temporary board; see the district block. Her fire-apparatus questions (used 2019 pumper vs new 2023)
+  are **procurement diligence**, and a single apparatus purchase is not a funding-level position.
+- **`transportation-priorities`** — no position found. Asking Staff *"to bring an update to Council
+  regarding Telephone Road"* and requesting the City *"contact Collin County in addressing Telephone
+  Road"* is constituent-service follow-up on a multi-jurisdictional maintenance problem; asking *"if
+  solar street lights could be further explored"* is a lighting-technology question.
+- **`housing` / `growth-and-development`** — no position found on either. **`homelessness` /
+  `local-immigration` / `civil-rights`** — no position found; structurally absent, and her
+  **Facilities Manager role at Melissa United Methodist Church** (surfaced in a 2023 P&Z packet as the
+  contact on a church shade-structure application) is **profession**, from which no inference was
+  drawn on any axis. **`taxes`** — researched, no row by ruling; she is a named subject of the block
+  above. **`healthcare`** — no position found.
+
+### Joseph Armstrong — Council Member Place 4 — `12d3560f-3b07-4fe7-b8c4-c2466c13e7eb`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** On Council since May 2022, re-elected May 3,
+2025 in a race with no other filer for Place 4 — so **no contested campaign generated a questionnaire,
+Q&A or forum** for him. **Vice President of the Fire Control District temporary board.** The
+Ballotpedia trap described above is his; nothing from it was used.
+
+- **`growth-and-development`** — no position found. **NEAR-MISS, REFUSED** (near-miss 5, the park-fee
+  waiver, January 14, 2025). His other statement that night — *"he is in support of the land-use and
+  trusts Staff to vet the process and bring back their recommendation"* — is support for **one
+  single-family land use** plus deference to staff, which names no pace, gate or fee posture; and his
+  observation on the PID financing that *"while it is slightly cheaper, there is more risk involved in
+  the other version"* is a debt-structure comparison.
+- **`residential-zoning`** — no position found. *"Joseph Armstrong stated that it could be questioned
+  that if a coffee shop is the best use for this tract"* and *"for him, it is not the highest and best
+  use of this property"* (September 26, 2023, a convenience store) are single-site commercial
+  judgments, off the housing-density axis. **`economic-development`** — no position found; his
+  Downtown-Overlay contribution is *"Council does not want to waste the developers' time, but want to
+  make sure that they are giving clear directions"* — process courtesy — and his question *"Staffs'
+  take on how this project fits into the DOD"* is informational.
+- **`public-safety-approach`** — no position found. *"Joseph Armstrong asked if it is safe to assume
+  public safety reviewed the proposed ordinance"* is a procedural check; *"asked what happens to the
+  person when their car gets towed"* is an operational question about the towing ordinance. His Fire
+  District vice-presidency is board service. **`transportation-priorities` / `housing` /
+  `homelessness` / `local-immigration` / `civil-rights`** — no position found on any; the last three
+  structurally absent. **`taxes`** — researched, no row by ruling; *"stated that he was in support"* of
+  the homestead exemptions, quoted in the block above. **`healthcare`** — no position found.
+
+### Craig Ackerman — Council Member Place 5, Mayor Pro Tem — `c5d9869d-6e7b-448d-bb48-43c2cd795d9a`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** Mayor Pro Tem throughout the documented window
+and the council's most frequent mover of motions. **Vice President of the Crime Control District
+temporary board.** No Ballotpedia page; a Facebook officeholder page exists but is unfetchable;
+`craigackerman.com` has 2009/2018 Wayback captures that are an empty parking iframe and are **not
+confirmed to be him** — rejected rather than used.
+
+- **`residential-zoning`** — no position found. **NEAR-MISS, REFUSED** — near-miss 1, the July 11,
+  2023 Skorburg multifamily PD, and **the closest call of this entire section**. A second refusal: on
+  **July 23, 2024** he *"stated that he does not plan to go against the recommendation of the Planning
+  and Zoning Commission"* on the UNB Investments single-family PD — that is **deference to a
+  recommending body**, an institutional-process position that would read identically whatever the
+  recommendation had been.
+- **`economic-development`** — no position found. *"Craig Ackerman stated that Green Acres Nursery
+  does look like it will be a cut above the standard nursery"* is a compliment to one applicant;
+  *"Holcim has taken the neccesary steps to be the best neighbor that they can be"* and *"the City can
+  request reports of the noise readings"* concern an existing concrete-batching plant's SUP renewal and
+  nuisance monitoring. Neither engages incentives.
+- **`growth-and-development`** — no position found. His Downtown-Overlay summation (*"it seems like
+  Council is all on the same page regarding keeping this feeling like it is part of the DOD with
+  architecture and design elements, but in order to accommodate everyone's wishes, coming back with a
+  better layout of the feedback Council has given tonight"*) is **the presiding officer summarising the
+  body's consensus**, which attribution control 14 explicitly refuses; and his Scooter's Coffee remarks
+  (*"he liked the plan for the 0.5 acre and has no reservations"*; suggesting *"parameters be placed on
+  the planned development so that future owners will have guidance"*) are entitlement drafting on one
+  parcel.
+- **`public-safety-approach`** — no position found, despite the Crime Control District vice-presidency;
+  see the district block. His janitorial-contract question about **CJIS-restricted areas of the Public
+  Safety Building** is a facilities-security detail, and his fire-apparatus maintenance question is
+  procurement.
+- **`transportation-priorities` / `housing` / `homelessness` / `local-immigration` / `civil-rights`** —
+  no position found on any; the last three structurally absent. **`taxes`** — researched, no row by
+  ruling; he moved the FY2023 statutory tax-rate motions and asked the FY2025 exemption-headroom
+  question, both quoted above. **`healthcare`** — no position found.
+
+### Sean Lehr — Council Member Place 6 — `b3602d0c-9af7-4baf-a96c-a15be063c272`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** **The thinnest record of the six, and the
+thinnest this plan has seen — with a structural reason that is itself the finding.** A targeted sweep
+of every occurrence of his name across the entire 9.3 MB corpus returns **exactly zero
+member-attributed statements**. He appears **only** as: roll-call presence or absence, mover or
+seconder of a motion, a name in a vote tally, a record-vote checkbox line
+(`SEAN LEHR ____X__ FOR ________ AGAINST`), and as **President of the Fire Control, Prevention and EMS
+District temporary board** — board service, the named adjacency class. In four years of narrated
+Melissa minutes he is never recorded saying anything substantive about any subject. This is not a
+gap in what was read; it is what the record contains.
+
+He compounds it with the **smallest online footprint of the six**: no Ballotpedia page (404 stub,
+51,204 bytes, re-verified in the self-audit), **no campaign website — `seanlehr.com` and
+`lehrformelissa.com` have no Wayback captures at all**, no campaign or officeholder Facebook page
+found, no press quote, no questionnaire, and no bio on the city site (Melissa publishes none for
+anyone). The only third-party result his name returns is a white-pages directory listing.
+
+Per-topic, therefore: **housing, residential-zoning, growth-and-development, economic-development,
+public-safety-approach, transportation-priorities, homelessness, local-immigration, civil-rights** —
+no position found on any (the last three also structurally absent from the city record);
+**taxes** — researched, no row by ruling (he seconded the FY2023 tax-levy ordinance, unexplained);
+**healthcare** — no position found. His one non-unanimous vote, the September 26, 2023 opposition to
+denying a convenience store, carries **no recorded reason** and concerns commercial siting, off-axis
+for all eleven topics.
+
+---
+
+**Melissa reconcile (222-12 Task 1):** all six council members are accounted for — **all six in
+bucket 2 for all eleven topics each. 66 attempted pairs = 0 proposed chairs + 66 register blanks.**
+No person is in neither bucket; no (person, topic) pair is in both. With Mayor Northcut already
+stanced, every Melissa officeholder is now fully attempted. **No Pitfall-5 trigger:** Melissa is not
+at zero stances (the mayor carries rows), so its `coverage.js` entry needs no flip, and this plan
+changes production by nothing at all. **Per the standing instruction, this plan authors NO migration
+and claims NO migration number.**
+
+**Prior-note ledger.** All six carry 8 `inform.politician_context` found-nothing rows from the
+2026-05-12 pass, covering the 8 Local Lens topics — **48 notes in total, and all 48 are independently
+corroborated by this pass.** No note was overwritten, and no Lavine-precedent upgrade was attempted:
+the two sources the prior pass could not have read (Taylor's expired campaign site, recovered via
+Wayback; the scanned minutes, recovered via agenda packets) were both recovered here **and both still
+yield nothing**, which strengthens rather than displaces the prior finding. Melissa's 2026-05-12
+blanks were correct.
+
+**Self-audit (222-12 Task 1).** The contract is 100% re-verification of any value-1/value-5 stance
+plus a ≥20% sample of the rest. **No stance of any value is proposed, so the 100% clause is vacuous;
+the sampling clause was applied to the blank-decisive documents instead, at well above 20%.** Four
+independent re-fetches were run by `curl` (cache-bypassing, per note 18): **(a)** the Wayback capture
+of `prestonformelissa.com` was fetched a second time (HTTP 200, 99,343 bytes) and both platform
+sentences — *"balance between residential and commercial space"* and *"maintain the hometown feel
+while providing positive economic development"* — were grep-confirmed present, sustaining every
+refusal in Taylor's entry; **(b)** the **July 11, 2023** council packet (`_08072023-300`) was
+re-downloaded from scratch and re-extracted, confirming verbatim *"doesn't believe it could be the
+highest and best use for this tract"* (Ackerman), *"in order for him to move forward, he would need to
+see a commercial aspect"* (Hendrickson) and *"would prefer a mixed-use development with something that
+is unique and different, not cookie-cutter"* (Conklin), with the **July 11, 2023** minutes header
+confirmed on the same read — this fixes the date of the section's three closest calls; **(c)** the
+**April 11, 2024** P&Z packet (`_04112024-347`) was re-downloaded (42,020,724 bytes, MD5 identical to
+the first fetch) and the sentence *"Preston Taylor agreed and stated that he is not sure this is the
+best use for this location"* was recovered verbatim with the **March 14, 2024** minutes header —
+correcting a working assumption that this passage lived in the March packet, since **Melissa packets
+carry the *prior* meeting's minutes**; **(d)** three Ballotpedia pages (`Preston_Taylor`, `Sean_Lehr`,
+`Craig_Ackerman`) were re-fetched with a browser UA and all three returned **HTTP 404** at stub size,
+sustaining the no-Ballotpedia-coverage finding. **No demotions occurred, because nothing was
+promoted — zero chairs were proposed. Five on-topic near-misses were refused on the record instead**
+(Ackerman/residential-zoning, Hendrickson/residential-zoning, Conklin/residential-zoning,
+Taylor/housing, Armstrong/growth-and-development), together with the Crime Control District's
+unexplained unanimous adoption for all six. The operator wanting to revisit any of them should start
+with **near-miss 1 (Ackerman)** and **near-miss 4 (Taylor)**, whose full evidence is preserved
+verbatim above.
