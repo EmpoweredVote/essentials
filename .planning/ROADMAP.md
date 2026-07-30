@@ -709,7 +709,7 @@ Plans:
 
 **Wave 11** *(blocked on Wave 10 completion)*
 
-- [ ] 222-11-PLAN.md — Councils: Fairview + Princeton
+- [x] 222-11-PLAN.md — Councils: Fairview + Princeton
 
 **Wave 12** *(blocked on Wave 11 completion)*
 
