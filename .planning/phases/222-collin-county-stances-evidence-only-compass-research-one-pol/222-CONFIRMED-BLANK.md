@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 630
+## Count: 684
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -80,8 +80,20 @@ found-nothing notes are independently corroborated). Melissa's zeros rest on thr
 its 2025–2026 council minutes are strictly action-only ("There was no Council discussion."), every
 standalone Minutes PDF it publishes is a text-layerless Brother-scanner image (recovered instead from
 the following meeting's agenda packet), and its official site carries no officeholder bios at all.
-Five on-topic near-misses were refused on the record. **222-12 authors NO migration and claims NO
-migration number.**
+Five on-topic near-misses were refused on the record. **222-12 Task 1 authors NO migration and claims
+NO migration number.**
++ 54 by 222-12 Task 2 (Farmersville council — 5 people × 11 topics = 55 attempted pairs, **1 chair
+proposed: Mike Henry / residential-zoning = 3**, 54 blanks; **all 54 are SETTLED**). Farmersville
+publishes **only RICOH-scanner images with no text layer — minutes and agenda packets alike**, so the
+Melissa agenda-packet recovery does not work here; the corpus was unlocked instead by **OCR'ing all
+133 minutes PDFs (1,050 pages, 2.07 MB of text, Jan 2021 → Jun 2026)** with Tesseract. Unlike Anna,
+Fairview and Melissa, **Farmersville's minutes narrate member-attributed discussion throughout**, so
+these zeros are the harder class: much speech, almost none of it on a compass axis. Nine on-topic
+near-misses were refused on the record, and **five identity traps were rejected** — including a live,
+populated `ballotpedia.org/Mike_Henry` that is a Virginia political operative. **⚠ If the Henry chair
+is approved it moves Farmersville 0 → 1 stance — the first `coverage.js` Pitfall-5 trigger of this
+phase** (see execution note 29) — and 222-12 would then author a migration and claim a number; if the
+chair is rejected, no migration and no number.
 222-13 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -8593,3 +8605,854 @@ Taylor/housing, Armstrong/growth-and-development), together with the Crime Contr
 unexplained unanimous adoption for all six. The operator wanting to revisit any of them should start
 with **near-miss 1 (Ackerman)** and **near-miss 4 (Taylor)**, whose full evidence is preserved
 verbatim above.
+
+---
+
+## City of Farmersville (4825488) — 222-12
+
+**Scope, stated once.** Plan 222-12 Task 2 researches **the five City Council members of Farmersville**
+(Collin County, Texas). **Mayor Craig Overstreet is out of scope here** — he was attempted in full by
+222-08 and appears above under `## City of Farmersville (4825488) — 222-08` with 11 of 11 blanks; he
+was not re-researched, re-reasoned or modified by this pass. All five politician_ids were re-verified
+live against production by the orchestrator on 2026-07-30 as **0 answer rows and 0 context rows**.
+**No prior 2026-05-12 found-nothing notes exist for any of these five**, so nothing here corroborates
+or displaces an earlier pass.
+
+**Attempted:** 2026-07-30 — **5 people × 11 canonical topics = 55 (person, topic) pairs.**
+
+| Person | Title | politician_id | Term evidence (all from primary documents read this session) |
+|---|---|---|---|
+| Coleman Strickland | Council Member Place 1, **Deputy Mayor Pro-Tempore** | `94252f68-40d6-4e82-8f10-1015a85fa403` | elected **May 6, 2023** in a three-way contested race (194 of 252 votes, 77%, over Mary Berry and Richard Repp); sworn in the week of **May 23, 2023**; **re-elected unopposed May 2, 2026** (election cancelled, certificate presented **May 18, 2026**); chosen Deputy Mayor Pro-Tem **May 19, 2025** |
+| Russell ("Russ") Chandler | Council Member Place 2 | `eb6c2d0f-ea9f-420c-81bb-eb3d6287214d` | **appointed October 21, 2024** to fill the remainder of the term vacated by Terry Williams (sworn that night); **elected unopposed May 3, 2025**; sworn **May 19, 2025** |
+| Kristi Mondy | Council Member Place 3 | `fae40714-a182-4e37-9bac-1afe754b4561` | **appointed June 2, 2025** to the Place 3 vacancy left by Ted Wagner; **sworn June 16, 2025**; **re-elected unopposed May 2, 2026** to her first full three-year term |
+| Mike Henry | Council Member Place 4, **Mayor Pro-Tempore** | `5712d682-ffd5-4e6d-afa8-9707613fd838` | **the longest-serving of the five** — already seated when this corpus opens (**January 26, 2021**); re-elected unopposed to a second Place 4 term **May 7, 2022**; re-elected and sworn **May 14, 2024**; Mayor Pro-Tem continuously through the documented window (re-elected to it unanimously May 19, 2025) |
+| Tonya Fox | Council Member Place 5 | `eab3bbe2-4103-49a2-a0bf-d45acc9d54e0` | **appointed and sworn March 17, 2025** to the Place 5 vacancy left by Lance Hudson; **elected unopposed May 3, 2025**; sworn **May 19, 2025** |
+
+---
+
+### 🔴 RESULT — ONE CHAIR PROPOSED. THIS FLIPS A ZERO-COVERAGE CITY.
+
+**1 chair proposed + 54 of 55 attempted (person, topic) pairs are honest blanks. All 54 are SETTLED.**
+
+> ⚠ **PITFALL-5 TRIGGER — READ BEFORE APPLYING.** Farmersville is currently at **zero stances across
+> every officeholder** (Mayor Overstreet 0, all five council 0), so it carries **no coverage chip
+> today**. The single chair below is the **first stance the government would ever hold**, which means
+> this is the **first plan in phase 222 to move a government from 0 → ≥1** and therefore the first to
+> trip `coverage.js` Pitfall 5 (execution note 29 records that no plan had done so as of 222-11).
+> If this chair is applied, `src/lib/coverage.js` must be updated so Farmersville flips to
+> `hasContext: true`, and the operator should re-run the split-section check and the browse spot-check
+> for geo_id **4825488**. If the operator rejects the chair, Farmersville stays at zero, no migration
+> is authored, no migration number is claimed, and `coverage.js` needs no edit.
+
+**The chair:**
+
+| full_name | politician_id | topic_key | topic_id | value |
+|---|---|---|---|---|
+| Mike Henry | `5712d682-ffd5-4e6d-afa8-9707613fd838` | `residential-zoning` | `d4f18138-a2e0-4110-b925-7387d9d0d16d` | **3** |
+
+Full evidence, the chair-elimination argument, and the resample record are in **Mike Henry's entry**
+below. It rests on **six dated, named actions in signed City Secretary minutes across five years**,
+including a self-authored citywide density proposal with specific numbers and the member's own motion
+to adopt the ordinance enacting it. **It is not a defaulted middle value** — chairs 1, 2, 4 and 5 are
+each excluded by a specific dated act, and chair 3 is affirmatively supported by two of them.
+**Flagged for operator review** on account of the zero-coverage flip.
+
+---
+
+### The structural facts that produce Farmersville's zeros — and the one that nearly produced 55 of them
+
+**1. Every PDF the City of Farmersville publishes is a RICOH scanner image with no text layer.**
+All 133 City Council Minutes PDFs downloaded this session (Jan 2021 → Jun 2026) return **2–21 bytes**
+from `pdftotext -layout`, and `pdfinfo` reports `Creator: RICOH IM C6010` on every one. **The agenda
+packets are the same** — the March 16, 2026 packet is **142 pages / 28.9 MB and yields 142 bytes of
+text**; `pdfimages -list` shows every page is a 300-dpi CCITT/JPEG scan. **There is no text-layer
+recovery route in Farmersville.** The Melissa method (go to the next meeting's CivicPlus agenda packet
+for a text layer) **does not work here**, because Farmersville's packets are scans too.
+> **RECOVERY — and the single most important method note for any future Farmersville pass: the corpus
+> was unlocked with OCR.** `pdftoppm -r 200 -gray -png` + `tesseract --psm 6`, six-way parallel, over
+> all 133 files = **1,050 pages** and a **2.07 MB master text corpus** in about twelve minutes on the
+> operator's machine (Tesseract 5 is installed at `C:/Program Files/Tesseract-OCR`). Quality is high:
+> ordinance captions, member names, motion/second/tally lines and narrated discussion all come through
+> cleanly. **Everything in this section that is not from a newspaper came out of that corpus.** Without
+> OCR this city is a total blank; with it, Farmersville has the richest member-attributed discussion
+> record of any small town this phase has touched.
+
+**2. Farmersville's minutes NARRATE member discussion — unlike Anna, Fairview and Melissa.**
+This is the finding that distinguishes Farmersville from every other small town in phase 222. Anna's
+and Fairview's minutes are action-only; Melissa's went action-only in 2025. Farmersville's clerk
+records member-attributed statements at length — *"Mike Henry suggested the following for MF-2 —
+Multifamily Residence-2: o Height from four stories max to three stories max o Reducing it down to 18
+units per acre instead of 24"* — throughout the whole 2021–2026 window. The **five-member statement
+extraction** run against the corpus returned **1,652 lines mentioning Henry, 656 Strickland, 355
+Chandler, 299 Fox and 219 Mondy.** The zeros below are therefore **not** the "the record contains no
+speech" class. They are the harder and more honest class: **the record contains a great deal of
+speech, and almost none of it engages a compass axis.**
+
+**3. Farmersville's official website carries no officeholder biographies at all.**
+All five directory pages — `/city-council/directory-listing/coleman-strickland`,
+`/mayor-council/directory-listing/russell-chandler`, `/city-council/directory-listing/kristi-mondy`,
+`/city-council/directory-listing/mike-henry`, `/city-council/directory-listing/tonya-fox` — were
+fetched and read in full. Each contains **only** the person's name, their position line
+("Deputy Mayor Pro-Tempore, Place 1"), and an email link. No bio, no priorities statement, no
+committee list. This closes the "official bio" source class for all five at once, exactly as 222-08
+found for Mayor Overstreet.
+
+**4. Four of the five have never faced a contested election, and none of the five has ever answered a
+questionnaire.** Chandler (appointed 2024, unopposed 2025), Mondy (appointed 2025, unopposed 2026) and
+Fox (appointed 2025, unopposed 2025) were each **appointed to a vacancy and then ran unopposed**;
+Strickland's only contested race was **May 2023** and his 2026 re-election was uncontested (the city
+cancelled the election under the Texas Election Code). Only Strickland has ever had an opponent. **No
+campaign generated a platform document, a forum, a Q&A or a questionnaire for any of the five**, and
+none was found.
+
+---
+
+### Evidence checked
+
+Every item below was fetched and read this session unless listed under "unavailable".
+
+- **The complete City Council minutes corpus, January 2021 → June 2026 — 133 PDFs, 1,050 pages,
+  OCR'd in full.** Enumerated exhaustively from the city's Drupal/CivicPlus meetings index across all
+  five pager pages (`https://www.farmersvilletx.com/meetings/recent?boards-commissions=71&page=0` …
+  `&page=4`, **216 rows back to January 8, 2019**), which exposes agenda, agenda-packet and minutes
+  PDFs at plain `https://www.farmersvilletx.com/media/NNNN` URLs. Per-year file counts OCR'd:
+  **2021: 25 · 2022: 26 · 2023: 23 · 2024: 23 · 2025: 24 · 2026: 12.** Swept for every compass axis
+  with member-name attribution. **Counts in the 2.07 MB corpus:** `panhandl*`, `public camping`,
+  `encampment`, `sanctuary`, `ICE detainer`, `immigration`, `Chapter 380`, `380 agreement`,
+  `tax abatement`, `townhome`, `accessory dwelling`, `short-term rental`, `police staffing` — **zero
+  hits each**; `homeless` **4 hits**; `civil right` **2 hits**; `healthcare`/`health care` **3 hits**;
+  `affordable housing` **1 hit**; `moratorium` **1 hit**. Against that: `multifamily`/`multi-family`
+  **34**, `apartment` **63**, `density` **16**, `duplex` **13**, `annex` **71**, `impact fee` **38**,
+  `comprehensive plan` **29**, `subdivision` **50**.
+- **The Farmersville Times** (`farmersvilletimes.com`) — the town's own newspaper, and the source
+  222-08 correctly identified as the richest secondary vein. **Searched per person across all
+  available result pages** (`/?s=Strickland`, `/?s=Chandler`, `/?s=Mondy`, `/?s=Tonya+Fox`,
+  `/?s=Mike+Henry`, `/?s=Councilmember+Henry`, plus `/page/2/` and `/page/3/` for each; the index is
+  exhausted at ~20 results per name). **29 articles fetched and body-extracted**, including:
+  `/2023/05/07/strickland-wins-council-place-1-…`, `/2023/06/01/strickland-wagner-sworn-into-office/`,
+  `/2024/05/23/new-city-leadership-installed-at-council-meeting/`,
+  `/2024/10/24/council-hears-trail-annexation-concerns-at-meeting/`,
+  `/2025/02/20/local-election-filings-complete/`,
+  `/2025/05/22/councilmembers-sworn-in-parkway-project-moves-forward/`,
+  `/2025/06/12/council-seats-filled-through-appointments-election/`,
+  `/2025/06/19/council-hears-first-look-at-2025-26-budget/`,
+  `/2025/09/11/hearing-sept-15-on-proposed-property-tax-increase/`,
+  `/2025/10/23/council-rejects-property-purchase/`,
+  `/2026/01/08/city-manager-resigns-council-approves-separation/`,
+  `/2026/01/30/repairs-to-city-buildings-prioritized/`,
+  `/2026/02/12/mondy-strickland-seek-reelection/`,
+  `/2026/02/19/no-challengers-emerge-as-council-filing-ends/`,
+  `/2026/02/26/parkway-updates-chaparral-trail-modifications-presented/`,
+  `/2026/03/05/building-repairs-parkway-progress-lead-council-agenda/`,
+  `/2026/05/21/city-manager-search-underway-ots-paused/`, `/2022/05/11/its-a-home-run-for-home-rule/`,
+  `/2023/04/20/high-speed-fiber-in-city-closer-to-reality/`,
+  `/2023/10/19/market-drives-water-rate-increase-per-city-officials/`. **222-08's "effectively
+  paywalled" finding is confirmed and refined**: the free web body carries the lede plus two to five
+  real paragraphs and then truncates to *"For more on this story see the … print, or digital
+  edition."* Those free paragraphs are substantive and are the source of every term fact in the table
+  above — but **no article in the archive contains a policy position by any of the five** beyond what
+  is already recorded below.
+- **Ballotpedia — checked for all five with a browser User-Agent via `curl`, and re-checked during the
+  self-audit.** `Coleman_Strickland` (**404**, 51,348 bytes), `Russell_Chandler` (**404**, 51,316),
+  `Russ_Chandler` (**404**, 51,268), `Kristi_Mondy` (**404**, 51,252), `Tonya_Fox` (**404**, 51,204) —
+  all five are Ballotpedia's 404 stub. `Municipal_elections_in_Collin_County,_Texas_(2024)`,
+  `…(2025)` and `…(2026)` were all fetched (284 KB / 147 KB / 308 KB) and contain **zero occurrences
+  of "Farmersville" and none of the five names**; the only "Chandler" strings in them are
+  **Chandler, Arizona**. Farmersville is below Ballotpedia's municipal coverage scope. **Yield: zero,
+  as execution note 11 predicts.** See the homonym block for `Mike_Henry`, which is **not** a 404.
+- **Campaign and officeholder websites.** Wayback CDX was queried for `colemanstrickland.com`,
+  `strickland4farmersville.com`, `votecolemanstrickland.com`, `kristimondy.com`,
+  `mondyforfarmersville.com`, `tonyafox.com`, `tonyafoxfarmersville.com`, `mikehenryfarmersville.com`
+  and `russchandler.com`. **No captures exist for any of them** except `russchandler.com`, whose only
+  captures are from **2001–2002** at 378–430 bytes — twenty-three years before this Chandler took
+  office, unconnected to Farmersville, and **rejected as a homonym rather than used.**
+- **Third-party news sweeps, per person.** `starlocalmedia.com/search/?q=Farmersville+<name>`,
+  `localprofile.com/?s=Farmersville+<name>` and `dallasexpress.com/?s=Farmersville+<name>` were each
+  fetched for all five (15 searches). **Star Local Media** returns only unrelated items (high-school
+  sports rosters, a Collin County military-service memorial list, a general Old Time Saturday
+  feature); **Local Profile** returns **zero headlines** for every name; **Dallas Express** returns
+  *"No results found"* for every name. Two WebSearch discovery passes were also run and surfaced
+  nothing beyond the Farmersville Times, the city's own pages, `txdirectory.com` and
+  `directory.tml.org` (bare directory entries with contact data only).
+- **The city's Elections page** (`farmersvilletx.com/elections`) — read in full. It is stale (still
+  showing the pre-May-2025 roster) and carries only notices, ballot-order drawings and **candidate
+  finance reports for the 2024 mayoral race**; it contains **no policy content and no candidate
+  filings for any of the five.**
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position. **None of these blocks the chair or changes any blank**, which is why all 54 zeros are
+classified settled:
+
+- **Facebook is unfetchable from this environment — HTTP 400.** Confirmed by direct test against
+  `facebook.com/p/Coleman-Strickland-for-Farmersville-City-Council-Place-1-100090108833036/`
+  (400, 1,542 bytes), which WebSearch confirms exists as a real 2023 campaign page. **Wayback holds no
+  capture of it.** Mitigation: social posts are not evidence of a policy position absent a direct
+  citable quote. Retry path: a real logged-in browser session. This is the largest single unread
+  surface for Strickland specifically.
+- **Council meeting VIDEO was not watched.** Farmersville streams and archives on **BoxCast**
+  (`boxcast.tv/channel/pjlmoamwdrud0o6wncn9`, fetched, 20,564 bytes). Video is not readable by this
+  pass. Because the minutes **paraphrase in the third person** rather than transcribe, the video is
+  where every member's actual first-person phrasing lives. **This is the single highest-value unread
+  Farmersville source and the named retry path for upgrading any blank below into a quote.**
+- **The October 20, 2025 minutes are not published.** The meetings index lists that meeting with an
+  **Agenda Packet only** (`/media/8996`, 105 pages — downloaded and OCR-sampled this session to
+  confirm it is the *agenda*, not minutes). Eleven other 2025–26 meetings are likewise minutes-less
+  (Jul 20 2026, Jul 16 2026, Jul 6 2026, Jun 30 2026, May 29 2026, May 14 2026, Nov 18 2025,
+  Aug 25 2025, Jun 12 2025, Apr 14 2025, Feb 17 2025) — most are work sessions the city states carry
+  no minutes, plus the three most recent meetings whose minutes are not yet approved. **The Oct 20
+  gap matters** because that is the meeting where Council unanimously rejected the 111 N. Johnson
+  Street police/fire building purchase; Chandler's stated reason survives **only** in the Farmersville
+  Times. Mitigation: that reason is refused on the merits regardless (see his entry).
+- **The Farmersville Times' full article text** sits behind `publisher.etype.services/Farmersville-Times`
+  and the print/digital edition. Not obtained. Named retry path for a future pass.
+- **`communityimpact.com/search` — HTTP 403**, phase-wide. In any case 222-08 established Community
+  Impact's Collin County coverage does not extend to Farmersville, and nothing this session
+  contradicts that.
+- **`lwvcollin.org` / VOTE411** — not retried; both confirmed CLOSED for this phase (403;
+  post-election guides decommissioned). Moot here regardless: four of the five never had an opponent.
+
+---
+
+### ⚠ HOMONYM AND MISATTRIBUTION TRAPS REJECTED — five, every one caught before any evidence was used
+
+Farmersville produced more identity traps than any city this phase, and **not one word from any of
+them was used.**
+
+1. **`ballotpedia.org/Mike_Henry` resolves HTTP 200 (62,635 bytes) and is a Virginia political
+   operative** — a Democratic strategist, Chief of Staff to Senator Tim Kaine, based in Washington,
+   D.C., with a decades-long campaign-management résumé and an explicit party label on the page. It is
+   **not** the Farmersville Place 4 councilmember. This is precisely the hazard execution note 10
+   describes: under the old 403 this page was unreachable and harmless; unlocked, it returns
+   confidently and in depth, **with a party affiliation, in a phase where party is never used and
+   never displayed.** Office, state and city were all checked on the page itself and all three fail.
+   **Rejected outright.** Note that Henry is the one member who *does* receive a chair here — and the
+   chair rests entirely on Farmersville city minutes, with **zero** input from this page.
+2. **"Tony Strickland" is not Coleman Strickland.** Tony Strickland appears in the April 13, 2021 and
+   June 8, 2021 minutes as the representative of **Nelson Bros. Concrete**, speaking on a concrete
+   batch plant. Coleman Strickland was not on the Council until May 2023. Excluded.
+3. **"Chandler Williams" is not Russell Chandler.** Chandler Williams is a **Farmersville Fire
+   Department captain** (introduced as a new firefighter September 26, 2023; later Firefighter of the
+   Year; pictured in the cab at the May 2025 ladder-truck push-in ceremony). Excluded.
+4. **"Mr. Mondy" is not Councilmember Kristi Mondy.** **Benny Mondy** sits on the **Texoma Housing
+   Partners Board** (reappointed by Council on May 28, 2024) and reports to Council on public-housing
+   unit renovations — showers, tubs and sidewalks at the Santa Fe, Candy Street and Hamilton Street
+   properties (May 4, 2026). He is also the food-truck applicant at the centre of a March 2021 citizen
+   complaint. **His housing statements are the most on-topic `housing` material in the entire corpus
+   and none of it is hers.** Excluded. (Kristi Mondy served on the Welford School Project Committee
+   alongside Benny Mondy — a separate, volunteer capacity, itself adjacency.)
+5. **`russchandler.com`** — Wayback captures from 2001–2002 only, 378–430 bytes, no Farmersville
+   connection, twenty-three years before this Chandler took office. Rejected.
+
+**⚠ WITHIN-CITY MISATTRIBUTION GUARD.** Farmersville's minutes attribute a large share of recorded
+speech to people who are **not** the five, and this pass refused all of it for them: **Mayor Craig
+Overstreet** (whose extensive density remarks of 2021 — *"his concern was the density"*, *"he is
+concerned the proposed multifamily zoned property could be sold to someone else and they might want to
+build more units"* — belong to him as a **councilmember** in that era and are already covered by
+222-08); **former Mayor Bryon Wiebold**; **former councilmembers Terry Williams, Ted Wagner, Lance
+Hudson and Dwain Mathers** (Williams in particular proposed a **vacancy tax** on empty downtown
+buildings, and Mathers said *"we do not want negative growth, but smart growth"* — both refused for the
+five); and staff — **City Manager Ben White**, Interim City Manager **Michael Scott**, City Secretary
+**Tabatha Monk**, Finance Manager **John Lawrence**, Finance Director **Daphne Hamlin**, Police Chief
+**Marsha Phillips**, Fire Chief **Greg Massey**, City Attorneys **Alan Lathrom** and **Amy Stanphill**,
+and City Engineers **Eddy Daniel** and **Jacob Dupuis** of Dunaway — who account for most of the
+substantive content in these minutes. **Every action and quotation used below names its speaker in a
+primary document read this session, and every date was checked against that person's term.**
+
+---
+
+### `taxes` — researched for all five, NO ROW WRITTEN FOR ANY OF THEM
+
+Per the settled operator ruling of 2026-07-25. Findings preserved verbatim for any future
+municipal-scope rewrite:
+
+- **September 15, 2025 tax-rate public hearing.** Council adopted Resolution R-2025-0915-000
+  *"approving the proposed tax rate of no new revenue at .827244 per $100 valuation"* — **Henry moved,
+  Mondy seconded, approved 5-0**; **Henry** also moved the FY2025-26 appraisal roll with **Strickland**
+  seconding. The Farmersville Times reports the proposed rate as a **23.67% increase over the prior
+  year's $0.676773**, raising the average homestead bill from $1,682.94 to $2,097.91, and names
+  **Strickland, Mondy, Henry and Fox as voting in favor with Chandler absent**. **Adopting the
+  no-new-revenue rate reaches no chair on any reading**: chairs 1–2 require raising taxes specifically
+  on wealthy people and large companies; chairs 4–5 require committing to scale public services back.
+- **April 23, 2024 senior/disabled tax freeze — the single most substantive tax statement any of the
+  five has made, and still refused.** **Henry**: *"one of the reasons the Council continued to discuss
+  this was our values, if you lived in Farmersville in the past 6 years, have doubled. For our senior
+  citizens that are 65 and older or disabled that are on fixed incomes all that has done is put a
+  burden on them to try and continue to pay their taxes as well as increased gasoline prices, food
+  prices and everything else… in an effort to try and ease that on those citizens it is his
+  recommendation that we move forward with this freeze."* He then moved Ordinance O-2024-0423-001.
+  This is **exemption-and-freeze mechanics for a protected class**, squarely inside execution note 19's
+  extended refusal list, and chair 3 would be the only reachable chair.
+- **October 6, 2025 balanced-budget amendment.** **Henry moved** and **Strickland seconded** Ordinance
+  O-2025-1006-000 **reducing the General Fund from the Police Department ($91,372.00) and Rike
+  Memorial Library ($148,962.00)**, 5-0. Henry's stated reason is a **revenue** fact — *"the average
+  home value in Collin County is $550,000.00 and the average home value in Farmersville is $230,000.00
+  to $240,000.00 which is why our tax revenues are lower than what we proposed."* A forced
+  balanced-budget trim explained by an appraisal shortfall is not a position on scaling services back.
+  (This item is also refused for `public-safety-approach` — see below.)
+- **June 22, 2021 vacancy-tax discussion.** Former councilmember **Terry Williams** *"suggested
+  charging a tax to the owners of a vacant building that is not being utilized."* **Henry** replied
+  that *"if that was his building and he had to pay a tax for not using it, he would take the city to
+  court. He said that kind of tact is not the way to go in his opinion"*, and later that *"it would
+  still be up to the owner on how to use his building."* A property-rights objection to one proposed
+  penalty is not a position on taxing the wealthy or on the size of government.
+- **Utility and franchise ratemaking, separately refused under the 222-06 rule**: the Master Fee
+  Schedule water/electrical amendments, the **Atmos Energy Mid-Tex rate-review settlement** (9.27%
+  residential / 6.56% commercial, ≈$7.83 more per residential month), the **Park Development Fee**
+  ordinance (**Chandler** moved, **Strickland** seconded, December 15, 2025) and the **thoroughfare,
+  water and wastewater impact-fee** ordinances (**Henry** moved, **Strickland** seconded, March 3,
+  2025). A rate or a fee is not a tax.
+- **Appraisal-value grievances** aired at the September 15, 2025 hearing belong to residents **Jim Foy**
+  and **Randy Smith**, not to any councilmember, and are expressly refused as taxes evidence anyway.
+- **No member anywhere in the 2.07 MB corpus argues for raising taxes on wealthy people or large
+  companies, or for scaling public services back.** The ruling's premise holds exactly in
+  Farmersville. **No taxes row was written for anyone.**
+
+### `healthcare` — searched for all five; blank for all five
+
+All five chairs describe **national** healthcare policy, which no city council member holds a position
+on by role. The corpus's only health-adjacent text is **three proclamations read by the Mayor** —
+National Healthcare Week (August 18, 2025, honouring CareVide employees), the tabling of that same
+proclamation on August 4, 2025, and Community Health Care Centers Week (July 23, 2024). No member
+speaks on any of them. **No health-adjacent remark was stretched into a chair.**
+
+### `homelessness`, `local-immigration` and `civil-rights` — structurally near-absent
+
+- **`local-immigration` is absolute.** Across 1,050 OCR'd pages spanning 2021–2026: **zero** hits for
+  `immigration`, `sanctuary`, `ICE detainer`, `detainer`. **Not a single such item has ever come before
+  this council**, and Texas SB 4 is state law, not any member's position. **These five pairs are the
+  most securely settled zeros in the section.**
+- **`civil-rights` is two hits, both federal grant boilerplate.** Resolution R-2022-0913-002 *"adopting
+  required Texas CDBG Civil Rights Policy"* (September 13, 2022) and Resolution R-2023-0411-002
+  *"adopting required Community Development Block Grant Civil Rights Policies"* (April 11, 2023) —
+  **Henry moved both**, both carried 5-0 with **no discussion recorded from anyone**. A federally
+  **required** grant-compliance policy adopted without a word said is an administrative act, not a
+  position on racial or social inequality. Also refused: the Mayor's MLK Day proclamations and holiday
+  closures, the Juneteenth closure (moved by Henry, June 14, 2022, no reasoning), and the **Welford
+  School** restoration — a historic **Black** school on US-380 whose committee Kristi Mondy vice-chairs.
+  **No inference was drawn from any identity, demographic, religious or affiliation characteristic** —
+  that inference class is forbidden and was the basis of deletions from two Richardson records on
+  2026-07-25. Volunteer service on a historic-preservation committee is **adjacency**.
+- **`homelessness` is four hits and one real discussion** — the September 2, 2025 item, which is
+  **Fox's closest miss** and is set out in full in her entry below.
+
+---
+
+### The on-topic near-misses, refused on the record
+
+Recorded in full so a later pass does not re-derive them and reach a different answer.
+
+1. **Russell Chandler and Coleman Strickland — `economic-development`, April 20, 2026 (the vacant
+   downtown buildings item).** **Chandler placed the item on the agenda** and said he *"heard the
+   citizens who spoke on this issue very clearly. He did not ask for this item to want to penalize,
+   fine or anything like that, it's their buildings and they can do what they want with them. He just
+   simply wanted to discuss how we can entice the building owners to open up those buildings so they
+   can be a vital part of the City and **not penalize but incentivize**."* **Strickland** followed:
+   *"the opportunity here tonight is to identify a tool or resource for the business owners and help
+   with the code issues that are going on downtown. We can put a process into place to bring buildings
+   up to code to create opportunities for additional investments and developers to come in. **Not to
+   use this as a penalty or some sort of punishment**, that is not the intention at all."* **Both
+   refused.** *Shared vocabulary is not shared subject* — every chair on this scale is a proposition
+   about **what incentives a city should offer to attract businesses and employers** (no incentives /
+   small-business programs only / targeted incentives with community-benefit and job-quality
+   conditions / significant abatements for major employers / maximum incentives for any large
+   employer). Neither member engages that axis: both are choosing **enforcement posture toward existing
+   owners of existing buildings** — carrot rather than stick on code compliance and vacancy — and
+   neither names a single incentive instrument, dollar figure, eligibility rule or scale. The Mayor,
+   not either of them, is the one who names the city's actual instruments (*"the grants that are
+   available, some are 50% and some are 100%"*). **The two closest calls of this section after the
+   Henry chair; flagged for operator review.** The same posture appears from **Henry** five years
+   earlier on the identical subject (June 22, 2021, quoted in the `taxes` block) and is refused for the
+   same reason.
+2. **Tonya Fox — `homelessness`, September 2, 2025.** Item H, *"Update, consider and discussion
+   regarding vagrancy and homelessness"* — **Fox co-sponsored it** (*"Councilmember Fox stated this is
+   her item as well"*) and said *"we have noticed an increase in people who are unable to reside in
+   permanent residences. **She would like for the police to identify and try an assist those they can
+   assist**."* She later *"stated her appreciation to Chief Phillips for her efforts and the work
+   done."* **Refused, and this is a genuinely close call.** It is on-subject and it is her own view,
+   but it does not choose among the chairs. The five chairs are separated by their **enforcement
+   mechanism** — protecting the right to sleep in public and redirecting enforcement budgets (1);
+   decriminalising while investing in shelter capacity (2); enforcement gated on shelter-bed
+   availability with citations diverting to services (3); prohibition with graduated penalties plus
+   required shelter (4); a criminal camping ban (5). Fox proposes **no** enforcement mechanism, **no**
+   decriminalisation, **no** shelter investment and **no** budget position; "police should identify and
+   assist" is compatible with chairs 2, 3 and 4 alike, and a chair-4 holder would say the same
+   sentence. The specific practice she thanked the Chief for cuts **both** ways: Chief Phillips
+   reported that the one identified person *"has cleaned up and is continuing to move his items"* and
+   that *"there are no resources for him here so she has discussed with him other communities that have
+   resources that can help him"* — assistance and de-facto relocation in the same act. **A statement
+   compatible with three chairs locates none.** No action was taken; the Mayor observed only that
+   *"this will not be a problem we can solve tonight."* **Fox's closest miss; flagged for operator
+   review.** He re-listed "Vagrancy and homelessness" for a future agenda on **May 18, 2026**; the
+   July 2026 minutes are not yet published, so a future pass should re-check.
+3. **Coleman Strickland and Tonya Fox — `residential-zoning`, July 7, 2025 (Development Standards).**
+   Staff presented recommended amendments raising the **Minimum Floor Area per Dwelling Unit** to
+   **1,800 / 1,500 / 1,200 sq ft** for SF-1 / SF-2 / SF-3, adding a minimum garage setback, and
+   widening pavement from 26 ft to 30 ft. **Strickland made the motion** to direct staff to proceed
+   with changing both the subdivision and zoning ordinances; **Fox seconded**; 5-0. **Both refused.**
+   The proposal is **staff's**, not either member's (*"Mr. White listed some of the items… Recommended
+   changes which are:"*); the motion directs a **study** and requires the ordinance to return for final
+   approval, not adoption; and **neither member states any reasoning at all** — their only recorded
+   contribution is Strickland and Henry noting *"some of these recommendations are already in place for
+   Windsor Farms."* Per attribution control 16, an agenda line states what was voted on, not what it
+   means, and a procedural direction to study carries no chair. (Contrast Henry's June 2021 item, where
+   the **numbers are his own** and he later moved the resulting ordinance — that is the difference the
+   chair below turns on.)
+4. **Mike Henry and Russell Chandler — `growth-and-development`, October 21, 2024 (Chaparral Trail
+   annexation).** Council voluntarily annexed an **89.2-acre tract of the Chaparral Rails-to-Trails
+   corridor** over six residents' objections, **3-2, with Henry and Chandler voting against.**
+   **Refused for both.** Chandler's No is **unexplained**. Henry's is explained but off-axis: he
+   corrected the record that *"the rationale originally for annexing the trail was… Council believed it
+   had to be annexed to get the grants approved, however, since then it has been proven that is not the
+   case. The initial purpose was so we could have jurisdiction to police the trail"*, then said *"he is
+   probably going to go against the Council here, but he is going to speak openly. He has no problem
+   with the people out in the Merit area having the opportunity to vote whether or not they want to
+   incorporate, and their decision should be theirs to decide."* That is a position on **a neighbouring
+   unincorporated community's right to hold its own incorporation election** — municipal
+   self-determination — and the subject annexed is a **recreational trail corridor, not a
+   development**. Every chair on the growth scale is about the **pace and terms of new development**
+   (growth caps and voter approval for major annexations / infrastructure-capacity gating / proactive
+   infrastructure investment ahead of growth / streamlined permitting and reduced fees / full
+   deregulation). Chair 1's *"require voter approval for major annexations"* is superficially tempting
+   and is the trap here: Henry is defending **Merit's** vote about **Merit's** incorporation, not
+   proposing that **Farmersville** voters ratify **Farmersville's** annexations.
+5. **Russell Chandler — `public-safety-approach`, October 20, 2025.** Council **unanimously rejected**
+   the purchase of **111 N. Johnson Street** as a future home for the fire and police departments; per
+   the Farmersville Times, *"Councilmember Russell Chandler said he was initially in favor of the
+   purchase until he toured the interior and realized the extent of improvements needed"*, alongside
+   council concerns about renovation cost, street condition, emergency-vehicle access and no room to
+   expand the footprint. **Refused.** A **building-condition** judgment on one property is not a
+   position on staffing, pay, equipment, crisis-response teams, unarmed co-responders or the size of
+   the police budget — and **capital-project attribution is an expressly refused defect class** in this
+   phase (222-08 refused the mirror image of this same building for Mayor Overstreet). Note the
+   October 20, 2025 **minutes are unpublished**, so this rests on the Times alone; it changes nothing,
+   because the reason is refused on its face.
+6. **Mike Henry — `public-safety-approach`, January 20 and March 2, 2026 (city facility repairs).**
+   As Mayor Pro-Tem, Henry led the buildings item across two meetings, itemising **HVAC and ductwork
+   repairs at the police and fire stations after mold was found ($26,800)**, calling a **$145,000
+   roofing bid *"cost-prohibitive"***, describing another roof fix as a **"band-aid fix" ($9,146)**,
+   deferring **$28,177** of foundation work to second-quarter budget analysis, and **recommending an
+   additional $5,000 for the police and fire departments** for supplies, a dishwasher, a stove, a hot
+   water heater, a door repair and parking-lot lighting. **Refused.** This is **maintenance framing** —
+   a named refusal class — on **buildings**, and a dishwasher and a hot water heater are not "police
+   staffing, equipment and pay to improve response times and deter crime." Note that the same member
+   moved the **October 6, 2025 ordinance cutting $91,372 from the Police Department budget** to balance
+   the fund; **the two together point in opposite directions and neither states a public-safety funding
+   principle** — which is exactly why both are refused rather than netted.
+7. **Coleman Strickland and Tonya Fox — `public-safety-approach`, October 6, 2025 (code enforcement).**
+   **Strickland**: *"he and Councilmember Fox met for quite some time on Friday with Chief Phillips and
+   she has hit the ground running, she has an aggressive approach to this… she has divided up the City
+   with different sections to attack this problem with those 4 different officers… he doesn't mind the
+   responsibilities being moved over to the police department… What he is concerned about is we have
+   funding available for a salary position, and he's not hearing action regarding filling that role."*
+   **Fox**: *"she does not want to see people cited waiting for a court date, if their court date is 2
+   months out, start stacking the citations up, we need to send the message this needs to be taken care
+   of right away."* **Both refused.** The subject is **property-maintenance code enforcement** — tall
+   grass, junked vehicles, repeat-offender yards — which is the `city-sanitation` axis, **not one of
+   this phase's 11 canonical topics**, and neither member says anything about police funding levels,
+   staffing counts, pay, crisis response or budget priority. Strickland's point is that a **funded**
+   code-enforcement position should be **filled**; Fox's is about **court scheduling**. Neither reaches
+   the public-safety scale.
+8. **All five — `transportation-priorities`.** Farmersville's transportation record is enormous and
+   entirely off-axis. Refused across the board: the **Farmersville Parkway** construction and
+   right-of-way condemnations (**Henry moved** the April 20, 2026 condemnation resolution for sewer
+   easements serving Windsor Farms); the **Chaparral Trail** rebuild, bid rejections and rebid (**Fox**
+   moved to reject bids on cost grounds — *"she can't see how we can get from what we have available
+   $675,000.00 to a price increase bring it up to $956,000.00"* — a **procurement** objection);
+   **Chandler's** repeated requests to clear low branches and debris from the trail and to discuss
+   bollards blocking emergency traffic (**maintenance**); **Strickland's** observation that rock trucks
+   are using the Parkway past Collin College when *"there is ample room for them to make the transition
+   from Hwy. 78 to Hwy. 380 using the on/off ramps"* (**truck routing**); **Fox's** and Strickland's
+   street-sign and striping programme with Chief Phillips (**80 signs installed, plus 24 stop signs and
+   6 speed-limit signs**); the Rike/Orange/Main Street repaving and downtown brick repairs; and the
+   **roadway thoroughfare impact fees** (**Henry** moved, **Strickland** seconded). Every chair on this
+   scale allocates investment **between modes** — pedestrian/cycling/transit first (1), equal
+   multimodal with mandatory bike lanes and sidewalks (2), maintain roads while selectively adding
+   transit and pedestrian improvements (3), road capacity for the driving majority (4), highways and
+   free parking as the foundation (5). **No member ever sets roads against transit, bikes or
+   sidewalks.** The one apparent exception is the Chaparral Trail, and it is treated throughout the
+   record as a **grant-funded recreational amenity and parks asset** administered through the 4B
+   corporation and the Northeast Texas Trails Coalition, never as a transportation-mode choice. **A
+   capital project delivered during a tenure is not a funding-level position**, and a bond or budget
+   bundling roads with drainage and utilities is not a mode tradeoff.
+9. **Kristi Mondy — `transportation-priorities`, October 23, 2025 and January 22, 2026.** As **City
+   Amenities Board** liaison she reported that *"the board is looking into possible public
+   transportation where for a small fee senior citizens and handicapped persons can receive rides for
+   doctor appointments, grocery stores, pharmacy etc."* and, later, *"discussion regarding concerns and
+   interests from the board to present opportunities for transportation for the senior citizens and
+   handicapped and disabled persons within the community."* **Refused.** This is **liaison reporting**
+   — relaying a board's exploration is not holding a position, the established Overstreet/FEDC
+   precedent from 222-08 — and a demand-response senior ride service is a **human-services** programme,
+   not a choice about where the city puts its transportation investment.
+
+---
+
+### Coleman Strickland — Council Member Place 1, Deputy Mayor Pro-Tempore — `94252f68-40d6-4e82-8f10-1015a85fa403`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** The **second-most-quoted of the five** (656 lines
+across the corpus) and the only one of the five ever to face an opponent — and every one of those
+statements is a budget question, a timeline question, a coordination request or a liaison report. A
+targeted read of every substantive Strickland statement in the corpus produces a consistent profile:
+**a fiscal-detail and process member**, not a policy-position member. He is Parks & Recreation Board
+liaison, was TIRZ liaison until November 2024, and his recurring agenda items are **code enforcement**
+and, latterly, a **downtown vacancy ordinance**.
+
+- **`economic-development`** — no position found. **NEAR-MISS, REFUSED** (near-miss 1, April 20, 2026;
+  his 2026 future-agenda item is literally *"Vacancy Ordinance (Downtown Buildings)"*). Also refused:
+  his coordination requests around the **Fire Suppression Grant** work at Rusty Pistons, 1850
+  Mercantile and Headquarters for Hair Design — *"we just need to make sure that we are coordinating
+  with the businesses as some of them do have patrons entering not only from the front of the building
+  but from the back"* — which is construction logistics, and the grants themselves are **FEDC and TIRZ**
+  board actions he does not vote on.
+- **`residential-zoning`** — no position found. **NEAR-MISS, REFUSED** (near-miss 3, the July 7, 2025
+  minimum-floor-area direction). He **voted to deny both SF-2 → 2F duplex rezones on April 7, 2025**
+  (111 Wilcoxson Street and 201 Neathery Street, both 4-0) but is recorded saying **nothing** on either;
+  an unexplained vote cannot distinguish the chairs it might imply. His plat and site-plan motions
+  (Preliminary Plat February 27, 2024; the McDonald's site plan; Windsor Farms Preliminary Plat second)
+  are **ministerial approvals of already-entitled land**.
+- **`growth-and-development`** — no position found; nothing on growth caps, voter approval, approval
+  speed, permitting fees or building infrastructure ahead of growth. He seconded the **Windsor Farms
+  Development Agreement** (February 18, 2025) and the **thoroughfare impact-fee ordinance** (March 3,
+  2025) without stating a reason.
+- **`public-safety-approach`** — no position found. **NEAR-MISS, REFUSED** (near-miss 7). He seconded
+  the October 6, 2025 ordinance cutting $91,372 from the Police Department, unexplained.
+- **`transportation-priorities`** — no position found (near-miss 8). **`housing`** — no position found;
+  nothing on public housing, rent caps, inclusionary requirements, affordable-project subsidy,
+  first-time-buyer assistance, permit streamlining or leaving prices to the market.
+  **`homelessness` / `local-immigration` / `civil-rights`** — no position found; all three
+  structurally absent from the city record. **`taxes`** — researched, no row by ruling; he seconded the
+  FY2025-26 appraisal roll and is named by the Times as voting for the September 15, 2025 rate.
+  **`healthcare`** — no position found.
+- **Unread surface named:** his **2023 campaign Facebook page**
+  (`facebook.com/p/Coleman-Strickland-for-Farmersville-City-Council-Place-1-100090108833036/`) exists,
+  is HTTP 400 from this environment, and has **no Wayback capture**. He is the only one of the five who
+  ran a contested campaign, so this is the likeliest place a platform survives. Named as the top retry.
+
+### Russell Chandler — Council Member Place 2 — `eb6c2d0f-ea9f-420c-81bb-eb3d6287214d`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** Seated **October 21, 2024**, so his record is
+under two years long. TIRZ Board liaison (and briefly FEDC liaison), and the **most prolific mover of
+consent agendas** on the council. The Farmersville Times describes him as *"a longtime resident"* with
+*"extensive experience in materials management and contract negotiations"* and quotes his stated
+motive for seeking office — *"to provide representation for both citizens and city employees… **They
+are our most valuable asset as we grow**"* (June 12, 2025). **That is the only quotable line he has
+produced in any source, and it reaches no chair on any of the eleven scales**: it names constituencies
+he intends to represent, not a policy on any axis, and "as we grow" is the generically-evaluative class
+this phase has refused repeatedly.
+
+- **`economic-development`** — no position found. **NEAR-MISS, REFUSED** (near-miss 1 — he is the
+  member who **placed the vacant-buildings item on the agenda** and said *"not penalize but
+  incentivize"*; it is the strongest thing he has said and it still locates no chair). His **TIRZ
+  liaison reports** — the fire-suppression project not to exceed $259,700, a downtown streetscape
+  project not to exceed $228,000 — are **relaying a board's decisions**, the named adjacency class.
+- **`residential-zoning`** — no position found. On **April 7, 2025** he voted to deny both SF-2 → 2F
+  duplex rezones and offered the only remark other than Henry's: *"the Council looked at this same thing
+  years back and came to the same conclusion at that time."* **Refused** — a **precedent observation**
+  is not a reason; it reports what the body did before, and would read identically whatever the earlier
+  conclusion had been.
+- **`growth-and-development`** — no position found. **NEAR-MISS, REFUSED** (near-miss 4, his
+  **unexplained No** on the Chaparral Trail annexation, October 21, 2024 — his first meeting). His
+  three **ETJ-release** motions (2192 CR 551, 1649 FM 547, 910/904 CR 697) are ministerial: Texas
+  landowners have a statutory right to petition out of an ETJ and the city's only recorded check is
+  that the paperwork was filed correctly.
+- **`public-safety-approach`** — no position found. **NEAR-MISS, REFUSED** (near-miss 5, the 111 N.
+  Johnson Street rejection). Also refused: his motion to accept the **$60,000 Byrne JAG portable-radio
+  grant** (November 3, 2025 — accepting an outside grant for replacement radios that *"are outdated and
+  if they break, they can't be replaced"* is **procurement**, and Chief Phillips, not Chandler,
+  supplied the reasoning); his repeated **code-enforcement** pressure (*"grass is one thing, but he
+  walks the neighborhoods and sees all the yards, and something needs to be done now… we have got to
+  work closer with the courts to get this fixed"*), which is the `city-sanitation` axis and not one of
+  the 11; and his questions about crossing guards and the FISD crossing-guard ILA.
+- **`transportation-priorities`** — no position found (near-miss 8). **`housing` / `homelessness` /
+  `local-immigration` / `civil-rights` / `healthcare`** — no position found on any; the middle three
+  structurally absent. **`taxes`** — researched, no row by ruling; he moved the **Park Development Fee**
+  and **Master Fee Schedule** ordinances, both refused as fee ratemaking, and he was **absent** for the
+  September 15, 2025 rate vote.
+
+### Kristi Mondy — Council Member Place 3 — `fae40714-a182-4e37-9bac-1afe754b4561`
+
+Sourced: **none. All 11 topics blank (all SETTLED). The thinnest council record of the five, with a
+structural reason that is itself the finding: she has been in office barely thirteen months.**
+Appointed June 2, 2025 and sworn June 16, 2025, she appears in only ~24 meetings of a 133-meeting
+corpus, and a targeted sweep of every occurrence of "Councilmember Mondy" returns **219 lines, of which
+the overwhelming majority are City Amenities Board liaison reports and unexplained motions or
+seconds.** She is not recorded stating a reason for any vote on any subject in the eleven topic areas.
+
+- **`transportation-priorities`** — no position found. **NEAR-MISS, REFUSED** (near-miss 9, the
+  Amenities Board's senior-transportation exploration, which is a board's interest relayed by its
+  liaison). Her one first-person transportation remark is a **signage-priority** observation:
+  *"regarding Mayor Overstreet's question about priority areas, Hamilton Street has no signs of any kind
+  on that street. So, in thinking of priority, we might want to keep areas with absolutely nothing in
+  mind."* Sign replacement is maintenance.
+- **`housing`** — no position found, **and this blank was refused deliberately against the most
+  tempting material in the corpus.** On **November 3, 2025** she **moved** Resolution R-2025-1103-001,
+  a **payment agreement with Texoma Housing Partners, "a public housing consortium."** She states **no
+  reasoning whatsoever**; the substance was presented by outside counsel (Brent Ruben of Carrington
+  Coleman) and the City Attorney, and it is an inter-entity payment arrangement, not a decision about
+  the government's role in housing affordability. Per attribution control 16, an agenda line states
+  what was voted on, not what it means. **Critically, the housing content in this record belongs to
+  Benny Mondy, not to her** — see homonym trap 4. The `housing` scale measures public housing vs. rent
+  caps and inclusionary requirements vs. targeted subsidy and permit easing vs. deregulation vs. staying
+  out; none of those is engaged by anyone in Farmersville.
+- **`civil-rights`** — no position found. Her **Welford School Project** work — vice-president of the
+  committee restoring a century-old historic **Black** school on US-380, presented to Council June 11,
+  2024 and March 12, 2024, and the subject of a Black History Month presentation she gave at Collin
+  College — is **volunteering and committee service, the named adjacency class**, and **no inference
+  was drawn from it, or from any identity, demographic or affiliation characteristic.** This is the
+  same refusal class that produced deletions from two Richardson records on 2026-07-25.
+- **`residential-zoning`** — no position found; she was not yet seated for the April 7, 2025 duplex
+  denials and no zoning case with a Mondy position has come before Council since. **`economic-development`
+  / `growth-and-development` / `public-safety-approach` / `homelessness` / `local-immigration` /
+  `healthcare`** — no position found on any. **`taxes`** — researched, no row by ruling; she **seconded**
+  the September 15, 2025 no-new-revenue rate resolution, unexplained, and is named by the Times as
+  voting in favour.
+- **No Ballotpedia page** (404 stub, 51,252 bytes, re-verified in the self-audit); **no campaign
+  website** (`kristimondy.com` and `mondyforfarmersville.com` have no Wayback captures); **no campaign
+  or officeholder Facebook page found**; **no press quote**; **no questionnaire**; **no bio on the city
+  site**. Her seat has never been contested.
+
+### Mike Henry — Council Member Place 4, Mayor Pro-Tempore — `5712d682-ffd5-4e6d-afa8-9707613fd838`
+
+**Sourced: 1 of 11 — `residential-zoning` = 3. Ten topics blank (all SETTLED).** The longest-serving
+and by a wide margin the most-quoted member on this council (**1,652 lines** across the corpus, more
+than twice Strickland's), Mayor Pro-Tem throughout the documented window, **Council liaison to the
+Planning & Zoning Commission**, and the council's most frequent mover of motions.
+
+#### ✅ PROPOSED CHAIR — `residential-zoning` (`d4f18138-a2e0-4110-b925-7387d9d0d16d`) = **3**
+
+**Six dated, named actions in signed City Secretary minutes, spanning five years and all inside his
+tenure.** Every one was read in the primary document; four of the six were **independently re-fetched
+and re-OCR'd at a different resolution during the self-audit** (see below).
+
+| Date | Action, verbatim from the minutes |
+|---|---|
+| **2021-03-23** | *"Motion to deny the zoning change made by Mike Henry"* — a change from C – Commercial to MF-2 Multifamily Residence-2 for an apartment complex at **1904 Harvard Blvd**. Denied unanimously. |
+| **2021-04-28** | *"The Council wanted to limit the units of the apartment complex in order to control the density. Motion to approve the zoning change **with a restriction of 350 units on the MF-2 tract** made by Mike Henry"* — a 37-acre A → PD rezone at the **northwest quadrant of State Highway 78 and U.S. Highway 380**, commercial on 15.26 acres and MF-2 on 21.74 acres. He also *"stated one thing he liked about the layout is the buffer zone from the industrial."* Approved. |
+| **2021-05-25** | On a C → MF-2 rezone for a **240-unit** complex on 12 acres off **W. Audie Murphy Parkway**, Henry *"asked why she is asking for MF-2 and not a MF-1"* and *"reminded Council that in MF-2 a developer could build up to four stories and in MF-1 they could build three stories."* Then: *"Motion to deny the zoning change **due to density concerns**… 2nd was made by Mike Henry."* Denied. |
+| **2021-06-08** | Agenda item *"Discussion and possible direction of matters related to zoning standards and regulations for MF-1 … and MF-2 …"*: ***"Mike Henry suggested the following for MF-2 — Multifamily Residence-2: o Height from four stories max to three stories max o Reducing it down to 18 units per acre instead of 24. He also, suggested the following for MF-1 — Multifamily Residence-1: o Height from three stories max to two stories max o Reducing it down to 12 units per acre instead of 18."*** Council agreed to send it to P&Z. |
+| **2022-01-11** | *"Councilmember Henry would like to see the multifamily ordinance come through City Council that passed through P&Z in October."* (Staff confirmed on 2022-01-25 that the ordinance was being drafted *"as requested by Councilmember Henry."*) |
+| **2022-02-08** | Ordinance **O-2022-0208-001**, amending Chapter 77 §77-52 *"to reduce only the maximum heights and the maximum residential densities allowed in said districts"* for MF-1 and MF-2: ***"Councilmember Henry made a motion to approve."*** Seconded by Williams, **approved 5-0**. |
+| **2025-04-07** | **111 Wilcoxson Street, SF-2 → 2F (Duplex)**: *"Councilmember Henry made a motion to deny this zoning change request"* — denied 4-0. **201 Neathery Street, SF-2 → 2F (Duplex)**: Fox moved to deny, *"Councilmember Henry seconded the motion to deny"* — denied 4-0. |
+
+**Why this clears the D-04 bar.** It is not a single-tract "highest and best use" judgment (the class
+refused three times in Melissa) and it is not an unexplained vote. It is (a) an **explicit, on-topic,
+self-authored statement of what the city's housing-density limits should be, with specific numbers**,
+(b) the **same member's own motion adopting the ordinance that enacted them**, citywide, eight months
+later, and (c) **recorded votes with stated density reasoning** on three separate applications. The
+proposal is his, not staff's — this is exactly the distinction that refuses near-miss 3 for Strickland
+and Fox on the July 2025 development-standards item.
+
+**Why chair 3 and not another — by elimination on dated acts, not by defaulting to the middle.**
+- **Chair 5** (*eliminate single-family-only zoning; any housing type on any lot citywide*) — **excluded**
+  by the April 7, 2025 duplex denials.
+- **Chair 4** (*upzone broadly, multifamily by right, streamline approvals, reduce parking*) — **excluded**
+  by the February 8, 2022 citywide reduction of maximum densities and heights, and by two rezone denials.
+- **Chair 2** (*allow modest density increases — duplexes, accessory units — with strong design review
+  and neighborhood input*) — **excluded**, and this is the decisive exclusion: chair 2's defining
+  vehicle is the duplex, and he **moved to deny one duplex rezone and seconded denial of the other on
+  the same night**, in an established SF-2 neighbourhood, after two residents objected.
+- **Chair 1** (*protect existing neighborhood character strictly; require community votes before any
+  rezoning*) — **excluded on both clauses.** He has never proposed any voter-approval mechanism for
+  rezonings and has decided them himself at Council throughout; and "strict" protection is
+  contradicted by his own **motion to approve a 350-unit multifamily PD**.
+- **Chair 3** (*allow multifamily and mixed-use near commercial corridors while protecting most
+  residential zones*) — **affirmatively supported by both halves of its sentence.** The one multifamily
+  rezone he moved to approve was **mixed-use** (15.26 acres commercial + 21.74 acres MF-2) at the
+  **intersection of two state highways**, with an office/flex buffer he praised and a hard unit cap; the
+  two he opposed were **standalone apartment complexes**. And "protecting most residential zones" is
+  exactly what the two SF-2 → 2F denials did. His revealed rule across all six actions is internally
+  consistent: **multifamily belongs in mixed-use development at commercial corridors at capped density
+  (his approval ran to ≈16.1 units/acre, his denials to 20 and 24), and single-family neighbourhoods
+  stay single-family.**
+
+**SQL-ready reasoning** (no party mention, as required):
+> On June 8, 2021 Henry personally proposed reducing Farmersville's citywide multifamily density and
+> height limits — MF-2 from 24 to 18 units per acre and four stories to three, MF-1 from 18 to 12 units
+> per acre and three stories to two — and on February 8, 2022 he made the motion adopting Ordinance
+> O-2022-0208-001, which amended Chapter 77 §77-52 to enact exactly that (5-0). He moved to deny two
+> SF-2-to-duplex rezonings on April 7, 2025 (111 Wilcoxson St and 201 Neathery St, both denied 4-0), and
+> on April 28, 2021 he moved to approve a 37-acre planned development combining commercial with
+> multifamily at the State Highway 78 / U.S. 380 quadrant only with a 350-unit cap "in order to control
+> the density," while seconding the denial of a 240-unit standalone apartment rezone "due to density
+> concerns" on May 25, 2021. That record allows multifamily and mixed use at commercial corridors at
+> capped density while keeping established single-family neighborhoods single-family.
+
+**Sources** (all fetched and read this session; the first four were re-fetched and re-OCR'd during the
+self-audit):
+- `https://www.farmersvilletx.com/media/5221` — City Council Regular Session Minutes, June 8, 2021
+- `https://www.farmersvilletx.com/media/5041` — City Council Regular Session Minutes, February 8, 2022
+- `https://www.farmersvilletx.com/media/8396` — City Council Regular Session Minutes, April 7, 2025
+- `https://www.farmersvilletx.com/media/5261` — City Council Regular Session Minutes, April 28, 2021
+- `https://www.farmersvilletx.com/media/5291` — City Council Regular Session Minutes, March 23, 2021
+- `https://www.farmersvilletx.com/media/5231` — City Council Regular Session Minutes, May 25, 2021
+- `https://www.farmersvilletx.com/media/5071` — City Council Regular Session Minutes, January 11, 2022
+
+**No verbatim first-person quote is offered.** Farmersville's minutes paraphrase in the third person
+(*"Mike Henry suggested…"*), so nothing here would survive a verbatim-quote gate. Per the standing
+rule, a blank quote is better than a bad one; the stance is recorded from the record. **If the operator
+wants a quotable sentence, the BoxCast archive of the June 8, 2021 and February 8, 2022 meetings is the
+place to get it.**
+
+#### Mike Henry — the ten blanks
+
+- **`economic-development`** — no position found. Refused: his June 22, 2021 **property-rights objection
+  to a vacancy tax** (quoted in the `taxes` block — rejecting one penalty is not choosing an incentive
+  posture); his **FCDC (4B) liaison reports** and his motion approving the 4B FY2025-26 budget
+  (liaison reporting is adjacency); his July 7, 2025 motions directing P&Z to study **SUP requirements
+  for gas stations with convenience stores** and **proximity restrictions on smoke/vape shops** *"to
+  mirror alcohol sales rules"* (land-use restriction of specific business types, not an incentive
+  proposition); and his relaying of P&Z's interest in *"how future developments might include the
+  retail commercial also instead of just being residential."*
+- **`growth-and-development`** — no position found. **NEAR-MISS, REFUSED** (near-miss 4, the trail
+  annexation). Also refused: *"we need to look at the future requirements for the need for traffic
+  studies to be done when a development such as this comes in on subpar roads"* (February 27, 2024) —
+  a **review-procedure** request that names no pace, gate or fee posture; his note that *"the last
+  Comprehensive Plan was completed in 2013 and he would like to find out when the next Comprehensive
+  Plan can be done"* (January 21, 2025) — a **scheduling** question about a planning document; his
+  motions creating the **Windsor Farms Public Improvement District** and approving that development's
+  agreement, preliminary plat and easement condemnations, all with **no reasoning stated**; and *"from
+  his view he sees this as a positive, it would give Farmersville the ability to grow that area (West)
+  and to improve the water in that area"* — said of a **water interlocal agreement**, and generically
+  evaluative besides.
+- **`public-safety-approach`** — no position found. **NEAR-MISS, REFUSED** twice (near-miss 6, the
+  2026 building repairs; and his October 6, 2025 motion cutting $91,372 from the police budget for
+  balanced-budget reasons, in the `taxes` block). Also refused: his motion establishing the **Office of
+  Fire Marshal** (Ordinance O-2025-0421-001) and his motion to **terminate the AMR ambulance lease**,
+  both unexplained; and his question *"if it is common practice to leverage and partner with other
+  cities"* on fire/EMS interlocals, which is informational.
+- **`transportation-priorities`** — no position found (near-miss 8).
+- **`residential-zoning` is his only sourced topic; the remaining six are:** **`housing`** — no
+  position found. Nothing on public housing, rent caps, inclusionary requirements, affordable-project
+  subsidy, first-time-buyer assistance or leaving prices to the market. Refused: the June 22, 2021
+  **housing-rehabilitation grant** discussion, where Henry moved to **table** the resolution and then
+  *"stated he would withdraw his motion"* after the Mayor Pro-Tem objected — a withdrawn procedural
+  motion states nothing; and his question *"if Charles Edwards could describe a project in Paris because
+  he does not understand how"* the programme works, which is informational. **`homelessness` /
+  `local-immigration` / `civil-rights`** — no position found; structurally absent (he is the mover on
+  both CDBG Civil Rights Policy resolutions, refused above as federal grant compliance). **`taxes`** —
+  researched, no row by ruling; he is the named subject of four items in that block. **`healthcare`** —
+  no position found.
+- **⚠ Ballotpedia trap:** `ballotpedia.org/Mike_Henry` is a live, populated page about a **different
+  person in another state, with a party label** — homonym trap 1 above. **Not one word of it informed
+  the chair or any blank.** No campaign website for the Farmersville Mike Henry exists in Wayback; no
+  Facebook page was found; no press quote of any policy position was found in any outlet.
+
+### Tonya Fox — Council Member Place 5 — `eab3bbe2-4103-49a2-a0bf-d45acc9d54e0`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** Seated **March 17, 2025**. FCDC (4B) liaison and
+the council's most detailed liaison reporter; before taking office she was a visible community
+volunteer — **co-coordinator of Wreaths Across America** (450 wreaths placed in 2024), an organiser of
+**Farmersville Lights** and the Bids for Bulbs fundraiser, and a citizen speaker at the February 8,
+2022 Council meeting on the 3% credit-card convenience fee and on *"nullifying the exemption in favor
+of a permanent freeze on taxes for residents 65 years of age or older and disabled persons."*
+**Volunteering is the named adjacency class and no inference was drawn from any of it**; the tax-freeze
+comment falls under the standing ruling and reaches no chair in any case.
+
+- **`homelessness`** — no position found. **NEAR-MISS, REFUSED — the closest call for this person**
+  (near-miss 2, September 2, 2025, full text and reasoning above). **Flagged for operator review**, and
+  the named place to re-check is the **July 2026 minutes** once published, since the Mayor re-listed
+  vagrancy and homelessness for a future agenda on May 18, 2026.
+- **`residential-zoning`** — no position found. She **made the motion to deny** the 201 Neathery Street
+  SF-2 → 2F duplex rezone and **seconded the motion to deny** the 111 Wilcoxson Street rezone on
+  April 7, 2025 — both denied 4-0 — and is recorded stating **no reason for either**. **Refused.** A
+  motion to deny with no stated reasoning cannot distinguish chairs 1, 2 and 3, all of which would
+  produce the same vote on a duplex conversion in an established single-family block; the only reason
+  in the record is **P&Z's spot-zoning finding, relayed by Henry**, not hers. She also seconded the
+  July 7, 2025 development-standards direction (near-miss 3).
+- **`economic-development`** — no position found. **NEAR-MISS, REFUSED** (near-miss 1 — on the vacant
+  downtown buildings item her whole recorded contribution is that she *"was completely on board with a
+  meeting"* of building owners at an FCDC meeting, which is a **process agreement**). Her extensive
+  **4B liaison reports** — grant cycles, performance agreements for grantees, the 208 Orange Street
+  demolition, a 4B website, hiring an administrative assistant — are **relaying a board's decisions**,
+  and she does not vote on those grants at Council. Her praise of the **Fire Suppression Grant**
+  partnership (*"she really appreciates them working together on this project that is very important
+  for the City"*) is generically evaluative.
+- **`public-safety-approach`** — no position found. **NEAR-MISS, REFUSED** (near-miss 7, her
+  citation-stacking remark, which concerns **property-maintenance code enforcement** and the municipal
+  court calendar, not police funding). Also refused: *"she would like to recognize the efforts of the
+  police department, working in inclement weather"* (recognition), her street-sign programme with Chief
+  Phillips (maintenance), and her fire-hydrant question about *"wear and tear or vandalism or parts
+  broken due to age"* (asset condition).
+- **`transportation-priorities`** — no position found (near-miss 8). Her striping and curb-painting
+  remarks — *"she believes the curb colors deal with the commercial areas, business areas and
+  developments but in the more historical residential areas there are no curbs painted; however, we do
+  have a lot of areas that are specifically no parking that they are flooded with parked cars all the
+  time"* — concern **parking enforcement markings**, not the allocation of transportation investment
+  between modes.
+- **`growth-and-development` / `housing` / `local-immigration` / `civil-rights` / `healthcare`** — no
+  position found on any; the middle two structurally absent. **`taxes`** — researched, no row by ruling;
+  she is named by the Times as voting for the September 15, 2025 rate.
+- **No Ballotpedia page** (404 stub, 51,204 bytes); **no campaign website** in Wayback; **no campaign
+  Facebook page found**; **no questionnaire**; **no bio on the city site**; **no press quote of a policy
+  position** — the only Times quotes attributed to her are about volunteering (*"This is an opportunity
+  for everyone in the community to contribute to keeping our town's holiday spirit alive"*; *"We are
+  thankful to work with the Farmersville community to identify and honor veterans laid to rest here"*).
+
+---
+
+**Farmersville reconcile (222-12 Task 2):** all five council members are accounted for — **Mike Henry
+in bucket 1 for `residential-zoning` and bucket 2 for the other ten; Strickland, Chandler, Mondy and
+Fox in bucket 2 for all eleven each. 55 attempted pairs = 1 proposed chair + 54 register blanks.** No
+person is in neither bucket; no (person, topic) pair is in both. With Mayor Overstreet attempted in
+222-08, **every Farmersville officeholder is now fully attempted.** **⚠ Pitfall 5 DOES apply here** —
+see the red block at the top: if the Henry chair is applied, Farmersville moves 0 → 1 stance and
+`src/lib/coverage.js` must flip it to `hasContext: true`; if the chair is rejected, this plan authors
+**no migration and claims no migration number**, and `coverage.js` is unchanged.
+
+**Prior-note ledger.** **None of the five carries a 2026-05-12 found-nothing note** (0 answer rows and
+0 context rows each, re-verified live by the orchestrator 2026-07-30), so nothing here corroborates or
+displaces a prior pass, and no Lavine-precedent upgrade question arises.
+
+**Self-audit (222-12 Task 2).** The contract is 100% re-verification of any value-1/value-5 stance plus
+a ≥20% sample of the rest. **The one proposed stance is value 3, so the 100% clause is not engaged; it
+was nevertheless re-verified in full, and the sampling clause was applied to the blank-decisive
+documents at well above 20%.** Six re-fetches were run with `curl` (cache-bypassing, per execution note
+18), and **four of them were re-OCR'd from scratch at 300 dpi — a different resolution from the 200-dpi
+first pass — so the second read is genuinely independent at the recognition layer, not merely a second
+download:**
+- **(a)** `media/5221` re-downloaded (598,379 bytes, MD5 `7683f251…`, identical to the first fetch) and
+  re-OCR'd at 300 dpi: the header **"REGULAR SESSION MINUTES / June 8, 2021, 6:00 P.M."** and all four
+  of Henry's density lines — *"Height from four stories max to three stories max"*, *"Reducing it down
+  to 18 units per acre instead of 24"*, *"Height from three stories max to two stories max"*,
+  *"Reducing it down to 12 units per acre instead of 18"* — plus *"Council agreed to send it back down
+  to P&Z for review"* were recovered **verbatim**. This fixes the date and the authorship of the chair's
+  founding document.
+- **(b)** `media/5041` re-downloaded (249,451 bytes, MD5 `2182fe7a…`) and re-OCR'd: header **"February
+  08, 2022"**, the ordinance caption *"…TO AMEND ONLY THE MAXIMUM HEIGHTS AND THE MAXIMUM RESIDENTIAL
+  DENSITIES ALLOWED IN SAID DISTRICTS"*, *"Councilmember Henry made a motion to approve"*,
+  *"Councilmember Williams seconded"*, *"approved unanimously (5-0)"*, and the attendance line placing
+  Henry in the room — all confirmed.
+- **(c)** `media/8396` re-downloaded (1,092,685 bytes, MD5 `65f5acf0…`) and re-OCR'd: header **"April 7,
+  2025"**; attendance **"Councilmembers Coleman Strickland, Russell Chandler, Mike Henry and Tonya Fox
+  were in attendance. Councilmember Ted Wagner was absent"** — which fixes exactly who cast the two 4-0
+  denials; *"Councilmember Henry made a motion to deny this zoning change request"*, *"Councilmember
+  Chandler stated the Council looked at this same thing…"*, *"Councilmember Fox seconded the motion to
+  deny"*, *"Councilmember Fox made a motion to deny this zoning change request"*, *"Councilmember Henry
+  seconded the motion to deny"*, both *"passed unanimously (4-0)"*, and both **"Single-Family Dwelling —
+  2 District (SF-2) to the Two-Family"** captions — all confirmed.
+- **(d)** `media/5261` re-downloaded (483,856 bytes, MD5 `bc1f9996…`) and re-OCR'd: header **"April 28,
+  2021"**, *"control the density"*, *"Motion to approve the zoning change with a restriction of 350
+  units on the MF-2 tract made by Mike Henry"*, and *"All council members voted in favor, except Craig
+  Overstreet who…"* — confirmed, including that the dissenter was the Mayor Pro-Tem of the day and not
+  Henry.
+- **(e)** `media/5291` and `media/5231` (March 23 and May 25, 2021) were re-downloaded and MD5-matched.
+- **(f)** All five Ballotpedia URLs were fetched with a Chrome User-Agent and all five returned **HTTP
+  404** at stub size (51,204–51,348 bytes), sustaining the no-coverage finding; `Mike_Henry` returned
+  **HTTP 200** and was read in full and **rejected on identity** before any use.
+
+**Demotions: none — stated precisely, because the distinction matters.** Only one stance was ever
+promoted (Henry / `residential-zoning` = 3) and it survived re-verification unchanged, so there was
+nothing to demote. **No near-miss below was ever written into a proposed-chair list and then removed**;
+each was assessed against the scale and refused at assessment time, then re-examined during the
+self-audit and confirmed refused. The one that came closest to being promoted, and the judgement the
+operator should scrutinise hardest after the Henry chair, is **Fox / `homelessness`** (near-miss 2):
+it is on-subject, it is her own view, and it is the only real homelessness discussion in six years of
+Farmersville minutes — but "police should identify and assist those they can assist" specifies **no
+enforcement mechanism**, and the enforcement mechanism is the only thing that separates chairs 2, 3
+and 4 on that scale. Refused under "a statement compatible with several chairs locates none." The
+remaining refusals are Chandler and Strickland on `economic-development` (near-miss 1),
+Strickland and Fox on `residential-zoning` (near-miss 3), Henry and Chandler on `growth-and-development`
+(near-miss 4), Chandler on `public-safety-approach` (near-miss 5), Henry on `public-safety-approach`
+(near-miss 6), Strickland and Fox on `public-safety-approach` (near-miss 7), and Mondy on
+`transportation-priorities` (near-miss 9). **An operator wanting to revisit any of them should start
+with near-miss 1 (Chandler, the "not penalize but incentivize" line) and near-miss 2 (Fox,
+homelessness)**, whose full evidence is preserved verbatim above.
