@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 468
+## Count: 533
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -66,7 +66,10 @@ failure — **222-10 cracked Anna's minutes archive**, closing the named retry p
 + 22 by 222-10 part B (Murphy council — 11 Ison + 11 Kelley; both council members fully blank, 22 of
 22 attempted pairs; both zeros are **SETTLED**, and three on-topic near-misses were refused on the
 record rather than rounded up). **222-10 COMPLETE: 77 of 77 attempted pairs blank across 7 people.**
-222-11 through 222-17 append their own per-government sections below as they execute.
++ 65 by 222-11 Task 1 (Fairview council — 6 people × 11 topics = 66 attempted pairs, **1 chair
+proposed: Lakia Works / residential-zoning = 1**, 65 blanks; 64 of the 65 are **SETTLED**, one —
+Sheehan / homelessness — is an **access failure** with the exact retry path named in the section).
+222-11 part B (Princeton) through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -7057,4 +7060,497 @@ passed. **Three refusals are reported above in place of demotions**, since nothi
 - **(f)** **`gathergov.com` returned HTTP 403** and appears to be another AI-generated municipal
   synthesis site in the `citizenportal.ai` class. Recommend **closing** it rather than retrying, and
   recording it alongside `citizenportal.ai` as non-citable under D-05 — but verify before ruling.
+
+---
+
+## Town of Fairview (4825224) — 222-11
+
+**Scope, stated once.** Plan 222-11 Task 1 researches **the six Town Council members of Fairview**
+(Collin County, Texas). **Mayor John Hubbard was handled in 222-08** (11 pairs, all blank) and was
+**not** re-researched, re-reasoned or modified here. All six politician_ids were re-verified live
+against production by the orchestrator as 0 answer rows before research began.
+
+**Attempted:** 2026-07-30 — **6 people × 11 canonical topics = 66 (person, topic) pairs.**
+
+| Person | Title | politician_id | Term |
+|---|---|---|---|
+| Rich Connelly | Council Member Seat 1 (Mayor Pro Tem from June 2026) | `9e2aa590-23e2-4217-84b7-418ba9dc1414` | first elected May 2021; re-elected May 3, 2025 |
+| Joe W. Boggs | Council Member Seat 2 | `1a726799-8eb1-4479-b46a-83aacb0109e8` | elected unopposed May 2, 2026 (600 votes, 100%); sworn in June 2, 2026 |
+| Jill Hawkins | Council Member Seat 3 | `c97ba2a3-d56e-4ecc-aa7d-c5d009c9312c` | elected May 3, 2025 |
+| John Stanley | Council Member Seat 4 | `194c1b38-e76c-4edb-a064-0a7e7e1ac195` | elected May 2, 2026, 381–351 (52.05%) over incumbent Ricardo Doi; sworn in June 2, 2026 |
+| Pat Sheehan | Council Member Seat 5 (Deputy Mayor Pro Tem from June 2026) | `38e20826-63c9-4eef-a4e1-ea77aa6892e2` | elected May 3, 2025 |
+| Lakia Works | Council Member Seat 6 | `9e80fff4-8b89-4c38-b33e-a1a0fff7e080` | **appointed May 29, 2025** (motion seconded by Hawkins, term through May 2, 2026); **elected May 2, 2026** over Ryan Riyad |
+
+**Result: 1 chair proposed — Lakia Works, `residential-zoning` = 1 — and 65 honest blanks.**
+64 of the 65 are **SETTLED**; one (Sheehan / `homelessness`) is an **access failure** with a named,
+specific retry path. Three of the six (Boggs, Stanley, Works) were sworn in **eight weeks before this
+research** — their officeholding record is three regular meetings and four work/joint sessions, every
+published document of which was read — but the two 2026 challengers' **campaign** records were
+researched in full via live campaign websites and Ballotpedia's verbatim reproductions.
+
+---
+
+### ✅ FAIRVIEW'S FULL MINUTES CORPUS IS READABLE — an upgrade to 222-08's finding. Here is how.
+
+222-08 read one Fairview minutes document (April 29, 2025, fileId 1877) and recorded the CivicClerk
+OData route. This pass extended that to the **entire May 2025 → June 2026 corpus** and hit, then
+solved, the same tooling wall Anna's 2024 minutes presented:
+
+- **Fairview's standalone `"Minutes"`-type files are PaperStream image scans with NO text layer.**
+  30 were downloaded (fileIds 1894–3306); `pdftotext` returns 2–11 bytes on nearly all of them,
+  `pdffonts` shows zero embedded fonts (fileId 2086 carries a partial, unreliable OCR layer), and
+  `GetMeetingFileStream(...,plainText=true)` returns an empty body. Recorded as a tooling limit.
+- **RECOVERY: every regular meeting's Agenda Packet carries the prior meetings' DRAFT minutes as
+  consent attachments, and the packets are CivicClerk-generated with a full text layer.** Packet
+  fileIds 1892, 1921, 1974, 1993, 2005, 2021, 2041, 2067, 2084, 2101, 2122, 3156, 3181, 3208, 3224,
+  3247 and 3294 were downloaded and text-extracted, recovering the complete minutes of the meetings
+  of May 6, June 3, June 17, July 1, July 31, August 5, August 18, August 25, September 2, October 8,
+  November 4 and December 2, 2025, and January 6, February 3, March 3, April 7, April 22, May 5,
+  May 11 (canvass), May 19, June 2, June 4, June 11 and June 15, 2026. **A future Fairview pass should
+  go straight to the packets and skip the scanned standalone minutes.**
+- **Fairview's minutes are MOSTLY action-only, but not strictly** — a refinement of 222-08's
+  structural note. They occasionally record **verbatim motion texts** (Connelly's August 5, 2025
+  tax-rate motion; Hawkins' December 2, 2025 drainage motion; Sheehan's May 19, 2026 NTRA resolution)
+  and occasional **Council-comment statements** (Sheehan's October 8, 2025 remarks). What they never
+  record is a member's **reasoning on a contested vote** — every single dissent in the fourteen-month
+  corpus is unexplained, so the unexplained-vote refusal class still disposes of all of them.
+
+**Every non-unanimous vote in the corpus involving the six was examined and every one is refused as
+unexplained.** They are: Connelly's lone Nays on the AMI metering contract and on the Town Social
+Media Policies (both August 5, 2025); Connelly and Little against changing the council meeting start
+time (October 8, 2025); Hubbard and Connelly against tabling the town-hall-hours item (November 4,
+2025); Connelly's lone Nay against accepting the FY2025 independent audit (April 7, 2026); Connelly
+and Works against the Sciens ERP contract (April 7, 2026); and Hubbard, Connelly and Works against
+the Kimley-Horn Fairview Parkway professional-services amendment (April 7, 2026). The last is
+transportation-adjacent, but it is an engineering-contract amendment with no recorded reasoning — an
+unexplained vote on a contract cannot locate a mode-tradeoff chair. Also examined and refused:
+Custer's motion (Connelly seconding) to **deny** the Chase Oaks Church daycare CUP (August 5, 2025,
+4-2) — a non-residential institutional use, unexplained, and not a housing-density proposition.
+
+**Evidence checked** (every item below was fetched and read this session unless listed as unavailable):
+
+- **The council minutes corpus above**, swept for every compass axis and every member-attributed
+  statement. `camping / homeless* / panhandling` → one hit, Sheehan's January 6, 2026 comment (see
+  his entry); `immigration / sanctuary / ICE` → **zero hits**; density/zoning items → the 2026
+  religious-assembly/daycare ordinance review (below); incentives → TIF Zone No. One / Sloan Corners
+  amendment (April 7, 2026, 7-0, unexplained); police staffing → no member-attributed position.
+- **The 2026 Comprehensive Zoning Ordinance text-amendment process** (April 22, May 19, June 4 and
+  June 11, 2026 meetings, all minutes read). This is the steeple aftermath: amendments governing
+  **day care, schools and religious assembly uses in residential zoning districts** (appurtenance
+  height caps, CUP discretion). The June 11 minutes record only **collective** discussion and
+  "consensus" — no individual member position — and the subject is institutional-use regulation,
+  not housing density, so under the settled steeple ruling it could not set `residential-zoning`
+  even if attributed. Council tabled the ordinance to July 7, 2026.
+- **Official Town of Fairview bios, all six, read in full**
+  (`fairviewtexas.org/government/mayor-town-council/` — note the site was rebuilt; the old
+  `/index.php/government/town-council` paths 222-08 recorded now 404). Every one is
+  **biography-only**; the per-person refusals they force are itemised below.
+- **Ballotpedia — checked for all six with a browser User-Agent via `curl`.** Findings:
+  - **Ballotpedia's Fairview coverage begins with the May 2026 cycle.** Real, disambiguated,
+    Texas-confirmed pages exist for the three 2026 candidates:
+    `John_Stanley_(Fairview_Town_Council_Seat_4,_Texas,_candidate_2026)` (96,063 bytes),
+    `Lakia_Works_(Fairview_Town_Council_Seat_6,_Texas,_candidate_2026)` (100,731 bytes),
+    `Joe_W._Boggs_(Fairview_Town_Council_Seat_2,_Texas,_candidate_2026)` (90,749 bytes).
+    **None of the three completed the Candidate Connection survey**, and Ballotpedia "did not
+    receive biographical information" for any of them.
+  - **Stanley's and Works' pages reproduce their campaign-website platforms verbatim** under
+    "Campaign themes → Campaign website" (Stanley dated April 12, 2026; Works dated April 13, 2026),
+    each closing with *"This text is quoted verbatim from the original source."* Both reproductions
+    were then verified against the **live primary sites** rather than trusted.
+  - **The 2025 candidates have NO Ballotpedia pages**: bare and disambiguated forms for Connelly
+    (`Rich_Connelly`, `Richard_Connelly`, `..._candidate_2025`, `..._candidate_2021`), Hawkins and
+    Sheehan (`Pat_Sheehan`, `..._candidate_2025`) all return the ~51 KB 404 stub.
+- **Live campaign websites**: `vote4stanley.com/fairview-issues` (fetched and read in full; matches
+  Ballotpedia's reproduction word for word) and `worksforfairview.com` (fetched and read in full,
+  **twice** — the second fetch during the self-audit). **No campaign website exists or could be found
+  for Boggs** (unopposed; Ballotpedia lists no website link for him), **nor for Connelly, Hawkins or
+  Sheehan** (2025 cycle).
+- **Collin County official May 2, 2026 election results** (Summary Results Report, unofficial-final,
+  `collincountytx.gov`) — Boggs 600 votes (100.00%), Stanley 381 (52.05%) over Doi 351, Works over
+  Riyad. The May 3, 2025 general elected the Mayor and Seats 1, 3 and 5 (Connelly, Hawkins, Sheehan).
+- **News sweeps**: Deseret News April 28, 2025 (temple renaming — carries Works' P&Z-era quote, see
+  her entry), April 30, 2025 (the CUP-vote account — **re-verified this session by `curl`: the page
+  contains zero occurrences of "Connelly"**; it quotes Lessner, Custer and Doi), and June 15, 2026
+  (FairviewSpeaks launch — no in-scope member quoted); CBS Texas June 15, 2026 (same); The Laurel
+  (`thelaurelct.com/sheehan-goes-big-in-texas/`, a Connecticut journalism-trade profile of Sheehan's
+  move to the Fairview council — read; **zero policy content**); WebSearch per person against
+  Community Impact, Star Local Media, Local Profile, NBC5/WFAA/Fox4. **No candidate questionnaire,
+  forum transcript, Q&A or policy interview exists for any of the six that this session could find.**
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position:
+
+- **Council meeting AUDIO remains the highest-value unread Fairview source** (MP3s surfaced as
+  `externalMediaUrl` in the CivicClerk event payloads, directly addressable under
+  `fairviewtexas.org/pdf/audio/Town%20Council/...`). 222-08 said this and it is now sharper: the
+  minutes prove members DO speak substantively (Sheehan most of all) and record almost none of it.
+  The single most valuable target is the **January 6, 2026 regular meeting audio** — see Sheehan /
+  `homelessness` below.
+- **The July 7, 2026 regular-meeting minutes are not yet published** (they will ride in the August
+  packet). The tabled religious-assembly/daycare zoning ordinance was scheduled for decision that
+  night; whatever was said there postdates this pass. Off-axis under the steeple ruling regardless.
+- **Texas Monthly, "The Big Temple That Divided a Small Texas Town"** — **HTTP 403** to both WebFetch
+  and `curl` with a browser UA. Retry path: a real browser. Mitigation: the temple subject is
+  off-axis for all 11 topics under the settled steeple ruling, so this 403 blocks no chair.
+- **WFAA's temple articles** — 403/timeout to fetch. Same mitigation.
+- **`communityimpact.com/search`** — HTTP 403; general search surfaced no Community Impact coverage
+  of any Fairview council race.
+- **Facebook pages** (Stanley's `facebook.com/investmentsteward` is his only other Ballotpedia link)
+  — Facebook is not fetchable here, and social posts are not evidence absent a citable quote.
+- **`lwvcollin.org` / VOTE411** — not retried; both confirmed closed for this phase (403; post-election
+  guides decommissioned).
+
+**⚠ HOMONYM TRAPS REJECTED** — four, all caught before any evidence was used:
+
+- **`ballotpedia.org/John_Stanley`** resolves HTTP 200 (66,911 bytes) — it is a **South Carolina
+  Municipal Courts** page (title verified), i.e. a South Carolina John Stanley, not the Fairview
+  member. Only the disambiguated `..._(Fairview_Town_Council_Seat_4,_Texas,_candidate_2026)` page
+  was used.
+- **`ballotpedia.org/Patrick_Sheehan`** resolves HTTP 200 — a **disambiguation page** listing
+  *Patrick J. Sheehan* and *Patrick Sheehan (Illinois)*; neither is the Fairview member. The Fairview
+  Sheehan is confirmed independently (official bio + The Laurel profile) as the former Connecticut
+  broadcast anchor.
+- **"Hawkins" is also a Texas CITY** (City of Hawkins, Wood County) — a "2025 Texas Hawkins City
+  Council Position 5" race surfaced mid-search and was rejected; it has nothing to do with Jill
+  Hawkins of Fairview.
+- **"New Fairview, TX" (Wise County) is a different Texas city** whose election pages dominate
+  "Fairview Texas election" searches; every source used here was pinned to **Fairview, Collin
+  County** by the 372 Town Place address, Collin County election documents, or the fairviewtexas.org
+  domain.
+
+**⚠ MISATTRIBUTION GUARD.** Fairview's minutes attribute most recorded speech to the **mayor**, and
+this pass refused all of it for the six: Hubbard's June 2, 2026 Flock-camera statement (a four-part
+numbered argument that sits inches from Connelly's name in the minutes — Connelly only *asked the
+police chief questions*, and Chief Chandler's answer that Fairview neither uses nor plans Flock
+cameras is a staff statement); Hubbard's April 22, 2026 zoning-process statement; Hubbard's
+September 2, 2025 temple-plat motion speech (Sheehan merely seconded the plat motion). The Deseret
+News April 30, 2025 CUP-vote article quotes **Lessner, Custer and Doi** — Connelly's Nay exists only
+in the official April 29, 2025 minutes and has no recorded reason anywhere. Works' one press quote
+was verified as hers and dated inside her P&Z tenure. Every quote used below names its speaker in a
+primary document read this session, and every date was checked against that person's term.
+
+---
+
+### ⭐ ONE CHAIR PROPOSED: Lakia Works — `residential-zoning` = **1**
+
+**Evidence (primary, fetched twice, plus an independent verbatim reproduction):** Works' 2026
+campaign website `worksforfairview.com` ("Re-elect Lakia Works"), under the heading **"Champion of
+Fairview's Character"**:
+
+> *"Fairview's identity is what makes it special, and Lakia is committed to preserving it. She
+> believes in protecting the Town's low-density, residential character while maintaining the high
+> standards that residents expect. Lakia supports strengthening ordinances and ensuring they are
+> applied consistently so that growth never comes at the expense of quality of life."*
+
+and, under "Why Lakia Works?":
+
+> *"With five years of vetting development on the Planning and Zoning Commission, she possess[es]
+> the technical expertise to strictly enforce ordinances that protect our neighborhoods."*
+
+Ballotpedia reproduces the platform **verbatim** as of **April 13, 2026** on her disambiguated,
+Texas-confirmed candidate page, closing *"This text is quoted verbatim from the original source"* —
+so the citation rests on two independent reads of the live primary source plus a dated third-party
+reproduction.
+
+**Why this is a chair and not a character-remark refusal.** This phase has refused bare character
+remarks three times (Hubbard's "preserving Fairview's unique charm", Kelley's "protecting the
+character of our community", Bryan's "preserving the rich history that defines us") because none of
+them engages housing density. Works' statement does: it names **"low-density, residential character"**
+— the density axis itself — and commits to a **zoning-ordinance mechanism** ("strengthening
+ordinances", "strictly enforce ordinances that protect our neighborhoods"). That is the exact
+distinction the register already drew in the Dusty Kuykendall entry (222-08, Lucas), which ruled that
+a commitment to preserving *"low density, large lots and open spaces through zoning requirements that
+prevent high density"* **"is chair 1 … squarely on the housing-density axis the topic measures"** and
+was left blank there **only** because its source (VOTE411) returned 403 and could not be read. Works'
+source is live, read twice, and independently reproduced with a date. Chair 1 ("Protect existing
+neighborhood character strictly; require community votes before any rezoning") fits her strict-
+preservation, strengthen-and-enforce posture; chair 2 is affirmatively contrary (it *allows* modest
+density increases, which she nowhere supports). Direction re-checked against the inversion-trap table:
+`residential-zoning` 1 = strict character protection, 5 = eliminate single-family zoning — a
+preservationist scores LOW. ✓
+
+**Honest limitation, flagged for operator review:** chair 1's second clause ("require community votes
+before any rezoning") is not in her platform. The Kuykendall precedent maps this statement class to
+chair 1 on its dominant strict-preservation proposition, and that mapping is followed here — but this
+is the single judgment call of this pass, and an operator who prefers to treat the missing
+community-votes clause as disqualifying should strike the row rather than let a later pass rediscover
+the evidence.
+
+**Proposed row** (for the orchestrator; this executor writes no SQL):
+- politician_id `9e80fff4-8b89-4c38-b33e-a1a0fff7e080`, topic_id `d4f18138-a2e0-4110-b925-7387d9d0d16d`
+  (`residential-zoning`), value **1**.
+- Reasoning: On her 2026 campaign website (reproduced verbatim by Ballotpedia as of April 13, 2026),
+  Works states she "believes in protecting the Town's low-density, residential character" and
+  "supports strengthening ordinances and ensuring they are applied consistently so that growth never
+  comes at the expense of quality of life," citing "five years of vetting development on the Planning
+  and Zoning Commission" as "the technical expertise to strictly enforce ordinances that protect our
+  neighborhoods." This is an explicit commitment to strict preservation of existing low-density
+  neighborhood character through zoning ordinances.
+- Sources: `https://worksforfairview.com/`,
+  `https://ballotpedia.org/Lakia_Works_(Fairview_Town_Council_Seat_6,_Texas,_candidate_2026)`
+
+**Consequence if applied:** Fairview moves 0 → 1 stances, which makes it the **first Pitfall-5
+trigger of the phase** — `src/lib/coverage.js`'s Fairview entry must gain `hasContext: true` at
+close-out (222-18). If the operator strikes the row, Fairview stays at zero and the chip stays off.
+
+---
+
+**`taxes` (`f7e5678d-dadd-4556-a2fc-446e24642ceb`) — researched for all six, NO ROW WRITTEN FOR ANY
+OF THEM**, per the settled operator ruling of 2026-07-25. Findings preserved:
+
+- **Rich Connelly is the most tax-active member in the record and every action is unexplained or
+  procedural.** He moved the FY 25-26 **proposed maximum** tax rate verbatim (August 5, 2025: *"I
+  move to set the maximum tax rate for $0.316558 per $100 valuation as identified in the Town Budget
+  Officer's proposed budget…"* — a hearing-setting procedural step); moved the September 2 correction
+  clarifying the intended figure ($0.316658); moved adoption of the FY 2025-26 **budget** (August 25,
+  2025: *"I motion to approve the fiscal year 2025-2026 budget ordinance … as submitted"*, carried
+  5-0 by roll call, Hawkins seconding); voted **Aye** on Hubbard's motion adopting the $0.316658 rate
+  (*"effectively a 6.44 percent increase in the tax rate"*, 5-0 roll call); and moved the ordinance
+  **ratifying the property-tax revenue increase** (5-0). Every vote was unanimous and no reasoning is
+  recorded for any of them; an omnibus budget motion is the refused whole-city-appropriation class.
+- **Hawkins seconded** the budget adoption and **Works voted Aye** on all three roll-call items
+  (budget, rate, ratification) — same disposition.
+- **John Stanley** campaigned on *"I support disciplined budgeting and careful evaluation of spending.
+  The goal is to maintain a reasonable tax burden while meeting essential needs"* — generic fiscal
+  stewardship reaching no chair — and on Fairview receiving *"its fair share of sales tax revenue"*
+  (ZIP-code allocation mechanics), which is a revenue-allocation complaint, not a position on raising
+  taxes on the wealthy or scaling services back.
+- **Boggs and Sheehan**: nothing tax-relevant found at all (Boggs moved the June 2, 2026 Interlocal
+  Agreement with Collin County for **tax collection services** — administrative contracting,
+  unexplained, not a tax-policy position).
+
+**`healthcare` (`e8dad4a8-eb93-4931-91f5-d8fb5d7dd529`)** — searched for all six; blank for all six,
+as expected: all five chairs describe national healthcare policy, which no town council member holds
+a position on by role. No health-adjacent remark was stretched into a chair.
+
+---
+
+### Rich Connelly — Council Member Seat 1, Mayor Pro Tem — `9e2aa590-23e2-4217-84b7-418ba9dc1414`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** Fairview's longest-serving current member
+(elected May 2021, re-elected May 2025, Mayor Pro Tem from June 2026), a retired CPA with 45 years of
+executive financial management. He is the **most active dissenter on the council — seven recorded
+Nays in fourteen months — and not one carries a recorded reason**, which is the structural story of
+this blank: the person votes independently and the town's action-minutes format erases why.
+
+- **residential-zoning** — no position found. His April 29, 2025 **Nay on the temple CUP** (with
+  then-MPT Hubbard, 5-2) is recorded by name in the official minutes and **completely unexplained**
+  — unlike Hubbard, who later gave his reason on camera, **no Connelly statement about the vote
+  exists anywhere this session could find** (the Deseret News April 30, 2025 account was re-verified
+  to contain zero mentions of him). An unexplained vote cannot locate a chair; and under the settled
+  steeple ruling a religious-building height dispute is not a housing-density proposition anyway.
+  His seconding of the Chase Oaks daycare-CUP denial (August 5, 2025) is likewise unexplained and
+  non-residential. His P&Z Commission service (January–May 2021) is board service — adjacency.
+- **civil-rights** — no position found. **NEAR-MISS, REFUSED:** Connelly **moved** to add **Martin
+  Luther King Jr. Day as a Town holiday** starting FY2025-26 (September 2, 2025, carried 5-0). It is
+  a named, affirmative, on-record motion — and it is refused because the minutes record no reasoning
+  (unexplained-motion class) and because an employee-holiday designation does not engage any of the
+  five chairs, which run from mandated equity requirements to eliminating race-based programs. A
+  symbolic recognition locates nothing on that scale. Flagged so a later pass does not re-derive it.
+- **public-safety-approach** — no position found. Nothing on staffing levels, pay, equipment,
+  co-responders or budget priority. His June 2, 2026 questions to Police Chief Chandler about Flock
+  cameras are questions, not positions (and the chief's answer is a staff statement).
+- **transportation-priorities** — no position found. His April 7, 2026 Nay on the Kimley-Horn
+  Fairview Parkway amendment (with Hubbard and Works) is an unexplained vote on an engineering
+  contract; he also **seconded** the 7-0 Collin County roadway-funds interlocal the same night.
+  Contract votes in both directions, no recorded reason, no mode tradeoff.
+- **growth-and-development** — no position found. No statement on pace, capacity gates, annexation,
+  approval speed or permitting fees anywhere in the corpus, his bio, or any press.
+- **economic-development** — no position found. The TIF/Sloan Corners amendment passed 7-0
+  unexplained; his 45-year finance career is profession, not a position.
+- **housing** — no position found. Nothing on affordability, subsidy, rent regulation or market
+  provision. **homelessness** — no position found; zero camping/encampment items in the corpus.
+  Structural. **local-immigration** — no position found; zero immigration/ICE items in the corpus.
+  Structural. **taxes** — researched; no row written by operator ruling (see the block above — he is
+  its main subject). **healthcare** — no position found.
+
+### Joe W. Boggs — Council Member Seat 2 — `1a726799-8eb1-4479-b46a-83aacb0109e8`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** The thinnest record of the six, for structural
+reasons that are themselves settled findings: he was **elected unopposed** (600 votes, 100.00%) on
+May 2, 2026, so no contested race generated a questionnaire, Q&A or forum; he has **no campaign
+website** (Ballotpedia lists none and none was found); his Ballotpedia page exists but is empty of
+content (no survey, no biography, no themes); and he has served **eight weeks**, in which his only
+recorded actions are moving the ordinance creating a Deputy Mayor Pro Tem position and moving the
+Collin County tax-collection interlocal (both June 2, 2026, both 7-0, both administrative and
+unexplained). His official bio is purely biographical: 26 years as a mortgage banker, board positions
+in Fairview and Allen, Allen/Fairview Leadership Program — **profession and board service are
+adjacency** and set no chair; *"inspired by his teenage daughter to enter political office"* is
+biography. Per-topic: **housing, residential-zoning, growth-and-development, economic-development,
+public-safety-approach, transportation-priorities, homelessness, local-immigration, civil-rights** —
+no position found on any (the last three also structurally absent from the town record);
+**taxes** — researched, no row by ruling (nothing found regardless); **healthcare** — no position
+found (national-policy scale).
+
+### Jill Hawkins — Council Member Seat 3 — `c97ba2a3-d56e-4ecc-aa7d-c5d009c9312c`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** Elected May 3, 2025; co-owner of a landscape
+business; council liaison to the Parks & Recreation Advisory Board. No Ballotpedia page (2025 cycle,
+below coverage), no campaign website found, no press quote found.
+
+- **economic-development** — no position found. **REFUSED — adjacency, deliberately:** her bio's
+  strongest content is Chairperson of the **Allen Chamber of Commerce** board (2017) and appointment
+  to the **Town of Fairview's Economic Development Board**. EDC and chamber board service is a named
+  refusal class (the Manny Singh precedent, 222-10) — chairs 1 and 5 are both held by people who
+  serve on EDCs. Her business's "Small Business of the Year" award is biography.
+- **growth-and-development** — no position found. Nothing on pace, gates or permitting anywhere.
+- **transportation-priorities** — no position found. Her December 2, 2025 verbatim motion authorising
+  the Town Manager and Attorney to act on **drainage problems** near Country Club and Stoddard Roads
+  is infrastructure-maintenance/legal authorisation — maintenance framing, not a mode tradeoff.
+- **public-safety-approach** — no position found. **residential-zoning** — no position found; her
+  seconding of Works' 2025 council appointment and routine P&R appointments are procedure.
+  **housing** — no position found. **homelessness** — no position found; structural (zero items).
+  **local-immigration** — no position found; structural. **civil-rights** — no position found; the
+  Golden-Rule language in her business bio is a values remark, not a policy position, and no
+  inference was made from it. **taxes** — researched, no row by ruling (she seconded the FY26 budget
+  motion, unexplained omnibus). **healthcare** — no position found.
+
+### John Stanley — Council Member Seat 4 — `194c1b38-e76c-4edb-a064-0a7e7e1ac195`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** Unseated incumbent Ricardo Doi 381–351 on
+May 2, 2026; a licensed civil engineer with ~20 years in "infrastructure, transportation, and
+municipal-related projects" and a transportation-engineering master's — **profession, refused as
+adjacency on every axis it brushes**. His campaign site (`vote4stanley.com/fairview-issues`, live,
+read in full; reproduced verbatim by Ballotpedia as of April 12, 2026) is a genuine six-plank issues
+platform, and **every plank was weighed and refused on the record**:
+
+- **transportation-priorities** — no position found, two near-misses refused. (a) *"Traffic &
+  Congestion (Stacy Road)"*: *"If elected, I will engage regional partners early and push for
+  meaningful traffic studies to guide long-term solutions… Improvements should be data-driven,
+  coordinated, and protect neighborhood access."* Commissioning traffic studies chooses no mode —
+  every chair on this scale is a tradeoff between road capacity and pedestrian/cycling/transit
+  investment, and a study serves any of them. (b) *"DART & Regional Transit"*: *"Potential transit
+  expansion from Plano to McKinney could significantly impact Fairview. Any consideration must
+  include full transparency and community input. Long-term implications should be carefully evaluated
+  before commitments are made."* This is an evaluate-before-committing posture toward someone else's
+  transit line, not a position on where Fairview's transportation investment should go; it is
+  compatible with chairs 2, 3 and 4 alike and therefore locates none. **The closest call for this
+  person; flagged for operator review.**
+- **growth-and-development** — no position found. His temple-process plank (*"The April 2025 5–2 vote
+  exposed real concerns about due process, communication, and fairness… Fairview cannot afford to
+  repeat that process"*) is a **process-and-participation critique**, not a growth-pace position; his
+  McKinney-airport plank (*"waiting to act has real consequences… showing the need for earlier
+  leadership"*) urges responsiveness to a regional project, naming no pace, gate or permitting
+  posture. His bio's *"committed to preserving the town's character while planning thoughtfully for
+  the future"* is the refused character-remark/generically-evaluative class (and unlike Works' plank
+  it names no density subject and no mechanism).
+- **residential-zoning** — no position found. The temple-process plank is due-process critique of a
+  CUP proceeding, off the housing-density axis under the settled steeple ruling. His June 2, 2026
+  second of the Oakwood Estates amending plat (7-0) is routine.
+- **public-safety-approach / housing / economic-development / homelessness / local-immigration /
+  civil-rights** — no position found on any; the last three are structurally absent from the town
+  record. His June 2, 2026 motion approving the $18,000 Margulies PR program (LDS-related
+  communications) is unexplained and off-axis. His PTA and Technology Advisory Board service is
+  adjacency. **taxes** — researched, no row by ruling; his two fiscal planks are quoted in the block
+  above and reach no chair. **healthcare** — no position found.
+
+### Pat Sheehan — Council Member Seat 5, Deputy Mayor Pro Tem — `38e20826-63c9-4eef-a4e1-ea77aa6892e2`
+
+Sourced: **none. 10 topics blank SETTLED; 1 topic (`homelessness`) blank as an ACCESS FAILURE.**
+Elected May 3, 2025; a retired investment manager and 30-year Connecticut television news anchor;
+Deputy Mayor Pro Tem from June 2026. **He is the most substantively quoted member in the minutes**,
+and every recorded statement was weighed:
+
+- **homelessness** — **ACCESS FAILURE, the register's one non-settled zero in this section.** The
+  January 6, 2026 regular-meeting minutes record, under Council and Staff Comments:
+  *"Councilmember Sheehan spoke regarding updates to laws regarding homelessness and panhandling."*
+  **That is the entire record** — the minutes preserve the topic and erase the content. This is the
+  only sentence in the fourteen-month corpus that touches the `homelessness` axis for any of the six,
+  and what he actually said exists **only in the meeting audio**. Exact retry path: the January 6,
+  2026 Town Council meeting MP3 (CivicClerk event `externalMediaUrl`, pattern
+  `fairviewtexas.org/pdf/audio/Town%20Council/2026/...January 6, 2026...mp3`); failure mode: audio is
+  not readable by this pass. Until someone listens, no chair and no settled zero.
+- **transportation-priorities / economic-development** — no position found; **the plan's most
+  substantive near-miss, refused on both axes.** On May 19, 2026 Sheehan **proposed a resolution,
+  recorded verbatim**, that the North Texas Regional Airport expansion *"represents a singular
+  opportunity to provide new transpiration [sic] and economic benefits to the fastest growing region
+  of our state"*, authorising Mayor Hubbard to serve on a North Texas Regional Mayors Alliance *"to
+  review and support the NTRA expansion plan"* (passed 6-0, Connelly seconding). It is named, dated,
+  affirmative and his own text — and it is off-axis on both scales: `transportation-priorities` is a
+  tradeoff among **the city's own** road/pedestrian/cycling/transit investments (no chair mentions
+  airports or regional advocacy), and `economic-development` is about **incentive mechanisms** for
+  attracting business, which the resolution never touches. Refused rather than rounded up; flagged
+  for operator review as the section's second-closest call.
+- **civil-rights** — no position found. His October 8, 2025 Council-comment statement (recorded
+  nearly verbatim) deplores *"attacks on religious leaders, political leaders, and people who have
+  true belief systems — being attacked for their free speech, for their religious beliefs"* and urges
+  the town to *"speak out against the kind of violence."* It is a condemnation of political and
+  religious violence, not a position on government's role in racial and social inequality — none of
+  the five chairs (equity mandates ↔ eliminating race-based programs) is engaged. Refused as
+  off-axis, on the record.
+- **residential-zoning** — no position found. He spoke on the May 5, 2026 "processes for updating
+  Town zoning ordinances" item — content unrecorded (audio-only, same gap as above), and the item is
+  ordinance-update **process**; he moved the ERP tabling pickup and the Ward Addition replat (7-0,
+  routine). The town-hall-hours motions he authored (November 2025 tabling; December 2025 verbatim
+  resolution committing to Monday–Friday service) are administrative service-hours matters.
+- **growth-and-development / housing / public-safety-approach / local-immigration** — no position
+  found on any; the last is structurally absent from the record. **taxes** — researched, no row by
+  ruling; nothing found regardless. **healthcare** — no position found.
+
+### Lakia Works — Council Member Seat 6 — `9e80fff4-8b89-4c38-b33e-a1a0fff7e080`
+
+Sourced: **1 chair — `residential-zoning` = 1 (see the ⭐ block above). The remaining 10 topics are
+blank (all SETTLED).** Appointed to Seat 6 on May 29, 2025, elected May 2, 2026 over Ryan Riyad;
+five years on the Fairview Planning & Zoning Commission before appointment; a Workday program leader.
+
+- **growth-and-development** — no position found. **NEAR-MISS, REFUSED:** her "Strategic Growth
+  Advocate" plank — *"Lakia supports smart, intentional growth that benefits Fairview — not growth
+  for growth's sake. She believes development should be carefully evaluated to ensure it aligns with
+  the Town's vision, enhances long-term value, and respects surrounding neighborhoods"* — and her
+  site's *"prioritizes residents over 'growth for growth's sake'"*. "Smart growth" is the textbook
+  refused generically-evaluative formulation (the Nathan Bryan precedent, 222-10); "not growth for
+  growth's sake" leans against chairs 4–5 but cannot separate chairs 1, 2 and 3 (no growth cap, no
+  infrastructure gate, no proactive-investment commitment). A statement compatible with three chairs
+  locates none. Refused on the record; the operator reviewing the residential-zoning chair should
+  read this refusal alongside it.
+- **residential-zoning** — **CHAIR 1 PROPOSED** — full evidence, direction check, precedent and the
+  honest limitation are in the ⭐ block above. Her five years of P&Z service were **not** used as
+  evidence (board service is adjacency); the chair rests entirely on her own platform text.
+- **economic-development** — no position found. *"Appropriate commercial expansion"* names no
+  incentive mechanism; her P&Z vetting of "development proposals" is board service.
+- **civil-rights** — no position found. Her volunteering history (church, soup kitchens) is
+  volunteering — a named refusal class — and **no identity inference was made on this or any axis**.
+- **homelessness** — no position found. Her bio's youth volunteering **"in homeless shelters"** was
+  deliberately not read as a position on public-camping enforcement — volunteering is adjacency, and
+  the scale measures enforcement-versus-housing-first policy, which she has never addressed.
+  Structurally absent from the town record besides.
+- **public-safety-approach** — no position found. **transportation-priorities** — no position found;
+  her April 7, 2026 Nays (ERP contract with Connelly; Kimley-Horn amendment with Hubbard and
+  Connelly) are unexplained contract votes. **housing** — no position found — the affordability
+  scale (public housing, rent caps, subsidy, buyer assistance) is untouched by her
+  density-preservation platform, and the low-density plank was **not** carried across topics (each
+  topic requires its own evidence). **local-immigration** — no position found; structural.
+  **taxes** — researched, no row by ruling; her three Aye roll-call votes on the FY26 budget, rate
+  and ratification are unexplained. **healthcare** — no position found.
+- Context, verified but off-axis: as a P&Z commissioner she was quoted on the temple **renaming**
+  (Deseret News, April 28, 2025): *"You would never hear McDonald's call themselves Sonic. That's
+  just not OK."* A naming/branding remark; no chair on any axis, recorded so it is not re-derived.
+
+---
+
+**Fairview reconcile (222-11 Task 1):** all six council members are accounted for — Works in bucket 1
+for one topic (`residential-zoning`, if the operator applies the proposed row) and bucket 2 for her
+other ten; Connelly, Boggs, Hawkins, Stanley and Sheehan in bucket 2 for all eleven each. **66
+attempted pairs = 1 proposed chair + 65 register blanks.** No person is in neither bucket; no
+(person, topic) pair is in both. With Hubbard's 11 pairs from 222-08, every Fairview officeholder is
+now fully attempted. **If and only if the Works row is applied, Fairview flips 0 → ≥1 stances and
+`src/lib/coverage.js` must gain `hasContext: true` for Fairview at close-out** (RESEARCH.md
+Pitfall 5 — first trigger of the phase).
+
+**Self-audit (222-11 Task 1).** The contract is 100% re-verification of any value-1/value-5 stance
+plus a ≥20% sample of the rest. **The one proposed chair is a value 1 and was re-verified at 100%:**
+`worksforfairview.com` was fetched twice by `curl` (independent reads, cache-bypassing; both HTTP
+200, 181,184 bytes) and both the "protecting the Town's low-density, residential character /
+strengthening ordinances" plank and the "strictly enforce ordinances that protect our neighborhoods"
+line were confirmed present and correctly attributed on both reads, with Ballotpedia's dated
+(2026-04-13) verbatim reproduction as an independent third confirmation; the direction was re-checked
+against the inversion-trap table (preservationist → LOW). Sampled blank-decisive documents were also
+independently re-fetched: `vote4stanley.com/fairview-issues` (both refused transit/traffic passages
+confirmed present verbatim) and the Deseret News April 30, 2025 CUP-vote article (re-fetched by
+`curl`; confirmed **zero** occurrences of "Connelly", sustaining the unexplained-vote classification
+of his temple Nay). The Sheehan NTRA resolution and the Connelly MLK-holiday motion were verified
+against the packet PDFs on disk (fileIds 3247 and 2041 respectively). **No demotions occurred because
+nothing was promoted beyond the one chair; five near-misses (Connelly/MLK-holiday,
+Stanley/DART-transit, Sheehan/NTRA on two axes, Works/smart-growth) were refused on the record
+instead.**
 
