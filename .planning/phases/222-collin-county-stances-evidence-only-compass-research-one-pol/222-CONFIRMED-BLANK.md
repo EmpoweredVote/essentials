@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 533
+## Count: 564
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -69,7 +69,12 @@ record rather than rounded up). **222-10 COMPLETE: 77 of 77 attempted pairs blan
 + 65 by 222-11 Task 1 (Fairview council — 6 people × 11 topics = 66 attempted pairs, **1 chair
 proposed: Lakia Works / residential-zoning = 1**, 65 blanks; 64 of the 65 are **SETTLED**, one —
 Sheehan / homelessness — is an **access failure** with the exact retry path named in the section).
-222-11 part B (Princeton) through 222-17 append their own per-government sections below as they execute.
++ 31 by 222-11 Task 2 (Princeton council — 3 people × 11 topics = 33 attempted pairs, **2 chairs
+proposed: Cristina Todd / growth-and-development = 2 and Bryan Washington / public-safety-approach
+= 4**, 31 blanks; all 31 are **SETTLED**, with the unread council-video archive and three paywalled
+Herald article tails documented as retry paths rather than access-failure zeros). **222-11 COMPLETE:
+99 attempted pairs across 9 people in two cities, 3 chairs proposed, 96 register blanks.**
+222-12 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -7554,3 +7559,446 @@ nothing was promoted beyond the one chair; five near-misses (Connelly/MLK-holida
 Stanley/DART-transit, Sheehan/NTRA on two axes, Works/smart-growth) were refused on the record
 instead.**
 
+
+## City of Princeton (4859576) — 222-11
+
+**Scope, stated once.** Plan 222-11 Task 2 researches **the three scoped City Council members of
+Princeton** (Collin County, Texas). **Mayor Eugene Escobar Jr. is already stanced and out of scope
+under D-07**; the remaining four council members (Johnson, Deffibaugh, Long, David-Graves) are not in
+this plan's scope. All three politician_ids were re-verified live against production by the
+orchestrator as 0 answer rows before research began. **Todd and Washington each carry 8
+`inform.politician_context` found-nothing rows from the 2026-05-12 pass** (deliberate honest-blank
+notes on the 8 Local Lens topics); Rutledge is clean — he was not seated until June 2026, after that
+pass ran.
+
+**Attempted:** 2026-07-30 — **3 people × 11 canonical topics = 33 (person, topic) pairs.**
+
+| Person | Title | politician_id | Term |
+|---|---|---|---|
+| Cristina Todd | Council Member Place 2 | `3c8d7283-2387-47ff-8a29-1ef7a1e2a554` | elected November 5, 2024 (3,497 votes, 51.92%, over incumbent Marlo Obera); sworn in November 18, 2024 |
+| Bryan Washington | Council Member Place 3, Mayor Pro Tem | `e40be594-2239-4c28-a8ac-d4f86c6d4180` | first elected November 2020; re-elected November 7, 2023 (865 votes, 59.49%, over Terrance Gilmore) to a four-year term; elected Mayor Pro Tem December 8, 2025 |
+| Jaisen Rutledge | Council Member Place 4 | `53f97990-822e-46de-8e18-f09e5a160c2b` | won the June 13, 2026 runoff (293 votes, 54.45%, over Jan Goria) for the unexpired term vacated by Ryan Gerfers (resigned for health reasons); top-two in the four-way May 2, 2026 special election; seated after the canvass in mid-June 2026 |
+
+**Result: 2 chairs proposed — Cristina Todd `growth-and-development` = 2 and Bryan Washington
+`public-safety-approach` = 4 — and 31 honest blanks, all SETTLED.** Rutledge has served roughly one
+month; his contested 2026 race nonetheless produced a real forum record, all of it read and weighed.
+
+---
+
+### ⚠ TENURE vs THE MORATORIUM TIMELINE — the trap this plan's prompt named, mapped precisely
+
+Princeton's famous residential development moratorium is a genuine growth-pace instrument, and its
+dates against these three tenures matter:
+
+- **Enacted September 23, 2024** (unanimous; preliminary passage a week earlier). **Washington was on
+  the council; Todd was NOT** (seated November 18, 2024); Rutledge was not. The Herald's full
+  enactment account is print-edition-only; no accessible source attributes individual reasoning for
+  the enactment to any scoped member.
+- **Extension 1 — January 13, 2025**, unanimous, 180 days (to July 12, 2025). Todd and Washington
+  both on the council; no accessible record attributes an individual position (the city's Council
+  Highlights carries no tally; the KERA/CBS/KETR/NBC5/WFAA coverage quotes City Manager Michael
+  Mashburn, Police Chief John Waters and a resident — staff and institutional voices, not members).
+- **Extension 2 — June 23, 2025**, **6-0**, 160 days (to November 30, 2025). The official minutes
+  (image-scan PDF `_06232025-1370`, all 10 pages read visually this session) record: Johnson moved,
+  David-Graves seconded, Ayes Deffibaugh, Johnson, Long, Gerfers, **Washington**, David-Graves —
+  **Todd absent**. The Princeton Herald's same-day account adds the one member-attributed fact in the
+  entire moratorium record: *"Councilmember Cristina Todd was absent but sent a message that she
+  supported the second extension."*
+- **Lifted effective December 1, 2025** — compelled by the 89th Texas Legislature ("laws enacted
+  during the 89th Texas Legislature's regular session have prohibited the city from further extending
+  the moratorium," City Attorney Grant Lowry). A state-law-forced lapse; no member position derivable.
+
+Every other moratorium mention in local and national coverage credits "the council," "the city,"
+"city leaders," the city manager, or the mayor (Spectrum's headline "Princeton mayor extends
+moratorium" is flatly wrong as attribution — it was a council ordinance). None of that was used.
+
+---
+
+### Source intelligence for Princeton (differs from Fairview/Anna in three ways)
+
+**Evidence checked** (every item fetched and read this session unless noted):
+
+- **Official bios, all three, read in full** (`princetontx.gov/Directory.aspx?did=37`, `/733/Cristina-Todd`,
+  `/m/directory/employee?eid=46`, `/m/directory/employee?eid=151`). All biography-only: Todd is a
+  Princeton ISD Special Education leader and 20-year Rotarian (Assistant Governor, District 5810);
+  Washington co-owns The Jym boxing gym and is a youth-sports commissioner; Rutledge is a VP leading
+  Governance and Regulatory Delivery in Third-Party Risk Management at a financial firm, ex-chair of
+  the Princeton CDC and chair of the Home Rule Charter Committee. Profession, board service and
+  volunteering are adjacency; Rutledge's four principles (Integrity, Voice, Progress, Transparency)
+  are values language reaching no chair.
+- **Council minutes.** Princeton's standalone minutes PDFs are **PFU ScanSnap image scans with zero
+  embedded fonts** — `pdftotext` returns ~10 bytes — but they ARE readable by visual PDF extraction
+  (the June 23, 2025 regular meeting was read cover to cover this way). Format is strictly
+  **action-only**: mover, seconder, roll-call tally, no member reasoning anywhere in 10 pages. ⚠
+  **AgendaCenter's `ViewFile` endpoint serves by numeric ID and IGNORES the date prefix** — probe
+  `_01132025-1097` returned the CDC minutes of September 3, 2024 — so a wanted meeting's minutes
+  cannot be found by URL guessing, and the year navigation is JS-driven. Retry path for other
+  meetings: the AgendaCenter UI in a real browser, or the packets.
+- **Princeton Herald (`princetonherald.com`)** — the member-attribution record for this city (staff
+  writer Bob Wieland covers every council meeting and, unlike the minutes, records member statements).
+  Per-person site-search sweeps run for all three names; ~20 articles fetched and read (list in the
+  per-person entries). **Failure mode: several articles truncate mid-body into a subscription wall**
+  — the September 26, 2024 moratorium-enactment full account ("see the print edition"), the
+  November 20, 2025 moratorium-lifting tail, the July 2, 2026 data-centers item and the July 30, 2026
+  permit-fees item. Each truncation was cross-checked against untruncated coverage (KERA, CBS, WFAA,
+  KETR, city newsflash); none of the paywalled tails is known to contain scoped-member speech, and
+  the two 2026 items sit on refused or off-scope axes anyway (fee decisions; data-centers is not one
+  of the 11 topics).
+- **KERA News** — Todd complaints piece (September 23, 2025), January 2025 extension, and the two
+  Rutledge race pieces (April 16 and May 2, 2026), all read.
+- **Ballotpedia, checked for all three with a browser User-Agent via `curl`.** Princeton coverage
+  begins with the **November 2024 cycle**: Todd's disambiguated page
+  (`Cristina_Todd_(Princeton_City_Council_At-large_Seat_2,_Texas,_candidate_2024)`, 92,700 bytes,
+  Texas-confirmed in title and categories) is real but **she did not complete the Candidate
+  Connection survey** and the page has no campaign-themes content — results tables only.
+  **Washington: genuine 404 stubs in all five forms tried** (bare name, `(Texas)`, and three
+  disambiguated 2020/2023 forms, 51–52 KB stubs) — his pre-2024 races are below coverage. **Rutledge:
+  genuine 404 stubs** (bare name and the 2026 disambiguated form) — the May 2026 special election
+  drew no Ballotpedia page.
+- **Campaign websites.** **`wash4council.com` is live** (Washington's 2023 re-election site) — it is
+  a Square Online SPA whose `curl` body is an empty loading shell; content was recovered **two
+  independent ways**: a Playwright headless render (home, `/about`, `/campaign-platforms`, all read)
+  and the `__BOOTSTRAP_STATE__` JSON embedded in the raw HTML. **No campaign website exists for Todd
+  or Rutledge** — both campaigned on Facebook pages (`CTodd4PrincetonCityCouncil`,
+  `Jaisen4Princeton`), which are not fetchable here and are not evidence absent a citable quote;
+  Rutledge's Facebook platform content is known only through KERA's quotation of it, which was read.
+- **The Herald's forum account** (June 4, 2026, of the May 30 LWV-moderated runoff forum) — the
+  richest Rutledge source; read in full verbatim. ⚠ Its true URL is
+  `/2026/06/04/council-runoff-candidates-meet-in-forum-2/` — search engines index a `/2026/05/30/...`
+  slug that 404s.
+- **Election results**: Collin County / City of Princeton summary reports (November 5, 2024; May 2,
+  2026) via `princetontx.gov/DocumentCenter`, plus Herald canvass coverage for the seating dates.
+- **DFW/national moratorium coverage** (WFAA, CBS Texas, NBC5, KETR, Spectrum, Local Profile): all
+  institutional attribution, zero scoped-member content — see the timeline block above.
+- **City newsflash Council Highlights** (Jan 13, 2025 = detail/415; Dec 8, 2025 = detail/471):
+  outcome summaries without tallies or member statements.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence:
+
+- **The council VIDEO archive (`princetontx.new.swagit.com`) is the highest-value unread Princeton
+  source.** Princeton records full video of every meeting while its minutes are action-only, so all
+  unrecorded member reasoning lives there. Named targets a future pass should pull first: the
+  **September 8, 2025 budget debate** (Todd's full dissent beyond the Herald's quotes), the
+  **January 13, 2025 extension discussion**, and the **May 30, 2026 runoff forum**
+  (`princetontx.new.swagit.com/videos/389581`). Failure mode: video/audio is not readable by this
+  pass.
+- **Princeton Herald paywalled tails** listed above — retry path: subscription or print archive.
+- **VOTE411 / citizenportal.ai / gathergov.com / lwvcollin.org** — CLOSED for this phase; not retried.
+
+**⚠ HOMONYM TRAPS REJECTED** — four classes, all caught before any evidence was used:
+
+- **"Bryan Washington" is a famous Houston novelist** — as the plan warned, search noise is heavy;
+  every Washington source used was pinned to Princeton, Collin County by the `princetontx.gov` or
+  `wash4council.com` domain or by the Herald's council context. No novelist content ever entered the
+  evidence stream.
+- **Princeton, NEW JERSEY** noise: `patch.com/new-jersey/princeton` and `princetonperspectives.com`
+  results (council swearing-ins, BOE races) surfaced repeatedly and were rejected on sight.
+- **`Brandon Todd (politician)`** (a Washington-DC councilmember) surfaced in a Todd search — rejected.
+- **Terrance Johnson (Place 1) vs Terrance Gilmore (Washington's 2023 opponent)** — two different
+  people whose first names collide; kept distinct throughout.
+
+**⚠ MISATTRIBUTION GUARD.** The moratorium record is a within-city misattribution minefield (see the
+timeline block). Staff voices were excluded throughout: City Manager Michael Mashburn, Police Chief
+John Waters, City Attorney / Assistant City Attorney Grant Lowry, CFO Kelley Wilson, Development
+Services Director Shai Roos, Fire Marshal Samantha Jones, Parks Director Chase Bryant, Public Works
+Director Tommy Mapp. Ben Long's September 8, 2025 budget statements (pro-budget despite misgivings,
+"more police officers" needed, "much broader commercial base") are **his**, out of scope, and were
+not leaked onto any scoped member. Every quote used below names its speaker in a document read this
+session, and every date was checked against that person's term.
+
+---
+
+### ⭐ CHAIR 1 PROPOSED: Cristina Todd — `growth-and-development` = **2**
+
+**Evidence (primary account read three times, twice by cache-bypassing `curl`):** The Princeton
+Herald, June 23, 2025, "Housing moratorium extended" (Bob Wieland), on the 160-day second extension
+of the residential development moratorium:
+
+> *"Council voted 6-0 to approve the extension at the regular Monday, June 23, meeting.
+> Councilmember Cristina Todd was absent but sent a message that she supported the second extension."*
+
+The same article states the instrument's substance: the moratorium *"suspends the acceptance,
+authorization, permits and approvals necessary for residential property development such as
+subdivision, platting, construction, reconstruction — or other alteration or improvement — within the
+city limits and its extraterritorial jurisdiction"*, imposed *"to allow time for the rapidly growing
+city to plan for improving its infrastructure to keep pace"*, extended because the city had made
+*"reasonable, yet insufficient"* progress *"in preventing a shortage of essential public services"*
+(Assistant City Attorney Grant Lowry). The official minutes (read visually this session) corroborate
+the 6-0 tally and Todd's absence; the message of support exists only in the Herald's account — the
+minutes' action-only format does not record it.
+
+**Why this is a chair and not an unexplained-vote refusal.** This phase refuses silent Ayes (the
+five other members' identical votes locate nothing — see Washington's entry). Todd did something
+different in kind: absent from the vote, she **deliberately communicated a named, individual position
+of support** for a single-subject instrument, and the town's paper of record printed it. The plan's
+own prompt anticipated exactly this route ("only a member's own named statement or explained vote
+counts"). The instrument is a pure growth-pace proposition whose adopted written findings state its
+purpose — pause residential approvals because infrastructure and public services have not kept up —
+which is **chair 2's text nearly verbatim** ("Allow growth only where existing infrastructure can
+support it; slow approvals until capacity catches up"). Her support is incompatible with chairs 3–5
+(all keep approvals flowing) and does not reach chair 1 (no permanent growth limits or voter-approval
+advocacy anywhere in her record). Direction re-checked against the scale: `growth-and-development`
+1 = growth limits, 5 = remove all barriers — a moratorium supporter scores LOW. ✓
+
+**Honest limitation, flagged for operator review:** the Herald reports the fact of her support, not
+her personal reasoning — the chair leans on the ordinance's own stated purpose for the WHY. An
+operator who reads a relayed message of support as informationally equivalent to an absentee Aye (and
+therefore inside the unexplained-vote refusal class) should strike the row; the evidence would then
+have no home and her `growth-and-development` blank would be settled on the same record.
+
+**Proposed row** (for the orchestrator; this executor writes no SQL):
+- politician_id `3c8d7283-2387-47ff-8a29-1ef7a1e2a554`, topic_id `fb25c1ac-91cc-49bf-8afc-c7fa22ef45e4`
+  (`growth-and-development`), value **2**.
+- Reasoning: Though absent from the June 23, 2025 council meeting, Todd sent a message — reported by
+  the Princeton Herald — that she supported the second extension of Princeton's residential
+  development moratorium, which suspended acceptance, permits and approvals for residential
+  development citywide and in the ETJ so the fast-growing city's infrastructure and public services
+  could catch up (the city cited "reasonable, yet insufficient" progress in preventing a shortage of
+  essential public services). Supporting continued suspension of residential approvals until capacity
+  catches up aligns with allowing growth only where existing infrastructure can support it.
+- Sources: `https://princetonherald.com/2025/06/23/housing-moratorium-extended/`,
+  `https://www.princetontx.gov/AgendaCenter/ViewFile/Minutes/_06232025-1370`
+
+**Note:** growth-and-development is a legacy-tail topic, NOT one of the 8 Local Lens topics — so this
+chair does **not** overwrite any of Todd's 2026-05-12 found-nothing notes.
+
+---
+
+### ⭐ CHAIR 2 PROPOSED: Bryan Washington — `public-safety-approach` = **4**
+
+**Evidence (first-party, verified by two independent methods):** Washington's own 2023 re-election
+campaign website, `wash4council.com` (still live, fetched 2026-07-30 by Playwright render and
+confirmed verbatim in the raw HTML's embedded content JSON via `curl`), home page, "Dedication and
+Drive" section:
+
+> *"His efforts within the community along with his work while in office the past three years, speak
+> volumes to his dedication to the city of Princeton. Certain initiatives such as his role in the
+> current Parks Bond, being a strong proponent of starting salary increases for our police and fire
+> as well as the support of expanding the structure of the Economic Development Corporation truly
+> display Councilman Washington's level of leadership."*
+
+**Why this is a chair.** "A strong proponent of starting salary increases for our police" is an
+explicit, first-party, on-axis advocacy of increased public-safety pay during his 2020–2023 term.
+`public-safety-approach` chair 4 is "Increase police staffing, equipment, and **pay** to improve
+response times and deter crime" — the only chair compatible with advocating police pay increases
+(chair 3 keeps funding level; chairs 1–2 redirect or hold; chair 5's top-priority-over-everything is
+nowhere claimed). This is not the refused maintenance/backfill class: a starting-salary increase is a
+real, recurring budget increase for public safety, not a vacancy backfill. Site identity confirmed:
+"Bryan Washington is a candidate for re-election for Princeton, Texas City Council, Place 3" (footer).
+Direction re-checked: 1 = redirect police budget away, 5 = police budget above all — a pay-increase
+proponent scores HIGH. ✓
+
+**Honest limitations, flagged for operator review:** (a) the advocacy is a record-claim in his
+campaign's third-person voice, dated to the 2023 campaign — no motive clause ("response times,"
+"deter crime") is stated; (b) police is bundled with fire (both are public-safety services, so the
+axis is still engaged); (c) **this row would REPLACE his 2026-05-12 found-nothing note on
+`public-safety` — a Lavine-precedent upgrade** — but `wash4council.com` was live on 2026-05-12, so if
+the prior pass's note records having read this site and refusing this exact sentence, the orchestrator
+should weigh that earlier refusal before applying. This pass proposes the chair on the sentence's
+explicitness; it does not lower the bar to overwrite the prior blank.
+
+**Proposed row** (for the orchestrator; this executor writes no SQL):
+- politician_id `e40be594-2239-4c28-a8ac-d4f86c6d4180`, topic_id `e9ebefcd-c496-45e8-b816-a79f8442ba85`
+  (`public-safety-approach` — RESEARCH.md §B topic 6), value **4**.
+- Reasoning: His 2023 re-election campaign website states that during his first term (2020–2023) he
+  was "a strong proponent of starting salary increases for our police and fire," an explicit
+  first-party advocacy of increasing public-safety compensation, consistent with increasing police
+  pay as a city budget priority. No statement of his supports redirecting public-safety funding or
+  holding it level.
+- Sources: `https://www.wash4council.com/`
+
+---
+
+**`taxes` (`f7e5678d-dadd-4556-a2fc-446e24642ceb`) — researched for all three, NO ROW WRITTEN FOR ANY
+OF THEM**, per the settled operator ruling of 2026-07-25. Findings preserved:
+
+- **Cristina Todd voted AGAINST the FY 2025-26 budget and against maintaining the $0.4402/$100 rate**
+  (September 8, 2025, adopted 5-2 with Johnson also opposed), with recorded reasoning — she blamed
+  former administrations for creating too many Tax Increment Reinvestment Zones and Public
+  Improvement Districts: *"which means from those communities, we are not going to be getting the
+  full tax rate from them, which means the remaining residents, basically their tax dollars, have to
+  pick up that gap"*, and *"We have dug a hole so deep, and we are trying to climb out, and we can't
+  afford [police] officers because of it. … we have failed our residents, we have failed our staff,
+  and we need to do better."* Real, dated, hers — and structurally homeless on this scale: a
+  burden-distribution complaint about past financing districts is neither raising taxes on the
+  wealthy (1–2) nor cutting taxes/services (4–5), and chair 3 is forbidden as a default. Preserved
+  here for any future municipal rewrite. She also single-handedly blocked the proposed **$1,000 ETJ
+  removal petition fee** (October 2025) by pulling it from consent, asking whether it was "taxation
+  without representation since ETJ residents had no say in adopting the fee or electing the council"
+  — a **fee decision**, the named refusal class, and a procedural-fairness objection besides.
+- **Bryan Washington**: nothing tax-relevant individually attributed anywhere in the record (the
+  Herald's budget accounts never name him; his campaign site is silent on taxes).
+- **Jaisen Rutledge**: at the May 30, 2026 forum, asked about budget priorities, he said he would
+  *"invest in staff and make sure the city is supported by commercial growth, not just residential
+  property"* — the **expand-the-commercial-tax-base refusal class** (rule 19, already refused for two
+  Plano members; Ben Long's identical September 2025 argument was not evidence for him either).
+
+**`healthcare` (`e8dad4a8-eb93-4931-91f5-d8fb5d7dd529`)** — searched for all three; blank for all
+three, as expected: all five chairs describe national healthcare policy, which no city council member
+holds a position on by role. No health-adjacent remark was stretched into a chair.
+
+---
+
+### Cristina Todd — Council Member Place 2 — `3c8d7283-2387-47ff-8a29-1ef7a1e2a554`
+
+Sourced: **1 chair — `growth-and-development` = 2 (see the ⭐ block above). The remaining 10 topics
+are blank (all SETTLED).** Princeton ISD Special Education leader; 20-year Rotarian; council liaison
+to the Planning & Zoning Commission. She is the council's most visible questioner — the subject of a
+September 22, 2025 open meeting on complaints that her questioning of staff "created tension" (council
+took no action; her defense: *"The law is the law. Follow it."*) — and her recorded statements are
+almost all process and fiscal-structure, not compass axes. **Every blank below on a Local Lens topic
+independently corroborates her 2026-05-12 found-nothing note for that topic** — and the two most
+substantive near-misses below postdate that pass (September–October 2025), so they were refused here
+on fresh grounds, not inherited.
+
+- **public-safety-approach** — no position found; **the section's biggest near-miss, REFUSED.** Her
+  September 8, 2025 budget dissent laments: *"We have dug a hole so deep, and we are trying to climb
+  out, and we can't afford [police] officers because of it."* Named, dated, hers — and refused
+  because it is a **fiscal-capacity lament, not a funding-posture prescription**: the operative
+  complaint is that past TIRZ/PID decisions starve the general fund; "[police]" is the reporter's
+  bracket (the verbatim word is not certain); and wanting to be ABLE to afford officers cannot
+  separate chair 3 (keep funding, add crisis teams) from chair 4 (increase staffing/pay) — she
+  prescribes no operating model. The September 8 meeting video is the named retry path for her fuller
+  remarks. **Corroborates the 2026-05-12 found-nothing note** (which predates this statement).
+- **economic-development** — no position found; **near-miss, REFUSED.** The same dissent blames
+  *"too many"* TIRZs and PIDs — retrospective fiscal diagnosis of past financing tools, not a forward
+  position on how the city should attract business (no chair's incentive mechanism is engaged; PIDs
+  are assessment districts, not business incentives). Corroborates the prior note.
+- **residential-zoning** — no position found. P&Z **liaison** assignment is board service —
+  adjacency. Her May 2026 advocacy for a **historic preservation committee** (*"There are a lot of
+  things that we can do once this door gets open, but it's a door that has actively been kept
+  shut"*) concerns historic sites and artifacts (a 1940 water tower, a German POW camp facility,
+  cemeteries) — shared vocabulary is not shared subject; nothing engages housing density. Corroborates
+  the prior note.
+- **transportation-priorities** — no position found. Her drainage focus (*"I can get passionate about
+  drainage"*, KERA) and her November 2025 **rescission** of her own motion for the $4.7M stormwater
+  study (*"I withdraw my recommendation and motion for item M2 after further research on the policies
+  and procedures in selecting the engineering company"*) are maintenance framing and
+  vendor-selection process respectively — no mode tradeoff anywhere. Corroborates the prior note.
+- **housing** — no position found: nothing on affordability mechanisms in any source. Corroborates
+  the prior note. **homelessness** — no position found; **zero** camping/encampment/panhandling items
+  surfaced in any Princeton source for any member — structural. Corroborates. **local-immigration** —
+  no position found; **zero** immigration/ICE items — structural. Corroborates. **civil-rights** — no
+  position found; her "strengthen the bonds between residents" mission language is values talk.
+  Corroborates.
+- **growth-and-development** — **CHAIR 2 PROPOSED** (⭐ block above; legacy-tail topic, no prior note
+  exists to overwrite). The moratorium's unanimous January 13, 2025 extension (individual votes
+  unrecorded in accessible sources) was not used.
+- **taxes** — researched; no row by operator ruling (findings preserved in the block above — she is
+  its main subject). **healthcare** — no position found.
+
+### Bryan Washington — Council Member Place 3, Mayor Pro Tem — `e40be594-2239-4c28-a8ac-d4f86c6d4180`
+
+Sourced: **1 chair — `public-safety-approach` = 4 (see the ⭐ block above; a Lavine-precedent upgrade
+of his 2026-05-12 found-nothing note on that topic, with the caveat flagged there). The remaining 10
+topics are blank (all SETTLED).** Nearly six years on the council, and outside his own campaign site
+he is **almost entirely voiceless in the accessible record** — the Herald's meeting coverage never
+quotes him on policy; the one minutes remark of his this session found is congratulating the high
+school football team (June 23, 2025). **Each blank below on a Local Lens topic independently
+corroborates his 2026-05-12 found-nothing note for that topic** (7 of his 8 notes corroborated; the
+8th, public-safety, is the proposed upgrade).
+
+- **growth-and-development** — no position found. His only individually-documented moratorium action
+  is his **Aye in the 6-0 of June 23, 2025** (official minutes read visually) — an unexplained
+  unanimous vote, the named refusal class; the September 23, 2024 enactment was unanimous but no
+  accessible source establishes his individual presence or words, and he was **absent** from the
+  August 22, 2024 Housing Standards Commission hearing on the stalled Princeton Luxury Apartments.
+  His platform's growth text — *"the most important issue confronting Princeton City Council is
+  strategic growth planning … demanding cautious preparation"* — is the refused
+  generically-evaluative class (the Nathan Bryan / "smart growth" precedent): compatible with chairs
+  1, 2 and 3 alike, locating none.
+- **economic-development** — no position found; **near-miss, REFUSED.** The same campaign-site
+  sentence that grounds his public-safety chair also credits *"the support of expanding the structure
+  of the Economic Development Corporation"* — an organizational-structure endorsement naming **no
+  incentive mechanism**; EDC support/service is a named refusal class (the Manny Singh precedent).
+  His "parks, businesses, and job opportunities — PB&J" line is campaign wordplay. Corroborates the
+  prior note.
+- **public-safety-approach** — **CHAIR 4 PROPOSED** (⭐ block above).
+- **residential-zoning** — no position found: nothing on density, zoning categories or neighborhood
+  character anywhere. Corroborates. **housing** — no position found. Corroborates. **homelessness** /
+  **local-immigration** — no position found; structural (zero items citywide). Both corroborate.
+  **civil-rights** — no position found. His 2020 "history was made together" campaign line (about his
+  own election) is biography; **no identity inference was made on this or any axis.** Corroborates.
+- **transportation-priorities** — no position found. The 380-expansion monument-relocation mention in
+  his platform is project logistics, not a mode tradeoff; his recorded motions are procedural
+  (adjournments, a ZBA-appointment second, a charter-committee-deadline second). Corroborates.
+- **taxes** — researched; no row by ruling (nothing individually attributed found at all).
+  **healthcare** — no position found.
+- Also examined and refused: his unexplained **recusal** from the November 2025 executive-session
+  personnel matters (*"No reason stated"* — the Herald's words) — procedure, no axis.
+
+### Jaisen Rutledge — Council Member Place 4 — `53f97990-822e-46de-8e18-f09e5a160c2b`
+
+Sourced: **none. All 11 topics blank (all SETTLED).** Seated mid-June 2026 — roughly one month in
+office at research time, with **no prior found-nothing notes** (his May–June 2026 race postdates the
+2026-05-12 pass), so these are his first-ever register entries. His record is his contested special
+election: a real LWV-moderated runoff forum (May 30, 2026, Herald account read verbatim), two KERA
+race pieces, Herald filing/results coverage, and a Facebook-only campaign whose platform is known
+through KERA's quotation. His council tenure so far shows no individually-attributed action in
+accessible sources (the July 2026 data-center zoning direction and city-manager search were staff
+recommendations approved without recorded individual reasoning — and data-centers is not one of the
+11 topics).
+
+- **public-safety-approach** — no position found; **his closest call, REFUSED.** At the forum he said
+  the police department *"is currently understaffed"* and: *"We have a lot of opportunity for us to
+  look at our budgeting in that capacity and ensure that we're putting the resources where they're
+  needed."* An understaffing assessment plus examine-the-budget language is compatible with chair 3
+  (keep funding, add capability), chair 4 (increase staffing) and even reallocation — a statement
+  compatible with three postures locates none. The **forum video**
+  (`princetontx.new.swagit.com/videos/389581`) is the named retry path if a future pass wants his
+  fuller answer; the Herald's account of it was read and is refused on its merits, so this zero is
+  SETTLED on the read record.
+- **growth-and-development** — no position found. *"Princeton is a fast-growing city that still has a
+  small town charm to it … I believe that it has done a really good job of retaining a lot of its
+  culture"* is a descriptive answer to "describe Princeton to a potential resident," not a pace
+  prescription (the character-remark class); his victory statement (*"…prepared me well to serve
+  Princeton during this important stage of growth"*) is biography.
+- **economic-development** — no position found. The *"commercial growth, not just residential
+  property"* budget answer names no incentive mechanism (and is the refused commercial-tax-base class
+  on the taxes axis); his CDC chairmanship — including being its first African American chair — is
+  board service, adjacency.
+- **housing / residential-zoning / homelessness / local-immigration / civil-rights /
+  transportation-priorities** — no position found on any; homelessness and local-immigration are
+  structurally absent from the whole city record. His **transparency** platform (publish contracts,
+  budgets, development agreements and project timelines in searchable form; publish explanations for
+  his votes; *"Residents deserve access, clarity, and honest communication about how decisions are
+  made and why"*) is process governance — no compass topic measures it. Recorded here so it is not
+  re-derived. (If he keeps the published-vote-explanations pledge, **Princeton's minutes gap will
+  close for him specifically** — a future pass should check for that publication first.)
+- **taxes** — researched, no row by ruling (the one finding is in the block above). **healthcare** —
+  no position found.
+
+---
+
+**Princeton reconcile (222-11 Task 2):** all three scoped members are accounted for — Todd in bucket 1
+for one topic (`growth-and-development`, if the operator applies the proposed row) and bucket 2 for
+her other ten; Washington in bucket 1 for one topic (`public-safety-approach`, if applied) and bucket
+2 for his other ten; Rutledge in bucket 2 for all eleven. **33 attempted pairs = 2 proposed chairs +
+31 register blanks.** No person is in neither bucket; no (person, topic) pair is in both. **No
+Pitfall-5 trigger either way:** Mayor Escobar is already stanced, so Princeton is not at zero and its
+`coverage.js` entry needs no flip. Prior-note ledger: **Todd — 8 of 8 Local Lens found-nothing notes
+independently corroborated** (her proposed chair is on a legacy-tail topic); **Washington — 7 of 8
+corroborated, 1 (public-safety) proposed for a Lavine-precedent upgrade** with the wash4council.com
+caveat flagged in the ⭐ block; **Rutledge — no prior notes existed.**
+
+**Self-audit (222-11 Task 2).** The contract is 100% re-verification of any value-1/value-5 stance
+plus a ≥20% sample of the rest; both proposed chairs are mid-scale (2 and 4) and **both were
+re-verified at 100% anyway**. Todd: the Herald June 23, 2025 article was read three times — a WebFetch
+read, a full-text `curl` read, and an independent audit-pass `curl` (HTTP 200, 170,229 bytes) — with
+both the "Council voted 6-0…" and "Councilmember Cristina Todd was absent but sent a message that she
+supported the second extension." sentences grep-confirmed verbatim on the audit read; the official
+minutes PDF was read visually page-by-page confirming the tally and her absence; direction re-checked
+(moratorium supporter → LOW → 2). Washington: the "strong proponent of starting salary increases for
+our police and fire" sentence was verified by **two independent methods** — the Playwright DOM render
+and a `grep` of the `__BOOTSTRAP_STATE__` content JSON in the raw `curl` HTML (1 hit, full sentence
+recovered verbatim) — and the site's footer confirms the Princeton, Texas identity; direction
+re-checked (pay-increase proponent → HIGH → 4). Blank-decisive documents were also independently
+re-fetched by `curl`: the September 11, 2025 Herald budget article ("We have dug a hole so deep" —
+1 hit, sustaining the Todd public-safety/economic-development refusals) and the June 4, 2026 forum
+article ("police department is currently understaffed" — 1 hit, sustaining the Rutledge
+public-safety refusal). **No demotions occurred because nothing was promoted beyond the two chairs;
+five near-misses (Todd/public-safety, Todd/economic-development, Washington/growth-platform,
+Rutledge/public-safety, Rutledge/economic-development) were refused on the record instead.** Both
+chairs carry named operator-review flags — the relayed-support-message question for Todd and the
+prior-note-overwrite question for Washington — so the orchestrator can strike either without losing
+the underlying evidence, which is preserved verbatim above.
