@@ -379,6 +379,10 @@ export function tierOrderFor(leadTier) {
 }
 
 const LOCAL_BODY_TYPE_ORDER = ['LOCAL', 'City', 'Town', 'Township', 'School District', 'County'];
+// Special-purpose overlay districts (park & recreation, utility, fire, library, transit…)
+// sort after the general-purpose city/town/county governments they overlay, before courts.
+// School districts deliberately do NOT match — they keep their LOCAL_BODY_TYPE_ORDER slot.
+const SPECIAL_DISTRICT_RE = /\b(park|parks|recreation|utility|utilities|water|fire|library|sanitation|transit|irrigation|conservation)\b[^,]*\bdistrict\b/i;
 // Judiciary bodies sorted last within local
 const isJudiciary = (pols) => pols.some(p => p.district_type === 'JUDICIAL');
 
@@ -407,7 +411,8 @@ function bodyOrderScore(accordionKey, pols) {
 
   if (tier === 'Local') {
     if (isJudiciary(pols)) return 100; // Courts last in local
-const govType = pols[0]?.government_type || '';
+    if (SPECIAL_DISTRICT_RE.test(accordionKey)) return 90; // Overlay districts after general-purpose govs
+    const govType = pols[0]?.government_type || '';
     const idx = LOCAL_BODY_TYPE_ORDER.indexOf(govType);
     return idx >= 0 ? idx : 50;
   }

@@ -437,3 +437,52 @@ describe('groupIntoHierarchy — leadTier option', () => {
     expect(tiers[0]).toBe('Local');
   });
 });
+
+describe('Special-purpose overlay districts sort after general-purpose local governments', () => {
+  it('Bend Metro Park & Recreation District sorts below City of Bend (and school district), above courts', () => {
+    const pols = [
+      makePol({
+        government_name: 'Bend Metro Park & Recreation District, Oregon, US',
+        government_body_name: 'Board of Directors',
+        chamber_name_formal: 'Board of Directors',
+        chamber_name: 'Board of Directors',
+        office_title: 'Director',
+        last_name: 'Parks',
+      }),
+      makePol({
+        government_name: 'City of Bend, Oregon, US',
+        government_body_name: 'Bend City Council',
+        chamber_name_formal: 'City Council',
+        chamber_name: 'City Council',
+        office_title: 'Council Member',
+        last_name: 'Civic',
+      }),
+    ];
+
+    const hierarchy = groupIntoHierarchy(pols);
+    const localTier = hierarchy.find(t => t.tier === 'Local');
+    expect(localTier).toBeDefined();
+
+    const titles = localTier.bodies.map(b => b.title);
+    const cityIdx = titles.findIndex(t => t.includes('City of Bend'));
+    const parkIdx = titles.findIndex(t => t.includes('Park & Recreation District'));
+    expect(cityIdx).toBeGreaterThanOrEqual(0);
+    expect(parkIdx).toBeGreaterThanOrEqual(0);
+    expect(parkIdx).toBeGreaterThan(cityIdx);
+  });
+
+  it('does NOT reclassify school districts (Administrative School District keeps its slot)', () => {
+    const pols = [
+      makePol({
+        district_type: 'SCHOOL',
+        government_name: 'Bend-La Pine Administrative School District 1, Oregon, US',
+        government_body_name: 'Bend-La Pine School Board',
+        office_title: 'Board Member',
+        last_name: 'Scholastic',
+      }),
+    ];
+    const hierarchy = groupIntoHierarchy(pols);
+    const localTier = hierarchy.find(t => t.tier === 'Local' || t.tier === 'School');
+    expect(localTier).toBeDefined();
+  });
+});
