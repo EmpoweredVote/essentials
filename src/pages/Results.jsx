@@ -24,7 +24,7 @@ import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
 import SectionBanner from '../components/SectionBanner.jsx';
-import { fetchTreasuryCities, findMatchingMunicipality, findCountyTreasuryEntity, findStateTreasuryEntity, toTreasurySlug, TREASURY_URL } from '../lib/treasury';
+import { fetchTreasuryCities } from '../lib/treasury';
 import { fetchTriviaCollections } from '../lib/trivia';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
@@ -2113,33 +2113,7 @@ export default function Results() {
                           <Fragment key={tier}>
                             {tierBanner}
                           <div data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
-                            {bodies.map((body, bodyIdx) => {
-                              const isJudicialBody = body.subgroups.some(sg =>
-                                sg.pols.some(p => p.district_type === 'JUDICIAL')
-                              );
-                              // Disambiguate the treasury entity by state so a Utah city never
-                              // links to a same-named entity in another state (Salem UT → salem-ma).
-                              // Prefer the body's own politicians' state; fall back to the view state.
-                              const bodyState = body.subgroups
-                                .flatMap((sg) => sg.pols)
-                                .find((p) => p?.representing_state)?.representing_state || userState;
-                              // Local tier carries two kinds of fiscal entity: municipalities and
-                              // counties. Try the municipality matcher first (it rejects
-                              // county-shaped titles by design), then the county one.
-                              //
-                              // State tier is different: a state has ONE fiscal entity, but many
-                              // government bodies (Senate, Assembly, Governor, AG...). Attaching
-                              // the same "Explore Wisconsin revenue and expenses" link under every
-                              // one of them would repeat it down the whole section, so it renders
-                              // once, on the tier's first body.
-                              const treasuryMatch = isJudicialBody
-                                ? null
-                                : tier === 'Local'
-                                  ? (findMatchingMunicipality(body.title, treasuryCities, bodyState)
-                                     || findCountyTreasuryEntity(body.title, treasuryCities, bodyState))
-                                  : (tier === 'State' && bodyIdx === 0)
-                                    ? findStateTreasuryEntity(bodyState || userState, treasuryCities)
-                                    : null;
+                            {bodies.map((body) => {
                               return (
                                 <GovernmentBodySection
                                   key={body.key}
@@ -2147,20 +2121,6 @@ export default function Results() {
                                   websiteUrl={body.url || undefined}
                                   tier={tierKey}
                                 >
-                                  {treasuryMatch && (
-                                    <div className="mb-3">
-                                      <a
-                                        href={`${TREASURY_URL}/?entity=${encodeURIComponent(toTreasurySlug(treasuryMatch))}`}
-                                        className="inline-flex items-center gap-1 text-sm text-[#00657c] hover:text-[#004d5c] dark:text-[#00c8d7] dark:hover:text-[#7ec8d8] transition-colors"
-                                        style={{ fontFamily: "'Manrope', sans-serif" }}
-                                      >
-                                        Explore {treasuryMatch.name} revenue and expenses
-                                        <svg viewBox="0 0 16 16" className="w-3 h-3 ml-1" fill="currentColor" aria-hidden="true">
-                                          <path fillRule="evenodd" d="M4.22 11.78a.75.75 0 010-1.06L9.44 5.5H5.75a.75.75 0 010-1.5h5.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0V6.56l-5.22 5.22a.75.75 0 01-1.06 0z" clipRule="evenodd"/>
-                                        </svg>
-                                      </a>
-                                    </div>
-                                  )}
                                   {body.subgroups.map((sg) => {
                                     const maxCols = isWideForThree ? 3 : isWideForVertical ? 2 : 1;
                                     const cols = Math.min(maxCols, sg.pols.length || 1);
