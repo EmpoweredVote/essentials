@@ -337,9 +337,11 @@ export const COVERAGE_COUNTIES = [
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
   // Racine County (2026-07-28 WI cluster): county executive + 21-member County
-  // Board + row officers + 10 Circuit Court judges. No hasContext — zero WI
-  // compass stances seeded.
-  { label: 'Racine County', browseGovernmentList: ['55101'], browseStateAbbrev: 'WI' },
+  // Board + row officers + 10 Circuit Court judges. hasContext per the WI-muni
+  // convention (>=1 official with evidence rows): supervisors Renee Kelly +
+  // Tom Preusker carry stances from the 2026-07-29 cluster push. Thin (2/38)
+  // but DB-honest.
+  { label: 'Racine County', browseGovernmentList: ['55101'], browseStateAbbrev: 'WI', hasContext: true },
   // Dane County (2026-07-29 seed): county executive + 37-member County Board +
   // row officers + 17 Circuit Court branches. hasContext is DB-honest: 170
   // evidence-only answers across 42 officials (exec + officers + all 37
