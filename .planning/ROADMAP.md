@@ -717,7 +717,7 @@ Plans:
 
 **Wave 13** *(blocked on Wave 12 completion)*
 
-- [ ] 222-13-PLAN.md — Councils: Parker + Lucas
+- [x] 222-13-PLAN.md — Councils: Parker + Lucas
 
 **Wave 14** *(blocked on Wave 13 completion)*
 
