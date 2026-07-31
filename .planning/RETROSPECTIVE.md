@@ -1,5 +1,72 @@
 # Retrospective
 
+## Milestone: v25.0 — Collin County TX Data-Completeness
+
+**Shipped:** 2026-07-31 (override_closeout)
+**Phases:** 6 (217–222) | **Plans:** 34 of 39 executed (222 descoped at 13/18)
+
+### What Was Built
+
+Closed the DB-verified data gaps in the already-seeded 23-government Collin County, TX browse list:
+seated ~21 vacant offices across 11 cities (218), backfilled 37 races / 54 candidates plus a 43-race
+sourcing reconcile (219), populated `web_form_url` / emails / term-end dates across all 23 governments
+(220), sourced 12 headshots with honest blanks where none existed (221), and applied 7 evidence-cited
+compass stances with 857 registered blanks before the stance phase was stopped (222). Phase 217's
+premise turned out stale on inspection — coverage.js was already correct — and it closed as a quick
+task with no code change.
+
+### What Worked
+
+- **The blocking operator-apply checkpoint.** Every production write in 222 went through a human gate
+  with the evidence and its weaknesses on the table. Nothing was applied that the operator had not
+  seen flagged.
+- **Orchestrator-side verification of every chair.** Each of the 7 applied stances had its source
+  re-fetched by the orchestrator — not the research agent — before apply. This caught nothing false,
+  which is the point: it is the check that makes the other agents' claims trustworthy.
+- **Refusals as the real output.** The phase's most valuable artifacts were rejections: a fabricated
+  quote attributed to the wrong councilmember in the same city, a WebSearch summary that invented a
+  biography by fusing two people, Ballotpedia pages that confidently describe a different person in
+  another state, City-Attorney-authored documents nearly attributed to elected members.
+- **Escalating source recovery.** CivicClerk OData pagination, agenda-packet text layers, and OCR of
+  scanner-image PDFs each unlocked a corpus a prior pass had recorded as unreachable.
+
+### What Was Inefficient
+
+- **The core one: ~2.5M subagent tokens produced 7 chairs.** Small Texas towns do not keep the public
+  record a compass needs. Waves 8–10 and Melissa returned 0 chairs from 311 pairs; the final three
+  towns 0 from 176. The tier map in RESEARCH.md predicted this and the phase ran anyway.
+- **Migration numbering raced twice in a single day** against a concurrent session (1503, then
+  1506/1507), forcing two filename-only renumbers. Fixed by claiming a band (1516–1525) with headroom.
+- **A research agent was killed on a bad liveness signal** — the `.output` transcript's size and mtime
+  say nothing about whether an agent is alive; only elapsed-vs-expected and committed artifacts do.
+- **Blue Ridge was dispatched twice and died twice** before producing anything.
+
+### Patterns Established
+
+- **Descoped ≠ blank.** When research stops, un-attempted people must be recorded as *not researched*,
+  never folded into a blank register. A blank asserts "we looked"; silence asserts nothing.
+- **Chair-by-elimination** (Henry): a chair is locatable when every other chair is excluded by an
+  affirmative recorded act — never by absence of evidence.
+- **Adjacent-chairs-inseparable = blank**, never the middle value.
+- **A prior "checked X, found nothing" note is an access failure in disguise** when X is a SPA shell
+  or 403 to the tooling that pass used (the Washington/Lavine upgrade).
+
+### Key Lessons
+
+1. **Verify the yield model before spending the budget.** The evidence-density tier map existed from
+   the start. Tier "very low" should have been a stop condition, not a lower expectation.
+2. **Evidence integrity is cheaper to protect than to add.** The 7 chairs cost ~2.5M tokens; the
+   ~696 unsupported bio-page-only rows already in production can be triaged with SQL. Auditing what
+   is already displayed outranks adding more.
+3. **A cost objection is a scope signal.** The right response to "this is burning credits" was to
+   stop the low-yield work and bank what was verified — not to optimize the model tier.
+
+### Cost Observations
+
+- Model mix: 2 research agents on the session model, 5 on Opus after an explicit mid-milestone ruling.
+- Notable: per-agent cost scaled with corpus recovery effort (Parker 521k tokens for 110 OCR'd PDFs +
+  73 transcripts), not with chairs found. Thoroughness and yield were uncorrelated.
+
 ## Milestone: v24.0 — Results-Page Search & Header Overhaul
 
 **Shipped:** 2026-07-23

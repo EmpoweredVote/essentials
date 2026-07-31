@@ -55,7 +55,28 @@ written and execution-ready. See the v22.0 block below + `milestones/v22.0-*`.
 
 ## Current Focus
 
-### v25.0 Collin County TX Data-Completeness (OPENED 2026-07-23 — first gsd-core milestone)
+### Between milestones (v25.0 shipped 2026-07-31)
+
+No milestone is open. The highest-value known work, in order:
+
+1. **National stance evidence-integrity audit** (backlog Phase 999.2, todo `high`) — **~696 context
+   rows across 265 politicians cite only a Ballotpedia *biography* URL, and 695 of those have a live
+   answer row**, i.e. that many compass positions are displayed on real people's public profiles
+   backed by a source with no stance content. Also in scope: reasoning text that names party
+   (contradicts the antipartisan display rule), stances citing votes cast before the member was
+   seated, and 921 answer rows with no context row at all. Tooling and a partial Oregon remediation
+   already exist in EV-Accounts. **Operator began this in the EV-Accounts session 2026-07-31.**
+2. **Phase 206 — AZ 2026 candidate reconcile**, execution-ready, gated on the ~Aug-6 state canvass.
+3. **CA congressional redistricting** — Prop 50 / AB 604 2027–2032 shapefiles are staged untracked in
+   `docs/`; not yet scoped.
+4. **Phase 999.1 — CA judicial districts** (504 NULL geo_ids leave the Judges tab empty statewide).
+5. `phase212-gazetteer-data-audit` (high) — backend place-data encoding / invalid records.
+
+**Standing lesson from v25.0 (see RETROSPECTIVE.md):** auditing already-displayed evidence outranks
+gathering more of it. Small-town stance research cost ~2.5M subagent tokens for 7 verified chairs;
+the unsupported rows already in production can be triaged with SQL.
+
+### v25.0 Collin County TX Data-Completeness — ✅ SHIPPED 2026-07-31 (opened 2026-07-23; first gsd-core milestone)
 
 **Goal:** Close the known data gaps in the already-seeded Collin County, TX coverage (23-government browse list) so every resolvable city shows complete, correct officials, elections, and contact data — and fix the browse entries that currently resolve to nothing.
 
@@ -413,6 +434,11 @@ Reconcile-heavy wave (duplicate-chamber merges, At-Large→by-district relabels,
 | Elected-default + Judges-appointed-exception ship together, atomically | Defaulting to Elected without the Judges exception would silently empty the Judges tab; per-bucket TAB_TYPE_DEFAULTS constants filter each hierarchy independently (no shared state) | ✓ Good — v24.0 (HDR-01/02) |
 | `cleanPlaceName()` normalizes both source name shapes at label-build time | Curated `governments.name` ("City of Bloomington, Indiana, US") and Census gazetteer names ("Bloomington city") both over-qualify; strip in the resolver so the label reads "Bloomington, IN" everywhere (combobox/banner/heading read one `browse_label`); County/Township/Unified + mid-name capitals ("Kansas City") preserved | ✓ Good — v24.0 (close-time) |
 | Lens tooltip = lens name + plain-language focus summary (frontend copy map) | The API description alone ("8 questions for judicial and DA candidates") reads as jargon; a keyed `LENS_SUMMARIES` map gives "Judicial Lens — How judges & DAs approach the law", falling back to the API description for unknown keys | ✓ Good — v24.0 (close-time) |
+| Every production stance write passes a blocking operator-apply checkpoint | Each chair is a public claim about a named real person; the orchestrator presents the evidence *and its weaknesses* and applies nothing unseen | ✓ Good — v25.0 (222) |
+| The orchestrator re-fetches every citation itself before apply — never delegating verification | Research subagents have asserted checks they never ran; a false claim of a passed gate suppresses the real check permanently | ✓ Good — v25.0 (222) |
+| Un-attempted people are recorded as **descoped, never blank** | A blank register entry asserts "the named sources were read and no position exists"; silence asserts nothing. Conflating them fabricates evidence of absence | ✓ Good — v25.0 (222 close) |
+| `taxes` gets no chair for TX municipal officeholders | The scale's chairs 1–2 require taxing the wealthy and 4–5 require cutting services, so chair 3 is the only reachable option and carries no information — the question needs a municipal-scope rewrite | ⚠️ Revisit — v25.0 (operator ruling 2026-07-25); `healthcare` has the same defect inverted |
+| Stop stance research where the public record is thin, rather than lowering the evidence bar | Very-low-tier towns yielded 0 chairs from 487 pairs; the honest options are spend-more or stop, never relax the bar | ✓ Good — v25.0 (operator, 2026-07-31) |
 
 ## Evolution
 
@@ -432,6 +458,14 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
+*Last updated: 2026-07-31 — **v25.0 Collin County TX Data-Completeness SHIPPED (Phases 217–222, override_closeout).**
+Collin County TX now carries seated officials, elections, contact data, headshots and 7 evidence-cited
+compass stances across its 23-government browse list. Phase 222 stances were stopped at operator
+direction with 13/18 plans — 39 council members across 7 small towns are recorded as **descoped, not
+blank**. Standing lesson: auditing already-displayed evidence outranks gathering more of it.*
+
+<details><summary>Previous (v24.0, 2026-07-23)</summary>
+
 *Last updated: 2026-07-23 — **v24.0 Results-Page Search & Header Overhaul SHIPPED (Phases 212–216).**
 One always-editable `<LocationCombobox>` classifies address / place-name / coordinate input; the backend
 "owns the search stack" (pg_trgm place-name resolver + nationwide Census Gazetteer + national fallback +
@@ -494,6 +528,8 @@ cross-milestone artifacts remain deferred (see STATE.md). No active milestone �
 <summary>Earlier footer — v21.0 Phase 187 checkpoint (2026-07-07)</summary>
 
 *v21.0 Phase 187 (Tethered Feature-Icon Row) COMPLETE (2/2 plans, verified 11/11 must-haves; human-approved checkpoint). Every section banner now shows a bottom-right Treasury chip deep-linking the banner's OWN location into financials.empowered.vote (TETH-01), with an accessible hover+focus tooltip and no chip when no per-location dataset exists (TETH-03). Requirements ICON-01/02/03 + TETH-01/02/03/04 satisfied. Next: Phase 188 (Location Stats Strip). **v21.0 Smart Banners OPENED** (phases start at 187). Turns SectionBanner into a location-aware hub: tethered product-icon row (deep-links each banner's own location into other EV products, context-aware) + Census stats strip; fills v19.0's `stats`/`featureIcons` scaffolding slots; Essentials-only reusable component. Treasury contract = financials.empowered.vote/?entity=<name-state>. Prior: **v20.0 Beaverton & Washington County, OR SHIPPED** (Phase 186 close-out complete). Final DB-verified state: Washington County + 7 west-metro cities + 5 school-district boards; 80 seated officials, 79/80 headshots, 50/51 city/county officials with evidence-only stances (391 rows), school boards deferred by design; 2026 layer = 25 races + 12 candidates/8 races + 8 discovery jurisdictions + 1 live discovery run. Coverage.js reconciled (all 8 city/county purple chips DB-honest, no edits), LOCATION-ONBOARDING.md playbook updated (13 Cities Onboarded rows + West-Metro Quick Reference), v20.0-MILESTONE-AUDIT.md written. Non-blocking follow-ups: Cornelius thin stances, FG SD-15 headshot gap, 2 new-challenger headshots, ongoing 2026 candidate discovery. Next: v19.0 Dark-Mode Redesign remains parked (169–172), or open a new milestone; v18.0 NV shipped*
+
+</details>
 
 </details>
 

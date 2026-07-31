@@ -2,36 +2,38 @@
 gsd_state_version: 1.0
 milestone: v25.0
 milestone_name: Collin County TX Data-Completeness
-current_phase: 222
-current_phase_name: collin-county-stances-evidence-only-compass-research-one-pol
-status: stopped-descoped
-stopped_at: "Operator descoped remaining small-town research 2026-07-31; 13/18 plans complete, 7 chairs live, 4 chips flipped"
-last_updated: "2026-07-30T19:01:45.970Z"
+status: Awaiting next milestone
+stopped_at: Completed 222-04-PLAN.md (Plano + McKinney topic-gap-fill applied to production)
+last_updated: "2026-07-31T15:37:27.194Z"
 last_activity: 2026-07-31
-last_activity_desc: Phase 222 stopped at operator direction; descope recorded, coverage chips flipped
+last_activity_desc: Milestone v25.0 completed and archived
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 42
-  completed_plans: 34
+  completed_plans: 37
   percent: 67
+current_phase: 222
+current_phase_name: collin-county-stances-evidence-only-compass-research-one-pol
 ---
 
 # State
 
 ## Current Position
 
-Phase: 222 (collin-county-stances-evidence-only-compass-research-one-pol) — PARTIALLY DESCOPED 2026-07-31
-Plans: 13 of 18 complete (222-01 … 222-13). 222-14 half-done (Weston yes, Blue Ridge never attempted).
-Status: STOPPED at operator direction — 'stop searching for these smaller towns' (2026-07-31).
-Last activity: 2026-07-31 — coverage chips flipped for the 4 cities that gained stances; descope recorded.
+Phase: Milestone v25.0 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-31 — Milestone v25.0 completed and archived
 
 ### What phase 222 actually delivered
+
 - **7 chairs applied to production**, each orchestrator-verified against a re-fetched source:
   Works (Fairview residential-zoning=1), Todd (Princeton growth=2), Washington (Princeton
   public-safety=4), Henry (Farmersville residential-zoning=3), Sharpe (Parker residential-zoning=1),
   Underhill + Orr (Lucas residential-zoning=1). Migrations 1516/1517/1518 on branch
   `data/phase-222-stances` in C:/EV-Accounts — **committed, applied by hand, NEVER pushed**.
+
 - **857 honest per-(person,topic) blanks** registered across the researched cities.
 - **4 coverage chips flipped** (Fairview 4825224, Farmersville 4825488, Parker 4855152, Lucas 4845012).
 - ⛔ **39 council members across 7 towns were NEVER RESEARCHED** — Blue Ridge, Josephine, Lavon,
@@ -40,9 +42,32 @@ Last activity: 2026-07-31 — coverage chips flipped for the 4 cities that gaine
   Exactly-one-bucket now holds for **68 of 107** names by decision, not defect.
 
 ### Owed if this is ever formally closed (222-18 was never run)
+
 - AFTER coverage snapshot vs 222-01's BEFORE; browse spot-check screenshots; split-section check.
 - The reconcile must target **68**, not 107, and carry the descope table forward.
-- `data/phase-222-stances` is unpushed by design (pushing master deploys accounts-api).
+- ✅ `data/phase-222-stances` PUSHED 2026-07-31 (migrations 1516/1517/1518, `bb201068..1f9625d7`).
+  EV-Accounts `master` deliberately untouched — pushing it deploys accounts-api to Render.
+
+## Deferred Items — acknowledged at the v25.0 close (2026-07-31, override_closeout)
+
+Pre-close audit surfaced 6 open items. None is a v25.0 phase gap; all are carried forward.
+
+| Category | Item | Status |
+|----------|------|--------|
+| debug | cambridge-locals-missing | diagnosed (Cambridge offices have district_id = NULL) — v13.0-era MA, open since v5.0 |
+| todo | national-stance-evidence-integrity-audit (high) | **ACTIVE — operator working it in the EV-Accounts session 2026-07-31**; backlog Phase 999.2 |
+| todo | phase212-gazetteer-data-audit (high) | pending — backend place-data encoding/invalid records |
+| todo | locationcombobox-type-color-coding (medium) | pending follow-up |
+| todo | locationcombobox-search-refinements (low) | pending follow-up |
+| context | Phase 222 CONTEXT open questions (2) | MOOT — both were per-city source-availability questions answered by the 222-13/14 research and then superseded by the 2026-07-31 descope |
+
+### Verification overrides recorded at this close (3)
+
+| Phase | Why it is not a verified close |
+|-------|-------------------------------|
+| 217 | Completed as quick task 260723-lfc — premise was stale, coverage.js already correct; no plans/artifacts were ever generated, so there is nothing to verify |
+| 219 | 9/9 plans complete with summaries, but no VERIFICATION.md was ever produced; operator browse spot-check was approved live 2026-07-24 |
+| 222 | **DESCOPED 2026-07-31 at operator direction** — 13/18 plans. 39 council members across 7 towns never researched (recorded as descoped, NOT blank, in 222-CONFIRMED-BLANK.md) |
 
 ## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
