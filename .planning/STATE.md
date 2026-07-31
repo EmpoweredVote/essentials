@@ -4,11 +4,11 @@ milestone: v25.0
 milestone_name: Collin County TX Data-Completeness
 current_phase: 222
 current_phase_name: collin-county-stances-evidence-only-compass-research-one-pol
-status: executing
-stopped_at: Completed 222-04-PLAN.md (Plano + McKinney topic-gap-fill applied to production)
+status: stopped-descoped
+stopped_at: "Operator descoped remaining small-town research 2026-07-31; 13/18 plans complete, 7 chairs live, 4 chips flipped"
 last_updated: "2026-07-30T19:01:45.970Z"
-last_activity: 2026-07-30
-last_activity_desc: Phase 222 execution resumed (wave continue)
+last_activity: 2026-07-31
+last_activity_desc: Phase 222 stopped at operator direction; descope recorded, coverage chips flipped
 progress:
   total_phases: 6
   completed_phases: 4
@@ -21,10 +21,28 @@ progress:
 
 ## Current Position
 
-Phase: 222 (collin-county-stances-evidence-only-compass-research-one-pol) — EXECUTING
-Plan: 1 of 18
-Status: Executing Phase 222
-Last activity: 2026-07-30 — Phase 222 execution resumed (wave continue)
+Phase: 222 (collin-county-stances-evidence-only-compass-research-one-pol) — PARTIALLY DESCOPED 2026-07-31
+Plans: 13 of 18 complete (222-01 … 222-13). 222-14 half-done (Weston yes, Blue Ridge never attempted).
+Status: STOPPED at operator direction — 'stop searching for these smaller towns' (2026-07-31).
+Last activity: 2026-07-31 — coverage chips flipped for the 4 cities that gained stances; descope recorded.
+
+### What phase 222 actually delivered
+- **7 chairs applied to production**, each orchestrator-verified against a re-fetched source:
+  Works (Fairview residential-zoning=1), Todd (Princeton growth=2), Washington (Princeton
+  public-safety=4), Henry (Farmersville residential-zoning=3), Sharpe (Parker residential-zoning=1),
+  Underhill + Orr (Lucas residential-zoning=1). Migrations 1516/1517/1518 on branch
+   in C:/EV-Accounts — **committed, applied by hand, NEVER pushed**.
+- **857 honest per-(person,topic) blanks** registered across the researched cities.
+- **4 coverage chips flipped** (Fairview 4825224, Farmersville 4825488, Parker 4855152, Lucas 4845012).
+- ⛔ **39 council members across 7 towns were NEVER RESEARCHED** — Blue Ridge, Josephine, Lavon,
+  Lowry Crossing, Nevada, Saint Paul, Van Alstyne. See the DESCOPED section at the end of
+  222-CONFIRMED-BLANK.md. They are **not blanks**; do not cite them as evidence of absence.
+  Exactly-one-bucket now holds for **68 of 107** names by decision, not defect.
+
+### Owed if this is ever formally closed (222-18 was never run)
+- AFTER coverage snapshot vs 222-01's BEFORE; browse spot-check screenshots; split-section check.
+- The reconcile must target **68**, not 107, and carry the descope table forward.
+-  is unpushed by design (pushing master deploys accounts-api).
 
 ## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
