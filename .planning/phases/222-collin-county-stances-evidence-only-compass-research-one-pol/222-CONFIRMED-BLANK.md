@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 802
+## Count: 857
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -131,7 +131,31 @@ returns HTTP 204, so the Parker transcript technique does not transfer.** **⚠ 
 approved it moves Lucas 0 → ≥1 stance — a third `coverage.js` Pitfall-5 trigger** (see execution
 note 29) — and 222-13 would author a migration and claim a number; if both are rejected, no
 migration and no number.
-222-14 through 222-17 append their own per-government sections below as they execute.
++ 55 by 222-14 Task 1 (Weston council — 5 people × 11 topics = 55 attempted pairs, **0 chairs
+proposed**, 55 blanks; **all 55 are SETTLED**). **Weston stays at zero stances: with 222-09's mayor
+pass the city is now complete at 66 of 66 attempted pairs across all six officeholders, every one
+blank — no `coverage.js` Pitfall-5 trigger, no migration, no migration number.** Weston's record is
+not thin: the city publishes **223 sets of minutes from January 10 2012 to July 14 2026 under two
+different, inconsistently-named path families**, and **all 223 were downloaded (47 MB) and read**,
+with **39 image scans OCR'd** (four of them 2025–26 strays, so an "OCR only the old years" pass loses
+real meetings) and **5 dead links that return an 807-byte HTML page under a `.pdf` name**. The zeros
+rest on one decisive fact: **in 223 documents there is exactly ONE sentence attributing speech to any
+councilmember, and it is "Alderman Johnston voiced the invocation."** **⚠ This section partly
+supersedes 222-09's structural claim that Weston records only `AYES: UNANIMOUS`** — the July 14 2026
+FM 455 resolutions name **all five members on both sides of three consecutive 3–2 votes**, and the
+2020 Thoroughfare Plan and 2013 budget name dissenters too. **Attribution is available; reasoning
+never is**, and that is the claim later passes should rely on. 26 compass keyword classes return
+**zero** hits across the 715 KB corpus (no police department, no transit, no rental stock). The
+town's only multifamily fight was resolved **in litigation** — Mike Hill was a named defendant — and
+the 2024 approvals were expressly made *"per the terms of the Settlement Agreement."* **Ballotpedia
+covers Weston for the first time in 2025**: real pages exist for **Harrington and Roach only** and
+both state the candidate **did not complete** the Candidate Connection survey; **"Weston" appears
+zero times** on the Collin County municipal-elections pages for 2025 and 2026. **No council video
+exists at all** (CivicClerk and Swagit both 404), which closes the phase's highest-value retry path
+before it opens. Six on-topic near-misses refused on the record and eight homonym/attribution traps
+rejected — including `westonworksforyou.com`, which is **Weston Martinez**, a San Antonio Republican
+Party chair candidate whose *first name* is Weston.
+222-15 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -11313,3 +11337,557 @@ pairs are accounted for — 2 chairs + 64 blanks — with no name in neither buc
 for the same topic. **Mayor Dusty Kuykendall remains covered by the 222-08 section above and was not
 touched.** If either chair is applied, Lucas moves **0 → 1 or more** and `coverage.js` must gain
 `hasContext: true` for geo_id **4845012**.
+
+---
+
+## City of Weston (4877740) — 222-14
+
+**Scope, stated once.** Plan 222-14 Task 1 researches **the five Aldermen (Council Members) of the
+City of Weston** (Collin County, Texas, geo_id 4877740). **Mayor Matthew Marchiori is out of scope
+here** — he was attempted in full by 222-09 and appears above under
+`## City of Weston (4877740) — 222-09` with 11 of 11 blanks; he was not re-researched, re-reasoned or
+modified by this pass. All five politician_ids were re-verified live against production by the
+orchestrator on 2026-07-30 as **0 answer rows and 0 context rows**. **No prior 2026-05-12
+found-nothing notes exist for any of these five**, so nothing here corroborates or displaces an
+earlier pass.
+
+**Attempted:** 2026-07-30 — **5 people × 11 canonical topics = 55 (person, topic) pairs.**
+
+| Person | Seat | politician_id | Tenure evidence (all from primary documents read this session) |
+|---|---|---|---|
+| Patti Harrington | Council Member Place 1 | `34d011da-2352-4d91-b3f2-b3970ccbaefd` | **Appointed to fill an Alderman vacancy August 12, 2025** (*"Motion made to nominate Patti Harrington to the fill the Alderman vacancy"* — Hill moved, Johnston seconded), then **elected November 4, 2025** to a term expiring **Nov 2027**; sworn by Mayor Marchiori. **She is also a former MAYOR of Weston** — she presides over every meeting in the minutes from **January 10, 2012** through at least **May 2015**, and signs those minutes *"Patti Harrington, Mayor."* |
+| Brian M. Roach | Council Member Place 2, **Mayor Pro Tem** | `ec61ea47-5631-4203-a6b6-a09fbdb7837d` | **Elected November 4, 2025**, term expiring **Nov 2027**; *"Alderman Brian Roach (Mayor) Oath of Office administered by Mayor Marchiori"*; first roll call **November 12, 2025**. Elected **Mayor Pro-Tem January 22, 2026** (Harrington moved, Johnston seconded). **The newest member of the five** — his entire record is nine months long. |
+| Jeff Metzger | Council Member Place 3 | `bd1727af-4222-448a-839c-8fc79e8abdb9` | Present from the **January 2, 2023** special-called meeting onward; **Mayor Pro Tem through 2025** (styled "MPT Metzger" from Jan 2025, and he broke the December 9, 2025 BESS tie); term expires **Nov 2026**. The second-longest-serving of the five. |
+| Mike Hill | Council Member Place 4 | `de080c23-2e85-4b08-b7f7-780bebcde9b8` | **The longest-serving of the five** — "CM Hill" appears in the **November 10, 2020** minutes and continuously thereafter to **July 14, 2026**; term expires **Nov 2026**. Named as a sitting Alderman in the caption of *Honeycreek Venetian LLC v. City of Weston, Texas, Mayor Jim Marischen…and Aldermen Maria Whitworth, Carol Decker, M[ik]e Hill, Heather Richardson and Tim Wilson, In Their Official Capacities*, District Court of Collin County, Cause 471-00546-2022. |
+| Marla Johnston | Council Member Place 5 | `bf89cead-3e7b-4f03-b5be-040c45aa7d07` | Present from the **January 9, 2024** regular meeting onward, continuously to **July 14, 2026**; term expires **Nov 2026**. |
+
+---
+
+### 🔵 RESULT — ZERO CHAIRS. 55 OF 55 ATTEMPTED PAIRS ARE HONEST BLANKS, AND ALL 55 ARE **SETTLED**.
+
+**Weston stays at zero stances.** Mayor Marchiori was 11-for-11 blank in 222-09 and all five council
+members are 11-for-11 blank here, so the government's stance count is **0 out of 66 attempted pairs
+across all six officeholders**. **No `coverage.js` Pitfall-5 trigger. This plan authors NO migration
+and claims NO migration number.** Six on-topic near-misses were reached and refused on the record;
+each is written out below so a later pass does not re-litigate them from scratch.
+
+This is the expected outcome for a 222-RESEARCH.md §C **Tier "very low"** town of **1,050 people on
+4.6 square miles** — but it is *not* the "thin record" class. Weston's civic record is **large,
+complete and freely downloadable**: the city publishes **223 sets of council minutes running from
+January 10, 2012 to July 14, 2026**, and **every one of them was downloaded (47 MB) and read this
+session.** The zeros come from what those minutes *contain*, not from what could not be reached.
+
+---
+
+### 🔓 SOURCE WORK — the complete Weston minutes corpus, 2012→2026
+
+- **`https://www.westontexas.com/page/Council_Meetings`** is a single flat HTML index that links
+  **every minute the city has ever posted**. 223 distinct minutes PDFs were enumerated from its 464
+  hrefs and **all 223 were downloaded**. ⚠ **The archive is served under two different path families
+  and a naïve crawl gets only one of them:** the 2012–2025 archive sits under
+  `/upload/common/Minutes/<YEAR>%20Minutes/…` while everything from **May 2025 forward** sits under
+  `/upload/page/0044/…` and `/upload/page/0044/docs/…` with **free-form, inconsistent filenames**
+  (`Minutes - 6.9.26.pdf`, `Minutes- 2.10.26.pdf`, `Minutes of 3.24.26.pdf`, `Minutes -1.27.26.pdf`,
+  `Mintues - 2025-01-14 …pdf` — note the typo, which is the city's, not ours). Filenames must be
+  URL-encoded (literal spaces 000-fail in curl) and **the dates must be parsed out of the filenames,
+  because directory order is not chronological.**
+- **Text-layer audit: 184 of 223 have real text layers; 39 are image scans.** All 39 were OCR'd with
+  `pdftoppm -r 200 -gray -png` + `tesseract --psm 6` (Tesseract 5 at `C:/Program Files/Tesseract-OCR`),
+  six-way parallel. The image-scan set is **2012–2015 plus four modern strays** — `Minutes- 2.10.26`,
+  `Minutes- 3.10.26`, `Minutes- 4.14.26` and `Minutes - 7.1.25` — i.e. **the scanner problem is not
+  confined to the old years, and a pass that only OCR'd "the old ones" would silently lose four
+  2025–26 meetings.** Final corpus: **715,097 bytes of text across 223 documents.**
+- **5 of the 223 links are dead** and return an **807-byte HTML error page under a `.pdf` filename** —
+  `2012-03-06`, a duplicate `2012-01-10`, `2015-10-28`, **`2020-01-14`** and **`2020-02-11`**.
+  ⚠ **Byte-count alone does not catch this** — the files are non-empty; the tell is that they start
+  `<!DOCTYPE html>`. Only the two 2020 files fall inside any in-scope member's tenure (Hill's), they
+  are two meetings out of roughly 180 in his term, and nothing in the surrounding 2019–2020 record is
+  on a compass axis. **Recorded as a note, not as an access-failure zero.**
+
+### The structural facts that produce Weston's 55 zeros
+
+**1. 🔴 Weston's minutes contain ZERO member-attributed narrative speech. In 223 documents spanning
+fourteen and a half years, not one sentence records what any councilmember said.** A regex for
+`(Alderman|Councilmember|CM|MPT) (Harrington|Roach|Metzger|Hill|Johnston) (stated|said|expressed|
+noted|asked|explained|commented|indicated|suggested|reported|shared|felt|believes|argued|objected|
+opposed|raised|added|emphasized)` returns **exactly one hit in the entire corpus, and it is
+"Alderman Johnston voiced the invocation."** The minute format is `MOTION: / MADE BY: / SECONDED BY:
+/ AYES: / NAYS: / ABSTAIN: / RESULT:` and nothing else. This is the **Anna/Fairview/Melissa
+action-only class in its purest form** — harder than Farmersville's or Lucas's, where the secretary
+at least narrates discussion. There is no staff report, no discussion summary, no dissent
+explanation and no public-hearing testimony summary anywhere in the corpus.
+
+**2. ⚠ 222-09's structural finding about Weston vote records is now PARTLY SUPERSEDED — and it does
+not change the outcome.** That section recorded that *"Weston records its votes as `AYES: UNANIMOUS`
+with no individual names,"* and concluded that **even an on-topic vote could never be attributed to
+an individual.** That is true of the great majority of the corpus but **it is not true of all of
+it.** Three counter-examples were found and read in full this session:
+- **July 14, 2026** — the FM 455 realignment resolutions, where **all five members are named on both
+  sides of three consecutive 3–2 votes** (see near-miss 1).
+- **December 8, 2020** — the Master Thoroughfare Plan, *"For 4 Against 1 (CM Richardson)."*
+- **September 10, 2013** — the FY2013-14 budget, *"Mayor Patti Harrington votes Nay"* then
+  *"Mayor Patti Harrington votes Aye."*
+
+**So Weston's record CAN name an individual voter. What it never does is record a reason.** Under
+execution note 21 an unexplained vote — including an unexplained dissent — cannot locate a chair,
+because it cannot distinguish among the chairs it might imply. **That, not attribution, is why these
+55 are blank.** Any later Weston pass should stop repeating the "unanimous only" claim and rely on
+the reasoning-absence claim instead, which is the one that actually holds.
+
+**3. Whole compass axes are structurally absent from Weston's civic record.** Sweeps of the full
+715 KB, 2012–2026 corpus returned **ZERO hits — not few, zero — for every one of these:**
+`homeless`, `encampment`, `panhandl*`; `immigra*`, `ICE detainer`, `sanctuary`; `affordable housing`,
+`rent control`, `rent stabil*`, `tenant`; `apartment`, `duplex`, `townhome`, `densit*`;
+`civil right*`, `equity`, `discriminat*`; `healthcare`, `health care`, `clinic`, `mental health`;
+`transit`, `bus route`, `bike lane`; `police department`; `tax abatement`. The town has **no police
+department** (Collin County Sheriff patrol plus a Collin County dispatch ILA), **no transit**, **no
+shelter**, **no rental stock of any consequence**, and a **volunteer fire department**.
+`homelessness`, `local-immigration`, `civil-rights`, `healthcare` and `housing` are blank here not
+because the record is incomplete — **they have never once been before this body in fourteen years.**
+
+**4. 🔴 The one genuine multifamily fight in Weston's history was resolved in LITIGATION, in closed
+session, and the open-session approvals were compelled by a settlement.** Honeycreek Venetian, LLC
+sought to rezone from Agricultural to **Multi-Family 3 to construct 111 HUD multifamily living
+units**, and later a 240-acre planned development with **a lagoon and up to 300 multi-family units**.
+From **August 2022 through June 2023** that request appears in **eight consecutive agendas
+exclusively as a §551.071 closed-session litigation item** — *Megatel Homes III, LLC and Honeycreek
+Venetian LLC v City of Weston*, Cause 471-00546-2022; *Honeycreek Venetian LLC v. City of Weston…and
+Aldermen*, Cause 471-02239-2022; *Venetian 141 Swisher, LLC v. City of Weston*, E.D. Tex.
+4:22-cv-00552 — **with no open-session vote, no motion and no recorded position by any member.**
+When the matter finally surfaced in open session on **April 9, 2024**, every motion carried the words
+**"per the terms of the Settlement Agreement"**: *"Motion to Approve Zoning Changes of four (4)
+Ordinances e.3-6 per the terms of the Settlement Agreement. CM MWhitworth. Second Motion: CM MHill.
+Vote 5/0."* **Mike Hill's second of that motion is the single most quotable land-use act by any of
+the five, and it is worthless as evidence**: he was a *named defendant in the very lawsuit the
+settlement resolved*, and a vote taken to perform a settlement agreement is a legal obligation, not a
+land-use position. Execution note 16 exactly — an agenda line states what was voted on, not what it
+means. **Refused for Hill, and for Metzger, who on March 26, 2024 moved only to table the same items
+"until the next meeting in two weeks."**
+
+**5. Every other land-use action in the corpus is a single-tract, landowner-petitioned, unanimous,
+unexplained approval.** The complete 2025–2026 set: **January 14, 2025** — annexation of 15.359 acres
+and rezoning to **RED-1 Residential Estate, one-acre minimum lot size** (moved by "CM Johnson", an
+obvious minute-taker's slip for **Johnston**; Hill seconded the annexation, Metzger the rezoning);
+**February 25, 2025** — rezoning 685 Weston Road from **AG (10-acre minimum) to RED-1 (one-acre
+minimum)** (Johnston moved, Hill seconded), plus the Estep Homestead final plat (Metzger moved,
+Johnston seconded); **March 10, 2026** — the Crossland ETJ-expansion ordinance (Harrington moved,
+Roach seconded), the Crossland/Warner Land Advisors development agreement (Roach moved, Metzger
+seconded) and consent to a Municipal Management District (Harrington moved, Hill seconded). **All
+unanimous. Not one carries a stated reason.** Per the standing refusal, a **single-tract judgment is
+not a density principle** — and Weston's rezonings do not even move density upward: they move raw
+agricultural land into a **one-acre-minimum** residential district. **Refused for all five.**
+
+**6. Ballotpedia covers Weston for the FIRST time in 2025, only the 2025 race, and neither covered
+candidate filled out the survey.** Real pages exist for exactly two of the five —
+`Patti_Harrington_(Weston_Town_Council_At-large,_Texas,_candidate_2025)` (**94,546 bytes**) and
+`Brian_M._Roach_(Weston_Town_Council_At-large,_Texas,_candidate_2025)` (**94,823 bytes**) — both
+confirmed on the page itself to read *"Candidate, Weston Town Council At-large"* in **Texas** before
+a word was used, and both listing the same four-way general election of **November 4, 2025** (Patti
+Harrington, Crissy Hinojosa-Wilson, Brian M. Roach, John Yang; 2 seats). **Both pages say, in
+Ballotpedia's own words, that the candidate "did not complete Ballotpedia's 2025 Candidate
+Connection survey," that "Ballotpedia did not receive biographical information for this candidate,"
+and that "Ballotpedia did not identify endorsements."** The Campaign-themes section is empty on both.
+**Metzger, Hill and Johnston have no page at all** — bare-name URLs return the ~51 KB 404 stub
+(`Jeff_Metzger` 51,252 · `Michael_Hill` 51,252 · `Marla_Johnston` 51,284 · and the bare
+`Patti_Harrington` 51,316 / `Brian_Roach` 51,236, which live only under their disambiguated 2025
+titles). **`Municipal_elections_in_Collin_County,_Texas_(2025)` and `(2026)` contain the string
+"Weston" ZERO times**, so there is no county-level election page to work from either.
+
+---
+
+### Evidence checked
+
+Every item below was fetched and read this session unless listed under "unavailable".
+
+- **The complete City Council minutes corpus, January 10, 2012 → July 14, 2026 — 223 PDFs, 39 of
+  them OCR'd**, enumerated from `https://www.westontexas.com/page/Council_Meetings`, swept for every
+  compass axis, then re-swept per member inside that member's own term window. **The two meetings
+  222-09 read (June 9 and June 23, 2026) are documents 200 and 199 of this corpus and were re-read
+  here; nothing in either was reinterpreted.**
+- **Ballotpedia, via `curl` with a browser User-Agent** (WebFetch cannot reach the host): the two
+  real 2025 Weston candidate pages, the five bare-name stubs, `Mike_Hill`,
+  `Municipal_elections_in_Collin_County,_Texas_(2025)` and `(2026)`, and `Weston,_Texas`.
+- **`https://www.westontexas.com/page/Mayor_Aldermen`** — the official Governing Body roster,
+  fetched. It confirms **all five aldermen by name, title, term-expiry and city e-mail address**
+  (Metzger Nov 2026 · Harrington Nov 2027 · **Roach, Mayor Pro Tem, Nov 2027** · Hill Nov 2026 ·
+  Johnston Nov 2026) alongside Mayor Marchiori (Nov 2027) and City Secretary Britt Murry.
+  **It carries no biography, no statement of priorities and no policy position for anyone.**
+- **`https://directory.tml.org/profile/city/1867`** — the Texas Municipal League City Officials
+  Directory entry, fetched. Independently confirms **"City of Weston · Collin · General Law Type A"**
+  and lists **Aldermen Michael Hill, Jeff Metzger, Marla Johnston, Patti Harrington, Brian Roach**.
+  **This is the identity anchor for all five.** Contact information only; no policy positions.
+- **`https://www.westontexas.com/page/About_Us`** — fetched. Population **1,050 (2023)**, land size
+  **4.6 sq. mi.**, served by Celina ISD and McKinney ISD. History and demographics only.
+- **`https://www.westontexas.com/`** and **`…/default.aspx?name=Resident_Survey`** (the same page
+  under an alias) — fetched. Surface the FY26 budget, the tax-rate comparison table (rate held at
+  **$0.360000 per $100**, average homestead tax up **5.42%** to **$2,007.49**, total levy **down
+  0.32%**), and the notice that **three At-Large Alderman seats are up on November 3, 2026** with
+  filing July 18 – August 17, 2026. **No officeholder statement of any kind.**
+- **`https://www.westontexas.com/page/Zoning`** — fetched. Procedural only (application, scale
+  drawing, $750 fee, 45-day deadline). Unchanged from what 222-09 recorded.
+- **`https://www.westontexas.com/page/The%20Weston%20Post`** — fetched, and its full issue list
+  enumerated: **Winter 2019 through Winter 2022, then nothing.** ⚠ **The newsletter is the wrong
+  instrument for all five of these people on a date basis alone** — it ceased publishing before any
+  of them is documented in it as a councilmember, and years before Johnston, Harrington (as
+  alderman) and Roach took office — quite apart from 222-09's finding that it is published by
+  **Classroom Counterpoints**, a volunteer 501(c)(3) **explicitly not affiliated with the City**.
+  **No issue was read and none needed to be.**
+- **`https://www.lwvcollin.org/candidates` — reachable with a browser User-Agent (HTTP 200 /
+  28,780 bytes) and content-free**, exactly as 222-13 recorded: a ClubExpress shell whose only
+  substantive element is a generic "register to vote" block. **Re-confirmed so no later plan
+  re-spends time on it.**
+- **`https://onyourballot.vote411.org/` — ⚠ NO LONGER 403; it now returns HTTP 200 / 14,127 bytes,
+  and it is still useless.** The body is the generic address-lookup shell carrying the banner
+  *"Voter guide information is published closer to your next Election Day. Check back later to find
+  your ballot information."* **No Weston race, no Weston candidate, no questionnaire.** Execution
+  note 12's practical conclusion stands — this host cannot serve a past municipal race — but its
+  stated *reason* ("403 / decommissioned") should be updated to "reachable and empty for past races."
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position. **None of these blocks any chair or changes any blank**, which is why all 55 zeros are
+classified settled:
+
+- **🔒 THERE IS NO WESTON COUNCIL VIDEO. This is the opposite of the Parker and Lucas situations and
+  it closes the highest-value retry path before it opens.** `westontx.api.civicclerk.com` and
+  `weston.api.civicclerk.com` both return **HTTP 404** (Weston does not use CivicClerk — the fourth
+  Collin city checked against that endpoint after Fairview, Anna and Lucas, and the first to
+  genuinely not have it), and `westontx.new.swagit.com/views/` returns **HTTP 404** (no Swagit
+  portal, so no `…/videos/<id>/transcript` path exists). The city's site links no stream, no YouTube
+  channel and no archive. **Weston's meetings are not recorded. The minutes are the whole record, and
+  the minutes do not narrate.** This is the single most important fact in this section: the blanks
+  below are not waiting on an unread source.
+- **`roachforweston.com` — registered, resolving and serving nothing.** Ballotpedia lists
+  `Brian@RoachForWeston.com` as Roach's contact. The domain **does resolve** (A record
+  `66.81.203.198`) but **nothing listens on port 443 or port 80** — `curl` times out at ~21 s on both
+  with "Could not connect to server" — and the **Wayback Machine holds zero captures**
+  (`archive.org/wayback/available` returns `"archived_snapshots": {}`; the CDX API returns an empty
+  set). On the evidence available this is a **mail-only domain that never carried platform content**,
+  so it is recorded as a note rather than an access-failure zero, following the Barron and
+  `peterson4lucas.com` precedents. **Named retry path: a request to the officeholder.**
+  `harringtonforweston.com`, `pattiforweston.com`, `johnstonforweston.com`, `metzgerforweston.com`
+  and `hillforweston.com` all return **NXDOMAIN** — no campaign domain of any kind exists for the
+  other four.
+- **`facebook.com/roach4weston`** (linked from Ballotpedia as Roach's campaign Facebook) — **HTTP
+  400**, unfetchable from this environment as in every prior wave; not retried. Social posts are not
+  evidence of a policy position absent a direct citable quote. **Nothing below depends on it.**
+- **LinkedIn — HTTP 999 (bot block) for both profiles Ballotpedia links**:
+  `linkedin.com/in/aunt-patti-harrington-4a0bbb92/` and `linkedin.com/in/brianmroach/`. Employment
+  history would be **profession/adjacency** and refused in any case.
+- **Local press: all three candidate-era outlets are unreachable, and this is recorded as
+  unreachability, not as a finding that no article exists.** **Community Impact**
+  (`communityimpact.com/search`) returns **HTTP 403 / 5,707 bytes** to every fetch. **Star Local
+  Media** (`starlocalmedia.com/?s=Weston+town+council`) returns **HTTP 200 / 877,835 bytes** whose
+  body is the outlet's generic chrome plus the string *"Sorry, an error occurred"* and **zero
+  occurrences of "Weston"** — the search back end errored rather than returning a negative. Its
+  **Celina Record** title (`celinarecord.com/?s=Weston+council`, HTTP 200 / 791,834 bytes) returns
+  the identical error string — and **Celina is the town 8 miles west of Weston**, so this is the
+  outlet most likely to have covered the race. **`mckinneycourier.com` does not connect at all.**
+  **The paywall/login layer is the retry path for all three.**
+- **`txdirectory.com`** (Texas State Directory) — both the Weston city page and the Patti Harrington
+  person page return HTTP 200 but are **login-gated**: the body is site navigation only. A contact
+  directory; no policy content behind it in any event.
+
+---
+
+### ⚠ ATTRIBUTION TRAPS AND HOMONYMS REJECTED
+
+**1. 🔴 "Roach" is a substring of "approach," and a naïve grep inflates his record.** A
+case-insensitive `roach` returns **16 files**; a word-boundary `\broach\b` returns **14**, and the
+two false positives are *"Discussion — New Mayor Leadership **Approach**"* (November 21, 2019) and
+*"an **approach** for code enforcement"* (2023) — **both predating his election by years**. Every
+"Roach" used below is word-boundary matched and inside his November 2025 → present term.
+
+**2. 🔴 "Hill" is a road, a parkway and a trash vendor in Weston's own minutes.** A bare `hill`
+returns **89 files**. The corpus contains **Mugg Hill Rd**, **West Cottage Hill Parkway** (the
+subject of a 2024 speed-limit item) and *"**Heather Hill** with Bradshaw & Son Trash Service"* — a
+vendor, not the alderman. Only `CM Hill` / `Alderman Hill` / `Councilmember Hill` / `M. Hill` /
+`MHill` / `Mie Hill` (the OCR rendering of *Mike Hill* in the 2023 litigation caption) were treated
+as the officeholder.
+
+**3. 🔴 "CM Johnson" in the January 14, 2025 minutes is Marla JOHNSTON — and no chair rests on
+resolving it.** The Weston roster in January 2025 was Metzger (MPT), Coleman, Whitworth, Hill and
+Johnston; there was **no Alderman Johnson**, and a 2026 attendance line in the same series reads
+*"Aldermen Hill, Harrington, **Johnson**, Roach, and Metzger"* when the roster demonstrably contained
+Johnston. The minute-taker's spelling drifts across **Johnston / Johnson / Herrington / Harrington**
+in 2025–26. **Flagged rather than relied on: every act attributed to Johnston below is one where the
+spelling is unambiguous.**
+
+**4. 🔴 `westonworksforyou.com` is WESTON MARTINEZ, a San Antonio candidate for Chair of the
+Republican Party of Texas — the most dangerous trap in this pass, because a search for "Weston" plus
+a policy word surfaces a live, richly-populated platform site with detailed positions.** *"Weston"*
+is his **given name**. He is a former Texas Real Estate Commissioner from the Alamo City with no
+connection whatever to Collin County. **Rejected on sight, and not one word of it was used** — quite
+apart from the fact that its content sits on federal and state axes this compass does not ask a city
+councilmember about.
+
+**5. 🔴 `ballotpedia.org/Michael_Hill_(Gainesville_City_Council_Ward_3,_Texas,_candidate_2026)` is a
+DIFFERENT TEXAS MUNICIPAL OFFICIAL.** Gainesville is in **Cooke County**. This is precisely the
+execution-note-10 hazard: a live, confident, in-state, same-office-type page for the same name.
+**Rejected.** Also rejected: **Mike Hill (Florida)**, **Mike Hill (Alabama)** and **Mike Hill
+(Colorado)** — the three entries on Ballotpedia's `Mike_Hill` disambiguation page, none of them
+Weston — plus **Mike Hill (British politician)** and the **1,540 Spokeo "Mike Hill, Texas" matches**.
+
+**6. The Weston place-name collisions, re-encountered and re-rejected from 222-09's list:** **City of
+Weston Lakes, Texas** (`westonlakestexas.gov`, **Fort Bend County**, which publishes its own "Mayor
+and Council" page and its own "November 2025 Elections Update", and which was the *top* result on two
+of this session's searches); **Weston, Florida**; **Weston, Massachusetts**; **Weston, Wisconsin**;
+**Weston-super-Mare Town Council**, **Weston on the Green** and **Weston Rhyn** parish councils
+(England). New this session: **Cary Weston** (Bangor, Maine councillor), **Weston Wamp** (Hamilton
+County, Tennessee), **Weston Martinez** (above) and **Katie Weston** (Stockton, England). **Surname
+collisions rejected:** **James C. Harrington** and **David C. Harrington**, **Jen Metzger** (New York
+State Senate), **Luella Johnston**, **Anne Johnston** and **Arthur Johnston (politician)**.
+
+**7. Within-city misattribution guard — the people whose Weston acts were NOT borrowed.** Everything
+used below names its actor in a document read this session and every date was checked against that
+person's term. Refused by name, all out of scope: **Mayor Matthew Marchiori** (222-09's subject;
+presiding is not a position) and former mayors **Jerry Randall**, **Heather Richardson**, **Jim
+Marischen** and **William Denny**; former councilmembers **Maria Whitworth, Carol Decker, Tim Wilson,
+Dana Coleman, Bruce Morrell, Kevin Deal, Randall Hales, John Tingle** and **Molinar**; the defeated
+2025 candidates **Crissy Hinojosa-Wilson** and **John Yang**; and staff — City Secretaries **Britt
+Murry, Suzanne Scott-DiNicola, Kristina Dean, Shelly Green, Rochelle Green, Susan M. Coffer** and
+**Michele Smith**, City Planner **Michael Coker**, Fire Chiefs **Bart Chambers** and **Schneider**,
+and Code Enforcement Officer **Lee Swain**. ⚠ **Heather Richardson is the sharpest of these**: she is
+the *only* individually-named dissenter in the 2020 Master Thoroughfare Plan vote, and she was
+**Mayor Pro Tem and then Mayor**, so a summary that credits "the council" or "the mayor pro tem" with
+a Weston road position is describing **her**, not Hill or Metzger.
+
+**8. ⚠ Wikipedia is still stale for the Weston mayoralty** — the article *"Weston, Texas"* names
+**Jerry Randall** as mayor. 222-09 already flagged this; it is repeated here only so a later pass
+does not treat it as new. It does not touch any of the five council rows, which the city roster and
+the TML directory both confirm.
+
+---
+
+### ⚠ THE SIX ON-TOPIC NEAR-MISSES, REFUSED ON THE RECORD
+
+These are the closest Weston comes to a compass position in fourteen years. Each is written out so a
+later pass can see exactly what was weighed rather than re-deriving it.
+
+**NEAR-MISS 1 — the July 14, 2026 FM 455 realignment votes: three consecutive 3–2 splits with all
+five members named on both sides. Refused for all five on `transportation`.** Resolution
+R-2026-07-02 stated *"the City of Weston's official position to the Texas Department of
+Transportation regarding the future alternative routing of Farm to Market Road 455 (FM 455
+Feasibility Study, from Shady Brook Lane to US 75, Project ID A00210773)."* Three competing versions
+were moved in sequence, each endorsing a different TxDOT corridor:
+
+| Alignment | Made by | Seconded by | Ayes | Nays | Result |
+|---|---|---|---|---|---|
+| **Yellow** | Johnston | Roach | Johnston, Roach | Harrington, Hill, Metzger | Failed 3–2 |
+| **Pink** | Roach | Johnston | Roach, Johnston | Harrington, Hill, Metzger | Failed 3–2 |
+| **Green** | Harrington | Hill | Harrington, Hill, Metzger | Johnston, Roach | **Passed 3–2** |
+
+**Why this is a blank and not a chair.** The `transportation` scale is a **mode-allocation**
+proposition end to end — chair 1 prioritises pedestrians, cycling and transit and cuts parking;
+chair 2 requires bike lanes and sidewalks on all new road projects; chair 3 maintains roads while
+selectively adding transit; chair 4 puts road capacity and traffic flow first; chair 5 makes highway
+access and free parking the foundation of local transportation policy. **All three of Weston's
+alternatives are the same state highway.** Choosing among Yellow, Pink and Green decides *where the
+road goes*, not *whether the city should spend on roads rather than on transit, bikes or sidewalks* —
+and the minutes record **no reason from any of the five** for preferring one corridor. This is
+execution note 20's "shared vocabulary is not shared subject" applied to the sharpest split in the
+corpus. **Attribution here is perfect and it still yields nothing**, which is the clearest possible
+demonstration that Weston's problem is reasoning-absence, not attribution.
+
+**NEAR-MISS 2 — Mike Hill's second of the amended 2020 Master Thoroughfare Plan. Refused on
+`transportation`.** December 8, 2020: *"Consider and act upon adoption of the 2020 Master
+Thoroughfare Plan. Motion to approve by CM Decker with the following changes: FM543 [Weston Rd] from
+CR206 [Chambersville Rd] southward is a 4-lane undivided highway and all other 6-lane undivided
+highways become 4-lane undivided highways. Second by CM Hill. For 4 Against 1 (CM Richardson)."*
+This is the **only citywide, non-single-tract transportation instrument any of the five ever acted
+on**, and its amendment **reduces planned roadway capacity across the whole plan**. It is still a
+blank: **Hill seconded, he did not move**; the amendment is **Decker's** and no reason of Hill's own
+is recorded; a roadway **cross-section** decision (6-lane → 4-lane undivided) is a capacity and
+right-of-way engineering judgment, not a statement about what the city should *invest in*; and the
+act is consistent with chairs 2, 3 **and** 4 without separating them. **Two adjacent chairs that
+cannot be separated is a blank, never the middle.**
+
+**NEAR-MISS 3 — Mike Hill is the council's standing transportation-item sponsor, and sponsorship is
+not a position. Refused on `transportation`.** He personally placed on the agenda: *"Consider and act
+upon changes to the current Thoroughfare Plan regarding realignment of FM 543/Weston Rd/Main St"*
+(November 8, 2022 — **"No action taken"**); *"Consider and discuss Weston's Thoroughfare Plan"*
+(April 25, 2023); *"Consider and discuss City of Weston Thoroughfare Plan"* (July 25, 2023);
+*"Consider and discuss traffic deterrents"* (April 25, 2023); *"Consider and discuss the installation
+of safety features on CR 175 at the intersection of FM 455"*; *"Consider and discuss the installation
+of street lights on FM 455 near Weston Creek Trl"*; and an item to *"submit required sign permit
+applications for commercial no parking signs on Main Street."* **Not one of the seven produced a
+recorded outcome, a vote, or a sentence of his.** They are **safety and maintenance** items —
+explicitly refused as transportation evidence — and the last is if anything *against* chair 5's
+"abundant free parking." **A recurring interest in an area of city business is adjacency; it is the
+"board service / profession / tenure" refusal in another costume.**
+
+**NEAR-MISS 4 — Brian Roach's nine-condition motion on the Purple Sage BESS development agreement.
+Refused on `economic-development` and on `growth-and-development`.** December 9, 2025, the single
+most substantive act by any of the five: *"Alderman Roach made a motion to approved Ordinance
+O-225-11-02 with the following conditions: 1. The 2024 IFC must be followed 2. The 2023 NFBA must be
+followed 3. Any future expansion must follow the current IFC and NFBA 4. Any future phases will
+require an amendment to the Development Agreement 5. A masonry wall on the N/W side shall be
+constructed consistent with Oncor substation as well as additional landscaping 6. City property tax
+portion protection 7. No waiver on any Governmental immunity 8. Any additional substation changes
+will come back to Council 9. Include HB 3808. Alderman Johnston seconded the motion. The vote was a
+tie 2 in favor and 2 against. Mayor Protem Metzger broke the tie with an in favor vote."* This is
+**named, affirmative, self-authored and specific** — everything the evidence bar asks for — and it
+still reaches no chair. **`economic-development` asks how the city should ATTRACT business**, and
+every one of its five chairs is a statement about **incentives** (none / small-business only /
+targeted with community-benefit and job-quality requirements / active competition with abatements /
+maximum incentives). Roach's motion contains **no incentive of any kind** — condition 6 protects the
+city's **own** property-tax revenue, which is the opposite of an abatement — and no job-quality
+requirement. It is a **conditioning-of-a-permit posture toward a project that came to the town**,
+which the scale does not measure. **`growth-and-development` asks about population growth and new
+development pace**; a 300 MW battery energy storage facility on annexed land is neither, and a
+**single-tract** conditional approval does not locate a pace chair. **Refused for Roach (mover) and
+for Johnston (seconder); Metzger's tie-break carries no stated reason at all.**
+
+**NEAR-MISS 5 — Jeff Metzger's lone Nay on the BESS negotiation authorisation. Refused as an
+unexplained dissent.** February 27, 2025: *"CM Coleman made a motion authorizing the Mayor to proceed
+with negotiations and planning related to a proposed 300 MW / 600 MWH Battery Energy Storage System
+(BESS) by RWE Clean Energy LLC…with the stipulation that any proposal is subjected to a public
+hearing and approval of the Town Council. CM Whitworth seconded the motion and it carried 4-1. **MPT
+Metzger opposed.**"* A named, individually-recorded dissent on the largest development question this
+council has faced — and **no reason is recorded anywhere in the minutes, with no video to recover one
+from.** A No with no stated reason cannot distinguish among the chairs it might imply (the Shannon
+Moore / Ordinance 4495 precedent, execution note 21). **Refused.** Note also that he **broke the tie
+in favour** of the same project's development agreement ten months later, which — absent reasoning on
+either occasion — compounds rather than resolves the ambiguity.
+
+**NEAR-MISS 6 — Patti Harrington's motion to table the RWE development agreement "until after the
+election." Refused on `growth-and-development`.** October 28, 2025: *"Motion Made by CM Harrington to
+table RWE DA and Mayoral authorization until after the election and until we hold a Public Hearing.
+Motion Seconded by CM Metzger. Vote 5/0."* This is the **only motion in the corpus by any of the five
+that carries an explicit stated reason**, and it is tantalisingly close to `growth-and-development`
+**chair 1**, *"Impose growth limits; require voter approval for major annexations or large-scale
+developments."* It is still a blank. She moved to **sequence** a decision after an election that was
+seven days away and after a statutorily-useful public hearing — **process, not a standing rule that
+voters must approve development.** She proposed no referendum, no growth cap and no general policy;
+the hearing she asked for was duly held on **December 9, 2025** and she raised no objection to the
+agreement that followed. **Reading a one-off timing motion as a standing growth-limits principle
+would be exactly the inference D-04 forbids.** *(Refused for Metzger as seconder on the same
+grounds.)*
+
+---
+
+### `taxes` — researched for all five, NO ROW WRITTEN FOR ANY OF THEM
+
+Per the settled operator ruling of 2026-07-25. Weston's tax record is unusually rich for a town this
+size and **none of it reaches a chair**; findings are preserved verbatim for any future
+municipal-scope rewrite:
+
+- **🔴 Patti Harrington cast the most explicit tax-rate votes found anywhere in this phase — as
+  MAYOR, thirteen years ago.** September 10, 2013, on Ordinance 2013-09-02 adopting the FY2013-14
+  budget: *"Motion to approve at a $0.30 rate by John Tingle. Second by Kevin Deal. Nays — Carol
+  Decker/Randall Hales. **Mayor Patti Harrington votes Nay.** Motion fails 2-3. 2d Motion to approve
+  at a $0.36 rate by Carol Decker. Second by Randal Hales. Nays — John Tingle/Kevin Deal. **Mayor
+  Patti Harrington votes Aye.** Motion Carries 3-2."* She voted **against** the lower rate and **for**
+  the higher one, in a recorded, individually-named, contested pair of votes. Under the ruling this
+  is squarely unusable: chairs 1–2 require raising taxes **specifically on wealthy people and large
+  companies**, chairs 4–5 require **scaling public services back**, and a uniform municipal
+  ad-valorem rate does neither. It is also a **rate** decision, the first item on execution note 19's
+  extended refusal list. **Preserved here because it is the best artifact this phase has for showing
+  what the `taxes` scale cannot see.**
+- **Metzger moved and Johnston seconded holding the rate flat.** September 9, 2025: *"Motion made to
+  Accept the tax rate remaining $0.36 per $100 by CM Metzger. Motion seconded by CM Johnston. Vote
+  5/0."* September 23, 2025, on Ordinance O-2025-09-02 (agenda-sponsored by Johnston): *"Motion to
+  Adopt Tax Rate made by CM Harrington. Motion Seconded by CM Johnston. Vote: 3/0 to accept Tax Rate.
+  **Note: No change to the current tax rate was made.**"* Holding a rate flat is the "maintenance"
+  case and reaches no chair in either direction.
+- **The FY2026 budget adoption** (September 9, 2025) was moved by former CM Coleman and **seconded by
+  CM Harrington**, 5/0 — a budget adoption with no stated priority.
+- **October 28, 2025: Metzger moved and Coleman seconded approval of the 2025 Tax Roll**
+  (O-2025-10-01), 5/0. A tax roll is an administrative certification, not a position.
+- **June 9, 2026: Johnston moved and Harrington seconded** renewal of the **delinquent-tax collection
+  contract** with Abernathy, Roeder, Boyd & Hullett, PC under Tex. Tax Code §6.30. Collections
+  administration, not tax policy.
+- **February 11, 2025: Johnston moved and Hill seconded** an ordinance calling a **May 3, 2025
+  special election on a half-cent local sales-and-use tax for street maintenance**. Refused twice
+  over — it is a **rate** question **and** it is **maintenance framing** — and calling an election is
+  a procedural act that takes no side.
+- **July 25, 2023: "Consider and discuss raising Weston's sales tax"** was sponsored by former CM
+  Whitworth, not by any of the five, and produced no recorded action.
+- **Roach's condition 6, "City property tax portion protection"** (December 9, 2025) is a
+  revenue-protection term inside a development agreement, not a position on what the city should tax
+  or spend.
+- **The City's published FY26 rate** — held at **$0.360000 per $100** with a **5.42% increase in the
+  average homestead bill** driven entirely by valuation, and a **0.32% decrease in total levy** — is
+  the City's institutional figure, attributed to no individual, and is the appraisal-valuation case
+  execution note 19 refuses outright.
+
+---
+
+### Per-person register entries
+
+**All five people below are blank on all 11 topics. Every entry is SETTLED.** The shared structural
+grounds — action-only minutes with zero member-attributed speech, no council video in existence, no
+completed Ballotpedia survey, no live campaign site, and 26 compass keyword classes at zero hits
+across the full 2012–2026 corpus — are stated once above and are not repeated per line.
+
+- **Patti Harrington** — Weston — `34d011da-2352-4d91-b3f2-b3970ccbaefd` — **housing** ·
+  **homelessness** · **local-immigration** · **civil-rights** · **healthcare** ·
+  **residential-zoning** · **economic-development** · **public-safety-approach** · **transportation**
+  · **growth-and-development** · **taxes** — **11 blanks, all SETTLED.** She has the longest and
+  richest record of the five (Mayor 2012–2015, Alderman from August 2025) and it still yields
+  nothing: her mayoral years are presiding plus the two 2013 budget-rate votes preserved under
+  `taxes`; her aldermanic acts are the October 2025 timing motion (near-miss 6, refused), the
+  **Green FM 455 alignment** motion (near-miss 1, refused), the March 2026 Crossland ETJ-expansion
+  ordinance and Municipal Management District consent (single-tract, unanimous, unexplained), the
+  **SAFER grant application** of April 14, 2026 (a **fire** grant — the `public-safety-approach`
+  scale is a police-budget proposition end to end, so this is off-axis, and applying for outside
+  money is not a funding-level position in any case), the December 2025 **Collin County Dispatch
+  ILA** amendment (same off-axis reasoning), and a run of financial-controls, audit and
+  accounts-payable resolutions. Her Ballotpedia page exists and is empty of positions by
+  Ballotpedia's own statement.
+- **Brian M. Roach** — Weston — `ec61ea47-5631-4203-a6b6-a09fbdb7837d` — **housing** ·
+  **homelessness** · **local-immigration** · **civil-rights** · **healthcare** ·
+  **residential-zoning** · **economic-development** · **public-safety-approach** · **transportation**
+  · **growth-and-development** · **taxes** — **11 blanks, all SETTLED.** His entire record is nine
+  months long. Its high-water mark is the nine-condition BESS motion (near-miss 4, refused on two
+  topics), plus the March 2026 Crossland development-agreement motion (unanimous, unexplained), the
+  **Yellow and Pink** FM 455 alignments he moved and seconded and lost 3–2 (near-miss 1, refused),
+  fire-apparatus and equipment purchases, and adoption of the 2024 International Code editions. His
+  Ballotpedia page exists and states he did not complete the survey; **`roachforweston.com` is
+  registered but serves nothing and has never been archived**; his campaign Facebook is unfetchable.
+- **Jeff Metzger** — Weston — `bd1727af-4222-448a-839c-8fc79e8abdb9` — **housing** ·
+  **homelessness** · **local-immigration** · **civil-rights** · **healthcare** ·
+  **residential-zoning** · **economic-development** · **public-safety-approach** · **transportation**
+  · **growth-and-development** · **taxes** — **11 blanks, all SETTLED.** Three and a half years on
+  the council, much of it as Mayor Pro Tem, and his two most on-topic acts point in opposite
+  directions with no reason recorded for either: the **lone Nay** on authorising BESS negotiations
+  (near-miss 5) and the **tie-breaking Aye** for the same project's development agreement ten months
+  later (near-miss 4). His own sponsored agenda items are **City Hall foundation repair, gutters, a
+  remodel using COVID funds and a city parking lot** — building maintenance, not policy. He moved the
+  March 2024 tabling of the Honeycreek annexations, rezonings and TIRZ plan (procedural), seconded
+  the January 2025 RED-1 rezoning (single-tract), and voted **Nay on Yellow and Pink and Aye on
+  Green** for FM 455 with no reason recorded. No Ballotpedia page; no campaign domain.
+- **Mike Hill** — Weston — `de080c23-2e85-4b08-b7f7-780bebcde9b8` — **housing** · **homelessness** ·
+  **local-immigration** · **civil-rights** · **healthcare** · **residential-zoning** ·
+  **economic-development** · **public-safety-approach** · **transportation** ·
+  **growth-and-development** · **taxes** — **11 blanks, all SETTLED.** The longest-serving member
+  (2020 → present) and the one who came closest twice, on the same topic, and missed both times: the
+  amended Master Thoroughfare Plan second (near-miss 2) and seven sponsored road/traffic items that
+  produced no recorded outcome (near-miss 3). **His second of the April 9, 2024 motion approving four
+  zoning-change ordinances — including the 300-unit multi-family planned development — is refused
+  because the motion was expressly made "per the terms of the Settlement Agreement" in litigation in
+  which he was himself a named defendant.** He also seconded the 2024 speed-limit reduction on West
+  Cottage Hill Parkway (safety), the February 2025 street-maintenance sales-tax election call
+  (maintenance + rate) and the December 2025 dispatch ILA. **No Ballotpedia page**; the bare
+  `Mike_Hill` URL is a disambiguation page for three men in other states.
+- **Marla Johnston** — Weston — `bf89cead-3e7b-4f03-b5be-040c45aa7d07` — **housing** ·
+  **homelessness** · **local-immigration** · **civil-rights** · **healthcare** ·
+  **residential-zoning** · **economic-development** · **public-safety-approach** · **transportation**
+  · **growth-and-development** · **taxes** — **11 blanks, all SETTLED.** Two and a half years on the
+  council. She is the mover on **more land-use items than anyone else in scope** — the January 2025
+  annexation and RED-1 rezoning (as "CM Johnson", trap 3) and the February 2025 AG→RED-1 rezoning at
+  685 Weston Road — and **every one is a single-tract, landowner-petitioned, unanimous approval into
+  a one-acre-minimum district with no reason recorded**, which is neither a density principle nor a
+  growth-pace position. She seconded Roach's BESS motion (near-miss 4) and moved the **Yellow**
+  alignment and seconded **Pink** on FM 455, voting Nay on the Green alignment that passed
+  (near-miss 1) — a real, named, contested transportation preference with no stated reason behind it.
+  No Ballotpedia page; no campaign domain.
+
+---
+
+**Weston reconcile:** **all five council members appear in bucket 2 for all 11 topics; none appears
+in bucket 1.** 55 of 55 attempted (person, topic) pairs are accounted for — **0 chairs + 55 blanks** —
+with no name in neither bucket and no name in both for the same topic. **Mayor Matthew Marchiori
+remains covered by the 222-09 section above and was not touched.** Combined with 222-09, **the City of
+Weston is now complete at 66 of 66 attempted pairs across all six officeholders, every one blank.**
+Weston stays at **zero stances**, `coverage.js` is unaffected (no 0 → ≥1 transition), **no migration
+is authored and no migration number is claimed.**
