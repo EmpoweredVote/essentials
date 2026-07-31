@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 738
+## Count: 802
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -111,6 +111,26 @@ substantive position. Nine attribution traps rejected in all. **⚠ If the Sharp
 moves Parker 0 → 1 stance — a second `coverage.js` Pitfall-5 trigger** (see execution note 29) — and
 222-13 would then author a migration and claim a number; if the chair is rejected, no migration and
 no number.
++ 64 by 222-13 Task 2 (Lucas council — 6 people × 11 topics = 66 attempted pairs, **2 chairs
+proposed: Jonathan Underhill / residential-zoning = 1 and Rebecca B. Orr / residential-zoning = 1**,
+64 blanks; **all 64 are SETTLED**). **🔓 This closes the file 222-08 opened on Lucas: its minutes are
+NOT inaccessible.** The city's own `AgendaCenter` is a JavaScript splash that serves no documents,
+but `lucastx.api.civicclerk.com` serves the whole archive — **489 events back to January 2016, 234
+of them City Council, 185 Minutes PDFs from January 3 2019 to June 4 2026** — provided the walk uses
+`$skip` in steps of **15**, the server's real page size regardless of `$top`. 179 of the 185 are
+image scans (≤2 bytes/page) and one is a hybrid that looks partly complete and is not; all 185 were
+OCR'd into a **1.73 MB corpus**, plus 17 P&Z minutes. **Unlike Anna, Fairview and Melissa, Lucas's
+minutes DO narrate member-attributed speech** — 246 lines for Fisher, 99 for Lawrence — **and on
+land-use and police items they record the residents' positions and the council's motion but not the
+members' reasoning**, which is why four of the six yield nothing. Both chairs come instead from 2026
+campaign documents: Underhill's **completed Ballotpedia Candidate Connection survey** and Orr's
+**own live campaign site**. **Two source facts for later plans: `lwvcollin.org` is NO LONGER 403 to
+`curl` with a browser UA (HTTP 200) but its `/candidates` page carries no candidate content; and
+Lucas uses Swagit like Parker but has NOT bought closed captioning — `…/videos/<id>/transcript`
+returns HTTP 204, so the Parker transcript technique does not transfer.** **⚠ If either chair is
+approved it moves Lucas 0 → ≥1 stance — a third `coverage.js` Pitfall-5 trigger** (see execution
+note 29) — and 222-13 would author a migration and claim a number; if both are rejected, no
+migration and no number.
 222-14 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
@@ -10346,3 +10366,950 @@ in bucket 2 for all 11.** 55 of 55 attempted (person, topic) pairs are accounted
 blanks — with no name in neither bucket and no name in both for the same topic. **Mayor Lee Pettle
 remains covered by the 222-08 section above and was not touched.** If the Sharpe chair is applied,
 Parker moves **0 → 1** and `coverage.js` must gain `hasContext: true` for geo_id 4855152.
+
+---
+
+## City of Lucas (4845012) — 222-13
+
+**Scope, stated once.** Plan 222-13 Task 2 researches **the six City Council members of Lucas**
+(Collin County, Texas, geo_id 4845012). **Mayor Dusty Kuykendall is out of scope here** — he was
+attempted in full by 222-08 and appears above under `## City of Lucas (4845012) — 222-08` with 11 of
+11 blanks; he was not re-researched, re-reasoned or modified by this pass. All six politician_ids
+were re-verified live against production by the orchestrator on 2026-07-30 as **0 answer rows and 0
+context rows**. **No prior 2026-05-12 found-nothing notes exist for any of these six**, so nothing
+here corroborates or displaces an earlier pass.
+
+**Attempted:** 2026-07-30 — **6 people × 11 canonical topics = 66 (person, topic) pairs.**
+
+| Person | Seat | politician_id | Term evidence (all from primary documents read this session) |
+|---|---|---|---|
+| Jonathan Underhill | Council Member Seat 1 | `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` | **elected May 2, 2026** over Richard Alan; **Oath of Office administered by City Secretary Toshia Kimball on May 21, 2026**; first roll call as a councilmember **June 4, 2026**; three-year term expiring **2029**. Previously **Alternate Commissioner 2, Planning & Zoning**, appointed **December 5, 2024**; sat as a voting P&Z member on **March 13, 2025** and **February 12, 2026** |
+| Rebecca B. Orr | Council Member Seat 2 | `3c839111-ed39-41fd-8e63-9c81b1e3e591` | **elected May 2, 2026** over John Awezec; **sworn May 21, 2026**; first roll call **June 4, 2026**; term expiring **2029**. Appointed a **Member of the Board of Adjustment** on **August 15, 2024** (Fisher moved, Lawrence seconded, 7-0), reappointed **December 18, 2025**; also Building & Standards Commission. Addressed Council as a **citizen** on **April 2, 2026** |
+| Chris Bierman | Council Member Seat 3 | `ada1526e-32a3-47b2-9535-c4988e8db633` | **elected May 4, 2024**; **sworn May 16, 2024** alongside Mayor Kuykendall; three-year term expiring **2027**. Previously Board of Adjustment, then P&Z Alternate 2 → Alternate 1 → **Commissioner** (two-year term from January 1, 2024); appointed **Board of Adjustment Liaison** May 21, 2026 |
+| Phil (Philip) Lawrence | Council Member Seat 4 | `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` | **the longest-serving of the six** — present in the roll call of the **January 3, 2019** meeting, the earliest minutes Lucas publishes online, and in **85 of the 86** council minutes from January 2023 forward; **re-elected May 4, 2024** for a three-year term expiring **2027** |
+| Debbie Fisher | Council Member Seat 5, **Mayor Pro Tem** | `8d24cdb6-64d1-4597-a66e-71bc723391d7` | also present in the **January 3, 2019** roll call and in **all 86** council minutes from January 2023 forward; **re-elected as an incumbent May 3, 2025** (sworn May 15, 2025), term expiring **2028**; elected **Mayor Pro Tem** on **May 15, 2025** (Peterson moved, Kuykendall seconded, 5-0) for the year from June 1, 2025, and still Mayor Pro Tem in the June 4, 2026 roll call |
+| Neil Peterson | Council Member Seat 6 | `72c0de8c-38b0-4470-a0d0-9d7a71986be0` | **elected May 4, 2024 to an UNEXPIRED term** for Seat 6 (a special election held the same day); **sworn May 16, 2024**; **re-elected as an incumbent May 3, 2025**, term expiring **2028**. Council liaison to the Parks and Open Space Board |
+
+---
+
+### 🔴 RESULT — TWO CHAIRS PROPOSED. THIS FLIPS A ZERO-COVERAGE CITY.
+
+**2 chairs proposed + 64 of 66 attempted (person, topic) pairs are honest blanks. All 64 are
+SETTLED.**
+
+> ⚠ **PITFALL-5 TRIGGER — READ BEFORE APPLYING.** Lucas is currently at **zero stances across every
+> officeholder** — Mayor Kuykendall is at 0 per 222-08 and all six council members were re-verified
+> at 0 this session — so it carries **no coverage chip today**. Either chair below would be the
+> **first stance the government has ever held**. If either is applied, `src/lib/coverage.js` must be
+> updated so Lucas flips to `hasContext: true`, and the operator should re-run the split-section
+> check and a browse spot-check for geo_id **4845012**. If both chairs are rejected, Lucas stays at
+> zero, no migration is authored and no migration number is claimed.
+
+**The chairs:**
+
+| full_name | politician_id | topic_key | topic_id | value |
+|---|---|---|---|---|
+| Jonathan Underhill | `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` | `residential-zoning` | `d4f18138-a2e0-4110-b925-7387d9d0d16d` | **1** |
+| Rebecca B. Orr | `3c839111-ed39-41fd-8e63-9c81b1e3e591` | `residential-zoning` | `d4f18138-a2e0-4110-b925-7387d9d0d16d` | **1** |
+
+Both rest on **the candidate's own words in a 2026 campaign document**: for Underhill, a
+**completed Ballotpedia Candidate Connection survey** (the strongest source class D-05 recognises
+short of a questionnaire the candidate signed); for Orr, **her own live campaign website**, whose
+operative passages Ballotpedia also reproduces verbatim under its "Campaign website" heading. Both
+are values of **1**, so both were re-fetched in full during the self-audit by `curl` with a browser
+User-Agent, bypassing WebFetch's cache. Full text, the chair-selection argument and the resample
+record are in each person's entry below.
+
+**This is the direct payoff of the ⭐ Kuykendall precedent named in the 222-08 section above.** That
+section recorded a VOTE411 paraphrase in which the mayor commits to preserving Lucas's *"low
+density, large lots and open spaces through zoning requirements that prevent high density"* and
+declined to write a chair from it, because the primary document 403'd. **The same statement class
+turns out to be reachable for two of the six council members from sources that are not blocked** —
+and it locates the same chair. VOTE411 is still 403 (re-confirmed this session, see below); nothing
+in either chair below depends on it.
+
+---
+
+### 🔓 SOURCE UNLOCK — 222-08's "Lucas minutes completely inaccessible" finding is now CLOSED
+
+222-08 recorded that **"NO Lucas City Council minute was read this session, and Lucas's minutes
+could not be reached at all"** — `lucastexas.us/AgendaCenter` renders only a search interface,
+`/129/Agendas-Minutes` shows only navigation, and `/city-council-meetings/` 404s. **All of that is
+still true of the city's own website, and it is beside the point: Lucas's entire minutes archive is
+served by an unauthenticated CivicClerk OData API.**
+
+```
+https://lucastx.api.civicclerk.com/v1/Events?$filter=startDateTime lt 2026-07-30T00:00:00Z
+    &$orderby=startDateTime desc&$top=15&$skip=N
+```
+
+- **The server caps a page at 15 rows regardless of `$top`** (and rejects `$top` above 1000 with an
+  OData validation error), so the corpus must be walked with `$skip` in steps of 15. That single
+  quirk is what makes the endpoint look empty on a first try. **489 past events** were enumerated in
+  33 pages — **234 City Council**, 80 Planning & Zoning, 71 Board of Adjustment, 67 Parks & Open
+  Space, 23 Fire Control/EMS District, 5 CIAC, 2 Building & Standards, 7 general — running from
+  **January 2016 to July 2026**.
+- Each event carries an inline `publishedFiles[]`; the City Council set holds **567 files, of which
+  185 are Minutes**, dated **January 3, 2019 → June 4, 2026**. Files download from
+  `https://lucastx.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=N,plainText=false)`.
+- **All 185 were downloaded (90 MB) and 179 of them are image scans with no usable text layer** —
+  `pdftotext -layout` returns **≤2 bytes per page** on 179, five have genuine text layers
+  (2,268–2,885 bytes/page), and **one is a hybrid: the March 5, 2020 minutes are 8 pages and yield
+  2,229 bytes (278 bytes/page), which looks partly complete and is not** — its body is absent, and it
+  is the very file that carries the only Phil Lawrence statement on trails quoted below.
+  **Bytes-per-page, not bytes, is again the correct test.** **All 185 were OCR'd regardless** with
+  `pdftoppm -r 200 -gray -png` + `tesseract --psm 6` (Tesseract 5 at `C:/Program Files/Tesseract-OCR`),
+  six-way parallel, producing a **1.73 MB master minutes corpus covering 2019–2026**. A further
+  **17 Planning & Zoning minutes (June 2024 → May 2026) were downloaded and OCR'd** to check
+  Underhill's and Bierman's commission votes.
+- **The named retry path 222-08 proposed — the CivicPlus `AgendaCenter/ViewFile/Minutes/_MMDDYYYY-NNNN`
+  document-id pattern — is not needed and does not work.** The city's `AgendaCenter` is a JavaScript
+  splash that returns zero `ViewFile` links to any fetch, and its `Search/?term=&CIDs=all` endpoint
+  answers 200 with no documents. **Any future Collin pass should try `<city>.api.civicclerk.com`
+  before concluding a city has no minutes** — this is the third city in the phase (after Fairview
+  and Anna) recovered by that endpoint.
+
+### The structural facts that produce Lucas's 64 zeros
+
+**1. Lucas's minutes DO narrate member-attributed discussion — which makes these the harder class of
+zero.** Unlike Anna's, Fairview's and Melissa's action-only minutes, Lucas's City Secretary records
+who said what. Counting only lines that attribute speech to a named member — excluding roll calls,
+motions, seconds and vote tallies — the 2019–2026 corpus holds **246 lines for Fisher and 99 for
+Lawrence**, against **5 for Peterson, 4 for Bierman and 0 for Underhill and Orr** (the last two took
+office in May 2026). Fisher's surname appears in **all 185** minutes, Lawrence's in **183**,
+Bierman's in 52, Peterson's in 48, Underhill's in 3 and "Rebecca Orr" in 4.
+**Almost none of the 354 attributed lines is on a compass axis.** The
+recurring shape is a technical or procedural question to staff — drainage co-efficients, plat
+checklists, culvert responsibility, pothole locations, contract billing, signage, whether a vendor
+must show proof of licensure. These zeros are not "the record is thin"; they are "much speech,
+almost none of it a policy position," the Farmersville class.
+
+**2. On land-use items specifically, the minutes record the CITIZENS' positions and the council's
+motion — but not the members' reasoning.** The clearest instance is the **March 5, 2026** discussion
+of the Toll Brothers / Paxton Family Trust concept plan (110 acres of residential creating 89 lots
+plus 36 acres of commercial at Angel Parkway and Estates Parkway) — the largest density question put
+to this council. The minutes name **seven** speakers and their positions (*"In opposition"*, *"In
+support"*, *"Voiced drainage concerns"*, *"Suggested that a traffic study be completed"*) and then
+record: *"There is no motion required on this item."* **Not one councilmember's view is recorded.**
+The same pattern governs the **March 5 and February 19, 2026** items on the formation of the Lucas
+Police Department: staff presented, residents were listed for and against, *"No motion required on
+this item,"* and no member's position appears.
+
+**3. Whole compass axes are structurally absent from Lucas's civic record.** Sweeps of the 1.73 MB
+minutes corpus (2019–2026): `homeless`, `encampment`, `panhandl*` — **zero hits**; `immigration`,
+`ICE detainer`, `detainer` — **zero hits**; `affordable housing` — **zero hits**; `rent control` —
+**zero hits**; `tax abatement`, `Chapter 380`, `380 agreement` — **zero hits**; `multifamily`,
+`multi-family`, `apartment`, `duplex`, `townhome` — **two hits in eight years**, both descriptive and
+neither a member's position (a 2019 applicant's assisted-living/memory-care proposal that included
+*"17 duplexes totaling 34 retirement homes"*, and a 2023 ordinance discussion limiting a *"guest
+house/apartment area"* to 800 square feet); `densit*` — **6 hits**, of which two are residents
+speaking in a public hearing, two are staff or vendor descriptions of Lucas as *"low density"*, one
+is **former** Councilmember Duke observing that *"Collin County is considering high density
+development"* and one is **former** Councilmember Baney's (see the traps section below);
+`healthcare`/`health care` — **2 hits**, both the same state bill (SB 2476, emergency-medical
+billing) appearing in a legislative-update list. Lucas
+is a home-rule city of **9,535 people** on one- and two-acre septic lots with no rental stock, no
+transit, no shelter and, until 2026, no police department of its own. `homelessness`,
+`local-immigration`, `civil-rights`, `healthcare`, `housing` and `rent`-adjacent questions are blank
+here not because the record is incomplete — **they have never been before this body.**
+
+**4. Ballotpedia covers Lucas for the FIRST time in 2026, and only the 2026 race.** Real candidate
+pages exist for all four **2026** candidates — `Jonathan_Underhill_(Lucas_City_Council_Seat_1,_Texas,_candidate_2026)`
+(103,326 bytes), `Rebecca_B._Orr_(Lucas_City_Council_Seat_2,_Texas,_candidate_2026)` (95,480),
+`Richard_Alan_(…)` (93,318), `John_Awezec_(…)` (92,948). **`Municipal_elections_in_Collin_County,_Texas_(2024)`
+and `(2025)` contain no Lucas race and no Lucas candidate link at all**, so **Bierman, Lawrence,
+Fisher and Peterson have no Ballotpedia page** — their bare-name URLs return the ~51 KB 404 stub
+(`Chris_Bierman` 51,268 · `Phil_Lawrence` 51,268 · `Debbie_Fisher` 51,268 · `Neil_Peterson` 51,268 ·
+`Jonathan_Underhill` 51,348 · `Rebecca_Orr` 51,236 — the last two are live only under their
+disambiguated 2026 titles). **Underhill is the only one of the six who completed the Candidate
+Connection survey** (April 20, 2026).
+
+**5. No local-press candidate coverage of Lucas could be reached.** **Community Impact**
+(`communityimpact.com/search`) returns **HTTP 403 / 5,701 bytes** to every fetch. **Star Local
+Media's site search** (`starlocalmedia.com/?s=Lucas+city+council`) returns HTTP 200 / 878,642 bytes
+whose body is the outlet's generic front-page carousel plus the string *"Sorry, an error occurred"*
+and **zero occurrences of "Lucas"** — the search back end errored rather than returning a negative,
+so this is recorded as **an unreachable source, not as a finding that no article exists**; the
+paywall/login layer is the retry path. The **Murphy Monitor** — the Star Local title 222-13 Task 1
+mined for Parker — covers Murphy and Parker, not Lucas. No State-of-the-City address exists for a
+councilmember; the *"A Message from the Mayor"* column is the mayor's and was already read by 222-08.
+
+---
+
+### Evidence checked
+
+Every item below was fetched and read this session unless listed under "unavailable".
+
+- **The complete City Council minutes corpus, January 3, 2019 → June 4, 2026 — 185 PDFs, all 185
+  OCR'd**, enumerated from the CivicClerk OData endpoint above and swept for every compass axis with
+  member-name attribution, then re-swept per member inside that member's own term window.
+- **17 Planning & Zoning minutes, June 2024 → May 2026**, downloaded and OCR'd from the same
+  endpoint, to check the commission votes of Underhill (Alternate Commissioner) and Bierman
+  (Commissioner).
+- **Ballotpedia, via `curl` with a browser User-Agent** (WebFetch cannot reach the host): the four
+  2026 Lucas candidate pages, the six bare-name stubs, `Collin_County,_Texas,_elections,_2024`
+  / `2025` / `2026` and `Municipal_elections_in_Collin_County,_Texas_(2024)` / `(2025)` / `(2026)`.
+  All Lucas pages were confirmed to name **Lucas City Council Seat 1 / Seat 2, Texas** on the page
+  itself before a word was used.
+- **Campaign websites.**
+  - **`https://underhillforcitycouncil.carrd.co/`** — live, HTTP 200, 72,770 bytes, read in full and
+    re-fetched during the self-audit. Three-plank platform; see his entry.
+  - **`https://rebeccaorr.us/`** — live, HTTP 200, 228,618 bytes, read in full and re-fetched during
+    the self-audit. `<title>` *"Home - Rebecca For Lucas"*; the platform is delivered as a
+    question-and-answer block whose raw JSON was extracted so the wording could be checked
+    character-for-character against Ballotpedia's rendering. **This is the only campaign site of the
+    six that is both live and states policy positions.**
+  - **`https://peterson4lucas.com/`** — **DEAD.** The domain does **not resolve** (`NXDOMAIN`).
+    Wayback holds exactly three captures and **none of them is content**: `20240322170959` renders
+    *"Website Under Construction — Welcome to our site. It is currently under construction,"*
+    `20250712191550` is `/cgi-sys/suspendedpage.cgi` (hosting suspended), and `20260425190536` is a
+    registrar lander (`/feed/` returning `window.location.href="/lander"`). archive.today rate-limited
+    (HTTP 429) and holds nothing indexed. See his entry.
+  - `fisherforlucas.com`, `biermanforlucas.com`, `lawrenceforlucas.com`, `underhillforlucas.com`,
+    `orrforlucas.com`, `voteorr.com` — **none resolves.** No campaign domain of any kind could be
+    found for Bierman, Lawrence or Fisher.
+- **City of Lucas official site**: the City Council roster (`/164/City-Council`, giving every seat
+  and term expiry), `/344/My-Elected-Appointed-Officials`, `/178/Elections`, `/129/Agendas-Minutes`,
+  `/163/Watch-Live-Meetings`, `/AgendaCenter` and its `Search` endpoint, `Archive.aspx` and the
+  fifteen Archive Center categories behind it, and the site map. **The city publishes no
+  councilmember biography page of any kind** — every `/contacts/<name>/` and `/home/<name>/` path a
+  search engine still indexes returns **HTTP 404** (87.8 KB error page), and the roster carries name,
+  seat, term and e-mail only.
+- **The Lucas Leader city newsletter** — the Archive Center category (AMID 44) enumerated and the
+  four most recent issues plus five older ones downloaded, **with `/Author` and `/Title` extracted
+  from every one**. Authors are **`Mkowaleski`** (Morgan Kowaleski, Executive Administrative
+  Assistant), **`Devanie Stevens`**, **`Jill Debord`**, **`kwingo`** and **`shenderson`** — city
+  staff, every time. The June 2026 issue's *"Honoring Our Outgoing Councilmembers"* feature is
+  written **about** Tim Johnson and Brian Stubblefield in the third person by staff. **Execution note
+  15 applies exactly: a city's institutional voice is not an officeholder's position, and not one
+  word of any newsletter was attributed to any of the six.**
+- **TML City Officials Directory** (`directory.tml.org/profile/city/463`) — bare roster, confirming
+  all seven seats, home-rule status and population 9,535. Adjacency only.
+- **`lwvcollin.org/candidates` — ⚠ NOW REACHABLE, and it changes nothing.** For seven waves this
+  phase has recorded `lwvcollin.org` as HTTP 403. With a browser User-Agent via `curl` it returns
+  **HTTP 200 / 28,780 bytes**. (WebFetch still gets the 403.) **The page carries no candidate
+  content**: it is a ClubExpress shell whose only body element is a *"register to vote"* graphic, and
+  its sole VOTE411 reference is a header button to `https://www.vote411.org/`. **Recorded so no later
+  plan re-spends time on it.**
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position. **None of these blocks either chair or changes any blank**, which is why all 64 zeros are
+classified settled:
+
+- **🔒 Council meeting VIDEO exists for 268 meetings and CANNOT be read. Lucas is the counter-example
+  to the Parker transcript discovery.** Every CivicClerk event since roughly 2021 carries an
+  `externalMediaUrl` of the form `https://lucastx.new.swagit.com/videos/<id>` — the same vendor whose
+  `…/videos/<id>/transcript` path handed 222-13 Task 1 4.44 MB of Parker speech. **For Lucas that
+  path returns HTTP 204 No Content**, the video page's `<!-- transcript -->` block is empty, and
+  there is no `<track>` element or caption file: **Lucas has not purchased closed captioning.**
+  `lucastx.new.swagit.com/views/` additionally returns **403** to a direct fetch. The video is
+  therefore the single highest-value unread Lucas source and **the named retry path for upgrading any
+  blank below** — but it requires watching, not fetching. Sample entry point:
+  `https://lucastx.new.swagit.com/videos/390190` (June 4, 2026 City Council).
+- **VOTE411 — still 403, re-confirmed.** `https://onyourballot.vote411.org/m/race-detail.do?id=50429844`
+  (the Lucas Mayor race page 222-08 found) returns **HTTP 403 / 1,386 bytes** to `curl` with a
+  browser User-Agent. It is the mayor's race in any event; **no VOTE411 race page for either 2026
+  council seat was located.** Execution note 12 stands: this host is CLOSED.
+- **The April 6, 2024 YouTube mayoral candidate interview** named by 222-08 (`watch?v=0loL5TZf90o`)
+  is Kuykendall's and out of scope here; **no equivalent video interview was found for any of the
+  six**.
+- **Facebook and Instagram.** Underhill's `facebook.com/underhillforcitycouncil` and Orr's
+  `facebook.com/profile.php?id=61588162108878` are both linked from Ballotpedia. **Facebook is
+  unfetchable from this environment** and was not retried; social posts are not evidence of a policy
+  position absent a direct citable quote. Neither chair below depends on either page.
+- **`peterson4lucas.com`** — see above. **Named retry path: a request to the officeholder.** On the
+  evidence available the domain appears never to have carried platform content (its only content
+  capture is a placeholder), so this is recorded as a note rather than an access-failure zero,
+  following the Barron precedent in the Parker section above.
+- **Community Impact** (`communityimpact.com`) — **HTTP 403** to every fetch; no Lucas coverage
+  exists in any case.
+
+---
+
+### ⚠ ATTRIBUTION TRAPS AND HOMONYMS REJECTED
+
+**1. 🔴 "Orr" is a STREET NAME in Lucas, and it appears in the minutes 40+ times before Rebecca Orr
+was ever mentioned.** `Orr Road` runs from East Winningkoff Road to the city limits and is the
+subject of repeated paving, reconstruction, right-of-way and budget-amendment items from 2019
+onward — including a March 5, 2026 budget amendment for *"the reconstruction of Orr Road with a
+2-inch overlay."* A naive case-insensitive surname grep of the 2023–2026 subset returns **64 files**;
+a word-boundary grep that also excludes the road returns **her, in four documents, from August
+2024**, plus the June 4, 2026 roll call. Every "Orr" used
+below is `Rebecca Orr` in full. Related OCR hazard: Tesseract renders her surname as **"Ort"** in
+the June 4, 2026 roll call, and `Ort` also collides with `report`, `support`, `effort` and `sort`.
+**2. Mayor Quinton Lucas of Kansas City, Missouri** — 222-08's worst Lucas trap, re-encountered and
+re-rejected. **Lucas County, Ohio** and its CivicEngage Agenda Center likewise. **`Philip Lawrence
+(politician)` on Wikipedia** is a different person entirely, and Phil Lawrence is also the name of a
+well-known songwriter; **`Neil Peterson`** returns a Raytheon executive LinkedIn profile that
+happens to be the same man but carries no policy content; **`Chris Bierman`** returns unrelated
+social profiles. **Every source used below is pinned to Lucas, Collin County, Texas** by the
+`lucastexas.us` domain, the 665 Country Club Road council chambers, the City Secretary's
+attestation, the Collin County Elections certification, or the named Lucas council roster.
+**3. Within-city misattribution guard.** Everything used below names its speaker in a document read
+this session and every date was checked against that person's term. Refused by name, all out of
+scope: **Mayor Dusty Kuykendall** (222-08's subject; presiding is not a position) and former mayors
+**Jim Olk** and **Rebecca Mark**; former councilmembers **Kathleen Peele, Tim Johnson, David Keer,
+Tim Baney, Brian Stubblefield, Steve Duke** and **Millsap**; **P&Z Chairman Tommy Tolson**, Vice
+Chairman **Williams** and commissioners **Awezec, Alwardt, Dale, Hise**; staff — City Managers
+**Joni Clarke** and **John Whitsell**, Development Services Director **Joe Hilbourn**, City
+Secretaries **Erin Day** and **Toshia Kimball**, Executive Assistant **Morgan Kowaleski**, Finance
+Director **Liz Exum**, Public Works Directors **Scott Holden** and **Jeremy Bogle**, CIP Manager
+**Patrick Hubbard**, City Engineer **Stanton Foerster**, City Attorney **Joe Gorfida**, Fire Chiefs
+**Ted Stephens** and **Rick Lasky**, and **Public Safety Director Doug Kowalski**; and the residents
+whose names the minutes record on exactly the questions this compass asks — **Tyler Simpson, Jennifer
+Kapp, Stephanie Schertz, Tracey Ayre, Regina Embry, Daryl Schulman, Joe Champion, Chris Duhon, Greg
+Jacobs, Curtis Helton, Julie Judd, Aniruddha Sant, Jack Dunaway, Joseph Ferdo, Kendal Simpson**.
+**Several of these residents state far sharper density and police-budget positions than any
+councilmember does; none of it was borrowed.**
+**4. Joe Awezec / John Awezec.** `John_Awezec_(Lucas_City_Council_Seat_2,_Texas,_candidate_2026)` is
+Orr's **defeated opponent** and also a sitting **P&Z Commissioner** whose motions appear throughout
+the P&Z minutes. He is not an officeholder in scope and nothing of his was used for Orr.
+**5. The City of Lucas's own low-density zoning is CITY POLICY and was not used as a default for
+anyone.** 222-08 singled this trap out for Lucas and declined it; the same discipline was applied
+here. Neither chair below is inferred from the fact that Lucas has one- and two-acre districts —
+each rests on the individual's own published statement about what the city *should* do.
+**6. 🔴 The only "high density homes" objection anywhere in eight years of Lucas minutes belongs to
+TIM BANEY, a former councilmember who is out of scope — and the in-scope member standing next to it
+was relaying residents, not stating a position.** On **May 16, 2019**, on a development agreement for
+an off-site drainage facility serving an assisted-living/memory-care/retirement community, the
+minutes read: *"Councilmember **Baney** did not see a benefit to residents and the City from the
+development by putting high density homes which would create a subdivision with small lots in a
+commercial area. Councilmember **Fisher** indicated that residents have expressed their concern over
+this type of development. Mayor Pro Tem **Peele** indicated that residents have made it clear that
+they did not want to see this type of commercial development in Lucas."* **Baney's sentence is the
+single most quotable density objection in the corpus and it is not attributable to any of the six.**
+**Fisher's sentence is relaying constituent perception, which execution note 21 refuses outright** —
+she reports what residents said, not what she thinks. The motion that followed was **Peele's**, to
+**deny**, **seconded by Lawrence** with no reason of his own recorded. **Refused for Fisher and for
+Lawrence.** This is the closest the minutes ever come to a councilmember density statement, and it
+is exactly the within-city misattribution execution note 14 was written for.
+
+
+---
+
+### `taxes` — researched for all six, NO ROW WRITTEN FOR ANY OF THEM
+
+Per the settled operator ruling of 2026-07-25. Findings preserved verbatim for any future
+municipal-scope rewrite:
+
+- **Jonathan Underhill's platform is the only genuinely substantive tax material in this pass, and
+  it reaches no chair.** His Ballotpedia survey says: *"I am committed to a revenue-neutral mindset
+  and leveraging natural revenue growth to fund essential services and community improvements
+  without raising the tax burden on our residents,"* *"I believe this must be achieved through
+  disciplined budgeting, not tax increases,"* and *"My plan is to fund these vital measures by
+  leveraging our city's natural revenue growth, ensuring we enhance our capabilities without raising
+  the tax rate. I am dedicated to a revenue-neutral budgeting policy and I'll advocate for absolute
+  transparency in the budget process."* This is **squarely the standing refusal list twice over** —
+  it is a **rate** commitment (execution note 19) and it is the **"more services at no additional
+  cost"** class, which the ruling says reaches no chair in either direction. Chairs 1–2 require
+  raising taxes specifically on wealthy people and large companies; chairs 4–5 require committing to
+  scale public services back, and he commits to the opposite ("enhance our capabilities").
+- **Rebecca Orr** describes herself as *"a fiscal conservative"* — a self-label with no policy
+  content attached, refused.
+- **Debbie Fisher** has the longest tax record of the six and none of it is a position: she noted on
+  **August 22, 2019** *"a decrease in the amount being taxed for maintenance"*; on **March 7, 2019**
+  commented on the **I&S** rate; on **April 4, 2019** explained that **HB 2** property-tax relief
+  *"may provide"* something; and on **February 16, 2023** said she *"is concerned about House Bill
+  43 related to value added taxes."* Commentary on **state** legislation and arithmetic observations
+  about a rate are not a position on how a city balances collection against services.
+- **The May 4, 2024 ballot carried Proposition (A), reauthorising the half-cent street-maintenance
+  sales tax.** The council canvassed it (Fisher moved, Olk seconded, 3-0). A canvass is a ministerial
+  act and **no member's position on the proposition is recorded anywhere.**
+- **Every budget and tax-rate adoption in the 2019–2026 corpus is an unexplained ministerial
+  motion.** **No taxes row was written for any of the six.**
+
+---
+
+### Jonathan Underhill — Council Member Seat 1 — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0`
+
+**Sourced: 1 of 11 — `residential-zoning`. The remaining 10 are blank; all 10 settled.**
+
+#### ✅ THE CHAIR — `residential-zoning` = 1
+
+**Evidence (his own Ballotpedia Candidate Connection survey, completed April 20, 2026, for the May
+2, 2026 Lucas City Council Seat 1 race).** Asked for the three key messages of his campaign, he
+wrote:
+
+> *"While growth and densification continue across DFW, Lucas is uniquely defined by its rural feel,
+> and I am dedicated to protecting that legacy. … **I stand firmly against high-density development
+> that threatens our community's identity.** By focusing on smart, sustainable infrastructure, we can
+> improve our daily lives while keeping Lucas exactly what it is: a peaceful, open-space haven for
+> our families."*
+
+Asked separately *"What areas of public policy are you personally passionate about?"* he answered:
+
+> *"**I am passionate about protecting the unique character of Lucas through smart land-use
+> policies** and improving our roads. **This means standing firmly against high-density development
+> that threatens our community's identity** and prioritizing high-quality construction and
+> maintenance."*
+
+And in the biographical answer: *"I recognize the nuances of land use and the vital importance of
+maintaining property standards to protect our community's long-term value,"* and *"I'll work to
+ensure neighborhoods remain safe, property standards remain high and the community's character stays
+intact."* His campaign site adds, under the heading **"Protecting the Character of Lucas"**: *"New
+developments must be done thoughtfully and responsibly - serving our community without negatively
+impacting the peace and privacy of our neighbors."*
+
+**Why chair 1 and not chair 2, 3, 4 or 5.** The scale asks what should guide decisions about housing
+density and neighborhood character. Chair 5 (eliminate single-family-only zoning) and chair 4
+(upzone broadly, multifamily by right, reduce parking) are excluded outright — he opposes
+high-density development in terms. Chair 3 (allow multifamily and mixed-use near commercial
+corridors while protecting most residential zones) is excluded for the same reason: multifamily *is*
+the high-density development he stands firmly against, and he proposes it nowhere. **Chair 2 is the
+only near miss and it is what decides the value: chair 2 requires *allowing modest density
+increases* — duplexes, accessory dwelling units — subject to design review. Underhill allows no
+density increase anywhere.** His framing throughout is preservationist and status-quo — *"protecting
+that legacy,"* *"the community's character stays intact,"* *"keeping Lucas exactly what it is"* —
+and the one thing he says development must do is not affect neighbours. That is chair 1, protecting
+existing neighbourhood character strictly. **The chair-1 text also mentions requiring community
+votes before rezoning; he does not say that, and the reasoning does not claim he does** — the axis
+chair 1 occupies is maximal protection of existing low density, which he states expressly and twice.
+
+The statement passes all three quote-selection gates: it is **forward** (what the city should do,
+not a résumé), **on-question** (it engages the density-and-character axis directly, by name), and a
+**position, not an attack**. Note that his generic phrases — *"smart land-use policies,"* *"smart,
+sustainable infrastructure,"* *"thoughtfully and responsibly"* — are the refused generic class and
+carry none of the weight; the chair rests on *"I stand firmly against high-density development,"*
+which names a development type and takes a side.
+
+**Contradiction check (the Doug Charles test) — passed.** Every land-use act of his that exists was
+checked. As a seated **voting** Planning & Zoning member on **February 12, 2026** he was part of the
+5-0 vote approving a rezoning from Agricultural and Open Space to **R-1 (Single-family residential
+1-acre lots)** at 1100 and 1020 W. Forest Grove Road — single-family at the city's own one-acre
+district minimum, not a density increase against his platform. On **March 13, 2025**, again seated
+as a voting member, the commission approved the Wildflower Estates preliminary plat **"without
+variances."** On the council he has sat for two published meetings (**May 21** and **June 4, 2026**)
+and cast no land-use vote of his own beyond a unanimous consent agenda and a preliminary plat for a
+40.6-acre single-family addition moved by Fisher. **He has cast no vote to upzone, to allow
+multifamily, or to lower a density floor.**
+
+**Proposed row:**
+
+| full_name | politician_id | topic_key | topic_id | value |
+|---|---|---|---|---|
+| Jonathan Underhill | `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` | `residential-zoning` | `d4f18138-a2e0-4110-b925-7387d9d0d16d` | **1** |
+
+**SQL-ready reasoning:** *In the Ballotpedia Candidate Connection survey he completed on April 20,
+2026 for the May 2, 2026 Lucas City Council Seat 1 election, Underhill wrote that "While growth and
+densification continue across DFW, Lucas is uniquely defined by its rural feel, and I am dedicated
+to protecting that legacy" and that "I stand firmly against high-density development that threatens
+our community's identity," repeating in answer to a separate question that he is "passionate about
+protecting the unique character of Lucas through smart land-use policies" and that "this means
+standing firmly against high-density development." His campaign website (April 12, 2026) adds that
+new development must serve the community "without negatively impacting the peace and privacy of our
+neighbors." He proposes no density increase of any kind — not multifamily, not duplexes, not
+accessory units — which places him at the strict-protection end of this scale rather than at the
+modest-increase chair. As a voting Planning and Zoning member on February 12, 2026 he took part in
+the unanimous approval of a rezoning to single-family one-acre lots, consistent with, not contrary
+to, that platform.*
+
+**Sources:** `https://ballotpedia.org/Jonathan_Underhill_(Lucas_City_Council_Seat_1,_Texas,_candidate_2026)`
+· `https://underhillforcitycouncil.carrd.co/`
+
+**Resample record.** Value 1 ⇒ 100% re-verification. Both URLs were **re-fetched independently by
+`curl` with a browser User-Agent**, bypassing WebFetch's ~15-minute cache: the Ballotpedia page
+returned **HTTP 200 / 103,326 bytes** and the operative sentences were re-located verbatim in the
+fresh body (*"I stand firmly against high-density development that threatens our community's
+identity."* and the full passionate-about answer); the carrd site returned **HTTP 200 / 72,770
+bytes** and the **"Protecting the Character of Lucas"** plank was re-located verbatim.
+**Identity re-confirmed on the source itself**: the Ballotpedia page is titled *"Jonathan Underhill
+(Lucas City Council Seat 1, Texas, candidate 2026)"*, states he *"serve[s] on the Planning and Zoning
+Commission in the City of Lucas,"* and links `underhillforcitycouncil.carrd.co`, whose page title is
+*"Jonathan Underhill for Lucas City Council"*; the City of Lucas roster lists Jonathan Underhill,
+Seat 1, term ending 2029, and the May 21, 2026 minutes record his oath of office. **Direction
+re-checked against the inversion-trap table**: `residential-zoning` runs 1 = protect neighborhood
+character strictly → 5 = eliminate single-family zoning citywide, so the most protective position
+takes the **lowest** value. **No party affiliation, endorsement or donor information was used**; the
+survey's biographical and career material (firefighter/paramedic, commercial real-estate appraiser,
+P&Z service) is adjacency and set no chair.
+
+#### The other ten topics
+
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **public-safety-approach** —
+  **no chair, and this is the closest miss in the entire pass.** His platform is genuinely
+  substantial and genuinely on the subject: *"Keeping Lucas one of the safest cities in Texas is my
+  top priority. Public safety is one of the most vital services a city provides and drawing on my
+  eight years as a firefighter/paramedic, I'll advocate for an 'all-hazards' public safety model
+  that ensures our police and fire departments are fully equipped for any emergency,"* *"This policy
+  ensures our police and fire departments have the training, equipment, and staffing levels
+  necessary to handle any crisis,"* and, on his campaign site, *"Public safety is a top priority of
+  mine. As a former first responder, I will ensure a seamless implementation of our Police Department
+  without ever compromising the gold standard of our Fire Department."* **Chairs 1 and 2 are excluded
+  outright** (he proposes no redirection of budget and no unarmed co-responder model). **Chair 5 is
+  excluded by his own words** — expanding the police budget cannot be the top spending priority over
+  other municipal services when he commits in the same breath to *"disciplined budgeting, not tax
+  increases,"* a *"revenue-neutral budgeting policy,"* and to *"improving local roads and
+  infrastructure."* **What cannot be separated is chair 3 from chair 4, and D-04 forbids picking
+  between them.** Chair 4 requires *increasing* staffing, equipment and **pay**; he commits only to
+  the levels *"necessary to handle any crisis"* — an adequacy standard, not an increase — and never
+  mentions pay. Chair 3 requires *keeping current funding while adding crisis-response teams for
+  mental health and addiction calls*; **"all-hazards" is an emergency-management term of art covering
+  fire, EMS and disaster response, not mental-health co-response**, so that half of chair 3 is
+  equally unmet. His one concrete commitment, *"a seamless implementation of our Police
+  Department,"* is **execution of a decision the council had already taken before he was sworn in**
+  (the Public Safety Director was hired and presenting to council from February 2026, three months
+  before Underhill's oath) — execution note 16 exactly: an agenda line states what was voted on, not
+  what it means, and implementing an existing decision is not a funding-level position. **Settled —
+  recorded in full so a follow-up interview or a rewrite can resolve it.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **growth-and-development** —
+  no chair. His growth language is the refused generic class: *"New developments must be done
+  thoughtfully and responsibly,"* *"modernize our infrastructure without sacrificing the rural charm
+  that defines Lucas,"* *"By focusing on smart, sustainable infrastructure."* This scale asks about
+  **pace and mechanism** — growth limits and voter approval (1), gating approvals on existing
+  infrastructure capacity (2), investing ahead of growth (3), streamlining permitting to recruit
+  development (4), removing barriers entirely (5). **He names no mechanism at all.** "Smart,
+  intentional growth" generics reach no chair; that refusal is standing across this phase and is not
+  relaxed because the same platform yielded a density chair. **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **transportation-priorities**
+  — no chair. He says *"I'm committed to improving local roads and infrastructure by prioritizing
+  high-quality maintenance and modernizing our thoroughfares to handle today's traffic"* and
+  *"improving our roads … prioritizing high-quality construction and maintenance."* **"High-quality
+  maintenance" is the standing maintenance-framing refusal**, and *"modernizing our thoroughfares to
+  handle today's traffic"* is a capacity remark that **sets no mode against another**: he never
+  mentions transit, cycling, sidewalks, trails or parking, and in a city with no transit and no
+  sidewalk network roads-only is the default condition rather than a stated priority. Chair 4
+  requires the affirmative proposition that investment *"should serve the majority who drive"*; he
+  does not make it. **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **housing** — no position
+  found on government's role in housing affordability. His survey and site address density and
+  character, never price, supply, subsidy, rent, first-time buyers, inclusionary requirements or
+  permit streamlining for affordability. `affordable housing` returns **zero hits** in the eight-year
+  minutes corpus. **The residential-zoning chair was expressly NOT carried across to this scale** —
+  they are different questions. **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **economic-development** —
+  no position found on incentives, abatements, Chapter 380 agreements, community-benefit or
+  job-quality conditions. His only revenue language is *"leveraging our city's natural revenue
+  growth"*, which is a budgeting statement, not a business-attraction strategy. His profession
+  (commercial real-estate appraiser at Cushman & Wakefield) is **adjacency and set no chair**.
+  **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **homelessness** — no
+  statement or vote found on people sleeping or camping in public spaces. Structurally absent from
+  Lucas: `homeless`, `encampment` and `panhandl*` return **zero hits** across 2019–2026. **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **local-immigration** — no
+  statement found on the relationship between Lucas policing and federal immigration enforcement.
+  `immigration` and `detainer` return **zero hits** in the corpus. **The new Lucas Police Department
+  has no detainer policy in any document read, and none was inferred from his support for standing it
+  up. Texas SB 4 is state law, not his position.** **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **civil-rights** — no
+  on-topic position found on racial or social inequality. Zero hits in the corpus. **No inference was
+  drawn from any identity, demographic, religious or affiliation characteristic.** **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **healthcare** — no
+  statement found on government's role in healthcare access. His paramedic career is **occupational
+  adjacency, not a healthcare-policy position**, and the topic's five chairs are national
+  single-payer-to-pure-private propositions no Lucas councilmember holds by role. **Settled.**
+- Jonathan Underhill — Lucas — `4ad7d4e3-c0d2-4b7a-bc32-a8b3f41551a0` — **taxes** — **researched, no
+  chair written** per the settled 2026-07-25 operator ruling; his revenue-neutral material is set out
+  in full in the `taxes` section above and reaches no chair on the merits either. **Settled.**
+
+---
+
+### Rebecca B. Orr — Council Member Seat 2 — `3c839111-ed39-41fd-8e63-9c81b1e3e591`
+
+**Sourced: 1 of 11 — `residential-zoning`. The remaining 10 are blank; all 10 settled.**
+
+#### ✅ THE CHAIR — `residential-zoning` = 1
+
+**Evidence (her own campaign website, live at `rebeccaorr.us` and read in full this session; the
+same passages are reproduced verbatim by Ballotpedia under "Campaign website," dated April 13,
+2026).** The site is built as a set of questions she answers in her own voice. Two of them are on
+this axis:
+
+> **"What do I see as the future of Lucas?"** — *"I am a fiscal conservative, and would like to see
+> Collin County grow around us, not through us. **Lucas is known for our large lots and open spaces,
+> and that is core to the identity of Lucas.** I bring a historical perspective to this position,
+> having lived through 18 years of Lucas's growth. I am running to serve my local community- I am a
+> neighbor who wants to make sure the town my children grew up in is still recognizable 20 years
+> from now."*
+>
+> **"What do I think of adding sewer to the City?"** — ***"I will never vote to add sewer to the City
+> of Lucas. Sewer leads to higher costs, higher density, and loss of who we are as the City of
+> Lucas."***
+
+Elsewhere on the same page: *"I love the small town, country lifestyle, and want to preserve Lucas's
+rural character."*
+
+**Why chair 1 and not chair 2, 3, 4 or 5.** This is the strongest form the statement class can take:
+she **names the city's density instrument and commits categorically against changing it.** Lucas has
+no municipal sanitary sewer; every home is on septic, and Texas on-site sewage rules are what force
+the one- and two-acre minimum lot sizes that define the city. **She states the causal chain herself
+— *"Sewer leads to … higher density"* — and then rules the change out absolutely: *"I will never
+vote."*** Chairs 4 and 5 (upzone broadly; eliminate single-family-only zoning) are excluded outright.
+Chair 3 (allow multifamily and mixed-use near commercial corridors) is excluded because multifamily
+at Lucas densities is not possible on septic and she opposes the only thing that would make it
+possible. **Chair 2 is the near miss and it fails on the same sentence: chair 2 requires *allowing
+modest density increases*, and she forecloses the precondition for any density increase at all.**
+That leaves chair 1 — protecting existing neighbourhood character strictly — which she states in her
+own terms (*"large lots and open spaces … core to the identity of Lucas,"* *"preserve Lucas's rural
+character,"* *"still recognizable 20 years from now"*). **The chair-1 text also mentions requiring
+community votes before rezoning; she does not say that, and the reasoning does not claim she does.**
+
+The statement passes all three quote-selection gates: **forward** (a commitment about future votes),
+**on-question** (it answers the density-and-character axis by naming the instrument that sets
+density), and **position, not attack**.
+
+**Contradiction check — passed, and it is short.** She was sworn on May 21, 2026 and the only
+published council minutes since are June 4, 2026, at which she cast no land-use vote of her own
+(unanimous consent agenda; a preliminary plat for a 40.6-acre single-family addition moved by Fisher
+and seconded by Lawrence). Her Board of Adjustment service since August 2024 is a **variance** body,
+not a zoning body, and no decision of it was attributed to her. **She has cast no vote that
+contradicts the platform, and none that supports it either — the chair rests entirely on her own
+published words.**
+
+**Proposed row:**
+
+| full_name | politician_id | topic_key | topic_id | value |
+|---|---|---|---|---|
+| Rebecca B. Orr | `3c839111-ed39-41fd-8e63-9c81b1e3e591` | `residential-zoning` | `d4f18138-a2e0-4110-b925-7387d9d0d16d` | **1** |
+
+**SQL-ready reasoning:** *On her campaign website for the May 2, 2026 Lucas City Council Seat 2
+election — live at rebeccaorr.us and quoted verbatim by Ballotpedia as of April 13, 2026 — Orr wrote
+"Lucas is known for our large lots and open spaces, and that is core to the identity of Lucas" and,
+asked what she thinks of adding sewer, "I will never vote to add sewer to the City of Lucas. Sewer
+leads to higher costs, higher density, and loss of who we are as the City of Lucas." Lucas has no
+municipal sewer and its one- and two-acre minimum lot sizes follow from septic requirements, so this
+is a categorical commitment against the change that would permit higher density, stated with her own
+reasoning attached. She also writes that she wants "to preserve Lucas's rural character" and to keep
+the town "still recognizable 20 years from now." Because she forecloses the precondition for any
+density increase, this is the strict-protection end of the scale rather than the modest-increase
+chair.*
+
+**Sources:** `https://rebeccaorr.us/` ·
+`https://ballotpedia.org/Rebecca_B._Orr_(Lucas_City_Council_Seat_2,_Texas,_candidate_2026)`
+
+**Resample record.** Value 1 ⇒ 100% re-verification. Both URLs were **re-fetched independently by
+`curl` with a browser User-Agent**, bypassing WebFetch's cache: `rebeccaorr.us` returned **HTTP 200 /
+228,618 bytes** and the two operative answers were re-located verbatim in the fresh body — extracted
+from the page's raw question/answer JSON so the wording could be compared character-for-character
+with Ballotpedia's rendering, which matched apart from a non-breaking space. The Ballotpedia page
+returned **HTTP 200 / 95,480 bytes** and carries the identical text under "Campaign website."
+**Identity re-confirmed on the sources themselves**: the site's `<title>` is *"Home - Rebecca For
+Lucas"*, it records *"2 Term Member, Board of Adjustments. Serving since 2024"* and *"Member,
+Building and Standards Commission since 2024"* — which matches the City of Lucas minutes of **August
+15, 2024**, where Rebecca Orr is appointed a Member of the Board of Adjustment — and the Ballotpedia
+page is titled *"Rebecca B. Orr (Lucas City Council Seat 2, Texas, candidate 2026)"*. **Direction
+re-checked against the inversion-trap table**: `residential-zoning` runs 1 = protect strictly → 5 =
+eliminate single-family zoning, so the most protective position takes the **lowest** value. **Her
+page states that she did NOT complete Ballotpedia's Candidate Connection survey**, so the "Campaign
+themes" section is a quotation of her own site, not a survey answer, and it is cited as such. **No
+party affiliation, endorsement or donor information was used**; her doctorate, her Collin College
+career and her board service are adjacency and set no chair.
+
+#### The other ten topics
+
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **growth-and-development** — no
+  chair, **and this was the second-closest call of the pass.** *"I would like to see Collin County
+  grow around us, not through us"* is an on-topic, first-person statement about her city's growth,
+  and her sewer commitment is a real constraint on it. **But this scale asks for a mechanism and the
+  two candidate chairs cannot be separated.** Chair 1 requires **growth limits or voter approval for
+  major annexations or large-scale developments** — she proposes neither, and never mentions
+  annexation, a cap, or a referendum. Chair 2 requires **allowing growth only where existing
+  infrastructure can support it and slowing approvals until capacity catches up** — her sewer
+  position is close in spirit but is the opposite construction: she refuses to build the
+  infrastructure rather than gating growth on it, and she says nothing about approval pace. Under
+  D-04 an evidence base that cannot distinguish two adjacent chairs yields a **blank**, and the
+  refusal is the same one applied to Sharpe in the Parker section above. **Settled — recorded in
+  full so a follow-up interview or a rewrite can resolve it.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **transportation-priorities** —
+  no chair. On **April 2, 2026**, as a **private citizen** during the public hearing on the
+  Villarreal AO→R-2 rezoning, the minutes record: *"Rebecca Orr, 831 Sugar Bars Drive, Lucas, Texas,
+  75002, expressed concerns about the cut-through traffic."* That is a **constituent concern voiced
+  before she took office**, it is **cut-through traffic management** rather than a tradeoff among
+  transportation modes, and the minutes reproduce no reasoning. Her campaign site names no
+  transportation priority at all. **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **housing** — no position found
+  on government's role in housing affordability. Her platform is about lot size and rural character,
+  never price, supply, subsidy or assistance. **The residential-zoning chair was expressly NOT
+  carried across.** **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **economic-development** — no
+  position found on incentives, abatements or business attraction. *"Fiscal conservative"* is a
+  self-label with no policy attached. **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **public-safety-approach** — no
+  statement found on how the city should fund or operate public safety, and none on the new Lucas
+  Police Department, which was the live civic controversy during her campaign. Her platform does not
+  mention it. **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **homelessness** — structurally
+  absent; zero corpus hits. **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **local-immigration** —
+  structurally absent; zero corpus hits. **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **civil-rights** — no on-topic
+  position found. **No inference was drawn from her profession, employer or any identity
+  characteristic.** **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **healthcare** — no statement
+  found. Her doctorate in cell regulation and her teaching career are **occupational adjacency, not
+  a healthcare-policy position** — this was the most tempting adjacency in the pass and it was
+  declined. **Settled.**
+- Rebecca B. Orr — Lucas — `3c839111-ed39-41fd-8e63-9c81b1e3e591` — **taxes** — **researched, no
+  chair written** per the settled operator ruling; see the `taxes` section above. **Settled.**
+
+---
+
+### Chris Bierman — Council Member Seat 3 — `ada1526e-32a3-47b2-9535-c4988e8db633`
+
+**Sourced: none. All 11 topics blank; all 11 settled.**
+
+Bierman has the **thinnest first-person record of the six**. He has no Ballotpedia page (bare-name
+404 stub; Ballotpedia carries no Lucas race before 2026 and he last stood in 2024), no campaign
+domain that resolves, no city biography page, and across the 52 council minutes in which his name appears
+his attributed speech amounts to **four lines, none of them substantive** — he seconds motions, moves adjournments, and is named in roll calls.
+His two **dissenting votes** are the only individual acts in his record and neither carries a stated
+reason:
+
+- **April 2, 2026** — the council voted **6 to 1, Bierman opposed**, to **deny** a rezoning from
+  Agricultural and Open Space to **Commercial Business** on a 0.6911-acre tract (Robinson Living
+  Trust). Later the same night the council voted **4 to 3 — Peterson, Bierman and Fisher opposed —**
+  to approve a **Specific Use Permit and amended site plan for a Wal-Mart refueling station** at 2662
+  W. Lucas Road.
+- **September 5, 2024** — a motion to provide dinner meals to councilmembers and staff before
+  meetings **failed 3-3, with Bierman among the three opposed.**
+
+**All three are refused on the standing rule that an unexplained dissenting vote cannot locate a
+chair** (the Shannon Moore precedent): a No with no recorded reasoning cannot distinguish the chairs
+it might imply, and it may reflect the site, the applicant, the process or the merits. **The first
+two are additionally off-axis** — both concern **non-residential** land use (a commercial rezoning
+and a fuel-station use permit), and every chair on the `residential-zoning` scale is a housing-density
+proposition. Shared vocabulary is not shared subject.
+
+- Chris Bierman — Lucas — `ada1526e-32a3-47b2-9535-c4988e8db633` — **residential-zoning** — no
+  position found. His P&Z service (Alternate 2 → Alternate 1 → Commissioner, 2023–2024) and his May
+  21, 2026 appointment as **Board of Adjustment Liaison** are **board service — adjacency, and it
+  would have been particularly tempting and particularly wrong to read a density position off a
+  planning-commission seat**, the same trap 222-08 declined for the mayor. **Settled.**
+- Chris Bierman — Lucas — `ada1526e-32a3-47b2-9535-c4988e8db633` — **growth-and-development** — no
+  statement found on growth pace or mechanism; he is recorded seconding plat and annexation-adjacent
+  motions with no reasoning. **Settled.**
+- Chris Bierman — Lucas — `ada1526e-32a3-47b2-9535-c4988e8db633` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. **Settled.**
+- Chris Bierman — Lucas — `ada1526e-32a3-47b2-9535-c4988e8db633` — **public-safety-approach** — no
+  statement found. He sat through the February 19, March 5, March 19 and April 2, 2026 police-formation
+  items and **the minutes record no view of his on any of them.** **Settled.**
+- Chris Bierman — Lucas — `ada1526e-32a3-47b2-9535-c4988e8db633` — **economic-development** — no
+  position found on incentives or abatements; his lone opposed vote on a commercial rezoning denial
+  is unexplained and is a **site-specific** land-use act, not an incentives policy. **Settled.**
+- Chris Bierman — Lucas — `ada1526e-32a3-47b2-9535-c4988e8db633` — **housing** · **homelessness** ·
+  **local-immigration** · **civil-rights** · **healthcare** — no statement or vote found on any of
+  the five; all are structurally absent from Lucas's record (zero corpus hits for the operative
+  terms). **Settled** (five entries).
+- Chris Bierman — Lucas — `ada1526e-32a3-47b2-9535-c4988e8db633` — **taxes** — **researched, no chair
+  written** per the settled operator ruling; nothing chair-locating exists in any event. **Settled.**
+
+---
+
+### Phil Lawrence — Council Member Seat 4 — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca`
+
+**Sourced: none. All 11 topics blank; all 11 settled.**
+
+Lawrence is the **longest-serving member and the second most talkative in the minutes** — 99
+attributed lines of speech across 2019–2026, his name in 183 of the 185 minutes — and that is what makes his zero informative rather than empty.
+**His recorded speech is almost entirely interrogative and technical**: he asks about metal in road
+millings, whether debt-issuance proceeds can be refunded, the distance from home plate to the nearest
+residence, whether vendors must show proof of licensure, whether commercial water rates can be skewed
+by meter size, how Lucas Fire-Rescue bills for services on Lake Lavon, whether a resident without
+commercial insurance is billed, whether a traffic signal can be set to *"go to sleep"* in slow
+traffic, and whether all vehicle brands were checked in a fleet review. Where he does state a view it
+is procedural (*"the developer should come back when they have more information"*, twice, in December
+2022) or about ordinance drafting (*"some of the proposed ordinance is overreaching"*). He has no
+Ballotpedia page, no campaign domain that resolves and no city biography page.
+
+Two on-topic near-misses were examined and refused:
+
+- **March 5, 2020 — trails.** In a debate about extending the trail system on Winningkoff Road, after
+  two residents spoke against, the minutes record: *"Councilmember Lawrence stated that he was not a
+  proponent of adding trails unless the residents in the neighborhood were also in favor."* This is
+  the closest thing in eight years to a Lawrence statement on the `transportation-priorities` axis
+  and it is still a **blank**: it is a **process condition** (neighbourhood consent) attached to one
+  project, not a modal investment priority, and he sets nothing against roads. The scale runs from
+  prioritising pedestrians, cycling and transit (1) to prioritising road capacity for drivers (4–5);
+  conditioning a single trail on neighbour support sits on neither end.
+- **August 3, 2023 — accessory dwelling units.** During a workshop on the accessory-buildings
+  ordinance, Mayor Pro Tem Peele said *"the issue is circumventing single family zoning"*; Lawrence
+  then *"asked whether the City Council should even be concerning itself with defining these
+  buildings unless the owner is using it for commercial purposes"* and agreed that ordinance
+  *"language should be more generic and less hyper-specific."* **This is a question about regulatory
+  scope and drafting style, not a position on whether accessory dwellings should be allowed.** It is
+  suggestive of permissiveness and suggestive is not explicit. **Refused.**
+
+- Phil Lawrence — Lucas — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` — **residential-zoning** — no
+  position found; the ADU exchange above is the closest and it is a drafting question. He **seconded**
+  Mayor Pro Tem Peele's motion to deny the May 16, 2019 assisted-living drainage agreement that
+  former Councilmember Baney had objected to as *"high density homes … small lots"* — **a second
+  with no stated reason of his own cannot borrow the mover's or another member's reasoning** (trap 6
+  above). **Settled.**
+- Phil Lawrence — Lucas — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` — **transportation-priorities** — no
+  chair; the trails remark above is a process condition, and his other road material (speed humps
+  *"do slow traffic and they should remain in place"*, evaluating roadway projects, identifying
+  safety projects, traffic volume observations) is the standing **maintenance-and-safety framing**
+  refusal. **Settled.**
+- Phil Lawrence — Lucas — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` — **growth-and-development** — no
+  chair. *"The developer should come back when they have more information"* is a completeness
+  requirement for one application, not a growth-pace position. **Settled.**
+- Phil Lawrence — Lucas — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` — **public-safety-approach** — no
+  chair. He asks operational questions about Fire-Rescue billing and law-enforcement activity and
+  thanked residents who took firearms-safety training (August 3, 2023). **Thanking participants and
+  asking whether enforcement occurred are not funding-level positions**, and board/volunteer
+  adjacency sets no chair. **Settled.**
+- Phil Lawrence — Lucas — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` — **economic-development** — no
+  chair. His business-related remarks are administrative (*"asked if we do a check in on the
+  businesses"*; whether commercial water rates can be skewed by size). **A utility rate is not a
+  tax and a compliance check is not an incentives policy.** **Settled.**
+- Phil Lawrence — Lucas — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` — **housing** · **homelessness** ·
+  **local-immigration** · **civil-rights** · **healthcare** — no statement or vote found on any of
+  the five across an eight-year record; all structurally absent. **Settled** (five entries).
+- Phil Lawrence — Lucas — `bf1f8150-ae29-42ef-8b50-b2619e8d46ca` — **taxes** — **researched, no chair
+  written** per the settled operator ruling; nothing chair-locating exists in any event. **Settled.**
+
+---
+
+### Debbie Fisher — Council Member Seat 5, Mayor Pro Tem — `8d24cdb6-64d1-4597-a66e-71bc723391d7`
+
+**Sourced: none. All 11 topics blank; all 11 settled.**
+
+**Fisher was the person in this pass most likely to yield a chair and did not.** She is the
+council's most active participant by a wide margin — **246 attributed lines of speech** across the 2019–2026
+corpus, more than the other five combined — she is Mayor Pro Tem, and she is the member who moves
+the most substantive land-use motions (the Mansions on Blondy Jhune preliminary plat, June 4 2026;
+the Villarreal AO→R-2 rezoning ordinance, April 2 2026; the 2024 and 2025 board slates; the 2024
+election canvasses). **Her tenure was checked carefully as instructed: she is not a former mayor.**
+Lucas's mayors in the period covered are **Jim Olk** (through May 2024) and **Dusty Kuykendall**
+(from May 2024); Fisher has been a councilmember throughout, in the January 3, 2019 roll call and in
+every one of the 86 meetings from January 2023 forward, and became **Mayor Pro Tem on May 15, 2025**.
+No pre-council statements of hers were located at all, so the office-context question did not arise.
+
+**Why the volume produces nothing.** Her contribution is overwhelmingly **operational and
+procedural**: potholes north of the Stinson Road bridge, a light pole too close to Christian Road,
+whether trash carts left by mailboxes could blow into the road, whether an applicant should have
+replatted, who maintains grassy medians, drainage co-efficients, a plat-submittal checklist for
+staff, requesting that Article 10.03 (Subdivisions) be reviewed by the Planning & Zoning Commission,
+reading a resident's e-mail into the record, and Lucas history at community events. **Four on-topic
+near-misses were examined and refused:**
+
+- **May 16, 2019 — lot size.** *"Councilmember Fisher suggested a change from the number of lots to
+  lot size to address drainage issues."* On its face this is a lot-size proposal; **read in context
+  it is a stormwater-calculation proposal** — the whole exchange is about how drainage
+  co-efficients are computed before and after construction, the City Attorney recommends an engineer
+  review it, and Fisher's follow-up is *"some things changed with stormwater."* **A drainage metric
+  is not a density principle.** Refused.
+- **December 19, 2019 — helicopters.** Discussing a proposed commercial taxi-helicopter service, the
+  minutes note that *"lot sizes in Lucas"* mean *"helicopters could land on residential property."*
+  **That clause is a factual premise about the city, and the minutes do not attribute it to her as a
+  position on density.** Refused — this is the city-policy-as-default trap 222-08 flagged for Lucas.
+- **February 7, 2019 — the City of Branch development.** *"Councilmember Fisher also noted that the
+  development in the City of Branch with 2,100 homes being proposed would have a negative impact on
+  traffic in the area and should be added to the list of topics for discussion."* This is about a
+  **neighbouring city's** project, over which Lucas has no zoning authority; the stated concern is
+  **traffic impact**, and the operative request is that it be **added to an agenda**. It reaches
+  neither `residential-zoning` (not Lucas's density) nor `growth-and-development` (no pace or
+  mechanism for Lucas) nor `transportation-priorities` (no mode tradeoff). Refused.
+- **May 21, 2020 — the farmers market.** *"Councilmember Fisher explained that she did not envision
+  the Lucas farmers market growing into a large market recruiting businesses outside of Lucas.
+  Councilmember Fisher stated she was in favor of supporting Lucas businesses and waiving the fee for
+  those businesses, but businesses outside of Lucas should be required to pay the fee."* This is the
+  closest she comes to `economic-development`, and it is **a $20 vendor fee for a weekly market
+  during the COVID-19 emergency, not a business-attraction strategy**. A fee decision is not an
+  incentive policy (execution note 19's logic), and chair 2 of this scale is about **small-business
+  support and entrepreneur programs as a citywide alternative to corporate subsidies** — a market
+  stall waiver is not that. Refused.
+
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **residential-zoning** — no
+  position found on density or neighbourhood character. She **moved** the Villarreal rezoning from
+  Agricultural and Open Space to **R-2 (single-family two-acre lots)** on April 2, 2026 (7-0,
+  Kuykendall seconding) and moved the Mansions on Blondy Jhune preliminary plat on June 4, 2026 —
+  **both unexplained ministerial acts on land moving to or already at the city's own single-family
+  standard, with no reasoning of any kind recorded.** The lot-size and helicopter remarks above are refused, as is her
+  **May 16, 2019** line that *"residents have expressed their concern over this type of
+  development"* — **relaying constituent perception is not her own position** (execution note 21),
+  and the "high density homes" sentence beside it in those minutes is **former Councilmember
+  Baney's**, not hers (trap 6 above). **Settled.**
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **growth-and-development** — no
+  chair. Her development remarks are regulatory-process observations (*"the new requirements for
+  developments going in will take care of a lot of future issues going forward,"* February 16, 2023,
+  said of a **culvert and drainage** test case; *"concerns related to procedures for platting
+  requirements outlined in Article 10.03,"* June 3, 2021). **Tightening plat paperwork is not a
+  growth-pace position.** **Settled.**
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **transportation-priorities** — no
+  chair, despite the largest volume of transportation speech of anyone in the corpus: traffic studies
+  in the Huntwick neighbourhood, *"No Truck"* signage on Forestview, a 1998 street-assessment
+  ordinance, turn-lane safety, Winningkoff Road, trail concerns about *"privacy"* and a suggestion
+  that *"there may be more of an opportunity to install trails when new developments were
+  constructed"* (March 5, 2020). **Every item is either maintenance framing, a safety observation, or
+  a siting/timing preference for one trail** — none sets a transportation mode against another, which
+  is what this scale measures. **Settled.**
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **public-safety-approach** — no
+  chair. On **January 17, 2019** she *"noted that she did not want the fire-rescue program to decline"*
+  — a **maintenance** framing, not a funding-level position, and about fire rather than the police
+  question this scale is built around. She was one of **three opposed** to the Wal-Mart fuel-station
+  SUP on April 2, 2026 (unexplained, and not a public-safety item). She sat through every
+  police-formation item of 2026 with **no view recorded**. Her long association with the **Friends of
+  Lucas Fire-Rescue** is **volunteering — adjacency, refused.** **Settled.**
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **economic-development** — no
+  chair; the farmers-market fee is refused above, and her concern that a community event was
+  *"becoming commercialized"* (October 1, 2020) is about an event's character, not a business-attraction
+  policy. **Settled.**
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **housing** — no position found on
+  government's role in housing affordability. `affordable housing` returns **zero hits** in the
+  eight-year corpus. Her one housing-cost remark — that *"the water line expense was a development
+  cost to the"* developer (August 22, 2019) — is a cost-allocation point in an infrastructure item.
+  **Settled.**
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **homelessness** ·
+  **local-immigration** · **civil-rights** · **healthcare** — no statement or vote found on any of
+  the four; all structurally absent from Lucas's record. **No inference was drawn from her church,
+  community or volunteer associations.** **Settled** (four entries).
+- Debbie Fisher — Lucas — `8d24cdb6-64d1-4597-a66e-71bc723391d7` — **taxes** — **researched, no chair
+  written** per the settled operator ruling; her I&S, HB 2 and HB 43 remarks are set out in the
+  `taxes` section above and reach no chair on the merits either. **Settled.**
+
+---
+
+### Neil Peterson — Council Member Seat 6 — `72c0de8c-38b0-4470-a0d0-9d7a71986be0`
+
+**Sourced: none. All 11 topics blank; all 11 settled.**
+
+Peterson has served since May 2024 (an unexpired term, then re-elected in his own right in May 2025)
+and his name appears in 48 council minutes; he has **five** attributed lines of speech in the whole corpus. **His recorded speech is sparse and almost entirely committee
+administration**: he leads the board-and-commission appointment discussions, moves the appointment
+slates, moves consent agendas, and serves as council liaison to the Parks and Open Space Board. The
+one substantive line in his record is **procedural**: on an after-action item he *"requested lessons
+learned"* from the Assistant Fire Chief. He has no Ballotpedia page (bare-name 404 stub; Ballotpedia
+carries no Lucas race before 2026 and he last stood in 2025) and no city biography page.
+
+**His campaign domain `peterson4lucas.com` is dead and holds no recoverable content** — it does not
+resolve, and Wayback's three captures are an *"Under Construction"* placeholder (March 22, 2024), a
+hosting-suspension page (July 12, 2025) and a registrar lander (April 25, 2026). **On the evidence
+available it appears never to have carried a platform**, which is why his zeros are classified
+settled rather than as access failures; a request to the officeholder is the named retry path.
+
+His only individual act of any substance is an **unexplained dissent**: on **April 2, 2026** he was
+one of three opposed (with Bierman and Fisher) to the **4-3** approval of the Wal-Mart refueling
+station Specific Use Permit at 2662 W. Lucas Road. **Refused on the Shannon Moore rule** — no reason
+is recorded, and a fuel-station use permit is in any case not on the `residential-zoning`,
+`economic-development` or `transportation-priorities` axis as those scales are framed.
+
+- Neil Peterson — Lucas — `72c0de8c-38b0-4470-a0d0-9d7a71986be0` — **residential-zoning** — no
+  position found on density or neighbourhood character. He has cast plat and rezoning votes only as
+  part of unanimous or unexplained tallies. **Settled.**
+- Neil Peterson — Lucas — `72c0de8c-38b0-4470-a0d0-9d7a71986be0` — **growth-and-development** — no
+  statement found on growth pace or mechanism. **Settled.**
+- Neil Peterson — Lucas — `72c0de8c-38b0-4470-a0d0-9d7a71986be0` — **transportation-priorities** — no
+  statement found setting any transportation mode against another. **His Parks and Open Space Board
+  liaison role touches the trail system; board service is adjacency and set no chair.** **Settled.**
+- Neil Peterson — Lucas — `72c0de8c-38b0-4470-a0d0-9d7a71986be0` — **public-safety-approach** — no
+  statement found. His *"requested lessons learned"* remark to the Assistant Fire Chief is an
+  after-action process request, not a funding-level position, and he sat through every 2026
+  police-formation item with no view recorded. **Settled.**
+- Neil Peterson — Lucas — `72c0de8c-38b0-4470-a0d0-9d7a71986be0` — **economic-development** — no
+  position found on incentives or abatements. His 40-year engineering and business-development career
+  at Raytheon is **profession — adjacency, refused.** **Settled.**
+- Neil Peterson — Lucas — `72c0de8c-38b0-4470-a0d0-9d7a71986be0` — **housing** · **homelessness** ·
+  **local-immigration** · **civil-rights** · **healthcare** — no statement or vote found on any of
+  the five; all structurally absent from Lucas's record. **Settled** (five entries).
+- Neil Peterson — Lucas — `72c0de8c-38b0-4470-a0d0-9d7a71986be0` — **taxes** — **researched, no chair
+  written** per the settled operator ruling; nothing chair-locating exists in any event. **Settled.**
+
+---
+
+**Lucas reconcile:** **Jonathan Underhill and Rebecca B. Orr each appear in bucket 1 for
+`residential-zoning` and in bucket 2 for the other 10 topics; Chris Bierman, Phil Lawrence, Debbie
+Fisher and Neil Peterson each appear in bucket 2 for all 11.** 66 of 66 attempted (person, topic)
+pairs are accounted for — 2 chairs + 64 blanks — with no name in neither bucket and no name in both
+for the same topic. **Mayor Dusty Kuykendall remains covered by the 222-08 section above and was not
+touched.** If either chair is applied, Lucas moves **0 → 1 or more** and `coverage.js` must gain
+`hasContext: true` for geo_id **4845012**.
