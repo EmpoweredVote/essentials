@@ -11891,3 +11891,39 @@ remains covered by the 222-09 section above and was not touched.** Combined with
 Weston is now complete at 66 of 66 attempted pairs across all six officeholders, every one blank.**
 Weston stays at **zero stances**, `coverage.js` is unaffected (no 0 → ≥1 transition), **no migration
 is authored and no migration number is claimed.**
+
+---
+
+## ⛔ DESCOPED BY OPERATOR — 2026-07-31 — NOT RESEARCHED, NOT BLANK
+
+**Operator decision (2026-07-31): stop stance research for the remaining small towns.**
+
+The 39 council members below were **never attempted**. They are recorded here so no later pass
+mistakes silence for a finding. **They are NOT confirmed blanks.** A confirmed blank in this file
+means "the sources named in the Evidence line were read and no explicit on-topic position exists."
+These 39 have no Evidence line because no research ran. They must not be counted in the `## Count:`
+total, must not be treated as settled zeros, and must not be cited as evidence of absence.
+
+Their **mayors** WERE researched in 222-09 and are genuine 11/11 blanks; that says nothing about
+these council members.
+
+| Plan | City (geo_id) | Council members not attempted | N |
+|------|---------------|-------------------------------|---|
+| 222-14 | Blue Ridge (4808872) | Apple, Braly, Sissom, Mattingly, Chitwood | 5 |
+| 222-15 | Josephine (4838068) | Aurand, Ridgway, Esquivel, Sardo, Chappell | 5 |
+| 222-15 | Lavon (4841800) | Shepard, Cook, Jacob, Dumas, Hedge | 5 |
+| 222-16 | Lowry Crossing (4844308) | Pitchure, Hodges, Trujillo, Hijazen, Madrid, Rios, Cash, Simpson | 8 |
+| 222-16 | Nevada (4850760) | Laye, Baker, Wilson, Laughter, Little | 5 |
+| 222-17 | Saint Paul (4864220) | Nail, Dryden, Pierson, Bewley, Simmons | 5 |
+| 222-17 | Van Alstyne (4874924) | Neal, Butler, Williams, Thomas, Arsenault, Williams | 6 |
+| **TOTAL** | 7 cities | | **39** |
+
+**Effect on the phase contract:** COLLIN-STANCE-01's exactly-one-bucket rule now holds for
+**68 of the 107** worklist names (all of which are in exactly one bucket — applied migration or a
+researched blank section). The remaining 39 are in **neither** bucket by operator decision, not by
+defect. Any future close-out must reconcile against 68, not 107, and carry this table forward.
+
+**If research ever resumes:** the source playbook in `222-RESEARCH.md` §rev-2 and the per-city
+findings in this register (CivicClerk OData pagination, OCR recipe, Ballotpedia UA + wrong-person
+hazard, closed sources) all still apply. Blue Ridge was dispatched twice on 2026-07-30/31 and both
+agents died before producing anything — no partial work exists for it.
