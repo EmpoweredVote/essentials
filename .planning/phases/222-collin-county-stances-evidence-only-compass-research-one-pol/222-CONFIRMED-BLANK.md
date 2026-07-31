@@ -42,7 +42,7 @@ the remaining, unsourced topics are listed in this register (bucket 2) under the
 never happen: a person absent from both the migrations and this register (an attempt that was silently
 dropped), or a person present in both with the *same* topic recorded twice (an inconsistent record).
 
-## Count: 684
+## Count: 738
 
 27 (person, topic) pairs appended by 222-02 (integrity remediation) + 15 by 222-03 (Frisco)
 + 54 by 222-04 part A (Plano topic-gap fill) + 47 by 222-04 part B (McKinney topic-gap fill)
@@ -94,7 +94,24 @@ populated `ballotpedia.org/Mike_Henry` that is a Virginia political operative. *
 is approved it moves Farmersville 0 → 1 stance — the first `coverage.js` Pitfall-5 trigger of this
 phase** (see execution note 29) — and 222-12 would then author a migration and claim a number; if the
 chair is rejected, no migration and no number.
-222-13 through 222-17 append their own per-government sections below as they execute.
++ 54 by 222-13 Task 1 (Parker council — 5 people × 11 topics = 55 attempted pairs, **1 chair
+proposed: Darrel Sharpe / residential-zoning = 1**, 54 blanks; **all 54 are SETTLED**). Parker's
+minutes are Canon-scanner images with no usable text layer **and 12 of them are hybrids that return a
+small amount of scanner text and look complete but are not** — the corpus was unlocked by OCR'ing 110
+of 143 PDFs (Jan 2022 → Jul 2026, 4.84 MB of text). **🔓 The larger discovery: Parker publishes full
+verbatim closed-caption transcripts of every meeting at
+`parkertx.new.swagit.com/videos/<id>/transcript` — 49 City Council meetings, 4.44 MB of speech, no
+login required — which reverses 222-08's "video not readable" finding.** It nonetheless produced
+**zero chairs**, because the transcripts carry **no speaker labels** and the ASR garbles every name;
+four separate on-topic passages had to be refused as unattributable, and one strong two-acre speech
+was positively traced to **former councilmember Randy Kercho**, who is out of scope. **This section
+also corrects 222-08's Parker record: "Lindy Pilgrim", the PDF author of the City's March 12, 2026
+Open Letter, IS Buddy Pilgrim** — Lindy is his legal first name — though the letter still takes no
+substantive position. Nine attribution traps rejected in all. **⚠ If the Sharpe chair is approved it
+moves Parker 0 → 1 stance — a second `coverage.js` Pitfall-5 trigger** (see execution note 29) — and
+222-13 would then author a migration and claim a number; if the chair is rejected, no migration and
+no number.
+222-14 through 222-17 append their own per-government sections below as they execute.
 
 **Migration status** — 1416 through 1421 were all applied to production 2026-07-25 after
 operator approval; 1422 is authored and committed but **not yet applied**:
@@ -9456,3 +9473,876 @@ Strickland and Fox on `residential-zoning` (near-miss 3), Henry and Chandler on 
 `transportation-priorities` (near-miss 9). **An operator wanting to revisit any of them should start
 with near-miss 1 (Chandler, the "not penalize but incentivize" line) and near-miss 2 (Fox,
 homelessness)**, whose full evidence is preserved verbatim above.
+
+## City of Parker (4855152) — 222-13
+
+**Scope, stated once.** Plan 222-13 Task 1 researches **the five City Council members of Parker**
+(Collin County, Texas). **Mayor Lee Pettle is out of scope here** — she was attempted in full by
+222-08 and appears above under `## City of Parker (4855152) — 222-08` with 11 of 11 blanks; she was
+not re-researched, re-reasoned or modified by this pass. All five politician_ids were re-verified
+live against production by the orchestrator on 2026-07-30 as **0 answer rows and 0 context rows**.
+**No prior 2026-05-12 found-nothing notes exist for any of these five**, so nothing here corroborates
+or displaces an earlier pass.
+
+**Attempted:** 2026-07-30 — **5 people × 11 canonical topics = 55 (person, topic) pairs.**
+
+| Person | Title | politician_id | Term evidence (all from primary documents read this session) |
+|---|---|---|---|
+| Roxanne Bogdan | Council Member, at-large | `a32e8631-404d-49bd-a914-8b05febe9df5` | **elected May 3, 2025** in a six-way race for three at-large seats — top vote-getter (**406** in the body of the canvass minutes; the attached Collin County summary report OCRs her total as 408) over Sharpe 401, Halbert 375, Noe 330, Fecht 240, Cordina 239; canvassed by **Resolution No. 2025-844** and **sworn May 13, 2025**; first roll call **May 20, 2025**; two-year term expiring **May 2027** |
+| Colleen Halbert | Council Member, at-large | `fc09e53a-723c-4c34-97ab-9e0b692104a0` | **elected May 3, 2025** (375 votes); sworn **May 13, 2025**; term expiring **May 2027**. She nominated Pilgrim for Mayor Pro Tem the night she was sworn in |
+| Buddy Pilgrim (legal first name **Lindy**) | Council Member, at-large, **Mayor Pro Tem** | `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` | **the longest-serving of the five** — seated after the **May 4, 2024** election (absent from the April 23 and May 14, 2024 roll calls, present as a councilmember from **May 21, 2024**); elected **Mayor Pro Tem May 13, 2025** (Halbert moved, he abstained, 4-1) and re-elected Mayor Pro Tem **May 12, 2026** (Barron nominated, Bogdan seconded, 5-0); **re-elected to council May 2, 2026** as top vote-getter (490 to Barron 450, Noe 332, Meyer 292); term expiring **May 2028** |
+| Darrel Sharpe | Council Member, at-large | `aba6f016-e35d-4977-99e6-a2cfc079ad75` | **elected May 3, 2025** (401 votes); sworn **May 13, 2025**; term expiring **May 2027**. Council's designated lead on the Lewis Lane interlocal negotiation with the City of Lucas |
+| Billy Barron | Council Member, at-large | `e136a517-1772-4f16-9bd5-785828f524e8` | **appointed July 1, 2025** by **Resolution No. 2025-852** to the vacancy created by Councilmember Randy Kercho's resignation effective June 18, 2025 — chosen from six applicants (Arias, Barron, Hedlund, Marino, Merlino, Tierce) after each was invited to address Council for five minutes; **Pilgrim moved, Halbert seconded, 4-0**; sworn and seated the same night; **elected in his own right May 2, 2026** (450 votes); term expiring **May 2028** |
+
+---
+
+### 🔴 RESULT — ONE CHAIR PROPOSED. THIS FLIPS A ZERO-COVERAGE CITY.
+
+**1 chair proposed + 54 of 55 attempted (person, topic) pairs are honest blanks. All 54 are SETTLED.**
+
+> ⚠ **PITFALL-5 TRIGGER — READ BEFORE APPLYING.** Parker is currently at **zero stances across every
+> officeholder** (Mayor Pettle 0 per 222-08, all five council members re-verified at 0 this session),
+> so it carries **no coverage chip today**. The chair below would be the **first stance the
+> government has ever held**. If it is applied, `src/lib/coverage.js` must be updated so Parker flips
+> to `hasContext: true`, and the operator should re-run the split-section check and a browse
+> spot-check for geo_id **4855152**. If the operator rejects the chair, Parker stays at zero, no
+> migration is authored and no migration number is claimed.
+
+**The chair:**
+
+| full_name | politician_id | topic_key | topic_id | value |
+|---|---|---|---|---|
+| Darrel Sharpe | `aba6f016-e35d-4977-99e6-a2cfc079ad75` | `residential-zoning` | `d4f18138-a2e0-4110-b925-7387d9d0d16d` | **1** |
+
+It rests on **Sharpe's own 2025 campaign platform, published on his own domain and linked from his
+Ballotpedia candidate page**, which names the city's existing standard, defends it, and gives three
+reasons for it. Full text, the chair-selection argument and the resample record are in **his entry
+below**. As a value of **1** it was re-fetched in full during the self-audit; the current
+`/the-issues-1` page and the live home page were both retrieved independently by `curl` and both
+carry the operative language. **It is not an inferred or defaulted value** — chairs 2–5 each require
+allowing some density increase, and he argues expressly against any.
+
+---
+
+### The structural facts that produce Parker's zeros
+
+**1. Parker's minutes are ACTION-oriented, and its own recordings are the reason that matters.**
+Parker publishes signed City Secretary minutes going back to 2009 (`Archive.aspx?AMID=40`, 434
+indexed entries). **143 of them — every meeting from January 2022 through July 7, 2026 — were
+downloaded and read this session.** They record mover, seconder, tally, and a short narrative of
+staff presentations and member requests, but they very rarely record a member's *reasoning* for a
+vote. Where a member's substantive statement does appear, it is normally a project status report
+(litigation posture, road paving, drone research), not a policy position.
+
+> **RECOVERY — the method note for any future Parker pass. Parker's PDFs are Canon iR-ADV C5870
+> scans with no usable text layer, and the corpus had to be OCR'd.** 98 of the 143 files yielded
+> **1–2 bytes** from `pdftotext -layout`; a further **12 were hybrids** that returned a small amount
+> of scanner-generated text and looked complete but were not — the **February 17, 2026** minutes are
+> 13 pages and yielded 3,422 bytes, and the **June 16, 2026** minutes are 42 pages and yielded 2,768
+> bytes. *Any future pass must check bytes-per-page, not bytes.* All 110 deficient files were OCR'd
+> with `pdftoppm -r 200 -gray -png` + `tesseract --psm 6`, six-way parallel (Tesseract 5 at
+> `C:/Program Files/Tesseract-OCR`); one decisive exhibit set was re-rendered at **300 dpi**. Result:
+> a **4.84 MB master minutes corpus**. Handwritten exhibits (the six council-vacancy applications of
+> June 2025) OCR poorly even at 300 dpi and are additionally **name-redacted**, so they cannot be
+> attributed to any applicant.
+
+**2. 🔓 PARKER PUBLISHES FULL VERBATIM MEETING TRANSCRIPTS — and they are readable. This is the
+single most important source discovery of this pass, and it is also a trap.**
+222-08 recorded Parker's Swagit/Granicus video as unwatchable and therefore unusable. That is only
+half right. The archive at `https://parkertx.new.swagit.com/views/237/` exposes, for **every**
+meeting, a plain-HTML closed-caption transcript at `…/videos/<id>/transcript` — no login, no
+JavaScript. **73 transcripts covering May 2024 → July 2026 were downloaded; 49 are City Council and
+15 are Planning & Zoning** (the P&Z ones were separated out and none of their content was used for
+any councilmember). The City Council set alone is **4.44 MB of verbatim speech** — vastly more
+member speech than the minutes contain.
+> ⚠ **AND YET IT PRODUCED ZERO CHAIRS, BECAUSE IT HAS NO SPEAKER LABELS.** The transcripts are
+> uncorrected closed captioning: speaker changes are marked only by `>>`, names appear only when
+> somebody says a name out loud, and the ASR garbles names badly (`BILLY BARRYN`, `MS. BOGDEN`,
+> `COUNCIL MEMBER BARROW`, `COUNCILMAN PROMAN`, `MS. BAUGHMAN`, `MR. SHORT`, `COUNCIL MEMBER FAT`).
+> **A transcript passage cannot be attributed to an individual unless the transcript itself names
+> the speaker at the moment of speaking, and Parker's does so only for motions and recognitions.**
+> Every attribution attempted from this corpus and refused is listed under "traps rejected" below.
+> This is a genuine, high-value source for a future pass **only** if paired with the video (to
+> diarise) or with narrated minutes.
+
+**3. Whole compass axes are structurally absent from Parker's civic record.** Sweeps across the
+**4.84 MB minutes corpus** and the **4.44 MB council-transcript corpus**: `homeless`, `encampment`,
+`public camping`, `panhandl*`, `ICE detainer`, `detainer`, `rent control`, `Chapter 380`,
+`380 agreement`, `tax abatement`, `duplex`, `bike lane`, `public transit`, `single-payer` — **zero
+hits in both**. `civil right` — **0 in the minutes, 1 in the transcripts** (a city-attorney briefing
+on *Bostock* and Title VII in the context of the employee handbook). `immigration` — **1 in the
+minutes** (a boilerplate e-mail footer from an attorney's signature block) and **1 in the
+transcripts** (the Flock/LPR vendor representative, on 2026-04-21, explaining that a transparency
+portal lists prohibited uses). `affordable housing` — **0 in the minutes, 1 in the transcripts**, in
+a developer's remark about possible future state legislation. `healthcare` — **1 in the minutes**,
+an employee-benefits line item. Parker is a town of roughly 5,000 people on two-acre lots with no
+shelter, no transit, no rental stock and no commercial tax base; `homelessness`,
+`local-immigration`, `civil-rights`, `healthcare` and `housing` are not blank here because the
+record is thin — **they are blank because those questions have never been before this body.**
+
+**4. Not one of the five completed a Ballotpedia Candidate Connection survey, and the Murphy Monitor
+does not run candidate Q&As for Parker.** Ballotpedia **does** carry individual candidate pages for
+all five (see below) — 94–96 KB real pages, not 404 stubs — and each says in terms that the
+candidate did not complete the survey. The Murphy Monitor publishes a printed **Voters Guide** with
+full candidate questionnaires; the **2025 edition was downloaded as a PDF and read in full** and
+covers **Murphy City Council, Plano ISD and Collin College only** — it contains **zero occurrences
+of "Parker City Council" and none of the five names**. The 2026 election write-up likewise carries
+candidate biographies for **Murphy only**. Parker's own **"2026 Candidates Night," held Tuesday
+April 14, 2026 at Victory Church**, produced no published account that could be found.
+
+---
+
+### Evidence checked
+
+Every item below was fetched and read this session unless listed under "unavailable".
+
+- **The complete City Council minutes corpus, January 2022 → July 7, 2026 — 143 PDFs, OCR'd where
+  needed (110 of 143).** Enumerated exhaustively from `https://www.parkertexas.us/Archive.aspx?AMID=40`
+  (434 indexed minutes back to 2009), each fetched at `https://www.parkertexas.us/Archive.aspx?ADID=<n>`.
+  Swept for every compass axis with member-name attribution; per-member narrative extraction inside
+  each person's own term window.
+- **The full Swagit closed-caption transcript corpus, 49 City Council meetings, May 2024 → July 2026**
+  (`https://parkertx.new.swagit.com/views/237/`, then `https://parkertx.new.swagit.com/videos/<id>/transcript`).
+  See structural finding 2 for why it yielded nothing attributable.
+- **Ballotpedia — all five, fetched with a browser User-Agent via `curl`, and re-checked during the
+  self-audit.** Real pages, all confirming **Parker City Council At-large, Texas**:
+  `Roxanne_Bogdan_(Parker_City_Council_At-large,_Texas,_candidate_2025)` (95,563 bytes),
+  `Colleen_Halbert_(…candidate_2025)` (95,582), `Darrel_Sharpe_(…candidate_2025)` (95,846),
+  `Buddy_Pilgrim_(…candidate_2026)` (94,311), `Billy_Barron_(…candidate_2026)` (96,673). **All five
+  state that the candidate did not complete the Candidate Connection survey**, so the "Campaign
+  themes" section is empty in every case. Their value was the **campaign-website links**, which is
+  how Sharpe's platform was found. `Collin_County,_Texas,_elections,_2025` and `…,_2026` were also
+  fetched (218 KB / 217 KB) and confirm the races and the candidate fields. The bare-name pages
+  `Roxanne_Bogdan`, `Colleen_Halbert`, `Buddy_Pilgrim`, `Darrel_Sharpe`, `Darrell_Sharpe` and
+  `Billy_Barron` are all **404 stubs (~51 KB)** — the disambiguated titles above are the live ones.
+- **Campaign websites.**
+  - **`https://www.sharpeforparker.com/`** — live, 787 KB, plus **`/the-issues-1`** (the current
+    issues page, 721 KB) and **`/the-issues`** (an older copy whose `<title>` reads "The Issues -
+    old", 906 KB). Both issue pages carry identical operative text; the home page corroborates it
+    independently. **This is the only campaign site of the five that states policy positions.**
+  - **`https://www.colleenhalbert.com`** — live, 684 KB, read in full. Carries an "ABOUT ME" bio and
+    a nine-item **"My Goals"** list. See her entry: none of the nine reaches a compass chair.
+  - **`https://www.roxanneforparker.com/`** — **DEAD.** HTTP 404, 2,517 bytes, a Wix
+    `ConnectYourDomain Error` page. Wayback CDX holds **one** capture (`20250301172229`, a 301) and
+    the replay returns 404. Access failure; see her entry.
+  - **`https://barronforparker.com`** — **CONTENT REMOVED.** Resolves HTTP 200 but returns a
+    **421-byte empty "Cocoa HTML Writer" placeholder** for `/`, `/index.html` and every other path;
+    `www.` does not resolve. **Wayback and archive.today hold no captures at all.** Ballotpedia's
+    infobox links `barronforparker.com/#Goals`, so a goals section existed during the 2026 campaign.
+    Access failure; see his entry.
+  - **`https://pilgrimforparker.com/`** — **REDIRECTS TO INSTAGRAM.** The domain now serves the
+    Instagram profile shell for `@pilgrimforparker`; `/about-buddy`, which a search engine still
+    indexes, returns **HTTP 404 to both `curl` and WebFetch**. Wayback's only capture
+    (`20250712200742`) is a registrar lander (`window.location.href="/lander"`). Access failure; see
+    his entry.
+- **The City of Parker's "Restore the Grasslands Transparency" page** (`parkertexas.us/468/…`) read
+  in full, **and all four documents it links downloaded and their PDF metadata extracted** —
+  `DocumentCenter/View/4108` (Open Letter, 03-12-2026), `/4107` (List of Key Issues, 03-12-2026),
+  `/4137` (Gregory Lane Nonsuit Update, 04-12-2026), `/4169` (Revised List of Key Issues,
+  06-04-2026). See the attribution block below: **this closes the file 222-08 opened.**
+- **Murphy Monitor** (`murphymonitor.com`), the Star Local Media title covering Parker. Per-surname
+  searches run for all five; **eleven articles fetched and body-extracted**, including
+  `/2024/03/21/community-discusses-disputed-development/`,
+  `/2025/04/17/early-voting-begins-april-22/`, `/2025/05/29/foes-delay-disputed-development/`,
+  `/2025/08/21/deadline-set-for-disputed-development/`,
+  `/2025/11/06/developers-request-new-road-near-parker/`,
+  `/2026/02/19/parker-pz-votes-against-restore-the-grasslands-proposal/`,
+  `/2026/03/19/parker-negotiating-with-developer/`,
+  `/2026/04/09/murphy-exits-fight-over-disputed-development/`,
+  `/2026/04/16/early-voting-starts-april-20/`,
+  `/2026/06/23/restore-the-grasslands-plat-approved-with-conditions/` and
+  `/2026/07/02/county-grants-restore-the-grassland-plat/`. **The paywall is partial**: the free body
+  carries the lede plus two to six real paragraphs and photo captions before truncating. Searches
+  for **Bogdan**, **Halbert**, **Sharpe** and **Barron** return *no* substantive Parker coverage —
+  only the 2025 early-voting notice, a 2020 Bataan-march feature and unrelated homonyms. Only
+  **Pilgrim** has real coverage, all of it about the RTG dispute.
+- **The Murphy Monitor 2025 printed Voters Guide**, obtained as a 1.73 MB PDF from
+  `https://publisher.etype.services/Murphy-Monitor/e-paper-special-edition/858BF4B326E92A0C`,
+  converted and read in full — see structural finding 4.
+- **`https://communitiescreeksunited.org/`** — the 501(c)(3) opposing the RTG development — home,
+  `/key-issue/`, `/board/`, `/timeline/`, `/action/` and `/documents/` all fetched and read.
+- **City of Parker official pages**: the City Council roster (`/80/City-Council`, giving each
+  member's term expiry), the Elections page (`/291/Elections`), the staff directory, the site map,
+  and the Live Council Meetings page that exposes the Swagit archive.
+
+**Sources checked but unavailable this session** — recorded rather than treated as absence of a
+position. **None of these blocks the chair or changes any blank**, which is why all 54 zeros are
+classified settled:
+
+- **Council meeting VIDEO was not watched.** Parker streams and archives on **Swagit**
+  (`parkertx.new.swagit.com`). The *audio* is the only thing that can resolve which councilmember is
+  speaking in the caption transcripts, and the transcripts are where every member's first-person
+  phrasing lives. **This is now the single highest-value unread Parker source and the named retry
+  path for upgrading any blank below** — and, uniquely for this phase, the payoff is quantified: 4.44
+  MB of speech is already extracted and merely needs speaker attribution.
+- **`barronforparker.com` content, `roxanneforparker.com` content, and
+  `pilgrimforparker.com/about-buddy`** — all three described above. No archive copy exists for any of
+  them. Retry path: a request to the candidate, or a future crawl if any is restored.
+- **Facebook** is unfetchable from this environment and was not retried; social posts are not
+  evidence of a policy position absent a direct citable quote. **Instagram `@pilgrimforparker`** is
+  named as a retry path for Pilgrim specifically, since his campaign domain now points there.
+- **The Murphy Monitor's full article text** sits behind `publisher.etype.services/Murphy-Monitor`
+  and the print/digital edition. The 2025 Voters Guide special edition *was* obtained; the ordinary
+  news archive was not. Named retry path.
+- **The April 14, 2026 "Candidates Night"** at Victory Church — announced in the March 10, 2026
+  minutes, but no recording, transcript or write-up could be located. Pilgrim and Barron were both on
+  that ballot; this is the highest-value missing document for those two.
+- **`lwvcollin.org` / VOTE411 / `communityimpact.com`** — not retried; all confirmed CLOSED for this
+  phase. Community Impact has no Parker coverage.
+
+---
+
+### ⚠ ATTRIBUTION TRAPS REJECTED — nine, and one of them corrects the 222-08 record
+
+**1. 🔴 "Lindy Pilgrim", the author of the City's March 12, 2026 Open Letter, IS Buddy Pilgrim.**
+222-08 read the PDF creator metadata of `DocumentCenter/View/4108` as **"Lindy Pilgrim"** and treated
+that as evidence the letter "was authored by a third party." **It was not a third party.** The
+Communities & Creeks United board page lists its directors as *"Carrolyn Moebius · President;*
+***Lindy "Buddy" Pilgrim*** *· Board; Andrew Malczewski; Andrea Dennis; Ray Hemmig; Sami Munassar."*
+**Lindy is his legal first name.** The correction does not change 222-08's conclusion for Mayor
+Pettle and it does not create a chair for Pilgrim, because **the Open Letter takes no substantive
+position** — it is a process letter that says *"no specific offers have been proposed or accepted by
+either side, Parker has not agreed to any specific terms"*, that the attached list is *"a discussion
+guide only… not intended to represent final legal language"*, and that *"there is no guarantee that
+discussions will yield any particular outcome."* It is signed **"Your Parker City Council and
+Mayor"** collectively. Drafting a collective process letter is not holding a position. **Recorded
+because the underlying identification was wrong and a later pass must not repeat it.**
+**2. The RTG "Key Issues" documents are the CITY ATTORNEY's, not any member's.** `/4107` and `/4169`
+— the documents that contain Parker's only detailed density language (*"Only single-family (SF)
+residences are allowable… No mixed use, duplexes, quadplexes, apartments, or multi-family dwellings
+of any type may ever be added"*, deed-restricted lot minimums, a fixed maximum unit count) — both
+carry `/Author: Catherine Clifton`, the **City Attorney**. `/4137` carries `/Author: Kent Manton`,
+the **City Administrator**. This is execution note 15 exactly: a city's institutional voice is not an
+officeholder's position, and these are negotiating instruments for a tract **outside the city limits**
+that Parker cannot zone. **Refused for all five.**
+**3. The 2024-10-22 South Fork rezoning speech is unattributable.** In the transcript of that
+meeting a councilmember delivers the strongest pro-two-acre statement in the entire corpus — *"WE
+WANT TWO ACRE LOTS. THAT IS UNUSUAL. THAT IS NOT LIKE THE OTHER SUBURBS AND CITIES AROUND HERE…"* —
+and a second delivers a light-commercial/sales-tax argument. **Neither speaker is named.** Pilgrim
+did move Ordinance No. 876 that night, but between the speech and the motion there are at least two
+other speakers and a developer; the only nominal clue is an ASR string, `"I'M AGREEING WITH
+COUNCILMAN PROMAN"`, that matches no member's name. Six people could have said it (Pettle, Reed,
+Fecht, Kercho, Noe, Pilgrim). **Refused.**
+**4. The 2025-02-25 "I'm very committed to two-acre lots" speech belongs to RANDY KERCHO, a former
+councilmember who is not in scope.** The mayor's recognition immediately before it —
+*"…AND A SECOND FROM COUNCIL MEMBER AMANDA… IS THERE ANY FURTHER DISCUSSION? **MR. KERCHO.**"* — pins
+it. The speech (*"I'm very committed to two-acre lots for everything that's already within the City
+of Parker… we're better off agreeing to roughly one acre lots here, getting it into the city"*) is
+the reasoning behind the Buckingham Estates agreement that **Pilgrim moved**. Pilgrim's own reasoning
+is nowhere in the record. **Refused — and note this cuts *against* a strict-protection chair for
+Pilgrim, since the motion he made accepts ~1-acre lots.**
+**5. The 2026-02-17 "we're still very committed to two acre lots, and this is a safety issue" line is
+unattributable.** The speaker presses the Southfork engineer on whether lots 8–13 exceed two acres
+and asks him to shift acreage to lot 14. The mayor's next words are *"MR. BARRON"* — calling on the
+*next* speaker — so the transcript never names the one who just spoke. Pilgrim moved that plat and
+Barron seconded it, but the February 17, 2026 minutes narrate no discussion for the item.
+**Refused.** (Also on the merits: the motion granted *"the necessary variance for lot size building
+setbacks and lot frontage"* — a site-specific engineering variance, not a density principle.)
+**6. The 2026-02-03 police-pay statements are unattributable.** The workshop contains the corpus's
+only substantive public-safety-funding remark — *"it's not that I disagree completely with the
+decision that was made to raise pay some to help us not lose any more officers and to help us be
+more effective at recruiting officers, because I think that's very, very important"*, from a speaker
+who adds *"I'm the one who made the proposal… that we funded two, we approved three [positions]."*
+The speaker refers to **Bogdan in the third person** (so is not Bogdan), and the mayor calls on
+**Pilgrim only afterwards** (so is not Pilgrim); the one recognition in range is the garble
+**"MS. BAUGHMAN"**, which matches no member. The **February 3, 2026 minutes record the whole
+workshop collectively**: *"City Council voiced concern and displeasure regarding the process…"*,
+*"Some City Council members expressed continued displeasure."* **Refused.** On the merits it is in
+any case a **process** dispute about who sets police compensation, not a funding-level position.
+**7. Planning & Zoning transcripts were segregated and never used.** The Swagit archive interleaves
+**15 P&Z meetings** with the council meetings; the P&Z density debates (*"I think that's what Parker
+is about, large lots as much as possible"*, *"we cannot impose unrealistic and unreasonable limits on
+somebody who owns property in our city"*) are **commissioners' words, not councilmembers'**. All 15
+were moved out of the council corpus before any analysis. **Refused.**
+**8. WebSearch fabricated a Colleen Halbert biography out of another city's councilmember.** A search
+for Halbert's stated *"6 years of city council experience in a neighboring community"* returned a
+confident summary asserting she *"served six years on the Board of Adjustment before her election to
+council in 2023"* and *"built her career at Cisco Systems."* **That is Laura Deel of Murphy**, taken
+verbatim from the Murphy Monitor's April 16, 2026 candidate write-up. Halbert appears nowhere in
+Murphy's council rosters. **Rejected on sight; not one word of it was used.**
+**9. Homonyms rejected.** `ballotpedia.org/Bill_Barron` returns **HTTP 200** but is a
+**disambiguation page for a Kentucky candidate and a Utah congressional candidate** — the benign
+case, but checked. The **2007–2013 Wayback captures of `colleenhalbert.com`** are a different Colleen
+Halbert entirely, sixteen years before this one ran, and were not used. **"Kent Bogdan"** of Parker,
+who appears in a 2020 Murphy Monitor Bataan-march feature, is not Roxanne Bogdan. **"Vicki Pilgrim"**,
+appointed to a city board in June 2024, is Buddy Pilgrim's **wife** — he recused himself from that
+vote, and none of her activity was attributed to him. 222-08's Parker COLORADO / Parker COUNTY /
+Mattie Parker / Annise Parker traps were re-encountered and re-rejected; every source used here is
+pinned to **Parker, Collin County, Texas** by the 5700 E. Parker Road municipal complex, the City of
+Parker/Collin County/Texas seal, City Secretary Patti Scott Hull's attestation, or the Collin County
+Elections Administrator's certification.
+
+**⚠ WITHIN-CITY MISATTRIBUTION GUARD.** Everything used below names its speaker in a document read
+this session and every date was checked against that person's term. Refused for the five, by name:
+**Mayor Lee Pettle** (222-08's subject; presiding is not a position); former councilmembers **Jim
+Reed, Todd Fecht, Randy Kercho, Terry Lynch and Amanda Noe**; **P&Z Chair Russell Wright** and
+commissioners **Joe Lozano, Wei Wei Jeang, Susan Medrano**; **Parks & Recreation Chair Frank
+DaCosta**; staff — City Administrators **Luke Olson** and **Kent Manton**, City Secretary **Patti
+Scott Hull/Grey**, Finance/HR Director **Grant Savage**, City Attorneys **Catherine Clifton**,
+**Trey Lansford** and **Amy Stanphill**, Public Works Director **Gary Machado**, City Engineers
+**Justin Ivy** and **Craig Kerkhoff**, Police Chief **Kenneth Price**, Sergeant **Ralph Burdick**,
+Fire Chiefs **Mike Sheff** and **Justin Miller**; developers **Sean Terry** (Centurion American),
+**Preston Walhood**, **Steve Sallman**, **Phillip and Don Huffines**, **Jordan Ramirez**; and the
+city's very active public-comment regulars — **Ray and Ruth Hemmig, Carrolyn Moebius, Linda Nelson,
+Marcos Arias, Lynnette Ammar, Ed Standridge, Ted Lane, Cindy Meyer, Melissa Tierce, Scott Livesay,
+Lynne Orozco, Rachel Cucinelli, Jerry Tartaglino**. Several of these citizens make *far* stronger
+density statements than any councilmember; **none of it was borrowed.**
+
+---
+
+### `taxes` — researched for all five, NO ROW WRITTEN FOR ANY OF THEM
+
+Per the settled operator ruling of 2026-07-25. Findings preserved verbatim for any future
+municipal-scope rewrite:
+
+- **August 19, 2025 — the only tax-rate motion any of the five has made.** *"Councilmember Sharpe
+  moved to adopt Resolution No. 2025-854 to adopt a Proposed Tax Rate of $0.310439 for FY 2025-2026,
+  which is higher than the FY 2025-2026 No-New-Revenue Tax Rate of $0.299267 and call for a Public
+  Hearing."* **No reason of any kind is recorded**, and proposing a rate above no-new-revenue in a
+  Texas general-law city reaches no chair on this scale: chairs 1–2 require raising taxes
+  specifically on wealthy people and large companies, chairs 4–5 require committing to scale public
+  services back.
+- **September 9, 2025 — Bogdan moved to adopt Ordinance No. 896, the FY 2025-2026 budget** (Sharpe
+  seconded, roll-call 5-0); **October 21, 2025 — Barron moved the 2025 tax roll** (Ordinance No.
+  902, on consent); **September 16, 2025 — Pilgrim moved Ordinance No. 900** amending the FY
+  2024-2025 operating budget. All four are unexplained ministerial acts.
+- **The "expand the commercial tax base" argument was made in Parker** — a councilmember argued on
+  2024-10-22 that without light commercial the city will have *"over 90% of the revenue coming only
+  from property taxes on personal residences"* and that *"over time, that gets to be a big burden to
+  bear when you put it all on homeowners."* **It is unattributable (trap 3) AND it is on the standing
+  refusal list** (execution note 19, refused for two Plano members). Recorded twice over as a
+  non-chair.
+- **July 7, 2026** was a **"Budget 101"** workshop presented by Finance/HR Director **Grant Savage**.
+  Staff testimony, not member positions. **No taxes row was written for any of the five.**
+
+---
+
+### Roxanne Bogdan — Council Member, at-large — `a32e8631-404d-49bd-a914-8b05febe9df5`
+
+Sourced: **none.** All 11 topics blank; all 11 **settled**. Bogdan is the council's most frequent
+mover — she moved the FY2025-26 budget, the Dublin Road reconstruction contract, the Kings Crossing
+Phase Six plat, multiple board appointments, the public-comment rules, the agenda-preparation
+procedures and the license-plate-reader grant — and in the minutes and the caption transcripts her
+recorded speech is almost entirely **procedural or interrogative**: questions to the Public Works
+Director about prime coat, dewatering and drainage exclusions in a paving contract (2025-11-18);
+concern about flaggers and the warranty bond on the Lewis Lane contract (2026-02-03); a request that
+public comments go to a single shared address; a request that the electioneering item be expanded.
+Her campaign site is dead (see below).
+
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **residential-zoning** — no
+  position found on density or neighborhood character. She moved the **Kings Crossing Phase Six final
+  plat** (2025-12-02, Halbert seconded, 5-0) and moved to **refer the commercial-zoning ordinances
+  back to the Planning and Zoning Commission** (2026-01-20, *"and further requests Mayor Pettle
+  and/or City Administrator Manton work with P&Z to express City Council concerns and expectations on
+  this matter"*, Barron seconded, 5-0). The referral names **no substantive expectation** — the
+  minutes record the concerns as unstated — and commercial zoning is not on this axis in any event.
+  The plat is a subdivision of already-zoned single-family land, an unexplained ministerial act.
+  **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **growth-and-development** — no
+  chair-locating position on growth pace. She moved the **Municipal Services Agreement** for the Kings
+  Crossing Phase Six annexation and seconded the **annexation ordinance** itself (No. 905,
+  2025-12-02, 5-0), and the City's own transparency page names her as one of two officials who would
+  **speak for Parker at the June 8, 2026 Collin County Commissioners Court** on the RTG plat. The
+  annexation votes carry **no stated reasoning**; and appearing as the City's designated speaker is a
+  representation role, not a personal position — the same refusal applied to Pilgrim below.
+  **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **housing** — no position found
+  on government's role in housing affordability. `affordable housing` returns **zero hits** in the
+  entire minutes corpus. Nothing on public housing, rent caps, inclusionary requirements, subsidy,
+  first-time-buyer assistance, permit streamlining, or leaving prices to the market. **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **public-safety-approach** — no
+  chair-locating position, **and this is her closest miss.** On **2026-05-19** she pulled the
+  license-plate-reader item off consent for *"additional discussion,"* then **moved to authorize
+  applying for a grant for license plate readers** (Sharpe seconded, 5-0); on **2026-02-03** she
+  opened the workshop on the police pay restructuring, saying she *"requested this tonight because of
+  how the restructuring of the pay scale came down to us"* and that *"the process of how it was
+  handled I didn't agree with."* Both are refused. The LPR motion is **grant-funded investigative
+  equipment with no stated reason** and cannot separate chair 4 (increase staffing, equipment and
+  pay) from chair 3 (add crisis-response capacity); the pay-scale objection is expressly about
+  **who decides**, not about the funding level — she describes the council's role, not a preferred
+  outcome. A procedural objection is not a position on how the city funds and operates public safety.
+  **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **transportation-priorities** —
+  no statement found setting any transportation mode against another. She moved the **Dublin Road
+  reconstruction contract** (Resolution No. 2025-872, 2025-11-18) and pulled it off consent to
+  question the contractor's exclusions, and with Councilmember Barron she met Collin County officials
+  about the county trail plan and **sidewalk widths along FM 2551 and FM 2514** (2025-07-15). Road
+  reconstruction bundled with drainage is the standing **maintenance-framing** refusal; asking about
+  sidewalk widths on a state highway project is an inquiry, not a stated investment priority.
+  **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **economic-development** — no
+  position found on incentives, abatements, Chapter 380 agreements, community-benefit or job-quality
+  conditions. `tax abatement`, `Chapter 380` and `380 agreement` return **zero hits** across both
+  corpora. **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **homelessness** — no statement
+  or vote found on people sleeping or camping in public spaces. Structurally absent from Parker:
+  `homeless`, `encampment`, `public camping` and `panhandl*` return **zero hits** in the 4.84 MB
+  minutes corpus and the 4.44 MB transcript corpus. **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **local-immigration** — no
+  statement found on the Parker Police Department's relationship to federal immigration enforcement.
+  `ICE detainer` and `detainer` return **zero hits**. The single `immigration` hit in the transcripts
+  is the **Flock vendor representative** at the 2026-04-21 LPR presentation noting that a transparency
+  portal lists prohibited uses; it is not a member's statement and no detainer or information-sharing
+  position was read into her LPR motion. **Texas SB 4 is state law, not her position.** **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **civil-rights** — no on-topic
+  position found on racial or social inequality. Zero hits in the minutes corpus; the sole transcript
+  hit is a **City Attorney briefing** on *Bostock*/Title VII in the context of the employee handbook.
+  **No inference was drawn from any identity, demographic, religious or affiliation characteristic.**
+  **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **taxes** — **researched, no
+  chair written** per the settled 2026-07-25 operator ruling; and separately nothing chair-locating
+  was found. She moved adoption of **Ordinance No. 896**, the FY2025-2026 budget (2025-09-09, roll
+  call 5-0), with no recorded reasoning. **Settled.**
+- Roxanne Bogdan — Parker — `a32e8631-404d-49bd-a914-8b05febe9df5` — **healthcare** — no statement
+  found on healthcare access. Expected: all five chairs describe **national** healthcare policy,
+  which a city councilmember holds no position on by role. The single `healthcare` hit in the corpus
+  is an employee-benefits line item. **Settled.**
+
+> **Access-failure note carried against Bogdan specifically (does not change any classification
+> above, because her council record was read in full):** her campaign site
+> **`https://www.roxanneforparker.com/`** — cited on her Ballotpedia page as her official campaign
+> website — is **dead**, returning a Wix `ConnectYourDomain Error` (HTTP 404, 2,517 bytes), and the
+> **single Wayback capture (2025-03-01) is a 301 whose replay also 404s**. If she published a
+> platform there during the 2025 campaign, it is unrecoverable by this pass. Retry path: a request to
+> the candidate; no archive holds it.
+
+---
+
+### Colleen Halbert — Council Member, at-large — `fc09e53a-723c-4c34-97ab-9e0b692104a0`
+
+Sourced: **none.** All 11 topics blank; all 11 **settled**. Halbert is the only one of the five other
+than Sharpe with a **live campaign website carrying a platform**, and it was read in full — which is
+what makes her zeros settled rather than access failures.
+
+**Her nine-item "My Goals" list (`https://www.colleenhalbert.com`, read in full) and why none of it
+reaches a chair:** *"Prioritize city attention to infrastructure like roads and drainage"* — roads
+bundled with drainage is the standing **maintenance-framing** refusal, and it sets no mode against
+another. *"Take visible action on citizens' safety and wellness concerns, including neighborhood
+nuisances like speeding and noise"* — nuisance enforcement, not a position on how the city funds and
+operates public safety; it cannot separate chair 4 from chair 3. *"Invest in our city employees so
+they can continue to be responsive and support of our community as it grows"* — generic and not
+police-specific. *"Hire experienced City Administrator and City Attorney"*, *"Provide appropriately
+sized and priced city offices"*, *"Participate in a council that discusses, debates and decides
+issues"*, *"Openly consider Home Rule / City Charter with a vote from the residents"* — municipal
+governance structure, on no compass axis. *"Maintain the quality and integrity of our community"* —
+a generic-character line of exactly the kind refused across three scales in wave 6. *"Address
+annexation of Extra Territorial Jurisdictions and the potential for creating Planned Development
+Districts"* — names a subject without stating a direction; it is equally consistent with chairs 1
+through 5 of `growth-and-development`. Her **"ABOUT ME"** section is a résumé of past acts in an
+unnamed neighboring city (*"Reviewing and approving planned development districts"*, *"Considering
+and approving Extra Territorial Jurisdiction acquisitions"*) — record, not forward-looking position,
+and adjacency under the standing rule. **Named retry path: identify the "neighboring community"
+whose council she served on for six years and search its minutes; it is not Murphy (she appears in
+no Murphy council roster).**
+
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **residential-zoning** — no
+  position found on density or neighborhood character, **and this is her closest miss.** On
+  **2025-10-21** she **moved to approve Ordinance No. 903 adopting Parker's updated Comprehensive
+  Plan** — the document that carries the city's *"Uniquely Country"* vision statement and its
+  low-density land-use policy. **The motion is refused because her three stated amendments are
+  purely clerical**: correct the plan date to "2025"; correct the American Rescue Plan figure from
+  $6 million to $1,285,000; and *"remove 'Sudbury' and show 'Sycamore' as an asphalt road."* An agenda
+  line states what was voted on, not what it means, and adopting a staff-and-committee document with
+  typographical corrections is not an endorsement of its density policy as her own. On **2026-02-17**
+  she moved to accept P&Z's recommendation to begin **Planned Development District** discussions with
+  Southfork — a zoning-instrument choice for a non-residential special-activities tract, off this
+  axis. On **2026-07-07** she moved the **Green Meadows preliminary plat** with conditions and two
+  variances (cul-de-sac length over the 600-foot maximum under §155.052(17); two-points-of-access
+  under §155.049(1)(b)) — site-specific engineering, the standing single-tract refusal. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **growth-and-development** — no
+  chair-locating position. She moved **Ordinance No. 904**, the Municipal Services Agreement for the
+  Kings Crossing Phase Six annexation (2025-12-02), and seconded the annexation ordinance; she moved
+  the canvass of the May 2, 2026 election; she moved the **RTG FM 2551 access preliminary plat** on
+  2026-03-10. That last one is the strongest-looking item and is still refused: the City Attorney
+  advised on the record that approval was a **ministerial duty** under Texas Local Government Code
+  ch. 212 with mandamus exposure for refusal, and the minutes record that she **"reluctantly" moved** it, the caption transcript has her prefacing it *"with frustration"*, and the seconder said *"not wanting to do this… but I feel like we have to"* (Barron seconded; Bogdan and Halbert voted for; **Mayor Pro Tem Pilgrim abstained**; 3-0-1). **A vote a member states
+  she is compelled to cast is not a position**, and her conditions were engineering conditions (the
+  2026-02-11 engineering letter; a TxDOT access permit *"based on an access solution that
+  appropriately mitigates the traffic congestion"*). Her platform line on annexation states no
+  direction. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **housing** — no position found
+  on government's role in housing affordability; `affordable housing` is a zero-hit term across the
+  minutes corpus and nothing on her site engages it. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **public-safety-approach** — no
+  chair-locating position. Her platform's *"take visible action on citizens' safety and wellness
+  concerns, including neighborhood nuisances like speeding and noise"* is nuisance enforcement, and
+  her council work on that subject was the **noise ordinance**: she moved to postpone Ordinance No.
+  894 and send it back to the Noise Committee (2025-06-17), later moved to amend its
+  daytime/non-daytime decibel thresholds, and **cast the lone Nay** when the 58 dB amendment carried
+  4-1 on 2025-12-02. That dissent is **unexplained in the minutes**, and an unexplained No cannot
+  locate a chair (the Shannon Moore precedent). Nothing found on police staffing, pay, equipment,
+  mental-health co-responders or redirecting police budget. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **transportation-priorities** —
+  no statement found setting any mode against another. She seconded the Dublin Road/Lewis Lane
+  striping-and-buttons authorization (2026-02-17) and moved the parks grant that funded a **6-foot
+  versus 8-foot trail-connector sidewalk** decision (Resolution No. 2026-886, raised to a $40,000
+  not-to-exceed) — a single capital detail settled on cost and existing-footprint grounds, not an
+  investment-priority principle. Her platform bundles roads with drainage. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **economic-development** — no
+  position found on incentives or abatements; zero-hit terms across both corpora. Serving on the
+  Solid Waste RFP Review Committee (appointed 2026-05-19) is procurement, and committee service is
+  adjacency. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **homelessness** — structurally
+  absent; zero hits citywide. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **local-immigration** —
+  structurally absent; zero hits for `detainer`, `ICE detainer`. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **civil-rights** — no on-topic
+  position found; no inference drawn from any identity or affiliation characteristic. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **taxes** — **researched, no
+  chair written** per the operator ruling; nothing chair-locating found either. **Settled.**
+- Colleen Halbert — Parker — `fc09e53a-723c-4c34-97ab-9e0b692104a0` — **healthcare** — no statement
+  found; national-scale question, no city role. **Settled.**
+
+---
+
+### Buddy Pilgrim — Council Member, at-large, Mayor Pro Tem — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a`
+
+Sourced: **none.** All 11 topics blank; all 11 **settled**. **Pilgrim is the reason 222-08 flagged
+Parker as a live lead for this plan**, and the lead was real — he is by a wide margin the most
+publicly engaged of the five, the council's designated negotiator with Restore the Grasslands, the
+member who reports the TCEQ wastewater and MUD litigation at nearly every meeting, and a director of
+the nonprofit organised against the development. **And it still produces no chair**, for reasons that
+are worth stating precisely, because the temptation to score him is strong.
+
+**The Restore the Grasslands file, examined for Pilgrim by name.** 222-08 refused this file for Mayor
+Pettle *because every primary document assigns it to Pilgrim, Sharpe and Barron.* That refusal was
+correct and this pass confirms the underlying facts — the **March 12, 2026 Open Letter** names
+*"Darrel Sharpe and Buddy Pilgrim"* as *"the Parker City Council representatives for discussions with
+RTG"*; the transparency page's **June 6, 2026** update states *"Mayor Pro Tem Buddy Pilgrim will be
+there speaking for the City as will Council Member Roxanne Bogdan"*; the **Murphy Monitor of July 2,
+2026** carries a photo caption reading *"Parker Mayor pro tem Buddy Pilgrim asks Collin County
+Commissioners to deny a plat for the densely-populated Restore the Grasslands development between
+Parker and Murphy."* **Every one of those is a representation role, not a stated position of his
+own.** He appears in each as the person the City sent, and in each the position asserted is the
+City's — drafted, in the case of the Key Issues list, by the **City Attorney** (trap 2). An
+institutional position delivered by its designated spokesman is the body's, not the spokesman's; that
+is the same rule that refused the file for the mayor, applied consistently.
+
+**His single strongest personal item — and why it still fails.** The **Murphy Monitor of March 21,
+2024** reports, in text this pass fetched and read: *"It was standing-room-only in the 150-seat
+Murphy City Council Chambers as Buddy Pilgrim of Parker presented a slide show outlining what he said
+were three major objections to the development by Restore the Grasslands (RTG): high-density
+housing, a sewage treatment plant discharging into Maxwell Creek and a municipal utility district
+that would strain services from neighboring cities."* This is named, dated, and on the record.
+**Refused on four independent grounds, any one of which is sufficient:** (i) it is an objection to
+**one specific development on one specific tract**, and a single-tract judgment is site-suitability,
+not a density principle — the standing refusal; (ii) that tract is **outside Parker's city limits**,
+in unincorporated county land Parker cannot zone, so it is not a decision about *"housing density and
+neighborhood character in your city"* at all; (iii) **no reasoning of his is quoted** — the three
+objections are listed, not argued, and two of the three are wastewater and utility-district
+objections, i.e. infrastructure and service-capacity concerns rather than density ones; (iv) he was
+speaking on **March 13, 2024** as an organiser for a nonprofit, seven weeks before he was elected to
+the council, and his subsequent record on the council **cuts the other way** — he moved Ordinance No.
+876 rezoning 151.316 acres of South Fork Ranch from Special Activities District to Single-Family
+Residential (2024-10-22, 3-1), and he moved Resolution No. 2025-831 approving the **Buckingham
+Estates** agreement, whose whole premise, as argued on the record that night by Councilmember Kercho,
+was accepting *"roughly one acre lots"* on 47 ETJ acres in exchange for annexation. A member who
+moves a rezoning and a one-acre-lot development agreement is not demonstrably at chair 1, and nothing
+found states which chair he is at.
+
+**Board service is adjacency.** `communitiescreeksunited.org/board/` lists him as a director of
+**Communities & Creeks United, Inc.**, a 501(c)(3). The organisation publishes strong positions
+(*"Our position: 600+ homes need two entrances regardless of sprinklers"*; *"only a fully signed,
+binding, enforceable agreement with independent review counts"*) — **all in the organisation's own
+institutional voice, none attributed to any individual director.** Board and committee service is
+adjacency under the standing rule and was not converted into a position on any axis.
+
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **residential-zoning** — no
+  chair-locating position, for all of the reasons set out above. His own affirmative zoning acts are
+  a **rezoning to single-family** (Ord. 876) and a **preliminary plat approved with a lot-size
+  setback and frontage variance** (Estates at Southfork Ranch, 2026-02-17) — both unexplained in the
+  minutes, and the transcript passages around them are unattributable (traps 3 and 5). **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **growth-and-development** — no
+  chair-locating position on growth pace. Everything available is the RTG material refused above,
+  plus his standing role reporting **municipal litigation strategy** — the TCEQ wastewater-permit
+  appeal (*"The City has filed for a re-hearing on the Wastewater Treatment Plant permit, and, if
+  denied, which is 'somewhat expected', the City plans to file an appeal"*, 2026-06-16) and the
+  SOAH/MUD contested case. On **2026-03-10** he **abstained** on the RTG FM 2551 access preliminary
+  plat (3-0-1) after cautioning the applicant *"with regard to the way this preliminary plat was
+  handled and presented"* — a **procedural** rebuke, and an **abstention with no stated reason cannot
+  locate a chair** any more than an unexplained Nay can. **Litigation status reported on the City's
+  behalf is not a growth-pace
+  position**, and it was adopted institutionally rather than argued by him. He voted with a
+  unanimous council to **intervene in the Grand Prairie ETJ-release lawsuit** (2024-06-18) — an
+  unexplained vote about municipal jurisdiction, not about approval speed, permitting fees, growth
+  caps, or infrastructure-ahead-of-growth sequencing. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **housing** — no position found
+  on housing affordability. The RTG dispute concerns **whether and at what density a development
+  proceeds**, not affordability, and was not carried across. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **public-safety-approach** — no
+  chair-locating position. He moved the interlocal EMS-transport agreement with the City of Wylie
+  (Res. 2024-804) and appointed a committee including the Police Chief to review policy — service
+  contracts and process. In the 2026-02-03 police-pay workshop his recorded contribution is a
+  **statutory argument** — that Texas Local Government Code §141.006 provides *"the governing body of
+  a Type A general law municipality shall set the compensation for police officers"* — which is an
+  argument about **authority**, expressly not about the level. Nothing found on staffing, pay levels,
+  equipment, co-responders or redirecting police budget. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **transportation-priorities** —
+  no statement found setting any mode against another. He moved the **Anderson Asphalt street
+  maintenance contract** (Res. 2024-805), a Lewis Lane repair expenditure of up to $15,341.39, and
+  the **two-phase paving of Dublin Road** *"with the northern phase to be completed first to take
+  advantage of cost savings"* — sequencing and procurement, the standing maintenance refusal.
+  **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **economic-development** — no
+  position found on incentives, abatements or Chapter 380 agreements; those are zero-hit terms in
+  Parker. The light-commercial/sales-tax argument of 2024-10-22 is **unattributable** (trap 3) and
+  independently on the taxes refusal list. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **homelessness** — structurally
+  absent; zero hits citywide. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **local-immigration** —
+  structurally absent; zero hits for `detainer`/`ICE detainer`. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **civil-rights** — no on-topic
+  position found; no inference drawn from any identity or affiliation characteristic. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **taxes** — **researched, no
+  chair written** per the operator ruling; he moved Ordinance No. 900 amending the FY2024-2025
+  operating budget with no stated reasoning. **Settled.**
+- Buddy Pilgrim — Parker — `812359f8-3ea5-4815-91ca-7e5a4ba2ba0a` — **healthcare** — no statement
+  found; national-scale question, no city role. **Settled.**
+
+> **Access-failure note carried against Pilgrim specifically:** his campaign domain
+> **`https://pilgrimforparker.com/`** now serves the Instagram shell for `@pilgrimforparker`, and
+> **`/about-buddy`** — a page a search engine still indexes — returns **HTTP 404 to both `curl` and
+> WebFetch**; Wayback's only capture is a registrar lander. Together with the missing record of the
+> **April 14, 2026 Candidates Night**, in which he was a candidate, these are the two documents most
+> likely to carry a first-person Pilgrim position. **They do not change the classification above**,
+> because his council record and his RTG record were both read in full and both are genuinely
+> position-free for him personally.
+
+---
+
+### Darrel Sharpe — Council Member, at-large — `aba6f016-e35d-4977-99e6-a2cfc079ad75`
+
+**Sourced: 1 of 11 — `residential-zoning`. The remaining 10 are blank; all 10 settled.**
+
+#### ✅ THE CHAIR — `residential-zoning` = 1
+
+**Evidence (his own 2025 campaign platform, on his own domain, linked from his Ballotpedia candidate
+page).** Home page, under *"Parker Issues I care about the most"*: **"Maintaining low density / large
+lot sizes"** and **"Keeping Parker 'Parker'"**. Issues page, under a section headed *"Keeping Parker
+… Parker"*:
+
+> *"Many of us moved to Parker because it is a place away from the hustle and bustle of Dallas and
+> its fast growing, population-dense suburbs. Horse pasture, corn and wheat fields, and other
+> agricultural land are transitioning into residential housing. **I believe we have some significant
+> tools at our disposal to keep the living conditions we cherish while this development continues.**
+> **Minimum Lot Sizes. The 2 acre minimum helps preserve the feel of our city, limits the ongoing
+> impact on our water and road infrastructure and helps alleviate the impact of rapid growth
+> occurring all around us. This lot size restriction is a big reason why Parker maintains a small,
+> country feel.**"*
+
+**Why chair 1 and not chair 2, 3, 4 or 5.** The scale asks what should guide decisions about housing
+density and neighborhood character. Chair 5 (eliminate single-family-only zoning) and chair 4 (upzone
+broadly, reduce parking requirements) are excluded outright — he defends the most restrictive
+residential standard the city has. Chair 3 (allow multifamily and mixed-use near commercial
+corridors) is excluded — Parker has essentially no commercial corridor and he proposes no multifamily
+anywhere. **Chair 2 is the only near miss, and it is the one that decides the value: chair 2 requires
+*allowing modest density increases* — duplexes, accessory dwelling units — with design review.
+Sharpe's platform argues the opposite, that the existing 2-acre minimum should be kept as the tool
+that holds density down.** That leaves chair 1, protecting existing neighborhood character strictly.
+This is a **forward-looking** statement (what the city should keep doing), it is **on-question** (it
+answers the density-and-character axis directly, by naming the city's density instrument), and it is
+**a position rather than an attack**. The chair-1 text also mentions requiring community votes before
+rezoning; **he does not say that, and the reasoning below does not claim he does** — the axis chair 1
+occupies is maximal protection of existing low density, which he states expressly and defends with
+three reasons (community feel, water and road infrastructure load, and buffering the impact of rapid
+regional growth).
+
+**Contradiction check (the Doug Charles test) — passed.** Every land-use vote Sharpe has cast since
+taking office was checked against the platform and none contradicts it: he voted for the Estates at
+Southfork Ranch preliminary plat (2026-02-17, Pilgrim moved and Barron seconded), for the Kings
+Crossing Phase Six plat, MSA and
+annexation (2025-12-02), for the Kingswood Estates preliminary plat with a cul-de-sac variance
+(2026-04-07) and for the Green Meadows preliminary plat with two variances (2026-07-07). **All of
+these subdivide land already zoned SF, whose minimum lot size under the Parker Code of Ordinances is
+2.0 acres (87,120 square feet)** — the very standard his platform defends. The variances granted were
+cul-de-sac length, points of access, building setbacks and lot frontage; **none reduced a minimum lot
+size below the code standard.** He has cast no vote to upzone, to allow multifamily, or to lower a
+density floor.
+
+**Proposed row:**
+
+| full_name | politician_id | topic_key | topic_id | value |
+|---|---|---|---|---|
+| Darrel Sharpe | `aba6f016-e35d-4977-99e6-a2cfc079ad75` | `residential-zoning` | `d4f18138-a2e0-4110-b925-7387d9d0d16d` | **1** |
+
+**Sources:** `https://www.sharpeforparker.com/the-issues-1` · `https://www.sharpeforparker.com/` ·
+`https://ballotpedia.org/Darrel_Sharpe_(Parker_City_Council_At-large,_Texas,_candidate_2025)`
+
+**Resample record.** Value 1 ⇒ 100% re-verification. Both pages were re-fetched **independently by
+`curl` with a browser User-Agent**, bypassing WebFetch's cache: `/the-issues-1` returned HTTP 200 /
+721,419 bytes and `/` returned HTTP 200 / 787,803 bytes, and the operative sentences were re-located
+in the fresh bodies verbatim. **Identity re-confirmed on the sources themselves**: the site is headed
+*"Darrel Sharpe for Parker City Council 2025"*, states *"I've lived in Parker for 6 years"*, and is
+the campaign URL listed on his Ballotpedia page, which is titled *"Darrel Sharpe (Parker City Council
+At-large, Texas, candidate 2025)"*; Parker's own canvass minutes of May 13, 2025 declare Darrel
+Sharpe elected with 401 votes. **Direction re-checked against the inversion-trap table**:
+`residential-zoning` runs 1 = protect neighborhood character strictly → 5 = eliminate single-family
+zoning citywide, so the most protective position takes the **lowest** value. **Sitemap check:** the
+site's `pages-sitemap.xml` lists both `/the-issues` and `/the-issues-1`; `/the-issues` renders with
+the `<title>` *"The Issues - old"* and `/the-issues-1` with *"The Issues"*, so **the current page is
+cited first**. The two carry identical operative text (the older copy truncates one ETJ bullet), and
+the live home page corroborates the same position independently.
+
+#### The other ten topics
+
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **growth-and-development** — no
+  chair written, **and this was the closest call of the entire pass.** His platform contains a
+  genuinely on-topic paragraph: *"Parker is growing, and our infrastructure needs to grow along with
+  us. Parker must invest in these areas as our population continues to grow or the problems will be
+  worse, more expensive and we will be constantly behind the needs of our city. Moreover, the city
+  must leverage its development agreements as a key portion of its planning. When we sign off on the
+  development of housing, we are committing to those future citizens using the same infrastructure
+  that's already overused. Planning together, in advance, with the developers is key to our
+  community's infrastructure integrity."* Chair 1 (growth limits, voter approval for annexations) is
+  excluded by his own ETJ guiding principle, *"Where appropriate and mutually beneficial, annex ETJs
+  into the city,"* and by his acceptance that *"this development continues."* Chairs 4 and 5 are
+  excluded by the same platform's defence of the 2-acre restriction and its warning about
+  committing future residents to overused infrastructure. **But chairs 2 and 3 cannot be separated.**
+  *"Invest… ahead of growth"* is chair 3; *"the same infrastructure that's already overused"* is the
+  premise of chair 2 (allow growth only where existing infrastructure can support it). He never says
+  whether approvals should slow until capacity catches up. Under D-04 an evidence base that cannot
+  distinguish two adjacent chairs yields a **blank**, and chair 3 is additionally the middle value,
+  which may not be reached by elimination when a neighbouring chair survives. **Settled — recorded
+  in full so a future rewrite or a follow-up interview can resolve it.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **transportation-priorities** —
+  no chair. His platform's *"Regulating Thoroughfare"* section is substantive — *"Many of our roads
+  are true farm to market roads… They aren't designed for large cities' residents to take shortcuts
+  through our town… The city has an obligation to carefully plan which streets should (and should
+  not) be available for increased through traffic"* — but it is **cut-through traffic management**,
+  not a tradeoff among transportation modes. This scale runs from prioritising pedestrians, cycling
+  and transit (1) to prioritising road capacity for drivers (4–5); limiting through traffic to
+  protect residents sits on neither end, and he advocates no transit, bike or sidewalk investment and
+  no road-capacity expansion. His other transportation line bundles *"drainage and road quality"* —
+  the standing maintenance refusal. His council work on Lewis Lane was a **jurisdictional** interlocal
+  negotiation with the City of Lucas (Resolution No. 2026-882, which he moved), not a modal priority.
+  **Shared vocabulary is not shared subject.** **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **public-safety-approach** — no
+  chair, **and this is a near miss worth recording.** His platform's *"City Services"* section says
+  *"We need to take a more serious approach to the facilities and tools we afford to city employees,
+  especially the police and fire department,"* recounts that the police department has been in *"a
+  temporary triple-wide trailer"* for over a decade since black mold was found in its building, and
+  concludes that *"this lack of suitable office space needs to be addressed in a reasonable way,
+  keeping cost in mind."* **Refused:** chair 4 is *"increase police staffing, equipment, and pay"* —
+  he addresses **facilities**, a capital project, which the standing rule holds is not a funding-level
+  position, and he expressly qualifies it *"keeping cost in mind,"* which points away from chair 5
+  (make expanding the police budget the top spending priority). Nothing found on staffing levels,
+  pay, mental-health co-responders or redirecting police budget. **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **economic-development** — no
+  position found on incentives, abatements or community-benefit conditions. His platform's only
+  adjacent line notes that *"ETJs often form attractive economic opportunities for real estate
+  developers"* — an observation, not a position, and annexation is not a business-incentive
+  instrument. **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **housing** — no position found
+  on government's role in housing affordability. His platform is about **density and lot size**, not
+  price or access, and the two were deliberately not conflated. **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **homelessness** — structurally
+  absent; zero hits citywide, and nothing on his site. **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **local-immigration** —
+  structurally absent; zero hits for `detainer`/`ICE detainer`. **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **civil-rights** — no on-topic
+  position found. **His campaign biography's mention of prior service on a parish pastoral council
+  was specifically NOT used** — religious affiliation is never a basis for inference, and board
+  service is adjacency. **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **taxes** — **researched, no
+  chair written** per the settled operator ruling. He is the only one of the five to have moved a tax
+  rate — Resolution No. 2025-854 on 2025-08-19, proposing $0.310439 against a no-new-revenue rate of
+  $0.299267 — **with no reason recorded**, and proposing a rate above no-new-revenue reaches no chair
+  on a scale whose ends require taxing wealthy people and large companies or scaling public services
+  back. Preserved verbatim for a future municipal-scope rewrite. **Settled.**
+- Darrel Sharpe — Parker — `aba6f016-e35d-4977-99e6-a2cfc079ad75` — **healthcare** — no statement
+  found; national-scale question, no city role. **Settled.**
+
+---
+
+### Billy Barron — Council Member, at-large — `e136a517-1772-4f16-9bd5-785828f524e8`
+
+Sourced: **none.** All 11 topics blank; all 11 **settled**. Barron is the council's most active
+member on the county **trail plan** and on **drone activity over Parker**, and he speaks often and at
+length — but on compass axes his recorded speech is consistently **factual, procedural or
+property-rights-specific**.
+
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **transportation-priorities** —
+  no chair, **and this is his closest miss.** On **2025-07-01** he told council that Collin County was
+  updating its trails plan and *"there are some things in the plan that he did not think were
+  suitable for the City of Parker… this plan was better than the plan from over a decade ago but
+  there was still room for improvement"*; on **2025-07-15** he said flatly that **"the trail plan is
+  not feasible, stating the plan runs trails through residents' yards/property,"** and reported that
+  he and Councilmember Bogdan had met county officials about that concern **and about sidewalk widths
+  along FM 2551 and FM 2514**. **Refused, and the refusal is the point:** his objection is to a
+  **routing** that crosses private property, not to trails as a transportation investment — in the
+  same breath he presses for wider sidewalks on two state highways, and on 2026-02-17 he intervened
+  to hold a city trail connector to the **8-foot county minimum** rather than 6 feet. Those pull in
+  opposite directions on this scale, which is precisely why no chair can be located: he is neither
+  prioritising pedestrian infrastructure (chair 1) nor prioritising road capacity for drivers (chair
+  4). **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **growth-and-development** — no
+  chair-locating position, **and this is a second near miss.** On **2026-02-17**, on the Southfork
+  special-activities zoning, he explained P&Z's recommendation and added: *"part of the reason for
+  wanting to move away from the Special Activities District, **which I personally agree with**, is
+  that it was sort of really a thing that was negotiated just for South Fork… it has a 175-acre
+  minimum… But now, if it was amended to say… it's 39 acres… then we are at risk of other
+  developments coming in and saying, I have 40 acres, I want to do all this same stuff."* This is a
+  named, dated, explicitly first-person statement — but it is a **zoning-instrument preference**
+  (Planned Development District rather than a broadened Special Activities District) about a
+  **non-residential** venue tract, and it does not engage growth pace: it says nothing about approval
+  speed, permitting fees, impact fees, growth caps, annexation policy or infrastructure sequencing,
+  and it cannot separate chair 1 from chair 2 or chair 3. He moved **Ordinance No. 905** annexing
+  56.939 acres for Kings Crossing Phase Six (2025-12-02, Halbert seconded, 5-0) with **no stated
+  reasoning**, and moved the Kingswood Estates preliminary plat with a cul-de-sac variance
+  (2026-04-07). **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **residential-zoning** — no
+  position found on density or neighborhood character. His plat and annexation motions are
+  unexplained ministerial acts on land already zoned single-family; the Special Activities District
+  remark above concerns a non-residential district. He seconded the Estates at Southfork Ranch
+  preliminary plat but the transcript of that discussion does not name the speaker who pressed the
+  two-acre point (trap 5). **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **public-safety-approach** — no
+  chair-locating position. On **2026-02-03** he asked Mayor Pettle whether Police Chief Price could
+  *"collect data, analyze, and present findings to City Council in about six (6) months to determine
+  effectiveness"* of the new noise ordinance — an evaluation request, not a funding position. His work
+  on the **Noise Committee** (with Bogdan he produced a *"Proposed Noise Ordinance Fact Sheet"* for
+  the city website) is nuisance regulation. His **drone** investigation — identifying Amazon and Wing
+  as the operators, confirming that Lucas's Walmart was denied a drone-hub designation, and planning
+  a public FAQ — is airspace research, not a public-safety funding position. Nothing found on
+  staffing, pay, equipment, co-responders or redirecting police budget. **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **housing** — no position found;
+  zero-hit term citywide. **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **economic-development** — no
+  position found on incentives or abatements; zero-hit terms citywide. **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **homelessness** — structurally
+  absent; zero hits citywide. **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **local-immigration** —
+  structurally absent. He questioned the Flock representative closely at the 2026-04-21 LPR
+  presentation about early-termination liability, hot-list notification and **data sharing with
+  neighbouring agencies** — *"Let's say we give City of Murphy access to it. Can they see all of the
+  cars that come in?"* — but every question is about contract terms and audit trails, and **none
+  touches immigration enforcement, ICE detainers or status information.** No detainer position was
+  read into it. **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **civil-rights** — no on-topic
+  position found; no inference drawn from any identity or affiliation characteristic. **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **taxes** — **researched, no chair
+  written** per the operator ruling. He moved approval of the 2025 tax roll (Ordinance No. 902) on
+  consent, with no reasoning. **Settled.**
+- Billy Barron — Parker — `e136a517-1772-4f16-9bd5-785828f524e8` — **healthcare** — no statement
+  found; national-scale question, no city role. **Settled.**
+
+> **Access-failure note carried against Barron specifically:** **`https://barronforparker.com`** —
+> the campaign site cited on his Ballotpedia page, including an anchor to a **`#Goals`** section — now
+> returns a **421-byte empty placeholder** at every path, `www.` does not resolve, and **neither
+> Wayback nor archive.today holds a single capture**. His 2025 council-vacancy **application (Exhibit
+> 4 to the July 1, 2025 minutes)** and his five-minute statement of goals to council that night were
+> both located, but the application PDFs are **handwritten and name-redacted** — the six applications
+> in that packet cannot be matched to their authors even at 300 dpi — and the minutes summarise the
+> statements without reproducing them. Together with the missing **April 14, 2026 Candidates Night**
+> record, these are the three documents most likely to carry a first-person Barron platform. **They
+> do not change the classification above**, because his entire council record from July 2025 to July
+> 2026 was read in full.
+
+---
+
+**Parker reconcile:** **Darrel Sharpe appears in bucket 1 for `residential-zoning` and in bucket 2
+for the other 10 topics; Roxanne Bogdan, Colleen Halbert, Buddy Pilgrim and Billy Barron each appear
+in bucket 2 for all 11.** 55 of 55 attempted (person, topic) pairs are accounted for — 1 chair + 54
+blanks — with no name in neither bucket and no name in both for the same topic. **Mayor Lee Pettle
+remains covered by the 222-08 section above and was not touched.** If the Sharpe chair is applied,
+Parker moves **0 → 1** and `coverage.js` must gain `hasContext: true` for geo_id 4855152.
