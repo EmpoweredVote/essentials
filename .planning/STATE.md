@@ -31,7 +31,7 @@ Last activity: 2026-07-31 — coverage chips flipped for the 4 cities that gaine
   Works (Fairview residential-zoning=1), Todd (Princeton growth=2), Washington (Princeton
   public-safety=4), Henry (Farmersville residential-zoning=3), Sharpe (Parker residential-zoning=1),
   Underhill + Orr (Lucas residential-zoning=1). Migrations 1516/1517/1518 on branch
-   in C:/EV-Accounts — **committed, applied by hand, NEVER pushed**.
+  `data/phase-222-stances` in C:/EV-Accounts — **committed, applied by hand, NEVER pushed**.
 - **857 honest per-(person,topic) blanks** registered across the researched cities.
 - **4 coverage chips flipped** (Fairview 4825224, Farmersville 4825488, Parker 4855152, Lucas 4845012).
 - ⛔ **39 council members across 7 towns were NEVER RESEARCHED** — Blue Ridge, Josephine, Lavon,
@@ -42,7 +42,7 @@ Last activity: 2026-07-31 — coverage chips flipped for the 4 cities that gaine
 ### Owed if this is ever formally closed (222-18 was never run)
 - AFTER coverage snapshot vs 222-01's BEFORE; browse spot-check screenshots; split-section check.
 - The reconcile must target **68**, not 107, and carry the descope table forward.
--  is unpushed by design (pushing master deploys accounts-api).
+- `data/phase-222-stances` is unpushed by design (pushing master deploys accounts-api).
 
 ## Phase 219 — Complete (browse approved 2026-07-24) + Reconcile Done
 
