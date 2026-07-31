@@ -713,7 +713,7 @@ Plans:
 
 **Wave 12** *(blocked on Wave 11 completion)*
 
-- [ ] 222-12-PLAN.md — Councils: Melissa + Farmersville
+- [x] 222-12-PLAN.md — Councils: Melissa + Farmersville
 
 **Wave 13** *(blocked on Wave 12 completion)*
 
