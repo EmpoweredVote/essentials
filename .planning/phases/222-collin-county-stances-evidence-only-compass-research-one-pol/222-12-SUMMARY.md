@@ -9,7 +9,7 @@ requires:
   - phase: 222-11
     provides: Lavine-upgrade execution precedent, SPA-shell access-failure reclassification, worktree branch workflow (data/phase-222-stances), Opus dispatch ruling
 provides:
-  - "1 chair applied via migration 1507 (APPLIED to production 2026-07-30): Mike Henry (Farmersville Place 4) residential-zoning=3, located by elimination from a 4-year recorded legislative pattern"
+  - "1 chair applied via migration 1517 (renumbered from 1507) (APPLIED to production 2026-07-30): Mike Henry (Farmersville Place 4) residential-zoning=3, located by elimination from a 4-year recorded legislative pattern"
   - "FARMERSVILLE FLIPPED 0 -> 1 STANCES — the phase's SECOND coverage-chip (Pitfall 5) trigger; 222-18 must add hasContext: true for geo_id 4825488 (joining Fairview 4825224)"
   - "Melissa ALL-BLANK: 66/66 pairs settled, all 48 prior 2026-05-12 found-nothing notes corroborated; no Melissa rows, correctly no Melissa migration content"
   - "OCR UNLOCK: Farmersville publishes ONLY text-layerless RICOH scanner images (minutes AND packets) — pdftoppm + Tesseract 5 (installed at C:/Program Files/Tesseract-OCR) converted 133 minutes PDFs / 1,050 pages into a searchable 2.07 MB corpus, Jan 2021 - Jun 2026"
@@ -23,20 +23,20 @@ tech-stack:
     - "When a city's agenda packets are ALSO image scans (unlike Melissa/Fairview where packets carry text layers), OCR is the corpus unlock: pdftoppm -r 200 -png + tesseract, parallelized; re-OCR decisive documents at 300 dpi for an independent recognition-layer verification"
     - "Melissa packets carry the PRIOR meeting's minutes as a consent item (4A/5A) — the passage for meeting M lives in meeting M+1's packet"
     - "A chair can be LOCATED BY ELIMINATION from a member's own motion record when each rejected chair is excluded by an affirmative recorded act (not by absence of evidence) — Henry: duplex denials exclude 5 and 2, citywide downzoning excludes 4, no voter-approval mechanism + MF PD approval excludes 1"
-    - "Migration prefix collisions across concurrent sessions are LIVE: 1503 was claimed by this session (branch) and another session (origin/master) within hours — renumber the branch copy (filename-only if already applied), re-check max at every claim"
+    - "Migration prefix collisions across concurrent sessions are LIVE: 1503 AND 1506/1507 were each claimed by this session (branch) and another session (origin/master) within hours — renumber the branch copies (filename-only if already applied); phase 222 now holds the 1516-1525 band"
 
 key-files:
   created:
-    - "C:/EV-Accounts/backend/migrations/1507_222_melissa_farmersville_councils_stances.sql (branch data/phase-222-stances, commit 8c08cae7 — NOT master, NOT pushed)"
+    - "C:/EV-Accounts/backend/migrations/1517_222_melissa_farmersville_councils_stances.sql (branch data/phase-222-stances, commit 8c08cae7 — NOT master, NOT pushed)"
   modified:
     - ".planning/phases/222-collin-county-stances-evidence-only-compass-research-one-pol/222-CONFIRMED-BLANK.md"
-    - "C:/EV-Accounts/backend/migrations/1506_222_fairview_princeton_councils_stances.sql (renamed from 1503, commit 141c59a8)"
+    - "C:/EV-Accounts/backend/migrations/1506_222_fairview_princeton_councils_stances.sql (renamed 1503→1506→1516)"
 
 key-decisions:
   - "Henry residential-zoning=3 accepted: chair located by elimination from his own motions with stated density reasoning (proposed + moved the citywide MF downzoning O-2022-0208-001; moved denial of both duplex rezonings; moved approval of the corridor MF PD capped 'in order to control the density'). Third-person minutes mean no verbatim quote is claimed; BoxCast video is the named quote path"
   - "Orchestrator independently OCR'd media/5221 (200 dpi, fresh download) and confirmed the MF-2 24->18 / MF-1 18->12 proposal attributed to Henry by name, with Henry in the attendance line — the verification was not delegated"
   - "Melissa authors nothing: an all-blank city contributes no migration content (rev-2 note 25); its 66 zeros are all settled with structural reasons (action-only minutes, no bios, structurally absent topics)"
-  - "Migration 1503 renumbered to 1506 after origin/master's concurrent 1503_civicpatch_tx_ma_contacts appeared; 1507 claimed against live max 1505. Rename is filename-only — the 222-11 SQL was already applied"
+  - "Migration 1503 renumbered to 1506 after origin/master's concurrent 1503_civicpatch_tx_ma_contacts appeared; 1507 claimed against live max 1505, later renumbered 1517. Rename is filename-only — the 222-11 SQL was already applied"
   - "Fox/homelessness refused: 'police should identify and assist' specifies no enforcement mechanism, compatible with chairs 2/3/4 alike. Nine Farmersville + five Melissa near-misses refused on the record"
   - "taxes: researched, no rows per the standing 2026-07-25 operator ruling"
 
@@ -44,7 +44,7 @@ requirements-completed: []
 
 coverage:
   - id: D1
-    description: "1 chair applied with paired context row; migration 1507 applied to production via mcp__supabase-local__execute_sql"
+    description: "1 chair applied with paired context row; migration 1517 (renumbered from 1507 — second same-day prefix collision) applied to production via mcp__supabase-local__execute_sql"
     requirement: "COLLIN-STANCE-02"
     verification:
       - kind: sql_gate

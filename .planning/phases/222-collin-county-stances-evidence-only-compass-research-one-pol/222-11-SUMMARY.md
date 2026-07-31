@@ -9,7 +9,7 @@ requires:
   - phase: 222-10
     provides: Ballotpedia UA unlock + wrong-person hazard, CivicClerk OData pattern, settled-vs-access-failure classification, staff-report-behind-the-motion control
 provides:
-  - "3 chairs applied via migration 1506 (renumbered from 1503 on 2026-07-30 — prefix collision with a concurrent session) (APPLIED to production 2026-07-30): Works (Fairview) residential-zoning=1, Todd (Princeton) growth-and-development=2, Washington (Princeton) public-safety-approach=4"
+  - "3 chairs applied via migration 1516 (renumbered 1503→1506→1516 across two same-day prefix collisions with concurrent sessions) (APPLIED to production 2026-07-30): Works (Fairview) residential-zoning=1, Todd (Princeton) growth-and-development=2, Washington (Princeton) public-safety-approach=4"
   - "FAIRVIEW FLIPPED 0 -> 1 STANCES — the phase's FIRST coverage-chip (Pitfall 5) trigger; 222-18 must add hasContext: true for Fairview in src/lib/coverage.js"
   - "First executed Lavine-precedent upgrade: Washington's 2026-05-12 found-nothing note on public-safety replaced — prior pass 'checked wash4council.com' but the site serves an empty SPA shell to curl/WebFetch, so it never read the content (recovered via headless render + embedded JSON)"
   - Two register sections, register Count 468 -> 564 (96 blanks: Fairview 65, Princeton 31)
@@ -26,7 +26,7 @@ tech-stack:
 
 key-files:
   created:
-    - "C:/EV-Accounts/backend/migrations/1506_222_fairview_princeton_councils_stances.sql (on branch data/phase-222-stances, commits 304e529d + 76bd3957 — NOT master, NOT pushed)"
+    - "C:/EV-Accounts/backend/migrations/1516_222_fairview_princeton_councils_stances.sql (on branch data/phase-222-stances, commits 304e529d + 76bd3957 — NOT master, NOT pushed)"
   modified:
     - ".planning/phases/222-collin-county-stances-evidence-only-compass-research-one-pol/222-CONFIRMED-BLANK.md"
 
@@ -42,7 +42,7 @@ requirements-completed: []
 
 coverage:
   - id: D1
-    description: "3 chairs applied with paired context rows; migration 1506 (renumbered from 1503 on 2026-07-30 — prefix collision with a concurrent session) applied to production via mcp__supabase-local__execute_sql (upserts returned clean; post-apply row-state verified)"
+    description: "3 chairs applied with paired context rows; migration 1516 (renumbered 1503→1506→1516 across two same-day prefix collisions with concurrent sessions) applied to production via mcp__supabase-local__execute_sql (upserts returned clean; post-apply row-state verified)"
     requirement: "COLLIN-STANCE-02"
     verification:
       - kind: sql_gate
@@ -76,16 +76,16 @@ follow_ups:
 
 # 222-11: Fairview + Princeton councils — evidence-only stances
 
-**One-liner:** 9 council members attempted one at a time across 11 topics (99 pairs) → 3 evidence-cited chairs APPLIED to production (migration 1506 (renumbered from 1503 on 2026-07-30 — prefix collision with a concurrent session)) + 96 honest blanks registered; Fairview flipped 0→1 stances (first coverage-chip trigger of the phase); Washington's row is the phase's first executed Lavine-precedent upgrade over a prior found-nothing note.
+**One-liner:** 9 council members attempted one at a time across 11 topics (99 pairs) → 3 evidence-cited chairs APPLIED to production (migration 1516 (renumbered 1503→1506→1516 across two same-day prefix collisions with concurrent sessions)) + 96 honest blanks registered; Fairview flipped 0→1 stances (first coverage-chip trigger of the phase); Washington's row is the phase's first executed Lavine-precedent upgrade over a prior found-nothing note.
 
 ## What was done
 
 - **Task 1 (Fairview, 6 people):** 1 chair (Works residential-zoning=1, her own 2026 platform, twice-verified) + 65 blanks (64 settled — Fairview minutes are action-only; 1 access failure — Sheehan/homelessness, MP3 retry path named). Register commit `6621705d`; migration commit `304e529d`.
 - **Task 2 (Princeton, 3 people):** 2 chairs (Todd growth=2 via Herald-reported absentee support for the moratorium extension; Washington public-safety=4 via his campaign site, recovered from an SPA shell the 2026-05-12 pass could not read) + 31 settled blanks, corroborating 15 of 16 prior found-nothing notes. Register commit `2c0db4e2`; migration commit `76bd3957`.
-- **Task 3 (blocking checkpoint):** operator approved 2026-07-30 ("continue" at the presented checkpoint with all three rows and their flags on the table). Orchestrator applied migration 1506 (renumbered from 1503 on 2026-07-30 — prefix collision with a concurrent session) via `mcp__supabase-local__execute_sql`; evidence-integrity gate 0 rows; exactly-one-bucket reconcile passed; no `schema_migrations` write (no such table exists — no migration runner).
+- **Task 3 (blocking checkpoint):** operator approved 2026-07-30 ("continue" at the presented checkpoint with all three rows and their flags on the table). Orchestrator applied migration 1516 (renumbered 1503→1506→1516 across two same-day prefix collisions with concurrent sessions) via `mcp__supabase-local__execute_sql`; evidence-integrity gate 0 rows; exactly-one-bucket reconcile passed; no `schema_migrations` write (no such table exists — no migration runner).
 
 ## Deviations
 
-- Migration number: plan text and STATE.md assumed the 1468–1490 band; live origin/master max was 1502 → claimed **1503**, renumbered **1506** after a concurrent session shipped its own 1503 per rev-2 note 5 (always re-check). Band ruling superseded.
+- Migration number: plan text and STATE.md assumed the 1468–1490 band; live origin/master max was 1502 → claimed **1503**, renumbered **1506**, then **1516** after concurrent sessions shipped their own 1503 and 1506 per rev-2 note 5 (always re-check). Band ruling superseded.
 - EV-Accounts commits made via a dedicated worktree (`C:/EV-Accounts-wt-222`) on `data/phase-222-stances` rather than `git -C` against the main checkout, so other sessions' use of the main checkout (on master) is never disturbed. Same branch contract as rev-2 note 7; nothing pushed.
 - The plans' literal `^## {City}` register greps do not match the actual heading convention (`## Town of Fairview (4825224) — 222-11`) — known rev-2 note 28 discrepancy; artifact contract satisfied, 222-18 reconciles on city name.
