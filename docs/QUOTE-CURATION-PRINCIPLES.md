@@ -310,11 +310,13 @@ answer contains many ideas; keep the ones most representative of the candidate's
 approach* and those that create a *genuine, legible contrast*; cut supporting stats,
 mechanics-explainers, and topical asides. Record which and why.
 
-**Keep it short and self-contained — two sentences max** (go longer only when heavy editing needs
-explaining). Typically: one sentence on source/verification and how the quote aligns with the
-candidate's current Compass stance on that topic; one on any edits (or "verbatim, no edits"). Flag
-source weakness plainly ("campaign website, not verifiable to video"). No section numbers or
-internal jargon ("§4.3," "tier-1") — write for a skeptical human, not a note-to-self.
+**Keep it short and self-contained — two sentences, three at the outside.** Typically: one
+sentence on source/verification and how the quote aligns with the candidate's current Compass
+stance on that topic; one on any edits (or "verbatim, no edits"). Reach for a third only when the
+quote was genuinely edited and the cut needs explaining — an honest account of what was removed
+beats a note crammed into two. Flag source weakness plainly ("campaign website, not verifiable to
+video"). No section numbers or internal jargon ("§4.3," "tier-1") — write for a skeptical human,
+not a note-to-self.
 
 ### 6.2 Edit history *(net-new)*
 
