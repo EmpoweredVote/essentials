@@ -11,7 +11,11 @@ export const COVERAGE_STATES = [
       { label: 'Alhambra', browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Bellflower', browseGovernmentList: ['0604982'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
-      { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: true },
+      // hasContext flipped false 2026-08-02: migration 1538 retired all 5 of Beverly Hills'
+      // stanced officials (Mirisch, Friedman, Nazarian, Corman, Wells). Every one of their rows
+      // cited only URLs that never existed, so there was no evidence a reader could check. The
+      // city keeps its browse entry; it has no compass coverage to claim until re-research.
+      { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Burbank', browseGovernmentList: ['0608954'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Carson', browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Compton', browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
