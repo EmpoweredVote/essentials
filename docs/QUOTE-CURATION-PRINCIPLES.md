@@ -286,7 +286,9 @@ candidate to only say what they came to say:**
 - **Written-medium rule (any tier):** a written source — questionnaire answer, op-ed,
   platform page — yields quotes *only as verbatim sentences the candidate actually wrote*,
   never a curator-summarized bullet list (e.g. "Support DACA, oppose Muslim ban and family
-  separation" is a summary, not a quote).
+  separation" is a summary, not a quote). Use the source at all *only if it is clearly the
+  candidate's own words* — op-eds and platform pages are often staff-drafted; confirm
+  authorship first.
 
 - **Hard filter, soft preference:** strongly prefer tiers 1–2; allow 3–4 *with a justification
   note explaining why*; hard-exclude tier 5.
