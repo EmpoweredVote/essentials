@@ -84,7 +84,13 @@ export const COVERAGE_STATES = [
       { label: 'Lynn',        browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Medford',     browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Newton',      browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA', hasContext: true },
+      // hasContext flipped false 2026-08-04, operator ruling "landing pages don't count as
+      // coverage". Migration 1548 (ev-accounts) retired 48 of Newton's 55 answers; the 7 that
+      // survived are not evidence: Laredo's 3 cite only `newtonma.gov/government/mayor`, a landing
+      // page that states no position, and Baker's 4 cite only his Suffolk Law faculty profile while
+      // asserting council votes — reasoning from profession, not from a record. Newton keeps its
+      // browse entry; it has nothing to claim until re-research.
+      { label: 'Newton',      browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA', hasContext: false },
       { label: 'Quincy',      browseGovernmentList: ['2555745'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Somerville',  browseGovernmentList: ['2562535'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Springfield', browseGovernmentList: ['2567000'], browseStateAbbrev: 'MA', hasContext: true },
@@ -116,7 +122,14 @@ export const COVERAGE_STATES = [
       { label: 'Gresham',      browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
       { label: 'Hillsboro',    browseGovernmentList: ['4134100'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Maywood Park', browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
-      { label: 'Portland',     browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
+      // hasContext flipped false 2026-08-04, operator ruling "landing pages don't count as
+      // coverage". Migration 1558 (ev-accounts) retired 57 rows across all 12 sitting councillors —
+      // every one sole-sourced to a fabricated Willamette Week article — leaving 8 of 12 at zero.
+      // The 15 that survived are not evidence either: Ryan's 6 and Wilson's 2 cite only
+      // `portland.gov/council/agenda` and `/mayor`, landing pages that state no position (and an
+      // agenda is not minutes), and the other 7 cite oregonlive URLs with zero Wayback captures in a
+      // directory that is otherwise well archived. Portland keeps its browse entry.
+      { label: 'Portland',     browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: false },
       { label: 'Sherwood',     browseGovernmentList: ['4167100'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Tigard',       browseGovernmentList: ['4173650'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Troutdale',    browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
