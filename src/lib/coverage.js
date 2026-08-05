@@ -80,7 +80,13 @@ export const COVERAGE_STATES = [
       { label: 'Brockton',    browseGovernmentList: ['2509000'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Cambridge',   browseGovernmentList: ['2511000'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Fall River',  browseGovernmentList: ['2523000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Lowell',      browseGovernmentList: ['2537000'], browseStateAbbrev: 'MA', hasContext: true },
+      // hasContext flipped false 2026-08-05: Lowell now holds ZERO stance answers. Migration 1562
+      // (ev-accounts) retired all 17 remaining rows across 9 of its 12 seated officials, including the
+      // mayor, because every one cited lowellsun.com articles that never existed — the host is the real
+      // Lowell Sun and is live, but all 15 cited paths 404 and none was ever archived, while sibling
+      // articles from the same months are densely captured. The 14 rows that also cited
+      // lowellma.gov/council or /mayor lost their only other source to the landing-page ruling.
+      { label: 'Lowell',      browseGovernmentList: ['2537000'], browseStateAbbrev: 'MA', hasContext: false },
       { label: 'Lynn',        browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Medford',     browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA', hasContext: true },
