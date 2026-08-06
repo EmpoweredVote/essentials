@@ -262,18 +262,33 @@ Prefer sources where the candidate is **personally speaking, on the record, in a
 public accountability** — ideally responding to a question. This favors authenticity and
 verifiability (spoken sources deep-link to video).
 
-**Hierarchy (best → worst):**
+**Hierarchy (best → worst), ranked by QUESTIONER INDEPENDENCE — how hard is it for the
+candidate to only say what they came to say:**
 
-1. **Debates & candidate forums** — spoken, on-record, probed.
-2. **News interviews** — spoken, on-record, questioned.
-3. **Prepared public remarks** — stump/floor speeches, testimony (spoken, unprobed).
-4. **Candidate-bylined written** — op-eds, official platform, *only if clearly the candidate's
-   own words, quoted as a **verbatim sentence** from the source — never a curator-summarized
-   bullet list* (e.g. "Support DACA, oppose Muslim ban and family separation" is a summary, not a
-   quote).
+1. **Debates, candidate forums & town halls** — spoken, on-record, probed by an independent
+   moderator, opponents, or citizens.
+2. **Independent-questioner interviews & Q&A** — interviews by established news organizations
+   (network/local TV, radio, nonpartisan nonprofit newsrooms); A Starting Point videos
+   (*caveat: curated questions, zero follow-up — structured self-presentation; prefer a
+   genuine press interview when both exist*); and **candidate questionnaires** — the
+   candidate's own unedited answers to an independent questioner's fixed questions
+   (LWV/Vote411, WyoFile-style outlet pages) — the best available *text* source.
+3. **Sympathetic-questioner interviews & prepared remarks** — partisan/ideological podcasts
+   and web shows, party-aligned hosts, candidate-friendly platforms; stump/rally/launch
+   speeches, floor speeches, testimony. *Per-candidate exception: a sympathetic-host
+   interview is never excluded when it is the candidate's only sourceable speech — the
+   justification note says so.*
+4. **Candidate-bylined written** — op-eds, official platform pages.
 5. **Hard-excluded — not merely deprioritized:** hot-mic, private, secretly-recorded, or clearly
    off-the-cuff "gotcha" remarks. Using off-guard speech is the manufactured-drama we reject and
    it corrodes trust. **Do not use.**
+
+- **Written-medium rule (any tier):** a written source — questionnaire answer, op-ed,
+  platform page — yields quotes *only as verbatim sentences the candidate actually wrote*,
+  never a curator-summarized bullet list (e.g. "Support DACA, oppose Muslim ban and family
+  separation" is a summary, not a quote). Use the source at all *only if it is clearly the
+  candidate's own words* — op-eds and platform pages are often staff-drafted; confirm
+  authorship first.
 
 - **Hard filter, soft preference:** strongly prefer tiers 1–2; allow 3–4 *with a justification
   note explaining why*; hard-exclude tier 5.
