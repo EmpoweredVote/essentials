@@ -8,7 +8,12 @@ export const COVERAGE_STATES = [
   {
     name: 'California', abbrev: 'CA',
     areas: [
-      { label: 'Alhambra', browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: false },
+      // hasContext restored true 2026-08-06: migration 1564 had flipped this false after retiring all
+      // 19 of Alhambra's rows (every one cited a fabricated sgvtribune.com path or a 404 agendas index).
+      // Migration 1567 re-researched the council from the city's own AgendaCenter minutes and restored
+      // 16 rows across all five councilmembers, so the coverage claim is true again. Homelessness
+      // Response is deliberately still blank for Lee, Wang and Maza — no position statement exists.
+      { label: 'Alhambra', browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Bellflower', browseGovernmentList: ['0604982'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
       // hasContext flipped false 2026-08-02: migration 1538 retired all 5 of Beverly Hills'
