@@ -192,7 +192,35 @@ in the header is the thing to go read.
 | KS held rows | Gaynor, Catanese (KS-04); dated `2026-09-01` |
 | MO held rows | 16 minor-party rows; dated `2026-09-01` |
 | MO placeholder election | districts 2–6 hang off a 2026-03-24 shell — needs a re-parent decision |
-| TX May 2026 | 19 uncovered races (6 cities' cancellation orders, Grayson/Gregg counties, Frisco Mayor runoff which has no race row) |
+| TX May 2026 | ⏸ **PARKED 2026-08-07 at 18 races / 19 rows** (from 19/21). See below. |
+
+### ⏸ TX May 2026 — parked state
+
+**Done:** Longview Council D3 (mig 1598 — we held only 2 of a **5**-candidate certified field; added
+Woolridge, Rudolph, Floyd as `lost`). Frisco Mayor June runoff (mig 1599 — closed the "no race row"
+item; Hill `won` per City of Frisco Ordinance 2026-06-43).
+
+**The fact that matters for resuming:** 17 of the 18 remaining races have exactly ONE candidate. Under
+Texas Election Code §2.053 an unopposed candidate is declared elected and the office omitted from the
+ballot; if instead they appeared, they took 100%. **Both paths yield `won` — only the citation is
+missing.** But check per city: Fairview Seat 2 shows an unopposed candidate who DID appear, at 100%.
+
+| jurisdiction | races | needs |
+|---|---|---|
+| Blue Ridge (3), Farmersville (2) | 5 | cancellation order — absence from the county canvass already confirmed |
+| Murphy Mayor (1), Nevada (3), Prosper (2), Saint Paul (4) | 10 | city orders, or Collin canvass pp.11–19 |
+| Van Alstyne P6 + Mayor | 2 | Grayson canvass. Mayor contested; only a secondary source so far (Atchison 399 / Soucie 71) |
+| Longview D4 | 1 | Longview cancellation order |
+
+**Dead ends — don't repeat:** Collin County's official May 2 summary PDF is **truncated at 10 pages**
+("1 of 19"…"10 of 19"), ending mid-Murphy; the operator's own copy is byte-identical, so it is not a
+download artifact and pages 11–19 are simply not published. Grayson County 403s both curl and WebFetch.
+~25 filename guesses on collincountytx.gov all 404 — the site requires its `?sfvrsn=` version token.
+
+**Also parked:** Frisco's MAY 2 mayor rows cite Collin's share only (Hill 4,803 / Vilhauer 3,702) —
+values correct, numbers understated, do NOT fix by scaling. Sachse is entirely absent from the corpus
+despite a June 13 Sachse Place 4 runoff. Princeton's runoff row cites 293–245 while the Collin CSV
+totals 294–246.
 
 ### ⚠️ The rule that held in every state checked
 
