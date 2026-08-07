@@ -186,13 +186,42 @@ in the header is the thing to go read.
 
 | | |
 |---|---|
-| WA top-two cull | after 2026-08-21 certification; 69 rows dated `provisional_until = 2026-08-24` |
+| WA top-two cull | ⏳ after certification (county canvass 08-18, SoS deadline 08-21); 69 rows dated `provisional_until = 2026-08-24`. ✅ **Field pre-verified complete 2026-08-07 — see below.** |
 | TN full-shell reconcile | after 2026-08-24; 88 rows dated `2026-08-27` |
 | VA held rows | Kersey (VA-04), Terry (VA-07) after VA DOE posts its November list; dated `2026-09-01` |
 | KS held rows | Gaynor, Catanese (KS-04); dated `2026-09-01` |
 | MO held rows | 16 minor-party rows; dated `2026-09-01` |
 | MO placeholder election | districts 2–6 hang off a 2026-03-24 shell — needs a re-parent decision |
 | TX May 2026 | ⏸ **PARKED 2026-08-07 at 18 races / 19 rows** (from 19/21). See below. |
+
+### ⏳ WA top-two cull — field pre-verified 2026-08-07, execution gated
+
+Election `51e7a875-bff9-4e96-adcf-41736454d25d`: 10 races (all 10 U.S. House districts), 69
+candidates, 0 results, all 69 flagged. The "20 flagged / 69 real" undercount noted below is already
+fixed — the queue now equals the full shell.
+
+**✅ The field is complete.** Our 69 rows were checked against the SoS *ballot field* — a
+results-independent check, since the set of names on the ballot is final while only counts move.
+**69 = 69 across all 10 districts, 0 missing, 0 extra.** So after certification the cull is a pure
+application of results with no discovery needed. (This was the only complete field found on
+2026-08-07: Sheriff was 4 of 8, Assessor 2 of 5, Longview D3 2 of 5.) Only cosmetic variance: we store
+"Suzan K. DelBene", the ballot says "Suzan DelBene" — same person, not a defect.
+
+**Why it must wait.** WA is all-mail and accepts ballots postmarked through election day, so counting
+runs about two weeks, and top-two turns entirely on SECOND place — the most volatile slot in a slow
+count. D5 has 12 candidates, D4 has 11, D3 has 9. The SoS feed itself reports
+`isOfficialResults = false` and states "Results posted before certification are unofficial."
+
+**Data path for the day** (host is `results.votewa.gov` — no dot; the site is an Angular SPA and the
+API base is only discoverable from `main-*.js`):
+1. `https://results.votewa.gov/results/public/api/elections/washington/20260804` — JSON; check
+   `isOfficialResults` flips true, and re-read `publicReportCategories[].reports[].blobName`.
+2. `https://results.votewa.gov/cdn/results/01000000-f977-1a83-1ed4-08ddd69e9e69/<blobName>` — the
+   candidate-level xlsx, under the **jurisdictionId** (not the electionId). Blob GUIDs change.
+3. Parse with the minimal XLSX→TSV script; columns are
+   `Office Name | Contest ID | Ballot Name | Choice ID | Party | Total`. Exclude the non-candidate
+   rows: `Ballots Cast`, `Registered Voters`, `Over Votes`, `Under Votes`, `Times Blank Voted`,
+   `Write-in`.
 
 ### ⏸ TX May 2026 — parked state
 
