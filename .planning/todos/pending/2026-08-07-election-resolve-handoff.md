@@ -1,7 +1,47 @@
 # Election resolve — handoff, 2026-08-07
 
 Session did the post-election "large resolve". **Migrations 1574–1589 are applied AND pushed**
-(EV-Accounts `master` @ `307c6fd4`). Next free migration: **1590**.
+(EV-Accounts `master` @ `307c6fd4`). Next free migration: **1593**.
+
+> ## ✅ TASKS (A) AND (B) ARE COMPLETE — closed 2026-08-07 (later session)
+>
+> **Migrations 1590–1592 applied and committed; 1527 committed.** EV-Accounts `master` @ `a694d960`,
+> **2 commits ahead of origin — NOT PUSHED.**
+>
+> **(A) LA County June 2 primary is FULLY RESOLVED.** 247 rows, **0 NULL results**, every result
+> carries a source (249 − 2 deleted fabrications). 44 rows recorded across migs 1590–1592.
+>
+> Three findings that **overturned assumptions written below** — read these before trusting the
+> task-A section, which is left intact only as a record of what was believed at handoff time:
+>
+> 1. **Long Beach City Attorney + Prosecutor WERE on the June ballot.** The guess below ("these
+>    seats weren't on the June ballot") was wrong. Each had exactly ONE filer; under LBMC 1.15.150
+>    the Council appointed the sole nominee and cancelled that contest, so neither appears in the
+>    canvass. Both are `won` (unopposed). Every Long Beach office with 2+ candidates *does* appear
+>    in the results — that asymmetry is the diagnostic.
+> 2. **Two more `incumbent_lookup` fabrications**, deleted and archived in
+>    `essentials._fabricated_1590_removed`: **Ricardo Lara** (termed out, Cal. Const. art. V) and
+>    **Tony Thurmond** (positively on the GOVERNOR ballot, 63,762 / 0.7%). Both contests had one row
+>    more than the certified field. The `incumbent_lookup` audit for this election is now COMPLETE —
+>    4 of 14 rows were fabrications; the other 10 are confirmed real.
+> 3. **Superintendent's nonpartisan majority rule never fired.** Nobody cleared 50% (Shaw led on
+>    22.6%), so the top two `advanced`. The warning below is still correct — it just didn't apply.
+>
+> Also: the three district contests were **verified** LA-only (one county row each), and the SoS
+> `.xlsx` **dropped Sang "Sam Shin" Masog's name** while keeping his 10,199 votes — only the PDF
+> (p.93) identifies him.
+>
+> **(B) Migration 1527 is committed, and its open question is CLOSED.** The 404 empty-`sources` rows
+> are **legitimate**, not a defect backlog. The gate is driven from `politician_answers`, so
+> `EMPTY_SOURCES` fires only where a voter-facing answer rests on uncited context — 0 of the 404 have
+> an answer. All 404 are honest documented blanks from the 2026-05-11..13 Collin County / Richardson /
+> Plano / Prosper / Bloomington work across 92 people, each opening "Researched <date>" and listing
+> what was checked. `scripts/check-stance-sources.mjs` runs green: `EMPTY_SOURCES 0`,
+> `NON_URL_SOURCE 0`, `BALLOTPEDIA_ONLY 159` (unchanged).
+>
+> ▶ **Everything still open is in "Other open items" near the bottom of this file** — the WA / TN /
+> VA / KS / MO / TX post-certification queues, plus the deliberately-unseeded additive work (LA City
+> Mayor has no race row, Villanueva has no Sheriff-runoff row, BoS D5 has no race row).
 
 Two things to pick up: **(A) the last 46 LA County rows**, **(B) migration 1527**.
 
