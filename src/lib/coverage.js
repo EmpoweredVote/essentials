@@ -162,23 +162,35 @@ export const COVERAGE_STATES = [
     areas: [
       { label: 'Allen',         browseGovernmentList: ['4801924'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Anna',          browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX', hasContext: true },
+      // Tarrant County big-six (2026-08-08 seed, migs 1621-1628). This is a SECOND, unconnected
+      // TX cluster — every other TX entry here is Collin County area (plus Longview). None of the
+      // six carries hasContext: the seed was roster + geofence + browse only, with no compass
+      // stances, so claiming context would not be DB-honest.
+      { label: 'Arlington',     browseGovernmentList: ['4804000'], browseStateAbbrev: 'TX' },
       { label: 'Blue Ridge',    browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
       { label: 'Celina',        browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX', hasContext: true },
+      // Euless: 4 of its 7 seats are seeded VACANT-by-design (Mayor, Places 2/4/5) — see mig 1628.
+      { label: 'Euless',        browseGovernmentList: ['4824768'], browseStateAbbrev: 'TX' },
       // Phase 222 (2026-07-30/31): each of these four moved 0 -> >=1 evidence-cited compass
       // stance, so hasContext is DB-honest. Fairview: Works (residential-zoning).
       // Farmersville: Henry (residential-zoning). Lucas: Underhill + Orr. Parker: Sharpe.
       { label: 'Fairview',      browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Farmersville',  browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX', hasContext: true },
+      // Fort Worth: districts run 2-11 (there is no District 1) + Mayor = 11 seats.
+      { label: 'Fort Worth',    browseGovernmentList: ['4827000'], browseStateAbbrev: 'TX' },
       { label: 'Frisco',        browseGovernmentList: ['4827684'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Grapevine',     browseGovernmentList: ['4830644'], browseStateAbbrev: 'TX' },
       { label: 'Josephine',     browseGovernmentList: ['4838068'], browseStateAbbrev: 'TX' },
       { label: 'Lavon',         browseGovernmentList: ['4841800'], browseStateAbbrev: 'TX' },
       { label: 'Longview',      browseGovernmentList: ['4843888'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Lowry Crossing',browseGovernmentList: ['4844308'], browseStateAbbrev: 'TX' },
       { label: 'Lucas',         browseGovernmentList: ['4845012'], browseStateAbbrev: 'TX', hasContext: true },
+      { label: 'Mansfield',     browseGovernmentList: ['4846452'], browseStateAbbrev: 'TX' },
       { label: 'McKinney',      browseGovernmentList: ['4845744'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Melissa',       browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Murphy',        browseGovernmentList: ['4850100'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Nevada',        browseGovernmentList: ['4850760'], browseStateAbbrev: 'TX' },
+      { label: 'North Richland Hills', browseGovernmentList: ['4852356'], browseStateAbbrev: 'TX' },
       { label: 'Parker',        browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Plano',         browseGovernmentList: ['4858016'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Princeton',     browseGovernmentList: ['4859576'], browseStateAbbrev: 'TX', hasContext: true },
@@ -390,6 +402,15 @@ export const COVERAGE_COUNTIES = [
   { label: 'Dane County', browseGovernmentList: ['55025'], browseStateAbbrev: 'WI', hasContext: true },
   { label: 'Pima County', browseGovernmentList: ['04019'], browseStateAbbrev: 'AZ', hasContext: true },
   { label: 'Riverside County', browseGovernmentList: ['06065'], browseStateAbbrev: 'CA', hasContext: true },
+  // First two TEXAS counties (2026-08-08, migs 1621/1622). Each is a Commissioners Court:
+  // County Judge + 4 precinct Commissioners. No hasContext — roster-only seed, no stances.
+  // ⚠ Both share ONE countywide district (the Clark County NV pattern) because no commissioner
+  // precinct geofences are loaded, so an address returns all five members rather than just its
+  // own precinct's. Correct for the County Judge, over-inclusive for the commissioners.
+  // ⚠ Collin's geo_id 48085 is ambiguous — it is also TX House District 85 (G5220). Anything
+  // resolving this entry must qualify by mtfcc/district_type, never by geo_id alone.
+  { label: 'Tarrant County', browseGovernmentList: ['48439'], browseStateAbbrev: 'TX' },
+  { label: 'Collin County', browseGovernmentList: ['48085'], browseStateAbbrev: 'TX' },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on
