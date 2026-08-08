@@ -133,14 +133,23 @@ export const COVERAGE_STATES = [
       { label: 'Gresham',      browseGovernmentList: ['4131250'], browseStateAbbrev: 'OR' },
       { label: 'Hillsboro',    browseGovernmentList: ['4134100'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Maywood Park', browseGovernmentList: ['4146730'], browseStateAbbrev: 'OR' },
-      // hasContext flipped false 2026-08-04, operator ruling "landing pages don't count as
-      // coverage". Migration 1558 (ev-accounts) retired 57 rows across all 12 sitting councillors —
-      // every one sole-sourced to a fabricated Willamette Week article — leaving 8 of 12 at zero.
-      // The 15 that survived are not evidence either: Ryan's 6 and Wilson's 2 cite only
-      // `portland.gov/council/agenda` and `/mayor`, landing pages that state no position (and an
-      // agenda is not minutes), and the other 7 cite oregonlive URLs with zero Wayback captures in a
-      // directory that is otherwise well archived. Portland keeps its browse entry.
-      { label: 'Portland',     browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: false },
+      // hasContext restored true 2026-08-07. It was flipped false on 08-04 under the operator ruling
+      // "landing pages don't count as coverage", after migration 1558 retired 57 rows sole-sourced to
+      // fabricated Willamette Week articles and the 15 survivors turned out to rest on
+      // `portland.gov/council/agenda` and `/mayor` (landing pages stating no position) or on
+      // oregonlive URLs with zero Wayback captures.
+      //
+      // Migrations 1608-1614 (ev-accounts) rebuilt the cluster on portland.gov's PER-MEMBER ROLL-CALL
+      // RECORDS (`/council/districts/<n>/<name>/votes`), which give each councillor's individual
+      // Yea/Nay/Absent per council document, plus per-member topical pages and — for the mayor, who
+      // votes only to break ties — his published agenda. All 12 now hold 3-9 answers each (56 rows,
+      // 117 citations, every one portland.gov). Zero cite the two banned landing pages, oregonlive, or
+      // willametteweek, so the coverage claim is true again on the standard that flipped it off.
+      //
+      // 13 topics are deliberately still blank (mig 1614): Criminalization for the 7 councillors
+      // seated after the camping ordinance passed, School Vouchers for 2 (Portland has no K-12
+      // jurisdiction), Rent for 2 and Homelessness for 2 — all verified unsourceable, not unresearched.
+      { label: 'Portland',     browseGovernmentList: ['4159000'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Sherwood',     browseGovernmentList: ['4167100'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Tigard',       browseGovernmentList: ['4173650'], browseStateAbbrev: 'OR', hasContext: true },
       { label: 'Troutdale',    browseGovernmentList: ['4174850'], browseStateAbbrev: 'OR' },
