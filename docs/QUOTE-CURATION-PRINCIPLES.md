@@ -65,7 +65,7 @@ The accountability principles (§6) depend on all of them existing.
 | **Canonical (revealed) quote** | The edited quote shown everywhere **post-reveal** and in Compass/Essentials. Single source of truth. | `essentials.quotes.quote_text` |
 | **Blind quote** | Canonical **plus extra de-identification** (§4.5). Shown only on the blind Read & Rank card; relaxes to canonical at reveal. | `essentials.quotes.deidentified_text` (public serves `COALESCE(deidentified_text, quote_text)`) |
 | **Justification** | Why this quote was selected + what was edited and why. | `essentials.quotes.editor_note` (required) |
-| **Provenance** | Speaker, source name, venue/event, date, **source tier** (§5), **medium**, **timestamp + deep-link**, URL. | Partial — `source_name`, `source_url` (timestamp via `&t=<s>s`); tier/medium/venue/date **net-new** |
+| **Provenance** | Speaker, source name, venue/event, date, **source directness** (§5), **medium**, **timestamp + deep-link**, URL. | Partial — `source_name`, `source_url` (timestamp via `&t=<s>s`); directness/medium/venue/date **net-new** |
 | **Topic + stance relationship** | Canonical `topic_key`; whether the quote is *reinforcing / elaborating / in-tension* with the Compass value (§7). | `topic_key` exists; relationship tag **net-new** |
 | **Review metadata** | Who reviewed/approved; **last-reviewed date** (staleness clock, §6.6). | **Net-new** |
 | **Edit history** | Git/Wikipedia-style log of every change, attributable. | **Net-new** (`editor_note` is point-in-time, not a running log) |
@@ -254,48 +254,92 @@ is on-question (it favors non-car mobility) but states a goal no one contests, w
 flag it, and prefer a quote that says *how* (dedicated bus lanes, road-diet tradeoffs, parking
 policy).
 
+**Per-quote preference vs. per-set property.** Everything above judges a *single* quote, and it is a
+preference. There is a second question that only exists across a *set*: do the answers to one
+question actually let a citizen make a meaningful choice? Two properties, both required:
+
+- **Commensurable** — a shared latent dimension exists, so preferring one answer over the other
+  *means* something. Not "same words," not "mutually exclusive." Healthcare coverage vs. healthcare
+  supply are commensurable — both are positions on how large a role government should play. "Cap
+  insulin prices" vs. "build more medical schools" are not: no axis, so no meaningful ordering.
+  Incommensurable answers are the signal that these are **two questions** — split them, and each
+  half becomes rank-or-surface on its own.
+- **Differentiated** — real distance along that axis. Commensurable-but-identical is not rankable.
+
+**Undifferentiated is not a failure. Agreement is information.** When candidates genuinely converge,
+show that they converge — do not rank it, and **never hide agreement to make a race look sharper.**
+Dropping the question would discard a true fact about the race.
+
+Three limits keep this honest:
+
+- **Contrast is observed, never engineered.** Select each candidate's *most faithful* answer first;
+  only then look at the set and ask whether real difference exists. Never pick a quote *because* it
+  contrasts. This ordering is the guardrail — it is why the audit runs its per-set pass strictly
+  after its per-quote pass.
+- **Articulacy is not a differentiation signal, in either direction.** Same position, one candidate
+  more fluent, is still undifferentiated — ranking it would measure rhetoric rather than policy. A
+  blunt, plainly-worded genuine difference is differentiated. Fluency is never evidence either way.
+- **Difference often lives in the HOW.** When candidates share a goal, the mechanism is usually
+  where they diverge — so hunting genuine differentiation is usually hunting the mechanism-bearing
+  quote, which is what this section already asks for.
+
 ---
 
 ## 5. Source principles
 
-Prefer sources where the candidate is **personally speaking, on the record, in a context of
-public accountability** — ideally responding to a question. This favors authenticity and
-verifiability (spoken sources deep-link to video).
+Prefer sources where the candidate is **on the record, in a context of public accountability,
+answering a question** — ideally the very question the quote will be ranked against. This favours
+authenticity, verifiability, and above all **comparability**.
 
-**Hierarchy (best → worst), ranked by QUESTIONER INDEPENDENCE — how hard is it for the
-candidate to only say what they came to say:**
+**Hierarchy — directness of answer (best → worst).** The levels are **named, not numbered**, on
+purpose: `essentials.discovered_sources.source_tier_guess` runs 1–4 on a *different* scale (see
+"Why directness and not medium" below), and two 1–4 scales meaning different things is a trap.
 
-1. **Debates, candidate forums & town halls** — spoken, on-record, probed by an independent
-   moderator, opponents, or citizens.
-2. **Independent-questioner interviews & Q&A** — interviews by established news organizations
-   (network/local TV, radio, nonpartisan nonprofit newsrooms); A Starting Point videos
-   (*caveat: curated questions, zero follow-up — structured self-presentation; prefer a
-   genuine press interview when both exist*); and **candidate questionnaires** — the
-   candidate's own unedited answers to an independent questioner's fixed questions
-   (LWV/Vote411, WyoFile-style outlet pages) — the best available *text* source.
-3. **Sympathetic-questioner interviews & prepared remarks** — partisan/ideological podcasts
-   and web shows, party-aligned hosts, candidate-friendly platforms; stump/rally/launch
-   speeches, floor speeches, testimony. *Per-candidate exception: a sympathetic-host
-   interview is never excluded when it is the candidate's only sourceable speech — the
-   justification note says so.*
-4. **Candidate-bylined written** — op-eds, official platform pages.
-5. **Hard-excluded — not merely deprioritized:** hot-mic, private, secretly-recorded, or clearly
-   off-the-cuff "gotcha" remarks. Using off-guard speech is the manufactured-drama we reject and
-   it corrodes trust. **Do not use.**
+- **`answered-this-question`** — the candidate was asked this question, or its clear equivalent,
+  and this is their answer. Debate, forum and town-hall answers land here, probed by an
+  independent moderator, opponents or citizens. So do **candidate questionnaires** — the
+  candidate's own unedited answers to an independent questioner's fixed questions (LWV/Vote411,
+  WyoFile-style outlet pages). A questionnaire is written and self-published, yet every candidate
+  answers an *identical prompt* and every ballot-qualified candidate is invited, so it solves
+  comparability and inclusion at once: it is the best available **text** source. Prefer these.
+  *Caveat on curated formats* — A Starting Point videos and similar are answers to fixed questions
+  with zero follow-up, i.e. structured self-presentation; prefer a genuine press interview when
+  both exist.
+- **`adjacent`** — genuinely responsive, but the prompt they were given differed: a news interview
+  that circled the subject, an answer to a narrower or broader version of the question.
+- **`curator-extracted`** — the position was lifted from material not organised as an answer at
+  all: stump, rally and launch speeches, floor remarks, testimony, op-eds, official platform
+  pages. Sometimes it is all a candidate has, and that is honest presence, not a defect.
+- **`excluded` — hard-excluded, not merely deprioritized:** hot-mic, private, secretly-recorded, or
+  clearly off-the-cuff "gotcha" remarks. Using off-guard speech is the manufactured-drama we reject
+  and it corrodes trust. **Do not use.**
 
-- **Written-medium rule (any tier):** a written source — questionnaire answer, op-ed,
-  platform page — yields quotes *only as verbatim sentences the candidate actually wrote*,
-  never a curator-summarized bullet list (e.g. "Support DACA, oppose Muslim ban and family
-  separation" is a summary, not a quote). Use the source at all *only if it is clearly the
-  candidate's own words* — op-eds and platform pages are often staff-drafted; confirm
-  authorship first.
-
-- **Hard filter, soft preference:** strongly prefer tiers 1–2; allow 3–4 *with a justification
-  note explaining why*; hard-exclude tier 5.
+- **Why directness and not medium.** The old ladder ranked by *questioner independence*
+  (debates > news interviews > prepared remarks > candidate-bylined written). That instinct was
+  really tracking directness, and ranking by medium got questionnaires exactly backwards — it filed
+  the most directly comparable source we have under "written, lowest tier." Questioner independence
+  still carries real information (a debate answer is probed; a questionnaire answer is not), so use
+  it to break ties **within** a level — never to override the level itself. A sympathetic or
+  partisan questioner lowers a source *within* its level for the same reason.
+  *Source discovery deliberately still ranks by questioner independence*, because it is guessing
+  from a title and channel name before anything has been read, where directness is not yet
+  knowable. Its `source_tier_guess` is a **triage-priority** signal, not a quality claim about a
+  quote.
+- **Per-candidate exception.** A sympathetic-host interview, or any lower level, is **never
+  excluded when it is that candidate's only sourceable speech** — the justification note says so.
+  Silencing a candidate to protect a hierarchy is the worse error.
+- **Hard filter, soft preference:** strongly prefer `answered-this-question`; allow `adjacent` and
+  `curator-extracted` *with a justification note explaining why*; hard-exclude `excluded`.
+- **Written sources at any level yield verbatim sentences only** — the quote must be an actual
+  sentence the candidate wrote, never a curator-summarized bullet list (e.g. "Support DACA, oppose
+  Muslim ban and family separation" is a summary, not a quote). This applies to questionnaires
+  exactly as it does to op-eds. **And use the source at all *only if it is clearly the candidate's
+  own words*** — op-eds, platform pages and advocacy-organisation policy papers are often
+  staff-drafted; confirm authorship first.
 - **Social media is a distribution channel, not a source type** — classify by the *utterance*:
-  - Video of the candidate speaking, posted to social → slot by speaking context (tier 2–3);
-    video-verifiable.
-  - First-person **text** post stating a considered position → allowed at ~tier 4 but
+  - Video of the candidate speaking, posted to social → slot by what they were responding to,
+    usually `adjacent` or `curator-extracted`; video-verifiable.
+  - First-person **text** post stating a considered position → `curator-extracted` and
     **high-scrutiny** (§6.3): confirm authorship (accounts are often staff-run) and watch that
     the post isn't an already-stripped qualifier.
   - Reactive posts — dunks, quote-tweets, jokes → excluded (position-not-attack + off-the-cuff).
@@ -347,7 +391,8 @@ when — like a git or Wikipedia history, so authorship and evolution are attrib
   against the source, judge representativeness (§4.3), approve the final trim and every de-id
   call, sign the justification, own it. AI output is a draft, not a decision.
 - **High-scrutiny class** (needs an explicit justification note, and ideally a second set of
-  eyes): de-identification edits, tier 3–4 sources, text-only social, in-tension quotes (§7),
+  eyes): de-identification edits, `adjacent` / `curator-extracted` sources, text-only social,
+  in-tension quotes (§7),
   older-quote exceptions.
 - **Review model:** for now, a single accountable curator + full log + justification is the bar;
   a second human reviewer is aspirational — **except for dispute resolution, where the resolver
@@ -475,19 +520,37 @@ the cost of gas?").
 
 An override **may** re-word, localize, add debate context, or shorten. It **must**:
 
-- **Stay on the same axis.** It engages the *same* Compass axis/dimension as the topic. If the
-  race's real question is on a different axis, that is a Compass fix or a re-home (§7.1), **not** an
-  override — an axis-shifting override silently breaks the §7.2 coupling and the "same topics"
-  guarantee.
+- **Prefer the same axis; shift only deliberately.** Prefer a ranking question that engages the same
+  Compass axis as its topic. But candidates answer the question they were actually asked, and **a
+  rankable question on a slightly different axis beats an unrankable one** — so a race-local question
+  may sit off the Compass axis, and may even have no Compass topic at all (an emergent local
+  question). When it does: the topic is **race-local** and must not be pooled across races, and the
+  §7.2 coupling check is **skipped**, not reported — comparing a quote to a Compass value measured on
+  a different axis produces noise, not a finding.
+  **How the shift is declared:** `essentials.readrank_questions.origin`. A question with
+  `origin = 'compass'` is on-axis by construction and coupling applies. A question with
+  `origin = 'moderator'` or `'emergent'` is one somebody actually asked, which may or may not sit on
+  the Compass axis — so coupling is unreliable and is skipped. This is deliberately blunt: a
+  moderator question can perfectly well be on-axis, and we skip a check that would have been valid.
+  That is the right direction of error for a check whose output is "a human must resolve this."
 - **Stay blind.** It is shown identically to every candidate and must not name or contextually leak
   a candidate (§4.2). "California" (the race) is fine; "the former mayor's plan" is not.
 - **Derive from the real question.** Prefer the actual debate/interview question, tightened for
   clarity, over an invented one. Record the source.
 
-Because it is axis-invariant, "answers the ranking question" still implies "is evidence on the
-Compass axis," so responsiveness (§7.1) and coupling (§7.2) both continue to hold. The override is a
-**Read & Rank ranking-question concern only** — anywhere the Compass question is surfaced (Compass,
-Essentials) still shows the canonical Compass question.
+When the question is on-axis, "answers the ranking question" still implies "is evidence on the
+Compass axis," so responsiveness (§7.1) and coupling (§7.2) both hold. When it is off-axis,
+responsiveness still holds — it is gated against the ranking question, which is the question the
+candidates answered — but coupling does not, and is **skipped rather than reported**.
+
+Read & Rank never surfaces a Compass value (the reveal shows candidate, topic, quotes, agreement and
+sources — no spectrum), which is why this costs nothing a citizen sees. The real cost is cross-race
+comparability, contained by marking the topic race-local. Watch the aggregate: if one topic
+accumulates many off-axis questions, the *Compass question* is what is wrong — escalate to
+`compass-topic-builder` rather than papering over it race by race.
+
+The override is a **Read & Rank ranking-question concern only** — anywhere the Compass question is
+surfaced (Compass, Essentials) still shows the canonical Compass question.
 
 ---
 
