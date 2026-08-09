@@ -24,11 +24,39 @@ Per-government coverage is 11 Fort Worth / 9 Arlington / 8 NRH / 7 Mansfield / 7
 
 ---
 
-## ▶▶ NEXT UP — the rest of the Tarrant County November ballot (operator asked for this)
+## ✅✅ DONE 2026-08-09 — the full county ballot is seeded (migration 1640, pushed)
 
-Mig 1636 seeded only the 3 contests whose offices already existed. **42 more contests are on the
-same ballot and none of their offices exist in `essentials.offices`.** This is the blocker: the
-work is *create offices first, then races, then candidates*, not just races.
+All 42 remaining contests are in. **Tarrant County now: 8 chambers / 47 offices / 0 vacant /
+45 races / 66 candidates / 40 officeholders**, every chamber's office count matching its
+`official_count`.
+
+Migration 1640 added 7 chambers, 42 offices, 42 races, 60 candidates, 60 politician records and
+occupancy for the 35 incumbents.
+
+**Chamber model = Racine County, WI** (governing body + `Countywide Elected Officials` + one
+chamber per court). Racine also settled the state-court question: Wisconsin circuit courts are
+likewise STATE trial courts elected by county, and Racine models them under the COUNTY government,
+so the 13 Texas district courts do the same.
+
+### Lessons from the build (all cost time)
+- ⚠ **Reserved words cannot be VALUES column aliases** — `) AS v(full, ...)` is a syntax error.
+  Use `fullname/fname/lname`. The whole 6-statement transaction rolled back cleanly on the error;
+  **verify nothing committed before retrying** rather than assuming.
+- ⚠ Naive `name.split()[-1]` gave **"Sergio De Leon" → last_name "Leon"**. Keep an override map
+  for multi-word surnames.
+- 🔑 **One name collision in 60, and it was a trap**: "David Cook" already existed as a **Texas
+  State Rep with 7 compass answers** — not the Criminal Court No. 1 judge. A separate record was
+  created deliberately; linking them would have grafted a legislator's compass profile onto a
+  judicial race.
+- ⚠ **7 seats have no incumbent on the ballot** (1 Criminal District, 4 District, 1 Justice,
+  1 Probate). They are `is_vacant=false` with **no holder** — their occupant is unknown, NOT
+  absent. Marking them vacant would recreate the exact 1628 Euless bug.
+  ▶ **Owed: source those 7 current occupants.**
+
+### Historical note — what the blocker had been
+Mig 1636 seeded only the 3 contests whose offices already existed. The other 42 had no
+`essentials.offices` rows at all, so the work was *create offices first, then races, then
+candidates*.
 
 ### Inventory (from Ballotpedia "Municipal elections in Tarrant County, Texas (2026)", fetched 2026-08-08)
 
@@ -130,6 +158,10 @@ Mig 1636 is the worked example. Key points:
 ---
 
 ## ▶ ALSO OUTSTANDING
+
+### 0. ▶▶ START HERE NEXT — Texas state races (biggest remaining gap; NOT started)
+See item 1. Scoped but untouched: expect ~150 TX House + 31 TX Senate + statewide executive
+offices, so it is a multi-migration job on the scale of the county ballot, not a top-off.
 
 ### 1. 🔴 All Texas STATE races are missing (statewide gap, not Tarrant-specific)
 `TX 2026 Statewide General` contains **only 38 U.S. House races + U.S. Senate**. There is **no
