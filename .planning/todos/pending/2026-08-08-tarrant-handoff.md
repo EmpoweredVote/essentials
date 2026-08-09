@@ -54,20 +54,59 @@ work is *create offices first, then races, then candidates*, not just races.
 **Total remaining: 42** (3 + 3 + 10 + 3 + 2 + 8 + 13). With the 3 already seeded, the full county
 ballot is **45 contests**.
 
-### 🔴 Decisions to make BEFORE writing the migration
+### ✅ DECIDED 2026-08-08 (operator) — do not re-litigate these
 
-1. **The 13 "Texas Nth District Court" seats are STATE district courts, not county offices.**
-   They appear on the Tarrant ballot but belong to the judicial tier, not
-   `Tarrant County, Texas, US`. Putting them under the county government would be wrong and would
-   make them render as county offices. Decide the government/chamber before seeding.
-   See `project_ca_judicial_districts_null_geoid` — 504 CA judicial districts with NULL `geo_id`
-   left the Judges tab empty. Do not repeat that: set `geo_id`.
-2. **JP precincts (1–8) are county subdivisions** and need `districts` rows if they are to be
-   geo-resolvable; Tarrant's existing offices all share one LOCAL district row.
+**Decision 1 — the 13 "Texas Nth District Court" seats get `geo_id = '48439'` (Tarrant County),
+NOT `'48'` (Texas).** Reuse the existing district row
+`0d533885-23fb-4f13-8084-fe01dc57372b` — label `Tarrant County`, `COUNTY`, `48439`, `G4020`,
+already shared by all 5 existing Tarrant County offices and backed by an exact geofence.
+
+Rationale: **`geo_id` encodes who VOTES for the office, not which level of government owns it.**
+These are Texas state courts constitutionally, but only Tarrant voters elect them. `geo_id = '48'`
+would surface all 13 Tarrant judicial races to every voter in Texas.
+
+The pattern is already proven in `essentials.districts` by Indiana:
+| label | geo_id | why |
+|---|---|---|
+| `Indiana Supreme Court Justice (Retain Goff?)` | `18` | statewide retention → statewide electorate |
+| `Greene County Superior Court Judge` | `18055` | county FIPS → county electorate |
+
+Same `JUDICIAL` type, different `geo_id`, chosen by electorate. Texas district courts are case 2.
+
+⚠ **Per-court check still owed**: some Texas district courts are **multi-county** (rural benches
+share a judge). If any of the 13 serves beyond Tarrant, a county-only `geo_id` under-resolves it
+for the other counties' voters. Tarrant's are almost certainly single-county (urban), but confirm
+court by court rather than assuming.
+
+**Decision 2 — do NOT create district rows for the 8 JP precincts. Reuse the same county district row.**
+
+Checked 2026-08-08: Tarrant has exactly **two** geofences — the county itself (`48439`/`G4020`)
+and one unrelated town. **There is no sub-county geometry at all**: no JP precincts, no
+commissioner precincts.
+
+So creating 8 JP district rows means inventing `geo_id`s that **no geofence backs**. A district
+whose `geo_id` matches no geofence resolves to nobody and the office becomes **invisible** — it
+does not error, it simply never appears for any address. That is exactly
+`project_ca_judicial_districts_null_geoid` (504 rows, empty Judges tab), and Indiana has the same
+bug in miniature at `1800001`.
+
+Precedent that settles it: **the 4 commissioner precinct offices already share the single county
+district row.** Precinct-level granularity is already absent for commissioners and was accepted.
+
+Tradeoff, stated honestly: every Tarrant voter will see all 8 JP races and all 4 commissioner
+precincts when they vote in only one of each. That is **over-showing** — wrong but visible and
+fixable. Inventing geo_ids gives **under-showing** — wrong and invisible. Over-showing is the
+safer failure and is what the data already does.
+▶ If precinct accuracy is wanted later, the real fix is sourcing JP/commissioner precinct
+boundaries from Tarrant GIS and loading them as **geofences first**. Geometry before district
+rows, never the reverse.
+
+### 🔴 Still open
+
 3. **Judicial coverage has its own rules** — see `project_judicial_compass_design` and
    `project_judicial_discipline_display`. Do not attach stances to judges casually.
-4. **Appraisal district board**: Ballotpedia notes a filing deadline of **2026-08-17**, i.e. after
-   this handoff. That field is not final — re-check before seeding, and expect additions.
+4. **Appraisal district board**: filing deadline **2026-08-17**, after this handoff. Operator is
+   fine topping this off later — re-check after that date and expect additions.
 
 ### ⚠ Data-quality caveats on the extract
 - The judicial tables are **nested `div`s, not `<table>` elements** — an HTML table parser returns
