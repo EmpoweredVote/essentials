@@ -484,6 +484,25 @@ const CURATED_LOCAL = {
   richardson: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/richardson.jpg' },
   'van alstyne': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/van-alstyne.jpg' },
   weston: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/weston.jpg' },
+  // Tarrant County city banners (2026-08-08 Tarrant seed). Wikimedia Commons,
+  // ground-level daytime views per the standing no-aerial/no-AI banner rule.
+  // State-scoped 'TX' matters more than usual here: Arlington, VA is a covered
+  // jurisdiction (see the VA block above), so an unscoped 'arlington' key would
+  // serve the Texas photo there the moment VA gets a banner.
+  // Keys are space-form to match coverage.js browse_label; storage files are hyphenated.
+  //   arlington    - City Center plaza (operator pick over the Globe Life Park frame) | Michael Barera | CC BY-SA 4.0
+  //   fort worth   - Downtown Fort Worth Skyline, Trinity Park across the river | DerekAyala27 | CC BY 4.0
+  //   grapevine    - historic Main Street, "Great Taste of Grapevine" banner | diego_bf109 | CC BY-SA 2.0
+  //   mansfield    - historic Main Street storefronts (Flowers Etc./Casa del Sol) | Renelibrary | CC BY-SA 4.0
+  //   north richland hills - TEXRail Trinity Metro station platform | DerekAyala27 | CC BY 4.0
+  // Coverage gap (operator-accepted 2026-08-08): Euless. Commons has only a
+  // 1046x683 welcome sign, a high school and a Michaels storefront -- nothing
+  // on-subject clears the 1700px minimum, so Euless takes the tier gradient.
+  arlington: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/arlington.jpg' },
+  'fort worth': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-worth.jpg' },
+  grapevine: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/grapevine.jpg' },
+  mansfield: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/mansfield.jpg' },
+  'north richland hills': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/north-richland-hills.jpg' },
   // Nevada city banners (Wikimedia Commons; state-scoped 'NV'). Operator-certified
   // 2026-07-06. Keys are space-form to match coverage.js browse_label; storage
   // files are hyphenated. Note: the NV STATE banner is the Las Vegas Strip, so the
