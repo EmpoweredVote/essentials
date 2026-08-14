@@ -602,6 +602,37 @@ const CURATED_LOCAL = {
   // (no same-named-city collision); storage cities/south-tucson.jpg.
   //   south tucson  - South Tucson City Hall / Municipal Complex (Southtucson1.JPG) | Rgper22008 (Wikimedia Commons) | Public Domain
   'south tucson': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-tucson.jpg' },
+  // Washington: Seattle + King County (2026-08-14 Seattle deep seed, Task 9).
+  // Operator-certified from a side-by-side artifact review at both shipped crop
+  // ratios. State-scoped 'WA'; keys are space-form; storage files hyphenated.
+  //
+  // ⚠ THE STATE BANNER MOVED FOR THIS. states/WA.jpg WAS this exact Kerry Park
+  // photograph, so Seattle-the-city and Washington-the-state were one subject.
+  // Rather than give the state's largest city a side street, the state banner
+  // became Hurricane Ridge and the Seattle shot came DOWN a tier — the same
+  // resolution Maine used for its Portland skyline and Oregon for Mount Hood.
+  // cities/seattle.jpg is therefore BYTE-IDENTICAL to the pre-2026-08-14
+  // states/WA.jpg (sha256 8170493..., 1700x462, already brightened), which is
+  // also why no _archive copy was needed: this entry IS the archive.
+  //   seattle     - Seattle skyline from Kerry Park, Space Needle and Mt. Rainier | Daniel Schwen | CC BY-SA 4.0 [brightened]
+  //
+  // King County reads as the county, not as Seattle: Snoqualmie Falls from the
+  // public overlook, anchor 0.45, then brightened (gamma 0.82, brightness 1.14,
+  // contrast 1.06, color 1.08) because the whole Commons category is overcast.
+  // The falls are a VERTICAL subject and crop badly to 3.15:1 — tighter windows
+  // read as generic whitewater, so this frame keeps Salish Lodge for scale.
+  // ⚠ Rejected on its own caption: 'Snoqualmie Falls August 18' is the prettiest
+  // file in the category and its photographer describes it as "Wildfire Season
+  // 2021. After three days on intense smoke" — that pink alpenglow is smoke.
+  //   king county - Snoqualmie Falls from the public overlook | Kpsudeep | CC BY-SA 4.0 [brightened]
+  //
+  // ⚠ King County's 14 offices all carry representing_city = NULL (same as Dane,
+  // Pima and Riverside), so this key resolves ONLY through browse_label in browse
+  // mode — it needs the coverage.js 'King County' entry to have a path to screen.
+  // Seattle's 11 offices DO carry representing_city = 'Seattle', so the city key
+  // also resolves in address mode without the Beaverton-style backfill.
+  seattle: { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/seattle.jpg' },
+  'king county': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/king-county.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
@@ -667,7 +698,15 @@ const CURATED_LOCAL = {
 //   UT - SLC Skyline 2024 | Invictus323 | CC BY 4.0
 //   VA - Richmond Skyline from East Grace Street | Don.s.okeefe | CC BY-SA 3.0 [brightened]
 //   VT - Vermont fall foliage panorama | chensiyuan | CC BY-SA 4.0
-//   WA - Seattle (Space Needle and Mt. Rainier) | Daniel Schwen | CC BY-SA 4.0 [brightened]
+//   WA - Hurricane Ridge, Olympic National Park | Iamsridhar | CC BY-SA 3.0
+//        [2026-08-14: replaced the prior Kerry Park Seattle skyline per operator — the state
+//         banner was a photograph of Seattle, so Washington and its largest city shared one
+//         subject. That Kerry Park frame moved DOWN to cities/seattle.jpg byte-for-byte
+//         (see the Washington block in CURATED_LOCAL), mirroring what ME did with Portland
+//         and OR with Mount Hood. Anchor 0.68 from a 9195x2326 source; verified in the 6:1
+//         desktop band, where all three Mount Rainier alternatives failed — Reflection Lake
+//         cannot hold both the peak and its reflection at 6:1, and Rainier-filling-the-frame
+//         clips the summit with no ground beneath it.]
 //   WI - Milwaukee panorama (west, day) | Dori | CC BY-SA 3.0 US
 //   WV - New River Gorge Bridge from overlook | Gabor Eszes (UED77) | CC BY-SA 3.0
 //   WY - Teton Range Panorama Spring | GrandTetonNPS | Public domain
