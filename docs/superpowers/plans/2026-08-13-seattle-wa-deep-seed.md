@@ -27,7 +27,10 @@ These apply to **every** task. Violating any one of them has previously produced
 
 **Schema**
 
-- `essentials.districts.government_id` is frequently NULL — **join districts by `geo_id`**, never by `government_id`.
+- `essentials.districts.government_id` is frequently NULL — never join by `government_id`.
+- **In WA, `geo_id` alone is NOT unique — join on `(geo_id, mtfcc)`.** `53001` is simultaneously Adams County (G4020), Legislative District 1 Senate (G5210), *and* Legislative District 1 House (G5220). A `geo_id`-only join silently cross-products. Confirmed 2026-08-13.
+- **WA MTFCC orientation is INVERTED** relative to a plain TIGER reading: `sldu` → **G5210** (STATE_UPPER/Senate), `sldl` → **G5220** (STATE_LOWER/House). Confirmed twice on 2026-08-13 — by loader config and independently by the boundary names themselves. Matches CA/VA/NV/AZ handling in this codebase.
+- The geometry column on `geofence_boundaries` is named **`geometry`**, not `geom`.
 - `essentials.offices` has no `politician_id`, no `seat_label`, no `is_active`, and no `email`. Occupancy lives in `essentials.office_terms`; emails live on `politicians.email_addresses` (a `TEXT[]`).
 - Occupancy requires **both** gates: an `office_terms` row with real dates **and** `politicians.is_incumbent`. Never leave `term_start`/`term_end` both NULL — that pair reads downstream as "currently serving".
 - `races` and `race_candidates` have **no unique constraint** on the dedupe key. Use `NOT EXISTS`, **never** `ON CONFLICT`.
@@ -198,14 +201,30 @@ git -C "C:/EV-Accounts" commit -m "feat(geo): load WA TIGER places and legislati
 
 ---
 
-### Task 2: WA legislature structure — districts, chambers, 147 offices
+### Task 2: WA legislature structure — chambers and 147 offices
+
+> **REVISED after Task 1.** The TIGER loader runs with `writeDistrictRow=true` for
+> `sldu`/`sldl` and **already created all 98 `essentials.districts` rows** — 49
+> STATE_UPPER (G5210) and 49 STATE_LOWER (G5220), with correct labels, `ocd_id`s,
+> and `state='wa'` (lowercase). This task must **NOT create districts**; doing so
+> would duplicate them. It creates chambers and offices only, attaching to the
+> existing district rows.
 
 **Files:**
 - Create: `C:/EV-Accounts/backend/migrations/<n>_wa_legislature_structure.sql`
 
 **Interfaces:**
-- Consumes: the G5210/G5220 mapping and geo_ids from Task 1.
-- Produces: 98 `essentials.districts` rows (49 upper + 49 lower), 2 `chambers` rows (`State Senate`, `House of Representatives`) under the existing State of Washington government, and 147 `offices` rows. Tasks 3 and 5 join to these offices.
+- Consumes: the 98 district rows already written by Task 1.
+- Produces: 2 `chambers` rows (`State Senate`, `House of Representatives`) under the existing State of Washington government, and 147 `offices` rows. Tasks 3 and 5 join to these offices.
+
+**Confirmed district facts from Task 1** (do not re-derive):
+
+| district_type | mtfcc | count | geo_id range | label form |
+|---|---|---|---|---|
+| STATE_UPPER | G5210 | 49 | 53001–53049 | `Legislative (Senate) District N` |
+| STATE_LOWER | G5220 | 49 | 53001–53049 | `Legislative (House) District N` |
+
+`districts.state = 'wa'` (lowercase).
 
 - [ ] **Step 1: Confirm the parent government and existing naming convention**
 
@@ -223,9 +242,9 @@ JOIN essentials.governments g ON c.government_id=g.id WHERE g.state='WA';
 
 Create the migration file (number from `check-migration-numbers.mjs` at commit time). It must:
 
-1. Insert 49 `STATE_UPPER` districts and 49 `STATE_LOWER` districts, joined to geofences by `geo_id`, matching the casing convention already used by WA rows in `essentials.districts`.
-2. Insert the two chambers under the State of Washington government id.
-3. Insert 49 Senator offices (one per upper district) and 98 Representative offices (**two per lower district**, titled `Representative Position 1` and `Representative Position 2`).
+1. Insert the two chambers under the State of Washington government id. **No district inserts** — Task 1's loader already wrote all 98.
+2. Insert 49 Senator offices (one per STATE_UPPER district).
+3. Insert 98 Representative offices — **two per STATE_LOWER district**, titled `Representative Position 1` and `Representative Position 2`.
 
 The multi-member guard — this is the Maryland trap and the single most likely failure in this task:
 
@@ -235,7 +254,7 @@ INSERT INTO essentials.offices (id, chamber_id, district_id, title)
 SELECT gen_random_uuid(), :house_chamber_id, d.id, 'Representative Position ' || p.pos
 FROM essentials.districts d
 CROSS JOIN (SELECT 1 AS pos UNION ALL SELECT 2) p
-WHERE d.district_type = 'STATE_LOWER' AND d.geo_id LIKE '53%'
+WHERE d.district_type = 'STATE_LOWER' AND d.state ILIKE 'wa' AND d.mtfcc = 'G5220'
   AND NOT EXISTS (
     SELECT 1 FROM essentials.offices o
     WHERE o.district_id = d.id

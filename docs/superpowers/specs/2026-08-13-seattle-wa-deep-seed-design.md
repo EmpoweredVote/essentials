@@ -31,8 +31,8 @@ A second consequence shapes the candidate scope: **Seattle has no city office on
 | Layer | MTFCC | Count | Source |
 |---|---|---|---|
 | WA places (all) | G4110 | ~281 | TIGER `PLACE`, state 53 |
-| WA legislative districts (upper) | G5220 | 49 | TIGER `SLDU` |
-| WA legislative districts (lower) | G5210 | 49 | TIGER `SLDL` |
+| WA legislative districts (upper) | **G5210** | 49 | TIGER `SLDU` |
+| WA legislative districts (lower) | **G5220** | 49 | TIGER `SLDL` |
 | Seattle council districts | **X0025** | 7 | Seattle ArcGIS / data.seattle.gov |
 | King County council districts | **X0026** | 9 | King County GIS ArcGIS |
 
@@ -46,7 +46,9 @@ Each of the 49 WA legislative districts elects **one Senator and two Representat
 
 ### Verify, do not assume
 
-- **MTFCC orientation.** California has G5210/G5220 inverted relative to the TIGER convention. Read the actual MTFCC values off the WA TIGER files at load time; do not hard-code upper/lower.
+- **MTFCC orientation — CONFIRMED INVERTED 2026-08-13.** The table above is corrected: `sldu` loads as **G5210** (upper/Senate) and `sldl` as **G5220** (lower/House), the opposite of a plain TIGER reading and the same as CA/VA/NV/AZ here. Verified twice — by loader config and independently by the boundary names ("Legislative (Senate) District 34" carries mtfcc G5210). The original presumption in this spec was backwards; verifying at load rather than hard-coding is what caught it.
+- **`geo_id` is not unique across MTFCCs.** `53001` is Adams County (G4020), LD 1 Senate (G5210), and LD 1 House (G5220) at once. Join on `(geo_id, mtfcc)`.
+- **The loader writes district rows itself** for `sldu`/`sldl` (`writeDistrictRow=true`), so all 98 `essentials.districts` rows already exist after the load. Downstream migrations create chambers and offices only.
 - **geo_ids.** Seattle is presumably `5363000` and King County `53033`. Both are confirmed against loaded TIGER data before any government row is written. The playbook records four prior cities where an estimated geo_id was wrong, including one that resolved to an entirely different city.
 - **`districts.government_id` is frequently NULL.** Join districts by `geo_id`, never by `government_id`.
 - **State casing is inconsistent by table.** Follow the existing per-table convention rather than assuming; `districts.state` and `elections.state` do not agree across prior states.
