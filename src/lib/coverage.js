@@ -334,6 +334,27 @@ export const COVERAGE_STATES = [
       { label: 'Yorkville',          browseGovernmentList: ['5589550'], browseStateAbbrev: 'WI', hasContext: true },
     ],
   },
+  {
+    // Washington (2026-08-14 Seattle deep seed, migs 1742-1753). Seattle is the
+    // state's only CITY entry. King County is standalone and lives in
+    // COVERAGE_COUNTIES (unrelated array) — a county is deliberately NOT a chip
+    // here, same convention as Dane/Pima/Riverside/Clark and as school districts.
+    // The 147 WA legislators are reached through the state browse
+    // (browse_state_officials=WA), never from this list.
+    //
+    // No hasContext: all 11 Seattle officials have ZERO stance rows until Task 10
+    // of the deep seed lands. Flip it true then, and only if the DB agrees —
+    // six of them took office in January 2026, so blank spokes are the likely
+    // honest answer for several rows.
+    //
+    // The label doubles as the banner key: buildingImages matches CURATED_LOCAL
+    // on the lowercased browse label, so 'Seattle' here is what resolves
+    // cities/seattle.jpg. Do not retitle it without checking that map.
+    name: 'Washington', abbrev: 'WA',
+    areas: [
+      { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA' },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
@@ -411,6 +432,16 @@ export const COVERAGE_COUNTIES = [
   // resolving this entry must qualify by mtfcc/district_type, never by geo_id alone.
   { label: 'Tarrant County', browseGovernmentList: ['48439'], browseStateAbbrev: 'TX' },
   { label: 'Collin County', browseGovernmentList: ['48085'], browseStateAbbrev: 'TX' },
+  // King County WA (2026-08-14 Seattle deep seed): County Executive, 9-member
+  // County Council, Assessor, Prosecuting Attorney, Director of Elections, and an
+  // APPOINTED Sheriff (2020 charter amendment). No hasContext — roster-only until
+  // deep-seed Task 10. Moved to even-year elections under the 2022 charter change.
+  // ⚠ geo_id 53033 is NOT unique across MTFCCs — it is also LD33 Senate (G5210)
+  // and LD33 House (G5220). Anything resolving this entry must qualify by
+  // mtfcc/district_type, never by geo_id alone. Same trap as Collin County above.
+  // ⚠ This entry is also what gives cities/king-county.jpg a browse label to key
+  // off, since all 14 county offices carry representing_city = NULL.
+  { label: 'King County', browseGovernmentList: ['53033'], browseStateAbbrev: 'WA' },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on
