@@ -94,7 +94,7 @@ Extends the established WA convention rather than opening a new band.
 -5310001..-5310049   State Senate           (49)
 -5320001..-5320098   House of Representatives (98, two per district)
 -5363001..-5363011   Seattle                (Mayor, 9 council, City Attorney)
--5303301..-5303313   King County            (13)
+-5303301..-5303314   King County            (13 elected + appointed Sheriff)
 ```
 
 Verified: the `-5400000..-5300000` band contains nothing but the five statewide executives. All four new ranges are collision-free.
