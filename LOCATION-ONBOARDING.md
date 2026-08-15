@@ -105,6 +105,9 @@ Check this table before starting a new city — proven patterns from prior onboa
 | Wisconsin (state) | WI | 2026-07-26 | plurality (partisan primary Aug + general Nov; **judicial/municipal are April nonpartisan**) | **PR ev-accounts#88 (migrations 1441–1461).** 144 state officials (33 Sen + 99 Assembly + execs + 7 Supreme Court). Open States roster + docs.legis photos: **136/144 photos, 132/144 emails, 0/144 websites**. `office_terms` temporal model shipped here (Bradley→Taylor handoff on 2026-08-01). Geofences G4020/G5200/G5210/G5220 + 607 places + 1243 MCDs. |
 | Racine County | WI | 2026-07-26 | County Exec + Board = **April nonpartisan**; Sheriff/Clerk of Circuit Court/DA etc = November partisan | **PR ev-accounts#88.** 38 officials (7 countywide + 21 supervisors + 10 circuit judges). Custom supervisor geofence `X-RC-SUP`. **Enrichment 0/38 — see Wisconsin Quick Reference; whole domain is Akamai-403 to curl.** |
 | Racine + 16 Racine Co. municipalities | WI | 2026-07-26 | plurality (April nonpartisan) | **PR ev-accounts#88.** All 17 seeded (2 cities, 11 villages, 4 towns) = 116 officials. Villages/cities on G4110 place geo_id, **towns on G4040 cousub** (mixing them double-matches). **Enrichment 0/116.** No ward geometry — council members surface municipality-wide. |
+| Washington (state) | WA | 2026-08-14 | **top-two primary** (Aug 4) → November general; all state/county/city offices | **Seattle deep seed (migs 1742–1753).** 7 chambers / 152 offices: 49 Senate + 98 House + 5 statewide execs. **House is multi-member** — 49 SLDL polygons, 98 seats (Position 1/2). **Senate is staggered** — 24 of 49 on the 2026 ballot. `districts.state='wa'` lowercase for legislative/local tiers, `'WA'` uppercase for STATE_EXEC. **MTFCC is INVERTED vs CA: sldu→G5210, sldl→G5220.** 281 G4110 places + 39 G4020 counties. leg.wa.gov/memberphoto headshots (900×1200), **147/147**. **0 stance rows — deferred to its own milestone.** ⚠ Only 5 of WA's 9 statewide execs seeded (see `.planning/WA-GAPS.md`). |
+| Seattle | WA | 2026-08-14 | plurality (top-two primary; **odd-year city cycle**) | **Deep seed (migs 1742–1753).** 3 chambers / 11 offices: Mayor (LOCAL_EXEC) + 9 Council (7 districts + 2 citywide Positions 8/9) + elected City Attorney. 7 custom **X0025** council geofences. geo_id=5363000; ext -5363001..-5363011; **11/11 headshots** (seattle.gov studio, only 300×300); **2 stance rows / 1 of 11 officials** (Strauss) — the other 10 blank after a full 2020–2026 corpus read. **Council D5 IS on the 2026 ballot** (Juarez appointed 2025-07-28 to fill a vacancy); next full city cycle 2027. Purple chip. |
+| King County | WA (county) | 2026-08-14 | plurality (**nonpartisan**; even-year since the 2022 charter amendment) | **Deep seed (migs 1742–1753).** Standalone county govt (NOT under State of WA; geo_id=53033). 6 chambers / 14 offices: Executive + 9-member Council + Assessor + Prosecuting Attorney + Director of Elections + **appointed Sheriff** (2020 charter amendment). 9 custom **X0026** council geofences. ext -5303301..-5303314; **14/14 headshots** (the 1600×700 "banner" IS a letterboxed studio portrait); **9 stance rows / 6 of 14**. ⚠ geo_id 53033 also = LD33 Senate + LD33 House — always qualify by mtfcc. Search-only entry in `COVERAGE_COUNTIES` (inert — tree-shaken out). |
 
 ---
 
@@ -463,6 +466,50 @@ Verified 2026-07-26 on the roster page, per-supervisor pages, `showpublishedimag
 - Judicial terms run **Aug 1 → Jul 31**; April winners are not seated until Aug 1. Supreme Court terms are exactly 10 years, so `term_start = expiry − 10 years`.
 - Migration guard is mandatory: `BASE_REF=origin/master node backend/scripts/check-migration-numbers.mjs` (this WI work was renumbered three times). Guard diffs **committed** state.
 - Still open: Court of Appeals District II polygon (`ST_Union` of 12 counties under a custom `X-` mtfcc); school-board tier; municipal judges (deliberately skipped when seeding towns/villages).
+
+---
+
+## Washington State Quick Reference
+
+**Read before any WA state / Seattle / King County work.** ⚠ Not to be confused with the
+**Washington County / West-Metro** section above, which is **Oregon**. This section is the state
+of Washington (FIPS 53). Seeded 2026-08-13/14 (Seattle deep seed, EV-Accounts migs 1742–1759);
+boundary of the milestone is recorded in `.planning/WA-GAPS.md`.
+
+| Trap / Pattern | One-Line Summary |
+|----------------|------------------|
+| **MTFCC is INVERTED** | `sldu` → **G5210** (upper/Senate), `sldl` → **G5220** (lower/House) — the opposite of CA. Confirmed from the boundary names themselves; the spec had it backwards. |
+| **geo_id is NOT unique across MTFCCs** | `53033` is King County (G4020) **and** LD33 Senate (G5210) **and** LD33 House (G5220). Join on `(geo_id, district_type, mtfcc)`, never geo_id alone. Same trap as Collin County TX. |
+| Two state-column conventions, three values | `districts.state='wa'` (lowercase) for STATE_UPPER/STATE_LOWER/LOCAL/LOCAL_EXEC/COUNTY, but `'WA'` (uppercase) for STATE_EXEC. `geofence_boundaries.state='53'` (FIPS) for every TIGER layer, but **`'wa'` for the custom X0025/X0026 polygons**. `governments.state='WA'`. Don't normalize any of them. |
+| The TIGER loader writes district rows itself | `writeDistrictRow=true` for sldu/sldl — all 98 legislative district rows existed before the structure migration. Don't re-create them. |
+| `load-state-tiger-boundaries.ts` was a silent no-op on Windows | The isMainModule guard compared `import.meta.url` to a `file://${argv[1]}` template. Fixed with `pathToFileURL`. **Any state load attempted from this machine before 2026-08-13 did nothing.** |
+| **House is multi-member** | 49 SLDL polygons cover 98 seats — Position 1 and Position 2 have separate ballot lines in the same district. The `NOT EXISTS` guard must key on `(district_id, title)`, not `(district_id, chamber_id)`. |
+| **Senate is staggered** | Only **24** of 49 districts are on the 2026 ballot. Read the set from the SoS filed list — never infer it from district numbers. |
+| `races` / `race_candidates` DO have unique indexes here | Contrary to the older playbook note. Check before choosing `ON CONFLICT` vs `NOT EXISTS`. |
+| psql via backend `.env` runs as `ev_api` | It CAN insert into `essentials.*` but CANNOT do DDL there. Always verify counts through MCP afterwards. |
+| **Seattle DOES have a 2026 race** | Council District 5 — Juarez was appointed 2025-07-28 to replace Cathy Moore and serves only until a successor is elected. The spec said Seattle had none. Otherwise Seattle is an odd-year city (next full cycle 2027, Districts 1–7). |
+| King County moved to even years | 2022 charter amendment. Its **Sheriff is appointed** (2020 charter amendment) — no race row. Both King County and Seattle are **nonpartisan**, so `party IS NULL` is correct data, not a gap. |
+| Nonpartisan county races can skip the primary | Races with ≤2 candidates never appear in the results feed — they exist **only** in the filings. |
+| **`browse_state_officials=WA` does NOT return legislators** | It returns statewide executives + federal officials (41 rows — identical shape for OR and MD). The 147 legislators are reached **by address**, through their G5210/G5220 geofences. |
+| The WA state banner was already a Seattle photo | Resolved the state/city collision by **moving the state banner off Seattle** (the ME/OR precedent), not by giving Seattle a non-skyline subject. |
+| Seattle sponsorship is **weak** evidence | This inverts the MD/Berkeley rule: Seattle land-use bills are routinely mayor/SDCI-transmitted with a councilmember as nominal sponsor. Prefer a **divided roll-call vote** or a **member-sponsored amendment**. King County is the opposite — sponsor/mover is the strong filter there. |
+| Legistar caps result sets at ~1,000 rows | `events?$filter=EventDate ge 2023-01-01` returned exactly **999**. Index **year by year** and verify by summing, or a wider window truncates silently. |
+| **Vote labels differ by Legistar client** | Seattle uses `In Favor`/`Opposed`; King County uses `Yes`/`No`. Hard-coding one pair returns **0 divided votes**, which is indistinguishable from a council that never disagrees. Always print every label seen. |
+
+**Washington Key Facts:**
+
+- FIPS **53**. Governments: State of Washington `53` (7 chambers / 152 offices) · City of Seattle `5363000` (3 / 11) · King County `53033` (6 / 14, standalone — NOT under the state).
+- Geofences loaded: **281** G4110 places · **39** G4020 counties · **10** G5200 congressional · **49** G5210 Senate · **49** G5220 House · **7** X0025 Seattle council · **9** X0026 King County council.
+- Statewide executives seeded: Governor, Lieutenant Governor, Attorney General, Secretary of State, Treasurer. ⚠ **The other 4 of WA's 9 are not seeded** (Auditor, Commissioner of Public Lands, Insurance Commissioner, Superintendent of Public Instruction) — see `.planning/WA-GAPS.md`.
+- External id bands: execs `-5300001..-5300005` · Senate `-5310001..-5310049` · House `-5320001..-5320098` · Seattle `-5363001..-5363011` · King County `-5303301..-5303314`.
+- Election row: **`WA 2026 Statewide General`**, id `51e7a875-bff9-4e96-adcf-41736454d25d`, state `WA`, 2026-11-03 — **140 races / 382 candidates** (98 WA House + 24 WA Senate + 10 U.S. House + 7 King County + 1 Seattle). Every candidate carries `provisional_until = 2026-08-24`; **gate the cull on the certified canvass**, not the primary date.
+- Results API: `results.votewa.gov/results/public/api/elections/{jurisdiction}/{id}/data` — host is **results.votewa.gov**, NOT results.vote.wa.gov (which 404s everything). Jurisdictions `washington` / `king-county-wa`; primary id `20260804`.
+- Filings: `voter.votewa.gov/CandidateList.aspx?e=898` (primary) / `899` (general). The grid paginates at 100 of 1,108 — drive its Export-to-CSV button by replaying the whole form with the submit button's value set to a single space. Script: `C:/EV-Accounts/backend/scripts/export-wa-sos-filings.mjs`. ⚠ The county filter does NOT apply to the export — attribute county races by **race name**, never by mailing address (candidates share campaign PO boxes across counties).
+- Headshots, all hosts **NO-WAF**: legislature `leg.wa.gov/memberphoto/{wslId}.jpg` (900×1200; `/memberthumbnail/` is only 150×200, legacy `/PublishingImages/` is dead) · King County bio-page "1600×700 banner" **is** a letterboxed studio headshot with the subject **off-centre** — crop around the face, never the frame centre · seattle.gov is AEM-style with zero `img` tags and only 300×300 portraits. Subject-aware cropper: `C:/EV-Accounts/backend/scripts/headshot-smartcrop.py`.
+- seattle.gov filename traps: Foster has an encoded space, Strauss is misspelled "Struass", and member pages carry staff photos with **mismatched alt text**.
+- Banners: `states/WA.jpg` Hurricane Ridge, Olympic NP (anchor 0.68) · `cities/seattle.jpg` Kerry Park (the previous state banner bytes) · `cities/king-county.jpg` Snoqualmie Falls (anchor 0.45). `CURATED_LOCAL` is keyed by lowercased `representing_city`/`browse_label` **substring, not geo_id**.
+- Stance corpora: `seattle.legistar.com` and `kingcounty.legistar.com` (⚠ King County **attachments** live on `kingcounty.legistar1.com`, with the `1`). `MatterHistoryTally` is null on Seattle matters — screen divided votes with the per-matter roll call.
+- Browse: city/county `?browse_government_list=<geo_id>&browse_label=<Label>&browse_state=WA`; state `?browse_state_officials=WA`; legislators by address only.
 
 ---
 
