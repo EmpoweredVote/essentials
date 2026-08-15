@@ -342,17 +342,22 @@ export const COVERAGE_STATES = [
     // The 147 WA legislators are reached through the state browse
     // (browse_state_officials=WA), never from this list.
     //
-    // No hasContext: all 11 Seattle officials have ZERO stance rows until Task 10
-    // of the deep seed lands. Flip it true then, and only if the DB agrees —
-    // six of them took office in January 2026, so blank spokes are the likely
-    // honest answer for several rows.
+    // hasContext true 2026-08-14, Task 10 landed (mig 1754). ⚠ It is DELIBERATELY
+    // THIN: only Dan Strauss carries rows (local-environment 3, taxes 1) — 10 of
+    // the 11 Seattle officials are blank on every topic and that is a researched
+    // finding, not a backlog. Seattle's divided votes cluster on tax mechanics,
+    // procedure, appointments and budget line items, while the ladders describe
+    // substantive policy; the whole 2020-2026 corpus (10,639 agenda items, 146
+    // divided at >=20%) was read to establish it. Nine of the eleven took office
+    // in 2024 or 2026, so several have almost no roll-call record to read.
+    // Do NOT read the blank spokes as work owed — see mig 1754's header.
     //
     // The label doubles as the banner key: buildingImages matches CURATED_LOCAL
     // on the lowercased browse label, so 'Seattle' here is what resolves
     // cities/seattle.jpg. Do not retitle it without checking that map.
     name: 'Washington', abbrev: 'WA',
     areas: [
-      { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA' },
+      { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA', hasContext: true },
     ],
   },
 ];
@@ -434,8 +439,17 @@ export const COVERAGE_COUNTIES = [
   { label: 'Collin County', browseGovernmentList: ['48085'], browseStateAbbrev: 'TX' },
   // King County WA (2026-08-14 Seattle deep seed): County Executive, 9-member
   // County Council, Assessor, Prosecuting Attorney, Director of Elections, and an
-  // APPOINTED Sheriff (2020 charter amendment). No hasContext — roster-only until
-  // deep-seed Task 10. Moved to even-year elections under the 2022 charter change.
+  // APPOINTED Sheriff (2020 charter amendment). Moved to even-year elections under
+  // the 2022 charter change.
+  // hasContext true 2026-08-14, Task 10 landed (mig 1754): Balducci, Dembowski,
+  // Perry and Zahilay carry 7 rows between them (jail-capacity, growth-and-
+  // development, local-immigration). The other 10 of 14 are blank, which is a
+  // researched finding — Dunn and von Reichbauer in particular voted NO on every
+  // seatable instrument, and a no vote defeats a policy without describing a chair.
+  // ⚠ This flag has NO RUNTIME EFFECT: COVERAGE_COUNTIES has no importers, so
+  // Rollup tree-shakes the whole array out of the production bundle. It is
+  // source-only documentation. Verified: 53033 returns 0 occurrences in the live
+  // bundle while Seattle's 5363000 returns 2.
   // ⚠ geo_id 53033 is NOT unique across MTFCCs — it is also LD33 Senate (G5210)
   // and LD33 House (G5220). Anything resolving this entry must qualify by
   // mtfcc/district_type, never by geo_id alone. Same trap as Collin County above.
