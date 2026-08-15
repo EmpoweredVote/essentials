@@ -22,13 +22,18 @@ All figures below were re-verified against the production DB and the live browse
 
 ## Roster gaps
 
-- **4 of Washington's 9 statewide elected executives are not seeded.** Present: Governor,
-  Lieutenant Governor, Attorney General, Secretary of State, Treasurer. **Absent: State Auditor
-  (Pat McCarthy), Commissioner of Public Lands (Dave Upthegrove), Insurance Commissioner
-  (Patty Kuderer), Superintendent of Public Instruction (Chris Reykdal — nonpartisan).**
-  This is visible in the product: any WA address returns 5 statewide officials, not 9.
-  None of the four is on the 2026 ballot (all four are elected in presidential years, next 2028),
-  so this is a roster gap, not an elections gap.
+- ✅ **CLOSED 2026-08-15 — all 9 statewide elected executives are now seeded** (migrations 1760 +
+  1761). The gap was real: only 5 were present, so any WA address returned 5 statewide officials
+  instead of 9. Added: **State Auditor** Pat McCarthy, **Commissioner of Public Lands** Dave
+  Upthegrove, **Insurance Commissioner** Patty Kuderer, **Superintendent of Public Instruction**
+  Chris Reykdal. Verified live — `?browse_state_officials=WA` returns 9, and a Seattle address
+  returns all 9 plus its 3 legislators.
+  - None of the four is on the 2026 ballot. Washington elects statewide executives to four-year
+    terms in presidential years; all four were last elected 2024-11-05 and next stand in 2028.
+    No race rows were created, which matches the WA 2026 election already in the DB.
+  - **Reykdal's party is NULL and that is correct** — Superintendent of Public Instruction is
+    nonpartisan. The certified 2024 results prove it: every other statewide race prints a party
+    preference beside each name ("Prefers Democratic Party"), the SPI race prints none.
 
 ## Stance coverage (Task 10)
 
@@ -61,13 +66,25 @@ Only von Reichbauer (in office since 1994) and Dunn (2005) have service inside t
 
 ## Headshots (Task 8)
 
-**172 of 172 — no gaps.** Seattle 11/11, King County 14/14, Senate 49/49, House 98/98
-(DB-verified 2026-08-15).
+**181 of 181 — no gaps.** Seattle 11/11, King County 14/14, Senate 49/49, House 98/98,
+statewide executives 9/9 (DB-verified 2026-08-15, and all four new CDN URLs return HTTP 200).
 
 A previous version of this file listed Steffanie Fain, John Wilson and Julie Wise as missing.
 All three were imported on 2026-08-14 and the file was not updated. Corrected here.
 
 Imperfect but imported, recorded so they are not mistaken for finished work:
+
+- **Dave Upthegrove** (Commissioner of Public Lands) — the DNR portrait is only **312x312**,
+  so the 4:5 window takes 250x312 and upscales 2.4x. Soft. Chosen over a sharp 900x1200
+  Wikimedia studio portrait because that one dates from about 2015, during his King County
+  Council service, and shows him with dark hair rather than grey. Current likeness beat
+  sharpness. ⚠ Its source file is named `em_cpl_block_312x312.png` with alt text "Commissioner
+  Upthegrove" — it reads like a CMS badge graphic and is a real portrait; and it is an RGBA PNG
+  whose transparent surround becomes **black wedges** under a naive RGB conversion. Composite on
+  white before cropping.
+- **Chris Reykdal** (Superintendent of Public Instruction) — the OSPI portrait is **400x350
+  landscape**, so the crop upscales 2.1x. The only sharper option (Wikimedia, 1716x1965) is a
+  mid-speech shot with a microphone in frame.
 
 - **Katie Wilson** (Seattle Mayor) — no official photo exists; her Wikimedia source is a
   distant standing shot, so her face is small even after cropping.
