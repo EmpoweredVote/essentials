@@ -3,6 +3,14 @@ name: Build check
 on:
   pull_request:
     branches: [main]
+  # Also run on direct pushes to main. Branch protection requires the "build"
+  # context, but enforce_admins is false, so an admin pushing straight to main
+  # bypasses the PR flow entirely and the required check never reports — GitHub
+  # prints 'Required status check "build" is expected' and lets the push through
+  # unverified. Direct pushes are the normal workflow on this repo, so without
+  # this trigger most commits on main were never built by CI at all.
+  push:
+    branches: [main]
 
 jobs:
   build:
