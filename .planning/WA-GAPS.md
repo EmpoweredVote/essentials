@@ -38,12 +38,12 @@ All figures below were re-verified against the production DB and the live browse
 ## Stance coverage
 
 **Seattle: 44 evidence rows across 11 of 11 city offices** (migration 1784, 2026-08-15).
-**King County: 9 rows across 6 of 14** (migrations 1754 + 1759) — still vote-first, see below.
+**King County: 20 rows across 11 of 14** (migration 1785, 2026-08-16).
 
 | Where | Rows | Officials with rows |
 |---|---|---|
 | Seattle (11 officials) | 44 | **11 of 11** |
-| King County (14 officials) | 9 | 6 — Balducci, Dembowski, Perry, Zahilay, Barón, Mosqueda |
+| King County (14 officials) | 20 | **11 of 14** |
 
 ### 🔴 This section used to overclaim, and the correction is the point
 
@@ -63,12 +63,26 @@ Full write-up: `backend/data/stance-research/2026-08-15-seattle-council-web-sour
 
 ### What is still genuinely blank
 
-- **King County's 8 uncovered officials have NOT been re-run** against web sources. Their blanks
-  carry the same caveat Seattle's did — treat them as "no roll-call-provable chair", not as a
-  researched finding. This is the obvious next pass.
+King County's 8 have now been re-run too (migration 1785), reaching 5 of them: Fain (6 rows),
+Manion (2), Wise, Dunn and von Reichbauer (1 each). The yield is lower than Seattle's and the
+reason is structural — Seattle's eleven are all elected policy-makers who ran contested campaigns;
+King County's eight include three administrative offices, a three-month-old appointee, and two
+long-serving members who decline questionnaires.
+
+- 🔑 **Two officials cannot hold a chair on the ladder their job is about, and that is a finding
+  rather than a gap.** The Sheriff does not honour ICE detainers, but her own office presents that
+  as compliance with binding state law and county code — and the county code chapter in question is
+  the one created by the ordinance that seated two *councilmembers* on that ladder. The Assessor
+  administers exemptions whose thresholds state law sets. Executing a policy is not holding a
+  position. Contrast the Elections Director, who *advocated* prepaid postage into statewide law and
+  is seated.
+- **Rhonda Lewis (Council D2)** has no rows and no topic blanks. Appointed 2025-12-09; her only
+  public document is biography, so a per-ladder blank would assert an absence nobody tested.
 - Seattle's 5 documented blanks are honest and named in the write-up: Juarez/`taxes`,
   Kettle/`transportation-priorities`, Hollingsworth/`residential-zoning`, Lin/`local-environment`
   (a ladder gap), Evans/`judicial-police-accountability`.
+- ▶ **Owed:** Zahilay (now County Executive, one row) and Balducci both have full 2025 candidate
+  questionnaires already located. They are the two most consequential County officials.
 - A No vote against a proposal is direction, not a chair — that rule survives and still explains
   Dunn and von Reichbauer.
 
