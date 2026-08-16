@@ -38,12 +38,12 @@ All figures below were re-verified against the production DB and the live browse
 ## Stance coverage
 
 **Seattle: 44 evidence rows across 11 of 11 city offices** (migration 1784, 2026-08-15).
-**King County: 20 rows across 11 of 14** (migration 1785, 2026-08-16).
+**King County: 35 rows across 11 of 14** (migrations 1785 + 1786, 2026-08-16).
 
 | Where | Rows | Officials with rows |
 |---|---|---|
 | Seattle (11 officials) | 44 | **11 of 11** |
-| King County (14 officials) | 20 | **11 of 14** |
+| King County (14 officials) | 35 | **11 of 14** |
 
 ### 🔴 This section used to overclaim, and the correction is the point
 
@@ -81,8 +81,10 @@ long-serving members who decline questionnaires.
 - Seattle's 5 documented blanks are honest and named in the write-up: Juarez/`taxes`,
   Kettle/`transportation-priorities`, Hollingsworth/`residential-zoning`, Lin/`local-environment`
   (a ladder gap), Evans/`judicial-police-accountability`.
-- ▶ **Owed:** Zahilay (now County Executive, one row) and Balducci both have full 2025 candidate
-  questionnaires already located. They are the two most consequential County officials.
+- ✅ **Zahilay and Balducci closed** (migration 1786). The two most consequential County officials
+  were the thinnest-covered — one row and two respectively — and both now carry 9, from the
+  long-form questionnaires they filed in the 2025 Executive race. Nothing was overwritten: all
+  three pre-existing rows were re-checked and confirmed.
 - A No vote against a proposal is direction, not a chair — that rule survives and still explains
   Dunn and von Reichbauer.
 
