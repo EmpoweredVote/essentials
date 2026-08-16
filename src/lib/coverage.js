@@ -344,18 +344,22 @@ export const COVERAGE_STATES = [
     // from browse_state_officials=WA either: that endpoint returns statewide
     // executives plus federal officials only, for every state.
     //
-    // hasContext true 2026-08-14, Task 10 landed (migs 1754 + 1759). ⚠ It is
-    // DELIBERATELY THIN: only Dan Strauss carries rows (local-environment 3,
-    // taxes 1) — 10 of the 11 Seattle officials are blank on every topic and that
-    // is a researched finding, not a backlog. Seattle's divided votes cluster on
-    // tax mechanics, procedure, appointments and budget line items, while the
-    // ladders describe substantive policy; the whole 2020-2026 corpus (10,639
-    // agenda items) was read to establish it, then re-swept at a 10% dissent
-    // threshold — 284 divided items, up from the 146 the original >=20% pass saw,
-    // because a 20% floor cannot see an 8-1 or 9-2 vote. Nine of the eleven took
-    // office in 2024 or 2026, so several have almost no roll-call record to read.
-    // Do NOT read the blank spokes as work owed — see mig 1754's header and
-    // .planning/WA-GAPS.md.
+    // hasContext true 2026-08-14. ⚠ THIS COMMENT USED TO CLAIM 10 OF 11 SEATTLE
+    // OFFICIALS WERE BLANK AND THAT IT WAS "a researched finding, not a backlog".
+    // THAT WAS AN OVERCLAIM AND IT HAS BEEN CORRECTED. Task 10 (migs 1754 + 1759)
+    // searched exactly ONE source class — Legistar roll calls and ordinance PDFs —
+    // and reported its output in the vocabulary of exhaustive research. What it
+    // actually established was that 10 of 11 had no ROLL-CALL-PROVABLE chair.
+    //
+    // Migration 1784 (2026-08-15) re-ran the same officials against web sources,
+    // led by The Urbanist's candidate questionnaires: 42 seated rows and 5
+    // documented blanks, covering ALL 11 of 11 Seattle city offices. Strauss's two
+    // original rows were re-checked against the new sources and CONFIRMED
+    // unchanged. Write-up: backend/data/stance-research/
+    // 2026-08-15-seattle-council-web-sources.md (EV-Accounts repo).
+    //
+    // 🔑 The lesson worth keeping: a blank is only as strong as the search behind
+    // it, and "we read the whole roll-call corpus" is not "we researched them".
     //
     // The label doubles as the banner key: buildingImages matches CURATED_LOCAL
     // on the lowercased browse label, so 'Seattle' here is what resolves

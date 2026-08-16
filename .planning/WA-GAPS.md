@@ -35,34 +35,45 @@ All figures below were re-verified against the production DB and the live browse
     nonpartisan. The certified 2024 results prove it: every other statewide race prints a party
     preference beside each name ("Prefers Democratic Party"), the SPI race prints none.
 
-## Stance coverage (Task 10)
+## Stance coverage
 
-**11 evidence rows across 7 of the 25 Seattle + King County officials. The other 18 are blank,
-and that is a researched finding, not unfinished work.** Migrations 1754 and 1759; full
-dispositions in `backend/data/stance-research/2026-08-15-wa-task10-blank-recheck.md` and
-`backend/data/stance-research/2026-08-15-wa-growth-second-instrument.md` (EV-Accounts repo).
+**Seattle: 44 evidence rows across 11 of 11 city offices** (migration 1784, 2026-08-15).
+**King County: 9 rows across 6 of 14** (migrations 1754 + 1759) — still vote-first, see below.
 
 | Where | Rows | Officials with rows |
 |---|---|---|
-| Seattle (11 officials) | 2 | 1 — Strauss (`local-environment` 3, `taxes` 1) |
+| Seattle (11 officials) | 44 | **11 of 11** |
 | King County (14 officials) | 9 | 6 — Balducci, Dembowski, Perry, Zahilay, Barón, Mosqueda |
 
-Why the 18 blanks are honest and not a backlog:
+### 🔴 This section used to overclaim, and the correction is the point
 
-- The entire roll-call corpus was read — King County 12,631 agenda items (2018–2026), Seattle
-  10,639 (2020–2026) — then re-swept at a 10% dissent threshold, which surfaced 260 divided King
-  County items and 284 Seattle items. Both re-check rows came from that lower band.
-- **10 of the 18 cannot be reached by the vote-first method at all**: 6 hold non-legislative
-  offices (Executive, Sheriff, Assessor, Prosecuting Attorney, Elections Director, City Attorney)
-  and 6 took office in January 2026 with almost no record.
-- Seattle's divided votes cluster on tax mechanics, procedure, appointments, labour agreements and
-  fees; the compass ladders describe substantive policy. That mismatch, not a thin search, is why
-  Seattle seats only one official.
-- A No vote against a proposal is direction, not a chair. Dunn and von Reichbauer voted No on most
-  seatable instruments and stay blank on purpose.
+It previously said the 18 blanks were "a researched finding, not unfinished work". **That was
+wrong for Seattle.** Task 10 searched exactly one source class — Legistar roll calls and ordinance
+PDFs, every one of its 13 source URLs a Legistar attachment — and reported that output as though
+every source class had been searched. What it established was that those officials had **no
+roll-call-provable chair**, which is a different claim.
 
-⚠ **Known unread windows:** Seattle 2020 and earlier, and King County before 2018, are not indexed.
-Only von Reichbauer (in office since 1994) and Dunn (2005) have service inside them.
+Migration 1784 re-ran Seattle's 11 offices against web sources, led by The Urbanist's long-form
+**candidate questionnaires** (verbatim, candidate-authored), plus PubliCola and local reporting.
+Result: 42 new rows and 5 documented blanks, covering all 11. Strauss's 2 original rows were
+re-checked and **confirmed unchanged** — the vote-first work was correct, just narrow.
+
+Full write-up: `backend/data/stance-research/2026-08-15-seattle-council-web-sources.md`
+(EV-Accounts repo).
+
+### What is still genuinely blank
+
+- **King County's 8 uncovered officials have NOT been re-run** against web sources. Their blanks
+  carry the same caveat Seattle's did — treat them as "no roll-call-provable chair", not as a
+  researched finding. This is the obvious next pass.
+- Seattle's 5 documented blanks are honest and named in the write-up: Juarez/`taxes`,
+  Kettle/`transportation-priorities`, Hollingsworth/`residential-zoning`, Lin/`local-environment`
+  (a ladder gap), Evans/`judicial-police-accountability`.
+- A No vote against a proposal is direction, not a chair — that rule survives and still explains
+  Dunn and von Reichbauer.
+
+⚠ **Known unread windows** (vote corpus only): Seattle 2020 and earlier, and King County before
+2018. Only von Reichbauer (in office since 1994) and Dunn (2005) have service inside them.
 
 ## Headshots (Task 8)
 
