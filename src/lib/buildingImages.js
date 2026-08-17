@@ -633,6 +633,40 @@ const CURATED_LOCAL = {
   // also resolves in address mode without the Beaverton-style backfill.
   seattle: { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/seattle.jpg' },
   'king county': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/king-county.jpg' },
+
+  // Washington, second pass: Bainbridge Island + Kitsap County (2026-08-17, the
+  // Bainbridge finish-up — EV-Accounts mig 1820). Operator-certified from a
+  // side-by-side artifact that rendered every candidate in the REAL SectionBanner
+  // at BOTH shipped ratios, so each was judged on its rendered slice rather than
+  // its full frame. State-scoped 'WA'; keys space-form, storage files hyphenated.
+  //
+  // Both frames were chosen because their subject is a HORIZONTAL BAND and so
+  // survives the 6/1 desktop crop, which keeps only the middle 52.5%. That is the
+  // exact property Bend lacked when it shipped broken.
+  //   bainbridge island - Eagle Harbor and the Seattle ferry at the Bainbridge terminal | Ecoscapes | CC BY-SA 4.0
+  //   kitsap county     - The Manette Bridge from the Bremerton waterfront | Joe Mabel | CC BY-SA 4.0
+  //
+  // ⚠ Rejected, and worth recording because it is the cheapest lesson here: the
+  // best-composed frame of the eight reviewed was Poulsbo at night across Liberty
+  // Bay (Jonathan Miske, CC BY-SA 2.0) — a flawless horizontal band of town lights
+  // and reflections. It lost twice over: no other banner in this registry is a
+  // night shot, and one small waterfront town cannot stand in for a county that is
+  // mostly Bremerton, Silverdale and Port Orchard.
+  //
+  // ⚠ These two keys reach the screen by DIFFERENT routes, and only one of them
+  // works from an address. Bainbridge Island's 7 council offices carry
+  // representing_city = 'Bainbridge Island', so that key resolves in address mode.
+  // Kitsap County's 9 offices carry representing_city = NULL (same as King, Dane,
+  // Pima and Riverside), so 'kitsap county' resolves ONLY through browse_label —
+  // it depends on the coverage.js 'Kitsap County' entry, which already exists.
+  // A Bainbridge address therefore shows the ferry, never the bridge.
+  //
+  // ⚠ Key is the full phrase 'bainbridge island', not 'bainbridge'. The lookup is
+  // a substring test over the caller's city, and Bainbridge is also a town in GA,
+  // OH, NY and PA; the state scope catches those, but the longer key is the guard
+  // that does not depend on the caller passing a state at all.
+  'bainbridge island': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bainbridge-island.jpg' },
+  'kitsap county': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/kitsap-county.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
