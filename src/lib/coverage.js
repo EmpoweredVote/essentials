@@ -335,10 +335,15 @@ export const COVERAGE_STATES = [
     ],
   },
   {
-    // Washington (2026-08-14 Seattle deep seed, migs 1742-1753). Seattle is the
-    // state's only CITY entry. King County is standalone and lives in
+    // Washington (2026-08-14 Seattle deep seed, migs 1742-1753; Bainbridge Island
+    // added 2026-08-17). King County and Kitsap County are standalone and live in
     // COVERAGE_COUNTIES (unrelated array) — a county is deliberately NOT a chip
     // here, same convention as Dane/Pima/Riverside/Clark and as school districts.
+    // Operator ruling 2026-08-17, worth keeping because it is the reason this
+    // block has two entries and not four: counties stay OFF the landing grid, and
+    // are reached by name through the search box instead, where the resolver tags
+    // them COUNTY and appends their state so "Los Angeles County, CA" cannot be
+    // mistaken for "Los Angeles, CA".
     // The 147 WA legislators are reached BY ADDRESS, through their G5210/G5220
     // district geofences — never from this list, and (verified 2026-08-15) NOT
     // from browse_state_officials=WA either: that endpoint returns statewide
@@ -356,7 +361,9 @@ export const COVERAGE_STATES = [
     // documented blanks, covering ALL 11 of 11 Seattle city offices. Strauss's two
     // original rows were re-checked against the new sources and CONFIRMED
     // unchanged. Write-up: backend/data/stance-research/
-    // 2026-08-15-seattle-council-web-sources.md (EV-Accounts repo).
+    // 2026-08-15-seattle-council-web-sources.md (EV-Accounts repo). Migration 1787
+    // (Rivera's tree amendment) took it to 48 rows; verified against the live DB
+    // 2026-08-17 — 11 of 11 offices, 48 answers.
     //
     // 🔑 The lesson worth keeping: a blank is only as strong as the search behind
     // it, and "we read the whole roll-call corpus" is not "we researched them".
@@ -366,6 +373,15 @@ export const COVERAGE_STATES = [
     // cities/seattle.jpg. Do not retitle it without checking that map.
     name: 'Washington', abbrev: 'WA',
     areas: [
+      // Bainbridge Island (2026-08-16 Kitsap seed, EV-Accounts 3e8400db / c359d077
+      // / b1b1c422): 7 offices, all 7 seated on dated terms, routed by address off
+      // its own place geofence. NO hasContext — the seed was roster + geofence +
+      // browse only, zero compass stances (verified against the live DB
+      // 2026-08-17), so claiming context would not be DB-honest. Same call as the
+      // Tarrant County six. It also has no curated banner: buildingImages has no
+      // 'bainbridge island' key, so it falls back like any other unbannered city —
+      // do not add one here without adding the image.
+      { label: 'Bainbridge Island', browseGovernmentList: ['5303736'], browseStateAbbrev: 'WA' },
       { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA', hasContext: true },
     ],
   },
@@ -400,7 +416,26 @@ export function normalizePlace(s) {
 // Covered counties — browsable like cities (the county government's geo_id routes
 // through browse-by-government-list, returning the county's own officials —
 // supervisors/commissioners, sheriff, DA, assessor — plus statewide officials).
-// Search-only (not shown on the landing grid). Synced from essentials.governments.
+// Not shown on the landing grid, by operator ruling (reaffirmed 2026-08-17):
+// counties are cities' peers in the data but read out of place among city chips.
+//
+// ⚠ Nothing in the BROWSER BUNDLE imports this array, so Rollup tree-shakes it out
+// of the app — but it is NOT dead code: `scripts/gen-coverage.mjs` (the `prebuild`
+// hook) reads it to emit `public/coverage.json`, the public catalog Treasury Tracker
+// reads to decide where its banner may tether back into Essentials. So a row added
+// here does nothing for this app's UI and everything for TT's cross-links. The JSON
+// itself is gitignored and rebuilt by `prebuild` on every deploy, so there is
+// nothing to commit but this file — run `npm run gen:coverage` only when you want
+// to eyeball the catalog locally. What the header used to call "search-only"
+// overstated it in the other direction: nothing here powers search either.
+// What actually makes a county findable is the LocationCombobox, which queries
+// GET /essentials/location-search live and tags each row from the resolver's own
+// fields (mtfcc → COUNTY pill, plus the state in the label). Confirmed on the
+// deployed site 2026-08-17: "los angeles" returns "Los Angeles County, CA" tagged
+// COUNTY above "Los Angeles, CA", and "kitsap" returns "Kitsap County, WA".
+// So a county missing from this array is still searchable; keep the rows in sync
+// with essentials.governments anyway, because this list is where the coverage
+// reasoning is written down.
 export const COVERAGE_COUNTIES = [
   { label: 'Los Angeles County', browseGovernmentList: ['06037'], browseStateAbbrev: 'CA', hasContext: true },
   { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
@@ -451,11 +486,16 @@ export const COVERAGE_COUNTIES = [
   // APPOINTED Sheriff (2020 charter amendment). Moved to even-year elections under
   // the 2022 charter change.
   // hasContext true 2026-08-15, Task 10 landed (migs 1754 + 1759): Balducci,
-  // Dembowski, Perry, Zahilay, Barón and Mosqueda carry 9 rows between them
-  // (jail-capacity, growth-and-development, local-immigration, taxes). The other
-  // 8 of 14 are blank, which is a researched finding — Dunn and von Reichbauer in
-  // particular voted NO on every seatable instrument, and a no vote defeats a
-  // policy without describing a chair.
+  // Dembowski, Perry, Zahilay, Barón and Mosqueda carried 9 rows between them
+  // (jail-capacity, growth-and-development, local-immigration, taxes).
+  // ⚠ The "other 8 of 14 are blank, which is a researched finding" note that used
+  // to sit here did NOT survive re-research, the same way Seattle's did not: those
+  // blanks came out of roll-call instruments only. Migrations 1785, 1786 and the
+  // 2025 County Executive questionnaires (Zahilay + Balducci) re-ran them against
+  // web sources and took the county to 11 of 14 offices at 35 rows — verified
+  // against the live DB 2026-08-17. Dunn and von Reichbauer's no-vote reasoning
+  // still holds for the 3 that remain blank; the lesson is that a no-vote finding
+  // is a fact about one source class, not about a person.
   // ⚠ The flag was MISSING from the entry below until 2026-08-15 even though the
   // comment (and commit da64983c) claimed it was set. Set now.
   // ⚠ This flag has NO RUNTIME EFFECT: COVERAGE_COUNTIES has no importers, so
@@ -468,6 +508,14 @@ export const COVERAGE_COUNTIES = [
   // ⚠ This entry is also what gives cities/king-county.jpg a browse label to key
   // off, since all 14 county offices carry representing_city = NULL.
   { label: 'King County', browseGovernmentList: ['53033'], browseStateAbbrev: 'WA', hasContext: true },
+  // Kitsap County WA (2026-08-16 seed, EV-Accounts 3e8400db / c359d077): 9 offices,
+  // all 9 seated on dated terms, seven of them on the 2026 general ballot.
+  // Commissioner-district and city-ward boundaries are loaded as REFERENCE geometry
+  // only, so an in-county address returns all three commissioners rather than just
+  // its own district — the same over-inclusive shape as Tarrant/Collin above.
+  // No hasContext: zero compass stances, verified against the live DB 2026-08-17.
+  // Its city, Bainbridge Island, is a chip in COVERAGE_STATES — do NOT add it here.
+  { label: 'Kitsap County', browseGovernmentList: ['53035'], browseStateAbbrev: 'WA' },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on
