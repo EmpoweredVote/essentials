@@ -376,7 +376,7 @@ export const COVERAGE_STATES = [
       // Bainbridge Island (2026-08-16 Kitsap seed, EV-Accounts 3e8400db / c359d077
       // / b1b1c422): 7 offices, all 7 seated on dated terms, routed by address off
       // its own place geofence.
-      // 2026-08-17 (EV-Accounts migs 1820/1821): all 7 councilmembers now carry
+      // 2026-08-17 (EV-Accounts migs 1822/1823): all 7 councilmembers now carry
       // portraits, and hasContext is now TRUE — but on a thin margin worth naming.
       // Exactly TWO of the seven hold a compass chair: Mike Nelson and Lara Lant,
       // both Growth and Development Pace = 2, from their 2025 Bainbridge
@@ -520,7 +520,7 @@ export const COVERAGE_COUNTIES = [
   // Commissioner-district and city-ward boundaries are loaded as REFERENCE geometry
   // only, so an in-county address returns all three commissioners rather than just
   // its own district — the same over-inclusive shape as Tarrant/Collin above.
-  // hasContext TRUE as of 2026-08-17 (EV-Accounts mig 1821), on a thin margin worth naming:
+  // hasContext TRUE as of 2026-08-17 (EV-Accounts mig 1823), on a thin margin worth naming:
   // exactly TWO Kitsap people hold a chair — Commissioner Katie Walters (Growth and Development
   // Pace = 3) and sheriff candidate Brandon L. Myers (Public Safety Approach = 4), both from
   // their own filed 2026 voters'-pamphlet statements. The Assessor, Auditor, Clerk and Treasurer
