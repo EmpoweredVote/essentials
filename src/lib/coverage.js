@@ -375,13 +375,20 @@ export const COVERAGE_STATES = [
     areas: [
       // Bainbridge Island (2026-08-16 Kitsap seed, EV-Accounts 3e8400db / c359d077
       // / b1b1c422): 7 offices, all 7 seated on dated terms, routed by address off
-      // its own place geofence. NO hasContext — the seed was roster + geofence +
-      // browse only, zero compass stances (verified against the live DB
-      // 2026-08-17), so claiming context would not be DB-honest. Same call as the
-      // Tarrant County six. It also has no curated banner: buildingImages has no
-      // 'bainbridge island' key, so it falls back like any other unbannered city —
-      // do not add one here without adding the image.
-      { label: 'Bainbridge Island', browseGovernmentList: ['5303736'], browseStateAbbrev: 'WA' },
+      // its own place geofence.
+      // 2026-08-17 (EV-Accounts migs 1820/1821): all 7 councilmembers now carry
+      // portraits, and hasContext is now TRUE — but on a thin margin worth naming.
+      // Exactly TWO of the seven hold a compass chair: Mike Nelson and Lara Lant,
+      // both Growth and Development Pace = 2, from their 2025 Bainbridge
+      // Conservation Coalition survey answers. The other five are blank ON PURPOSE.
+      // ⚠ THE ISLAND'S DEFINING VOTES HAVE NOT HAPPENED YET. The Comprehensive Plan
+      // and Winslow Subarea Plan — residential zoning, growth pace, affordable
+      // housing, tree canopy — were still in Planning Commission as of 2026-07-24
+      // after a unanimous council remand of mandatory inclusionary zoning, with
+      // adoption expected SEPTEMBER 2026. Re-enter then: that roll call should
+      // evidence most of the remaining spokes for all seven at once.
+      // It now HAS a curated banner — buildingImages 'bainbridge island'.
+      { label: 'Bainbridge Island', browseGovernmentList: ['5303736'], browseStateAbbrev: 'WA', hasContext: true },
       { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA', hasContext: true },
     ],
   },
@@ -513,9 +520,16 @@ export const COVERAGE_COUNTIES = [
   // Commissioner-district and city-ward boundaries are loaded as REFERENCE geometry
   // only, so an in-county address returns all three commissioners rather than just
   // its own district — the same over-inclusive shape as Tarrant/Collin above.
-  // No hasContext: zero compass stances, verified against the live DB 2026-08-17.
+  // hasContext TRUE as of 2026-08-17 (EV-Accounts mig 1821), on a thin margin worth naming:
+  // exactly TWO Kitsap people hold a chair — Commissioner Katie Walters (Growth and Development
+  // Pace = 3) and sheriff candidate Brandon L. Myers (Public Safety Approach = 4), both from
+  // their own filed 2026 voters'-pamphlet statements. The Assessor, Auditor, Clerk and Treasurer
+  // are blank ON PURPOSE and should stay blank — they are administrative offices and none of the
+  // 22 local-scope topics applies to them.
+  // ⚠ This entry also gives cities/kitsap-county.jpg its only path to screen: all 9 county offices
+  // carry representing_city = NULL, so the banner key resolves through browse_label alone.
   // Its city, Bainbridge Island, is a chip in COVERAGE_STATES — do NOT add it here.
-  { label: 'Kitsap County', browseGovernmentList: ['53035'], browseStateAbbrev: 'WA' },
+  { label: 'Kitsap County', browseGovernmentList: ['53035'], browseStateAbbrev: 'WA', hasContext: true },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on
