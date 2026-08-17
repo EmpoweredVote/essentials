@@ -306,9 +306,21 @@ export default function LocationCombobox({
                           {kindTag}
                         </span>
                       )}
+                      {/* This pill read "Stances" until 2026-08-17 and was claiming
+                          something the flag does not say. `has_local_data` is the
+                          resolver's D-07 coverage signal — an EXISTS check against
+                          essentials.chambers, i.e. "we have a seeded government
+                          here" — and says nothing about compass stances. Kitsap
+                          County and Bainbridge Island are the proof: both come back
+                          has_local_data:true with ZERO stance rows, so both wore a
+                          purple Stances pill they had not earned. Same class of
+                          overclaim as the Beverly Hills / Newton hasContext flips.
+                          The pill is now neutral grey and says what the flag means;
+                          a real stance badge needs a new resolver field, not a
+                          relabelling of this one. */}
                       {candidate.has_local_data && (
-                        <span className="rounded-full border border-dotted border-purple-400 bg-transparent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-purple-700 dark:border-purple-500 dark:text-purple-300">
-                          Stances
+                        <span className="rounded-full border border-dotted border-gray-400 bg-transparent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gray-600 dark:border-gray-500 dark:text-gray-300">
+                          Covered
                         </span>
                       )}
                     </span>
