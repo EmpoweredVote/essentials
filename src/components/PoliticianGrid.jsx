@@ -225,6 +225,7 @@ function PoliticianGrid({ gridTitle, polList }) {
               imageFocalPoint={imgData.focalPoint || 'center 20%'}
               name={`${pol.first_name} ${pol.last_name}`}
               title={getDisplayTitle(pol)}
+              votingPowers={pol.voting_powers}
               badge={ballot ? "On Ballot" : undefined}
             />
           );

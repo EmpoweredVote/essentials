@@ -127,10 +127,38 @@ function Profile() {
                 : 'Representatives'
             }
             banner={(() => {
+              // ADR 0003: a seat whose holder cannot cast a floor vote MUST NOT be shown as an
+              // ordinary one. Territory/DC delegates, DC's shadow senators and Maine's tribal
+              // representatives all sit here. Rendered ABOVE and IN ADDITION TO the ballot banner
+              // rather than instead of it — this is a permanent fact about the seat, not a
+              // seasonal one, and it must never lose a race with an election notice.
+              const powers = pol.voting_powers || 'full';
+              const repNote = powers !== 'full' && pol.representation_note ? (
+                <div
+                  style={{
+                    borderLeft: '4px solid #00657c',
+                    backgroundColor: isDark ? '#0a1f24' : '#f2fafb',
+                    borderRadius: '0 8px 8px 0',
+                    padding: '12px 16px',
+                    marginTop: '16px',
+                    fontFamily: "'Manrope', sans-serif",
+                  }}
+                >
+                  <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: isDark ? '#59b0c4' : '#00657c' }}>
+                    {powers === 'non_voting' ? 'Cannot vote on the floor' : 'Committee votes only'}
+                  </p>
+                  <p style={{ margin: '4px 0 0', fontSize: '13px', lineHeight: 1.5, color: isDark ? '#cbd5e0' : '#4a5568' }}>
+                    {pol.representation_note}
+                  </p>
+                </div>
+              ) : null;
+
               const ballotStatus = getSeatBallotStatus(pol.term_end, pol.term_date_precision, pol.next_primary_date, pol.next_general_date);
 
               if (ballotStatus) {
                 return (
+                  <>
+                  {repNote}
                   <div
                     style={{
                       borderLeft: '4px solid #f6ad55',
@@ -150,11 +178,14 @@ function Profile() {
                         : 'Open seat'}
                     </p>
                   </div>
+                  </>
                 );
               }
 
               if (activeElection) {
                 return (
+                  <>
+                  {repNote}
                   <div
                     style={{
                       borderLeft: '4px solid #fed12e',
@@ -174,10 +205,11 @@ function Profile() {
                       </p>
                     )}
                   </div>
+                  </>
                 );
               }
 
-              return null;
+              return repNote;
             })()}
             legislativeSummary={legislativeSummary}
             judicialRecord={judicialRecord}

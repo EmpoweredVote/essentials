@@ -10,7 +10,7 @@ function getInitials(name) {
   return initials.toUpperCase();
 }
 
-function PoliticianCard({ image, imageSrc, name, title, level, id, badge }) {
+function PoliticianCard({ image, imageSrc, name, title, level, id, badge, votingPowers }) {
   const navigate = useNavigate();
   const src = imageSrc || image;
   const [imgError, setImgError] = useState(false);
@@ -42,6 +42,14 @@ function PoliticianCard({ image, imageSrc, name, title, level, id, badge }) {
           )}
         </div>
         <h1 className="text-sky-950 dark:text-white font-bold text-lg">{name}</h1>
+        {/* ADR 0003: never show a seat that cannot cast a floor vote as if it were an
+            ordinary one. The full explanation lives on the profile; this is the at-a-glance
+            version so the grid does not mislead on its own. */}
+        {votingPowers && votingPowers !== 'full' && (
+          <span className="mx-auto inline-block rounded-full border border-[#00657c] px-2 py-[2px] text-[10px] font-semibold uppercase tracking-wide leading-none text-[#00657c] dark:border-ev-teal-light dark:text-ev-teal-light">
+            {votingPowers === 'non_voting' ? 'Non-voting seat' : 'Committee votes only'}
+          </span>
+        )}
         <div>
           {/* Eventually add party logo here */}
           <p className="text-sky-900 dark:text-gray-300 leading-snug line-clamp-2 min-h-[2.5rem]">
