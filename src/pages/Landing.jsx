@@ -283,8 +283,8 @@ export default function Landing() {
                     onSubmitCoordinate={handleSubmitCoordinate}
                     onSubmitZip={handleSubmitZip}
                     onSelectCandidate={handleSelectCandidate}
-                    placeholder="Address, city, or coordinates — anywhere in the U.S."
-                    ariaLabel="Enter your street address, city, county, state, or decimal coordinates"
+                    placeholder="Address, ZIP, city, or coordinates — anywhere in the U.S."
+                    ariaLabel="Enter your street address, ZIP code, city, county, state, or decimal coordinates"
                   />
                 </div>
               </div>
