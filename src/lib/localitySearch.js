@@ -60,6 +60,21 @@ export function browseAreaRoute(candidate) {
  * URLSearchParams percent-encodes every value — never string-concatenate
  * untrusted input into this path (T-214-05, open-redirect/injection guard).
  */
+/**
+ * ZIP hand-off contract: Landing -> Results. Results reads ?zip= on mount and
+ * resolves it through fetchOfficialsByZip.
+ *
+ * A ZIP is an AREA, so the Results page it lands on speaks in area voice
+ * ("Officials serving 46220") rather than claiming any official is the visitor's
+ * own — the ZIP cannot establish which side of a district line they live on.
+ *
+ * URLSearchParams percent-encodes every value; never string-concatenate input
+ * into this path (same guard as coordinateRoute below).
+ */
+export function zipRoute(zip) {
+  return `/results?${new URLSearchParams({ zip }).toString()}`;
+}
+
 export function coordinateRoute(lat, lng, raw) {
   const params = new URLSearchParams({
     lat: String(lat),
