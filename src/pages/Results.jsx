@@ -30,7 +30,7 @@ import { fetchTriviaCollections } from '../lib/trivia';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
 import { buildBannerProps } from '../lib/bannerProps';
-import { splitBodiesByState } from '../lib/stateGroups';
+import { splitBodiesByState, orderBodiesByState } from '../lib/stateGroups';
 import { unincorporatedLabel } from '../lib/localityLabel';
 
 /** Stable key that identifies a specific seat (office + district). */
@@ -2359,6 +2359,17 @@ export default function Results() {
                           ? splitBodiesByState(bodies, { dominantState: dominantZipState })
                           : null;
 
+                        // The Local tier gets the same state ORDER and no banners of its
+                        // own. Its accordions already name the community — "Clark County",
+                        // "San Bernardino County" — so both sides of a straddling ZIP are
+                        // already legible, and the "In ZIP …" band above them is true as
+                        // written. Only the order was left to chance: sorting by name
+                        // leads with whichever community sorts first, which for a Nevada
+                        // ZIP can be the California one.
+                        const orderedBodies = tier === 'Local' && multiStateZip
+                          ? orderBodiesByState(bodies, { dominantState: dominantZipState })
+                          : bodies;
+
                         return (
                           <Fragment key={tier}>
                             {tierBanner}
@@ -2372,7 +2383,7 @@ export default function Results() {
                                     {group.bodies.map(renderBody)}
                                   </Fragment>
                                 ))
-                              : bodies.map(renderBody)}
+                              : orderedBodies.map(renderBody)}
                           </div>
                           </Fragment>
                         );

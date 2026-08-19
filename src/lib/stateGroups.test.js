@@ -2,7 +2,7 @@
 // Mirrors bannerProps.test.js / population.test.js convention.
 
 import { describe, it, expect } from 'vitest';
-import { splitBodiesByState } from './stateGroups';
+import { splitBodiesByState, orderBodiesByState } from './stateGroups';
 
 /**
  * Minimal stand-in for one entry of groupIntoHierarchy()'s `bodies` array.
@@ -114,5 +114,48 @@ describe('splitBodiesByState', () => {
 
   it('returns no groups for no bodies', () => {
     expect(splitBodiesByState([], { dominantState: 'NV' })).toEqual([]);
+  });
+});
+
+describe('orderBodiesByState', () => {
+  it('puts the dominant state first when alphabetical order would not', () => {
+    // The case that makes this worth having: the minority state's community
+    // sorts first by name, so leaving order to chance leads with the wrong side.
+    const bodies = [body('Alpine County', 'CA'), body('Clark County', 'NV')];
+
+    expect(
+      orderBodiesByState(bodies, { dominantState: 'NV' }).map((b) => b.key)
+    ).toEqual(['Clark County', 'Alpine County']);
+  });
+
+  it('keeps each state\u2019s bodies in their original relative order', () => {
+    const bodies = [
+      body('San Bernardino County', 'CA'),
+      body('Clark County', 'NV'),
+      body('Inyo County', 'CA'),
+      body('Nye County', 'NV'),
+    ];
+
+    expect(
+      orderBodiesByState(bodies, { dominantState: 'NV' }).map((b) => b.key)
+    ).toEqual(['Clark County', 'Nye County', 'San Bernardino County', 'Inyo County']);
+  });
+
+  it('returns a single-state list unchanged', () => {
+    const bodies = [body('Los Angeles', 'CA'), body('Culver City', 'CA'), body('Los Angeles County', 'CA')];
+
+    expect(orderBodiesByState(bodies, { dominantState: 'CA' }).map((b) => b.key)).toEqual([
+      'Los Angeles',
+      'Culver City',
+      'Los Angeles County',
+    ]);
+  });
+
+  it('puts bodies with no determinable state last without losing them', () => {
+    const bodies = [body('Unattributed Board', null), body('Clark County', 'NV')];
+
+    const ordered = orderBodiesByState(bodies, { dominantState: 'NV' });
+    expect(ordered.map((b) => b.key)).toEqual(['Clark County', 'Unattributed Board']);
+    expect(ordered).toHaveLength(bodies.length);
   });
 });
