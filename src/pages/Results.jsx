@@ -30,6 +30,7 @@ import { fetchTriviaCollections } from '../lib/trivia';
 import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
 import { buildBannerProps } from '../lib/bannerProps';
+import { splitBodiesByState } from '../lib/stateGroups';
 import { unincorporatedLabel } from '../lib/localityLabel';
 
 /** Stable key that identifies a specific seat (office + district). */
@@ -1383,6 +1384,59 @@ export default function Results() {
     [representingCity, userState, buildingImageMap, featureIconMap, populationMap, zipInfo]
   );
 
+  // A ZIP that straddles a state line gets one State banner PER state, instead of a
+  // single generic "In ZIP …" band sitting over both states' officials interleaved.
+  // 89439 (CA+NV) arrived as one undifferentiated pile — Newsom, Kounalakis, Bonta,
+  // then Lombardo, Anthony, Aguilar, then CA and NV legislators mixed together — so
+  // the grouping is what makes a per-state banner mean anything.
+  //
+  // Single-state ZIPs never take this path: userState resolves from zipInfo.states
+  // above and the existing single band already carries that state's own name and
+  // panorama. Address and browse mode have no zipInfo at all.
+  const multiStateZip = (zipInfo?.states?.length ?? 0) > 1;
+
+  // The state the ZIP mostly sits in leads the others. The ZIP endpoint returns a
+  // single county — 89439 → Washoe County, geoid 32031 — whose FIPS prefix names it.
+  const dominantZipState = useMemo(
+    () => (multiStateZip ? stateAbbrevFromGeoId(zipInfo?.county?.geoid) : null),
+    [multiStateZip, zipInfo]
+  );
+
+  // Banner props for one NAMED state, independent of `userState` — which is
+  // deliberately null on a straddling ZIP, since such a ZIP cannot establish
+  // possession of either state. Runs the same three resolvers the single-state path
+  // uses, so a per-state band renders identically to the band that state gets alone.
+  //
+  // Called during render like the existing buildBannerProps(…, bannerCtx) calls
+  // rather than memoised: the set of states is not known until the bodies are
+  // grouped, because a state can carry officials while sitting below the API's 1%
+  // reporting floor and therefore never appear in zipInfo.states.
+  const stateBandProps = (abbrev) => {
+    const statePop = resolvePopulation({ tier: 'state', stateAbbrev: abbrev });
+    return buildBannerProps('state', {
+      ...bannerCtx,
+      userState: abbrev,
+      buildingImageMap: {
+        ...bannerCtx.buildingImageMap,
+        State: getBuildingImages(null, abbrev).State,
+      },
+      featureIconMap: {
+        ...bannerCtx.featureIconMap,
+        State: resolveFeatureIcons({
+          representingCity: null,
+          userState: abbrev,
+          stateName: STATE_NAMES[abbrev] || null,
+          treasuryCities,
+          triviaCollections,
+        }).State,
+      },
+      populationMap: {
+        ...bannerCtx.populationMap,
+        State: statePop != null ? { label: 'POPULATION', value: statePop } : null,
+      },
+    });
+  };
+
   // Only show the nearest upcoming election; hiding future elections avoids duplicate
   // race sections when a primary and general are both returned for the same seat.
   const nearestElection = useMemo(() => {
@@ -2261,11 +2315,10 @@ export default function Results() {
                           ? <SectionBanner {...buildBannerProps('federal', bannerCtx)} />
                           : null;
 
-                        return (
-                          <Fragment key={tier}>
-                            {tierBanner}
-                          <div data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
-                            {bodies.map((body) => {
+                        // One <GovernmentBodySection> per body. Extracted from the map
+                        // callback so the State tier can render bodies per state group
+                        // without duplicating this subtree.
+                        const renderBody = (body) => {
                               return (
                                 <GovernmentBodySection
                                   key={body.key}
@@ -2294,7 +2347,32 @@ export default function Results() {
                                   })}
                                 </GovernmentBodySection>
                               );
-                            })}
+                        };
+
+                        // On a state-straddling ZIP the State tier splits into one
+                        // group per state, each led by that state's own banner. The
+                        // "In ZIP …" band above still leads the tier, because the ZIP
+                        // really does span both and naming one would misrepresent it.
+                        // A group whose state could not be determined renders its
+                        // bodies with no banner rather than being dropped.
+                        const stateGroups = tier === 'State' && multiStateZip
+                          ? splitBodiesByState(bodies, { dominantState: dominantZipState })
+                          : null;
+
+                        return (
+                          <Fragment key={tier}>
+                            {tierBanner}
+                          <div data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tier === 'Federal' ? '#f0f2f5' : tierStyle.bg } : undefined}>
+                            {stateGroups
+                              ? stateGroups.map((group) => (
+                                  <Fragment key={group.stateAbbrev ?? '__unattributed'}>
+                                    {group.stateAbbrev && (
+                                      <SectionBanner {...stateBandProps(group.stateAbbrev)} />
+                                    )}
+                                    {group.bodies.map(renderBody)}
+                                  </Fragment>
+                                ))
+                              : bodies.map(renderBody)}
                           </div>
                           </Fragment>
                         );
