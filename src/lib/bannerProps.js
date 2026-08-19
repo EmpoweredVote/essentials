@@ -35,6 +35,12 @@ export function buildBannerProps(tier, ctx = {}) {
     // so "Your City" would claim a possession the ZIP cannot establish (ZIP 47401
     // covers Bloomington plus four townships across two counties).
     cityFallbackLabel = 'Your City',
+    // Same argument as cityFallbackLabel, one tier up. A ZIP that straddles a
+    // state line (63673 is IL/MO, 89439 is CA/NV) has no state of record either,
+    // so "Your State" claims a possession the ZIP cannot establish — and naming
+    // just one of the two would be worse. Single-state ZIPs never reach this:
+    // Results derives userState from zipInfo.states when there is exactly one.
+    stateFallbackLabel = 'Your State',
   } = ctx;
 
   const mapKey = TIER_TO_MAP_KEY[tier];
@@ -73,7 +79,7 @@ export function buildBannerProps(tier, ctx = {}) {
       locationName = representingCity;
     }
   } else if (tier === 'state') {
-    locationName = (userState && stateNames[userState]) || userState || 'Your State';
+    locationName = (userState && stateNames[userState]) || userState || stateFallbackLabel;
   } else {
     locationName = 'United States';
   }
