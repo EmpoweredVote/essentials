@@ -73,3 +73,23 @@ export function splitBodiesByState(bodies = [], { dominantState = null } = {}) {
 
   return groups;
 }
+
+/**
+ * The same state ordering as splitBodiesByState, flattened back to one list — for a
+ * tier that should read dominant-state-first WITHOUT gaining a banner per state.
+ *
+ * The Local tier is this case. Unlike the State tier, its accordions already carry
+ * the community name ("Clark County", "San Bernardino County"), so a reader can
+ * already tell the two sides of a straddling ZIP apart and the "In ZIP …" band above
+ * them is simply true. What was left to chance was the ORDER: name-sorting leads with
+ * whichever community sorts first, which for a Nevada ZIP can be the California one
+ * (Alpine County before Clark County). This makes the invariant explicit instead.
+ *
+ * @param {Array} bodies one tier's bodies, in render order
+ * @param {{dominantState?: string|null}} opts
+ * @returns {Array} the same bodies, dominant state's first, then the rest
+ *                  alphabetically by state, then any with no determinable state
+ */
+export function orderBodiesByState(bodies = [], opts = {}) {
+  return splitBodiesByState(bodies, opts).flatMap((group) => group.bodies);
+}
