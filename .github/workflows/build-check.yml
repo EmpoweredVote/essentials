@@ -23,3 +23,10 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
+      # The suite runs even when the build fails. A failing early step otherwise
+      # MASKS every step after it, and "did the bundle break, or did behaviour
+      # break?" is the first thing you need to know — one answer is a type/import
+      # slip, the other is a regression. !cancelled() rather than always() so a
+      # cancelled run stops promptly instead of grinding through the suite.
+      - run: npm test
+        if: ${{ !cancelled() }}
