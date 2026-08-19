@@ -12,14 +12,15 @@ import FilterBar, { StickyCompassKey } from '../components/FilterBar';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
 import { getBuildingImages, parseStateFromAddress, parseCityFromAddress, stateAbbrevFromGeoId } from '../lib/buildingImages';
-import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, browseFederalOfficials, fetchVoterInfo, lookupCoordinate } from '../lib/api';
+import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, browseFederalOfficials, fetchVoterInfo, lookupCoordinate, fetchOfficialsByZip } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import MiniCompass from '../components/MiniCompass';
-import { resolveLocalityRoute, browseAreaRoute } from '../lib/localitySearch';
+import { resolveLocalityRoute, browseAreaRoute, zipRoute } from '../lib/localitySearch';
 import LocationCombobox from '../components/LocationCombobox';
+import { splitByShare, ambiguityCopy, zipHeading } from '../lib/zipResults';
 import ElectionsView from '../components/ElectionsView';
 import VoterResourcesCard from '../components/VoterResourcesCard';
 import CompassControlsBar from '../components/CompassControlsBar';
@@ -405,6 +406,13 @@ export default function Results() {
   // Pitfall 1) — resolveCoordinate() populates this directly, mirroring how
   // browseResults is a second data channel alongside the hook.
   const [coordLocality, setCoordLocality] = useState(null);
+  // ZIP mode (?zip=): { zip, states, county, ambiguity }. Officials themselves ride
+  // in browseResults, because a ZIP result IS an area result — many officials per
+  // office, none of them claimed as the visitor's own.
+  const [zipInfo, setZipInfo] = useState(null);
+  // True only for a well-formed ZIP with no ZCTA polygon, i.e. not a real ZIP.
+  // Distinct from "real ZIP, nothing covered", which renders an empty result.
+  const [zipNotFound, setZipNotFound] = useState(false);
   // Currently-browsed area (geo_id + mtfcc), captured from URL shortcut params.
   // Used to drive elections-by-area fetch.
   const [browseArea, setBrowseArea] = useState(() => {
@@ -433,6 +441,11 @@ export default function Results() {
     if (searchParams.get('browse_government_list')) return;
     if (searchParams.get('browse_state_officials')) return;
     if (searchParams.get('browse_federal_officials')) return;
+    // ...and a ZIP search, for the same reason: the visitor typed a ZIP, so a
+    // stored street address resolving in a moment later would replace what they
+    // searched with something they did not. (Observed: /results?zip=47401 showed
+    // "100 W Kirkwood Ave, Bloomington, IN, 47404" in the box.)
+    if (searchParams.get('zip')) return;
     let cancelled = false;
     loadUserAddressFromContext().then((stored) => {
       if (cancelled || !stored?.addr) return;
@@ -501,8 +514,17 @@ export default function Results() {
   // cache): an empty/unseeded browse must show "no results", not bleed the prior
   // address search's officials through (e.g. a stale Los Angeles list surfacing
   // under a Nevada browse). browseResults is null only while loading.
+  // ZIP mode splits the officials by how much of the ZIP their district covers.
+  // NOTHING is discarded: sub-2% slivers move to a disclosure below the results
+  // instead of competing with the districts that actually cover the ZIP (ZIP
+  // 46360 touches 7 places and only 1 is real). null outside ZIP mode.
+  const zipSplit = useMemo(
+    () => (zipInfo ? splitByShare(browseResults || []) : null),
+    [zipInfo, browseResults],
+  );
+
   const list = (searchMode === 'browse' || searchMode === 'coordinate')
-    ? (browseResults || [])
+    ? (zipSplit ? zipSplit.primary : (browseResults || []))
     : (cachedResult ? cachedResult.list : hookData);
   const phase = (searchMode === 'browse' || searchMode === 'coordinate')
     ? (browseLoading ? 'loading' : (browseResults ? 'fresh' : 'idle'))
@@ -925,6 +947,49 @@ export default function Results() {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Handle ?zip=46220 — every official serving any part of a ZIP.
+  //
+  // Reuses browse mode's rendering, because browse mode is the one presentation
+  // that already shows many officials per office WITHOUT claiming any of them is
+  // yours — which is exactly what a ZIP can honestly say.
+  //
+  // Keyed on the zip param VALUE, not [], so typing a new ZIP into the in-page
+  // combobox (Results->Results navigation, no remount) actually re-fetches
+  // instead of leaving the previous ZIP's officials on screen. Same reasoning as
+  // the browse_geo_id effect above; the other browse_* readers get away with []
+  // because they are one-shot entry points.
+  useEffect(() => {
+    const zip = searchParams.get('zip');
+    if (!zip) return;
+
+    setSearchMode('browse');
+    setBrowseLoading(true);
+    setZipNotFound(false);
+    setAddressInput(zip);
+
+    let cancelled = false;
+    fetchOfficialsByZip(zip).then(({ data, error }) => {
+      if (cancelled) return;
+      if (error === 'ZIP_NOT_FOUND' || !data) {
+        if (error && error !== 'ZIP_NOT_FOUND') console.error('zip lookup error:', error);
+        setZipNotFound(true);
+        setZipInfo(null);
+        setBrowseResults([]);
+        setBrowseLoading(false);
+        return;
+      }
+      setZipInfo({
+        zip: data.zip,
+        states: Array.isArray(data.states) ? data.states : [],
+        county: data.county ?? null,
+        ambiguity: Array.isArray(data.ambiguity) ? data.ambiguity : [],
+      });
+      setBrowseResults(Array.isArray(data.politicians) ? data.politicians : []);
+      setBrowseLoading(false);
+    });
+    return () => { cancelled = true; };
+  }, [searchParams.get('zip')]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Handle ?browse_federal_officials=1 — all federal-tier officials nationally
   // (US Senate/House, President/VP/Cabinet/agencies, federal judiciary). The
   // "browse the United States" entry point; Treasury Tracker's federal deep-link
@@ -1155,6 +1220,12 @@ export default function Results() {
     // Deriving the city from politician records can surface a neighboring city
     // when districts overlap (e.g. a Culver City browse showing "Inglewood"
     // because an overlapping district's official has representing_city set).
+    // ZIP mode has NO single place of record: a ZIP routinely spans several
+    // cities. Deriving one from politician records would let a stray
+    // representing_city on an overlapping district's official hijack the banner —
+    // the same hijack the browse and coordinate branches guard against. Return
+    // null and let the state-level banner lead.
+    if (zipInfo) return null;
     if (searchMode === 'browse') {
       const label = searchParams.get('browse_label');
       if (label && label.trim()) return label.trim();
@@ -1208,7 +1279,7 @@ export default function Results() {
     const fromAddress = parseCityFromAddress(addressInput);
     if (fromAddress) return fromAddress;
     return null;
-  }, [list, addressInput, searchMode, searchParams, incorporationInfo, coordLocality]);
+  }, [list, addressInput, searchMode, searchParams, incorporationInfo, coordLocality, zipInfo]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"
@@ -1283,13 +1354,14 @@ export default function Results() {
   const bannerCtx = useMemo(
     () => ({
       representingCity,
+      cityFallbackLabel: zipInfo ? `In ZIP ${zipInfo.zip}` : undefined,
       userState,
       stateNames: STATE_NAMES,
       buildingImageMap,
       featureIconMap,
       populationMap,
     }),
-    [representingCity, userState, buildingImageMap, featureIconMap, populationMap]
+    [representingCity, userState, buildingImageMap, featureIconMap, populationMap, zipInfo]
   );
 
   // Only show the nearest upcoming election; hiding future elections avoids duplicate
@@ -1930,12 +2002,73 @@ export default function Results() {
               }}
               onSubmitAddress={(raw) => handleAddressSearch(raw)}
               onSubmitCoordinate={(lat, lng, raw) => resolveCoordinate(lat, lng, raw, { method: 'combobox' })}
+              onSubmitZip={(zip) => {
+                track('essentials_zip_searched', { method: 'combobox' });
+                navigate(zipRoute(zip));
+              }}
               onSelectCandidate={(candidate) => {
                 track('essentials_locality_searched', { label: candidate.label, state: candidate.state });
                 navigate(browseAreaRoute(candidate));
               }}
               errorRow={coordError}
             />
+
+            {/* ZIP mode header — AREA VOICE, deliberately.
+                "Officials serving 46220", never "your representatives": a ZIP
+                cannot establish which side of a district line the visitor lives
+                on, so for most of a doubled office the personal claim is false.
+                The nudge to a full street address is how they get the precise
+                answer. */}
+            {zipInfo && (
+              <div className="mt-3">
+                <h2 className="text-lg font-bold text-[var(--ev-navy)] dark:text-white">
+                  {zipHeading(zipInfo.zip)}
+                </h2>
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                  {ambiguityCopy(zipInfo.ambiguity) && (
+                    <span>{ambiguityCopy(zipInfo.ambiguity)} </span>
+                  )}
+                  Enter a full street address to see which of them are yours.
+                </p>
+              </div>
+            )}
+            {zipNotFound && (
+              <p role="alert" className="mt-3 flex items-center gap-1 text-sm text-[var(--ev-coral)]">
+                <span aria-hidden="true" className="text-[12px] font-semibold">!</span>
+                We don&rsquo;t recognize that ZIP code. Check the digits, or enter a full street address.
+              </p>
+            )}
+
+            {/* Sliver disclosure. These officials serve a sub-2% edge of the ZIP —
+                real, so never dropped, but they would otherwise drown out the
+                districts that actually cover it. A compact list rather than full
+                cards: the point is to name them and let the reader reach them. */}
+            {zipSplit && zipSplit.collapsed.length > 0 && (
+              <details className="mt-3 rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2">
+                <summary className="cursor-pointer text-sm text-gray-600 dark:text-gray-300">
+                  Also partly in this ZIP code ({zipSplit.collapsed.length})
+                </summary>
+                <ul className="mt-2 space-y-1">
+                  {zipSplit.collapsed.map((pol) => (
+                    <li key={pol.id || `${pol.full_name}-${pol.office_title}`} className="text-sm">
+                      <button
+                        type="button"
+                        onClick={() => pol.id && navigate(`/politician/${pol.id}`)}
+                        className="text-left text-[var(--ev-teal)] dark:text-[var(--color-ev-teal-light)] hover:underline"
+                      >
+                        {pol.full_name || `${pol.first_name} ${pol.last_name}`.trim()}
+                      </button>
+                      <span className="text-gray-500 dark:text-gray-400">
+                        {pol.office_title ? ` — ${pol.office_title}` : ''}
+                        {typeof pol.share === 'number'
+                          ? ` (serves ${pol.share < 0.01 ? '<1' : Math.round(pol.share * 100)}% of this ZIP)`
+                          : ''}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
 
             {/* Secondary info row: tribal/elections badges (when present) plus the
                 Compass on/off toggle, right-aligned on the same line as the election

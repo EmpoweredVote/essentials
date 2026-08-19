@@ -22,6 +22,9 @@ import { stripAreaTypeSuffix } from '../lib/localitySearch';
 //   onChange(next)      — fired on every keystroke
 //   onSubmitAddress(raw)             — Enter/Search for kind === 'address'
 //   onSubmitCoordinate(lat,lng,raw)  — Enter/Search for kind === 'coordinate'
+//   onSubmitZip(zip, raw)            — Enter/Search for kind === 'zip' (a BARE
+//                                      ZIP; a ZIP inside a longer string is an
+//                                      address and still resolves to a point)
 //   onSelectCandidate(candidate)     — a listbox row (or Enter on a name query
 //                                       with an active row) was chosen
 //   placeholder?, ariaLabel?         — copy overrides (UI-SPEC defaults below)
@@ -74,9 +77,10 @@ export default function LocationCombobox({
   onChange,
   onSubmitAddress,
   onSubmitCoordinate,
+  onSubmitZip,
   onSelectCandidate,
-  placeholder = 'Address, city, or coordinates',
-  ariaLabel = 'Search by address, city, county, state, or decimal coordinates',
+  placeholder = 'Address, ZIP, city, or coordinates',
+  ariaLabel = 'Search by address, ZIP code, city, county, state, or decimal coordinates',
   errorRow = '',
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -174,7 +178,9 @@ export default function LocationCombobox({
   }
 
   function dispatchSubmit() {
-    if (classified.kind === 'address') {
+    if (classified.kind === 'zip') {
+      onSubmitZip?.(classified.zip, value.trim());
+    } else if (classified.kind === 'address') {
       onSubmitAddress?.(value.trim());
     } else if (classified.kind === 'coordinate') {
       onSubmitCoordinate?.(classified.lat, classified.lng, value);
@@ -201,6 +207,16 @@ export default function LocationCombobox({
       );
     }
     if (listboxVisible) return null;
+    if (classified.kind === 'zip') {
+      // Says "serving" rather than "your representatives" on purpose: a ZIP
+      // cannot establish which side of a district line the visitor lives on.
+      return (
+        <p className="mt-2 flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+          <span aria-hidden="true" className="text-[12px] font-semibold">↵</span>
+          Press Enter to see everyone serving this ZIP code
+        </p>
+      );
+    }
     if (classified.kind === 'address') {
       return (
         <p className="mt-2 flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">

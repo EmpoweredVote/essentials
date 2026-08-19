@@ -5,7 +5,7 @@ import { Layout } from '../components/Layout';
 import { useCompass } from '../contexts/CompassContext';
 import { searchPoliticiansByName } from '../lib/api';
 import { COVERAGE_STATES } from '../lib/coverage';
-import { browseAreaRoute, coordinateRoute } from '../lib/localitySearch';
+import { browseAreaRoute, coordinateRoute, zipRoute } from '../lib/localitySearch';
 import LocationCombobox from '../components/LocationCombobox';
 import { getAutoOpenMyLocation } from '../lib/locationPref';
 
@@ -76,6 +76,14 @@ export default function Landing() {
   const handleSubmitAddress = (raw) => {
     track('essentials_address_searched', { method: 'manual' });
     navigate(`/results?q=${encodeURIComponent(raw)}`);
+  };
+
+  // A bare ZIP resolves as an AREA, not a point — Results renders it in area
+  // voice ("Officials serving 46220"). No raw ZIP in telemetry beyond the fact
+  // that a ZIP search happened, matching the coordinate handler's restraint.
+  const handleSubmitZip = (zip) => {
+    track('essentials_zip_searched', { method: 'manual' });
+    navigate(zipRoute(zip));
   };
 
   const handleSubmitCoordinate = (lat, lng, raw) => {
@@ -273,9 +281,10 @@ export default function Landing() {
                     onChange={setAddressInput}
                     onSubmitAddress={handleSubmitAddress}
                     onSubmitCoordinate={handleSubmitCoordinate}
+                    onSubmitZip={handleSubmitZip}
                     onSelectCandidate={handleSelectCandidate}
-                    placeholder="Address, city, or coordinates — anywhere in the U.S."
-                    ariaLabel="Enter your street address, city, county, state, or decimal coordinates"
+                    placeholder="Address, ZIP, city, or coordinates — anywhere in the U.S."
+                    ariaLabel="Enter your street address, ZIP code, city, county, state, or decimal coordinates"
                   />
                 </div>
               </div>

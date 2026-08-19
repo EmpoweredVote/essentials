@@ -88,4 +88,18 @@ describe('buildBannerProps', () => {
     expect(result.featureIcons).toEqual([]);
     expect(result.stats).toBeNull();
   });
+
+  it('lets a caller override the no-city label — ZIP mode has no city of record', () => {
+    // A ZIP spans several cities (47401 covers Bloomington plus four townships
+    // across two counties), so "Your City" would claim a possession the ZIP
+    // cannot establish.
+    const result = buildBannerProps('city', { cityFallbackLabel: 'In ZIP 47401' });
+    expect(result.locationName).toBe('In ZIP 47401');
+  });
+
+  it('still says "Your City" when the override is undefined', () => {
+    // Results passes `undefined` for non-ZIP modes; the default must survive it.
+    const result = buildBannerProps('city', { cityFallbackLabel: undefined });
+    expect(result.locationName).toBe('Your City');
+  });
 });

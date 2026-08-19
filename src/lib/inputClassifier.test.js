@@ -37,11 +37,39 @@ describe('classifyInput — address detection (D-02)', () => {
   it('classifies a leading-street-number string as address', () => {
     expect(classifyInput('123 Main St')).toEqual({ kind: 'address' });
   });
-  it('classifies a bare 5-digit ZIP as address (flows through existing Census path)', () => {
-    expect(classifyInput('90210')).toEqual({ kind: 'address' });
+  it('classifies a street address containing a ZIP as address', () => {
+    // A full address must still geocode to a POINT — the precise answer. Only an
+    // input that is NOTHING BUT a ZIP resolves as an area (see the zip block).
+    expect(classifyInput('123 Main St, Bloomington IN 47401')).toEqual({ kind: 'address' });
   });
-  it('classifies a ZIP+4 as address', () => {
-    expect(classifyInput('90210-1234')).toEqual({ kind: 'address' });
+});
+
+describe('classifyInput — ZIP detection', () => {
+  // NOTE: two assertions in the address block above used to claim a BARE ZIP was
+  // an address. They were deleted deliberately, not fixed: routing a bare ZIP
+  // into the Census address path guarantees a 422 ADDRESS_NOT_FOUND, because the
+  // Census geocoder cannot resolve a ZIP without a street. Inverting them IS the
+  // feature — a bare ZIP now resolves as an AREA.
+  it('classifies a bare 5-digit ZIP as zip, carrying the normalized code', () => {
+    expect(classifyInput('46220')).toEqual({ kind: 'zip', zip: '46220' });
+  });
+  it('classifies a ZIP+4 as zip, normalized to five digits', () => {
+    expect(classifyInput('46220-1234')).toEqual({ kind: 'zip', zip: '46220' });
+  });
+  it('trims surrounding whitespace', () => {
+    expect(classifyInput('  46220  ')).toEqual({ kind: 'zip', zip: '46220' });
+  });
+  it('keeps a city+ZIP string as an address, not a zip', () => {
+    expect(classifyInput('Bloomington 47401')).toEqual({ kind: 'address' });
+  });
+  it('does not treat a 4-digit number as a zip', () => {
+    expect(classifyInput('4622')).toEqual({ kind: 'name' });
+  });
+  it('does not treat a 6-digit number as a zip', () => {
+    expect(classifyInput('462201')).toEqual({ kind: 'name' });
+  });
+  it('does not treat a 9-digit run without the hyphen as a zip', () => {
+    expect(classifyInput('462201234')).toEqual({ kind: 'name' });
   });
 });
 

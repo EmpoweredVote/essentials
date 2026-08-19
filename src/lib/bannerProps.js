@@ -30,6 +30,11 @@ export function buildBannerProps(tier, ctx = {}) {
     buildingImageMap = {},
     featureIconMap = {},
     populationMap = {},
+    // Label for the local band when no single city can be named. Overridable
+    // because ZIP mode deliberately has no city of record — a ZIP spans several,
+    // so "Your City" would claim a possession the ZIP cannot establish (ZIP 47401
+    // covers Bloomington plus four townships across two counties).
+    cityFallbackLabel = 'Your City',
   } = ctx;
 
   const mapKey = TIER_TO_MAP_KEY[tier];
@@ -37,7 +42,7 @@ export function buildBannerProps(tier, ctx = {}) {
   let locationName;
   if (tier === 'city') {
     if (!representingCity) {
-      locationName = 'Your City';
+      locationName = cityFallbackLabel;
     } else if (userState) {
       // In browse mode representingCity is the resolver's full label, which already
       // ends in the state (e.g. "…, California, US, CA") — appending userState again

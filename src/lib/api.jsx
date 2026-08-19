@@ -190,29 +190,30 @@ export async function saveMyLocation(address) {
   }
 }
 
-export async function fetchCandidates(zipOrQuery) {
+/**
+ * Officials serving any part of a ZIP code.
+ *
+ * A ZIP is an AREA, so the response legitimately contains several holders of the
+ * same office, each with `share` — the fraction of the ZIP their district covers.
+ * Statewide offices carry share: null. Nothing is filtered by share server-side;
+ * collapsing slivers is the caller's job (see src/lib/zipResults.js).
+ *
+ * Returns { data, error } like the browse helpers. `data` is null when the
+ * backend reports 404 ZIP_NOT_FOUND — a well-formed string that is not a real
+ * ZIP, which the UI must distinguish from a real ZIP we cover no offices in.
+ *
+ * (Replaces fetchCandidates, which routed 5-digit input at a backend stub that
+ * ignored the ZIP and returned every active profile. It had no callers.)
+ */
+export async function fetchOfficialsByZip(zip) {
   try {
-    const isZip = /^\d{5}$/.test(zipOrQuery);
-
-    if (isZip) {
-      // ZIP: use existing GET endpoint
-      const res = await apiFetch(`/essentials/candidates/${zipOrQuery}`, {
-        cache: "no-store",
-      });
-      if (!res || !res.ok) return [];
-      return res.json();
-    }
-
-    // Address: use search endpoint with includeChallengers so non-incumbents appear
-    const res = await apiFetch(`/essentials/candidates/search`, {
-      method: "POST",
-      body: JSON.stringify({ query: zipOrQuery, includeChallengers: true }),
-    });
-    if (!res || !res.ok) return [];
-    return res.json();
+    const res = await publicFetch(`/essentials/candidates/${encodeURIComponent(zip)}`);
+    if (res && res.status === 404) return { data: null, error: "ZIP_NOT_FOUND" };
+    if (!res || !res.ok) return { data: null, error: `${res?.status ?? "unknown"}` };
+    return { data: await res.json(), error: null };
   } catch (error) {
-    console.error("Error fetching candidates:", error);
-    return [];
+    console.error("fetchOfficialsByZip error:", error);
+    return { data: null, error: error.message };
   }
 }
 
