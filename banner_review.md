@@ -1,5 +1,5 @@
 EMPOWERED VOTE - CITY BANNER REVIEW
-Certified 7 | Redo 0 | Unreviewed 4 of 11
+Certified 8 | Redo 0 | Unreviewed 4 of 12
 
 NOTE (2026-08-18): this ledger is BEHIND the registry. Many banners added since
 2026-07-29 -- the five Tarrant cities, Seattle, King County, Bainbridge Island,
@@ -11,7 +11,7 @@ entry here as unrecorded, not as unreviewed.
 REDO (0):
   (none)
 
-CERTIFIED (7):
+CERTIFIED (8):
   - Alexandria
   - Leonardtown
   - Springfield
@@ -19,6 +19,17 @@ CERTIFIED (7):
   - Madison WI      -- NEW 2026-07-27. Skyline across Lake Monona, Capitol dome centred.
                         John Benson | CC BY 2.5 | anchor .45 of the 2408x932 original.
                         First WI city banner; WI local coverage was Racine County only.
+  - Travis County TX -- NEW 2026-08-18 (cities/travis-county.jpg). Hamilton Pool
+                        Preserve. Fredlyfish4 | CC BY-SA 4.0 | 7986x2502 original,
+                        centred crop, 7877px retained. Deliberately NOT the skyline:
+                        that subject moved to cities/austin.jpg the same day, so the
+                        county reads as the county -- the separation King County keeps
+                        from Seattle and Dane from Madison.
+                        Operator-accepted 2026-08-18 over my objection, correctly: the
+                        beachgoers are 10-20px silhouettes with no facial detail at the
+                        shipped 1700x540. Distance and scale are the test, not the mere
+                        presence of people -- the Barton Springs and Barton Creek frames
+                        rejected the same day had subjects filling the FOREGROUND.
   - Austin TX       -- NEW 2026-08-18 (cities/austin.jpg). Downtown skyline from Lady
                         Bird Lake. Sk5893 | CC BY-SA 4.0 | 8005x2993 original.
                         THIS FILE IS THE FORMER states/TX.jpg, BYTE-FOR-BYTE
@@ -110,4 +121,4 @@ new Hurricane Ridge frame today -- that is the cache having expired over four da
 NOT evidence that overwrite works. Version the filename for state banners too.
 
 --- machine-readable ---
-{"alexandria":{"status":"certified","note":""},"leonardtown":{"status":"certified","note":""},"springfield-mo":{"status":"certified","note":""},"falls-church-alt":{"status":"certified","note":""},"madison-wi":{"status":"certified","note":"new 2026-07-27; CC BY 2.5 John Benson; anchor .45"},"bend-or":{"status":"certified","note":"re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"},"austin-tx":{"status":"certified","note":"new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}}
+{"alexandria":{"status":"certified","note":""},"leonardtown":{"status":"certified","note":""},"springfield-mo":{"status":"certified","note":""},"falls-church-alt":{"status":"certified","note":""},"madison-wi":{"status":"certified","note":"new 2026-07-27; CC BY 2.5 John Benson; anchor .45"},"bend-or":{"status":"certified","note":"re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"},"austin-tx":{"status":"certified","note":"new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"},"travis-county-tx":{"status":"certified","note":"new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}}

@@ -527,6 +527,31 @@ const CURATED_LOCAL = {
   // Collin and Dane do): a county-level representing_city would hijack the CITY banner for
   // every address in the county.
   austin: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/austin.jpg' },
+  // Travis County reads as the COUNTY, not as Austin: Hamilton Pool Preserve, the collapsed
+  // grotto on the west side of the county. Deliberately not the skyline, which now sits one
+  // tier down at cities/austin.jpg — the same separation King County keeps from Seattle
+  // (Snoqualmie Falls) and Dane from Madison (the Driftless).
+  //   travis county - Hamilton Pool Preserve | Fredlyfish4 | CC BY-SA 4.0
+  // 7986x2502 source, centred crop (wider than 3.148:1), 7877px retained against a 1700 target.
+  //
+  // ⚠ The frame contains beachgoers. Operator-reviewed and accepted 2026-08-18: at the shipped
+  // 1700x540 they are 10-20px silhouettes with no facial detail — a distant crowd at a public
+  // swimming hole, not identifiable individuals. This is NOT the same call as the Barton Springs
+  // and Barton Creek frames rejected the same day, where subjects filled the FOREGROUND at close
+  // range. The distinction is distance and scale, not the presence of people.
+  //
+  // ⚠ HOW THIS KEY REACHES THE SCREEN, because it is not obvious. County offices carry
+  // representing_city = NULL by design (a county-level value would hijack the CITY banner for
+  // every address in the county), so this resolves ONLY via browse_label. That label comes from
+  // the BACKEND: /api/essentials/location-search?q=Travis returns
+  // "Travis County, TX · County" with has_local_data true. Verified against production.
+  // 🔴 It does NOT come from COVERAGE_COUNTIES in coverage.js — that array has no importers, so
+  // Rollup drops it entirely. Entries there are source documentation only.
+  //   Test it by LABEL, not by geo_id: grepping a built bundle for "Travis County",
+  //   "King County" and "Kitsap County" returns 0 each. The geo_id proxy quoted elsewhere in
+  //   these files is unreliable — 48453 appears 4 times in a built bundle from unrelated
+  //   population/FIPS data, which would read as "the entry shipped" when it did not.
+  'travis county': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/travis-county.jpg' },
   // Nevada city banners (Wikimedia Commons; state-scoped 'NV'). Operator-certified
   // 2026-07-06. Keys are space-form to match coverage.js browse_label; storage
   // files are hyphenated. Note: the NV STATE banner is the Las Vegas Strip, so the

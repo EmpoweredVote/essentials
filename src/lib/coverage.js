@@ -530,6 +530,23 @@ export const COVERAGE_COUNTIES = [
   // carry representing_city = NULL, so the banner key resolves through browse_label alone.
   // Its city, Bainbridge Island, is a chip in COVERAGE_STATES — do NOT add it here.
   { label: 'Kitsap County', browseGovernmentList: ['53035'], browseStateAbbrev: 'WA', hasContext: true },
+  // Travis County TX (2026-08-18 Austin/Travis deep seed, EV-Accounts migs 1827-1831): 12 elected
+  // executives — County Judge, four Commissioners, DA, County Attorney, Sheriff, Tax
+  // Assessor-Collector, County Clerk, District Clerk, County Treasurer. All 12 seated on dated
+  // terms; Commissioner Pct 4 (George Morales III) holds his by APPOINTMENT from 2026-06-11 and
+  // starts a fresh elected term 2027-01-01, so this entry needs a look in January.
+  // The ~30 district/county/probate court seats, 5 Justices of the Peace and 5 Constables are
+  // NOT seeded yet — deliberately out of wave 1.
+  // hasContext FALSE: no Travis County officeholder holds a compass chair yet. Stance work was
+  // scoped to the 11 Austin CITY seats and has not run.
+  // ⚠ Precinct boundaries are not loaded, so an in-county address returns all four commissioners
+  // rather than its own — the same over-inclusive shape as Tarrant/Collin/Kitsap above.
+  // ⚠ geo_id 48453 is unique, but 48015 (Austin COUNTY, a different place) is shared with TX SD15
+  // and TX HD15. Anything resolving these must qualify by mtfcc/district_type, never geo_id alone.
+  // ⚠ This entry gives cities/travis-county.jpg (Hamilton Pool) its browse label, since all 12
+  // county offices carry representing_city = NULL. Its city, Austin, is keyed off
+  // representing_city='Austin' instead — do NOT add Austin here.
+  { label: 'Travis County', browseGovernmentList: ['48453'], browseStateAbbrev: 'TX', hasContext: false },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on
