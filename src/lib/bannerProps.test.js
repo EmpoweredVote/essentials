@@ -102,4 +102,42 @@ describe('buildBannerProps', () => {
     const result = buildBannerProps('city', { cityFallbackLabel: undefined });
     expect(result.locationName).toBe('Your City');
   });
+
+  it('names the state on the state band when userState is known', () => {
+    // Reported 2026-08-18: a ZIP search resolved Los Angeles and Culver City
+    // correctly, but the state band still read "Your State". userState was null
+    // because it was derived only from the address string or the browse params,
+    // and ZIP mode has neither — see the zipInfo branch in Results' userState.
+    const result = buildBannerProps('state', {
+      userState: 'CA',
+      stateNames: { CA: 'California' },
+    });
+    expect(result.locationName).toBe('California');
+  });
+
+  it('lets a caller override the no-state label — a multi-state ZIP has no state of record', () => {
+    // Same argument as cityFallbackLabel, one tier up. ZIP 63673 straddles
+    // Illinois and Missouri and 89439 straddles California and Nevada, so
+    // "Your State" would claim a possession the ZIP cannot establish. Naming
+    // either one of the two would be worse still.
+    const result = buildBannerProps('state', { stateFallbackLabel: 'In ZIP 63673' });
+    expect(result.locationName).toBe('In ZIP 63673');
+  });
+
+  it('still says "Your State" when the state override is undefined', () => {
+    const result = buildBannerProps('state', { stateFallbackLabel: undefined });
+    expect(result.locationName).toBe('Your State');
+  });
+
+  it('prefers the real state name over the fallback even when a fallback is supplied', () => {
+    // A single-state ZIP supplies BOTH a resolved userState and a fallback
+    // label; the resolved state must win, or the fix for the reported bug does
+    // nothing in exactly the case it was written for.
+    const result = buildBannerProps('state', {
+      userState: 'CA',
+      stateNames: { CA: 'California' },
+      stateFallbackLabel: 'In ZIP 90232',
+    });
+    expect(result.locationName).toBe('California');
+  });
 });

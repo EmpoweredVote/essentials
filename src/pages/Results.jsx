@@ -1286,6 +1286,22 @@ export default function Results() {
   const userState = useMemo(() => {
     const fromAddr = parseStateFromAddress(addressInput);
     if (fromAddr) return fromAddr;
+    // ZIP mode has neither an address string nor browse params, so every branch
+    // below missed it and the State band fell back to "Your State" even though
+    // the backend had already told us the state. Reported 2026-08-18: a ZIP
+    // resolved Los Angeles and Culver City correctly under a "Your State" banner.
+    //
+    // Only when the ZIP resolves to EXACTLY ONE state. Roughly 1% of ZIPs
+    // straddle a state line, and the backend returns every state clearing the 1%
+    // floor; picking states[0] there would label a CA/NV ZIP as whichever
+    // happened to sort first. Multi-state ZIPs fall through to null and the
+    // stateFallbackLabel names the ZIP instead — mirroring the WR-03 guard on
+    // browse_government_list, which likewise trusts a derived state only when
+    // the whole list agrees.
+    if (zipInfo && Array.isArray(zipInfo.states) && zipInfo.states.length === 1) {
+      const zipState = String(zipInfo.states[0] || '').trim().toUpperCase();
+      if (/^[A-Z]{2}$/.test(zipState)) return zipState;
+    }
     // In geo browse mode the geo_id's FIPS prefix is authoritative for the state,
     // so a stale/contradictory browse_state can never mislabel real officials
     // (e.g. Newsom shown as "Missouri"). Geo wins over the raw param.
@@ -1317,7 +1333,7 @@ export default function Results() {
       return browseState.toUpperCase();
     }
     return null;
-  }, [addressInput, searchParams]);
+  }, [addressInput, searchParams, zipInfo]);
 
   const buildingImageMap = useMemo(
     () => getBuildingImages(representingCity, userState),
@@ -1355,6 +1371,9 @@ export default function Results() {
     () => ({
       representingCity,
       cityFallbackLabel: zipInfo ? `In ZIP ${zipInfo.zip}` : undefined,
+      // Only reached by a ZIP that straddles a state line, since a single-state
+      // ZIP resolves userState above and the real state name wins.
+      stateFallbackLabel: zipInfo ? `In ZIP ${zipInfo.zip}` : undefined,
       userState,
       stateNames: STATE_NAMES,
       buildingImageMap,
