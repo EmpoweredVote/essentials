@@ -503,6 +503,30 @@ const CURATED_LOCAL = {
   grapevine: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/grapevine.jpg' },
   mansfield: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/mansfield.jpg' },
   'north richland hills': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/north-richland-hills.jpg' },
+  // Austin (2026-08-18 Austin/Travis deep seed, migrations 1827-1831).
+  //
+  // ⚠ THE STATE BANNER MOVED FOR THIS. states/TX.jpg WAS this exact skyline photograph, so
+  // Austin-the-capital and Texas-the-state were one subject. Rather than give Austin a
+  // substitute view of itself, the state banner became the Chisos Mountains and this frame came
+  // DOWN a tier — the same resolution WA used for Seattle, ME for Portland, OR for Mount Hood.
+  // cities/austin.jpg is therefore BYTE-IDENTICAL to the pre-2026-08-18 states/TX.jpg
+  // (sha256 62cba3d5..., 1700x540); this entry IS the archive, so no _archive copy was needed.
+  //   austin - Austin, Texas Skyline 2018, downtown from Lady Bird Lake | Sk5893 | CC BY-SA 4.0
+  //
+  // The other way to resolve this collision is Nevada's: keep the state banner and give the
+  // city a deliberately different vantage (NV state is the Las Vegas Strip, so the Las Vegas
+  // city banner is the Welcome sign). That was offered and declined here — Austin's skyline
+  // over Lady Bird Lake is the certified frame, and the alternatives that did NOT collide were
+  // materially weaker in the 6:1 band.
+  //
+  // Migration 1831 backfilled representing_city='Austin'/representing_state='TX' onto the 11
+  // city offices so this key resolves on its PRIMARY path. Before that it would still have
+  // resolved for a typed address via the parse-the-address fallback in Results.jsx, but not
+  // from the data — and never in ZIP mode, which returns null by design.
+  // 🔴 Travis County's 12 offices deliberately keep representing_city = NULL (as Tarrant, King,
+  // Collin and Dane do): a county-level representing_city would hijack the CITY banner for
+  // every address in the county.
+  austin: { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/austin.jpg' },
   // Nevada city banners (Wikimedia Commons; state-scoped 'NV'). Operator-certified
   // 2026-07-06. Keys are space-form to match coverage.js browse_label; storage
   // files are hyphenated. Note: the NV STATE banner is the Las Vegas Strip, so the
@@ -728,7 +752,21 @@ const CURATED_LOCAL = {
 //   SC - Arthur Ravenel Bridge (from water) | bbatsell | CC BY-SA 2.5
 //   SD - Mount Rushmore National Memorial | Nick Amoscato | CC BY 2.0
 //   TN - Nashville panorama | Kaldari | Public domain
-//   TX - Austin, Texas Skyline 2018 | Sk5893 | CC BY-SA 4.0
+//   TX - Chisos Mountains, Big Bend National Park | Tlshands | CC BY-SA 3.0
+//        [2026-08-18: replaced the prior Austin, Texas Skyline 2018 (Sk5893, CC BY-SA 4.0) per
+//         operator — the state banner was a photograph of Austin, so Texas and its capital
+//         shared one subject. That skyline moved DOWN to cities/austin.jpg byte-for-byte
+//         (see the Austin block in CURATED_LOCAL), the same resolution WA used for Seattle,
+//         ME for Portland and OR for Mount Hood. Anchor n/a: the 16618x3456 source is wider
+//         than 3.148:1, so the crop is horizontal and centred. Chosen from an artifact
+//         rendering all eight candidates at BOTH shipped ratios; the deciding test was the
+//         6:1 desktop band, where Guadalupe empties into pale sky exactly where the title and
+//         stat row sit, and both Enchanted Rock frames read as undifferentiated granite.
+//         Palo Duro was the runner-up and was passed over on subject collision, not quality:
+//         ND already carries Painted Canyon at Theodore Roosevelt NP, the same visual family
+//         of layered eroded badlands.
+//         🔴 SERVED FROM states/TX-v2.jpg VIA STATE_PANORAMA_FILES, not states/TX.jpg — the
+//         in-place overwrite was measured serving stale bytes on the plain URL. See the map.]
 //   UT - SLC Skyline 2024 | Invictus323 | CC BY 4.0
 //   VA - Richmond Skyline from East Grace Street | Don.s.okeefe | CC BY-SA 3.0 [brightened]
 //   VT - Vermont fall foliage panorama | chensiyuan | CC BY-SA 4.0
@@ -752,6 +790,29 @@ const STATE_PANORAMAS = new Set([
   'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA',
   'VT', 'WA', 'WI', 'WV', 'WY',
 ]);
+
+/**
+ * States whose panorama file is VERSIONED instead of the default `<ABBREV>.jpg`.
+ *
+ * 🔴 WHY THIS MAP HAS TO EXIST. Replacing a state banner means overwriting the same object
+ * path, and overwriting in place does NOT reliably invalidate the Supabase CDN. Measured on
+ * 2026-08-18 while swapping Texas: seconds after the upload, the sha256 of
+ * `states/TX.jpg` fetched WITHOUT a cache-buster was still the OLD Austin skyline, while the
+ * same URL with `?v=` returned the new Chisos frame. SectionBanner requests the plain URL, so
+ * users would have kept seeing the old picture for an unknown period.
+ *
+ * The rest of the file already versions filenames for exactly this reason — `FEDERAL_IMAGE`
+ * is `us-capitol-banner-v2.jpg` and Bend is `bend-v2.jpg` — but the state path had no way to
+ * express it, because the URL was built as `${abbrev}.jpg`. This map is that way.
+ *
+ * ⚠ Washington was swapped on 2026-08-14 by overwriting `states/WA.jpg`, and it serves the
+ * new Hurricane Ridge frame today. That is not evidence overwriting works — only that the
+ * cache eventually expires. Any future state replacement should get a versioned entry here
+ * rather than repeat the overwrite and hope.
+ */
+const STATE_PANORAMA_FILES = {
+  TX: 'TX-v2.jpg',
+};
 
 /**
  * Get building images for each tier.
@@ -792,7 +853,7 @@ export function getBuildingImages(representingCity, stateAbbrev) {
   // State: curated panoramic banner if available; else null (graceful gradient fallback)
   let stateImage = null;
   if (STATE_PANORAMAS.has(abbrev)) {
-    stateImage = `${STATE_PANORAMA_BASE}${abbrev}.jpg`;
+    stateImage = `${STATE_PANORAMA_BASE}${STATE_PANORAMA_FILES[abbrev] || `${abbrev}.jpg`}`;
   }
 
   return {
