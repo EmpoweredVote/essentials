@@ -287,6 +287,26 @@ const CURATED_LOCAL = {
   // browse_label 'Dane County'; storage file is hyphenated.
   //   dane county - Driftless Area banner, Ice Age Trail near Berry | Corey Coyle | CC BY 3.0
   'dane county': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/dane-county.jpg' },
+  // Colorado Springs + El Paso County (2026-08-21, operator-certified). Licensed
+  // Wikimedia Commons; state-scoped 'CO'. Both certified in the 6:1 DESKTOP band
+  // (rows 128-411 of 540), not on the full frame.
+  //
+  // Neither is a skyline, deliberately. The Colorado STATE banner is the Denver
+  // skyline backed by snowcapped Front Range peaks, and a Colorado Springs
+  // downtown shot renders as that same composition one tier down the same page.
+  // The strongest such candidate (Downtown Colorado Springs by David Shankbone,
+  // CC BY-SA 3.0) was rejected on that adjacency alone, not on quality.
+  //
+  // El Paso County reads as the COUNTY the place — the Calhan Paint Mines, a
+  // county-owned park on unincorporated ground out east — deliberately not the
+  // red rock that is Colorado Springs the city's banner. Same split as Dane
+  // County vs Madison above. Key matches the backend browse_label 'El Paso
+  // County'; the storage file carries a -co suffix because El Paso County also
+  // exists in Texas and would otherwise collide on the shared cities/ path.
+  //   colorado springs - Garden of the Gods partial pano (Cheyenne Mountain at right) | WolfmanSF | CC BY-SA 4.0
+  //   el paso county   - Calhan Paint Mines Archeological District, Pillars on the Rim | MElizabethTill | CC BY-SA 4.0
+  'colorado springs': { state: 'CO', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/colorado-springs.jpg' },
+  'el paso county': { state: 'CO', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-paso-county-co.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the

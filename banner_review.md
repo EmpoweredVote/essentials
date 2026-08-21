@@ -120,5 +120,52 @@ Washington was swapped on 2026-08-14 by overwriting states/WA.jpg and serves the
 new Hurricane Ridge frame today -- that is the cache having expired over four days,
 NOT evidence that overwrite works. Version the filename for state banners too.
 
+--- COLORADO SPRINGS + EL PASO COUNTY, 2026-08-21 ---
+
+Two banners certified in one pass, both inside the 6:1 DESKTOP band (rows 128-411
+of 540), never on the full frame.
+
+  cities/colorado-springs.jpg   Garden of the Gods partial pano, Cheyenne Mountain
+                                at right | WolfmanSF | CC BY-SA 4.0
+                                native 7640x2796 (2.73:1), vertical anchor 0.45
+  cities/el-paso-county-co.jpg  Calhan Paint Mines Archeological District, Pillars
+                                on the Rim | MElizabethTill | CC BY-SA 4.0
+                                native 4723x2988 (1.58:1), vertical anchor 0.25
+
+NEITHER IS A SKYLINE, AND THAT IS THE FINDING. The Colorado STATE banner is the
+Denver skyline backed by snowcapped Front Range peaks. Any downtown Colorado
+Springs candidate renders as the same composition one tier down the same page, so
+the strongest of them -- Downtown Colorado Springs by David Shankbone, CC BY-SA
+3.0, a perfectly good photograph -- was rejected on adjacency alone. This is the
+state/capital subject collision (Seattle/WA, Portland/ME, Portland/OR, Austin/TX)
+appearing in a NON-capital city: Denver and Colorado Springs are different places,
+but the two banners were still going to be the same picture. Check the state
+banner's SUBJECT, not just its city name.
+
+Fourteen candidates rejected. Two rejections worth keeping:
+  - Garden of the Gods "central area" is a wall of conifers with the rock behind
+    them: the exact Bend defect, and it looks fine at full frame.
+  - "Monument Hill" ranked TOP of the county pool on metadata alone (5465x3787,
+    CC BY 4.0, name matches the Palmer Divide landform) and is a photograph of a
+    highway elevation sign. Metadata ranking shortlists; only the render decides.
+
+El Paso County reads as the county the place -- a county-owned park on
+unincorporated ground out east near Calhan -- deliberately not the red rock that
+is the city's banner. Same city/county split as Madison vs Dane County.
+
+The storage file is el-paso-county-co.jpg, not el-paso-county.jpg: El Paso County
+also exists in Texas, and cities/ is a shared flat namespace. Precedent
+portland-me.jpg / fairview-or.jpg.
+
+NO STALE-CDN RISK ON THIS PASS. Both paths are new keys, never previously written,
+so there was nothing cached to invalidate. Served bytes were still sha256-verified
+against the local files after upload (014fed61 / e55d2e49) rather than trusting
+HTTP 200.
+
+Surfacing differs between the two and only one is exercised by an address search:
+the city banner resolves from offices.representing_city, which all ten Colorado
+Springs city offices carry, while county offices deliberately leave that column
+NULL, so the county banner resolves only from browse_label in browse mode.
+
 --- machine-readable ---
-{"alexandria":{"status":"certified","note":""},"leonardtown":{"status":"certified","note":""},"springfield-mo":{"status":"certified","note":""},"falls-church-alt":{"status":"certified","note":""},"madison-wi":{"status":"certified","note":"new 2026-07-27; CC BY 2.5 John Benson; anchor .45"},"bend-or":{"status":"certified","note":"re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"},"austin-tx":{"status":"certified","note":"new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"},"travis-county-tx":{"status":"certified","note":"new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}}
+{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}}
