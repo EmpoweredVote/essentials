@@ -167,5 +167,64 @@ the city banner resolves from offices.representing_city, which all ten Colorado
 Springs city offices carry, while county offices deliberately leave that column
 NULL, so the county banner resolves only from browse_label in browse mode.
 
+
+--- ASHEVILLE, 2026-08-23 ---
+
+One banner, certified inside the 6:1 DESKTOP band (rows 128-411 of 540), never on
+the full frame.
+
+  cities/asheville.jpg   Asheville Skyline from Beaucatcher Mountain, August 2023
+                         - 1 | Bill McMannis | CC BY 2.0
+                         native 2400x1350 (1.78:1), centred crop 2400x762,
+                         downscaled to 1700x540 -- NOTHING upscaled
+
+THE "AVOID A SKYLINE" RULE OF THUMB GAVE THE WRONG ANSWER HERE, and that is the
+finding worth keeping. North Carolina's state banner is the Charlotte uptown
+skyline, so the reflex -- carried straight over from the Colorado Springs pass
+above -- was to refuse any Asheville skyline. Reading the four candidates in the
+band inverts it.
+
+Charlotte's frame is a CLOSE, GROUND-LEVEL view with buildings filling it. The two
+candidates that actually reproduced that composition were the Pack Square pair,
+Asheville City Hall and the Buncombe County Courthouse shot from the square
+(DiscoA340, CC BY-SA 4.0; 11488x2800 and 7904x2800). Both are close ground-level
+civic buildings -- the same composition one tier down the same page. They also
+shipped bare February trees across roughly half the band, a blown-flat sky, and in
+the 11488 frame the courthouse roof cut off above row 128.
+
+The chosen frame is an ELEVATED view: the Blue Ridge dominates, downtown sits
+mid-distance, City Hall's tiled ziggurat roof is visible left of centre. Nothing
+about it recalls Charlotte. So the adjacency risk lives in the COMPOSITION, not in
+the word "skyline" -- and on this pass the two frames labelled "skyline" were the
+most differentiated of the four, while the two civic close-ups were the collision.
+
+ALSO REJECTED, and on a rule rather than on quality: a downtown aerial panorama at
+sunset with McCormick Field (WillThomas, CC BY 4.0, 8192x2716). It is the best
+looking frame of the four and by far the best source. Refused only because the
+pipeline asks for daytime, consistent with the 50 live state panoramas. If that
+rule is ever relaxed, this is the frame to revisit.
+
+EXIF CAN LIE ABOUT TIME OF DAY; THE EXPOSURE TRIANGLE CANNOT. The 11488x2800 Pack
+Square panorama carries an EXIF timestamp of 22:26, which reads as a night shot and
+would fail the daytime rule outright. Its settings are 1/500 sec at f/5.6, ISO 100,
+which is impossible at night, and the frame measures mean luminance 155.8/255 with
+a blown sky. The camera clock is offset. Judge the pixels, not the timestamp.
+
+NO STALE-CDN RISK. cities/asheville.jpg is a new key, never previously written, so
+there was nothing cached to invalidate and no -v2 suffix is needed. Served bytes
+were still sha256-verified against the local file after upload -- plain URL and
+cache-busted URL both returned 6e6d4aec... matching the local file -- rather than
+trusting HTTP 200.
+
+SURFACING. All 7 Asheville city offices carry representing_city='Asheville'
+(measured in prod after CA_0009), so this banner resolves from an ordinary address
+search. Buncombe County's 10 offices leave that column NULL, the same as Durham and
+El Paso County, so a county banner would resolve only from browse_label in browse
+mode. Buncombe has no county banner and does not need one for this wave.
+
+Attribution was verified on the Commons File: page, not from the filename or the
+API summary -- the file is a Flickr photo mirrored to Commons, and these lines are
+transcribed into public credit by Treasury Tracker.
+
 --- machine-readable ---
-{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}}
+{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}, "asheville-nc": {"status": "certified", "note": "new 2026-08-23; Asheville Skyline from Beaucatcher Mountain Aug 2023 - 1; Bill McMannis CC BY 2.0 (Flickr->Commons); centred crop, 2400->1700 downscale; ELEVATED mountain view chosen BECAUSE the NC state banner is the close ground-level Charlotte skyline -- the two Pack Square civic close-ups were the real adjacency collision, not the skyline frames; sunset aerial (WillThomas CC BY 4.0, 8192px) rejected on the daytime rule only"}}
