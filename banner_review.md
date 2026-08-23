@@ -226,5 +226,78 @@ Attribution was verified on the Commons File: page, not from the filename or the
 API summary -- the file is a Flickr photo mirrored to Commons, and these lines are
 transcribed into public credit by Treasury Tracker.
 
+
+--- DURHAM, 2026-08-23 ---
+
+One banner, certified inside the 6:1 DESKTOP band (rows 128-411 of 540).
+
+  cities/durham.jpg   Panorama on Corcoran Street, Durham (April 2023)
+                      | DiscoA340 | CC BY-SA 4.0
+                      native 13300x2800 (4.75:1) -- WIDER than the 3.148:1
+                      target, so the crop is horizontal only and nothing is lost
+                      vertically. Nine candidates sourced.
+
+DURHAM IS THE FIRST CITY THAT HAD TO CLEAR TWO BANNERS, and that is the finding.
+The Asheville pass above established that adjacency lives in the COMPOSITION, not
+the subject noun. Durham is where that rule starts doing real work, because both
+of its obvious framings were already taken:
+
+    NC state banner  Charlotte uptown  -> close, ground-level, buildings fill frame
+    Asheville (city) Beaucatcher Mtn   -> elevated, mountains dominate
+
+A Durham downtown close-up repeats Charlotte. An elevated-over-hills view repeats
+Asheville. Between them they eliminate the two framings a city banner normally
+reaches for, and six of the nine candidates died on exactly that, on clutter, or
+on band fit. Expect this to tighten again with each NC city added; the third city
+in a state has fewer compositions left than the second.
+
+The chosen frame is a WIDE LOW-RISE cityscape with sky and foliage -- neither a
+tower canyon nor a mountain view -- and it carries four Durham landmarks at once:
+DPAC, the Lucky Strike water tower, the smokestack, and the Durham Bull. Its
+honest cost is clutter: a traffic signal centre-frame and a railroad crossing
+gantry right of centre. Operator accepted that trade for the landmark content.
+
+🔴 REJECTED ON A MEASUREMENT, AND IT WAS THE FIRST-CHOICE SUBJECT. The American
+Tobacco Campus courtyard (DiscoA340, CC BY-SA 4.0, 9152x2800) is the best-looking
+image of the nine -- warm brick, the canal, a genuinely horizontal composition
+filling the band, and the single most recognisable place in Durham. It fails the
+people test, not on taste:
+
+    pedestrians ~67 px tall in the 1700x540 asset
+    ~51 px as rendered at a 1296 px container
+    accepted precedent is 10-20 px silhouettes (Travis County, 2026-08-18)
+
+At that scale they are identifiable individuals -- faces and clothing distinct --
+on a government banner, and none of them agreed to appear there. The existing
+rule already says the test is DISTANCE AND SCALE, not presence; this is the first
+time it has refused a frame that won on every other axis. If that test is ever
+read as "presence is fine at any scale", this is the strongest Durham candidate
+by a clear margin, and it should be revisited before anything else.
+
+ALSO REJECTED: a DPAC panorama -- the cleanest frame of the nine, and it passed
+the people test (parked cars plus one ~15 px figure) -- because DPAC is an
+anonymous white modern building that could sit in many cities, a lamppost cuts the
+left third, and the lower band is flat lawn that the overlay drives to near-black.
+Kept as the standing alternative if the clutter in the shipped frame ever grates.
+Also rejected: a Lucky Strike tower panorama (~70% empty sky, subjects at both
+edges), two ground-level street frames (overcast, traffic furniture), a
+looking-up skyline (buildings cut at the band's bottom edge, sun flare filling the
+middle), a second courtyard angle (a steel gantry across the whole frame), and a
+CC0 file whose name says tobacco campus but which shows a street corner of
+signals and cables -- a reminder that a filename is not a subject.
+
+NO STALE-CDN RISK. cities/durham.jpg is a new key, so nothing was cached and no
+-v2 suffix is needed. Served bytes were still sha256-verified after upload --
+plain and cache-busted URLs both returned d1f92d7b... matching the local file.
+
+SURFACING. Durham's 7 city offices carry representing_city='Durham', so this
+resolves from an ordinary address search. Durham County's 8 offices leave that
+column NULL, as Buncombe and El Paso County do, and no county banner was created:
+unlike El Paso County there is no distinct county geography to depict, so a second
+Durham image would be an invented distinction.
+
+Attribution verified on the Commons File: page -- own work, DiscoA340, CC BY-SA
+4.0, 29 April 2023 15:36, afternoon daylight.
+
 --- machine-readable ---
-{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}, "asheville-nc": {"status": "certified", "note": "new 2026-08-23; Asheville Skyline from Beaucatcher Mountain Aug 2023 - 1; Bill McMannis CC BY 2.0 (Flickr->Commons); centred crop, 2400->1700 downscale; ELEVATED mountain view chosen BECAUSE the NC state banner is the close ground-level Charlotte skyline -- the two Pack Square civic close-ups were the real adjacency collision, not the skyline frames; sunset aerial (WillThomas CC BY 4.0, 8192px) rejected on the daytime rule only"}}
+{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}, "asheville-nc": {"status": "certified", "note": "new 2026-08-23; Asheville Skyline from Beaucatcher Mountain Aug 2023 - 1; Bill McMannis CC BY 2.0 (Flickr->Commons); centred crop, 2400->1700 downscale; ELEVATED mountain view chosen BECAUSE the NC state banner is the close ground-level Charlotte skyline -- the two Pack Square civic close-ups were the real adjacency collision, not the skyline frames; sunset aerial (WillThomas CC BY 4.0, 8192px) rejected on the daytime rule only"}, "durham-nc": {"status": "certified", "note": "new 2026-08-23; Panorama on Corcoran Street (April 2023); DiscoA340 CC BY-SA 4.0; native 4.75:1 so horizontal crop only; carries DPAC + Lucky Strike tower + smokestack + Durham Bull in one frame; FIRST city to clear TWO banners (Charlotte close-ground-level AND Asheville elevated-mountain), which eliminated both obvious framings; tobacco-campus courtyard was first choice and REJECTED on the people test at ~67px figures vs the 10-20px silhouette precedent -- revisit it first if that test is ever relaxed; DPAC pano kept as standing alternative"}}

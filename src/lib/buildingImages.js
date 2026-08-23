@@ -336,6 +336,36 @@ const CURATED_LOCAL = {
   // verified on the Commons File: page rather than from the filename.
   //   asheville - Asheville Skyline from Beaucatcher Mountain, August 2023 - 1 | Bill McMannis | CC BY 2.0
   asheville: { state: 'NC', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/asheville.jpg' },
+  // Durham, NC (2026-08-23, operator-certified). NC deep-seed wave 2 seated
+  // Durham's 15 elected officials; this is wave 2b's banner for them.
+  //
+  // Certified in the 6:1 DESKTOP band (rows 128-411 of 540). Native 13300x2800
+  // (4.75:1) is WIDER than the 3.148:1 target, so the crop is horizontal only and
+  // no sky or foreground is lost.
+  //
+  // 🔴 DURHAM IS THE FIRST CITY THAT HAD TO CLEAR TWO BANNERS, and both of its
+  // obvious framings were already spent. Compare COMPOSITIONS, not subject nouns:
+  //   NC state    = Charlotte uptown -> close, ground-level, buildings fill frame
+  //   Asheville   = Beaucatcher Mtn  -> elevated, mountains dominate
+  // So a Durham downtown close-up repeats Charlotte, and an elevated-over-hills
+  // view repeats Asheville. This frame is a WIDE LOW-RISE cityscape with sky and
+  // foliage, which is neither, and it carries four Durham landmarks at once: DPAC,
+  // the Lucky Strike water tower, the smokestack, and the Durham Bull.
+  //
+  // 🔴 REJECTED, and worth recording because it was the FIRST-CHOICE SUBJECT: the
+  // American Tobacco Campus courtyard (DiscoA340, CC BY-SA 4.0, 9152x2800) is the
+  // best-looking frame of the nine sourced. It fails the people test on a
+  // MEASUREMENT, not on taste -- its pedestrians are ~67 px tall in the 1700x540
+  // asset, ~51 px as rendered, against an accepted precedent of 10-20 px
+  // silhouettes (Travis County). At that scale they are identifiable individuals
+  // on a government banner. If that test is ever read as "presence is fine at any
+  // scale", that frame is the strongest candidate for Durham by a clear margin.
+  //
+  // Also rejected: a DPAC panorama (cleanest frame, but an anonymous white modern
+  // building, a lamppost through the left third, and a flat lawn in the lower
+  // band) and six others on clutter, band fit, or overcast light.
+  //   durham - Panorama on Corcoran Street, Durham (April 2023) | DiscoA340 | CC BY-SA 4.0
+  durham: { state: 'NC', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/durham.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
