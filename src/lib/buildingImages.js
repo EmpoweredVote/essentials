@@ -307,6 +307,35 @@ const CURATED_LOCAL = {
   //   el paso county   - Calhan Paint Mines Archeological District, Pillars on the Rim | MElizabethTill | CC BY-SA 4.0
   'colorado springs': { state: 'CO', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/colorado-springs.jpg' },
   'el paso county': { state: 'CO', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-paso-county-co.jpg' },
+  // Asheville, NC (2026-08-23, operator-certified). NC deep-seed wave 3 seated
+  // Asheville's 7 city and Buncombe County's 10 elected officials, so the city
+  // needed a banner.
+  //
+  // Certified in the 6:1 DESKTOP band (rows 128-411 of 540), never on the full
+  // frame. Native 2400x1350 (1.78:1) -> crop 2400x762 -> 1700x540, a DOWNSCALE,
+  // so nothing is upscaled.
+  //
+  // ADJACENCY: North Carolina's STATE banner is the Charlotte uptown skyline,
+  // and the rule of thumb "so avoid a skyline for the city" gives the WRONG
+  // answer here. Read the composition, not the label. Charlotte's frame is a
+  // CLOSE, GROUND-LEVEL view with buildings filling it. The two candidates that
+  // actually repeated that composition were the Pack Square pair -- Asheville
+  // City Hall and the Buncombe County Courthouse shot from the square
+  // (DiscoA340, CC BY-SA 4.0, two panoramas) -- which are close ground-level
+  // civic buildings, and which additionally shipped bare February trees across
+  // half the band and a blown-flat sky. This frame is an ELEVATED view where the
+  // Blue Ridge dominates and downtown sits mid-distance, so it does not echo
+  // Charlotte at all. City Hall's tiled ziggurat roof is visible left of centre.
+  //
+  // Also rejected: a downtown aerial panorama at sunset (WillThomas, CC BY 4.0,
+  // 8192x2716) -- the best-looking frame and by far the best source, refused
+  // only because the pipeline asks for daytime, consistent with the 50 live
+  // state panoramas.
+  //
+  // Licence note: this is a Flickr photo mirrored to Commons, CC BY 2.0, author
+  // verified on the Commons File: page rather than from the filename.
+  //   asheville - Asheville Skyline from Beaucatcher Mountain, August 2023 - 1 | Bill McMannis | CC BY 2.0
+  asheville: { state: 'NC', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/asheville.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
