@@ -22,7 +22,15 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      # Errors block; warnings do not. The remaining react-hooks/exhaustive-deps
+      # warnings need individual judgement — mechanically adding deps to those
+      # effects is a reliable way to create a render loop — so they stay visible
+      # without wedging CI. Keep errors at zero; that is what makes this useful.
+      - run: npm run lint
+      # Same no-masking reasoning as the test step below: a lint failure must not
+      # hide a broken bundle.
       - run: npm run build
+        if: ${{ !cancelled() }}
       # The suite runs even when the build fails. A failing early step otherwise
       # MASKS every step after it, and "did the bundle break, or did behaviour
       # break?" is the first thing you need to know — one answer is a type/import

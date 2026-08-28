@@ -16,28 +16,7 @@ import { buildBannerProps } from '../lib/bannerProps';
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 
 /** Derive scope-filtered topic pool from a race's districtType */
-function deriveScopedTopics(allTopics, districtType) {
-  if (!districtType || allTopics.length === 0) return allTopics;
-  const upper = String(districtType).toUpperCase();
-  const key = upper.startsWith('STATE_')                  ? 'applies_state'
-            : upper.startsWith('NATIONAL_JUDICIAL')        ? 'applies_judicial'
-            : upper === 'JUDICIAL'                         ? 'applies_judicial'
-            : upper.startsWith('NATIONAL_')                ? 'applies_federal'
-            : (upper === 'LOCAL' || upper === 'LOCAL_EXEC' || upper === 'COUNTY' || upper === 'SCHOOL') ? 'applies_local'
-            : null;
-  if (!key) return allTopics;
-  return allTopics.filter((t) => t[key] !== false);
-}
-
 /** Timezone-safe days-until helper */
-function daysUntil(dateStr) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const target = new Date(dateStr + 'T12:00:00');
-  target.setHours(0, 0, 0, 0);
-  return Math.round((target - today) / (1000 * 60 * 60 * 24));
-}
-
 /** Seeded shuffle for antipartisan candidate ordering */
 function seededShuffle(candidates, seed) {
   const hash = (s) =>
@@ -48,16 +27,6 @@ function seededShuffle(candidates, seed) {
 }
 
 /** Format election date: "May 6, 2026" */
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
-}
-
 /** Word-number mapping for ordinal district names */
 const WORD_TO_NUM = {
   first: 1, second: 2, third: 3, fourth: 4, fifth: 5,
@@ -301,11 +270,6 @@ export default function ElectionsView({
   // On phones the 190px side-overlay compass crowds the candidate name off the
   // card. Below this width we stack the compass beneath the card content instead.
   const isMobile = useMediaQuery('(max-width: 767px)');
-
-  const handleBuildCompass = () => {
-    const returnUrl = window.location.href;
-    window.open(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}`, '_blank');
-  };
 
   // Per-candidate stances cache for compass overlay on the new vertical card.
   const [stancesByPolId, setStancesByPolId] = useState({});

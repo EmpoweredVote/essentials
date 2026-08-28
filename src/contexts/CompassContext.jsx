@@ -26,7 +26,7 @@ import {
   loadLensPending,
   clearLensPending,
 } from "../lib/compass";
-import { extractHashToken, getToken, setToken, apiFetch, publicFetch, clearToken, redirectToLogin, API_BASE } from "../lib/auth";
+import { extractHashToken, getToken, setToken, publicFetch, clearToken, API_BASE } from "../lib/auth";
 import { fetchMyRepresentatives } from "../lib/api";
 import { evContext } from "@empoweredvote/ev-ui";
 import { identify } from "@empoweredvote/analytics";
@@ -37,7 +37,7 @@ export function useCompass() {
   return useContext(CompassContext);
 }
 
-export function CompassProvider({ children, compassEnabled: initialCompassEnabled = false }) {
+export function CompassProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -463,14 +463,14 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
       }
       if (typeof c.a !== 'object' || c.a === null) return;
       if (allTopics.length === 0) {
-        try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch {}
+        try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch { /* the guest cache is a convenience, not the source of truth */ }
         return;
       }
       const apiAnswers = convertGuestAnswersToApiFormat(c.a, allTopics);
       setUserAnswers(apiAnswers);
       if (Array.isArray(c.s)) setSelectedTopics(c.s);
       if (c.i && typeof c.i === 'object') setInvertedSpokes(c.i);
-      try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch {}
+      try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch { /* the guest cache is a convenience, not the source of truth */ }
     });
     return unsub;
   }, [compassDataLoaded, isLoggedIn, allTopics]);

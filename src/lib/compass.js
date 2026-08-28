@@ -80,7 +80,6 @@ export function buildAnswerMapByShortTitle(
   allowedShorts
 ) {
   const allowed = new Set(allowedShorts.map((s) => s.toLowerCase()));
-  const topicById = new Map(allTopics.map((t) => [t.id, t]));
   const shortById = new Map(allTopics.map((t) => [t.id, t.short_title]));
 
   // Initialize with 0 for each allowed short title (in allowedShorts order to preserve spoke layout)

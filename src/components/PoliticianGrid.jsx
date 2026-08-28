@@ -16,10 +16,6 @@ function getImageData(pol) {
   return { url: pol.photo_origin_url, focalPoint: null };
 }
 
-function getImageUrl(pol) {
-  return getImageData(pol).url;
-}
-
 /**
  * Qualify a generic local title with the jurisdiction name.
  * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"

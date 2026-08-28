@@ -10,7 +10,7 @@ function getInitials(name) {
   return initials.toUpperCase();
 }
 
-function PoliticianCard({ image, imageSrc, name, title, level, id, badge, votingPowers }) {
+function PoliticianCard({ image, imageSrc, name, title, id, badge, votingPowers }) {
   const navigate = useNavigate();
   const src = imageSrc || image;
   const [imgError, setImgError] = useState(false);
