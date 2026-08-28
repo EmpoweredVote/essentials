@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
-import { computeVariant, classifyBucket, classifyCategory, TAB_TYPE_DEFAULTS, matchesAppointedFilter } from '../lib/classify';
+import { classifyBucket, classifyCategory, TAB_TYPE_DEFAULTS, matchesAppointedFilter } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
@@ -38,26 +38,8 @@ function seatKey(pol) {
   return `${pol.office_title}||${pol.district_type}||${pol.district_id || ''}`;
 }
 
-function deriveScopedTopics(allTopics, districtType) {
-  if (!districtType || allTopics.length === 0) return allTopics;
-  const upper = String(districtType).toUpperCase();
-  const key = upper.startsWith('STATE_')               ? 'applies_state'
-            : upper.startsWith('NATIONAL_JUDICIAL')     ? 'applies_judicial'
-            : upper === 'JUDICIAL'                      ? 'applies_judicial'
-            : upper.startsWith('NATIONAL_')             ? 'applies_federal'
-            : (upper === 'LOCAL' || upper === 'LOCAL_EXEC' || upper === 'COUNTY' || upper === 'SCHOOL') ? 'applies_local'
-            : null;
-  if (!key) return allTopics;
-  return allTopics.filter((t) => t[key] !== false);
-}
-
 // Whether an office is a "local" office for Local Lens default purposes.
 // Mirrors the local-tier mapping in Profile.jsx's districtScope.
-function isLocalDistrict(districtType) {
-  const upper = String(districtType || '').toUpperCase();
-  return upper === 'LOCAL' || upper === 'LOCAL_EXEC' || upper === 'COUNTY';
-}
-
 function getImageData(pol) {
   if (pol.images && pol.images.length > 0) {
     const defaultImg = pol.images.find((img) => img.type === 'default');
@@ -65,17 +47,6 @@ function getImageData(pol) {
     return { url: img.url, focalPoint: img.focal_point || null };
   }
   return { url: pol.photo_origin_url, focalPoint: null };
-}
-
-function getImageUrl(pol) {
-  return getImageData(pol).url;
-}
-
-function formatElectionDate(dateStr) {
-  if (!dateStr) return '';
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return dateStr;
-  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 }
 
 /**
@@ -136,24 +107,6 @@ function toAddressTitleCase(address) {
 }
 
 /** Derive a short formal name for the compass legend, e.g. "Senator Young" */
-function formatLegendName(pol) {
-  const dt = pol.district_type || '';
-  const last = pol.last_name || '';
-  const titleMap = {
-    NATIONAL_EXEC: 'President',
-    NATIONAL_UPPER: 'Senator',
-    NATIONAL_LOWER: 'Representative',
-    STATE_EXEC: 'Governor',
-    STATE_UPPER: 'Senator',
-    STATE_LOWER: 'Representative',
-    LOCAL_EXEC: 'Mayor',
-  };
-  const prefix = titleMap[dt];
-  if (prefix) return `${prefix} ${last}`;
-  // Fallback: full name
-  return `${pol.first_name} ${last}`.trim();
-}
-
 /**
  * 260426-mw6 — Inline banner for guest → authed promotion (compass or address).
  * Rendered when useEvContextPromotion's shouldPrompt is true.
@@ -538,7 +491,7 @@ export default function Results() {
   const handleCompassModeChange = (val) => {
     track('essentials_compass_mode_toggled', { enabled: val });
     setCompassMode(val);
-    try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch {}
+    try { localStorage.setItem('ev:compassMode', val ? 'true' : 'false'); } catch { /* best-effort: storage or parsing is unavailable, fall back to the default */ }
     if (val) enableCompass();
   };
   // Elections tab data
@@ -569,7 +522,7 @@ export default function Results() {
         setCompassMode(true);
         localStorage.setItem('ev:compassMode', 'true');
       }
-    } catch {}
+    } catch { /* best-effort: storage or parsing is unavailable, fall back to the default */ }
   }, [rawUserAnswers]);
 
   const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
@@ -710,22 +663,10 @@ export default function Results() {
     apiData: myRepresentativesAddress, // string when API has it; null otherwise
     apiWriter: addressPromoteWriter,
   });
-  // Enrich answers with topic objects (CompassCardVertical needs topic.short_title)
-  const userAnswers = useMemo(() => (rawUserAnswers || []).map(a => {
-    if (a.topic?.short_title) return a;
-    const topic = allTopics.find(t => t.id === a.topic_id);
-    return topic ? { ...a, topic } : a;
-  }), [rawUserAnswers, allTopics]);
   // Filter answers by selectedTopics — when the user removes a spoke in CompassV2,
   // selectedTopics is updated but the answer value is preserved. Only show answers
   // for topics that are still selected. When selectedTopics is empty (no filtering),
   // show all answers to preserve existing behavior.
-  const filteredAnswers = useMemo(() => {
-    if (!selectedTopics || selectedTopics.length === 0) return userAnswers;
-    return userAnswers.filter(a =>
-      selectedTopics.includes(a.topic_id) || selectedTopics.includes(String(a.topic_id))
-    );
-  }, [userAnswers, selectedTopics]);
   const [savingSuggested, setSavingSuggested] = useState(false);
 
   // Prefilled mode: Connected user with saved location — use representatives from context (loaded at login)
@@ -2036,7 +1977,7 @@ export default function Results() {
                 disabled={savingSuggested}
                 onClick={async () => {
                   setSavingSuggested(true);
-                  try { await saveMyLocation(suggestedSaveAddress.addr); } catch {}
+                  try { await saveMyLocation(suggestedSaveAddress.addr); } catch { /* best-effort: storage or parsing is unavailable, fall back to the default */ }
                   setSavingSuggested(false);
                   dismissSuggestedSaveAddress();
                   setAddressInput(toAddressTitleCase(suggestedSaveAddress.addr));

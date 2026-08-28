@@ -11,7 +11,6 @@ import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanc
 import VotingRecordSection from '../components/VotingRecord/VotingRecordSection';
 import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
-import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 
 function formatElectionDateFull(dateStr) {
@@ -34,7 +33,6 @@ function Profile() {
   const [activeElection, setActiveElection] = useState(null);
   const [judicialRecord, setJudicialRecord] = useState(null);
   const [isLegalPolitician, setIsLegalPolitician] = useState(false);
-  const { politicianIdsWithStances } = useCompass();
 
   // Fetch politician, legislative summary, elections, and judicial record in parallel
   useEffect(() => {
@@ -227,7 +225,6 @@ function Profile() {
           {(() => {
             // Plan C: explicit treatment for offices where compass doesn't apply
             const engagement = pol.policy_engagement_level || 'full';
-            const hasStances = politicianIdsWithStances.has(String(id));
 
             // Administrative offices — no compass comparison applies
             if (engagement === 'none') {

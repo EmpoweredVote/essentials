@@ -97,7 +97,7 @@ function App() {
   }, []);
 
   return (
-    <CompassProvider compassEnabled={localStorage.getItem('ev:compassMode') === 'true'}>
+    <CompassProvider>
       <PostHogPageview />
       <ScrollToTop />
       <Routes>

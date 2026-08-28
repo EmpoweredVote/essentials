@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 function LocationCard({ zip }) {
   console.log(zip);
