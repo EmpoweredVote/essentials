@@ -229,6 +229,57 @@ export function clearGuestCompass() {
   localStorage.removeItem(GUEST_COMPASS_KEY);
 }
 
+/** localStorage key for the last compass reset this browser has applied. */
+export const COMPASS_CLEARED_AT_KEY = "compassClearedAt";
+
+/**
+ * Timestamp of the most recent "Reset Compass" this browser has already applied.
+ *
+ * Compass publishes `compass.clearedAt` when the user resets. The shared payload
+ * cannot express a reset through its contents alone — `a` only carries the ≤8
+ * topics on the compass, so an empty payload is indistinguishable from a tab
+ * that has not hydrated yet — so the timestamp is what makes a reset explicit.
+ * A writer that has never reset sends no timestamp, and so can never clear us.
+ */
+export function getAppliedClearedAt() {
+  return Number(localStorage.getItem(COMPASS_CLEARED_AT_KEY)) || 0;
+}
+
+export function setAppliedClearedAt(value) {
+  localStorage.setItem(COMPASS_CLEARED_AT_KEY, String(value));
+}
+
+/**
+ * True when an incoming shared-compass payload represents a reset we have not
+ * applied yet.
+ *
+ * The rule that matters is the negative one: a payload with no `clearedAt` never
+ * clears anything, no matter how empty it looks. That is what makes it safe for
+ * a peer to publish before it has hydrated.
+ *
+ * @param {Object|null} compass          - the shared `compass` slice
+ * @param {number}      appliedClearedAt - newest reset this browser has applied
+ */
+export function shouldApplyClear(compass, appliedClearedAt) {
+  const incoming = Number(compass && compass.clearedAt) || 0;
+  return incoming > (Number(appliedClearedAt) || 0);
+}
+
+/**
+ * Builds the `compass` slice to publish, preserving any keys this app does not
+ * own.
+ *
+ * evContext.set() replaces the whole slice, so composing a payload from scratch
+ * drops everything not named — which silently deleted the user's write-ins (`w`),
+ * a field this app reads but never authors.
+ *
+ * @param {Object|null} prior - the `compass` slice currently in shared context
+ * @param {Object}      owned - the keys this app is authoritative for
+ */
+export function buildCompassPayload(prior, owned) {
+  return { ...(prior && typeof prior === "object" ? prior : {}), ...owned };
+}
+
 // ─── Guest verdict bridge utilities ──────────────────────────────────────────
 
 /** localStorage key for guest verdict cache */

@@ -23,6 +23,10 @@ import {
   LENS_FALLBACKS,
   LENS_SELECTION_KEY,
   sanitizeLensColor,
+  shouldApplyClear,
+  buildCompassPayload,
+  getAppliedClearedAt,
+  setAppliedClearedAt,
   normalizeApiLens,
   isLensCalibrated,
   saveLensSelection,
@@ -384,5 +388,72 @@ describe('computeDisplaySpokes — Best Match (custom) biggest-disagreement fill
     });
 
     expect(displayTopicIds).toEqual(LOCAL_LENS_TOPICS.slice(0, 3));
+  });
+});
+
+
+// ─── Cross-subdomain reset + payload preservation ────────────────────────────
+//
+// The shared compass slice cannot express a reset through its contents: `a`
+// only carries the ≤8 topics on the compass, so an empty payload is
+// indistinguishable from a peer that has not hydrated yet. Compass publishes an
+// explicit `clearedAt` timestamp instead; these cover our half of that contract.
+
+describe('shouldApplyClear', () => {
+  it('applies a reset newer than the one already applied', () => {
+    expect(shouldApplyClear({ a: {}, s: [], clearedAt: 200 }, 100)).toBe(true);
+  });
+
+  it('ignores a reset already applied, so a reload does not re-clear', () => {
+    expect(shouldApplyClear({ a: {}, s: [], clearedAt: 100 }, 100)).toBe(false);
+    expect(shouldApplyClear({ a: {}, s: [], clearedAt: 50 }, 100)).toBe(false);
+  });
+
+  // The important one: an unhydrated peer publishes an empty payload with no
+  // timestamp. Treating "looks empty" as "was reset" would let it wipe a
+  // populated compass — which is why the timestamp exists at all.
+  it('never clears on an empty payload that carries no timestamp', () => {
+    expect(shouldApplyClear({ a: {}, s: [], i: {} }, 0)).toBe(false);
+    expect(shouldApplyClear({ a: {}, s: [], i: {} }, 100)).toBe(false);
+  });
+
+  it('tolerates a missing or malformed slice', () => {
+    expect(shouldApplyClear(null, 0)).toBe(false);
+    expect(shouldApplyClear(undefined, 0)).toBe(false);
+    expect(shouldApplyClear({ clearedAt: 'nonsense' }, 0)).toBe(false);
+  });
+});
+
+describe('buildCompassPayload', () => {
+  // evContext.set() replaces the whole slice, so anything not carried forward is
+  // deleted from shared state. This app reads write-ins but never authors them.
+  it('preserves keys this app does not own, such as write-ins', () => {
+    const prior = { a: { Housing: 1 }, s: ['t1'], i: {}, w: { Housing: 'my own words' } };
+    const next = buildCompassPayload(prior, { a: { Zoning: 3 }, s: ['t5'], i: { Zoning: true } });
+    expect(next.w).toEqual({ Housing: 'my own words' });
+    expect(next.a).toEqual({ Zoning: 3 });
+    expect(next.s).toEqual(['t5']);
+  });
+
+  it('carries forward unknown future keys rather than dropping them', () => {
+    const next = buildCompassPayload({ somethingNew: 42 }, { a: {}, s: [], i: {} });
+    expect(next.somethingNew).toBe(42);
+  });
+
+  it('handles a missing or malformed prior slice', () => {
+    expect(buildCompassPayload(null, { a: {} })).toEqual({ a: {} });
+    expect(buildCompassPayload('not an object', { a: {} })).toEqual({ a: {} });
+  });
+});
+
+describe('applied clearedAt persistence', () => {
+  beforeEach(() => {
+    globalThis.localStorage = createMemoryStorage();
+  });
+
+  it('round-trips through storage and defaults to 0', () => {
+    expect(getAppliedClearedAt()).toBe(0);
+    setAppliedClearedAt(1234);
+    expect(getAppliedClearedAt()).toBe(1234);
   });
 });
