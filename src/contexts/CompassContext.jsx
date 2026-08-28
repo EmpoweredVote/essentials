@@ -11,6 +11,10 @@ import {
   saveGuestCompass,
   loadGuestCompass,
   clearGuestCompass,
+  getAppliedClearedAt,
+  setAppliedClearedAt,
+  shouldApplyClear,
+  buildCompassPayload,
   saveGuestVerdicts,
   loadGuestVerdicts,
   clearGuestVerdicts,
@@ -208,8 +212,17 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
               .filter(Boolean);
             const selectedAMap = {};
             for (const s of selectedShorts) { if (aMap[s] !== undefined) selectedAMap[s] = aMap[s]; }
-            const compassPayload = { a: selectedAMap, s: Array.isArray(selectedResult) ? selectedResult : [], i: inverted };
             evContext.get().then((current) => {
+              // Carry forward `w` (write-ins) and any future keys we do not own.
+              // evContext.set replaces the whole compass slice, so building the
+              // payload from scratch silently deleted the user's write-ins from
+              // shared state — which this app reads (see Results.jsx) but never
+              // authors.
+              const compassPayload = buildCompassPayload(current && current.compass, {
+                a: selectedAMap,
+                s: Array.isArray(selectedResult) ? selectedResult : [],
+                i: inverted,
+              });
               const next = { ...(current || {}), compass: compassPayload };
               evContext.set(next).catch(() => {});
             }).catch(() => {});
@@ -227,7 +240,13 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
           saveGuestCompass(fragment.answers, fragment.selectedTopics, inverted);
           try {
             const current = await evContext.get();
-            const next = { ...(current || {}), compass: { a: fragment.answers, s: fragment.selectedTopics, i: inverted } };
+            // Same reasoning as the authed write above: preserve keys we do not own.
+            const next = {
+              ...(current || {}),
+              compass: buildCompassPayload(current && current.compass, {
+                a: fragment.answers, s: fragment.selectedTopics, i: inverted,
+              }),
+            };
             evContext.set(next).catch(() => {});
           } catch { /* broker offline */ }
         }
@@ -429,7 +448,20 @@ export function CompassProvider({ children, compassEnabled: initialCompassEnable
     if (!compassDataLoaded || isLoggedIn) return;
     const unsub = evContext.subscribe((shared) => {
       const c = shared && shared.compass;
-      if (!c || typeof c.a !== 'object' || c.a === null) return;
+      if (!c || typeof c !== 'object') return;
+      // An explicit "Reset Compass" from another subdomain. Checked before the
+      // shape guard below, because a reset arrives as an EMPTY payload and would
+      // otherwise be discarded. Only a real reset carries a timestamp, so a peer
+      // that has merely not hydrated yet can never clear us.
+      if (shouldApplyClear(c, getAppliedClearedAt())) {
+        setAppliedClearedAt(Number(c.clearedAt));
+        setUserAnswers([]);
+        setSelectedTopics([]);
+        setInvertedSpokes({});
+        clearGuestCompass();
+        return;
+      }
+      if (typeof c.a !== 'object' || c.a === null) return;
       if (allTopics.length === 0) {
         try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch {}
         return;
