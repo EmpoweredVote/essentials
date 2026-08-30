@@ -818,8 +818,10 @@ const CURATED_LOCAL = {
  */
 const CURATED_COUNTY = {
   // Palm Beach County, FL. Spec §8.3, decided 2026-08-28 (Cantrell): its own county key
-  // rather than the Florida state banner, which is a Miami skyline and would collide with
-  // Miami's own banner in the same slice.
+  // rather than falling back to the Florida state banner. At the time that fallback was
+  // also a Miami skyline, so it would have collided with Miami's own banner; the state
+  // banner has since been replaced, but the ruling stands on its own — a county with no
+  // city half deserves a banner of its own place, not its state's.
   '12099': { state: 'FL', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/counties/palm-beach-fl.jpg' },
 };
 
@@ -839,7 +841,14 @@ const CURATED_COUNTY = {
 //   CO - Denver skyline with Rocky Mountains (clear daytime) | Quintin Soloviev | CC BY 4.0
 //   CT - Hartford Skyline from Great River Park | KyleConstable | CC BY-SA 4.0 [brightened]
 //   DE - Wilmington Delaware skyline | Tim Kiser | CC BY-SA 2.5
-//   FL - Miami Late Afternoon Skyline | Euthman | CC BY 4.0
+//   FL - Aerial view of an island in Rookery Bay | RW at RookeryBay | CC BY-SA 4.0
+//        (was "Miami Late Afternoon Skyline" | Euthman | CC BY 4.0 until 2026-08-30 —
+//         that photograph is now cities/miami.jpg, where it belongs)
+//   Florida city + county banners, FL-7, operator-certified 2026-08-30:
+//     miami         - Miami Late Afternoon Skyline | Euthman | CC BY 4.0
+//     tallahassee   - Old Florida State Capitol, east view | Daniel Vorndran (DXR) | CC BY-SA 4.0
+//     bradenton     - De Soto National Memorial entrance | Ebyabe | CC BY-SA 3.0
+//     palm-beach-fl - Whitehall, the Flagler Museum | Ebyabe | CC BY-SA 3.0 (levelled -1.0 deg)
 //   GA - Midtown Atlanta skyline | Marc Merlin | CC BY-SA 4.0
 //   HI - Waikiki view from Diamond Head | Cristo Vlahos | CC BY-SA 3.0
 //   IA - Morning Skyline, Des Moines, Iowa | Tony Webster | CC BY 2.0
@@ -942,6 +951,16 @@ const STATE_PANORAMAS = new Set([
  */
 const STATE_PANORAMA_FILES = {
   TX: 'TX-v2.jpg',
+  // FL versioned 2026-08-30. Florida's banner WAS a Miami downtown skyline — which is
+  // also what Miami's own city banner had to be, and the adjacency rule forbids a city
+  // repeating its state's composition. Rather than work around that, the skyline moved
+  // DOWN a tier: it is now cities/miami.jpg, and the state gets a frame that stands for
+  // the whole state — an aerial of the barrier spit and mangrove channels at Rookery Bay,
+  // in the Ten Thousand Islands.
+  //
+  // 🔴 Versioned, NOT overwritten, for the reason this map exists: overwriting states/FL.jpg
+  // would not reliably purge the CDN, and every Florida address reads this one.
+  FL: 'FL-v2.jpg',
 };
 
 /**

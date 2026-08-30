@@ -128,3 +128,22 @@ describe('getBuildingImages — county tier (FL-7)', () => {
     expect(getBuildingImages('Anywhere', 'GA', '12099').Local).toBeNull();
   });
 });
+
+describe('Florida state banner is versioned, not overwritten (FL-7)', () => {
+  it('FL resolves to the versioned FL-v2.jpg', () => {
+    // Overwriting states/FL.jpg does not reliably purge the CDN — measured on TX,
+    // 2026-08-18. Every state replacement must be a NEW filename, so this asserts the
+    // version is actually wired rather than the map entry merely existing.
+    const state = getBuildingImages('Anytown', 'FL').State;
+    expect(state).toContain('/states/FL-v2.jpg');
+    expect(state).not.toContain('/states/FL.jpg');
+  });
+
+  it('Miami now carries the skyline that used to be the state banner', () => {
+    expect(getBuildingImages('Miami', 'FL').Local).toContain('/cities/miami.jpg');
+  });
+
+  it('an unversioned state is unaffected', () => {
+    expect(getBuildingImages('Anytown', 'CA').State).toContain('/states/CA.jpg');
+  });
+});
