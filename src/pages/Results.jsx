@@ -444,6 +444,8 @@ export default function Results() {
     // `locality` collides with the pre-existing fromLocality/localityLabel
     // (browse_label URL param) already declared above (ADR-0001, Pitfall 2).
     locality: incorporationInfo,
+    // FL-7: county GEOID for the county banner tier (address-mode path).
+    county,
   } = usePoliticianData(activeQuery, {
     enabled: !!activeQuery && !cachedResult,
     initialData: [],
@@ -1287,8 +1289,8 @@ export default function Results() {
   }, [addressInput, searchParams, zipInfo]);
 
   const buildingImageMap = useMemo(
-    () => getBuildingImages(representingCity, userState),
-    [representingCity, userState]
+    () => getBuildingImages(representingCity, userState, county?.geoid ?? zipInfo?.county?.geoid),
+    [representingCity, userState, county, zipInfo]
   );
 
   const featureIconMap = useMemo(

@@ -795,6 +795,32 @@ const CURATED_LOCAL = {
   // that does not depend on the caller passing a state at all.
   'bainbridge island': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bainbridge-island.jpg' },
   'kitsap county': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/kitsap-county.jpg' },
+  // Florida — Knight program wave FL-7 (2026-08-30, operator-certified).
+  // 🔴 match:'exact' is LOAD-BEARING. Substring matching would hand Miami's banner to
+  // Miami Beach, Miami Gardens, Miami Lakes, Miami Shores, Miami Springs, North Miami and
+  // West Miami, and Bradenton's to Bradenton Beach — all separate cities we do not seat.
+  miami: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/miami.jpg' },
+  bradenton: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bradenton.jpg' },
+  tallahassee: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tallahassee.jpg' },
+};
+
+/**
+ * Curated COUNTY banners, keyed by county GEOID.
+ *
+ * 🔴 WHY A SEPARATE MAP, AND WHY GEOID. CURATED_LOCAL is keyed by the city label and
+ * matched by substring, and a county cannot be expressed that way. A 'palm beach' key
+ * would match West Palm Beach, Palm Beach Gardens and Royal Palm Beach — and match
+ * NOTHING for Boca Raton, Delray Beach or Jupiter, which are equally in the county.
+ * The GEOID is exact, complete and already on the address response.
+ *
+ * Only jurisdictions with NO city half belong here. Miami-Dade deliberately has no entry:
+ * Miami has a city banner, and adding one would change what Hialeah and Miami Beach see.
+ */
+const CURATED_COUNTY = {
+  // Palm Beach County, FL. Spec §8.3, decided 2026-08-28 (Cantrell): its own county key
+  // rather than the Florida state banner, which is a Miami skyline and would collide with
+  // Miami's own banner in the same slice.
+  '12099': { state: 'FL', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/counties/palm-beach-fl.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
@@ -922,9 +948,12 @@ const STATE_PANORAMA_FILES = {
  * Get building images for each tier.
  * @param {string} representingCity - City name from politician data
  * @param {string} stateAbbrev - Two-letter state abbreviation (e.g., "IN", "CA")
+ * @param {string} [countyGeoId] - 5-digit county GEOID from the address response
+ *   (`county.geoid`). Optional: callers that omit it get city-only resolution, which
+ *   is the pre-FL-7 behaviour.
  * @returns {{ Local: string, State: string, Federal: string }}
  */
-export function getBuildingImages(representingCity, stateAbbrev) {
+export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
   const city = (representingCity || '').toLowerCase();
   const abbrev = (stateAbbrev || '').toUpperCase();
 
@@ -941,16 +970,30 @@ export function getBuildingImages(representingCity, stateAbbrev) {
     (a, b) => b[0].length - a[0].length
   );
   for (const [key, entry] of curatedEntries) {
-    if (!city.includes(key)) continue;
     // An entry is either a single {state, src} or an ARRAY of state-scoped
     // variants for a city name that recurs across states (e.g. Fairview OR vs
     // Fairview TX). Pick the variant whose state matches the caller's; a
     // missing/unknown caller state or entry state is treated as match-allowed.
+    //
+    // 🔴 THE KEY TEST IS PER-VARIANT, because match:'exact' lives on the variant.
+    // Entries without the flag keep the historical substring behaviour exactly.
     const variants = Array.isArray(entry) ? entry : [entry];
-    const match = variants.find((v) => !abbrev || !v.state || v.state === abbrev);
-    if (match) {
-      localImage = match.src;
+    const hit = variants.find((v) => {
+      if (abbrev && v.state && v.state !== abbrev) return false;
+      return v.match === 'exact' ? city === key : city.includes(key);
+    });
+    if (hit) {
+      localImage = hit.src;
       break;
+    }
+  }
+
+  // County tier: only when no city key matched. A city banner always wins — a Miami
+  // address gets Miami, not Miami-Dade. Counties with a seated city half have no entry.
+  if (!localImage && countyGeoId) {
+    const countyEntry = CURATED_COUNTY[String(countyGeoId)];
+    if (countyEntry && (!abbrev || !countyEntry.state || countyEntry.state === abbrev)) {
+      localImage = countyEntry.src;
     }
   }
 
