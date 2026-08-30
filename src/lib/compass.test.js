@@ -40,6 +40,7 @@ import {
   mergeLenses,
   pruneLensTopics,
   USER_LENS_COLOR,
+  applySharedAnswers,
 } from './compass.js';
 
 const topic = (id, short_title) => ({ id, short_title });
@@ -589,5 +590,87 @@ describe('resolveTabLens with a custom lens', () => {
     // Custom lenses are remembered, never built-in defaults — a per-user key
     // cannot be a static default without meaning something different per user.
     expect(Object.values(TAB_DEFAULTS).some((k) => String(k).startsWith('u_'))).toBe(false);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// applySharedAnswers — the shape of a cross-subdomain answer update
+// ---------------------------------------------------------------------------
+//
+// The guest compass reaches this app through TWO channels of different fidelity:
+//
+//   #compass= fragment  — serializeCompassFragment() sends the COMPLETE answers
+//                         object. This is what a return-from-Compass carries.
+//   ev-context payload  — compassToPublish() caps `a` at MAX_SHARED_ANSWERS (16).
+//                         A projection, explicitly "not the full answer set".
+//
+// The live-sync subscribe applied the low-fidelity channel as a plain REPLACE,
+// so a guest who calibrated 30 topics on Compass, returned here via the banner,
+// and then received one broker echo watched 14 answers vanish.
+//
+// A plain merge is not the fix and CompassV2 already documents why (#65): a
+// merge can never remove an answer, so a stance cleared on another subdomain
+// comes straight back. The rule that works — and the one CompassV2's own
+// subscribe uses — is a SCOPED replace: the payload is authoritative for the
+// topics it declares (`s`), and silent about every other topic.
+
+describe('applySharedAnswers', () => {
+  const ans = (id, value) => ({ topic_id: id, value, write_in_text: '' });
+  const byId = (rows) => Object.fromEntries(rows.map((r) => [r.topic_id, r.value]));
+
+  it('🔴 keeps answers the payload does not declare', () => {
+    // The regression. t9 is outside the sender's scope entirely.
+    const local = [ans('t1', 2), ans('t9', 5)];
+    const out = applySharedAnswers(local, [ans('t1', 4)], ['t1']);
+    expect(byId(out)).toEqual({ t1: 4, t9: 5 });
+  });
+
+  it('takes the payload as authoritative for topics it declares', () => {
+    const local = [ans('t1', 2)];
+    const out = applySharedAnswers(local, [ans('t1', 5)], ['t1']);
+    expect(byId(out)).toEqual({ t1: 5 });
+  });
+
+  it('removes an answer cleared in scope — a merge could not do this', () => {
+    // t2 is in the sender's compass but carries no answer: they cleared it.
+    const local = [ans('t1', 2), ans('t2', 3)];
+    const out = applySharedAnswers(local, [ans('t1', 2)], ['t1', 't2']);
+    expect(byId(out)).toEqual({ t1: 2 });
+  });
+
+  it('adds an answer for a topic outside the declared scope', () => {
+    // Conservative: assign what arrives, but never DELETE out of scope. Mirrors
+    // CompassV2, where `a` can carry a lens topic that is not in `s`.
+    // t1 is carried, so it is not a clear; t7 arrives from outside `s`.
+    const out = applySharedAnswers([ans('t1', 2)], [ans('t1', 2), ans('t7', 4)], ['t1']);
+    expect(byId(out)).toEqual({ t1: 2, t7: 4 });
+  });
+
+  it('preserves write_in_text from the incoming row when it has one', () => {
+    const local = [{ topic_id: 't1', value: 2, write_in_text: 'old' }];
+    const out = applySharedAnswers(local, [{ topic_id: 't1', value: 3, write_in_text: 'new' }], ['t1']);
+    expect(out[0].write_in_text).toBe('new');
+  });
+
+  it('returns the SAME array reference when nothing changed', () => {
+    // The subscribe feeds React state. A new-but-equal array re-renders every
+    // consumer and, worse, can re-trigger the publish effect into an echo loop.
+    const local = [ans('t1', 2)];
+    expect(applySharedAnswers(local, [ans('t1', 2)], ['t1'])).toBe(local);
+  });
+
+  it('tolerates missing or malformed sides', () => {
+    const local = [ans('t1', 2)];
+    expect(applySharedAnswers(local, [], [])).toBe(local);
+    expect(applySharedAnswers(local, null, null)).toBe(local);
+    expect(byId(applySharedAnswers(null, [ans('t1', 2)], ['t1']))).toEqual({ t1: 2 });
+  });
+
+  it('🔴 an empty scope cannot delete anything', () => {
+    // A peer that has not hydrated publishes s: []. Under a scoped replace that
+    // is silence, not "the user has no answers" — the same asymmetry
+    // shouldApplyClear exists to protect, one layer down.
+    const local = [ans('t1', 2), ans('t2', 3)];
+    expect(applySharedAnswers(local, [], [])).toBe(local);
   });
 });

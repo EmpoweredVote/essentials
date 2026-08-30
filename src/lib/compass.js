@@ -202,6 +202,76 @@ export function convertGuestAnswersToApiFormat(guestAnswers, allTopics) {
 }
 
 /**
+ * Apply a cross-subdomain answer payload on top of the answers already held.
+ *
+ * 🔴 NEITHER A REPLACE NOR A MERGE. The shared payload is a PROJECTION —
+ * compassToPublish() caps `a` at 16 topics and says so — while the `#compass=`
+ * return fragment carries the COMPLETE answer set. Two channels, two fidelities.
+ *
+ *   A plain replace deletes every answer the payload was too small to carry.
+ *     A guest calibrates 30 topics on Compass, returns here via the banner with
+ *     all 30 in the fragment, then one broker echo cuts them to 16.
+ *   A plain merge can never remove an answer.
+ *     A stance cleared on another subdomain comes straight back.
+ *
+ * So: the payload is AUTHORITATIVE for the topics it declares (`scopeIds`, the
+ * sender's `s`) and SILENT about every other topic. Same rule CompassV2's own
+ * subscribe uses — see its CompassContext and the #65 regression behind it.
+ *
+ * ⚠ An empty scope deletes nothing. A peer that has not hydrated yet publishes
+ * `s: []`, and that is silence, not "the user has no answers" — the asymmetry
+ * shouldApplyClear() protects one layer up, for the same reason.
+ *
+ * Returns the SAME array reference when nothing changed: this feeds React state,
+ * and a new-but-equal array re-renders every consumer and can re-trigger the
+ * publish effect into an echo loop.
+ *
+ * @param {Array}  localAnswers  - [{ topic_id, value, write_in_text }, ...]
+ * @param {Array}  incoming      - same shape, converted from the payload's `a`
+ * @param {Array}  scopeIds      - topic ids the payload declares (its `s`)
+ * @returns {Array}
+ */
+export function applySharedAnswers(localAnswers, incoming, scopeIds) {
+  const local = Array.isArray(localAnswers) ? localAnswers : [];
+  const rows = Array.isArray(incoming) ? incoming : [];
+  const scope = new Set((Array.isArray(scopeIds) ? scopeIds : []).map(String));
+
+  const next = [];
+  const seen = new Set();
+
+  // Everything the payload declares wins, in its own order.
+  for (const row of rows) {
+    if (!row || row.topic_id == null) continue;
+    const id = String(row.topic_id);
+    if (seen.has(id)) continue;
+    seen.add(id);
+    next.push(row);
+  }
+
+  // Then whatever the payload was silent about. In scope and absent means
+  // cleared; out of scope means the sender simply could not carry it.
+  for (const row of local) {
+    if (!row || row.topic_id == null) continue;
+    const id = String(row.topic_id);
+    if (seen.has(id) || scope.has(id)) continue;
+    seen.add(id);
+    next.push(row);
+  }
+
+  const unchanged =
+    next.length === local.length &&
+    next.every((row, i) => {
+      const was = local[i];
+      return was
+        && String(was.topic_id) === String(row.topic_id)
+        && was.value === row.value
+        && (was.write_in_text || '') === (row.write_in_text || '');
+    });
+
+  return unchanged ? local : next;
+}
+
+/**
  * Saves guest compass data to localStorage.
  * @param {Object} answers        - { [short_title]: value }
  * @param {Array}  selectedTopics - [uuid, ...]
