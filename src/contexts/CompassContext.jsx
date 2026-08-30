@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import {
   fetchTopics,
   fetchLenses,
+  fetchMyLenses,
   fetchUserAnswers,
   fetchSelectedTopics,
   fetchPoliticiansWithStances,
@@ -20,6 +21,9 @@ import {
   clearGuestVerdicts,
   LENS_FALLBACKS,
   normalizeApiLens,
+  normalizeUserLens,
+  mergeLenses,
+  pruneLensTopics,
   isLensCalibrated,
   saveLensSelection,
   loadLensSelection,
@@ -73,10 +77,37 @@ export function CompassProvider({ children }) {
   // per-office default, which avoids the stale-global-toggle confusion.
   const [lensOverride, setLensOverride] = useState(null); // null | true | false
 
-  // Available lenses — live source is GET /compass/lenses; LENS_FALLBACKS (name +
-  // description + color/topicIds/autoDistrictTypes) is the offline fallback until
-  // the fetch resolves.
-  const [lenses, setLenses] = useState(() => LENS_FALLBACKS);
+  // Available lenses come from TWO sources and are merged, never mixed in state:
+  //   editorial — GET /compass/lenses, curated, public, carries colour + icon.
+  //               LENS_FALLBACKS is the offline fallback until the fetch resolves.
+  //   user      — GET /compass/my-lenses, the caller's own, authed-only, [] for a
+  //               guest. Carries neither colour nor icon; normalizeUserLens adds
+  //               both.
+  // Kept apart so sign-out drops one without disturbing the other, and so the
+  // merge/prune below re-derives whenever either side or the topic set changes.
+  const [editorialLenses, setEditorialLenses] = useState(() => LENS_FALLBACKS);
+  const [userLenses, setUserLenses] = useState([]);
+
+  // The single array every consumer renders.
+  //
+  // Pruning is applied to USER lenses ONLY, deliberately. A user's lens is a
+  // private snapshot of ids they picked once and cannot be asked to maintain, so
+  // a retired topic there should just fall out. An editorial lens is curated: if
+  // it names a topic this season does not ask, that is an editorial fact and it
+  // should keep failing to calibrate rather than quietly shrinking its own
+  // threshold — isLensCalibrated keys on min(8, topicIds.length), so pruning is
+  // never cosmetic, it moves the bar.
+  //
+  // It lives in a memo rather than at the fetch because allTopics arrives
+  // independently — as a memo it re-runs when topics land, where a one-shot
+  // prune at fetch time would race them.
+  const lenses = useMemo(
+    () => mergeLenses(
+      editorialLenses,
+      pruneLensTopics(userLenses, allTopics.map((t) => t?.id)),
+    ),
+    [editorialLenses, userLenses, allTopics],
+  );
 
   // ── Global lens selection (Req 11) ──────────────────────────────────────
   // Persisted, explicit lens key applied to every card on the grid. Default
@@ -143,8 +174,19 @@ export function CompassProvider({ children }) {
       // Normalize each row so name/description/icon are guaranteed and color is
       // sanitized before it ever reaches an inline style (T-204-02).
       fetchLenses()
-        .then((rows) => { if (Array.isArray(rows) && rows.length > 0) setLenses(rows.map(normalizeApiLens)); })
+        .then((rows) => { if (Array.isArray(rows) && rows.length > 0) setEditorialLenses(rows.map(normalizeApiLens)); })
         .catch(() => { /* keep fallback */ });
+
+      // The caller's own lenses. Authed-only by nature — the endpoint answers []
+      // for a guest — so this is skipped entirely when signed out rather than
+      // spending a request to be told nothing. Non-blocking and failure-tolerant
+      // for the same reason as the editorial fetch: no lens list is worth
+      // stalling or breaking the switcher over.
+      if (authedUser) {
+        fetchMyLenses()
+          .then((rows) => { if (Array.isArray(rows)) setUserLenses(rows.map(normalizeUserLens)); })
+          .catch(() => { /* editorial lenses still render */ });
+      }
 
       let answers = [];
       let selected = [];
@@ -533,6 +575,9 @@ export function CompassProvider({ children }) {
     setUserAnswers([]);
     setSelectedTopics([]);
     setVerdicts({});
+    // Custom lenses belong to the account, not the browser — leaving them in
+    // state would show the previous user's named lenses to whoever signs in next.
+    setUserLenses([]);
   };
 
   const value = useMemo(

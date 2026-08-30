@@ -20,6 +20,21 @@ export async function fetchLenses() {
     return [];
   }
 }
+// The caller's OWN custom lenses: [{ key, name, topicIds, needsRecalibration, ... }]
+// apiFetch (authed) — the endpoint is optionalAuth and answers [] for a guest, so
+// a signed-out visitor simply gets no custom lenses. Returns [] on any failure,
+// matching fetchUserAnswers: a lens list that cannot load must degrade to the
+// editorial lenses, never break the switcher.
+export async function fetchMyLenses() {
+  try {
+    const res = await apiFetch('/compass/my-lenses');
+    if (!res || !res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
+  }
+}
+
 // Politician answers: [{ topic_id, value }, ...]
 // Uses publicFetch — politician stances are public and must not redirect unauthenticated guests.
 export async function fetchPoliticianAnswers(politicianId) {
@@ -583,6 +598,93 @@ export function normalizeApiLens(l) {
     topicIds: Array.isArray(l?.topicIds) ? l.topicIds : [],
     autoDistrictTypes: Array.isArray(l?.autoDistrictTypes) ? l.autoDistrictTypes : [],
   };
+}
+
+/**
+ * The accent for user-authored lenses.
+ *
+ * Deliberately NOT #7C3AED, the violet EV-CompassV2 gives them. That hex already
+ * means "needs calibration" on this app's chip borders (LensChipRow), so reusing
+ * it here would make an uncalibrated custom lens indistinguishable from a
+ * calibrated one. Teal is the app's own accent token, distinct from Best Match
+ * coral / federal navy / local green / judicial rust, and LensChipRow's
+ * lightenForDark handles it in dark mode with no special case.
+ */
+export const USER_LENS_COLOR = '#00657C';
+
+/**
+ * Normalizes a GET /compass/my-lenses row into the same render-safe shape the
+ * chip row already consumes for editorial lenses.
+ *
+ * inform.compass_user_lenses stores identity, not presentation — there is no
+ * colour or icon column — so both are supplied here rather than defaulted from
+ * an absent field. `color` is assigned, never read from the row: it reaches an
+ * inline style, and a closed door is worth more than a trusted absence.
+ */
+export function normalizeUserLens(l) {
+  return {
+    key: l?.key,
+    name: l?.name || titleCaseKey(l?.key),
+    description: l?.description || '',
+    color: USER_LENS_COLOR,
+    icon: 'tag',
+    topicIds: Array.isArray(l?.topicIds) ? l.topicIds : [],
+    autoDistrictTypes: [],
+    isUser: true,
+    // Editorial's recalibration prompts for this lens, reduced to a count — the
+    // chip shows a marker, the explanation lives on Compass.
+    flagCount: Array.isArray(l?.needsRecalibration) ? l.needsRecalibration.length : 0,
+  };
+}
+
+/**
+ * Combines editorial and user lenses into the single array the switcher renders.
+ *
+ * 🔴 AN EDITORIAL KEY ALWAYS WINS A COLLISION. Every lookup downstream is
+ * `.find(l => l.key === activeLensKey)` — first match wins — so a user row
+ * sharing a key would silently retarget an editorial chip. The server restricts
+ * user keys to /^u_[a-z0-9]{4,32}$/, which should make this unreachable; the
+ * check is here because the chip row is a shared key namespace and that property
+ * should hold structurally, not because validation elsewhere is trusted.
+ */
+export function mergeLenses(editorialLenses, userLenses) {
+  const editorial = Array.isArray(editorialLenses) ? editorialLenses : [];
+  const user = Array.isArray(userLenses) ? userLenses : [];
+
+  const out = [];
+  const seen = new Set();
+  for (const lens of [...editorial, ...user]) {
+    const key = lens?.key;
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    out.push(lens);
+  }
+  return out;
+}
+
+/**
+ * Drops topic ids a lens still names but the topic set no longer contains.
+ *
+ * Not cosmetic: isLensCalibrated thresholds on min(8, topicIds.length), so a
+ * lens holding a retired topic asks for one more answer than it can ever
+ * receive and never lights up. Pruning restores the honest threshold.
+ *
+ * ⚠ An empty/absent `knownTopicIds` returns the lenses UNTOUCHED. Topics load
+ * asynchronously, and pruning against a not-yet-loaded set would empty every
+ * lens on first render — which the same threshold then reads as a lens needing
+ * zero answers. Absence of the topic list is not evidence a topic is gone.
+ */
+export function pruneLensTopics(lenses, knownTopicIds) {
+  const list = Array.isArray(lenses) ? lenses : [];
+  const known = Array.isArray(knownTopicIds) ? knownTopicIds : [];
+  if (known.length === 0) return list;
+
+  const knownSet = new Set(known.map(String));
+  return list.map((lens) => {
+    const topicIds = Array.isArray(lens?.topicIds) ? lens.topicIds : [];
+    const kept = topicIds.filter((id) => knownSet.has(String(id)));
+    return kept.length === topicIds.length ? lens : { ...lens, topicIds: kept };
+  });
 }
 
 /**
