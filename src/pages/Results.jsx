@@ -562,6 +562,14 @@ export default function Results() {
     window.location.assign(`${COMPASS_URL}/?calibrate=${encodeURIComponent(key)}&return=${encodeURIComponent(returnUrl)}`);
   };
 
+  // A custom lens whose questions moved under the user. Routes to Compass, which
+  // owns lens management and the per-topic explanation; the grid only reports it.
+  const handleRecalibrateLens = (key) => {
+    const returnUrl = window.location.href;
+    track('essentials_compass_lens_recalibrate_clicked', { lens: key, tab: effectiveActiveView });
+    window.location.assign(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}#lens=${encodeURIComponent(key)}`);
+  };
+
   // Resolve the active lens's topic set for the grid: 'custom' means no explicit
   // lens is selected, so every card falls back to the Best Match overlap (Req 8).
   const activeLens = activeLensKey === 'custom' ? null : lenses.find((l) => l.key === activeLensKey);
@@ -1149,6 +1157,7 @@ export default function Results() {
       activeLensKey={activeLensKey}
       onSelectLens={handleSelectLens}
       onCalibrate={handleCalibrateLens}
+      onRecalibrate={handleRecalibrateLens}
       onStanceMin={handleStanceMin}
       onStanceMax={handleStanceMax}
       isDesktop={isDesktop}

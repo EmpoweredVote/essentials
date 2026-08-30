@@ -7,6 +7,7 @@ export default function CompassControlsBar({
   activeLensKey,
   onSelectLens,
   onCalibrate,
+  onRecalibrate,
   onStanceMin,
   onStanceMax,
   isDesktop,
@@ -52,6 +53,7 @@ export default function CompassControlsBar({
                 activeLensKey={activeLensKey}
                 onSelectLens={onSelectLens}
                 onCalibrate={onCalibrate}
+                onRecalibrate={onRecalibrate}
                 isDesktop={isDesktop}
               />
             ) : (
@@ -61,6 +63,7 @@ export default function CompassControlsBar({
                   activeLensKey={activeLensKey}
                   onSelectLens={onSelectLens}
                   onCalibrate={onCalibrate}
+                  onRecalibrate={onRecalibrate}
                   isDesktop={isDesktop}
                 />
               </div>

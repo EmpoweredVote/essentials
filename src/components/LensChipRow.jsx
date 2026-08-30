@@ -80,6 +80,18 @@ function renderLensIcon(lens) {
       </svg>
     );
   }
+  // A user-authored lens. Matched on the isUser flag rather than the `u_` key
+  // prefix so presentation depends on the normalizer's decision, not on a naming
+  // convention this file would otherwise have to know. Same tag glyph Compass
+  // uses in its own switcher, so one lens looks like itself in both apps.
+  if (lens?.isUser) {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width="15" height="15">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6Z" />
+      </svg>
+    );
+  }
   // Neutral fallback for any future lens key (State/International, etc.) —
   // renders a plain dot rather than guessing at a metaphor.
   return (
@@ -180,7 +192,7 @@ function LensButton({
   );
 }
 
-export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, isDesktop }) {
+export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, onRecalibrate, isDesktop }) {
   const { isDark } = useTheme();
   // Clicking an un-calibrated lens opens a confirmation dialog ("Calibrate these
   // N topics?") rather than jumping straight to the quiz. confirmLens holds the
@@ -216,7 +228,22 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
         // text carry the lit/needs-calibration language on top of it.
         const chipSurface = isDark ? '#161b22' : '#FFFFFF';
         let stateStyle = {};
-        if (needsCalibration) {
+        if (needsCalibration && lens.isUser) {
+          // A custom lens carries TWO facts at once here: whose it is (teal) and
+          // that it needs calibration (violet). A solid violet border would say
+          // only the second and erase the first, so the border alternates both.
+          //
+          // ⚠ The obvious spelling — border-image with a repeating gradient —
+          // silently drops border-radius, and these chips are pills. Painting the
+          // gradient as a border-box background layer under an opaque padding-box
+          // layer keeps the radius and still gives alternating dashes.
+          stateStyle = {
+            color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.4)',
+            border: '1.5px solid transparent',
+            background: `linear-gradient(${chipSurface}, ${chipSurface}) padding-box, `
+              + `repeating-linear-gradient(45deg, ${lens.color} 0 6px, #7C3AED 6px 12px) border-box`,
+          };
+        } else if (needsCalibration) {
           stateStyle = {
             background: chipSurface,
             color: isDark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.4)',
@@ -242,6 +269,24 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
               stateStyle={stateStyle}
               onClick={() => handleChipClick(lens)}
             />
+            {lens.flagCount > 0 && (
+              <button
+                type="button"
+                onClick={() => onRecalibrate?.(lens.key)}
+                title={`${lens.flagCount} question${lens.flagCount === 1 ? '' : 's'} in ${lens.name} changed since you answered`}
+                aria-label={`${lens.flagCount} question${lens.flagCount === 1 ? '' : 's'} in ${lens.name} changed since you answered. Review on Compass.`}
+                style={{
+                  position: 'absolute', top: -2, right: -2, zIndex: 1,
+                  width: 9, height: 9, padding: 0,
+                  borderRadius: '50%',
+                  background: '#7C3AED',
+                  // Rides the chip's own edge, so it needs a ring in the surface
+                  // colour to stay legible against a coloured/active chip.
+                  border: `1.5px solid ${chipSurface}`,
+                  cursor: 'pointer',
+                }}
+              />
+            )}
           </div>
         );
       })}

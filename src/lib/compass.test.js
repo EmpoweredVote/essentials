@@ -36,6 +36,10 @@ import {
   clearLensPending,
   resolveTabLens,
   TAB_DEFAULTS,
+  normalizeUserLens,
+  mergeLenses,
+  pruneLensTopics,
+  USER_LENS_COLOR,
 } from './compass.js';
 
 const topic = (id, short_title) => ({ id, short_title });
@@ -455,5 +459,135 @@ describe('applied clearedAt persistence', () => {
     expect(getAppliedClearedAt()).toBe(0);
     setAppliedClearedAt(1234);
     expect(getAppliedClearedAt()).toBe(1234);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Custom (user-authored) lenses
+// ---------------------------------------------------------------------------
+//
+// Editorial lenses come from GET /compass/lenses and carry a colour and icon.
+// User lenses come from GET /compass/my-lenses and carry neither — the table
+// stores identity, not presentation — so Essentials supplies both here, and the
+// two sources are merged into the one array the chip row already renders.
+
+describe('normalizeUserLens', () => {
+  it('supplies the teal accent and tag icon the API does not store', () => {
+    const out = normalizeUserLens({ key: 'u_7f3a91', name: 'My Eight', topicIds: ['a', 'b'] });
+    expect(out.color).toBe(USER_LENS_COLOR);
+    expect(out.icon).toBe('tag');
+    expect(out.isUser).toBe(true);
+  });
+
+  it('falls back to a title-cased key when the lens has no name', () => {
+    expect(normalizeUserLens({ key: 'u_7f3a91', topicIds: [] }).name).toBe('U 7f3a91');
+  });
+
+  it('coerces a missing or non-array topicIds to []', () => {
+    expect(normalizeUserLens({ key: 'u_1' }).topicIds).toEqual([]);
+    expect(normalizeUserLens({ key: 'u_1', topicIds: 'nope' }).topicIds).toEqual([]);
+  });
+
+  it('counts needsRecalibration into flagCount, defaulting to 0', () => {
+    expect(normalizeUserLens({ key: 'u_1', needsRecalibration: [{ topicId: 't1' }, { topicId: 't2' }] }).flagCount).toBe(2);
+    expect(normalizeUserLens({ key: 'u_1' }).flagCount).toBe(0);
+    expect(normalizeUserLens({ key: 'u_1', needsRecalibration: 'nope' }).flagCount).toBe(0);
+  });
+
+  it('never lets an API-supplied colour through — user lenses are always teal', () => {
+    // The endpoint has no colour column today, but the chip row renders colour
+    // into an inline style, so this stays a closed door rather than a trusted
+    // absence (the same reasoning as sanitizeLensColor).
+    const out = normalizeUserLens({ key: 'u_1', color: 'javascript:alert(1)' });
+    expect(out.color).toBe(USER_LENS_COLOR);
+  });
+});
+
+describe('mergeLenses', () => {
+  const editorial = [
+    { key: 'federal', topicIds: FEDERAL_LENS_TOPICS },
+    { key: 'judicial', topicIds: JUDICIAL_LENS_TOPICS },
+  ];
+
+  it('keeps editorial lenses first, user lenses after', () => {
+    const merged = mergeLenses(editorial, [{ key: 'u_1' }, { key: 'u_2' }]);
+    expect(merged.map((l) => l.key)).toEqual(['federal', 'judicial', 'u_1', 'u_2']);
+  });
+
+  it('🔴 an editorial key always wins a collision', () => {
+    // Server validation restricts user keys to /^u_[a-z0-9]{4,32}$/, so this
+    // should be unreachable. The chip row is a shared key namespace and lookups
+    // there are `.find(l => l.key === activeLensKey)` — first match wins — so a
+    // shadowing row would silently retarget an editorial chip. Structural, not
+    // validated-somewhere-else.
+    const merged = mergeLenses(editorial, [{ key: 'federal', name: 'Not Federal' }]);
+    expect(merged.filter((l) => l.key === 'federal')).toHaveLength(1);
+    expect(merged.find((l) => l.key === 'federal').name).toBeUndefined();
+  });
+
+  it('de-dupes repeated user keys, keeping the first', () => {
+    const merged = mergeLenses([], [{ key: 'u_1', name: 'First' }, { key: 'u_1', name: 'Second' }]);
+    expect(merged).toHaveLength(1);
+    expect(merged[0].name).toBe('First');
+  });
+
+  it('tolerates missing/non-array sides', () => {
+    expect(mergeLenses(null, null)).toEqual([]);
+    expect(mergeLenses(editorial, undefined).map((l) => l.key)).toEqual(['federal', 'judicial']);
+  });
+});
+
+describe('pruneLensTopics', () => {
+  const lens = { key: 'u_1', topicIds: ['t1', 't2', 'gone'] };
+
+  it('drops topic ids that no longer exist', () => {
+    const [out] = pruneLensTopics([lens], ['t1', 't2', 't3']);
+    expect(out.topicIds).toEqual(['t1', 't2']);
+  });
+
+  it('🔴 leaves every lens untouched when the topic list is empty', () => {
+    // allTopics loads asynchronously. Pruning against an empty set would empty
+    // every lens on first render — and because isLensCalibrated thresholds on
+    // min(8, topicIds.length), a lens is not merely blanked, it is briefly
+    // *un-prunable back*: a shrunken lens lowers its own calibration bar and can
+    // light up as ready on fewer answers than it should need.
+    expect(pruneLensTopics([lens], [])).toEqual([lens]);
+    expect(pruneLensTopics([lens], null)).toEqual([lens]);
+  });
+
+  it('does not mutate the input lens', () => {
+    const input = { key: 'u_1', topicIds: ['t1', 'gone'] };
+    pruneLensTopics([input], ['t1']);
+    expect(input.topicIds).toEqual(['t1', 'gone']);
+  });
+
+  it('compares as strings, so numeric ids still match', () => {
+    const [out] = pruneLensTopics([{ key: 'u_1', topicIds: [1, 2] }], ['1', '2']);
+    expect(out.topicIds).toHaveLength(2);
+  });
+});
+
+describe('resolveTabLens with a custom lens', () => {
+  const userLens = { key: 'u_7f3a91', topicIds: ['t1', 't2', 't3'] };
+  const calibrated = userLens.topicIds.map((id) => ans(id, 3));
+
+  it('honours a remembered custom lens per tab', () => {
+    expect(resolveTabLens('representatives', { representatives: 'u_7f3a91' }, [userLens], calibrated)).toBe('u_7f3a91');
+  });
+
+  it("degrades to 'custom' once that lens is deleted — no new code needed", () => {
+    // The deleted-lens path is the existing missing-lens check. Asserted so the
+    // self-healing behaviour is pinned rather than assumed.
+    expect(resolveTabLens('representatives', { representatives: 'u_7f3a91' }, [], calibrated)).toBe('custom');
+  });
+
+  it("degrades to 'custom' when the custom lens is not calibrated", () => {
+    expect(resolveTabLens('representatives', { representatives: 'u_7f3a91' }, [userLens], [ans('t1', 3)])).toBe('custom');
+  });
+
+  it('is never a static TAB_DEFAULTS entry', () => {
+    // Custom lenses are remembered, never built-in defaults — a per-user key
+    // cannot be a static default without meaning something different per user.
+    expect(Object.values(TAB_DEFAULTS).some((k) => String(k).startsWith('u_'))).toBe(false);
   });
 });

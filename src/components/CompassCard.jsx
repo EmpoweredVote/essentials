@@ -101,6 +101,15 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     window.location.assign(`${COMPASS_URL}/?calibrate=${encodeURIComponent(key)}&return=${encodeURIComponent(returnUrl)}`);
   };
 
+  // A lens whose questions moved under the user. Routes to Compass, where the
+  // lens is managed and where the per-topic explanation already lives — this app
+  // reports that something changed, it does not host the fix.
+  const handleRecalibrateLens = (key) => {
+    const returnUrl = window.location.href;
+    track('essentials_compass_lens_recalibrate_clicked', { lens: key, context: 'profile' });
+    window.location.assign(`${COMPASS_URL}/?return=${encodeURIComponent(returnUrl)}#lens=${encodeURIComponent(key)}`);
+  };
+
   // Topic pool for the comparison + stance breakdown:
   //   • Local Lens ON  → local-scoped topics (the lens is about local issues).
   //   • Local Lens OFF → all topics, so the comparison uses the user's full
@@ -331,6 +340,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               activeLensKey={activeLensKey}
               onSelectLens={handleSelectLens}
               onCalibrate={handleCalibrateLens}
+              onRecalibrate={handleRecalibrateLens}
               isDesktop={isDesktop}
             />
           </div>
@@ -341,6 +351,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               activeLensKey={activeLensKey}
               onSelectLens={handleSelectLens}
               onCalibrate={handleCalibrateLens}
+              onRecalibrate={handleRecalibrateLens}
               isDesktop={isDesktop}
             />
           </div>
