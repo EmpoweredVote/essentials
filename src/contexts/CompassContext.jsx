@@ -9,6 +9,7 @@ import {
   fetchUserVerdicts,
   parseCompassFragment,
   convertGuestAnswersToApiFormat,
+  applySharedAnswers,
   saveGuestCompass,
   loadGuestCompass,
   clearGuestCompass,
@@ -508,8 +509,17 @@ export function CompassProvider({ children }) {
         try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch { /* the guest cache is a convenience, not the source of truth */ }
         return;
       }
+      // 🔴 NOT a replace. `c.a` is a PROJECTION — compassToPublish() caps it at
+      // 16 topics — while the #compass= return fragment carries the COMPLETE
+      // answer set. Replacing wholesale deleted every answer the payload was too
+      // small to carry: calibrate 30 topics on Compass, return here via the
+      // banner with all 30, then one broker echo cuts you to 16.
+      //
+      // A merge is not the fix either; CompassV2 documents why (#65). The
+      // payload is authoritative for the topics it declares and silent about the
+      // rest. See applySharedAnswers.
       const apiAnswers = convertGuestAnswersToApiFormat(c.a, allTopics);
-      setUserAnswers(apiAnswers);
+      setUserAnswers((prev) => applySharedAnswers(prev, apiAnswers, Array.isArray(c.s) ? c.s : []));
       if (Array.isArray(c.s)) setSelectedTopics(c.s);
       if (c.i && typeof c.i === 'object') setInvertedSpokes(c.i);
       try { saveGuestCompass(c.a, Array.isArray(c.s) ? c.s : [], c.i || {}); } catch { /* the guest cache is a convenience, not the source of truth */ }
