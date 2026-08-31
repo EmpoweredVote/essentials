@@ -364,6 +364,49 @@ export function buildCompassPayload(prior, owned) {
   return { ...(prior && typeof prior === "object" ? prior : {}), ...owned };
 }
 
+/** The ways a compass can reach this app, in the order the hydrate tries them. */
+export const HYDRATION_SOURCES = ["api", "ev-context", "storage", "fragment", "empty"];
+
+/**
+ * Assembles the props for the `essentials_compass_hydrated` event.
+ *
+ * `shared` is deliberately three-valued:
+ *   • omitted — this branch never read shared context, so both broker props are
+ *     left off the event. "Missing" then honestly means "not applicable".
+ *   • null    — we read the broker and it held no compass.
+ *   • object  — the `compass` slice the broker held.
+ *
+ * Collapsing the first two into a single null is what made an earlier event
+ * impossible to verify: there was no way to tell a silent bug from a branch
+ * that never had the data to report.
+ *
+ * @param {Object} input
+ * @param {string} input.source   - one of HYDRATION_SOURCES
+ * @param {string} input.reason   - which branch within that source won
+ * @param {boolean} input.authed  - whether a user was signed in
+ * @param {Array} input.answers   - the answers the hydrate resolved
+ * @param {Array} input.selected  - the selected topic ids it resolved
+ * @param {Object|null} [input.shared] - the broker's compass slice, if read
+ */
+export function buildHydrationEvent({
+  source, reason, authed, answers, selected, shared,
+} = {}) {
+  const props = {
+    source: HYDRATION_SOURCES.includes(source) ? source : "unknown",
+    reason,
+    authed: !!authed,
+    answer_count: Array.isArray(answers) ? answers.length : 0,
+    selected_count: Array.isArray(selected) ? selected.length : 0,
+  };
+  if (shared !== undefined) {
+    const a = shared && typeof shared === "object" ? shared.a : null;
+    const carried = a && typeof a === "object" ? Object.keys(a).length : 0;
+    props.had_shared_payload = carried > 0;
+    props.shared_answer_count = carried;
+  }
+  return props;
+}
+
 // ─── Guest verdict bridge utilities ──────────────────────────────────────────
 
 /** localStorage key for guest verdict cache */

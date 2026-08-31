@@ -41,6 +41,7 @@ import {
   pruneLensTopics,
   USER_LENS_COLOR,
   applySharedAnswers,
+  buildHydrationEvent,
 } from './compass.js';
 
 const topic = (id, short_title) => ({ id, short_title });
@@ -672,5 +673,63 @@ describe('applySharedAnswers', () => {
     // shouldApplyClear exists to protect, one layer down.
     const local = [ans('t1', 2), ans('t2', 3)];
     expect(applySharedAnswers(local, [], [])).toBe(local);
+  });
+});
+
+/**
+ * buildHydrationEvent() — assembles the props for `essentials_compass_hydrated`.
+ *
+ * The subtle part is the two broker-health props. They are only knowable in the
+ * branches that actually read shared context, so "we read and found nothing"
+ * and "we never looked" must not collapse into the same null — that ambiguity
+ * is exactly what made an earlier event unverifiable for a whole session.
+ */
+describe('buildHydrationEvent', () => {
+  const base = { source: 'api', reason: 'authed-api', authed: true, answers: [], selected: [] };
+
+  it('omits both broker props when shared context was never read', () => {
+    const props = buildHydrationEvent({ ...base });
+    expect('had_shared_payload' in props).toBe(false);
+    expect('shared_answer_count' in props).toBe(false);
+  });
+
+  it('reports a broker read that returned nothing as present-but-empty', () => {
+    const props = buildHydrationEvent({ ...base, shared: null });
+    expect(props.had_shared_payload).toBe(false);
+    expect(props.shared_answer_count).toBe(0);
+  });
+
+  it('counts the answers the broker actually carried', () => {
+    const props = buildHydrationEvent({ ...base, shared: { a: { econ: 3, educ: 5 } } });
+    expect(props.had_shared_payload).toBe(true);
+    expect(props.shared_answer_count).toBe(2);
+  });
+
+  it('carries the resolved source, reason and counts', () => {
+    const props = buildHydrationEvent({
+      source: 'ev-context',
+      reason: 'guest-cross-subdomain',
+      authed: false,
+      answers: [{ topic_id: 1 }, { topic_id: 2 }, { topic_id: 3 }],
+      selected: [1, 2],
+    });
+    expect(props).toMatchObject({
+      source: 'ev-context',
+      reason: 'guest-cross-subdomain',
+      authed: false,
+      answer_count: 3,
+      selected_count: 2,
+    });
+  });
+
+  it('surfaces an unrecognised source rather than crashing the hydrate', () => {
+    const props = buildHydrationEvent({ ...base, source: 'typo-here' });
+    expect(props.source).toBe('unknown');
+  });
+
+  it('counts nothing when answers and selected are not arrays', () => {
+    const props = buildHydrationEvent({ ...base, answers: undefined, selected: null });
+    expect(props.answer_count).toBe(0);
+    expect(props.selected_count).toBe(0);
   });
 });
