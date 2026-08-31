@@ -30,11 +30,12 @@ import {
   loadLensSelection,
   loadLensPending,
   clearLensPending,
+  buildHydrationEvent,
 } from "../lib/compass";
 import { extractHashToken, getToken, setToken, publicFetch, clearToken, API_BASE } from "../lib/auth";
 import { fetchMyRepresentatives } from "../lib/api";
 import { evContext } from "@empoweredvote/ev-ui";
-import { identify } from "@empoweredvote/analytics";
+import { identify, track } from "@empoweredvote/analytics";
 
 const CompassContext = createContext(null);
 
@@ -192,6 +193,11 @@ export function CompassProvider({ children }) {
       let answers = [];
       let selected = [];
       let inverted = {};
+      // What the hydrate decided, and what shared context held when we looked.
+      // `sharedSeen` stays undefined in branches that never read the broker, so
+      // the event can distinguish "read it, found nothing" from "never looked".
+      let hydration = null;
+      let sharedSeen;
 
       if (authedUser) {
         // SWR hydrate from authed ev-context slice (compass part)
@@ -199,6 +205,7 @@ export function CompassProvider({ children }) {
         let evCachedAnswers = null;
         try {
           const authedSlice = await evContext.getAuthedSlice(authedUser.id);
+          sharedSeen = authedSlice?.compass ?? null;
           if (authedSlice?.compass?.a && typeof authedSlice.compass.a === 'object') {
             const cached = convertGuestAnswersToApiFormat(authedSlice.compass.a, topics);
             if (cached.length > 0) {
@@ -213,7 +220,7 @@ export function CompassProvider({ children }) {
               };
             }
           }
-        } catch { /* broker offline */ }
+        } catch { sharedSeen = null; /* broker offline */ }
 
         const [answersResult, selectedResult] = await Promise.all([
           fetchUserAnswers(),
@@ -223,24 +230,24 @@ export function CompassProvider({ children }) {
         if (answersResult.length === 0) {
           if (evCachedAnswers) {
             // Compass calibrated in another app — API hasn't synced yet but ev-context has it
-            if (import.meta.env.DEV) console.log('[CompassContext] priority=ev-context (authed+empty-api, cross-app fallback)', evCachedAnswers);
+            hydration = { source: 'ev-context', reason: 'authed-empty-api' };
             answers = evCachedAnswers.answers;
             selected = evCachedAnswers.selected;
             inverted = evCachedAnswers.inverted;
           } else {
             const guestCache = loadGuestCompass();
             if (guestCache) {
-              if (import.meta.env.DEV) console.log('[CompassContext] priority=storage (authed+empty-api, guest cache fallback)', { guestCache });
+              hydration = { source: 'storage', reason: 'authed-guest-cache' };
               answers = convertGuestAnswersToApiFormat(guestCache.answers, topics);
               selected = guestCache.selectedTopics;
               inverted = guestCache.invertedSpokes || {};
             } else {
-              if (import.meta.env.DEV) console.log('[CompassContext] priority=empty (authed, no api answers, no guest cache)');
+              hydration = { source: 'empty', reason: 'authed-no-data' };
               clearGuestCompass();
             }
           }
         } else {
-          if (import.meta.env.DEV) console.log('[CompassContext] priority=api (authed, api answers count:', answersResult.length, ')');
+          hydration = { source: 'api', reason: 'authed-api' };
           [answers, selected] = [answersResult, selectedResult];
           clearGuestCompass();
           const aMap = {};
@@ -276,7 +283,7 @@ export function CompassProvider({ children }) {
         }
       } else if (fragment) {
         if (fragment.answers !== null) {
-          if (import.meta.env.DEV) console.log('[CompassContext] priority=fragment (guest, fresh compass fragment)', { answers: fragment.answers });
+          hydration = { source: 'fragment', reason: 'guest-fragment' };
           answers = convertGuestAnswersToApiFormat(fragment.answers, topics);
           selected = fragment.selectedTopics;
           inverted = fragment.invertedSpokes || {};
@@ -297,8 +304,9 @@ export function CompassProvider({ children }) {
         let shared = null;
         try { shared = await evContext.get(); } catch { shared = null; }
         const sharedCompass = shared && shared.compass;
+        sharedSeen = sharedCompass ?? null;
         if (sharedCompass && sharedCompass.a && Object.keys(sharedCompass.a).length > 0) {
-          if (import.meta.env.DEV) console.log('[CompassContext] priority=ev-context (guest, cross-subdomain shared)', { sharedCompass });
+          hydration = { source: 'ev-context', reason: 'guest-cross-subdomain' };
           answers = convertGuestAnswersToApiFormat(sharedCompass.a, topics);
           selected = Array.isArray(sharedCompass.s) ? sharedCompass.s : [];
           inverted = sharedCompass.i || {};
@@ -306,12 +314,12 @@ export function CompassProvider({ children }) {
         } else {
           const cached = loadGuestCompass();
           if (cached) {
-            if (import.meta.env.DEV) console.log('[CompassContext] priority=storage (guest, loading cached guestCompass)', { cached });
+            hydration = { source: 'storage', reason: 'guest-cache' };
             answers = convertGuestAnswersToApiFormat(cached.answers, topics);
             selected = cached.selectedTopics;
             inverted = cached.invertedSpokes || {};
           } else {
-            if (import.meta.env.DEV) console.log('[CompassContext] priority=empty (guest, no fragment, no cached data)');
+            hydration = { source: 'empty', reason: 'guest-no-data' };
           }
         }
       }
@@ -337,6 +345,20 @@ export function CompassProvider({ children }) {
         const match = topics.find((t) => t.topic_key === fragment.topicId);
         if (match) setInitialTopicId(String(match.id));
       }
+
+      // One emit per successful hydrate, never from the catch below. The DEV log
+      // prints the event itself so the console and the analytics cannot disagree.
+      const hydrationProps = buildHydrationEvent({
+        ...(hydration || {}),
+        authed: !!authedUser,
+        answers,
+        selected,
+        shared: sharedSeen,
+      });
+      if (import.meta.env.DEV) console.log('[CompassContext] hydrated', hydrationProps);
+      // Analytics must never break the compass load: a throw here would land in
+      // the catch below, which clears the guard and retries the whole hydrate.
+      try { track('essentials_compass_hydrated', hydrationProps); } catch { /* never block hydrate */ }
 
       setCompassDataLoaded(true);
     } catch (err) {
