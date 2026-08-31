@@ -733,3 +733,47 @@ describe('buildHydrationEvent', () => {
     expect(props.selected_count).toBe(0);
   });
 });
+
+/**
+ * The truncation half of the same contract. Compass publishes `n` — the answers
+ * that were in scope before its cap — so a consumer can tell a payload that is
+ * merely SCOPED from one the cap DISCARDED topics from.
+ *
+ * The version-skew case is the one that matters: a Compass build older than the
+ * `n` change publishes no count at all, and "the publisher is too old to tell
+ * us" must never be reported as "nothing was truncated".
+ */
+describe('buildHydrationEvent truncation reporting', () => {
+  const base = { source: 'ev-context', reason: 'guest-cross-subdomain', authed: false, answers: [], selected: [] };
+
+  it('omits both truncation props when the publisher sent no count', () => {
+    const props = buildHydrationEvent({ ...base, shared: { a: { econ: 1, educ: 2 } } });
+    expect('shared_truncated' in props).toBe(false);
+    expect('shared_scope_count' in props).toBe(false);
+  });
+
+  it('reports no truncation when the count matches what arrived', () => {
+    const props = buildHydrationEvent({ ...base, shared: { a: { econ: 1, educ: 2 }, n: 2 } });
+    expect(props.shared_truncated).toBe(false);
+    expect(props.shared_scope_count).toBe(2);
+  });
+
+  it('reports truncation when the publisher had more in scope than it sent', () => {
+    const props = buildHydrationEvent({ ...base, shared: { a: { econ: 1, educ: 2 }, n: 23 } });
+    expect(props.shared_truncated).toBe(true);
+    expect(props.shared_scope_count).toBe(23);
+  });
+
+  it('omits the truncation props when the broker held nothing', () => {
+    // had_shared_payload already says the slice was empty; there is no count to
+    // report and inventing false would claim knowledge we do not have.
+    const props = buildHydrationEvent({ ...base, shared: null });
+    expect(props.had_shared_payload).toBe(false);
+    expect('shared_truncated' in props).toBe(false);
+  });
+
+  it('ignores a non-numeric count rather than trusting it', () => {
+    const props = buildHydrationEvent({ ...base, shared: { a: { econ: 1 }, n: 'lots' } });
+    expect('shared_truncated' in props).toBe(false);
+  });
+});

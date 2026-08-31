@@ -403,6 +403,15 @@ export function buildHydrationEvent({
     const carried = a && typeof a === "object" ? Object.keys(a).length : 0;
     props.had_shared_payload = carried > 0;
     props.shared_answer_count = carried;
+    // Compass publishes `n` — what was in scope before its cap — so truncation
+    // is derivable here. A publisher too old to send it is NOT the same fact as
+    // a payload that was not truncated, so an absent or non-numeric count omits
+    // both props rather than defaulting to false.
+    const n = shared && typeof shared === "object" ? shared.n : undefined;
+    if (typeof n === "number" && Number.isFinite(n)) {
+      props.shared_scope_count = n;
+      props.shared_truncated = n > carried;
+    }
   }
   return props;
 }
