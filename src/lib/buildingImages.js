@@ -828,6 +828,28 @@ const CURATED_LOCAL = {
   // here — unlike Miami, where states/FL.jpg WAS the city's own skyline. Columbus and
   // Macon are clear for the same reason.
   milledgeville: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/milledgeville.jpg' },
+  // Georgia -- Knight program wave GA-4 (2026-09-01, operator-certified). Composed to
+  // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
+  //   columbus - the Eagle & Phenix mill row above the Chattahoochee whitewater course,
+  //              seen from the west bank | CC BY-SA 4.0 | Wikimedia Commons
+  //
+  // The desktop 6/1 band keeps only rows 128-411 of 540, so the crop was chosen to put the
+  // mill row, the river and the rapids all inside that band -- the whitewater course is the
+  // thing Columbus is known for, and it is a genuinely horizontal subject rather than a
+  // frontal building portrait. Chroma measured 30.9 in the desktop band, so this is not
+  // Milledgeville's greyscale trap.
+  //
+  // 🔴 THE BEST-LOOKING CANDIDATE WAS THE WRONG CITY, AND IT NEARLY SHIPPED. The largest,
+  // best-licensed, most banner-shaped image the search returned was 'Downtown Columbus View
+  // from Main St Bridge' -- 6188x4227, PUBLIC DOMAIN, a Wikimedia FEATURED PICTURE -- and it
+  // is COLUMBUS, OHIO. Its own Commons categories say 'Columbus, Ohio skylines'. This wave
+  // already met that homonym once, when a search for council-district geometry surfaced
+  // gis.columbus.gov. Ohio is the bigger Columbus, so it ranks first on every generic search:
+  // CHECK THE CITY, NOT THE NAME.
+  //
+  // ⚠ match:'exact' is load-bearing here for the usual reason -- substring matching would
+  // hand this banner to any other Georgia place whose label contains 'columbus'.
+  columbus: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/columbus.jpg' },
 };
 
 /**
