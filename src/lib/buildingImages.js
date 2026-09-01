@@ -802,6 +802,54 @@ const CURATED_LOCAL = {
   miami: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/miami.jpg' },
   bradenton: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bradenton.jpg' },
   tallahassee: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tallahassee.jpg' },
+  // Georgia — Knight program wave GA-3 (2026-09-01, operator-certified). The program's
+  // FIRST 'GA'-scoped key. Certified in BOTH production boxes, not on the full frame:
+  // mobile 13/4 shows 96.9% (rows 8-531 of 540), desktop 6/1 shows 52.5% (rows 128-411).
+  //   milledgeville - Old State Capitol / Georgia Military College, seen across State
+  //                   House Square | Clifflandis | CC0 / Public Domain
+  //
+  // 🔴 THE OBVIOUS SUBJECT WAS REJECTED, AND THE REASON GENERALISES. Milledgeville's
+  // signature building is the 1839 Old Governor's Mansion, and it FAILS this box. Both
+  // available photographs are ~1.42:1 frontal portraits, so the 3.148:1 asset crop drops
+  // 55% of the rows and the desktop band then keeps 52.5% of the rest — about a quarter of
+  // the original. Swept at anchors 0.30/0.45/0.60 on two different photographs, every
+  // result is a wall of windows with the pediment cropped off the top and the ground off
+  // the bottom. That is the Bend, OR failure and the FL-7 failure in a third dress:
+  // A FRONTAL BUILDING PORTRAIT IS NOT A BANNER SUBJECT. Prefer a horizontally arranged
+  // subject, and prefer a source already near 3:1.
+  //
+  // 🔴 AND TEST COLOUR, NOT ONLY LICENCE AND RATIO. The two widest, most permissively
+  // licensed sources found — Historic American Buildings Survey, federal work, public
+  // domain, 1.62:1, which would have survived the desktop band better than anything else —
+  // measured 100% GREYSCALE. Archival black and white beside a shelf of colour banners
+  // reads as a fault, not a choice. No licence or aspect check catches that.
+  //
+  // ⚠ Georgia's STATE banner is the Atlanta skyline, so §8.1 needed no state-banner move
+  // here — unlike Miami, where states/FL.jpg WAS the city's own skyline. Columbus and
+  // Macon are clear for the same reason.
+  milledgeville: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/milledgeville.jpg' },
+  // Georgia -- Knight program wave GA-4 (2026-09-01, operator-certified). Composed to
+  // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
+  //   columbus - the Eagle & Phenix mill row above the Chattahoochee whitewater course,
+  //              seen from the west bank | CC BY-SA 4.0 | Wikimedia Commons
+  //
+  // The desktop 6/1 band keeps only rows 128-411 of 540, so the crop was chosen to put the
+  // mill row, the river and the rapids all inside that band -- the whitewater course is the
+  // thing Columbus is known for, and it is a genuinely horizontal subject rather than a
+  // frontal building portrait. Chroma measured 30.9 in the desktop band, so this is not
+  // Milledgeville's greyscale trap.
+  //
+  // 🔴 THE BEST-LOOKING CANDIDATE WAS THE WRONG CITY, AND IT NEARLY SHIPPED. The largest,
+  // best-licensed, most banner-shaped image the search returned was 'Downtown Columbus View
+  // from Main St Bridge' -- 6188x4227, PUBLIC DOMAIN, a Wikimedia FEATURED PICTURE -- and it
+  // is COLUMBUS, OHIO. Its own Commons categories say 'Columbus, Ohio skylines'. This wave
+  // already met that homonym once, when a search for council-district geometry surfaced
+  // gis.columbus.gov. Ohio is the bigger Columbus, so it ranks first on every generic search:
+  // CHECK THE CITY, NOT THE NAME.
+  //
+  // ⚠ match:'exact' is load-bearing here for the usual reason -- substring matching would
+  // hand this banner to any other Georgia place whose label contains 'columbus'.
+  columbus: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/columbus.jpg' },
 };
 
 /**
