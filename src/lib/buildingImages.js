@@ -850,6 +850,34 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing here for the usual reason -- substring matching would
   // hand this banner to any other Georgia place whose label contains 'columbus'.
   columbus: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/columbus.jpg' },
+  // Georgia -- Knight program wave GA-5 (2026-09-02, operator-certified). Composed to
+  // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
+  //   macon - the downtown Macon skyline seen across the tree line, with the domed
+  //           building and the brick tower's white cupola reading as landmarks
+  //           | CC BY-SA 3.0 | Bubba73, Wikimedia Commons, own work
+  //
+  // The desktop 6/1 band keeps only rows 128-411 of 540, and this was the ONLY one of three
+  // candidates whose subject sits inside that band. Its native 3.27:1 is almost exactly the
+  // mobile 13/4 box, so that crop is close to lossless. Saturation measured 59.7 with a
+  // channel spread of 30.7 in the desktop band -- the highest of the three, so this is not
+  // Milledgeville's greyscale trap.
+  //
+  // 🔴 A COLOUR METRIC CANNOT SEE COMPOSITION, AND IT FLAGGED THE RIGHT FILE FOR THE WRONG
+  // REASON. The rejected candidate ('Panoramic Macon Skyline', 8000x1615) tripped a low-
+  // saturation test at 29.7 -- true, and not the actual disqualifier. It is a badly stitched
+  // panorama with visible seams and mismatched exposure between panels, AND its skyline sits
+  // at the very bottom of the frame, so the 6/1 box shows almost nothing but sky. Rendering
+  // it in the real box is what caught that; no metric would have.
+  //
+  // ⚠ MACON HAS MORE HOMONYMS THAN COLUMBUS DID, so every candidate was verified against its
+  // own Commons categories ('2009 in Macon, Georgia', 'Downtown Macon, Georgia') rather than
+  // its title. Macon COUNTY, Georgia is a different, rural county some 60 miles from the city
+  // of Macon -- whose parent county is BIBB -- and there are Macons in Missouri, Mississippi
+  // and Illinois, plus Mâcon in France. CHECK THE CITY, NOT THE NAME.
+  //
+  // ⚠ match:'exact' is load-bearing for the usual reason, and more so here: substring
+  // matching would hand this banner to Macon County GA as well as to the city.
+  macon: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/macon.jpg' },
 };
 
 /**
