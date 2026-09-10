@@ -831,7 +831,22 @@ const CURATED_LOCAL = {
   // Georgia -- Knight program wave GA-4 (2026-09-01, operator-certified). Composed to
   // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
   //   columbus - the Eagle & Phenix mill row above the Chattahoochee whitewater course,
-  //              seen from the west bank | CC BY-SA 4.0 | Wikimedia Commons
+  //              seen from the west bank | AUTHOR UNRESOLVED | CC BY-SA 4.0
+  //
+  // 🔴 COLUMBUS HAS NO AUTHOR ON RECORD. DO NOT TRANSCRIBE THIS LINE AS A CREDIT. It read
+  // '| CC BY-SA 4.0 | Wikimedia Commons' until 2026-09-10 -- a licence sitting in the author
+  // slot, so a consumer reading positionally (the documented contract, see line 106)
+  // publishes 'CC BY-SA 4.0' as the photographer. 'Wikimedia Commons' names nobody, so the
+  // author is not recorded anywhere on this line. Treasury Tracker's extractor refused it
+  // rather than guessing and omits columbus|GA from its catalog (TT note 2026-09-10).
+  // TT could not recover the source: it swept Category:Columbus, Georgia, :Downtown Columbus,
+  // Georgia, :Eagle and Phenix Mills, :Phenix City, Alabama plus four full-text searches, and
+  // the best candidate scored 29.92 mean abs difference per channel where a true match lands
+  // at 1-7. Since this frame was composed to 1700x540 FIRST, it is likely a sub-region crop
+  // that a whole-image sweep cannot recover.
+  // ▶ WHOEVER COMPOSED THIS FRAME: name the Commons File: page from your own working notes
+  //   and put it in the author slot. Do not fill it from a category guess -- and note the
+  //   homonym trap below, which nearly shipped Columbus, OHIO here.
   //
   // The desktop 6/1 band keeps only rows 128-411 of 540, so the crop was chosen to put the
   // mill row, the river and the rapids all inside that band -- the whitewater course is the
@@ -854,7 +869,16 @@ const CURATED_LOCAL = {
   // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
   //   macon - the downtown Macon skyline seen across the tree line, with the domed
   //           building and the brick tower's white cupola reading as landmarks
-  //           | CC BY-SA 3.0 | Bubba73, Wikimedia Commons, own work
+  //           | Bubba73 | CC BY-SA 3.0 (own work)
+  //   source: File:MaconSkyline.JPG (3008x920, the native 3.27:1 recorded below)
+  //
+  // ⚠ These two fields were REVERSED here until 2026-09-10, reading '| CC BY-SA 3.0 |
+  // Bubba73, Wikimedia Commons, own work'. The author survived in the licence slot, so no
+  // credit was lost, but a positional consumer published the licence as the photographer.
+  // Corrected against the Commons File: page rather than by trusting the position: Treasury
+  // Tracker pixel-matched cities/macon.jpg to File:MaconSkyline.JPG at 2.11 mean abs
+  // difference per channel, against 62.69 for the other wide Macon skyline in the same
+  // category (File:Macon night skyline2.JPG) (TT note 2026-09-10).
   //
   // The desktop 6/1 band keeps only rows 128-411 of 540, and this was the ONLY one of three
   // candidates whose subject sits inside that band. Its native 3.27:1 is almost exactly the
