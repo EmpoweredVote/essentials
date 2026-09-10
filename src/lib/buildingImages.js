@@ -380,6 +380,45 @@ const CURATED_LOCAL = {
   biddeford: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biddeford.jpg' },
   lewiston: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lewiston.jpg' },
   auburn: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/auburn.jpg' },
+  // The four la_county/building_photos assets -- credits RECOVERED 2026-09-10. Line 106 says
+  // this attribution block covers the LA-county skylines, but no title|author|license line
+  // ever existed for any of these four: the 2026-07-05 CA audit at line 126 certified them
+  // ('Los Angeles + Torrance kept their prior la_county/building_photos shots; Pomona +
+  // Carson certified as-is') without crediting them. Treasury Tracker called this the one
+  // gap costing a consumer today -- all four are live TT entities, and they are why their
+  // refresh covered 95 of 99 cities, with Los Angeles falling back to a Wikipedia lookup.
+  //
+  // All four are Wikimedia Commons files and ALL FOUR ARE AttributionRequired=true, so they
+  // have been displaying in breach of their licences. Recovered by the same matcher used for
+  // the UT Wave 2 batch, then confirmed by eye. These are not composed to a box like the UT
+  // banners, and the dimensions corroborate each match independently:
+  //   pomona   800x402  == the (cropped) derivative exactly -- used verbatim
+  //   carson   1039x779 == the Commons file exactly -- used verbatim, scored MAD 1.17
+  //   torrance 1600x909 is 3700x2103 rescaled (1.7602 vs 1.7594) -- whole-frame MAD 2.92
+  //   los angeles 1600x520 is a crop -- MAD 2.29 against the located rectangle
+  //
+  //   los angeles - downtown skyline at sunset above Echo Park Lake
+  //            (File:Echo Park Lake with Downtown Los Angeles Skyline.jpg) | Adoramassey | CC BY-SA 4.0
+  //   pomona - Pomona City Hall, the Welton Becket civic centre block
+  //            (File:Pomona city hall (cropped).jpg) | Cliffo | CC BY 2.5
+  //   torrance - Torrance City Hall behind the eucalyptus on Torrance Blvd
+  //            (File:Torrance CA City Hall.jpg) | Thurifer | CC BY-SA 4.0
+  //   carson - Carson City Hall across the lawn
+  //            (File:Carson city hall.jpg) | The Front Page Online | CC BY-SA 4.0
+  //
+  // ⚠ Two wrinkles worth keeping, because both would mislead someone re-deriving these:
+  // 1. LOS ANGELES: two Commons pages hold this photograph. The shipped crop matches the
+  //    file's PRE-2019-06-16 revision (MAD 2.29), which someone re-uploaded as a separate
+  //    page named 'File:20190616154621!Echo Park Lake with Downtown Los Angeles Skyline.jpg';
+  //    the current revision of the canonical page scores 10.38. Same author and licence
+  //    either way, so the credit above is right, but a pixel check against the canonical
+  //    page today will NOT reproduce 2.29 and that is expected, not a mismatch.
+  // 2. POMONA: the source is the (cropped) DERIVATIVE, which is 800x402 -- exactly the
+  //    shipped file. The 800x600 original (File:Pomona..cityhall.jpg) actually scored
+  //    slightly better on the matcher (5.41 vs 7.85); the dimensions, not the metric, settle
+  //    which was used. Cliffo / CC BY 2.5 covers both, so attribution is unaffected.
+  // 🔑 And note the licences differ per file -- CC BY-SA 4.0 twice, CC BY 2.5 once. There is
+  //    no batch-level licence here any more than there was in UT Wave 2.
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
   'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
   glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
