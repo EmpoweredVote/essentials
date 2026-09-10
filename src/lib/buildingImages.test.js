@@ -19,8 +19,10 @@ import {
 
 const BLOOMINGTON_URL =
   'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bloomington.jpg';
+// CA became versioned on 2026-09-09 (CA-v2.jpg). The shipped frame lost the Golden Gate
+// above the 6:1 desktop window; the re-crop moved it back inside. See buildingImages.js.
 const CA_PANORAMA_URL =
-  'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/states/CA.jpg';
+  'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/states/CA-v2.jpg';
 
 describe('getBuildingImages — Bloomington wiring + fallback (ASST-01)', () => {
   it('resolves Bloomington Local to the cities/bloomington.jpg Storage URL', () => {
@@ -144,6 +146,21 @@ describe('Florida state banner is versioned, not overwritten (FL-7)', () => {
   });
 
   it('an unversioned state is unaffected', () => {
-    expect(getBuildingImages('Anytown', 'CA').State).toContain('/states/CA.jpg');
+    // CO, not CA — CA was this test's example of an unversioned state until 2026-09-09,
+    // when it was versioned too. The rule under test is the fall-through to <ABBR>.jpg,
+    // so it needs a state that is genuinely absent from STATE_PANORAMA_FILES.
+    expect(getBuildingImages('Anytown', 'CO').State).toContain('/states/CO.jpg');
+  });
+});
+
+describe('California state banner is versioned, not overwritten (CA-3)', () => {
+  it('CA resolves to the versioned CA-v2.jpg', () => {
+    // Not an adjacency swap like FL — the photograph is unchanged. The shipped frame was
+    // measured failing the 6:1 desktop band: the Golden Gate towers, Marin and the bay all
+    // sat above rows 128-411 of 540, so desktop visitors saw rooftops on an asset whose own
+    // credit names the bridge. The re-crop puts the bridge at 32% height.
+    const state = getBuildingImages('Anytown', 'CA').State;
+    expect(state).toContain('/states/CA-v2.jpg');
+    expect(state).not.toContain('/states/CA.jpg');
   });
 });
