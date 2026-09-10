@@ -479,8 +479,85 @@ const CURATED_LOCAL = {
   'west valley city': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-valley-city.jpg' },
   murray: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/murray.jpg' },
   draper: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/draper.jpg' },
-  // UT Wave 2 batch (19 smaller cities, operator-certified 2026-07-06). Licensed Wikimedia
-  // Commons; thin-coverage towns lean on landmarks/mountain-backdrops. Attribution in review notes.
+  // UT Wave 2 batch (19 smaller cities, operator-certified 2026-07-06). Wikimedia Commons;
+  // thin-coverage towns lean on landmarks/mountain-backdrops.
+  //
+  // ⚠ The authors below were RECOVERED on 2026-09-10, not transcribed. This batch shipped
+  // reading 'Attribution in review notes' and named nobody -- those notes were a session
+  // artifact and are in neither the repo nor commit df538f07, which lists the 19 cities and
+  // stops at 'Licensed Wikimedia Commons'. Treasury Tracker raised it as a licence-compliance
+  // gap (TT note 2026-09-10): a CC BY / CC BY-SA image shown without its author is a breach,
+  // and 'Wikimedia Commons' names nobody, so they could not ship these behind a placeholder
+  // either -- all 19 were omitted from their catalog.
+  //
+  // Method, since these are recovered rather than certified: every banner in this batch was
+  // composed to 1700x540 FIRST, so each is a CROP of its source and a whole-image comparison
+  // cannot see the match (this is what defeated the columbus recovery in GA-4). Each banner
+  // was located inside candidate frames by multi-scale template matching, scored by mean
+  // absolute difference per channel over the located rectangle, and then LOOKED AT beside its
+  // candidate. Calibrated on the one pair whose answer was already known, macon: true source
+  // 10.85, nearest non-match 29.49. Every line below scored <= 13.5 with correlation >= 0.925
+  // against a runner-up of 18 or worse (usually 30-50), and every one was confirmed by eye.
+  // Author and licence were read from each File: page via the Commons API, never inferred
+  // from the ranking. Weakest margins, so re-check these two first if anything looks wrong:
+  // mapleton (4.31 against a 18.19 runner-up) and cottonwood-heights (13.52, corr 0.925).
+  //
+  // 🔑 THE LICENCES ARE NOT UNIFORM -- CC BY-SA 4.0, 3.0 and 2.0, CC BY 2.0, and one public
+  //    domain file. The old header was wrong about the licence, not merely silent on it.
+  //
+  // title | author | license (source File: page in parentheses):
+  //   alpine - snow-covered ridge above tile rooftops (File:Alpine 01.png)
+  //            | TungstenKing | CC BY-SA 4.0
+  //   bluffdale - aerial over the Traverse Mountain ridges toward the valley
+  //            (File:Traverse Mountains (South Mountain), Draper and Alpine, Utah (67181504).jpg)
+  //            | Ken Lund | CC BY-SA 2.0
+  //   cedar hills - N Canyon Road dropping toward Utah Lake
+  //            (File:South on N Canyon Rd, Cedar Hills, Utah, Jun 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   cottonwood heights - hillside homes in autumn colour below the Wasatch
+  //            (File:Homes in the Mountains - Cottonwood Heights - Utah (52838760022).jpg)
+  //            | Tony Webster | CC BY 2.0
+  //   eagle mountain - the planted median of Pony Express Parkway
+  //            (File:Pony Express Parkway in Eagle Mountain, Utah.jpg) | Helen854 (en.wikipedia) | Public domain
+  //   herriman - Butterfield Canyon overlook, the mine terrace at left and the valley beyond
+  //            (File:Butterfield Canyon (Utah).jpg) | Terry Ott | CC BY 2.0
+  //   lindon - the US-89 signal run looking south-east
+  //            (File:Southeast on US-89 in Lindon, Utah, Jun 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   mapleton - the derelict timber barn below the Wasatch
+  //            (File:Old, often photographed, barn in Mapleton, Utah.JPG) | An Errant Knight | CC BY-SA 4.0
+  //   midvale - the brick 'Midvale City Old Town' sign
+  //            (File:Midvale CIty Old Town sign.JPG) | An Errant Knight | CC BY-SA 4.0
+  //   millcreek - the west face of Mount Olympus
+  //            (File:June 2008 - Mount Olympus Utah.jpg) | Jeff McGrath (Climbjm) | CC BY-SA 3.0
+  //   payson - Payson Utah Temple with the valley and hills behind
+  //            (File:Paysonutah.jpg) | Whatsupchadjames | CC BY-SA 4.0
+  //   pleasant grove - historic-district storefronts under the Rexall Drugs sign
+  //            (File:Pleasant Grove Historic District commercial buildings.jpg) | Ken Lund | CC BY-SA 2.0
+  //   salem - east across Salem Pond to the mountain
+  //            (File:East across Salem Lake, Salem, Utah, Jul 17.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   santaquin - Main Street looking east into the mountainside
+  //            (File:East on Main Street, Santaquin, Utah, May 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   saratoga springs - reeds along the Utah Lake shore, range beyond
+  //            (File:Utah Lake from Saratoga Springs dyeclan.com - panoramio.jpg) | The Dye Clan | CC BY-SA 3.0
+  //   south jordan - Oquirrh Lake at Daybreak, houses and the Wasatch beyond
+  //            (File:Daybreak Community Utah 2011-06-20.JPG) | Dean Derhak | CC BY-SA 3.0
+  //   south salt lake - street at a rail crossing, townhouses and streetcar catenary
+  //            | AUTHOR UNRESOLVED | LICENCE UNRESOLVED
+  //   taylorsville - the front elevation of Taylorsville library
+  //            (File:Taylorsville Library front view.jpg) | Bobjgalindo | CC BY-SA 4.0
+  //   vineyard - railroad track curving toward Cascade Mountain, shot from a FrontRunner train
+  //            (File:East at Cascade Mountain on FrontRunner, Jul 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //
+  // 🔴 SOUTH SALT LAKE HAS NO AUTHOR AND NO LICENCE ON RECORD. DO NOT TRANSCRIBE IT AS A
+  // CREDIT, and note it is the one banner in this batch whose licence is also unknown -- the
+  // batch header's old 'Licensed Wikimedia Commons' claim is not evidence for this file.
+  // 18 of the 19 were recovered; this one resisted two sweeps. Searched 2026-09-10: Category:
+  // South Salt Lake, Utah at depth 2 plus S-Line / Sugar House streetcar / TRAX / UTA /
+  // Central Pointe / 300 West full-text searches -- 296 files, 280 comparable, best score
+  // 41.88 where a true match lands under 13.5. Like columbus in GA-4 it was cropped to the
+  // box first, so if the frame is a sub-region of a photo filed under none of those
+  // categories, a sweep cannot reach it.
+  // ▶ WHOEVER COMPOSED THIS FRAME: name the Commons File: page from your working notes and
+  //   fill in BOTH the author and the licence. Do not fill either from a category guess.
   alpine: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alpine.jpg' },
   bluffdale: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bluffdale.jpg' },
   'cedar hills': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/cedar-hills.jpg' },
