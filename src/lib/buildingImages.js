@@ -914,6 +914,27 @@ const CURATED_COUNTY = {
 //   AR - Little Rock pano | Daniel Schwen | CC BY-SA 4.0
 //   AZ - Downtown Phoenix (skyline + mountains) | DPPed | CC BY-SA 3.0
 //   CA - Golden Gate Bridge and San Francisco | Brocken Inaglory | CC BY-SA 4.0
+//        [2026-09-09: RE-CROPPED from the same photograph after the shipped frame was measured
+//         FAILING the 6:1 desktop band. The old crop was near full-width of the 10000x3245
+//         source, which is 3.082:1 — narrower than 3.148:1 — so it had ~68px of vertical slack
+//         and the bridge sat at 15% height. The desktop window keeps rows 128-411 of 540
+//         (23.75%-76.25%), so the Golden Gate towers, Marin headlands and the bay were ALL
+//         above it: desktop visitors saw an anonymous field of rooftops, on an asset whose own
+//         credit names the bridge as the subject. This is the Bend failure mode, and it was
+//         never a regression from the 2026-07-27 crop fix — the old 43.7% window cut it too.
+//         🔴 A wider crop cannot fix it. Moving the bridge into the band requires cropping
+//         NARROWER, which is only lossless because the source is 10000px wide.
+//         New frame: x 0-5900, y 0-1874 of the original, downscaled 3.47x to 1700x540.
+//         Bridge lands at 32% height — inside the band in BOTH boxes, verified by rendering
+//         rows 128-411 and rows 8-531 side by side against the live baseline.
+//         🟢 It also excludes downtown, which REDUCES the §8.1 adjacency risk: san francisco is
+//         a live CURATED_LOCAL key and its banner is the downtown skyline from the same hilltop
+//         (measured NOT byte-identical to the state banner, mean abs difference 78/255, so this
+//         was never Miami's identical-file case — but one city on one page twice is still one
+//         city twice). Rejected: a tight Golden Gate portrait (fog dominates, reads as a bridge
+//         photo not a state) and a 7000px-wide frame (bridge shrinks to haze at 216px tall).
+//         🔴 SERVED FROM states/CA-v2.jpg VIA STATE_PANORAMA_FILES, not states/CA.jpg. The old
+//         object is deliberately left in place, untouched and still serving its old bytes.]
 //   CO - Denver skyline with Rocky Mountains (clear daytime) | Quintin Soloviev | CC BY 4.0
 //   CT - Hartford Skyline from Great River Park | KyleConstable | CC BY-SA 4.0 [brightened]
 //   DE - Wilmington Delaware skyline | Tim Kiser | CC BY-SA 2.5
@@ -1037,6 +1058,15 @@ const STATE_PANORAMA_FILES = {
   // 🔴 Versioned, NOT overwritten, for the reason this map exists: overwriting states/FL.jpg
   // would not reliably purge the CDN, and every Florida address reads this one.
   FL: 'FL-v2.jpg',
+  // CA versioned 2026-09-09. Not an adjacency swap like FL — the photograph is unchanged.
+  // The shipped frame simply lost its own subject at 6:1: the Golden Gate towers, Marin and
+  // the bay all sat above the desktop window (rows 128-411 of 540), leaving rooftops. The
+  // re-crop moves the bridge to 32% height. See the CA note in the credit block above.
+  //
+  // 🔴 Versioned, NOT overwritten, for the reason this map exists. states/CA.jpg is still in
+  // the bucket serving its old bytes and must stay there — every California address reads
+  // this one, and an overwrite would not reliably purge.
+  CA: 'CA-v2.jpg',
 };
 
 /**
