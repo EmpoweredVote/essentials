@@ -167,6 +167,10 @@ export const COVERAGE_STATES = [
       // six carries hasContext: the seed was roster + geofence + browse only, with no compass
       // stances, so claiming context would not be DB-honest.
       { label: 'Arlington',     browseGovernmentList: ['4804000'], browseStateAbbrev: 'TX' },
+      // Added 2026-09-11: Austin was seeded but had never been listed here. 11 of 11
+      // councilmembers hold compass rows (65 total), so hasContext is true on arrival —
+      // it is the only city in this audit that was complete and simply absent.
+      { label: 'Austin',        browseGovernmentList: ['4805000'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Blue Ridge',    browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
       { label: 'Celina',        browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX', hasContext: true },
       // Euless: 4 of its 7 seats are seeded VACANT-by-design (Mayor, Places 2/4/5) — see mig 1628.
@@ -390,6 +394,60 @@ export const COVERAGE_STATES = [
       // It now HAS a curated banner — buildingImages 'bainbridge island'.
       { label: 'Bainbridge Island', browseGovernmentList: ['5303736'], browseStateAbbrev: 'WA', hasContext: true },
       { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA', hasContext: true },
+    ],
+  },
+  // ── Four states added 2026-09-11 (Austin went into the TX block above) ──────
+  // All of these were already seeded — full rosters, occupants resolving through
+  // office_current_holder — but had never been listed here, so none of them was
+  // reachable from the landing grid or the name typeahead. Found by diffing every
+  // municipal government carrying occupants against the geo_ids in this file.
+  // Array order does not matter: Landing.jsx:360 sorts by state name at render.
+  //
+  // ⚠ hasContext is NOT a judgement about the roster — it drives the CHIP COLOUR
+  // (Landing.jsx:399-402): true renders purple, false renders teal. So it must mean
+  // "this city has compass coverage", nothing more. Verified per city against
+  // inform.politician_answers before being set either way below.
+  {
+    name: 'Colorado', abbrev: 'CO',
+    areas: [
+      // 10 of 10 councilmembers stanced, 44 rows. Banner present ('colorado springs').
+      { label: 'Colorado Springs', browseGovernmentList: ['0816000'], browseStateAbbrev: 'CO', hasContext: true },
+    ],
+  },
+  {
+    name: 'North Carolina', abbrev: 'NC',
+    areas: [
+      // Both complete: Asheville 7 of 7 stanced (27 rows), Durham 7 of 7 (14 rows).
+      { label: 'Asheville', browseGovernmentList: ['3702140'], browseStateAbbrev: 'NC', hasContext: true },
+      { label: 'Durham',    browseGovernmentList: ['3719000'], browseStateAbbrev: 'NC', hasContext: true },
+    ],
+  },
+  {
+    name: 'Florida', abbrev: 'FL',
+    areas: [
+      // hasContext FALSE for all three: rosters and banners are in place, but ZERO
+      // compass rows exist for any of their officials as of 2026-09-11. These have
+      // never been researched — which is not the same thing as having been researched
+      // and found blank — so they claim no coverage until a stance pass runs.
+      { label: 'Bradenton',   browseGovernmentList: ['1207950'], browseStateAbbrev: 'FL', hasContext: false },
+      { label: 'Miami',       browseGovernmentList: ['1245000'], browseStateAbbrev: 'FL', hasContext: false },
+      { label: 'Tallahassee', browseGovernmentList: ['1270600'], browseStateAbbrev: 'FL', hasContext: false },
+    ],
+  },
+  {
+    name: 'Georgia', abbrev: 'GA',
+    areas: [
+      // The Knight program cities. Same position as Florida: full rosters, curated
+      // banners (the GA-3/4/5 waves in buildingImages.js), zero compass rows yet.
+      // ⚠ Labels are the CITY names, but two of these governments are consolidated
+      // city-counties: 'Columbus' is the Columbus Consolidated Government (1319000)
+      // and 'Macon' is Macon-Bibb County Government (1349008). Do not "correct" these
+      // labels to the government names — the banner keys in buildingImages.js
+      // CURATED_LOCAL are 'columbus' (state-scoped GA, match:'exact') and 'macon',
+      // and they resolve off these labels.
+      { label: 'Columbus',      browseGovernmentList: ['1319000'], browseStateAbbrev: 'GA', hasContext: false },
+      { label: 'Macon',         browseGovernmentList: ['1349008'], browseStateAbbrev: 'GA', hasContext: false },
+      { label: 'Milledgeville', browseGovernmentList: ['1351492'], browseStateAbbrev: 'GA', hasContext: false },
     ],
   },
 ];
