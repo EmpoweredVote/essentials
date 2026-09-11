@@ -521,7 +521,7 @@ const CURATED_LOCAL = {
   // UT Wave 2 batch (19 smaller cities, operator-certified 2026-07-06). Wikimedia Commons;
   // thin-coverage towns lean on landmarks/mountain-backdrops.
   //
-  // ⚠ The authors below were RECOVERED on 2026-09-10, not transcribed. This batch shipped
+  // ⚠ The authors below were RECOVERED on 2026-09-10/11, not transcribed. This batch shipped
   // reading 'Attribution in review notes' and named nobody -- those notes were a session
   // artifact and are in neither the repo nor commit df538f07, which lists the 19 cities and
   // stops at 'Licensed Wikimedia Commons'. Treasury Tracker raised it as a licence-compliance
@@ -540,6 +540,8 @@ const CURATED_LOCAL = {
   // Author and licence were read from each File: page via the Commons API, never inferred
   // from the ranking. Weakest margins, so re-check these two first if anything looks wrong:
   // mapleton (4.31 against a 18.19 runner-up) and cottonwood-heights (13.52, corr 0.925).
+  // All 19 are now attributed; south salt lake was the last and took a third pass -- see the
+  // note under the list for why a category sweep could never have found it.
   //
   // 🔑 THE LICENCES ARE NOT UNIFORM -- CC BY-SA 4.0, 3.0 and 2.0, CC BY 2.0, and one public
   //    domain file. The old header was wrong about the licence, not merely silent on it.
@@ -579,24 +581,31 @@ const CURATED_LOCAL = {
   //            (File:Utah Lake from Saratoga Springs dyeclan.com - panoramio.jpg) | The Dye Clan | CC BY-SA 3.0
   //   south jordan - Oquirrh Lake at Daybreak, houses and the Wasatch beyond
   //            (File:Daybreak Community Utah 2011-06-20.JPG) | Dean Derhak | CC BY-SA 3.0
-  //   south salt lake - street at a rail crossing, townhouses and streetcar catenary
-  //            | AUTHOR UNRESOLVED | LICENCE UNRESOLVED
+  //   south salt lake - looking south at the S-Line level crossing at S 400 East, townhouses
+  //            under construction behind (File:S-Line S 400 E level crossing, South Salt Lake,
+  //            Utah, Oct 16.jpg) | An Errant Knight | CC BY-SA 4.0
   //   taylorsville - the front elevation of Taylorsville library
   //            (File:Taylorsville Library front view.jpg) | Bobjgalindo | CC BY-SA 4.0
   //   vineyard - railroad track curving toward Cascade Mountain, shot from a FrontRunner train
   //            (File:East at Cascade Mountain on FrontRunner, Jul 16.jpg) | An Errant Knight | CC BY-SA 4.0
   //
-  // 🔴 SOUTH SALT LAKE HAS NO AUTHOR AND NO LICENCE ON RECORD. DO NOT TRANSCRIBE IT AS A
-  // CREDIT, and note it is the one banner in this batch whose licence is also unknown -- the
-  // batch header's old 'Licensed Wikimedia Commons' claim is not evidence for this file.
-  // 18 of the 19 were recovered; this one resisted two sweeps. Searched 2026-09-10: Category:
-  // South Salt Lake, Utah at depth 2 plus S-Line / Sugar House streetcar / TRAX / UTA /
-  // Central Pointe / 300 West full-text searches -- 296 files, 280 comparable, best score
-  // 41.88 where a true match lands under 13.5. Like columbus in GA-4 it was cropped to the
-  // box first, so if the frame is a sub-region of a photo filed under none of those
-  // categories, a sweep cannot reach it.
-  // ▶ WHOEVER COMPOSED THIS FRAME: name the Commons File: page from your working notes and
-  //   fill in BOTH the author and the licence. Do not fill either from a category guess.
+  // 🔑 SOUTH SALT LAKE RESISTED TWO SWEEPS BEFORE A TITLE SEARCH FOUND IT, AND THE REASON IS
+  //    WORTH KEEPING. It was marked AUTHOR/LICENCE UNRESOLVED on 2026-09-10 after two passes
+  //    failed: Category:South Salt Lake, Utah at depth 2 plus S-Line / Sugar House streetcar /
+  //    TRAX / UTA / Central Pointe / 300 West full-text searches -- 296 files, 280 comparable,
+  //    best score 41.88 where a true match lands under 13.5. Resolved 2026-09-11 by
+  //    `intitle:"South Salt Lake"` in the File namespace: 61 titles, and the banner's source
+  //    is the second one a human eye would pick from that list, at MAD 5.83 / corr 0.989
+  //    against 44.96 for the next best.
+  //    THE FILE IS NOT IN ANY SOUTH SALT LAKE CATEGORY. Its categories are 'Level crossings in
+  //    Utah', 'S Line (Utah Transit Authority)', 'Photographs by An Errant Knight', 'Stop signs
+  //    in Utah' and so on -- no city category at all, which is why a category walk could not
+  //    reach it however deep it went. Torrance in the LA-county block failed the same way and
+  //    was found through the en.wikipedia article's image list. So when a category sweep comes
+  //    up empty, the subject is often filed by WHAT IT IS rather than WHERE IT IS: try an
+  //    intitle: search on the place name, the photographer's own category, and article image
+  //    lists before concluding the source is unrecoverable.
+  //    With this line the batch is complete: all 19 UT Wave 2 banners carry an author.
   alpine: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alpine.jpg' },
   bluffdale: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bluffdale.jpg' },
   'cedar hills': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/cedar-hills.jpg' },
