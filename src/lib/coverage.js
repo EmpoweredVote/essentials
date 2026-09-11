@@ -456,7 +456,8 @@ export const COVERAGE_STATES = [
       // Added 2026-09-11, once the banner existed. This was the largest single coverage gap on
       // the landing page: a complete 42-seat roster (Mayor, Vice Mayor, 5 at-large, 35 districts)
       // that no user could reach, because the chip was gated on cities/nashville.jpg.
-      // hasContext FALSE: zero compass rows for any of the 42 as of 2026-09-11.
+      // hasContext FALSE: zero compass rows for any of the 42 as of 2026-09-11 — and none for the
+      // 131 newly seeded state legislators either. A stance pass is what turns this chip purple.
       //
       // ⚠ Label is 'Nashville' but the government is the Metropolitan Government of Nashville
       // and Davidson County (geo_id 47037 — a COUNTY fips, not a place fips, because the city
@@ -464,13 +465,28 @@ export const COVERAGE_STATES = [
       // the buildingImages 'nashville' key resolves off, and 47037 is what the government row
       // actually carries.
       //
-      // 🔴 THE STATE BAND BEHIND THIS CHIP IS NEARLY EMPTY, AND THAT IS KNOWN, NOT AN OVERSIGHT.
-      // Tennessee's state government holds ONE office: the Governor. No legislature (99 House +
-      // 33 Senate), no other statewide executives — against 175 offices for North Carolina and
-      // 239 for Georgia. So a visitor here gets a complete Local band (42), a complete Federal
-      // band (9 US House + 2 Senate, all seated), and a State band with a single person in it.
-      // Shipped anyway on the operator's call, because 42 unreachable officials was the worse
-      // failure. ▶ SEEDING THE TN STATE TIER IS THE NEXT JOB — see project_tn_state_tier_seed.
+      // ✅ GENERAL ASSEMBLY SEEDED 2026-09-11 (ev-accounts migration 1855): 99 House + 33 Senate
+      // = 132 offices, 131 seated (House District 84 is vacant per the General Assembly's own
+      // directory). The roster is real and correct.
+      //
+      // 🔴 BUT IT IS NOT REACHABLE FROM THIS CHIP YET, AND THE STATE BAND STILL SHOWS ONE PERSON.
+      // Legislators are routed by polygon, and essentials.geofence_boundaries has state-legislative
+      // layers (G5210/G5220) for 19 states — Georgia 236, North Carolina 170 — but ZERO for
+      // Tennessee. Measured 2026-09-11, after the seed: POST /essentials/browse/by-government-list
+      // for Nashville returns "State of Tennessee: 1" (the Governor), while the same call for
+      // Columbus GA returns 5 State House + 2 State Senate members. So the remaining work is the
+      // TIGER load (load-state-tiger-boundaries.ts + a STATE_LAYER_ALLOWLIST entry for TN), NOT
+      // more roster seeding. Confirm the TIGER vintage matches Tennessee's current legislative map
+      // before loading — routing a voter to the WRONG legislator is worse than routing to none.
+      //
+      // 🔴 THE EXECUTIVE BAND IS STILL A SINGLE OFFICE — THE GOVERNOR — AND THAT IS CORRECT.
+      // Tennessee popularly elects only the Governor. The Secretary of State, Treasurer and
+      // Comptroller are chosen by joint vote of the General Assembly (Art. III §17, Art. VII §3),
+      // the Attorney General by the judges of the Supreme Court (Art. VI §5), and the Lieutenant
+      // Governor is the Senate Speaker, chosen by senators (TCA 8-2-102). Seeding four or five
+      // statewide executives here by analogy with Georgia or North Carolina would invent popular
+      // elections that do not exist. DO NOT "FIX" IT — the enacted text is quoted in the
+      // migration header.
       { label: 'Nashville', browseGovernmentList: ['47037'], browseStateAbbrev: 'TN', hasContext: false },
     ],
   },
