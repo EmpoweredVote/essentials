@@ -463,13 +463,16 @@ export const COVERAGE_STATES = [
       // Added 2026-09-11, once the banner existed. This was the largest single coverage gap on
       // the landing page: a complete 42-seat roster (Mayor, Vice Mayor, 5 at-large, 35 districts)
       // that no user could reach, because the chip was gated on cities/nashville.jpg.
-      // hasContext TRUE as of 2026-09-11: 37 of the 42 Metro officials now hold evidenced compass
-      // rows — 104 answers across 10 topics, every one sourced to a Nashville Banner 2023 Voter's
-      // Guide questionnaire page that was actually fetched (CC BY-ND). Verified through the
-      // occupancy chain, not politicians.office_id: 37 with answers, 0 rows missing a source.
-      // ⚠ The 5 without rows are honest gaps, not oversights: the Mayor needs his own record rather
-      // than a council questionnaire; the Vice Mayor's Banner piece is a procedural interview that
-      // correctly yielded nothing; and D8/D24/D33 have no Banner questionnaire in the guide at all.
+      // hasContext TRUE as of 2026-09-11: 38 of the 42 Metro officials now hold evidenced compass
+      // rows — 106 answers across 10 topics, every one sourced to a page that was actually fetched
+      // (the Nashville Banner 2023 Voter's Guide questionnaires, CC BY-ND, plus the Banner's
+      // one-on-one interview with Mayor O'Connell). Verified through the occupancy chain, not
+      // politicians.office_id: 38 with answers, 0 rows missing a source.
+      // ⚠ The 4 without rows are honest gaps, not oversights: the Vice Mayor's Banner piece is a
+      // procedural interview about running the council that correctly yielded nothing, and
+      // D8/D24/D33 have no Banner questionnaire in the guide at all. Seating those three needs a
+      // different source class (Legistar sponsorships/roll calls); the questionnaire corpus that
+      // seated the other 38 simply does not cover them.
       // ⚠ This flag speaks only for the 42 local officials, which is all it is allowed to claim.
       // Measured against the live browse this chip opens (by-government-list 47037 + browse_state=TN,
       // 2026-09-11): a visitor also meets 15 State of Tennessee officials — Davidson's own 10 House
