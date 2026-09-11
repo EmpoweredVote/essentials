@@ -380,6 +380,45 @@ const CURATED_LOCAL = {
   biddeford: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biddeford.jpg' },
   lewiston: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lewiston.jpg' },
   auburn: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/auburn.jpg' },
+  // The four la_county/building_photos assets -- credits RECOVERED 2026-09-10. Line 106 says
+  // this attribution block covers the LA-county skylines, but no title|author|license line
+  // ever existed for any of these four: the 2026-07-05 CA audit at line 126 certified them
+  // ('Los Angeles + Torrance kept their prior la_county/building_photos shots; Pomona +
+  // Carson certified as-is') without crediting them. Treasury Tracker called this the one
+  // gap costing a consumer today -- all four are live TT entities, and they are why their
+  // refresh covered 95 of 99 cities, with Los Angeles falling back to a Wikipedia lookup.
+  //
+  // All four are Wikimedia Commons files and ALL FOUR ARE AttributionRequired=true, so they
+  // have been displaying in breach of their licences. Recovered by the same matcher used for
+  // the UT Wave 2 batch, then confirmed by eye. These are not composed to a box like the UT
+  // banners, and the dimensions corroborate each match independently:
+  //   pomona   800x402  == the (cropped) derivative exactly -- used verbatim
+  //   carson   1039x779 == the Commons file exactly -- used verbatim, scored MAD 1.17
+  //   torrance 1600x909 is 3700x2103 rescaled (1.7602 vs 1.7594) -- whole-frame MAD 2.92
+  //   los angeles 1600x520 is a crop -- MAD 2.29 against the located rectangle
+  //
+  //   los angeles - downtown skyline at sunset above Echo Park Lake
+  //            (File:Echo Park Lake with Downtown Los Angeles Skyline.jpg) | Adoramassey | CC BY-SA 4.0
+  //   pomona - Pomona City Hall, the Welton Becket civic centre block
+  //            (File:Pomona city hall (cropped).jpg) | Cliffo | CC BY 2.5
+  //   torrance - Torrance City Hall behind the eucalyptus on Torrance Blvd
+  //            (File:Torrance CA City Hall.jpg) | Thurifer | CC BY-SA 4.0
+  //   carson - Carson City Hall across the lawn
+  //            (File:Carson city hall.jpg) | The Front Page Online | CC BY-SA 4.0
+  //
+  // ⚠ Two wrinkles worth keeping, because both would mislead someone re-deriving these:
+  // 1. LOS ANGELES: two Commons pages hold this photograph. The shipped crop matches the
+  //    file's PRE-2019-06-16 revision (MAD 2.29), which someone re-uploaded as a separate
+  //    page named 'File:20190616154621!Echo Park Lake with Downtown Los Angeles Skyline.jpg';
+  //    the current revision of the canonical page scores 10.38. Same author and licence
+  //    either way, so the credit above is right, but a pixel check against the canonical
+  //    page today will NOT reproduce 2.29 and that is expected, not a mismatch.
+  // 2. POMONA: the source is the (cropped) DERIVATIVE, which is 800x402 -- exactly the
+  //    shipped file. The 800x600 original (File:Pomona..cityhall.jpg) actually scored
+  //    slightly better on the matcher (5.41 vs 7.85); the dimensions, not the metric, settle
+  //    which was used. Cliffo / CC BY 2.5 covers both, so attribution is unaffected.
+  // 🔑 And note the licences differ per file -- CC BY-SA 4.0 twice, CC BY 2.5 once. There is
+  //    no batch-level licence here any more than there was in UT Wave 2.
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
   'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
   glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
@@ -479,8 +518,85 @@ const CURATED_LOCAL = {
   'west valley city': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-valley-city.jpg' },
   murray: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/murray.jpg' },
   draper: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/draper.jpg' },
-  // UT Wave 2 batch (19 smaller cities, operator-certified 2026-07-06). Licensed Wikimedia
-  // Commons; thin-coverage towns lean on landmarks/mountain-backdrops. Attribution in review notes.
+  // UT Wave 2 batch (19 smaller cities, operator-certified 2026-07-06). Wikimedia Commons;
+  // thin-coverage towns lean on landmarks/mountain-backdrops.
+  //
+  // ⚠ The authors below were RECOVERED on 2026-09-10, not transcribed. This batch shipped
+  // reading 'Attribution in review notes' and named nobody -- those notes were a session
+  // artifact and are in neither the repo nor commit df538f07, which lists the 19 cities and
+  // stops at 'Licensed Wikimedia Commons'. Treasury Tracker raised it as a licence-compliance
+  // gap (TT note 2026-09-10): a CC BY / CC BY-SA image shown without its author is a breach,
+  // and 'Wikimedia Commons' names nobody, so they could not ship these behind a placeholder
+  // either -- all 19 were omitted from their catalog.
+  //
+  // Method, since these are recovered rather than certified: every banner in this batch was
+  // composed to 1700x540 FIRST, so each is a CROP of its source and a whole-image comparison
+  // cannot see the match (this is what defeated the columbus recovery in GA-4). Each banner
+  // was located inside candidate frames by multi-scale template matching, scored by mean
+  // absolute difference per channel over the located rectangle, and then LOOKED AT beside its
+  // candidate. Calibrated on the one pair whose answer was already known, macon: true source
+  // 10.85, nearest non-match 29.49. Every line below scored <= 13.5 with correlation >= 0.925
+  // against a runner-up of 18 or worse (usually 30-50), and every one was confirmed by eye.
+  // Author and licence were read from each File: page via the Commons API, never inferred
+  // from the ranking. Weakest margins, so re-check these two first if anything looks wrong:
+  // mapleton (4.31 against a 18.19 runner-up) and cottonwood-heights (13.52, corr 0.925).
+  //
+  // 🔑 THE LICENCES ARE NOT UNIFORM -- CC BY-SA 4.0, 3.0 and 2.0, CC BY 2.0, and one public
+  //    domain file. The old header was wrong about the licence, not merely silent on it.
+  //
+  // title | author | license (source File: page in parentheses):
+  //   alpine - snow-covered ridge above tile rooftops (File:Alpine 01.png)
+  //            | TungstenKing | CC BY-SA 4.0
+  //   bluffdale - aerial over the Traverse Mountain ridges toward the valley
+  //            (File:Traverse Mountains (South Mountain), Draper and Alpine, Utah (67181504).jpg)
+  //            | Ken Lund | CC BY-SA 2.0
+  //   cedar hills - N Canyon Road dropping toward Utah Lake
+  //            (File:South on N Canyon Rd, Cedar Hills, Utah, Jun 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   cottonwood heights - hillside homes in autumn colour below the Wasatch
+  //            (File:Homes in the Mountains - Cottonwood Heights - Utah (52838760022).jpg)
+  //            | Tony Webster | CC BY 2.0
+  //   eagle mountain - the planted median of Pony Express Parkway
+  //            (File:Pony Express Parkway in Eagle Mountain, Utah.jpg) | Helen854 (en.wikipedia) | Public domain
+  //   herriman - Butterfield Canyon overlook, the mine terrace at left and the valley beyond
+  //            (File:Butterfield Canyon (Utah).jpg) | Terry Ott | CC BY 2.0
+  //   lindon - the US-89 signal run looking south-east
+  //            (File:Southeast on US-89 in Lindon, Utah, Jun 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   mapleton - the derelict timber barn below the Wasatch
+  //            (File:Old, often photographed, barn in Mapleton, Utah.JPG) | An Errant Knight | CC BY-SA 4.0
+  //   midvale - the brick 'Midvale City Old Town' sign
+  //            (File:Midvale CIty Old Town sign.JPG) | An Errant Knight | CC BY-SA 4.0
+  //   millcreek - the west face of Mount Olympus
+  //            (File:June 2008 - Mount Olympus Utah.jpg) | Jeff McGrath (Climbjm) | CC BY-SA 3.0
+  //   payson - Payson Utah Temple with the valley and hills behind
+  //            (File:Paysonutah.jpg) | Whatsupchadjames | CC BY-SA 4.0
+  //   pleasant grove - historic-district storefronts under the Rexall Drugs sign
+  //            (File:Pleasant Grove Historic District commercial buildings.jpg) | Ken Lund | CC BY-SA 2.0
+  //   salem - east across Salem Pond to the mountain
+  //            (File:East across Salem Lake, Salem, Utah, Jul 17.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   santaquin - Main Street looking east into the mountainside
+  //            (File:East on Main Street, Santaquin, Utah, May 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   saratoga springs - reeds along the Utah Lake shore, range beyond
+  //            (File:Utah Lake from Saratoga Springs dyeclan.com - panoramio.jpg) | The Dye Clan | CC BY-SA 3.0
+  //   south jordan - Oquirrh Lake at Daybreak, houses and the Wasatch beyond
+  //            (File:Daybreak Community Utah 2011-06-20.JPG) | Dean Derhak | CC BY-SA 3.0
+  //   south salt lake - street at a rail crossing, townhouses and streetcar catenary
+  //            | AUTHOR UNRESOLVED | LICENCE UNRESOLVED
+  //   taylorsville - the front elevation of Taylorsville library
+  //            (File:Taylorsville Library front view.jpg) | Bobjgalindo | CC BY-SA 4.0
+  //   vineyard - railroad track curving toward Cascade Mountain, shot from a FrontRunner train
+  //            (File:East at Cascade Mountain on FrontRunner, Jul 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //
+  // 🔴 SOUTH SALT LAKE HAS NO AUTHOR AND NO LICENCE ON RECORD. DO NOT TRANSCRIBE IT AS A
+  // CREDIT, and note it is the one banner in this batch whose licence is also unknown -- the
+  // batch header's old 'Licensed Wikimedia Commons' claim is not evidence for this file.
+  // 18 of the 19 were recovered; this one resisted two sweeps. Searched 2026-09-10: Category:
+  // South Salt Lake, Utah at depth 2 plus S-Line / Sugar House streetcar / TRAX / UTA /
+  // Central Pointe / 300 West full-text searches -- 296 files, 280 comparable, best score
+  // 41.88 where a true match lands under 13.5. Like columbus in GA-4 it was cropped to the
+  // box first, so if the frame is a sub-region of a photo filed under none of those
+  // categories, a sweep cannot reach it.
+  // ▶ WHOEVER COMPOSED THIS FRAME: name the Commons File: page from your working notes and
+  //   fill in BOTH the author and the licence. Do not fill either from a category guess.
   alpine: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alpine.jpg' },
   bluffdale: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bluffdale.jpg' },
   'cedar hills': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/cedar-hills.jpg' },
@@ -831,7 +947,22 @@ const CURATED_LOCAL = {
   // Georgia -- Knight program wave GA-4 (2026-09-01, operator-certified). Composed to
   // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
   //   columbus - the Eagle & Phenix mill row above the Chattahoochee whitewater course,
-  //              seen from the west bank | CC BY-SA 4.0 | Wikimedia Commons
+  //              seen from the west bank | AUTHOR UNRESOLVED | CC BY-SA 4.0
+  //
+  // 🔴 COLUMBUS HAS NO AUTHOR ON RECORD. DO NOT TRANSCRIBE THIS LINE AS A CREDIT. It read
+  // '| CC BY-SA 4.0 | Wikimedia Commons' until 2026-09-10 -- a licence sitting in the author
+  // slot, so a consumer reading positionally (the documented contract, see line 106)
+  // publishes 'CC BY-SA 4.0' as the photographer. 'Wikimedia Commons' names nobody, so the
+  // author is not recorded anywhere on this line. Treasury Tracker's extractor refused it
+  // rather than guessing and omits columbus|GA from its catalog (TT note 2026-09-10).
+  // TT could not recover the source: it swept Category:Columbus, Georgia, :Downtown Columbus,
+  // Georgia, :Eagle and Phenix Mills, :Phenix City, Alabama plus four full-text searches, and
+  // the best candidate scored 29.92 mean abs difference per channel where a true match lands
+  // at 1-7. Since this frame was composed to 1700x540 FIRST, it is likely a sub-region crop
+  // that a whole-image sweep cannot recover.
+  // ▶ WHOEVER COMPOSED THIS FRAME: name the Commons File: page from your own working notes
+  //   and put it in the author slot. Do not fill it from a category guess -- and note the
+  //   homonym trap below, which nearly shipped Columbus, OHIO here.
   //
   // The desktop 6/1 band keeps only rows 128-411 of 540, so the crop was chosen to put the
   // mill row, the river and the rapids all inside that band -- the whitewater course is the
@@ -854,7 +985,16 @@ const CURATED_LOCAL = {
   // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
   //   macon - the downtown Macon skyline seen across the tree line, with the domed
   //           building and the brick tower's white cupola reading as landmarks
-  //           | CC BY-SA 3.0 | Bubba73, Wikimedia Commons, own work
+  //           | Bubba73 | CC BY-SA 3.0 (own work)
+  //   source: File:MaconSkyline.JPG (3008x920, the native 3.27:1 recorded below)
+  //
+  // ⚠ These two fields were REVERSED here until 2026-09-10, reading '| CC BY-SA 3.0 |
+  // Bubba73, Wikimedia Commons, own work'. The author survived in the licence slot, so no
+  // credit was lost, but a positional consumer published the licence as the photographer.
+  // Corrected against the Commons File: page rather than by trusting the position: Treasury
+  // Tracker pixel-matched cities/macon.jpg to File:MaconSkyline.JPG at 2.11 mean abs
+  // difference per channel, against 62.69 for the other wide Macon skyline in the same
+  // category (File:Macon night skyline2.JPG) (TT note 2026-09-10).
   //
   // The desktop 6/1 band keeps only rows 128-411 of 540, and this was the ONLY one of three
   // candidates whose subject sits inside that band. Its native 3.27:1 is almost exactly the
