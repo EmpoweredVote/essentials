@@ -976,9 +976,21 @@ const CURATED_LOCAL = {
   //   - the two other anchors that build tried, 0.55 and 0.68, land at 60.66 and 60.79, which
   //     are the same figures TT reports, from a separate implementation
   //   - the matcher calibrated on the macon pair scores this source ncc 0.997 / MAD 8.26
-  // Byte-identity is NOT reproducible and should not be expected: a PIL re-encode at q90
-  // gives 364,294 bytes, because JPEG bytes depend on the encoder. The geometry is the claim,
-  // and the geometry reproduces.
+  // ✅ AND IT REPRODUCES BYTE-FOR-BYTE. Stock Pillow 12.1.1, JPEG quality 90, cropping the
+  // FULL-RESOLUTION original (4032x3021): 363,180 bytes, sha256 32e8b5c91cd04892 -- the live
+  // object exactly. Verified 2026-09-11.
+  //
+  // 🔴 CORRECTION, AND THE TRAP IS THE REUSABLE PART. This block previously said byte-identity
+  // was "NOT reproducible and should not be expected... because JPEG bytes depend on the
+  // encoder", citing a 364,294-byte re-encode. That was wrong, and the cause was not the
+  // encoder: that attempt re-encoded a 3840px-wide THUMBNAIL served by the Commons API, not
+  // the 4032px original. Resizing 3840->1700 and 4032->1700 are different operations, so the
+  // output differed and the difference was then blamed on the encoder. REPRODUCE FROM THE
+  // ORIGINAL, NEVER FROM A `thumburl`. A thumbnail silently changes the answer while looking
+  // like the same file, and it turns the strongest confirmation available -- an exact hash --
+  // into a false negative that reads as evidence against a correct identification.
+  // A different encoder or quality setting could still differ, so treat a byte mismatch as
+  // "check your inputs first", not as a refutation. But do attempt the hash: it is decisive.
   //
   // 🔑 WHY THE SWEEP MISSED IT, WHICH IS THE REUSABLE PART. This exact file was the
   //    TOP-SCORING candidate in the sweep that gave up, at 29.92 -- and it was written off for
