@@ -463,8 +463,15 @@ export const COVERAGE_STATES = [
       // Added 2026-09-11, once the banner existed. This was the largest single coverage gap on
       // the landing page: a complete 42-seat roster (Mayor, Vice Mayor, 5 at-large, 35 districts)
       // that no user could reach, because the chip was gated on cities/nashville.jpg.
-      // hasContext FALSE: zero compass rows for any of the 42 as of 2026-09-11 — and none for the
-      // 131 newly seeded state legislators either. A stance pass is what turns this chip purple.
+      // hasContext TRUE as of 2026-09-11: 37 of the 42 Metro officials now hold evidenced compass
+      // rows — 104 answers across 10 topics, every one sourced to a Nashville Banner 2023 Voter's
+      // Guide questionnaire page that was actually fetched (CC BY-ND). Verified through the
+      // occupancy chain, not politicians.office_id: 37 with answers, 0 rows missing a source.
+      // ⚠ The 5 without rows are honest gaps, not oversights: the Mayor needs his own record rather
+      // than a council questionnaire; the Vice Mayor's Banner piece is a procedural interview that
+      // correctly yielded nothing; and D8/D24/D33 have no Banner questionnaire in the guide at all.
+      // ⚠ The 131 state legislators still hold ZERO rows — this flag speaks only for the 42 local
+      // officials this chip browses (geo_id 47037), which is all it is allowed to claim.
       //
       // ⚠ Label is 'Nashville' but the government is the Metropolitan Government of Nashville
       // and Davidson County (geo_id 47037 — a COUNTY fips, not a place fips, because the city
@@ -494,7 +501,7 @@ export const COVERAGE_STATES = [
       // statewide executives here by analogy with Georgia or North Carolina would invent popular
       // elections that do not exist. DO NOT "FIX" IT — the enacted text is quoted in the
       // migration header.
-      { label: 'Nashville', browseGovernmentList: ['47037'], browseStateAbbrev: 'TN', hasContext: false },
+      { label: 'Nashville', browseGovernmentList: ['47037'], browseStateAbbrev: 'TN', hasContext: true },
     ],
   },
 ];
