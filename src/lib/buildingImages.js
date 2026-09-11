@@ -947,22 +947,43 @@ const CURATED_LOCAL = {
   // Georgia -- Knight program wave GA-4 (2026-09-01, operator-certified). Composed to
   // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
   //   columbus - the Eagle & Phenix mill row above the Chattahoochee whitewater course,
-  //              seen from the west bank | AUTHOR UNRESOLVED | CC BY-SA 4.0
+  //              seen from the west bank (File:Downtown Columbus, Georgia skyline.jpg)
+  //              | PghPhxNfk | CC BY-SA 4.0
   //
-  // 🔴 COLUMBUS HAS NO AUTHOR ON RECORD. DO NOT TRANSCRIBE THIS LINE AS A CREDIT. It read
-  // '| CC BY-SA 4.0 | Wikimedia Commons' until 2026-09-10 -- a licence sitting in the author
-  // slot, so a consumer reading positionally (the documented contract, see line 106)
-  // publishes 'CC BY-SA 4.0' as the photographer. 'Wikimedia Commons' names nobody, so the
-  // author is not recorded anywhere on this line. Treasury Tracker's extractor refused it
-  // rather than guessing and omits columbus|GA from its catalog (TT note 2026-09-10).
-  // TT could not recover the source: it swept Category:Columbus, Georgia, :Downtown Columbus,
-  // Georgia, :Eagle and Phenix Mills, :Phenix City, Alabama plus four full-text searches, and
-  // the best candidate scored 29.92 mean abs difference per channel where a true match lands
-  // at 1-7. Since this frame was composed to 1700x540 FIRST, it is likely a sub-region crop
-  // that a whole-image sweep cannot recover.
-  // ▶ WHOEVER COMPOSED THIS FRAME: name the Commons File: page from your own working notes
-  //   and put it in the author slot. Do not fill it from a category guess -- and note the
-  //   homonym trap below, which nearly shipped Columbus, OHIO here.
+  // ⚠ This line read '| CC BY-SA 4.0 | Wikimedia Commons' until 2026-09-10 -- a licence
+  // sitting in the author slot with no author anywhere on the line, so a consumer reading
+  // positionally (the documented contract, see line 106) published 'CC BY-SA 4.0' as the
+  // photographer. Treasury Tracker's extractor refused it rather than guessing, which is how
+  // it was caught. It was then marked AUTHOR UNRESOLVED for a day before TT recovered it.
+  //
+  // The author was NOT established by resemblance -- it was established by REPRODUCTION. TT
+  // found the source in the GA-4 build's own working record (the upload step reads
+  // asset_E_0.42.jpg at 363,180 bytes, and E resolves to the file above from that session's
+  // A-E shortlist), then re-ran the compose step to check it. Verified here independently on
+  // 2026-09-11 rather than taken on trust:
+  //   - the live object is 363,180 bytes, sha256 32e8b5c91cd04892 (TT's stated hash is right)
+  //   - re-running their recipe -- full-width 3.148:1 crop, vertical window centred at 42% of
+  //     source height, LANCZOS to 1700x540 -- reproduces the live frame at pixel MAD 2.74
+  //   - the two other anchors that build tried, 0.55 and 0.68, land at 60.66 and 60.79, which
+  //     are the same figures TT reports, from a separate implementation
+  //   - the matcher calibrated on the macon pair scores this source ncc 0.997 / MAD 8.26
+  // Byte-identity is NOT reproducible and should not be expected: a PIL re-encode at q90
+  // gives 364,294 bytes, because JPEG bytes depend on the encoder. The geometry is the claim,
+  // and the geometry reproduces.
+  //
+  // 🔑 WHY THE SWEEP MISSED IT, WHICH IS THE REUSABLE PART. This exact file was the
+  //    TOP-SCORING candidate in the sweep that gave up, at 29.92 -- and it was written off for
+  //    failing the threshold. The 41 anchor steps tried over the vertical span all landed
+  //    14-18px from the true crop, about 4px in the rendered banner, and on a detailed
+  //    cityscape that reads as a different photograph. The same failure shows up in the UT
+  //    Wave 2 recovery from the other direction: even the KNOWN-GOOD macon pair sat at MAD 15
+  //    until a local search over scale and offset was added, after which it fell to 10.85 and
+  //    the true Utah sources to 3.73-13.52. So: WHEN A SWEEP PRODUCES A CLEAR LEADER THAT
+  //    STILL FAILS THE THRESHOLD, REFINE AROUND IT BEFORE RULING IT OUT. A near-miss on
+  //    alignment is indistinguishable from a different photograph until you fix the alignment.
+  // 🔴 And the leader was nearly discarded for a second reason -- see the homonym trap below.
+  //    'Downtown Columbus, Georgia skyline' is the right city; the PUBLIC DOMAIN featured
+  //    picture named 'Downtown Columbus View from Main St Bridge' is Columbus, OHIO.
   //
   // The desktop 6/1 band keeps only rows 128-411 of 540, so the crop was chosen to put the
   // mill row, the river and the rapids all inside that band -- the whitewater course is the
