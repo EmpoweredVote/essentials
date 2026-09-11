@@ -927,6 +927,39 @@ const CURATED_LOCAL = {
   miami: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/miami.jpg' },
   bradenton: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bradenton.jpg' },
   tallahassee: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tallahassee.jpg' },
+  // Tennessee — the first 'TN'-scoped key (2026-09-11, operator-approved). Nashville was the
+  // largest coverage gap on the landing page: 42 officials, a complete Metro Council roster,
+  // and no chip, purely because cities/nashville.jpg did not exist.
+  //   nashville - Ryman Auditorium and the Lower Broadway honky-tonks, downtown towers behind
+  //            (File:Nashville pano Opry Broadway.jpg) | Daniel Schwen | CC BY-SA 4.0
+  //
+  // ⚠ SOURCED AND CROPPED 2026-09-11; vertical anchor 0.94, which is unusually high and was
+  // the operator's explicit call. At the default 0.5 (and even at 0.68) the desktop band is
+  // half overcast sky with the Ryman roofline across it; the honky-tonk signage that actually
+  // identifies Nashville sits in the bottom third of the frame and was being clipped away.
+  // 0.94 puts the storefront row, the Tootsie's facade and the traffic signals INSIDE the
+  // 6:1 band and leaves pavement as a thin strip at the lower edge. Cropped from the
+  // 4600x2500 ORIGINAL, not a thumbnail (see the columbus note for why that matters).
+  // Verified after upload: served bytes hash-match the local file, sha256 af6de2705d0284b7,
+  // 263,238 bytes.
+  //
+  // 🔑 WHY THE ANCHOR AND NOT object-position: SectionBanner.jsx renders every banner with
+  //    object-fit:cover and NO object-position, so the visible band is always the file's
+  //    vertical middle, identically for all ~180 banners, with no per-banner override. Moving
+  //    a single banner's visible band therefore has to happen in the FILE, by choosing which
+  //    part of the scene lands in the middle. Do not add object-position to that component to
+  //    fix one image: it would re-crop every banner in the registry at once.
+  //
+  // Rejected candidates, recorded so they are not re-proposed: a Fort Negley skyline (Jschnake,
+  // CC BY-SA 4.0) and Kaldari's Cumberland panorama (public domain, and it carries the State
+  // Capitol) both read as 'a city' rather than as Nashville; Lower Broadway at dusk
+  // (Cpl. Vincent Needham, public domain) fails the daytime rule with half the frame empty
+  // pavement; Shelby Park's river view has an unreadable distant skyline.
+  // 🔴 AND ONE THAT PASSED EVERY AUTOMATED FILTER: 'File:City of Nashville skyline from Gulch -
+  //    Oct 2019.jpg' (Marlamorrismusic, CC BY-SA 4.0) is a PORTRAIT OF A MAN against open sky.
+  //    Correct licence, ample resolution, landscape aspect, and the word 'skyline' in the
+  //    filename. Only looking at it caught that. Read the picture, never the title.
+  nashville: { state: 'TN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/nashville.jpg' },
   // Georgia — Knight program wave GA-3 (2026-09-01, operator-certified). The program's
   // FIRST 'GA'-scoped key. Certified in BOTH production boxes, not on the full frame:
   // mobile 13/4 shows 96.9% (rows 8-531 of 540), desktop 6/1 shows 52.5% (rows 128-411).
