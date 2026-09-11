@@ -470,8 +470,12 @@ export const COVERAGE_STATES = [
       // ⚠ The 5 without rows are honest gaps, not oversights: the Mayor needs his own record rather
       // than a council questionnaire; the Vice Mayor's Banner piece is a procedural interview that
       // correctly yielded nothing; and D8/D24/D33 have no Banner questionnaire in the guide at all.
-      // ⚠ The 131 state legislators still hold ZERO rows — this flag speaks only for the 42 local
-      // officials this chip browses (geo_id 47037), which is all it is allowed to claim.
+      // ⚠ This flag speaks only for the 42 local officials, which is all it is allowed to claim.
+      // Measured against the live browse this chip opens (by-government-list 47037 + browse_state=TN,
+      // 2026-09-11): a visitor also meets 15 State of Tennessee officials — Davidson's own 10 House
+      // seats and 4 Senate seats plus the Governor — and 14 of those 15 hold ZERO rows (only Gov. Lee
+      // has any). The federal band is 39 shown / 8 with rows. Migration 1855 seeded 131 legislators
+      // statewide, but 131 is NOT this chip's exposure; quoting it here would overstate the gap by 9x.
       //
       // ⚠ Label is 'Nashville' but the government is the Metropolitan Government of Nashville
       // and Davidson County (geo_id 47037 — a COUNTY fips, not a place fips, because the city
