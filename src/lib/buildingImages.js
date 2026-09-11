@@ -1093,6 +1093,45 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing for the usual reason, and more so here: substring
   // matching would hand this banner to Macon County GA as well as to the city.
   macon: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/macon.jpg' },
+  // Indiana -- Knight program slice 4, stage 5 (2026-09-11, operator-certified). Both composed
+  // to 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), not on the full frame.
+  //
+  // Indiana already had two compositions to differentiate against, and the test is CAMERA HEIGHT
+  // AND WHAT FILLS THE FRAME, never the subject noun (the Asheville ruling):
+  //   states/IN.jpg        - ELEVATED, looking down on a ballpark, skyline a distant right-hand band
+  //   cities/bloomington   - STREET CORRIDOR down the axis of Kirkwood Ave, trees framing both edges
+  //
+  //   fort wayne - the confluence of the St Marys and St Joseph rivers, with the stone revetment
+  //                and the three arches of the Columbia Street Bridge | Momoneymoproblemz
+  //                | CC BY-SA 3.0 (own work, 2014-05-10)
+  //                source: File:Confluence of Three Rivers, Fort Wayne, Indiana.JPG (4896x1992)
+  //                anchor_y 0.25 -- at 0.55 the band is almost pure water.
+  //   gary       - Gary City Hall's colonnade with the domed Lake County Superior Courthouse to
+  //                its right, east along Fourth Avenue | Nyttend | Public domain (own work,
+  //                2012-04-12) | source: File:City Hall and Superior Courthouse in Gary.jpg
+  //                (2816x1584), anchor_y 0.35 -- the road and parked cars fall below the band.
+  //
+  // 🔴 A CATEGORY NAME IS NOT A JURISDICTION. Sweeping Commons for these two returned the wrong
+  // state repeatedly: 'Category:Maumee River' gave Defiance, OHIO (Fort Amanda, Pontiac Park, the
+  // Auglaize confluence) and the Indiana Dunes categories gave Porter County rather than Gary.
+  // Every candidate coordinate was tested against the city's own TIGER place polygon -- 21
+  // rejected for Fort Wayne, 38 for Gary. Gary's file lands 60 m from the City Hall point the
+  // IN-4 acceptance probe uses. Fort Wayne's carries no coordinates and was cleared instead by
+  // its uploader's description naming the Three Rivers Water Filtration Plant.
+  //
+  // 🔴 GARY'S COMMONS COVERAGE IS DOMINATED BY RUIN PHOTOGRAPHY. Five of the six best candidates
+  // by size and aspect are the derelict City Methodist Church and abandoned buildings -- all wide,
+  // sharp, in-city and correctly licensed. Ranking on measurements alone puts a collapsed church
+  // on the banner of a city whose mayor and council we seated. Sorting Fort Wayne the same way
+  // puts three derelict parking garages on top. ASPECT IS NOT MERIT.
+  //
+  // ⚠ The Allen County Courthouse is Fort Wayne's strongest civic subject and was REFUSED: it is a
+  // frontal building portrait whose dome sits too near the top edge to be centred in the band
+  // without discarding the building's width -- the Milledgeville failure exactly.
+  //
+  // ⚠ match:'exact' is load-bearing for the usual reason.
+  'fort wayne': { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-wayne.jpg' },
+  gary: { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gary.jpg' },
 };
 
 /**
