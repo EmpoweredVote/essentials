@@ -48,6 +48,7 @@
     "vitest": "^4.1.4"
   },
   "overrides": {
-    "browserslist": "^4.28.7"
+    "browserslist": "^4.28.7",
+    "@humanfs/node": "^0.16.8"
   }
 }
