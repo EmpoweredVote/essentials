@@ -59,6 +59,13 @@ export const COVERAGE_STATES = [
     name: 'Indiana', abbrev: 'IN',
     areas: [
       { label: 'Bloomington', address: '100 W Kirkwood Ave, Bloomington, IN 47404', hasContext: true },
+      // Knight program slice 4 (2026-09-10/11). Seeded and banner-backed, and absent from this
+      // list until now -- an address search reached them, but the name typeahead did not.
+      // No hasContext on either: measured 2026-09-11, no sitting official in Fort Wayne (11) or
+      // Gary (6) carries a row in inform.politician_answers, so claiming it would not be
+      // DB-honest -- the Deschutes rule.
+      { label: 'Fort Wayne', browseGovernmentList: ['1825000'], browseStateAbbrev: 'IN' },
+      { label: 'Gary', browseGovernmentList: ['1827000'], browseStateAbbrev: 'IN' },
     ],
   },
   {
@@ -543,6 +550,12 @@ export function normalizePlace(s) {
 // reasoning is written down.
 export const COVERAGE_COUNTIES = [
   { label: 'Los Angeles County', browseGovernmentList: ['06037'], browseStateAbbrev: 'CA', hasContext: true },
+  // Knight slice 4, stage 4 (2026-09-10). Allen is 3 commissioners elected COUNTY-WIDE + 4
+  // council districts + 3 at large + 9 officers; Lake seats 12 of 19, its seven council
+  // districts deferred for want of a published map. No hasContext on either (measured
+  // 2026-09-11: no sitting official in either county has a compass answer).
+  { label: 'Allen County', browseGovernmentList: ['18003'], browseStateAbbrev: 'IN' },
+  { label: 'Lake County, IN', browseGovernmentList: ['18089'], browseStateAbbrev: 'IN' },
   { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
   { label: 'Greene County', browseGovernmentList: ['29077'], browseStateAbbrev: 'MO', hasContext: true },
   // Deschutes County (2026-07-24 Bend deep seed): 3 at-large commissioners + 4 countywide row
