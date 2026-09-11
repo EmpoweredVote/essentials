@@ -469,15 +469,15 @@ export const COVERAGE_STATES = [
       // = 132 offices, 131 seated (House District 84 is vacant per the General Assembly's own
       // directory). The roster is real and correct.
       //
-      // 🔴 BUT IT IS NOT REACHABLE FROM THIS CHIP YET, AND THE STATE BAND STILL SHOWS ONE PERSON.
-      // Legislators are routed by polygon, and essentials.geofence_boundaries has state-legislative
-      // layers (G5210/G5220) for 19 states — Georgia 236, North Carolina 170 — but ZERO for
-      // Tennessee. Measured 2026-09-11, after the seed: POST /essentials/browse/by-government-list
-      // for Nashville returns "State of Tennessee: 1" (the Governor), while the same call for
-      // Columbus GA returns 5 State House + 2 State Senate members. So the remaining work is the
-      // TIGER load (load-state-tiger-boundaries.ts + a STATE_LAYER_ALLOWLIST entry for TN), NOT
-      // more roster seeding. Confirm the TIGER vintage matches Tennessee's current legislative map
-      // before loading — routing a voter to the WRONG legislator is worse than routing to none.
+      // ✅ AND IT IS NOW REACHABLE — the polygons were loaded the same day. Legislators are routed
+      // by polygon, and TN had ZERO G5210/G5220 geofences until TIGER 2024 FIPS 47 was loaded
+      // (33 + 99, ev-accounts PR #458). Production's overlap query for Davidson County now returns
+      // 4 Senate + 10 House districts, so this chip's State band shows 14 legislators plus the
+      // Governor. Downtown Nashville resolves to Senate 21 / House 51, which is what the State of
+      // Tennessee's own GIS service returns for the same point.
+      // ⚠ The overlap resolution is CACHED FOR 1 HOUR (OVERLAP_CACHE_TTL_SECONDS), so immediately
+      // after a geofence load the API still serves the old, thinner band. Do not read that as a
+      // failed load — verify against the DB, not the cached response.
       //
       // 🔴 THE EXECUTIVE BAND IS STILL A SINGLE OFFICE — THE GOVERNOR — AND THAT IS CORRECT.
       // Tennessee popularly elects only the Governor. The Secretary of State, Treasurer and
