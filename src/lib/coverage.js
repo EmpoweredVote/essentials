@@ -450,6 +450,30 @@ export const COVERAGE_STATES = [
       { label: 'Milledgeville', browseGovernmentList: ['1351492'], browseStateAbbrev: 'GA', hasContext: false },
     ],
   },
+  {
+    name: 'Tennessee', abbrev: 'TN',
+    areas: [
+      // Added 2026-09-11, once the banner existed. This was the largest single coverage gap on
+      // the landing page: a complete 42-seat roster (Mayor, Vice Mayor, 5 at-large, 35 districts)
+      // that no user could reach, because the chip was gated on cities/nashville.jpg.
+      // hasContext FALSE: zero compass rows for any of the 42 as of 2026-09-11.
+      //
+      // ⚠ Label is 'Nashville' but the government is the Metropolitan Government of Nashville
+      // and Davidson County (geo_id 47037 — a COUNTY fips, not a place fips, because the city
+      // and county are consolidated). Do not "fix" either the label or the id: the label is what
+      // the buildingImages 'nashville' key resolves off, and 47037 is what the government row
+      // actually carries.
+      //
+      // 🔴 THE STATE BAND BEHIND THIS CHIP IS NEARLY EMPTY, AND THAT IS KNOWN, NOT AN OVERSIGHT.
+      // Tennessee's state government holds ONE office: the Governor. No legislature (99 House +
+      // 33 Senate), no other statewide executives — against 175 offices for North Carolina and
+      // 239 for Georgia. So a visitor here gets a complete Local band (42), a complete Federal
+      // band (9 US House + 2 Senate, all seated), and a State band with a single person in it.
+      // Shipped anyway on the operator's call, because 42 unreachable officials was the worse
+      // failure. ▶ SEEDING THE TN STATE TIER IS THE NEXT JOB — see project_tn_state_tier_seed.
+      { label: 'Nashville', browseGovernmentList: ['47037'], browseStateAbbrev: 'TN', hasContext: false },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
