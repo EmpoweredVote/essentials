@@ -302,6 +302,13 @@ purpose: `essentials.discovered_sources.source_tier_guess` runs 1–4 on a *diff
   WyoFile-style outlet pages). A questionnaire is written and self-published, yet every candidate
   answers an *identical prompt* and every ballot-qualified candidate is invited, so it solves
   comparability and inclusion at once: it is the best available **text** source. Prefer these.
+  *Caveat — VOTE411/LWV licensing.* VOTE411 answers are the candidate's own words, but the League
+  of Women Voters' terms bar reproducing them or querying them programmatically without prior
+  written permission. Until a written League license is in place, VOTE411 is a **pointer, not a
+  cited source**: read it (a human, in a browser) to find a position, then source and cite the
+  quote from the candidate's own materials; if the position appears only on VOTE411, leave the
+  candidate absent and never paraphrase the answer. (Enforced by the on-the-record
+  `pointer-only-source` audit check.)
   *Caveat on curated formats* — A Starting Point videos and similar are answers to fixed questions
   with zero follow-up, i.e. structured self-presentation; prefer a genuine press interview when
   both exist.
