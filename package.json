@@ -12,7 +12,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "gen:population": "node scripts/gen-population.mjs",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "banners:json": "node scripts/gen-banners-json.mjs",
+    "banners:check": "node scripts/gen-banners-json.mjs --check"
   },
   "dependencies": {
     "@empoweredvote/analytics": "^0.2.0",
