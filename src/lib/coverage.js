@@ -463,16 +463,25 @@ export const COVERAGE_STATES = [
       // Added 2026-09-11, once the banner existed. This was the largest single coverage gap on
       // the landing page: a complete 42-seat roster (Mayor, Vice Mayor, 5 at-large, 35 districts)
       // that no user could reach, because the chip was gated on cities/nashville.jpg.
-      // hasContext TRUE as of 2026-09-11: 38 of the 42 Metro officials now hold evidenced compass
-      // rows — 106 answers across 10 topics, every one sourced to a page that was actually fetched
-      // (the Nashville Banner 2023 Voter's Guide questionnaires, CC BY-ND, plus the Banner's
-      // one-on-one interview with Mayor O'Connell). Verified through the occupancy chain, not
-      // politicians.office_id: 38 with answers, 0 rows missing a source.
-      // ⚠ The 4 without rows are honest gaps, not oversights: the Vice Mayor's Banner piece is a
-      // procedural interview about running the council that correctly yielded nothing, and
-      // D8/D24/D33 have no Banner questionnaire in the guide at all. Seating those three needs a
-      // different source class (Legistar sponsorships/roll calls); the questionnaire corpus that
-      // seated the other 38 simply does not cover them.
+      // hasContext TRUE as of 2026-09-11: 39 of the 42 Metro officials now hold evidenced compass
+      // rows — 125 answers across 12 topics, every one sourced to a page that was actually fetched,
+      // across three source classes now: the Nashville Banner 2023 Voter's Guide questionnaires
+      // (CC BY-ND), the Banner's one-on-one with Mayor O'Connell, and nashville.legistar.com
+      // enacted texts and roll calls. Verified through the occupancy chain, not
+      // politicians.office_id: 39 with answers, 0 rows missing a source. Re-measured 2026-09-14.
+      // ⚠ The 3 without rows are honest gaps, not oversights: the Vice Mayor's Banner piece is a
+      // procedural interview about running the council that correctly yielded nothing; D8 (Harrell)
+      // and D33 (Lee) have no Banner questionnaire in the guide at all.
+      // ✅ D24 (Gadd) WAS the fourth, and Legistar closed her — 4 rows from sponsored ordinances and
+      // resolutions (ev-accounts #502). That path was scoped before it was spent and it does NOT
+      // generalise: only 40 of the 4,428 matters introduced this term are position-bearing at all,
+      // ~0.9%, the rest being grant acceptances, appointments, easements and parcel zone changes.
+      // Gadd cleared it because she is the council's most prolific sponsor of the few that are;
+      // Harrell holds zero prime sponsorships and is worth exactly two named bills, not a pass.
+      // 🔑 Four of her strongest documents seated NOTHING because no LADDER reaches them — an
+      // enacted eviction right-to-counsel ordinance (rent-regulation's chairs are all rent-control
+      // levels) and a grocery-tax resolution (taxes' chairs are all "wealthy people and large
+      // companies"). Those are Season 3 decisions #5 and #4, not research gaps.
       // ⚠ This flag speaks only for the 42 local officials, which is all it is allowed to claim.
       // Measured against the live browse this chip opens (by-government-list 47037 + browse_state=TN,
       // 2026-09-11): a visitor also meets 15 State of Tennessee officials — Davidson's own 10 House
