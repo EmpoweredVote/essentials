@@ -11,7 +11,7 @@ import { getSeatBallotStatus } from '../utils/ballotStatus';
 import FilterBar, { StickyCompassKey } from '../components/FilterBar';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
-import { getBuildingImages, parseStateFromAddress, parseCityFromAddress, stateAbbrevFromGeoId } from '../lib/buildingImages';
+import { getBuildingImages, parseStateFromAddress, stateAbbrevFromGeoId, resolveRepresentingCity } from '../lib/buildingImages';
 import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, browseFederalOfficials, fetchVoterInfo, lookupCoordinate, fetchOfficialsByZip } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
 import { apiFetch } from '../lib/auth';
@@ -31,7 +31,6 @@ import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
 import { buildBannerProps } from '../lib/bannerProps';
 import { splitBodiesByState, orderBodiesByState } from '../lib/stateGroups';
-import { unincorporatedLabel } from '../lib/localityLabel';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -1168,71 +1167,17 @@ export default function Results() {
 
   // Derive representing city for building image selection — uses unfiltered list
   // so the building image doesn't disappear when search filter narrows the grid.
-  const representingCity = useMemo(() => {
-    // In browse mode the browsed area label is authoritative for the city banner.
-    // Deriving the city from politician records can surface a neighboring city
-    // when districts overlap (e.g. a Culver City browse showing "Inglewood"
-    // because an overlapping district's official has representing_city set).
-    // ZIP mode has NO single place of record: a ZIP routinely spans several
-    // cities. Deriving one from politician records would let a stray
-    // representing_city on an overlapping district's official hijack the banner —
-    // the same hijack the browse and coordinate branches guard against. Return
-    // null and let the state-level banner lead.
-    if (zipInfo) return null;
-    if (searchMode === 'browse') {
-      const label = searchParams.get('browse_label');
-      if (label && label.trim()) return label.trim();
-    }
-    // Coordinate-mode guard (T-214-06 / RESEARCH Pitfall 3): a raw lat/lng has no
-    // resolved place name — the server never echoes an address (D-05) — so there is
-    // no trustworthy label-of-record to derive here. Return null explicitly rather
-    // than falling through to the "derive from politician records" branches below,
-    // which can surface a neighboring jurisdiction's stray representing_city for a
-    // boundary-straddling point (the same hijack the 'browse' branch above guards
-    // against).
-    if (searchMode === 'coordinate') {
-      // LOC-04 (Phase 216-03): an unincorporated coordinate point still has an
-      // authoritative backend-derived label ("Unincorporated {County}") even
-      // though no address/place name can be derived — check it before falling
-      // through to the "no trustworthy label" null below.
-      const lbl = unincorporatedLabel(coordLocality);
-      if (lbl) return lbl;
-      return null;
-    }
-    const src = Array.isArray(list) ? list : [];
-    // Only local-government officials may set the local city banner. A statewide or
-    // federal office (NATIONAL_* / STATE_*) can carry a stray representing_city — e.g. a
-    // U.S. Senator whose office was tagged with a city from an old city-council record —
-    // and, because it is returned for every address in the state, would otherwise hijack
-    // the banner wherever the real local officials have no representing_city (a Riverside
-    // County address rendering under an "Inglewood" banner via Sen. Padilla's office).
-    for (const p of src) {
-      const dt = p?.district_type || '';
-      if (dt.startsWith('NATIONAL') || dt.startsWith('STATE')) continue;
-      if (p.representing_city) return p.representing_city;
-    }
-    // Fallback 1: extract city name from local politicians' chamber_name.
-    // Handles "Bloomington City Council" and "City of Bloomington".
-    for (const p of src) {
-      const dt = p?.district_type || '';
-      if (dt === 'LOCAL' && p.chamber_name) {
-        const beforeCity = p.chamber_name.match(/^(\w[\w\s]+?)\s+City\b/);
-        if (beforeCity) return beforeCity[1];
-        const cityOf = p.chamber_name.match(/^City of\s+(.+)$/i);
-        if (cityOf) return cityOf[1].trim();
-      }
-    }
-    // LOC-04 (Phase 216-03): an unincorporated point is authoritatively backend-flagged
-    // — check it BEFORE the postal-city guess below, which would otherwise mislabel an
-    // unincorporated parcel with its nearest postal city (e.g. "Tucson").
-    const lbl = unincorporatedLabel(incorporationInfo);
-    if (lbl) return lbl;
-    // Fallback 2: parse the city out of the typed address ("…, Bloomington, IN 47404").
-    // Reliable for address searches where politician data lacks representing_city.
-    const fromAddress = parseCityFromAddress(addressInput);
-    if (fromAddress) return fromAddress;
-    return null;
-  }, [list, addressInput, searchMode, searchParams, incorporationInfo, coordLocality, zipInfo]);
+  // Logic lives in resolveRepresentingCity (src/lib/buildingImages.js) so it has a
+  // unit-testable seam; see that function's doc for the mode-by-mode rationale.
+  const representingCity = useMemo(() => resolveRepresentingCity({
+    zipInfo,
+    searchMode,
+    browseLabel: searchParams.get('browse_label'),
+    coordLocality,
+    incorporationInfo,
+    list,
+    addressInput,
+  }), [list, addressInput, searchMode, searchParams, incorporationInfo, coordLocality, zipInfo]);
 
   // Extract state abbreviation from the address string
   // Handles "Orem, UT 84057" and "South Dakota, USA"

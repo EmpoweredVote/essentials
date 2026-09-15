@@ -59,6 +59,13 @@ export const COVERAGE_STATES = [
     name: 'Indiana', abbrev: 'IN',
     areas: [
       { label: 'Bloomington', address: '100 W Kirkwood Ave, Bloomington, IN 47404', hasContext: true },
+      // Knight program slice 4 (2026-09-10/11). Seeded and banner-backed, and absent from this
+      // list until now -- an address search reached them, but the name typeahead did not.
+      // No hasContext on either: measured 2026-09-11, no sitting official in Fort Wayne (11) or
+      // Gary (6) carries a row in inform.politician_answers, so claiming it would not be
+      // DB-honest -- the Deschutes rule.
+      { label: 'Fort Wayne', browseGovernmentList: ['1825000'], browseStateAbbrev: 'IN' },
+      { label: 'Gary', browseGovernmentList: ['1827000'], browseStateAbbrev: 'IN' },
     ],
   },
   {
@@ -167,6 +174,10 @@ export const COVERAGE_STATES = [
       // six carries hasContext: the seed was roster + geofence + browse only, with no compass
       // stances, so claiming context would not be DB-honest.
       { label: 'Arlington',     browseGovernmentList: ['4804000'], browseStateAbbrev: 'TX' },
+      // Added 2026-09-11: Austin was seeded but had never been listed here. 11 of 11
+      // councilmembers hold compass rows (65 total), so hasContext is true on arrival —
+      // it is the only city in this audit that was complete and simply absent.
+      { label: 'Austin',        browseGovernmentList: ['4805000'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Blue Ridge',    browseGovernmentList: ['4808872'], browseStateAbbrev: 'TX' },
       { label: 'Celina',        browseGovernmentList: ['4813684'], browseStateAbbrev: 'TX', hasContext: true },
       // Euless: 4 of its 7 seats are seeded VACANT-by-design (Mayor, Places 2/4/5) — see mig 1628.
@@ -392,6 +403,130 @@ export const COVERAGE_STATES = [
       { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA', hasContext: true },
     ],
   },
+  // ── Four states added 2026-09-11 (Austin went into the TX block above) ──────
+  // All of these were already seeded — full rosters, occupants resolving through
+  // office_current_holder — but had never been listed here, so none of them was
+  // reachable from the landing grid or the name typeahead. Found by diffing every
+  // municipal government carrying occupants against the geo_ids in this file.
+  // Array order does not matter: Landing.jsx:360 sorts by state name at render.
+  //
+  // ⚠ hasContext is NOT a judgement about the roster — it drives the CHIP COLOUR
+  // (Landing.jsx:399-402): true renders purple, false renders teal. So it must mean
+  // "this city has compass coverage", nothing more. Verified per city against
+  // inform.politician_answers before being set either way below.
+  {
+    name: 'Colorado', abbrev: 'CO',
+    areas: [
+      // 10 of 10 councilmembers stanced, 44 rows. Banner present ('colorado springs').
+      { label: 'Colorado Springs', browseGovernmentList: ['0816000'], browseStateAbbrev: 'CO', hasContext: true },
+    ],
+  },
+  {
+    name: 'North Carolina', abbrev: 'NC',
+    areas: [
+      // Both complete: Asheville 7 of 7 stanced (27 rows), Durham 7 of 7 (14 rows).
+      { label: 'Asheville', browseGovernmentList: ['3702140'], browseStateAbbrev: 'NC', hasContext: true },
+      { label: 'Durham',    browseGovernmentList: ['3719000'], browseStateAbbrev: 'NC', hasContext: true },
+    ],
+  },
+  {
+    name: 'Florida', abbrev: 'FL',
+    areas: [
+      // hasContext FALSE for all three: rosters and banners are in place, but ZERO
+      // compass rows exist for any of their officials as of 2026-09-11. These have
+      // never been researched — which is not the same thing as having been researched
+      // and found blank — so they claim no coverage until a stance pass runs.
+      { label: 'Bradenton',   browseGovernmentList: ['1207950'], browseStateAbbrev: 'FL', hasContext: false },
+      { label: 'Miami',       browseGovernmentList: ['1245000'], browseStateAbbrev: 'FL', hasContext: false },
+      { label: 'Tallahassee', browseGovernmentList: ['1270600'], browseStateAbbrev: 'FL', hasContext: false },
+    ],
+  },
+  {
+    name: 'Georgia', abbrev: 'GA',
+    areas: [
+      // The Knight program cities. Same position as Florida: full rosters, curated
+      // banners (the GA-3/4/5 waves in buildingImages.js), zero compass rows yet.
+      // ⚠ Labels are the CITY names, but two of these governments are consolidated
+      // city-counties: 'Columbus' is the Columbus Consolidated Government (1319000)
+      // and 'Macon' is Macon-Bibb County Government (1349008). Do not "correct" these
+      // labels to the government names — the banner keys in buildingImages.js
+      // CURATED_LOCAL are 'columbus' (state-scoped GA, match:'exact') and 'macon',
+      // and they resolve off these labels.
+      { label: 'Columbus',      browseGovernmentList: ['1319000'], browseStateAbbrev: 'GA', hasContext: false },
+      { label: 'Macon',         browseGovernmentList: ['1349008'], browseStateAbbrev: 'GA', hasContext: false },
+      { label: 'Milledgeville', browseGovernmentList: ['1351492'], browseStateAbbrev: 'GA', hasContext: false },
+    ],
+  },
+  {
+    name: 'Tennessee', abbrev: 'TN',
+    areas: [
+      // Added 2026-09-11, once the banner existed. This was the largest single coverage gap on
+      // the landing page: a complete 42-seat roster (Mayor, Vice Mayor, 5 at-large, 35 districts)
+      // that no user could reach, because the chip was gated on cities/nashville.jpg.
+      // hasContext TRUE as of 2026-09-11: 40 of the 42 Metro officials now hold evidenced compass
+      // rows — 127 answers across 12 topics, every one sourced to a page that was actually fetched,
+      // across three source classes now: the Nashville Banner 2023 Voter's Guide questionnaires
+      // (CC BY-ND), the Banner's one-on-one with Mayor O'Connell, and nashville.legistar.com
+      // enacted texts and roll calls. Verified through the occupancy chain, not
+      // politicians.office_id: 40 with answers, 0 rows missing a source. Re-measured 2026-09-14.
+      // ✅ BOTH REMAINING ZEROS ARE DOCUMENTED, so there is no unexplained gap left in this city.
+      // The Vice Mayor's Banner piece is a procedural interview about running the council that
+      // correctly yielded nothing (#138). Harrell (D8) was researched to a written zero
+      // (ev-accounts #503): all 4,428 matters this term swept, 15 sponsorships found, 11 of them
+      // recognitions or memorials, and no prime sponsorship of anything position-bearing.
+      // ✅ D24 (Gadd) and D33 (Lee) were both closed by Legistar — Gadd on 4 topics (#502), Lee on
+      // 2 (#505). That path was scoped before it was spent and it does NOT generalise: only 40 of
+      // the 4,428 matters introduced this term are position-bearing at all, ~0.9%, the rest being
+      // grant acceptances, appointments, easements and parcel zone changes. Gadd cleared it because
+      // she is the council's most prolific sponsor of the few that are; Lee only because the sweep
+      // was extended back to her FIRST term — she is a returning 2019 member, so the 2023 corpus
+      // that covered everyone else holds half her record.
+      // 🔑 SIX OF THEIR STRONGEST DOCUMENTS SEATED NOTHING BECAUSE NO LADDER REACHES THEM, and that
+      // is a product finding rather than a research gap. An enacted eviction right-to-counsel
+      // ordinance has nowhere to go while rent-regulation's chairs are all rent-control levels; a
+      // grocery-tax resolution has nowhere to go while taxes' chairs read "wealthy people and large
+      // companies"; and Lee's PRIME-sponsored resolution backing MNPS's refusal to arm teachers has
+      // nowhere to go while gun-policy's chairs run ban / background checks / waiting periods /
+      // repeal. That last one is the sharpest: a national weapon-class ladder has no rung for the
+      // most salient LOCAL gun question in Tennessee. Season 3 decisions #5, #4 and one more.
+      // ⚠ This flag speaks only for the 42 local officials, which is all it is allowed to claim.
+      // Measured against the live browse this chip opens (by-government-list 47037 + browse_state=TN,
+      // 2026-09-11): a visitor also meets 15 State of Tennessee officials — Davidson's own 10 House
+      // seats and 4 Senate seats plus the Governor — and 14 of those 15 hold ZERO rows (only Gov. Lee
+      // has any). The federal band is 39 shown / 8 with rows. Migration 1855 seeded 131 legislators
+      // statewide, but 131 is NOT this chip's exposure; quoting it here would overstate the gap by 9x.
+      //
+      // ⚠ Label is 'Nashville' but the government is the Metropolitan Government of Nashville
+      // and Davidson County (geo_id 47037 — a COUNTY fips, not a place fips, because the city
+      // and county are consolidated). Do not "fix" either the label or the id: the label is what
+      // the buildingImages 'nashville' key resolves off, and 47037 is what the government row
+      // actually carries.
+      //
+      // ✅ GENERAL ASSEMBLY SEEDED 2026-09-11 (ev-accounts migration 1855): 99 House + 33 Senate
+      // = 132 offices, 131 seated (House District 84 is vacant per the General Assembly's own
+      // directory). The roster is real and correct.
+      //
+      // ✅ AND IT IS NOW REACHABLE — the polygons were loaded the same day. Legislators are routed
+      // by polygon, and TN had ZERO G5210/G5220 geofences until TIGER 2024 FIPS 47 was loaded
+      // (33 + 99, ev-accounts PR #458). Production's overlap query for Davidson County now returns
+      // 4 Senate + 10 House districts, so this chip's State band shows 14 legislators plus the
+      // Governor. Downtown Nashville resolves to Senate 21 / House 51, which is what the State of
+      // Tennessee's own GIS service returns for the same point.
+      // ⚠ The overlap resolution is CACHED FOR 1 HOUR (OVERLAP_CACHE_TTL_SECONDS), so immediately
+      // after a geofence load the API still serves the old, thinner band. Do not read that as a
+      // failed load — verify against the DB, not the cached response.
+      //
+      // 🔴 THE EXECUTIVE BAND IS STILL A SINGLE OFFICE — THE GOVERNOR — AND THAT IS CORRECT.
+      // Tennessee popularly elects only the Governor. The Secretary of State, Treasurer and
+      // Comptroller are chosen by joint vote of the General Assembly (Art. III §17, Art. VII §3),
+      // the Attorney General by the judges of the Supreme Court (Art. VI §5), and the Lieutenant
+      // Governor is the Senate Speaker, chosen by senators (TCA 8-2-102). Seeding four or five
+      // statewide executives here by analogy with Georgia or North Carolina would invent popular
+      // elections that do not exist. DO NOT "FIX" IT — the enacted text is quoted in the
+      // migration header.
+      { label: 'Nashville', browseGovernmentList: ['47037'], browseStateAbbrev: 'TN', hasContext: true },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
@@ -445,6 +580,12 @@ export function normalizePlace(s) {
 // reasoning is written down.
 export const COVERAGE_COUNTIES = [
   { label: 'Los Angeles County', browseGovernmentList: ['06037'], browseStateAbbrev: 'CA', hasContext: true },
+  // Knight slice 4, stage 4 (2026-09-10). Allen is 3 commissioners elected COUNTY-WIDE + 4
+  // council districts + 3 at large + 9 officers; Lake seats 12 of 19, its seven council
+  // districts deferred for want of a published map. No hasContext on either (measured
+  // 2026-09-11: no sitting official in either county has a compass answer).
+  { label: 'Allen County', browseGovernmentList: ['18003'], browseStateAbbrev: 'IN' },
+  { label: 'Lake County, IN', browseGovernmentList: ['18089'], browseStateAbbrev: 'IN' },
   { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
   { label: 'Greene County', browseGovernmentList: ['29077'], browseStateAbbrev: 'MO', hasContext: true },
   // Deschutes County (2026-07-24 Bend deep seed): 3 at-large commissioners + 4 countywide row

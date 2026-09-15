@@ -15,6 +15,7 @@ import {
   parseCityFromAddress,
   parseStateFromAddress,
   stateAbbrevFromGeoId,
+  resolveRepresentingCity,
 } from './buildingImages.js';
 
 const BLOOMINGTON_URL =
@@ -162,5 +163,63 @@ describe('California state banner is versioned, not overwritten (CA-3)', () => {
     const state = getBuildingImages('Anytown', 'CA').State;
     expect(state).toContain('/states/CA-v2.jpg');
     expect(state).not.toContain('/states/CA.jpg');
+  });
+});
+
+describe('resolveRepresentingCity — Local-tier banner label (district-type allowlist)', () => {
+  // Reported bug: "877 W 1050 N, Orem, UT" banner-titled "Alpine School District".
+  // Live POST /essentials/candidates/search returns the SCHOOL record (self-
+  // referential representing_city="Alpine School District") sorted ahead of the
+  // LOCAL Orem City Council record — this fixture mirrors that order.
+  it("does not let a SCHOOL record's self-referential representing_city hijack the banner", () => {
+    const list = [
+      { district_type: 'SCHOOL', representing_city: 'Alpine School District', chamber_name: 'Alpine School Board' },
+      { district_type: 'COUNTY', representing_city: 'Utah', chamber_name: 'Utah County Commission' },
+      { district_type: 'LOCAL', representing_city: 'Orem', chamber_name: 'Orem City Council' },
+    ];
+    expect(
+      resolveRepresentingCity({ searchMode: 'address', list, addressInput: '877 W 1050 N, Orem, UT' })
+    ).toBe('Orem');
+  });
+
+  // Same hijack, different tier: COUNTY records carry their own county name (e.g.
+  // "Utah" for Utah County), which must not out-rank the mayor's LOCAL_EXEC record.
+  it("does not let a COUNTY record's self-referential representing_city hijack the banner", () => {
+    const list = [
+      { district_type: 'COUNTY', representing_city: 'Utah', chamber_name: 'Utah County Commission' },
+      { district_type: 'LOCAL_EXEC', representing_city: 'Orem', chamber_name: 'Orem Mayor' },
+    ];
+    expect(
+      resolveRepresentingCity({ searchMode: 'address', list, addressInput: '877 W 1050 N, Orem, UT' })
+    ).toBe('Orem');
+  });
+
+  it('still guards against a NATIONAL/STATE stray representing_city (pre-existing behavior)', () => {
+    const list = [{ district_type: 'NATIONAL_UPPER', representing_city: 'Inglewood', chamber_name: 'U.S. Senate' }];
+    expect(
+      resolveRepresentingCity({ searchMode: 'address', list, addressInput: '123 Main St, Riverside, CA' })
+    ).toBe('Riverside');
+  });
+
+  it('falls back to a "City of X" chamber_name parse when no record has representing_city set', () => {
+    const list = [{ district_type: 'LOCAL', chamber_name: 'City of Bloomington' }];
+    expect(
+      resolveRepresentingCity({ searchMode: 'address', list, addressInput: '100 W Kirkwood Ave, Bloomington, IN 47404' })
+    ).toBe('Bloomington');
+  });
+
+  it('falls back to parsing the typed address when no local official carries a city of record', () => {
+    expect(
+      resolveRepresentingCity({ searchMode: 'address', list: [], addressInput: '100 W Kirkwood Ave, Bloomington, IN 47404' })
+    ).toBe('Bloomington');
+  });
+
+  it('returns null in ZIP mode even with a matching LOCAL record (a ZIP has no single place of record)', () => {
+    const list = [{ district_type: 'LOCAL', representing_city: 'Bloomington' }];
+    expect(resolveRepresentingCity({ zipInfo: { states: ['IN'] }, list, addressInput: '' })).toBeNull();
+  });
+
+  it('uses the browse-mode label as-is', () => {
+    expect(resolveRepresentingCity({ searchMode: 'browse', browseLabel: 'Culver City, CA' })).toBe('Culver City, CA');
   });
 });

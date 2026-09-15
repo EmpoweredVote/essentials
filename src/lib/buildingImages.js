@@ -8,6 +8,8 @@
  *   return null and fall back to the same tier gradient.
  */
 
+import { unincorporatedLabel } from './localityLabel';
+
 /** Map of state abbreviation → kebab-case file stem for state capitol images */
 const STATE_CAPITOLS = {
   AL: 'alabama',
@@ -97,7 +99,7 @@ const STATE_NAME_TO_ABBREV = Object.fromEntries(
 );
 
 // US Capitol from the Capitol Reflecting Pool (Wikimedia Commons) —
-//   Panorama at the Capitol Reflecting Pool (September 2023) 02 | DiscoA340 | CC BY-SA 4.0
+//   federal - Panorama at the Capitol Reflecting Pool (September 2023) 02 | DiscoA340 | CC BY-SA 4.0
 // Leveled 0.6° and cropped to 1700x540 with a thin water strip anchoring the bottom
 // (operator-selected 2026-07-03). v2 filename busts the CDN cache on the old path.
 const FEDERAL_IMAGE = 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/national/us-capitol-banner-v2.jpg';
@@ -380,6 +382,45 @@ const CURATED_LOCAL = {
   biddeford: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biddeford.jpg' },
   lewiston: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lewiston.jpg' },
   auburn: { state: 'ME', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/auburn.jpg' },
+  // The four la_county/building_photos assets -- credits RECOVERED 2026-09-10. Line 106 says
+  // this attribution block covers the LA-county skylines, but no title|author|license line
+  // ever existed for any of these four: the 2026-07-05 CA audit at line 126 certified them
+  // ('Los Angeles + Torrance kept their prior la_county/building_photos shots; Pomona +
+  // Carson certified as-is') without crediting them. Treasury Tracker called this the one
+  // gap costing a consumer today -- all four are live TT entities, and they are why their
+  // refresh covered 95 of 99 cities, with Los Angeles falling back to a Wikipedia lookup.
+  //
+  // All four are Wikimedia Commons files and ALL FOUR ARE AttributionRequired=true, so they
+  // have been displaying in breach of their licences. Recovered by the same matcher used for
+  // the UT Wave 2 batch, then confirmed by eye. These are not composed to a box like the UT
+  // banners, and the dimensions corroborate each match independently:
+  //   pomona   800x402  == the (cropped) derivative exactly -- used verbatim
+  //   carson   1039x779 == the Commons file exactly -- used verbatim, scored MAD 1.17
+  //   torrance 1600x909 is 3700x2103 rescaled (1.7602 vs 1.7594) -- whole-frame MAD 2.92
+  //   los angeles 1600x520 is a crop -- MAD 2.29 against the located rectangle
+  //
+  //   los angeles - downtown skyline at sunset above Echo Park Lake
+  //            (File:Echo Park Lake with Downtown Los Angeles Skyline.jpg) | Adoramassey | CC BY-SA 4.0
+  //   pomona - Pomona City Hall, the Welton Becket civic centre block
+  //            (File:Pomona city hall (cropped).jpg) | Cliffo | CC BY 2.5
+  //   torrance - Torrance City Hall behind the eucalyptus on Torrance Blvd
+  //            (File:Torrance CA City Hall.jpg) | Thurifer | CC BY-SA 4.0
+  //   carson - Carson City Hall across the lawn
+  //            (File:Carson city hall.jpg) | The Front Page Online | CC BY-SA 4.0
+  //
+  // ⚠ Two wrinkles worth keeping, because both would mislead someone re-deriving these:
+  // 1. LOS ANGELES: two Commons pages hold this photograph. The shipped crop matches the
+  //    file's PRE-2019-06-16 revision (MAD 2.29), which someone re-uploaded as a separate
+  //    page named 'File:20190616154621!Echo Park Lake with Downtown Los Angeles Skyline.jpg';
+  //    the current revision of the canonical page scores 10.38. Same author and licence
+  //    either way, so the credit above is right, but a pixel check against the canonical
+  //    page today will NOT reproduce 2.29 and that is expected, not a mismatch.
+  // 2. POMONA: the source is the (cropped) DERIVATIVE, which is 800x402 -- exactly the
+  //    shipped file. The 800x600 original (File:Pomona..cityhall.jpg) actually scored
+  //    slightly better on the matcher (5.41 vs 7.85); the dimensions, not the metric, settle
+  //    which was used. Cliffo / CC BY 2.5 covers both, so attribution is unaffected.
+  // 🔑 And note the licences differ per file -- CC BY-SA 4.0 twice, CC BY 2.5 once. There is
+  //    no batch-level licence here any more than there was in UT Wave 2.
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
   'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
   glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
@@ -479,8 +520,94 @@ const CURATED_LOCAL = {
   'west valley city': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/west-valley-city.jpg' },
   murray: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/murray.jpg' },
   draper: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/draper.jpg' },
-  // UT Wave 2 batch (19 smaller cities, operator-certified 2026-07-06). Licensed Wikimedia
-  // Commons; thin-coverage towns lean on landmarks/mountain-backdrops. Attribution in review notes.
+  // UT Wave 2 batch (19 smaller cities, operator-certified 2026-07-06). Wikimedia Commons;
+  // thin-coverage towns lean on landmarks/mountain-backdrops.
+  //
+  // ⚠ The authors below were RECOVERED on 2026-09-10/11, not transcribed. This batch shipped
+  // reading 'Attribution in review notes' and named nobody -- those notes were a session
+  // artifact and are in neither the repo nor commit df538f07, which lists the 19 cities and
+  // stops at 'Licensed Wikimedia Commons'. Treasury Tracker raised it as a licence-compliance
+  // gap (TT note 2026-09-10): a CC BY / CC BY-SA image shown without its author is a breach,
+  // and 'Wikimedia Commons' names nobody, so they could not ship these behind a placeholder
+  // either -- all 19 were omitted from their catalog.
+  //
+  // Method, since these are recovered rather than certified: every banner in this batch was
+  // composed to 1700x540 FIRST, so each is a CROP of its source and a whole-image comparison
+  // cannot see the match (this is what defeated the columbus recovery in GA-4). Each banner
+  // was located inside candidate frames by multi-scale template matching, scored by mean
+  // absolute difference per channel over the located rectangle, and then LOOKED AT beside its
+  // candidate. Calibrated on the one pair whose answer was already known, macon: true source
+  // 10.85, nearest non-match 29.49. Every line below scored <= 13.5 with correlation >= 0.925
+  // against a runner-up of 18 or worse (usually 30-50), and every one was confirmed by eye.
+  // Author and licence were read from each File: page via the Commons API, never inferred
+  // from the ranking. Weakest margins, so re-check these two first if anything looks wrong:
+  // mapleton (4.31 against a 18.19 runner-up) and cottonwood-heights (13.52, corr 0.925).
+  // All 19 are now attributed; south salt lake was the last and took a third pass -- see the
+  // note under the list for why a category sweep could never have found it.
+  //
+  // 🔑 THE LICENCES ARE NOT UNIFORM -- CC BY-SA 4.0, 3.0 and 2.0, CC BY 2.0, and one public
+  //    domain file. The old header was wrong about the licence, not merely silent on it.
+  //
+  // title | author | license (source File: page in parentheses):
+  //   alpine - snow-covered ridge above tile rooftops (File:Alpine 01.png)
+  //            | TungstenKing | CC BY-SA 4.0
+  //   bluffdale - aerial over the Traverse Mountain ridges toward the valley
+  //            (File:Traverse Mountains (South Mountain), Draper and Alpine, Utah (67181504).jpg)
+  //            | Ken Lund | CC BY-SA 2.0
+  //   cedar hills - N Canyon Road dropping toward Utah Lake
+  //            (File:South on N Canyon Rd, Cedar Hills, Utah, Jun 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   cottonwood heights - hillside homes in autumn colour below the Wasatch
+  //            (File:Homes in the Mountains - Cottonwood Heights - Utah (52838760022).jpg)
+  //            | Tony Webster | CC BY 2.0
+  //   eagle mountain - the planted median of Pony Express Parkway
+  //            (File:Pony Express Parkway in Eagle Mountain, Utah.jpg) | Helen854 (en.wikipedia) | Public domain
+  //   herriman - Butterfield Canyon overlook, the mine terrace at left and the valley beyond
+  //            (File:Butterfield Canyon (Utah).jpg) | Terry Ott | CC BY 2.0
+  //   lindon - the US-89 signal run looking south-east
+  //            (File:Southeast on US-89 in Lindon, Utah, Jun 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   mapleton - the derelict timber barn below the Wasatch
+  //            (File:Old, often photographed, barn in Mapleton, Utah.JPG) | An Errant Knight | CC BY-SA 4.0
+  //   midvale - the brick 'Midvale City Old Town' sign
+  //            (File:Midvale CIty Old Town sign.JPG) | An Errant Knight | CC BY-SA 4.0
+  //   millcreek - the west face of Mount Olympus
+  //            (File:June 2008 - Mount Olympus Utah.jpg) | Jeff McGrath (Climbjm) | CC BY-SA 3.0
+  //   payson - Payson Utah Temple with the valley and hills behind
+  //            (File:Paysonutah.jpg) | Whatsupchadjames | CC BY-SA 4.0
+  //   pleasant grove - historic-district storefronts under the Rexall Drugs sign
+  //            (File:Pleasant Grove Historic District commercial buildings.jpg) | Ken Lund | CC BY-SA 2.0
+  //   salem - east across Salem Pond to the mountain
+  //            (File:East across Salem Lake, Salem, Utah, Jul 17.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   santaquin - Main Street looking east into the mountainside
+  //            (File:East on Main Street, Santaquin, Utah, May 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   saratoga springs - reeds along the Utah Lake shore, range beyond
+  //            (File:Utah Lake from Saratoga Springs dyeclan.com - panoramio.jpg) | The Dye Clan | CC BY-SA 3.0
+  //   south jordan - Oquirrh Lake at Daybreak, houses and the Wasatch beyond
+  //            (File:Daybreak Community Utah 2011-06-20.JPG) | Dean Derhak | CC BY-SA 3.0
+  //   south salt lake - looking south at the S-Line level crossing at S 400 East, townhouses
+  //            under construction behind (File:S-Line S 400 E level crossing, South Salt Lake,
+  //            Utah, Oct 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //   taylorsville - the front elevation of Taylorsville library
+  //            (File:Taylorsville Library front view.jpg) | Bobjgalindo | CC BY-SA 4.0
+  //   vineyard - railroad track curving toward Cascade Mountain, shot from a FrontRunner train
+  //            (File:East at Cascade Mountain on FrontRunner, Jul 16.jpg) | An Errant Knight | CC BY-SA 4.0
+  //
+  // 🔑 SOUTH SALT LAKE RESISTED TWO SWEEPS BEFORE A TITLE SEARCH FOUND IT, AND THE REASON IS
+  //    WORTH KEEPING. It was marked AUTHOR/LICENCE UNRESOLVED on 2026-09-10 after two passes
+  //    failed: Category:South Salt Lake, Utah at depth 2 plus S-Line / Sugar House streetcar /
+  //    TRAX / UTA / Central Pointe / 300 West full-text searches -- 296 files, 280 comparable,
+  //    best score 41.88 where a true match lands under 13.5. Resolved 2026-09-11 by
+  //    `intitle:"South Salt Lake"` in the File namespace: 61 titles, and the banner's source
+  //    is the second one a human eye would pick from that list, at MAD 5.83 / corr 0.989
+  //    against 44.96 for the next best.
+  //    THE FILE IS NOT IN ANY SOUTH SALT LAKE CATEGORY. Its categories are 'Level crossings in
+  //    Utah', 'S Line (Utah Transit Authority)', 'Photographs by An Errant Knight', 'Stop signs
+  //    in Utah' and so on -- no city category at all, which is why a category walk could not
+  //    reach it however deep it went. Torrance in the LA-county block failed the same way and
+  //    was found through the en.wikipedia article's image list. So when a category sweep comes
+  //    up empty, the subject is often filed by WHAT IT IS rather than WHERE IT IS: try an
+  //    intitle: search on the place name, the photographer's own category, and article image
+  //    lists before concluding the source is unrecoverable.
+  //    With this line the batch is complete: all 19 UT Wave 2 banners carry an author.
   alpine: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alpine.jpg' },
   bluffdale: { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bluffdale.jpg' },
   'cedar hills': { state: 'UT', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/cedar-hills.jpg' },
@@ -802,6 +929,39 @@ const CURATED_LOCAL = {
   miami: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/miami.jpg' },
   bradenton: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bradenton.jpg' },
   tallahassee: { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/tallahassee.jpg' },
+  // Tennessee — the first 'TN'-scoped key (2026-09-11, operator-approved). Nashville was the
+  // largest coverage gap on the landing page: 42 officials, a complete Metro Council roster,
+  // and no chip, purely because cities/nashville.jpg did not exist.
+  //   nashville - Ryman Auditorium and the Lower Broadway honky-tonks, downtown towers behind
+  //            (File:Nashville pano Opry Broadway.jpg) | Daniel Schwen | CC BY-SA 4.0
+  //
+  // ⚠ SOURCED AND CROPPED 2026-09-11; vertical anchor 0.94, which is unusually high and was
+  // the operator's explicit call. At the default 0.5 (and even at 0.68) the desktop band is
+  // half overcast sky with the Ryman roofline across it; the honky-tonk signage that actually
+  // identifies Nashville sits in the bottom third of the frame and was being clipped away.
+  // 0.94 puts the storefront row, the Tootsie's facade and the traffic signals INSIDE the
+  // 6:1 band and leaves pavement as a thin strip at the lower edge. Cropped from the
+  // 4600x2500 ORIGINAL, not a thumbnail (see the columbus note for why that matters).
+  // Verified after upload: served bytes hash-match the local file, sha256 af6de2705d0284b7,
+  // 263,238 bytes.
+  //
+  // 🔑 WHY THE ANCHOR AND NOT object-position: SectionBanner.jsx renders every banner with
+  //    object-fit:cover and NO object-position, so the visible band is always the file's
+  //    vertical middle, identically for all ~180 banners, with no per-banner override. Moving
+  //    a single banner's visible band therefore has to happen in the FILE, by choosing which
+  //    part of the scene lands in the middle. Do not add object-position to that component to
+  //    fix one image: it would re-crop every banner in the registry at once.
+  //
+  // Rejected candidates, recorded so they are not re-proposed: a Fort Negley skyline (Jschnake,
+  // CC BY-SA 4.0) and Kaldari's Cumberland panorama (public domain, and it carries the State
+  // Capitol) both read as 'a city' rather than as Nashville; Lower Broadway at dusk
+  // (Cpl. Vincent Needham, public domain) fails the daytime rule with half the frame empty
+  // pavement; Shelby Park's river view has an unreadable distant skyline.
+  // 🔴 AND ONE THAT PASSED EVERY AUTOMATED FILTER: 'File:City of Nashville skyline from Gulch -
+  //    Oct 2019.jpg' (Marlamorrismusic, CC BY-SA 4.0) is a PORTRAIT OF A MAN against open sky.
+  //    Correct licence, ample resolution, landscape aspect, and the word 'skyline' in the
+  //    filename. Only looking at it caught that. Read the picture, never the title.
+  nashville: { state: 'TN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/nashville.jpg' },
   // Georgia — Knight program wave GA-3 (2026-09-01, operator-certified). The program's
   // FIRST 'GA'-scoped key. Certified in BOTH production boxes, not on the full frame:
   // mobile 13/4 shows 96.9% (rows 8-531 of 540), desktop 6/1 shows 52.5% (rows 128-411).
@@ -831,7 +991,55 @@ const CURATED_LOCAL = {
   // Georgia -- Knight program wave GA-4 (2026-09-01, operator-certified). Composed to
   // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
   //   columbus - the Eagle & Phenix mill row above the Chattahoochee whitewater course,
-  //              seen from the west bank | CC BY-SA 4.0 | Wikimedia Commons
+  //              seen from the west bank (File:Downtown Columbus, Georgia skyline.jpg)
+  //              | PghPhxNfk | CC BY-SA 4.0
+  //
+  // ⚠ This line read '| CC BY-SA 4.0 | Wikimedia Commons' until 2026-09-10 -- a licence
+  // sitting in the author slot with no author anywhere on the line, so a consumer reading
+  // positionally (the documented contract, see line 106) published 'CC BY-SA 4.0' as the
+  // photographer. Treasury Tracker's extractor refused it rather than guessing, which is how
+  // it was caught. It was then marked AUTHOR UNRESOLVED for a day before TT recovered it.
+  //
+  // The author was NOT established by resemblance -- it was established by REPRODUCTION. TT
+  // found the source in the GA-4 build's own working record (the upload step reads
+  // asset_E_0.42.jpg at 363,180 bytes, and E resolves to the file above from that session's
+  // A-E shortlist), then re-ran the compose step to check it. Verified here independently on
+  // 2026-09-11 rather than taken on trust:
+  //   - the live object is 363,180 bytes, sha256 32e8b5c91cd04892 (TT's stated hash is right)
+  //   - re-running their recipe -- full-width 3.148:1 crop, vertical window centred at 42% of
+  //     source height, LANCZOS to 1700x540 -- reproduces the live frame at pixel MAD 2.74
+  //   - the two other anchors that build tried, 0.55 and 0.68, land at 60.66 and 60.79, which
+  //     are the same figures TT reports, from a separate implementation
+  //   - the matcher calibrated on the macon pair scores this source ncc 0.997 / MAD 8.26
+  // ✅ AND IT REPRODUCES BYTE-FOR-BYTE. Stock Pillow 12.1.1, JPEG quality 90, cropping the
+  // FULL-RESOLUTION original (4032x3021): 363,180 bytes, sha256 32e8b5c91cd04892 -- the live
+  // object exactly. Verified 2026-09-11.
+  //
+  // 🔴 CORRECTION, AND THE TRAP IS THE REUSABLE PART. This block previously said byte-identity
+  // was "NOT reproducible and should not be expected... because JPEG bytes depend on the
+  // encoder", citing a 364,294-byte re-encode. That was wrong, and the cause was not the
+  // encoder: that attempt re-encoded a 3840px-wide THUMBNAIL served by the Commons API, not
+  // the 4032px original. Resizing 3840->1700 and 4032->1700 are different operations, so the
+  // output differed and the difference was then blamed on the encoder. REPRODUCE FROM THE
+  // ORIGINAL, NEVER FROM A `thumburl`. A thumbnail silently changes the answer while looking
+  // like the same file, and it turns the strongest confirmation available -- an exact hash --
+  // into a false negative that reads as evidence against a correct identification.
+  // A different encoder or quality setting could still differ, so treat a byte mismatch as
+  // "check your inputs first", not as a refutation. But do attempt the hash: it is decisive.
+  //
+  // 🔑 WHY THE SWEEP MISSED IT, WHICH IS THE REUSABLE PART. This exact file was the
+  //    TOP-SCORING candidate in the sweep that gave up, at 29.92 -- and it was written off for
+  //    failing the threshold. The 41 anchor steps tried over the vertical span all landed
+  //    14-18px from the true crop, about 4px in the rendered banner, and on a detailed
+  //    cityscape that reads as a different photograph. The same failure shows up in the UT
+  //    Wave 2 recovery from the other direction: even the KNOWN-GOOD macon pair sat at MAD 15
+  //    until a local search over scale and offset was added, after which it fell to 10.85 and
+  //    the true Utah sources to 3.73-13.52. So: WHEN A SWEEP PRODUCES A CLEAR LEADER THAT
+  //    STILL FAILS THE THRESHOLD, REFINE AROUND IT BEFORE RULING IT OUT. A near-miss on
+  //    alignment is indistinguishable from a different photograph until you fix the alignment.
+  // 🔴 And the leader was nearly discarded for a second reason -- see the homonym trap below.
+  //    'Downtown Columbus, Georgia skyline' is the right city; the PUBLIC DOMAIN featured
+  //    picture named 'Downtown Columbus View from Main St Bridge' is Columbus, OHIO.
   //
   // The desktop 6/1 band keeps only rows 128-411 of 540, so the crop was chosen to put the
   // mill row, the river and the rapids all inside that band -- the whitewater course is the
@@ -854,7 +1062,16 @@ const CURATED_LOCAL = {
   // 1700x540 FIRST and then certified in BOTH production boxes, not on the full frame:
   //   macon - the downtown Macon skyline seen across the tree line, with the domed
   //           building and the brick tower's white cupola reading as landmarks
-  //           | CC BY-SA 3.0 | Bubba73, Wikimedia Commons, own work
+  //           | Bubba73 | CC BY-SA 3.0 (own work)
+  //   source: File:MaconSkyline.JPG (3008x920, the native 3.27:1 recorded below)
+  //
+  // ⚠ These two fields were REVERSED here until 2026-09-10, reading '| CC BY-SA 3.0 |
+  // Bubba73, Wikimedia Commons, own work'. The author survived in the licence slot, so no
+  // credit was lost, but a positional consumer published the licence as the photographer.
+  // Corrected against the Commons File: page rather than by trusting the position: Treasury
+  // Tracker pixel-matched cities/macon.jpg to File:MaconSkyline.JPG at 2.11 mean abs
+  // difference per channel, against 62.69 for the other wide Macon skyline in the same
+  // category (File:Macon night skyline2.JPG) (TT note 2026-09-10).
   //
   // The desktop 6/1 band keeps only rows 128-411 of 540, and this was the ONLY one of three
   // candidates whose subject sits inside that band. Its native 3.27:1 is almost exactly the
@@ -878,6 +1095,45 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing for the usual reason, and more so here: substring
   // matching would hand this banner to Macon County GA as well as to the city.
   macon: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/macon.jpg' },
+  // Indiana -- Knight program slice 4, stage 5 (2026-09-11, operator-certified). Both composed
+  // to 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), not on the full frame.
+  //
+  // Indiana already had two compositions to differentiate against, and the test is CAMERA HEIGHT
+  // AND WHAT FILLS THE FRAME, never the subject noun (the Asheville ruling):
+  //   states/IN.jpg        - ELEVATED, looking down on a ballpark, skyline a distant right-hand band
+  //   cities/bloomington   - STREET CORRIDOR down the axis of Kirkwood Ave, trees framing both edges
+  //
+  //   fort wayne - the confluence of the St Marys and St Joseph rivers, with the stone revetment
+  //                and the three arches of the Columbia Street Bridge | Momoneymoproblemz
+  //                | CC BY-SA 3.0 (own work, 2014-05-10)
+  //                source: File:Confluence of Three Rivers, Fort Wayne, Indiana.JPG (4896x1992)
+  //                anchor_y 0.25 -- at 0.55 the band is almost pure water.
+  //   gary       - Gary City Hall's colonnade with the domed Lake County Superior Courthouse to
+  //                its right, east along Fourth Avenue | Nyttend | Public domain (own work,
+  //                2012-04-12) | source: File:City Hall and Superior Courthouse in Gary.jpg
+  //                (2816x1584), anchor_y 0.35 -- the road and parked cars fall below the band.
+  //
+  // 🔴 A CATEGORY NAME IS NOT A JURISDICTION. Sweeping Commons for these two returned the wrong
+  // state repeatedly: 'Category:Maumee River' gave Defiance, OHIO (Fort Amanda, Pontiac Park, the
+  // Auglaize confluence) and the Indiana Dunes categories gave Porter County rather than Gary.
+  // Every candidate coordinate was tested against the city's own TIGER place polygon -- 21
+  // rejected for Fort Wayne, 38 for Gary. Gary's file lands 60 m from the City Hall point the
+  // IN-4 acceptance probe uses. Fort Wayne's carries no coordinates and was cleared instead by
+  // its uploader's description naming the Three Rivers Water Filtration Plant.
+  //
+  // 🔴 GARY'S COMMONS COVERAGE IS DOMINATED BY RUIN PHOTOGRAPHY. Five of the six best candidates
+  // by size and aspect are the derelict City Methodist Church and abandoned buildings -- all wide,
+  // sharp, in-city and correctly licensed. Ranking on measurements alone puts a collapsed church
+  // on the banner of a city whose mayor and council we seated. Sorting Fort Wayne the same way
+  // puts three derelict parking garages on top. ASPECT IS NOT MERIT.
+  //
+  // ⚠ The Allen County Courthouse is Fort Wayne's strongest civic subject and was REFUSED: it is a
+  // frontal building portrait whose dome sits too near the top edge to be centred in the band
+  // without discarding the building's width -- the Milledgeville failure exactly.
+  //
+  // ⚠ match:'exact' is load-bearing for the usual reason.
+  'fort wayne': { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-wayne.jpg' },
+  gary: { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gary.jpg' },
 };
 
 /**
@@ -1207,5 +1463,112 @@ export function parseStateFromAddress(address) {
     if (abbrev) return abbrev;
   }
 
+  return null;
+}
+
+/**
+ * Derive the "representing city" label for the Local-tier banner (SBAN-03) and
+ * curated-image lookup. In browse/coordinate mode the caller's own label/probe is
+ * authoritative; in address mode it prefers a local official's `representing_city`,
+ * then a chamber_name parse, then the backend's unincorporated-locality probe, then a
+ * parse of the typed address string.
+ *
+ * Only LOCAL/LOCAL_EXEC (actual municipal government) officials may set the banner
+ * from `representing_city`. COUNTY and SCHOOL records also carry a `representing_city`
+ * — set to their OWN jurisdiction's name (e.g. a SCHOOL record for Alpine School
+ * District carries representing_city="Alpine School District"), not a city — so this
+ * needs an allowlist of district types, not a denylist. A denylist of just
+ * NATIONAL_* / STATE_* (the original guard, meant to stop a stray representing_city on a
+ * statewide office from hijacking the banner) missed COUNTY and SCHOOL, which carry the
+ * same kind of self-referential value and hijack the banner identically whenever they
+ * sort before the real municipal official (reported: an Orem, UT address banner-titled
+ * "Alpine School District" because the SCHOOL record for Alpine School District sorted
+ * first in the politicians list).
+ *
+ * @param {object} ctx
+ * @param {object|null} [ctx.zipInfo] - ZIP has no single place of record; forces null.
+ * @param {'address'|'browse'|'coordinate'|string|null} [ctx.searchMode]
+ * @param {string|null} [ctx.browseLabel] - browse-mode area label (`browse_label` param)
+ * @param {object|null} [ctx.coordLocality] - locality probe for a raw lat/lng point
+ * @param {object|null} [ctx.incorporationInfo] - locality probe for an address-mode point
+ * @param {Array<object>} [ctx.list] - politician/official records for the resolved point
+ * @param {string} [ctx.addressInput] - the typed/geocoded address string
+ * @returns {string|null}
+ */
+export function resolveRepresentingCity(ctx = {}) {
+  const {
+    zipInfo = null,
+    searchMode = null,
+    browseLabel = null,
+    coordLocality = null,
+    incorporationInfo = null,
+    list = [],
+    addressInput = '',
+  } = ctx;
+
+  // In browse mode the browsed area label is authoritative for the city banner.
+  // Deriving the city from politician records can surface a neighboring city
+  // when districts overlap (e.g. a Culver City browse showing "Inglewood"
+  // because an overlapping district's official has representing_city set).
+  // ZIP mode has NO single place of record: a ZIP routinely spans several
+  // cities. Deriving one from politician records would let a stray
+  // representing_city on an overlapping district's official hijack the banner —
+  // the same hijack the browse and coordinate branches guard against. Return
+  // null and let the state-level banner lead.
+  if (zipInfo) return null;
+  if (searchMode === 'browse') {
+    if (browseLabel && browseLabel.trim()) return browseLabel.trim();
+  }
+  // Coordinate-mode guard (T-214-06 / RESEARCH Pitfall 3): a raw lat/lng has no
+  // resolved place name — the server never echoes an address (D-05) — so there is
+  // no trustworthy label-of-record to derive here. Return null explicitly rather
+  // than falling through to the "derive from politician records" branches below,
+  // which can surface a neighboring jurisdiction's stray representing_city for a
+  // boundary-straddling point (the same hijack the 'browse' branch above guards
+  // against).
+  if (searchMode === 'coordinate') {
+    // LOC-04 (Phase 216-03): an unincorporated coordinate point still has an
+    // authoritative backend-derived label ("Unincorporated {County}") even
+    // though no address/place name can be derived — check it before falling
+    // through to the "no trustworthy label" null below.
+    const lbl = unincorporatedLabel(coordLocality);
+    if (lbl) return lbl;
+    return null;
+  }
+  const src = Array.isArray(list) ? list : [];
+  // Only LOCAL/LOCAL_EXEC (actual municipal government) may set the local city
+  // banner from representing_city — see function doc above. A statewide or federal
+  // office (NATIONAL_* / STATE_*), a COUNTY office, or a SCHOOL office can all carry
+  // a stray/self-referential representing_city — e.g. a U.S. Senator whose office
+  // was tagged with a city from an old city-council record — and, because it sorts
+  // ahead of or instead of the real local official, would otherwise hijack the
+  // banner (a Riverside County address rendering under an "Inglewood" banner via
+  // Sen. Padilla's office; an Orem, UT address rendering under "Alpine School
+  // District" via the local school board).
+  for (const p of src) {
+    const dt = p?.district_type || '';
+    if (!dt.startsWith('LOCAL')) continue;
+    if (p.representing_city) return p.representing_city;
+  }
+  // Fallback 1: extract city name from local politicians' chamber_name.
+  // Handles "Bloomington City Council" and "City of Bloomington".
+  for (const p of src) {
+    const dt = p?.district_type || '';
+    if (dt === 'LOCAL' && p.chamber_name) {
+      const beforeCity = p.chamber_name.match(/^(\w[\w\s]+?)\s+City\b/);
+      if (beforeCity) return beforeCity[1];
+      const cityOf = p.chamber_name.match(/^City of\s+(.+)$/i);
+      if (cityOf) return cityOf[1].trim();
+    }
+  }
+  // LOC-04 (Phase 216-03): an unincorporated point is authoritatively backend-flagged
+  // — check it BEFORE the postal-city guess below, which would otherwise mislabel an
+  // unincorporated parcel with its nearest postal city (e.g. "Tucson").
+  const lbl = unincorporatedLabel(incorporationInfo);
+  if (lbl) return lbl;
+  // Fallback 2: parse the city out of the typed address ("…, Bloomington, IN 47404").
+  // Reliable for address searches where politician data lacks representing_city.
+  const fromAddress = parseCityFromAddress(addressInput);
+  if (fromAddress) return fromAddress;
   return null;
 }

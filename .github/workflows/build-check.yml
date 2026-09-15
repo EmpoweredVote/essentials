@@ -33,6 +33,10 @@ jobs:
       - run: npm run lint
       # Same no-masking reasoning as the test step below: a lint failure must not
       # hide a broken bundle.
+      # banners.json is generated from the registry comment block in buildingImages.js.
+      # Two other products render these credits as public attribution, so a stale export
+      # is a licence problem, not a formatting one -- fail the build rather than drift.
+      - run: npm run banners:check
       - run: npm run build
         if: ${{ !cancelled() }}
       # The suite runs even when the build fails. A failing early step otherwise
