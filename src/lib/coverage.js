@@ -463,25 +463,32 @@ export const COVERAGE_STATES = [
       // Added 2026-09-11, once the banner existed. This was the largest single coverage gap on
       // the landing page: a complete 42-seat roster (Mayor, Vice Mayor, 5 at-large, 35 districts)
       // that no user could reach, because the chip was gated on cities/nashville.jpg.
-      // hasContext TRUE as of 2026-09-11: 39 of the 42 Metro officials now hold evidenced compass
-      // rows — 125 answers across 12 topics, every one sourced to a page that was actually fetched,
+      // hasContext TRUE as of 2026-09-11: 40 of the 42 Metro officials now hold evidenced compass
+      // rows — 127 answers across 12 topics, every one sourced to a page that was actually fetched,
       // across three source classes now: the Nashville Banner 2023 Voter's Guide questionnaires
       // (CC BY-ND), the Banner's one-on-one with Mayor O'Connell, and nashville.legistar.com
       // enacted texts and roll calls. Verified through the occupancy chain, not
-      // politicians.office_id: 39 with answers, 0 rows missing a source. Re-measured 2026-09-14.
-      // ⚠ The 3 without rows are honest gaps, not oversights: the Vice Mayor's Banner piece is a
-      // procedural interview about running the council that correctly yielded nothing; D8 (Harrell)
-      // and D33 (Lee) have no Banner questionnaire in the guide at all.
-      // ✅ D24 (Gadd) WAS the fourth, and Legistar closed her — 4 rows from sponsored ordinances and
-      // resolutions (ev-accounts #502). That path was scoped before it was spent and it does NOT
-      // generalise: only 40 of the 4,428 matters introduced this term are position-bearing at all,
-      // ~0.9%, the rest being grant acceptances, appointments, easements and parcel zone changes.
-      // Gadd cleared it because she is the council's most prolific sponsor of the few that are;
-      // Harrell holds zero prime sponsorships and is worth exactly two named bills, not a pass.
-      // 🔑 Four of her strongest documents seated NOTHING because no LADDER reaches them — an
-      // enacted eviction right-to-counsel ordinance (rent-regulation's chairs are all rent-control
-      // levels) and a grocery-tax resolution (taxes' chairs are all "wealthy people and large
-      // companies"). Those are Season 3 decisions #5 and #4, not research gaps.
+      // politicians.office_id: 40 with answers, 0 rows missing a source. Re-measured 2026-09-14.
+      // ✅ BOTH REMAINING ZEROS ARE DOCUMENTED, so there is no unexplained gap left in this city.
+      // The Vice Mayor's Banner piece is a procedural interview about running the council that
+      // correctly yielded nothing (#138). Harrell (D8) was researched to a written zero
+      // (ev-accounts #503): all 4,428 matters this term swept, 15 sponsorships found, 11 of them
+      // recognitions or memorials, and no prime sponsorship of anything position-bearing.
+      // ✅ D24 (Gadd) and D33 (Lee) were both closed by Legistar — Gadd on 4 topics (#502), Lee on
+      // 2 (#505). That path was scoped before it was spent and it does NOT generalise: only 40 of
+      // the 4,428 matters introduced this term are position-bearing at all, ~0.9%, the rest being
+      // grant acceptances, appointments, easements and parcel zone changes. Gadd cleared it because
+      // she is the council's most prolific sponsor of the few that are; Lee only because the sweep
+      // was extended back to her FIRST term — she is a returning 2019 member, so the 2023 corpus
+      // that covered everyone else holds half her record.
+      // 🔑 SIX OF THEIR STRONGEST DOCUMENTS SEATED NOTHING BECAUSE NO LADDER REACHES THEM, and that
+      // is a product finding rather than a research gap. An enacted eviction right-to-counsel
+      // ordinance has nowhere to go while rent-regulation's chairs are all rent-control levels; a
+      // grocery-tax resolution has nowhere to go while taxes' chairs read "wealthy people and large
+      // companies"; and Lee's PRIME-sponsored resolution backing MNPS's refusal to arm teachers has
+      // nowhere to go while gun-policy's chairs run ban / background checks / waiting periods /
+      // repeal. That last one is the sharpest: a national weapon-class ladder has no rung for the
+      // most salient LOCAL gun question in Tennessee. Season 3 decisions #5, #4 and one more.
       // ⚠ This flag speaks only for the 42 local officials, which is all it is allowed to claim.
       // Measured against the live browse this chip opens (by-government-list 47037 + browse_state=TN,
       // 2026-09-11): a visitor also meets 15 State of Tennessee officials — Davidson's own 10 House
