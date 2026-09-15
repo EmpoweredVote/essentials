@@ -8,6 +8,8 @@
  *   return null and fall back to the same tier gradient.
  */
 
+import { unincorporatedLabel } from './localityLabel';
+
 /** Map of state abbreviation → kebab-case file stem for state capitol images */
 const STATE_CAPITOLS = {
   AL: 'alabama',
@@ -1461,5 +1463,112 @@ export function parseStateFromAddress(address) {
     if (abbrev) return abbrev;
   }
 
+  return null;
+}
+
+/**
+ * Derive the "representing city" label for the Local-tier banner (SBAN-03) and
+ * curated-image lookup. In browse/coordinate mode the caller's own label/probe is
+ * authoritative; in address mode it prefers a local official's `representing_city`,
+ * then a chamber_name parse, then the backend's unincorporated-locality probe, then a
+ * parse of the typed address string.
+ *
+ * Only LOCAL/LOCAL_EXEC (actual municipal government) officials may set the banner
+ * from `representing_city`. COUNTY and SCHOOL records also carry a `representing_city`
+ * — set to their OWN jurisdiction's name (e.g. a SCHOOL record for Alpine School
+ * District carries representing_city="Alpine School District"), not a city — so this
+ * needs an allowlist of district types, not a denylist. A denylist of just
+ * NATIONAL_* / STATE_* (the original guard, meant to stop a stray representing_city on a
+ * statewide office from hijacking the banner) missed COUNTY and SCHOOL, which carry the
+ * same kind of self-referential value and hijack the banner identically whenever they
+ * sort before the real municipal official (reported: an Orem, UT address banner-titled
+ * "Alpine School District" because the SCHOOL record for Alpine School District sorted
+ * first in the politicians list).
+ *
+ * @param {object} ctx
+ * @param {object|null} [ctx.zipInfo] - ZIP has no single place of record; forces null.
+ * @param {'address'|'browse'|'coordinate'|string|null} [ctx.searchMode]
+ * @param {string|null} [ctx.browseLabel] - browse-mode area label (`browse_label` param)
+ * @param {object|null} [ctx.coordLocality] - locality probe for a raw lat/lng point
+ * @param {object|null} [ctx.incorporationInfo] - locality probe for an address-mode point
+ * @param {Array<object>} [ctx.list] - politician/official records for the resolved point
+ * @param {string} [ctx.addressInput] - the typed/geocoded address string
+ * @returns {string|null}
+ */
+export function resolveRepresentingCity(ctx = {}) {
+  const {
+    zipInfo = null,
+    searchMode = null,
+    browseLabel = null,
+    coordLocality = null,
+    incorporationInfo = null,
+    list = [],
+    addressInput = '',
+  } = ctx;
+
+  // In browse mode the browsed area label is authoritative for the city banner.
+  // Deriving the city from politician records can surface a neighboring city
+  // when districts overlap (e.g. a Culver City browse showing "Inglewood"
+  // because an overlapping district's official has representing_city set).
+  // ZIP mode has NO single place of record: a ZIP routinely spans several
+  // cities. Deriving one from politician records would let a stray
+  // representing_city on an overlapping district's official hijack the banner —
+  // the same hijack the browse and coordinate branches guard against. Return
+  // null and let the state-level banner lead.
+  if (zipInfo) return null;
+  if (searchMode === 'browse') {
+    if (browseLabel && browseLabel.trim()) return browseLabel.trim();
+  }
+  // Coordinate-mode guard (T-214-06 / RESEARCH Pitfall 3): a raw lat/lng has no
+  // resolved place name — the server never echoes an address (D-05) — so there is
+  // no trustworthy label-of-record to derive here. Return null explicitly rather
+  // than falling through to the "derive from politician records" branches below,
+  // which can surface a neighboring jurisdiction's stray representing_city for a
+  // boundary-straddling point (the same hijack the 'browse' branch above guards
+  // against).
+  if (searchMode === 'coordinate') {
+    // LOC-04 (Phase 216-03): an unincorporated coordinate point still has an
+    // authoritative backend-derived label ("Unincorporated {County}") even
+    // though no address/place name can be derived — check it before falling
+    // through to the "no trustworthy label" null below.
+    const lbl = unincorporatedLabel(coordLocality);
+    if (lbl) return lbl;
+    return null;
+  }
+  const src = Array.isArray(list) ? list : [];
+  // Only LOCAL/LOCAL_EXEC (actual municipal government) may set the local city
+  // banner from representing_city — see function doc above. A statewide or federal
+  // office (NATIONAL_* / STATE_*), a COUNTY office, or a SCHOOL office can all carry
+  // a stray/self-referential representing_city — e.g. a U.S. Senator whose office
+  // was tagged with a city from an old city-council record — and, because it sorts
+  // ahead of or instead of the real local official, would otherwise hijack the
+  // banner (a Riverside County address rendering under an "Inglewood" banner via
+  // Sen. Padilla's office; an Orem, UT address rendering under "Alpine School
+  // District" via the local school board).
+  for (const p of src) {
+    const dt = p?.district_type || '';
+    if (!dt.startsWith('LOCAL')) continue;
+    if (p.representing_city) return p.representing_city;
+  }
+  // Fallback 1: extract city name from local politicians' chamber_name.
+  // Handles "Bloomington City Council" and "City of Bloomington".
+  for (const p of src) {
+    const dt = p?.district_type || '';
+    if (dt === 'LOCAL' && p.chamber_name) {
+      const beforeCity = p.chamber_name.match(/^(\w[\w\s]+?)\s+City\b/);
+      if (beforeCity) return beforeCity[1];
+      const cityOf = p.chamber_name.match(/^City of\s+(.+)$/i);
+      if (cityOf) return cityOf[1].trim();
+    }
+  }
+  // LOC-04 (Phase 216-03): an unincorporated point is authoritatively backend-flagged
+  // — check it BEFORE the postal-city guess below, which would otherwise mislabel an
+  // unincorporated parcel with its nearest postal city (e.g. "Tucson").
+  const lbl = unincorporatedLabel(incorporationInfo);
+  if (lbl) return lbl;
+  // Fallback 2: parse the city out of the typed address ("…, Bloomington, IN 47404").
+  // Reliable for address searches where politician data lacks representing_city.
+  const fromAddress = parseCityFromAddress(addressInput);
+  if (fromAddress) return fromAddress;
   return null;
 }
