@@ -1134,6 +1134,34 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing for the usual reason.
   'fort wayne': { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-wayne.jpg' },
   gary: { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gary.jpg' },
+  // Minnesota -- Knight program slice 5, stage 5 (2026-09-16, operator-certified). Both composed
+  // to 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), never the full frame.
+  //
+  // The composition to differentiate against is states/MN.jpg, the Minneapolis skyline from the
+  // Stone Arch Bridge: a daytime downtown skyline panorama. That is what rejected Saint Paul's own
+  // skyline, which is otherwise its best-known view -- a reader moving from the state section to
+  // the city section would have met the same picture twice.
+  //
+  //   duluth     - the shipping canal, the Aerial Lift Bridge and Canal Park, from the air
+  //                | Bspor.88 | CC0 (own work, August 2024)
+  //                source: File:Duluth, MN - Aerial Lift Bridge and harbor, aerial, August 2024.jpg
+  //                (4000x1660), anchor_y 0.10 -- at 0.25 the bridge rides the top edge of the band.
+  //   saint paul - the Union Depot colonnade, its column bases and the lawn
+  //                | August Schwerdfeger | CC BY 4.0 (own work, 2015-07-26)
+  //                source: File:Saint Paul Union Depot - headhouse panorama - 2015-07-26.jpg
+  //                (12285x3974, native 3.09:1) -- the source is only 0.06 off the asset ratio, so
+  //                anchor_y moves the frame by ~10px and CANNOT choose what the band shows. The
+  //                roofline was trimmed from the source instead (top 690px), which is what puts the
+  //                bases and the planting strip inside the desktop band. Certified for the ground,
+  //                on the operator's reading that the earlier crop read better on mobile than on
+  //                desktop -- which is the Bend failure's signature.
+  //
+  // 🔴 match:'exact' AND the state scope are BOTH load-bearing here. Duluth, GEORGIA is a city of
+  // 33,000 in Gwinnett County, and Georgia is slice 2 of this same program, so a substring or
+  // state-blind match would hand Lake Superior to a suburb of Atlanta. Saint Paul's neighbours are
+  // South Saint Paul and West Saint Paul, separate cities we do not seat.
+  duluth: { state: 'MN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/duluth.jpg' },
+  'saint paul': { state: 'MN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/saint-paul.jpg' },
 };
 
 /**

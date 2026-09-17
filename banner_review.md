@@ -299,5 +299,55 @@ Durham image would be an invented distinction.
 Attribution verified on the Commons File: page -- own work, DiscoA340, CC BY-SA
 4.0, 29 April 2023 15:36, afternoon daylight.
 
+
+## 2026-09-16 -- Duluth and Saint Paul (Knight program slice 5, stage 5)
+
+CERTIFIED. Two new keys, `duluth` (state MN) and `saint paul` (state MN), both
+`match:'exact'`. Assets composed to 1700x540 first, JPEG q90 progressive, and
+judged in the 6/1 DESKTOP BAND -- rows 128-411 -- with the 13/4 mobile band shown
+beside it.
+
+ADJACENCY. states/MN.jpg is the Minneapolis skyline from the Stone Arch Bridge: a
+daytime downtown skyline panorama. That single fact decided Saint Paul. Its own
+best-known view is a skyline across the Mississippi, which is the same
+composition, so it was rejected as a candidate and is recorded on the review page
+as a rejection rather than quietly dropped. Union Depot's colonnade differs on
+both axes the Asheville ruling names -- camera height and what fills the frame.
+
+DULUTH. The shipping canal, the Aerial Lift Bridge and Canal Park from the air;
+Bspor.88, CC0, so no attribution is owed and one is given anyway. anchor_y 0.10:
+at 0.25 the bridge rides the top edge of the desktop band, and the band is then
+mostly water. Two alternatives are on the review page -- the Canal Park light at
+sunset (the strongest colour of any candidate, and the most saturated thing that
+would sit above a list of officials) and the lift bridge head-on in winter, which
+is dramatic at full frame and nearly empty at 6/1 because its own steel frames the
+left and right edges while the band keeps the white sky between them.
+
+SAINT PAUL -- AND THE RATIO TRAP THAT DECIDED THE CROP. The source panorama is
+12285x3974, native 3.09:1, against the asset's 3.148:1. That is a difference of
+22 source pixels, so anchor_y moves the composed frame by about ten pixels and
+CANNOT choose what the desktop band shows. The first certified crop held the whole
+colonnade and the desktop band cut the ground away; the operator caught it exactly
+as the Bend failure presents -- "looks better on mobile than desktop". Zooming made
+it worse, landing the band mid-facade. What worked was trimming the roofline from
+the SOURCE (top 690px) so the composed frame is colonnade-and-ground, which puts
+the column bases, the planting strip and the lawn inside the band. The cornice is
+deliberately outside the desktop band; mobile still shows it.
+
+🔴 EXACT MATCHING AND THE STATE SCOPE ARE BOTH LOAD-BEARING. Duluth, GEORGIA is a
+city of 33,000 in Gwinnett County, and Georgia is slice 2 of this same program --
+a substring or state-blind match would hand Lake Superior to a suburb of Atlanta.
+Saint Paul's neighbours are South Saint Paul and West Saint Paul.
+
+NO STALE-CDN RISK. Both are new keys, so nothing was cached and no -v2 suffix is
+needed. Served bytes were sha256-verified against the local files after upload,
+and a key that cannot exist was requested as a control: HTTP 400, correctly
+refused.
+
+SURFACING. Duluth's 10 city offices carry representing_city='Duluth' and Saint
+Paul's 8 carry 'Saint Paul', so both resolve from an ordinary address search. The
+two county boards leave that column NULL, as Durham County and Buncombe do, and no
+county banner was created.
+
 --- machine-readable ---
-{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}, "asheville-nc": {"status": "certified", "note": "new 2026-08-23; Asheville Skyline from Beaucatcher Mountain Aug 2023 - 1; Bill McMannis CC BY 2.0 (Flickr->Commons); centred crop, 2400->1700 downscale; ELEVATED mountain view chosen BECAUSE the NC state banner is the close ground-level Charlotte skyline -- the two Pack Square civic close-ups were the real adjacency collision, not the skyline frames; sunset aerial (WillThomas CC BY 4.0, 8192px) rejected on the daytime rule only"}, "durham-nc": {"status": "certified", "note": "new 2026-08-23; Panorama on Corcoran Street (April 2023); DiscoA340 CC BY-SA 4.0; native 4.75:1 so horizontal crop only; carries DPAC + Lucky Strike tower + smokestack + Durham Bull in one frame; FIRST city to clear TWO banners (Charlotte close-ground-level AND Asheville elevated-mountain), which eliminated both obvious framings; tobacco-campus courtyard was first choice and REJECTED on the people test at ~67px figures vs the 10-20px silhouette precedent -- revisit it first if that test is ever relaxed; DPAC pano kept as standing alternative"}}
+{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}, "asheville-nc": {"status": "certified", "note": "new 2026-08-23; Asheville Skyline from Beaucatcher Mountain Aug 2023 - 1; Bill McMannis CC BY 2.0 (Flickr->Commons); centred crop, 2400->1700 downscale; ELEVATED mountain view chosen BECAUSE the NC state banner is the close ground-level Charlotte skyline -- the two Pack Square civic close-ups were the real adjacency collision, not the skyline frames; sunset aerial (WillThomas CC BY 4.0, 8192px) rejected on the daytime rule only"}, "durham-nc": {"status": "certified", "note": "new 2026-08-23; Panorama on Corcoran Street (April 2023); DiscoA340 CC BY-SA 4.0; native 4.75:1 so horizontal crop only; carries DPAC + Lucky Strike tower + smokestack + Durham Bull in one frame; FIRST city to clear TWO banners (Charlotte close-ground-level AND Asheville elevated-mountain), which eliminated both obvious framings; tobacco-campus courtyard was first choice and REJECTED on the people test at ~67px figures vs the 10-20px silhouette precedent -- revisit it first if that test is ever relaxed; DPAC pano kept as standing alternative"}, "duluth-mn": {"status": "certified", "note": "new 2026-09-16; canal + Aerial Lift Bridge + Canal Park from the air; Bspor.88 CC0; anchor_y .10; state-scoped MN with match:'exact' because Duluth GA exists in slice 2 of the same program"}, "saint-paul-mn": {"status": "certified", "note": "new 2026-09-16; Union Depot colonnade, bases and lawn; August Schwerdfeger CC BY 4.0; source is 3.09:1 against the asset's 3.148:1 so anchor_y moves ~10px and cannot choose the band -- roofline trimmed from the SOURCE (top 690px) instead, after the first crop cut the ground on desktop; cornice deliberately outside the desktop band; Saint Paul's own skyline REJECTED on adjacency with the Minneapolis state banner"}}
