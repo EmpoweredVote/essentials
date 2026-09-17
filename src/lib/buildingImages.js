@@ -1134,6 +1134,35 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing for the usual reason.
   'fort wayne': { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-wayne.jpg' },
   gary: { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gary.jpg' },
+  // Colorado -- Knight program slice 9, stage 5 (2026-09-16, operator-certified). Composed to
+  // 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), not the full frame.
+  //
+  // 🔴 COLORADO IS THE FIRST STATE WITH **TWO** COMPOSITIONS ALREADY SPOKEN FOR, and the second one
+  // exists BECAUSE of the first:
+  //   states/CO.jpg              - the DENVER SKYLINE at eye level, mountains as a back wall
+  //   cities/colorado-springs    - GARDEN OF THE GODS, near-field red rock filling the frame, which
+  //                                that wave chose precisely to avoid repeating the skyline
+  // Boulder's signature view is also rock, so this was a real test rather than a formality. The
+  // Asheville ruling decides it: the test is CAMERA HEIGHT AND WHAT FILLS THE FRAME. Against Garden
+  // of the Gods this frame differs on all three axes -- grey-tan tilted slab rather than red fin, a
+  // camera looking UP a mountain flank rather than across a park at eye level, and a near field of
+  // pine forest rather than rock.
+  //
+  //   boulder    - the Flatirons rising behind a pine screen from Bluebell Road
+  //                | joiseyshowaa | CC BY-SA 2.0
+  //                source: File:The Flatirons and Bluebell Road (52529745372).jpg (5824x2942)
+  //                anchor_y 0.50 -- slabs in the upper band, pines in the lower, nothing cut.
+  //
+  // ⚠ TWO CANDIDATES WERE REFUSED AND BOTH ARE WORTH REMEMBERING. Pearl Street Mall is the most
+  // compositionally distinctive frame Boulder has -- a street corridor, like Bloomington's -- and it
+  // fails the PEOPLE TEST outright: figures hundreds of pixels tall and plainly identifiable, far
+  // past the ~67px Durham refused and the 10-20px silhouettes Travis County accepted. A sunset
+  // panorama was refused on SUBJECT: the dramatic band across its sky is wildfire smoke.
+  //
+  // 🔴 match:'exact' AND the state scope are BOTH load-bearing. Boulder City, NEVADA is a separate
+  // city of 15,000 outside Las Vegas, and it is ALREADY SEATED in production with five council
+  // offices -- it is the row a name-based lookup finds first.
+  boulder: { state: 'CO', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/boulder.jpg' },
   // Minnesota -- Knight program slice 5, stage 5 (2026-09-16, operator-certified). Both composed
   // to 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), never the full frame.
   //
