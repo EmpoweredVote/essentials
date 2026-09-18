@@ -35,6 +35,10 @@ HEADERS = {'User-Agent': 'EmpoweredVote/1.0 (info@empowered.vote)'}
 TARGET_W = 1700
 TARGET_H = 540
 TARGET_RATIO = TARGET_W / TARGET_H  # ~3.148
+# The 6:1 DESKTOP window SectionBanner.jsx renders at md+ — 283 of the 540 rows.
+# Certification happens here, never on the full frame; the full frame is what shipped
+# the broken Bend banner.
+BAND_H = round(TARGET_W / 6)
 
 
 def download_image(url):
@@ -47,7 +51,8 @@ def download_image(url):
     return r.content
 
 
-def crop_to_ratio(img, target_ratio, vertical_anchor=0.5):
+def crop_to_ratio(img, target_ratio, vertical_anchor=0.5, crop_width=None,
+                  horizontal_anchor=0.5):
     """
     Crop img to match target_ratio (width/height) WITHOUT stretching.
     Crops the longer dimension to preserve the shorter one.
@@ -58,11 +63,31 @@ def crop_to_ratio(img, target_ratio, vertical_anchor=0.5):
       0.5 = center (default — equivalent to the original center-crop)
       1.0 = keep the BOTTOM band (trims the top)
     A higher anchor trims more sky off the top, raising skyline/landmark features
-    toward the upper third of the banner. Horizontal crops stay centered.
+    toward the upper third of the banner.
+
+    crop_width NARROWS the source before the ratio crop, and horizontal_anchor
+    (0.0 left .. 1.0 right) says where that narrower window sits.
+
+    🔴 THE ANCHOR CANNOT CHOOSE THE BAND ON A SOURCE NARROWER THAN 3.148:1 --
+    crop NARROWER instead. A full-width crop of such a source leaves almost no
+    vertical slack, so the anchor has nothing to move through. states/CA.jpg had
+    68px of slack with its subject pinned at the top edge and had to be re-cropped
+    narrower; cities/charlotte.jpg had 105px, and sliding its anchor from 0.55 to
+    1.0 moved the rendered band about 19px while the skyline stayed marooned under
+    two-thirds of empty sky. Dropping crop_width from 3881 to 3000 raised the slack
+    to 385 rows and was still a downscale, because the source was 3881px wide.
+    Cropping narrower is lossless whenever the result is still wider than 1700.
     """
     w, h = img.size
-    current_ratio = w / h
     vertical_anchor = max(0.0, min(1.0, vertical_anchor))
+    horizontal_anchor = max(0.0, min(1.0, horizontal_anchor))
+
+    if crop_width and crop_width < w:
+        left = int(round((w - crop_width) * horizontal_anchor))
+        img = img.crop((left, 0, left + crop_width, h))
+        w, h = img.size
+
+    current_ratio = w / h
 
     if current_ratio > target_ratio:
         # Image is wider than target — crop sides (centered)
@@ -97,7 +122,8 @@ def apply_dark_overlay(img):
     return composited.convert('RGB')
 
 
-def process_banner(input_path, output_path, apply_overlay=False, vertical_anchor=0.5):
+def process_banner(input_path, output_path, apply_overlay=False, vertical_anchor=0.5,
+                   crop_width=None, horizontal_anchor=0.5):
     """
     Open a source image, crop to 3.15:1 (vertical_anchor controls the vertical
     crop position), resize to 1700x540 LANCZOS, optionally apply dark overlay,
@@ -108,9 +134,44 @@ def process_banner(input_path, output_path, apply_overlay=False, vertical_anchor
     orig_w, orig_h = img.size
     print(f"Source size: {orig_w} x {orig_h} (ratio {orig_w/orig_h:.2f}:1)")
 
-    # Crop to target aspect ratio (no distortion), honoring the vertical anchor
-    img = crop_to_ratio(img, TARGET_RATIO, vertical_anchor=vertical_anchor)
-    print(f"After crop: {img.size[0]} x {img.size[1]} (vertical anchor {vertical_anchor})")
+    # 🔴 REPORT THE VERTICAL SLACK, because it says whether the anchor is even a
+    # lever. slack = source height - the height the ratio crop will keep. When it
+    # is small the anchor cannot choose the band and --crop-width is the control
+    # that can. Silence here is how a banner ships with its subject marooned.
+    effective_w = min(crop_width, orig_w) if crop_width else orig_w
+    slack = orig_h - (effective_w / TARGET_RATIO)
+    if slack < 1:
+        print(f"Vertical slack: none - source is {orig_w/orig_h:.2f}:1, at or wider than "
+              f"{TARGET_RATIO:.3f}:1, so the crop is horizontal and --vertical-anchor does nothing.")
+    else:
+        rendered = slack * (TARGET_H / (effective_w / TARGET_RATIO))
+        print(f"Vertical slack: {slack:.0f} source rows (~{rendered:.0f}px of the 540 asset). "
+              f"The anchor can only move the frame within that.")
+        # 🔴 THE THRESHOLD IS THE DESKTOP BAND, NOT A ROUND NUMBER. The band is 283 of
+        # the 540 rows, so travel worth having is a real fraction of it; under about a
+        # third (90px) the anchor cannot reframe anything. This was first set at 40px
+        # and SILENTLY PASSED CHARLOTTE, whose 46px of travel is the exact case the
+        # warning exists for. A threshold that misses its own founding case is not a
+        # threshold.
+        if rendered < 90:
+            print(f"  WARNING: THAT IS TOO LITTLE FOR THE ANCHOR TO CHOOSE THE BAND "
+                  f"({rendered:.0f}px against a {BAND_H}px desktop window). "
+                  "Pass --crop-width to narrow the source instead; it stays lossless "
+                  f"down to {TARGET_W}px wide.")
+
+    # Crop to target aspect ratio (no distortion), honoring the anchors
+    img = crop_to_ratio(img, TARGET_RATIO, vertical_anchor=vertical_anchor,
+                        crop_width=crop_width, horizontal_anchor=horizontal_anchor)
+    # Report the crop width only when it was actually APPLIED. Naming a --crop-width
+    # wider than the source reads as though it took effect when it did not.
+    applied = crop_width and crop_width < orig_w
+    print(f"After crop: {img.size[0]} x {img.size[1]} (vertical anchor {vertical_anchor}"
+          f"{f', crop width {crop_width}, horizontal anchor {horizontal_anchor}' if applied else ''})")
+    if crop_width and not applied:
+        print(f"  note: --crop-width {crop_width} is not narrower than the {orig_w}px source, so it was ignored.")
+    if img.size[0] < TARGET_W:
+        print(f"  WARNING - UPSCALING: the crop is {img.size[0]}px wide against a {TARGET_W}px target. "
+              "The asset will carry no more detail than the crop does.")
 
     # Resize to banner spec
     img = img.resize((TARGET_W, TARGET_H), Image.LANCZOS)
@@ -173,6 +234,31 @@ def main():
         )
     )
 
+    parser.add_argument(
+        '--crop-width',
+        type=int,
+        default=None,
+        metavar='PX',
+        help=(
+            'Narrow the SOURCE to this pixel width before the ratio crop. Use it when '
+            '--vertical-anchor cannot move the frame: a source narrower than 3.148:1 has '
+            'almost no vertical slack, so the anchor has nothing to travel through and the '
+            'subject stays where it fell. Cropping narrower is lossless while the result is '
+            'still wider than 1700px. This is what states/CA.jpg and cities/charlotte.jpg '
+            'both needed; the script prints the slack so you can see which lever applies.'
+        )
+    )
+    parser.add_argument(
+        '--horizontal-anchor',
+        type=float,
+        default=0.5,
+        metavar='0.0-1.0',
+        help=(
+            'Where the --crop-width window sits: 0.0 keeps the left edge, 0.5 centers '
+            '(default), 1.0 keeps the right edge. Ignored without --crop-width.'
+        )
+    )
+
     args = parser.parse_args()
 
     # Resolve input: download if URL, otherwise use local file
@@ -186,7 +272,8 @@ def main():
         input_path = args.input
 
     process_banner(input_path, args.output, apply_overlay=args.overlay,
-                   vertical_anchor=args.vertical_anchor)
+                   vertical_anchor=args.vertical_anchor, crop_width=args.crop_width,
+                   horizontal_anchor=args.horizontal_anchor)
 
 
 if __name__ == '__main__':
