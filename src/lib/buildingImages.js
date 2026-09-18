@@ -368,6 +368,74 @@ const CURATED_LOCAL = {
   // band) and six others on clutter, band fit, or overcast light.
   //   durham - Panorama on Corcoran Street, Durham (April 2023) | DiscoA340 | CC BY-SA 4.0
   durham: { state: 'NC', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/durham.jpg' },
+  // Charlotte, NC (2026-09-17, operator-certified). Knight NC-3 seated Charlotte's
+  // 12 city and Mecklenburg County's 16 elected officials, so the city needed a
+  // banner.
+  //
+  // 🔴🔴 CHARLOTTE IS THE FIRST CITY THAT IS ALREADY ITS OWN STATE'S SUBJECT.
+  // `states/NC.jpg` IS the Charlotte uptown skyline (Bruce Emmerling, CC BY-SA
+  // 4.0), so the state/capital collision that Austin resolved by moving the
+  // skyline down to cities/austin.jpg was live here before this key existed.
+  // Resolved the OTHER way, as Nevada did with the Strip and the Welcome sign:
+  // the state panorama is untouched and the city takes a different composition.
+  //
+  // The measurement that makes that honest: read in the 6:1 DESKTOP BAND (rows
+  // 128-411 of 540), the state asset CUTS THE TOWER CROWNS OFF. What a desktop
+  // visitor sees there is a parking deck, mid-rise offices and trees at close,
+  // ground-level range -- not a recognisable Charlotte skyline. This frame is
+  // distant and elevated with the Bank of America crown and the Duke Energy
+  // wedge both whole, so the two do not repeat each other.
+  //
+  // 🔴 CHARLOTTE NEEDED THE FOURTH DISTINCT NC COMPOSITION, and Durham had
+  // already spent the third. Compare compositions, never subject nouns:
+  //   NC state  = Charlotte uptown  -> close, ground-level, buildings fill frame
+  //   Asheville = Beaucatcher Mtn   -> elevated, mountains dominate
+  //   Durham    = Corcoran Street   -> wide low-rise with sky and foliage
+  //   Charlotte = this frame        -> distant elevated skyline, crowns whole
+  //
+  // 🔴 THE ANCHOR COULD NOT FIX THIS FRAME; A NARROWER CROP COULD -- the same
+  // correction states/CA.jpg needed. The source is 2.90:1, NARROWER than the
+  // 3.148:1 target, so a full-width crop leaves only 105 rows of vertical slack:
+  // sliding the anchor from 0.55 to 1.0 moved the band about 19 rendered pixels
+  // and the skyline stayed marooned under two-thirds of empty sky. Cropping to
+  // 3000 px wide raises the slack to 385 rows. Crop = centre 3000x953 at the
+  // BOTTOM edge, then LANCZOS to 1700x540 -- a 0.57x DOWNSCALE, nothing enlarged.
+  //
+  // People test: passes because there are no people. At 2x zoom the lower band
+  // holds buildings and one tree.
+  //
+  // ⚠ ITS ONE WEAKNESS IS AGE: April 2014, so a construction crane stands in the
+  // right third and towers finished since are absent. The most CURRENT frame
+  // found (Wesley Heights connector, February 2024, City Dweller 2, CC BY-SA
+  // 4.0) was the closest runner-up and was refused on clutter -- parked cars,
+  // utility poles, bare winter trees and a crane across the lower band. If this
+  // key is ever revisited for currency, start there.
+  //
+  // Also refused, of 27 candidates rendered in the band: the CC0 "Skyline of
+  // Charlotte 2016" (best licence found -- a highway overpass and a lamp
+  // standard cross the band and the crowns are cut at every anchor); "2010
+  // Charlotte Skyline", which MEASURES GREYSCALE at channel spread 4.7 of 255
+  // against this frame's 56.4; "Panorama bank of america", which is the STADIUM
+  // full of a crowd, not the bank; the Crowders Mountain view, which is the
+  // Asheville composition with Charlotte unreadable on the horizon; and Bruce
+  // Emmerling's own 2021 uptown frame, which repeats his state-banner
+  // composition at close ground level with people in it.
+  //
+  // 🔴 match:'exact' is LOAD-BEARING. Substring matching would hand this banner
+  // to CHARLOTTESVILLE, VA -- 'charlottesville'.includes('charlotte') is true.
+  // The NC state scope blocks it today, but getBuildingImages() treats a
+  // missing/unknown caller state as match-allowed, so the flag is the real guard.
+  //
+  // Surfacing: Charlotte's 12 city offices carry representing_city = 'Charlotte',
+  // so this resolves from an ordinary address search. Mecklenburg County's 16
+  // offices leave it NULL -- the same shape as Buncombe and Durham -- so a county
+  // banner would need a browse_label entry, and there is deliberately none.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule applies to OVERWRITES.
+  // cities/charlotte.jpg had never been written. sha256 verified identical on
+  // BOTH the plain and a cache-busted URL rather than trusting HTTP 200.
+  //   charlotte - Charlotte Skyline (Panoramio), 10 April 2014 | James Willamor | CC BY-SA 3.0
+  charlotte: { state: 'NC', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/charlotte.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
