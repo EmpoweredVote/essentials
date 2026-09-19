@@ -436,6 +436,57 @@ const CURATED_LOCAL = {
   // BOTH the plain and a cache-busted URL rather than trusting HTTP 200.
   //   charlotte - Charlotte Skyline (Panoramio), 10 April 2014 | James Willamor | CC BY-SA 3.0
   charlotte: { state: 'NC', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/charlotte.jpg' },
+
+  // Pennsylvania city banners (Knight slice 6, stage 5b; operator-certified
+  // 2026-09-19 against a sheet of 6 proposals and 7 refusals, every frame cut to
+  // the 6:1 desktop band).
+  //
+  // The state banner was read in the band FIRST, which is the Charlotte rule:
+  // states/PA.jpg is PITTSBURGH, elevated and distant, full tower crowns over
+  // pale sky with hills behind -- and unlike states/NC.jpg it really does show
+  // the subject its credit names. So Philadelphia raises no state/city subject
+  // collision at all, and the only question left was composition. The chosen
+  // frame is a CLOSE skyline with towers filling the width under a thin sky,
+  // which is not the elevated-distant frame sitting above it on the page.
+  //
+  // Refused, with the reasons, because they transfer: Chestnut Street at
+  // Independence Hall, whose foreground figures measure ~200px in the 1700x540
+  // asset against Durham's 67px bound, and which was otherwise the strongest
+  // civic frame found; the Schuylkill River skyline, which IS the state
+  // banner's composition one city over; Independence Hall with the Liberty Bell
+  // Center, where the band keeps the LAWN and the Hall is a few hundred pixels
+  // at the left edge; and Boathouse Row at night, band luminance 28.8/255.
+  //
+  // ⚠ A NARROWER CROP MADE CITY HALL WORSE. The runner-up (Anntom4's City Hall
+  // from Broad Street) is 1.76:1 with 1,372 rows of slack, so the ANCHOR is the
+  // lever there; crop widths of 3400/4000/4600 each pushed the building into the
+  // centre under more sky. The states/CA.jpg "crop narrower" rule is for sources
+  // NARROWER than 3.148:1 -- do not reach for it when the slack is already large.
+  //
+  // State College is a borough of 40,000 with a university inside it, and the
+  // corpus reflects that: nearly every wide, well-lit, freely licensed frame of
+  // the place is a campus frame. The chosen one is ground level with Mount
+  // Nittany closing the view -- the one landform that says this borough and
+  // nowhere else -- and its pedestrians measure ~10px, inside the 10-20px band
+  // Travis County set. Refused: Allen Street (one pedestrian well over the 67px
+  // bound), the State Theatre marquee (night, luminance 62.9), and a downtown
+  // rooftop frame at channel spread 13.5, which is the Milledgeville test --
+  // no licence check and no aspect check catches a frame with no colour in it.
+  //
+  // ⚠ A keyword search for "Old Main Penn State" returned MINNESOTA STATE
+  // MANKATO's Old Main at the top of the list. --categories-of caught it.
+  //
+  // 🔴 match:'exact' on both. 'state college' is a common phrase and the state
+  // scope is not the guard -- getBuildingImages() treats a missing caller state
+  // as match-allowed. Verified by running the matcher, not by reasoning about it.
+  //
+  // Both keys are NEW, so neither needs a -v2; the stale-CDN rule is about
+  // overwrites. sha256 verified identical on BOTH the plain and a cache-busted
+  // URL, with a missing-key control that failed as required.
+  //   philadelphia  - Philadelphia skyline from the southwest, 5 October 2015 | Mefman00, modifications by Maps and stuff (Brian W. Schaller) | CC0
+  //   state college - Penn State Campus, 20 April 2019 | Goonsnick | CC BY-SA 4.0
+  philadelphia: { state: 'PA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/philadelphia.jpg' },
+  'state college': { state: 'PA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/state-college.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
