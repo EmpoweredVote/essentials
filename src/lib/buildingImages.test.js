@@ -108,6 +108,31 @@ describe('getBuildingImages — exact match is opt-in (FL-7)', () => {
   });
 });
 
+describe('getBuildingImages — Pennsylvania city banners (Knight PA-5b)', () => {
+  it('both PA cities resolve, with and without a caller state', () => {
+    // getBuildingImages() treats a MISSING caller state as match-allowed, so the
+    // stateless call is the one that proves match:'exact' is doing the work.
+    expect(getBuildingImages('Philadelphia', 'PA').Local).toContain('/cities/philadelphia.jpg');
+    expect(getBuildingImages('Philadelphia', null).Local).toContain('/cities/philadelphia.jpg');
+    expect(getBuildingImages('State College', 'PA').Local).toContain('/cities/state-college.jpg');
+    expect(getBuildingImages('State College', null).Local).toContain('/cities/state-college.jpg');
+  });
+
+  it('a longer name containing the key gets NO banner', () => {
+    expect(getBuildingImages('North Philadelphia', 'PA').Local).toBeNull();
+    expect(getBuildingImages('Philadelphia Heights', 'PA').Local).toBeNull();
+    expect(getBuildingImages('State College Borough', 'PA').Local).toBeNull();
+  });
+
+  it('state scoping still applies — New Philadelphia, OH takes nothing', () => {
+    expect(getBuildingImages('New Philadelphia', 'OH').Local).toBeNull();
+  });
+
+  it('control: an unregistered PA city is null, so these assertions can fail', () => {
+    expect(getBuildingImages('Nowhereville', 'PA').Local).toBeNull();
+  });
+});
+
 describe('getBuildingImages — county tier (FL-7)', () => {
   it('returns the county banner when no city key matches', () => {
     expect(getBuildingImages('West Palm Beach', 'FL', '12099').Local).toContain('/counties/');

@@ -58,10 +58,16 @@ def upload_banner(local_file, dest_path, service_key):
     # Use curl --data-binary for binary-safe upload.
     # -X PUT to overwrite an existing key (vs POST which creates new only).
     # Authorization header uses the service-role key — never logged here.
+    # 🔴 BOTH Authorization AND apikey, and both set to the same key. Since the legacy
+    # anon/service_role keys were disabled (2026-09-09) the service key is no longer a
+    # JWT, and Authorization alone comes back HTTP 400 with
+    # {"statusCode":"403","error":"Unauthorized","message":"Invalid Compact JWS"} —
+    # which reads as a bad credential rather than a missing header.
     result = subprocess.run(
         [
             'curl', '-s', '-X', 'PUT', upload_url,
             '-H', f'Authorization: Bearer {service_key}',
+            '-H', f'apikey: {service_key}',
             '-H', 'Content-Type: image/jpeg',
             '--data-binary', f'@{local_file}',
         ],
