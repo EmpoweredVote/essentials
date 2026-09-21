@@ -1316,6 +1316,14 @@ export default function Results() {
       buildingImageMap: {
         ...bannerCtx.buildingImageMap,
         State: getBuildingImages(null, abbrev).State,
+        // Override the FOCUS for this state too. The spread above carries the
+        // page-level focus map, whose State entry belongs to the user's own state —
+        // pairing it with a different state's image would crop that image to a
+        // target chosen for another photograph.
+        focus: {
+          ...(bannerCtx.buildingImageMap?.focus || {}),
+          State: getBuildingImages(null, abbrev).focus?.State ?? null,
+        },
       },
       featureIconMap: {
         ...bannerCtx.featureIconMap,

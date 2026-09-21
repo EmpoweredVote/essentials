@@ -248,3 +248,81 @@ describe('resolveRepresentingCity — Local-tier banner label (district-type all
     expect(resolveRepresentingCity({ searchMode: 'browse', browseLabel: 'Culver City, CA' })).toBe('Culver City, CA');
   });
 });
+
+describe('South Carolina city banners (Knight slice 7) — run the matcher, do not reason about it', () => {
+  // 'charlottesville'.includes('charlotte') is true and a missing caller state is
+  // treated as match-allowed, so state scope alone is never the guard. South
+  // Carolina stacks the traps: Columbia is also a city in KY, MS, SD and TN, WEST
+  // Columbia SC sits across the river, and "Myrtle Beach" is a substring of NORTH
+  // Myrtle Beach, a separate municipality up the coast.
+  const COL = 'cities/columbia.jpg';
+  const MYR = 'cities/myrtle-beach.jpg';
+  const key = (r) => (r.Local ? r.Local.split('/').slice(-2).join('/') : null);
+
+  it('resolves Columbia, SC to its own banner and focus', () => {
+    const r = getBuildingImages('Columbia', 'SC');
+    expect(key(r)).toBe(COL);
+    expect(r.focus.Local).toBe('50% 82%');
+  });
+
+  it('resolves Myrtle Beach, SC to its own banner and focus', () => {
+    const r = getBuildingImages('Myrtle Beach', 'SC');
+    expect(key(r)).toBe(MYR);
+    expect(r.focus.Local).toBe('50% 84%');
+  });
+
+  it('resolves with a missing caller state, which is match-allowed', () => {
+    expect(key(getBuildingImages('Columbia', null))).toBe(COL);
+    expect(key(getBuildingImages('Myrtle Beach', null))).toBe(MYR);
+  });
+
+  // THE NEGATIVES ARE THE POINT. A run where everything resolves proves nothing.
+  it('does NOT hand the Columbia banner to another state\'s Columbia', () => {
+    for (const st of ['MO', 'TN', 'KY', 'MS', 'SD']) {
+      expect(key(getBuildingImages('Columbia', st)), st).toBeNull();
+    }
+  });
+
+  it('does NOT hand the Columbia banner to WEST Columbia, SC', () => {
+    expect(key(getBuildingImages('West Columbia', 'SC'))).toBeNull();
+  });
+
+  it('does NOT hand the Myrtle Beach banner to NORTH Myrtle Beach, SC', () => {
+    // The exact-match flag is the only thing stopping this: North Myrtle Beach is
+    // a separate municipality and 'north myrtle beach'.includes('myrtle beach').
+    expect(key(getBuildingImages('North Myrtle Beach', 'SC'))).toBeNull();
+  });
+
+  it('does NOT match a city that merely starts with the key', () => {
+    expect(key(getBuildingImages('Columbiana', 'SC'))).toBeNull();
+  });
+
+  it('leaves an unregistered SC city with no local banner', () => {
+    // The control proving these checks can return non-null: Charleston is a real
+    // SC city with no entry, and it must resolve to null rather than a neighbour.
+    expect(key(getBuildingImages('Charleston', 'SC'))).toBeNull();
+  });
+
+  it('does not disturb the SC state tier', () => {
+    const r = getBuildingImages('Columbia', 'SC');
+    expect(r.State).toMatch(/states\/SC\.jpg$/);
+    // No state focus is set for SC — retargeting a live state banner changes what
+    // every address in the state sees and wants its own review.
+    expect(r.focus.State).toBeNull();
+  });
+
+  it('keeps the focus map additive — the three tier keys are unchanged in shape', () => {
+    // Other apps consume this registry as an API, so `focus` must be a sibling,
+    // never a change to what Local/State/Federal mean.
+    const r = getBuildingImages('Columbia', 'SC');
+    expect(typeof r.Local).toBe('string');
+    expect(typeof r.State).toBe('string');
+    expect(typeof r.Federal).toBe('string');
+    expect(r.focus).toEqual({ Local: '50% 82%', State: null, Federal: null });
+  });
+
+  it('a city with no focus returns null focus, not undefined', () => {
+    const r = getBuildingImages('Bloomington', 'IN');
+    expect(r.focus.Local).toBeNull();
+  });
+});

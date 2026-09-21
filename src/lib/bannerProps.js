@@ -88,6 +88,11 @@ export function buildBannerProps(tier, ctx = {}) {
     tier,
     locationName,
     imageUrl: buildingImageMap[mapKey] ?? null,
+    // Per-banner desktop crop target, read off the SAME object getBuildingImages
+    // returns, so no caller had to change: the resolver gained a `focus` sibling map
+    // and it arrives here inside buildingImageMap. Absent focus is null, which
+    // SectionBanner reads as the historical centre.
+    imageFocus: buildingImageMap.focus?.[mapKey] ?? null,
     featureIcons: featureIconMap[mapKey] ?? [],
     stats: populationMap[mapKey] ?? null,
   };

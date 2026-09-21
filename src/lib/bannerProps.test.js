@@ -19,8 +19,45 @@ describe('buildBannerProps', () => {
       tier: 'city',
       locationName: 'Plano, TX',
       imageUrl: 'https://.../plano.jpg',
+      // Absent by default: a banner with no focus keeps the historical centre crop.
+      imageFocus: null,
       featureIcons: [{ key: 'treasury' }],
       stats: { label: 'POPULATION', value: 285494 },
+    });
+  });
+
+  describe('imageFocus — the per-banner desktop crop target', () => {
+    // The focus arrives inside buildingImageMap, because that object IS what
+    // getBuildingImages returns and it gained a `focus` sibling map. That is why
+    // neither Results.jsx nor ElectionsView.jsx needed a call-site change.
+    const focusCtx = {
+      ...CTX,
+      buildingImageMap: {
+        ...CTX.buildingImageMap,
+        focus: { Local: '50% 82%', State: null, Federal: null },
+      },
+    };
+
+    it('passes a city focus through', () => {
+      expect(buildBannerProps('city', focusCtx).imageFocus).toBe('50% 82%');
+    });
+
+    it('is null for a tier with no focus', () => {
+      expect(buildBannerProps('state', focusCtx).imageFocus).toBeNull();
+      expect(buildBannerProps('federal', focusCtx).imageFocus).toBeNull();
+    });
+
+    it('is null when the map carries no focus key at all (back-compatibility)', () => {
+      // Every caller that predates the focus map must keep working unchanged.
+      expect(buildBannerProps('city', CTX).imageFocus).toBeNull();
+    });
+
+    it('does not disturb the other props', () => {
+      const withFocus = buildBannerProps('city', focusCtx);
+      const without = buildBannerProps('city', CTX);
+      expect(withFocus.imageUrl).toBe(without.imageUrl);
+      expect(withFocus.locationName).toBe(without.locationName);
+      expect(withFocus.stats).toEqual(without.stats);
     });
   });
 
