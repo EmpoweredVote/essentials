@@ -11,6 +11,7 @@ import { getSeatBallotStatus } from '../utils/ballotStatus';
 import FilterBar, { StickyCompassKey } from '../components/FilterBar';
 import { usePoliticianData } from '../hooks/usePoliticianData';
 import { groupIntoHierarchy } from '../lib/groupHierarchy';
+import { mergeUpcomingBallot } from '../lib/ballot';
 import { getBuildingImages, parseStateFromAddress, stateAbbrevFromGeoId, resolveRepresentingCity } from '../lib/buildingImages';
 import { fetchElectionsByAddress, fetchElectionsByArea, fetchElectionsByGovernmentList, fetchMyElections, saveMyLocation, browseByArea, browseByGovernmentList, browseByState, browseFederalOfficials, fetchVoterInfo, lookupCoordinate, fetchOfficialsByZip } from '../lib/api';
 import { saveUserAddress, loadUserAddressFromContext } from '../lib/compass';
@@ -1334,19 +1335,10 @@ export default function Results() {
     });
   };
 
-  // Only show the nearest upcoming election; hiding future elections avoids duplicate
-  // race sections when a primary and general are both returned for the same seat.
-  const nearestElection = useMemo(() => {
-    if (!electionsData || electionsData.length === 0) return [];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const sorted = [...electionsData]
-      .filter((e) => e.election_date)
-      .sort((a, b) => new Date(a.election_date) - new Date(b.election_date));
-    const upcoming = sorted.filter((e) => new Date(e.election_date + 'T12:00:00') >= today);
-    const nearest = upcoming.length > 0 ? upcoming[0] : sorted[sorted.length - 1];
-    return nearest ? [nearest] : [];
-  }, [electionsData]);
+  // Surface the FULL ballot for the address by merging every upcoming election
+  // (city, county, state, federal) into one list. See lib/ballot.js for the rules;
+  // keeping only one election record used to drop entire levels for a voter.
+  const ballotElections = useMemo(() => mergeUpcomingBallot(electionsData), [electionsData]);
 
   const electionsLabelSuffix = useMemo(() => {
     if (!electionsData || electionsData.length === 0) return null;
@@ -2326,7 +2318,7 @@ export default function Results() {
               )}
 
               <ElectionsView
-                elections={nearestElection}
+                elections={ballotElections}
                 loading={electionsLoading}
                 compassMode={compassMode}
                 isDark={isDark}

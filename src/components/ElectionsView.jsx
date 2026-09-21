@@ -335,8 +335,6 @@ export default function ElectionsView({
     if (!elections || elections.length === 0) return [];
 
     return elections.map((election) => {
-      const isPrimary = election.election_type === 'primary';
-
       // Deduplicate races with identical candidate sets (e.g. "LA City Controller" vs
       // "Los Angeles City Controller" — same race from two data sources). Keep the
       // longer (more descriptive) position name when a duplicate is found.
@@ -367,6 +365,12 @@ export default function ElectionsView({
         const tier = getTier(race.district_type);
         const cleaned = cleanPositionName(race.position_name);
         const { body, subgroup } = deriveBodyAndSubGroup(cleaned, race.district_type);
+        // Per-race election context. The address ballot is merged from several election
+        // records (city/county/state/federal), so each race carries its own type/date
+        // rather than inheriting a single election-level value.
+        const electionType = race.election_type ?? election.election_type;
+        const electionDate = race.election_date ?? election.election_date;
+        const isPrimary = electionType === 'primary';
         const party = isPrimary && race.primary_party ? race.primary_party : null;
         const subgroupKey = party ? `${subgroup}||${party}` : subgroup;
         const subgroupLabel = party ? `${subgroup} — ${party} Primary` : subgroup;
@@ -388,6 +392,8 @@ export default function ElectionsView({
           // convention from ev-accounts migration 1456). The API clears it on
           // re-verification, never on the calendar.
           provisionalUntil: race.provisional_until ?? null,
+          electionType,
+          electionDate,
         });
       }
 
@@ -694,7 +700,7 @@ export default function ElectionsView({
                                 const isSingleOffice = /^(NATIONAL|STATE)/.test(race.districtType || '');
                                 let label = race.label;
                                 if (isSingleOffice) {
-                                  const dateLong = formatElectionDateLong(election.election_date);
+                                  const dateLong = formatElectionDateLong(race.electionDate ?? election.election_date);
                                   const base = race.party ? `${race.party} Primary` : 'Candidates for office';
                                   label = dateLong ? `${base} — election on ${dateLong}` : base;
                                 }
@@ -734,12 +740,12 @@ export default function ElectionsView({
                               ) : (
                                 displayCandidates.map((candidate) => {
                                   const branch = getBranch(race.districtType, race.cleanedPosition);
-                                  const elDate = new Date(election.election_date + 'T12:00:00');
+                                  const elDate = new Date((race.electionDate ?? election.election_date) + 'T12:00:00');
                                   const ballot = {
                                     onBallot: true,
                                     termEndDate: elDate,
                                     electionDate: elDate,
-                                    electionLabel: election.election_type === 'primary' ? 'Primary' : 'General',
+                                    electionLabel: (race.electionType ?? election.election_type) === 'primary' ? 'Primary' : 'General',
                                   };
                                   // The section header already names the office (state-qualified), so the
                                   // per-card office line is redundant on the elections page — omit it from the
