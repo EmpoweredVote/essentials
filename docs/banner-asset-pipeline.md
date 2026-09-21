@@ -11,7 +11,20 @@ re-deriving the process.
 **Tools required:** Python 3, Pillow (`pip install pillow`), requests (`pip install requests`),
 `curl` (system), git.
 
-**Scripts committed at:** `scripts/banners/process_banner.py` and `scripts/banners/upload_banner.py`.
+**Scripts committed at:** `scripts/banners/` —
+
+| script | stage | what it is for |
+|---|---|---|
+| `commons_sweep.mjs` | 1, sourcing | find candidates on Wikimedia Commons, filtered on width, aspect and licence |
+| `certify_banner.py` | 2, certification | render every candidate in the **6:1 desktop band**, measure it, and write one approval sheet |
+| `process_banner.py` | 3, treatment | crop and resize the winner to the 1700x540 spec |
+| `upload_banner.py` | 4, upload | push the asset to Supabase Storage |
+
+🔴 **Certify in the 6:1 DESKTOP BAND, never on the full frame.** `SectionBanner.jsx`
+renders a responsive aspect *pair*: 13/4 on mobile keeps 96.9% of the asset, but 6/1 at
+`md`+ keeps only **52.4%** — rows 128–411 of 540. A banner approved on the full frame was
+approved on a picture desktop visitors never see, which is exactly how the Bend banner
+shipped broken. `certify_banner.py` exists to make that band the thing you look at.
 
 ---
 
@@ -23,8 +36,31 @@ generation is intentionally **NOT** part of this pipeline (see note below).
 ### Where to search
 
 - **Wikimedia Commons** (`commons.wikimedia.org`) — preferred; perpetual free license,
-  attribution easy to verify. Search: `<city name> skyline panorama` or
-  `<state name> skyline wide`.
+  attribution easy to verify. Use `scripts/banners/commons_sweep.mjs` rather than the
+  website search, because it filters on width, aspect and licence and can hand its
+  results straight to `certify_banner.py`.
+
+  🔴 **DO NOT GUESS CATEGORY NAMES, AND DO NOT WALK THE CITY TREE.** Both fail, and both
+  have cost real time: seven guessed Charlotte category names returned **0 files**
+  (`Category:Skylines of Charlotte, North Carolina` and friends do not exist), and a
+  recursive walk of `Category:Charlotte, North Carolina` to depth 3 drifted into US-74
+  **highway photography** without surfacing a single skyline. The real category was
+  `Category:Charlotte skylines` — plural. The Bend original was likewise missed by
+  keyword search, by three plausible categories, and by the Wikipedia article images.
+
+  ▶ **The method that works: find ONE good file, then ask that file which categories it
+  belongs to, then sweep those.**
+
+  ```bash
+  # 1. find one good file
+  node scripts/banners/commons_sweep.mjs --search "Charlotte North Carolina skyline"
+
+  # 2. ask IT where it lives  (> marks the subject categories)
+  node scripts/banners/commons_sweep.mjs --categories-of "File:Charlotte Skyline - panoramio (1).jpg"
+
+  # 3. sweep the real category, and write a candidates file for certification
+  node scripts/banners/commons_sweep.mjs --category "Category:Charlotte skylines"       --json /tmp/charlotte-candidates.json
+  ```
 - **Unsplash** (`unsplash.com`) — free for commercial/editorial use (Unsplash License);
   check individual photo terms. Search: city name + "skyline" or "cityscape".
 
@@ -60,6 +96,36 @@ gap. A verifier reading the absence of AI tooling should treat it as expected.
 
 The graceful fallback for jurisdictions without a banner photo is the tier-gradient
 CSS fallback built into `SectionBanner.jsx` (`onError` handler). No AI intermediate.
+
+---
+
+## Stage 1b — Certification
+
+Before treating anything, render every candidate in the band an operator will actually
+see and look at them side by side. `certify_banner.py` writes one self-contained HTML
+sheet: the proposal at full asset size **and** in the 6:1 band, the live banners it has to
+sit beside, and every refusal with its measured reason.
+
+```bash
+python scripts/banners/certify_banner.py   --candidates /tmp/charlotte-candidates.json   --title "Charlotte - cities/charlotte.jpg"   --baseline states/NC.jpg   --baseline cities/asheville.jpg   --baseline cities/durham.jpg   --sheet /tmp/charlotte-certification.html
+```
+
+It measures the things neither a licence check nor an aspect check can catch:
+
+| measurement | why it exists |
+|---|---|
+| channel spread | **Greyscale detector.** Milledgeville's two widest and most permissively licensed candidates — federal HABS work, public domain — measured 100% greyscale. |
+| band luminance | too dark to read a title over, or blown flat |
+| anchor travel | whether `--vertical-anchor` is even a lever on this source (see Stage 3) |
+| upscale factor | whether the asset carries real pixels or interpolated ones |
+
+🔴 **Pass `--baseline` for every banner that can appear on the same page.** Adjacency lives
+in the **composition** — camera height, subject scale, what fills the frame — never in the
+subject noun, so the live bands have to sit beside the candidate to be judged. The rule of
+thumb "the state banner is a skyline, so the city must not be" gave the *wrong* answer on
+Asheville and inverted the ranking of four candidates. A later city in the same state has
+fewer compositions left than an earlier one: Durham was the first to clear two, and
+Charlotte needed a fourth distinct North Carolina framing.
 
 ---
 
@@ -110,8 +176,27 @@ The script will:
 **Framing tip — `--vertical-anchor`** (default `0.5`): when the source is taller than the
 banner, this controls which horizontal band is kept — `0.0` keeps the top, `0.5` centers,
 `1.0` keeps the bottom. Raise it to trim sky and lift a skyline, flag, or dome toward the
-top third. The Bloomington exemplar shipped at `--vertical-anchor 0.85`. Horizontal crops
-always stay centered. Preview the output before uploading and adjust the anchor as needed.
+top third. The Bloomington exemplar shipped at `--vertical-anchor 0.85`. Preview the output
+before uploading and adjust as needed.
+
+🔴 **THE ANCHOR CANNOT CHOOSE THE BAND ON A SOURCE NARROWER THAN 3.148:1 — use
+`--crop-width` instead.** A full-width crop of such a source leaves almost no vertical
+slack, so the anchor has nothing to travel through and the subject stays wherever it fell.
+`process_banner.py` now prints the slack and warns when it is under about a third of the
+283px desktop window:
+
+```
+Vertical slack: 105 source rows (~46px of the 540 asset).
+  WARNING: THAT IS TOO LITTLE FOR THE ANCHOR TO CHOOSE THE BAND (46px against a 283px
+  desktop window). Pass --crop-width to narrow the source instead.
+```
+
+Narrowing the source is **lossless while the result is still wider than 1700px**, and it
+buys back framing freedom: `cities/charlotte.jpg` went from 105 rows of slack at its full
+3881px width to 385 rows at `--crop-width 3000`, and still shipped as a 0.57x downscale.
+`states/CA.jpg` needed the same correction — its subject sat above the desktop window and a
+*wider* crop could not have rescued it. `--horizontal-anchor` says where the narrower
+window sits (`0.0` left, `0.5` centre, `1.0` right).
 
 **Target spec** (measured from live production assets):
 

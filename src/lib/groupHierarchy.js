@@ -185,7 +185,26 @@ const isChiefExecTitle = (title) => {
   return LOCAL_EXEC_TITLE_RE.test(primary);
 };
 
-function getSubGroupKey(pol) {
+// A parenthetical designation — "Council Member (Mayor)" — names a rotating title carried by an
+// ordinary council seat. Whether it marks the chief executive depends on the BODY, not the string:
+//   - Tucson / Marana / Oro Valley elect a Mayor on their own ballot line, so that standalone seat
+//     is the executive and the parenthetical vice-mayor annotation stays with the council.
+//   - Sahuarita / South Tucson / Monterey Park hold no mayoral contest at all; the council
+//     designates a Mayor from among its own members, so the parenthetical IS the executive and
+//     there is no other seat that could be.
+// The discriminator is checkable against the county canvass: is there a "Mayor - <place>" contest?
+const PAREN_TITLE_RE = /\(([^)]*)\)/;
+const parentheticalExecTitle = (title) => {
+  const m = PAREN_TITLE_RE.exec(title || '');
+  return m && LOCAL_EXEC_TITLE_RE.test(m[1]) ? m[1].trim() : null;
+};
+/** Does this body have an exec seat of its own (a bare "Mayor"/"Governor" title)? */
+const hasStandaloneExecSeat = (pols) => pols.some(p => isChiefExecTitle(p.office_title));
+/** Chief-exec test that knows whether the body already has a standalone exec seat. */
+const isChiefExecFor = (title, standaloneExecInBody) =>
+  isChiefExecTitle(title) || (!standaloneExecInBody && parentheticalExecTitle(title) !== null);
+
+function getSubGroupKey(pol, standaloneExecInBody = true) {
   // Use government_body_name + district_type + role segment as compound key.
   // This separates:
   //   - Mayor (LOCAL_EXEC) from council (LOCAL) via district_type
@@ -202,7 +221,7 @@ function getSubGroupKey(pol) {
   }
 
   let roleSegment;
-  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC') && isChiefExecTitle(pol.office_title)) {
+  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC') && isChiefExecFor(pol.office_title, standaloneExecInBody)) {
     roleSegment = 'EXEC'; // Mayor / Governor — own sub-group, sorts first
   } else if (dt === 'LOCAL_EXEC') {
     // City Manager, City Administrator, etc. — unique key per title so each gets own label
@@ -232,7 +251,7 @@ function stripSuffix(name) {
  * 3. Replace generic words ("Government") with "Officials"
  * 4. Courts: derive from shared office_title prefix
  */
-function getSubGroupLabel(pols, accordionTitle) {
+function getSubGroupLabel(pols, accordionTitle, standaloneExecInBody = true) {
   if (pols.length === 0) return '';
 
   const first = pols[0];
@@ -295,9 +314,13 @@ function getSubGroupLabel(pols, accordionTitle) {
   // Use the office_title directly rather than the chamber name as the sub-group label.
   if (
     (dt === 'LOCAL' || dt === 'LOCAL_EXEC') &&
-    pols.every(p => isChiefExecTitle(p.office_title))
+    pols.every(p => isChiefExecFor(p.office_title, standaloneExecInBody))
   ) {
-    const title = first.office_title || '';
+    // For a designated (not separately elected) exec the seat is an ordinary council seat and the
+    // designation lives in the parenthetical, so label from the parenthetical: a voter looking for
+    // the mayor of Sahuarita should see "Mayor", not "Council Member (Mayor)".
+    const raw = first.office_title || '';
+    const title = parentheticalExecTitle(raw) || raw;
     return title.replace(/^(City|Town|Village|County)\s+/i, '').replace(/\s+-\s+.*$/, '') || title;
   }
 
@@ -435,7 +458,7 @@ function bodyOrderScore(accordionKey, pols) {
 const LEGISLATIVE_KW = ['council', 'board of supervisors', 'senate', 'house', 'assembly', 'board of commissioners', 'board of education', 'school board'];
 const EXECUTIVE_KW = ['mayor', 'governor', 'president', 'trustee', 'executive'];
 
-function subGroupOrderScore(label, pols) {
+function subGroupOrderScore(label, pols, standaloneExecInBody = true) {
   const lower = label.toLowerCase();
   const titleLower = (pols[0]?.office_title || '').toLowerCase();
 
@@ -460,7 +483,7 @@ function subGroupOrderScore(label, pols) {
   if (
     pols.length > 0 &&
     pols.every(p => p.district_type === 'LOCAL' || p.district_type === 'LOCAL_EXEC') &&
-    pols.every(p => isChiefExecTitle(p.office_title))
+    pols.every(p => isChiefExecFor(p.office_title, standaloneExecInBody))
   ) return 10;
   if (EXECUTIVE_KW.some(kw => lower.includes(kw) || titleLower.includes(kw))) return 20;
   if (LEGISLATIVE_KW.some(kw => lower.includes(kw))) return 20;
@@ -677,9 +700,14 @@ export function groupIntoHierarchy(politicians, { leadTier = null } = {}) {
     const bodies = Object.entries(accordions)
       .map(([key, pols]) => {
         // Build sub-groups within this accordion
+        // Whether a parenthetical "(Mayor)" marks the executive depends on whether this body
+        // already has an exec seat of its own. Computed once per body, then threaded through
+        // keying, labelling and ordering so all three agree.
+        const standaloneExecInBody = hasStandaloneExecSeat(pols);
+
         const sgMap = {};
         for (const pol of pols) {
-          const sgKey = getSubGroupKey(pol);
+          const sgKey = getSubGroupKey(pol, standaloneExecInBody);
           if (!sgMap[sgKey]) sgMap[sgKey] = [];
           sgMap[sgKey].push(pol);
         }
@@ -692,14 +720,14 @@ export function groupIntoHierarchy(politicians, { leadTier = null } = {}) {
             const sortedPols = sortPoliticians(sgPols);
             return {
               key: sgKey,
-              label: getSubGroupLabel(sortedPols, stripSuffix(pols[0]?.government_name)),
+              label: getSubGroupLabel(sortedPols, stripSuffix(pols[0]?.government_name), standaloneExecInBody),
               url: getSubGroupUrl(sortedPols),
               pols: sortedPols,
             };
           })
           .sort((a, b) => {
-            const sa = subGroupOrderScore(a.label, a.pols);
-            const sb = subGroupOrderScore(b.label, b.pols);
+            const sa = subGroupOrderScore(a.label, a.pols, standaloneExecInBody);
+            const sb = subGroupOrderScore(b.label, b.pols, standaloneExecInBody);
             if (sa !== sb) return sa - sb;
             return a.label.localeCompare(b.label);
           });

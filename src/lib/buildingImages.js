@@ -368,6 +368,186 @@ const CURATED_LOCAL = {
   // band) and six others on clutter, band fit, or overcast light.
   //   durham - Panorama on Corcoran Street, Durham (April 2023) | DiscoA340 | CC BY-SA 4.0
   durham: { state: 'NC', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/durham.jpg' },
+  // Charlotte, NC (2026-09-17, operator-certified). Knight NC-3 seated Charlotte's
+  // 12 city and Mecklenburg County's 16 elected officials, so the city needed a
+  // banner.
+  //
+  // 🔴🔴 CHARLOTTE IS THE FIRST CITY THAT IS ALREADY ITS OWN STATE'S SUBJECT.
+  // `states/NC.jpg` IS the Charlotte uptown skyline (Bruce Emmerling, CC BY-SA
+  // 4.0), so the state/capital collision that Austin resolved by moving the
+  // skyline down to cities/austin.jpg was live here before this key existed.
+  // Resolved the OTHER way, as Nevada did with the Strip and the Welcome sign:
+  // the state panorama is untouched and the city takes a different composition.
+  //
+  // The measurement that makes that honest: read in the 6:1 DESKTOP BAND (rows
+  // 128-411 of 540), the state asset CUTS THE TOWER CROWNS OFF. What a desktop
+  // visitor sees there is a parking deck, mid-rise offices and trees at close,
+  // ground-level range -- not a recognisable Charlotte skyline. This frame is
+  // distant and elevated with the Bank of America crown and the Duke Energy
+  // wedge both whole, so the two do not repeat each other.
+  //
+  // 🔴 CHARLOTTE NEEDED THE FOURTH DISTINCT NC COMPOSITION, and Durham had
+  // already spent the third. Compare compositions, never subject nouns:
+  //   NC state  = Charlotte uptown  -> close, ground-level, buildings fill frame
+  //   Asheville = Beaucatcher Mtn   -> elevated, mountains dominate
+  //   Durham    = Corcoran Street   -> wide low-rise with sky and foliage
+  //   Charlotte = this frame        -> distant elevated skyline, crowns whole
+  //
+  // 🔴 THE ANCHOR COULD NOT FIX THIS FRAME; A NARROWER CROP COULD -- the same
+  // correction states/CA.jpg needed. The source is 2.90:1, NARROWER than the
+  // 3.148:1 target, so a full-width crop leaves only 105 rows of vertical slack:
+  // sliding the anchor from 0.55 to 1.0 moved the band about 19 rendered pixels
+  // and the skyline stayed marooned under two-thirds of empty sky. Cropping to
+  // 3000 px wide raises the slack to 385 rows. Crop = centre 3000x953 at the
+  // BOTTOM edge, then LANCZOS to 1700x540 -- a 0.57x DOWNSCALE, nothing enlarged.
+  //
+  // People test: passes because there are no people. At 2x zoom the lower band
+  // holds buildings and one tree.
+  //
+  // ⚠ ITS ONE WEAKNESS IS AGE: April 2014, so a construction crane stands in the
+  // right third and towers finished since are absent. The most CURRENT frame
+  // found (Wesley Heights connector, February 2024, City Dweller 2, CC BY-SA
+  // 4.0) was the closest runner-up and was refused on clutter -- parked cars,
+  // utility poles, bare winter trees and a crane across the lower band. If this
+  // key is ever revisited for currency, start there.
+  //
+  // Also refused, of 27 candidates rendered in the band: the CC0 "Skyline of
+  // Charlotte 2016" (best licence found -- a highway overpass and a lamp
+  // standard cross the band and the crowns are cut at every anchor); "2010
+  // Charlotte Skyline", which MEASURES GREYSCALE at channel spread 4.7 of 255
+  // against this frame's 56.4; "Panorama bank of america", which is the STADIUM
+  // full of a crowd, not the bank; the Crowders Mountain view, which is the
+  // Asheville composition with Charlotte unreadable on the horizon; and Bruce
+  // Emmerling's own 2021 uptown frame, which repeats his state-banner
+  // composition at close ground level with people in it.
+  //
+  // 🔴 match:'exact' is LOAD-BEARING. Substring matching would hand this banner
+  // to CHARLOTTESVILLE, VA -- 'charlottesville'.includes('charlotte') is true.
+  // The NC state scope blocks it today, but getBuildingImages() treats a
+  // missing/unknown caller state as match-allowed, so the flag is the real guard.
+  //
+  // Surfacing: Charlotte's 12 city offices carry representing_city = 'Charlotte',
+  // so this resolves from an ordinary address search. Mecklenburg County's 16
+  // offices leave it NULL -- the same shape as Buncombe and Durham -- so a county
+  // banner would need a browse_label entry, and there is deliberately none.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule applies to OVERWRITES.
+  // cities/charlotte.jpg had never been written. sha256 verified identical on
+  // BOTH the plain and a cache-busted URL rather than trusting HTTP 200.
+  //   charlotte - Charlotte Skyline (Panoramio), 10 April 2014 | James Willamor | CC BY-SA 3.0
+  charlotte: { state: 'NC', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/charlotte.jpg' },
+
+  // South Carolina city banners (Knight slice 7, stage 5b; operator-certified
+  // 2026-09-21). THE FIRST TWO BANNERS TO CARRY A `focus` -- see below.
+  //
+  // Adjacency: states/SC.jpg is the Arthur Ravenel Bridge, and unlike states/CA
+  // and states/NC its credit is accurate in the band -- the bridge really is what
+  // a desktop visitor sees. Read there it is a DISTANT, EYE-LEVEL view ACROSS
+  // OPEN WATER of one engineered structure, low horizon, big sky. Both cities
+  // were chosen against that composition, not against the words "bridge" or
+  // "water": Columbia is a building filling the frame at ground level, and
+  // Myrtle Beach is a ground-level wall of high-rises. The beachfront panoramas
+  // were the obvious Myrtle Beach pick and were REFUSED for exactly this reason
+  // -- a low horizon across open water is the state banner's own composition one
+  // tier down.
+  //
+  // 🟢 WHY THESE CARRY A `focus`, AND WHAT IT BOUGHT
+  // Both subjects are TALL, and the centre band cut the identifying feature off:
+  // Columbia lost its dome, Myrtle Beach its SkyWheel. Anchoring the asset lower
+  // fixed desktop and threw the feature out of the ASSET, which mobile shows 96.9%
+  // of. The focus separates the two decisions -- the asset is now the best full
+  // frame (dome whole, SkyWheel whole) and the desktop band is aimed at the part
+  // that reads at 6:1 (the colonnade; the hotels and the pier). Operator direction,
+  // 2026-09-21: "build from the bottom of the picture ... we will see the columns
+  // more than the dome."
+  // ⚠ The focus values are not guesses. Each was solved from the approved
+  // vertical_anchor 0.70 band and then VERIFIED by rendering the retargeted band
+  // and comparing it against the approved one.
+  //
+  // Refusals worth keeping, because the reasons transfer:
+  //   * Columbia's only ready-made 7:1 Wikivoyage banner is the STATUE OF STROM
+  //     THURMOND, not the building -- a contested political monument is the wrong
+  //     subject for a civic banner, and it measures colour spread 10.5 of 255
+  //     against this frame's 109.7, close to greyscale.
+  //   * Myrtle Beach's Ocean Boulevard street scene is the strongest "this is
+  //     Myrtle Beach" frame after the winner and fails the PEOPLE TEST outright --
+  //     pedestrians fill the near foreground as identifiable individuals.
+  //   * "Panorama of the Myrtle Beach Beachfront 2" is 16382x2936; cropped to
+  //     3.148:1 and banded it is ENTIRELY SKY. A very wide source is not
+  //     automatically a good banner -- it can lose its own subject.
+  //
+  // People test on the shipped Myrtle Beach frame: figures on the pier and beach
+  // measure ~7-10px in the 1700x540 asset, inside Durham's 10-20px bound; at
+  // vertical_anchor 0.80 a full beach crowd with umbrellas enters and it fails.
+  // Columbia has no people in frame at all.
+  //
+  // match:'exact' on both. "Columbia" is a city name in KY, MS, SD and TN as well
+  // as SC, and West Columbia SC sits across the river; "Myrtle Beach" is a
+  // substring of NORTH Myrtle Beach, a separate municipality up the coast.
+  //
+  // Surfacing: both cities' offices carry representing_city, so these resolve from
+  // an ordinary address search. Richland and Horry county offices leave it NULL,
+  // so neither county has a banner and none is implied.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule applies to OVERWRITES. Neither key
+  // had been written. sha256 verified identical on BOTH the plain and a
+  // cache-busted URL rather than trusting HTTP 200, with a nonexistent-key control
+  // that failed as required.
+  //   columbia - 2018 South Carolina State House (cropped) | Farragutful | CC BY-SA 4.0
+  columbia: { state: 'SC', match: 'exact', focus: '50% 82%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/columbia.jpg' },
+  //   myrtle beach - Myrtle Beach, SC, USA (Panoramio), 12 October 2012 | James Willamor | CC BY-SA 3.0
+  'myrtle beach': { state: 'SC', match: 'exact', focus: '50% 84%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/myrtle-beach.jpg' },
+
+  // Pennsylvania city banners (Knight slice 6, stage 5b; operator-certified
+  // 2026-09-19 against a sheet of 6 proposals and 7 refusals, every frame cut to
+  // the 6:1 desktop band).
+  //
+  // The state banner was read in the band FIRST, which is the Charlotte rule:
+  // states/PA.jpg is PITTSBURGH, elevated and distant, full tower crowns over
+  // pale sky with hills behind -- and unlike states/NC.jpg it really does show
+  // the subject its credit names. So Philadelphia raises no state/city subject
+  // collision at all, and the only question left was composition. The chosen
+  // frame is a CLOSE skyline with towers filling the width under a thin sky,
+  // which is not the elevated-distant frame sitting above it on the page.
+  //
+  // Refused, with the reasons, because they transfer: Chestnut Street at
+  // Independence Hall, whose foreground figures measure ~200px in the 1700x540
+  // asset against Durham's 67px bound, and which was otherwise the strongest
+  // civic frame found; the Schuylkill River skyline, which IS the state
+  // banner's composition one city over; Independence Hall with the Liberty Bell
+  // Center, where the band keeps the LAWN and the Hall is a few hundred pixels
+  // at the left edge; and Boathouse Row at night, band luminance 28.8/255.
+  //
+  // ⚠ A NARROWER CROP MADE CITY HALL WORSE. The runner-up (Anntom4's City Hall
+  // from Broad Street) is 1.76:1 with 1,372 rows of slack, so the ANCHOR is the
+  // lever there; crop widths of 3400/4000/4600 each pushed the building into the
+  // centre under more sky. The states/CA.jpg "crop narrower" rule is for sources
+  // NARROWER than 3.148:1 -- do not reach for it when the slack is already large.
+  //
+  // State College is a borough of 40,000 with a university inside it, and the
+  // corpus reflects that: nearly every wide, well-lit, freely licensed frame of
+  // the place is a campus frame. The chosen one is ground level with Mount
+  // Nittany closing the view -- the one landform that says this borough and
+  // nowhere else -- and its pedestrians measure ~10px, inside the 10-20px band
+  // Travis County set. Refused: Allen Street (one pedestrian well over the 67px
+  // bound), the State Theatre marquee (night, luminance 62.9), and a downtown
+  // rooftop frame at channel spread 13.5, which is the Milledgeville test --
+  // no licence check and no aspect check catches a frame with no colour in it.
+  //
+  // ⚠ A keyword search for "Old Main Penn State" returned MINNESOTA STATE
+  // MANKATO's Old Main at the top of the list. --categories-of caught it.
+  //
+  // 🔴 match:'exact' on both. 'state college' is a common phrase and the state
+  // scope is not the guard -- getBuildingImages() treats a missing caller state
+  // as match-allowed. Verified by running the matcher, not by reasoning about it.
+  //
+  // Both keys are NEW, so neither needs a -v2; the stale-CDN rule is about
+  // overwrites. sha256 verified identical on BOTH the plain and a cache-busted
+  // URL, with a missing-key control that failed as required.
+  //   philadelphia  - Philadelphia skyline from the southwest, 5 October 2015 | Mefman00, modifications by Maps and stuff (Brian W. Schaller) | CC0
+  //   state college - Penn State Campus, 20 April 2019 | Goonsnick | CC BY-SA 4.0
+  philadelphia: { state: 'PA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/philadelphia.jpg' },
+  'state college': { state: 'PA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/state-college.jpg' },
   // Maine city banners (2026-07-06, operator-certified). Licensed Wikimedia
   // Commons; state-scoped 'ME'. Portland ME = the ex-state Portland skyline
   // (see the portland array above). The Maine STATE banner is now the
@@ -1134,6 +1314,63 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing for the usual reason.
   'fort wayne': { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-wayne.jpg' },
   gary: { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gary.jpg' },
+  // Colorado -- Knight program slice 9, stage 5 (2026-09-16, operator-certified). Composed to
+  // 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), not the full frame.
+  //
+  // 🔴 COLORADO IS THE FIRST STATE WITH **TWO** COMPOSITIONS ALREADY SPOKEN FOR, and the second one
+  // exists BECAUSE of the first:
+  //   states/CO.jpg              - the DENVER SKYLINE at eye level, mountains as a back wall
+  //   cities/colorado-springs    - GARDEN OF THE GODS, near-field red rock filling the frame, which
+  //                                that wave chose precisely to avoid repeating the skyline
+  // Boulder's signature view is also rock, so this was a real test rather than a formality. The
+  // Asheville ruling decides it: the test is CAMERA HEIGHT AND WHAT FILLS THE FRAME. Against Garden
+  // of the Gods this frame differs on all three axes -- grey-tan tilted slab rather than red fin, a
+  // camera looking UP a mountain flank rather than across a park at eye level, and a near field of
+  // pine forest rather than rock.
+  //
+  //   boulder    - the Flatirons rising behind a pine screen from Bluebell Road
+  //                | joiseyshowaa | CC BY-SA 2.0
+  //                source: File:The Flatirons and Bluebell Road (52529745372).jpg (5824x2942)
+  //                anchor_y 0.50 -- slabs in the upper band, pines in the lower, nothing cut.
+  //
+  // ⚠ TWO CANDIDATES WERE REFUSED AND BOTH ARE WORTH REMEMBERING. Pearl Street Mall is the most
+  // compositionally distinctive frame Boulder has -- a street corridor, like Bloomington's -- and it
+  // fails the PEOPLE TEST outright: figures hundreds of pixels tall and plainly identifiable, far
+  // past the ~67px Durham refused and the 10-20px silhouettes Travis County accepted. A sunset
+  // panorama was refused on SUBJECT: the dramatic band across its sky is wildfire smoke.
+  //
+  // 🔴 match:'exact' AND the state scope are BOTH load-bearing. Boulder City, NEVADA is a separate
+  // city of 15,000 outside Las Vegas, and it is ALREADY SEATED in production with five council
+  // offices -- it is the row a name-based lookup finds first.
+  boulder: { state: 'CO', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/boulder.jpg' },
+  // Minnesota -- Knight program slice 5, stage 5 (2026-09-16, operator-certified). Both composed
+  // to 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), never the full frame.
+  //
+  // The composition to differentiate against is states/MN.jpg, the Minneapolis skyline from the
+  // Stone Arch Bridge: a daytime downtown skyline panorama. That is what rejected Saint Paul's own
+  // skyline, which is otherwise its best-known view -- a reader moving from the state section to
+  // the city section would have met the same picture twice.
+  //
+  //   duluth     - the shipping canal, the Aerial Lift Bridge and Canal Park, from the air
+  //                | Bspor.88 | CC0 (own work, August 2024)
+  //                source: File:Duluth, MN - Aerial Lift Bridge and harbor, aerial, August 2024.jpg
+  //                (4000x1660), anchor_y 0.10 -- at 0.25 the bridge rides the top edge of the band.
+  //   saint paul - the Union Depot colonnade, its column bases and the lawn
+  //                | August Schwerdfeger | CC BY 4.0 (own work, 2015-07-26)
+  //                source: File:Saint Paul Union Depot - headhouse panorama - 2015-07-26.jpg
+  //                (12285x3974, native 3.09:1) -- the source is only 0.06 off the asset ratio, so
+  //                anchor_y moves the frame by ~10px and CANNOT choose what the band shows. The
+  //                roofline was trimmed from the source instead (top 690px), which is what puts the
+  //                bases and the planting strip inside the desktop band. Certified for the ground,
+  //                on the operator's reading that the earlier crop read better on mobile than on
+  //                desktop -- which is the Bend failure's signature.
+  //
+  // 🔴 match:'exact' AND the state scope are BOTH load-bearing here. Duluth, GEORGIA is a city of
+  // 33,000 in Gwinnett County, and Georgia is slice 2 of this same program, so a substring or
+  // state-blind match would hand Lake Superior to a suburb of Atlanta. Saint Paul's neighbours are
+  // South Saint Paul and West Saint Paul, separate cities we do not seat.
+  duluth: { state: 'MN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/duluth.jpg' },
+  'saint paul': { state: 'MN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/saint-paul.jpg' },
 };
 
 /**
@@ -1302,6 +1539,19 @@ const STATE_PANORAMAS = new Set([
  * cache eventually expires. Any future state replacement should get a versioned entry here
  * rather than repeat the overwrite and hope.
  */
+/**
+ * Optional per-state DESKTOP crop target (`object-position`), same mechanism as a
+ * city entry's `focus`. See SectionBanner.jsx's BANNER_FOCUS_DEFAULT.
+ *
+ * 🟢 THIS IS THE CHEAP FIX FOR A STATE PANORAMA THAT LOSES ITS SUBJECT AT 6:1.
+ * states/CA.jpg needed a re-crop and a -v2 upload because the Golden Gate sat above
+ * the centre band; states/NC.jpg still cuts the Charlotte tower crowns off. Both are
+ * now solvable WITHOUT re-uploading anything — point the band at the subject instead.
+ * Left empty on purpose: retargeting a live state banner changes what millions of
+ * addresses see, so each one wants its own before/after review, not a bulk sweep.
+ */
+const STATE_PANORAMA_FOCUS = {};
+
 const STATE_PANORAMA_FILES = {
   TX: 'TX-v2.jpg',
   // FL versioned 2026-08-30. Florida's banner WAS a Miami downtown skyline — which is
@@ -1344,6 +1594,11 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
   // state is treated as match-allowed so existing callers that don't pass
   // stateAbbrev keep working unchanged.
   let localImage = null;
+  // Optional per-banner `object-position` for the DESKTOP 6:1 band. See
+  // SectionBanner.jsx's BANNER_FOCUS_DEFAULT for why this exists: without it the
+  // asset's composition and desktop's crop are the same decision, and a subject
+  // that frames well as a whole picture can still be cut in half on desktop.
+  let localFocus = null;
   // Match the LONGEST key first so a more specific city name wins over one that
   // is a substring of it (e.g. "south portland" must beat "portland"). Otherwise
   // resolution order follows key length descending; ties keep insertion order.
@@ -1365,6 +1620,7 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
     });
     if (hit) {
       localImage = hit.src;
+      localFocus = hit.focus || null;
       break;
     }
   }
@@ -1375,6 +1631,7 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
     const countyEntry = CURATED_COUNTY[String(countyGeoId)];
     if (countyEntry && (!abbrev || !countyEntry.state || countyEntry.state === abbrev)) {
       localImage = countyEntry.src;
+      localFocus = countyEntry.focus || null;
     }
   }
 
@@ -1388,6 +1645,16 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
     Local: localImage,
     State: stateImage,
     Federal: FEDERAL_IMAGE,
+    // ADDITIVE, NEVER A SHAPE CHANGE. Other apps consume this registry as an API
+    // (ESSENTIALS-TEAM-NOTE-registry-as-an-api), so the three tier keys keep their
+    // exact meaning and type. `focus` is a sibling map of optional CSS
+    // object-position strings; a consumer that ignores it behaves as before, and a
+    // tier with no focus is null, which SectionBanner reads as the historical centre.
+    focus: {
+      Local: localFocus,
+      State: STATE_PANORAMA_FOCUS[abbrev] || null,
+      Federal: null,
+    },
   };
 }
 

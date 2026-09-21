@@ -486,3 +486,72 @@ describe('Special-purpose overlay districts sort after general-purpose local gov
     expect(localTier).toBeDefined();
   });
 });
+
+describe('Council-appointed Mayor with no separate exec seat (Sahuarita-class)', () => {
+
+  // Sahuarita AZ / South Tucson AZ / Monterey Park CA: the body elects seven council members
+  // at large and DESIGNATES one as Mayor and one as Vice Mayor. There is no mayoral contest on
+  // any ballot, so there is no standalone `Mayor` seat — the designation lives in a parenthetical
+  // on a council seat: "Council Member (Mayor)".
+  //
+  // This is the mirror image of the Tucson case above. There, the parenthetical must NOT promote
+  // the Ward 1 member, because an at-large Mayor already exists as its own seat. Here there is no
+  // such seat, so the parenthetical IS the executive and must head its own sub-group.
+  const gov = {
+    government_name: 'Town of Sahuarita, Arizona, US',
+    government_body_name: 'Sahuarita Town Council',
+    chamber_name_formal: 'Sahuarita Town Council',
+    district_type: 'LOCAL',
+  };
+
+  // Upstream order deliberately puts a plain council member first and the Mayor last.
+  const makeCouncil = () => [
+    makePol({ ...gov, office_title: 'Council Member', last_name: 'Gillespie', district_id: '1' }),
+    makePol({ ...gov, office_title: 'Council Member', last_name: 'Lisk', district_id: '2' }),
+    makePol({ ...gov, office_title: 'Council Member', last_name: 'Lytle', district_id: '3' }),
+    makePol({ ...gov, office_title: 'Council Member', last_name: 'Priolo', district_id: '4' }),
+    makePol({ ...gov, office_title: 'Council Member', last_name: 'Morales', district_id: '5' }),
+    makePol({ ...gov, office_title: 'Council Member (Vice Mayor)', last_name: 'Egbert', district_id: '6' }),
+    makePol({ ...gov, office_title: 'Council Member (Mayor)', last_name: 'Murphy', district_id: '7' }),
+  ];
+
+  it('puts the designated Mayor in an exec sub-group separate from the plain council members', () => {
+    const hierarchy = groupIntoHierarchy(makeCouncil());
+    const body = hierarchy.find(t => t.tier === 'Local').bodies[0];
+
+    const execGroup = body.subgroups.find(sg =>
+      sg.pols.some(p => p.office_title === 'Council Member (Mayor)')
+    );
+    expect(execGroup).toBeDefined();
+
+    // the five plain council members must NOT be in it
+    expect(execGroup.pols.every(p => p.office_title !== 'Council Member')).toBe(true);
+    // the Vice Mayor belongs with the Mayor, as Mayor Pro Tem does in Bellflower
+    expect(execGroup.pols.some(p => p.office_title === 'Council Member (Vice Mayor)')).toBe(true);
+    // Mayor sorts ahead of Vice Mayor
+    const mayorIdx = execGroup.pols.findIndex(p => p.office_title === 'Council Member (Mayor)');
+    const viceIdx = execGroup.pols.findIndex(p => p.office_title === 'Council Member (Vice Mayor)');
+    expect(mayorIdx).toBeLessThan(viceIdx);
+  });
+
+  it('labels that sub-group "Mayor", not "Council Member (Mayor)"', () => {
+    const hierarchy = groupIntoHierarchy(makeCouncil());
+    const body = hierarchy.find(t => t.tier === 'Local').bodies[0];
+    const execGroup = body.subgroups.find(sg =>
+      sg.pols.some(p => p.office_title === 'Council Member (Mayor)')
+    );
+    expect(execGroup.label).toBe('Mayor');
+  });
+
+  it('sorts the exec sub-group ahead of the council sub-group', () => {
+    const hierarchy = groupIntoHierarchy(makeCouncil());
+    const body = hierarchy.find(t => t.tier === 'Local').bodies[0];
+    const execIdx = body.subgroups.findIndex(sg =>
+      sg.pols.some(p => p.office_title === 'Council Member (Mayor)')
+    );
+    const councilIdx = body.subgroups.findIndex(sg =>
+      sg.pols.every(p => p.office_title === 'Council Member')
+    );
+    expect(execIdx).toBeLessThan(councilIdx);
+  });
+});

@@ -11,6 +11,7 @@ import { readFileSync } from 'node:fs';
 import {
   FALLBACK_GRADIENTS, shouldRenderStat, shouldRenderIcons,
   BANNER_ASPECT, BANNER_ASPECT_CLASS,
+  BANNER_FOCUS_DEFAULT, resolveImageFocus,
 } from './SectionBanner.jsx';
 
 describe('BANNER_ASPECT — the box must stay aspect-driven, never fixed-height', () => {
@@ -155,5 +156,55 @@ describe('shouldRenderIcons', () => {
 
   it('returns false for a non-array', () => {
     expect(shouldRenderIcons('x')).toBe(false);
+  });
+});
+
+describe('resolveImageFocus — the per-banner desktop crop target', () => {
+  // Added 2026-09-21. Until now `object-fit: cover` with no `object-position`
+  // pinned every banner's desktop slice to the CENTRE of its asset, which made
+  // "compose a good 1700x540 picture" and "choose what desktop sees" the same
+  // decision. South Carolina is where that bit: the Columbia State House frames
+  // best with its dome, the dome sits above the centre band, and anchoring the
+  // asset low enough to fix desktop threw the dome out of the asset entirely.
+  const SRC = readFileSync(new URL('./SectionBanner.jsx', import.meta.url), 'utf8');
+
+  it('defaults to the historical centre', () => {
+    // EVERY banner that sets no focus must render byte-identically to before.
+    expect(BANNER_FOCUS_DEFAULT).toBe('50% 50%');
+    for (const absent of [null, undefined, '', '   ']) {
+      expect(resolveImageFocus(absent)).toBe(BANNER_FOCUS_DEFAULT);
+    }
+  });
+
+  it('passes a valid two-component value through unchanged', () => {
+    for (const ok of ['50% 82%', '50% 0%', '50% 100%', 'center bottom', '0px 120px']) {
+      expect(resolveImageFocus(ok), ok).toBe(ok);
+    }
+  });
+
+  it('falls back rather than emitting invalid CSS', () => {
+    // A malformed value must not reach the style object: the browser would drop
+    // the whole object-position declaration, which looks exactly like "the focus
+    // did nothing" and gets debugged in the wrong file.
+    for (const bad of ['50%', '50% 82% 3%', 'junk', '50%; color:red', 42, {}, []]) {
+      expect(resolveImageFocus(bad), String(bad)).toBe(BANNER_FOCUS_DEFAULT);
+    }
+  });
+
+  it('applies object-position to the image layer', () => {
+    // The knob is worthless if the component does not actually set it.
+    expect(SRC).toMatch(/objectPosition:\s*resolveImageFocus\(imageFocus\)/);
+  });
+
+  it('still covers — the focus moves the crop, it never replaces object-fit', () => {
+    expect(SRC).toMatch(/objectFit:\s*'cover'/);
+  });
+
+  it('can reach both edges of the desktop overflow', () => {
+    // At md+ the 6/1 box shows 1700/6 = 283 of 540 rows, so 257 rows of overflow
+    // exist for the focus to travel through. If this ever reached zero the knob
+    // would be inert and a banner could not be retargeted at all.
+    const BAND = Math.round(1700 / 6);
+    expect(540 - BAND).toBeGreaterThan(200);
   });
 });

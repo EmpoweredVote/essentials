@@ -299,5 +299,203 @@ Durham image would be an invented distinction.
 Attribution verified on the Commons File: page -- own work, DiscoA340, CC BY-SA
 4.0, 29 April 2023 15:36, afternoon daylight.
 
+
+## 2026-09-16 -- Duluth and Saint Paul (Knight program slice 5, stage 5)
+
+CERTIFIED. Two new keys, `duluth` (state MN) and `saint paul` (state MN), both
+`match:'exact'`. Assets composed to 1700x540 first, JPEG q90 progressive, and
+judged in the 6/1 DESKTOP BAND -- rows 128-411 -- with the 13/4 mobile band shown
+beside it.
+
+ADJACENCY. states/MN.jpg is the Minneapolis skyline from the Stone Arch Bridge: a
+daytime downtown skyline panorama. That single fact decided Saint Paul. Its own
+best-known view is a skyline across the Mississippi, which is the same
+composition, so it was rejected as a candidate and is recorded on the review page
+as a rejection rather than quietly dropped. Union Depot's colonnade differs on
+both axes the Asheville ruling names -- camera height and what fills the frame.
+
+DULUTH. The shipping canal, the Aerial Lift Bridge and Canal Park from the air;
+Bspor.88, CC0, so no attribution is owed and one is given anyway. anchor_y 0.10:
+at 0.25 the bridge rides the top edge of the desktop band, and the band is then
+mostly water. Two alternatives are on the review page -- the Canal Park light at
+sunset (the strongest colour of any candidate, and the most saturated thing that
+would sit above a list of officials) and the lift bridge head-on in winter, which
+is dramatic at full frame and nearly empty at 6/1 because its own steel frames the
+left and right edges while the band keeps the white sky between them.
+
+SAINT PAUL -- AND THE RATIO TRAP THAT DECIDED THE CROP. The source panorama is
+12285x3974, native 3.09:1, against the asset's 3.148:1. That is a difference of
+22 source pixels, so anchor_y moves the composed frame by about ten pixels and
+CANNOT choose what the desktop band shows. The first certified crop held the whole
+colonnade and the desktop band cut the ground away; the operator caught it exactly
+as the Bend failure presents -- "looks better on mobile than desktop". Zooming made
+it worse, landing the band mid-facade. What worked was trimming the roofline from
+the SOURCE (top 690px) so the composed frame is colonnade-and-ground, which puts
+the column bases, the planting strip and the lawn inside the band. The cornice is
+deliberately outside the desktop band; mobile still shows it.
+
+🔴 EXACT MATCHING AND THE STATE SCOPE ARE BOTH LOAD-BEARING. Duluth, GEORGIA is a
+city of 33,000 in Gwinnett County, and Georgia is slice 2 of this same program --
+a substring or state-blind match would hand Lake Superior to a suburb of Atlanta.
+Saint Paul's neighbours are South Saint Paul and West Saint Paul.
+
+NO STALE-CDN RISK. Both are new keys, so nothing was cached and no -v2 suffix is
+needed. Served bytes were sha256-verified against the local files after upload,
+and a key that cannot exist was requested as a control: HTTP 400, correctly
+refused.
+
+SURFACING. Duluth's 10 city offices carry representing_city='Duluth' and Saint
+Paul's 8 carry 'Saint Paul', so both resolve from an ordinary address search. The
+two county boards leave that column NULL, as Durham County and Buncombe do, and no
+county banner was created.
+
+
+## 2026-09-16 -- Boulder (Knight program slice 9, stage 5)
+
+CERTIFIED. One new key, `boulder` (state CO), `match:'exact'`. Composed to 1700x540
+first, JPEG q90 progressive, judged in the 6/1 desktop band with the 13/4 mobile
+band beside it.
+
+ADJACENCY -- THE FIRST STATE WITH TWO COMPOSITIONS ALREADY TAKEN, and the second
+exists because of the first: states/CO.jpg is the Denver skyline at eye level, and
+Colorado Springs took Garden of the Gods precisely to avoid repeating it. Boulder's
+signature view is also rock, so this was a real test. The Asheville ruling decides
+it on camera height and what fills the frame, and against Garden of the Gods this
+frame differs on all three axes: grey-tan tilted slab rather than red fin, a camera
+looking UP a mountain flank rather than across a park at eye level, and a near
+field of pine forest rather than rock. The two frames were shown stacked on the
+review page so the operator could judge the closest call directly.
+
+SHIPPED: the Flatirons rising behind a pine screen from Bluebell Road;
+joiseyshowaa, CC BY-SA 2.0; anchor_y 0.50. Slabs occupy the upper band and pines
+the lower, and nothing important falls outside the desktop slice.
+
+TWO ALTERNATIVES REMAIN ON THE PAGE, both of which clear the baselines more easily
+and read more quietly at banner size: the city under snow from Flagstaff Mountain
+(Hustvedt, CC BY-SA 3.0) and the Chautauqua Park meadow trail (Akos Kokai, CC BY
+2.0). If the Flatirons are ever judged too close to Garden of the Gods, the snow
+frame is the replacement.
+
+TWO REJECTIONS WORTH KEEPING. Pearl Street Mall is the most compositionally
+distinctive frame Boulder has -- a street corridor, like Bloomington's -- and it
+fails the PEOPLE TEST outright: figures hundreds of pixels tall and plainly
+identifiable, far past the ~67px that refused Durham's courtyard and the 10-20px
+silhouettes Travis County accepted. A sunset panorama was refused on SUBJECT: the
+dramatic band across its sky is wildfire smoke, and a parked car and a standing
+figure sit in the near field. A civic banner should not open a resident's page
+with a fire.
+
+🔴 EXACT MATCHING AND THE STATE SCOPE ARE BOTH LOAD-BEARING, and more so here than
+usual: Boulder City, NEVADA is a separate city of 15,000 outside Las Vegas and is
+ALREADY SEATED in production with five council offices. It is the row a name-based
+lookup finds first -- the Colorado seeding wave's own migrations carry gates
+asserting it stays untouched.
+
+NO STALE-CDN RISK. A new key, so nothing was cached and no -v2 suffix is needed.
+Served bytes were sha256-verified against the local file after upload, and a key
+that cannot exist was requested as a control: HTTP 400, correctly refused.
+
+SURFACING. Boulder's 9 city offices carry representing_city='Boulder', so this
+resolves from an ordinary address search. The 10 Boulder County offices leave that
+column NULL, as Durham County and Ramsey do, and no county banner was created.
+
+
+--- CHARLOTTE, 2026-09-17 ---
+
+One banner, certified inside the 6:1 DESKTOP band (rows 128-411 of 540).
+
+  cities/charlotte.jpg   Charlotte Skyline (Panoramio), 10 April 2014 07:39
+                         | James Willamor | CC BY-SA 3.0 Unported
+                         native 3881x1338 (2.90:1) -- NARROWER than the 3.148:1
+                         target. Crop = centre 3000x953 at the BOTTOM edge, then
+                         LANCZOS to 1700x540, a 0.57x downscale. 27 candidates
+                         rendered in the band.
+
+CHARLOTTE IS THE FIRST CITY THAT IS ALREADY ITS OWN STATE'S SUBJECT, and that is
+the finding. states/NC.jpg IS the Charlotte uptown skyline (Bruce Emmerling,
+CC BY-SA 4.0). Two precedents point opposite ways and both shipped: Austin moved
+the skyline down to cities/austin.jpg and gave TX the Chisos Mountains; Nevada kept
+the Strip on the state and made the city the Welcome sign. Operator chose the
+Nevada route on 2026-09-17 -- the state panorama is untouched.
+
+THE MEASUREMENT THAT MAKES THAT HONEST. Read in the desktop band, the state asset
+CUTS THE TOWER CROWNS OFF. What a desktop visitor sees there is a parking deck,
+mid-rise offices and trees at close, ground-level range, not a recognisable
+Charlotte skyline. This frame is distant and elevated with the Bank of America
+crown and the Duke Energy wedge both whole. Different camera height, different
+subject scale, different frame -- which is the Asheville rule applied to the
+hardest case it has met.
+
+CHARLOTTE NEEDED THE FOURTH DISTINCT NC COMPOSITION. Durham had already spent the
+third, and Durham's own note warned that a third city in a state has fewer
+compositions left than the second. A fourth has fewer still:
+
+    NC state banner   Charlotte uptown  -> close, ground-level, buildings fill frame
+    Asheville (city)  Beaucatcher Mtn   -> elevated, mountains dominate
+    Durham (city)     Corcoran Street   -> wide low-rise with sky and foliage
+    Charlotte (city)  this frame        -> distant elevated skyline, crowns whole
+
+THE ANCHOR COULD NOT FIX THIS FRAME; A NARROWER CROP COULD. This is the states/CA
+correction meeting a new case. The source is narrower than the target, so a
+full-width crop leaves only 105 rows of vertical slack: sliding the anchor from
+0.55 to 1.0 moved the band about 19 rendered pixels and the skyline stayed marooned
+under two-thirds of empty sky. Cropping to 3000px wide raises the slack to 385
+rows and is still a downscale, because the source is 3881px wide. Check the SOURCE
+ASPECT before assuming an anchor can help -- an anchor cannot choose the band on a
+source narrower than 3.148:1.
+
+PEOPLE TEST: passes because there are no people. At 2x zoom the lower band holds
+buildings and one tree.
+
+THE ONE WEAKNESS IS AGE, and it is recorded rather than hidden. April 2014: a
+construction crane stands in the right third and towers finished since are absent.
+The most CURRENT frame found -- Wesley Heights connector, February 2024, City
+Dweller 2, CC BY-SA 4.0 -- was the closest runner-up and was refused on clutter:
+parked cars, utility poles, bare winter trees and a crane across the lower band.
+If this key is ever revisited for currency, start there.
+
+REFUSED, and worth recording because the reasons transfer:
+  - Skyline of Charlotte 2016 (brandon walker, CC0) -- the BEST LICENCE found and
+    still refused: a highway overpass and a lamp standard cross the band and the
+    crowns are cut at every anchor.
+  - 2010 Charlotte Skyline (Calvin Dellinger, CC BY 2.0) -- MEASURES GREYSCALE,
+    channel spread 4.7 of 255 against this frame's 56.4. The Milledgeville colour
+    rule firing again: no licence check and no aspect check catches it.
+  - Panorama bank of america (Billibous, CC BY-SA 4.0) -- not the bank. The
+    STADIUM, full of a crowd.
+  - View from Crowders Mountain (Idawriter, CC BY-SA 3.0) -- elevated over forest
+    with the city tiny on the horizon. This IS the Asheville composition.
+  - Charlotte NC Uptown (Bruce Emmerling, CC BY-SA 4.0) -- by the state banner's
+    own photographer, repeating his composition: close ground-level park, people
+    in frame.
+  - Two Precisionviews aerials -- one is Bank of America Stadium at every anchor,
+    the other a wall of towers with the crowns cut, repeating the state banner.
+  - Blue-hour and night frames (panoramio 2, jacreative, Timelapse of Charlotte
+    Skyline, BB&T Ballpark) -- the daytime rule, consistent with the 50 live state
+    panoramas.
+
+FINDING THE CORPUS AT ALL was most of the work, and repeats the Bend lesson. Seven
+guessed category names returned 0 files; a recursive walk of the Charlotte tree to
+depth 3 drifted into US-74 highway photography and surfaced no skyline. The real
+category is Category:Charlotte skylines (plural), and it was found by asking the
+ONE known-good file which categories it belongs to. Do that first next time.
+
+NO STALE-CDN RISK. cities/charlotte.jpg is a new key, never previously written, so
+no -v2 suffix is needed. Served bytes were sha256-verified identical to the local
+file on BOTH the plain and a cache-busted URL rather than trusting HTTP 200, and a
+key that cannot exist was requested as a control: HTTP 400, correctly refused.
+
+match:'exact' IS LOAD-BEARING, and was proved rather than assumed.
+'charlottesville'.includes('charlotte') is true, so substring matching would hand
+this banner to Charlottesville VA. getBuildingImages() was run directly:
+Charlotte/NC and Charlotte with NO state both resolve to cities/charlotte.jpg;
+Charlottesville and Port Charlotte resolve to null with and without a state; and an
+unregistered city returns null, which is the control proving the check can fail.
+
+SURFACING. Charlotte's 12 city offices carry representing_city='Charlotte', so this
+resolves from an ordinary address search. Mecklenburg County's 16 offices leave
+that column NULL, as Buncombe, Durham County and Boulder County do, and no county
+banner was created.
+
 --- machine-readable ---
-{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}, "asheville-nc": {"status": "certified", "note": "new 2026-08-23; Asheville Skyline from Beaucatcher Mountain Aug 2023 - 1; Bill McMannis CC BY 2.0 (Flickr->Commons); centred crop, 2400->1700 downscale; ELEVATED mountain view chosen BECAUSE the NC state banner is the close ground-level Charlotte skyline -- the two Pack Square civic close-ups were the real adjacency collision, not the skyline frames; sunset aerial (WillThomas CC BY 4.0, 8192px) rejected on the daytime rule only"}, "durham-nc": {"status": "certified", "note": "new 2026-08-23; Panorama on Corcoran Street (April 2023); DiscoA340 CC BY-SA 4.0; native 4.75:1 so horizontal crop only; carries DPAC + Lucky Strike tower + smokestack + Durham Bull in one frame; FIRST city to clear TWO banners (Charlotte close-ground-level AND Asheville elevated-mountain), which eliminated both obvious framings; tobacco-campus courtyard was first choice and REJECTED on the people test at ~67px figures vs the 10-20px silhouette precedent -- revisit it first if that test is ever relaxed; DPAC pano kept as standing alternative"}}
+{"alexandria": {"status": "certified", "note": ""}, "leonardtown": {"status": "certified", "note": ""}, "springfield-mo": {"status": "certified", "note": ""}, "falls-church-alt": {"status": "certified", "note": ""}, "madison-wi": {"status": "certified", "note": "new 2026-07-27; CC BY 2.5 John Benson; anchor .45"}, "bend-or": {"status": "certified", "note": "re-cropped 2026-07-27 to bend-v2.jpg; pond band; supersedes centre crop"}, "austin-tx": {"status": "certified", "note": "new 2026-08-18; cities/austin.jpg IS the former states/TX.jpg byte-for-byte (sha256 62cba3d5); state moved to Chisos at states/TX-v2.jpg"}, "travis-county-tx": {"status": "certified", "note": "new 2026-08-18; Hamilton Pool Preserve; Fredlyfish4 CC BY-SA 4.0; centred crop; distant beachgoers operator-accepted (10-20px silhouettes at shipped size)"}, "colorado-springs-co": {"status": "certified", "note": "new 2026-08-21; Garden of the Gods partial pano; WolfmanSF CC BY-SA 4.0; anchor .45; NOT a skyline -- CO state banner is the Denver skyline, adjacency collision"}, "el-paso-county-co": {"status": "certified", "note": "new 2026-08-21; Calhan Paint Mines Pillars on the Rim; MElizabethTill CC BY-SA 4.0; anchor .25; -co suffix avoids El Paso County TX collision; browse-mode only (county offices have NULL representing_city)"}, "asheville-nc": {"status": "certified", "note": "new 2026-08-23; Asheville Skyline from Beaucatcher Mountain Aug 2023 - 1; Bill McMannis CC BY 2.0 (Flickr->Commons); centred crop, 2400->1700 downscale; ELEVATED mountain view chosen BECAUSE the NC state banner is the close ground-level Charlotte skyline -- the two Pack Square civic close-ups were the real adjacency collision, not the skyline frames; sunset aerial (WillThomas CC BY 4.0, 8192px) rejected on the daytime rule only"}, "durham-nc": {"status": "certified", "note": "new 2026-08-23; Panorama on Corcoran Street (April 2023); DiscoA340 CC BY-SA 4.0; native 4.75:1 so horizontal crop only; carries DPAC + Lucky Strike tower + smokestack + Durham Bull in one frame; FIRST city to clear TWO banners (Charlotte close-ground-level AND Asheville elevated-mountain), which eliminated both obvious framings; tobacco-campus courtyard was first choice and REJECTED on the people test at ~67px figures vs the 10-20px silhouette precedent -- revisit it first if that test is ever relaxed; DPAC pano kept as standing alternative"}, "duluth-mn": {"status": "certified", "note": "new 2026-09-16; canal + Aerial Lift Bridge + Canal Park from the air; Bspor.88 CC0; anchor_y .10; state-scoped MN with match:'exact' because Duluth GA exists in slice 2 of the same program"}, "saint-paul-mn": {"status": "certified", "note": "new 2026-09-16; Union Depot colonnade, bases and lawn; August Schwerdfeger CC BY 4.0; source is 3.09:1 against the asset's 3.148:1 so anchor_y moves ~10px and cannot choose the band -- roofline trimmed from the SOURCE (top 690px) instead, after the first crop cut the ground on desktop; cornice deliberately outside the desktop band; Saint Paul's own skyline REJECTED on adjacency with the Minneapolis state banner"}, "boulder-co": {"status": "certified", "note": "new 2026-09-16; the Flatirons behind a pine screen from Bluebell Road; joiseyshowaa CC BY-SA 2.0; anchor_y .50; FIRST state with two compositions already taken (Denver skyline as states/CO.jpg, Garden of the Gods for Colorado Springs) -- cleared on the Asheville axes: tilted grey slab not red fin, camera looking UP a flank not across a park, pine near field not rock; Pearl Street Mall REJECTED on the people test (figures hundreds of px), a sunset panorama REJECTED on subject (wildfire smoke); Boulder City NEVADA is already seated, so match:'exact' + CO scope are load-bearing"}, "charlotte-nc": {"status": "certified", "note": "new 2026-09-17; Charlotte Skyline (Panoramio) 10 Apr 2014; James Willamor CC BY-SA 3.0; source 2.90:1 is NARROWER than the 3.148:1 asset so the anchor moves only ~19 rendered px -- cropped NARROWER instead (centre 3000x953 at the bottom edge, 0.57x downscale), the states/CA correction in a new case; FIRST city that is ALREADY ITS OWN STATE'S SUBJECT (states/NC.jpg IS the Charlotte skyline) -- resolved the NEVADA way on operator ruling, state untouched, because the state band CUTS THE TOWER CROWNS OFF and shows no recognisable skyline; FOURTH distinct NC composition after state/Asheville/Durham; CC0 'Skyline of Charlotte 2016' REJECTED (overpass + lamp standard, crowns cut) and '2010 Charlotte Skyline' REJECTED as MEASURED GREYSCALE at spread 4.7/255; weakness is AGE (2014, crane in frame) -- Wesley Heights connector Feb 2024 is the standing alternative, refused on clutter; match:'exact' load-bearing and PROVED against Charlottesville VA and Port Charlotte FL"}}
