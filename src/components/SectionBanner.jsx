@@ -112,6 +112,61 @@ export const BANNER_ASPECT = {
 export const BANNER_ASPECT_CLASS = 'aspect-[13/4] md:aspect-[6/1]';
 
 /**
+ * Where the desktop band sits inside the asset — `object-position`, per banner.
+ *
+ * WHY THIS EXISTS (2026-09-21)
+ * ----------------------------
+ * `object-fit: cover` with no `object-position` pins the visible slice to the CENTRE
+ * of the asset. At the md+ 6/1 ratio that slice is rows 128-411 of 540, and until now
+ * it was the only slice any banner could ever show. So the asset and the desktop crop
+ * were the SAME decision: composing a good full 3.148:1 picture and choosing what
+ * desktop sees were in direct conflict, and one of them had to lose.
+ *
+ * South Carolina is where that bit. The Columbia State House frames best as a whole
+ * picture with the dome in it, but the dome lands ABOVE the centre band, so desktop
+ * showed a decapitated building; anchoring the asset lower fixed desktop and threw
+ * the dome out of the asset entirely. Myrtle Beach had the same shape — the SkyWheel
+ * high, the pier low, and no single centred crop holding both.
+ *
+ * With a per-banner focus the two decisions separate: build the asset as the best
+ * full frame, then TARGET the band at the part desktop should see.
+ *
+ *   asset rows visible at 6/1 = 1700/6 = 283.33 of 540, leaving 256.67 of overflow.
+ *   focus Y=0% shows the TOP of the asset, 100% the BOTTOM, 50% the historical centre.
+ *
+ * ⚠ Mobile is barely affected and that is correct: the 13/4 box already shows 96.9%
+ * of the asset, so there are only ~17 rows of overflow for the focus to move through.
+ * This knob is a DESKTOP crop control.
+ *
+ * ⚠ It is NOT a substitute for composing the asset. A focus cannot invent pixels the
+ * asset does not carry, and the 3.148:1 crop still decides what exists at all.
+ */
+export const BANNER_FOCUS_DEFAULT = '50% 50%';
+
+/**
+ * Validate a focus string before it reaches inline CSS. An invalid value must fall
+ * back to the historical centre rather than emit broken CSS that silently drops the
+ * whole `object-position` declaration — which would look like "the focus did nothing"
+ * and is exactly the kind of failure that gets debugged in the wrong file.
+ * Accepts the two forms the registry uses: "50% 82%" and a bare keyword pair.
+ * @param {string|null|undefined} focus
+ * @returns {string} a safe CSS object-position value
+ */
+// eslint-disable-next-line react-refresh/only-export-components
+export function resolveImageFocus(focus) {
+  if (typeof focus !== 'string') return BANNER_FOCUS_DEFAULT;
+  const value = focus.trim();
+  if (!value) return BANNER_FOCUS_DEFAULT;
+  // Two space-separated components, each a percentage, a px length, or a keyword.
+  const TOKEN = /^(-?\d+(\.\d+)?(%|px)|left|right|top|bottom|center)$/;
+  const parts = value.split(/\s+/);
+  if (parts.length !== 2 || !parts.every((p) => TOKEN.test(p))) {
+    return BANNER_FOCUS_DEFAULT;
+  }
+  return value;
+}
+
+/**
  * FeatureIconChip — a single circular semi-transparent chip (D-05) wrapping an
  * accessible external deep-link, with a hover+keyboard-focus tooltip naming the
  * product (D-08). Reimplements the @floating-ui hover+focus+dismiss+role('tooltip')
@@ -237,7 +292,9 @@ export function shouldRenderStat(stats) {
 export function shouldRenderIcons(featureIcons) {
   return Array.isArray(featureIcons) && featureIcons.length > 0;
 }
-export default function SectionBanner({ tier, locationName, imageUrl, stats, featureIcons }) {
+export default function SectionBanner({
+  tier, locationName, imageUrl, stats, featureIcons, imageFocus,
+}) {
   // BANR-03: never show a broken <img>. If the image 404s (e.g. a paused storage
   // bucket), fall back to the tier-tinted gradient instead of a broken-image icon.
   const [imageFailed, setImageFailed] = useState(false);
@@ -263,6 +320,9 @@ export default function SectionBanner({ tier, locationName, imageUrl, stats, fea
               width: '100%',
               height: '100%',
               objectFit: 'cover',
+              // Per-banner desktop crop target. Defaults to the historical centre,
+              // so every banner that does not set one renders byte-identically.
+              objectPosition: resolveImageFocus(imageFocus),
             }}
           />
           {/* Mandatory dark gradient overlay — ensures title/eyebrow legibility (UI-SPEC constraint #7) */}

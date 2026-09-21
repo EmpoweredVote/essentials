@@ -437,6 +437,67 @@ const CURATED_LOCAL = {
   //   charlotte - Charlotte Skyline (Panoramio), 10 April 2014 | James Willamor | CC BY-SA 3.0
   charlotte: { state: 'NC', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/charlotte.jpg' },
 
+  // South Carolina city banners (Knight slice 7, stage 5b; operator-certified
+  // 2026-09-21). THE FIRST TWO BANNERS TO CARRY A `focus` -- see below.
+  //
+  // Adjacency: states/SC.jpg is the Arthur Ravenel Bridge, and unlike states/CA
+  // and states/NC its credit is accurate in the band -- the bridge really is what
+  // a desktop visitor sees. Read there it is a DISTANT, EYE-LEVEL view ACROSS
+  // OPEN WATER of one engineered structure, low horizon, big sky. Both cities
+  // were chosen against that composition, not against the words "bridge" or
+  // "water": Columbia is a building filling the frame at ground level, and
+  // Myrtle Beach is a ground-level wall of high-rises. The beachfront panoramas
+  // were the obvious Myrtle Beach pick and were REFUSED for exactly this reason
+  // -- a low horizon across open water is the state banner's own composition one
+  // tier down.
+  //
+  // 🟢 WHY THESE CARRY A `focus`, AND WHAT IT BOUGHT
+  // Both subjects are TALL, and the centre band cut the identifying feature off:
+  // Columbia lost its dome, Myrtle Beach its SkyWheel. Anchoring the asset lower
+  // fixed desktop and threw the feature out of the ASSET, which mobile shows 96.9%
+  // of. The focus separates the two decisions -- the asset is now the best full
+  // frame (dome whole, SkyWheel whole) and the desktop band is aimed at the part
+  // that reads at 6:1 (the colonnade; the hotels and the pier). Operator direction,
+  // 2026-09-21: "build from the bottom of the picture ... we will see the columns
+  // more than the dome."
+  // ⚠ The focus values are not guesses. Each was solved from the approved
+  // vertical_anchor 0.70 band and then VERIFIED by rendering the retargeted band
+  // and comparing it against the approved one.
+  //
+  // Refusals worth keeping, because the reasons transfer:
+  //   * Columbia's only ready-made 7:1 Wikivoyage banner is the STATUE OF STROM
+  //     THURMOND, not the building -- a contested political monument is the wrong
+  //     subject for a civic banner, and it measures colour spread 10.5 of 255
+  //     against this frame's 109.7, close to greyscale.
+  //   * Myrtle Beach's Ocean Boulevard street scene is the strongest "this is
+  //     Myrtle Beach" frame after the winner and fails the PEOPLE TEST outright --
+  //     pedestrians fill the near foreground as identifiable individuals.
+  //   * "Panorama of the Myrtle Beach Beachfront 2" is 16382x2936; cropped to
+  //     3.148:1 and banded it is ENTIRELY SKY. A very wide source is not
+  //     automatically a good banner -- it can lose its own subject.
+  //
+  // People test on the shipped Myrtle Beach frame: figures on the pier and beach
+  // measure ~7-10px in the 1700x540 asset, inside Durham's 10-20px bound; at
+  // vertical_anchor 0.80 a full beach crowd with umbrellas enters and it fails.
+  // Columbia has no people in frame at all.
+  //
+  // match:'exact' on both. "Columbia" is a city name in KY, MS, SD and TN as well
+  // as SC, and West Columbia SC sits across the river; "Myrtle Beach" is a
+  // substring of NORTH Myrtle Beach, a separate municipality up the coast.
+  //
+  // Surfacing: both cities' offices carry representing_city, so these resolve from
+  // an ordinary address search. Richland and Horry county offices leave it NULL,
+  // so neither county has a banner and none is implied.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule applies to OVERWRITES. Neither key
+  // had been written. sha256 verified identical on BOTH the plain and a
+  // cache-busted URL rather than trusting HTTP 200, with a nonexistent-key control
+  // that failed as required.
+  //   columbia - 2018 South Carolina State House (cropped) | Farragutful | CC BY-SA 4.0
+  columbia: { state: 'SC', match: 'exact', focus: '50% 82%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/columbia.jpg' },
+  //   myrtle beach - Myrtle Beach, SC, USA (Panoramio), 12 October 2012 | James Willamor | CC BY-SA 3.0
+  'myrtle beach': { state: 'SC', match: 'exact', focus: '50% 84%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/myrtle-beach.jpg' },
+
   // Pennsylvania city banners (Knight slice 6, stage 5b; operator-certified
   // 2026-09-19 against a sheet of 6 proposals and 7 refusals, every frame cut to
   // the 6:1 desktop band).
@@ -1478,6 +1539,19 @@ const STATE_PANORAMAS = new Set([
  * cache eventually expires. Any future state replacement should get a versioned entry here
  * rather than repeat the overwrite and hope.
  */
+/**
+ * Optional per-state DESKTOP crop target (`object-position`), same mechanism as a
+ * city entry's `focus`. See SectionBanner.jsx's BANNER_FOCUS_DEFAULT.
+ *
+ * 🟢 THIS IS THE CHEAP FIX FOR A STATE PANORAMA THAT LOSES ITS SUBJECT AT 6:1.
+ * states/CA.jpg needed a re-crop and a -v2 upload because the Golden Gate sat above
+ * the centre band; states/NC.jpg still cuts the Charlotte tower crowns off. Both are
+ * now solvable WITHOUT re-uploading anything — point the band at the subject instead.
+ * Left empty on purpose: retargeting a live state banner changes what millions of
+ * addresses see, so each one wants its own before/after review, not a bulk sweep.
+ */
+const STATE_PANORAMA_FOCUS = {};
+
 const STATE_PANORAMA_FILES = {
   TX: 'TX-v2.jpg',
   // FL versioned 2026-08-30. Florida's banner WAS a Miami downtown skyline — which is
@@ -1520,6 +1594,11 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
   // state is treated as match-allowed so existing callers that don't pass
   // stateAbbrev keep working unchanged.
   let localImage = null;
+  // Optional per-banner `object-position` for the DESKTOP 6:1 band. See
+  // SectionBanner.jsx's BANNER_FOCUS_DEFAULT for why this exists: without it the
+  // asset's composition and desktop's crop are the same decision, and a subject
+  // that frames well as a whole picture can still be cut in half on desktop.
+  let localFocus = null;
   // Match the LONGEST key first so a more specific city name wins over one that
   // is a substring of it (e.g. "south portland" must beat "portland"). Otherwise
   // resolution order follows key length descending; ties keep insertion order.
@@ -1541,6 +1620,7 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
     });
     if (hit) {
       localImage = hit.src;
+      localFocus = hit.focus || null;
       break;
     }
   }
@@ -1551,6 +1631,7 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
     const countyEntry = CURATED_COUNTY[String(countyGeoId)];
     if (countyEntry && (!abbrev || !countyEntry.state || countyEntry.state === abbrev)) {
       localImage = countyEntry.src;
+      localFocus = countyEntry.focus || null;
     }
   }
 
@@ -1564,6 +1645,16 @@ export function getBuildingImages(representingCity, stateAbbrev, countyGeoId) {
     Local: localImage,
     State: stateImage,
     Federal: FEDERAL_IMAGE,
+    // ADDITIVE, NEVER A SHAPE CHANGE. Other apps consume this registry as an API
+    // (ESSENTIALS-TEAM-NOTE-registry-as-an-api), so the three tier keys keep their
+    // exact meaning and type. `focus` is a sibling map of optional CSS
+    // object-position strings; a consumer that ignores it behaves as before, and a
+    // tier with no focus is null, which SectionBanner reads as the historical centre.
+    focus: {
+      Local: localFocus,
+      State: STATE_PANORAMA_FOCUS[abbrev] || null,
+      Federal: null,
+    },
   };
 }
 
