@@ -45,14 +45,22 @@ export const LOCAL_ORDER = [
 export const STATE_JUDICIARY_ORDER = ["State Supreme Court", "State Court of Appeals", "State Tax Court"];
 
 // Phase 215 (HDR-01/HDR-02, decision D-05): single source of truth for the
-// per-tab type-filter default. Judges defaults to 'Appointed' — the exact
-// value that keeps the Judges tab populated (most judges are appointed, not
-// elected), while representatives/educators default to 'Elected'.
+// per-tab type-filter default. Representatives/educators default to 'Elected'.
+// Judges defaults to 'All' (operator decision 2026-09-23): the former
+// 'Appointed' default dropped every ELECTED trial judge (e.g. all 10 Racine
+// County, WI circuit judges), and they had no other tab to show on.
 export const TAB_TYPE_DEFAULTS = {
   representatives: "Elected",
   educators: "Elected",
-  judges: "Appointed",
+  judges: "All",
 };
+
+// Empty-state wording for a tab: "No elected officials found…" on an Elected
+// tab, "No officials found…" on an 'All' tab.
+export function tabTypeLabel(tab) {
+  const filter = TAB_TYPE_DEFAULTS[tab];
+  return filter && filter !== "All" ? `${filter.toLowerCase()} ` : "";
+}
 
 // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
 export function resolveIsAppointed(pol) {
@@ -74,6 +82,13 @@ export function matchesAppointedFilter(pol, filter) {
   }
   return true;
 }
+
+// TX / AR "County Judge" and KY "County Judge/Executive" preside over the
+// county's governing body (Commissioners / Quorum / Fiscal Court). They are
+// county executives, not adjudicators. Court titles such as "Judge, County
+// Court at Law No. 1" do not match. A JUDICIAL-typed row is still decided by
+// its district_type first.
+const COUNTY_JUDGE_EXEC_TITLE_RE = /\bcounty judge\b/i;
 
 const BODY_LEGIS_UPPER = ["senate"];
 const BODY_LEGIS_LOWER = ["house", "assembly"];
@@ -239,6 +254,9 @@ export function classifyCategory(pol) {
 
   // County officials - treat as Local
   if (dt === "COUNTY") {
+    if (COUNTY_JUDGE_EXEC_TITLE_RE.test(title)) {
+      return { tier: "Local", group: "County Executives" };
+    }
     if (hasAny(title, ["commissioner", "commission", "supervisor", "council"])) {
       return { tier: "Local", group: "County Legislators" };
     }
@@ -343,12 +361,76 @@ export function classifyBucket(pol) {
   // 208-02: prosecutors/public defenders are NOT adjudicators — no longer
   // routed to judge (reverses 207-D-02, see note above). Only genuine
   // judge/justice titles fall through to the judge bucket here.
+  if (COUNTY_JUDGE_EXEC_TITLE_RE.test(title)) return "representative"; // county executive, not a court
   if (JUDGE_TITLE_RE.test(title)) return "judge"; // D-03
   if (SCHOOL_SUPERINTENDENT_TITLE_RE.test(title)) return "educator"; // D-05
   if (SCHOOL_BOARD_TEXT_RE.test(title) || SCHOOL_BOARD_TEXT_RE.test(chamber))
     return "educator"; // D-04
 
   return "representative"; // D-09 catch-all
+}
+
+/**
+ * partitionByTab(pols) -> { representative, educator, judge }
+ *
+ * Phase 208 (TAB-01/TAB-02): partitions the office-holders for a location into
+ * the three tab buckets via classifyBucket. This is the ONLY place the tab
+ * buckets are built; never add a parallel keyword check (207-D-06/208-D-06 —
+ * tab membership must not drift from list grouping).
+ *
+ * 208-02 operator punch-list: the U.S. Supreme Court (Federal Judiciary)
+ * exists for EVERY location, so it must not by itself summon a Judges tab.
+ * Require a non-federal (state/local) judge to warrant the tab. When the only
+ * judges are federal, fold them back into Representatives — their pre-208
+ * home under Federal → Federal Judiciary — so SCOTUS still renders but the
+ * Judges tab stays hidden. When state/local judges DO exist, the tab shows and
+ * keeps the federal judges alongside them.
+ */
+export function partitionByTab(pols) {
+  const buckets = { representative: [], educator: [], judge: [] };
+  for (const pol of pols || []) {
+    buckets[classifyBucket(pol)].push(pol);
+  }
+  const hasNonFederalJudge = buckets.judge.some(
+    (pol) => classifyCategory(pol).tier !== "Federal"
+  );
+  if (!hasNonFederalJudge && buckets.judge.length > 0) {
+    buckets.representative.push(...buckets.judge);
+    buckets.judge = [];
+  }
+  return buckets;
+}
+
+/**
+ * applyTabTypeDefault(hier, tab) -> hierarchy
+ *
+ * D-11: the elected/appointed filter layer, applied to one tab's grouped
+ * hierarchy (groupIntoHierarchy output). Empty sub-groups, bodies and tiers
+ * are removed. Each official is tested against TAB_TYPE_DEFAULTS[tab], except
+ * a judge, which keeps the Judges default wherever it renders: partitionByTab
+ * folds federal-only judges (SCOTUS) into Representatives, and the
+ * Representatives 'Elected' default must not drop them there.
+ */
+export function applyTabTypeDefault(hier, tab) {
+  const filterFor = (pol) =>
+    classifyBucket(pol) === "judge" ? TAB_TYPE_DEFAULTS.judges : TAB_TYPE_DEFAULTS[tab];
+
+  return hier
+    .map(({ tier, bodies }) => ({
+      tier,
+      bodies: bodies
+        .map((body) => ({
+          ...body,
+          subgroups: body.subgroups
+            .map((sg) => ({
+              ...sg,
+              pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, filterFor(pol))),
+            }))
+            .filter((sg) => sg.pols.length > 0),
+        }))
+        .filter((body) => body.subgroups.length > 0),
+    }))
+    .filter(({ bodies }) => bodies.length > 0);
 }
 
 export function orderedEntries(obj, order) {
@@ -423,7 +505,8 @@ export function computeVariant(pol, userAnswers, hasStances = true) {
 
   // Admin and judicial never have compass data — always show unavailable plate
   if (/clerk|treasurer|auditor|recorder|assessor/.test(title)) return 'administrative';
-  if (dt === 'JUDICIAL' || /judge|justice|court/.test(title)) return 'judicial';
+  if (dt === 'JUDICIAL') return 'judicial';
+  if (/judge|justice|court/.test(title) && !COUNTY_JUDGE_EXEC_TITLE_RE.test(title)) return 'judicial';
 
   // No stances on file — show "no stances" plate regardless of user calibration,
   // so we don't bait the user into calibrating only to find no comparison data.

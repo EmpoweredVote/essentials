@@ -11,7 +11,11 @@ import {
   TAB_TYPE_DEFAULTS,
   resolveIsAppointed,
   matchesAppointedFilter,
+  partitionByTab,
+  applyTabTypeDefault,
+  tabTypeLabel,
 } from './classify.js';
+import { groupIntoHierarchy } from './groupHierarchy.js';
 
 function makePol(overrides) {
   return {
@@ -395,8 +399,8 @@ describe('TAB_TYPE_DEFAULTS + appointed-filter logic', () => {
   it('TAB_TYPE_DEFAULTS.educators is "Elected"', () => {
     expect(TAB_TYPE_DEFAULTS.educators).toBe('Elected');
   });
-  it('TAB_TYPE_DEFAULTS.judges is "Appointed" (HDR-02: keeps the Judges tab populated)', () => {
-    expect(TAB_TYPE_DEFAULTS.judges).toBe('Appointed');
+  it('TAB_TYPE_DEFAULTS.judges is "All" (elected trial judges and appointed judges both show)', () => {
+    expect(TAB_TYPE_DEFAULTS.judges).toBe('All');
   });
 
   describe('resolveIsAppointed', () => {
@@ -433,5 +437,163 @@ describe('TAB_TYPE_DEFAULTS + appointed-filter logic', () => {
       expect(matchesAppointedFilter({ is_elected: true }, 'All')).toBe(true);
       expect(matchesAppointedFilter({ is_elected: false }, 'All')).toBe(true);
     });
+  });
+});
+
+// County Judge (TX / AR) and County Judge/Executive (KY) lead the county's
+// governing body (Commissioners / Quorum / Fiscal Court). They are county
+// executives, not adjudicators, so they route to Representatives.
+describe('County Judge — county executive, not a court judge', () => {
+  const countyJudge = makePol({
+    district_type: 'COUNTY',
+    office_title: 'County Judge',
+    chamber_name: 'Commissioners Court',
+  });
+
+  it('classifyBucket routes a COUNTY "County Judge" to representative', () => {
+    expect(classifyBucket(countyJudge)).toBe('representative');
+  });
+  it('classifyBucket routes a Kentucky "County Judge/Executive" to representative', () => {
+    expect(
+      classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'County Judge/Executive' }))
+    ).toBe('representative');
+  });
+  it('a JUDICIAL "County Judge" stays judge (district_type is decided first)', () => {
+    expect(classifyBucket(makePol({ district_type: 'JUDICIAL', office_title: 'County Judge' }))).toBe('judge');
+  });
+  it('a COUNTY court title such as "Judge, County Court at Law No. 1" stays judge', () => {
+    expect(
+      classifyBucket(makePol({ district_type: 'COUNTY', office_title: 'Judge, County Court at Law No. 1' }))
+    ).toBe('judge');
+  });
+  it('classifyCategory groups a COUNTY "County Judge" under County Executives', () => {
+    expect(classifyCategory(countyJudge)).toEqual({ tier: 'Local', group: 'County Executives' });
+  });
+  it('computeVariant does not give a COUNTY "County Judge" the judicial plate', () => {
+    expect(computeVariant(countyJudge, [1, 2, 3])).toBe('compass');
+  });
+});
+
+describe('tabTypeLabel', () => {
+  it('reads "elected " for a tab that defaults to Elected', () => {
+    expect(tabTypeLabel('representatives')).toBe('elected ');
+  });
+  it('reads "" for a tab that defaults to All', () => {
+    expect(tabTypeLabel('judges')).toBe('');
+  });
+});
+
+// Full tab pipeline, as Results.jsx runs it: partitionByTab -> groupIntoHierarchy
+// -> applyTabTypeDefault. Fixtures copy the live rows measured 2026-09-23.
+describe('tab pipeline — who each tab shows', () => {
+  let seq = 0;
+  function row(overrides) {
+    seq += 1;
+    return {
+      id: `pol-${seq}`,
+      first_name: 'Test',
+      full_name: `Test ${overrides.last_name}`,
+      is_elected: true,
+      is_appointed: false,
+      faces_retention_vote: false,
+      ...overrides,
+    };
+  }
+  const justice = (last_name) =>
+    row({
+      last_name,
+      district_type: 'NATIONAL_JUDICIAL',
+      office_title: 'Associate Justice',
+      chamber_name: 'Supreme Court',
+      government_name: 'United States',
+      is_elected: false,
+      is_appointed: true,
+    });
+  const cabinetSecretary = row({
+    last_name: 'Rubio',
+    district_type: 'NATIONAL_EXEC',
+    office_title: 'Secretary of State',
+    government_name: 'United States',
+    is_elected: false,
+  });
+
+  function visible(pols, tab) {
+    const bucket = { representatives: 'representative', educators: 'educator', judges: 'judge' }[tab];
+    const hier = applyTabTypeDefault(groupIntoHierarchy(partitionByTab(pols)[bucket]), tab);
+    return hier.flatMap((t) => t.bodies.flatMap((b) => b.subgroups.flatMap((sg) => sg.pols.map((p) => p.last_name))));
+  }
+
+  describe('partitionByTab', () => {
+    it('folds federal-only judges into representative and leaves judge empty', () => {
+      const buckets = partitionByTab([justice('Kagan'), cabinetSecretary]);
+      expect(buckets.judge).toEqual([]);
+      expect(buckets.representative.map((p) => p.last_name)).toEqual(['Rubio', 'Kagan']);
+    });
+    it('keeps federal judges on the judge bucket when a state/local judge exists', () => {
+      const local = row({
+        last_name: 'Boyle',
+        district_type: 'JUDICIAL',
+        office_title: 'Circuit Court Judge, Branch 10',
+        chamber_name: 'Racine County Circuit Court',
+        government_name: 'Racine County, Wisconsin, US',
+      });
+      const buckets = partitionByTab([justice('Kagan'), local]);
+      expect(buckets.judge.map((p) => p.last_name)).toEqual(['Kagan', 'Boyle']);
+      expect(buckets.representative).toEqual([]);
+    });
+  });
+
+  it('King County WA: SCOTUS stays visible after it folds back into Representatives', () => {
+    const councilMember = row({
+      last_name: 'Balducci',
+      district_type: 'COUNTY',
+      office_title: 'Council Member, District 6',
+      chamber_name: 'County Council',
+      government_name: 'King County, Washington, US',
+    });
+    const names = visible([councilMember, justice('Kagan'), justice('Roberts')], 'representatives');
+    expect(names).toEqual(expect.arrayContaining(['Balducci', 'Kagan', 'Roberts']));
+  });
+
+  it('Racine County WI: elected Circuit Court judges show on the Judges tab', () => {
+    const judge = row({
+      last_name: 'Boyle',
+      district_type: 'JUDICIAL',
+      office_title: 'Circuit Court Judge, Branch 10',
+      chamber_name: 'Racine County Circuit Court',
+      government_name: 'Racine County, Wisconsin, US',
+    });
+    expect(visible([judge, justice('Kagan')], 'judges')).toEqual(expect.arrayContaining(['Boyle', 'Kagan']));
+  });
+
+  it('Travis County TX: the elected County Judge shows on Representatives, and SCOTUS stays visible', () => {
+    const countyJudge = row({
+      last_name: 'Brown',
+      district_type: 'COUNTY',
+      office_title: 'County Judge',
+      chamber_name: 'Commissioners Court',
+      chamber_name_formal: 'Travis County Commissioners Court',
+      government_name: 'Travis County, Texas, US',
+    });
+    const pols = [countyJudge, justice('Kagan')];
+    expect(partitionByTab(pols).judge).toEqual([]);
+    expect(visible(pols, 'representatives')).toEqual(expect.arrayContaining(['Brown', 'Kagan']));
+  });
+
+  // Operator decision 2026-09-23: Representatives keeps its Elected default, so
+  // appointed non-judge officials stay hidden (Phase 215 D-06 trade-off kept).
+  it('appointed non-judges stay hidden on Representatives (Cabinet, appointed sheriff)', () => {
+    const sheriff = row({
+      last_name: 'Cole-Tindall',
+      district_type: 'COUNTY',
+      office_title: 'Sheriff',
+      chamber_name: 'Sheriff',
+      government_name: 'King County, Washington, US',
+      is_elected: false,
+      is_appointed: true,
+    });
+    const names = visible([sheriff, cabinetSecretary], 'representatives');
+    expect(names).not.toContain('Cole-Tindall');
+    expect(names).not.toContain('Rubio');
   });
 });
