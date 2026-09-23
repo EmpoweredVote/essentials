@@ -212,8 +212,12 @@ function getSubGroupKey(pol, standaloneExecInBody = true) {
   //   - Admin officers (clerk/treasurer/etc., LOCAL) from council members (LOCAL)
   //     via a third "ADMIN" vs "MEMBER" segment
   //   - JUDICIAL clerks/officials from judges via "OFFICIAL" vs "JUDGE" segment
-  const body = pol.government_body_name || '';
+  //   - COUNTY bodies from each other via the chamber, when government_body_name is
+  //     empty (government-list browse). COUNTY has no role segments, so without the
+  //     chamber every county official shares one key and collapses into one sub-group.
   const dt = pol.district_type || '';
+  const body = pol.government_body_name
+    || (dt === 'COUNTY' ? (pol.chamber_name_formal || pol.chamber_name || '') : '');
 
   if (dt === 'JUDICIAL') {
     const judicialSeg = isJudicialOfficial(pol) ? 'OFFICIAL' : 'JUDGE';
@@ -331,10 +335,12 @@ function getSubGroupLabel(pols, accordionTitle, standaloneExecInBody = true) {
       : body;
   }
 
-  // Rule 3.5 (no body, LOCAL district): use chamber_name_formal or chamber_name as the label.
+  // Rule 3.5 (no body, LOCAL or COUNTY district): use chamber_name_formal or chamber_name as the label.
   // This covers TX cities whose government_bodies rows don't exist yet but whose chamber
-  // has a clean name like "Plano City Council" stored in ch.name_formal / ch.name.
-  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC') && (first.chamber_name_formal || first.chamber_name)) {
+  // has a clean name like "Plano City Council" stored in ch.name_formal / ch.name, and
+  // county rows from the government-list browse ("Dane County Board of Supervisors"),
+  // which getSubGroupKey already splits by chamber.
+  if ((dt === 'LOCAL' || dt === 'LOCAL_EXEC' || dt === 'COUNTY') && (first.chamber_name_formal || first.chamber_name)) {
     return first.chamber_name_formal || first.chamber_name;
   }
 
@@ -457,6 +463,9 @@ function bodyOrderScore(accordionKey, pols) {
 // Sub-group ordering: Legislative → Executive → Other
 const LEGISLATIVE_KW = ['council', 'board of supervisors', 'senate', 'house', 'assembly', 'board of commissioners', 'board of education', 'school board'];
 const EXECUTIVE_KW = ['mayor', 'governor', 'president', 'trustee', 'executive'];
+// County legislative bodies. "commission" / "commissioners" must stay whole words so a
+// row officer such as "Tax Commissioner" is not mistaken for the county commission.
+const COUNTY_LEGISLATIVE_RE = /\b(council|commission|commissioners|supervisors|county board|legislature|fiscal court|quorum court)\b/i;
 
 function subGroupOrderScore(label, pols, standaloneExecInBody = true) {
   const lower = label.toLowerCase();
@@ -466,6 +475,14 @@ function subGroupOrderScore(label, pols, standaloneExecInBody = true) {
   if (pols.length > 0 && pols.every(p => isJudicialOfficial(p))) return 30;
   // Judges sort FIRST within a court body (before officials).
   if (pols.length > 0 && pols[0]?.district_type === 'JUDICIAL' && !pols.every(p => isJudicialOfficial(p))) return 15;
+
+  // County: the legislative body (board / council / commission) leads; row officers
+  // (sheriff, clerk, treasurer, …) follow, after any LOCAL groups that share the
+  // accordion (consolidated governments such as Macon-Bibb). Decided on the label
+  // alone so a row-officer group is not promoted by whichever title happens to sort first.
+  if (pols.length > 0 && pols.every(p => p.district_type === 'COUNTY')) {
+    return COUNTY_LEGISLATIVE_RE.test(label) ? 20 : 35;
+  }
 
   // Admin officers score 25 — after executives (20) but before generic "other" (30).
   // Check this BEFORE the legislative keyword check to prevent admin officers whose
