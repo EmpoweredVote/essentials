@@ -555,3 +555,135 @@ describe('Council-appointed Mayor with no separate exec seat (Sahuarita-class)',
     expect(execIdx).toBeLessThan(councilIdx);
   });
 });
+
+describe('COUNTY sub-groups split by chamber when government_body_name is empty', () => {
+
+  // The government-list browse (and several ZIP lookups) return county rows with an EMPTY
+  // government_body_name; the only thing that tells the bodies apart is the chamber. Every
+  // COUNTY row got roleSegment 'MEMBER', so all of them shared the key '||COUNTY||MEMBER' and
+  // collapsed into one sub-group labelled with whichever office_title sorted first — e.g. Dane
+  // County WI showed 44 supervisors and row officers together under "County Executive".
+  // Fixtures mirror live API rows (browse/by-government-list, 2026-09-23).
+  const county = (government_name, chamber_name_formal, chamber_name) => ({
+    district_type: 'COUNTY',
+    government_name,
+    government_body_name: '',
+    chamber_name_formal,
+    chamber_name,
+    district_id: 'shared-county-uuid',
+  });
+
+  const dane = () => {
+    const board = county('Dane County, Wisconsin, US', 'Dane County Board of Supervisors', 'County Board');
+    const officers = county('Dane County, Wisconsin, US', 'Dane County Countywide Elected Officials', 'Countywide Elected Officials');
+    // Upstream order deliberately leads with a row officer.
+    return [
+      makePol({ ...officers, office_title: 'Sheriff', last_name: 'Barrett' }),
+      makePol({ ...officers, office_title: 'County Executive', last_name: 'Parisi' }),
+      makePol({ ...officers, office_title: 'County Clerk', last_name: 'McDonell' }),
+      makePol({ ...board, office_title: 'County Board Supervisor', last_name: 'Alpha', district_label: 'District 1' }),
+      makePol({ ...board, office_title: 'County Board Supervisor', last_name: 'Bravo', district_label: 'District 2' }),
+      makePol({ ...board, office_title: 'County Board Supervisor', last_name: 'Charlie', district_label: 'District 3' }),
+    ];
+  };
+
+  const countyBody = (pols, title) =>
+    groupIntoHierarchy(pols).find(t => t.tier === 'Local').bodies.find(b => b.title === title);
+
+  it('Dane County: supervisors and countywide officers land in separate sub-groups', () => {
+    const body = countyBody(dane(), 'Dane County');
+    expect(body.subgroups.map(sg => sg.pols.length).sort()).toEqual([3, 3]);
+    const board = body.subgroups.find(sg => sg.pols.some(p => p.office_title === 'County Board Supervisor'));
+    expect(board.pols.every(p => p.office_title === 'County Board Supervisor')).toBe(true);
+  });
+
+  it('Dane County: sub-groups are labelled from the chamber, not the first office_title', () => {
+    const body = countyBody(dane(), 'Dane County');
+    expect(body.subgroups.map(sg => sg.label)).toEqual([
+      'Dane County Board of Supervisors',
+      'Dane County Countywide Elected Officials',
+    ]);
+  });
+
+  it('Allen County: council, commissioners and elected officials are three sub-groups, bodies first', () => {
+    const council = county('Allen County, Indiana, US', 'Allen County Council', 'Allen County Council');
+    const commissioners = county('Allen County, Indiana, US', 'Board of County Commissioners', 'Board of County Commissioners');
+    const officers = county('Allen County, Indiana, US', 'Elected Officials', 'Elected Officials');
+    const pols = [
+      makePol({ ...officers, office_title: 'Treasurer', last_name: 'Adams' }),
+      makePol({ ...council, office_title: 'Council Member, At Large', last_name: 'Baker' }),
+      makePol({ ...commissioners, office_title: 'Commissioner, District 1', last_name: 'Cole' }),
+      makePol({ ...officers, office_title: 'Coroner', last_name: 'Dunn' }),
+      makePol({ ...council, office_title: 'Council Member, District 1', last_name: 'Ellis' }),
+      makePol({ ...commissioners, office_title: 'Commissioner, District 2', last_name: 'Ford' }),
+    ];
+    const body = countyBody(pols, 'Allen County');
+    expect(body.subgroups.map(sg => [sg.label, sg.pols.length])).toEqual([
+      ['Allen County Council', 2],
+      ['Board of County Commissioners', 2],
+      ['Elected Officials', 2],
+    ]);
+  });
+
+  it('a county commission sorts ahead of row officers even when an officer chamber sorts first alphabetically', () => {
+    // Greene County MO names its legislative body "Greene County Commission" — no LEGISLATIVE_KW
+    // match — while its row officers each have a chamber of their own. "Assessor" < "Commission".
+    const gov = 'Greene County, Missouri, US';
+    const pols = [
+      makePol({ ...county(gov, 'Greene County Assessor', 'Assessor'), office_title: 'Assessor', last_name: 'Ames' }),
+      makePol({ ...county(gov, 'Greene County Sheriff', 'Office of the Sheriff'), office_title: 'Sheriff', last_name: 'Arnott' }),
+      makePol({ ...county(gov, 'Greene County Commission', 'County Commission'), office_title: 'Presiding Commissioner', last_name: 'Dixon' }),
+      makePol({ ...county(gov, 'Greene County Commission', 'County Commission'), office_title: 'Commissioner, 1st District', last_name: 'Bilyeu' }),
+    ];
+    const body = countyBody(pols, 'Greene County');
+    expect(body.subgroups[0].label).toBe('Greene County Commission');
+    expect(body.subgroups[0].pols).toHaveLength(2);
+    expect(body.subgroups.slice(1).map(sg => sg.label).sort()).toEqual([
+      'Greene County Assessor',
+      'Greene County Sheriff',
+    ]);
+  });
+
+  it('Macon-Bibb (consolidated): county row officers sort after the Mayor and the LOCAL commission', () => {
+    // One accordion holds LOCAL (Mayor, commission) and COUNTY (row officers) rows. Labelling
+    // the county group from its chamber ("Bibb County Elected Officials") must not let it jump
+    // ahead of the commission alphabetically.
+    const gov = { government_name: 'Macon-Bibb County Government, Georgia, US', government_body_name: '' };
+    const pols = [
+      makePol({ ...county(gov.government_name, 'Bibb County Elected Officials', 'Bibb County Elected Officials'), office_title: 'Sheriff', last_name: 'Davis' }),
+      makePol({ ...county(gov.government_name, 'Bibb County Elected Officials', 'Bibb County Elected Officials'), office_title: 'Coroner', last_name: 'Jones' }),
+      makePol({ ...gov, district_type: 'LOCAL', chamber_name_formal: 'Macon-Bibb County Commission', chamber_name: 'County Commission', office_title: 'Commissioner, District 1', last_name: 'Tillman', district_id: '1' }),
+      makePol({ ...gov, district_type: 'LOCAL', chamber_name_formal: 'Macon-Bibb County Commission', chamber_name: 'County Commission', office_title: 'Commissioner, District 2', last_name: 'Wilson', district_id: '2' }),
+      makePol({ ...gov, district_type: 'LOCAL', chamber_name_formal: 'Macon-Bibb County', chamber_name: 'Mayor', office_title: 'Mayor', last_name: 'Miller', district_id: '0' }),
+    ];
+    const body = countyBody(pols, 'Macon-Bibb County Government');
+    expect(body.subgroups.map(sg => sg.label)).toEqual([
+      'Mayor',
+      'Macon-Bibb County Commission',
+      'Bibb County Elected Officials',
+    ]);
+  });
+
+  it('COUNTY rows WITH a government_body_name keep grouping by body (Monroe County address-lookup shape)', () => {
+    // Here chamber_name is the seat title ("Council - District 1"); splitting by it would put
+    // every council seat in a sub-group of its own.
+    const gov = 'Monroe County, Indiana, US';
+    const row = (body, chamber, title, last_name) => makePol({
+      district_type: 'COUNTY', government_name: gov, government_body_name: body,
+      chamber_name_formal: body, chamber_name: chamber, office_title: title, last_name,
+    });
+    const pols = [
+      row('Monroe County Government', 'Sheriff', 'Sheriff', 'Marshall'),
+      row('Monroe County Government', 'Auditor', 'Auditor', 'Hutchens'),
+      row('Monroe County Council', 'Council - District 1', 'Council - District 1', 'Crossin'),
+      row('Monroe County Council', 'Council - District 2', 'Council - District 2', 'Munson'),
+      row('Monroe County Board of Commissioners', 'Commission - District 1', 'Commission - District 1', 'Thomas'),
+    ];
+    const body = countyBody(pols, 'Monroe County');
+    expect(body.subgroups.map(sg => [sg.label, sg.pols.length])).toEqual([
+      ['Monroe County Board of Commissioners', 1],
+      ['Monroe County Council', 2],
+      ['Monroe County Officials', 2],
+    ]);
+  });
+});
