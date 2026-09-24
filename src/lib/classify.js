@@ -67,12 +67,15 @@ export function resolveIsAppointed(pol) {
 // Filter logic per CONTEXT D-06
 export function matchesAppointedFilter(pol, filter) {
   if (filter === 'All') return true;
-  const resolved = resolveIsAppointed(pol);
   if (filter === 'Elected') {
-    return !resolved || pol.faces_retention_vote === true;
+    // About the SEAT, not how the person got it (operator decision 2026-09-24):
+    // an interim appointee (politician.is_appointed) in an elected seat still
+    // shows, because voters fill that seat. So does a judge who faces a
+    // retention vote.
+    return pol.is_elected === true || pol.faces_retention_vote === true;
   }
   if (filter === 'Appointed') {
-    return resolved === true;
+    return resolveIsAppointed(pol) === true;
   }
   return true;
 }
