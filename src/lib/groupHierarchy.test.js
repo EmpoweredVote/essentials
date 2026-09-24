@@ -193,6 +193,21 @@ function makeJudicialPol(overrides) {
 
 describe('Judicial sub-group splitting (judges vs. court officials)', () => {
 
+  // Live by-government-list rows carry an empty government_body_name, so the
+  // court name must come from chamber_name_formal, not the county name
+  // (measured 2026-09-24: the Monroe clerk read "Monroe County Officials").
+  it('clerk with no government_body_name -> label from chamber_name_formal ("Circuit Court Officials")', () => {
+    const clerk = makeJudicialPol({
+      government_body_name: '',
+      chamber_name_formal: 'Monroe County Circuit Court',
+      chamber_name: 'Circuit Court Clerk',
+      office_title: 'Circuit Court Clerk',
+      last_name: 'Clerk',
+    });
+    const [tier] = groupIntoHierarchy([clerk]);
+    expect(tier.bodies[0].subgroups.map(sg => sg.label)).toEqual(['Circuit Court Officials']);
+  });
+
   // Test F: 3 judges + 1 clerk -> two sub-groups (judges, officials)
   it('Test F: 3 judges + clerk -> two sub-groups; clerk in "Circuit Court Officials"', () => {
     const pols = [
