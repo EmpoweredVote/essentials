@@ -13,7 +13,6 @@ import {
   matchesAppointedFilter,
   partitionByTab,
   applyTabTypeDefault,
-  tabTypeLabel,
 } from './classify.js';
 import { groupIntoHierarchy } from './groupHierarchy.js';
 
@@ -399,8 +398,8 @@ describe('TAB_TYPE_DEFAULTS + appointed-filter logic', () => {
   it('TAB_TYPE_DEFAULTS.educators is "Elected"', () => {
     expect(TAB_TYPE_DEFAULTS.educators).toBe('Elected');
   });
-  it('TAB_TYPE_DEFAULTS.judges is "All" (elected trial judges and appointed judges both show)', () => {
-    expect(TAB_TYPE_DEFAULTS.judges).toBe('All');
+  it('TAB_TYPE_DEFAULTS.judges is "Elected" (elected judges + retention-vote judges; appointed judges left out)', () => {
+    expect(TAB_TYPE_DEFAULTS.judges).toBe('Elected');
   });
 
   describe('resolveIsAppointed', () => {
@@ -474,17 +473,32 @@ describe('County Judge — county executive, not a court judge', () => {
   });
 });
 
-describe('tabTypeLabel', () => {
-  it('reads "elected " for a tab that defaults to Elected', () => {
-    expect(tabTypeLabel('representatives')).toBe('elected ');
+// Court clerks sit in JUDICIAL districts but are court staff, not
+// adjudicators (operator decision 2026-09-24), so they route to Representatives.
+describe('court clerk — court staff, not a judge', () => {
+  it('a JUDICIAL "Circuit Court Clerk" routes to representative', () => {
+    expect(classifyBucket(makePol({ district_type: 'JUDICIAL', office_title: 'Circuit Court Clerk' }))).toBe(
+      'representative'
+    );
   });
-  it('reads "" for a tab that defaults to All', () => {
-    expect(tabTypeLabel('judges')).toBe('');
+  it('a JUDICIAL "Clerk of the Superior Court" routes to representative', () => {
+    expect(
+      classifyBucket(makePol({ district_type: 'JUDICIAL', office_title: 'Clerk of the Superior Court' }))
+    ).toBe('representative');
+  });
+  it('a JUDICIAL judge title still routes to judge', () => {
+    expect(
+      classifyBucket(makePol({ district_type: 'JUDICIAL', office_title: 'Circuit Court Judge, Branch 1' }))
+    ).toBe('judge');
   });
 });
 
 // Full tab pipeline, as Results.jsx runs it: partitionByTab -> groupIntoHierarchy
-// -> applyTabTypeDefault. Fixtures copy the live rows measured 2026-09-23.
+// -> applyTabTypeDefault. Results.jsx shows the Educators/Judges tab only when
+// this returns at least one official. Fixtures copy live rows measured
+// 2026-09-23/24. Operator decision 2026-09-24: the Judges tab shows elected
+// judges (and appointed judges who face a retention vote) and leaves appointed
+// judges out; no judge shows on Representatives.
 describe('tab pipeline — who each tab shows', () => {
   let seq = 0;
   function row(overrides) {
@@ -516,6 +530,13 @@ describe('tab pipeline — who each tab shows', () => {
     government_name: 'United States',
     is_elected: false,
   });
+  const circuitJudge = row({
+    last_name: 'Boyle',
+    district_type: 'JUDICIAL',
+    office_title: 'Circuit Court Judge, Branch 10',
+    chamber_name: 'Racine County Circuit Court',
+    government_name: 'Racine County, Wisconsin, US',
+  });
 
   function visible(pols, tab) {
     const bucket = { representatives: 'representative', educators: 'educator', judges: 'judge' }[tab];
@@ -530,20 +551,44 @@ describe('tab pipeline — who each tab shows', () => {
       expect(buckets.representative.map((p) => p.last_name)).toEqual(['Rubio', 'Kagan']);
     });
     it('keeps federal judges on the judge bucket when a state/local judge exists', () => {
-      const local = row({
-        last_name: 'Boyle',
-        district_type: 'JUDICIAL',
-        office_title: 'Circuit Court Judge, Branch 10',
-        chamber_name: 'Racine County Circuit Court',
-        government_name: 'Racine County, Wisconsin, US',
-      });
-      const buckets = partitionByTab([justice('Kagan'), local]);
+      const buckets = partitionByTab([justice('Kagan'), circuitJudge]);
       expect(buckets.judge.map((p) => p.last_name)).toEqual(['Kagan', 'Boyle']);
       expect(buckets.representative).toEqual([]);
     });
   });
 
-  it('King County WA: SCOTUS stays visible after it folds back into Representatives', () => {
+  it('Racine County WI: elected Circuit Court judges show on Judges; appointed SCOTUS does not', () => {
+    expect(visible([circuitJudge, justice('Kagan')], 'judges')).toEqual(['Boyle']);
+  });
+
+  it('an appointed judge who faces a retention vote shows on Judges', () => {
+    const appeals = row({
+      last_name: 'AppealsJudge',
+      district_type: 'JUDICIAL',
+      office_title: 'Indiana Appeals Court Judge - District 1',
+      chamber_name: 'Indiana Appeals Court Judge - District 1',
+      government_name: 'State of Indiana',
+      is_elected: false,
+      faces_retention_vote: true,
+    });
+    expect(visible([appeals, circuitJudge], 'judges')).toEqual(expect.arrayContaining(['AppealsJudge', 'Boyle']));
+  });
+
+  it('only appointed judges (no retention vote): no judge shows on any tab, so the Judges tab is hidden', () => {
+    const appointed = row({
+      last_name: 'SuperiorJudge',
+      district_type: 'JUDICIAL',
+      office_title: 'Judge, Los Angeles County Superior Court',
+      chamber_name: 'Superior Court',
+      government_name: 'Los Angeles County, California, US',
+      is_elected: false,
+    });
+    const pols = [appointed, justice('Kagan')];
+    expect(visible(pols, 'judges')).toEqual([]);
+    expect(visible(pols, 'representatives')).toEqual([]);
+  });
+
+  it('King County WA: SCOTUS shows nowhere, and no judge lands on Representatives', () => {
     const councilMember = row({
       last_name: 'Balducci',
       district_type: 'COUNTY',
@@ -551,22 +596,12 @@ describe('tab pipeline — who each tab shows', () => {
       chamber_name: 'County Council',
       government_name: 'King County, Washington, US',
     });
-    const names = visible([councilMember, justice('Kagan'), justice('Roberts')], 'representatives');
-    expect(names).toEqual(expect.arrayContaining(['Balducci', 'Kagan', 'Roberts']));
+    const pols = [councilMember, justice('Kagan'), justice('Roberts')];
+    expect(visible(pols, 'representatives')).toEqual(['Balducci']);
+    expect(visible(pols, 'judges')).toEqual([]);
   });
 
-  it('Racine County WI: elected Circuit Court judges show on the Judges tab', () => {
-    const judge = row({
-      last_name: 'Boyle',
-      district_type: 'JUDICIAL',
-      office_title: 'Circuit Court Judge, Branch 10',
-      chamber_name: 'Racine County Circuit Court',
-      government_name: 'Racine County, Wisconsin, US',
-    });
-    expect(visible([judge, justice('Kagan')], 'judges')).toEqual(expect.arrayContaining(['Boyle', 'Kagan']));
-  });
-
-  it('Travis County TX: the elected County Judge shows on Representatives, and SCOTUS stays visible', () => {
+  it('Travis County TX: the elected County Judge shows on Representatives', () => {
     const countyJudge = row({
       last_name: 'Brown',
       district_type: 'COUNTY',
@@ -577,7 +612,23 @@ describe('tab pipeline — who each tab shows', () => {
     });
     const pols = [countyJudge, justice('Kagan')];
     expect(partitionByTab(pols).judge).toEqual([]);
-    expect(visible(pols, 'representatives')).toEqual(expect.arrayContaining(['Brown', 'Kagan']));
+    expect(visible(pols, 'representatives')).toEqual(['Brown']);
+  });
+
+  it('Monroe County IN: the elected Circuit Court Clerk shows on Representatives, not Judges', () => {
+    const monroe = {
+      district_type: 'JUDICIAL',
+      chamber_name_formal: 'Monroe County Circuit Court',
+      government_name: 'Monroe County, Indiana, US',
+    };
+    const clerk = row({ ...monroe, last_name: 'Clerk', office_title: 'Circuit Court Clerk' });
+    const judge = row({
+      ...monroe,
+      last_name: 'CircuitJudge',
+      office_title: 'Indiana Circuit Court Judge - 10th Circuit, Division 1',
+    });
+    expect(visible([clerk, judge], 'judges')).toEqual(['CircuitJudge']);
+    expect(visible([clerk, judge], 'representatives')).toEqual(['Clerk']);
   });
 
   // Operator decision 2026-09-23: Representatives keeps its Elected default, so

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
-import { partitionByTab, applyTabTypeDefault, tabTypeLabel } from '../lib/classify';
+import { partitionByTab, applyTabTypeDefault, TAB_TYPE_DEFAULTS } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
@@ -1477,8 +1477,6 @@ export default function Results() {
 
   // D-11: each tab's elected/appointed default (TAB_TYPE_DEFAULTS), applied
   // after grouping so body/sub-group labels are built from the full list.
-  // applyTabTypeDefault keeps a folded-back judge (SCOTUS) on the Judges
-  // default, so the Representatives 'Elected' default never drops it.
   const filteredHierarchy = useMemo(
     () => applyTabTypeDefault(hierarchy, 'representatives'),
     [hierarchy]
@@ -1492,11 +1490,12 @@ export default function Results() {
     [judgesHierarchy]
   );
 
-  // D-05: hide Educators/Judges tabs when the location has 0 office-holders of
-  // that bucket — computed PRE-appointed-filter, so an active "All types"
-  // narrowing never hides a tab that genuinely has data.
-  const hasEducators = bucketed.educator.length > 0;
-  const hasJudges = bucketed.judge.length > 0;
+  // D-05: hide the Educators/Judges tab when it has nothing to show. Computed
+  // AFTER the tab's type default (operator decision 2026-09-24): the default is
+  // fixed, so a tab whose office-holders are all appointed (e.g. judges with no
+  // retention vote) would otherwise open onto an empty list.
+  const hasEducators = educatorsFilteredHierarchy.length > 0;
+  const hasJudges = judgesFilteredHierarchy.length > 0;
 
   // D-08 / T-208-01/T-208-02: never trust the raw `?view=` param. Validate
   // against the known tab set and fall back to Representatives when the
@@ -2146,7 +2145,7 @@ export default function Results() {
                         const hasTier = hier.some(h => h.tier === tier);
                         if (hasTier) return null;
 
-                        const emptyMessage = `No ${tabTypeLabel(viewName)}officials found at the ${tier.toLowerCase()} level.`;
+                        const emptyMessage = `No ${TAB_TYPE_DEFAULTS[viewName].toLowerCase()} officials found at the ${tier.toLowerCase()} level.`;
 
                         return (
                           <div key={`empty-${tier}`} data-tier={tier} className="-mx-6 md:-mx-12 px-6 md:px-12 py-3" style={!isDark ? { backgroundColor: tierStyle?.bg ?? '#FFFFFF' } : undefined}>
@@ -2259,7 +2258,7 @@ export default function Results() {
                       {/* Filter-aware empty state — when the per-tab type default yields no results but location has politicians */}
                       {fallbackListLength > 0 && hier.length === 0 && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-8">
-                          No {tabTypeLabel(viewName)}officials found for this area.
+                          No {TAB_TYPE_DEFAULTS[viewName].toLowerCase()} officials found for this area.
                         </p>
                       )}
                     </div>

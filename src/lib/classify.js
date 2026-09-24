@@ -45,22 +45,16 @@ export const LOCAL_ORDER = [
 export const STATE_JUDICIARY_ORDER = ["State Supreme Court", "State Court of Appeals", "State Tax Court"];
 
 // Phase 215 (HDR-01/HDR-02, decision D-05): single source of truth for the
-// per-tab type-filter default. Representatives/educators default to 'Elected'.
-// Judges defaults to 'All' (operator decision 2026-09-23): the former
-// 'Appointed' default dropped every ELECTED trial judge (e.g. all 10 Racine
-// County, WI circuit judges), and they had no other tab to show on.
+// per-tab type-filter default. Every tab defaults to 'Elected', which also
+// keeps appointed judges who face a retention vote (matchesAppointedFilter).
+// Judges was 'Appointed' until 2026-09-24; that dropped every ELECTED trial
+// judge (e.g. all 10 Racine County, WI circuit judges). Operator decision
+// 2026-09-24: show elected judges and leave appointed judges out.
 export const TAB_TYPE_DEFAULTS = {
   representatives: "Elected",
   educators: "Elected",
-  judges: "All",
+  judges: "Elected",
 };
-
-// Empty-state wording for a tab: "No elected officials found…" on an Elected
-// tab, "No officials found…" on an 'All' tab.
-export function tabTypeLabel(tab) {
-  const filter = TAB_TYPE_DEFAULTS[tab];
-  return filter && filter !== "All" ? `${filter.toLowerCase()} ` : "";
-}
 
 // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
 export function resolveIsAppointed(pol) {
@@ -324,6 +318,11 @@ const EDUCATOR_DISTRICT_TYPES = new Set(["SCHOOL", "STATE_BOARD", "SCHOOL_BOARD"
 // district_type.
 const JUDGE_TITLE_RE = /\b(judge|justice)\b/i;
 
+// Court clerks sit in JUDICIAL districts but are court staff, not adjudicators
+// (operator decision 2026-09-24), so they route to Representatives. This is the
+// one exception to the D-08 rule that a JUDICIAL row is never pulled out.
+const COURT_CLERK_TITLE_RE = /\bclerk\b/i;
+
 // D-05 / Pitfall 5: school-superintendent override, guarded so it does not
 // catch non-education superintendent titles (police, public works, streets).
 const SCHOOL_SUPERINTENDENT_TITLE_RE = /superintendent\s+of\s+(public instruction|schools)\b/i;
@@ -352,8 +351,10 @@ export function classifyBucket(pol) {
 
   // Base: district_type (D-07). Clean JUDICIAL/NATIONAL_JUDICIAL/SCHOOL/
   // STATE_BOARD/SCHOOL_BOARD rows are decided here and never pulled back out
-  // by a keyword below (D-08).
-  if (JUDGE_DISTRICT_TYPES.has(dt)) return "judge";
+  // by a keyword below (D-08) — except a court clerk.
+  if (JUDGE_DISTRICT_TYPES.has(dt)) {
+    return COURT_CLERK_TITLE_RE.test(title) ? "representative" : "judge";
+  }
   if (EDUCATOR_DISTRICT_TYPES.has(dt)) return "educator";
 
   // Additive overrides (D-07/D-08) — only reachable when the base bucket is
@@ -405,15 +406,13 @@ export function partitionByTab(pols) {
  * applyTabTypeDefault(hier, tab) -> hierarchy
  *
  * D-11: the elected/appointed filter layer, applied to one tab's grouped
- * hierarchy (groupIntoHierarchy output). Empty sub-groups, bodies and tiers
- * are removed. Each official is tested against TAB_TYPE_DEFAULTS[tab], except
- * a judge, which keeps the Judges default wherever it renders: partitionByTab
- * folds federal-only judges (SCOTUS) into Representatives, and the
- * Representatives 'Elected' default must not drop them there.
+ * hierarchy (groupIntoHierarchy output), after grouping so body/sub-group
+ * labels are built from the full list. Each official is tested against
+ * TAB_TYPE_DEFAULTS[tab]; empty sub-groups, bodies and tiers are removed.
  */
 export function applyTabTypeDefault(hier, tab) {
-  const filterFor = (pol) =>
-    classifyBucket(pol) === "judge" ? TAB_TYPE_DEFAULTS.judges : TAB_TYPE_DEFAULTS[tab];
+  const filter = TAB_TYPE_DEFAULTS[tab];
+  if (filter === "All") return hier;
 
   return hier
     .map(({ tier, bodies }) => ({
@@ -424,7 +423,7 @@ export function applyTabTypeDefault(hier, tab) {
           subgroups: body.subgroups
             .map((sg) => ({
               ...sg,
-              pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, filterFor(pol))),
+              pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, filter)),
             }))
             .filter((sg) => sg.pols.length > 0),
         }))
