@@ -421,6 +421,14 @@ describe('TAB_TYPE_DEFAULTS + appointed-filter logic', () => {
     it('Elected filter excludes an appointed pol', () => {
       expect(matchesAppointedFilter({ is_elected: false }, 'Elected')).toBe(false);
     });
+    // Operator decision 2026-09-24: the filter is about the SEAT. An interim
+    // appointee (politician.is_appointed) holds a seat voters fill, so shows.
+    it('Elected filter keeps an interim appointee in an elected seat', () => {
+      expect(matchesAppointedFilter({ is_elected: true, is_appointed: true }, 'Elected')).toBe(true);
+    });
+    it('Elected filter still excludes a person appointed to an appointed seat', () => {
+      expect(matchesAppointedFilter({ is_elected: false, is_appointed: true }, 'Elected')).toBe(false);
+    });
     it('Elected filter includes a retention-vote judge (appointed but faces_retention_vote)', () => {
       expect(
         matchesAppointedFilter({ is_elected: false, faces_retention_vote: true }, 'Elected')
@@ -629,6 +637,19 @@ describe('tab pipeline — who each tab shows', () => {
     });
     expect(visible([clerk, judge], 'judges')).toEqual(['CircuitJudge']);
     expect(visible([clerk, judge], 'representatives')).toEqual(['Clerk']);
+  });
+
+  it('Monroe County IN: a council member appointed to fill an elected seat shows on Representatives', () => {
+    const interim = row({
+      last_name: 'Interim',
+      district_type: 'LOCAL',
+      office_title: 'City Common Council - District 5',
+      chamber_name: 'Common Council',
+      government_name: 'City of Bloomington, Indiana, US',
+      is_elected: true,
+      is_appointed: true,
+    });
+    expect(visible([interim], 'representatives')).toEqual(['Interim']);
   });
 
   // Operator decision 2026-09-23: Representatives keeps its Elected default, so
