@@ -4,6 +4,7 @@ import DonorList from './DonorList';
 import CompositionBar from './CompositionBar';
 import PacList from './PacList';
 import { formatCurrency, formatPercent } from '../../utils/format';
+import { refundSummary } from '../../lib/financeRefunds';
 
 /**
  * ExpandedView — full campaign finance breakdown shown when card is expanded.
@@ -55,6 +56,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
 
   const individualPct = totalRaised > 0 ? (individualTotal / totalRaised) * 100 : 0;
   const pacPct = totalRaised > 0 ? (pacTotal / totalRaised) * 100 : 0;
+  const refunds = refundSummary(summary);
 
   return (
     <div className="border-t border-gray-100 dark:border-gray-700 px-5 pb-5 pt-4 space-y-6">
@@ -103,6 +105,19 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
               <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Section 1a: Returned contributions. Reported apart from total raised (which is gross),
+          so a refund never shrinks "raised" or a source bucket. */}
+      {refunds.refunded > 0 && (
+        <div>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+            Refunded
+          </h4>
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            {refunds.label}. Not subtracted from total raised.
+          </p>
         </div>
       )}
 
