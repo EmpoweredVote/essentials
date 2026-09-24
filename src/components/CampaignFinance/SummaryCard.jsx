@@ -1,4 +1,5 @@
 import ConfidenceDot from './ConfidenceDot';
+import { refundSummary } from '../../lib/financeRefunds';
 
 /**
  * SummaryCard — collapsed campaign finance summary with cycle selector.
@@ -80,6 +81,8 @@ export default function SummaryCard({
 
   const updatedLabel = formatUpdatedDate(dataUpdatedAt);
   const availableCycles = summary.available_cycles || [];
+  // total_raised is gross; returned contributions are reported beside it, never subtracted.
+  const refunds = refundSummary(summary);
 
   return (
     <div className="p-5">
@@ -111,14 +114,28 @@ export default function SummaryCard({
         </div>
       </div>
 
-      {/* Body: total raised */}
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-2xl font-bold text-gray-900 dark:text-gray-100" style={{ fontFamily: "'Manrope', sans-serif" }}>
-          {formatCurrency(summary.total_raised || 0)}
-        </span>
-        <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
-        <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">total raised</span>
-      </div>
+      {/* Body: total raised (gross), then returned contributions on their own line */}
+      {refunds.onlyRefunds ? (
+        <div className="mb-3">
+          <p className="text-base font-semibold text-gray-800 dark:text-gray-200" style={{ fontFamily: "'Manrope', sans-serif" }}>
+            No new contributions this cycle
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{refunds.label}</p>
+        </div>
+      ) : (
+        <div className="mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-bold text-gray-900 dark:text-gray-100" style={{ fontFamily: "'Manrope', sans-serif" }}>
+              {formatCurrency(summary.total_raised || 0)}
+            </span>
+            <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+            <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">total raised</span>
+          </div>
+          {refunds.label && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{refunds.label}</p>
+          )}
+        </div>
+      )}
 
       {/* Footer: source + freshness */}
       <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
