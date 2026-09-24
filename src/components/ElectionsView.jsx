@@ -631,16 +631,22 @@ export default function ElectionsView({
                         const activeCandidates = electionCandidates.filter(
                           (c) => c.candidate_status !== 'withdrawn'
                         );
-                        // Show active candidates first, then any withdrawn ones at the end
-                        // (preserves antipartisan shuffle order within each group).
+                        // Registered write-ins (is_write_in) are still running but are not printed
+                        // on the ballot: they sit after the ballot candidates and never count toward
+                        // Unopposed — a lone ballot name with a write-in opponent is still unopposed
+                        // on the ballot.
+                        const ballotCandidates = activeCandidates.filter((c) => !c.is_write_in);
+                        const writeInCandidates = activeCandidates.filter((c) => c.is_write_in);
+                        // Show ballot candidates first, then write-ins, then any withdrawn ones at
+                        // the end (preserves antipartisan shuffle order within each group).
                         const withdrawnCandidates = electionCandidates.filter(
                           (c) => c.candidate_status === 'withdrawn'
                         );
                         const displayCandidates = hideWithdrawn
-                          ? activeCandidates
-                          : [...activeCandidates, ...withdrawnCandidates];
+                          ? [...ballotCandidates, ...writeInCandidates]
+                          : [...ballotCandidates, ...writeInCandidates, ...withdrawnCandidates];
                         const seats = race.seats ?? 1;
-                        const isUnopposed = activeCandidates.length > 0 && activeCandidates.length <= seats;
+                        const isUnopposed = ballotCandidates.length > 0 && ballotCandidates.length <= seats;
                         const isEmpty = displayCandidates.length === 0;
 
                         return (
@@ -818,7 +824,12 @@ export default function ElectionsView({
                                       Withdrawn
                                     </div>
                                   );
-                                  const unopposedBadge = isUnopposed && candidate.candidate_status !== 'withdrawn' && (
+                                  const writeInBadge = candidate.is_write_in && candidate.candidate_status !== 'withdrawn' && (
+                                    <div style={{ position: 'absolute', bottom: 0, left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
+                                      Write-in
+                                    </div>
+                                  );
+                                  const unopposedBadge = isUnopposed && candidate.candidate_status !== 'withdrawn' && !candidate.is_write_in && (
                                     <div style={{ position: 'absolute', bottom: '8px', left: 0, width: '64px', backgroundColor: 'rgba(0,0,0,0.55)', color: '#fff', fontSize: '8px', fontWeight: 700, letterSpacing: '0.4px', textAlign: 'center', textTransform: 'uppercase', padding: '3px 0', pointerEvents: 'none' }}>
                                       {seats > 1 ? `${seats} seats` : 'Unopposed'}
                                     </div>
@@ -834,6 +845,7 @@ export default function ElectionsView({
                                         <div style={{ position: 'relative', flex: '0 0 auto' }}>
                                           {card}
                                           {withdrawnBadge}
+                                          {writeInBadge}
                                           {unopposedBadge}
                                         </div>
                                         <div
@@ -867,6 +879,7 @@ export default function ElectionsView({
                                     <div key={candidate.candidate_id} style={wrapperStyle} {...wrapperHandlers}>
                                       {card}
                                       {withdrawnBadge}
+                                      {writeInBadge}
                                       {unopposedBadge}
                                       {sideCompass && (
                                         <div
