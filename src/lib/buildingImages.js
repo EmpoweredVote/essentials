@@ -498,6 +498,60 @@ const CURATED_LOCAL = {
   //   myrtle beach - Myrtle Beach, SC, USA (Panoramio), 12 October 2012 | James Willamor | CC BY-SA 3.0
   'myrtle beach': { state: 'SC', match: 'exact', focus: '50% 84%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/myrtle-beach.jpg' },
 
+  // Akron (Knight slice 8, stage OH-5; operator-certified 2026-09-24).
+  //
+  // 🔴 ADJACENCY: states/OH.jpg IS A CITY SKYLINE -- Cincinnati from Devou Park.
+  // This is a NEW SHAPE of the adjacency problem and the rule survives it. Miami,
+  // Wichita, Detroit and Charlotte collide because the state banner is THAT city's
+  // skyline; here the city differs, so a name check passes and the frame still
+  // collides. Read in the 6:1 band, states/OH.jpg is a downtown skyline across a
+  // valley: a horizontal bar of towers, mid-distance, big sky. ANY Akron skyline
+  // repeats that composition regardless of which city it is of.
+  // ▶ The test is COMPOSITION, and it has to be run against the BAND, not the
+  //   subject line. Eight candidates were refused on it.
+  //
+  // The winner is the opposite composition: South Main Street at golden hour, read
+  // at EYE LEVEL, with the Akron Civic Theatre's blade sign running the full height
+  // of the band and its marquee legible below.
+  //
+  // 🟢 WHY THIS CARRIES A `focus`, AND WHAT IT BOUGHT
+  // Same lesson as Columbia and Myrtle Beach, reached from the other direction.
+  // The approved centre-band crop (vertical_anchor 0.75) was a good DESKTOP frame
+  // and a poor ASSET -- it threw away the tower tops that mobile shows 96.9% of.
+  // Operator direction, 2026-09-24: "keep the full asset and crop from the top
+  // (keeping the bottom) for the desktop band." So the asset is built at
+  // vertical_anchor 0.44, which holds the towers AND reaches down to the marquee,
+  // and the desktop band is aimed at the bottom.
+  // ⚠ The focus is not a guess: `50% 100%` was solved from the approved 0.75 band
+  // (asset row 257..540 of 540 lands on the same source rows) and then VERIFIED by
+  // rendering the retargeted band beside the approved one.
+  //
+  // Refusals worth keeping, because the reasons transfer:
+  //   * Lock 15 on the Ohio & Erie Canal is the right IDEA for Akron -- the canal
+  //     is what the city was built on -- and at 6:1 it is white water and rock with
+  //     no built context. A correct subject is not a correct frame.
+  //   * Canal Park reads as a baseball game, not as a city.
+  //   * The Mustill Store's GROCERIES AND PROVISIONS sign is handsome and legible
+  //     and reads as a heritage museum.
+  //   * Loew's Theatre facade puts a blank concrete wall across 60% of the band.
+  //   * Downtown from Cascade Plaza looks UP at glass towers: foreshortened, and
+  //     still a downtown-tower frame, which is the adjacency being avoided.
+  //   * Stan Hywet Hall keeps a fragment of brick wall behind trees, and the estate
+  //     is away from the civic centre.
+  //
+  // People test: no pedestrians in frame. The only human figures are a promotional
+  // LED board and a printed historical mural -- published graphics on a wall, not
+  // identifiable bystanders.
+  //
+  // match:'exact'. Akron is also a place name in CO, IA, IN, MI, NY and PA, and
+  // Akron OH is the one this banner is of.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule applies to OVERWRITES. cities/akron.jpg
+  // had never been written -- both it and cities/akron-v2.jpg returned HTTP 400
+  // NoSuchKey before the upload.
+  //   akron - Main Street Akron, 24 September 2024 | Dillguy9 | CC0
+  akron: { state: 'OH', match: 'exact', focus: '50% 100%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/akron.jpg' },
+
   // Pennsylvania city banners (Knight slice 6, stage 5b; operator-certified
   // 2026-09-19 against a sheet of 6 proposals and 7 refusals, every frame cut to
   // the 6:1 desktop band).
