@@ -58,9 +58,9 @@ describe('describeReport', () => {
   it('lists raised, spent and cash on hand, keeping blanks as dashes', () => {
     const d = describeReport(GRANGER);
     expect(d.figures).toEqual([
-      { label: 'Raised', value: '—' },
-      { label: 'Spent', value: '—' },
-      { label: 'Cash on hand', value: '$0' },
+      { label: 'Raised', value: '—', derived: false },
+      { label: 'Spent', value: '—', derived: false },
+      { label: 'Cash on hand', value: '$0', derived: false },
     ]);
   });
 
@@ -73,6 +73,23 @@ describe('describeReport', () => {
   it('says the donor list is missing only when the sheet itemizes receipts', () => {
     expect(describeReport(GRANGER).itemizedNote).toBeNull();
     expect(describeReport({ ...GRANGER, receipts_itemized: 500 }).itemizedNote).toBe('Itemized donor list not yet available.');
+  });
+
+  // Granger left "raised" and "spent" blank but wrote 0 on lines 13, 16 and 18; the backend derives
+  // $0 from the sheet's arithmetic and flags it. The panel must say the figure was calculated.
+  it('marks a figure derived from the report totals and explains it once', () => {
+    const d = describeReport({
+      ...GRANGER,
+      receipts_total: 0, receipts_total_derived: true,
+      expenditures_total: 0, expenditures_total_derived: true,
+    });
+    expect(d.figures[0]).toEqual({ label: 'Raised', value: '$0', derived: true });
+    expect(d.figures[2].derived).toBe(false);
+    expect(d.derivedNote).toBe('* Calculated from the report’s totals; the filer left that line blank.');
+  });
+
+  it('has no derived note when nothing was derived', () => {
+    expect(describeReport(GRANGER).derivedNote).toBeNull();
   });
 
   it('omits "filed" when the stamp date is missing', () => {

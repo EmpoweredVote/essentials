@@ -58,12 +58,18 @@ export function describeReport(r) {
     filed: r.filed_on
       ? `filed ${formatReportDate(r.filed_on)} with the ${r.filed_with}`
       : `filed with the ${r.filed_with}`,
+    // A derived figure was calculated by the backend from the sheet's own totals because the filer left
+    // that line blank (line 16 − 13 for raised, 16 − 18 for spent); it is marked, not presented as written.
     figures: [
-      { label: 'Raised', value: formatMoney(r.receipts_total) },
-      { label: 'Spent', value: formatMoney(r.expenditures_total) },
-      { label: 'Cash on hand', value: formatMoney(r.cash_end) },
+      { label: 'Raised', value: formatMoney(r.receipts_total), derived: r.receipts_total_derived === true },
+      { label: 'Spent', value: formatMoney(r.expenditures_total), derived: r.expenditures_total_derived === true },
+      { label: 'Cash on hand', value: formatMoney(r.cash_end), derived: false },
     ],
     itemizedNote: r.receipts_itemized > 0 ? 'Itemized donor list not yet available.' : null,
+    derivedNote:
+      r.receipts_total_derived === true || r.expenditures_total_derived === true
+        ? '* Calculated from the report’s totals; the filer left that line blank.'
+        : null,
   };
 }
 
@@ -90,10 +96,13 @@ export default function FiledReportsPanel({ reports }) {
                 {d.figures.map((f, i) => (
                   <span key={f.label}>
                     {i > 0 && ' · '}
-                    {f.label} <span className="font-semibold">{f.value}</span>
+                    {f.label} <span className="font-semibold">{f.value}{f.derived && '*'}</span>
                   </span>
                 ))}
               </p>
+              {d.derivedNote && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{d.derivedNote}</p>
+              )}
               {d.itemizedNote && (
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{d.itemizedNote}</p>
               )}
