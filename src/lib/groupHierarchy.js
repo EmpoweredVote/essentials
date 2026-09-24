@@ -298,8 +298,10 @@ function getSubGroupLabel(pols, accordionTitle, standaloneExecInBody = true) {
   if (dt === 'JUDICIAL') {
     // Rule 4a: Judicial officials (clerk, administrator) sub-group
     if (pols.every(p => isJudicialOfficial(p))) {
-      // Derive court type from accordion/body name: "Monroe Circuit Court" -> "Circuit Court"
-      const courtName = (body || accordionTitle || '').replace(/^.*?\b(Circuit Court|Superior Court|District Court|Court)\b.*$/i, '$1');
+      // Derive court type from accordion/body name: "Monroe Circuit Court" -> "Circuit Court".
+      // chamber_name_formal before accordionTitle: browse rows carry an empty body name,
+      // and accordionTitle is then the county ("Monroe County"), not the court.
+      const courtName = (body || first.chamber_name_formal || accordionTitle || '').replace(/^.*?\b(Circuit Court|Superior Court|District Court|Court)\b.*$/i, '$1');
       return courtName ? `${courtName} Officials` : 'Court Officials';
     }
     // Rule 4b: Judges sub-group — derive from shared office_title prefix

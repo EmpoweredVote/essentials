@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVertical, useMediaQuery, tierColors, useEvContextPromotion } from '@empoweredvote/ev-ui';
-import { classifyBucket, classifyCategory, TAB_TYPE_DEFAULTS, matchesAppointedFilter } from '../lib/classify';
+import { partitionByTab, applyTabTypeDefault, TAB_TYPE_DEFAULTS } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import { getBranch } from '../utils/branchType';
@@ -1445,32 +1445,12 @@ export default function Results() {
     });
   }, [federalFiltered]);
 
-  // Phase 208 (TAB-01/TAB-02): partition deduped into three buckets via
-  // classifyBucket (Phase 207, src/lib/classify.js) — the single source of
-  // truth for tab routing. This is the ONLY place classifyBucket is called;
-  // never add a parallel keyword check here or elsewhere (207-D-06/208-D-06 —
-  // tab membership must not drift from list grouping).
-  const bucketed = useMemo(() => {
-    const buckets = { representative: [], educator: [], judge: [] };
-    for (const pol of deduped) {
-      buckets[classifyBucket(pol)].push(pol);
-    }
-    // 208-02 operator punch-list: the U.S. Supreme Court (Federal Judiciary)
-    // exists for EVERY location, so it must not by itself summon a Judges tab.
-    // Require a non-federal (state/local) judge to warrant the tab. When the
-    // only judges are federal, fold them back into Representatives — their
-    // pre-208 home under Federal → Federal Judiciary — so SCOTUS still renders
-    // but the Judges tab stays hidden. When state/local judges DO exist, the
-    // tab shows and keeps the federal judges alongside them.
-    const hasNonFederalJudge = buckets.judge.some(
-      (pol) => classifyCategory(pol).tier !== 'Federal'
-    );
-    if (!hasNonFederalJudge && buckets.judge.length > 0) {
-      buckets.representative.push(...buckets.judge);
-      buckets.judge = [];
-    }
-    return buckets;
-  }, [deduped]);
+  // Phase 208 (TAB-01/TAB-02): partition deduped into the three tab buckets.
+  // partitionByTab (src/lib/classify.js) is the single source of truth for tab
+  // routing, including the 208-02 SCOTUS fold-back into Representatives; never
+  // add a parallel keyword check here (207-D-06/208-D-06 — tab membership must
+  // not drift from list grouping).
+  const bucketed = useMemo(() => partitionByTab(deduped), [deduped]);
 
   // Lead with the tier the user actually browsed for. Searching "State of
   // Wisconsin" and getting every covered city first buries the state section
@@ -1495,44 +1475,27 @@ export default function Results() {
     [bucketed, leadTier]
   );
 
-  // D-11: the elected/appointed ("All types") filter layer, generalized into a
-  // reusable helper so it can be applied per-bucket without triplicating the
-  // map/filter body. matchesAppointedFilter (below) is reused unchanged.
-  function applyAppointedFilter(hier, filter) {
-    if (filter === 'All') return hier;
-
-    return hier
-      .map(({ tier, bodies }) => ({
-        tier,
-        bodies: bodies.map((body) => ({
-          ...body,
-          subgroups: body.subgroups.map((sg) => ({
-            ...sg,
-            pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, filter)),
-          })).filter((sg) => sg.pols.length > 0),
-        })).filter((body) => body.subgroups.length > 0),
-      }))
-      .filter(({ bodies }) => bodies.length > 0);
-  }
-
+  // D-11: each tab's elected/appointed default (TAB_TYPE_DEFAULTS), applied
+  // after grouping so body/sub-group labels are built from the full list.
   const filteredHierarchy = useMemo(
-    () => applyAppointedFilter(hierarchy, TAB_TYPE_DEFAULTS.representatives),
+    () => applyTabTypeDefault(hierarchy, 'representatives'),
     [hierarchy]
   );
   const educatorsFilteredHierarchy = useMemo(
-    () => applyAppointedFilter(educatorsHierarchy, TAB_TYPE_DEFAULTS.educators),
+    () => applyTabTypeDefault(educatorsHierarchy, 'educators'),
     [educatorsHierarchy]
   );
   const judgesFilteredHierarchy = useMemo(
-    () => applyAppointedFilter(judgesHierarchy, TAB_TYPE_DEFAULTS.judges),
+    () => applyTabTypeDefault(judgesHierarchy, 'judges'),
     [judgesHierarchy]
   );
 
-  // D-05: hide Educators/Judges tabs when the location has 0 office-holders of
-  // that bucket — computed PRE-appointed-filter, so an active "All types"
-  // narrowing never hides a tab that genuinely has data.
-  const hasEducators = bucketed.educator.length > 0;
-  const hasJudges = bucketed.judge.length > 0;
+  // D-05: hide the Educators/Judges tab when it has nothing to show. Computed
+  // AFTER the tab's type default (operator decision 2026-09-24): the default is
+  // fixed, so a tab whose office-holders are all appointed (e.g. judges with no
+  // retention vote) would otherwise open onto an empty list.
+  const hasEducators = educatorsFilteredHierarchy.length > 0;
+  const hasJudges = judgesFilteredHierarchy.length > 0;
 
   // D-08 / T-208-01/T-208-02: never trust the raw `?view=` param. Validate
   // against the known tab set and fall back to Representatives when the
