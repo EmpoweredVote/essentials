@@ -45,13 +45,15 @@ export const LOCAL_ORDER = [
 export const STATE_JUDICIARY_ORDER = ["State Supreme Court", "State Court of Appeals", "State Tax Court"];
 
 // Phase 215 (HDR-01/HDR-02, decision D-05): single source of truth for the
-// per-tab type-filter default. Judges defaults to 'Appointed' — the exact
-// value that keeps the Judges tab populated (most judges are appointed, not
-// elected), while representatives/educators default to 'Elected'.
+// per-tab type-filter default. Every tab defaults to 'Elected', which also
+// keeps appointed judges who face a retention vote (matchesAppointedFilter).
+// Judges was 'Appointed' until 2026-09-24; that dropped every ELECTED trial
+// judge (e.g. all 10 Racine County, WI circuit judges). Operator decision
+// 2026-09-24: show elected judges and leave appointed judges out.
 export const TAB_TYPE_DEFAULTS = {
   representatives: "Elected",
   educators: "Elected",
-  judges: "Appointed",
+  judges: "Elected",
 };
 
 // Resolution logic per CONTEXT D-05: politician.is_appointed overrides office-level
@@ -65,15 +67,25 @@ export function resolveIsAppointed(pol) {
 // Filter logic per CONTEXT D-06
 export function matchesAppointedFilter(pol, filter) {
   if (filter === 'All') return true;
-  const resolved = resolveIsAppointed(pol);
   if (filter === 'Elected') {
-    return !resolved || pol.faces_retention_vote === true;
+    // About the SEAT, not how the person got it (operator decision 2026-09-24):
+    // an interim appointee (politician.is_appointed) in an elected seat still
+    // shows, because voters fill that seat. So does a judge who faces a
+    // retention vote.
+    return pol.is_elected === true || pol.faces_retention_vote === true;
   }
   if (filter === 'Appointed') {
-    return resolved === true;
+    return resolveIsAppointed(pol) === true;
   }
   return true;
 }
+
+// TX / AR "County Judge" and KY "County Judge/Executive" preside over the
+// county's governing body (Commissioners / Quorum / Fiscal Court). They are
+// county executives, not adjudicators. Court titles such as "Judge, County
+// Court at Law No. 1" do not match. A JUDICIAL-typed row is still decided by
+// its district_type first.
+const COUNTY_JUDGE_EXEC_TITLE_RE = /\bcounty judge\b/i;
 
 const BODY_LEGIS_UPPER = ["senate"];
 const BODY_LEGIS_LOWER = ["house", "assembly"];
@@ -239,6 +251,9 @@ export function classifyCategory(pol) {
 
   // County officials - treat as Local
   if (dt === "COUNTY") {
+    if (COUNTY_JUDGE_EXEC_TITLE_RE.test(title)) {
+      return { tier: "Local", group: "County Executives" };
+    }
     if (hasAny(title, ["commissioner", "commission", "supervisor", "council"])) {
       return { tier: "Local", group: "County Legislators" };
     }
@@ -306,6 +321,11 @@ const EDUCATOR_DISTRICT_TYPES = new Set(["SCHOOL", "STATE_BOARD", "SCHOOL_BOARD"
 // district_type.
 const JUDGE_TITLE_RE = /\b(judge|justice)\b/i;
 
+// Court clerks sit in JUDICIAL districts but are court staff, not adjudicators
+// (operator decision 2026-09-24), so they route to Representatives. This is the
+// one exception to the D-08 rule that a JUDICIAL row is never pulled out.
+const COURT_CLERK_TITLE_RE = /\bclerk\b/i;
+
 // D-05 / Pitfall 5: school-superintendent override, guarded so it does not
 // catch non-education superintendent titles (police, public works, streets).
 const SCHOOL_SUPERINTENDENT_TITLE_RE = /superintendent\s+of\s+(public instruction|schools)\b/i;
@@ -334,8 +354,10 @@ export function classifyBucket(pol) {
 
   // Base: district_type (D-07). Clean JUDICIAL/NATIONAL_JUDICIAL/SCHOOL/
   // STATE_BOARD/SCHOOL_BOARD rows are decided here and never pulled back out
-  // by a keyword below (D-08).
-  if (JUDGE_DISTRICT_TYPES.has(dt)) return "judge";
+  // by a keyword below (D-08) — except a court clerk.
+  if (JUDGE_DISTRICT_TYPES.has(dt)) {
+    return COURT_CLERK_TITLE_RE.test(title) ? "representative" : "judge";
+  }
   if (EDUCATOR_DISTRICT_TYPES.has(dt)) return "educator";
 
   // Additive overrides (D-07/D-08) — only reachable when the base bucket is
@@ -343,12 +365,74 @@ export function classifyBucket(pol) {
   // 208-02: prosecutors/public defenders are NOT adjudicators — no longer
   // routed to judge (reverses 207-D-02, see note above). Only genuine
   // judge/justice titles fall through to the judge bucket here.
+  if (COUNTY_JUDGE_EXEC_TITLE_RE.test(title)) return "representative"; // county executive, not a court
   if (JUDGE_TITLE_RE.test(title)) return "judge"; // D-03
   if (SCHOOL_SUPERINTENDENT_TITLE_RE.test(title)) return "educator"; // D-05
   if (SCHOOL_BOARD_TEXT_RE.test(title) || SCHOOL_BOARD_TEXT_RE.test(chamber))
     return "educator"; // D-04
 
   return "representative"; // D-09 catch-all
+}
+
+/**
+ * partitionByTab(pols) -> { representative, educator, judge }
+ *
+ * Phase 208 (TAB-01/TAB-02): partitions the office-holders for a location into
+ * the three tab buckets via classifyBucket. This is the ONLY place the tab
+ * buckets are built; never add a parallel keyword check (207-D-06/208-D-06 —
+ * tab membership must not drift from list grouping).
+ *
+ * 208-02 operator punch-list: the U.S. Supreme Court (Federal Judiciary)
+ * exists for EVERY location, so it must not by itself summon a Judges tab.
+ * Require a non-federal (state/local) judge to warrant the tab. When the only
+ * judges are federal, fold them back into Representatives — their pre-208
+ * home under Federal → Federal Judiciary — so SCOTUS still renders but the
+ * Judges tab stays hidden. When state/local judges DO exist, the tab shows and
+ * keeps the federal judges alongside them.
+ */
+export function partitionByTab(pols) {
+  const buckets = { representative: [], educator: [], judge: [] };
+  for (const pol of pols || []) {
+    buckets[classifyBucket(pol)].push(pol);
+  }
+  const hasNonFederalJudge = buckets.judge.some(
+    (pol) => classifyCategory(pol).tier !== "Federal"
+  );
+  if (!hasNonFederalJudge && buckets.judge.length > 0) {
+    buckets.representative.push(...buckets.judge);
+    buckets.judge = [];
+  }
+  return buckets;
+}
+
+/**
+ * applyTabTypeDefault(hier, tab) -> hierarchy
+ *
+ * D-11: the elected/appointed filter layer, applied to one tab's grouped
+ * hierarchy (groupIntoHierarchy output), after grouping so body/sub-group
+ * labels are built from the full list. Each official is tested against
+ * TAB_TYPE_DEFAULTS[tab]; empty sub-groups, bodies and tiers are removed.
+ */
+export function applyTabTypeDefault(hier, tab) {
+  const filter = TAB_TYPE_DEFAULTS[tab];
+  if (filter === "All") return hier;
+
+  return hier
+    .map(({ tier, bodies }) => ({
+      tier,
+      bodies: bodies
+        .map((body) => ({
+          ...body,
+          subgroups: body.subgroups
+            .map((sg) => ({
+              ...sg,
+              pols: sg.pols.filter((pol) => matchesAppointedFilter(pol, filter)),
+            }))
+            .filter((sg) => sg.pols.length > 0),
+        }))
+        .filter((body) => body.subgroups.length > 0),
+    }))
+    .filter(({ bodies }) => bodies.length > 0);
 }
 
 export function orderedEntries(obj, order) {
@@ -423,7 +507,8 @@ export function computeVariant(pol, userAnswers, hasStances = true) {
 
   // Admin and judicial never have compass data — always show unavailable plate
   if (/clerk|treasurer|auditor|recorder|assessor/.test(title)) return 'administrative';
-  if (dt === 'JUDICIAL' || /judge|justice|court/.test(title)) return 'judicial';
+  if (dt === 'JUDICIAL') return 'judicial';
+  if (/judge|justice|court/.test(title) && !COUNTY_JUDGE_EXEC_TITLE_RE.test(title)) return 'judicial';
 
   // No stances on file — show "no stances" plate regardless of user calibration,
   // so we don't bait the user into calibrating only to find no comparison data.
