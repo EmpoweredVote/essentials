@@ -5,6 +5,7 @@ import SummaryCard from './SummaryCard';
 import ExpandedView from './ExpandedView';
 import DonorSearch from './DonorSearch';
 import OutsideSpendingSection from './OutsideSpendingSection';
+import FiledReportsPanel from './FiledReportsPanel';
 
 /**
  * LocalUnavailableBanner — shown when a local/county politician has no digital filings.
@@ -109,6 +110,23 @@ export default function CampaignFinanceSection({ politicianId }) {
           Transparent Motivations
         </h2>
         <LocalUnavailableBanner />
+        {hasOutsideSpending && (
+          <OutsideSpendingSection outsideSpending={summary.outside_spending} />
+        )}
+      </section>
+    );
+  }
+
+  // A filed report is on file but no itemized contributions are loaded (typically a $0 report):
+  // say what the report shows, not that it is "being processed".
+  if (!loading && summary?.coverage_status === 'filed_reports') {
+    const hasOutsideSpending = summary?.outside_spending?.committees?.length > 0;
+    return (
+      <section className="mt-8" aria-label="Campaign Finance">
+        <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: "'Manrope', sans-serif" }}>
+          Transparent Motivations
+        </h2>
+        <FiledReportsPanel reports={summary.filed_reports} />
         {hasOutsideSpending && (
           <OutsideSpendingSection outsideSpending={summary.outside_spending} />
         )}
