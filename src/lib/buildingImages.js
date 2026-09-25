@@ -1427,15 +1427,34 @@ const CURATED_LOCAL = {
   'saint paul': { state: 'MN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/saint-paul.jpg' },
   // North Dakota's FIRST city banner (Knight slice 12, Grand Forks stage 5).
   //
-  // 🔴 match:'exact' IS LOAD-BEARING, and for two separate reasons that both end with the
+  // 🔴🔴 THE SUBJECT IS IN GRAND FORKS, AND THAT WAS THE DECIDING TEST -- not composition.
+  // Every candidate's coordinate was checked against the TIGER place polygon, and this is
+  // the ONLY one that falls inside Grand Forks city (FIPS 38). Four of the five were
+  // titled AND categorised "Grand Forks, North Dakota" on Commons while sitting inside
+  // East Grand Forks city, MINNESOTA (FIPS 27) -- a separate municipality one bridge away
+  // across the Red River. A CATEGORY NAME IS NOT A JURISDICTION, and here the file TITLE
+  // named the wrong state's city too.
+  //   An earlier revision of this entry shipped the Sorlie Memorial Bridge, photographed
+  //   from the Minnesota bank looking across at North Dakota. It had the better band. It
+  //   was rejected on operator ruling (Cantrell, 2026-09-25): a banner is a claim about
+  //   WHERE A PLACE IS, on a site whose whole value is getting jurisdiction right, so a
+  //   Minnesota photograph standing in for a North Dakota city is not merely weaker -- it
+  //   is the kind of error this product exists to avoid. PREFER THE FRAME THAT IS
+  //   ACTUALLY IN THE JURISDICTION, even when a prettier one sits across the line.
+  //
+  // The subject earns it on its own: the North Dakota Mill and Elevator is STATE-OWNED,
+  // the only state-owned mill in the United States, and it has stood in Grand Forks since
+  // 1922. ⚠ Overhead wires and a road cross the frame; that is inherent to the source and
+  // was accepted knowingly.
+  //
+  // 🔴 match:'exact' IS LOAD-BEARING, for two separate reasons that both end with the
   // wrong place being served this banner:
-  //   - 'east grand forks'.includes('grand forks') is TRUE, and East Grand Forks is a
-  //     separate municipality in MINNESOTA, one bridge away across the Red River. The
-  //     state scope catches that only while the caller's state parses -- getBuildingImages
-  //     treats an unknown caller state as match-allowed, so a substring key would hand a
-  //     Minnesota city North Dakota's banner on any address whose state does not parse.
-  //     ND-3's own address probe had to separate these two: Grand Forks City Hall returns
-  //     six answers and East Grand Forks, a mile away, returns nothing.
+  //   - 'east grand forks'.includes('grand forks') is TRUE. The state scope catches that
+  //     only while the caller's state parses -- getBuildingImages treats an unknown caller
+  //     state as match-allowed, so a substring key would hand a Minnesota city North
+  //     Dakota's banner on any address whose state does not parse. ND-3's own address
+  //     probe had to separate these two: Grand Forks City Hall returns six answers and
+  //     East Grand Forks, a mile away, returns nothing.
   //   - 'grand forks county'.includes('grand forks') is TRUE and the county IS in ND, so
   //     the state scope cannot separate them at all. Only the exact flag can.
   //
@@ -1449,17 +1468,13 @@ const CURATED_LOCAL = {
   // no collision, and a built subject is available here in a way it is not for Miami,
   // Wichita, Detroit or Charlotte, whose state banners ARE those cities' skylines.
   //
-  // ⚠ THE CAMERA STOOD IN MINNESOTA, and that is a knowing choice, not an oversight. The
-  // file's coordinate falls inside East Grand Forks city (FIPS 27), not Grand Forks (38);
-  // the Sorlie Bridge spans the two and the frame looks across at the NORTH DAKOTA bank,
-  // so the band carries the bridge, the Red River and the Grand Forks skyline together.
-  // Four of the five candidates sweep-tested were titled and categorised "Grand Forks,
-  // North Dakota" while sitting in Minnesota -- a category name is not a jurisdiction.
+  // Certified in the band, not the full frame: channel spread 56.5, saturation 0.341,
+  // luminance 128.6 -- the most colourful of the five candidates. 7047x4677 down to
+  // 1700x540 is a 0.24x DOWNSCALE, so every pixel is real.
   //
-  // No `focus` key: the vertical anchor (0.60) is baked into the 1700x540 asset, so the
-  // CENTRED desktop band is exactly the frame that was certified. A focus here would move
-  // the window away from the approved one.
-  //   grand forks - Sorlie Memorial Bridge - Red River State Recreation Area | Tony Webster | CC BY-SA 2.0
+  // No `focus` key: the vertical anchor (0.50) is baked into the 1700x540 asset, so the
+  // CENTRED desktop band is exactly the frame that was certified.
+  //   grand forks - North Dakota Mill 2022-07-20 01 | Schwerdf | CC BY 4.0
   'grand forks': { state: 'ND', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/grand-forks.jpg' },
 };
 
