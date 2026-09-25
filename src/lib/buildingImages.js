@@ -1425,6 +1425,42 @@ const CURATED_LOCAL = {
   // South Saint Paul and West Saint Paul, separate cities we do not seat.
   duluth: { state: 'MN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/duluth.jpg' },
   'saint paul': { state: 'MN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/saint-paul.jpg' },
+  // North Dakota's FIRST city banner (Knight slice 12, Grand Forks stage 5).
+  //
+  // 🔴 match:'exact' IS LOAD-BEARING, and for two separate reasons that both end with the
+  // wrong place being served this banner:
+  //   - 'east grand forks'.includes('grand forks') is TRUE, and East Grand Forks is a
+  //     separate municipality in MINNESOTA, one bridge away across the Red River. The
+  //     state scope catches that only while the caller's state parses -- getBuildingImages
+  //     treats an unknown caller state as match-allowed, so a substring key would hand a
+  //     Minnesota city North Dakota's banner on any address whose state does not parse.
+  //     ND-3's own address probe had to separate these two: Grand Forks City Hall returns
+  //     six answers and East Grand Forks, a mile away, returns nothing.
+  //   - 'grand forks county'.includes('grand forks') is TRUE and the county IS in ND, so
+  //     the state scope cannot separate them at all. Only the exact flag can.
+  //
+  // Surfacing: the nine CITY offices carry representing_city 'Grand Forks', so this
+  // resolves from an ordinary address search. The seven COUNTY offices carry NULL, so no
+  // county banner is implied -- the Richland/Horry shape above.
+  //
+  // Adjacency, measured rather than assumed: states/ND.jpg is the Painted Canyon overlook
+  // in Theodore Roosevelt NP. Read in the 6:1 DESKTOP BAND (rows 128-411), it is badlands
+  // strata and sky with no built structure, 350 miles west of Grand Forks -- so there is
+  // no collision, and a built subject is available here in a way it is not for Miami,
+  // Wichita, Detroit or Charlotte, whose state banners ARE those cities' skylines.
+  //
+  // ⚠ THE CAMERA STOOD IN MINNESOTA, and that is a knowing choice, not an oversight. The
+  // file's coordinate falls inside East Grand Forks city (FIPS 27), not Grand Forks (38);
+  // the Sorlie Bridge spans the two and the frame looks across at the NORTH DAKOTA bank,
+  // so the band carries the bridge, the Red River and the Grand Forks skyline together.
+  // Four of the five candidates sweep-tested were titled and categorised "Grand Forks,
+  // North Dakota" while sitting in Minnesota -- a category name is not a jurisdiction.
+  //
+  // No `focus` key: the vertical anchor (0.60) is baked into the 1700x540 asset, so the
+  // CENTRED desktop band is exactly the frame that was certified. A focus here would move
+  // the window away from the approved one.
+  //   grand forks - Sorlie Memorial Bridge - Red River State Recreation Area | Tony Webster | CC BY-SA 2.0
+  'grand forks': { state: 'ND', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/grand-forks.jpg' },
 };
 
 /**
