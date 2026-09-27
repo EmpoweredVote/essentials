@@ -498,6 +498,40 @@ const CURATED_LOCAL = {
   //   myrtle beach - Myrtle Beach, SC, USA (Panoramio), 12 October 2012 | James Willamor | CC BY-SA 3.0
   'myrtle beach': { state: 'SC', match: 'exact', focus: '50% 84%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/myrtle-beach.jpg' },
 
+  // Lexington (Knight slice 13, stage KY-5b; operator-certified 2026-09-26).
+  //
+  // ADJACENCY: states/KY.jpg is the LOUISVILLE skyline across the Ohio, and like
+  // states/SC -- and unlike states/CA and states/NC -- its credit is ACCURATE IN
+  // THE BAND: the skyline really is what a desktop visitor sees, checked before
+  // anything was chosen. Read there it is a DISTANT, EYE-LEVEL view ACROSS OPEN
+  // WATER, buildings filling the middle at mid-distance. That refused the three
+  // widest Lexington candidates, including an 11503x2665 downtown panorama, on
+  // COMPOSITION rather than on the word "skyline". Lexington is the first KY city
+  // banner, so this is the only adjacency it had to clear.
+  //
+  // The chosen frame is the opposite composition: rolling Bluegrass pasture, no
+  // water, no buildings at mid-distance, subject spread as a HORIZONTAL BAND so
+  // it survives the crop.
+  //
+  // 🔴 THE `focus` IS LOAD BEARING, NOT COSMETIC. At the centred cut the barn and
+  // the sky fall outside the desktop window and a heavy dark fence rail dominates
+  // the bottom third -- the Bend defect. At '50% 30%' the band measures luminance
+  // 116.0 and channel spread 27.3, against 89.6 and 20.6 centred: it reads better
+  // AND measures better.
+  //
+  // ⚠ The Commons "original", File:Spendthrift Farm (28380511168).jpg, is 3456x4608
+  // PORTRAIT and useless for a banner. The "(cropped)" derivative is the usable
+  // file. Preferring the original would have been wrong here.
+  //
+  // match:'exact' because Lexington is a city name in MA, NC, SC, VA and NE as
+  // well, and Lexington County SC is a live browse label. Verified by running the
+  // matcher, not by reasoning about it.
+  //
+  // A NEW key needs no -v2. sha256 verified identical on BOTH the plain and a
+  // cache-busted URL, with a nonexistent-key control that failed as required.
+  //   lexington - Spendthrift Farm | Erin Aiken (atthepaddock.com) | CC BY 2.0
+  lexington: { state: 'KY', match: 'exact', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lexington.jpg' },
+
   // Akron (Knight slice 8, stage OH-5; operator-certified 2026-09-24).
   //
   // 🔴 ADJACENCY: states/OH.jpg IS A CITY SKYLINE -- Cincinnati from Devou Park.

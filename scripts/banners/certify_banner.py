@@ -36,6 +36,9 @@ INPUT: a JSON array, one object per candidate:
     license           licence short name (CC BY-SA 4.0, CC0, public domain, ...)
     url  or  path     where to read the source from
     crop_width        optional, narrow the source before the ratio crop
+    focus             optional, '<x>% <y>%' as the registry writes it. Moves the
+                      DESKTOP band, exactly as SectionBanner does, so the sheet
+                      shows what SHIPS rather than the centred cut
     vertical_anchor   optional, 0.0 top .. 1.0 bottom (default 0.5)
     horizontal_anchor optional, 0.0 left .. 1.0 right (default 0.5)
     verdict           "proposed" (default) or "rejected"
@@ -62,6 +65,7 @@ import html
 import io
 import json
 import os
+import re
 import sys
 
 import requests
@@ -109,7 +113,8 @@ def measure(band):
     return luminance, spread
 
 
-def render(src_bytes, crop_width=None, vertical_anchor=0.5, horizontal_anchor=0.5):
+def render(src_bytes, crop_width=None, vertical_anchor=0.5, horizontal_anchor=0.5,
+           focus=None):
     """
     Produce (asset, band, facts) for one source image.
 
@@ -123,7 +128,18 @@ def render(src_bytes, crop_width=None, vertical_anchor=0.5, horizontal_anchor=0.
     cropped = crop_to_ratio(src, TARGET_RATIO, vertical_anchor=vertical_anchor,
                             crop_width=crop_width, horizontal_anchor=horizontal_anchor)
     asset = cropped.resize((TARGET_W, TARGET_H), Image.LANCZOS)
-    band = asset.crop((0, BAND_TOP, TARGET_W, BAND_TOP + BAND_H))
+    # A shipped banner may carry `focus: '<x>% <y>%'`, which moves the DESKTOP window
+    # off centre -- so a sheet that always cut the centred band showed something other
+    # than what ships. That is the Bend defect one layer up, in the certifying tool
+    # itself. The Y component is the only one that matters here: the band is full width,
+    # so X cannot move it. Mirrors SectionBanner's fallback to '50% 50%'.
+    band_top = BAND_TOP
+    if focus:
+        m = re.search(r'([\d.]+)%\s+([\d.]+)%', str(focus))
+        if m:
+            band_top = round((TARGET_H - BAND_H) * float(m.group(2)) / 100.0)
+            band_top = max(0, min(TARGET_H - BAND_H, band_top))
+    band = asset.crop((0, band_top, TARGET_W, band_top + BAND_H))
     luminance, spread = measure(band)
     kept_w = cropped.size[0]
     facts = {
@@ -134,6 +150,8 @@ def render(src_bytes, crop_width=None, vertical_anchor=0.5, horizontal_anchor=0.
         'slack_px': round(slack * (TARGET_H / (effective_w / TARGET_RATIO))) if slack else 0,
         'luminance': round(luminance, 1),
         'spread': round(spread, 1),
+        'band_top': band_top,
+        'focus': focus or '50% 50%',
     }
     flags = []
     if facts['spread'] < GREYSCALE_SPREAD:
@@ -271,7 +289,8 @@ def main():
                 raw,
                 crop_width=c.get('crop_width'),
                 vertical_anchor=c.get('vertical_anchor', 0.5),
-                horizontal_anchor=c.get('horizontal_anchor', 0.5))
+                horizontal_anchor=c.get('horizontal_anchor', 0.5),
+                focus=c.get('focus'))
         except Exception as exc:                                    # noqa: BLE001
             print(f'  FAILED   {slug:<24} {type(exc).__name__}: {exc}')
             failed.append((slug, f'{type(exc).__name__}: {exc}'))
@@ -309,7 +328,7 @@ def main():
       <img src="data:image/jpeg;base64,{c['_asset_b64']}" alt="Full asset for {html.escape(c.get('title', c['slug']))}" />
       <div class="framelabel"><span><b>THE FULL ASSET.</b> Only the middle 52.4% reaches a desktop screen.</span><span>{TARGET_W} &times; {TARGET_H}</span></div>
       <img src="data:image/jpeg;base64,{c['_band_b64']}" alt="Desktop band for {html.escape(c.get('title', c['slug']))}" />
-      <div class="framelabel"><span><b>THE DESKTOP BAND</b> &mdash; rows {BAND_TOP}&ndash;{BAND_TOP + BAND_H}. Certify here.</span><span>{TARGET_W} &times; {BAND_H} &middot; 6:1</span></div>
+      <div class="framelabel"><span><b>THE DESKTOP BAND</b> &mdash; rows {f['band_top']}&ndash;{f['band_top'] + BAND_H}, focus {html.escape(str(f['focus']))}. Certify here.</span><span>{TARGET_W} &times; {BAND_H} &middot; 6:1</span></div>
     </div>
     <div class="metrics">
       <div class="metric"><b>{f['src_w']}&times;{f['src_h']}</b><span>source &middot; {f['src_ratio']}:1</span></div>
