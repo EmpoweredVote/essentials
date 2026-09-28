@@ -326,3 +326,51 @@ describe('South Carolina city banners (Knight slice 7) — run the matcher, do n
     expect(r.focus.Local).toBeNull();
   });
 });
+
+describe('Michigan — the city takes the skyline and the state is versioned away from it', () => {
+  const DET = 'cities/detroit.jpg';
+  const key = (r) => (r.Local ? r.Local.split('/').slice(-2).join('/') : null);
+
+  it('resolves Detroit, MI to its own banner, with no focus', () => {
+    const r = getBuildingImages('Detroit', 'MI');
+    expect(key(r)).toBe(DET);
+    // The 0.50 anchor is baked into the asset, so the centred band is what was certified.
+    expect(r.focus.Local).toBeNull();
+  });
+
+  it('resolves with a missing caller state, which is match-allowed', () => {
+    expect(key(getBuildingImages('Detroit', null))).toBe(DET);
+  });
+
+  // THE NEGATIVES ARE THE POINT. 'detroit' is a substring of, or identical to, four other
+  // places, and a stateless call cannot lean on the state scope.
+  it('does NOT hand the Detroit banner to Detroit Lakes, MN', () => {
+    expect(key(getBuildingImages('Detroit Lakes', 'MN'))).toBeNull();
+    expect(key(getBuildingImages('Detroit Lakes', null))).toBeNull();
+  });
+
+  it('does NOT hand the Detroit banner to another state\'s Detroit', () => {
+    for (const st of ['OR', 'TX', 'ME']) {
+      expect(key(getBuildingImages('Detroit', st)), st).toBeNull();
+    }
+  });
+
+  it('leaves an unregistered MI city with no local banner', () => {
+    // The control proving these checks can return non-null: Kalamazoo is a real
+    // Michigan city with no entry, and it must resolve to null.
+    expect(key(getBuildingImages('Kalamazoo', 'MI'))).toBeNull();
+  });
+
+  it('serves the VERSIONED Michigan panorama, not the object it replaced', () => {
+    // states/MI.jpg is still in the bucket serving its old bytes, and must not be read:
+    // overwriting in place does not reliably purge the CDN.
+    const r = getBuildingImages('Detroit', 'MI');
+    expect(r.State).toMatch(/states\/MI-v2\.jpg$/);
+    expect(r.State).not.toMatch(/states\/MI\.jpg$/);
+    expect(r.focus.State).toBeNull();
+  });
+
+  it('control: a state with no version override is untouched', () => {
+    expect(getBuildingImages('Akron', 'OH').State).toMatch(/states\/OH\.jpg$/);
+  });
+});
