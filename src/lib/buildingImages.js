@@ -1540,6 +1540,52 @@ const CURATED_LOCAL = {
   //             | FUBAR007 | CC BY-SA 3.0
   //             source: File:Riverside street view.jpg, vertical anchor 0.31
   'wichita': { state: 'KS', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/wichita.jpg' },
+  // Michigan's FIRST city banner, and the fifth state/city subject collision resolved.
+  //
+  // 🔴🔴 THE STATE BANNER WAS THIS CITY. states/MI.jpg is "Detroit Skyline from Windsor"
+  // (TheWxResearcher, CC0). Read in the band it actually ships, the Renaissance Center,
+  // One Detroit Center and the whole downtown front all survive -- so the Charlotte escape
+  // hatch was not available and the skyline could not simply be repeated here. Resolved the
+  // FL/Miami way: the state moved to a new subject (states/MI-v2.jpg, Pictured Rocks) and
+  // the city took the skyline. Detroit joins Miami, Charlotte, Wichita and Saint Paul as a
+  // city whose state banner was already its own picture.
+  //
+  // 🔴🔴 states/MI.jpg IS OFF-SPEC AND THE CERTIFYING TOOL CANNOT SHOW WHAT IT SHIPS.
+  // It is 1700x422 (4.03:1), not 1700x540 (3.148:1), so object-fit:cover in the 6:1 box
+  // keeps 1700/6 = 283 of its 422 rows -- 67.1% of the file, rows 69-352, NOT the documented
+  // 52.4%. certify_banner.py crops every --baseline to 3.148:1 first, which for this file
+  // means cutting the WIDTH to 1328 and upscaling 1.28x. The adjacency call above was made
+  // on a band cut by hand at the true ratio. states/FL.jpg is the same shape (1700x419);
+  // ten other live assets measured exactly 1700x540.
+  //
+  // ⚠ SO THE STATE'S OWN PHOTOGRAPH IS NOT THE BEST CITY BANNER, WHICH IS NOT OBVIOUS.
+  // The intuitive move -- take the file that is already live and re-render it to spec --
+  // was certified and refused. Both forms of it were tested:
+  //   the (cropped) 4773x1185 source behind states/MI.jpg -> at 3.148:1 it must lose 22%
+  //     of its width, so the frame tightens and the building bases still sit BELOW the band
+  //   the uncropped 4773x2787 original                    -> the band floats the towers:
+  //     no bases, no riverbank, and the left third is empty sky
+  // Nine other frames were measured. Two more lost the Renaissance Center crown to the top
+  // edge, which is the exact defect states/NC.jpg is refused for; one was a park with a
+  // distant skyline; one ran spread 25.2, hazy and near-colourless.
+  //
+  // The frame that ships is the only one of eleven holding the whole downtown front AND
+  // every building base inside the band, with the riverbank along the bottom and open sky
+  // above. 4624x2084 down to 1700x540 is a 0.37x DOWNSCALE, so every pixel is real; band
+  // luminance 130.4, channel spread 39.3. Vertical slack 615 source rows.
+  //
+  // 🔴 match:'exact' IS LOAD BEARING HERE. Detroit Lakes MN, Detroit OR, Detroit TX and
+  // Detroit ME all contain 'detroit', and getBuildingImages() treats a MISSING caller state
+  // as match-allowed, so the state scope alone is not the guard. Proved by running the
+  // matcher, not by reading it.
+  //
+  // No `focus` key: the vertical anchor (0.50) is baked into the 1700x540 asset, so the
+  // CENTRED desktop band is exactly the frame that was certified. The shipping asset is
+  // pixel-identical to the certified one, max absolute difference 0.
+  //   detroit - Detroit from the river: the downtown front, the Renaissance Center and the
+  //             riverbank | CyberDetroit | CC BY-SA 4.0
+  //             source: File:CityofDetroit.jpg, vertical anchor 0.50
+  'detroit': { state: 'MI', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/detroit.jpg' },
 };
 
 /**
@@ -1621,7 +1667,17 @@ const CURATED_COUNTY = {
 //   MD - Baltimore, Maryland skyline | Quintin Soloviev | CC BY 4.0
 //   ME - Great Falls / Androscoggin River at Festival Plaza Park, Auburn | Kristen Wheatley | CC BY 2.0
 //        [2026-07-06: replaced the Portland skyline per operator; that skyline moved to the Portland CITY banner (cities/portland-me.jpg)]
-//   MI - Detroit Skyline from Windsor | TheWxResearcher | CC0
+//   MI - Pictured Rocks National Lakeshore | Victoria Stauffenberg | Public domain
+//        (was "Detroit Skyline from Windsor" | TheWxResearcher | CC0 until 2026-09-28 —
+//         Michigan's banner was a photograph of Detroit, so the state and its largest city
+//         had one subject between them. Detroit now carries its own banner and the state
+//         gets a subject that stands for the whole of it: the Pictured Rocks cliffs on the
+//         Lake Superior shore, the first National Lakeshore designated in the United States.
+//         🔴 The old photograph did NOT move down a tier, unlike FL/Miami and WA/Seattle.
+//         states/MI.jpg is 1700x422, 4.03:1, NOT the 1700x540 spec, so it renders 67.1% of
+//         itself on desktop rather than 52.4%. Re-cut to 3.148:1 it must lose 22% of its
+//         width and the building bases fall below the band. A different frame measured
+//         better; see the Michigan block in CURATED_LOCAL.)
 //   MN - Minneapolis Skyline from Stone Arch Bridge | w_lemay | CC BY-SA 2.0
 //   MO - STL Skyline (Gateway Arch) | Buphoff | CC BY-SA 3.0
 //   MS - Jackson MS Downtown Panorama | chmeredith | CC BY 2.0
@@ -1742,6 +1798,16 @@ const STATE_PANORAMA_FILES = {
   // the bucket serving its old bytes and must stay there — every California address reads
   // this one, and an overwrite would not reliably purge.
   CA: 'CA-v2.jpg',
+  // MI versioned 2026-09-28. The FL case exactly: Michigan's banner WAS the Detroit
+  // skyline from Windsor, which is also the subject Detroit's own banner had to take, and
+  // the adjacency rule forbids a city repeating its state's composition. Measured first
+  // rather than assumed -- states/NC.jpg cuts Charlotte's tower crowns off in the band and
+  // so does NOT collide, but states/MI.jpg keeps the whole downtown front and does.
+  //
+  // 🔴 Versioned, NOT overwritten, for the reason this map exists: overwriting states/MI.jpg
+  // would not reliably purge the CDN, and every Michigan address reads this one. The old
+  // object stays in the bucket serving its old bytes.
+  MI: 'MI-v2.jpg',
 };
 
 /**
