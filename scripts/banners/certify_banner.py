@@ -29,6 +29,14 @@ ONE CROP IMPLEMENTATION, imported from process_banner.py, so the sheet shows exa
 what the processor will ship. Two implementations drift, and then the operator
 approves a frame that never existed.
 
+A LIVE --baseline IS READ, NOT RE-RENDERED
+  A baseline is already a shipped asset, so the only honest thing to show is the slice
+  the browser cuts from it. desktop_band() computes that from the file's own size.
+  Forcing it through render() first was wrong for any asset not at the 1700x540 spec:
+  states/MI.jpg is 1700x422 and states/FL.jpg is 1700x419, and for those the old path
+  cropped the WIDTH to 1328 and upscaled 1.28x. Michigan's state/city adjacency call
+  had to be made on a band cut by hand because of it.
+
 INPUT: a JSON array, one object per candidate:
     slug              short id, used for the output filenames
     title             photograph title, shown on the card
@@ -83,6 +91,55 @@ BAND_TOP = (TARGET_H - BAND_H) // 2          # rows 128..411 of 540
 GREYSCALE_SPREAD = 6.0                       # below this, the frame has no colour
 DARK_LUMINANCE = 70.0
 BLOWN_LUMINANCE = 200.0
+DESKTOP_BOX_RATIO = 6.0                      # SectionBanner's md+ aspect
+
+
+def desktop_band(img, focus=None):
+    """
+    Cut the slice a desktop visitor sees, computed from the image's OWN dimensions.
+
+    WHY THIS IS NOT A CONSTANT. "rows 128-411 of 540" is true only for a file that is
+    already at the 1700x540 spec. object-fit:cover fits the image to a 6:1 BOX, so the
+    visible slice follows the file: a 1700x422 asset (states/MI.jpg, 4.03:1) shows
+    1700/6 = 283 of its 422 rows, which is 67.1% of the file and rows 69-352 -- not
+    52.4% and not rows 128-411.
+
+    That mattered because --baseline used to run a LIVE asset through render(), which
+    crops to 3.148:1 first: for states/MI.jpg that means cutting the WIDTH to 1328 and
+    upscaling 1.28x, so the strip shown for adjacency was a picture the browser never
+    serves. A live asset is already shipped; it must be read, not re-rendered. This is
+    the Bend defect, met a third time -- first in the sheet, then in the focus handling
+    (Lexington), now on the baseline path.
+
+    Both axes are handled because cover crops whichever one overflows: an asset WIDER
+    than 6:1 would keep its full height and lose width instead. `focus` is
+    object-position and moves the crop along the overflowing axis, as SectionBanner does.
+
+    Returns (band, info).
+    """
+    w, h = img.size
+    if w / h < DESKTOP_BOX_RATIO:
+        vis_w, vis_h = w, w / DESKTOP_BOX_RATIO      # width binds, crop vertically
+    else:
+        vis_w, vis_h = h * DESKTOP_BOX_RATIO, h      # height binds, crop horizontally
+    fx = fy = 50.0
+    if focus:
+        m = re.search(r'([\d.]+)%\s+([\d.]+)%', str(focus))
+        if m:
+            fx, fy = float(m.group(1)), float(m.group(2))
+            fx, fy = max(0.0, min(100.0, fx)), max(0.0, min(100.0, fy))
+    left = round((w - vis_w) * fx / 100.0)
+    top = round((h - vis_h) * fy / 100.0)
+    vis_w, vis_h = round(vis_w), round(vis_h)
+    band = img.crop((left, top, left + vis_w, top + vis_h))
+    info = {
+        'src_w': w, 'src_h': h, 'src_ratio': round(w / h, 3),
+        'band_top': top, 'band_left': left, 'band_w': vis_w, 'band_h': vis_h,
+        'visible_pct': round(100.0 * (vis_w * vis_h) / (w * h), 1),
+        'on_spec': (w, h) == (TARGET_W, TARGET_H),
+        'focus': focus or '50% 50%',
+    }
+    return band, info
 
 
 def fetch(url, cache_dir):
@@ -133,13 +190,11 @@ def render(src_bytes, crop_width=None, vertical_anchor=0.5, horizontal_anchor=0.
     # than what ships. That is the Bend defect one layer up, in the certifying tool
     # itself. The Y component is the only one that matters here: the band is full width,
     # so X cannot move it. Mirrors SectionBanner's fallback to '50% 50%'.
-    band_top = BAND_TOP
-    if focus:
-        m = re.search(r'([\d.]+)%\s+([\d.]+)%', str(focus))
-        if m:
-            band_top = round((TARGET_H - BAND_H) * float(m.group(2)) / 100.0)
-            band_top = max(0, min(TARGET_H - BAND_H, band_top))
-    band = asset.crop((0, band_top, TARGET_W, band_top + BAND_H))
+    # The asset is 1700x540 by construction here, so desktop_band reproduces the
+    # historical rows 128-411 exactly; it is shared with the baseline path so that one
+    # implementation decides what "the desktop band" means. Two would drift.
+    band, band_info = desktop_band(asset, focus)
+    band_top = band_info['band_top']
     luminance, spread = measure(band)
     kept_w = cropped.size[0]
     facts = {
@@ -261,7 +316,11 @@ def main():
                         help='Sheet heading. Name the city and the storage key, so a later '
                              'reader knows what was approved.')
     parser.add_argument('--baseline', '-b', action='append', default=[], metavar='KEY',
-                        help='A LIVE storage key to show for adjacency, e.g. states/NC.jpg. '
+                        help='A LIVE storage key to show for adjacency, e.g. states/NC.jpg, '
+                             'optionally with the focus its registry entry sets: '
+                             '"cities/columbia.jpg@50%% 82%%" (argparse %%-formats help, hence the '
+                             'doubled signs here only). A live asset is READ at its own '
+                             'dimensions, never re-rendered. '
                              'Repeatable. Adjacency lives in the COMPOSITION -- camera height, '
                              'subject scale, what fills the frame -- never in the subject noun, '
                              'so the live bands have to sit beside the candidates to be judged.')
@@ -309,12 +368,24 @@ def main():
               f"lum {facts['luminance']:5.1f}  spread {facts['spread']:5.1f}{flagtext}")
 
     baselines = []
-    for key in args.baseline:
+    for spec in args.baseline:
+        # A live key may carry the focus its registry entry sets, as KEY@<x>% <y>%.
+        # Without it a focused banner is shown centred, which is the same class of
+        # error as re-rendering an off-spec one.
+        key, _, focus = spec.partition('@')
+        key, focus = key.strip(), focus.strip() or None
         try:
             raw = fetch(BUCKET_PUBLIC + key, args.cache_dir)
-            _, band, facts = render(raw)
+            live = Image.open(io.BytesIO(raw)).convert('RGB')
+            band, info = desktop_band(live, focus)
+            luminance, spread = measure(band)
+            facts = dict(info, luminance=round(luminance, 1), spread=round(spread, 1))
             baselines.append({'key': key, 'b64': embed(band, args.embed_width), 'facts': facts})
-            print(f"  baseline {key:<24} live")
+            shape = f"{facts['src_w']}x{facts['src_h']} ({facts['src_ratio']}:1)"
+            note = '' if facts['on_spec'] else '  [OFF-SPEC: not 1700x540]'
+            print(f"  baseline {key:<24} live  {shape}  "
+                  f"shows {facts['visible_pct']}% rows {facts['band_top']}-"
+                  f"{facts['band_top'] + facts['band_h']}{note}")
         except Exception as exc:                                    # noqa: BLE001
             print(f'  FAILED   baseline {key}: {exc}')
 
@@ -342,8 +413,17 @@ def main():
             parts.append(f'<p>{html.escape(c["note"])}</p>')
 
     baseline_html = ''.join(
-        strip_html('live', b['key'], f"live &middot; band luminance {b['facts']['luminance']}",
-                   'Compare camera height, subject scale and what fills the frame.', b['b64'])
+        strip_html(
+            'live', b['key'],
+            f"live &middot; {b['facts']['src_w']}&times;{b['facts']['src_h']} "
+            f"&middot; shows {b['facts']['visible_pct']}% "
+            f"&middot; band luminance {b['facts']['luminance']}",
+            'Compare camera height, subject scale and what fills the frame.'
+            + ('' if b['facts']['on_spec'] else
+               ' <b>OFF-SPEC:</b> this asset is not 1700&times;540, so it renders '
+               f"{b['facts']['visible_pct']}% of itself rather than 52.4%. The strip is "
+               'cut at its own ratio, which is what the browser serves.'),
+            b['b64'])
         for b in baselines)
     rejected_html = ''.join(
         strip_html('reject', c.get('title', c['slug']),

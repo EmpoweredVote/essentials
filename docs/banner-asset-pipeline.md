@@ -26,6 +26,12 @@ renders a responsive aspect *pair*: 13/4 on mobile keeps 96.9% of the asset, but
 approved on a picture desktop visitors never see, which is exactly how the Bend banner
 shipped broken. `certify_banner.py` exists to make that band the thing you look at.
 
+⚠ **"Rows 128–411 of 540" is true only for a file that is AT the spec.** `object-fit: cover`
+fits the image to a 6:1 *box*, so the visible slice follows the file's own dimensions: a
+1700×422 asset shows 1700/6 = 283 of its 422 rows, which is **67.1%** and rows 69–352. Two
+live assets are off-spec today — `states/MI.jpg` (1700×422) and `states/FL.jpg` (1700×419) —
+so compute the band from the file, never from 540. `certify_banner.py` does this for you.
+
 ---
 
 ## Stage 1 — Sourcing
@@ -126,6 +132,22 @@ thumb "the state banner is a skyline, so the city must not be" gave the *wrong* 
 Asheville and inverted the ranking of four candidates. A later city in the same state has
 fewer compositions left than an earlier one: Durham was the first to clear two, and
 Charlotte needed a fourth distinct North Carolina framing.
+
+🟢 **A live `--baseline` is READ, never re-rendered.** It is already a shipped asset, so the
+only honest thing to show is the slice the browser cuts from it, at its own dimensions. Until
+2026-09-28 the baseline path ran every live key through the candidate renderer, which crops to
+3.148:1 first: for `states/MI.jpg` that meant cutting the **width** to 1328 and upscaling
+1.28×, so the strip shown for adjacency was a picture the browser never serves. Michigan's
+state/city adjacency call had to be made on a band cut by hand because of it. The sheet now
+prints each baseline's real size, the percentage it shows and the rows it cuts, and marks an
+off-spec asset.
+
+A live banner that carries a `focus` in the registry needs it here too, or it is shown
+centred — the same class of error. Append it to the key:
+
+```bash
+--baseline "cities/columbia.jpg@50% 82%"
+```
 
 ---
 
