@@ -374,3 +374,50 @@ describe('Michigan — the city takes the skyline and the state is versioned awa
     expect(getBuildingImages('Akron', 'OH').State).toMatch(/states\/OH\.jpg$/);
   });
 });
+
+/**
+ * Biloxi — Knight slice 16, stage MS-5. The last city banner of the programme.
+ *
+ * THE NEGATIVES ARE THE POINT, and here they are load-bearing rather than decorative.
+ * Removing `match: 'exact'` from the biloxi entry was tried before this block was
+ * written, and 'East Biloxi' immediately resolved to cities/biloxi.jpg — so the guard
+ * is real and these tests fail when it is dropped. CURATED_LOCAL matches by SUBSTRING
+ * unless an entry opts out.
+ */
+describe('Biloxi banner (MS-5)', () => {
+  const key = (r) => (r.Local ? r.Local.split('/').slice(-2).join('/') : null);
+
+  it('resolves Biloxi, MS to cities/biloxi.jpg', () => {
+    expect(key(getBuildingImages('Biloxi', 'MS'))).toBe('cities/biloxi.jpg');
+  });
+
+  it('does NOT hand the Biloxi banner to a compound or neighbouring name', () => {
+    for (const probe of ['East Biloxi', 'Biloxi City', "D'Iberville", 'Ocean Springs', 'Gulfport']) {
+      expect(key(getBuildingImages(probe, 'MS')), probe).not.toBe('cities/biloxi.jpg');
+    }
+  });
+
+  it('does NOT hand the Biloxi banner to another state', () => {
+    for (const st of ['CA', 'LA', 'AL']) {
+      expect(key(getBuildingImages('Biloxi', st)), st).not.toBe('cities/biloxi.jpg');
+    }
+  });
+
+  it('leaves an unregistered MS city with no local banner', () => {
+    // The control proving these checks can return non-null: Hattiesburg is a real
+    // Mississippi city with no entry, and it must resolve to null.
+    expect(key(getBuildingImages('Hattiesburg', 'MS'))).toBeNull();
+  });
+
+  it('carries the focus that keeps the tower crown inside the desktop band', () => {
+    // Centred, the 6:1 band cuts the Beau Rivage crown off. Without this the banner
+    // ships the Charlotte defect.
+    expect(getBuildingImages('Biloxi', 'MS').focus.Local).toBe('50% 30%');
+  });
+
+  it('serves the UNVERSIONED Mississippi panorama, which is untouched by this wave', () => {
+    const r = getBuildingImages('Biloxi', 'MS');
+    expect(r.State).toMatch(/states\/MS\.jpg$/);
+    expect(r.focus.State).toBeNull();
+  });
+});
