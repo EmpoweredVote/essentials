@@ -1510,6 +1510,36 @@ const CURATED_LOCAL = {
   // CENTRED desktop band is exactly the frame that was certified.
   //   grand forks - North Dakota Mill 2022-07-20 01 | Schwerdf | CC BY 4.0
   'grand forks': { state: 'ND', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/grand-forks.jpg' },
+  // Kansas's FIRST city banner (Knight slice 14, Wichita stage 5).
+  //
+  // 🔴🔴 THE STATE BANNER IS THIS CITY. states/KS.jpg is "Wichita, Kansas skyline" by Quintin
+  // Soloviev, and read in the 6:1 DESKTOP BAND (rows 128-411) it is an aerial of the whole
+  // downtown: the Epic Center, the Garvey Center, the New York Life tower and INTRUST Bank
+  // Arena. So a Wichita skyline here would put the SAME SUBJECT twice on one page -- and the
+  // strongest Commons candidate, "Wichita, Kansas skyline.jpg", is by THE SAME PHOTOGRAPHER.
+  // It was certified and REFUSED on adjacency. This is the Saint Paul case again (its state
+  // banner is the Minneapolis skyline), and Wichita is one of four such cities in the
+  // programme with Miami, Detroit and Charlotte.
+  //
+  // ⚠ THE ANCHOR IS 0.31 AND NEITHER EDGE WORKS, WHICH IS NOT OBVIOUS. The band is the MIDDLE
+  // 52.4% of the asset, so "anchor to the top" does not keep the top of the SUBJECT -- it puts
+  // the band over whatever sits in the middle of a top-aligned crop. Measured on this source:
+  //   anchor 0.0  -> band = source rows 246..788   : empty sky and rooflines, road cropped OUT
+  //   anchor 1.0  -> band = source rows 1162..1704 : water and dead grass, lum 62.9 [dark]
+  //   anchor 0.5  -> centred                       : canopy and a wall, no ground, no context
+  //   anchor 0.31 -> band = source rows 528..1071  : the street with parked cars, the apartment
+  //                  block, the houses on the far bank and the river. lum 110.5, spread 52.4.
+  // ▶ Solve for where the SUBJECT must land in the band, then derive the anchor. Do not tune
+  //   by eye from an edge; both edges look plausible and both lose the subject.
+  //
+  // ⚠ Wichita Falls, TEXAS is a live name-collision on Commons -- the category sweep surfaced
+  // its railroad museum. This file's Kansas provenance is its DESCRIPTION plus
+  // "Category:July 2026 in Kansas", NOT its filename.
+  //
+  //   wichita - Riverside street view (the lagoon, the street and the Riverside houses)
+  //             | FUBAR007 | CC BY-SA 3.0
+  //             source: File:Riverside street view.jpg, vertical anchor 0.31
+  'wichita': { state: 'KS', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/wichita.jpg' },
 };
 
 /**
