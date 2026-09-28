@@ -532,6 +532,59 @@ const CURATED_LOCAL = {
   //   lexington - Spendthrift Farm | Erin Aiken (atthepaddock.com) | CC BY 2.0
   lexington: { state: 'KY', match: 'exact', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lexington.jpg' },
 
+  // Aberdeen (Knight slice 15, stage SD-5; operator-certified 2026-09-28).
+  //
+  // ADJACENCY: states/SD.jpg is MOUNT RUSHMORE, and its credit is ACCURATE IN THE
+  // BAND -- checked before anything was chosen, the fifth time this has had to be
+  // verified rather than assumed (states/CA and states/NC fail it; SC, KY and now
+  // SD pass). Read in the 6:1 band it is a CLOSE, UPWARD view of ONE pale
+  // monumental mass filling the frame against flat blue sky. That refused the
+  // Milwaukee Road depot and the ready-made Wikivoyage banner on COMPOSITION --
+  // both are close low-angle views of a single mass against sky -- not on the
+  // subject noun. Aberdeen is the first SD city banner, so this was the only
+  // adjacency to clear.
+  //
+  // The chosen frame is the opposite composition: an EYE-LEVEL street view with
+  // receding perspective, Main Street looking north to the Brown County
+  // Courthouse, its clock tower centred among the downtown brick blocks. It is
+  // also the building whose commission SD-4 seated.
+  //
+  // THE CROP WAS REVISED AFTER THE FIRST APPROVAL, and the reason generalises.
+  // The first version used the whole 2016px width, centred, no focus. Its DESKTOP
+  // band was clean -- but the asset below the band still held roadworks, a "ROAD
+  // CLOSED" sign and a row of cars, and MOBILE RENDERS 96.9% OF THE ASSET while
+  // desktop renders 52.4%. Certifying on the band alone hides what a phone shows:
+  // the Bend defect standing on its head. Operator caught it.
+  //   crop-width 1700 is the DEEPEST ZOOM THIS SOURCE ALLOWS WITHOUT UPSCALING --
+  //     the file is 2016px wide, so 1700 lands at exactly 1.000x, no resampling at
+  //     all, and sharper than the 0.843x first version;
+  //   vertical-anchor 0.38 is the LOWEST anchor that keeps the asset clean. 0.40
+  //     lets a vehicle roof back into the bottom-right corner; measured, not
+  //     guessed;
+  //   focus 50% 100% recovers the desktop cut that the lower asset would otherwise
+  //     lose. "Same desktop cut, different full asset" is impossible -- the band IS
+  //     a fixed slice of the asset -- and the focus is the documented answer to it.
+  //
+  // PEOPLE: one figure stands in the courthouse doorway at ~19px in the 1700x540
+  // asset, an indistinct blur with no face or clothing detail. Inside the 10-20px
+  // silhouette band Travis County set, far under the ~67px that refused Durham.
+  // The deeper zoom enlarged it from ~17px, so it was RE-MEASURED, not carried.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule applies to OVERWRITES, and this key
+  // had never been written -- confirmed with a positive control (states/SD.jpg and
+  // cities/columbia.jpg return 200, cities/aberdeen.jpg and a bogus key 400).
+  // sha256 verified identical on BOTH the plain and a cache-busted URL, and the
+  // shipped file is PIXEL-IDENTICAL to the certified one, max abs difference 0.
+  // That assertion earned its keep: it first read 20, because the source had been
+  // re-encoded at q95 before processing while the certifier used the original
+  // bytes. A generation loss invisible to the eye, caught by the check.
+  //
+  // Surfacing: Aberdeen's 9 city offices carry representing_city, so this resolves
+  // from an ordinary address search. Brown County's 10 offices leave it NULL, so
+  // the county has no banner and none is implied.
+  //   aberdeen - Aberdeen, South Dakota | H2O2 at English Wikipedia | Public domain
+  aberdeen: { state: 'SD', match: 'exact', focus: '50% 100%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/aberdeen.jpg' },
+
   // Akron (Knight slice 8, stage OH-5; operator-certified 2026-09-24).
   //
   // 🔴 ADJACENCY: states/OH.jpg IS A CITY SKYLINE -- Cincinnati from Devou Park.
