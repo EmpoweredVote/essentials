@@ -585,6 +585,68 @@ const CURATED_LOCAL = {
   //   aberdeen - Aberdeen, South Dakota | H2O2 at English Wikipedia | Public domain
   aberdeen: { state: 'SD', match: 'exact', focus: '50% 100%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/aberdeen.jpg' },
 
+  // Biloxi (Knight slice 16, stage MS-5; operator-certified 2026-09-28). The last
+  // city banner of the programme, and the last of the 26 Knight cities to get one.
+  //
+  // ADJACENCY: states/MS.jpg is the Jackson downtown panorama, and its credit is
+  // ACCURATE IN THE BAND -- read before anything was chosen, the sixth time this
+  // has been verified rather than assumed (states/CA and states/NC fail it; SC, KY,
+  // SD and now MS pass). In the 6:1 band it is an ELEVATED, DISTANT inland view:
+  // the Capitol dome and downtown towers as a thin horizontal bar in mid-distance,
+  // wide sky above, tree canopy below. Biloxi is the only MS Knight city, so this
+  // was the only adjacency to clear -- unlike Durham and Charlotte, which had to
+  // clear three and four.
+  //
+  // The chosen frame is the opposite composition: WATER-LEVEL and NEAR, looking
+  // across the Mississippi Sound from the beach. Different camera height, different
+  // subject scale, different thing filling the frame. It carries the Beau Rivage
+  // tower, the Biloxi Schooner Pier pavilion, the pier itself and the Biloxi
+  // Lighthouse small at the right edge.
+  //
+  // 🔴 THE LIGHTHOUSE CANNOT BE THE SUBJECT, AND THAT IS WHY IT IS AT THE EDGE.
+  // It is the city's emblem and the obvious choice, but its subject is VERTICAL:
+  // certified close up it becomes a featureless white column against sky at 6:1 --
+  // the Bend failure mode exactly. A second lighthouse candidate died differently
+  // and just as instructively: shot from the highway, its band is a blank billboard
+  // frame, traffic signals, a pickup and an END ROAD WORK sign.
+  //
+  // 🔴 TWO READY-MADE ANSWERS WERE BOTH WRONG, and both are lessons already paid
+  // for elsewhere:
+  //   - Category:Wikivoyage banners of Mississippi exists and HAS a Biloxi entry,
+  //     7:1 by construction. It is a close crop of the Mississippi Blues Trail
+  //     marker, so the band is illegible sign lettering. Correct ratio is not
+  //     composition -- the Columbia/Strom Thurmond finding, repeated.
+  //   - The file literally titled "Biloxi, Mississippi Skyline.jpg" measures
+  //     channel spread 2.1 of 255 -- effectively GREYSCALE -- and blown out at
+  //     luminance 209.6. Picked by name it would have shipped. Sample the pixels.
+  //
+  // FRAMING: the source is 3264x1671 (1.95:1), NARROWER than the 3.148:1 asset, but
+  // a full-width crop still leaves 634 rows of slack, so here the anchor IS the
+  // lever -- unlike states/CA.jpg and cities/charlotte.jpg, where it was not and the
+  // crop width had to be. Centred and unfocused, the desktop band CUTS THE BEAU
+  // RIVAGE TOWER CROWN OFF: the Charlotte defect, in the asset's own subject.
+  //   vertical-anchor 0.35 lifts the asset so the crown clears with sky above it;
+  //   focus 50% 30% puts the desktop band on rows 77-360 rather than 128-411.
+  // Both the centred cut and a 50% 15% variant were rendered beside it, because the
+  // reason for a focus has to be visible to whoever approves it.
+  //
+  // PEOPLE: two figures sit on the beach at the lower left, measuring ~14px in the
+  // 1700x540 asset -- faces and clothing unresolvable at 4x magnification. Inside
+  // the 10-20px silhouette band Travis County set, far under the ~67px that refused
+  // Durham. They also fall BELOW the desktop band, so only mobile renders them.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule applies to OVERWRITES, and this key
+  // had never been written -- confirmed with a positive control (cities/aberdeen.jpg
+  // returns 200, cities/biloxi.jpg and a bogus key 400). sha256 verified identical
+  // on BOTH the plain and a cache-busted URL, and the shipped file is
+  // PIXEL-IDENTICAL to the certified one, max abs difference 0.
+  //
+  // Surfacing: Biloxi's 8 city offices carry representing_city, so this resolves
+  // from an ordinary address search. Harrison County's 27 offices leave it NULL, so
+  // the county has no banner and none is implied.
+  //   biloxi - Biloxi, Mississippi (2012) | Jared | CC BY 2.0
+  biloxi: { state: 'MS', match: 'exact', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biloxi.jpg' },
+
   // Akron (Knight slice 8, stage OH-5; operator-certified 2026-09-24).
   //
   // 🔴 ADJACENCY: states/OH.jpg IS A CITY SKYLINE -- Cincinnati from Devou Park.
