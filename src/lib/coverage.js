@@ -618,9 +618,22 @@ export const COVERAGE_STATES = [
       // measure will find rows and think they are new: exactly ONE Detroit officeholder
       // carries any — Council Member At-Large Mary Waters, 5 rows across two seasons
       // (3 dated 2026-08-26, 2 dated 2026-09-03). ALL FIVE HAVE NULL write_in_text: a
-      // bare value with no reasoning a reader can check. That is the Newton/Lowell
-      // standard, and it did not clear it — 1 of 18 seats, and the one carries no
-      // evidence. Purple would overstate the city by eighteenfold.
+      // bare value with no reasoning a reader can check.
+      //
+      // 🔑 AND THE 5 ROWS ARE ONLY 3 DISTINCT TOPICS, TWO OF THEM FEDERAL-SCOPE:
+      // Affordable Housing (2 -> 3 across the two seasons), Same-Sex Marriage (2 -> 3)
+      // and Social Security (2). A Detroit COUNCIL research pass would produce local
+      // topics — zoning, homelessness, policing, transit. Two federal questions and one
+      // local one, on a city council seat, is not what a municipal pass looks like:
+      // these rows reached Waters by some other route. That route is NOT nameable from
+      // this schema — the citation linkage lives in EV-Accounts, and nothing
+      // supabase-local exposes joins an answer to its source — so do not guess at it,
+      // and do not read these 5 rows as a Detroit stance pass having happened.
+      //
+      // That is the Newton/Lowell standard, and it did not clear it — 1 of 18 seats,
+      // one local topic in the whole set, and no evidence on any of it. Purple would
+      // overstate the city by eighteenfold. Operator confirmed 2026-09-29: no Detroit
+      // stance pass has run.
       { label: 'Detroit', browseGovernmentList: ['2622000'], browseStateAbbrev: 'MI', hasContext: false },
     ],
   },
