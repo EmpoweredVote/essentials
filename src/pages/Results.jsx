@@ -5,6 +5,7 @@ import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVert
 import { partitionByTab, applyTabTypeDefault, TAB_TYPE_DEFAULTS } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
+import PortraitRestrictionNotice from '../components/PortraitRestrictionNotice';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
@@ -1746,6 +1747,12 @@ export default function Results() {
         onClick={null}
         variant="horizontal"
         imageWidth="95px"
+        // A portrait of this person exists and its publisher has reserved it. The card then draws
+        // a figure rather than the initials avatar, because initials say "we have not found one
+        // yet" and would blame us for somebody else's decision. Ignored when imgData.url resolves,
+        // so a member who grants permission simply gets their photograph.
+        portraitRestricted={!!pol.photo_restriction}
+        restrictedLabel={pol.photo_restriction?.label}
         footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
       />
     );
@@ -2179,6 +2186,14 @@ export default function Results() {
                         // callback so the State tier can render bodies per state group
                         // without duplicating this subtree.
                         const renderBody = (body) => {
+                              // If any member of this body has a reserved portrait, say why ONCE,
+                              // above the first card — a reader must not meet the placeholders
+                              // before the explanation. Members who DO have a photograph are
+                              // skipped, so the notice disappears by itself as permissions arrive.
+                              const bodyRestriction = body.subgroups
+                                .flatMap((sg) => sg.pols || [])
+                                .map((p) => (!getImageData(p).url ? p.photo_restriction : null))
+                                .find(Boolean) || null;
                               return (
                                 <GovernmentBodySection
                                   key={body.key}
@@ -2186,6 +2201,7 @@ export default function Results() {
                                   websiteUrl={body.url || undefined}
                                   tier={tierKey}
                                 >
+                                  <PortraitRestrictionNotice restriction={bodyRestriction} />
                                   {body.subgroups.map((sg) => {
                                     const maxCols = isWideForThree ? 3 : isWideForVertical ? 2 : 1;
                                     const cols = Math.min(maxCols, sg.pols.length || 1);
