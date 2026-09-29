@@ -417,6 +417,12 @@ export const COVERAGE_STATES = [
   {
     name: 'Colorado', abbrev: 'CO',
     areas: [
+      // Boulder added 2026-09-29 (Knight slice 9 — Colorado Springs' own slice, but only
+      // the Springs got a chip at the time). 9 of 9 seated, banner present ('boulder',
+      // state-scoped CO, match:'exact' — it does NOT collide with the separate NV key
+      // 'boulder city', which is Boulder City's chip). hasContext FALSE: measured
+      // 2026-09-29, zero of the 9 hold any row in inform.politician_answers.
+      { label: 'Boulder',          browseGovernmentList: ['0807850'], browseStateAbbrev: 'CO', hasContext: false },
       // 10 of 10 councilmembers stanced, 44 rows. Banner present ('colorado springs').
       { label: 'Colorado Springs', browseGovernmentList: ['0816000'], browseStateAbbrev: 'CO', hasContext: true },
     ],
@@ -426,6 +432,11 @@ export const COVERAGE_STATES = [
     areas: [
       // Both complete: Asheville 7 of 7 stanced (27 rows), Durham 7 of 7 (14 rows).
       { label: 'Asheville', browseGovernmentList: ['3702140'], browseStateAbbrev: 'NC', hasContext: true },
+      // Charlotte added 2026-09-29 (Knight NC-3 seeded it and its banner landed 2026-09-17,
+      // but it never got a chip). 12 of 12 seated. hasContext FALSE: measured 2026-09-29,
+      // zero of the 12 hold any row in inform.politician_answers — unlike its two
+      // NC siblings above, which is why the flag differs inside one state block.
+      { label: 'Charlotte', browseGovernmentList: ['3712000'], browseStateAbbrev: 'NC', hasContext: false },
       { label: 'Durham',    browseGovernmentList: ['3719000'], browseStateAbbrev: 'NC', hasContext: true },
     ],
   },
@@ -525,6 +536,157 @@ export const COVERAGE_STATES = [
       // elections that do not exist. DO NOT "FIX" IT — the enacted text is quoted in the
       // migration header.
       { label: 'Nashville', browseGovernmentList: ['47037'], browseStateAbbrev: 'TN', hasContext: true },
+    ],
+  },
+  // ── Eight states added 2026-09-29 (Boulder and Charlotte went into the CO and NC
+  // blocks above) ────────────────────────────────────────────────────────────────
+  // Same shape as the 2026-09-11 wave: every one of these was already seeded — full
+  // roster, occupants resolving through office_current_holder, and (checked one by one)
+  // a curated banner already in buildingImages.js — but none had ever been listed here,
+  // so none was reachable from the landing grid or the name typeahead. Found by
+  // re-running the same diff: every non-state government carrying at least one CURRENT
+  // occupant, minus every geo_id already named in this file.
+  //
+  // These are the tail of the Knight city programme. The banner work ran ahead of the
+  // chips all the way through — Biloxi and Aberdeen were certified 2026-09-28, the day
+  // before this pass — so a banner existing is NOT evidence that a city is reachable.
+  //
+  // ⚠ hasContext is FALSE on all thirteen cities in this pass, and that is a measurement,
+  // not a shrug. Counted 2026-09-29 against inform.politician_answers, joined through the
+  // occupancy chain: twelve of the thirteen return ZERO rows for ZERO officials.
+  // The thirteenth is Detroit — see its comment. These cities have rosters and banners
+  // and have never had a stance pass, which is not the same as having been researched
+  // and found blank.
+  //
+  // ✅ THE TWO UNREACHABLE KNIGHT CITIES ARE FIXED. This block used to say Lexington-Fayette
+  // and Wichita were "deliberately not listed here, because a chip is keyed on
+  // governments.geo_id and theirs is NULL", and asked for a geo_id. Migration CC_0183
+  // (ev-accounts, applied to production 2026-09-29) set it: 2146027 for Lexington-Fayette
+  // and 2079000 for Wichita, each verified against a district that exists and carries a
+  // polygon rather than composed from the name. Both now have their chip, in the KS and KY
+  // blocks below.
+  //   ⚠ WICHITA NEEDED A SECOND FIX, AND THE geo_id ALONE WOULD NOT HAVE DONE IT. All seven
+  //   of its offices carried chamber_id = NULL, so the browse query's JOIN on chambers
+  //   dropped every one and its government reported 0 chambers and 0 offices. The note here
+  //   read that as "ZERO occupants. Nothing to reach yet" — which was wrong: Wichita had
+  //   SEVEN seated officials the whole time (Mayor Lily Wu and six council members), all
+  //   answering an address. They were orphaned from their government, not absent.
+  //   CC_0183 gave the city two chambers and attached all seven.
+  //
+  // 🔴 THE SAME TRAP IS STILL OPEN FOR THREE PLACES, AND ONE OF THEM CANNOT BE FIXED
+  // THE SAME WAY:
+  //   • City of St. Louis MO (22 seated) and St. Louis County MO (10 seated, seeded
+  //     2026-09-29) both got their geo_id in CC_0183 — 2965000 and 29189 — so the DATA is
+  //     ready. They get no chip yet because NEITHER HAS A BANNER in buildingImages.js.
+  //     Add the chip when a banner is certified.
+  //   • 🔴 City of Indianapolis IN (6 seated) has NO geo_id available and was dropped
+  //     from CC_0183 by its own gate, which refused the write. Indianapolis and Marion
+  //     County are consolidated (Unigov) and its Mayor sits on the county polygon
+  //     18097 — but `Marion County, Indiana, US` ALREADY carries 18097, with 38 chambers.
+  //     The place code 1836003 names no district in the database at all. So 18097 would
+  //     duplicate and 1836003 would point at nothing. How a consolidated city-county
+  //     should be modelled is a design question, not a data fix.
+  {
+    name: 'Kansas', abbrev: 'KS',
+    areas: [
+      // Reachable from 2026-09-29, after CC_0183 gave the government geo_id 2079000 and the
+      // two chambers its seven offices had been missing. 7 of 7 seated: Mayor Lily Wu and
+      // Council Members District 1-6, each on its own X0070 polygon. Banner 'wichita'.
+      // hasContext FALSE: measured 2026-09-29 through the occupancy chain, zero of the 7
+      // hold any row in inform.politician_answers.
+      { label: 'Wichita', browseGovernmentList: ['2079000'], browseStateAbbrev: 'KS', hasContext: false },
+    ],
+  },
+  {
+    name: 'Kentucky', abbrev: 'KY',
+    areas: [
+      // Reachable from 2026-09-29, after CC_0183 gave the government geo_id 2146027. Unlike
+      // Wichita this one was already fully wired — 4 chambers, 34 offices, 34 seated, zero
+      // orphans — and the single NULL column was the only thing between it and a chip.
+      // ⚠ The label is the city people search for; the government's real name is
+      // 'Lexington-Fayette Urban County Government', a consolidated city-county. Banner
+      // 'lexington' (certified 2026-09-26). hasContext FALSE: measured 2026-09-29, zero of
+      // the 34 hold any row in inform.politician_answers.
+      { label: 'Lexington', browseGovernmentList: ['2146027'], browseStateAbbrev: 'KY', hasContext: false },
+    ],
+  },
+  {
+    name: 'Michigan', abbrev: 'MI',
+    areas: [
+      // 18 of 18 seated (Mayor, Clerk, 9 council, and the rest of the citywide row).
+      // ⚠ hasContext FALSE on a margin worth writing down, because the next person to
+      // measure will find rows and think they are new: exactly ONE Detroit officeholder
+      // carries any — Council Member At-Large Mary Waters, 5 rows across two seasons
+      // (3 dated 2026-08-26, 2 dated 2026-09-03). ALL FIVE HAVE NULL write_in_text: a
+      // bare value with no reasoning a reader can check. That is the Newton/Lowell
+      // standard, and it did not clear it — 1 of 18 seats, and the one carries no
+      // evidence. Purple would overstate the city by eighteenfold.
+      { label: 'Detroit', browseGovernmentList: ['2622000'], browseStateAbbrev: 'MI', hasContext: false },
+    ],
+  },
+  {
+    name: 'Minnesota', abbrev: 'MN',
+    areas: [
+      // Knight slice 5. Both banners certified 2026-09-16, both chips missing until now.
+      { label: 'Duluth',     browseGovernmentList: ['2717000'], browseStateAbbrev: 'MN', hasContext: false },
+      // ⚠ 'Saint Paul' is ALSO a chip in the Texas block (Saint Paul, TX — 4864220).
+      // Nothing breaks: buildingImages is state-scoped, so the 'saint paul' key resolves
+      // MN here and the TX town keys separately, and the chips live under different
+      // state cards. Do not "de-duplicate" these two labels into one.
+      { label: 'Saint Paul', browseGovernmentList: ['2758000'], browseStateAbbrev: 'MN', hasContext: false },
+    ],
+  },
+  {
+    name: 'Mississippi', abbrev: 'MS',
+    areas: [
+      // Knight slice 16 — the last city of the programme to get a banner (certified
+      // 2026-09-28) and the only MS city in it. 8 of 8 seated.
+      { label: 'Biloxi', browseGovernmentList: ['2806220'], browseStateAbbrev: 'MS', hasContext: false },
+    ],
+  },
+  {
+    name: 'North Dakota', abbrev: 'ND',
+    areas: [
+      // Knight slice 12. ND's first and only city. 9 of 9 seated.
+      { label: 'Grand Forks', browseGovernmentList: ['3832060'], browseStateAbbrev: 'ND', hasContext: false },
+    ],
+  },
+  {
+    name: 'Ohio', abbrev: 'OH',
+    areas: [
+      // Knight slice 8. 14 of 14 seated.
+      { label: 'Akron', browseGovernmentList: ['3901000'], browseStateAbbrev: 'OH', hasContext: false },
+    ],
+  },
+  {
+    name: 'Pennsylvania', abbrev: 'PA',
+    areas: [
+      // Knight slice 6, both cities. Philadelphia is the largest single roster added in
+      // this pass: 25 of 25 seated (Mayor, Council President, 10 districts, 7 at-large,
+      // and the citywide row officers).
+      { label: 'Philadelphia',  browseGovernmentList: ['4260000'], browseStateAbbrev: 'PA', hasContext: false },
+      // ⚠ Label is 'State College' but the government is the BOROUGH of State College —
+      // Pennsylvania has no "City of State College". Do not "correct" it to Borough:
+      // the buildingImages key is 'state college' and it resolves off this label.
+      { label: 'State College', browseGovernmentList: ['4273808'], browseStateAbbrev: 'PA', hasContext: false },
+    ],
+  },
+  {
+    name: 'South Carolina', abbrev: 'SC',
+    areas: [
+      // Knight slice 7, both cities, banners certified together.
+      // ⚠ 'Columbia' (SC) and 'Columbus' (GA) are different keys one letter apart and
+      // both are state-scoped match:'exact' in buildingImages. Check the state before
+      // touching either.
+      { label: 'Columbia',     browseGovernmentList: ['4516000'], browseStateAbbrev: 'SC', hasContext: false },
+      { label: 'Myrtle Beach', browseGovernmentList: ['4549075'], browseStateAbbrev: 'SC', hasContext: false },
+    ],
+  },
+  {
+    name: 'South Dakota', abbrev: 'SD',
+    areas: [
+      // Knight slice 15, banner certified 2026-09-28. 9 of 9 seated.
+      { label: 'Aberdeen', browseGovernmentList: ['4600100'], browseStateAbbrev: 'SD', hasContext: false },
     ],
   },
 ];
