@@ -66,6 +66,16 @@ export const COVERAGE_STATES = [
       // DB-honest -- the Deschutes rule.
       { label: 'Fort Wayne', browseGovernmentList: ['1825000'], browseStateAbbrev: 'IN' },
       { label: 'Gary', browseGovernmentList: ['1827000'], browseStateAbbrev: 'IN' },
+      // Indianapolis, 2026-09-30. ev-accounts CC_0185 consolidated the city and Marion County into
+      // ONE government on the COUNTY fips 18097 -- the Nashville shape -- so the browse key is the
+      // county code, not a place code. 1836003 names no district in the database and never did.
+      // ⚠ MARION COUNTY MUST NOT BE ADDED TO COVERAGE_COUNTIES. One place, one entry, exactly as
+      // Davidson County is absent for Nashville. It is not in that list today; do not add it.
+      // No hasContext: measured 2026-09-29, no Indianapolis or Marion County officeholder holds a
+      // row in inform.politician_answers, so claiming it would not be DB-honest -- the Deschutes rule.
+      // ▶ Chip-reachable only. No council-district polygons exist, so an address cannot route to a
+      // council district; Nashville has the same property and ships fine.
+      { label: 'Indianapolis', browseGovernmentList: ['18097'], browseStateAbbrev: 'IN' },
     ],
   },
   {
@@ -594,13 +604,19 @@ export const COVERAGE_STATES = [
   //     2026-09-29) both got their geo_id in CC_0183 — 2965000 and 29189 — so the DATA is
   //     ready. They get no chip yet because NEITHER HAS A BANNER in buildingImages.js.
   //     Add the chip when a banner is certified.
-  //   • 🔴 City of Indianapolis IN (6 seated) has NO geo_id available and was dropped
-  //     from CC_0183 by its own gate, which refused the write. Indianapolis and Marion
-  //     County are consolidated (Unigov) and its Mayor sits on the county polygon
-  //     18097 — but `Marion County, Indiana, US` ALREADY carries 18097, with 38 chambers.
-  //     The place code 1836003 names no district in the database at all. So 18097 would
-  //     duplicate and 1836003 would point at nothing. How a consolidated city-county
-  //     should be modelled is a design question, not a data fix.
+  //   • ✅ RESOLVED 2026-09-29/30 — Indianapolis has a chip. Left here because the reasoning
+  //     is the record of how a consolidated city-county gets modelled.
+  //     It read: "City of Indianapolis IN (6 seated) has NO geo_id available and was dropped
+  //     from CC_0183 by its own gate, which refused the write. Indianapolis and Marion County
+  //     are consolidated (Unigov) and its Mayor sits on the county polygon 18097 — but
+  //     `Marion County, Indiana, US` ALREADY carries 18097, with 38 chambers. The place code
+  //     1836003 names no district in the database at all. So 18097 would duplicate and 1836003
+  //     would point at nothing. How a consolidated city-county should be modelled is a design
+  //     question, not a data fix." That was right, and the gate refusing the write was right.
+  //     The answer was the NASHVILLE shape: ev-accounts CC_0185 merged the two rows into ONE
+  //     government on 18097, typed 'City' with city 'Indianapolis', holding a 25-seat
+  //     City-County Council and the Mayor; the separate City of Indianapolis row was retired.
+  //     The chip is keyed on the COUNTY fips as a result. 1836003 is still never used.
   {
     name: 'Kansas', abbrev: 'KS',
     areas: [
