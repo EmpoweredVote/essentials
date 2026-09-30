@@ -1559,6 +1559,10 @@ const CURATED_LOCAL = {
   // AND WHAT FILLS THE FRAME, never the subject noun (the Asheville ruling):
   //   states/IN.jpg        - ELEVATED, looking down on a ballpark, skyline a distant right-hand band
   //   cities/bloomington   - STREET CORRIDOR down the axis of Kirkwood Ave, trees framing both edges
+  // ⚠ THAT states/IN.jpg LINE IS THE STATE OF PLAY IN 2026-09-11 AND IS KEPT AS HISTORY. The state
+  //   banner was retargeted to states/IN-v2.jpg (Indiana Dunes) on 2026-09-30; the adjacency these
+  //   two banners were actually certified against was the ballpark aerial, and saying otherwise
+  //   would rewrite the reasoning. The CURRENT list is in the Indianapolis block below.
   //
   //   fort wayne - the confluence of the St Marys and St Joseph rivers, with the stone revetment
   //                and the three arches of the Columbia Street Bridge | Momoneymoproblemz
@@ -1600,17 +1604,24 @@ const CURATED_LOCAL = {
   // banner could not simply be added beside it. Charlotte kept both because NC's band CUT THE TOWER
   // CROWNS OFF and so was not really showing the city; Indiana's band shows Indianapolis whole, so
   // that reasoning does not carry. Operator chose Austin over Nevada, 2026-09-29.
-  // ⚠ INDIANA THEREFORE STILL OWES A NEW STATE SUBJECT. Until it lands, states/IN.jpg and
-  // cities/indianapolis.jpg are the same city one tier apart -- deliberately, and temporarily.
+  // 🟢 THE DEBT IS PAID, 2026-09-30. That note used to read "INDIANA THEREFORE STILL OWES A NEW
+  // STATE SUBJECT", and for one day both tiers showed the same city, deliberately. The state now
+  // carries states/IN-v2.jpg, Indiana Dunes National Park -- see STATE_PANORAMA_FILES below.
   //
-  // ⚠ states/IN.jpg IS OFF-SPEC: 1700x409 (4.156:1), so it renders 69.2% of itself on desktop, not
-  // 52.4%. It is a full-width downscale of a 5707x1372 panorama with no crop at all. MI and FL were
-  // the two recorded off-spec state assets and both were superseded; this is a third, still live.
-  // Compute a band from the FILE's height, never from 540.
+  // ⚠ THE OLD states/IN.jpg IS OFF-SPEC: 1700x409 (4.156:1), so it rendered 69.2% of itself on
+  // desktop, not 52.4%. It was a full-width downscale of a 5707x1372 panorama with no crop at all.
+  // It is superseded, not deleted -- the object stays in the bucket serving its old bytes, exactly
+  // as states/FL.jpg, states/CA.jpg and states/MI.jpg do. Compute a band from the FILE's height,
+  // never from 540.
   //
   // Indiana now has FOUR compositions to differentiate against, and the test is CAMERA HEIGHT AND
   // WHAT FILLS THE FRAME, never the subject noun (the Asheville ruling):
-  //   states/IN.jpg      - ELEVATED aerial, looking down on a ballpark, skyline a right-hand band
+  //   states/IN-v2.jpg   - GROUND LEVEL along a beach, near-field sand filling the lower two thirds,
+  //                        an autumn dune bluff left and open lake right
+  //   ⚠ that one and cities/fort-wayne are BOTH ground level across water, and they were checked
+  //     against each other rather than waved through: Fort Wayne's frame is FILLED BY the water of
+  //     a narrow river, with a stone revetment and bridge arches; the dunes frame is filled by SAND,
+  //     with the water confined to the right third and no built structure in it at all.
   //   cities/bloomington - STREET CORRIDOR down the axis of Kirkwood Ave, trees framing both edges
   //   cities/fort-wayne  - GROUND LEVEL across water, revetment and bridge arches, no buildings of scale
   //   cities/gary        - FRONTAL civic colonnade, domed courthouse to its right
@@ -1906,7 +1917,26 @@ const CURATED_COUNTY = {
 //   IA - Morning Skyline, Des Moines, Iowa | Tony Webster | CC BY 2.0
 //   ID - Downtown Boise from Camel's Back Park | Tamanoeconomico | CC BY-SA 4.0
 //   IL - Chicago from North Avenue Beach | King of Hearts | CC BY-SA 3.0 [brightened]
-//   IN - Downtown Indianapolis skyline | Momoneymoproblemz | CC BY-SA 4.0
+//   IN - Indiana Dunes National Park, the beach at Michigan City | Diego Delso | CC BY-SA 3.0
+//        (was "Downtown Indianapolis skyline" | Momoneymoproblemz | CC BY-SA 4.0 until
+//         2026-09-30 — Indiana's banner was a photograph of Indianapolis, so the state and
+//         its largest city had one subject between them. This is the MICHIGAN case, not the
+//         Charlotte one, and the difference was measured rather than assumed: states/NC.jpg
+//         cuts Charlotte's tower crowns off in the band and so does not really show the
+//         city, but Indiana's band showed Indianapolis whole. Operator chose the Austin move
+//         on 2026-09-29 — the skyline came DOWN a tier to cities/indianapolis.jpg — which
+//         left the state tier owing a subject until this one landed.
+//         The replacement stands for the whole state: Indiana Dunes, the state's only
+//         national park, on the Lake Michigan shore.
+//         ⚠ DISCLOSED AND ACCEPTED: the frame carries two walkers, seen from behind, who
+//         measure 23px and 27px on the 540-row asset — ABOVE the 10-20px Travis County
+//         band. No face is visible. All four other frames from the same shoot were
+//         certified as people-free alternatives and every one is worse: open water with no
+//         land form, a Mount Baldy view crossed by two transmission pylon lines and a water
+//         tower, a boardwalk with an interpretive sign, and one portrait-format file.
+//         🔴 The old photograph is off-spec at 1700x409 (4.156:1) and renders 69.2% of
+//         itself on desktop, not 52.4%. It was a full-width downscale of a 5707x1372
+//         panorama with no crop at all. The new asset is at the 1700x540 spec.)
 //   KS - Wichita, Kansas skyline | Quintin Soloviev | CC BY 4.0
 //   KY - Panorama de Louisville | Anindya Chakraborty | CC BY-SA 3.0 [brightened]
 //   LA - New Orleans CBD from across the Mississippi | Michael Maples (USACE) | Public domain
@@ -2063,6 +2093,17 @@ const STATE_PANORAMA_FILES = {
   // would not reliably purge the CDN, and every Michigan address reads this one. The old
   // object stays in the bucket serving its old bytes.
   MI: 'MI-v2.jpg',
+  // IN versioned 2026-09-30. The MI case exactly, one step behind it: Indiana's banner WAS a
+  // photograph of Indianapolis, and Indianapolis needed that subject for its own city banner.
+  // Operator took the AUSTIN move on 2026-09-29 — the skyline went DOWN a tier to
+  // cities/indianapolis.jpg — which left the state tier showing the same city as the city tier
+  // until this landed. The state now takes Indiana Dunes, the only national park in Indiana.
+  //
+  // 🔴 Versioned, NOT overwritten, for the reason this map exists: overwriting states/IN.jpg
+  // would not reliably purge the CDN, and every Indiana address reads this one. The old object
+  // stays in the bucket serving its old bytes — and those bytes are off-spec at 1700x409, which
+  // is a second reason not to leave anything pointing at them.
+  IN: 'IN-v2.jpg',
 
   // Missouri (operator-certified 2026-09-29). THE AUSTIN/TEXAS SWAP, run a second time:
   // states/MO.jpg WAS the St. Louis skyline with the Gateway Arch, the city took that
