@@ -58,7 +58,28 @@ export const COVERAGE_STATES = [
   {
     name: 'Indiana', abbrev: 'IN',
     areas: [
-      { label: 'Bloomington', address: '100 W Kirkwood Ave, Bloomington, IN 47404', hasContext: true },
+      // Bloomington was the LAST entry in this file routing by a hard-coded STREET ADDRESS
+      // (`address: '100 W Kirkwood Ave, Bloomington, IN 47404'`), which geocodes a string at
+      // runtime through a third party; all 198 other chips resolve their government directly.
+      // It kept that shape only because `City of Bloomington` carried no geo_id. It has one
+      // now — 1805860 — so it joins the rest.
+      //
+      // 🔑 Verified 2026-09-30 by loading BOTH routes side by side rather than assuming the
+      // swap was neutral: they return the SAME five government blocks (City of Bloomington,
+      // Bloomington Township, Monroe County, Monroe County Circuit Court, School Board) and
+      // the SAME two banners (cities/bloomington.jpg + states/IN.jpg). Nothing is lost. The
+      // only differences favour this route — the header reads 'Bloomington, IN' instead of
+      // the raw street address, and there is no geocoder round-trip.
+      // ⚠ The banner was NOT broken on the old route, despite all 12 offices carrying
+      // representing_city = NULL: resolution also parses the city out of the address string.
+      // Worth knowing before assuming a NULL representing_city means a missing banner.
+      //
+      // hasContext TRUE and unusually well-earned for this file: 10 of the 11 seated
+      // officials hold rows, 93 answers, measured 2026-09-30.
+      // ⚠ The 'bloomington' banner key is state-scoped IN but has NO match:'exact'. Nothing
+      // collides today because only Indiana is seeded, but Bloomington MN and Bloomington IL
+      // both exist — if either is ever seeded, that key needs match:'exact' FIRST.
+      { label: 'Bloomington', browseGovernmentList: ['1805860'], browseStateAbbrev: 'IN', hasContext: true },
       // Knight program slice 4 (2026-09-10/11). Seeded and banner-backed, and absent from this
       // list until now -- an address search reached them, but the name typeahead did not.
       // No hasContext on either: measured 2026-09-11, no sitting official in Fort Wayne (11) or
