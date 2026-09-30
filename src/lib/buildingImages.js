@@ -1540,8 +1540,14 @@ const CURATED_LOCAL = {
   //   cities/bloomington - STREET CORRIDOR down the axis of Kirkwood Ave, trees framing both edges
   //   cities/fort-wayne  - GROUND LEVEL across water, revetment and bridge arches, no buildings of scale
   //   cities/gary        - FRONTAL civic colonnade, domed courthouse to its right
-  //   indianapolis       - GROUND LEVEL across the White River, the skyline filling the frame at
+  //   cities/indianapolis - GROUND LEVEL across the White River, the skyline filling the frame at
   //                        golden hour, riverbank and reflection along the base
+  // ⚠ THE LINE ABOVE USES THE PATH FORM ON PURPOSE. A comment shaped `//   <key> - <text>` is what
+  // gen-banners-json.mjs parses as a CREDIT, and a BARE key here matches a real registry entry --
+  // so writing `indianapolis - ...` in this adjacency list registered a SECOND credit for it and
+  // banners.test.js failed with credited 249 against 250. `banners:check` cannot catch that: it
+  // compares generated against committed, and both were equally wrong. Keep the path form, as the
+  // states/IN.jpg and cities/bloomington lines above already do.
   //
   //   indianapolis - the downtown skyline at golden hour from across the White River | Prabhakar
   //                  Koduri | CC BY 2.0
