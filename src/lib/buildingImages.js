@@ -647,6 +647,80 @@ const CURATED_LOCAL = {
   //   biloxi - Biloxi, Mississippi (2012) | Jared | CC BY 2.0
   biloxi: { state: 'MS', match: 'exact', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biloxi.jpg' },
 
+  // St. Louis (operator-certified 2026-09-29). Missouri's SECOND city banner after
+  // springfield-mo, which lives in the `springfield` array above (shared with MA).
+  //
+  // 🔴 THIS CITY TOOK ITS OWN STATE'S PHOTOGRAPH, on operator ruling. states/MO.jpg WAS
+  // this picture -- "STL Skyline (Gateway Arch) | Buphoff | CC BY-SA 3.0" -- and the
+  // operator's call was "I like the arches for St. Louis and think we should find
+  // something else for the State of Missouri." So the Arch moved here and Missouri moved
+  // to the Ozarks at states/MO-v2.jpg. That is the AUSTIN/TEXAS swap run a second time;
+  // see STATE_PANORAMA_FILES.MO below for why the state was VERSIONED and not overwritten.
+  // The bytes here are NOT copied from states/MO.jpg: they are re-derived from the
+  // ORIGINAL 5000x1139 Commons file, because states/MO.jpg is a 1700x387 downscale and
+  // re-encoding it would have been a generational copy for no reason.
+  //
+  // 🔑🔑 THIS ASSET IS DELIBERATELY OFF THE 1700x540 SPEC -- IT IS 1700x387 -- AND THAT IS
+  // THE WHOLE POINT. The operator asked whether the desktop band could SHRINK rather than
+  // CROP so the top and bottom of the Arch both survive. objectFit is `cover`, so there is
+  // no shrink-to-fit: `contain` would scale to the box HEIGHT and pillarbox, because the
+  // 6:1 desktop box is WIDER than a 3.148:1 asset, leaving the image filling only ~52% of
+  // the band width with dead space either side. But the goal is reachable a different way,
+  // and the arithmetic is the argument:
+  //     a 3.148:1 asset -> the 6:1 band keeps 52.5% of its height
+  //     a 4.390:1 asset -> the 6:1 band keeps 73.2% of its height
+  // Shipping at the source's NATIVE 4.39:1 is a PURE DOWNSCALE WITH NO CROP AT ALL, and at
+  // 73.2% the whole Arch survives -- crown and both legs to the ground, plus the skyline
+  // and the riverfront. Cropping to the 3.148:1 spec first would have thrown away exactly
+  // the rows the Arch needs. 🔴 Do NOT "fix" this file to 1700x540: that silently
+  // re-introduces the crop the operator asked to remove. states/MI.jpg (1700x422) and
+  // states/FL.jpg (1700x419) are off-spec for their own reasons and render fine.
+  //   ⚠ The trade is real and worth knowing: a 4.39:1 asset is WIDER than the 13:4 mobile
+  //   box, so mobile now crops ~26% of the WIDTH instead of nothing. The Arch keeps its
+  //   full height on mobile; the outer edges of the skyline are what go. For a subject
+  //   this tall that is the right way round, but it is the opposite of the usual trade.
+  //
+  // Refused, from the first pass when the Arch was still off the table (the state banner
+  // had not yet moved), and the reasons transfer:
+  //   - Grand Basin in Forest Park (Bohao Zhao, CC BY 3.0) -- the Saint Louis Art Museum
+  //     with the Apotheosis of St. Louis, at vertical_anchor 0.12. It was CERTIFIED AND
+  //     SHIPPED to this key earlier the same day and then superseded when the operator
+  //     chose to free the Arch. It is the STANDING ALTERNATIVE and it is a good banner:
+  //     daytime, people at ~10-15px, and the anchor is the whole picture (at the default
+  //     0.5 it is a field of grass with the museum cut off).
+  //   - Art Hill down to the Grand Basin (Fredlyfish4, CC BY-SA 3.0) -- refused TWICE:
+  //     dusk-pink at every anchor tested (0.15/0.45/0.75), and figures at ~70-100px
+  //     against the ~67px that refused Durham's tobacco-campus courtyard.
+  //   - StLouisArtMuseum.jpg (Kitz000/Matt Kitces, CC BY-SA 3.0) -- dusk, and at 2.96:1
+  //     the anchor cannot reframe, so the light cannot be cropped away.
+  //   - Cathedral Basilica (Antony-22, CC BY-SA 4.0) -- bare winter trees across the left
+  //     half and a utility pole at the edge: Charlotte's Wesley Heights refusal.
+  //   - City Hall (Kbh3rd, CC BY-SA 4.0) -- a lamp standard crosses the left third.
+  //   - Forest Park Panorama (Teeks99, CC BY-SA 4.0) -- generic parkland with car parks.
+  //   - Mississippi River Overlook (Panini!, CC0, 5864x3909) -- found while testing whether
+  //     a frame with more headroom could fit the whole Arch at 3.148:1. It cannot, and it
+  //     fails three ways anyway: sunset silhouette, POWER LINES across the band, a crane.
+  //
+  // sha256 verified identical on BOTH the plain and a cache-busted URL after upload
+  // (131,308 bytes), with a bogus key returning 400 as the control proving a 200 means
+  // something.
+  //
+  // ⚠ match:'exact' IS LOAD-BEARING, against a collision that does not exist yet but is
+  // seeded. The city's 23 offices carry representing_city='St. Louis', so this resolves
+  // from an ordinary address search. St. Louis COUNTY, Missouri (29189) is in the database,
+  // and under substring matching a browse label of 'St. Louis County' CONTAINS 'st. louis'
+  // and would hijack this banner INSIDE THE SAME STATE. exact matching blocks it.
+  // ⚠ That county would not want it anyway: its 10 offices carry representing_city =
+  // 'CLAYTON', the county seat, not 'St. Louis'. A future county banner must key on the
+  // browse label, and a naive representing_city key would resolve 'clayton'. St. Louis
+  // County MINNESOTA (27137) is a third entity again, with representing_city NULL; the MO
+  // state scope is what keeps all three apart.
+  //   st. louis - STL Skyline 2007 edit (the Gateway Arch, downtown and the riverfront from
+  //               the Illinois bank) | Buphoff | CC BY-SA 3.0
+  //               (File:STL Skyline 2007 edit.jpg) -- the same photograph that served as
+  //               states/MO.jpg until 2026-09-29, re-derived from the original at 1700x387
+  'st. louis': { state: 'MO', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/st-louis.jpg' },
+
   // Akron (Knight slice 8, stage OH-5; operator-certified 2026-09-24).
   //
   // 🔴 ADJACENCY: states/OH.jpg IS A CITY SKYLINE -- Cincinnati from Devou Park.
@@ -1794,7 +1868,15 @@ const CURATED_COUNTY = {
 //         width and the building bases fall below the band. A different frame measured
 //         better; see the Michigan block in CURATED_LOCAL.)
 //   MN - Minneapolis Skyline from Stone Arch Bridge | w_lemay | CC BY-SA 2.0
-//   MO - STL Skyline (Gateway Arch) | Buphoff | CC BY-SA 3.0
+//   MO - Ha Ha Tonka, Golden Trail (Ozarks) | Heath Cajandig | CC BY 2.0
+//        (File:Ha Ha Tonka - Golden Trail (15619898825).jpg), vertical_anchor 0.60.
+//        ⚠ SERVED FROM states/MO-v2.jpg, NOT states/MO.jpg -- see STATE_PANORAMA_FILES.
+//        states/MO.jpg still holds the PREVIOUS Missouri banner and still serves it:
+//        STL Skyline (Gateway Arch) | Buphoff | CC BY-SA 3.0. That object was left in
+//        place on purpose so nothing downstream re-credits itself silently; the same
+//        photograph is now the CITY banner at cities/st-louis.jpg. Anything still
+//        reading the plain states/MO.jpg path is getting Buphoff's Arch under
+//        Buphoff's name, which is correct, just no longer what this app shows.
 //   MS - Jackson MS Downtown Panorama | chmeredith | CC BY 2.0
 //   MT - Glacier National Park, Montana | TerryDOtt | CC BY 2.0
 //   NC - Charlotte uptown skyline (daytime) | Bruce Emmerling | CC BY-SA 4.0
@@ -1923,6 +2005,23 @@ const STATE_PANORAMA_FILES = {
   // would not reliably purge the CDN, and every Michigan address reads this one. The old
   // object stays in the bucket serving its old bytes.
   MI: 'MI-v2.jpg',
+
+  // Missouri (operator-certified 2026-09-29). THE AUSTIN/TEXAS SWAP, run a second time:
+  // states/MO.jpg WAS the St. Louis skyline with the Gateway Arch, the city took that
+  // photograph for cities/st-louis.jpg, and the state moved to a landscape -- Ha Ha Tonka,
+  // Golden Trail, in the Ozarks. Operator's call: "I like the arches for St. Louis and
+  // think we should find something else for the State of Missouri."
+  //
+  // 🔴🔴 VERSIONED, NOT OVERWRITTEN, AND THIS IS THE WHOLE REASON THE MAP EXISTS. When the
+  // Austin swap overwrote states/TX.jpg in place on 2026-08-18 the bytes DID propagate --
+  // that was the problem, not staleness. Every consumer reading the plain path silently
+  // switched from the Austin skyline to the Chisos Mountains with no deploy and no signal,
+  // and Treasury Tracker published the new photograph under the OLD photographer's name for
+  // three weeks. A stale image is visible; a stale CREDIT under a fresh image is not, and no
+  // test, typecheck or 404 can see it because the swap changes no URL. states/MO.jpg is
+  // therefore left in the bucket UNTOUCHED, serving Buphoff's Arch under Buphoff's name --
+  // verified byte-identical after this change (sha256 6e2a48c6b3050481).
+  MO: 'MO-v2.jpg',
 };
 
 /**

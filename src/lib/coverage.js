@@ -120,6 +120,21 @@ export const COVERAGE_STATES = [
     name: 'Missouri', abbrev: 'MO',
     areas: [
       { label: 'Springfield', browseGovernmentList: ['2970000', '2928860'], browseStateAbbrev: 'MO', hasContext: true },
+      // St. Louis added 2026-09-29, and the ONLY thing that was blocking it was the
+      // banner. CC_0183 gave the government geo_id 2965000 on 2026-09-11; the chip was
+      // held back because cities/st-louis.jpg did not exist, the same rule that gated
+      // Nashville. It exists now (operator-certified 2026-09-29): THE GATEWAY ARCH, which
+      // this city got by taking its own state's photograph — Missouri moved to an Ozarks
+      // landscape at states/MO-v2.jpg the same day. See the 'st. louis' key in
+      // buildingImages.js for the swap, and for why that asset is deliberately 1700x387
+      // rather than the 1700x540 spec (a wider asset loses less to the 6:1 desktop crop,
+      // which is what keeps the whole Arch on screen).
+      // 23 offices, 22 seated. hasContext FALSE: measured 2026-09-29 through the
+      // occupancy chain, zero of the 22 hold any row in inform.politician_answers.
+      // ⚠ Do NOT add St. Louis County MO (29189) here — counties stay off the grid, and
+      // its 10 offices carry representing_city='Clayton' anyway, so it would key a
+      // 'clayton' banner rather than this one.
+      { label: 'St. Louis',   browseGovernmentList: ['2965000'], browseStateAbbrev: 'MO', hasContext: false },
     ],
   },
   {
