@@ -1335,6 +1335,14 @@
       "license": "CC BY-SA 3.0"
     },
     {
+      "path": "cities/st-louis.jpg",
+      "kind": "city",
+      "state": "MO",
+      "title": "STL Skyline 2007 edit (the Gateway Arch, downtown and the riverfront from the Illinois bank)",
+      "author": "Buphoff",
+      "license": "CC BY-SA 3.0"
+    },
+    {
       "path": "cities/state-college.jpg",
       "kind": "city",
       "state": "PA",
@@ -1807,12 +1815,12 @@
       "license": "CC BY-SA 2.0"
     },
     {
-      "path": "states/MO.jpg",
+      "path": "states/MO-v2.jpg",
       "kind": "state",
       "state": "MO",
-      "title": "STL Skyline (Gateway Arch)",
-      "author": "Buphoff",
-      "license": "CC BY-SA 3.0"
+      "title": "Ha Ha Tonka, Golden Trail (Ozarks)",
+      "author": "Heath Cajandig",
+      "license": "CC BY 2.0"
     },
     {
       "path": "states/MS.jpg",
