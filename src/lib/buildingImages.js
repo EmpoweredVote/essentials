@@ -1517,6 +1517,58 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing for the usual reason.
   'fort wayne': { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-wayne.jpg' },
   gary: { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gary.jpg' },
+  // Indianapolis -- added 2026-09-29 (operator-certified), alongside the CC_0185 consolidation that
+  // put the city on geo_id 18097. Composed to 1700x540 FIRST and certified in the 6/1 DESKTOP BAND.
+  // Certification sheet: https://claude.ai/artifact/52MfcTDAxwpay4yecQUQHu
+  //
+  // 🔴 THIS IS THE AUSTIN MOVE: THE SKYLINE CAME DOWN A TIER. states/IN.jpg was itself a photograph
+  // of Indianapolis -- its published credit reads "Downtown Indianapolis skyline" -- so a city
+  // banner could not simply be added beside it. Charlotte kept both because NC's band CUT THE TOWER
+  // CROWNS OFF and so was not really showing the city; Indiana's band shows Indianapolis whole, so
+  // that reasoning does not carry. Operator chose Austin over Nevada, 2026-09-29.
+  // ⚠ INDIANA THEREFORE STILL OWES A NEW STATE SUBJECT. Until it lands, states/IN.jpg and
+  // cities/indianapolis.jpg are the same city one tier apart -- deliberately, and temporarily.
+  //
+  // ⚠ states/IN.jpg IS OFF-SPEC: 1700x409 (4.156:1), so it renders 69.2% of itself on desktop, not
+  // 52.4%. It is a full-width downscale of a 5707x1372 panorama with no crop at all. MI and FL were
+  // the two recorded off-spec state assets and both were superseded; this is a third, still live.
+  // Compute a band from the FILE's height, never from 540.
+  //
+  // Indiana now has FOUR compositions to differentiate against, and the test is CAMERA HEIGHT AND
+  // WHAT FILLS THE FRAME, never the subject noun (the Asheville ruling):
+  //   states/IN.jpg      - ELEVATED aerial, looking down on a ballpark, skyline a right-hand band
+  //   cities/bloomington - STREET CORRIDOR down the axis of Kirkwood Ave, trees framing both edges
+  //   cities/fort-wayne  - GROUND LEVEL across water, revetment and bridge arches, no buildings of scale
+  //   cities/gary        - FRONTAL civic colonnade, domed courthouse to its right
+  //   indianapolis       - GROUND LEVEL across the White River, the skyline filling the frame at
+  //                        golden hour, riverbank and reflection along the base
+  //
+  //   indianapolis - the downtown skyline at golden hour from across the White River | Prabhakar
+  //                  Koduri | CC BY 2.0
+  // ⚠ The credit deliberately does NOT name the bridge at the right edge. A bridge is visible
+  // there; which one it is was never verified, and this line is INPUT to the public credits file,
+  // not documentation. An unverified landmark name in a published credit is the composed-citation
+  // defect wearing a different hat.
+  //                  source: File:Panoram Indy.jpg (10200x1800), horizontal anchor 0.30, no
+  //                  vertical anchor -- at 5.67:1 the source is WIDER than 3.148:1, so the crop is
+  //                  horizontal and --vertical-anchor does nothing. 0.30 is the only position
+  //                  holding the riverbank AND the bridge; 0.50 and 0.70 slide both out of frame.
+  //
+  // 🔴 --crop-width 4000 WAS TRIED FIRST AND REFUSED. It took only 39% of a 10200px panorama and
+  // discarded the river entirely -- the one feature that made this frame worth choosing -- while
+  // clipping the tallest crown in the band. On a source this wide the lever is the HORIZONTAL
+  // anchor at full height, not the crop width.
+  //
+  // ⚠ DISCLOSED AND ACCEPTED: the photograph is from 2009-05-21 and carries FOUR CONSTRUCTION
+  // CRANES at the right, on buildings long since finished. Nothing in the pipeline bars an older
+  // frame, but a crane dates a picture visibly. The 2016 alternate (Momoneymoproblemz, the state
+  // banner's own shoot) is newer and far flatter -- colour spread 28 against 77 -- and was kept as
+  // the runner-up rather than shipped.
+  //
+  // ⚠ match:'exact' is load-bearing and NOT for the usual reason. Substring matching runs both
+  // ways, and there is a borough called Indiana, Pennsylvania: 'indianapolis'.includes('indiana')
+  // is true. Proved by running getBuildingImages, not by reading it.
+  indianapolis: { state: 'IN', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/indianapolis.jpg' },
   // Colorado -- Knight program slice 9, stage 5 (2026-09-16, operator-certified). Composed to
   // 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), not the full frame.
   //
