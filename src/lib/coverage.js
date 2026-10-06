@@ -8,12 +8,32 @@ export const COVERAGE_STATES = [
   {
     name: 'California', abbrev: 'CA',
     areas: [
+      // [2026-10-06] Seven LA County cities added: Arcadia, Claremont, Diamond Bar,
+      // Duarte, Glendora, La Verne, South Pasadena. All seven were ALREADY reachable
+      // when the 2026-09-29 pass ran — CA_0173/CA_0176 re-modelled them by district on
+      // 2026-09-23, six days earlier — so that pass simply missed them. Every one of its
+      // own 13 additions happened to have a curated banner and these seven did not,
+      // which is the likeliest reason they fell out.
+      //
+      // Verified against production through the live browse API, not row counts: each
+      // geo_id returns its own council and no other city's (the state-tier roster comes
+      // back on every request, so count the rows whose government_name matches before
+      // concluding anything). Rosters: Duarte 7, the other six 5 each, no vacancies.
+      //
+      // hasContext is FALSE on all seven, measured against inform.politician_answers:
+      // zero rows for zero officials, so there is nothing to claim yet.
+      //
+      // ⚠ representing_city is NULL on all 35 offices and the chambers are plain
+      // "City Council", so NEITHER local-tier banner route fires. That does not matter
+      // here — browse mode takes the label from THIS file (resolveRepresentingCity) —
+      // but an address-routed reader gets the CA state shot until Accounts backfills it.
       // hasContext restored true 2026-08-06: migration 1564 had flipped this false after retiring all
       // 19 of Alhambra's rows (every one cited a fabricated sgvtribune.com path or a 404 agendas index).
       // Migration 1567 re-researched the council from the city's own AgendaCenter minutes and restored
       // 16 rows across all five councilmembers, so the coverage claim is true again. Homelessness
       // Response is deliberately still blank for Lee, Wang and Maza — no position statement exists.
       { label: 'Alhambra', browseGovernmentList: ['0600884'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Arcadia', browseGovernmentList: ['0602462'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Bellflower', browseGovernmentList: ['0604982'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
       // hasContext flipped false 2026-08-02: migration 1538 retired all 5 of Beverly Hills'
@@ -23,17 +43,22 @@ export const COVERAGE_STATES = [
       { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Burbank', browseGovernmentList: ['0608954'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Carson', browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: false },
+      { label: 'Claremont', browseGovernmentList: ['0613756'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Compton', browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Culver City', browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Diamond Bar', browseGovernmentList: ['0619192'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Downey', browseGovernmentList: ['0619766'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Duarte', browseGovernmentList: ['0619990'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'El Monte', browseGovernmentList: ['0622230'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'El Segundo', browseGovernmentList: ['0622412'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Fremont', browseGovernmentList: ['0626000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Gardena', browseGovernmentList: ['0628168'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Glendale', browseGovernmentList: ['0630000'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Glendora', browseGovernmentList: ['0630014'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Hawthorne', browseGovernmentList: ['0632548'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Indio', browseGovernmentList: ['0636448'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Inglewood', browseGovernmentList: ['0636546'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'La Verne', browseGovernmentList: ['0640830'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Lancaster', browseGovernmentList: ['0640130'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Long Beach', browseGovernmentList: ['0643000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Los Angeles', browseGovernmentList: ['0644000'], browseStateAbbrev: 'CA', hasContext: true },
@@ -49,6 +74,7 @@ export const COVERAGE_STATES = [
       { label: 'Santa Clarita', browseGovernmentList: ['0669088'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Santa Monica', browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'South Gate', browseGovernmentList: ['0673080'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'South Pasadena', browseGovernmentList: ['0673220'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Torrance', browseGovernmentList: ['0680000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'West Covina', browseGovernmentList: ['0684200'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'West Hollywood', browseGovernmentList: ['0684410'], browseStateAbbrev: 'CA', hasContext: true },
