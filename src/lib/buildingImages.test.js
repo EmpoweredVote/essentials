@@ -421,3 +421,94 @@ describe('Biloxi banner (MS-5)', () => {
     expect(r.focus.State).toBeNull();
   });
 });
+
+/**
+ * The LA by-district seven (2026-10-06) — the South Pasadena collision, and the
+ * per-banner focus that keeps each subject inside the 6:1 desktop band.
+ *
+ * 🔴 THE GUARD HERE IS KEY LENGTH, NOT `match: 'exact'`. CURATED_LOCAL matches by
+ * SUBSTRING, longest key first. 'south pasadena' (14 chars) is therefore tried before
+ * 'pasadena' (8) and wins. This is load-bearing and it was verified by running the
+ * matcher over all 207 coverage labels, not reasoned about: BEFORE the 'south pasadena'
+ * entry existed, the label "South Pasadena" resolved to cities/pasadena.jpg — it would
+ * have published RBerteig's photograph of a DIFFERENT CITY under South Pasadena's name.
+ * That is the same class of defect as the Portland ME and Fairview TX mis-credits that
+ * banners.test.js pins, and licence attribution is the thing it breaks.
+ *
+ * Shortening that key, or adding match:'exact' to 'pasadena', reintroduces it. Both
+ * directions are asserted below, because the fix must also NOT steal Pasadena's own
+ * banner back.
+ *
+ * The focus tests are not decoration either. Desktop renders md:aspect-[6/1], which
+ * shows 52.5% of the asset centred, and six of these seven lose their subject at the
+ * default centre — the hat off Duarte's rider, the painted city name off South
+ * Pasadena, Arcadia's cupola and its ground, the rooflines off Claremont and La Verne,
+ * the mountains behind Glendora. Dropping a focus value re-ships that silently, and
+ * mobile (aspect-[13/4], ~97% of the asset) will not reveal it.
+ */
+describe('LA by-district seven — collision and desktop-band focus', () => {
+  const key = (r) => (r.Local ? r.Local.split('/').slice(-2).join('/') : null);
+
+  const SEVEN = [
+    ['Arcadia', 'cities/arcadia.jpg', '50% 65%'],
+    ['Claremont', 'cities/claremont.jpg', '50% 38%'],
+    ['Diamond Bar', 'cities/diamond-bar.jpg', null],
+    ['Duarte', 'cities/duarte.jpg', '50% 40%'],
+    ['Glendora', 'cities/glendora.jpg', '50% 0%'],
+    ['La Verne', 'cities/la-verne.jpg', '50% 25%'],
+    ['South Pasadena', 'cities/south-pasadena.jpg', '50% 8%'],
+  ];
+
+  it('resolves each of the seven to its OWN asset', () => {
+    for (const [city, asset] of SEVEN) {
+      expect(key(getBuildingImages(city, 'CA')), city).toBe(asset);
+    }
+  });
+
+  // 🔴 THE COLLISION. Both directions, because a fix that only works one way is a
+  // different bug: South Pasadena must not take Pasadena's photo, and Pasadena must
+  // keep it.
+  it('does NOT publish the Pasadena photograph under South Pasadena', () => {
+    expect(key(getBuildingImages('South Pasadena', 'CA'))).toBe('cities/south-pasadena.jpg');
+    expect(key(getBuildingImages('South Pasadena', 'CA'))).not.toBe('cities/pasadena.jpg');
+  });
+
+  it('leaves Pasadena itself on its own banner', () => {
+    expect(key(getBuildingImages('Pasadena', 'CA'))).toBe('cities/pasadena.jpg');
+  });
+
+  it('wins on key length, so the collision survives a stateless call too', () => {
+    // A missing caller state is match-allowed, so the state scope cannot be what is
+    // separating these two. Only the longest-key-first ordering can.
+    expect(key(getBuildingImages('South Pasadena', null))).toBe('cities/south-pasadena.jpg');
+  });
+
+  // THE NEGATIVES ARE THE POINT. Every one of these seven names exists in another
+  // state, and each entry is state-scoped CA.
+  it('does NOT hand any of the seven to another state', () => {
+    for (const [city, state] of [
+      ['Pasadena', 'TX'], ['Claremont', 'NH'], ['Arcadia', 'FL'],
+      ['Duarte', 'TX'], ['Glendora', 'NJ'],
+    ]) {
+      expect(key(getBuildingImages(city, state)), `${city}, ${state}`).toBeNull();
+    }
+  });
+
+  it('control: an unregistered LA County city is null, so these can fail', () => {
+    // Covina is a real San Gabriel Valley city with no entry. Note it does NOT
+    // inherit from the 'west covina' key, which is the longer string.
+    expect(key(getBuildingImages('Covina', 'CA'))).toBeNull();
+  });
+
+  it('carries the focus that keeps each subject inside the 6:1 desktop band', () => {
+    for (const [city, , focus] of SEVEN) {
+      expect(getBuildingImages(city, 'CA').focus.Local, city).toBe(focus);
+    }
+  });
+
+  it('Diamond Bar is the ONLY one with no focus, and that is deliberate', () => {
+    // A wide ridge-trail overlook with the town mid-frame: it reads correctly at the
+    // default centre band. If this ever needs a focus, the asset changed.
+    expect(getBuildingImages('Diamond Bar', 'CA').focus.Local).toBeNull();
+  });
+});
