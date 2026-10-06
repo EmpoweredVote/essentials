@@ -912,6 +912,48 @@ const CURATED_LOCAL = {
   gardena: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/gardena.jpg' },
   compton: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/compton.jpg' },
   'el segundo': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-segundo.jpg' },
+  // [2026-10-06 LA by-district seven: the cities CA_0173/CA_0176 re-modelled by
+  //  district on 2026-09-23. They were reachable six days before the 2026-09-29 chip
+  //  pass and it missed them, so this is a catch-up, not new ground.]
+  //
+  // 🔴 EVERY ONE OF THESE CARRIES A `focus`, AND SIX OF THE SEVEN NEEDED ONE.
+  // Desktop renders BANNER_ASPECT_CLASS md:aspect-[6/1], which shows only 52.5% of
+  // the 1700x540 asset — rows 128-411 — and the default centre band destroyed the
+  // subject in six of these frames: it sliced the hat off Duarte's rider, cut the
+  // painted "Welcome to the city of South Pasadena" clean out of the one shot whose
+  // whole merit is that the building names the city, clipped Arcadia's cupola while
+  // ALSO dropping the ground (the floating-building reject), took the roofline off
+  // Claremont and La Verne, and erased the San Gabriel Mountains behind Glendora,
+  // leaving a generic tree-line. Composing the 1700x540 asset is NOT composing the
+  // banner. Certify the 6:1 band, which is the only thing a desktop reader sees.
+  // Mobile is aspect-[13/4] and shows ~97% of the asset, so it hid all of this.
+  //
+  // ⚠ 'south pasadena' is LOAD-BEARING against the existing 'pasadena' key above.
+  // Matching is substring, longest-key-first, so before this entry existed the label
+  // "South Pasadena" resolved to cities/pasadena.jpg — it would have published
+  // RBerteig's Pasadena photograph under another city's name. Verified by running the
+  // matcher before and after, not by reasoning about it. Do not shorten this key.
+  //
+  //   duarte         - Statue of Andrés Avelino Duarte at sunset | Living in Monrovia | CC BY-SA 2.0
+  //   south-pasadena - South Pasadena Historic District, Mission and Meridian | Cbl62 | CC BY-SA 3.0
+  //   arcadia        - Queen Anne Cottage, L.A. County Arboretum | Rporch | CC BY-SA 3.0
+  //   claremont      - Claremont City Hall panorama from northeast | Sdkb | CC BY-SA 4.0
+  //   la-verne       - La Verne United Methodist Church | Christopher Eugene Lee | Public domain
+  //   diamond-bar    - Diamond Bar City Hills | Thebluewriter | CC BY-SA 4.0
+  //   glendora       - Glendora from the South Hills | jaymanuel | CC BY-SA 4.0
+  //
+  // ⚠ duarte is upscaled from a 1600px source — the only frame in Duarte's whole
+  // Commons category that is neither an aerial nor shot in another city.
+  // ⚠ glendora's source carries EXIF orientation=3 and process_banner.py does not
+  // apply EXIF rotation, so the first crop shipped upside down. It was transposed by
+  // hand before processing. Any future source with a rotation tag will hit this.
+  duarte: { state: 'CA', focus: '50% 40%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/duarte.jpg' },
+  'south pasadena': { state: 'CA', focus: '50% 8%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-pasadena.jpg' },
+  arcadia: { state: 'CA', focus: '50% 65%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/arcadia.jpg' },
+  claremont: { state: 'CA', focus: '50% 38%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/claremont.jpg' },
+  'la verne': { state: 'CA', focus: '50% 25%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/la-verne.jpg' },
+  'diamond bar': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/diamond-bar.jpg' },
+  glendora: { state: 'CA', focus: '50% 0%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendora.jpg' },
   // Massachusetts city banners (Wikimedia Commons; state-scoped so 'springfield'
   // does not collide with Springfield, MO). Batch 1 shipped 2026-07-06:
   //   quincy      - Marina Bay waterfront & clock tower | Sswonk | CC BY 3.0
