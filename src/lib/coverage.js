@@ -161,6 +161,18 @@ export const COVERAGE_STATES = [
       // collides today because only Indiana is seeded, but Bloomington MN and Bloomington IL
       // both exist — if either is ever seeded, that key needs match:'exact' FIRST.
       { label: 'Bloomington', browseGovernmentList: ['1805860'], browseStateAbbrev: 'IN', hasContext: true },
+      // Ellettsville and Stinesville, 2026-10-06. ev-accounts CC_0189 gave both towns a geo_id;
+      // until now nothing surfaced them -- seeded and reachable by address, but absent from the
+      // grid and from the name typeahead.
+      // hasContext FALSE on both, measured 2026-10-06 through inform.politician_answers joined to
+      // inform.politician_context on (politician_id, topic_id, season_id): Ellettsville 4 seated,
+      // Stinesville 2 seated, ZERO answers and ZERO rows with reasoning between them. Claiming it
+      // would not be DB-honest -- the Deschutes rule.
+      // Neither needs match:'exact'. Verified by running the matcher over every coverage label
+      // before and after: both resolve Local = null and fall through to the Indiana state banner,
+      // and no other label's resolution moves. Unlike the LA County 55, no CURATED_LOCAL key is
+      // reachable by substring from either name.
+      { label: 'Ellettsville', browseGovernmentList: ['1820800'], browseStateAbbrev: 'IN', hasContext: false },
       // Knight program slice 4 (2026-09-10/11). Seeded and banner-backed, and absent from this
       // list until now -- an address search reached them, but the name typeahead did not.
       // No hasContext on either: measured 2026-09-11, no sitting official in Fort Wayne (11) or
@@ -178,6 +190,7 @@ export const COVERAGE_STATES = [
       // ▶ Chip-reachable only. No council-district polygons exist, so an address cannot route to a
       // council district; Nashville has the same property and ships fine.
       { label: 'Indianapolis', browseGovernmentList: ['18097'], browseStateAbbrev: 'IN' },
+      { label: 'Stinesville', browseGovernmentList: ['1873232'], browseStateAbbrev: 'IN', hasContext: false },
     ],
   },
   {
