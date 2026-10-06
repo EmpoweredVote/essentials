@@ -344,9 +344,22 @@ export const COVERAGE_STATES = [
   },
   {
     name: 'Texas', abbrev: 'TX',
+    // 🔴 THE ONE-COVERED-OFFICIAL RULING, 2026-10-06 (operator). A chip resting on a SINGLE
+    // official out of three-to-seven seats is not city coverage, however good that one row is.
+    // Eleven chips were flipped true → false under it in one pass — five here (Anna, Fairview,
+    // Farmersville, Melissa, Parker) and six in Wisconsin (Dover, Norway, Raymond, Rochester,
+    // Union Grove, Yorkville). Each is marked ⬜ at its own line with its measured counts.
+    // ⚠ The rows themselves are NOT in question and were NOT retired — this is a DEPTH verdict,
+    // not an evidence verdict, and conflating the two is what #190 had to go back and repair.
+    // 🔑 After this pass no purple CITY rests on fewer than TWO covered officials, which is what
+    // makes the EV-Accounts coverage-honesty gate enforceable rather than advisory.
+    // ⚠ Kitsap County WA is the one 1-of-N purple left, and is deliberately NOT flipped: its second
+    // chair-holder is a sheriff CANDIDATE, not a seated official, so it reads as 1 only to a
+    // seated-officials measure. The gate reports it instead of failing on it.
     areas: [
       { label: 'Allen',         browseGovernmentList: ['4801924'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Anna',          browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX', hasContext: true },
+      // ⬜ Anna: 1 of 7 seated, 2 rows — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Anna',          browseGovernmentList: ['4803300'], browseStateAbbrev: 'TX', hasContext: false },
       // Tarrant County big-six (2026-08-08 seed, migs 1621-1628). This is a SECOND, unconnected
       // TX cluster — every other TX entry here is Collin County area (plus Longview). None of the
       // six carries hasContext: the seed was roster + geofence + browse only, with no compass
@@ -363,8 +376,10 @@ export const COVERAGE_STATES = [
       // Phase 222 (2026-07-30/31): each of these four moved 0 -> >=1 evidence-cited compass
       // stance, so hasContext is DB-honest. Fairview: Works (residential-zoning).
       // Farmersville: Henry (residential-zoning). Lucas: Underhill + Orr. Parker: Sharpe.
-      { label: 'Fairview',      browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Farmersville',  browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX', hasContext: true },
+      // ⬜ Fairview: 1 of 7 seated, 1 row — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Fairview',      browseGovernmentList: ['4825224'], browseStateAbbrev: 'TX', hasContext: false },
+      // ⬜ Farmersville: 1 of 6 seated, 1 row — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Farmersville',  browseGovernmentList: ['4825488'], browseStateAbbrev: 'TX', hasContext: false },
       // Fort Worth: districts run 2-11 (there is no District 1) + Mayor = 11 seats.
       { label: 'Fort Worth',    browseGovernmentList: ['4827000'], browseStateAbbrev: 'TX' },
       { label: 'Frisco',        browseGovernmentList: ['4827684'], browseStateAbbrev: 'TX', hasContext: true },
@@ -376,11 +391,13 @@ export const COVERAGE_STATES = [
       { label: 'Lucas',         browseGovernmentList: ['4845012'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Mansfield',     browseGovernmentList: ['4846452'], browseStateAbbrev: 'TX' },
       { label: 'McKinney',      browseGovernmentList: ['4845744'], browseStateAbbrev: 'TX', hasContext: true },
-      { label: 'Melissa',       browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX', hasContext: true },
+      // ⬜ Melissa: 1 of 7 seated, 4 rows — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Melissa',       browseGovernmentList: ['4847496'], browseStateAbbrev: 'TX', hasContext: false },
       { label: 'Murphy',        browseGovernmentList: ['4850100'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Nevada',        browseGovernmentList: ['4850760'], browseStateAbbrev: 'TX' },
       { label: 'North Richland Hills', browseGovernmentList: ['4852356'], browseStateAbbrev: 'TX' },
-      { label: 'Parker',        browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX', hasContext: true },
+      // ⬜ Parker: 1 of 6 seated, 1 row — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Parker',        browseGovernmentList: ['4855152'], browseStateAbbrev: 'TX', hasContext: false },
       { label: 'Plano',         browseGovernmentList: ['4858016'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Princeton',     browseGovernmentList: ['4859576'], browseStateAbbrev: 'TX', hasContext: true },
       { label: 'Prosper',       browseGovernmentList: ['4859696'], browseStateAbbrev: 'TX', hasContext: true },
@@ -512,8 +529,10 @@ export const COVERAGE_STATES = [
       { label: 'Mount Pleasant',     browseGovernmentList: ['5554875'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'North Bay',          browseGovernmentList: ['5557700'], browseStateAbbrev: 'WI' },
       { label: 'Racine',             browseGovernmentList: ['5566000'], browseStateAbbrev: 'WI', hasContext: true },
-      { label: 'Raymond',            browseGovernmentList: ['5566350'], browseStateAbbrev: 'WI', hasContext: true },
-      { label: 'Rochester',          browseGovernmentList: ['5568550'], browseStateAbbrev: 'WI', hasContext: true },
+      // ⬜ Raymond: 1 of 5 seated, 2 rows — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Raymond',            browseGovernmentList: ['5566350'], browseStateAbbrev: 'WI', hasContext: false },
+      // ⬜ Rochester: 1 of 7 seated, 1 row — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Rochester',          browseGovernmentList: ['5568550'], browseStateAbbrev: 'WI', hasContext: false },
       { label: 'Sturtevant',         browseGovernmentList: ['5577925'], browseStateAbbrev: 'WI', hasContext: true },
       // WI civil towns. Dover and Norway have no city/village namesake so they
       // read plain; Burlington and Waterford keep the "Town of" prefix because
@@ -521,14 +540,18 @@ export const COVERAGE_STATES = [
       // governments with chips above — a plain duplicate label would be
       // indistinguishable on the grid AND would key the wrong banner
       // (buildingImages matches on the browse label).
-      { label: 'Dover',              browseGovernmentList: ['5510120625'], browseStateAbbrev: 'WI', hasContext: true },
-      { label: 'Norway',             browseGovernmentList: ['5510158600'], browseStateAbbrev: 'WI', hasContext: true },
+      // ⬜ Dover: 1 of 3 seated, 1 row — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Dover',              browseGovernmentList: ['5510120625'], browseStateAbbrev: 'WI', hasContext: false },
+      // ⬜ Norway: 1 of 5 seated, 1 row — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Norway',             browseGovernmentList: ['5510158600'], browseStateAbbrev: 'WI', hasContext: false },
       { label: 'Town of Burlington', browseGovernmentList: ['5510111225'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Town of Waterford',  browseGovernmentList: ['5510183850'], browseStateAbbrev: 'WI', hasContext: true },
-      { label: 'Union Grove',        browseGovernmentList: ['5581775'], browseStateAbbrev: 'WI', hasContext: true },
+      // ⬜ Union Grove: 1 of 7 seated, 3 rows — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Union Grove',        browseGovernmentList: ['5581775'], browseStateAbbrev: 'WI', hasContext: false },
       { label: 'Waterford',          browseGovernmentList: ['5583825'], browseStateAbbrev: 'WI', hasContext: true },
       { label: 'Wind Point',         browseGovernmentList: ['5587700'], browseStateAbbrev: 'WI', hasContext: true },
-      { label: 'Yorkville',          browseGovernmentList: ['5589550'], browseStateAbbrev: 'WI', hasContext: true },
+      // ⬜ Yorkville: 1 of 5 seated, 1 row — flipped false 2026-10-06, the one-covered-official ruling.
+      { label: 'Yorkville',          browseGovernmentList: ['5589550'], browseStateAbbrev: 'WI', hasContext: false },
     ],
   },
   {
