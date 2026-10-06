@@ -28,7 +28,7 @@ import sys
 from io import BytesIO
 
 import requests
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
 
 HEADERS = {'User-Agent': 'EmpoweredVote/1.0 (info@empowered.vote)'}
 
@@ -130,8 +130,26 @@ def process_banner(input_path, output_path, apply_overlay=False, vertical_anchor
     and save as JPEG quality 90.
     """
     print(f"Opening: {input_path}")
-    img = Image.open(input_path).convert('RGB')
+    img = Image.open(input_path)
+
+    # 🔴 APPLY EXIF ORIENTATION FIRST, BEFORE ANYTHING MEASURES THE IMAGE.
+    # A phone or camera source may store its pixels rotated and record the correction
+    # in EXIF tag 274; Pillow does NOT apply it on open, so every downstream step sees
+    # the raw buffer. cities/glendora.jpg (orientation=3) was processed UPSIDE DOWN and
+    # was caught only because someone looked at it — nothing in the pipeline complained.
+    # Orientations 5-8 are worse than a flip: they SWAP width and height, so a landscape
+    # photo stored portrait gets measured portrait, the slack report is computed off the
+    # wrong axis, and crop_to_ratio trims the wrong dimension entirely.
+    # exif_transpose returns a new image and strips the now-satisfied tag; `or img`
+    # covers the Pillow versions that can hand back None.
+    orientation = img.getexif().get(274)
+    img = ImageOps.exif_transpose(img) or img
+    img = img.convert('RGB')
+
     orig_w, orig_h = img.size
+    if orientation and orientation != 1:
+        print(f"EXIF orientation {orientation} applied: the source stores its pixels "
+              f"rotated, so it is corrected before cropping.")
     print(f"Source size: {orig_w} x {orig_h} (ratio {orig_w/orig_h:.2f}:1)")
 
     # 🔴 REPORT THE VERTICAL SLACK, because it says whether the anchor is even a

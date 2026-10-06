@@ -1,0 +1,11 @@
+# Dependencies for the banner tooling (process_banner.py, upload_banner.py,
+# certify_banner.py) and its regression tests. CI installs this to run
+# test_process_banner.py; install it locally before processing a banner.
+#
+#   pip install -r scripts/banners/requirements.txt
+#
+# Pillow carries the EXIF handling the tests pin. exif_transpose has been stable
+# since well before 10.x; the floor is set where the keyword-only in_place
+# argument settled, so `exif_transpose(img) or img` behaves predictably.
+Pillow>=10.0.0
+requests>=2.28.0

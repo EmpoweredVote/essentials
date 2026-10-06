@@ -46,3 +46,22 @@ jobs:
       # cancelled run stops promptly instead of grinding through the suite.
       - run: npm test
         if: ${{ !cancelled() }}
+      # The banner tooling is Python and the JS suite cannot see it. EXIF orientation
+      # is the specific reason this runs: Pillow does not apply tag 274 on open, so a
+      # source that stores its pixels rotated was cropped and shipped in the stored
+      # orientation with no error and no warning — cities/glendora.jpg went out upside
+      # down and was caught only because someone looked at it. A defect whose only
+      # signal is "the picture looks wrong to a human" is exactly the kind that needs
+      # a machine watching it.
+      # Deliberately no pip cache: two small wheels, and a cache key on a file this
+      # rarely-changing is more moving parts than it saves.
+      - uses: actions/setup-python@v5
+        if: ${{ !cancelled() }}
+        with:
+          python-version: '3.12'
+      - run: pip install -r scripts/banners/requirements.txt
+        if: ${{ !cancelled() }}
+      # Runs without pytest on purpose — the file carries its own runner, so CI needs
+      # no test-framework dependency and a developer can run it the same way.
+      - run: python scripts/banners/test_process_banner.py
+        if: ${{ !cancelled() }}
