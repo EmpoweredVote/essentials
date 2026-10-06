@@ -45,13 +45,26 @@ export const COVERAGE_STATES = [
       { label: 'Berkeley', browseGovernmentList: ['0606000'], browseStateAbbrev: 'CA', hasContext: true },
       // hasContext flipped false 2026-08-02: migration 1538 retired all 5 of Beverly Hills'
       // stanced officials (Mirisch, Friedman, Nazarian, Corman, Wells). Every one of their rows
-      // cited only URLs that never existed, so there was no evidence a reader could check. The
-      // city keeps its browse entry; it has no compass coverage to claim until re-research.
+      // cited only URLs that never existed, so there was no evidence a reader could check.
+      // ⚠ RE-MEASURED 2026-10-06 AND THAT REASON NO LONGER DESCRIBES WHAT IS THERE. Corman was
+      // re-researched on 2026-08-26 and now holds ONE row (Residential Zoning) citing two
+      // beverlypress.com articles that both resolve 200 and both name him — the fabricated-URL
+      // defect is gone. The chip stays FALSE on DEPTH, not on evidence: 1 of 6 seated.
+      // 🔴 Operator ruling 2026-10-06: one covered official out of six is not city coverage.
+      // Do not re-grey it citing mig 1538; that is a closed defect. See Miami/Bradenton, same call.
       { label: 'Beverly Hills', browseGovernmentList: ['0606308'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Bradbury', browseGovernmentList: ['0607946'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Burbank', browseGovernmentList: ['0608954'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Calabasas', browseGovernmentList: ['0609598'], browseStateAbbrev: 'CA', hasContext: false },
-      { label: 'Carson', browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: false },
+      // hasContext flipped TRUE 2026-10-06. Carson was never commented and never judged; it was
+      // simply grey. Measured: 3 of 7 seated hold rows (Hicks, Dear, Davis-Holmes), 4 rows over
+      // two local topics, every one sourced to the city's OWN Legistar meeting minutes.
+      // 🔑 VERIFIED, not assumed: all three PDFs fetched and parsed, and each one's header date
+      // matches the date the reasoning cites — April 4 2023 (Dear to Assemblyman Gipson),
+      // September 19 2023 (Dear, Economic Development Strategic Plan) and January 23 2024
+      // (Hicks and Davis-Holmes on homelessness). 43% of seats on primary-source minutes clears
+      // the bar comfortably.
+      { label: 'Carson', browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Cerritos', browseGovernmentList: ['0612552'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Claremont', browseGovernmentList: ['0613756'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Commerce', browseGovernmentList: ['0614974'], browseStateAbbrev: 'CA', hasContext: false },
@@ -227,17 +240,42 @@ export const COVERAGE_STATES = [
       { label: 'Lynn',        browseGovernmentList: ['2537490'], browseStateAbbrev: 'MA', hasContext: false },
       { label: 'Medford',     browseGovernmentList: ['2539835'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'New Bedford', browseGovernmentList: ['2545000'], browseStateAbbrev: 'MA', hasContext: true },
-      // hasContext flipped false 2026-08-04, operator ruling "landing pages don't count as
-      // coverage". Migration 1548 (ev-accounts) retired 48 of Newton's 55 answers; the 7 that
-      // survived are not evidence: Laredo's 3 cite only `newtonma.gov/government/mayor`, a landing
-      // page that states no position, and Baker's 4 cite only his Suffolk Law faculty profile while
-      // asserting council votes — reasoning from profession, not from a record. Newton keeps its
-      // browse entry; it has nothing to claim until re-research.
-      { label: 'Newton',      browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA', hasContext: false },
+      // hasContext flipped false 2026-08-04 under the operator ruling "landing pages don't count
+      // as coverage" (mig 1548 retired 48 of 55 answers; the 7 survivors cited only
+      // `newtonma.gov/government/mayor` and a Suffolk Law faculty profile).
+      // ✅ FLIPPED BACK TRUE 2026-10-06 — THE RE-RESEARCH THAT RULING ASKED FOR HAS HAPPENED.
+      // 🔴 Those 7 rows are GONE. Do not look for them. A pass on 2026-08-26/09-03 replaced them:
+      // 10 of 25 seated now hold 17 rows across five LOCAL topics (residential zoning, housing,
+      // growth and development, local environment, transportation), sourced to Fig City News and
+      // the Newton Beacon — two real hyperlocal outlets, not a nav page in sight.
+      // 🔑 VERIFIED ROW BY ROW, not sampled: all 12 Newton URLs fetched (12/12 HTTP 200) and every
+      // quoted phrase in the reasoning found VERBATIM in the cited article — Kalis's "the more cash
+      // we have, the more we can do", Malakie's "The surest way to get a unit is to get a unit",
+      // Krintzman's "Absolutely not", Roche's "We don't need anybody's permission", Laredo seconding
+      // Lipof's motion, Baker moving BERDO on 27 November 2024. The landing-page ruling has not
+      // been overridden; its premise no longer holds.
+      { label: 'Newton',      browseGovernmentList: ['2545560'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Quincy',      browseGovernmentList: ['2555745'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Somerville',  browseGovernmentList: ['2562535'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Springfield', browseGovernmentList: ['2567000'], browseStateAbbrev: 'MA', hasContext: true },
-      { label: 'Waltham',     browseGovernmentList: ['2572600'], browseStateAbbrev: 'MA', hasContext: false },
+      // hasContext flipped TRUE 2026-10-06. Like Carson, Waltham carried no comment and had never
+      // been judged. 4 of 16 seated, 8 rows, all one topic (housing) — but the evidence class is
+      // the strongest in the audit: a RECORDED ROLL CALL in the city's own minutes.
+      // 🔑 THE TALLY IS IN A PLACE YOU WILL NOT FIND BY SEARCHING THE OBVIOUS HEADING. The
+      // Affordable Housing Zoning Amendment passed its third and final reading on 2026-06-22 under
+      // **Tabled Items**, not under Ordinances and Rules — whose three 13-0-1-1 roll calls that
+      // same night were RCI overlay districts for named developers. Reading the first matching
+      // tally would have credited the wrong vote. Bradley-MacArthur, Brasco, King and LeBlanc are
+      // all listed in favour; "13-0" in the prose is the yes-no part of a 13-0-1-1 (1 absent,
+      // 1 presiding), which is fair.
+      // ⚠ ONE SOFT SPOT, recorded rather than fixed: the rows describe the ordinance as "Article IX
+      // Section 9.1" requiring 15% at 80% AMI and 5% at 50% AMI. Those specifics are in NEITHER
+      // cited source — uncited background. The chair rests on the vote, which is sourced; the
+      // description is not. Worth citing properly on the next pass.
+      // 🔑 Tim King's second citation is the 2026-01-04 INAUGURATION minutes, which state no
+      // position — it is there to date his tenure ("took office January 4, 2026"), which is a
+      // legitimate use. Do not flag it as a landing-page defect; it was checked.
+      { label: 'Waltham',     browseGovernmentList: ['2572600'], browseStateAbbrev: 'MA', hasContext: true },
       { label: 'Worcester',   browseGovernmentList: ['2582000'], browseStateAbbrev: 'MA', hasContext: true },
     ],
   },
@@ -354,6 +392,14 @@ export const COVERAGE_STATES = [
   },
   {
     name: 'Utah', abbrev: 'UT',
+    // 🔴 EIGHT CHIPS FLIPPED TRUE → FALSE 2026-10-06: Layton, Lehi, Ogden, Provo, Sandy,
+    // St. George, West Jordan and West Valley City were claiming compass coverage that has never
+    // existed. Measured twice, two different ways: zero rows in inform.politician_answers for any
+    // CURRENTLY SEATED official, and then zero for any politician EVER linked to those governments
+    // through office_terms — so this is not a stale-roster artifact, there was never anything.
+    // Found while measuring the purple cohort to judge the grey chips, not by a detector.
+    // ⚠ Orem (7 of 7, 55 rows) and Salt Lake City (7 of 8, 70 rows) are genuinely covered and keep
+    // their chips. The Utah block carries no other comment; it was seeded flags-first.
     areas: [
       { label: 'Alpine', browseGovernmentList: ['4900540'], browseStateAbbrev: 'UT' },
       { label: 'American Fork', browseGovernmentList: ['4901310'], browseStateAbbrev: 'UT' },
@@ -364,33 +410,33 @@ export const COVERAGE_STATES = [
       { label: 'Eagle Mountain', browseGovernmentList: ['4920810'], browseStateAbbrev: 'UT' },
       { label: 'Herriman', browseGovernmentList: ['4934970'], browseStateAbbrev: 'UT' },
       { label: 'Holladay', browseGovernmentList: ['4936070'], browseStateAbbrev: 'UT' },
-      { label: 'Layton', browseGovernmentList: ['4943660'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Lehi', browseGovernmentList: ['4944320'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Layton', browseGovernmentList: ['4943660'], browseStateAbbrev: 'UT', hasContext: false },
+      { label: 'Lehi', browseGovernmentList: ['4944320'], browseStateAbbrev: 'UT', hasContext: false },
       { label: 'Lindon', browseGovernmentList: ['4945090'], browseStateAbbrev: 'UT' },
       { label: 'Mapleton', browseGovernmentList: ['4947950'], browseStateAbbrev: 'UT' },
       { label: 'Midvale', browseGovernmentList: ['4949710'], browseStateAbbrev: 'UT' },
       { label: 'Millcreek', browseGovernmentList: ['4950150'], browseStateAbbrev: 'UT' },
       { label: 'Murray', browseGovernmentList: ['4953230'], browseStateAbbrev: 'UT' },
-      { label: 'Ogden', browseGovernmentList: ['4955980'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Ogden', browseGovernmentList: ['4955980'], browseStateAbbrev: 'UT', hasContext: false },
       { label: 'Orem', browseGovernmentList: ['4957300'], browseStateAbbrev: 'UT', hasContext: true },
       { label: 'Payson', browseGovernmentList: ['4958730'], browseStateAbbrev: 'UT' },
       { label: 'Pleasant Grove', browseGovernmentList: ['4960930'], browseStateAbbrev: 'UT' },
-      { label: 'Provo', browseGovernmentList: ['4962470'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Provo', browseGovernmentList: ['4962470'], browseStateAbbrev: 'UT', hasContext: false },
       { label: 'Riverton', browseGovernmentList: ['4964340'], browseStateAbbrev: 'UT' },
       { label: 'Salem', browseGovernmentList: ['4965770'], browseStateAbbrev: 'UT' },
       { label: 'Salt Lake City', browseGovernmentList: ['4967000'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'Sandy', browseGovernmentList: ['4967440'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'Sandy', browseGovernmentList: ['4967440'], browseStateAbbrev: 'UT', hasContext: false },
       { label: 'Santaquin', browseGovernmentList: ['4967770'], browseStateAbbrev: 'UT' },
       { label: 'Saratoga Springs', browseGovernmentList: ['4967825'], browseStateAbbrev: 'UT' },
       { label: 'South Jordan', browseGovernmentList: ['4970850'], browseStateAbbrev: 'UT' },
       { label: 'South Salt Lake', browseGovernmentList: ['4971070'], browseStateAbbrev: 'UT' },
       { label: 'Spanish Fork', browseGovernmentList: ['4971290'], browseStateAbbrev: 'UT' },
       { label: 'Springville', browseGovernmentList: ['4972280'], browseStateAbbrev: 'UT' },
-      { label: 'St. George', browseGovernmentList: ['4965330'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'St. George', browseGovernmentList: ['4965330'], browseStateAbbrev: 'UT', hasContext: false },
       { label: 'Taylorsville', browseGovernmentList: ['4975360'], browseStateAbbrev: 'UT' },
       { label: 'Vineyard', browseGovernmentList: ['4980420'], browseStateAbbrev: 'UT' },
-      { label: 'West Jordan', browseGovernmentList: ['4982950'], browseStateAbbrev: 'UT', hasContext: true },
-      { label: 'West Valley City', browseGovernmentList: ['4983470'], browseStateAbbrev: 'UT', hasContext: true },
+      { label: 'West Jordan', browseGovernmentList: ['4982950'], browseStateAbbrev: 'UT', hasContext: false },
+      { label: 'West Valley City', browseGovernmentList: ['4983470'], browseStateAbbrev: 'UT', hasContext: false },
     ],
   },
   {
@@ -592,10 +638,18 @@ export const COVERAGE_STATES = [
   {
     name: 'Florida', abbrev: 'FL',
     areas: [
-      // hasContext FALSE for all three: rosters and banners are in place, but ZERO
-      // compass rows exist for any of their officials as of 2026-09-11. These have
-      // never been researched — which is not the same thing as having been researched
-      // and found blank — so they claim no coverage until a stance pass runs.
+      // hasContext FALSE for all three. The 2026-09-11 reason — "ZERO compass rows exist for any
+      // of their officials" — is STALE for two of them as of 2026-10-06, so it is restated here
+      // rather than left to mislead the next reader:
+      //   Bradenton  1 of 6 seated (Lisa Gonzalez Moore, local environment, The Bradenton Times)
+      //   Miami      1 of 6 seated (Eileen Higgins, local immigration, Miami New Times)
+      //   Tallahassee 0 of 5 — still literally zero, the original wording still fits.
+      // ⚠ Those two rows are NOT a Florida stance pass. Both were created 2026-10-06 as spillover
+      // from the Charlotte/Duluth/Saint Paul pass (38 rows that day, 35 of them in those three
+      // cities). Both sources were fetched and both name their subject.
+      // 🔴 Operator ruling 2026-10-06: one covered official out of six is not city coverage, so
+      // these stay grey on DEPTH. Same call as Beverly Hills. Do not re-grey them citing "zero
+      // rows" — that is no longer true and a wrong reason sends the next reader somewhere wrong.
       { label: 'Bradenton',   browseGovernmentList: ['1207950'], browseStateAbbrev: 'FL', hasContext: false },
       { label: 'Miami',       browseGovernmentList: ['1245000'], browseStateAbbrev: 'FL', hasContext: false },
       { label: 'Tallahassee', browseGovernmentList: ['1270600'], browseStateAbbrev: 'FL', hasContext: false },
@@ -772,8 +826,18 @@ export const COVERAGE_STATES = [
       // ⚠ hasContext FALSE on a margin worth writing down, because the next person to
       // measure will find rows and think they are new: exactly ONE Detroit officeholder
       // carries any — Council Member At-Large Mary Waters, 5 rows across two seasons
-      // (3 dated 2026-08-26, 2 dated 2026-09-03). ALL FIVE HAVE NULL write_in_text: a
-      // bare value with no reasoning a reader can check.
+      // (3 dated 2026-08-26, 2 dated 2026-09-03).
+      // 🔴 CORRECTION 2026-10-06 — THE REASON BELOW WAS WRONG, AND IT WAS WRONG IN THE EXACT WAY
+      // THAT CAUSED #188. This comment used to read "ALL FIVE HAVE NULL write_in_text: a bare
+      // value with no reasoning a reader can check." That is the WRONG COLUMN. Reasoning lives in
+      // `inform.politician_context` (politician_id, topic_id, season_id) → reasoning/sources, and
+      // all five rows have it: 417–621 characters each, plus six distinct sources — BridgeDetroit
+      // ×3, Detroit Free Press, Michigan Chronicle, Yahoo News. Four resolve 200 live; the Free
+      // Press (402 paywall) and Michigan Chronicle (403 bot block) are both in the Wayback Machine
+      // and were read there — the freep snapshot is dated 2024-07-31, the same day as the cited
+      // URL, and it carries the quoted headline. Nothing here is fabricated.
+      // ⚠ So the 2026-09-29 line below about "no evidence on any of it" is retracted. What
+      // survives, and what still keeps the chip grey, is DEPTH and SCOPE:
       //
       // 🔑 AND THE 5 ROWS ARE ONLY 3 DISTINCT TOPICS, TWO OF THEM FEDERAL-SCOPE:
       // Affordable Housing (2 -> 3 across the two seasons), Same-Sex Marriage (2 -> 3)
@@ -785,10 +849,11 @@ export const COVERAGE_STATES = [
       // supabase-local exposes joins an answer to its source — so do not guess at it,
       // and do not read these 5 rows as a Detroit stance pass having happened.
       //
-      // That is the Newton/Lowell standard, and it did not clear it — 1 of 18 seats,
-      // one local topic in the whole set, and no evidence on any of it. Purple would
-      // overstate the city by eighteenfold. Operator confirmed 2026-09-29: no Detroit
-      // stance pass has run.
+      // That is the Newton/Lowell standard, and it did not clear it — 1 of 18 seats and one local
+      // topic in the whole set. Purple would overstate the city by eighteenfold. Operator confirmed
+      // 2026-09-29: no Detroit stance pass has run. Re-confirmed 2026-10-06 on the evidence above:
+      // the rows are SOUND, the COVERAGE is not. Those are two different questions and this chip
+      // turns on the second one.
       { label: 'Detroit', browseGovernmentList: ['2622000'], browseStateAbbrev: 'MI', hasContext: false },
     ],
   },
