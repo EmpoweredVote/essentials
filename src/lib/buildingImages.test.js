@@ -512,3 +512,93 @@ describe('LA by-district seven — collision and desktop-band focus', () => {
     expect(getBuildingImages('Diamond Bar', 'CA').focus.Local).toBeNull();
   });
 });
+
+/**
+ * The LA County 55 (2026-10-06) — the El Monte collision, and the seven banners.
+ *
+ * EV-Accounts CA_0299 gave 55 city governments the geo_id that makes them nameable by a browse
+ * URL, so all 55 now carry chips. Seven of them (the 50k+ cities) have a banner; the other 48
+ * deliberately take the California state shot.
+ *
+ * 🔴 THE COLLISION, AND WHY match:'exact' ON 'el monte' IS LOAD-BEARING. CURATED_LOCAL matches
+ * by SUBSTRING, so the moment "South El Monte" became a coverage label it resolved to
+ * cities/el-monte.jpg — publishing Oran Viriyincy's photograph of EL MONTE under a different
+ * city. Measured, not reasoned about: a matcher run over all 55 new labels before the fix found
+ * exactly one inheriting a banner, and it was this one. Removing match:'exact' from 'el monte'
+ * brings it straight back. Same class as the Portland ME and Fairview TX mis-credits that
+ * banners.test.js pins, and licence attribution is what it breaks.
+ *
+ * Unlike 'south pasadena', length cannot save this one: 'el monte' is SHORTER than
+ * "south el monte", so longest-key-first still reaches it. Exactness is the only fix available
+ * short of giving South El Monte its own banner, and it has no usable photograph.
+ */
+describe('LA County 55 — the El Monte collision and the seven banners', () => {
+  const key = (r) => (r.Local ? r.Local.split('/').slice(-2).join('/') : null);
+
+  const WITH_BANNERS = [
+    ['Huntington Beach', 'cities/huntington-beach.jpg', null],
+    ['Montebello', 'cities/montebello.jpg', null],
+    ['Monterey Park', 'cities/monterey-park.jpg', null],
+    ['Pico Rivera', 'cities/pico-rivera.jpg', null],
+    ['Redondo Beach', 'cities/redondo-beach.jpg', '50% 12%'],
+    ['Lakewood', 'cities/lakewood.jpg', '50% 100%'],
+    ['Lynwood', 'cities/lynwood.jpg', '50% 92%'],
+  ];
+
+  it('does NOT publish the El Monte photograph under South El Monte', () => {
+    expect(key(getBuildingImages('South El Monte', 'CA'))).not.toBe('cities/el-monte.jpg');
+    expect(key(getBuildingImages('South El Monte', 'CA'))).toBeNull();
+  });
+
+  it('leaves El Monte itself on its own banner', () => {
+    expect(key(getBuildingImages('El Monte', 'CA'))).toBe('cities/el-monte.jpg');
+  });
+
+  it('keeps El Monte exact against any other compound, stateless call included', () => {
+    // A missing caller state is match-allowed, so the state scope is not what separates these.
+    expect(key(getBuildingImages('South El Monte', null))).toBeNull();
+    expect(key(getBuildingImages('El Monte', null))).toBe('cities/el-monte.jpg');
+  });
+
+  it('resolves each of the seven banner cities to its OWN asset', () => {
+    for (const [city, asset] of WITH_BANNERS) {
+      expect(key(getBuildingImages(city, 'CA')), city).toBe(asset);
+    }
+  });
+
+  it('carries the focus that keeps each subject inside the 6:1 desktop band', () => {
+    for (const [city, , focus] of WITH_BANNERS) {
+      expect(getBuildingImages(city, 'CA').focus.Local, city).toBe(focus);
+    }
+  });
+
+  // ⚠ Baldwin Park and Paramount have NO banner ON PURPOSE. Commons has no usable photograph
+  // for either: Baldwin Park's file titled "City Hall Complex" frames a retail strip at every
+  // focus and its station photo is 640x400; Paramount has two files in category, neither usable,
+  // and the only wider hit shows identifiable faces of private individuals. This test exists so
+  // that a future "fix" has to be a deliberate one with a real source behind it.
+  it('leaves Baldwin Park and Paramount on the state shot, deliberately', () => {
+    expect(key(getBuildingImages('Baldwin Park', 'CA'))).toBeNull();
+    expect(key(getBuildingImages('Paramount', 'CA'))).toBeNull();
+  });
+
+  // THE NEGATIVES ARE THE POINT. Every one of these names exists elsewhere, and each entry is
+  // state-scoped CA.
+  it('does NOT hand any of the seven to another state', () => {
+    for (const [city, state] of [
+      ['Huntington Beach', 'NY'], ['Montebello', 'NY'], ['Lakewood', 'CO'],
+      ['Lakewood', 'OH'], ['Lynwood', 'WA'], ['Redondo Beach', 'FL'],
+    ]) {
+      expect(key(getBuildingImages(city, state)), city + ', ' + state).toBeNull();
+    }
+  });
+
+  // The control is chosen, not generic: Huntington Park is a real LA County city with no entry
+  // whose name STARTS with "Huntington", so it also proves the new 'huntington beach' key does
+  // not over-reach onto a neighbour. (A first attempt used "Bellflower Heights" and failed — it
+  // contains the existing 'bellflower' key, which is the substring behaviour these tests exist
+  // to police.)
+  it('control: a real LA County city with no entry is null, so these can fail', () => {
+    expect(key(getBuildingImages('Huntington Park', 'CA'))).toBeNull();
+  });
+});

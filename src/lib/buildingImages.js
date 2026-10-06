@@ -901,7 +901,14 @@ const CURATED_LOCAL = {
   hawthorne: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/hawthorne.jpg' },
   bellflower: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bellflower.jpg' },
   alhambra: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/alhambra.jpg' },
-  'el monte': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-monte.jpg' },
+  // 🔴 match:'exact' ADDED 2026-10-06 AND IT IS LOAD-BEARING. CURATED_LOCAL matches by substring,
+  // so the moment South El Monte got a coverage chip the label "South El Monte" began resolving
+  // here — publishing Oran Viriyincy's photograph of EL MONTE under a different city's name. Same
+  // class as the Portland ME and Fairview TX mis-credits in banners.test.js, and licence
+  // attribution is what it breaks. South El Monte is one of the 46 with no banner of its own, so
+  // exactness is the whole fix: it falls through to the California state shot like its neighbours.
+  // Verified by running the matcher over every coverage label before and after.
+  'el monte': { state: 'CA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-monte.jpg' },
   'south gate': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/south-gate.jpg' },
   'san diego': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/san-diego.jpg' },
   fremont: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fremont.jpg' },
@@ -954,6 +961,41 @@ const CURATED_LOCAL = {
   'la verne': { state: 'CA', focus: '50% 25%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/la-verne.jpg' },
   'diamond bar': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/diamond-bar.jpg' },
   glendora: { state: 'CA', focus: '50% 0%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendora.jpg' },
+  // [2026-10-06 LA County 55: EV-Accounts CA_0299 gave 55 city governments the geo_id that makes
+  //  them nameable by a browse URL. All 55 get a chip; these SEVEN — the ones at 50k+ — get a
+  //  banner. The other 48 take states/CA.jpg deliberately, which is already what an address-routed
+  //  reader of those cities sees today.]
+  //
+  // 🔴 Only ONE of these nine candidates was right at the default centre band. Six lost their
+  // subject there and two had no usable photograph at all. Certify the 6:1 band, never the asset.
+  //   huntington-beach - an AERIAL was rejected first (standing rule); this is the pier at ground level
+  //   montebello       - the Armenian Genocide Memorial was rejected: mostly sky at 6:1, and a
+  //                      sombre subject for a civic-pride banner
+  //   monterey-park    - a blank stucco wall was rejected: unidentifiable, the named failure mode
+  //   redondo-beach    - centred, the band sliced "REDONDO BEACH" off and left only "THE PIER"
+  //   lakewood         - centred, the band was tree canopy; the building sits at the asset's base
+  //   lynwood          - centred, the band was flat grey sky
+  //
+  // ⚠ NO ENTRY for Baldwin Park (68,806) or Paramount (51,072), and that is a finding, not an
+  // omission. Baldwin Park's Commons file titled "City Hall Complex" frames a retail strip at every
+  // focus and its station photo is 640x400; Paramount has two files in category, neither usable,
+  // and the only wider hit shows identifiable faces of private individuals. Both take the state
+  // shot. Do not add a key for either without a new source.
+  //
+  //   huntington-beach - Ruby's diner at the end of Huntington Beach Pier, sunset | Mike Peel | CC BY-SA 4.0
+  //   montebello       - City of Montebello civic building and a Montebello Bus Lines coach | City of Montebello | Public domain
+  //   monterey-park    - Monterey Park Civic Center | Nandaro | CC BY-SA 3.0
+  //   pico-rivera      - Pico Rivera City Hall | Trackinfo | CC BY-SA 3.0
+  //   redondo-beach    - The REDONDO BEACH / THE PIER gateway sign | Ken Lund | CC BY-SA 2.0
+  //   lakewood         - Lakewood City Hall | Proarte | CC BY-SA 4.0
+  //   lynwood          - Lynwood City Hall | Андрей Романенко | CC BY-SA 4.0
+  'huntington beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/huntington-beach.jpg' },
+  montebello: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/montebello.jpg' },
+  'monterey park': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/monterey-park.jpg' },
+  'pico rivera': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pico-rivera.jpg' },
+  'redondo beach': { state: 'CA', focus: '50% 12%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/redondo-beach.jpg' },
+  lakewood: { state: 'CA', focus: '50% 100%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lakewood.jpg' },
+  lynwood: { state: 'CA', focus: '50% 92%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/lynwood.jpg' },
   // Massachusetts city banners (Wikimedia Commons; state-scoped so 'springfield'
   // does not collide with Springfield, MO). Batch 1 shipped 2026-07-06:
   //   quincy      - Marina Bay waterfront & clock tower | Sswonk | CC BY 3.0
