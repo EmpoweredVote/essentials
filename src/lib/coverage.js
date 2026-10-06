@@ -560,10 +560,19 @@ export const COVERAGE_STATES = [
       // Both complete: Asheville 7 of 7 stanced (27 rows), Durham 7 of 7 (14 rows).
       { label: 'Asheville', browseGovernmentList: ['3702140'], browseStateAbbrev: 'NC', hasContext: true },
       // Charlotte added 2026-09-29 (Knight NC-3 seeded it and its banner landed 2026-09-17,
-      // but it never got a chip). 12 of 12 seated. hasContext FALSE: measured 2026-09-29,
-      // zero of the 12 hold any row in inform.politician_answers — unlike its two
-      // NC siblings above, which is why the flag differs inside one state block.
-      { label: 'Charlotte', browseGovernmentList: ['3712000'], browseStateAbbrev: 'NC', hasContext: false },
+      // but it never got a chip). 12 of 12 seated.
+      //
+      // 🔴 hasContext FLIPPED TRUE 2026-10-06, AND THE OLD COMMENT HERE WAS WRONG TWICE.
+      // It said "zero of the 12 hold any row in inform.politician_answers" — true when written,
+      // stale by 10-06: 4 of the 12 now hold 5 rows across 4 topics. It was then defended on a
+      // re-check that read `politician_answers.write_in_text`, WHICH IS NOT WHERE REASONING LIVES.
+      // Reasoning and sources live in **inform.politician_context (politician_id, topic_id,
+      // season_id) → reasoning, sources** — the table Citations.jsx renders under "Why this
+      // position?", as CLAUDE.md states. Measured there: all 5 rows carry reasoning AND at least
+      // one source URL, e.g. Dimple Ajmera on data centres, sourced to an April 2026 WFAE
+      // interview. Checking write_in_text and concluding "no reasoning" is a FALSE NEGATIVE that
+      // can grey out a properly researched city.
+      { label: 'Charlotte', browseGovernmentList: ['3712000'], browseStateAbbrev: 'NC', hasContext: true },
       { label: 'Durham',    browseGovernmentList: ['3719000'], browseStateAbbrev: 'NC', hasContext: true },
     ],
   },
@@ -774,12 +783,21 @@ export const COVERAGE_STATES = [
     name: 'Minnesota', abbrev: 'MN',
     areas: [
       // Knight slice 5. Both banners certified 2026-09-16, both chips missing until now.
-      { label: 'Duluth',     browseGovernmentList: ['2717000'], browseStateAbbrev: 'MN', hasContext: false },
+      //
+      // 🔴 BOTH FLIPPED TRUE 2026-10-06. They shipped false on 09-29 with no stance measurement
+      // recorded at all — false was the default, not a finding. Measured against production on
+      // 10-06 in **inform.politician_context**, which is where reasoning and sources live
+      // (keyed politician_id, topic_id, season_id), NOT politician_answers.write_in_text:
+      //   Duluth      9 of 10 seated, 18 rows, 18 with reasoning, 18 with a source URL
+      //   Saint Paul  8 of 8  seated, 12 rows, 12 with reasoning, 12 with a source URL
+      // Not one exception in either city. These are among the best-covered local rosters in the
+      // file and were rendering grey.
+      { label: 'Duluth',     browseGovernmentList: ['2717000'], browseStateAbbrev: 'MN', hasContext: true },
       // ⚠ 'Saint Paul' is ALSO a chip in the Texas block (Saint Paul, TX — 4864220).
       // Nothing breaks: buildingImages is state-scoped, so the 'saint paul' key resolves
       // MN here and the TX town keys separately, and the chips live under different
       // state cards. Do not "de-duplicate" these two labels into one.
-      { label: 'Saint Paul', browseGovernmentList: ['2758000'], browseStateAbbrev: 'MN', hasContext: false },
+      { label: 'Saint Paul', browseGovernmentList: ['2758000'], browseStateAbbrev: 'MN', hasContext: true },
     ],
   },
   {
