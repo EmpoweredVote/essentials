@@ -9,6 +9,7 @@ import {
 } from '../lib/api';
 import { LegislativeRecord } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
+import LegiScanAttribution from '../components/LegiScanAttribution';
 
 function LegislativeRecordPage() {
   const { id } = useParams();
@@ -70,6 +71,7 @@ function LegislativeRecordPage() {
             politicianName={polName}
           />
         </div>
+        <LegiScanAttribution bills={bills} votes={votes} />
       </main>
     </div>
     </Layout>
