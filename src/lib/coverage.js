@@ -1044,10 +1044,25 @@ export const COVERAGE_COUNTIES = [
   { label: "St. Mary's County", browseGovernmentList: ['24037'], browseStateAbbrev: 'MD' },
   { label: 'Greene County', browseGovernmentList: ['29077'], browseStateAbbrev: 'MO', hasContext: true },
   // Deschutes County (2026-07-24 Bend deep seed): 3 at-large commissioners + 4 countywide row
-  // officers (Clerk, Assessor, Treasurer, Sheriff). No hasContext yet — the seeded compass
-  // stances belong to 2026 CANDIDATES for county seats, not to sitting officeholders, so
-  // claiming context here would not be DB-honest.
-  { label: 'Deschutes County', browseGovernmentList: ['41017'], browseStateAbbrev: 'OR' },
+  // officers (Clerk, Assessor, Treasurer, Sheriff).
+  // The original note said context would not be DB-honest because the seeded stances belonged to
+  // 2026 CANDIDATES rather than sitting officeholders. ✅ THAT IS NO LONGER THE CASE and the chip
+  // is TRUE as of 2026-10-06: a research pass on 2026-08-26/09-03 put 15 rows on all THREE sitting
+  // commissioners — DeBone, Adair and Chang (3 of 7 seated; the four row officers hold none).
+  // 🔑 Every source fetched and read, 2026-10-06. The two strongest are the officials' OWN WORDS:
+  // DeBone's four rows come from his official May 2026 county voters'-pamphlet statement, and
+  // Chang's environment row from a Bend Bulletin guest column he SIGNED — byline 'By Phil Chang',
+  // closing 'Phil Chang is a Deschutes County Commissioner... All views expressed in this piece are
+  // his own.' ⚠ Check that byline before reusing it: the headline is 'DeBone's legacy', so it reads
+  // at a glance like a piece ABOUT DeBone rather than BY Chang.
+  // The Thornburgh resort row is a recorded board vote, confirmed in the article text: 'Commissioners
+  // Tony DeBone and Patti Adair backed the resort, with commissioner Phil Chang voting against.'
+  // ⚠ WORTH KNOWING BEFORE YOU READ ADAIR'S ROWS: 3 of her 5 (deportation, taxes, voting-rights)
+  // rest on her 2026 CONGRESSIONAL campaign for OR-05, not on county business, and the reasoning
+  // says so in its own first word ('CONGRESSIONAL campaign:'). They are her own stated positions and
+  // no `office_scope` restricts those topics, so they are not defects — but they are the reason this
+  // county's topic mix looks federal in places. Her other two are county record.
+  { label: 'Deschutes County', browseGovernmentList: ['41017'], browseStateAbbrev: 'OR', hasContext: true },
   { label: 'Multnomah County', browseGovernmentList: ['41051'], browseStateAbbrev: 'OR' },
   { label: 'Washington County, OR', browseGovernmentList: ['41067'], browseStateAbbrev: 'OR', hasContext: true },
   { label: 'Box Elder County', browseGovernmentList: ['49003'], browseStateAbbrev: 'UT' },
@@ -1145,8 +1160,15 @@ export const COVERAGE_COUNTIES = [
   // starts a fresh elected term 2027-01-01, so this entry needs a look in January.
   // The ~30 district/county/probate court seats, 5 Justices of the Peace and 5 Constables are
   // NOT seeded yet — deliberately out of wave 1.
-  // hasContext FALSE: no Travis County officeholder holds a compass chair yet. Stance work was
-  // scoped to the 11 Austin CITY seats and has not run.
+  // hasContext was FALSE on the note 'no Travis County officeholder holds a compass chair yet;
+  // stance work was scoped to the 11 Austin CITY seats and has not run'. ✅ FLIPPED TRUE 2026-10-06
+  // — it has run since. A pass on 2026-08-26 put 8 rows on 6 of the 12 seated officials: County
+  // Judge Andy Brown, Commissioners Howard, Shea and Travillion, County Attorney Delia Garza and
+  // DA José Garza, across six genuinely COUNTY-scope topics (childcare, jail capacity,
+  // homelessness, climate, economic development).
+  // 🔑 All nine sources fetched and read 2026-10-06, all HTTP 200: two Travis County press releases
+  // (primary), six Austin Monitor pieces, and the DA office's own Special Initiatives page, which
+  // does carry the Conviction Integrity Unit and expunction fairs the reasoning cites.
   // ⚠ Precinct boundaries are not loaded, so an in-county address returns all four commissioners
   // rather than its own — the same over-inclusive shape as Tarrant/Collin/Kitsap above.
   // ⚠ geo_id 48453 is unique, but 48015 (Austin COUNTY, a different place) is shared with TX SD15
@@ -1154,7 +1176,7 @@ export const COVERAGE_COUNTIES = [
   // ⚠ This entry gives cities/travis-county.jpg (Hamilton Pool) its browse label, since all 12
   // county offices carry representing_city = NULL. Its city, Austin, is keyed off
   // representing_city='Austin' instead — do NOT add Austin here.
-  { label: 'Travis County', browseGovernmentList: ['48453'], browseStateAbbrev: 'TX', hasContext: false },
+  { label: 'Travis County', browseGovernmentList: ['48453'], browseStateAbbrev: 'TX', hasContext: true },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on
