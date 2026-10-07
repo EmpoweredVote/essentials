@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchPolitician } from '../lib/api';
 import { publicFetch } from '../lib/auth';
 import { Layout } from '../components/Layout';
+import { formatSourceDate } from '../lib/sourceDate';
 
 function formatVerifiedDate(isoString) {
   if (!isoString) return '';
@@ -12,6 +13,7 @@ function formatVerifiedDate(isoString) {
 }
 
 function CitationItem({ citation }) {
+  const sourceDate = formatSourceDate(citation.source_date, citation.source_date_precision);
   return (
     <div className="mb-4">
       <div className="flex items-center gap-2 mb-1">
@@ -21,6 +23,11 @@ function CitationItem({ citation }) {
         >
           {citation.domain}
         </span>
+        {sourceDate && (
+          <span className="text-xs text-gray-500 dark:text-gray-400 font-[Manrope]">
+            {sourceDate}
+          </span>
+        )}
         {citation.verified_at && (
           <span className="text-xs text-gray-500 dark:text-gray-400 font-[Manrope]">
             Verified {formatVerifiedDate(citation.verified_at)}
