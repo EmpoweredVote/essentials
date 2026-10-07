@@ -602,3 +602,32 @@ describe('LA County 55 — the El Monte collision and the seven banners', () => 
     expect(key(getBuildingImages('Huntington Park', 'CA'))).toBeNull();
   });
 });
+
+describe('WA third pass — Duvall and Redmond (2026-10-06 deep seed)', () => {
+  it('Duvall resolves to its own asset, and carries a focus', () => {
+    const r = getBuildingImages('Duvall', 'WA');
+    expect(JSON.stringify(r)).toContain('cities/duvall.jpg');
+    // The focus is load bearing here: at the default 50% the "DUVALL LIBRARY"
+    // signboard — the only thing in frame that names the town — is clipped by
+    // the top edge of the 6/1 desktop band.
+    expect(JSON.stringify(r)).toContain('50% 25%');
+  });
+
+  it('Redmond resolves to its own asset', () => {
+    expect(JSON.stringify(getBuildingImages('Redmond', 'WA'))).toContain('cities/redmond.jpg');
+  });
+
+  // Redmond, Oregon is a real city and is not seeded today. The key is state-scoped
+  // so that it keys separately if it ever is, the way the two Saint Pauls already do.
+  it('a Redmond in Oregon does NOT pick up the Washington asset', () => {
+    expect(JSON.stringify(getBuildingImages('Redmond', 'OR'))).not.toContain('cities/redmond.jpg');
+  });
+
+  // Duvall sits in the same river valley as King County's Snoqualmie Falls banner,
+  // and both are WA cities, so this guards the substring match from bleeding.
+  it('Duvall does not pick up King County or Seattle', () => {
+    const s = JSON.stringify(getBuildingImages('Duvall', 'WA'));
+    expect(s).not.toContain('king-county.jpg');
+    expect(s).not.toContain('cities/seattle.jpg');
+  });
+});

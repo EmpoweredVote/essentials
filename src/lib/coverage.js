@@ -609,6 +609,34 @@ export const COVERAGE_STATES = [
       // evidence most of the remaining spokes for all seven at once.
       // It now HAS a curated banner — buildingImages 'bainbridge island'.
       { label: 'Bainbridge Island', browseGovernmentList: ['5303736'], browseStateAbbrev: 'WA', hasContext: true },
+      // Duvall + Redmond (2026-10-06 deep seed, EV-Accounts CC_0190/CC_0191/CC_0192).
+      // Both are King County cities; the county and the Washington legislature were already
+      // seeded, so these two chips complete the city layer rather than start it.
+      // 8 offices each, 8 of 8 seated on dated terms, routed by address off their own place
+      // geofence — both polygons were already loaded from census_tiger_2024, so no TIGER run
+      // was needed. Each city has a Mayor and seven AT-LARGE councilmembers by numbered
+      // position; neither has wards.
+      //
+      // hasContext is OMITTED on both, deliberately. The seed wrote no compass stances, and a
+      // purple chip would promise some. Flip it only when a stance pass actually runs.
+      //
+      // Headshots: 13 of the 16 carry one (CC_0192). Three do not, and all three are on
+      // purpose — Duvall Positions 2 and 3 (Conway and Taylor, both appointed in late 2026,
+      // for whom the city publishes no portrait) and Redmond Position 2 (Vivek Prakriya,
+      // whose official city portrait is black and white).
+      //
+      // ⚠ BOTH MAYORS ARE voting_powers = 'non_voting', so PoliticianCard prints the
+      // "Non-voting seat" pill on them and Profile prints the representation_note. That is
+      // correct and not a bug: RCW 35A.12.100 gives a Washington code-city mayor a vote only
+      // to break a tie, and none at all on ordinances, franchises, licences or money
+      // resolutions. Same shape as the Columbus GA and Macon-Bibb GA mayors already here.
+      //
+      // ⚠ 'Redmond' is also a city in OREGON (pop ~35k, Deschutes County) and is not seeded
+      // today. Nothing breaks if it is later: buildingImages is state-scoped, so the 'redmond'
+      // banner key resolves WA here and an OR Redmond would key separately, exactly as the two
+      // Saint Pauls already do. Do not "de-duplicate" the label if that day comes.
+      { label: 'Duvall', browseGovernmentList: ['5319035'], browseStateAbbrev: 'WA' },
+      { label: 'Redmond', browseGovernmentList: ['5357535'], browseStateAbbrev: 'WA' },
       { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA', hasContext: true },
     ],
   },
