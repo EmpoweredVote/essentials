@@ -458,6 +458,26 @@ export const COVERAGE_STATES = [
   },
   {
     name: 'Virginia', abbrev: 'VA',
+    // 🔴 THE SECOND GEOID ON EACH OF THESE IS DELIBERATE AND IT WORKS. DO NOT 'TIDY' IT AWAY.
+    // Virginia independent cities exist in TIGER at BOTH tiers — G4110 incorporated place AND
+    // G4020 county-equivalent — so Alexandria is 5101000 and 51510, Falls Church 5127200 and 51610.
+    // (Baltimore City has the same shape.) Only the PLACE code carries a row in
+    // essentials.governments; the county-equivalent code lives in essentials.geofence_boundaries.
+    //
+    // 🔑 MEASURED 2026-10-06 AGAINST THE LIVE BROWSE API, because 'no government row' looks like
+    // dead weight and is not: posting ONLY ['51510'] returns the full Alexandria result — 7 city
+    // officials, 9 school board, 7 statewide, 37 federal — identical to posting only ['5101000'].
+    // The control settles it: a made-up code ('99999' or '51999') returns 39 rows, federal and
+    // state tier alone. So the browse resolves these through geofence_boundaries, and the published
+    // /coverage.json advertises both codes to consumers that hold only one of them (per the
+    // 2026-09-12 registry-as-an-API note: a consumer joins on geoid and never geocodes).
+    // ⚠ Anything that validates these geoids must check governments OR geofence_boundaries. Testing
+    // `governments.geo_id` alone reports a false positive — the ev-accounts coverage-honesty gate
+    // did exactly that on its first day and was corrected rather than the data being changed.
+    // ⚠ Latent, recorded not fixed: geo_id '51510' is ALSO a G6350 boundary in state 19 (IOWA).
+    // Nothing leaks today because every browse here carries browseStateAbbrev 'VA' and the query
+    // qualifies by state — verified, 0 Iowa rows. A caller that drops the state would be a
+    // different story. Same family as the G4000/G6350 catch-all overlap bug.
     areas: [
       { label: 'Alexandria', browseGovernmentList: ['5101000', '51510'], browseStateAbbrev: 'VA', hasContext: true },
       { label: 'Falls Church', browseGovernmentList: ['5127200', '51610'], browseStateAbbrev: 'VA', hasContext: true },
