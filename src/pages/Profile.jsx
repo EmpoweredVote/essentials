@@ -9,6 +9,7 @@ import JudicialCompassSection from '../components/JudicialCompassSection';
 import BarEvaluationSection from '../components/BarEvaluationSection';
 import CampaignFinanceSection from '../components/CampaignFinance/CampaignFinanceSection';
 import VotingRecordSection from '../components/VotingRecord/VotingRecordSection';
+import LegiScanAttribution from '../components/LegiScanAttribution';
 import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import { useTheme } from '../hooks/useTheme';
@@ -281,6 +282,7 @@ function Profile() {
           <div className="mt-6">
             <VotingRecordSection politicianId={id} />
           </div>
+          <LegiScanAttribution bills={legislativeSummary?.recent_bills} votes={legislativeSummary?.recent_votes} />
           </>
         )}
       </main>
