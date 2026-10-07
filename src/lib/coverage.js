@@ -1088,16 +1088,28 @@ export const COVERAGE_COUNTIES = [
   // Commissioner-district and city-ward boundaries are loaded as REFERENCE geometry
   // only, so an in-county address returns all three commissioners rather than just
   // its own district — the same over-inclusive shape as Tarrant/Collin above.
-  // hasContext TRUE as of 2026-08-17 (EV-Accounts mig 1823), on a thin margin worth naming:
-  // exactly TWO Kitsap people hold a chair — Commissioner Katie Walters (Growth and Development
-  // Pace = 3) and sheriff candidate Brandon L. Myers (Public Safety Approach = 4), both from
-  // their own filed 2026 voters'-pamphlet statements. The Assessor, Auditor, Clerk and Treasurer
-  // are blank ON PURPOSE and should stay blank — they are administrative offices and none of the
-  // 22 local-scope topics applies to them.
+  // hasContext was TRUE from 2026-08-17 (EV-Accounts mig 1823) on a thin margin the comment named
+  // honestly: exactly TWO Kitsap people hold a chair — Commissioner Katie Walters (Growth and
+  // Development Pace = 3) and sheriff candidate Brandon L. Myers (Public Safety Approach = 4), both
+  // from their own filed 2026 voters'-pamphlet statements. The Assessor, Auditor, Clerk and
+  // Treasurer are blank ON PURPOSE and should stay blank — they are administrative offices and none
+  // of the 22 local-scope topics applies to them.
+  //
+  // ⬜ FLIPPED FALSE 2026-10-06, operator ruling, closing the last 1-of-N purple in the file.
+  // 🔑 THE OLD COMMENT WAS NOT WRONG — IT COUNTED A DIFFERENT THING. Two PEOPLE hold a chair, but
+  // only ONE OFFICEHOLDER does: Myers is a candidate and carries no office_terms row at all, so by
+  // the measure the chip actually makes — 'this government's officials have stances' — Kitsap is
+  // 1 of 9 seated, the same shape as the eleven city chips greyed in #191.
+  // ⚠ Checked before flipping, because the name invites it: there is a second `Brandon G. Myers` in
+  // the DB with a seat and no stance rows. NOT the same person and NOT a split record — he is a
+  // school board trustee in Inglewood Unified, CALIFORNIA. Do not merge them.
+  // ⚠ COVERAGE_COUNTIES is tree-shaken out of the browser bundle, so this flag changes nothing in
+  // this app's UI — it changes /coverage.json, which Treasury Tracker reads and which the
+  // ev-accounts `coverage honesty` gate checks. Verify it there, never by a bundle diff.
   // ⚠ This entry also gives cities/kitsap-county.jpg its only path to screen: all 9 county offices
   // carry representing_city = NULL, so the banner key resolves through browse_label alone.
   // Its city, Bainbridge Island, is a chip in COVERAGE_STATES — do NOT add it here.
-  { label: 'Kitsap County', browseGovernmentList: ['53035'], browseStateAbbrev: 'WA', hasContext: true },
+  { label: 'Kitsap County', browseGovernmentList: ['53035'], browseStateAbbrev: 'WA', hasContext: false },
   // Travis County TX (2026-08-18 Austin/Travis deep seed, EV-Accounts migs 1827-1831): 12 elected
   // executives — County Judge, four Commissioners, DA, County Attorney, Sheriff, Tax
   // Assessor-Collector, County Clerk, District Clerk, County Treasurer. All 12 seated on dated
