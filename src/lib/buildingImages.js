@@ -1463,6 +1463,43 @@ const CURATED_LOCAL = {
   // that does not depend on the caller passing a state at all.
   'bainbridge island': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/bainbridge-island.jpg' },
   'kitsap county': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/kitsap-county.jpg' },
+
+  // Washington, third pass: Duvall + Redmond (2026-10-06 deep seed, EV-Accounts
+  // CC_0190/CC_0191/CC_0192). Both are King County cities. Operator-certified
+  // 2026-10-06 from an artifact that rendered every candidate in the REAL 6/1
+  // desktop band WITH the mandatory dark overlay composited on — a band judged
+  // without that overlay is not the production render.
+  //   duvall  - Duvall Public Library, King County Library System | Joe Mabel | CC BY-SA 3.0
+  //   redmond - Drone view of downtown Redmond | Spicypepper999 | CC0
+  //
+  // 🔴 BOTH CARRY focus '50% 25%', AND FOR DUVALL IT IS LOAD BEARING. The library's
+  // "DUVALL LIBRARY" signboard is the only thing in the frame that names the town,
+  // and it sits ABOVE the centre band: at the default 50% the sign is clipped by the
+  // top edge, and at 75% or 100% it is gone entirely and the banner is anonymous
+  // windows and a book drop. 25% puts the sign in the upper third with the façade
+  // beneath it. Redmond was solved the same way — past 50% the aerial fills with a
+  // car park and a flat roof, while 25% holds the densest run of downtown blocks
+  // and the light-rail guideway.
+  //
+  // ⚠ ADJACENCY DECIDED DUVALL, not just availability. King County is already
+  // Snoqualmie Falls, and Duvall sits in that same river valley, so any valley or
+  // farmland frame would have read as a second cut of the county's banner. The
+  // library is the one candidate that is unmistakably the TOWN.
+  //
+  // ⚠ Commons has almost nothing for Duvall: a six-kilometre geosearch returned nine
+  // files wide enough to use and most of them are photographs of Earth taken from the
+  // ISS. The rejected alternative was a Cherry Valley dairy barn — characteristic, but
+  // with power lines across the sky and a road shoulder in the band. If a better frame
+  // ever exists, this is the entry to replace.
+  //
+  // ⚠ 'redmond' is state-scoped because Redmond, OREGON is a real city (Deschutes
+  // County) and is not seeded today. If it is later, it keys separately the way the two
+  // Saint Pauls already do. Do not widen this key.
+  //
+  // Both cities' 8 offices carry representing_city ('Duvall' / 'Redmond'), so unlike
+  // King and Kitsap these two keys resolve in ADDRESS mode as well as browse.
+  duvall: { state: 'WA', focus: '50% 25%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/duvall.jpg' },
+  redmond: { state: 'WA', focus: '50% 25%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/redmond.jpg' },
   // Florida — Knight program wave FL-7 (2026-08-30, operator-certified).
   // 🔴 match:'exact' is LOAD-BEARING. Substring matching would hand Miami's banner to
   // Miami Beach, Miami Gardens, Miami Lakes, Miami Shores, Miami Springs, North Miami and
