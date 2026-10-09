@@ -655,8 +655,46 @@ export const COVERAGE_STATES = [
       // today. Nothing breaks if it is later: buildingImages is state-scoped, so the 'redmond'
       // banner key resolves WA here and an OR Redmond would key separately, exactly as the two
       // Saint Pauls already do. Do not "de-duplicate" the label if that day comes.
-      { label: 'Duvall', browseGovernmentList: ['5319035'], browseStateAbbrev: 'WA' },
-      { label: 'Redmond', browseGovernmentList: ['5357535'], browseStateAbbrev: 'WA' },
+      //
+      // 🟣 REDMOND FLIPPED PURPLE 2026-10-07, on request, after reading the rows — which is what
+      // check:coverage-honesty requires before a flip, and the reason it only ever REPORTS an
+      // underclaim instead of failing it. Measured with that script's own query (seated officials
+      // via current_office_holders, holding an answer whose politician_context.reasoning is
+      // non-blank): Redmond is 5 covered of 8 seated, 10 rows, so it was sitting in the
+      // UNDERCLAIMED tier (grey at >= 3 covered officials). Well clear of both failure tiers —
+      // EMPTY_PURPLE (zero) and ONE_OFFICIAL_CITY (exactly one).
+      //
+      // The five are Mayor Birney and councilmembers Forsythe, Kritzer, Soni and Stuart, across
+      // three ladders: Public Safety Approach, Rent Regulation and Homelessness Response. SIX of
+      // the ten are roll-call votes by the member — Resolution No. 1560 / AM No. 22-113 (5-2,
+      // 2022-07-19) and Ordinance No. 3091 / AM No. 22-112, which created RMC Chapter 9.54 (6-1),
+      // two members apiece. Birney's single row names the SAME resolution but is her own statement
+      // as Mayor when the Council placed it on the ballot, NOT a vote — and could not be one, per
+      // the RCW 35A.12.100 note above. Soni's three quote her campaign platform.
+      // None carries bookkeeping prose.
+      // 🔑 Three of the six (Forsythe, Kritzer, Stuart) carry BYTE-IDENTICAL reasoning per ladder,
+      // because it is one roll call and they voted the same way. That is correct, not a copy-paste
+      // defect — but it is why "10 rows" overstates the independent evidence here: it rests on two
+      // instruments plus one platform.
+      //
+      // ⚠ DUVALL IS LEFT GREY AND THAT IS A JUDGEMENT, NOT AN OVERSIGHT. It measures 2 covered of
+      // 8 seated, which clears MIN_COVERED_OFFICIALS_CITY (2) and so would not FAIL as purple, but
+      // sits under UNDERCLAIM_REPORT_AT (3) and so is not reported as grey either. Two of eight is
+      // the Deschutes-rule shape. Flip it only on a ruling, with the rows read.
+      //
+      // ⚠ `residential-zoning` is LIVE in Duvall (Hernandez, from a 2025 Snoqualmie Valley Record
+      // questionnaire) and simply ABSENT in Redmond. Measured 2026-10-08: NO Redmond officeholder
+      // has a residential-zoning answer row at all — not a blank one, not a zero-value one. That is
+      // UNRESEARCHED, which is a different kind of nothing from a scope blank, and the two must not
+      // be written down as the same thing.
+      // 🔴 An earlier draft of this comment called it a SCOPE BLANK and explained it with
+      // RCW 36.70A.635(1)(b). Both halves were wrong. `compass_topics.office_scope` is NULL for
+      // residential-zoning, so the topic is unrestricted — and office_scope is a per-TOPIC column
+      // anyway, so it could not express "applies to Redmond but not Duvall" even if someone wanted
+      // it to. Two city councils in one county sit at the same tier. The ladder counts differ here
+      // because of what has been researched, not because of what applies.
+      { label: 'Duvall', browseGovernmentList: ['5319035'], browseStateAbbrev: 'WA', hasContext: false },
+      { label: 'Redmond', browseGovernmentList: ['5357535'], browseStateAbbrev: 'WA', hasContext: true },
       { label: 'Seattle', browseGovernmentList: ['5363000'], browseStateAbbrev: 'WA', hasContext: true },
     ],
   },
