@@ -230,7 +230,7 @@ export default function CandidateProfile() {
               )}
               {polId && (
                 <div className="mt-6">
-                  <CampaignFinanceSection politicianId={polId} />
+                  <CampaignFinanceSection politicianId={polId} politicianName={pol.full_name || `${pol.first_name} ${pol.last_name}`} />
                 </div>
               )}
             </>

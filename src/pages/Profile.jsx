@@ -277,7 +277,7 @@ function Profile() {
           <BarEvaluationSection judicialRecord={judicialRecord} />
           {isLegalPolitician && <LegalDonorActivitySection politicianId={id} />}
           <div className="mt-6">
-            <CampaignFinanceSection politicianId={id} />
+            <CampaignFinanceSection politicianId={id} politicianName={pol.first_name ? `${pol.first_name} ${pol.last_name}` : ''} />
           </div>
           <div className="mt-6">
             <VotingRecordSection politicianId={id} />

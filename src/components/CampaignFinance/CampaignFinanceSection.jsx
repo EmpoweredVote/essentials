@@ -65,7 +65,7 @@ function DataPendingBanner() {
  * Props:
  *   politicianId — politician UUID string
  */
-export default function CampaignFinanceSection({ politicianId }) {
+export default function CampaignFinanceSection({ politicianId, politicianName }) {
   const currentYear = new Date().getFullYear();
   const defaultCycle = String(currentYear % 2 === 0 ? currentYear : currentYear - 1);
   const [cycle, setCycle] = useState(defaultCycle);
@@ -111,7 +111,7 @@ export default function CampaignFinanceSection({ politicianId }) {
         </h2>
         <LocalUnavailableBanner />
         {hasOutsideSpending && (
-          <OutsideSpendingSection outsideSpending={summary.outside_spending} />
+          <OutsideSpendingSection outsideSpending={summary.outside_spending} politicianName={politicianName} />
         )}
       </section>
     );
@@ -128,7 +128,7 @@ export default function CampaignFinanceSection({ politicianId }) {
         </h2>
         <FiledReportsPanel reports={summary.filed_reports} />
         {hasOutsideSpending && (
-          <OutsideSpendingSection outsideSpending={summary.outside_spending} />
+          <OutsideSpendingSection outsideSpending={summary.outside_spending} politicianName={politicianName} />
         )}
       </section>
     );
@@ -175,7 +175,7 @@ export default function CampaignFinanceSection({ politicianId }) {
         />
 
         {/* Outside Spending — IE committees / PACs that spent in this race */}
-        <OutsideSpendingSection outsideSpending={summary?.outside_spending} />
+        <OutsideSpendingSection outsideSpending={summary?.outside_spending} politicianName={politicianName} />
 
         {/* Donor search — lets visitors look up which politicians a donor funded */}
         <DonorSearch currentPoliticianId={politicianId} />
