@@ -1,0 +1,520 @@
+diff --git a/node_modules/@empoweredvote/ev-ui/dist/index.js b/node_modules/@empoweredvote/ev-ui/dist/index.js
+index 6655f7b..1166ace 100644
+--- a/node_modules/@empoweredvote/ev-ui/dist/index.js
++++ b/node_modules/@empoweredvote/ev-ui/dist/index.js
+@@ -859,8 +859,8 @@ function PlaceholderRadar({ size = 250, name = "", darkMode = false }) {
+   const cy = size / 2;
+   const r = size / 2 * 0.65;
+   const n = 8;
+-  const surface = darkMode ? "#1e2a3a" : colorScales.teal["050"];
+-  const stroke = darkMode ? "rgba(255,255,255,0.22)" : colorScales.gray["200"];
++  const surface = darkMode ? "#1e2a3a" : colorScales.teal["100"];
++  const stroke = darkMode ? "rgba(255,255,255,0.22)" : colorScales.gray["500"];
+   const vertices = Array.from({ length: n }, (_, i) => {
+     const a = 2 * Math.PI * i / n;
+     return [cx + r * Math.sin(a), cy - r * Math.cos(a)];
+@@ -878,6 +878,7 @@ function PlaceholderRadar({ size = 250, name = "", darkMode = false }) {
+       "aria-label": name ? `${name} \u2014 compass data unavailable` : "compass data unavailable",
+       style: {
+         backgroundColor: surface,
++        border: darkMode ? void 0 : `1px solid ${colorScales.teal["200"]}`,
+         borderRadius: borderRadius.sm,
+         flexShrink: 0
+       }
+@@ -4207,6 +4208,8 @@ function SocialLinks({
+     lg: "40px"
+   };
+   const iconSize = iconSizes[size];
++  // The LinkedIn mark is a filled square, so it drops the outlined box and renders larger
++  const logoSize = `${parseInt(iconSize, 10) + 4}px`;
+   const boxSize = boxSizes[size];
+   const styles2 = {
+     container: {
+@@ -4270,16 +4273,8 @@ function SocialLinks({
+       }
+     )),
+     instagram: /* @__PURE__ */ import_react23.default.createElement("svg", { style: styles2.icon, viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react23.default.createElement("rect", { x: "2", y: "2", width: "20", height: "20", rx: "5", stroke: "currentColor", strokeWidth: "2" }), /* @__PURE__ */ import_react23.default.createElement("circle", { cx: "12", cy: "12", r: "4", stroke: "currentColor", strokeWidth: "2" }), /* @__PURE__ */ import_react23.default.createElement("circle", { cx: "18", cy: "6", r: "1", fill: "currentColor" })),
+-    linkedin: /* @__PURE__ */ import_react23.default.createElement("svg", { style: styles2.icon, viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react23.default.createElement(
+-      "path",
+-      {
+-        d: "M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z",
+-        stroke: "currentColor",
+-        strokeWidth: "2",
+-        strokeLinecap: "round",
+-        strokeLinejoin: "round"
+-      }
+-    ), /* @__PURE__ */ import_react23.default.createElement("rect", { x: "2", y: "9", width: "4", height: "12", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), /* @__PURE__ */ import_react23.default.createElement("circle", { cx: "4", cy: "4", r: "2", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })),
++    // Official LinkedIn "in" mark (Simple Icons, CC0) — replaces the stroked outline
++    linkedin: /* @__PURE__ */ import_react23.default.createElement("svg", { style: { width: logoSize, height: logoSize }, viewBox: "0 0 24 24", fill: "currentColor", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react23.default.createElement("path", { d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" })),
+     youtube: /* @__PURE__ */ import_react23.default.createElement("svg", { style: styles2.icon, viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react23.default.createElement("rect", { x: "2", y: "5", width: "20", height: "14", rx: "3", stroke: "currentColor", strokeWidth: "2" }), /* @__PURE__ */ import_react23.default.createElement("polygon", { points: "10,9 16,12 10,15", fill: "currentColor" }))
+   };
+   const links = [
+@@ -4343,7 +4338,7 @@ function SocialLinks({
+       href: link.href,
+       target: "_blank",
+       rel: "noopener noreferrer",
+-      style: styles2.link,
++      style: link.label === "LinkedIn" ? { ...styles2.link, border: "none" } : styles2.link,
+       "aria-label": link.label,
+       onMouseEnter: (e) => {
+         e.currentTarget.style.color = colors.evTeal;
+@@ -5005,6 +5000,11 @@ var MapPinIcon = ({ size = 16 }) => /* @__PURE__ */ import_react28.default.creat
+ var PhoneIcon = ({ size = 16 }) => /* @__PURE__ */ import_react28.default.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ import_react28.default.createElement("path", { d: "M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.02 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" }));
+ var MailIcon = ({ size = 16 }) => /* @__PURE__ */ import_react28.default.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ import_react28.default.createElement("path", { d: "M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" }), /* @__PURE__ */ import_react28.default.createElement("path", { d: "M22 6L12 13L2 6" }));
+ var GlobeIcon = ({ size = 16 }) => /* @__PURE__ */ import_react28.default.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ import_react28.default.createElement("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ import_react28.default.createElement("path", { d: "M2 12H22M12 2C14.5 4.5 16 8 16 12C16 16 14.5 19.5 12 22C9.5 19.5 8 16 8 12C8 8 9.5 4.5 12 2Z" }));
++// Tinted circular badge for contact icons (matches the compass category badges)
++var ContactIconBadge = ({ kind, light, dark, darkMode, size = 26, children }) => {
++  const color = darkMode ? dark : light;
++  return /* @__PURE__ */ import_react28.default.createElement("span", { className: `ev-contact-badge ev-contact-badge--${kind}`, style: { flexShrink: 0, width: size, height: size, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", color, backgroundColor: `${color}${darkMode ? "2e" : "1f"}` } }, children);
++};
+ var ExternalLinkIcon = ({ size = 16 }) => /* @__PURE__ */ import_react28.default.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ import_react28.default.createElement("path", { d: "M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" }), /* @__PURE__ */ import_react28.default.createElement("polyline", { points: "15 3 21 3 21 9" }), /* @__PURE__ */ import_react28.default.createElement("line", { x1: "10", y1: "14", x2: "21", y2: "3" }));
+ function PoliticianProfile({
+   politician = {},
+@@ -5118,6 +5118,11 @@ function PoliticianProfile({
+     borderTop: `1px solid ${darkMode ? "#374151" : "#E5E7EB"}`,
+     margin: `${spacing[6]} 0`
+   };
++  // Softer, translucent divider above the contact section
++  const contactDivider = {
++    ...divider,
++    borderTop: `1px solid ${darkMode ? "rgba(255,255,255,0.08)" : "rgba(17,24,39,0.06)"}`
++  };
+   const sectionHeading = {
+     display: "flex",
+     alignItems: "center",
+@@ -5243,25 +5248,27 @@ function PoliticianProfile({
+       fontFamily: fonts.primary,
+       fontWeight: fontWeights.regular,
+       fontSize: isMobile ? fontSizes.base : fontSizes.lg,
+-      color: darkMode ? "#d1d5db" : "#364153",
++      color: darkMode ? "#59b0c4" : "#364153",
+       margin: 0,
+       marginBottom: spacing[1]
+     },
+     officeDesc: {
+       fontFamily: fonts.primary,
+-      fontSize: fontSizes.base,
+-      color: darkMode ? "#9ca3af" : "#6A7282",
++      fontSize: fontSizes.sm,
++      color: darkMode ? "#9ca3af" : "#374151",
+       margin: 0,
+-      marginBottom: spacing[3],
++      // 12px here + the title's 4px = 16px between the office title and this description
++      marginTop: spacing[3],
++      marginBottom: spacing[5],
+       lineHeight: 1.5
+     },
+     bioText: {
+       fontFamily: fonts.primary,
+       fontSize: fontSizes.sm,
+-      color: darkMode ? "#9ca3af" : "#6A7282",
++      color: darkMode ? "#9ca3af" : "#374151",
+       margin: 0,
+       marginTop: spacing[1],
+-      marginBottom: spacing[3],
++      marginBottom: spacing[5],
+       lineHeight: 1.5
+     },
+     metaRow: {
+@@ -5301,41 +5308,42 @@ function PoliticianProfile({
+     contactGrid: {
+       display: "grid",
+       gridTemplateColumns: isMobile ? "1fr" : (() => {
+-        const cols = [];
+-        if (hasAddresses) cols.push("1fr");
+-        if (hasPhones) cols.push("140px");
+-        if (hasEmails) cols.push("minmax(180px, 1fr)");
+-        if (hasWebsitesCol) cols.push("1fr");
+-        return cols.join(" ");
++        // Equal-width columns so the items are evenly spaced; long emails/URLs wrap
++        const count = [hasAddresses, hasPhones, hasEmails, hasWebsitesCol].filter(Boolean).length;
++        return `repeat(${count}, minmax(0, 1fr))`;
+       })(),
+       gap: isMobile ? spacing[4] : spacing[6]
+     },
+     contactGroup: {
+-      minWidth: 0
++      minWidth: 0,
++      // Align with the "Contact Information" heading (34px badge + 8px gap = 42px):
++      // content starts at 42px; the label row is pulled back to 4px so its 26px
++      // badge centers under the heading badge and, with a 12px gap, its text lands at 42px.
++      paddingLeft: "42px"
+     },
+     contactLabel: {
+       fontFamily: fonts.primary,
+-      fontWeight: fontWeights.semibold,
+-      fontSize: "11px",
+-      letterSpacing: "0.05em",
+-      textTransform: "uppercase",
+-      color: darkMode ? "#9ca3af" : "#6A7282",
++      fontWeight: fontWeights.bold,
++      fontSize: "14px",
++      color: darkMode ? "#f3f4f6" : "#101828",
+       margin: 0,
+       marginBottom: spacing[1],
++      marginLeft: "-38px",
+       display: "flex",
+       alignItems: "center",
+-      gap: spacing[1]
++      gap: spacing[3]
+     },
+     contactValue: {
+       fontFamily: fonts.primary,
+       fontSize: fontSizes.sm,
+-      color: darkMode ? "#d1d5db" : "#364153",
++      color: darkMode ? "#d1d5db" : "#1f2937",
+       lineHeight: 1.6,
+       margin: 0,
+       marginBottom: spacing[2]
+     },
+     contactLink: {
+-      color: darkMode ? "#59b0c4" : "#364153",
++      color: darkMode ? "#59b0c4" : "#00657c",
++      fontWeight: fontWeights.medium,
+       textDecoration: "none",
+       wordBreak: "break-all"
+     },
+@@ -5343,7 +5351,7 @@ function PoliticianProfile({
+       fontFamily: fonts.primary,
+       fontWeight: fontWeights.medium,
+       fontSize: "12px",
+-      color: darkMode ? "#6b7280" : "#9CA3AF",
++      color: darkMode ? "#6b7280" : "#6B7280",
+       margin: 0,
+       marginBottom: spacing[1]
+     },
+@@ -5396,7 +5404,7 @@ function PoliticianProfile({
+       },
+       /* @__PURE__ */ import_react28.default.createElement(RestrictedPortraitFigure, null)
+     )
+-  ) : /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.placeholder }, initials || "?")), /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.infoCol }, styles2.tierBadge && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.tierBadge }, tier), /* @__PURE__ */ import_react28.default.createElement("h1", { style: styles2.name }, displayName), banner, /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.roleLine }, roleLine), photoRestriction && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.restrictionNotice }, /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.restrictionHeadline }, photoRestriction.headline), String(photoRestriction.body || "").split(/\n\s*\n/).filter(Boolean).map((para, i, arr) => /* @__PURE__ */ import_react28.default.createElement(
++  ) : /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.placeholder }, initials || "?")), /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.infoCol }, styles2.tierBadge && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.tierBadge }, tier), /* @__PURE__ */ import_react28.default.createElement("h1", { style: styles2.name }, displayName), banner, /* @__PURE__ */ import_react28.default.createElement("p", { className: "ev-role-line", style: styles2.roleLine }, roleLine), photoRestriction && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.restrictionNotice }, /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.restrictionHeadline }, photoRestriction.headline), String(photoRestriction.body || "").split(/\n\s*\n/).filter(Boolean).map((para, i, arr) => /* @__PURE__ */ import_react28.default.createElement(
+     "p",
+     {
+       key: i,
+@@ -5419,7 +5427,7 @@ function PoliticianProfile({
+     },
+     /* @__PURE__ */ import_react28.default.createElement(ExternalLinkIcon, { size: 14 }),
+     "Submit a Message"
+-  ))), hasContactInfo && /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, null, /* @__PURE__ */ import_react28.default.createElement("div", { style: divider }), /* @__PURE__ */ import_react28.default.createElement("div", { style: sectionHeading }, /* @__PURE__ */ import_react28.default.createElement(MailIcon, { size: 20 }), "Contact Information"), /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGrid }, hasAddresses && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(MapPinIcon, { size: 12 }), "Addresses"), addresses.map((addr, i) => /* @__PURE__ */ import_react28.default.createElement("div", { key: `addr-${i}` }, /* @__PURE__ */ import_react28.default.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, addr.type), /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.contactValue }, addr.lines.map((line, j) => /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, { key: j }, line, j < addr.lines.length - 1 && /* @__PURE__ */ import_react28.default.createElement("br", null))))))), hasPhones && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(PhoneIcon, { size: 12 }), "Phone"), Object.entries(phonesByType).map(([type, phones], i) => /* @__PURE__ */ import_react28.default.createElement("div", { key: `phone-${type}` }, /* @__PURE__ */ import_react28.default.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), phones.map((phone, j) => /* @__PURE__ */ import_react28.default.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ import_react28.default.createElement(
++  ))), hasContactInfo && /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, null, /* @__PURE__ */ import_react28.default.createElement("div", { className: "ev-contact-divider", style: contactDivider }), /* @__PURE__ */ import_react28.default.createElement("div", { style: sectionHeading }, /* @__PURE__ */ import_react28.default.createElement(ContactIconBadge, { kind: "heading", light: "#00657c", dark: "#59b0c4", darkMode, size: 34 }, /* @__PURE__ */ import_react28.default.createElement(MailIcon, { size: 18 })), "Contact Information"), /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGrid }, hasAddresses && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(ContactIconBadge, { kind: "address", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ import_react28.default.createElement(MapPinIcon, { size: 14 })), "Addresses"), addresses.map((addr, i) => /* @__PURE__ */ import_react28.default.createElement("div", { key: `addr-${i}` }, /* @__PURE__ */ import_react28.default.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, addr.type), /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.contactValue }, addr.lines.map((line, j) => /* @__PURE__ */ import_react28.default.createElement(import_react28.default.Fragment, { key: j }, line, j < addr.lines.length - 1 && /* @__PURE__ */ import_react28.default.createElement("br", null))))))), hasPhones && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(ContactIconBadge, { kind: "phone", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ import_react28.default.createElement(PhoneIcon, { size: 14 })), "Phone"), Object.entries(phonesByType).map(([type, phones], i) => /* @__PURE__ */ import_react28.default.createElement("div", { key: `phone-${type}` }, /* @__PURE__ */ import_react28.default.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), phones.map((phone, j) => /* @__PURE__ */ import_react28.default.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ import_react28.default.createElement(
+     "a",
+     {
+       href: `tel:${phone}`,
+@@ -5432,7 +5440,7 @@ function PoliticianProfile({
+       }
+     },
+     phone
+-  )))))), hasEmails && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(MailIcon, { size: 12 }), "Email"), Object.entries(emailsByType).filter(([, emails]) => emails.some((e) => e && e.trim())).map(([type, emails], i) => /* @__PURE__ */ import_react28.default.createElement("div", { key: `email-${type}` }, /* @__PURE__ */ import_react28.default.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), emails.filter((e) => e && e.trim()).map((email, j) => /* @__PURE__ */ import_react28.default.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ import_react28.default.createElement(
++  )))))), hasEmails && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(ContactIconBadge, { kind: "email", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ import_react28.default.createElement(MailIcon, { size: 14 })), "Email"), Object.entries(emailsByType).filter(([, emails]) => emails.some((e) => e && e.trim())).map(([type, emails], i) => /* @__PURE__ */ import_react28.default.createElement("div", { key: `email-${type}` }, /* @__PURE__ */ import_react28.default.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), emails.filter((e) => e && e.trim()).map((email, j) => /* @__PURE__ */ import_react28.default.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ import_react28.default.createElement(
+     "a",
+     {
+       href: `mailto:${email}`,
+@@ -5445,7 +5453,7 @@ function PoliticianProfile({
+       }
+     },
+     email
+-  )))))), hasWebsitesCol && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(GlobeIcon, { size: 12 }), "Websites"), allWebsites.map((url, i) => /* @__PURE__ */ import_react28.default.createElement("p", { key: i, style: styles2.contactValue }, /* @__PURE__ */ import_react28.default.createElement(
++  )))))), hasWebsitesCol && /* @__PURE__ */ import_react28.default.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ import_react28.default.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ import_react28.default.createElement(ContactIconBadge, { kind: "website", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ import_react28.default.createElement(GlobeIcon, { size: 14 })), "Websites"), allWebsites.map((url, i) => /* @__PURE__ */ import_react28.default.createElement("p", { key: i, style: styles2.contactValue }, /* @__PURE__ */ import_react28.default.createElement(
+     "a",
+     {
+       href: url,
+@@ -6881,7 +6889,9 @@ function StanceAccordion({
+   verdictsByQuote,
+   // Record<quote_id, 'agreed' | 'disagreed'> | undefined
+   initialExpandedTopicId,
+-  apiUrl = "https://api.empowered.vote"
++  apiUrl = "https://api.empowered.vote",
++  // Optional override for the politician's stance dot (defaults to the palette green)
++  polDotColor
+ }) {
+   var _a;
+   const [expandedTopicId, setExpandedTopicId] = (0, import_react37.useState)(null);
+@@ -6889,7 +6899,7 @@ function StanceAccordion({
+   const [showAll, setShowAll] = (0, import_react37.useState)(false);
+   const contextCache = (0, import_react37.useRef)(/* @__PURE__ */ new Map());
+   const quotesCache = (0, import_react37.useRef)(null);
+-  const c = palette(darkMode);
++  const c = polDotColor ? { ...palette(darkMode), polDot: polDotColor } : palette(darkMode);
+   const polAnswerMap = {};
+   if (polAnswers) {
+     polAnswers.forEach((a) => {
+@@ -7128,7 +7138,7 @@ function StanceAccordion({
+                 key: i,
+                 style: {
+                   display: "flex",
+-                  alignItems: "flex-start",
++                  alignItems: "center",
+                   gap: "10px",
+                   padding: "10px 12px",
+                   borderRadius: "12px",
+@@ -7146,8 +7156,7 @@ function StanceAccordion({
+                     width: "30px",
+                     display: "flex",
+                     alignItems: "center",
+-                    gap: "5px",
+-                    paddingTop: "3px"
++                    gap: "5px"
+                   }
+                 },
+                 isUser && /* @__PURE__ */ import_react37.default.createElement("span", { style: { width: "9px", height: "9px", borderRadius: "50%", backgroundColor: USER_DOT, boxShadow: `0 0 0 3px ${USER_DOT}33` } }),
+diff --git a/node_modules/@empoweredvote/ev-ui/dist/index.mjs b/node_modules/@empoweredvote/ev-ui/dist/index.mjs
+index e11bb0e..683ddfc 100644
+--- a/node_modules/@empoweredvote/ev-ui/dist/index.mjs
++++ b/node_modules/@empoweredvote/ev-ui/dist/index.mjs
+@@ -762,8 +762,8 @@ function PlaceholderRadar({ size = 250, name = "", darkMode = false }) {
+   const cy = size / 2;
+   const r = size / 2 * 0.65;
+   const n = 8;
+-  const surface = darkMode ? "#1e2a3a" : colorScales.teal["050"];
+-  const stroke = darkMode ? "rgba(255,255,255,0.22)" : colorScales.gray["200"];
++  const surface = darkMode ? "#1e2a3a" : colorScales.teal["100"];
++  const stroke = darkMode ? "rgba(255,255,255,0.22)" : colorScales.gray["500"];
+   const vertices = Array.from({ length: n }, (_, i) => {
+     const a = 2 * Math.PI * i / n;
+     return [cx + r * Math.sin(a), cy - r * Math.cos(a)];
+@@ -781,6 +781,7 @@ function PlaceholderRadar({ size = 250, name = "", darkMode = false }) {
+       "aria-label": name ? `${name} \u2014 compass data unavailable` : "compass data unavailable",
+       style: {
+         backgroundColor: surface,
++        border: darkMode ? void 0 : `1px solid ${colorScales.teal["200"]}`,
+         borderRadius: borderRadius.sm,
+         flexShrink: 0
+       }
+@@ -4122,6 +4123,8 @@ function SocialLinks({
+     lg: "40px"
+   };
+   const iconSize = iconSizes[size];
++  // The LinkedIn mark is a filled square, so it drops the outlined box and renders larger
++  const logoSize = `${parseInt(iconSize, 10) + 4}px`;
+   const boxSize = boxSizes[size];
+   const styles2 = {
+     container: {
+@@ -4185,16 +4188,8 @@ function SocialLinks({
+       }
+     )),
+     instagram: /* @__PURE__ */ React19.createElement("svg", { style: styles2.icon, viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ React19.createElement("rect", { x: "2", y: "2", width: "20", height: "20", rx: "5", stroke: "currentColor", strokeWidth: "2" }), /* @__PURE__ */ React19.createElement("circle", { cx: "12", cy: "12", r: "4", stroke: "currentColor", strokeWidth: "2" }), /* @__PURE__ */ React19.createElement("circle", { cx: "18", cy: "6", r: "1", fill: "currentColor" })),
+-    linkedin: /* @__PURE__ */ React19.createElement("svg", { style: styles2.icon, viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ React19.createElement(
+-      "path",
+-      {
+-        d: "M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8Z",
+-        stroke: "currentColor",
+-        strokeWidth: "2",
+-        strokeLinecap: "round",
+-        strokeLinejoin: "round"
+-      }
+-    ), /* @__PURE__ */ React19.createElement("rect", { x: "2", y: "9", width: "4", height: "12", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), /* @__PURE__ */ React19.createElement("circle", { cx: "4", cy: "4", r: "2", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })),
++    // Official LinkedIn "in" mark (Simple Icons, CC0) — replaces the stroked outline
++    linkedin: /* @__PURE__ */ React19.createElement("svg", { style: { width: logoSize, height: logoSize }, viewBox: "0 0 24 24", fill: "currentColor", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ React19.createElement("path", { d: "M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" })),
+     youtube: /* @__PURE__ */ React19.createElement("svg", { style: styles2.icon, viewBox: "0 0 24 24", fill: "none", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ React19.createElement("rect", { x: "2", y: "5", width: "20", height: "14", rx: "3", stroke: "currentColor", strokeWidth: "2" }), /* @__PURE__ */ React19.createElement("polygon", { points: "10,9 16,12 10,15", fill: "currentColor" }))
+   };
+   const links = [
+@@ -4258,7 +4253,7 @@ function SocialLinks({
+       href: link.href,
+       target: "_blank",
+       rel: "noopener noreferrer",
+-      style: styles2.link,
++      style: link.label === "LinkedIn" ? { ...styles2.link, border: "none" } : styles2.link,
+       "aria-label": link.label,
+       onMouseEnter: (e) => {
+         e.currentTarget.style.color = colors.evTeal;
+@@ -4920,6 +4915,11 @@ var MapPinIcon = ({ size = 16 }) => /* @__PURE__ */ React24.createElement("svg",
+ var PhoneIcon = ({ size = 16 }) => /* @__PURE__ */ React24.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ React24.createElement("path", { d: "M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.07 2.18 2 2 0 012.02 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" }));
+ var MailIcon = ({ size = 16 }) => /* @__PURE__ */ React24.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ React24.createElement("path", { d: "M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" }), /* @__PURE__ */ React24.createElement("path", { d: "M22 6L12 13L2 6" }));
+ var GlobeIcon = ({ size = 16 }) => /* @__PURE__ */ React24.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ React24.createElement("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ React24.createElement("path", { d: "M2 12H22M12 2C14.5 4.5 16 8 16 12C16 16 14.5 19.5 12 22C9.5 19.5 8 16 8 12C8 8 9.5 4.5 12 2Z" }));
++// Tinted circular badge for contact icons (matches the compass category badges)
++var ContactIconBadge = ({ kind, light, dark, darkMode, size = 26, children }) => {
++  const color = darkMode ? dark : light;
++  return /* @__PURE__ */ React24.createElement("span", { className: `ev-contact-badge ev-contact-badge--${kind}`, style: { flexShrink: 0, width: size, height: size, borderRadius: "50%", display: "inline-flex", alignItems: "center", justifyContent: "center", color, backgroundColor: `${color}${darkMode ? "2e" : "1f"}` } }, children);
++};
+ var ExternalLinkIcon = ({ size = 16 }) => /* @__PURE__ */ React24.createElement("svg", { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }, /* @__PURE__ */ React24.createElement("path", { d: "M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" }), /* @__PURE__ */ React24.createElement("polyline", { points: "15 3 21 3 21 9" }), /* @__PURE__ */ React24.createElement("line", { x1: "10", y1: "14", x2: "21", y2: "3" }));
+ function PoliticianProfile({
+   politician = {},
+@@ -5033,6 +5033,11 @@ function PoliticianProfile({
+     borderTop: `1px solid ${darkMode ? "#374151" : "#E5E7EB"}`,
+     margin: `${spacing[6]} 0`
+   };
++  // Softer, translucent divider above the contact section
++  const contactDivider = {
++    ...divider,
++    borderTop: `1px solid ${darkMode ? "rgba(255,255,255,0.08)" : "rgba(17,24,39,0.06)"}`
++  };
+   const sectionHeading = {
+     display: "flex",
+     alignItems: "center",
+@@ -5158,25 +5163,27 @@ function PoliticianProfile({
+       fontFamily: fonts.primary,
+       fontWeight: fontWeights.regular,
+       fontSize: isMobile ? fontSizes.base : fontSizes.lg,
+-      color: darkMode ? "#d1d5db" : "#364153",
++      color: darkMode ? "#59b0c4" : "#364153",
+       margin: 0,
+       marginBottom: spacing[1]
+     },
+     officeDesc: {
+       fontFamily: fonts.primary,
+-      fontSize: fontSizes.base,
+-      color: darkMode ? "#9ca3af" : "#6A7282",
++      fontSize: fontSizes.sm,
++      color: darkMode ? "#9ca3af" : "#374151",
+       margin: 0,
+-      marginBottom: spacing[3],
++      // 12px here + the title's 4px = 16px between the office title and this description
++      marginTop: spacing[3],
++      marginBottom: spacing[5],
+       lineHeight: 1.5
+     },
+     bioText: {
+       fontFamily: fonts.primary,
+       fontSize: fontSizes.sm,
+-      color: darkMode ? "#9ca3af" : "#6A7282",
++      color: darkMode ? "#9ca3af" : "#374151",
+       margin: 0,
+       marginTop: spacing[1],
+-      marginBottom: spacing[3],
++      marginBottom: spacing[5],
+       lineHeight: 1.5
+     },
+     metaRow: {
+@@ -5216,41 +5223,42 @@ function PoliticianProfile({
+     contactGrid: {
+       display: "grid",
+       gridTemplateColumns: isMobile ? "1fr" : (() => {
+-        const cols = [];
+-        if (hasAddresses) cols.push("1fr");
+-        if (hasPhones) cols.push("140px");
+-        if (hasEmails) cols.push("minmax(180px, 1fr)");
+-        if (hasWebsitesCol) cols.push("1fr");
+-        return cols.join(" ");
++        // Equal-width columns so the items are evenly spaced; long emails/URLs wrap
++        const count = [hasAddresses, hasPhones, hasEmails, hasWebsitesCol].filter(Boolean).length;
++        return `repeat(${count}, minmax(0, 1fr))`;
+       })(),
+       gap: isMobile ? spacing[4] : spacing[6]
+     },
+     contactGroup: {
+-      minWidth: 0
++      minWidth: 0,
++      // Align with the "Contact Information" heading (34px badge + 8px gap = 42px):
++      // content starts at 42px; the label row is pulled back to 4px so its 26px
++      // badge centers under the heading badge and, with a 12px gap, its text lands at 42px.
++      paddingLeft: "42px"
+     },
+     contactLabel: {
+       fontFamily: fonts.primary,
+-      fontWeight: fontWeights.semibold,
+-      fontSize: "11px",
+-      letterSpacing: "0.05em",
+-      textTransform: "uppercase",
+-      color: darkMode ? "#9ca3af" : "#6A7282",
++      fontWeight: fontWeights.bold,
++      fontSize: "14px",
++      color: darkMode ? "#f3f4f6" : "#101828",
+       margin: 0,
+       marginBottom: spacing[1],
++      marginLeft: "-38px",
+       display: "flex",
+       alignItems: "center",
+-      gap: spacing[1]
++      gap: spacing[3]
+     },
+     contactValue: {
+       fontFamily: fonts.primary,
+       fontSize: fontSizes.sm,
+-      color: darkMode ? "#d1d5db" : "#364153",
++      color: darkMode ? "#d1d5db" : "#1f2937",
+       lineHeight: 1.6,
+       margin: 0,
+       marginBottom: spacing[2]
+     },
+     contactLink: {
+-      color: darkMode ? "#59b0c4" : "#364153",
++      color: darkMode ? "#59b0c4" : "#00657c",
++      fontWeight: fontWeights.medium,
+       textDecoration: "none",
+       wordBreak: "break-all"
+     },
+@@ -5258,7 +5266,7 @@ function PoliticianProfile({
+       fontFamily: fonts.primary,
+       fontWeight: fontWeights.medium,
+       fontSize: "12px",
+-      color: darkMode ? "#6b7280" : "#9CA3AF",
++      color: darkMode ? "#6b7280" : "#6B7280",
+       margin: 0,
+       marginBottom: spacing[1]
+     },
+@@ -5311,7 +5319,7 @@ function PoliticianProfile({
+       },
+       /* @__PURE__ */ React24.createElement(RestrictedPortraitFigure, null)
+     )
+-  ) : /* @__PURE__ */ React24.createElement("div", { style: styles2.placeholder }, initials || "?")), /* @__PURE__ */ React24.createElement("div", { style: styles2.infoCol }, styles2.tierBadge && /* @__PURE__ */ React24.createElement("div", { style: styles2.tierBadge }, tier), /* @__PURE__ */ React24.createElement("h1", { style: styles2.name }, displayName), banner, /* @__PURE__ */ React24.createElement("p", { style: styles2.roleLine }, roleLine), photoRestriction && /* @__PURE__ */ React24.createElement("div", { style: styles2.restrictionNotice }, /* @__PURE__ */ React24.createElement("p", { style: styles2.restrictionHeadline }, photoRestriction.headline), String(photoRestriction.body || "").split(/\n\s*\n/).filter(Boolean).map((para, i, arr) => /* @__PURE__ */ React24.createElement(
++  ) : /* @__PURE__ */ React24.createElement("div", { style: styles2.placeholder }, initials || "?")), /* @__PURE__ */ React24.createElement("div", { style: styles2.infoCol }, styles2.tierBadge && /* @__PURE__ */ React24.createElement("div", { style: styles2.tierBadge }, tier), /* @__PURE__ */ React24.createElement("h1", { style: styles2.name }, displayName), banner, /* @__PURE__ */ React24.createElement("p", { className: "ev-role-line", style: styles2.roleLine }, roleLine), photoRestriction && /* @__PURE__ */ React24.createElement("div", { style: styles2.restrictionNotice }, /* @__PURE__ */ React24.createElement("p", { style: styles2.restrictionHeadline }, photoRestriction.headline), String(photoRestriction.body || "").split(/\n\s*\n/).filter(Boolean).map((para, i, arr) => /* @__PURE__ */ React24.createElement(
+     "p",
+     {
+       key: i,
+@@ -5334,7 +5342,7 @@ function PoliticianProfile({
+     },
+     /* @__PURE__ */ React24.createElement(ExternalLinkIcon, { size: 14 }),
+     "Submit a Message"
+-  ))), hasContactInfo && /* @__PURE__ */ React24.createElement(React24.Fragment, null, /* @__PURE__ */ React24.createElement("div", { style: divider }), /* @__PURE__ */ React24.createElement("div", { style: sectionHeading }, /* @__PURE__ */ React24.createElement(MailIcon, { size: 20 }), "Contact Information"), /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGrid }, hasAddresses && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(MapPinIcon, { size: 12 }), "Addresses"), addresses.map((addr, i) => /* @__PURE__ */ React24.createElement("div", { key: `addr-${i}` }, /* @__PURE__ */ React24.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, addr.type), /* @__PURE__ */ React24.createElement("p", { style: styles2.contactValue }, addr.lines.map((line, j) => /* @__PURE__ */ React24.createElement(React24.Fragment, { key: j }, line, j < addr.lines.length - 1 && /* @__PURE__ */ React24.createElement("br", null))))))), hasPhones && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(PhoneIcon, { size: 12 }), "Phone"), Object.entries(phonesByType).map(([type, phones], i) => /* @__PURE__ */ React24.createElement("div", { key: `phone-${type}` }, /* @__PURE__ */ React24.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), phones.map((phone, j) => /* @__PURE__ */ React24.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ React24.createElement(
++  ))), hasContactInfo && /* @__PURE__ */ React24.createElement(React24.Fragment, null, /* @__PURE__ */ React24.createElement("div", { className: "ev-contact-divider", style: contactDivider }), /* @__PURE__ */ React24.createElement("div", { style: sectionHeading }, /* @__PURE__ */ React24.createElement(ContactIconBadge, { kind: "heading", light: "#00657c", dark: "#59b0c4", darkMode, size: 34 }, /* @__PURE__ */ React24.createElement(MailIcon, { size: 18 })), "Contact Information"), /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGrid }, hasAddresses && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(ContactIconBadge, { kind: "address", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ React24.createElement(MapPinIcon, { size: 14 })), "Addresses"), addresses.map((addr, i) => /* @__PURE__ */ React24.createElement("div", { key: `addr-${i}` }, /* @__PURE__ */ React24.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, addr.type), /* @__PURE__ */ React24.createElement("p", { style: styles2.contactValue }, addr.lines.map((line, j) => /* @__PURE__ */ React24.createElement(React24.Fragment, { key: j }, line, j < addr.lines.length - 1 && /* @__PURE__ */ React24.createElement("br", null))))))), hasPhones && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(ContactIconBadge, { kind: "phone", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ React24.createElement(PhoneIcon, { size: 14 })), "Phone"), Object.entries(phonesByType).map(([type, phones], i) => /* @__PURE__ */ React24.createElement("div", { key: `phone-${type}` }, /* @__PURE__ */ React24.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), phones.map((phone, j) => /* @__PURE__ */ React24.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ React24.createElement(
+     "a",
+     {
+       href: `tel:${phone}`,
+@@ -5347,7 +5355,7 @@ function PoliticianProfile({
+       }
+     },
+     phone
+-  )))))), hasEmails && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(MailIcon, { size: 12 }), "Email"), Object.entries(emailsByType).filter(([, emails]) => emails.some((e) => e && e.trim())).map(([type, emails], i) => /* @__PURE__ */ React24.createElement("div", { key: `email-${type}` }, /* @__PURE__ */ React24.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), emails.filter((e) => e && e.trim()).map((email, j) => /* @__PURE__ */ React24.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ React24.createElement(
++  )))))), hasEmails && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(ContactIconBadge, { kind: "email", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ React24.createElement(MailIcon, { size: 14 })), "Email"), Object.entries(emailsByType).filter(([, emails]) => emails.some((e) => e && e.trim())).map(([type, emails], i) => /* @__PURE__ */ React24.createElement("div", { key: `email-${type}` }, /* @__PURE__ */ React24.createElement("p", { style: { ...styles2.contactSubLabel, ...i === 0 ? { marginTop: 0 } : { marginTop: spacing[2] } } }, type), emails.filter((e) => e && e.trim()).map((email, j) => /* @__PURE__ */ React24.createElement("p", { key: j, style: styles2.contactValue }, /* @__PURE__ */ React24.createElement(
+     "a",
+     {
+       href: `mailto:${email}`,
+@@ -5360,7 +5368,7 @@ function PoliticianProfile({
+       }
+     },
+     email
+-  )))))), hasWebsitesCol && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(GlobeIcon, { size: 12 }), "Websites"), allWebsites.map((url, i) => /* @__PURE__ */ React24.createElement("p", { key: i, style: styles2.contactValue }, /* @__PURE__ */ React24.createElement(
++  )))))), hasWebsitesCol && /* @__PURE__ */ React24.createElement("div", { style: styles2.contactGroup }, /* @__PURE__ */ React24.createElement("p", { className: "ev-contact-label", style: styles2.contactLabel }, /* @__PURE__ */ React24.createElement(ContactIconBadge, { kind: "website", light: "#00657c", dark: "#59b0c4", darkMode, size: 26 }, /* @__PURE__ */ React24.createElement(GlobeIcon, { size: 14 })), "Websites"), allWebsites.map((url, i) => /* @__PURE__ */ React24.createElement("p", { key: i, style: styles2.contactValue }, /* @__PURE__ */ React24.createElement(
+     "a",
+     {
+       href: url,
+@@ -6796,7 +6804,9 @@ function StanceAccordion({
+   verdictsByQuote,
+   // Record<quote_id, 'agreed' | 'disagreed'> | undefined
+   initialExpandedTopicId,
+-  apiUrl = "https://api.empowered.vote"
++  apiUrl = "https://api.empowered.vote",
++  // Optional override for the politician's stance dot (defaults to the palette green)
++  polDotColor
+ }) {
+   var _a;
+   const [expandedTopicId, setExpandedTopicId] = useState18(null);
+@@ -6804,7 +6814,7 @@ function StanceAccordion({
+   const [showAll, setShowAll] = useState18(false);
+   const contextCache = useRef5(/* @__PURE__ */ new Map());
+   const quotesCache = useRef5(null);
+-  const c = palette(darkMode);
++  const c = polDotColor ? { ...palette(darkMode), polDot: polDotColor } : palette(darkMode);
+   const polAnswerMap = {};
+   if (polAnswers) {
+     polAnswers.forEach((a) => {
+@@ -7043,7 +7053,7 @@ function StanceAccordion({
+                 key: i,
+                 style: {
+                   display: "flex",
+-                  alignItems: "flex-start",
++                  alignItems: "center",
+                   gap: "10px",
+                   padding: "10px 12px",
+                   borderRadius: "12px",
+@@ -7061,8 +7071,7 @@ function StanceAccordion({
+                     width: "30px",
+                     display: "flex",
+                     alignItems: "center",
+-                    gap: "5px",
+-                    paddingTop: "3px"
++                    gap: "5px"
+                   }
+                 },
+                 isUser && /* @__PURE__ */ React32.createElement("span", { style: { width: "9px", height: "9px", borderRadius: "50%", backgroundColor: USER_DOT, boxShadow: `0 0 0 3px ${USER_DOT}33` } }),

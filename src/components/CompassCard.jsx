@@ -7,6 +7,7 @@ import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpoke
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import LensChipRow from './LensChipRow';
+import CategorizedStances from './CategorizedStances';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
@@ -631,7 +632,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             </div>
 
             {/* Right zone: stance breakdown accordion */}
-            <div className="flex flex-col">
+            <div className="flex flex-col justify-center">
               {polLoading || !polAnswers ? (
                 <div className="flex items-center justify-center py-8">
                   <div
@@ -646,13 +647,12 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   />
                 </div>
               ) : allPolTopics.length > 0 ? (
-                <StanceAccordion
-                  topics={allPolTopics.slice(0, 4)}
+                <CategorizedStances
+                  topics={allPolTopics}
                   polAnswers={polAnswers}
                   userAnswerMap={userAnswerMap}
                   politicianId={politicianId}
                   allTopics={scopedTopics}
-                  expandedTopics={allPolTopics.length > 4 ? allPolTopics : undefined}
                   darkMode={isDark}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
