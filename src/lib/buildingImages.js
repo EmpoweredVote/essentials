@@ -1673,6 +1673,33 @@ const CURATED_LOCAL = {
   // ⚠ match:'exact' is load-bearing for the usual reason, and more so here: substring
   // matching would hand this banner to Macon County GA as well as to the city.
   macon: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/macon.jpg' },
+  // Atlanta -- Knight program ATL-4, stage 5 (2026-10-17, operator-certified).
+  //
+  // 🔴🔴 THE STATE BANNER WAS THIS CITY. states/GA.jpg is "Midtown Atlanta skyline"
+  // (Marc Merlin, CC BY-SA 4.0). Read in the 6/1 band it actually ships -- rows 128-411 --
+  // the towers, the treeline and the whole downtown front all survive, so the Charlotte
+  // escape hatch was not available: the state really does show the city. Resolved the
+  // FL/Miami way, which is now also the MI and IN way: the skyline came DOWN a tier to
+  // this key and the state moved to a whole-state subject at states/GA-v2.jpg.
+  // Atlanta joins Miami, Detroit, Indianapolis, St. Louis, Charlotte, Wichita and Saint
+  // Paul as a city whose state banner was already its own picture.
+  //
+  // 🟢 THIS IS A BYTE COPY, AND THAT IS THE POINT. states/GA.jpg is already exactly
+  // 1700x540, on spec, so cities/atlanta.jpg is the same file under a new key -- sha256
+  // verified identical after upload. Michigan had to re-render because states/MI.jpg was
+  // off-spec at 1700x422, and that re-render is what cost eleven candidate frames. When
+  // the state asset IS on spec, copying it is both cheaper and strictly more faithful:
+  // the composition the operator already approved is the composition that ships.
+  //
+  // A NEW key needs no -v2: the stale-CDN rule is about OVERWRITES, and
+  // cities/atlanta.jpg had never been written.
+  //
+  // ⚠ match:'exact' is load-bearing. Georgia has no second Atlanta, but substring matching
+  // would also catch East Atlanta and any "Atlanta" annexation label. Verified: East
+  // Atlanta resolves to a null local banner, not to this one.
+  //
+  //   atlanta - Midtown Atlanta skyline | Marc Merlin | CC BY-SA 4.0
+  atlanta: { state: 'GA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/atlanta.jpg' },
   // Indiana -- Knight program slice 4, stage 5 (2026-09-11, operator-certified). Both composed
   // to 1700x540 FIRST and certified in the 6/1 DESKTOP BAND (rows 128-411), not on the full frame.
   //
@@ -2033,7 +2060,16 @@ const CURATED_COUNTY = {
 //     tallahassee   - Old Florida State Capitol, east view | Daniel Vorndran (DXR) | CC BY-SA 4.0
 //     bradenton     - De Soto National Memorial entrance | Ebyabe | CC BY-SA 3.0
 //     palm-beach-fl - Whitehall, the Flagler Museum | Ebyabe | CC BY-SA 3.0 (levelled -1.0 deg)
-//   GA - Midtown Atlanta skyline | Marc Merlin | CC BY-SA 4.0
+//   GA - Providence Canyon, Stewart County | anonymouse1 | CC BY-SA 3.0
+//        🔴 SERVED FROM states/GA-v2.jpg VIA STATE_PANORAMA_FILES, not states/GA.jpg.
+//        (was "Midtown Atlanta skyline" | Marc Merlin | CC BY-SA 4.0 until 2026-10-17 —
+//         Georgia's banner was a photograph of Atlanta, so the state and its largest city
+//         had one subject between them. Read in the band, Atlanta survives whole, which
+//         makes this the MICHIGAN case and not the Charlotte one. That photograph is now
+//         cities/atlanta.jpg, byte-identical, where it belongs — credited at its registry
+//         entry, the way Columbus, Macon and Milledgeville are. ⚠ Do NOT also list it here:
+//         two credit lines under one key leave one of them unmatched, and
+//         gen-banners-json.mjs reports that.)
 //   HI - Waikiki view from Diamond Head | Cristo Vlahos | CC BY-SA 3.0
 //   IA - Morning Skyline, Des Moines, Iowa | Tony Webster | CC BY 2.0
 //   ID - Downtown Boise from Camel's Back Park | Tamanoeconomico | CC BY-SA 4.0
@@ -2225,6 +2261,35 @@ const STATE_PANORAMA_FILES = {
   // stays in the bucket serving its old bytes — and those bytes are off-spec at 1700x409, which
   // is a second reason not to leave anything pointing at them.
   IN: 'IN-v2.jpg',
+  // GA versioned 2026-10-17. The MI/IN case a third time: Georgia's banner WAS the Midtown
+  // Atlanta skyline, and Atlanta needed that subject for its own city banner. Measured, not
+  // assumed -- the band keeps the towers, the treeline and the whole downtown front, so this
+  // is Michigan and not Charlotte. The skyline went DOWN a tier to cities/atlanta.jpg as a
+  // byte copy (states/GA.jpg was already on spec at 1700x540), and the state takes Providence
+  // Canyon in Stewart County, the state's own "Little Grand Canyon".
+  //
+  // Chosen from five certified candidates, and the four refusals are worth keeping because
+  // the reason transfers:
+  //   Cloudland Canyon  - band luminance 56.5, flagged [dark]; the right third falls to
+  //                       near-black. It had the BEST source ratio of the five (3.39:1) and
+  //                       still failed -- ratio is not the test.
+  //   Tallulah Gorge    - the band is the concrete dam and its piers, not the gorge, and the
+  //                       source has almost no vertical slack, so no anchor reframes it.
+  //   Sapelo Island     - channel spread 7.0 against 24-61 for the rest. Grey water, grey mud,
+  //                       grey birds: a colour photograph of a colourless scene. This is the
+  //                       Milledgeville greyscale defect again, and no licence or aspect
+  //                       check catches it.
+  //   Chesser Prairie   - not refused, held as the alternate. Brightest band (134.2) and the
+  //     (Okefenokee)      highest spread (61.2), marked down only on adjacency: water under a
+  //                       low treeline is compositionally close to the Columbus mill row.
+  // Providence Canyon carries no architecture at all, which is what separates it from every
+  // Georgia city banner -- Columbus, Macon and Milledgeville are all BUILT subjects.
+  //
+  // 🔴 Versioned, NOT overwritten, for the reason this map exists: overwriting states/GA.jpg
+  // would not reliably purge the CDN, and every Georgia address reads this one. The old object
+  // stays in the bucket serving its old bytes -- which is also exactly what cities/atlanta.jpg
+  // now serves, so those bytes must not change.
+  GA: 'GA-v2.jpg',
 
   // Missouri (operator-certified 2026-09-29). THE AUSTIN/TEXAS SWAP, run a second time:
   // states/MO.jpg WAS the St. Louis skyline with the Gateway Arch, the city took that
