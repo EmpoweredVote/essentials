@@ -157,6 +157,16 @@ export function groupTopicsByCategory(topics) {
 }
 
 /**
+ * StanceAccordion defaults its own apiUrl, and CompassCard passes
+ * `import.meta.env.VITE_API_URL`, which is undefined unless it is set. Mirror
+ * that default here so the hoisted quote fetch and the accordion's fallback
+ * fetch always address the same host.
+ */
+export function quotesApiUrl(apiUrl) {
+  return apiUrl || 'https://api.empowered.vote';
+}
+
+/**
  * The title of the group holding `topicId`, or null. Ids are compared as
  * strings because the deep link carries them as text.
  */
@@ -268,6 +278,32 @@ export default function CategorizedStances({
     });
   }, [deepLinkTitle]);
 
+  // One quote fetch for the whole panel. Left to itself each StanceAccordion
+  // keeps its own cache ref and re-requests the politician's full quote list
+  // the first time a topic is expanded inside its group, so the page paid for
+  // it once per group opened. ev-ui 0.14.0 takes the list as a prop; until this
+  // resolves it stays undefined, which leaves the accordion's own fetch as the
+  // fallback for an expand that beats us to it.
+  const [quotes, setQuotes] = useState(undefined);
+  useEffect(() => {
+    if (!politicianId) return undefined;
+    let cancelled = false;
+    (async () => {
+      let list = [];
+      try {
+        const res = await fetch(
+          `${quotesApiUrl(apiUrl)}/api/essentials/quotes?politician_id=${politicianId}`,
+          { credentials: 'include' }
+        );
+        if (res.ok) list = (await res.json()).quotes || [];
+      } catch {
+        list = [];
+      }
+      if (!cancelled) setQuotes(list);
+    })();
+    return () => { cancelled = true; };
+  }, [politicianId, apiUrl]);
+
   const toggle = (title) => {
     const opening = !openTitles.has(title);
     userToggled.current = true;
@@ -285,6 +321,22 @@ export default function CategorizedStances({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: "'Manrope', sans-serif" }}>
+      {/* One heading for the panel. Each StanceAccordion prints its own
+          "Stance Breakdown" by default, so with every group open the page
+          carried one per group — four on a real profile, and four duplicate
+          h3s in its outline. */}
+      <h3
+        style={{
+          fontSize: 11,
+          fontWeight: 600,
+          color: muted,
+          textTransform: 'uppercase',
+          letterSpacing: '0.06em',
+          margin: '0 0 4px',
+        }}
+      >
+        Stance Breakdown
+      </h3>
       {groups.map((group) => {
         const open = openTitles.has(group.title);
         const panelId = `stance-group-${group.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`;
@@ -354,6 +406,8 @@ export default function CategorizedStances({
                   verdictsByQuote={verdictsByQuote}
                   initialExpandedTopicId={group.title === deepLinkTitle ? initialExpandedTopicId : undefined}
                   polDotColor={darkMode ? dark : light}
+                  quotes={quotes}
+                  showHeading={false}
                 />
               </div>
             )}

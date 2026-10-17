@@ -15,6 +15,7 @@ import {
   groupTopicsByCategory,
   groupTitleForTopic,
   initialOpenTitle,
+  quotesApiUrl,
 } from './CategorizedStances.jsx';
 
 const SRC = readFileSync(new URL('./CategorizedStances.jsx', import.meta.url), 'utf8');
@@ -134,5 +135,35 @@ describe('source guards for defects that a build and a screenshot both pass', ()
     // initializer alone dropped it and the targeted topic stayed hidden.
     expect(SRC).toMatch(/useEffect\(/);
     expect(SRC).toMatch(/honouredDeepLink/);
+  });
+
+  it('prints the "Stance Breakdown" heading once, not once per group', () => {
+    // Every StanceAccordion renders its own by default. Measured on a real
+    // four-category profile with all groups open: four headings, four
+    // duplicate h3s in the outline.
+    expect(SRC).toMatch(/showHeading=\{false\}/);
+    expect(SRC.match(/<h3\b/g) || []).toHaveLength(1);
+    expect(SRC).toMatch(/<h3[\s\S]{0,320}?Stance Breakdown[\s\S]{0,40}?<\/h3>/);
+  });
+
+  it('hands every accordion one shared quote list instead of letting each fetch', () => {
+    // quotesCache is a per-instance ref upstream, so the politician's full
+    // quote list was re-requested once per group a topic was expanded in.
+    expect(SRC).toMatch(/quotes=\{quotes\}/);
+    expect(SRC).toMatch(/essentials\/quotes\?politician_id=/);
+  });
+});
+
+describe('quotesApiUrl', () => {
+  it('falls back to the same host StanceAccordion defaults to', () => {
+    // CompassCard passes import.meta.env.VITE_API_URL, which is undefined
+    // unless set; the hoisted fetch and the accordion's fallback fetch must
+    // not end up addressing different hosts.
+    expect(quotesApiUrl(undefined)).toBe('https://api.empowered.vote');
+    expect(quotesApiUrl('')).toBe('https://api.empowered.vote');
+  });
+
+  it('uses a configured base URL as given', () => {
+    expect(quotesApiUrl('https://api.test')).toBe('https://api.test');
   });
 });
