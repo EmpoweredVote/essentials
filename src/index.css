@@ -130,15 +130,41 @@ body {
   color: #7ec8d8 !important;
 }
 
-.dark .ev-politician-profile span:not(.ev-stance-panel *),
+.dark .ev-politician-profile span:not(.ev-stance-panel *):not(.ev-contact-badge),
 .dark .ev-politician-profile li:not(.ev-stance-panel *),
 .dark .ev-politician-profile address:not(.ev-stance-panel *) {
   color: #d1d5db !important;
 }
 
+/* Dark mode: contact icon badges (ev-ui patch). Profile.jsx doesn't pass
+   darkMode to PoliticianProfile, so the badges render their light colors —
+   swap in the dark-theme brand teal here. */
+.dark .ev-politician-profile .ev-contact-badge {
+  color: #59b0c4 !important;
+  background-color: #59b0c42e !important;
+}
+
+/* Divider above Contact Information: Profile.jsx doesn't pass darkMode, so
+   swap the light translucent line for a faint white one on the dark card. */
+.dark .ev-politician-profile .ev-contact-divider {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Office title under the name (e.g. "Bloomington City Mayor") in the same
+   teal as the contact badges; out-specifies the grey `p` rule above. */
+.dark .ev-politician-profile p.ev-role-line {
+  color: #59b0c4 !important;
+}
+
+/* Contact titles (Addresses / Phone / Email / Websites) are white like the
+   section heading; out-specifies the grey `p` and `[class*="label"]` rules below. */
+.dark .ev-politician-profile p.ev-contact-label {
+  color: #f3f4f6 !important;
+}
+
 /* Contact section labels (e.g. "Email", "Website", "Phone") */
 .dark .ev-politician-profile [class*="label"],
-.dark .ev-politician-profile [class*="contact"] span {
+.dark .ev-politician-profile [class*="contact"] span:not(.ev-contact-badge) {
   color: #9ca3af !important;
 }
 

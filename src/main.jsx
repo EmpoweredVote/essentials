@@ -7,6 +7,10 @@ import { AppErrorBoundary } from "@empoweredvote/analytics/react";
 import "./index.css";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/600.css";
+// 400/500 are used by ev-ui body text (bio, contact details, links); without
+// them the browser falls back to 600 and that text renders semibold.
+import "@fontsource/manrope/400.css";
+import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/600.css";
 import "@fontsource/manrope/700.css";
 import App from "./App.jsx";
