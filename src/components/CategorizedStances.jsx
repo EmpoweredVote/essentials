@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { StanceAccordion } from '@empoweredvote/ev-ui';
 
@@ -135,6 +135,47 @@ function categoryStyle(title) {
   return CATEGORY_STYLES.find((s) => lower.includes(s.key)) || FALLBACK_STYLE;
 }
 
+/**
+ * Bucket topics by their primary (first-listed) category, largest group first,
+ * ties broken alphabetically so the order is stable across renders. A topic
+ * belongs to exactly one group, so the totals in the headers add up to the
+ * number of topics the politician has answered.
+ *
+ * Exported for unit tests — this file has no jsdom render, matching the
+ * SectionBanner.test.js pattern.
+ */
+export function groupTopicsByCategory(topics) {
+  const byTitle = new Map();
+  for (const topic of topics || []) {
+    const title = topic.categories?.[0]?.title || OTHER_CATEGORY;
+    if (!byTitle.has(title)) byTitle.set(title, []);
+    byTitle.get(title).push(topic);
+  }
+  return [...byTitle.entries()]
+    .map(([title, groupTopics]) => ({ title, topics: groupTopics }))
+    .sort((a, b) => b.topics.length - a.topics.length || a.title.localeCompare(b.title));
+}
+
+/**
+ * The title of the group holding `topicId`, or null. Ids are compared as
+ * strings because the deep link carries them as text.
+ */
+export function groupTitleForTopic(groups, topicId) {
+  if (!topicId) return null;
+  const group = groups.find((g) => g.topics.some((t) => String(t.id) === String(topicId)));
+  return group ? group.title : null;
+}
+
+/**
+ * Which group should be open before the reader touches anything: the
+ * deep-linked one when there is one, otherwise the largest. Never nothing —
+ * ten collapsed headers is not a stance breakdown.
+ */
+export function initialOpenTitle(groups, initialExpandedTopicId) {
+  if (!groups.length) return null;
+  return groupTitleForTopic(groups, initialExpandedTopicId) || groups[0].title;
+}
+
 function CategoryIcon({ title, darkMode }) {
   const style = categoryStyle(title);
   const color = darkMode ? style.dark : style.light;
@@ -180,26 +221,56 @@ export default function CategorizedStances({
   verdictsByQuote,
   initialExpandedTopicId,
 }) {
-  const groups = useMemo(() => {
-    const byTitle = new Map();
-    for (const topic of topics) {
-      const title = topic.categories?.[0]?.title || OTHER_CATEGORY;
-      if (!byTitle.has(title)) byTitle.set(title, []);
-      byTitle.get(title).push(topic);
-    }
-    return [...byTitle.entries()]
-      .map(([title, groupTopics]) => ({ title, topics: groupTopics }))
-      .sort((a, b) => b.topics.length - a.topics.length || a.title.localeCompare(b.title));
-  }, [topics]);
+  const groups = useMemo(() => groupTopicsByCategory(topics), [topics]);
 
-  const [openTitles, setOpenTitles] = useState(() => {
-    if (!initialExpandedTopicId) return new Set();
-    const group = groups.find((g) => g.topics.some((t) => String(t.id) === String(initialExpandedTopicId)));
-    return new Set(group ? [group.title] : []);
-  });
+  // The group that owns the deep-linked topic, if any. Recomputed rather than
+  // captured once, because `initialExpandedTopicId` is set in
+  // CompassContext.loadCompassData behind several awaits and can arrive after
+  // this component has already mounted with its topics.
+  const deepLinkTitle = useMemo(
+    () => groupTitleForTopic(groups, initialExpandedTopicId),
+    [groups, initialExpandedTopicId]
+  );
+
+  // One group is always open. Collapsing all ten leaves the reader — and a
+  // signed-out visitor in particular — looking at a column of empty headers,
+  // where the previous accordion showed four positions straight away.
+  const initialTitle = initialOpenTitle(groups, initialExpandedTopicId);
+  const [openTitles, setOpenTitles] = useState(() => new Set(initialTitle ? [initialTitle] : []));
+
+  // Refs take their value on the first render only, which is what we want:
+  // they record what this component opened by itself, so a late deep link can
+  // replace that choice without overriding the reader's.
+  const autoSeeded = useRef(deepLinkTitle ? null : initialTitle);
+  const honouredDeepLink = useRef(deepLinkTitle);
+  const userToggled = useRef(false);
+
+  // `groups` can be empty on the first render while the topics load.
+  useEffect(() => {
+    if (autoSeeded.current || userToggled.current || deepLinkTitle || !groups.length) return;
+    autoSeeded.current = groups[0].title;
+    setOpenTitles((prev) => (prev.size ? prev : new Set([groups[0].title])));
+  }, [groups, deepLinkTitle]);
+
+  // Open the deep-linked group once the id resolves, and drop the group we had
+  // opened only as a fallback — unless the reader has already chosen for
+  // themselves, in which case nothing of theirs is closed.
+  useEffect(() => {
+    if (!deepLinkTitle || honouredDeepLink.current === deepLinkTitle) return;
+    honouredDeepLink.current = deepLinkTitle;
+    setOpenTitles((prev) => {
+      const next = new Set(prev);
+      if (!userToggled.current && autoSeeded.current && autoSeeded.current !== deepLinkTitle) {
+        next.delete(autoSeeded.current);
+      }
+      next.add(deepLinkTitle);
+      return next;
+    });
+  }, [deepLinkTitle]);
 
   const toggle = (title) => {
     const opening = !openTitles.has(title);
+    userToggled.current = true;
     track('essentials_compass_category_toggled', { category: title, open: opening, context: 'profile' });
     setOpenTitles((prev) => {
       const next = new Set(prev);
@@ -228,18 +299,23 @@ export default function CategorizedStances({
               overflow: 'hidden',
             }}
           >
+            {/* aria-controls is dropped while the group is closed: the panel
+                it names is rendered only when open, and an aria-controls
+                pointing at nothing fails the "ARIA attributes must point to a
+                valid element" rule. */}
             <button
               type="button"
               onClick={() => toggle(group.title)}
               aria-expanded={open}
-              aria-controls={panelId}
+              aria-controls={open ? panelId : undefined}
               className="w-full hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
               style={{
+                // No `background` here: it is shorthand for background-color,
+                // and an inline declaration would beat the hover: classes above.
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
                 padding: '12px 14px',
-                background: 'transparent',
                 border: 'none',
                 cursor: 'pointer',
                 textAlign: 'left',
@@ -263,6 +339,10 @@ export default function CategorizedStances({
             </button>
             {open && (
               <div id={panelId} style={{ padding: '4px 14px 14px', borderTop: `1px solid ${border}` }}>
+                {/* initialExpandedTopicId goes only to the group that holds the
+                    topic. Given to every group, each accordion fires a context
+                    fetch for an id it does not render and then sits on a
+                    spinner that never resolves to a visible row. */}
                 <StanceAccordion
                   topics={group.topics}
                   polAnswers={polAnswers}
@@ -272,7 +352,7 @@ export default function CategorizedStances({
                   darkMode={darkMode}
                   apiUrl={apiUrl}
                   verdictsByQuote={verdictsByQuote}
-                  initialExpandedTopicId={initialExpandedTopicId}
+                  initialExpandedTopicId={group.title === deepLinkTitle ? initialExpandedTopicId : undefined}
                   polDotColor={darkMode ? dark : light}
                 />
               </div>

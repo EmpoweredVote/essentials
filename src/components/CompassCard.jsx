@@ -383,7 +383,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               {!polLoading && !hasData && (
                 <div className="flex flex-col items-center py-8 px-4 w-full">
                   <div style={{ opacity: 0.85, marginBottom: '20px' }}>
-                    <PlaceholderRadar size={260} name={politicianName} darkMode={isDark} />
+                    <PlaceholderRadar size={260} name={politicianName} darkMode={isDark} highContrast />
                   </div>
 
                   <p
@@ -610,7 +610,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             {/* Left zone: CTA with ghost radar */}
             <div className="flex flex-col items-center justify-center py-8 px-4">
               <div style={{ opacity: 0.85, marginBottom: '20px' }}>
-                <PlaceholderRadar size={220} name={politicianName} darkMode={isDark} />
+                <PlaceholderRadar size={220} name={politicianName} darkMode={isDark} highContrast />
               </div>
 
               <p

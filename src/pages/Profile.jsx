@@ -215,6 +215,8 @@ function Profile() {
             politicianId={id}
             onNavigateToRecord={(href) => navigate(href)}
             darkMode={isDark}
+            contactBadges
+            brandMarks
           />
 
           <div className="mt-3 mb-1">
