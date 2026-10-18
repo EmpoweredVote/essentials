@@ -197,6 +197,8 @@ export default function CandidateProfile() {
                 politicianId={polId || id}
                 onNavigateToRecord={(href) => navigate(href)}
                 darkMode={isDark}
+                contactBadges
+                brandMarks
               />
 
               {/* CompassCard or JudicialCompassSection — only for incumbents. Per D-04. */}
