@@ -330,14 +330,17 @@ export default function Landing() {
           <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">Purple Cities</span>
           {' '}have verified stances.
         </p>
-        {/* Two panes: a state rail and a detail panel. The rail scrolls inside
-            itself, capped to the panel's height, so the section stays about one
-            screen tall whether we cover 29 states or 50 — tightening the row
-            padding alone still ran to roughly two screens at 50. */}
+        {/* Two panes: a state rail and a detail panel.
+            The rail runs its full natural height — no scrollbar inside it, so
+            every state is reachable by scrolling the page the way you'd expect.
+            That makes the rail tall (~1,070px at 29 states, ~1,850px at 50), so
+            the detail panel is sticky instead: it follows you down rather than
+            scrolling away and leaving a long empty column beside the list.
+            Rows are ~37px, down from the ~63px in the design. */}
         <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-4 items-start">
 
           {/* ── State rail ── */}
-          <ul className="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-ev-navy-card overflow-hidden divide-y divide-gray-100 dark:divide-white/5 lg:h-[30rem] lg:overflow-y-auto">
+          <ul className="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-ev-navy-card overflow-hidden divide-y divide-gray-100 dark:divide-white/5">
             {sortedStates.map((state) => {
               const isSelected = state.abbrev === selectedState;
               return (
@@ -393,7 +396,13 @@ export default function Landing() {
           <div
             role="region"
             aria-label={selected ? `${selected.name} covered areas` : 'Covered areas'}
-            className="hidden lg:flex lg:flex-col lg:h-[30rem] rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-ev-navy-card overflow-hidden"
+            /* Sticky below the 77px site header so the panel stays beside the
+               rail all the way down the list. It sizes to its chips rather than
+               to a fixed height, so no scrollbar appears until a state has more
+               areas than the viewport can hold — California's 98 fit. The
+               max-height is what keeps sticky workable: a panel taller than the
+               viewport could never be read in full. */
+            className="hidden lg:flex lg:flex-col lg:min-h-[16rem] lg:max-h-[calc(100vh-8rem)] lg:sticky lg:top-24 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-ev-navy-card overflow-hidden"
           >
             {selected ? (
               <>
@@ -414,8 +423,8 @@ export default function Landing() {
                     </span>
                   </div>
                 </div>
-                {/* Scrolls on its own: California is 98 areas, not the 34 in the mock. */}
-                <div className="flex-1 overflow-y-auto px-5 py-4">
+                {/* Grows with the chips; scrolls only past the panel's max height. */}
+                <div className="flex-1 min-h-0 overflow-y-auto px-5 py-4">
                   <AreaChips areas={selected.areas} onSelect={handleAreaClick} />
                 </div>
                 <p className="px-5 py-3 border-t border-gray-100 dark:border-white/5 text-xs text-gray-500 dark:text-gray-400">
