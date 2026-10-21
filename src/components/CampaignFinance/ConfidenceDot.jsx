@@ -3,14 +3,18 @@
  *
  * Props:
  *   level     — "HIGH" | "MEDIUM" | "ESTIMATED"
+ *   source    — optional summary data_source (e.g. 'la_socrata'); the HIGH tooltip names it. Without it the
+ *               tooltip says only "Verified filing", never a source the data did not come from.
  *   className — optional additional Tailwind classes
  */
+
+import { verifiedFilingText } from '../../lib/financeSource';
 
 const CONFIDENCE_CONFIG = {
   HIGH: {
     color: 'bg-green-500',
     label: 'High confidence',
-    tooltip: 'High Confidence — Verified FEC Filing',
+    tooltip: (source) => `High Confidence — ${verifiedFilingText(source)}`,
   },
   MEDIUM: {
     color: 'bg-yellow-400',
@@ -24,8 +28,9 @@ const CONFIDENCE_CONFIG = {
   },
 };
 
-export default function ConfidenceDot({ level, className = '' }) {
+export default function ConfidenceDot({ level, source, className = '' }) {
   const config = CONFIDENCE_CONFIG[level] || CONFIDENCE_CONFIG.ESTIMATED;
+  const tooltip = typeof config.tooltip === 'function' ? config.tooltip(source) : config.tooltip;
 
   return (
     <span className={`relative inline-flex items-center group ${className}`}>
@@ -41,7 +46,7 @@ export default function ConfidenceDot({ level, className = '' }) {
           after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2
           after:border-4 after:border-transparent after:border-t-gray-800"
       >
-        {config.tooltip}
+        {tooltip}
       </span>
     </span>
   );

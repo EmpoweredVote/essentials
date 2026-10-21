@@ -133,7 +133,7 @@ export default function SummaryCard({
             <span className="text-2xl font-bold text-gray-900 dark:text-gray-100" style={{ fontFamily: "'Manrope', sans-serif" }}>
               {formatCurrency(summary.total_raised || 0)}
             </span>
-            <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+            <ConfidenceDot level={summary.confidence_level || 'HIGH'} source={summary.data_source} />
             <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">total raised</span>
           </div>
           {refunds.label && (

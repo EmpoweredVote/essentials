@@ -6,6 +6,7 @@ import PacList from './PacList';
 import { formatCurrency, formatPercent } from '../../utils/format';
 import { refundSummary } from '../../lib/financeRefunds';
 import { matchingFundsSummary } from '../../lib/financeMatchingFunds';
+import { verifiedFilingText } from '../../lib/financeSource';
 
 /**
  * ExpandedView — full campaign finance breakdown shown when card is expanded.
@@ -22,7 +23,8 @@ const CONFIDENCE_LEVELS = [
   {
     level: 'HIGH',
     label: 'High Confidence',
-    description: 'Verified FEC electronic filing. Amounts and donor identities confirmed.',
+    // Names the summary's own source (verifiedFilingText), not always the FEC.
+    description: (source) => `${verifiedFilingText(source)}. Amounts and donor identities confirmed.`,
     color: 'bg-green-500',
   },
   {
@@ -98,14 +100,14 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
               <span className="text-gray-700 dark:text-gray-300">Individual:</span>
               <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(individualTotal)}</span>
               <span className="text-gray-500 dark:text-gray-400">({formatPercent(individualTotal, totalRaised)})</span>
-              <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+              <ConfidenceDot level={summary.confidence_level || 'HIGH'} source={summary.data_source} />
             </div>
             <div className="flex items-center gap-1.5 text-sm">
               <span className="inline-block w-2.5 h-2.5 rounded-full bg-purple-500 flex-shrink-0" />
               <span className="text-gray-700 dark:text-gray-300">PAC/Committee:</span>
               <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(pacTotal)}</span>
               <span className="text-gray-500 dark:text-gray-400">({formatPercent(pacTotal, totalRaised)})</span>
-              <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+              <ConfidenceDot level={summary.confidence_level || 'HIGH'} source={summary.data_source} />
             </div>
           </div>
         </div>
@@ -148,6 +150,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
           </h4>
           <div className="border border-gray-100 dark:border-gray-700 rounded-lg overflow-hidden">
             <DonorList
+              source={summary.data_source}
               donors={summary.top_donors}
               contributions={contributions}
               onFetchContributions={onFetchContributions}
@@ -189,7 +192,9 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
                   <span className={`inline-block w-2.5 h-2.5 rounded-full ${color} flex-shrink-0 mt-1`} />
                   <div>
                     <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">{label}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{description}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {typeof description === 'function' ? description(summary.data_source) : description}
+                    </p>
                   </div>
                 </li>
               ))}
