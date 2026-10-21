@@ -1,6 +1,7 @@
 import ConfidenceDot from './ConfidenceDot';
 import { refundSummary } from '../../lib/financeRefunds';
 import { matchingFundsSummary } from '../../lib/financeMatchingFunds';
+import { financeSourceName } from '../../lib/financeSource';
 
 /**
  * SummaryCard — collapsed campaign finance summary with cycle selector.
@@ -86,6 +87,7 @@ export default function SummaryCard({
   const refunds = refundSummary(summary);
   // Public matching funds are public money: shown beside raised, never inside it.
   const matching = matchingFundsSummary(summary);
+  const sourceName = financeSourceName(summary.data_source);
 
   return (
     <div className="p-5">
@@ -145,13 +147,9 @@ export default function SummaryCard({
 
       {/* Footer: source + freshness */}
       <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
-        <span>Data from FEC</span>
-        {updatedLabel && (
-          <>
-            <span>·</span>
-            <span>Updated {updatedLabel}</span>
-          </>
-        )}
+        {sourceName && <span>Data from {sourceName}</span>}
+        {sourceName && updatedLabel && <span>·</span>}
+        {updatedLabel && <span>Updated {updatedLabel}</span>}
       </div>
     </div>
   );
