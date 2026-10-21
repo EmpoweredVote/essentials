@@ -410,7 +410,11 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
                   onClick={confirmCalibrate}
                   style={{
                     padding: '9px 18px', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer',
-                    background: '#7C3AED', color: '#fff', border: 'none',
+                    // Grouped (profile) uses the yellow CTA colour shared with the compass intro.
+                    ...(grouped
+                      ? { background: '#FED12E', color: '#1C1C1C', boxShadow: '0 1px 2px rgba(0,0,0,0.08)' }
+                      : { background: '#7C3AED', color: '#fff' }),
+                    border: 'none',
                   }}
                 >
                   Calibrate
