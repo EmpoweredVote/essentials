@@ -5,6 +5,7 @@ import CompositionBar from './CompositionBar';
 import PacList from './PacList';
 import { formatCurrency, formatPercent } from '../../utils/format';
 import { refundSummary } from '../../lib/financeRefunds';
+import { matchingFundsSummary } from '../../lib/financeMatchingFunds';
 
 /**
  * ExpandedView — full campaign finance breakdown shown when card is expanded.
@@ -58,6 +59,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
   const individualPct = totalRaised > 0 ? (individualTotal / totalRaised) * 100 : 0;
   const pacPct = totalRaised > 0 ? (pacTotal / totalRaised) * 100 : 0;
   const refunds = refundSummary(summary);
+  const matching = matchingFundsSummary(summary);
 
   return (
     <div className="border-t border-gray-100 dark:border-gray-700 px-5 pb-5 pt-4 space-y-6">
@@ -118,6 +120,19 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
           </h4>
           <p className="text-sm text-gray-700 dark:text-gray-300">
             {refunds.label}. Not subtracted from total raised.
+          </p>
+        </div>
+      )}
+
+      {/* Section 1a-2: Public matching funds. City money paid to the campaign, not a donation, so it is
+          reported apart from total raised and is never listed as a donor. */}
+      {matching.amount > 0 && (
+        <div>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+            Public Matching Funds
+          </h4>
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            {matching.label} from the City of Los Angeles. Not included in total raised.
           </p>
         </div>
       )}

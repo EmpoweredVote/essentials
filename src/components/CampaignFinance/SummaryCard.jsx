@@ -1,5 +1,6 @@
 import ConfidenceDot from './ConfidenceDot';
 import { refundSummary } from '../../lib/financeRefunds';
+import { matchingFundsSummary } from '../../lib/financeMatchingFunds';
 
 /**
  * SummaryCard — collapsed campaign finance summary with cycle selector.
@@ -83,6 +84,8 @@ export default function SummaryCard({
   const availableCycles = summary.available_cycles || [];
   // total_raised is gross; returned contributions are reported beside it, never subtracted.
   const refunds = refundSummary(summary);
+  // Public matching funds are public money: shown beside raised, never inside it.
+  const matching = matchingFundsSummary(summary);
 
   return (
     <div className="p-5">
@@ -133,6 +136,9 @@ export default function SummaryCard({
           </div>
           {refunds.label && (
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{refunds.label}</p>
+          )}
+          {matching.label && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{matching.label}</p>
           )}
         </div>
       )}
