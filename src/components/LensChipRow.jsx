@@ -40,7 +40,7 @@ function lightenForDark(hex, amount = 0.5) {
 }
 
 // Icon for each lens chip: Capitol dome (federal), gavel (judicial), house
-// (local), viewfinder (Best Match / custom — mirrors the retired binary Lens
+// (local), graduation cap (education), viewfinder (Best Match / custom — mirrors the retired binary Lens
 // toggle icon in CompassControlsBar), neutral dot fallback for any future
 // lens key returned by the API that isn't one of these four.
 function renderLensIcon(lens) {
@@ -69,6 +69,16 @@ function renderLensIcon(lens) {
     return (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
         <path fillRule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clipRule="evenodd" />
+      </svg>
+    );
+  }
+  if (key === 'education') {
+    // Graduation cap (Lucide), stroke-based like the gavel.
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width="15" height="15">
+        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+        <path d="M22 10v6" />
+        <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
       </svg>
     );
   }
@@ -115,6 +125,7 @@ function LensButton({
   isDark,
   stateStyle,
   onClick,
+  grouped = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -143,12 +154,18 @@ function LensButton({
       <button
         ref={refs.setReference}
         type="button"
-        className="stance-btn"
-        aria-label={lens.name}
+        className={grouped ? 'lens-seg-btn' : 'stance-btn'}
+        aria-label={needsCalibration && grouped ? `${lens.name} (needs calibration)` : lens.name}
         {...(needsCalibration ? {} : { 'aria-pressed': isActive })}
         {...getReferenceProps()}
         onClick={onClick}
-        style={{
+        style={grouped ? {
+          height: 32,
+          minWidth: 32,
+          padding: isDesktop ? 0 : '0 10px',
+          gap: 6,
+          ...stateStyle,
+        } : {
           width: 'auto',
           height: 34,
           padding: '0 12px',
@@ -185,6 +202,11 @@ function LensButton({
                 {tooltipSummary}
               </div>
             )}
+            {grouped && needsCalibration && (
+              <div style={{ fontSize: 11.5, fontWeight: 600, marginTop: 4, color: isDark ? '#59b0c4' : '#00657c' }}>
+                Calibrate your compass to use this lens
+              </div>
+            )}
           </div>
         </FloatingPortal>
       )}
@@ -192,7 +214,16 @@ function LensButton({
   );
 }
 
-export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, onRecalibrate, isDesktop }) {
+/**
+ * variant:
+ *   'chips'   — separate outlined chips (results grid controls bar; overlays a photo).
+ *   'grouped' — one bordered, card-style container of borderless icon buttons with a
+ *               small "Lens" label (profile "Compass & Issues" header). Uncalibrated
+ *               lenses render in solid neutral ink instead of faded text in a violet
+ *               outline; calibrated ones take their lens colour; the active one fills.
+ */
+export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, onRecalibrate, isDesktop, variant = 'chips' }) {
+  const grouped = variant === 'grouped';
   const { isDark } = useTheme();
   // Clicking an un-calibrated lens opens a confirmation dialog ("Calibrate these
   // N topics?") rather than jumping straight to the quiz. confirmLens holds the
@@ -216,7 +247,29 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
   };
 
   return (
-    <div style={{ display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
+    <div
+      role={grouped ? 'group' : undefined}
+      aria-label={grouped ? 'Compass lens' : undefined}
+      style={grouped ? {
+        display: 'inline-flex', flexWrap: 'nowrap', alignItems: 'center', gap: 2,
+        padding: 4, borderRadius: 12,
+        background: isDark ? '#161b22' : '#FFFFFF',
+        border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : '#e5e7eb'}`,
+        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+      } : { display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}
+    >
+      {grouped && (
+        <span
+          aria-hidden="true"
+          style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
+            color: isDark ? '#9ca3af' : '#6b7280', padding: '0 8px 0 6px', whiteSpace: 'nowrap',
+            fontFamily: "'Manrope', sans-serif",
+          }}
+        >
+          Lens
+        </span>
+      )}
       {lenses.map((lens) => {
         const isActive = activeLensKey === lens.key;
         const needsCalibration = lens.calibrated === false;
@@ -228,7 +281,16 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
         // text carry the lit/needs-calibration language on top of it.
         const chipSurface = isDark ? '#161b22' : '#FFFFFF';
         let stateStyle = {};
-        if (needsCalibration && lens.isUser) {
+        if (grouped) {
+          // Borderless buttons inside the shared container; colour carries state.
+          if (isActive && !needsCalibration) {
+            stateStyle = { background: lens.color, color: '#fff' };
+          } else if (needsCalibration) {
+            stateStyle = { color: isDark ? '#d1d5db' : '#374151' };
+          } else {
+            stateStyle = { color: isDark ? lightenForDark(lens.color) : lens.color };
+          }
+        } else if (needsCalibration && lens.isUser) {
           // A custom lens carries TWO facts at once here: whose it is (teal) and
           // that it needs calibration (violet). A solid violet border would say
           // only the second and erase the first, so the border alternates both.
@@ -268,6 +330,7 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
               isDark={isDark}
               stateStyle={stateStyle}
               onClick={() => handleChipClick(lens)}
+              grouped={grouped}
             />
             {lens.flagCount > 0 && (
               <button

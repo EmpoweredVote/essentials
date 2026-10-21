@@ -367,6 +367,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               onCalibrate={handleCalibrateLens}
               onRecalibrate={handleRecalibrateLens}
               isDesktop={isDesktop}
+              variant="grouped"
             />
           </div>
         ) : (
@@ -378,6 +379,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               onCalibrate={handleCalibrateLens}
               onRecalibrate={handleRecalibrateLens}
               isDesktop={isDesktop}
+              variant="grouped"
             />
           </div>
         )}
