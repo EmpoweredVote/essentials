@@ -162,6 +162,13 @@ body {
   color: #f3f4f6 !important;
 }
 
+/* Indent each contact group's details (sub-labels, addresses, numbers, links)
+   so they line up with the title text rather than the icon badge: 26px badge
+   + 4px label gap (ev-ui contactIcon / contactLabel). */
+.ev-politician-profile p.ev-contact-label ~ * {
+  padding-left: 30px;
+}
+
 /* Contact section labels (e.g. "Email", "Website", "Phone") */
 .dark .ev-politician-profile [class*="label"],
 .dark .ev-politician-profile [class*="contact"] span:not(.ev-contact-badge) {

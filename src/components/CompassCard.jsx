@@ -2,7 +2,7 @@ import { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } fr
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { track } from '@empoweredvote/analytics';
-import { RadarChartCore, StanceAccordion, PlaceholderRadar, useMediaQuery } from '@empoweredvote/ev-ui';
+import { RadarChartCore, PlaceholderRadar, useMediaQuery } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes, saveLensPending } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
@@ -28,7 +28,7 @@ function stanceLabel(shortTitle, value, topics) {
  *
  * Gates display: only renders for politicians that have stance data.
  * Left zone: RadarChartCore dual-overlay (coral user + blue politician).
- * Right zone: StanceAccordion with topic stance labels, reasoning, and sources.
+ * Right zone: CategorizedStances — collapsible issue categories with stance labels, reasoning, and sources.
  *
  * Props:
  *   politicianId    — politician UUID
@@ -569,7 +569,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               )}
             </div>
 
-            {/* Right zone: stance breakdown accordion */}
+            {/* Right zone: stances grouped into collapsible issue categories — the
+                same panel guests see, with the viewer's "You" dot on each spectrum. */}
             <div className="flex flex-col">
               {polLoading || !polAnswers ? (
                 <div className="flex items-center justify-center py-8">
@@ -584,20 +585,20 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     }}
                   />
                 </div>
-              ) : (
-                <StanceAccordion
-                  topics={topicsFiltered.length > 0 ? topicsFiltered : allPolTopics}
+              ) : allPolTopics.length > 0 ? (
+                <CategorizedStances
+                  topics={allPolTopics}
                   polAnswers={polAnswers}
                   userAnswerMap={userAnswerMap}
                   politicianId={politicianId}
                   allTopics={scopedTopics}
-                  expandedTopics={topicsFiltered.length > 0 ? allPolTopics : undefined}
                   darkMode={isDark}
                   apiUrl={import.meta.env.VITE_API_URL}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
+                  collapsedByDefault
                 />
-              )}
+              ) : null}
             </div>
           </div>
           {!polLoading && missingTopicCount > 0 && (

@@ -124,6 +124,7 @@ function LensButton({
   isDesktop,
   isDark,
   stateStyle,
+  tileStyle,
   onClick,
   grouped = false,
 }) {
@@ -173,7 +174,20 @@ function LensButton({
           ...stateStyle,
         }}
       >
-        {renderLensIcon(lens, grouped ? 19 : 15)}
+        {grouped ? (
+          // Rounded-square tile behind the icon; it carries the state colour.
+          <span
+            aria-hidden="true"
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 34, height: 34, borderRadius: 9,
+              transition: 'background-color 0.15s, color 0.15s',
+              ...tileStyle,
+            }}
+          >
+            {renderLensIcon(lens, 19)}
+          </span>
+        ) : renderLensIcon(lens, 15)}
         {grouped ? (
           // Short caption under the icon; "Lens" is dropped since the group is labelled.
           <span aria-hidden="true" style={{ fontSize: 11, fontWeight: 600, lineHeight: 1.1, whiteSpace: 'nowrap', fontFamily: "'Manrope', sans-serif" }}>
@@ -222,10 +236,9 @@ function LensButton({
 /**
  * variant:
  *   'chips'   — separate outlined chips (results grid controls bar; overlays a photo).
- *   'grouped' — one bordered, card-style container of borderless icon buttons with a
- *               small "Lens" label (profile "Compass & Issues" header). Uncalibrated
- *               lenses render in solid neutral ink instead of faded text in a violet
- *               outline; calibrated ones take their lens colour; the active one fills.
+ *   'grouped' — an unboxed row of borderless icon buttons
+ *               (profile "Compass & Issues" header). Every lens takes its lens
+ *               colour, calibrated or not; the active one fills its icon tile.
  */
 export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, onRecalibrate, isDesktop, variant = 'chips' }) {
   const grouped = variant === 'grouped';
@@ -257,24 +270,8 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
       aria-label={grouped ? 'Compass lens' : undefined}
       style={grouped ? {
         display: 'inline-flex', flexWrap: 'nowrap', alignItems: 'center', gap: 2,
-        padding: 4, borderRadius: 12,
-        background: isDark ? '#161b22' : '#FFFFFF',
-        border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : '#e5e7eb'}`,
-        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
       } : { display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}
     >
-      {grouped && (
-        <span
-          aria-hidden="true"
-          style={{
-            fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
-            color: isDark ? '#9ca3af' : '#6b7280', padding: '0 8px 0 6px', whiteSpace: 'nowrap',
-            fontFamily: "'Manrope', sans-serif",
-          }}
-        >
-          Lens
-        </span>
-      )}
       {lenses.map((lens) => {
         const isActive = activeLensKey === lens.key;
         const needsCalibration = lens.calibrated === false;
@@ -286,14 +283,18 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
         // text carry the lit/needs-calibration language on top of it.
         const chipSurface = isDark ? '#161b22' : '#FFFFFF';
         let stateStyle = {};
+        let tileStyle;
         if (grouped) {
-          // Borderless buttons inside the shared container; colour carries state.
+          // Borderless buttons; the icon tile carries state, the caption takes the
+          // lens colour — calibrated or not, so signed-out viewers see the same
+          // palette as signed-in ones.
+          const ink = isDark ? lightenForDark(lens.color) : lens.color;
           if (isActive && !needsCalibration) {
-            stateStyle = { background: lens.color, color: '#fff' };
-          } else if (needsCalibration) {
-            stateStyle = { color: isDark ? '#d1d5db' : '#374151' };
+            stateStyle = { color: ink };
+            tileStyle = { background: lens.color, color: '#fff' };
           } else {
-            stateStyle = { color: isDark ? lightenForDark(lens.color) : lens.color };
+            stateStyle = { color: ink };
+            tileStyle = { background: `color-mix(in srgb, ${ink} ${isDark ? 18 : 12}%, transparent)` };
           }
         } else if (needsCalibration && lens.isUser) {
           // A custom lens carries TWO facts at once here: whose it is (teal) and
@@ -334,6 +335,7 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
               isDesktop={isDesktop}
               isDark={isDark}
               stateStyle={stateStyle}
+              tileStyle={tileStyle}
               onClick={() => handleChipClick(lens)}
               grouped={grouped}
             />
