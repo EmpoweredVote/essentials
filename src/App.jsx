@@ -15,6 +15,7 @@ import StagingQueue from "./pages/admin/StagingQueue";
 import DiscoveryDashboard from "./pages/admin/DiscoveryDashboard";
 import { CompassProvider } from "./contexts/CompassContext";
 import { getToken, clearToken, redirectToLogin, extractHashToken } from "./lib/auth";
+import { API_ORIGIN } from "./lib/apiOrigin";
 
 // Extract JWT from hash fragment on every page load (Auth Hub callback handler)
 extractHashToken();
@@ -76,7 +77,7 @@ function ElectionsRedirect() {
 function App() {
   // Cross-app logout sync — detect ev_session cookie cleared by another app
   useEffect(() => {
-    const SESSION_URL = `${import.meta.env.VITE_API_URL || 'https://api.empowered.vote'}/api/auth/session`;
+    const SESSION_URL = `${API_ORIGIN}/api/auth/session`;
     const poll = async () => {
       if (!getToken()) return; // skip if not logged in
       if (document.visibilityState !== 'visible') return;
