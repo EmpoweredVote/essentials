@@ -43,11 +43,11 @@ function lightenForDark(hex, amount = 0.5) {
 // (local), graduation cap (education), viewfinder (Best Match / custom — mirrors the retired binary Lens
 // toggle icon in CompassControlsBar), neutral dot fallback for any future
 // lens key returned by the API that isn't one of these four.
-function renderLensIcon(lens) {
+function renderLensIcon(lens, size = 15) {
   const key = lens?.key;
   if (key === 'federal') {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width={size} height={size}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
       </svg>
     );
@@ -56,7 +56,7 @@ function renderLensIcon(lens) {
     // Gavel (Lucide) — the prior path was a cpu-chip glyph, not a gavel; icon-only
     // mode made that obvious. Stroke-based to read clearly at 15px.
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
         <path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8" />
         <path d="m16 16 6-6" />
         <path d="m8 8 6-6" />
@@ -67,7 +67,7 @@ function renderLensIcon(lens) {
   }
   if (key === 'local') {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width={size} height={size}>
         <path fillRule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clipRule="evenodd" />
       </svg>
     );
@@ -75,7 +75,7 @@ function renderLensIcon(lens) {
   if (key === 'education') {
     // Graduation cap (Lucide), stroke-based like the gavel.
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
         <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
         <path d="M22 10v6" />
         <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
@@ -84,7 +84,7 @@ function renderLensIcon(lens) {
   }
   if (key === 'custom') {
     return (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5" />
         <circle cx="12" cy="12" r="3" />
       </svg>
@@ -96,7 +96,7 @@ function renderLensIcon(lens) {
   // uses in its own switcher, so one lens looks like itself in both apps.
   if (lens?.isUser) {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width={size} height={size}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6Z" />
       </svg>
@@ -105,7 +105,7 @@ function renderLensIcon(lens) {
   // Neutral fallback for any future lens key (State/International, etc.) —
   // renders a plain dot rather than guessing at a metaphor.
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
       <circle cx="12" cy="12" r="4" />
     </svg>
   );
@@ -173,7 +173,7 @@ function LensButton({
           ...stateStyle,
         }}
       >
-        {renderLensIcon(lens)}
+        {renderLensIcon(lens, grouped ? 19 : 15)}
         {grouped ? (
           // Short caption under the icon; "Lens" is dropped since the group is labelled.
           <span aria-hidden="true" style={{ fontSize: 11, fontWeight: 600, lineHeight: 1.1, whiteSpace: 'nowrap', fontFamily: "'Manrope', sans-serif" }}>
