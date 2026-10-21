@@ -14,6 +14,7 @@ import { refundSummary } from '../../lib/financeRefunds';
  *   contributions        — contributions object (may be null until lazy-loaded)
  *   onFetchContributions — function to trigger initial contribution fetch
  *   onFetchMore          — function to load next page of contributions
+ *   onFetchDonorContributions — (donorName, cursor?) => Promise of one donor's transactions page
  */
 
 const CONFIDENCE_LEVELS = [
@@ -37,7 +38,7 @@ const CONFIDENCE_LEVELS = [
   },
 ];
 
-export default function ExpandedView({ summary, contributions, onFetchContributions, onFetchMore }) {
+export default function ExpandedView({ summary, contributions, onFetchContributions, onFetchMore, onFetchDonorContributions }) {
   const [showConfidenceInfo, setShowConfidenceInfo] = useState(false);
 
   // Lazy-load contributions on first render of expanded view
@@ -136,6 +137,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
               contributions={contributions}
               onFetchContributions={onFetchContributions}
               onFetchMore={onFetchMore}
+              onFetchDonorContributions={onFetchDonorContributions}
             />
           </div>
         </div>

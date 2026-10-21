@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { donorContributionsQuery } from '../../../lib/donorTransactions';
 
 const API_BASE = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api`
@@ -18,6 +19,7 @@ const API_BASE = import.meta.env.VITE_API_URL
  *   dataUpdatedAt: string|null,
  *   fetchContributions: (cursor?: string) => void,
  *   fetchMoreContributions: () => void,
+ *   fetchDonorContributions: (donorName: string, cursor?: string) => Promise<object>,
  * }}
  */
 export function useCampaignFinance(politicianId, cycle) {
@@ -116,6 +118,21 @@ export function useCampaignFinance(politicianId, cycle) {
     }
   }, [fetchContributions]);
 
+  // One page of a single top donor's transactions. Returns the response instead of storing it:
+  // the caller keeps each donor's pages apart from the shared list. Throws on HTTP errors.
+  const fetchDonorContributions = useCallback(
+    async (donorName, cursor = null) => {
+      const res = await fetch(
+        `${API_BASE}/campaign-finance/politician/${politicianId}/contributions?${donorContributionsQuery(cycle, donorName, cursor)}`
+      );
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      }
+      return res.json();
+    },
+    [politicianId, cycle]
+  );
+
   return {
     summary,
     contributions,
@@ -124,5 +141,6 @@ export function useCampaignFinance(politicianId, cycle) {
     dataUpdatedAt,
     fetchContributions,
     fetchMoreContributions,
+    fetchDonorContributions,
   };
 }
