@@ -13,6 +13,7 @@ import LegiScanAttribution from '../components/LegiScanAttribution';
 import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { getSeatBallotStatus } from '../utils/ballotStatus';
 import { useTheme } from '../hooks/useTheme';
+import { stripSocials } from '../lib/stripSocials';
 
 function formatElectionDateFull(dateStr) {
   if (!dateStr) return '';
@@ -94,7 +95,7 @@ function Profile() {
         ) : (
           <>
           <PoliticianProfile
-            politician={pol}
+            politician={stripSocials(pol)}
             imageFocalPoint={(() => {
               const defaultImg = pol.images?.find((img) => img.type === 'default');
               const img = defaultImg || pol.images?.[0];
