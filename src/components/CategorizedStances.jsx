@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { StanceAccordion } from '@empoweredvote/ev-ui';
+import { API_ORIGIN } from '../lib/apiOrigin';
 
 const OTHER_CATEGORY = 'Other Issues';
 
@@ -157,13 +158,12 @@ export function groupTopicsByCategory(topics) {
 }
 
 /**
- * StanceAccordion defaults its own apiUrl, and CompassCard passes
- * `import.meta.env.VITE_API_URL`, which is undefined unless it is set. Mirror
- * that default here so the hoisted quote fetch and the accordion's fallback
- * fetch always address the same host.
+ * CompassCard passes API_ORIGIN to StanceAccordion. Fall back to the same
+ * value here so the hoisted quote fetch and the accordion's fetch always
+ * address the same host (and, in local dev, the /api proxy).
  */
 export function quotesApiUrl(apiUrl) {
-  return apiUrl || 'https://api.empowered.vote';
+  return apiUrl || API_ORIGIN;
 }
 
 /**
