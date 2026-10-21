@@ -15,10 +15,16 @@ import {
 } from '../lib/coverageSelection';
 
 
+// A SEQUENCE, not a menu. These are numbered 01/02/03 and only the first is
+// interactive, but a reader scanning the page sees three cards and reads them as
+// three options — a voter wrote in saying she could not tell "which option to
+// select" to work out how to vote, and the card that names her goal is the inert
+// one. Hence the "How it works" label above the column: it tells you these are
+// stages of one flow, and that the search box is the only door.
 const STEPS = [
   { n: '01', heading: 'Choose Your Area', body: 'Enter your address anywhere in the U.S. — or pick an Alpha Community for the full local-to-Congress view.', active: true },
   { n: '02', heading: 'See Their Stances', body: 'Browse each official\'s verified positions on the issues that shape your community.' },
-  { n: '03', heading: 'Vote with Confidence', body: 'Know every name on your ballot before you step into the booth.' },
+  { n: '03', heading: 'Vote with Confidence', body: 'Get your ballot for the next election, plus your state\'s official voting information.' },
 ];
 
 // The covered-area chips, shared by the desktop detail panel and the mobile
@@ -238,7 +244,7 @@ export default function Landing() {
                 Most voters can't name half the people on their ballot — let alone where they stand on the issues.
               </p>
               <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed mb-6">
-                Enter your address anywhere in the U.S. to meet your members of Congress and the candidates running for the House. In our Alpha Communities, you get the full picture — every office from city hall to Congress — and we're expanding it all the time.
+                Enter your address anywhere in the U.S. to meet your members of Congress, see the next election on your ballot, and find your state's official voting information. In our Alpha Communities, you get the full picture — every office from city hall to Congress — and we're expanding it all the time.
               </p>
               {/* width constrained so right edge aligns with Berkeley column below */}
               <div className="lg:max-w-[calc(50vw-5rem)]">
@@ -263,6 +269,28 @@ export default function Landing() {
                     ariaLabel="Enter your street address, ZIP code, city, county, state, or decimal coordinates"
                   />
                 </div>
+
+                {/* The "how do I vote" door. Deliberately NOT routed through our own
+                    voter-info card: that card is fed by /api/essentials/voter-info,
+                    which proxies Google Civic voterInfoQuery, and as of 2026-10-20 that
+                    returns an EMPTY payload for every address in every state tested —
+                    two weeks before a general election. Until that pipeline is fixed,
+                    sending someone here who asked "how do I vote" would promise help and
+                    deliver a redirect, which is the exact complaint that prompted this.
+                    vote.gov needs nothing from us, covers registration, deadlines and ID
+                    rules, and is always correct. */}
+                <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                  Need to register, check your registration, or find your polling place?{' '}
+                  <a
+                    href="https://www.vote.gov/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[var(--ev-teal)] dark:text-ev-teal-light underline underline-offset-2 hover:no-underline focus:outline-none focus:ring-2 focus:ring-ev-yellow rounded"
+                  >
+                    Start at vote.gov
+                  </a>
+                  <span className="text-gray-500 dark:text-gray-500"> — the official U.S. government site.</span>
+                </p>
               </div>
               {!compassLoading && isLoggedIn && myLocationNotSet && (
                 <div className="mt-3 px-4 py-3 bg-white dark:bg-gray-900 border border-[var(--ev-teal)] dark:border-ev-teal-light rounded-lg shadow-sm text-sm">
@@ -279,6 +307,9 @@ export default function Landing() {
 
             {/* Right: step cards */}
             <div className="space-y-3">
+              <p className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1">
+                How it works
+              </p>
               {STEPS.map(({ n, heading, body, active }) => (
                 <div
                   key={n}
