@@ -11,6 +11,7 @@
 
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
+import { API_ORIGIN } from '../lib/apiOrigin';
 import {
   groupTopicsByCategory,
   groupTitleForTopic,
@@ -161,12 +162,11 @@ describe('source guards for defects that a build and a screenshot both pass', ()
 });
 
 describe('quotesApiUrl', () => {
-  it('falls back to the same host StanceAccordion defaults to', () => {
-    // CompassCard passes import.meta.env.VITE_API_URL, which is undefined
-    // unless set; the hoisted fetch and the accordion's fallback fetch must
-    // not end up addressing different hosts.
-    expect(quotesApiUrl(undefined)).toBe('https://api.empowered.vote');
-    expect(quotesApiUrl('')).toBe('https://api.empowered.vote');
+  it('falls back to the API_ORIGIN that CompassCard hands StanceAccordion', () => {
+    // The hoisted fetch and the accordion's fetch must not end up addressing
+    // different hosts.
+    expect(quotesApiUrl(undefined)).toBe(API_ORIGIN);
+    expect(quotesApiUrl('')).toBe(API_ORIGIN);
   });
 
   it('uses a configured base URL as given', () => {

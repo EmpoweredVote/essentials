@@ -9,6 +9,7 @@ import { useTheme } from '../hooks/useTheme';
 import LensChipRow from './LensChipRow';
 import CategorizedStances from './CategorizedStances';
 import CompassIntro from './CompassIntro';
+import { API_ORIGIN } from '../lib/apiOrigin';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
 const MAX_SPOKES = 8;
@@ -593,7 +594,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   politicianId={politicianId}
                   allTopics={scopedTopics}
                   darkMode={isDark}
-                  apiUrl={import.meta.env.VITE_API_URL}
+                  apiUrl={API_ORIGIN}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
                   collapsedByDefault
@@ -674,7 +675,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   politicianId={politicianId}
                   allTopics={scopedTopics}
                   darkMode={isDark}
-                  apiUrl={import.meta.env.VITE_API_URL}
+                  apiUrl={API_ORIGIN}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
                   onOpenChange={setStancesOpen}
