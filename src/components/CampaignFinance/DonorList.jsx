@@ -10,6 +10,7 @@ import { isDonorFiltered, legacyDonorTransactions } from '../../lib/donorTransac
  * the shared `contributions` list, as it did before.
  *
  * Props:
+ *   source                    — summary.data_source, named in each donor's confidence tooltip
  *   donors                    — array from summary.top_donors
  *   contributions             — object from contributions endpoint (may be null); fallback only
  *   onFetchContributions      — function to trigger contribution fetch; fallback only
@@ -89,6 +90,7 @@ function SortHeader({ label, sortKey, sortBy, sortDir, onSort }) {
 }
 
 export default function DonorList({
+  source,
   donors,
   contributions,
   onFetchContributions,
@@ -257,7 +259,7 @@ export default function DonorList({
                     <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {formatCurrency(donor.total_amount || 0)}
                     </span>
-                    <ConfidenceDot level={donor.confidence_level || 'HIGH'} />
+                    <ConfidenceDot level={donor.confidence_level || 'HIGH'} source={source} />
                   </div>
 
                   {/* Count */}

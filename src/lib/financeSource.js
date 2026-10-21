@@ -18,3 +18,12 @@ const SOURCE_NAMES = {
 export function financeSourceName(dataSource) {
   return SOURCE_NAMES[String(dataSource ?? '').toLowerCase()] ?? '';
 }
+
+/**
+ * verifiedFilingText — the high-confidence wording, naming the source when it is known:
+ * 'Verified filing: LA City Ethics Commission', or 'Verified filing' for an unknown or mixed source.
+ */
+export function verifiedFilingText(dataSource) {
+  const name = financeSourceName(dataSource);
+  return name ? `Verified filing: ${name}` : 'Verified filing';
+}

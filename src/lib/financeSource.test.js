@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { financeSourceName } from './financeSource';
+import { financeSourceName, verifiedFilingText } from './financeSource';
 
 describe('financeSourceName', () => {
   it.each([
@@ -19,5 +19,17 @@ describe('financeSourceName', () => {
     expect(financeSourceName('')).toBe('');
     expect(financeSourceName(undefined)).toBe('');
     expect(financeSourceName('some_new_source')).toBe('');
+  });
+});
+
+describe('verifiedFilingText', () => {
+  it('names the known source', () => {
+    expect(verifiedFilingText('fec')).toBe('Verified filing: FEC');
+    expect(verifiedFilingText('la_socrata')).toBe('Verified filing: LA City Ethics Commission');
+  });
+
+  it('names no source when it is unknown or not given', () => {
+    expect(verifiedFilingText(undefined)).toBe('Verified filing');
+    expect(verifiedFilingText('some_new_source')).toBe('Verified filing');
   });
 });
