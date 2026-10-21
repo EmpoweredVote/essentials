@@ -160,10 +160,10 @@ function LensButton({
         {...getReferenceProps()}
         onClick={onClick}
         style={grouped ? {
-          height: 32,
-          minWidth: 32,
-          padding: isDesktop ? 0 : '0 10px',
-          gap: 6,
+          flexDirection: 'column',
+          minWidth: 56,
+          padding: '6px 8px 5px',
+          gap: 3,
           ...stateStyle,
         } : {
           width: 'auto',
@@ -174,7 +174,12 @@ function LensButton({
         }}
       >
         {renderLensIcon(lens)}
-        {!isDesktop && (
+        {grouped ? (
+          // Short caption under the icon; "Lens" is dropped since the group is labelled.
+          <span aria-hidden="true" style={{ fontSize: 11, fontWeight: 600, lineHeight: 1.1, whiteSpace: 'nowrap', fontFamily: "'Manrope', sans-serif" }}>
+            {lens.name.replace(/\s+lens$/i, '')}
+          </span>
+        ) : !isDesktop && (
           <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>{lens.name}</span>
         )}
       </button>
