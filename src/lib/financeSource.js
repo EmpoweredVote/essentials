@@ -19,6 +19,16 @@ export function financeSourceName(dataSource) {
   return SOURCE_NAMES[String(dataSource ?? '').toLowerCase()] ?? '';
 }
 
+// Sources whose filings do not say whether a donor is a person or a committee. The API's individual/PAC split
+// is always 0 / 0 for them, which would read as "no individual money", so the panel says the source does not
+// report it instead. (cal_access, indiana, ocpf and the FEC all report a donor type.)
+const NO_DONOR_TYPE = new Set(['la_socrata', 'la_county_netfile']);
+
+/** sourceReportsDonorType('la_socrata') → false; true for every other source, including unknown ones. */
+export function sourceReportsDonorType(dataSource) {
+  return !NO_DONOR_TYPE.has(String(dataSource ?? '').toLowerCase());
+}
+
 /**
  * verifiedFilingText — the high-confidence wording, naming the source when it is known:
  * 'Verified filing: LA City Ethics Commission', or 'Verified filing' for an unknown or mixed source.

@@ -6,7 +6,7 @@ import PacList from './PacList';
 import { formatCurrency, formatPercent } from '../../utils/format';
 import { refundSummary } from '../../lib/financeRefunds';
 import { matchingFundsSummary } from '../../lib/financeMatchingFunds';
-import { verifiedFilingText } from '../../lib/financeSource';
+import { verifiedFilingText, sourceReportsDonorType, financeSourceName } from '../../lib/financeSource';
 
 /**
  * ExpandedView — full campaign finance breakdown shown when card is expanded.
@@ -71,6 +71,16 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
           fall back to the simpler Individual/PAC proportion bar for non-FEC politicians. */}
       {summary.composition ? (
         <CompositionBar composition={summary.composition} />
+      ) : !sourceReportsDonorType(summary.data_source) ? (
+        <div>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+            Source Breakdown
+          </h4>
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            {financeSourceName(summary.data_source) || 'This source'} does not report whether each donor is a person
+            or a committee, so this breakdown is not available.
+          </p>
+        </div>
       ) : (
         <div>
           <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
@@ -140,7 +150,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
       )}
 
       {/* Section 1b: PACs & committees detail (drill-down of the composition bar's PAC segment) */}
-      {summary.pac_contributions && <PacList pacList={summary.pac_contributions} />}
+      {summary.pac_contributions && <PacList pacList={summary.pac_contributions} source={summary.data_source} />}
 
       {/* Section 2: Top donors */}
       {summary.top_donors && summary.top_donors.length > 0 && (
