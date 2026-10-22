@@ -53,6 +53,16 @@ export async function expectShownInTime(locator, what) {
   }
 }
 
+// The preflight. One failed call is retried after a pause, so a brief network
+// blip does not skip every journey and report the commit as checked.
+export async function apiIsUpWithRetry(request, { attempts = 2, gapMs = 5_000 } = {}) {
+  for (let i = 0; i < attempts; i++) {
+    if (i > 0) await new Promise((r) => setTimeout(r, gapMs));
+    if (await apiIsUp(request)) return true;
+  }
+  return false;
+}
+
 export const test = base.extend({
   // Runs around every test: skips when the preflight failed, blocks analytics,
   // and fails the test on an uncaught page error or a 5xx from our own API —

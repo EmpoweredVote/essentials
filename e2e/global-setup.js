@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import { request } from '@playwright/test';
-import { apiIsUp, API_DOWN_MARKER, API_DOWN_REASON } from './support.js';
+import { apiIsUpWithRetry, API_DOWN_MARKER, API_DOWN_REASON } from './support.js';
 
 // Runs once, after the preview server is up and before any journey.
 export default async function globalSetup(config) {
   fs.rmSync(API_DOWN_MARKER, { force: true });
   const ctx = await request.newContext({ baseURL: config.projects[0].use.baseURL });
-  const up = await apiIsUp(ctx);
+  const up = await apiIsUpWithRetry(ctx);
   await ctx.dispose();
   if (!up) {
     fs.writeFileSync(API_DOWN_MARKER, `${new Date().toISOString()}\n`);

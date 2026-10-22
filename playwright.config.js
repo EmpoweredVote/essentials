@@ -7,7 +7,9 @@ const baseURL = `http://localhost:${PREVIEW_PORT}`;
 // the live API through the preview proxy. See e2e/ and CLAUDE.md.
 export default defineConfig({
   testDir: './e2e',
-  timeout: 30_000,
+  // Room for two pages at the 15 s limit (see e2e/support.js), so a slow
+  // page fails with its own plain message, not a generic timeout.
+  timeout: 60_000,
   // A user's main content must show within 5 s.
   expect: { timeout: 5_000 },
   retries: process.env.CI ? 1 : 0,

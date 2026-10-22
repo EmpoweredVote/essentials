@@ -104,6 +104,7 @@ test('A profile opened from Compass shows the comparison', async ({ page, reques
   const fragment = `#compass=${Buffer.from(JSON.stringify(payload)).toString('base64')}`;
   await page.goto(`/politician/${member.id}${fragment}`);
 
+  await expectShownInTime(page.getByRole('main').getByRole('heading', { level: 1 }), 'The profile');
   const compass = page.locator('section').filter({ has: page.getByRole('heading', { name: 'Compass & Issues' }) });
   // The legend names both sides, and the chart draws the shared topics.
   await expectShownInTime(compass.getByText('You', { exact: true }).first(), 'The compass comparison');
