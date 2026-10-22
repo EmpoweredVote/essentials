@@ -14,6 +14,13 @@ import { getOfficialVoterLink } from '../lib/voterResourceLinks';
  *
  * Always renders in address mode; off-cycle it shows a clear empty state plus
  * the state's official voter site. State-agnostic + antipartisan.
+ *
+ * County lists: where Google has gaps, the backend fills them from a hand-checked
+ * county list (ev-accounts CA_0320). Those locations carry `source: 'county'`, and
+ * `localSource` names the list and the date it was last checked — shown in the
+ * footer. `pollingNotice === 'near_precinct_boundary'` means the address is too
+ * close to a precinct line to name one polling place safely; we say so and link
+ * the state's official lookup rather than guess.
  */
 
 const ico = 'w-[18px] h-[18px]';
@@ -110,6 +117,21 @@ function LocationTile({ loc, delay, highlight }) {
   );
 }
 
+function BoundaryNotice({ url, stateLabel }) {
+  return (
+    <div className="rounded-xl border border-[#fed12e]/50 bg-[#fed12e]/10 dark:bg-[#fed12e]/[0.06] p-3.5">
+      <p className="font-semibold text-gray-900 dark:text-gray-100 leading-snug">Check your Election Day polling place</p>
+      <p className="mt-1 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+        Your address is close to a precinct line, so we can't be sure which polling place is yours. Look it up on {stateLabel}'s official site.
+      </p>
+      <a href={url} target="_blank" rel="noopener noreferrer"
+        className="mt-2.5 inline-flex items-center gap-1 text-sm font-semibold text-[#00657c] dark:text-[#59b0c4] hover:gap-1.5 transition-all">
+        Find your polling place <ArrowIcon className="w-3.5 h-3.5" />
+      </a>
+    </div>
+  );
+}
+
 function Section({ icon, title, note, locations, defaultVisible, highlight }) {
   const [expanded, setExpanded] = useState(false);
   if (!locations || locations.length === 0) return null;
@@ -148,13 +170,18 @@ export default function VoterResourcesCard({ voterInfo, loading = false, stateNa
   const hasLocations = polling.length > 0 || early.length > 0 || dropBoxes.length > 0;
 
   const officialUrl = info.electionInfoUrl || getOfficialVoterLink(stateCode);
+  const lookupUrl = info.votingLocationFinderUrl || officialUrl;
+  const nearBoundary = info.pollingNotice === 'near_precinct_boundary';
+  const localSource = info.localSource || null;
   const ballotUrl = info.ballotInfoUrl || null;
   const stateLabel = stateName || 'your state';
   const heading = stateName ? `How to vote in ${stateName}` : 'How to vote';
   const electionDateStr = fmtDate(info.electionDate);
 
   const collapsedHint = hasLocations
-    ? assigned
+    ? polling.length === 0 && nearBoundary
+      ? 'Early voting & how to find your polling place'
+      : assigned
       ? `Your polling place${early.length || dropBoxes.length ? ', early voting & drop boxes' : ''}`
       : 'Polling places, early voting & ballot drop boxes'
     : 'Official voting info & deadlines';
@@ -200,6 +227,11 @@ export default function VoterResourcesCard({ voterInfo, loading = false, stateNa
 
       {open && (
         <div className="px-5 pb-4 pt-1 border-t border-gray-100 dark:border-gray-700/60">
+          {nearBoundary && polling.length === 0 && (
+            <div className="mt-3">
+              <BoundaryNotice url={lookupUrl} stateLabel={stateLabel} />
+            </div>
+          )}
           {hasLocations ? (
             <div className="space-y-5 mt-3">
               <Section
@@ -213,7 +245,7 @@ export default function VoterResourcesCard({ voterInfo, loading = false, stateNa
               <Section icon={<ClockIcon />} title="Early voting" note="Vote in person before Election Day." locations={early} defaultVisible={2} />
               <Section icon={<BoxIcon />} title="Ballot drop boxes" locations={dropBoxes} defaultVisible={2} />
             </div>
-          ) : (
+          ) : nearBoundary ? null : (
             <div className="text-center py-6 px-2">
               <span className="mx-auto grid place-items-center w-14 h-14 rounded-2xl bg-[#00657c]/[0.07] text-[#00657c] dark:bg-[#59b0c4]/10 dark:text-[#59b0c4] mb-4">
                 <PinIcon className="w-7 h-7" />
@@ -247,6 +279,15 @@ export default function VoterResourcesCard({ voterInfo, loading = false, stateNa
 
           <p className="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-[11px] text-gray-400 dark:text-gray-500">
             Voting-location data comes from the Voting Information Project via the Google Civic Information API, which controls when it's released.
+            {localSource && (
+              <>
+                {' '}Where it had none, locations come from the{' '}
+                <a href={localSource.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-gray-600 dark:hover:text-gray-300">
+                  {localSource.label}
+                </a>
+                {localSource.lastChecked ? `, last checked ${fmtDate(localSource.lastChecked)}` : ''}.
+              </>
+            )}
           </p>
         </div>
       )}
