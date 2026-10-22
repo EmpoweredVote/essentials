@@ -357,9 +357,7 @@ export default function Landing() {
           Choose an <span className="text-[var(--ev-teal)] dark:text-ev-teal-light">Alpha Community</span>
         </h2>
         <p className="text-base text-gray-500 dark:text-gray-400 mb-8">
-          Each one is a preview of the full Essentials experience.{' '}
-          <span className="inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">Purple Cities</span>
-          {' '}have verified stances.
+          Each one is a preview of the full Essentials experience.
         </p>
         {/* Two panes: a state rail and a detail panel.
             The rail runs its full natural height — no scrollbar inside it, so
@@ -413,7 +411,14 @@ export default function Landing() {
                   {isSelected && (
                     <div className="lg:hidden px-3 pb-3 pt-1 bg-[var(--ev-teal)]/5 dark:bg-ev-teal-light/5">
                       <AreaChips areas={state.areas} onSelect={handleAreaClick} />
-                      <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+                      {/* The desktop legend is in the detail panel's header, which
+                          doesn't render at this width — so the purple key rides
+                          along with the chips it explains. */}
+                      <p className="mt-3 flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400 shrink-0" aria-hidden="true" />
+                        Purple cities have verified stances.
+                      </p>
+                      <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
                         Select a city to view its full government coverage.
                       </p>
                     </div>
@@ -443,15 +448,11 @@ export default function Landing() {
                   <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300">
                     {selected.areas.length} {selected.areas.length === 1 ? 'area' : 'areas'}
                   </span>
-                  <div className="ml-auto flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[var(--ev-teal)] dark:bg-ev-teal-light" aria-hidden="true" />
-                      Area
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400" aria-hidden="true" />
-                      Purple City
-                    </span>
+                  {/* The purple dot is the key to the purple chips below, so the
+                      legend says what purple means rather than naming the colors. */}
+                  <div className="ml-auto flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400">
+                    <span className="w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400 shrink-0" aria-hidden="true" />
+                    Purple cities have verified stances.
                   </div>
                 </div>
                 {/* Grows with the chips; scrolls only past the panel's max height. */}
