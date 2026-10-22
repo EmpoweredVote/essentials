@@ -1,5 +1,7 @@
 import ConfidenceDot from './ConfidenceDot';
 import { refundSummary } from '../../lib/financeRefunds';
+import { matchingFundsSummary } from '../../lib/financeMatchingFunds';
+import { financeSourceName } from '../../lib/financeSource';
 
 /**
  * SummaryCard — collapsed campaign finance summary with cycle selector.
@@ -83,6 +85,9 @@ export default function SummaryCard({
   const availableCycles = summary.available_cycles || [];
   // total_raised is gross; returned contributions are reported beside it, never subtracted.
   const refunds = refundSummary(summary);
+  // Public matching funds are public money: shown beside raised, never inside it.
+  const matching = matchingFundsSummary(summary);
+  const sourceName = financeSourceName(summary.data_source);
 
   return (
     <div className="p-5">
@@ -128,24 +133,23 @@ export default function SummaryCard({
             <span className="text-2xl font-bold text-gray-900 dark:text-gray-100" style={{ fontFamily: "'Manrope', sans-serif" }}>
               {formatCurrency(summary.total_raised || 0)}
             </span>
-            <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+            <ConfidenceDot level={summary.confidence_level || 'HIGH'} source={summary.data_source} />
             <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">total raised</span>
           </div>
           {refunds.label && (
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{refunds.label}</p>
+          )}
+          {matching.label && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{matching.label}</p>
           )}
         </div>
       )}
 
       {/* Footer: source + freshness */}
       <div className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
-        <span>Data from FEC</span>
-        {updatedLabel && (
-          <>
-            <span>·</span>
-            <span>Updated {updatedLabel}</span>
-          </>
-        )}
+        {sourceName && <span>Data from {sourceName}</span>}
+        {sourceName && updatedLabel && <span>·</span>}
+        {updatedLabel && <span>Updated {updatedLabel}</span>}
       </div>
     </div>
   );

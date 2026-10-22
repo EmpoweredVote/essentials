@@ -78,6 +78,7 @@ export default function CampaignFinanceSection({ politicianId, politicianName })
     dataUpdatedAt,
     fetchContributions,
     fetchMoreContributions,
+    fetchDonorContributions,
   } = useCampaignFinance(politicianId, cycle);
 
   // Update cycle if current cycle is not in the politician's available cycles
@@ -172,6 +173,7 @@ export default function CampaignFinanceSection({ politicianId, politicianName })
           contributions={contributions}
           onFetchContributions={() => fetchContributions()}
           onFetchMore={fetchMoreContributions}
+          onFetchDonorContributions={fetchDonorContributions}
         />
 
         {/* Outside Spending — IE committees / PACs that spent in this race */}
