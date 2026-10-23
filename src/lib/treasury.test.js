@@ -16,18 +16,17 @@ import {
 } from './treasury';
 
 // Minimal slice of the live /treasury/cities shape (real duplicate-name data).
-const ds = [{ fiscal_year: 2024, dataset_type: 'revenue' }];
 const CITIES = [
-  { name: 'Salem', state: 'MA', available_datasets: ds },
-  { name: 'Salem', state: 'OH', available_datasets: ds },
-  { name: 'Salem', state: 'VA', available_datasets: ds },
-  { name: 'Saratoga', state: 'CA', available_datasets: ds },
-  { name: 'Orem', state: 'UT', available_datasets: ds },
-  { name: 'Provo', state: 'UT', available_datasets: ds },
-  { name: 'Springfield', state: 'MO', available_datasets: ds },
-  { name: 'Springfield', state: 'MA', available_datasets: ds },
-  { name: 'Franklin', state: 'MA', available_datasets: ds },
-  { name: 'Franklin', state: 'OH', available_datasets: ds },
+  { name: 'Salem', state: 'MA', has_data: true },
+  { name: 'Salem', state: 'OH', has_data: true },
+  { name: 'Salem', state: 'VA', has_data: true },
+  { name: 'Saratoga', state: 'CA', has_data: true },
+  { name: 'Orem', state: 'UT', has_data: true },
+  { name: 'Provo', state: 'UT', has_data: true },
+  { name: 'Springfield', state: 'MO', has_data: true },
+  { name: 'Springfield', state: 'MA', has_data: true },
+  { name: 'Franklin', state: 'MA', has_data: true },
+  { name: 'Franklin', state: 'OH', has_data: true },
 ];
 
 describe('findMatchingMunicipality — state disambiguation', () => {
@@ -70,10 +69,10 @@ describe('findMatchingMunicipality — state disambiguation', () => {
 // Minimal slice of the live /treasury/cities shape for state/federal entities
 // (real Texas / United States records, confirmed via live probe 2026-07-07).
 const STATE_FEDERAL_CITIES = [
-  { name: 'Texas', state: 'TX', entity_type: 'state', available_datasets: ds },
-  { name: 'Oklahoma', state: 'OK', entity_type: 'state', available_datasets: [] },
-  { name: 'United States', state: 'US', entity_type: 'federal', available_datasets: ds },
-  { name: 'Plano', state: 'TX', entity_type: 'municipality', available_datasets: ds },
+  { name: 'Texas', state: 'TX', entity_type: 'state', has_data: true },
+  { name: 'Oklahoma', state: 'OK', entity_type: 'state', has_data: false },
+  { name: 'United States', state: 'US', entity_type: 'federal', has_data: true },
+  { name: 'Plano', state: 'TX', entity_type: 'municipality', has_data: true },
 ];
 
 describe('findStateTreasuryEntity', () => {
@@ -87,7 +86,7 @@ describe('findStateTreasuryEntity', () => {
     expect(findStateTreasuryEntity('ZZ', STATE_FEDERAL_CITIES)).toBeNull();
   });
 
-  it('renders NO match for a state entity with empty available_datasets (Oklahoma)', () => {
+  it('renders NO match for a state entity with has_data false (Oklahoma)', () => {
     expect(findStateTreasuryEntity('OK', STATE_FEDERAL_CITIES)).toBeNull();
   });
 
@@ -119,15 +118,15 @@ describe('findFederalTreasuryEntity', () => {
 
 describe('findCountyTreasuryEntity', () => {
   const COUNTIES = [
-    { name: 'Dane County', state: 'WI', entity_type: 'county', available_datasets: [{ fiscal_year: 2024 }] },
-    { name: 'Los Angeles County', state: 'CA', entity_type: 'county', available_datasets: [{ fiscal_year: 2024 }] },
+    { name: 'Dane County', state: 'WI', entity_type: 'county', has_data: true },
+    { name: 'Los Angeles County', state: 'CA', entity_type: 'county', has_data: true },
     // A budget-less "grouper" county: getCities() returns these because they parent
     // municipalities that DO have data, but linking one lands on an empty page.
-    { name: 'Orange County', state: 'CA', entity_type: 'county', available_datasets: [] },
+    { name: 'Orange County', state: 'CA', entity_type: 'county', has_data: false },
     // Same county name in another state — must not win on a state-scoped lookup.
-    { name: 'Dane County', state: 'MN', entity_type: 'county', available_datasets: [{ fiscal_year: 2024 }] },
+    { name: 'Dane County', state: 'MN', entity_type: 'county', has_data: true },
     // A municipality that happens to share the stem.
-    { name: 'Dane', state: 'WI', entity_type: 'city', available_datasets: [{ fiscal_year: 2024 }] },
+    { name: 'Dane', state: 'WI', entity_type: 'city', has_data: true },
   ];
 
   it('matches a bare county title', () => {
