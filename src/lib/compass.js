@@ -43,6 +43,34 @@ export async function fetchPoliticianAnswers(politicianId) {
   return res.json();
 }
 
+// Stage 5 research states: [{ topic_id, outcome: 'doesnt-fit' | 'no-stance', researched_on, passages }].
+// The topics this person was researched on and holds no position on. Any failure returns [], so the
+// profile renders exactly as it did before research states existed.
+export async function fetchResearchStates(politicianId) {
+  try {
+    const res = await publicFetch(`/compass/politicians/${politicianId}/research-states`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+// The topics in `scopedTopics` (kept in its order) that get a research-state row: no position from the
+// person, and either no stance found or own words that passed the quote check. Mirrors StanceAccordion,
+// which renders a doesnt-fit state with no passage as a plain topic.
+export function researchedTopics(scopedTopics, polAnswers, researchStates) {
+  if (!Array.isArray(researchStates) || researchStates.length === 0) return [];
+  const seated = new Set((polAnswers ?? []).filter((a) => a.value > 0).map((a) => String(a.topic_id)));
+  const shown = new Set(
+    researchStates
+      .filter((st) => st.outcome === 'no-stance' || (st.outcome === 'doesnt-fit' && st.passages?.length > 0))
+      .map((st) => String(st.topic_id))
+  );
+  return scopedTopics.filter((t) => shown.has(String(t.id)) && !seated.has(String(t.id)));
+}
+
 // User's compass answers: [{ topic_id, value, write_in_text }, ...]
 // Returns [] if the user is not logged in (401) or on any network error.
 export async function fetchUserAnswers() {
