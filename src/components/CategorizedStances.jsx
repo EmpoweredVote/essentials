@@ -230,6 +230,8 @@ export default function CategorizedStances({
   apiUrl,
   verdictsByQuote,
   initialExpandedTopicId,
+  politicianName,
+  researchStates,
 }) {
   const groups = useMemo(() => groupTopicsByCategory(topics), [topics]);
 
@@ -408,6 +410,8 @@ export default function CategorizedStances({
                   polDotColor={darkMode ? dark : light}
                   quotes={quotes}
                   showHeading={false}
+                  politicianName={politicianName}
+                  researchStates={researchStates}
                 />
               </div>
             )}

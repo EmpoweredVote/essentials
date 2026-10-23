@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { track } from '@empoweredvote/analytics';
 import { RadarChartCore, StanceAccordion, PlaceholderRadar, useMediaQuery } from '@empoweredvote/ev-ui';
-import { fetchPoliticianAnswers, buildAnswerMapByShortTitle, computeDisplaySpokes, saveLensPending } from '../lib/compass';
+import { fetchPoliticianAnswers, fetchResearchStates, researchedTopics, buildAnswerMapByShortTitle, computeDisplaySpokes, saveLensPending } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import LensChipRow from './LensChipRow';
@@ -125,6 +125,23 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
   const [polAnswers, setPolAnswers] = useState(null);
   const [polLoading, setPolLoading] = useState(true);
+  // Stage 5 research states: topics this person was researched on and holds no
+  // position on. Fetched once per person and handed to the accordions. `null`
+  // while in flight, not `undefined`: StanceAccordion fetches its own copy when
+  // the prop is undefined, once per category group. [] on any failure.
+  const [researchStates, setResearchStates] = useState(null);
+
+  // Its own effect, keyed on the person only: the answers effect also re-runs
+  // when the compass loads, which fetched this twice. Cleared first, so one
+  // person's states never show under the next.
+  useEffect(() => {
+    let cancelled = false;
+    setResearchStates(null);
+    fetchResearchStates(politicianId).then((states) => {
+      if (!cancelled) setResearchStates(states);
+    });
+    return () => { cancelled = true; };
+  }, [politicianId]);
   const [tooltip, setTooltip] = useState(null);
   const containerRef = useRef(null);
 
@@ -203,12 +220,16 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     }
   }
 
-  // Build allPolTopics: ALL topics the politician has answered (for accordion), scoped by tier
-  let allPolTopics = [];
+  // Build allPolTopics: ALL topics the politician has answered (for accordion), scoped by tier,
+  // then the topics they were researched on with no position (Stage 5) so those rows show too.
+  let answeredPolTopics = [];
   if (!polLoading && polAnswers !== null && polAnswers.length > 0 && scopedTopics.length > 0) {
     const polAnsweredIds = new Set(polAnswers.map((a) => String(a.topic_id)));
-    allPolTopics = scopedTopics.filter((t) => polAnsweredIds.has(String(t.id)));
+    answeredPolTopics = scopedTopics.filter((t) => polAnsweredIds.has(String(t.id)));
   }
+  const allPolTopics = !polLoading && polAnswers !== null
+    ? [...answeredPolTopics, ...researchedTopics(scopedTopics, polAnswers, researchStates)]
+    : answeredPolTopics;
 
   // Plan C: count topics the politician has stances on that the user hasn't answered
   const userAnsweredIds = new Set((userAnswers ?? []).map((a) => String(a.topic_id)));
@@ -217,7 +238,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // can place the "You" dot on the stance spectrum alongside the politician's.
   const userAnswerMap = {};
   (userAnswers ?? []).forEach((a) => { userAnswerMap[String(a.topic_id)] = a.value; });
-  const missingTopicCount = allPolTopics.filter(
+  const missingTopicCount = answeredPolTopics.filter(
     (t) => !userAnsweredIds.has(String(t.id))
   ).length;
 
@@ -571,6 +592,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   apiUrl={API_ORIGIN}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
+                  politicianName={politicianName}
+                  researchStates={researchStates}
                 />
               )}
             </div>
@@ -658,6 +681,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   apiUrl={API_ORIGIN}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
+                  politicianName={politicianName}
+                  researchStates={researchStates}
                 />
               ) : null}
             </div>
