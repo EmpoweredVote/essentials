@@ -15,7 +15,7 @@
     "postinstall": "patch-package",
     "banners:json": "node scripts/gen-banners-json.mjs",
     "banners:check": "node scripts/gen-banners-json.mjs --check",
-    "e2e:serve": "VITE_API_URL=http://localhost:4173 npm run build && vite preview --config e2e/vite.preview.config.js",
+    "e2e:serve": "VITE_API_URL=http://localhost:4173 npm run build -- --outDir dist-e2e && vite preview --config e2e/vite.preview.config.js",
     "e2e": "playwright test"
   },
   "dependencies": {
