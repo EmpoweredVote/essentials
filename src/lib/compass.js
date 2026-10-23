@@ -71,14 +71,29 @@ export async function fetchSelectedTopics() {
   }
 }
 
-// Politicians that have compass stances: [{ id, first_name, last_name, ... }]
+// Ids of politicians that have compass stances: string[]
 // Public endpoint — returns [] on any error.
+//
+// Reads /compass/politicians/ids (~165 KB, cached 5 min). The full
+// /compass/politicians list is ~3.3 MB and only its ids were ever used here.
+// If the ids route fails (e.g. this build reached users before the API that
+// serves it), falls back to the full list, so either side can deploy first.
 export async function fetchPoliticiansWithStances() {
+  try {
+    const res = await publicFetch('/compass/politicians/ids');
+    if (res && res.ok) {
+      const ids = await res.json();
+      if (Array.isArray(ids)) return ids.map(String);
+    }
+  } catch {
+    // fall through to the full list
+  }
   try {
     const res = await publicFetch('/compass/politicians');
     if (!res) throw new Error('fetchPoliticiansWithStances failed: Unauthorized');
     if (!res.ok) throw new Error(`fetchPoliticiansWithStances failed: ${res.status}`);
-    return res.json();
+    const pols = await res.json();
+    return pols.map((p) => String(p.id));
   } catch (err) {
     console.error("fetchPoliticiansWithStances error:", err);
     return [];
