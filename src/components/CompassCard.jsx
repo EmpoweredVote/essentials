@@ -126,9 +126,22 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   const [polAnswers, setPolAnswers] = useState(null);
   const [polLoading, setPolLoading] = useState(true);
   // Stage 5 research states: topics this person was researched on and holds no
-  // position on. Fetched once beside the answers and handed to the accordions,
-  // which would otherwise each fetch it. [] on any failure.
-  const [researchStates, setResearchStates] = useState(undefined);
+  // position on. Fetched once per person and handed to the accordions. `null`
+  // while in flight, not `undefined`: StanceAccordion fetches its own copy when
+  // the prop is undefined, once per category group. [] on any failure.
+  const [researchStates, setResearchStates] = useState(null);
+
+  // Its own effect, keyed on the person only: the answers effect also re-runs
+  // when the compass loads, which fetched this twice. Cleared first, so one
+  // person's states never show under the next.
+  useEffect(() => {
+    let cancelled = false;
+    setResearchStates(null);
+    fetchResearchStates(politicianId).then((states) => {
+      if (!cancelled) setResearchStates(states);
+    });
+    return () => { cancelled = true; };
+  }, [politicianId]);
   const [tooltip, setTooltip] = useState(null);
   const containerRef = useRef(null);
 
@@ -141,10 +154,6 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
     let cancelled = false;
     setPolLoading(true);
-
-    fetchResearchStates(politicianId).then((states) => {
-      if (!cancelled) setResearchStates(states);
-    });
 
     fetchPoliticianAnswers(politicianId)
       .then((answers) => {
