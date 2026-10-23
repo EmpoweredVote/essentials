@@ -12,16 +12,35 @@ export const TREASURY_URL =
 /**
  * Fetches the list of Treasury municipalities from the backend.
  * Returns [] on network error or non-ok response (never throws).
+ *
+ * ⚠ Uses the lean index shape (`?fields=index&datasets=summary`): one small row
+ * per entity — id, name, state, entity_type, county_id, has_data, latest_year.
+ * The bare `/treasury/cities` carried one object per budget row and reached
+ * 122 MB by October 2026; it timed out, so this returned [] and no treasury
+ * link rendered. Read data presence with hasTreasuryData(), never a field of
+ * the old full shape.
  */
 export async function fetchTreasuryCities() {
   try {
-    const res = await apiFetch('/treasury/cities');
+    const res = await apiFetch('/treasury/cities?fields=index&datasets=summary');
     if (!res || !res.ok) return [];
     const body = await res.json();
     return Array.isArray(body) ? body : [];
   } catch {
     return [];
   }
+}
+
+/**
+ * Whether a Treasury entity has at least one budget a reader can open.
+ * The index shape's `has_data` excludes budget-less "grouper" counties, which
+ * getCities() also returns — linking one lands the user on an empty page.
+ *
+ * @param {{ has_data?: boolean }} c
+ * @returns {boolean}
+ */
+export function hasTreasuryData(c) {
+  return c?.has_data === true;
 }
 
 /**
@@ -54,7 +73,7 @@ function normalize(s) {
  *
  * Matching strategy:
  * - The body title must start with (or equal) the normalized municipality name.
- * - The municipality must have available_datasets.length > 0 (has-data predicate).
+ * - The municipality must have data (hasTreasuryData).
  * - When a `state` is supplied, only treasury entities in that state are eligible.
  *   This disambiguates same-named cities across states (e.g. Salem UT must NOT
  *   match Salem MA, Saratoga Springs UT must NOT match Saratoga CA). When a city
@@ -88,7 +107,7 @@ export function findMatchingMunicipality(bodyTitle, cities, state) {
   const stripped = t.replace(/^(city|town|village|county|township|borough) of /, '');
 
   const candidates = cities.filter((c) => {
-    if (!c.available_datasets || c.available_datasets.length === 0) return false;
+    if (!hasTreasuryData(c)) return false;
     // Require the matched candidate to actually be municipality-shaped, mirroring
     // the entity_type guard already used by findStateTreasuryEntity (WR-01). Only
     // exclude when entity_type IS SET and isn't municipality-shaped — entities with
@@ -132,7 +151,7 @@ export function findMatchingMunicipality(bodyTitle, cities, state) {
  *   "County of Dane"                     inverted
  *   "County of Dane Board of Supervisors"
  *
- * Requires available_datasets.length > 0. getCities() also returns budget-less
+ * Requires hasTreasuryData(). getCities() also returns budget-less
  * "grouper" counties (a county with no budgets of its own that is the parent of
  * municipalities that do have them); linking those would land the user on an
  * empty Treasury page, so they are excluded here.
@@ -152,7 +171,7 @@ export function findCountyTreasuryEntity(bodyTitle, cities, state) {
 
   const candidates = cities.filter((c) => {
     if (c.entity_type !== 'county') return false;
-    if (!Array.isArray(c.available_datasets) || c.available_datasets.length === 0) return false;
+    if (!hasTreasuryData(c)) return false;
     if (wantState && (c.state || '').toUpperCase() !== wantState) return false;
 
     const cn = normalize(c.name);              // "dane county"
@@ -189,8 +208,7 @@ export function findStateTreasuryEntity(state, cities) {
       (c) =>
         c.entity_type === 'state' &&
         (c.state || '').toUpperCase() === wantState &&
-        Array.isArray(c.available_datasets) &&
-        c.available_datasets.length > 0
+        hasTreasuryData(c)
     ) || null
   );
 }
@@ -208,8 +226,7 @@ export function findFederalTreasuryEntity(cities) {
     cities.find(
       (c) =>
         c.entity_type === 'federal' &&
-        Array.isArray(c.available_datasets) &&
-        c.available_datasets.length > 0
+        hasTreasuryData(c)
     ) || null
   );
 }
