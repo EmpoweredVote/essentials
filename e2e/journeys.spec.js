@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import { test, expect, expectShownInTime, API_PINNED_ADDRESS } from './support.js';
+import { test, expect, expectShownInTime, brokenImages, API_PINNED_ADDRESS } from './support.js';
 
 // Each test title is the sentence a reader of the CI log sees when it breaks.
 // Assert what a user sees (roles, names, text), never component internals.
@@ -44,6 +44,9 @@ test("An official's profile shows name, office and photo @phone", async ({ page 
     await expect.poll(() => photo.first().evaluate((img) => img.complete && img.naturalWidth > 0),
       { message: `${name}'s photo did not load` }).toBe(true);
   }
+
+  // Whatever its label, no picture on the profile is a broken link.
+  await expect.poll(() => brokenImages(main), { message: 'Pictures on the profile that failed to load' }).toEqual([]);
 
   // No section shows a heading over nothing.
   await expect(main.getByRole('heading', { level: 2 }).first()).toBeVisible();

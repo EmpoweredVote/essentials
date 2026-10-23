@@ -9,23 +9,36 @@ const BASE_URL = `http://localhost:${PREVIEW_PORT}`;
 // Stable input: LA City Hall area. Council District 14, LA County supervisor D1.
 export const API_PINNED_ADDRESS = '500 W Temple St, Los Angeles, CA 90012';
 
-// Written by global-setup.js when the preflight fails. Its presence turns every
-// journey into a skip ("couldn't run"), so a live-API outage does not block a PR.
+// Written by global-setup.js when the preflight fails, holding the reason. Its
+// presence turns every journey into a skip ("couldn't run"), so a live-API
+// outage or a data problem in production does not block a PR.
 export const API_DOWN_MARKER = path.join(path.dirname(fileURLToPath(import.meta.url)), '.api-down');
 export const API_DOWN_REASON = "couldn't run — live API down";
+export const NO_OFFICIALS_REASON = "couldn't run — live API is up but returned no officials for the pinned address";
 
-// True when the live API, reached through the preview proxy, returns officials
-// for the pinned address.
-export async function apiIsUp(request) {
+// null when the live API, reached through the preview proxy, returns officials
+// for the pinned address; otherwise the reason it did not.
+export async function preflightProblem(request) {
   try {
     const res = await request.post('/api/essentials/candidates/search', {
       data: { query: API_PINNED_ADDRESS },
       timeout: 30_000,
     });
-    if (res.status() !== 200) return false;
+    if (res.status() !== 200) return API_DOWN_REASON;
     const body = await res.json();
     const list = Array.isArray(body) ? body : body?.politicians;
-    return Array.isArray(list) && list.length > 0;
+    return Array.isArray(list) && list.length > 0 ? null : NO_OFFICIALS_REASON;
+  } catch {
+    return API_DOWN_REASON;
+  }
+}
+
+// True when the preview port serves this app's build, not some other server
+// left running there (locally Playwright reuses whatever answers the port).
+export async function isThisAppsBuild(request) {
+  try {
+    const res = await request.get('/');
+    return res.ok() && (await res.text()).includes('<title>Empowered Essentials</title>');
   } catch {
     return false;
   }
@@ -53,14 +66,24 @@ export async function expectShownInTime(locator, what) {
   }
 }
 
-// The preflight. One failed call is retried after a pause, so a brief network
+// The preflight. A failed check is retried after a pause, so a brief network
 // blip does not skip every journey and report the commit as checked.
-export async function apiIsUpWithRetry(request, { attempts = 2, gapMs = 5_000 } = {}) {
+export async function preflightProblemWithRetry(request, { attempts = 2, gapMs = 5_000 } = {}) {
+  let problem = null;
   for (let i = 0; i < attempts; i++) {
     if (i > 0) await new Promise((r) => setTimeout(r, gapMs));
-    if (await apiIsUp(request)) return true;
+    problem = await preflightProblem(request);
+    if (!problem) return null;
   }
-  return false;
+  return problem;
+}
+
+// Labels of visible pictures inside `scope` that finished loading with nothing
+// to show (a broken link). Pictures still loading are not counted.
+export function brokenImages(scope) {
+  return scope.evaluate((el) => [...el.querySelectorAll('img')]
+    .filter((img) => img.offsetParent !== null && img.complete && img.naturalWidth === 0)
+    .map((img) => img.alt || img.currentSrc || img.src));
 }
 
 export const test = base.extend({
@@ -68,7 +91,9 @@ export const test = base.extend({
   // and fails the test on an uncaught page error or a 5xx from our own API —
   // breaks a user would see even when every assertion passed.
   guard: [async ({ page }, use, testInfo) => {
-    testInfo.skip(fs.existsSync(API_DOWN_MARKER), API_DOWN_REASON);
+    if (fs.existsSync(API_DOWN_MARKER)) {
+      testInfo.skip(true, fs.readFileSync(API_DOWN_MARKER, 'utf8').trim() || API_DOWN_REASON);
+    }
 
     // Keep the bot out of analytics and the Maze survey widget.
     await page.route(/posthog|maze\.co/, (route) => route.abort());
