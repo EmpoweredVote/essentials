@@ -55,5 +55,6 @@ __pycache__/
 
 # Playwright journeys (e2e/)
 playwright-report/
+dist-e2e/
 test-results/
 e2e/.api-down

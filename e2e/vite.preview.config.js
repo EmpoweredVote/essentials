@@ -12,6 +12,9 @@ export default defineConfig(async (env) => {
   const base = typeof baseConfig === 'function' ? await baseConfig(env) : baseConfig;
   return {
     ...base,
+    // Its own folder, so a local e2e run does not replace dist/ with a build
+    // that only works behind this proxy.
+    build: { ...base.build, outDir: 'dist-e2e' },
     preview: {
       port: PREVIEW_PORT,
       strictPort: true,
