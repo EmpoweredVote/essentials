@@ -3,7 +3,7 @@
  * person was researched on them (ev-accounts GET /api/compass/politicians/:id/research-states).
  */
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { researchedTopics, fetchResearchStates } from './compass';
+import { researchedTopics, fetchResearchStates, compassCardMode } from './compass';
 
 const T = (id) => ({ id, short_title: `T${id}` });
 const scoped = [T('a'), T('b'), T('c'), T('d')];
@@ -51,5 +51,29 @@ describe('fetchResearchStates', () => {
     vi.stubGlobal('fetch', f);
     expect(await fetchResearchStates('p1')).toEqual(list);
     expect(String(f.mock.calls[0][0])).toContain('/compass/politicians/p1/research-states');
+  });
+});
+
+describe('compassCardMode', () => {
+  const noStance = (id) => ({ topic_id: id, outcome: 'no-stance', researched_on: '2026-10-20', passages: [] });
+
+  it('waits while the compass or the research states are still loading', () => {
+    expect(compassCardMode({ compassLoading: true, hasStances: true, scopedTopics: scoped, researchStates: [] })).toBe('wait');
+    expect(compassCardMode({ compassLoading: false, hasStances: false, scopedTopics: scoped, researchStates: null })).toBe('wait');
+  });
+
+  it('shows the full card for someone with answers, whatever the research states say', () => {
+    expect(compassCardMode({ compassLoading: false, hasStances: true, scopedTopics: scoped, researchStates: null })).toBe('full');
+    expect(compassCardMode({ compassLoading: false, hasStances: true, scopedTopics: scoped, researchStates: [] })).toBe('full');
+  });
+
+  it('shows a breakdown-only card for someone researched with no answers', () => {
+    expect(compassCardMode({ compassLoading: false, hasStances: false, scopedTopics: scoped, researchStates: [noStance('b')] })).toBe('research-only');
+  });
+
+  it('hides the card when no research state would make a row', () => {
+    expect(compassCardMode({ compassLoading: false, hasStances: false, scopedTopics: scoped, researchStates: [] })).toBe('hidden');
+    expect(compassCardMode({ compassLoading: false, hasStances: false, scopedTopics: scoped, researchStates: [noStance('z')] })).toBe('hidden');
+    expect(compassCardMode({ compassLoading: false, hasStances: false, scopedTopics: [], researchStates: [noStance('b')] })).toBe('hidden');
   });
 });

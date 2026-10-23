@@ -71,6 +71,18 @@ export function researchedTopics(scopedTopics, polAnswers, researchStates) {
   return scopedTopics.filter((t) => shown.has(String(t.id)) && !seated.has(String(t.id)));
 }
 
+// What the profile's compass card shows. 'full' for someone in the compass id list (radar + breakdown).
+// 'research-only' for someone Stage 5 researched who is not in that list — an official with no answer
+// rows, or a candidate whose answers are all blank — so the card holds the breakdown alone. The id list
+// stays "has a compass", because the results and ballot grids draw a radar for everyone in it.
+// 'wait' while either read is in flight; 'hidden' when no research state would make a row.
+export function compassCardMode({ compassLoading, hasStances, scopedTopics, researchStates }) {
+  if (compassLoading) return 'wait';
+  if (hasStances) return 'full';
+  if (researchStates === null) return 'wait';
+  return researchedTopics(scopedTopics, [], researchStates).length > 0 ? 'research-only' : 'hidden';
+}
+
 // User's compass answers: [{ topic_id, value, write_in_text }, ...]
 // Returns [] if the user is not logged in (401) or on any network error.
 export async function fetchUserAnswers() {
