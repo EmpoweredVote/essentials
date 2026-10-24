@@ -20,4 +20,13 @@ describe('CompassCard gate', () => {
   it('does not fetch answers for a research-only person', () => {
     expect(SRC).toMatch(/researchOnly \? \[\] : fetchedAnswers/);
   });
+
+  it('gives a research-only person the breakdown alone, guest or not', () => {
+    // The guest zone opens with CompassIntro, whose second step offers to lay the viewer's
+    // compass over this person's. A research-only person has no positions to lay one over —
+    // every row says we found no public stance — so the breakdown-only branch takes guests
+    // too. Gating it on hasUserCompass sent exactly these guests to that pitch.
+    expect(SRC).toMatch(/\{researchOnly \? \(/);
+    expect(SRC).not.toMatch(/researchOnly && hasUserCompass/);
+  });
 });

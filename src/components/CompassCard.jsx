@@ -414,9 +414,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       </div>
 
       <div className="bg-white dark:bg-ev-navy-card rounded-2xl border border-neutral-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm p-6">
-        {researchOnly && hasUserCompass ? (
-          /* Researched, no answers, viewer has a compass: nothing to compare, so no radar — the
-             breakdown alone. A guest still gets the calibrate CTA beside it (below). */
+        {researchOnly ? (
+          /* Researched, no answers: nothing to compare, so no radar — the breakdown alone.
+             This covers guests too. The guest zone below opens with CompassIntro, whose second
+             step reads "Lay your compass over theirs and the overlap does the explaining" — but
+             every row on this card says we found no public stance for this person, so there is
+             no shape to lay a compass over. Showing that pitch to exactly the people this card
+             exists for promised something the page cannot deliver. */
           <CategorizedStances
             topics={allPolTopics}
             polAnswers={polAnswers}
