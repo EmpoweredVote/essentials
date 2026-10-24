@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
  * Mirrors the Compass app's "learn" onboarding (compass.empowered.vote): a visual
  * on a card with a soft halo, then a "Step N of 2" label, title and body. The text
  * slides vertically between steps; the visual swaps with a fade/scale. Users move
- * between steps with Next / Previous, the dots, or by swiping up/down on the visual.
+ * between steps with Next / Previous, the dots, or by swiping left/right on the visual.
  *
  * Step 1 shows calibrating: picking a stance draws your compass shape.
  * Step 2 shows comparing: your shape over this candidate's, alignment pulsing.
@@ -225,7 +225,10 @@ function CalibrateVisual({ t }) {
 }
 
 /** Step 2 visual: your shape over the candidate's, with aligned spokes pulsing. */
-function CompareVisual({ t, politicianName }) {
+// The legend deliberately says "A candidate" rather than this profile's politician:
+// the green shape is POL_VALUES, a fixed sample, and putting a real person's name on
+// it would present invented positions as that person's record.
+function CompareVisual({ t }) {
   return (
     <div className="w-full flex flex-col items-center gap-3">
       <div className="w-full max-w-[15rem] aspect-square">
@@ -240,7 +243,7 @@ function CompareVisual({ t, politicianName }) {
           <span className="w-3 h-3 rounded-full" style={{ background: USER_COLOR }} /> You
         </span>
         <span className="flex items-center gap-2 text-sm font-semibold" style={{ color: t.textBody }}>
-          <span className="w-3 h-3 rounded-full" style={{ background: POL_COLOR }} /> {politicianName || 'A candidate'}
+          <span className="w-3 h-3 rounded-full" style={{ background: POL_COLOR }} /> A candidate
         </span>
       </div>
     </div>
@@ -309,7 +312,7 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
     {
       title: `See where you stand with ${politicianName || 'this candidate'}`,
       body: 'Lay your compass over theirs and the overlap does the explaining. Where you agree lights up, where you split is obvious. No party labels, no homework.',
-      visual: <CompareVisual t={t} politicianName={politicianName} />,
+      visual: <CompareVisual t={t} />,
     },
   ];
   const last = step === steps.length - 1;
@@ -320,15 +323,31 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
     setStep(next);
   };
 
-  // Swipe up → next, swipe down → previous (touch or mouse drag on the visual).
-  const onPointerDown = (e) => { dragStart.current = { y: e.clientY, time: e.timeStamp }; };
+  // Swipe left → next, swipe right → previous (touch or mouse drag on the visual).
+  //
+  // Horizontal, not vertical: below lg this card is full width and 22rem tall, so a
+  // vertical drag starting on it is almost always someone scrolling the page. Taking
+  // that axis (touch-action: none) meant a scroll flick anywhere on the card changed
+  // step instead of scrolling — and on the last step did nothing at all, leaving the
+  // page stuck. `touch-action: pan-y` hands vertical back to the browser and leaves
+  // us the horizontal axis, which is the usual carousel gesture anyway.
+  //
+  // setPointerCapture so a drag that ends outside the card still reports: mouse
+  // pointers get no implicit capture, and a 60px swipe started near an edge leaves it.
+  const onPointerDown = (e) => {
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    dragStart.current = { x: e.clientX, time: e.timeStamp };
+  };
   const onPointerUp = (e) => {
     if (!dragStart.current) return;
-    const dy = e.clientY - dragStart.current.y;
-    const velocity = dy / Math.max(1, e.timeStamp - dragStart.current.time); // px/ms
+    const dx = e.clientX - dragStart.current.x;
+    const velocity = dx / Math.max(1, e.timeStamp - dragStart.current.time); // px/ms
     dragStart.current = null;
-    if (dy < -60 || velocity < -0.4) go(step + 1);
-    else if (dy > 60 || velocity > 0.4) go(step - 1);
+    // Velocity alone is not enough: a plain click jitters a couple of px over a few
+    // ms, which clears 0.4 px/ms easily and used to advance the step on a click.
+    const travelled = Math.abs(dx) > 10;
+    if (dx < -60 || (travelled && velocity < -0.4)) go(step + 1);
+    else if (dx > 60 || (travelled && velocity > 0.4)) go(step - 1);
   };
 
   useEffect(() => { dragStart.current = null; }, [step]);
@@ -342,7 +361,7 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
       {/* Visual card */}
       <div
         className="relative w-full shrink-0 rounded-3xl flex items-center justify-center h-[22rem] sm:h-[23rem] lg:h-auto lg:flex-1 lg:min-h-0 overflow-hidden select-none"
-        style={{ background: t.card, border: `1px solid ${t.border}`, touchAction: 'none', cursor: 'grab' }}
+        style={{ background: t.card, border: `1px solid ${t.border}`, touchAction: 'pan-y', cursor: 'grab' }}
         ref={cardRef}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
@@ -356,6 +375,16 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
           className="pointer-events-none absolute w-64 h-64 rounded-full evi-anim"
           style={{ background: `radial-gradient(circle, ${t.textAccent}22 0%, transparent 70%)`, animation: 'evi-halo 4.5s ease-in-out infinite' }}
         />
+        {/* Both visuals are drawn from fixed sample values (USER_VALUES / POL_VALUES):
+            they show how the compass works, not anyone's actual positions. Label the
+            card so no shape on it can be read as a real record. Outside FitToBox, so
+            it keeps its size when the visual is scaled down on a short screen. */}
+        <span
+          className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide"
+          style={{ background: t.bg, color: t.textMuted, border: `1px solid ${t.border}` }}
+        >
+          Example
+        </span>
         {/* Inset box the visual is scaled to fit (card padding lives here). */}
         <div className="absolute inset-x-4 inset-y-5 sm:inset-x-6 sm:inset-y-6">
           <FitToBox>

@@ -150,6 +150,12 @@ function LensButton({
   // API-supplied description, then to just the title).
   const tooltipSummary = LENS_SUMMARIES[lens.key] || lens.description || '';
 
+  // In the grouped variant the selected lens is visibly filled even when it needs
+  // calibrating, so it reports as pressed too — otherwise a signed-out visitor, for
+  // whom every lens is uncalibrated, gets no selected state at all. The chips
+  // variant keeps its existing behaviour.
+  const pressedProps = needsCalibration && !grouped ? {} : { 'aria-pressed': isActive };
+
   return (
     <>
       <button
@@ -157,7 +163,7 @@ function LensButton({
         type="button"
         className={grouped ? 'lens-seg-btn' : 'stance-btn'}
         aria-label={needsCalibration && grouped ? `${lens.name} (needs calibration)` : lens.name}
-        {...(needsCalibration ? {} : { 'aria-pressed': isActive })}
+        {...pressedProps}
         {...getReferenceProps()}
         onClick={onClick}
         style={grouped ? {
@@ -289,13 +295,16 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
           // lens colour — calibrated or not, so signed-out viewers see the same
           // palette as signed-in ones.
           const ink = isDark ? lightenForDark(lens.color) : lens.color;
-          if (isActive && !needsCalibration) {
-            stateStyle = { color: ink };
-            tileStyle = { background: lens.color, color: '#fff' };
-          } else {
-            stateStyle = { color: ink };
-            tileStyle = { background: `color-mix(in srgb, ${ink} ${isDark ? 18 : 12}%, transparent)` };
-          }
+          stateStyle = { color: ink };
+          // The selected lens fills its tile whether or not it is calibrated. Gating
+          // the fill on calibration meant no lens ever filled for a signed-out
+          // visitor: activeLensKey defaults to 'custom', and for a guest every lens
+          // is uncalibrated (custom needs >= 3 answers), so the switcher rendered
+          // with no selection showing at all. What still needs calibrating is said
+          // by the button's label and its tooltip, not by hiding the selection.
+          tileStyle = isActive
+            ? { background: lens.color, color: '#fff' }
+            : { background: `color-mix(in srgb, ${ink} ${isDark ? 18 : 12}%, transparent)` };
         } else if (needsCalibration && lens.isUser) {
           // A custom lens carries TWO facts at once here: whose it is (teal) and
           // that it needs calibration (violet). A solid violet border would say
