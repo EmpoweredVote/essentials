@@ -33,6 +33,7 @@ import {
   buildHydrationEvent,
 } from "../lib/compass";
 import { extractHashToken, getToken, setToken, publicFetch, clearToken, API_BASE } from "../lib/auth";
+import { isPreviewSignedIn, previewAnswers } from "../mocks/previewSignedIn";
 import { fetchMyRepresentatives } from "../lib/api";
 import { evContext } from "@empoweredvote/ev-ui";
 import { identify, track } from "@empoweredvote/analytics";
@@ -300,6 +301,10 @@ export function CompassProvider({ children }) {
             evContext.set(next).catch(() => {});
           } catch { /* broker offline */ }
         }
+      } else if (isPreviewSignedIn()) {
+        // Dev-only design preview (src/mocks/previewSignedIn.js).
+        hydration = { source: 'dev-preview', reason: 'dev-preview' };
+        ({ answers, selected } = previewAnswers(topics));
       } else {
         let shared = null;
         try { shared = await evContext.get(); } catch { shared = null; }

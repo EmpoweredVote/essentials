@@ -40,14 +40,14 @@ function lightenForDark(hex, amount = 0.5) {
 }
 
 // Icon for each lens chip: Capitol dome (federal), gavel (judicial), house
-// (local), viewfinder (Best Match / custom — mirrors the retired binary Lens
+// (local), graduation cap (education), viewfinder (Best Match / custom — mirrors the retired binary Lens
 // toggle icon in CompassControlsBar), neutral dot fallback for any future
 // lens key returned by the API that isn't one of these four.
-function renderLensIcon(lens) {
+function renderLensIcon(lens, size = 15) {
   const key = lens?.key;
   if (key === 'federal') {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width={size} height={size}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
       </svg>
     );
@@ -56,7 +56,7 @@ function renderLensIcon(lens) {
     // Gavel (Lucide) — the prior path was a cpu-chip glyph, not a gavel; icon-only
     // mode made that obvious. Stroke-based to read clearly at 15px.
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
         <path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8" />
         <path d="m16 16 6-6" />
         <path d="m8 8 6-6" />
@@ -67,14 +67,24 @@ function renderLensIcon(lens) {
   }
   if (key === 'local') {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width={size} height={size}>
         <path fillRule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clipRule="evenodd" />
+      </svg>
+    );
+  }
+  if (key === 'education') {
+    // Graduation cap (Lucide), stroke-based like the gavel.
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
+        <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+        <path d="M22 10v6" />
+        <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
       </svg>
     );
   }
   if (key === 'custom') {
     return (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M7.5 3.75H6A2.25 2.25 0 0 0 3.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0 1 20.25 6v1.5m0 9V18A2.25 2.25 0 0 1 18 20.25h-1.5m-9 0H6A2.25 2.25 0 0 1 3.75 18v-1.5" />
         <circle cx="12" cy="12" r="3" />
       </svg>
@@ -86,7 +96,7 @@ function renderLensIcon(lens) {
   // uses in its own switcher, so one lens looks like itself in both apps.
   if (lens?.isUser) {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width="15" height="15">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width={size} height={size}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6Z" />
       </svg>
@@ -95,7 +105,7 @@ function renderLensIcon(lens) {
   // Neutral fallback for any future lens key (State/International, etc.) —
   // renders a plain dot rather than guessing at a metaphor.
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
       <circle cx="12" cy="12" r="4" />
     </svg>
   );
@@ -114,7 +124,9 @@ function LensButton({
   isDesktop,
   isDark,
   stateStyle,
+  tileStyle,
   onClick,
+  grouped = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -138,17 +150,29 @@ function LensButton({
   // API-supplied description, then to just the title).
   const tooltipSummary = LENS_SUMMARIES[lens.key] || lens.description || '';
 
+  // In the grouped variant the selected lens is visibly filled even when it needs
+  // calibrating, so it reports as pressed too — otherwise a signed-out visitor, for
+  // whom every lens is uncalibrated, gets no selected state at all. The chips
+  // variant keeps its existing behaviour.
+  const pressedProps = needsCalibration && !grouped ? {} : { 'aria-pressed': isActive };
+
   return (
     <>
       <button
         ref={refs.setReference}
         type="button"
-        className="stance-btn"
-        aria-label={lens.name}
-        {...(needsCalibration ? {} : { 'aria-pressed': isActive })}
+        className={grouped ? 'lens-seg-btn' : 'stance-btn'}
+        aria-label={needsCalibration && grouped ? `${lens.name} (needs calibration)` : lens.name}
+        {...pressedProps}
         {...getReferenceProps()}
         onClick={onClick}
-        style={{
+        style={grouped ? {
+          flexDirection: 'column',
+          minWidth: 56,
+          padding: '6px 8px 5px',
+          gap: 3,
+          ...stateStyle,
+        } : {
           width: 'auto',
           height: 34,
           padding: '0 12px',
@@ -156,8 +180,26 @@ function LensButton({
           ...stateStyle,
         }}
       >
-        {renderLensIcon(lens)}
-        {!isDesktop && (
+        {grouped ? (
+          // Rounded-square tile behind the icon; it carries the state colour.
+          <span
+            aria-hidden="true"
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 34, height: 34, borderRadius: 9,
+              transition: 'background-color 0.15s, color 0.15s',
+              ...tileStyle,
+            }}
+          >
+            {renderLensIcon(lens, 19)}
+          </span>
+        ) : renderLensIcon(lens, 15)}
+        {grouped ? (
+          // Short caption under the icon; "Lens" is dropped since the group is labelled.
+          <span aria-hidden="true" style={{ fontSize: 11, fontWeight: 600, lineHeight: 1.1, whiteSpace: 'nowrap', fontFamily: "'Manrope', sans-serif" }}>
+            {lens.name.replace(/\s+lens$/i, '')}
+          </span>
+        ) : !isDesktop && (
           <span style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap' }}>{lens.name}</span>
         )}
       </button>
@@ -185,6 +227,11 @@ function LensButton({
                 {tooltipSummary}
               </div>
             )}
+            {grouped && needsCalibration && (
+              <div style={{ fontSize: 11.5, fontWeight: 600, marginTop: 4, color: isDark ? '#59b0c4' : '#00657c' }}>
+                Calibrate your compass to use this lens
+              </div>
+            )}
           </div>
         </FloatingPortal>
       )}
@@ -192,7 +239,15 @@ function LensButton({
   );
 }
 
-export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, onRecalibrate, isDesktop }) {
+/**
+ * variant:
+ *   'chips'   — separate outlined chips (results grid controls bar; overlays a photo).
+ *   'grouped' — an unboxed row of borderless icon buttons
+ *               (profile "Compass & Issues" header). Every lens takes its lens
+ *               colour, calibrated or not; the active one fills its icon tile.
+ */
+export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCalibrate, onRecalibrate, isDesktop, variant = 'chips' }) {
+  const grouped = variant === 'grouped';
   const { isDark } = useTheme();
   // Clicking an un-calibrated lens opens a confirmation dialog ("Calibrate these
   // N topics?") rather than jumping straight to the quiz. confirmLens holds the
@@ -216,7 +271,13 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
   };
 
   return (
-    <div style={{ display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
+    <div
+      role={grouped ? 'group' : undefined}
+      aria-label={grouped ? 'Compass lens' : undefined}
+      style={grouped ? {
+        display: 'inline-flex', flexWrap: 'nowrap', alignItems: 'center', gap: 2,
+      } : { display: 'inline-flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}
+    >
       {lenses.map((lens) => {
         const isActive = activeLensKey === lens.key;
         const needsCalibration = lens.calibrated === false;
@@ -228,7 +289,23 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
         // text carry the lit/needs-calibration language on top of it.
         const chipSurface = isDark ? '#161b22' : '#FFFFFF';
         let stateStyle = {};
-        if (needsCalibration && lens.isUser) {
+        let tileStyle;
+        if (grouped) {
+          // Borderless buttons; the icon tile carries state, the caption takes the
+          // lens colour — calibrated or not, so signed-out viewers see the same
+          // palette as signed-in ones.
+          const ink = isDark ? lightenForDark(lens.color) : lens.color;
+          stateStyle = { color: ink };
+          // The selected lens fills its tile whether or not it is calibrated. Gating
+          // the fill on calibration meant no lens ever filled for a signed-out
+          // visitor: activeLensKey defaults to 'custom', and for a guest every lens
+          // is uncalibrated (custom needs >= 3 answers), so the switcher rendered
+          // with no selection showing at all. What still needs calibrating is said
+          // by the button's label and its tooltip, not by hiding the selection.
+          tileStyle = isActive
+            ? { background: lens.color, color: '#fff' }
+            : { background: `color-mix(in srgb, ${ink} ${isDark ? 18 : 12}%, transparent)` };
+        } else if (needsCalibration && lens.isUser) {
           // A custom lens carries TWO facts at once here: whose it is (teal) and
           // that it needs calibration (violet). A solid violet border would say
           // only the second and erase the first, so the border alternates both.
@@ -267,7 +344,9 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
               isDesktop={isDesktop}
               isDark={isDark}
               stateStyle={stateStyle}
+              tileStyle={tileStyle}
               onClick={() => handleChipClick(lens)}
+              grouped={grouped}
             />
             {lens.flagCount > 0 && (
               <button
@@ -342,7 +421,11 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
                   onClick={confirmCalibrate}
                   style={{
                     padding: '9px 18px', borderRadius: 8, fontSize: 14, fontWeight: 700, cursor: 'pointer',
-                    background: '#7C3AED', color: '#fff', border: 'none',
+                    // Grouped (profile) uses the yellow CTA colour shared with the compass intro.
+                    ...(grouped
+                      ? { background: '#FED12E', color: '#1C1C1C', boxShadow: '0 1px 2px rgba(0,0,0,0.08)' }
+                      : { background: '#7C3AED', color: '#fff' }),
+                    border: 'none',
                   }}
                 >
                   Calibrate

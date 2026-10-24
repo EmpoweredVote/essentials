@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord, fetchRaceCandidate } from '../lib/api';
 import { withCandidatePhotoFallback } from '../lib/candidatePhoto';
+import { stripSocials } from '../lib/stripSocials';
 import LegalDonorActivitySection from '../components/LegalDonorActivitySection';
 import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
@@ -188,7 +189,7 @@ export default function CandidateProfile() {
           ) : (
             <>
               <PoliticianProfile
-                politician={pol}
+                politician={stripSocials(pol)}
                 onBack={handleBack}
                 backLabel={backLabel}
                 banner={candidateBanner}

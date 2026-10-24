@@ -1,13 +1,14 @@
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { track } from '@empoweredvote/analytics';
-import { RadarChartCore, StanceAccordion, PlaceholderRadar, useMediaQuery } from '@empoweredvote/ev-ui';
+import { RadarChartCore, PlaceholderRadar, useMediaQuery } from '@empoweredvote/ev-ui';
 import { fetchPoliticianAnswers, fetchResearchStates, researchedTopics, buildAnswerMapByShortTitle, computeDisplaySpokes, saveLensPending } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import LensChipRow from './LensChipRow';
 import CategorizedStances from './CategorizedStances';
+import CompassIntro from './CompassIntro';
 import { API_ORIGIN } from '../lib/apiOrigin';
 
 const COMPASS_URL = import.meta.env.VITE_COMPASS_URL || 'https://compass.empowered.vote';
@@ -28,7 +29,7 @@ function stanceLabel(shortTitle, value, topics) {
  *
  * Gates display: only renders for politicians that have stance data.
  * Left zone: RadarChartCore dual-overlay (coral user + blue politician).
- * Right zone: StanceAccordion with topic stance labels, reasoning, and sources.
+ * Right zone: CategorizedStances — collapsible issue categories with stance labels, reasoning, and sources.
  *
  * Props:
  *   politicianId    — politician UUID
@@ -59,6 +60,29 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     isLensCalibrated,
   } = useCompass();
   const location = useLocation();
+  // Whether any stance category is open in the guest layout (drives the intro's alignment).
+  const [stancesOpen, setStancesOpen] = useState(false);
+  // Height of the stance list beside the intro, so the intro's size and offset can
+  // be set in px — px values transition smoothly where % ↔ rem class swaps jump.
+  const [stancesHeight, setStancesHeight] = useState(0);
+  const stancesObserver = useRef(null);
+  const stancesEl = useRef(null);
+  const stancesRef = useCallback((el) => {
+    stancesObserver.current?.disconnect();
+    stancesEl.current = el;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    stancesObserver.current = new ResizeObserver(([entry]) => setStancesHeight(entry.contentRect.height));
+    stancesObserver.current.observe(el);
+  }, []);
+  // Re-measure synchronously when a group opens/closes: the ResizeObserver reports a
+  // frame late, and the transition would first head for a target from the stale height.
+  useLayoutEffect(() => {
+    if (stancesEl.current) setStancesHeight(stancesEl.current.getBoundingClientRect().height);
+  }, [stancesOpen]);
+  const INTRO_MIN = 448; // 28rem
+  const INTRO_MAX = 576; // 36rem
+  const introHeight = stancesOpen ? INTRO_MAX : Math.min(INTRO_MAX, Math.max(INTRO_MIN, stancesHeight));
+  const introTop = stancesOpen ? 0 : Math.max(0, (Math.max(stancesHeight, introHeight) - introHeight) / 2);
   const isDesktop = useMediaQuery('(min-width: 769px)');
 
   // Lens is the single, persisted global selection — the SAME one the results/
@@ -365,6 +389,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               onCalibrate={handleCalibrateLens}
               onRecalibrate={handleRecalibrateLens}
               isDesktop={isDesktop}
+              variant="grouped"
             />
           </div>
         ) : (
@@ -376,6 +401,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               onCalibrate={handleCalibrateLens}
               onRecalibrate={handleRecalibrateLens}
               isDesktop={isDesktop}
+              variant="grouped"
             />
           </div>
         )}
@@ -565,7 +591,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               )}
             </div>
 
-            {/* Right zone: stance breakdown accordion */}
+            {/* Right zone: stances grouped into collapsible issue categories — the
+                same panel guests see, with the viewer's "You" dot on each spectrum. */}
             <div className="flex flex-col">
               {polLoading || !polAnswers ? (
                 <div className="flex items-center justify-center py-8">
@@ -580,22 +607,22 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                     }}
                   />
                 </div>
-              ) : (
-                <StanceAccordion
-                  topics={topicsFiltered.length > 0 ? topicsFiltered : allPolTopics}
+              ) : allPolTopics.length > 0 ? (
+                <CategorizedStances
+                  topics={allPolTopics}
                   polAnswers={polAnswers}
                   userAnswerMap={userAnswerMap}
                   politicianId={politicianId}
                   allTopics={scopedTopics}
-                  expandedTopics={topicsFiltered.length > 0 ? allPolTopics : undefined}
                   darkMode={isDark}
                   apiUrl={API_ORIGIN}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
+                  collapsedByDefault
                   politicianName={politicianName}
                   researchStates={researchStates}
                 />
-              )}
+              ) : null}
             </div>
           </div>
           {!polLoading && missingTopicCount > 0 && (
@@ -631,32 +658,25 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         ) : (
           /* Guest (or logged-in with genuinely no answers) — 2-column: CTA left, accordion right */
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6">
-            {/* Left zone: CTA with ghost radar */}
-            <div className="flex flex-col items-center justify-center py-8 px-4">
-              <div style={{ opacity: 0.85, marginBottom: '20px' }}>
-                <PlaceholderRadar size={220} name={politicianName} darkMode={isDark} highContrast />
+            {/* Left zone: two-step animated intro (calibrate, then compare). On lg the
+                intro is taken out of flow so the stances column sets the row height:
+                while every category is closed it spans that column exactly (same top,
+                same bottom, centred); once one opens it grows to full size, pinned to
+                the top. Height, offset and the zone's min-height are px values driven
+                by the measured stance list, so the change animates instead of jumping;
+                the min-height easing back also lets the card shrink smoothly on close. */}
+            <div
+              className="relative flex flex-col items-center lg:min-h-[var(--intro-h)] lg:transition-[min-height] lg:duration-500 lg:ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none"
+              style={{ '--intro-h': `${introHeight}px`, '--intro-top': `${introTop}px` }}
+            >
+              <div className="w-full lg:absolute lg:inset-x-0 lg:top-[var(--intro-top)] lg:h-[var(--intro-h)] lg:transition-[top,height] lg:duration-500 lg:ease-[cubic-bezier(.22,1,.36,1)] motion-reduce:transition-none">
+                <CompassIntro politicianName={politicianName} ctaHref={ctaHref} isDark={isDark} />
               </div>
-
-              <p
-                className="text-center mb-6"
-                style={{ fontSize: '15px', lineHeight: 1.6, color: isDark ? '#9ca3af' : '#6b7280', maxWidth: '22rem' }}
-              >
-                Calibrate your compass to see how you align with {politicianName}
-              </p>
-
-              <a
-                href={ctaHref}
-                className="inline-block px-6 py-2.5 text-white font-semibold rounded-full text-sm transition-colors"
-                style={{ backgroundColor: '#00657c' }}
-                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004d5c'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#00657c'; }}
-              >
-                Calibrate your compass
-              </a>
             </div>
 
             {/* Right zone: stance breakdown accordion */}
-            <div className="flex flex-col justify-center">
+            <div className={`flex flex-col ${stancesOpen ? 'justify-start' : 'justify-center'}`}>
+              <div ref={stancesRef}>
               {polLoading || !polAnswers ? (
                 <div className="flex items-center justify-center py-8">
                   <div
@@ -681,10 +701,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   apiUrl={API_ORIGIN}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
+                  onOpenChange={setStancesOpen}
+                  collapsedByDefault
                   politicianName={politicianName}
                   researchStates={researchStates}
                 />
               ) : null}
+              </div>
             </div>
           </div>
         )}

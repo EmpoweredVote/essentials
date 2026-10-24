@@ -106,6 +106,12 @@ describe('initialOpenTitle — a group is always open', () => {
   it('returns null only when there is nothing to open', () => {
     expect(initialOpenTitle([], 3)).toBeNull();
   });
+
+  it('opens nothing under collapsedByDefault unless a topic is deep-linked', () => {
+    expect(initialOpenTitle(groups, null, { collapsedByDefault: true })).toBeNull();
+    expect(initialOpenTitle(groups, 999, { collapsedByDefault: true })).toBeNull();
+    expect(initialOpenTitle(groups, 3, { collapsedByDefault: true })).toBe('Zoning');
+  });
 });
 
 describe('source guards for defects that a build and a screenshot both pass', () => {

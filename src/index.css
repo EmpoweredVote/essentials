@@ -162,6 +162,13 @@ body {
   color: #f3f4f6 !important;
 }
 
+/* Indent each contact group's details (sub-labels, addresses, numbers, links)
+   so they line up with the title text rather than the icon badge: 26px badge
+   + 4px label gap (ev-ui contactIcon / contactLabel). */
+.ev-politician-profile p.ev-contact-label ~ * {
+  padding-left: 30px;
+}
+
 /* Contact section labels (e.g. "Email", "Website", "Phone") */
 .dark .ev-politician-profile [class*="label"],
 .dark .ev-politician-profile [class*="contact"] span:not(.ev-contact-badge) {
@@ -291,6 +298,25 @@ body {
   background: #21262d;
   border-color: rgba(255, 255, 255, 0.25);
 }
+
+/* Lens buttons inside the grouped (card-style) LensChipRow on the profile.
+   Background is left to the class (not inline) unless the lens is active, so
+   the hover state can show. */
+.lens-seg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.lens-seg-btn:hover { background-color: #f3f4f6; }
+.dark .lens-seg-btn:hover { background-color: rgba(255, 255, 255, 0.06); }
+.lens-seg-btn[aria-pressed="true"]:hover { filter: brightness(1.08); }
+.lens-seg-btn:focus-visible { outline: 2px solid #00657c; outline-offset: 1px; }
+.dark .lens-seg-btn:focus-visible { outline-color: #59b0c4; }
 
 /* ============================================================================
    Mobile audit — Run 2 fixes for ev-ui-rendered controls (ev-ui uses inline

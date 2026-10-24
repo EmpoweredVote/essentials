@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { track } from '@empoweredvote/analytics';
 import { StanceAccordion } from '@empoweredvote/ev-ui';
 import { API_ORIGIN } from '../lib/apiOrigin';
@@ -179,11 +179,15 @@ export function groupTitleForTopic(groups, topicId) {
 /**
  * Which group should be open before the reader touches anything: the
  * deep-linked one when there is one, otherwise the largest. Never nothing —
- * ten collapsed headers is not a stance breakdown.
+ * ten collapsed headers is not a stance breakdown — unless the caller opts
+ * into `collapsedByDefault`, where only a deep link opens a group (the guest
+ * CompassCard layout, whose intro sits centred beside the closed headers).
  */
-export function initialOpenTitle(groups, initialExpandedTopicId) {
+export function initialOpenTitle(groups, initialExpandedTopicId, { collapsedByDefault = false } = {}) {
   if (!groups.length) return null;
-  return groupTitleForTopic(groups, initialExpandedTopicId) || groups[0].title;
+  const deepLinked = groupTitleForTopic(groups, initialExpandedTopicId);
+  if (collapsedByDefault) return deepLinked;
+  return deepLinked || groups[0].title;
 }
 
 function CategoryIcon({ title, darkMode }) {
@@ -230,6 +234,8 @@ export default function CategorizedStances({
   apiUrl,
   verdictsByQuote,
   initialExpandedTopicId,
+  onOpenChange,
+  collapsedByDefault = false,
   politicianName,
   researchStates,
 }) {
@@ -247,7 +253,7 @@ export default function CategorizedStances({
   // One group is always open. Collapsing all ten leaves the reader — and a
   // signed-out visitor in particular — looking at a column of empty headers,
   // where the previous accordion showed four positions straight away.
-  const initialTitle = initialOpenTitle(groups, initialExpandedTopicId);
+  const initialTitle = initialOpenTitle(groups, initialExpandedTopicId, { collapsedByDefault });
   const [openTitles, setOpenTitles] = useState(() => new Set(initialTitle ? [initialTitle] : []));
 
   // Refs take their value on the first render only, which is what we want:
@@ -259,10 +265,10 @@ export default function CategorizedStances({
 
   // `groups` can be empty on the first render while the topics load.
   useEffect(() => {
-    if (autoSeeded.current || userToggled.current || deepLinkTitle || !groups.length) return;
+    if (collapsedByDefault || autoSeeded.current || userToggled.current || deepLinkTitle || !groups.length) return;
     autoSeeded.current = groups[0].title;
     setOpenTitles((prev) => (prev.size ? prev : new Set([groups[0].title])));
-  }, [groups, deepLinkTitle]);
+  }, [groups, deepLinkTitle, collapsedByDefault]);
 
   // Open the deep-linked group once the id resolves, and drop the group we had
   // opened only as a fallback — unless the reader has already chosen for
@@ -279,6 +285,13 @@ export default function CategorizedStances({
       return next;
     });
   }, [deepLinkTitle]);
+
+  // Lets the parent lay out around the panel (CompassCard top-aligns its intro
+  // while any group is open, and centres it when all are closed).
+  const anyOpen = openTitles.size > 0;
+  // Layout effect: the parent re-lays out before the browser paints the opened
+  // group, so there is no frame where the intro sits centred beside it.
+  useLayoutEffect(() => { onOpenChange?.(anyOpen); }, [anyOpen, onOpenChange]);
 
   // One quote fetch for the whole panel. Left to itself each StanceAccordion
   // keeps its own cache ref and re-requests the politician's full quote list
