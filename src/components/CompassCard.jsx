@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import { track } from '@empoweredvote/analytics';
 import { RadarChartCore, PlaceholderRadar, useMediaQuery } from '@empoweredvote/ev-ui';
-import { fetchPoliticianAnswers, fetchResearchStates, researchedTopics, buildAnswerMapByShortTitle, computeDisplaySpokes, saveLensPending } from '../lib/compass';
+import { fetchPoliticianAnswers, fetchResearchStates, researchedTopics, compassCardMode, buildAnswerMapByShortTitle, computeDisplaySpokes, saveLensPending } from '../lib/compass';
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import LensChipRow from './LensChipRow';
@@ -27,7 +27,8 @@ function stanceLabel(shortTitle, value, topics) {
 /**
  * CompassCard — profile page section showing compass comparison data.
  *
- * Gates display: only renders for politicians that have stance data.
+ * Gates display (compassCardMode): renders for politicians that have stance data,
+ * and — breakdown only, no radar — for people Stage 5 researched who have none.
  * Left zone: RadarChartCore dual-overlay (coral user + blue politician).
  * Right zone: CategorizedStances — collapsible issue categories with stance labels, reasoning, and sources.
  *
@@ -147,8 +148,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     return allTopics;
   }, [allTopics, localLensActive]);
 
-  const [polAnswers, setPolAnswers] = useState(null);
-  const [polLoading, setPolLoading] = useState(true);
+  const [fetchedAnswers, setPolAnswers] = useState(null);
+  const [fetchedLoading, setPolLoading] = useState(true);
   // Stage 5 research states: topics this person was researched on and holds no
   // position on. Fetched once per person and handed to the accordions. `null`
   // while in flight, not `undefined`: StanceAccordion fetches its own copy when
@@ -168,6 +169,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   }, [politicianId]);
   const [tooltip, setTooltip] = useState(null);
   const containerRef = useRef(null);
+
+  const hasStances = politicianIdsWithStances.has(politicianId);
+  const mode = compassCardMode({ compassLoading, hasStances, scopedTopics, researchStates });
+  // Someone researched with no answers has nothing to fetch: the breakdown is their research rows alone.
+  const researchOnly = mode === 'research-only';
+  const polAnswers = researchOnly ? [] : fetchedAnswers;
+  const polLoading = researchOnly ? false : fetchedLoading;
 
   // Fetch politician answers (hook must be called unconditionally)
   useEffect(() => {
@@ -310,11 +318,9 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     setTooltip({ x: rect.left + rect.width / 2, y: rect.top, shortTitle, stanceText });
   }, [userData, polData, topicsFiltered]);
 
-  // Gate: wait for compass data to load
-  if (compassLoading) return null;
-
-  // Gate: only show for politicians with stance data
-  if (!politicianIdsWithStances.has(politicianId)) return null;
+  // Gate: wait for compass data (and, for someone with no stances, their research states); show only
+  // for politicians with stance data or research rows.
+  if (mode === 'wait' || mode === 'hidden') return null;
 
   // Min/Max batch handlers — operate on what the user currently *sees* (display value),
   // not the raw stored value, so they work correctly on already-inverted spokes.
@@ -408,7 +414,27 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       </div>
 
       <div className="bg-white dark:bg-ev-navy-card rounded-2xl border border-neutral-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm p-6">
-        {hasUserCompass ? (
+        {researchOnly ? (
+          /* Researched, no answers: nothing to compare, so no radar — the breakdown alone.
+             This covers guests too. The guest zone below opens with CompassIntro, whose second
+             step reads "Lay your compass over theirs and the overlap does the explaining" — but
+             every row on this card says we found no public stance for this person, so there is
+             no shape to lay a compass over. Showing that pitch to exactly the people this card
+             exists for promised something the page cannot deliver. */
+          <CategorizedStances
+            topics={allPolTopics}
+            polAnswers={polAnswers}
+            userAnswerMap={userAnswerMap}
+            politicianId={politicianId}
+            allTopics={scopedTopics}
+            darkMode={isDark}
+            apiUrl={API_ORIGIN}
+            verdictsByQuote={verdicts}
+            initialExpandedTopicId={initialTopicId}
+            politicianName={politicianName}
+            researchStates={researchStates}
+          />
+        ) : hasUserCompass ? (
           <>
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6">
             {/* Left zone: radar chart. Centered when the card collapses to a single
