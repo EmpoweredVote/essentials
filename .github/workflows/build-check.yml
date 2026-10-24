@@ -14,7 +14,9 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Cancel superseded runs on a PR only. On main every push is a commit that
+  # ships, so each one gets its own complete check.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -65,3 +67,44 @@ jobs:
       # no test-framework dependency and a developer can run it the same way.
       - run: python scripts/banners/test_process_banner.py
         if: ${{ !cancelled() }}
+
+  # Browser journeys (e2e/, Playwright): this commit's build, served by
+  # `vite preview` with /api proxied to the live API, driven in Chromium. A
+  # separate job so it runs beside `build`. When the live API is down the
+  # journeys skip and this job passes with a warning: an outage is a production
+  # problem, not this PR's. Pages that pass but load slowly get a warning too.
+  journeys:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - id: pw
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
+      - name: Report skipped or slow journeys
+        if: ${{ !cancelled() }}
+        run: |
+          if [ -f e2e/.api-down ]; then
+            echo "::warning::Journeys $(head -n 1 e2e/.api-down)"
+          fi
+          if [ -f test-results/slow-pages.txt ]; then
+            while IFS= read -r line; do echo "::warning::Slow page: $line"; done < test-results/slow-pages.txt
+          fi
+      # Every run, not only failures: a journey that failed once and passed on
+      # its retry still shows green, and its trace is the only record of why.
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

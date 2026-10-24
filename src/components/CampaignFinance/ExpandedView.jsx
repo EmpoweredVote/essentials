@@ -5,6 +5,8 @@ import CompositionBar from './CompositionBar';
 import PacList from './PacList';
 import { formatCurrency, formatPercent } from '../../utils/format';
 import { refundSummary } from '../../lib/financeRefunds';
+import { matchingFundsSummary } from '../../lib/financeMatchingFunds';
+import { verifiedFilingText, sourceReportsDonorType, financeSourceName } from '../../lib/financeSource';
 
 /**
  * ExpandedView — full campaign finance breakdown shown when card is expanded.
@@ -14,13 +16,15 @@ import { refundSummary } from '../../lib/financeRefunds';
  *   contributions        — contributions object (may be null until lazy-loaded)
  *   onFetchContributions — function to trigger initial contribution fetch
  *   onFetchMore          — function to load next page of contributions
+ *   onFetchDonorContributions — (donorName, cursor?) => Promise of one donor's transactions page
  */
 
 const CONFIDENCE_LEVELS = [
   {
     level: 'HIGH',
     label: 'High Confidence',
-    description: 'Verified FEC electronic filing. Amounts and donor identities confirmed.',
+    // Names the summary's own source (verifiedFilingText), not always the FEC.
+    description: (source) => `${verifiedFilingText(source)}. Amounts and donor identities confirmed.`,
     color: 'bg-green-500',
   },
   {
@@ -37,7 +41,7 @@ const CONFIDENCE_LEVELS = [
   },
 ];
 
-export default function ExpandedView({ summary, contributions, onFetchContributions, onFetchMore }) {
+export default function ExpandedView({ summary, contributions, onFetchContributions, onFetchMore, onFetchDonorContributions }) {
   const [showConfidenceInfo, setShowConfidenceInfo] = useState(false);
 
   // Lazy-load contributions on first render of expanded view
@@ -57,6 +61,7 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
   const individualPct = totalRaised > 0 ? (individualTotal / totalRaised) * 100 : 0;
   const pacPct = totalRaised > 0 ? (pacTotal / totalRaised) * 100 : 0;
   const refunds = refundSummary(summary);
+  const matching = matchingFundsSummary(summary);
 
   return (
     <div className="border-t border-gray-100 dark:border-gray-700 px-5 pb-5 pt-4 space-y-6">
@@ -66,6 +71,16 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
           fall back to the simpler Individual/PAC proportion bar for non-FEC politicians. */}
       {summary.composition ? (
         <CompositionBar composition={summary.composition} />
+      ) : !sourceReportsDonorType(summary.data_source) ? (
+        <div>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+            Source Breakdown
+          </h4>
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            {financeSourceName(summary.data_source) || 'This source'} does not report whether each donor is a person
+            or a committee, so this breakdown is not available.
+          </p>
+        </div>
       ) : (
         <div>
           <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
@@ -95,14 +110,14 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
               <span className="text-gray-700 dark:text-gray-300">Individual:</span>
               <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(individualTotal)}</span>
               <span className="text-gray-500 dark:text-gray-400">({formatPercent(individualTotal, totalRaised)})</span>
-              <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+              <ConfidenceDot level={summary.confidence_level || 'HIGH'} source={summary.data_source} />
             </div>
             <div className="flex items-center gap-1.5 text-sm">
               <span className="inline-block w-2.5 h-2.5 rounded-full bg-purple-500 flex-shrink-0" />
               <span className="text-gray-700 dark:text-gray-300">PAC/Committee:</span>
               <span className="font-semibold text-gray-900 dark:text-gray-100">{formatCurrency(pacTotal)}</span>
               <span className="text-gray-500 dark:text-gray-400">({formatPercent(pacTotal, totalRaised)})</span>
-              <ConfidenceDot level={summary.confidence_level || 'HIGH'} />
+              <ConfidenceDot level={summary.confidence_level || 'HIGH'} source={summary.data_source} />
             </div>
           </div>
         </div>
@@ -121,8 +136,21 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
         </div>
       )}
 
+      {/* Section 1a-2: Public matching funds. City money paid to the campaign, not a donation, so it is
+          reported apart from total raised and is never listed as a donor. */}
+      {matching.amount > 0 && (
+        <div>
+          <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">
+            Public Matching Funds
+          </h4>
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            {matching.label} from the City of Los Angeles. Not included in total raised.
+          </p>
+        </div>
+      )}
+
       {/* Section 1b: PACs & committees detail (drill-down of the composition bar's PAC segment) */}
-      {summary.pac_contributions && <PacList pacList={summary.pac_contributions} />}
+      {summary.pac_contributions && <PacList pacList={summary.pac_contributions} source={summary.data_source} />}
 
       {/* Section 2: Top donors */}
       {summary.top_donors && summary.top_donors.length > 0 && (
@@ -132,10 +160,12 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
           </h4>
           <div className="border border-gray-100 dark:border-gray-700 rounded-lg overflow-hidden">
             <DonorList
+              source={summary.data_source}
               donors={summary.top_donors}
               contributions={contributions}
               onFetchContributions={onFetchContributions}
               onFetchMore={onFetchMore}
+              onFetchDonorContributions={onFetchDonorContributions}
             />
           </div>
         </div>
@@ -172,7 +202,9 @@ export default function ExpandedView({ summary, contributions, onFetchContributi
                   <span className={`inline-block w-2.5 h-2.5 rounded-full ${color} flex-shrink-0 mt-1`} />
                   <div>
                     <p className="text-xs font-semibold text-gray-800 dark:text-gray-100">{label}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400">{description}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                      {typeof description === 'function' ? description(summary.data_source) : description}
+                    </p>
                   </div>
                 </li>
               ))}

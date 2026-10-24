@@ -1,14 +1,21 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import ConfidenceDot from './ConfidenceDot';
+import { isDonorFiltered, legacyDonorTransactions } from '../../lib/donorTransactions';
 
 /**
  * DonorList — sortable donor list with inline transaction expand.
  *
+ * Opening a donor fetches that donor's own transactions (?donor=), a page at a time. An API
+ * without that filter is detected by the missing echo; the list then falls back to filtering
+ * the shared `contributions` list, as it did before.
+ *
  * Props:
- *   donors               — array from summary.top_donors
- *   contributions        — object from contributions endpoint (may be null)
- *   onFetchContributions — function to trigger contribution fetch
- *   onFetchMore          — function to load next page
+ *   source                    — summary.data_source, named in each donor's confidence tooltip
+ *   donors                    — array from summary.top_donors
+ *   contributions             — object from contributions endpoint (may be null); fallback only
+ *   onFetchContributions      — function to trigger contribution fetch; fallback only
+ *   onFetchMore               — function to load next page; fallback only
+ *   onFetchDonorContributions — (donorName, cursor?) => Promise of one page of that donor's rows
  */
 
 function formatCurrency(amount) {
@@ -22,7 +29,8 @@ function formatCurrency(amount) {
 function formatDate(dateStr) {
   if (!dateStr) return '';
   try {
-    const d = new Date(dateStr);
+    // A bare YYYY-MM-DD parses as UTC midnight, which shows the day before in US time zones.
+    const d = /^\d{4}-\d{2}-\d{2}$/.test(dateStr) ? new Date(`${dateStr}T00:00:00`) : new Date(dateStr);
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   } catch {
     return dateStr;
@@ -81,7 +89,14 @@ function SortHeader({ label, sortKey, sortBy, sortDir, onSort }) {
   );
 }
 
-export default function DonorList({ donors, contributions, onFetchContributions, onFetchMore }) {
+export default function DonorList({
+  source,
+  donors,
+  contributions,
+  onFetchContributions,
+  onFetchMore,
+  onFetchDonorContributions,
+}) {
   const [sortBy, setSortBy] = useState('total_amount');
   const [sortDir, setSortDir] = useState('desc');
   const [expandedDonor, setExpandedDonor] = useState(null);
@@ -107,13 +122,77 @@ export default function DonorList({ donors, contributions, onFetchContributions,
     }
   }
 
-  function toggleDonor(donorName) {
-    setExpandedDonor((prev) => (prev === donorName ? null : donorName));
-    // Trigger contribution fetch on first expand
+  // Per-donor pages, keyed by donor name:
+  //   { status: 'loading' | 'ready' | 'error' | 'legacy', results, endCursor, loadingMore, moreError }
+  const [donorPages, setDonorPages] = useState({});
+  // Bumped when the donor list changes (e.g. a new cycle), so a late response is dropped.
+  const generationRef = useRef(0);
+
+  useEffect(() => {
+    generationRef.current += 1;
+    setDonorPages({});
+  }, [donors]);
+
+  // Fallback for an API without ?donor=: load the shared list once, as before.
+  const startLegacyFetch = useCallback(() => {
     if (!fetchCalledRef.current) {
       fetchCalledRef.current = true;
-      onFetchContributions();
+      onFetchContributions?.();
     }
+  }, [fetchCalledRef, onFetchContributions]);
+
+  const loadDonorPage = useCallback(
+    async (donorName, cursor = null) => {
+      if (!onFetchDonorContributions) {
+        setDonorPages((p) => ({ ...p, [donorName]: { status: 'legacy' } }));
+        startLegacyFetch();
+        return;
+      }
+      const generation = generationRef.current;
+      setDonorPages((p) => ({
+        ...p,
+        [donorName]: cursor
+          ? { ...p[donorName], loadingMore: true, moreError: false }
+          : { status: 'loading', results: [] },
+      }));
+      try {
+        const data = await onFetchDonorContributions(donorName, cursor);
+        if (generation !== generationRef.current) return;
+        if (!isDonorFiltered(data, donorName)) {
+          setDonorPages((p) => ({ ...p, [donorName]: { status: 'legacy' } }));
+          startLegacyFetch();
+          return;
+        }
+        setDonorPages((p) => ({
+          ...p,
+          [donorName]: {
+            status: 'ready',
+            results: [...(cursor ? p[donorName]?.results ?? [] : []), ...(data.results || [])],
+            endCursor: data.page_info?.has_next_page ? data.page_info.end_cursor || null : null,
+            loadingMore: false,
+            moreError: false,
+          },
+        }));
+      } catch {
+        if (generation !== generationRef.current) return;
+        setDonorPages((p) => ({
+          ...p,
+          [donorName]: cursor ? { ...p[donorName], loadingMore: false, moreError: true } : { status: 'error' },
+        }));
+      }
+    },
+    [onFetchDonorContributions, startLegacyFetch]
+  );
+
+  // Fetch the first page when a donor is opened (or re-opened after the donor list changed).
+  useEffect(() => {
+    if (expandedDonor !== null && !donorPages[expandedDonor]) {
+      loadDonorPage(expandedDonor);
+    }
+  }, [expandedDonor, donorPages, loadDonorPage]);
+
+  function toggleDonor(donorName) {
+    setExpandedDonor((prev) => (prev === donorName ? null : donorName));
   }
 
   if (!donors || donors.length === 0) {
@@ -135,12 +214,11 @@ export default function DonorList({ donors, contributions, onFetchContributions,
           const donorType = (donor.donor_type || '').toLowerCase();
           const isPac = donorType === 'pac' || donorType === 'committee';
 
-          // Filter transactions for this donor
-          const donorTxns = contributions?.results
-            ? contributions.results.filter(
-                (tx) => tx.donor_name === donor.name
-              )
-            : [];
+          // This donor's transactions: its own pages, or the shared list on an older API
+          const page = donorPages[donor.name];
+          const isLegacy = page?.status === 'legacy';
+          const donorTxns = isLegacy ? legacyDonorTransactions(contributions, donor.name) : page?.results ?? [];
+          const isLoadingTxns = isLegacy ? contributions === null : !page || page.status === 'loading';
 
           return (
             <li key={donor.name}>
@@ -181,7 +259,7 @@ export default function DonorList({ donors, contributions, onFetchContributions,
                     <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                       {formatCurrency(donor.total_amount || 0)}
                     </span>
-                    <ConfidenceDot level={donor.confidence_level || 'HIGH'} />
+                    <ConfidenceDot level={donor.confidence_level || 'HIGH'} source={source} />
                   </div>
 
                   {/* Count */}
@@ -196,29 +274,45 @@ export default function DonorList({ donors, contributions, onFetchContributions,
               {/* Inline transaction list */}
               {isExpanded && (
                 <div className="pl-9 pr-3 pb-3 bg-gray-50 dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
-                  {contributions === null ? (
+                  {isLoadingTxns ? (
                     <p className="text-xs text-gray-400 dark:text-gray-500 py-2">Loading transactions...</p>
+                  ) : page?.status === 'error' ? (
+                    <p className="text-xs text-gray-400 dark:text-gray-500 py-2">Could not load transactions.</p>
                   ) : donorTxns.length === 0 ? (
                     <p className="text-xs text-gray-400 dark:text-gray-500 py-2">No individual transactions found.</p>
                   ) : (
                     <ul className="space-y-1 pt-2">
                       {donorTxns.map((tx, i) => (
-                        <li key={i} className="flex justify-between text-xs text-gray-600 dark:text-gray-300">
+                        <li key={tx.id ?? i} className="flex justify-between text-xs text-gray-600 dark:text-gray-300">
                           <span>{formatDate(tx.contribution_date || tx.date)}</span>
-                          <span className="font-medium">{formatCurrency(tx.amount)}</span>
+                          <span className="font-medium">
+                            {formatCurrency(tx.amount)}
+                            {tx.amount < 0 && <span className="font-normal text-gray-400 dark:text-gray-500"> refund</span>}
+                          </span>
                         </li>
                       ))}
                     </ul>
                   )}
-                  {contributions?.page_info?.has_next_page && (
-                    <button
-                      type="button"
-                      className="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
-                      onClick={(e) => { e.stopPropagation(); onFetchMore(); }}
-                    >
-                      Load more
-                    </button>
-                  )}
+                  {isLegacy
+                    ? contributions?.page_info?.has_next_page && (
+                        <button
+                          type="button"
+                          className="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline"
+                          onClick={(e) => { e.stopPropagation(); onFetchMore(); }}
+                        >
+                          Load more
+                        </button>
+                      )
+                    : page?.status === 'ready' && page.endCursor && (
+                        <button
+                          type="button"
+                          className="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline disabled:opacity-50 disabled:no-underline"
+                          disabled={page.loadingMore}
+                          onClick={(e) => { e.stopPropagation(); loadDonorPage(donor.name, page.endCursor); }}
+                        >
+                          {page.loadingMore ? 'Loading...' : page.moreError ? 'Could not load. Try again' : 'Load more'}
+                        </button>
+                      )}
                 </div>
               )}
             </li>

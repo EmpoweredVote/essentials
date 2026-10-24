@@ -7,6 +7,11 @@ import { formatCurrency } from '../../utils/format';
  * each one's full national record on FEC.gov ("see everywhere they donated"). Built from
  * summary.pac_contributions (entity_type IN 'PAC','PTY') — clean, no self-funding / victory-fund
  * double-count. Renders nothing when absent.
+ *
+ * Props:
+ *   pacList — summary.pac_contributions
+ *   source  — summary.data_source. The FEC.gov links (and the text promising them) show only for 'fec':
+ *             FEC.gov has no record of state or local committees such as Cal-Access or Indiana PACs.
  */
 
 const PAC_EXPLAINER = {
@@ -14,20 +19,24 @@ const PAC_EXPLAINER = {
   paragraphs: [
     'A political action committee (PAC) is an organized group — an industry, union, advocacy organization, or political party — that pools many people’s money to give to candidates.',
     'Because a PAC represents an organized interest rather than one person, which PACs fund a candidate — and who else those PACs fund — is often the clearest window into influence.',
-    'Each one links to its full national record on FEC.gov, so you can see everywhere it gave.',
   ],
 };
+const FEC_LINK_PARAGRAPH = 'Each one links to its full national record on FEC.gov, so you can see everywhere it gave.';
 
 /** FEC.gov committee search for a PAC name — its page lists everywhere the committee gave. */
 function fecCommitteeSearchUrl(name) {
   return `https://www.fec.gov/data/committees/?q=${encodeURIComponent(name)}`;
 }
 
-export default function PacList({ pacList }) {
+export default function PacList({ pacList, source }) {
   if (!pacList || !pacList.pacs || pacList.pacs.length === 0) return null;
 
   const { pacs, total_amount, count } = pacList;
   const shown = pacs.length;
+  const fecLinks = String(source ?? '').toLowerCase() === 'fec';
+  const explainer = fecLinks
+    ? { ...PAC_EXPLAINER, paragraphs: [...PAC_EXPLAINER.paragraphs, FEC_LINK_PARAGRAPH] }
+    : PAC_EXPLAINER;
 
   return (
     <div>
@@ -35,7 +44,7 @@ export default function PacList({ pacList }) {
         <h4 className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
           PACs &amp; committees that gave
         </h4>
-        <InfoTooltip content={PAC_EXPLAINER} label="What is a PAC?" />
+        <InfoTooltip content={explainer} label="What is a PAC?" />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
         {formatCurrency(total_amount)} from {count.toLocaleString()} political action &amp; party committees
@@ -56,14 +65,16 @@ export default function PacList({ pacList }) {
             <span className="text-sm font-semibold text-gray-900 dark:text-gray-100 tabular-nums whitespace-nowrap">
               {formatCurrency(pac.total_amount)}
             </span>
-            <a
-              href={fecCommitteeSearchUrl(pac.name)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap flex-shrink-0"
-            >
-              See where they gave ↗
-            </a>
+            {fecLinks && (
+              <a
+                href={fecCommitteeSearchUrl(pac.name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap flex-shrink-0"
+              >
+                See where they gave ↗
+              </a>
+            )}
           </li>
         ))}
       </ul>
@@ -71,8 +82,8 @@ export default function PacList({ pacList }) {
       <p className="text-[11px] text-gray-400 dark:text-gray-500 leading-relaxed mt-2">
         {shown < count ? `Top ${shown} of ${count.toLocaleString()} committees on file. ` : ''}
         Real political action &amp; party committees only — self-funding and transfers between the
-        candidate’s own committees are shown elsewhere, not counted here. “See where they gave”
-        opens each committee’s complete national record on FEC.gov.
+        candidate’s own committees are shown elsewhere, not counted here.
+        {fecLinks && ' “See where they gave” opens each committee’s complete national record on FEC.gov.'}
       </p>
     </div>
   );

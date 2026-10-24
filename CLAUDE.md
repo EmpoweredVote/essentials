@@ -22,3 +22,10 @@ component becomes rework for whoever merges the PR.
 
 The `ev-designer` skill in EmpoweredVote/ev-ui (`plugins/ev-designer/`) has the index of public
 routes with sample responses.
+
+## Browser journeys (`e2e/`)
+
+Journeys in `e2e/` test what users do (search an address, open a profile, go back, browse a place,
+arrive from Compass). They run in CI on every PR and push to `main`, against that commit's build
+talking to the live API. If your change alters a journey on purpose, update its test in the same PR.
+Run `npm run e2e` locally (first time: `npx playwright install chromium`).

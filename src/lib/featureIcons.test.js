@@ -13,12 +13,10 @@ import { PRODUCT_REGISTRY, resolveFeatureIcons } from './featureIcons';
 import { TREASURY_URL } from './treasury';
 import { TRIVIA_URL } from './trivia';
 
-const ds = [{ fiscal_year: 2024, dataset_type: 'revenue' }];
-
 const CITIES = [
-  { name: 'Texas', state: 'TX', entity_type: 'state', available_datasets: ds },
-  { name: 'United States', state: 'US', entity_type: 'federal', available_datasets: ds },
-  { name: 'Plano', state: 'TX', entity_type: 'municipality', available_datasets: ds },
+  { name: 'Texas', state: 'TX', entity_type: 'state', has_data: true },
+  { name: 'United States', state: 'US', entity_type: 'federal', has_data: true },
+  { name: 'Plano', state: 'TX', entity_type: 'municipality', has_data: true },
 ];
 
 describe('PRODUCT_REGISTRY', () => {
@@ -120,9 +118,9 @@ describe('resolveFeatureIcons — Civic Trivia Championship', () => {
       userState: 'CA',
       stateName: 'California',
       treasuryCities: [
-        { name: 'Los Angeles', state: 'CA', entity_type: 'municipality', available_datasets: ds },
-        { name: 'California', state: 'CA', entity_type: 'state', available_datasets: ds },
-        { name: 'United States', state: 'US', entity_type: 'federal', available_datasets: ds },
+        { name: 'Los Angeles', state: 'CA', entity_type: 'municipality', has_data: true },
+        { name: 'California', state: 'CA', entity_type: 'state', has_data: true },
+        { name: 'United States', state: 'US', entity_type: 'federal', has_data: true },
       ],
       triviaCollections: COLLECTIONS,
     });

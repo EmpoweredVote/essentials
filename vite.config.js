@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import fs from "fs";
@@ -59,5 +60,7 @@ export default defineConfig(async () => {
     // 'hidden' emits maps for upload without a sourceMappingURL comment in the
     // shipped bundles; the plugin deletes them after upload by default.
     build: { sourcemap: posthogSourcemapsEnabled ? 'hidden' : false },
+    // e2e/ holds the Playwright browser journeys (npm run e2e), not unit tests.
+    test: { exclude: [...configDefaults.exclude, "e2e/**"] },
   };
 });
