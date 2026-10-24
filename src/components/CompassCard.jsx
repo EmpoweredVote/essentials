@@ -421,19 +421,50 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
              every row on this card says we found no public stance for this person, so there is
              no shape to lay a compass over. Showing that pitch to exactly the people this card
              exists for promised something the page cannot deliver. */
-          <CategorizedStances
-            topics={allPolTopics}
-            polAnswers={polAnswers}
-            userAnswerMap={userAnswerMap}
-            politicianId={politicianId}
-            allTopics={scopedTopics}
-            darkMode={isDark}
-            apiUrl={API_ORIGIN}
-            verdictsByQuote={verdicts}
-            initialExpandedTopicId={initialTopicId}
-            politicianName={politicianName}
-            researchStates={researchStates}
-          />
+          <>
+            <CategorizedStances
+              topics={allPolTopics}
+              polAnswers={polAnswers}
+              userAnswerMap={userAnswerMap}
+              politicianId={politicianId}
+              allTopics={scopedTopics}
+              darkMode={isDark}
+              apiUrl={API_ORIGIN}
+              verdictsByQuote={verdicts}
+              initialExpandedTopicId={initialTopicId}
+              politicianName={politicianName}
+              researchStates={researchStates}
+            />
+            {/* Dropping CompassIntro above took the calibrate invitation with it — it is the only
+                place the CTA lives — which left a visitor with no compass no way into one at all.
+                So the invitation comes back on its own, without the comparison pitch: it points at
+                the people we do hold positions for, which is what calibrating actually buys here.
+                Same guard as the zone below: never offer it to a logged-in user whose answers are
+                still in flight, or it flashes at someone who already has a compass. */}
+            {!hasUserCompass && !(isLoggedIn && !compassDataLoaded) && (
+              <div
+                className="mt-6 pt-5 border-t"
+                style={{ borderColor: isDark ? 'rgba(255,255,255,0.08)' : '#e5e7eb' }}
+              >
+                <p style={{
+                  margin: '0 0 12px',
+                  fontSize: '14px',
+                  fontFamily: "'Manrope', sans-serif",
+                  lineHeight: 1.6,
+                  color: isDark ? '#9ca3af' : '#6b7280',
+                }}>
+                  Set up your compass to see where you line up with other candidates and officials.
+                </p>
+                <a
+                  href={ctaHref}
+                  className="inline-block px-5 py-2 rounded-full font-bold text-sm transition-all hover:opacity-90 active:scale-95 shadow-md whitespace-nowrap"
+                  style={{ background: '#FED12E', color: '#1C1C1C' }}
+                >
+                  Calibrate your compass →
+                </a>
+              </div>
+            )}
+          </>
         ) : hasUserCompass ? (
           <>
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6">

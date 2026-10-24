@@ -30,3 +30,35 @@ describe('CompassCard gate', () => {
     expect(SRC).not.toMatch(/researchOnly && hasUserCompass/);
   });
 });
+
+describe('CompassCard calibrate invitation', () => {
+  // CompassIntro is the only place the calibrate CTA lives, so the branch above — which drops
+  // the intro — took away the one route into the compass for the visitors this card exists for.
+  // A guest could read the whole card and have no way to calibrate. These pin the way back.
+
+  it('offers a research-only visitor a calibrate link', () => {
+    const branch = SRC.split('{researchOnly ? (')[1].split(') : hasUserCompass ? (')[0];
+    expect(branch).toMatch(/href=\{ctaHref\}/);
+    expect(branch).toMatch(/Calibrate your compass/);
+  });
+
+  it('does not offer it to someone who already has a compass', () => {
+    const branch = SRC.split('{researchOnly ? (')[1].split(') : hasUserCompass ? (')[0];
+    expect(branch).toMatch(/\{!hasUserCompass &&/);
+  });
+
+  it('does not flash it at a logged-in user whose answers are still loading', () => {
+    // Same reason the zone below shows a spinner instead of the CTA: compassLoading clears
+    // before loadCompassData() finishes, so hasUserCompass is briefly false for someone who
+    // does have a compass.
+    const branch = SRC.split('{researchOnly ? (')[1].split(') : hasUserCompass ? (')[0];
+    expect(branch).toMatch(/!\(isLoggedIn && !compassDataLoaded\)/);
+  });
+
+  it('does not re-introduce the comparison pitch alongside it', () => {
+    // The invitation points at the people we do hold positions for. Promising a comparison
+    // with *this* person is the thing the branch exists to avoid.
+    const branch = SRC.split('{researchOnly ? (')[1].split(') : hasUserCompass ? (')[0];
+    expect(branch).not.toMatch(/<CompassIntro/);
+  });
+});
