@@ -1,16 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
 
 /**
- * CompassIntro — two-step animated intro shown in the left zone of CompassCard
+ * CompassIntro — three-step animated intro shown in the left zone of CompassCard
  * when the viewer has no compass yet (guest, or logged in with no answers).
  *
  * Mirrors the Compass app's "learn" onboarding (compass.empowered.vote): a visual
- * on a card with a soft halo, then a "Step N of 2" label, title and body. The text
+ * on a card with a soft halo, then a "Step N of 3" label, title and body. The text
  * slides vertically between steps; the visual swaps with a fade/scale. Users move
  * between steps with Next / Previous, the dots, or by swiping left/right on the visual.
  *
- * Step 1 shows calibrating: picking a stance draws your compass shape.
- * Step 2 shows comparing: your shape over this candidate's, alignment pulsing.
+ * Step 1 shows answering: questions arrive, five positions slide in, one gets picked,
+ *        and the next question takes its place — looping until the viewer moves on.
+ * Step 2 shows the payoff: those answers drawn as a shape across all eight issues.
+ * Step 3 shows comparing: your shape over this candidate's, alignment pulsing.
+ *
+ * Step 1 used to be the first half of step 2 — a single pick that flipped to the
+ * radar after 2.3s. It read as someone choosing a topic rather than answering a
+ * question, and was gone before it could be understood. It is now its own step,
+ * paced to be read, and the radar it used to flip to is step 2.
  *
  * Animations are CSS-only (no motion library) and are disabled under
  * prefers-reduced-motion.
@@ -31,11 +38,67 @@ const DARK = {
 const USER_COLOR = '#7C6B9E';
 const POL_COLOR = '#5A9A6E';
 const ALIGN_COLOR = '#FED12E';
-const PICK_COLOR = '#59B0C4';
 
 const LABELS = ['Housing', 'Climate', 'Schools', 'Safety', 'Health', 'Jobs', 'Justice', 'Taxes'];
 const USER_VALUES = [0.9, 0.55, 0.95, 0.5, 0.78, 0.8, 0.92, 0.6];
 const POL_VALUES = [0.6, 0.82, 0.55, 0.72, 0.5, 0.8, 0.5, 0.8];
+
+/**
+ * Step 1's script. Written for the demo, NOT taken from the live compass: the real
+ * ladders run 40-70 characters an option and none of the 43 live topics has five
+ * that fit this column, so quoting them would either overflow or be truncated into
+ * something the compass does not actually say. These are plainly illustrative.
+ *
+ * Each `label` is one of LABELS, so the shape step 2 draws reads as the result of
+ * the questions just watched rather than a separate idea.
+ */
+const DEMO_QUESTIONS = [
+  {
+    label: 'Housing',
+    question: 'How much new housing should we build?',
+    pick: 1,
+    options: [
+      'Build a lot more, fast',
+      'More homes near transit',
+      'Keep today’s pace',
+      'Grow slowly and carefully',
+      'Keep things as they are',
+    ],
+  },
+  {
+    label: 'Schools',
+    question: 'Where should school money go?',
+    pick: 3,
+    options: [
+      'Split it evenly statewide',
+      'More to schools with least',
+      'Keep funding as it is',
+      'Let it follow each student',
+      'Hand it to families',
+    ],
+  },
+  {
+    label: 'Taxes',
+    question: 'Who should pay more in tax?',
+    pick: 0,
+    options: [
+      'Much more from top earners',
+      'A little more from the top',
+      'Keep rates where they are',
+      'Lower rates for everyone',
+      'Cut taxes as far as we can',
+    ],
+  },
+];
+
+// Step 1 pacing. Long enough to read all five before one is picked, then long
+// enough to take in which one it was. A full three-question loop is ~15s.
+const PICK_AT = 2.8;
+const ADVANCE_AT = 5.0;
+
+function prefersReducedMotion() {
+  return typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+}
 
 const STYLES = `
 @keyframes evi-fade { from { opacity: 0 } to { opacity: 1 } }
@@ -48,10 +111,15 @@ const STYLES = `
 @keyframes evi-slide-from-below { from { transform: translateY(100%); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
 @keyframes evi-slide-from-above { from { transform: translateY(-100%); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
 @keyframes evi-option-in { from { opacity: 0; transform: translateX(-12px) } to { opacity: 1; transform: translateX(0) } }
+/* The picked row is marked by its border, its filled dot and a tint — all of which
+   only have to clear 3:1 as non-text marks. The TEXT goes to the heading colour,
+   not to the accent: when it turned accent-blue it measured 2.23:1 in light mode,
+   making the selected answer the faintest line on the card. It is now 10.5:1 light
+   and 8.8:1 dark. --evi-pick is textAccent, so it is #00657C light / #59B0C4 dark. */
 @keyframes evi-select { from { background-color: transparent; border-color: var(--evi-border); color: var(--evi-body) }
-                        to { background-color: ${PICK_COLOR}22; border-color: ${PICK_COLOR}; color: ${PICK_COLOR} } }
+                        to { background-color: var(--evi-pick-tint); border-color: var(--evi-pick); color: var(--evi-head) } }
 @keyframes evi-radio { from { background-color: transparent; border-color: var(--evi-border) }
-                       to { background-color: ${PICK_COLOR}; border-color: ${PICK_COLOR} } }
+                       to { background-color: var(--evi-pick); border-color: var(--evi-pick) } }
 .evi-anim { animation-fill-mode: both; }
 @media (prefers-reduced-motion: reduce) {
   .evi-anim, .evi-anim * { animation-duration: 0.01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; }
@@ -163,63 +231,100 @@ function IntroRadar({ t, shapes, align = false, baseDelay = 0 }) {
 }
 
 /**
- * Step 1 visual, in two frames: first a stance gets picked on Housing, then the
- * picker hands over to your compass, which draws itself in. Plays once per visit
- * to the step (returning to it via Previous replays it).
+ * Step 1 visual: a questionnaire answering itself. A question arrives, its five
+ * positions slide in, one is picked, the answer holds, and the next question takes
+ * its place. It loops through DEMO_QUESTIONS indefinitely — the viewer leaves by
+ * going to the next step, not by waiting for it to finish.
+ *
+ * Under prefers-reduced-motion nothing cycles and nothing moves: the first question
+ * sits there with its answer already selected. The CSS above collapses the enter and
+ * select animations to their end state, so that is exactly what renders.
  */
-function CalibrateVisual({ t }) {
-  const options = ['Build housing everywhere, fast', 'Add more homes near transit', 'Grow slowly and carefully', 'Keep neighborhoods as they are'];
-  const picked = 1;
-  const selectAt = 0.15 + options.length * 0.12 + 0.35;
-  const [frame, setFrame] = useState(0);
+function QuestionnaireVisual({ t }) {
+  const [index, setIndex] = useState(0);
+  const reduced = prefersReducedMotion();
 
-  // Hold on the picked answer long enough to read it, then move to the compass.
   useEffect(() => {
-    const reduced = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    const id = setTimeout(() => setFrame(1), reduced ? 1500 : (selectAt + 1.3) * 1000);
-    return () => clearTimeout(id);
-  }, [selectAt]);
+    if (reduced) return undefined;
+    const id = setInterval(() => setIndex((n) => (n + 1) % DEMO_QUESTIONS.length), ADVANCE_AT * 1000);
+    return () => clearInterval(id);
+  }, [reduced]);
 
-  if (frame === 1) {
-    return (
-      <div className="w-full flex flex-col items-center gap-3 evi-anim" style={{ animation: 'evi-visual-in 0.35s ease both' }}>
-        <div className="w-full max-w-[15rem] aspect-square">
-          <IntroRadar t={t} shapes={[{ values: USER_VALUES, color: USER_COLOR }]} />
-        </div>
-        <span className="flex items-center gap-2 text-sm font-semibold evi-anim" style={{ color: t.textBody, animation: 'evi-option-in 0.4s ease 1.2s both' }}>
-          <span className="w-3 h-3 rounded-full" style={{ background: USER_COLOR }} /> Your compass
-        </span>
-      </div>
-    );
-  }
+  const q = DEMO_QUESTIONS[index];
 
   return (
-    <div className="w-full max-w-[17rem] flex flex-col gap-2.5" style={{ '--evi-border': t.border, '--evi-body': t.textBody }}>
-      <p className="text-xs font-bold tracking-widest uppercase mb-1 text-center" style={{ color: t.textMuted }}>Housing</p>
-      {options.map((label, i) => {
-        const isPick = i === picked;
-        const enter = `evi-option-in 0.45s cubic-bezier(.22,1,.36,1) ${0.15 + i * 0.12}s both`;
-        return (
-          <div
-            key={label}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-xl evi-anim"
-            style={{
-              border: `1.5px solid ${t.border}`,
-              color: t.textBody,
-              animation: isPick ? `${enter}, evi-select 0.3s ease ${selectAt}s both` : enter,
-            }}
-          >
-            <span
-              className="w-4 h-4 rounded-full shrink-0 evi-anim"
+    <div
+      className="w-full max-w-[17rem]"
+      style={{
+        '--evi-border': t.border,
+        '--evi-body': t.textBody,
+        '--evi-head': t.textHead,
+        '--evi-pick': t.textAccent,
+        '--evi-pick-tint': `${t.textAccent}22`,
+      }}
+    >
+      {/* Keyed on the question so every row remounts and replays its entrance.
+          Spacing is tighter than the four-option version this replaced: a question
+          plus five rows is two rows' worth taller, and on desktop the visual only
+          gets the height the text block and controls leave it. */}
+      <div key={index} className="flex flex-col gap-2">
+        <p
+          className="text-xs font-bold tracking-widest uppercase text-center evi-anim"
+          style={{ color: t.textMuted, animation: 'evi-fade 0.4s ease both' }}
+        >
+          {q.label}
+        </p>
+        {/* Fixed height: the questions are one or two lines, and letting the block
+            resize between them would make FitToBox rescale the whole card. */}
+        <p
+          className="text-[13px] font-semibold text-center leading-snug evi-anim"
+          style={{ color: t.textHead, minHeight: '2.6em', animation: 'evi-fade 0.4s ease 0.05s both' }}
+        >
+          {q.question}
+        </p>
+        {q.options.map((label, i) => {
+          const isPick = i === q.pick;
+          const enter = `evi-option-in 0.45s cubic-bezier(.22,1,.36,1) ${0.15 + i * 0.12}s both`;
+          return (
+            <div
+              key={`${index}-${i}`}
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl evi-anim"
               style={{
-                border: `2px solid ${t.border}`,
-                animation: isPick ? `evi-radio 0.3s ease ${selectAt}s both` : undefined,
+                border: `1.5px solid ${t.border}`,
+                color: t.textBody,
+                animation: isPick ? `${enter}, evi-select 0.3s ease ${PICK_AT}s both` : enter,
               }}
-            />
-            <span className="text-sm font-medium text-left leading-snug">{label}</span>
-          </div>
-        );
-      })}
+            >
+              <span
+                className="w-4 h-4 rounded-full shrink-0 evi-anim"
+                style={{
+                  border: `2px solid ${t.border}`,
+                  animation: isPick ? `evi-radio 0.3s ease ${PICK_AT}s both` : undefined,
+                }}
+              />
+              <span className="text-sm font-medium text-left leading-snug">{label}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Step 2 visual: the answers resolved into a shape. All eight spokes, drawn from
+ * USER_VALUES — three of them are the topics step 1 just asked about, so the shape
+ * reads as the result of what was watched rather than a new idea.
+ */
+function PrioritiesVisual({ t }) {
+  return (
+    <div className="w-full flex flex-col items-center gap-3">
+      <div className="w-full max-w-[15rem] aspect-square">
+        <IntroRadar t={t} shapes={[{ values: USER_VALUES, color: USER_COLOR }]} />
+      </div>
+      <span className="flex items-center gap-2 text-sm font-semibold evi-anim" style={{ color: t.textBody, animation: 'evi-option-in 0.4s ease 1.2s both' }}>
+        <span className="w-3 h-3 rounded-full" style={{ background: USER_COLOR }} /> Your compass
+      </span>
     </div>
   );
 }
@@ -306,8 +411,13 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
   const steps = [
     {
       title: 'Calibrate your compass',
-      body: 'Pick the issues that decide your vote and mark where you stand on each one. The Compass draws your answers into a shape that is yours alone.',
-      visual: <CalibrateVisual t={t} />,
+      body: 'Pick the issues that decide your vote and mark where you stand on each one. Every question offers five positions, from one end of the debate to the other.',
+      visual: <QuestionnaireVisual t={t} />,
+    },
+    {
+      title: 'See your priorities take shape',
+      body: 'The Compass draws your answers into a shape that is yours alone — eight issues, and how far you lean on each of them.',
+      visual: <PrioritiesVisual t={t} />,
     },
     {
       title: `See where you stand with ${politicianName || 'this candidate'}`,
@@ -375,10 +485,12 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
           className="pointer-events-none absolute w-64 h-64 rounded-full evi-anim"
           style={{ background: `radial-gradient(circle, ${t.textAccent}22 0%, transparent 70%)`, animation: 'evi-halo 4.5s ease-in-out infinite' }}
         />
-        {/* Both visuals are drawn from fixed sample values (USER_VALUES / POL_VALUES):
-            they show how the compass works, not anyone's actual positions. Label the
-            card so no shape on it can be read as a real record. Outside FitToBox, so
-            it keeps its size when the visual is scaled down on a short screen. */}
+        {/* Every visual here is invented: the radars from fixed sample values
+            (USER_VALUES / POL_VALUES), the questionnaire from DEMO_QUESTIONS. They
+            show how the compass works, not anyone's actual positions and not the
+            live ladders. Label the card so nothing on it can be read as a real
+            record. Outside FitToBox, so it keeps its size when the visual is
+            scaled down on a short screen. */}
         <span
           className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide"
           style={{ background: t.bg, color: t.textMuted, border: `1px solid ${t.border}` }}

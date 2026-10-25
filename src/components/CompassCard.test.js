@@ -22,7 +22,7 @@ describe('CompassCard gate', () => {
   });
 
   it('gives a research-only person the breakdown alone, guest or not', () => {
-    // The guest zone opens with CompassIntro, whose second step offers to lay the viewer's
+    // The guest zone opens with CompassIntro, whose last step offers to lay the viewer's
     // compass over this person's. A research-only person has no positions to lay one over —
     // every row says we found no public stance — so the breakdown-only branch takes guests
     // too. Gating it on hasUserCompass sent exactly these guests to that pitch.
@@ -60,5 +60,19 @@ describe('CompassCard calibrate invitation', () => {
     // with *this* person is the thing the branch exists to avoid.
     const branch = SRC.split('{researchOnly ? (')[1].split(') : hasUserCompass ? (')[0];
     expect(branch).not.toMatch(/<CompassIntro/);
+  });
+});
+
+describe('CompassCard intro height', () => {
+  it('leaves the intro enough height to draw its tallest step at full size', () => {
+    // INTRO_MIN is what the intro gets for anyone with a short stance list, so it is the
+    // worst case rather than an edge case. CompassIntro's step 1 is 264px of content and
+    // the card spends 207px of its height on the text block, controls and padding, so
+    // anything under 471 makes FitToBox shrink the questionnaire; at the old 448 it came
+    // out at 0.73 scale, which rendered the answer text at roughly 10px. 520 leaves margin.
+    const min = Number(SRC.match(/const INTRO_MIN = (\d+);/)[1]);
+    const max = Number(SRC.match(/const INTRO_MAX = (\d+);/)[1]);
+    expect(min).toBeGreaterThanOrEqual(520);
+    expect(max).toBeGreaterThanOrEqual(min);
   });
 });
