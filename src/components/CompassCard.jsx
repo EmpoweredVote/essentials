@@ -80,7 +80,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   useLayoutEffect(() => {
     if (stancesEl.current) setStancesHeight(stancesEl.current.getBoundingClientRect().height);
   }, [stancesOpen]);
-  const INTRO_MIN = 448; // 28rem
+  // The floor is what the intro gets on anyone with a short stance list, so it has to
+  // clear the tallest thing the intro draws. That is step 1's questionnaire: a question
+  // plus five options is 264px, and the visual card keeps 207px of that height for the
+  // text block, the controls and the card's own padding. Below this the card still
+  // renders — FitToBox shrinks it — but at 448 it came out at 0.73 scale, which put the
+  // answer text at ~10px.
+  const INTRO_MIN = 520; // 32.5rem
   const INTRO_MAX = 576; // 36rem
   const introHeight = stancesOpen ? INTRO_MAX : Math.min(INTRO_MAX, Math.max(INTRO_MIN, stancesHeight));
   const introTop = stancesOpen ? 0 : Math.max(0, (Math.max(stancesHeight, introHeight) - introHeight) / 2);
@@ -416,7 +422,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       <div className="bg-white dark:bg-ev-navy-card rounded-2xl border border-neutral-200 dark:border-[rgba(255,255,255,0.08)] shadow-sm p-6">
         {researchOnly ? (
           /* Researched, no answers: nothing to compare, so no radar — the breakdown alone.
-             This covers guests too. The guest zone below opens with CompassIntro, whose second
+             This covers guests too. The guest zone below opens with CompassIntro, whose last
              step reads "Lay your compass over theirs and the overlap does the explaining" — but
              every row on this card says we found no public stance for this person, so there is
              no shape to lay a compass over. Showing that pitch to exactly the people this card
@@ -715,7 +721,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
         ) : (
           /* Guest (or logged-in with genuinely no answers) — 2-column: CTA left, accordion right */
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-6">
-            {/* Left zone: two-step animated intro (calibrate, then compare). On lg the
+            {/* Left zone: three-step animated intro (answer, then your shape, then compare). On lg the
                 intro is taken out of flow so the stances column sets the row height:
                 while every category is closed it spans that column exactly (same top,
                 same bottom, centred); once one opens it grows to full size, pinned to
