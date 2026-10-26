@@ -1,0 +1,22 @@
+# public/banners.json is GENERATED from the registry comment block in
+# src/lib/buildingImages.js by scripts/gen-banners-json.mjs, and `npm run banners:check`
+# re-generates it and compares the BYTES against the committed copy.
+#
+# The generator writes LF. On Windows, git's default `core.autocrlf=true` checks the file
+# out with CRLF, so the two differ by one byte per line and the check reports
+#
+#     public/banners.json is stale. Run: node scripts/gen-banners-json.mjs
+#
+# on a clean `main` with nothing wrong. Measured 2026-10-25: strip the carriage returns from
+# both copies and the SHA-256 is identical — the content was never stale. CI runs on Linux,
+# where there are no CRs, so it has always passed there; this only ever cried wolf locally,
+# and the cost was a developer regenerating a file that did not need regenerating and then
+# carrying a phantom modification in `git status`.
+#
+# Pinning the file to LF makes the checked-out bytes match what the generator writes, on
+# every platform.
+#
+# ⚠ Existing clones already hold the CRLF copy. One `git add --renormalize public/banners.json`
+# (or deleting the file and `git checkout -- public/banners.json`) refreshes it; new clones
+# are correct immediately.
+public/banners.json text eol=lf
