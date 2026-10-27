@@ -50,6 +50,11 @@
       // Resolve the theme before first paint. The ev_theme cookie is the cross-app truth
       // (.empowered.vote), so it is read first and every app writes it on toggle; a local
       // choice made before that cookie existed is published here so the next app inherits it.
+      //
+      // Dark is the default. The OS is deliberately NOT consulted: a browser reports
+      // prefers-color-scheme: light when the OS has no preference set at all, so reading it
+      // could not tell "never chose" apart from "chose light", and every undecided visitor
+      // got a light page. Only a choice made on an Empowered Vote site counts.
       (function () {
         var m = document.cookie.match(/(?:^|;\s*)ev_theme=([^;]+)/);
         var s = m ? m[1] : null;
@@ -62,8 +67,8 @@
               document.cookie = 'ev_theme=' + s + '; domain=.empowered.vote; path=/; expires=' + d.toUTCString() + '; SameSite=Lax';
             }
           }
-        } catch (err) { /* best-effort: storage is unavailable, fall through to the OS preference */ }
-        if (s === 'dark' || (!s && !window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('dark');
+        } catch (err) { /* best-effort: storage is unavailable, fall through to the dark default */ }
+        if (s !== 'light') document.documentElement.classList.add('dark');
       })();
     </script>
   </head>
