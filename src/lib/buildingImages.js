@@ -585,6 +585,48 @@ const CURATED_LOCAL = {
   //   aberdeen - Aberdeen, South Dakota | H2O2 at English Wikipedia | Public domain
   aberdeen: { state: 'SD', match: 'exact', focus: '50% 100%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/aberdeen.jpg' },
 
+  // Anchorage (operator-certified 2026-10-28). Alaska's first city banner, and the
+  // first banner for any Alaska jurisdiction below the state panorama.
+  //
+  // SOURCING took the pipeline's own route rather than the website search: find one
+  // good file, ask THAT file which categories it belongs to, sweep those. The real
+  // category is `Category:Anchorage skylines` -- 55 files, 38 of them wide enough
+  // and reusable. Guessing category names is the documented time sink.
+  //
+  // ADJACENCY: states/AK.jpg is a MOUNTAIN WALL over tundra with no built structure
+  // in it at all. Read in the 6:1 band it is a horizontal mass of snow peaks above
+  // a flat brown plain. That is what refused Paxson Woelber's otherwise lovely
+  // golden-hour frame (CC BY-SA 3.0): dark mountain mass over a thin bright
+  // foreground is the SAME COMPOSITION as the state band, and the two would read as
+  // one picture. Refused on composition, not on the subject noun, and not on
+  // quality -- it is the better photograph.
+  //
+  // 🔴 THE BIGGEST AND NEWEST FILE IN THE CATEGORY IS AN AERIAL AND WAS REFUSED.
+  // File:Anchorage skyline.jpg (Quintin Soloviev, CC BY 4.0) is 7267x4845, shot May
+  // 2026, and sits in `Category:Aerial photographs of Anchorage, Alaska`. In the
+  // band it is rooftops and parking lots with no horizon. Resolution and recency
+  // are not the ranking.
+  //
+  // THE ANCHOR CHOICE IS ABOUT INFORMATION, NOT SKY. Anchors 0.50 through 0.92 were
+  // compared in the desktop band. The standing note is that my crops carry too much
+  // sky -- but here, above ~0.86 the Chugach ridge drops out of frame and the top
+  // band becomes PLAIN BLUE SKY. That trades information for filler, which is the
+  // opposite of what the rule is for. 0.76 keeps the ridge, the cloud bank and the
+  // frosted treeline, with the full skyline across the middle.
+  //
+  // match:'exact' because Anchorage is ALSO a city in Kentucky (place 2101504), and
+  // a substring key would hand a Kentucky browse label the Alaska skyline.
+  //
+  // A NEW key needs no -v2 -- the stale-CDN rule applies to OVERWRITES and this key
+  // had never been written. sha256 of the served bytes verified identical to the
+  // certified file, on a cache-busted URL.
+  //
+  // Surfacing: all 20 Anchorage offices carry representing_city = 'Anchorage'
+  // (ev-accounts CC_0303), so this resolves from an ordinary address search rather
+  // than falling back to the state panorama.
+  //   anchorage - Anchorage Downtown | Luke Jones | CC BY 2.0
+  anchorage: { state: 'AK', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/anchorage.jpg' },
+
   // Biloxi (Knight slice 16, stage MS-5; operator-certified 2026-09-28). The last
   // city banner of the programme, and the last of the 26 Knight cities to get one.
   //
