@@ -1040,6 +1040,40 @@ export const COVERAGE_STATES = [
       { label: 'Aberdeen', browseGovernmentList: ['4600100'], browseStateAbbrev: 'SD', hasContext: false },
     ],
   },
+  {
+    name: 'Alaska', abbrev: 'AK',
+    areas: [
+      // [2026-10-27] Alaska's first area, and the state's first local tier of any kind.
+      // ev-accounts CC_0303 seeded the Municipality of Anchorage from nothing: 3 chambers
+      // (Assembly, Office of the Mayor, School Board), 7 districts, 20 offices, 20 of 20
+      // seated, 20 of 20 headshots.
+      //
+      // ⚠ THE GEO_ID IS THE PLACE CODE, AND ANCHORAGE HAS TWO. It is a unified home rule
+      // municipality, so TIGER carries both 02020 (G4020, borough) and 0203000 (G4110,
+      // place) over identical ground — measured, both 1,944.5 sq mi with the same centroid.
+      // Precedent in the database is split (Indianapolis and Nashville use the county code,
+      // San Francisco and Columbus GA the place code); the place code was chosen because
+      // this list is populated with place geo_ids everywhere. Routing works either way.
+      //
+      // 🔴 'Anchorage' IS NOT A UNIQUE CITY NAME. Place 2101504 is Anchorage city, KENTUCKY.
+      // browseStateAbbrev disambiguates here; any future banner key for this city MUST be
+      // state-scoped match:'exact' in buildingImages, like Columbia SC vs Columbus GA.
+      //
+      // Verified against production through the live browse API, not row counts: 20 rows
+      // whose government_name is the Municipality, and three real addresses each resolving
+      // to their own two assembly members — City Hall to District 1, Eagle River to
+      // District 2, Girdwood to District 6.
+      //
+      // Banner: NONE curated yet, so the Alaska state panorama (states/AK.jpg, verified
+      // servable) renders instead. That is the documented fallback, not a defect.
+      //
+      // hasContext FALSE, measured 2026-10-27: zero of the 20 hold any row in
+      // inform.politician_answers. The Mayor and the 12 assembly members are eligible for a
+      // later stance pass; the 7 school board members are NOT, until the school-board badge
+      // ships.
+      { label: 'Anchorage', browseGovernmentList: ['0203000'], browseStateAbbrev: 'AK', hasContext: false },
+    ],
+  },
 ];
 
 // state name (long) -> USPS abbrev, for matching a geocoded administrative_area_level_1.
