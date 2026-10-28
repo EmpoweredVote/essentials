@@ -33,6 +33,7 @@ import { resolveFeatureIcons } from '../lib/featureIcons';
 import { resolvePopulation } from '../lib/population';
 import { buildBannerProps } from '../lib/bannerProps';
 import { splitBodiesByState, orderBodiesByState } from '../lib/stateGroups';
+import { qualifyLocalTitle, GOV_FORM_PREFIX } from '../lib/localTitle';
 
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
@@ -231,40 +232,10 @@ function deriveSeatSubtitle(pol, cleanTitle) {
   return null;
 }
 
-/**
- * Qualify a generic local title with the jurisdiction name.
- * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"
- * Only used when a card is NOT inside a government_body_name section.
- */
-function qualifyLocalTitle(baseTitle, pol) {
-  if (!baseTitle) return baseTitle;
-
-  const dt = pol.district_type || '';
-  if (!dt.startsWith('LOCAL') && dt !== 'COUNTY') return baseTitle;
-
-  // Use government_name if set; fall back to representing_city for loaders that
-  // don't create a chamber→government record (e.g. Utah at-large city councils).
-  const govRaw = pol.government_name || pol.representing_city || '';
-  if (!govRaw) return baseTitle;
-
-  const gov = govRaw.split(',')[0].trim();
-  const govCore = gov
-    .replace(/^(City|Town|Village)\s+of\s+/i, '')
-    .replace(/\s+(Township|County)$/i, '')
-    .trim();
-
-  if (govCore && baseTitle.toLowerCase().includes(govCore.toLowerCase()))
-    return baseTitle;
-
-  let prefix = dt === 'COUNTY'
-    ? gov
-    : gov.replace(/^(City|Town|Village)\s+of\s+/i, '');
-
-  if (prefix.endsWith('County') && baseTitle.startsWith('County'))
-    prefix = prefix.replace(/\s+County$/, '');
-
-  return `${prefix} ${baseTitle}`;
-}
+// `qualifyLocalTitle` now lives in src/lib/localTitle.js, imported above. It used to be defined
+// here AND, in a drifted copy, in components/PoliticianGrid.jsx — which nothing imports, so Vite
+// drops it from the bundle. A fix applied to that copy on 2026-10-28 changed nothing a reader
+// sees. One definition now, and it is this page's.
 
 /**
  * Simplify a card title when it's displayed inside a government_body_name section.
@@ -300,7 +271,7 @@ function simplifyForBody(title, pol) {
     const coreJurisdiction = pol.government_name
       .split(',')[0]
       .trim()
-      .replace(/^(City|Town|Village)\s+of\s+/i, '')
+      .replace(GOV_FORM_PREFIX, '')
       .replace(/\s+(Township|County)$/i, '');
 
     if (

@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import PoliticianCard from "./PoliticianCard";
 import { getSeatBallotStatus } from "../utils/ballotStatus";
+import { qualifyLocalTitle } from "../lib/localTitle";
 import {
   GROUP_SORT_OPTIONS,
   makeComparator,
@@ -20,45 +21,12 @@ function getImageData(pol) {
  * Qualify a generic local title with the jurisdiction name.
  * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"
  */
-// A government's name can lead with any of the incorporated forms, not just "City of".
-// 🔴 STRIPPING ONLY "City of " STUTTERS ON EVERY OTHER FORM, and did in production: a
-// "Borough of State College" official read "Borough of State College State College Borough
-// Council", because the duplicate check compared the chamber against the whole phrase
-// "Borough of State College" instead of against "State College". Measured live 2026-10-28 on
-// State College, Ellettsville and Anchorage. "City and County of" is here for San Francisco.
-// ⚠ Deliberately NOT matched: "Consolidated City of Indianapolis and Marion County" and
-// "Metropolitan Government of Nashville and Davidson County". Their cores are compound, so
-// stripping the lead leaves "Indianapolis and Marion", which is not a name any chamber carries
-// and would make the duplicate check worse rather than better.
-const GOV_FORM_PREFIX =
-  /^(?:City|Town|Village|Borough|Municipality|Township)(?: and County)? of\s+/i;
-
+// 🔴 THIS COMPONENT IS NOT IMPORTED ANYWHERE and is therefore tree-shaken out of the bundle.
+// The live card titles are built by `qualifyLocalTitle` in src/pages/Results.jsx. A fix applied
+// here on 2026-10-28 changed nothing a reader sees, which is how the deadness was found. The
+// shared helper now lives in src/lib/localTitle.js so the two cannot drift again.
 export function qualifyTitle(baseTitle, pol) {
-  if (!pol.government_name || !baseTitle) return baseTitle;
-
-  const dt = pol.district_type || "";
-  if (!dt.startsWith("LOCAL") && dt !== "COUNTY") return baseTitle;
-
-  // Extract first segment: "Los Angeles County, California, US" → "Los Angeles County"
-  const gov = pol.government_name.split(",")[0].trim();
-  // Core name for duplicate detection: strip the incorporated form and trailing " County"
-  const govCore = gov
-    .replace(GOV_FORM_PREFIX, "")
-    .replace(/\s+County$/i, "")
-    .trim();
-
-  // Already qualified (e.g. "Bloomington City Common Council" already contains "Bloomington")
-  if (govCore && baseTitle.toLowerCase().includes(govCore.toLowerCase()))
-    return baseTitle;
-
-  // For county officials use full gov name; for city officials strip the incorporated form
-  let prefix = dt === "COUNTY" ? gov : gov.replace(GOV_FORM_PREFIX, "");
-
-  // Avoid "Los Angeles County County Board of Supervisors"
-  if (prefix.endsWith("County") && baseTitle.startsWith("County"))
-    prefix = prefix.replace(/\s+County$/, "");
-
-  return `${prefix} ${baseTitle}`;
+  return qualifyLocalTitle(baseTitle, pol);
 }
 
 function getDisplayTitle(pol) {
