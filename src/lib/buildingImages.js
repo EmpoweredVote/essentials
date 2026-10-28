@@ -2034,6 +2034,38 @@ const CURATED_LOCAL = {
   //             riverbank | CyberDetroit | CC BY-SA 4.0
   //             source: File:CityofDetroit.jpg, vertical anchor 0.50
   'detroit': { state: 'MI', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/detroit.jpg' },
+
+  // Honolulu, HI (2026-10-28). Seeded with the City and County of Honolulu government
+  // (ev-accounts CC_0304).
+  //
+  // 🔴 THIS KEY COVERS THE WHOLE ISLAND, AND THAT IS CORRECT, NOT A BUG. Hawaii has NO
+  // incorporated places at all — TIGERweb returns zero for state 15 against 483 for
+  // California — so there is no city on Oahu except this one consolidated city-county.
+  // Kapolei, Kāne'ohe, Waipahū and Mililani have no municipal government of their own;
+  // their city hall IS Honolulu Hale. Every Oahu address resolves `representing_city` to
+  // 'Honolulu' through a LOCAL council-district office, so every Oahu address gets this
+  // banner, and every one of them is genuinely in this city.
+  //
+  // No `match: 'exact'`: no other US place name contains 'honolulu', and the substring
+  // form also catches a 'Honolulu County' label without needing a second key.
+  //
+  // 🔴 THE SUBJECT IS DELIBERATELY NOT THE SKYLINE. The HI STATE banner is already the
+  // Waikiki/Diamond Head panorama, and the two render adjacent — adjacency is composition.
+  // A second distant skyline would have read as the same picture twice. Honolulu Hale is
+  // the actual seat of this government, it is architecturally unmistakable, and it is a
+  // close subject against the state banner's far one.
+  //
+  // Certified in the 6:1 desktop band AND looked at whole: three vertical crops of the
+  // source were rendered as bands beside the HI state banner before this one was chosen.
+  // The 'top' crop was mostly sky, 'mid' cut the bell tower and filled the lower right with
+  // foliage. The shipping frame holds the bell tower, the tiled roofline and the façade,
+  // with open sky above. A night shot of the same building lit red/white/blue was refused:
+  // the band was almost entirely black, and the lighting was a one-off event.
+  // 2048x650 down to 1700x540 — a downscale, so every pixel is real.
+  //   honolulu - Honolulu Hale (city hall), front corner view with the bell tower
+  //              | Joel Bradshaw | CC0 / Public Domain
+  //              source: File:Honolulu-Hale-frontcornerview.JPG, own work, 2009-04-25
+  'honolulu': { state: 'HI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/honolulu.jpg' },
 };
 
 /**
@@ -2055,6 +2087,23 @@ const CURATED_COUNTY = {
   // banner has since been replaced, but the ruling stands on its own — a county with no
   // city half deserves a banner of its own place, not its state's.
   '12099': { state: 'FL', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/counties/palm-beach-fl.jpg' },
+
+  // Honolulu County, HI = the City and County of Honolulu. 2026-10-28.
+  //
+  // ⚠ THIS IS NOT A DUPLICATE OF THE 'honolulu' CITY KEY, AND IT IS NOT DEAD CODE. The two
+  // fire in different modes. In ADDRESS mode resolveRepresentingCity() returns 'Honolulu'
+  // from a LOCAL council-district office and CURATED_LOCAL wins. In ZIP mode it returns
+  // null by design (a ZIP has no single place of record), and in coordinate mode a raw
+  // point has no place name — in both, the city key cannot match and without this entry an
+  // Oahu lookup would fall through to the HI state banner. Same image on purpose: it is
+  // one government, so the two tiers cannot disagree about what it looks like.
+  //
+  // The "only jurisdictions with NO city half" rule above is satisfied in the strongest
+  // possible way: Hawaii has no incorporated places, so there is no city half anywhere in
+  // the state to collide with. Miami-Dade's reason for having no entry — that adding one
+  // would change what Hialeah and Miami Beach see — has no analogue here, because there is
+  // no Hialeah on Oahu.
+  '15003': { state: 'HI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/honolulu.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape

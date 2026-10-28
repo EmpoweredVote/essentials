@@ -631,3 +631,65 @@ describe('WA third pass — Duvall and Redmond (2026-10-06 deep seed)', () => {
     expect(s).not.toContain('cities/seattle.jpg');
   });
 });
+
+describe('Honolulu — the only local government on Oahu (2026-10-28 deep seed)', () => {
+  const key = (r) => (r.Local ? r.Local.split('/').slice(-2).join('/') : null);
+
+  // ADDRESS mode. Every Oahu address resolves representing_city to 'Honolulu' through a
+  // LOCAL council-district office, so the city key is the one that fires.
+  it('Honolulu resolves to its own city asset', () => {
+    expect(key(getBuildingImages('Honolulu', 'HI', '15003'))).toBe('cities/honolulu.jpg');
+    expect(key(getBuildingImages('Honolulu', 'HI'))).toBe('cities/honolulu.jpg');
+  });
+
+  // 🔴 ZIP and coordinate mode. resolveRepresentingCity() returns null by design for both —
+  // a ZIP has no single place of record and a raw point has no place name — so the city key
+  // CANNOT match and the county key is the only thing standing between an Oahu lookup and
+  // the Hawaii state banner. This is why both entries exist; neither is dead code.
+  it('falls back to the county key when there is no city label', () => {
+    expect(key(getBuildingImages(null, 'HI', '15003'))).toBe('cities/honolulu.jpg');
+    expect(key(getBuildingImages('', 'HI', '15003'))).toBe('cities/honolulu.jpg');
+  });
+
+  // The city and the county are ONE government here, so the two tiers must not be able to
+  // disagree about what it looks like.
+  // ⚠ Asserts NON-NULL first. Comparing the two keys alone passes vacuously when both are
+  // null, which is exactly what a removed entry looks like — measured: under a tamper that
+  // renamed both keys, this case stayed green while its three neighbours went red.
+  it('the city key and the county key serve the SAME asset', () => {
+    const city = key(getBuildingImages('Honolulu', 'HI', '15003'));
+    const county = key(getBuildingImages(null, 'HI', '15003'));
+    expect(city).toBe('cities/honolulu.jpg');
+    expect(county).toBe('cities/honolulu.jpg');
+    expect(city).toBe(county);
+  });
+
+  // Hawaii has no incorporated places, so every Oahu town is in this one city-county and
+  // is SUPPOSED to get this banner. Asserted so the breadth is deliberate, not accidental.
+  it('covers the rest of Oahu, because none of these has a government of its own', () => {
+    for (const town of ['Kapolei', 'Kaneohe', 'Waipahu', 'Mililani', 'Wahiawa']) {
+      expect(key(getBuildingImages(town, 'HI', '15003'))).toBe('cities/honolulu.jpg');
+    }
+  });
+
+  it('does NOT repeat the Hawaii state banner — adjacency is composition', () => {
+    const r = getBuildingImages('Honolulu', 'HI', '15003');
+    expect(r.Local).not.toBe(r.State);
+    expect(r.State).toContain('/states/');
+  });
+
+  // Controls. Without these the assertions above could pass on a map that matches anything.
+  it('control: another Hawaii county does NOT get the Honolulu banner', () => {
+    // Hilo is in Hawaii County (15001), which has no entry of its own.
+    expect(key(getBuildingImages('Hilo', 'HI', '15001'))).toBeNull();
+    expect(key(getBuildingImages(null, 'HI', '15001'))).toBeNull();
+  });
+
+  it('control: the state scope holds — a Honolulu in another state gets nothing', () => {
+    expect(key(getBuildingImages('Honolulu', 'CA', null))).toBeNull();
+  });
+
+  it('control: the county key is scoped to HI', () => {
+    expect(key(getBuildingImages(null, 'CA', '15003'))).toBeNull();
+  });
+});
