@@ -20,7 +20,20 @@ function getImageData(pol) {
  * Qualify a generic local title with the jurisdiction name.
  * e.g. "Mayor" → "Paramount Mayor", "Sheriff" → "Los Angeles County Sheriff"
  */
-function qualifyTitle(baseTitle, pol) {
+// A government's name can lead with any of the incorporated forms, not just "City of".
+// 🔴 STRIPPING ONLY "City of " STUTTERS ON EVERY OTHER FORM, and did in production: a
+// "Borough of State College" official read "Borough of State College State College Borough
+// Council", because the duplicate check compared the chamber against the whole phrase
+// "Borough of State College" instead of against "State College". Measured live 2026-10-28 on
+// State College, Ellettsville and Anchorage. "City and County of" is here for San Francisco.
+// ⚠ Deliberately NOT matched: "Consolidated City of Indianapolis and Marion County" and
+// "Metropolitan Government of Nashville and Davidson County". Their cores are compound, so
+// stripping the lead leaves "Indianapolis and Marion", which is not a name any chamber carries
+// and would make the duplicate check worse rather than better.
+const GOV_FORM_PREFIX =
+  /^(?:City|Town|Village|Borough|Municipality|Township)(?: and County)? of\s+/i;
+
+export function qualifyTitle(baseTitle, pol) {
   if (!pol.government_name || !baseTitle) return baseTitle;
 
   const dt = pol.district_type || "";
@@ -28,9 +41,9 @@ function qualifyTitle(baseTitle, pol) {
 
   // Extract first segment: "Los Angeles County, California, US" → "Los Angeles County"
   const gov = pol.government_name.split(",")[0].trim();
-  // Core name for duplicate detection: strip "City of " and trailing " County"
+  // Core name for duplicate detection: strip the incorporated form and trailing " County"
   const govCore = gov
-    .replace(/^City of\s+/i, "")
+    .replace(GOV_FORM_PREFIX, "")
     .replace(/\s+County$/i, "")
     .trim();
 
@@ -38,8 +51,8 @@ function qualifyTitle(baseTitle, pol) {
   if (govCore && baseTitle.toLowerCase().includes(govCore.toLowerCase()))
     return baseTitle;
 
-  // For county officials use full gov name; for city officials strip "City of "
-  let prefix = dt === "COUNTY" ? gov : gov.replace(/^City of\s+/i, "");
+  // For county officials use full gov name; for city officials strip the incorporated form
+  let prefix = dt === "COUNTY" ? gov : gov.replace(GOV_FORM_PREFIX, "");
 
   // Avoid "Los Angeles County County Board of Supervisors"
   if (prefix.endsWith("County") && baseTitle.startsWith("County"))
