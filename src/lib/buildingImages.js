@@ -2066,6 +2066,38 @@ const CURATED_LOCAL = {
   //              | Joel Bradshaw | CC0 / Public Domain
   //              source: File:Honolulu-Hale-frontcornerview.JPG, own work, 2009-04-25
   'honolulu': { state: 'HI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/honolulu.jpg' },
+  // Boise, ID (2026-10-30). The Idaho wave seated Boise's 7 city and Ada County's 9 elected
+  // officials, plus all 105 legislators, so the city needed a banner.
+  //
+  // 🔴🔴 IDAHO IS THE CHARLOTTE CASE, AND HARDER: THE STATE PANORAMA IS ALREADY THIS CITY.
+  // `states/ID.jpg` IS "Downtown Boise from Camel's Back Park" (Tamanoeconomico, CC BY-SA
+  // 4.0) — the capital and the state's own subject are the same place, and the two banners
+  // render adjacent. Read in the 6:1 DESKTOP BAND (rows 128-412 of 540), that asset is a
+  // DISTANT, ELEVATED skyline: mid-rise towers small against hazy foothills with a tree
+  // canopy across the bottom and the Capitol dome tiny at far left. A second wide Boise
+  // skyline would have read as the same picture twice.
+  //
+  // Resolved the Honolulu way rather than the Austin way: the state panorama is untouched
+  // and the city takes the seat of its own government. Compare COMPOSITIONS, never subject
+  // nouns:
+  //   ID state = Boise from Camel's Back -> distant, elevated, trees dominate, towers small
+  //   boise    = Boise City Hall         -> close, ground level, architecture fills the frame
+  //
+  // Certified in the 6:1 desktop band, not on the full frame. Three vertical crops of the
+  // source were rendered as bands: the 0.25 crop pushed the entrance below the band, the
+  // 0.65 crop pushed the "CITY HALL" lettering ABOVE it and left a band of railings and
+  // parked bicycles that identifies nothing. The shipping frame holds the city seal, the
+  // "CITY HALL" lettering, the teal lamp standards and the entrance inside the band.
+  // 3628x2710 source, cropped to 3628x1152 and downscaled to 1700x540 — every pixel real.
+  //
+  // ⚠ NO `match: 'exact'`, DELIBERATELY. TIGER's BASENAME for this place is "Boise City"
+  //   (the city's legal name is *City of Boise City*), so an exact match on 'boise' would
+  //   MISS its own city under any label carrying that form. The substring catches both.
+  //   `state: 'ID'` is what keeps it off Boise City, OKLAHOMA, which is a real municipality.
+  //   boise - Boise City Hall, 6th & Idaho entrance with the city seal and bell plaza
+  //           | Roman Eugeniusz | CC BY-SA 3.0
+  //           source: File:Downtown, Boise, ID 83702, USA - panoramio (6).jpg
+  'boise': { state: 'ID', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/boise.jpg' },
 };
 
 /**
