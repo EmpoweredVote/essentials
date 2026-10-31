@@ -689,6 +689,36 @@ const CURATED_LOCAL = {
   //   biloxi - Biloxi, Mississippi (2012) | Jared | CC BY 2.0
   biloxi: { state: 'MS', match: 'exact', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/biloxi.jpg' },
 
+  // Jackson (operator-certified 2026-10-31). Mississippi's SECOND city banner, and the
+  // hardest adjacency in the programme so far.
+  //
+  // 🔴🔴 states/MS.jpg IS A PHOTOGRAPH OF JACKSON. Every other city banner had to be
+  // composed AWAY from its state banner; this one shares its subject outright. Read in
+  // the 6:1 band BEFORE anything was chosen, states/MS.jpg is an ELEVATED, DISTANT
+  // inland panorama: the Capitol dome centre-right, downtown towers as a thin bar in
+  // mid-distance, wide sky above, tree canopy below.
+  //   ▶ So the dome, the downtown skyline and the elevated wide view are ALL SPENT.
+  //
+  // The chosen frame is the opposite: GROUND LEVEL and NEAR, looking along East Capitol
+  // Street — a street canyon with storefronts either side. Different camera height,
+  // different subject scale, different thing filling the frame.
+  //
+  // 🔴 THE SKYLINE CANDIDATE WAS PUT ON THE SHEET DELIBERATELY, AS A REJECT, so the
+  // collision was visible rather than argued: in the band it is a car park foreground
+  // under the same hazy downtown the state banner already owns.
+  // 🔴 AND THE RIGHT RATIO IS NOT COMPOSITION, AGAIN. Duling.jpg is 2709x861 — 3.15:1,
+  // the asset ratio EXACTLY, so a full-width crop loses nothing. Its bottom third is
+  // parked pickups. The Blues Trail marker made the same point on the Biloxi wave.
+  // 🔴 And the Russell C. Davis Planetarium frame is the Bend failure mode: at 6:1 the
+  // band is a building sign and three traffic signals.
+  //
+  // Surfacing: Jackson's 8 city offices carry representing_city = 'Jackson' (ev-accounts
+  // CC_0320), so this resolves from an ordinary address search. Hinds County's 28 offices
+  // leave it NULL, so the county has no banner and none is implied — the same split as
+  // Biloxi and Harrison above.
+  //   jackson - East Capitol Street, Jackson (2018) | Michael Barera | CC BY-SA 4.0
+  jackson: { state: 'MS', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/jackson.jpg' },
+
   // St. Louis (operator-certified 2026-09-29). Missouri's SECOND city banner after
   // springfield-mo, which lives in the `springfield` array above (shared with MA).
   //
