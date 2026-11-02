@@ -147,12 +147,43 @@ If the page is JS-heavy and no images load, wait briefly and re-snapshot.
 </step>
 
 <step name="determine_license">
-Assess license based on source:
-- `.gov` official bio page → `"press_use"` (government works are public domain)
-- Wikipedia infobox image → check the filename; if it ends in common CC patterns or file page says CC BY-SA → `"cc_by_sa"`. Default Wikipedia photos to `"cc_by_sa"` unless clearly stated otherwise.
-- Ballotpedia → `"press_use"` (Ballotpedia uses CC BY-SA)
-- Campaign site (`*.com`) → `"press_use"` (standard press kit usage)
-- Unclear → `"unknown"`
+🔴 **A LICENCE IS READ, NEVER INFERRED FROM THE HOST.** Which site published a page tells you
+nothing about who holds the photograph's copyright or what terms it carries. Record a licence only
+from a statement you actually read, and record **where you read it** in `photo_origin_url`.
+
+**Where the licence actually lives:**
+
+- **Wikipedia / Wikimedia** → open the image's **file description page** on Commons
+  (`commons.wikimedia.org/wiki/File:…`) and read its `LicenseShortName` and author.
+  🔴 The **article** is CC BY-SA; the images on it are not. Each carries its own licence, and they
+  are variously CC BY, CC0, public domain, a specific CC BY-SA version, or non-free.
+  🔴 Store the **file description page** as the origin, never the `upload.wikimedia.org` URL — the
+  raw file names no author and states no terms.
+  ⚠ Ask the Commons API for the title; do not build it from the upload path. That guess usually
+  works, and when it fails it returns a *different file of the same name*.
+- **A government site** → read that body's own policy page. 🔴 Only **federal** US government works
+  are public domain (17 USC §105). State, county and city works are **not**, and most such bodies
+  publish no photo policy at all. **Silence is not a grant** — say so in the licence string rather
+  than inventing a category for it.
+- **A campaign or candidate site** → `"press_use"` only where the site offers the photo for press
+  use or publishes no restriction. Read the footer and any terms page before deciding.
+- **Ballotpedia** → 🔴 **NOT a CC BY-SA source.** Its article text is GFDL, and its person photos
+  are candidate-submitted or taken from campaign sites — that copyright is not Ballotpedia's to
+  license. Treat a Ballotpedia photo as a pointer to the real source and go find that source.
+
+**If you did not read a licence, the value is `"unknown"`.** A blank or `unknown` is findable by
+the query that looks for missing provenance; a guessed licence is not, and it tells the public they
+may reuse a photograph nobody cleared. 184 rows in production carry an unverifiable CC BY-SA claim
+because this step used to default to one.
+
+**Spelling is fixed — see `CC_0328`.** Lowercase; parts joined with `_`; a licence element keeps its
+own hyphen; the version appended with `_`:
+
+`cc0` · `cc_by_2.0` · `cc_by_3.0` · `cc_by_4.0` · `cc_by-sa` · `cc_by-sa_2.0` · `cc_by-sa_3.0` · `cc_by-sa_4.0`
+
+plus the non-CC values already in use: `press_use` · `public_domain` · `us_government_work`.
+🔴 **Never write the bare unversioned `cc_by-sa` when the file page gives a version** — 2.0, 3.0 and
+4.0 are different licences with different terms.
 </step>
 
 <step name="present_for_approval">
