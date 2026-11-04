@@ -17,6 +17,16 @@ const MAX_SPOKES = 8;
 const CARD_PADDING = 110;
 const CARD_CENTER = 250; // size/2 for RadarChartCore size=500
 
+// The visible text of a radar spoke label. RadarChartCore wraps the label into
+// <tspan> lines, and for a spoke in `unansweredSpokes` it also renders an SVG
+// <title> ("No stance on file for this topic.") as the FIRST child of the same
+// <text>. textContent would swallow that title into the label, so read the
+// tspans when there are any and fall back to textContent when there are none.
+function labelText(el) {
+  const spans = el.querySelectorAll('tspan');
+  return spans.length ? Array.from(spans, (s) => s.textContent).join('') : el.textContent;
+}
+
 function stanceLabel(shortTitle, value, topics) {
   const topic = topics.find((t) => t.short_title === shortTitle);
   const stances = topic?.stances || [];
@@ -339,7 +349,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     const label = e.target.closest?.('text');
     if (!label) return;
     const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
-    const key = norm(label.textContent);
+    const key = norm(labelText(label));
     const topic = topicsFiltered.find((t) => norm(t.short_title) === key);
     if (!topic) return;
     track('essentials_compass_label_opened', { topic: topic.short_title, context: 'profile' });
@@ -358,7 +368,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       topicsFiltered.filter((t) => selectedTopicIds.includes(String(t.id))).map((t) => norm(t.short_title))
     );
     for (const label of host.querySelectorAll('svg text')) {
-      label.toggleAttribute('data-selected', selected.has(norm(label.textContent)));
+      label.toggleAttribute('data-selected', selected.has(norm(labelText(label))));
     }
   });
 

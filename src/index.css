@@ -296,7 +296,7 @@ body {
   transition: background 0.15s, border-color 0.15s;
 }
 .stance-btn:hover {
-  background: #F0F8FA;
+  background: var(--ev-bg-light);
   border-color: #C9CFD1;
 }
 .dark .stance-btn {
@@ -541,10 +541,22 @@ html:not(.dark) .ev-soft .ev-politician-profile p.ev-contact-label {
 html:not(.dark) .ev-soft :is(input, select, textarea)[class] {
   border-color: #858b94 !important;
 }
+/* Dark counterpart: dark is the default theme (index.html), so a light-only rule
+   would leave the boundary failing for most readers. #757c87 is 4.1:1 on the dark
+   profile card (#161b22) and 3.6:1 on the darker control fill (#21262d). */
+.dark .ev-soft :is(input, select, textarea)[class] {
+  border-color: #757c87 !important;
+}
 /* WCAG 2.4.7 / 1.4.11: one visible keyboard focus ring across the page — several
-   controls set outline-none and some had no replacement. Teal is 7:1 on the card. */
+   controls set outline-none and some had no replacement. Teal is 6.5:1 on the card. */
 html:not(.dark) .ev-soft :focus-visible {
   outline: 2px solid var(--ev-teal) !important;
+  outline-offset: 2px;
+}
+/* Same ring in dark mode, in the light blue the other dark focus rules above
+   already use (7:1 on the dark profile card). */
+.dark .ev-soft :focus-visible {
+  outline: 2px solid var(--ev-light-blue) !important;
   outline-offset: 2px;
 }
 

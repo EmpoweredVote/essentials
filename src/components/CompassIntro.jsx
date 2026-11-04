@@ -37,7 +37,10 @@ const DARK = {
   card: '#2F3237', border: '#41454E', divider: '#41454E',
   textHead: '#EBEDEF', textBody: '#D3D7DE', textMuted: '#9CA3AF', textAccent: '#59B0C4',
   btnBg: '#FED12E', btnText: '#1C1C1C', yellow: '#FED12E', bg: '#131416',
-  dot: '#41454E',
+  // Inactive step dot, as in LIGHT: a control, so it needs 3:1 (WCAG 1.4.11).
+  // The old divider grey was 1.3:1 on this card. The same #868C95 clears it on
+  // both cards — 3.8:1 here, 3.2:1 on LIGHT.card — so one value serves both.
+  dot: '#868C95',
 };
 
 const USER_COLOR = '#7C6B9E';
