@@ -103,6 +103,7 @@ export default function SummaryCard({
         <div className="flex items-center gap-3">
           {availableCycles.length > 1 ? (
             <select
+              aria-label="Election cycle"
               value={cycle || ''}
               onChange={(e) => onCycleChange(e.target.value)}
               className="text-sm border border-gray-200 dark:border-gray-700 rounded-md px-2 py-1 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
