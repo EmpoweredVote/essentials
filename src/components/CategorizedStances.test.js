@@ -119,7 +119,9 @@ describe('source guards for defects that a build and a screenshot both pass', ()
     // Passed to every group, each accordion calls handleToggle for an id it
     // does not render: a context fetch fires and the spinner never resolves
     // to a visible row.
-    expect(SRC).toMatch(/initialExpandedTopicId=\{group\.title === deepLinkTitle \? initialExpandedTopicId : undefined\}/);
+    // A radar-label pick (focusTopic) is scoped the same way, per group via `picks`.
+    expect(SRC).toMatch(/pick \? pick\.id\s*:\s*group\.title === deepLinkTitle \? initialExpandedTopicId : undefined/);
+    expect(SRC).toMatch(/const pick = picks\[group\.title\];/);
     expect(SRC).not.toMatch(/initialExpandedTopicId=\{initialExpandedTopicId\}/);
   });
 
@@ -133,7 +135,7 @@ describe('source guards for defects that a build and a screenshot both pass', ()
     // `background` is shorthand for background-color, and an inline
     // declaration beats the hover: classes — the hover state never rendered.
     const button = SRC.slice(SRC.indexOf('<button'), SRC.indexOf('</button>'));
-    expect(button).toMatch(/hover:bg-gray-50/);
+    expect(button).toMatch(/hover:bg-slate-100/);
     expect(button).not.toMatch(/background:/);
   });
 

@@ -160,8 +160,10 @@ export default function VotingRecordSection({ politicianId }) {
         {!loading && !error && votes.length > 0 && (
           <ul className="divide-y divide-gray-100 dark:divide-gray-800">
             {votes.map((v, i) => (
-              <li
-                key={`${v.council_file_number}-${v.vote_date}-${i}`}
+              // The button role sits on an inner div: on the <li> itself it replaced
+              // the listitem role, and a <ul> of buttons fails axe's `list` rule.
+              <li key={`${v.council_file_number}-${v.vote_date}-${i}`}>
+              <div
                 className={`py-3 flex items-start gap-3 px-2 -mx-2 rounded-lg transition-colors ${
                   v.council_file_number
                     ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50'
@@ -194,6 +196,7 @@ export default function VotingRecordSection({ politicianId }) {
                     {v.description || 'No description available.'}
                   </p>
                 </div>
+              </div>
               </li>
             ))}
           </ul>

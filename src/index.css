@@ -38,7 +38,7 @@
 }
 
 :root {
-  --ev-bg-light: #f0f8fa;
+  --ev-bg-light: #f5f8f9;
   --ev-teal: #00657c;
   --ev-teal-dark: #004d5c;
   --ev-coral: #ff5740;
@@ -162,11 +162,21 @@ body {
   color: #f3f4f6 !important;
 }
 
-/* Indent each contact group's details (sub-labels, addresses, numbers, links)
-   so they line up with the title text rather than the icon badge: 26px badge
-   + 4px label gap (ev-ui contactIcon / contactLabel). */
+/* Line each contact group up with the "Contact Information" heading above it.
+   The heading's badge is 34px with an 8px gap; the group badges are 26px with a
+   4px gap, so they sat 4px left of the heading icon's centre and their titles
+   started 12px early. 4px side margins centre the 26px badge in the heading
+   badge's 34px column, and the gap matches the heading's 8px. */
+.ev-politician-profile p.ev-contact-label {
+  gap: 8px !important;
+}
+.ev-politician-profile p.ev-contact-label .ev-contact-badge {
+  margin: 0 4px !important;
+}
+/* Indent each group's details (sub-labels, addresses, numbers, links) to the
+   same line as the titles: 34px badge column + 8px gap. */
 .ev-politician-profile p.ev-contact-label ~ * {
-  padding-left: 30px;
+  padding-left: 42px;
 }
 
 /* Contact section labels (e.g. "Email", "Website", "Phone") */
@@ -286,7 +296,7 @@ body {
   transition: background 0.15s, border-color 0.15s;
 }
 .stance-btn:hover {
-  background: #F0F8FA;
+  background: var(--ev-bg-light);
   border-color: #C9CFD1;
 }
 .dark .stance-btn {
@@ -413,4 +423,183 @@ html:not(.dark) .ev-politician-card p[style*="rgb(113, 128, 150)"] {
 .dark [data-pol-id]:focus-visible,
 .dark .ev-gov-body-section [role="link"]:focus-visible {
   outline-color: #00c8d7;
+}
+
+/* Profile page, light mode: soft palette. Pure-white cards, drop shadows and
+   near-black text stacked up to a glaring page, so the light profile keeps the
+   brand canvas (--ev-bg-light) but softens the cards to an off-white edged in
+   brand teal instead of a shadow, and sets text a step softer than black —
+   every text tone still clears 4.5:1 on the card. Scoped to the .ev-soft wrapper in Profile.jsx; dark
+   mode is untouched. ev-ui sets its colours inline, hence the !important. */
+html:not(.dark) .ev-soft {
+  --soft-page: var(--ev-bg-light); /* brand #f5f8f9, as on every other page */
+  --soft-card: #fbfcfc;
+  --soft-inset: #f2f5f6;
+  --soft-inset-hover: #e9eef0;
+  --soft-line: #dfe5e8;
+  /* Card edge in brand teal (#00657c at 55% over the card): a visible brand
+     line where the shadow used to be. Inner dividers stay neutral. */
+  --soft-edge: color-mix(in srgb, var(--ev-teal) 55%, #fbfcfc);
+  --soft-ink: #24272c;     /* 14.6:1 on card */
+  --soft-body: #3d4249;    /* 10.2:1 */
+  --soft-muted: #575d66;   /*  6.5:1 */
+  --soft-faint: #686e77;   /*  5.1:1 */
+  background-color: var(--soft-page);
+  color: var(--soft-ink);
+}
+
+/* White surfaces take the soft card tone */
+html:not(.dark) .ev-soft .bg-white {
+  background-color: var(--soft-card) !important;
+}
+/* Cards (ev-ui profile card, the app's rounded white panels): brand-teal edge,
+   no shadow. div + :is() out-specify the .border-* → --soft-line rule below;
+   small white controls (selects, icon buttons) keep their own borders. */
+html:not(.dark) .ev-soft .ev-politician-profile > div,
+html:not(.dark) .ev-soft div.bg-white:is(.rounded-xl, .rounded-2xl) {
+  background-color: var(--soft-card) !important;
+  border: 1px solid var(--soft-edge) !important;
+  box-shadow: none !important;
+}
+html:not(.dark) .ev-soft .shadow-sm,
+html:not(.dark) .ev-soft .shadow {
+  box-shadow: none !important;
+}
+html:not(.dark) .ev-soft .border-neutral-200,
+html:not(.dark) .ev-soft .border-gray-200,
+html:not(.dark) .ev-soft .border-gray-100,
+html:not(.dark) .ev-soft .border-b,
+html:not(.dark) .ev-soft .border-t,
+html:not(.dark) .ev-soft .ev-contact-divider {
+  border-color: var(--soft-line) !important;
+}
+
+/* Inset surfaces: stance group headers, filter chips, tags */
+html:not(.dark) .ev-soft .bg-slate-50,
+html:not(.dark) .ev-soft .bg-gray-50,
+html:not(.dark) .ev-soft .bg-gray-100 {
+  background-color: var(--soft-inset) !important;
+}
+html:not(.dark) .ev-soft .hover\:bg-slate-100:hover,
+html:not(.dark) .ev-soft .hover\:bg-gray-100:hover,
+html:not(.dark) .ev-soft .hover\:bg-gray-50:hover {
+  background-color: var(--soft-inset-hover) !important;
+}
+
+/* Text tones */
+html:not(.dark) .ev-soft h1,
+html:not(.dark) .ev-soft h2,
+html:not(.dark) .ev-soft h3,
+html:not(.dark) .ev-soft .text-gray-900 {
+  color: var(--soft-ink) !important;
+}
+html:not(.dark) .ev-soft .text-gray-800,
+html:not(.dark) .ev-soft .text-gray-700 {
+  color: var(--soft-body) !important;
+}
+html:not(.dark) .ev-soft .text-gray-600,
+html:not(.dark) .ev-soft .text-gray-500 {
+  color: var(--soft-muted) !important;
+}
+html:not(.dark) .ev-soft .text-gray-400 {
+  color: var(--soft-faint) !important;
+}
+html:not(.dark) .ev-soft .ev-politician-profile p:not(.ev-stance-panel *) {
+  color: var(--soft-body) !important;
+}
+/* Office title under the name (e.g. "Los Angeles City Council – District 14"):
+   brand teal, bold, on every bio in light mode — the light counterpart of the
+   dark-mode teal role line. 7.2:1 on the card. The first selector out-specifies
+   the .ev-soft profile `p` rule above. */
+html:not(.dark) .ev-soft .ev-politician-profile p.ev-role-line:not(.ev-stance-panel *),
+html:not(.dark) .ev-politician-profile p.ev-role-line {
+  color: var(--ev-teal) !important;
+  font-weight: 700 !important;
+}
+/* Contact titles (Addresses / Phone / Email / Websites) in near-black on every
+   bio in light mode, so they read as headings over the softer values below
+   (18:1 on the card). The first selector out-specifies the .ev-soft `p` rule. */
+html:not(.dark) .ev-soft .ev-politician-profile p.ev-contact-label:not(.ev-stance-panel *),
+html:not(.dark) .ev-politician-profile p.ev-contact-label {
+  color: #0b0c0e !important;
+}
+html:not(.dark) .ev-soft .ev-politician-profile span:not(.ev-stance-panel *):not(.ev-contact-badge),
+html:not(.dark) .ev-soft .ev-politician-profile address:not(.ev-stance-panel *) {
+  color: var(--soft-body) !important;
+}
+/* Contact links look like links: brand teal (7.2:1 on card) */
+html:not(.dark) .ev-soft .ev-politician-profile a:not(.ev-stance-panel *) {
+  color: var(--ev-teal) !important;
+}
+html:not(.dark) .ev-soft .ev-politician-profile p.ev-contact-label {
+  font-size: 12px !important;
+}
+
+/* WCAG 1.4.11: form fields need a 3:1 boundary. The gray-200 field borders sat
+   at 1.3–1.4:1 on the card; #858b94 is 3.4:1. */
+/* [class] out-specifies the .border-gray-200 → --soft-line rule above. */
+html:not(.dark) .ev-soft :is(input, select, textarea)[class] {
+  border-color: #858b94 !important;
+}
+/* Dark counterpart: dark is the default theme (index.html), so a light-only rule
+   would leave the boundary failing for most readers. #757c87 is 4.1:1 on the dark
+   profile card (#161b22) and 3.6:1 on the darker control fill (#21262d). */
+.dark .ev-soft :is(input, select, textarea)[class] {
+  border-color: #757c87 !important;
+}
+/* WCAG 2.4.7 / 1.4.11: one visible keyboard focus ring across the page — several
+   controls set outline-none and some had no replacement. Teal is 6.5:1 on the card. */
+html:not(.dark) .ev-soft :focus-visible {
+  outline: 2px solid var(--ev-teal) !important;
+  outline-offset: 2px;
+}
+/* Same ring in dark mode, in the light blue the other dark focus rules above
+   already use (7:1 on the dark profile card). */
+.dark .ev-soft :focus-visible {
+  outline: 2px solid var(--ev-light-blue) !important;
+  outline-offset: 2px;
+}
+
+/* Radar spoke labels open their topic in the stance panel (CompassCard). */
+.compass-radar-host svg text {
+  cursor: pointer;
+}
+.compass-radar-host svg text:hover {
+  text-decoration: underline;
+}
+
+/* Bio contact links (phone, email, websites): semibold in light mode so the teal
+   values carry as much weight as the near-black titles above them. */
+html:not(.dark) .ev-politician-profile a:not(.ev-stance-panel *) {
+  font-weight: 600 !important;
+}
+
+/* Term dates and time in office under the bio description ("Jan 2024 – Dec 2027",
+   "2 years in office"): brand teal in light mode, matching the role line. ev-ui
+   gives this row no class, so it is found as the wrapping flex row after the
+   role line; the icons use currentColor and follow. The first selector
+   out-specifies the .ev-soft profile `span` rule. */
+html:not(.dark) .ev-soft .ev-politician-profile p.ev-role-line ~ div[style*="flex-wrap: wrap"] > span:not(.ev-stance-panel *):not(.ev-contact-badge),
+html:not(.dark) .ev-politician-profile p.ev-role-line ~ div[style*="flex-wrap: wrap"] > span {
+  color: var(--ev-teal) !important;
+  font-weight: 600 !important; /* semibold, like the contact links */
+}
+
+/* "LOCAL" tier badge above the bio name: solid purple with white text in light
+   mode (6.7:1) instead of a near-white tint. ev-ui gives the badge no class, so
+   it is matched by its inline local-tier colours. */
+html:not(.dark) .ev-politician-profile div[style*="color: rgb(126, 34, 206)"][style*="background: rgb(253, 244, 255)"] {
+  background: #7e22ce !important;
+  color: #ffffff !important;
+}
+
+/* The radar label of a topic picked into the stance panel: brand dark teal in
+   light mode, brand light blue in dark mode, bold. The labels carry their colour
+   as a fill attribute, which a stylesheet rule overrides. */
+.compass-radar-host svg text[data-selected] {
+  fill: var(--ev-teal);
+  font-weight: 700;
+}
+.dark .compass-radar-host svg text[data-selected] {
+  fill: var(--ev-light-blue);
 }

@@ -76,3 +76,29 @@ describe('CompassCard intro height', () => {
     expect(max).toBeGreaterThanOrEqual(min);
   });
 });
+
+describe('CompassCard radar label matching', () => {
+  // A spoke label is matched back to its topic by its own text, because
+  // RadarChartCore takes no prop for this. For a spoke in `unansweredSpokes` it
+  // renders an SVG <title> ("No stance on file for this topic.") as the FIRST
+  // child of the same <text>, so textContent returns that sentence followed by
+  // the label and the topic stops matching — the label keeps its pointer cursor
+  // and hover underline and silently does nothing. `unansweredSpokes` is not
+  // passed today, so a build, a screenshot and the journeys all pass either way;
+  // this pins the shape before the Stage 5 "researched, no position" work makes
+  // it live. Reading the <tspan> lines skips the <title> by construction.
+
+  it('reads the label through labelText, never textContent directly', () => {
+    expect(SRC).not.toMatch(/norm\(\s*label\.textContent\s*\)/);
+    expect(SRC.match(/norm\(labelText\(label\)\)/g) || []).toHaveLength(2);
+  });
+
+  it('labelText reads the tspan lines, with textContent only as the fallback', () => {
+    const fn = SRC.slice(SRC.indexOf('function labelText('));
+    const body = fn.slice(0, fn.indexOf('\n}') + 2);
+    expect(body).toMatch(/querySelectorAll\('tspan'\)/);
+    // The fallback is for a label with no tspans at all, so it must be guarded
+    // by the tspan count rather than used on its own.
+    expect(body).toMatch(/spans\.length \?[\s\S]*: el\.textContent/);
+  });
+});
