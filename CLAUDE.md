@@ -29,3 +29,16 @@ Journeys in `e2e/` test what users do (search an address, open a profile, go bac
 arrive from Compass). They run in CI on every PR and push to `main`, against that commit's build
 talking to the live API. If your change alters a journey on purpose, update its test in the same PR.
 Run `npm run e2e` locally (first time: `npx playwright install chromium`).
+
+## Render settings live in ev-infra
+
+This repo's Render services (`essentials-frontend`) are managed by the Render Blueprint in
+[`EmpoweredVote/ev-infra`](https://github.com/EmpoweredVote/ev-infra) (`render.yaml`).
+
+- Build and start commands, rewrites, headers, custom domains, plans, cron
+  schedules and build filters change **only through a PR to ev-infra**. Render
+  syncs its `main` branch automatically.
+- A setting changed in the Render dashboard is **undone on the next sync**.
+- Env var **values** are the exception: set them in the Render dashboard. Add a
+  new variable's name to ev-infra (with `sync: false`) so the record stays complete.
+- Do not add a `render.yaml` to this repo. Render does not read it.
