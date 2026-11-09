@@ -17,6 +17,16 @@ const MAX_SPOKES = 8;
 const CARD_PADDING = 110;
 const CARD_CENTER = 250; // size/2 for RadarChartCore size=500
 
+// The visible text of a radar spoke label. RadarChartCore wraps the label into
+// <tspan> lines, and for a spoke in `unansweredSpokes` it also renders an SVG
+// <title> ("No stance on file for this topic.") as the FIRST child of the same
+// <text>. textContent would swallow that title into the label, so read the
+// tspans when there are any and fall back to textContent when there are none.
+function labelText(el) {
+  const spans = el.querySelectorAll('tspan');
+  return spans.length ? Array.from(spans, (s) => s.textContent).join('') : el.textContent;
+}
+
 function stanceLabel(shortTitle, value, topics) {
   const topic = topics.find((t) => t.short_title === shortTitle);
   const stances = topic?.stances || [];
@@ -63,6 +73,13 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   const location = useLocation();
   // Whether any stance category is open in the guest layout (drives the intro's alignment).
   const [stancesOpen, setStancesOpen] = useState(false);
+  // A topic picked by clicking its label on the radar: the stance panel opens its
+  // category and expands it. `n` counts clicks, so picking the same label again
+  // toggles: a second pick of the same label closes what the first opened.
+  const [focusTopic, setFocusTopic] = useState(null);
+  // Topics whose question a label pick currently has open (reported back by
+  // CategorizedStances); their radar labels are highlighted.
+  const [selectedTopicIds, setSelectedTopicIds] = useState([]);
   // Height of the stance list beside the intro, so the intro's size and offset can
   // be set in px — px values transition smoothly where % ↔ rem class swaps jump.
   const [stancesHeight, setStancesHeight] = useState(0);
@@ -324,6 +341,37 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     setTooltip({ x: rect.left + rect.width / 2, y: rect.top, shortTitle, stanceText });
   }, [userData, polData, topicsFiltered]);
 
+  // Clicking a spoke label opens that topic in the stance panel. RadarChartCore
+  // renders labels as plain SVG <text> (wrapped into <tspan> lines) with no click
+  // prop, so match the label's text back to a topic's short_title. Spoke lines
+  // keep their own click (invert the spoke) — only the label text opens a topic.
+  const handleLabelClick = useCallback((e) => {
+    const label = e.target.closest?.('text');
+    if (!label) return;
+    const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
+    const key = norm(labelText(label));
+    const topic = topicsFiltered.find((t) => norm(t.short_title) === key);
+    if (!topic) return;
+    track('essentials_compass_label_opened', { topic: topic.short_title, context: 'profile' });
+    setFocusTopic((prev) => ({ id: String(topic.id), n: (prev?.n ?? 0) + 1 }));
+  }, [topicsFiltered]);
+
+  // Mark the selected topics' labels for the highlight style in index.css.
+  // RadarChartCore renders the labels and takes no prop for this, so the mark is
+  // set on its <text> nodes after each render; React leaves an attribute it
+  // does not manage alone, and the next pass re-syncs it.
+  useEffect(() => {
+    const host = containerRef.current;
+    if (!host) return;
+    const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]/g, '');
+    const selected = new Set(
+      topicsFiltered.filter((t) => selectedTopicIds.includes(String(t.id))).map((t) => norm(t.short_title))
+    );
+    for (const label of host.querySelectorAll('svg text')) {
+      label.toggleAttribute('data-selected', selected.has(norm(labelText(label))));
+    }
+  });
+
   // Gate: wait for compass data (and, for someone with no stances, their research states); show only
   // for politicians with stance data or research rows.
   if (mode === 'wait' || mode === 'hidden') return null;
@@ -457,7 +505,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   fontSize: '14px',
                   fontFamily: "'Manrope', sans-serif",
                   lineHeight: 1.6,
-                  color: isDark ? '#9ca3af' : '#6b7280',
+                  color: isDark ? '#9ca3af' : '#4b5563',
                 }}>
                   Set up your compass to see where you line up with other candidates and officials.
                 </p>
@@ -499,7 +547,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
                   <p
                     className="text-center mb-6"
-                    style={{ fontSize: '15px', lineHeight: 1.6, color: isDark ? '#9ca3af' : '#6b7280', maxWidth: '22rem' }}
+                    style={{ fontSize: '15px', lineHeight: 1.6, color: isDark ? '#9ca3af' : '#4b5563', maxWidth: '22rem' }}
                   >
                     {!hasEnoughSpokes
                       ? 'Not enough shared topics to display a comparison compass.'
@@ -522,11 +570,14 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
 
               {!polLoading && hasData && (
                 <>
-                  {/* Legend */}
+                  {/* Legend — centred above the radar it explains */}
                   <div
                     style={{
                       display: 'flex',
+                      justifyContent: 'center',
                       alignItems: 'center',
+                      width: '100%',
+                      maxWidth: '700px',
                       gap: '16px',
                       marginBottom: '4px',
                       fontSize: '15px',
@@ -560,7 +611,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   </div>
 
                   {/* Chart container — mouse handlers here so the overlay doesn't block spoke clicks */}
-                  <div ref={containerRef} style={{ width: '100%', maxWidth: '700px', overflow: 'hidden', position: 'relative' }}
+                  <div ref={containerRef} className="compass-radar-host" style={{ width: '100%', maxWidth: '700px', overflow: 'hidden', position: 'relative' }}
+                    onClick={handleLabelClick}
                     onMouseMove={handleMouseMove}
                     onMouseLeave={() => setTooltip(null)}
                   >
@@ -681,6 +733,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                   apiUrl={API_ORIGIN}
                   verdictsByQuote={verdicts}
                   initialExpandedTopicId={initialTopicId}
+                  focusTopic={focusTopic}
+                  onPickedTopicsChange={setSelectedTopicIds}
                   collapsedByDefault
                   politicianName={politicianName}
                   researchStates={researchStates}
@@ -693,7 +747,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
               margin: '12px 0 0',
               fontSize: '12px',
               fontFamily: "'Manrope', sans-serif",
-              color: isDark ? '#9ca3af' : '#6b7280',
+              color: isDark ? '#9ca3af' : '#4b5563',
             }}>
               {missingTopicCount} {missingTopicCount === 1 ? 'topic' : 'topics'} not yet in your compass.{' '}
               <a href={ctaHref} style={{ color: isDark ? '#59b0c4' : '#00657c', textDecoration: 'underline' }}>

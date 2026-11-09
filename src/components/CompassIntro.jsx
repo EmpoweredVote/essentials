@@ -25,14 +25,22 @@ import { useEffect, useRef, useState } from 'react';
 
 // Compass app theme tokens (light / dark) — kept in sync with compass.empowered.vote.
 const LIGHT = {
-  card: '#FFFFFF', border: '#D3D7DE', divider: '#D3D7DE',
-  textHead: '#2F3237', textBody: '#535964', textMuted: '#6d7a9a', textAccent: '#00657C',
+  // card is off-white so the stage reads as a surface on the white panel; textMuted
+  // was #6d7a9a (4.0–4.3:1 at 10–12px), now 6:1.
+  card: '#F4F7F8', border: '#DFE5E8', divider: '#DFE5E8',
+  textHead: '#2F3237', textBody: '#535964', textMuted: '#525c74', textAccent: '#00657C',
   btnBg: '#FED12E', btnText: '#1C1C1C', yellow: '#FED12E', bg: '#F7F7F8',
+  // Inactive step dot: a control, so it needs 3:1 (WCAG 1.4.11); divider grey was 1.3:1.
+  dot: '#868C95',
 };
 const DARK = {
   card: '#2F3237', border: '#41454E', divider: '#41454E',
   textHead: '#EBEDEF', textBody: '#D3D7DE', textMuted: '#9CA3AF', textAccent: '#59B0C4',
   btnBg: '#FED12E', btnText: '#1C1C1C', yellow: '#FED12E', bg: '#131416',
+  // Inactive step dot, as in LIGHT: a control, so it needs 3:1 (WCAG 1.4.11).
+  // The old divider grey was 1.3:1 on this card. The same #868C95 clears it on
+  // both cards — 3.8:1 here, 3.2:1 on LIGHT.card — so one value serves both.
+  dot: '#868C95',
 };
 
 const USER_COLOR = '#7C6B9E';
@@ -480,11 +488,14 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
         aria-roledescription="slide"
         aria-label={`Step ${step + 1} of ${steps.length}`}
       >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute w-64 h-64 rounded-full evi-anim"
-          style={{ background: `radial-gradient(circle, ${t.textAccent}22 0%, transparent 70%)`, animation: 'evi-halo 4.5s ease-in-out infinite' }}
-        />
+        {/* Dark only: on the light card the teal halo reads as a grey smudge. */}
+        {isDark && (
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute w-64 h-64 rounded-full evi-anim"
+            style={{ background: `radial-gradient(circle, ${t.textAccent}22 0%, transparent 70%)`, animation: 'evi-halo 4.5s ease-in-out infinite' }}
+          />
+        )}
         {/* Every visual here is invented: the radars from fixed sample values
             (USER_VALUES / POL_VALUES), the questionnaire from DEMO_QUESTIONS. They
             show how the compass works, not anyone's actual positions and not the
@@ -492,8 +503,8 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
             record. Outside FitToBox, so it keeps its size when the visual is
             scaled down on a short screen. */}
         <span
-          className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide"
-          style={{ background: t.bg, color: t.textMuted, border: `1px solid ${t.border}` }}
+          className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide"
+          style={{ background: isDark ? t.bg : '#FFFFFF', color: t.textMuted, border: `1px solid ${t.border}` }}
         >
           Example
         </span>
@@ -551,9 +562,15 @@ export default function CompassIntro({ politicianName, ctaHref, isDark }) {
               onClick={() => go(i)}
               aria-label={`Go to step ${i + 1}`}
               aria-current={i === step ? 'step' : undefined}
-              className="h-2 rounded-full transition-all cursor-pointer"
-              style={{ width: i === step ? 24 : 8, background: i === step ? t.textAccent : t.divider }}
-            />
+              // 24px-tall hit area around the 8px dot (WCAG 2.5.8 target size).
+              className="h-6 min-w-6 flex items-center justify-center cursor-pointer"
+            >
+              <span
+                aria-hidden="true"
+                className="block h-2 rounded-full transition-all"
+                style={{ width: i === step ? 24 : 8, background: i === step ? t.textAccent : t.dot }}
+              />
+            </button>
           ))}
         </div>
         {last ? (

@@ -39,6 +39,35 @@ function lightenForDark(hex, amount = 0.5) {
   return `#${[mix(r), mix(g), mix(b)].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
 }
 
+// Blend a hex toward black until it reaches `target` contrast on `bg`. The raw
+// lens colours are tuned as fills, so as 12px caption ink on the light page some
+// fall short of AA — Best Match coral sits at 2.9:1 and Local green at 3.1:1.
+// Colours that already pass come back unchanged. The default bg is the light
+// page canvas (--ev-bg-light).
+function darkenForLight(hex, bg = '#f5f8f9', target = 4.5) {
+  const rgb = (h) => {
+    const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(h);
+    if (!m) return null;
+    let s = m[1];
+    if (s.length === 3) s = s.split('').map((c) => c + c).join('');
+    return [0, 2, 4].map((i) => parseInt(s.slice(i, i + 2), 16));
+  };
+  const lum = (c) => {
+    const [r, g, b] = c.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const base = rgb(hex);
+  const back = rgb(bg);
+  if (!base || !back) return hex;
+  const bgLum = lum(back);
+  let c = base;
+  for (let k = 0; k <= 1; k += 0.02) {
+    c = base.map((v) => Math.round(v * (1 - k)));
+    if ((bgLum + 0.05) / (lum(c) + 0.05) >= target) break;
+  }
+  return `#${c.map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+}
+
 // Icon for each lens chip: Capitol dome (federal), gavel (judicial), house
 // (local), graduation cap (education), viewfinder (Best Match / custom — mirrors the retired binary Lens
 // toggle icon in CompassControlsBar), neutral dot fallback for any future
@@ -196,7 +225,7 @@ function LensButton({
         ) : renderLensIcon(lens, 15)}
         {grouped ? (
           // Short caption under the icon; "Lens" is dropped since the group is labelled.
-          <span aria-hidden="true" style={{ fontSize: 11, fontWeight: 600, lineHeight: 1.1, whiteSpace: 'nowrap', fontFamily: "'Manrope', sans-serif" }}>
+          <span aria-hidden="true" style={{ fontSize: 12, fontWeight: 600, lineHeight: 1.1, whiteSpace: 'nowrap', fontFamily: "'Manrope', sans-serif" }}>
             {lens.name.replace(/\s+lens$/i, '')}
           </span>
         ) : !isDesktop && (
@@ -294,7 +323,7 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
           // Borderless buttons; the icon tile carries state, the caption takes the
           // lens colour — calibrated or not, so signed-out viewers see the same
           // palette as signed-in ones.
-          const ink = isDark ? lightenForDark(lens.color) : lens.color;
+          const ink = isDark ? lightenForDark(lens.color) : darkenForLight(lens.color);
           stateStyle = { color: ink };
           // The selected lens fills its tile whether or not it is calibrated. Gating
           // the fill on calibration meant no lens ever filled for a signed-out
@@ -304,7 +333,7 @@ export default function LensChipRow({ lenses, activeLensKey, onSelectLens, onCal
           // by the button's label and its tooltip, not by hiding the selection.
           tileStyle = isActive
             ? { background: lens.color, color: '#fff' }
-            : { background: `color-mix(in srgb, ${ink} ${isDark ? 18 : 12}%, transparent)` };
+            : { background: `color-mix(in srgb, ${ink} ${isDark ? 18 : 14}%, transparent)` };
         } else if (needsCalibration && lens.isUser) {
           // A custom lens carries TWO facts at once here: whose it is (teal) and
           // that it needs calibration (violet). A solid violet border would say
