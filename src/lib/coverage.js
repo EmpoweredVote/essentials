@@ -490,6 +490,13 @@ export const COVERAGE_STATES = [
       { label: 'Henderson', browseGovernmentList: ['3231900'], browseStateAbbrev: 'NV', hasContext: true },
       { label: 'North Las Vegas', browseGovernmentList: ['3251800'], browseStateAbbrev: 'NV', hasContext: true },
       { label: 'Boulder City', browseGovernmentList: ['3206500'], browseStateAbbrev: 'NV', hasContext: true },
+      // Reno (ev-accounts CC_0385 structure + CC_0387 roster, both applied). Northern
+      // Nevada's first local tier — every entry above is Clark County. 13 seats: Mayor,
+      // six ward councilmembers, an elected City Attorney and four municipal court
+      // departments, the court deliberately unseated while its bench is in dispute.
+      // hasContext is FALSE and DB-honest: no Reno official holds a row in
+      // inform.politician_answers yet.
+      { label: 'Reno', browseGovernmentList: ['3260600'], browseStateAbbrev: 'NV', hasContext: false },
     ],
   },
   {
@@ -1168,6 +1175,11 @@ export const COVERAGE_COUNTIES = [
   { label: 'Washington County', browseGovernmentList: ['49053'], browseStateAbbrev: 'UT' },
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
+  // Washoe County (ev-accounts CC_0386 structure + CC_0387 roster, both applied). Five
+  // commissioners, seeded BY DISTRICT (X0087) — unlike Clark above, which hangs all seven
+  // of its commissioners on the countywide polygon, so a Clark address cannot tell you
+  // which commissioner is yours. hasContext is DB-honest: no answers yet.
+  { label: 'Washoe County', browseGovernmentList: ['32031'], browseStateAbbrev: 'NV', hasContext: false },
   // Racine County (2026-07-28 WI cluster): county executive + 21-member County
   // Board + row officers + 10 Circuit Court judges. hasContext per the WI-muni
   // convention (>=1 official with evidence rows): supervisors Renee Kelly +
