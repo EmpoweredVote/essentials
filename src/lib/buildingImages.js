@@ -627,6 +627,30 @@ const CURATED_LOCAL = {
   //   anchorage - Anchorage Downtown | Luke Jones | CC BY 2.0
   anchorage: { state: 'AK', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/anchorage.jpg' },
 
+  // Reno (northern Nevada's first local tier; ev-accounts CC_0385/CC_0386/CC_0387).
+  //
+  // 🔴 match:'exact' AND state:'NV' ARE BOTH LOAD-BEARING. CURATED_LOCAL matches by
+  // substring, and 'Reno' is not a unique place name: TEXAS has TWO Reno cities
+  // (4861592 in Parker County, 4861604 in Lamar County), Ohio has a Reno CDP and
+  // Kansas a Reno County. Unscoped, this banner would also render over them.
+  //
+  // ADJACENCY: states/NV.jpg is the LAS VEGAS STRIP under flat blue sky -- Bellagio,
+  // Caesars and the Paris Eiffel replica over a wide empty sky band. Reno is also a
+  // casino skyline, so a clear-day downtown shot would have read as the same picture
+  // one tier up. This frame is chosen for the opposite weather: storm cloud, the snow
+  // line across the Carson Range, and an autumn canopy the Strip shot has no analogue
+  // for.
+  //
+  // CERTIFIED IN THE 6:1 BAND, not as the asset. Desktop renders rows 128-411 of the
+  // 1700x540 file and mobile ~97%, so the asset alone proves nothing. The first two
+  // zoomed crops were anchored by height and put the roofline BELOW the desktop window
+  // -- the band came back as cloud and mountain with one rooftop at the bottom edge.
+  // Re-anchored on the roofline, then lowered again at the operator's request so the
+  // band drops the cloud and picks up canopy beneath the buildings. No focus override:
+  // the asset is composed so the default centred band is the intended one.
+  //   reno - City of Reno in Autumn | Trevor Bexon | CC BY 2.0 (13548x4478)
+  reno: { state: 'NV', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/reno.jpg' },
+
   // Biloxi (Knight slice 16, stage MS-5; operator-certified 2026-09-28). The last
   // city banner of the programme, and the last of the 26 Knight cities to get one.
   //
