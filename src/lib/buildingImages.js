@@ -651,6 +651,29 @@ const CURATED_LOCAL = {
   //   reno - City of Reno in Autumn | Trevor Bexon | CC BY 2.0 (13548x4478)
   reno: { state: 'NV', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/reno.jpg' },
 
+  // Corte Madera (ev-accounts CC_0392/CC_0393, applied). Marin County's first town here
+  // and the first California entry outside LA County, the Bay Area big four and the
+  // desert pair.
+  //
+  // Subject: a rowing eight on Corte Madera Creek — the waterway the town is named for —
+  // with the waterfront houses and docks of the far bank and the Marin hills behind. A
+  // ground-level scene of the community doing something, which is the subject class that
+  // has worked, rather than a building.
+  //
+  // CERTIFIED IN THE 6:1 BAND, not as the asset: desktop renders rows 128-411 of the
+  // 1700x540 file and mobile ~97%, so the asset alone proves nothing.
+  // 🔴 ANCHORED LOW (0.00), AGAINST the standing "too much sky, bias to ~0.68" rule. In
+  // this frame the hills, houses and the shell all sit HIGH; at 0.68 the band came back
+  // as nothing but mud and marsh. The rule is about where the sky is, not a constant.
+  // No focus override — the asset is composed so the default centred band is the one meant.
+  // ⚖ Tilt: the shore/water boundary fits a line at 0.276°, but MAD is 11px — this is an
+  // irregular tidal shoreline, not a true horizon, so that is not evidence of camera tilt
+  // and it ships unrotated. 8px of rise across 1700px is sub-perceptual.
+  // Surfacing: all 5 council offices carry representing_city = 'Corte Madera' (set in
+  // CC_0392), so this resolves from an ordinary address search — the Beaverton trap.
+  //   corte madera - Rowers on Corte Madera Creek | Mx. Granger | CC0 (2592x1416)
+  'corte madera': { state: 'CA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/corte-madera.jpg' },
+
   // Biloxi (Knight slice 16, stage MS-5; operator-certified 2026-09-28). The last
   // city banner of the programme, and the last of the 26 Knight cities to get one.
   //
@@ -2173,6 +2196,27 @@ const CURATED_COUNTY = {
   // banner has since been replaced, but the ruling stands on its own — a county with no
   // city half deserves a banner of its own place, not its state's.
   '12099': { state: 'FL', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/counties/palm-beach-fl.jpg' },
+
+  // Marin County, CA (ev-accounts CC_0392/CC_0393, applied). Frank Lloyd Wright's Civic
+  // Center — the seat of county government and the building Marin is known for — its blue
+  // roof and arcade running out into the county's own hills. Deliberately not a city
+  // skyline, the same reasoning as the Dane County pick.
+  //
+  // ⚠ DEPARTS FROM THE RULE ABOVE, DELIBERATELY AND VISIBLY. The doc says only counties
+  // with NO city half belong here, and Marin now has one (Corte Madera). The reason that
+  // rule exists is Miami-Dade: a county entry would change what Hialeah and Miami Beach
+  // see, and those cities have banners' worth of identity of their own. Marin's other
+  // municipalities — San Rafael, Novato, Mill Valley, Sausalito, Tiburon — have NO banner
+  // and no seeded roster, so without this entry they fall through to the California state
+  // shot. Corte Madera is unaffected either way: resolution tries CURATED_LOCAL first and
+  // "a city banner always wins". Revert this one line if a reviewer prefers the rule as
+  // written; nothing else depends on it.
+  //
+  // CERTIFIED IN THE 6:1 BAND. 🔴 ANCHORED LOW (0.40) against the "bias to ~0.68" rule:
+  // the blue roof is the identifying element and sits high, so 0.68 and 0.80 both cut it
+  // off and left a band of blank wall and trees. No focus override.
+  //   marin county - Marin County Civic Center building | Kiddo27 | CC BY-SA 4.0 (4608x3440)
+  '06041': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/marin-county.jpg' },
 
   // Honolulu County, HI = the City and County of Honolulu. 2026-10-28.
   //
