@@ -69,6 +69,15 @@ export const COVERAGE_STATES = [
       { label: 'Claremont', browseGovernmentList: ['0613756'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Commerce', browseGovernmentList: ['0614974'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Compton', browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
+      // Corte Madera (ev-accounts CC_0392 structure + CC_0393 roster, both applied).
+      // Marin County's first town in this list — every other CA entry here is LA County,
+      // the Bay Area big four, or the desert pair. Five at-large councilmembers; the Mayor
+      // and Vice Mayor are one-year titles the council confers on itself each December, so
+      // there is no Mayor seat. hasContext is FALSE and DB-honest: measured 2026-11-11,
+      // 5 offices, 5 seated, 0 officials with any row in inform.politician_answers.
+      // ⚠ Three of the five seats were on the 2026-11-03 ballot and Marin certifies in
+      //   December, so this roster changes at the Town's December reorganisation.
+      { label: 'Corte Madera', browseGovernmentList: ['0616462'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Covina', browseGovernmentList: ['0616742'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Cudahy', browseGovernmentList: ['0617498'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Culver City', browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA', hasContext: true },
@@ -1194,6 +1203,20 @@ export const COVERAGE_COUNTIES = [
   { label: 'Dane County', browseGovernmentList: ['55025'], browseStateAbbrev: 'WI', hasContext: true },
   { label: 'Pima County', browseGovernmentList: ['04019'], browseStateAbbrev: 'AZ', hasContext: true },
   { label: 'Riverside County', browseGovernmentList: ['06065'], browseStateAbbrev: 'CA', hasContext: true },
+  // Marin County (ev-accounts CC_0392 structure + CC_0393 roster, both applied). Eight
+  // offices, all eight filled: the five-member Board of Supervisors seeded BY DISTRICT
+  // (X0088, polygons from the county's own open data), plus the three countywide officers
+  // — Assessor-Recorder-County Clerk, District Attorney, Sheriff-Coroner — which migration
+  // 1666 seated back in 2026-08-10 and which had never been listed here at all.
+  // 🔑 The district layer's vintage is proved against the county's OWN ballot layer: the
+  // leading digit of a Marin SubPrecinct id is its supervisorial district, and every one of
+  // 738 subprecincts (170,099 registered voters) sits in the district its own number claims,
+  // with zero disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
+  // hasContext is FALSE and DB-honest: measured 2026-11-11, 0 of the 8 hold a compass answer.
+  // ⚠ District 5 has a successor arriving January 2027 (the June primary settled it; the
+  //   sitting supervisor stood for the Assembly instead). Not seated anywhere — the certified
+  //   Statement of Votes Cast is unreachable, assets.marincounty.gov answers 403.
+  { label: 'Marin County', browseGovernmentList: ['06041'], browseStateAbbrev: 'CA', hasContext: false },
   // First two TEXAS counties (2026-08-08, migs 1621/1622). Each is a Commissioners Court:
   // County Judge + 4 precinct Commissioners. No hasContext — roster-only seed, no stances.
   // ⚠ Both share ONE countywide district (the Clark County NV pattern) because no commissioner
