@@ -141,6 +141,21 @@ export const COVERAGE_STATES = [
       { label: 'San Jose', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'San Marino', browseGovernmentList: ['0668224'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Santa Clarita', browseGovernmentList: ['0669088'], browseStateAbbrev: 'CA', hasContext: true },
+      // Santa Cruz (ev-accounts CC_0404 structure + CC_0405 roster, both applied).
+      // SEVEN seats, and the Mayor is one of them — unlike Santa Clarita or Corte Madera,
+      // where "Mayor" is a title the council hands round each year. Measure E (2022)
+      // rewrote the charter into six by-district Councilmembers plus a Mayor elected
+      // at large, all seven voting members of the Council.
+      // 🔴 The council-district layer publishes SEVEN polygons for SIX districts: District
+      // 6 is a main body plus a detached parcel at the Coastal Science Campus. The loader
+      // dissolves on the District attribute — read row-for-row it invents a 7th district.
+      // 🔑 Vintage proved against the COUNTY's ballot layer, which carries the city's
+      // council district as an attribute (SCCC): 97 of 97 city precincts agree, zero
+      // disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
+      // hasContext is FALSE and DB-honest: measured 2026-11-11, 0 of the 7 hold a compass answer.
+      // ⚠ The Mayor's seat changes hands at the December certification meeting — the
+      //   November 3 runoff is decided but its results are still unofficial.
+      { label: 'Santa Cruz', browseGovernmentList: ['0669112'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Santa Fe Springs', browseGovernmentList: ['0669154'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Santa Monica', browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Sierra Madre', browseGovernmentList: ['0671806'], browseStateAbbrev: 'CA', hasContext: false },
@@ -1217,6 +1232,23 @@ export const COVERAGE_COUNTIES = [
   //   sitting supervisor stood for the Assembly instead). Not seated anywhere — the certified
   //   Statement of Votes Cast is unreachable, assets.marincounty.gov answers 403.
   { label: 'Marin County', browseGovernmentList: ['06041'], browseStateAbbrev: 'CA', hasContext: false },
+  // Santa Cruz County (ev-accounts CC_0404 structure + CC_0405 roster, both applied). TEN
+  // offices, all ten filled: the five-member Board of Supervisors seeded BY DISTRICT
+  // (X0090, polygons from the county's own open data, copyrightText "County of Santa
+  // Cruz"), plus the five countywide officers — Assessor-Recorder,
+  // Auditor-Controller-Treasurer-Tax Collector, County Clerk, District Attorney-Public
+  // Administrator, Sheriff-Coroner — which migration 1663 seated on 2026-08-10 and which
+  // had never been listed here at all. The same half-seeded shape Marin was in.
+  // 🔑 Vintage proved against the county's OWN ballot layer, by attribute rather than by
+  // the numbering trick Marin needed: its Precincts layer carries SUPDIST on every row,
+  // and all 692 precincts sit in the district their own ballot attribute names, zero
+  // disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
+  // hasContext is FALSE and DB-honest: measured 2026-11-11, 0 of the 10 hold a compass answer.
+  // ⚠ District 4 has a successor arriving January 2027. The June primary settled it
+  //   OUTRIGHT — the challenger took 50.07%, six votes above the majority line, so no
+  //   November runoff was held and the sitting supervisor was defeated. He holds the seat
+  //   until January and is the one seated here.
+  { label: 'Santa Cruz County', browseGovernmentList: ['06087'], browseStateAbbrev: 'CA', hasContext: false },
   // First two TEXAS counties (2026-08-08, migs 1621/1622). Each is a Commissioners Court:
   // County Judge + 4 precinct Commissioners. No hasContext — roster-only seed, no stances.
   // ⚠ Both share ONE countywide district (the Clark County NV pattern) because no commissioner
