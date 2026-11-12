@@ -674,6 +674,27 @@ const CURATED_LOCAL = {
   //   corte madera - Rowers on Corte Madera Creek | Mx. Granger | CC0 (2592x1416)
   'corte madera': { state: 'CA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/corte-madera.jpg' },
 
+  // Santa Cruz (ev-accounts CC_0404/CC_0405, applied).
+  //
+  // Subject: the whole Beach Boardwalk frontage read across the bay — the Giant Dipper at
+  // the right, the arcade and casino buildings through the middle, the beach along the
+  // bottom and the Santa Cruz Mountains closing the back. The "wide multi-roofline" class
+  // adapted to a beach town, and the one view of the city almost anyone would recognise.
+  //
+  // CERTIFIED IN THE 6:1 BAND, not as the asset: desktop renders rows 128-411 of the
+  // 1700x540 file and mobile ~97%, so the asset alone proves nothing.
+  // 🔑 NO VERTICAL ANCHOR DECISION EXISTED HERE, which is unusual. The source is 3.51:1 —
+  // ALREADY WIDER than the 3.148:1 asset — so the crop takes WIDTH (2509 of 2794, centred)
+  // and keeps the full height. The centred band then lands exactly on the mountains, the
+  // boardwalk and the beach, dropping the empty sky above and the open water below. No
+  // focus override: the default band is the one meant.
+  // Surfacing: all 7 offices carry representing_city = 'Santa Cruz' (set in CC_0404), so
+  // this resolves from an ordinary address search — the Beaverton trap, checked not assumed.
+  // ⚠ `match: 'exact'` matters more than usual here: a substring key would also fire on
+  //   'Santa Cruz County', and the county has its own banner in CURATED_COUNTY below.
+  //   santa cruz - Santa Cruz Beach Boardwalk | Josta Photo | CC BY 2.0 (2794x797)
+  'santa cruz': { state: 'CA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-cruz.jpg' },
+
   // Biloxi (Knight slice 16, stage MS-5; operator-certified 2026-09-28). The last
   // city banner of the programme, and the last of the 26 Knight cities to get one.
   //
@@ -2217,6 +2238,39 @@ const CURATED_COUNTY = {
   // off and left a band of blank wall and trees. No focus override.
   //   marin county - Marin County Civic Center building | Kiddo27 | CC BY-SA 4.0 (4608x3440)
   '06041': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/marin-county.jpg' },
+
+  // Santa Cruz County, CA (ev-accounts CC_0404/CC_0405, applied). The unincorporated north
+  // coast: the marine terraces and bluffs above Davenport, the pocket beach and surf, with
+  // the county's own hills behind. Deliberately NOT a city skyline — the city half already
+  // has the Boardwalk — the same reasoning as the Dane County and Marin County picks.
+  //
+  // ⚠ DEPARTS FROM THE RULE ABOVE, the same way Marin does and for the same reason. The doc
+  // says only counties with NO city half belong here, and Santa Cruz now has one. That rule
+  // exists because of Miami-Dade, where a county entry would change what Hialeah and Miami
+  // Beach see. Santa Cruz County's other municipalities — Capitola, Scotts Valley,
+  // Watsonville — have NO banner and no seeded roster, so without this entry they fall
+  // through to the California state shot. The city is unaffected: resolution tries
+  // CURATED_LOCAL first and a city banner always wins. Revert this one line if a reviewer
+  // prefers the rule as written; nothing else depends on it.
+  //
+  // CERTIFIED IN THE 6:1 BAND. 🔴 FOCUS 30%, SET BY THE OPERATOR ON THE DESKTOP BAND, NOT ON
+  // THE ASSET — the centred default clipped the green cliff-top terrace, and lifting the band
+  // 52px brings the whole cliff top and the distant headlands in while still keeping the
+  // breaking surf at the bottom and admitting no dead sky. Checked against 0% and 15%, which
+  // both opened a band of sky. Y=0% is the TOP of the asset, 100% the BOTTOM.
+  // ⚖ Asset anchored at 0.60 of the source's vertical slack, checked against 0.45 (a strip of
+  //   dead sky) and 0.75 (gave up cliff for a flat green band of meadow).
+  //
+  // 🔑 HORIZON LEVELLED, AND THE FIRST MEASUREMENT WAS WRONG IN A WAY WORTH RECORDING. At
+  // sunset the sky and the sea are near-identical in LUMINANCE, so the usual brightness-step
+  // detector had nothing to lock onto: it returned +5.5°, -2.9° and -6.3° depending on the
+  // window, all with high scatter. That instability was the measurement failing, not the
+  // photograph tilting. Measuring the RED-MINUS-BLUE step instead fit cleanly across 255
+  // columns — -1.044°, mean deviation 0.4px, a real horizon rising 31px across the banner.
+  // Rotated +1.044° on the ORIGINAL before cropping; re-measured after at -0.205° (6px of
+  // rise across 1700px, sub-perceptual). All four corners still carry image, so no wedge.
+  //   santa cruz county - Davenport Beach, California Coast Panorama | the_tahoe_guy | CC BY 2.0 (3888x1912)
+  '06087': { state: 'CA', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-cruz-county.jpg' },
 
   // Honolulu County, HI = the City and County of Honolulu. 2026-10-28.
   //
