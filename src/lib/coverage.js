@@ -152,10 +152,21 @@ export const COVERAGE_STATES = [
       // 🔑 Vintage proved against the COUNTY's ballot layer, which carries the city's
       // council district as an attribute (SCCC): 97 of 97 city precincts agree, zero
       // disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
-      // hasContext is FALSE and DB-honest: measured 2026-11-11, 0 of the 7 hold a compass answer.
-      // ⚠ The Mayor's seat changes hands at the December certification meeting — the
-      //   November 3 runoff is decided but its results are still unofficial.
-      { label: 'Santa Cruz', browseGovernmentList: ['0669112'], browseStateAbbrev: 'CA', hasContext: false },
+      // hasContext is TRUE, re-measured against production 2026-11-13: 6 of the 7 hold a
+      // compass answer with reasoning, up from 0 of 7 on 2026-11-11. Both grading questions
+      // were answered separately. DEPTH: 6 of 7 seated members, far above the one-of-N bar.
+      // SOUNDNESS: 10 rows, every cited URL fetched and verified, zero failed; the chair
+      // gate finds an instrument named in all 10.
+      // 🔑 But COUNT INSTRUMENTS, NOT ROWS: the 10 rows rest on just TWO instruments —
+      //   Resolution NS-30,438 (California Values Act, 2025-02-11, all six) and Ordinance
+      //   2024-16 (AB 1482 just-cause extension, 2024-09-24, four of the six). One roll call
+      //   seats many members at once, so the row count overstates the evidence behind it.
+      //   Comparable to Redmond WA, which went purple on two instruments plus a platform.
+      // ⚠ The 7th seat is Mayor Fred Keeley, deliberately NOT researched: he loses the seat
+      //   at the December certification meeting, and a deep seed does not publish a stance
+      //   for an officeholder on the way out. So this chip will stay at 6 of 7 by design,
+      //   and 7 of 7 is NOT the thing to chase.
+      { label: 'Santa Cruz', browseGovernmentList: ['0669112'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Santa Fe Springs', browseGovernmentList: ['0669154'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Santa Monica', browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Sierra Madre', browseGovernmentList: ['0671806'], browseStateAbbrev: 'CA', hasContext: false },
@@ -1243,7 +1254,11 @@ export const COVERAGE_COUNTIES = [
   // the numbering trick Marin needed: its Precincts layer carries SUPDIST on every row,
   // and all 692 precincts sit in the district their own ballot attribute names, zero
   // disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
-  // hasContext is FALSE and DB-honest: measured 2026-11-11, 0 of the 10 hold a compass answer.
+  // hasContext stays FALSE and DB-honest: re-measured 2026-11-13, still 0 of the 10 hold a
+  // compass answer. The city went purple that day and the county did NOT, which is correct:
+  // the Board's current record is published only through santacruzcountyca.primegov.com,
+  // whose robots.txt is a blanket disallow, so no supervisor has a citable roll call. All
+  // ten are blank with that reason stated per person, not merely unresearched.
   // ⚠ District 4 has a successor arriving January 2027. The June primary settled it
   //   OUTRIGHT — the challenger took 50.07%, six votes above the majority line, so no
   //   November runoff was held and the sitting supervisor was defeated. He holds the seat
