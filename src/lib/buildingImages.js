@@ -695,6 +695,32 @@ const CURATED_LOCAL = {
   //   santa cruz - Santa Cruz Beach Boardwalk | Josta Photo | CC BY 2.0 (2794x797)
   'santa cruz': { state: 'CA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-cruz.jpg' },
 
+  // Marin County and Santa Cruz County, the BROWSE-BY-LABEL half. Both already have a geoid
+  // entry in CURATED_COUNTY ('06041' / '06087') and both were DEAD on the browse path until
+  // now: measured 2026-11-14, getBuildingImages('Marin County','CA',null) and
+  // ('Santa Cruz County','CA',null) each returned null, so browsing either county by name
+  // showed the California state shot while an address inside it showed the county banner.
+  // The cause is that the two maps serve different paths and these counties only had one —
+  // see the 'broward county' block below for the full mechanism. Found while wiring Broward
+  // (#250), fixed here on the operator's instruction.
+  // ⚠ Same asset as the CURATED_COUNTY entries, and NO credit line on these two keys:
+  //   banners.json is keyed by BUCKET PATH, the credits live with the geoid entries, and a
+  //   second credit comment for one path is how a photographer gets published against the
+  //   wrong photograph.
+  // ⚠ `state: 'CA'` is load-bearing on 'santa cruz county' — SANTA CRUZ COUNTY, ARIZONA is a
+  //   real county (Nogales). The state scope is what keeps this off it if AZ is ever seeded.
+  // 🔑 No `match: 'exact'` on either, matching the travis/king/dane county keys. Resolution
+  //   is longest-key-first, so 'santa cruz county' (17 chars) is tested before 'santa cruz'
+  //   (10) and the city key keeps its exact match — verified both ways, neither shadows the
+  //   other.
+  'marin county': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/marin-county.jpg' },
+  // 🔴 THE `focus` MUST BE COPIED, NOT JUST THE `src`. `getBuildingImages` reads focus from
+  //   whichever entry matched, so a CURATED_LOCAL twin without it would render the browse
+  //   path at the centred default while an address rendered at 30% — the same asset, two
+  //   different pictures, and the 30% was set deliberately because the centre clipped the
+  //   cliff-top terrace. Marin carries no focus, so its twin has none either.
+  'santa cruz county': { state: 'CA', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-cruz-county.jpg' },
+
   // Fort Lauderdale (ev-accounts CC_0420 structure + roster #1450, boundaries #1455).
   //
   // Subject: downtown's whole multi-roofline skyline read across the Intracoastal, with the
