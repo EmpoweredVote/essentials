@@ -802,6 +802,35 @@ export const COVERAGE_STATES = [
       // these stay grey on DEPTH. Same call as Beverly Hills. Do not re-grey them citing "zero
       // rows" — that is no longer true and a wrong reason sends the next reader somewhere wrong.
       { label: 'Bradenton',   browseGovernmentList: ['1207950'], browseStateAbbrev: 'FL', hasContext: false },
+      // Fort Lauderdale (ev-accounts CC_0420 structure + roster, #1450; boundaries #1455 —
+      // 13 polygons, which is why this one is reachable from an address and not only from
+      // the chip). FIVE seats: a Mayor elected at large plus Districts 1–4, all five voting
+      // members of the City Commission, all five on the SAME four-year cycle (2024→2028),
+      // three-term limit.
+      // ⚠ FOUR of the five are seated TODAY, not five. District 1 has been VACANT since
+      //   2026-11-02, when John Herbst resigned two years into the term. Heather Moraitis won
+      //   the 2026-11-03 special election for the remainder (49.04% — this is a plurality
+      //   city under charter §7.07, so no runoff) and her row starts 2026-12-01.
+      // 🔴 THE CITY'S OWN WEBSITE WOULD HAVE DATED HER TWO WEEKS EARLY. fortlauderdale.gov
+      //   says she "will be sworn in at the Nov. 17, 2026, City Commission meeting"; that is
+      //   the ceremony. Charter §7.10 puts the legal date in the calling resolution, and
+      //   Resolution 26-88 §3 says the term begins 12:00 a.m. Tuesday 2026-12-01. The seed
+      //   follows the resolution, so this chip goes 4 of 5 → 5 of 5 by itself on 12-01.
+      // 🔑 District 3 (Pamela Beasley-Pittman) appears on no 2024 ballot and that is correct,
+      //   not a gap: §7.07 has the clerk certify a sole qualifier and the commission declare
+      //   them elected, so no election was held for that seat.
+      // ⚠ The chip's cross-tier rows show ONE Broward commissioner, District 4. The city
+      //   actually spans four county districts — measured against the loaded polygons, D4
+      //   covers 45.2% of the city, D8 43.7%, D6 10.9% and D9 0.14% — and the browse returns
+      //   the largest. That is the browse's behaviour, not something this seed sets.
+      // hasContext is FALSE and DB-honest, measured 2026-11-13 TWO WAYS: 0 of the 4 seated
+      // officials hold a compass answer, and 0 of the 6 people ever linked to these offices
+      // through office_terms hold one either (the check that rules out a stale-roster
+      // artifact). The control matters — the obvious join through inform.politicians returns
+      // zero for EVERY city, Santa Clarita included, so it proves nothing; joining
+      // politician_answers on the essentials politician id gives Santa Clarita 5 of 5 and
+      // Santa Cruz 6 of 7, and Fort Lauderdale 0 of 4. Stances are a separate pass.
+      { label: 'Fort Lauderdale', browseGovernmentList: ['1224000'], browseStateAbbrev: 'FL', hasContext: false },
       { label: 'Miami',       browseGovernmentList: ['1245000'], browseStateAbbrev: 'FL', hasContext: false },
       { label: 'Tallahassee', browseGovernmentList: ['1270600'], browseStateAbbrev: 'FL', hasContext: false },
     ],
@@ -1351,6 +1380,35 @@ export const COVERAGE_COUNTIES = [
   // county offices carry representing_city = NULL. Its city, Austin, is keyed off
   // representing_city='Austin' instead — do NOT add Austin here.
   { label: 'Travis County', browseGovernmentList: ['48453'], browseStateAbbrev: 'TX', hasContext: true },
+  // Broward County, FL (ev-accounts CC_0420, #1450; boundaries #1455). FOURTEEN seats, all
+  // filled: nine district County Commissioners plus five countywide constitutional officers
+  // — Clerk of the Circuit Court, Sheriff, Property Appraiser, Supervisor of Elections and
+  // Tax Collector, the last of which Broward elects under Amendment 10.
+  // 🔴🔴 THERE IS NO ELECTED MAYOR, AND COPYING MIAMI-DADE WOULD HAVE INVENTED ONE. Charter
+  //   §2.03.A has the Commission elect one of its own members Mayor "on an annual basis" at
+  //   the organizational meeting — a one-year internal rotation, not an office. Miami-Dade's
+  //   third chamber has no Broward counterpart. Broward's commission is also PARTISAN where
+  //   Miami-Dade's is not.
+  // 🔑 Terms here do NOT begin in January. Charter §2.01.B: "the Tuesday two (2) weeks
+  //   following the day of the general or special election" — 2026-11-17 this cycle, which
+  //   is when District 6 passed from Quentin "Beam" Furr (term-limited under §2.02, so
+  //   term_expired and never defeated) to Caryl Shuham. ⚠ Broward commission seats finish in
+  //   the AUGUST primary, as a Universal Primary Contest; the November general carried no
+  //   county commission contest at all.
+  // ⚠ The charter text is only reachable through browardcdn.org. broward.org/Charter's own
+  //   PDF is a 404 and the widely mirrored copy is the 2002 revision, which still names a
+  //   commissioner who left in 2010.
+  // hasContext is FALSE and DB-honest, measured 2026-11-13 the same two ways as Fort
+  // Lauderdale: 0 of the 14 seated, and 0 of the 15 ever linked through office_terms.
+  // ⚠ This entry does NOT carry the county banner, and it is worth being exact about that
+  //   because the obvious assumption is wrong. All 14 offices carry representing_city = ''
+  //   (verified on the live browse), so cities/broward-county.jpg resolves only through
+  //   browse_label — and that label comes from the BACKEND's location-search, not from here.
+  //   COVERAGE_COUNTIES has no importers, so Rollup drops this array from the bundle
+  //   entirely; grepping a built bundle for "Broward County" returns 0. The banner is wired
+  //   by the 'broward county' key in CURATED_LOCAL plus the '12011' key in CURATED_COUNTY.
+  //   This array is source documentation and county search works without it.
+  { label: 'Broward County', browseGovernmentList: ['12011'], browseStateAbbrev: 'FL', hasContext: false },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on

@@ -695,6 +695,67 @@ const CURATED_LOCAL = {
   //   santa cruz - Santa Cruz Beach Boardwalk | Josta Photo | CC BY 2.0 (2794x797)
   'santa cruz': { state: 'CA', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-cruz.jpg' },
 
+  // Fort Lauderdale (ev-accounts CC_0420 structure + roster #1450, boundaries #1455).
+  //
+  // Subject: downtown's whole multi-roofline skyline read across the Intracoastal, with the
+  // marina, a superyacht and the low-rise frontage grounding it. The "wide multi-roofline"
+  // class, and it carries the waterfront the city is equally known for in the same frame.
+  // No conflict with the Florida state banner, which is a Rookery Bay aerial of mangrove
+  // and water — nothing built in it at all.
+  //
+  // CERTIFIED IN THE 6:1 BAND, not as the asset: desktop renders rows 128-411 of the
+  // 1700x540 file and mobile ~97%, so the asset alone proves nothing.
+  // ⚖ Anchored 0.48, checked against 0.42, 0.55, 0.60 and 0.80 as rendered bands. This is
+  //   LOWER than the ~0.68 the standing "too much sky" note calls for, and deliberately:
+  //   the skyline is the subject and it sits in the upper middle, so 0.55 pushed the tower
+  //   tops against the band's top edge and filled the bottom third with one tan apartment
+  //   block, and 0.68 and 0.80 cut the skyline off entirely. No focus override — the
+  //   centred default band is the one meant.
+  // 🔴 A SECOND PHOTOGRAPH WAS REJECTED ON THE BAND, NOT ON THE PHOTO, and it is the better
+  //   picture: File:New River (Fort Lauderdale, Florida).jpg, the Andrews Avenue bascule
+  //   leaf raised with towers either side. The raised leaf is a tall subject and the river
+  //   that grounds it is at the very bottom; at every anchor the 6:1 band holds neither the
+  //   bridge tip nor the water, only mid-tower walls. Same failure as the Duarte statue.
+  //   Do not "restore" it without rendering the band first.
+  // ⚠ NO HORIZON LEVELLING, and that is a decision rather than an omission. The frame
+  //   contains water, which normally triggers the routine tilt check, but it looks inland
+  //   and shows no sea-sky horizon. Fitting the long built edges instead returned slopes
+  //   that disagree in SIGN between features in the same frame (-2.72 deg on the white roof
+  //   at the bottom left, +0.40 deg on the apartment roofline above it), which is
+  //   perspective, not camera roll. There is no valid level reference here, so rotating
+  //   from any one feature would have introduced a tilt instead of removing one.
+  // Surfacing: all 4 city offices carry representing_city = 'Fort Lauderdale' (verified on
+  // the live browse, not assumed — the Beaverton trap).
+  // ⚠ `match: 'exact'` is belt and braces here. FIVE Florida places are named "Lauderdale"
+  //   and ALL FIVE are in Broward — Lauderdale Lakes, Lauderdale-by-the-Sea, Lauderhill and
+  //   North Lauderdale alongside this one. None of them CONTAINS the string "fort
+  //   lauderdale", so a substring key would in fact be safe today; the flag is here so that
+  //   stays true if one of the other four is ever seeded under a longer label.
+  //   fort lauderdale - Skyline of Fort Lauderdale, Nov-15 | KeanoManu | CC BY-SA 4.0 (6000x4000)
+  //                     source: File:Skyline of Fort Lauderdale, Nov-15.jpg, own work, 2015-11-29
+  'fort lauderdale': { state: 'FL', match: 'exact', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/fort-lauderdale.jpg' },
+
+  // Broward County, the BROWSE-BY-LABEL half. Same asset as the '12011' entry in
+  // CURATED_COUNTY below, and both are needed because they serve different paths — this is
+  // the Travis/King/Dane pattern, that one is the Palm Beach/Marin pattern.
+  //   Results.jsx:1210 calls getBuildingImages(representingCity, userState, countyGeoId).
+  //   - BROWSE a county: representingCity is the browse_label ("Broward County"), countyGeoId
+  //     is undefined, so ONLY a CURATED_LOCAL key can fire. That label comes from the backend
+  //     (/api/essentials/location-search), NOT from COVERAGE_COUNTIES — that array has no
+  //     importers and Rollup drops it, so grepping a bundle for "Broward County" returns 0.
+  //   - ADDRESS inside the county: representingCity is the city, countyGeoId is '12011', and
+  //     CURATED_COUNTY fires only when no city key matched.
+  // 🔴 MEASURED, NOT ASSUMED, and the measurement is why this entry exists: with only the
+  //   CURATED_COUNTY entry, getBuildingImages('Broward County','FL',null) returned null and
+  //   the county browse fell through to the Florida state shot. ⚠ Marin County and Santa
+  //   Cruz County have exactly that gap today — both resolve null on the browse path — which
+  //   is how it was found. Deliberately NOT fixed here; it is their line to add, not this
+  //   PR's, and it would change what two other places show.
+  // ⚠ No credit line on this key: banners.json is keyed by BUCKET PATH, and the credit for
+  //   cities/broward-county.jpg lives with the CURATED_COUNTY entry. A second credit comment
+  //   for one path is how a photographer ends up published against the wrong photograph.
+  'broward county': { state: 'FL', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/broward-county.jpg' },
+
   // Biloxi (Knight slice 16, stage MS-5; operator-certified 2026-09-28). The last
   // city banner of the programme, and the last of the 26 Knight cities to get one.
   //
@@ -2271,6 +2332,58 @@ const CURATED_COUNTY = {
   // rise across 1700px, sub-perceptual). All four corners still carry image, so no wedge.
   //   santa cruz county - Davenport Beach, California Coast Panorama | the_tahoe_guy | CC BY 2.0 (3888x1912)
   '06087': { state: 'CA', focus: '50% 30%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/santa-cruz-county.jpg' },
+
+  // Broward County, FL (ev-accounts CC_0420 #1450, boundaries #1455). The Hillsboro Inlet
+  // Light seen from the Pompano Beach shore: the whole tower from finial to base, the
+  // keeper's houses and palms at its foot, the jetty with the Hillsboro pilot boats, a
+  // sportfisher running out through the cut, and the sea horizon behind. Deliberately NOT a
+  // skyline — the city half already has downtown — the same reasoning as Dane, Marin and
+  // Santa Cruz County.
+  //
+  // ⚠ DEPARTS FROM THE RULE AT THE TOP OF THIS MAP, and of the three departures this is the
+  // one closest to the case the rule was written for. The doc says only counties with NO
+  // city half belong here. Broward has one, and it also has THIRTY-ONE municipalities, some
+  // of them large and distinct — Hollywood, Pembroke Pines, Coral Springs, Miramar, Pompano
+  // Beach — which is structurally the Miami-Dade shape that the rule exists to protect.
+  // It is still right here, for a reason that does not apply to Miami-Dade: none of those
+  // thirty-one has a seeded roster or a banner, so for a resident of any of them the COUNTY
+  // is the local government this app shows, and without this entry their Local band falls
+  // through to the Florida state shot. Fort Lauderdale is unaffected either way —
+  // resolution tries CURATED_LOCAL first and a city banner always wins. 🔴 The day Hollywood
+  // or Coral Springs is seeded with its own roster, revisit this line; nothing else depends
+  // on it, and reverting it is a one-line change.
+  //
+  // CERTIFIED IN THE 6:1 BAND. Anchored 0.12, no focus override.
+  // 🔴🔴 THE ANCHOR IS THE WHOLE DECISION HERE AND IT IS ARITHMETIC, NOT TASTE. The desktop
+  // band shows exactly SOURCE WIDTH / 6 rows of the original, whatever the anchor —
+  // 5472/6 = 912 rows here — because the asset is width/3.148 tall and desktop renders
+  // 52.47% of it. A lighthouse is a tall subject, so the only question is whether its tower
+  // fits inside those rows. Anchors 0.15, 0.18, 0.21, 0.24 and 0.26 all CLIP THE LANTERN
+  // (measured on the finished asset: the finial's topmost dark pixel lands at rows 112, 94,
+  // 76, 58 and 46 against a band that starts at row 128). 0.12 puts it at row 130 — finial,
+  // dome, Fresnel glazing and gallery rail all inside, with 2px of sky above.
+  // 🔴 VERIFY THAT NUMERICALLY, NEVER BY EYE. Reviewing the rendered band, I read the 0.18
+  // crop as having the lantern clear; it was 34px outside the band. A dark lantern against a
+  // pale sky is easy to misjudge at review size, and the band image looks plausible either
+  // way.
+  // 🔑 A DIFFERENT PHOTOGRAPH OF THIS SUBJECT WAS REFUSED FOR THE SAME ARITHMETIC, after the
+  // operator had chosen it: File:Hillsboro Lighthouse New.jpg (Jimmy DeMar, CC BY-SA 4.0), a
+  // sunset drone frame. Its tower spans 1,893 source rows against an 897-row window, so no
+  // anchor and no focus can hold the lantern and the setting at once — every crop either
+  // decapitates the light or shows an anonymous white shaft. The operator chose the SUBJECT;
+  // the frame had to change to deliver it. The rule of thumb that falls out, worth keeping:
+  // for a 6:1 band a vertical landmark has to be roughly a sixth of the frame's WIDTH or
+  // less, which means a distant, wide vantage.
+  // ⚠ Left unenhanced although it is a sunlit haze rather than a crisp sky, so the asset
+  //   stays exactly reproducible from `process_banner.py -i <source> -o <out>
+  //   --vertical-anchor 0.12` and nothing else. That script applies no contrast, colour or
+  //   brightness of its own — it is a pure crop, resize and q90 encode.
+  // ⚠ Surfacing depends on the coverage.js entry: all 14 county offices carry
+  //   representing_city = '' (verified on the live browse), so this resolves only through
+  //   browse_label. No coverage entry, no banner.
+  //   broward county - Hillsboro Inlet Light from the Pompano Beach shore | Russ | CC BY 2.0 (5472x3648)
+  //                    source: File:Hillsborough lighthouse (14423196275).jpg, Flickr, 2014-06-14
+  '12011': { state: 'FL', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/broward-county.jpg' },
 
   // Honolulu County, HI = the City and County of Honolulu. 2026-10-28.
   //
