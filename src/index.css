@@ -577,19 +577,18 @@ html:not(.dark) .ev-politician-profile a:not(.ev-stance-panel *) {
 
 /* Term dates and time in office under the bio description ("Jan 2024 – Dec 2027",
    "2 years in office"): brand teal in light mode, matching the role line. ev-ui
-   gives this row no class, so it is found as the wrapping flex row after the
-   role line; the icons use currentColor and follow. The first selector
-   out-specifies the .ev-soft profile `span` rule. */
-html:not(.dark) .ev-soft .ev-politician-profile p.ev-role-line ~ div[style*="flex-wrap: wrap"] > span:not(.ev-stance-panel *):not(.ev-contact-badge),
-html:not(.dark) .ev-politician-profile p.ev-role-line ~ div[style*="flex-wrap: wrap"] > span {
+   marks the row `ev-term-row` (from 0.17.0); the icons use currentColor and
+   follow. The first selector out-specifies the .ev-soft profile `span` rule. */
+html:not(.dark) .ev-soft .ev-politician-profile .ev-term-row > span:not(.ev-stance-panel *):not(.ev-contact-badge),
+html:not(.dark) .ev-politician-profile .ev-term-row > span {
   color: var(--ev-teal) !important;
   font-weight: 600 !important; /* semibold, like the contact links */
 }
 
 /* "LOCAL" tier badge above the bio name: solid purple with white text in light
-   mode (6.7:1) instead of a near-white tint. ev-ui gives the badge no class, so
-   it is matched by its inline local-tier colours. */
-html:not(.dark) .ev-politician-profile div[style*="color: rgb(126, 34, 206)"][style*="background: rgb(253, 244, 255)"] {
+   mode (6.7:1) instead of a near-white tint. ev-ui marks the badge
+   `ev-tier-badge` with `data-tier` (from 0.17.0). */
+html:not(.dark) .ev-politician-profile .ev-tier-badge[data-tier="local"] {
   background: #7e22ce !important;
   color: #ffffff !important;
 }
