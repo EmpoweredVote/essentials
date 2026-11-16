@@ -69,6 +69,15 @@ export const COVERAGE_STATES = [
       { label: 'Claremont', browseGovernmentList: ['0613756'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Commerce', browseGovernmentList: ['0614974'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Compton', browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
+      // Corte Madera (ev-accounts CC_0392 structure + CC_0393 roster, both applied).
+      // Marin County's first town in this list — every other CA entry here is LA County,
+      // the Bay Area big four, or the desert pair. Five at-large councilmembers; the Mayor
+      // and Vice Mayor are one-year titles the council confers on itself each December, so
+      // there is no Mayor seat. hasContext is FALSE and DB-honest: measured 2026-11-11,
+      // 5 offices, 5 seated, 0 officials with any row in inform.politician_answers.
+      // ⚠ Three of the five seats were on the 2026-11-03 ballot and Marin certifies in
+      //   December, so this roster changes at the Town's December reorganisation.
+      { label: 'Corte Madera', browseGovernmentList: ['0616462'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Covina', browseGovernmentList: ['0616742'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Cudahy', browseGovernmentList: ['0617498'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Culver City', browseGovernmentList: ['0617568'], browseStateAbbrev: 'CA', hasContext: true },
@@ -132,6 +141,32 @@ export const COVERAGE_STATES = [
       { label: 'San Jose', browseGovernmentList: ['0668000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'San Marino', browseGovernmentList: ['0668224'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Santa Clarita', browseGovernmentList: ['0669088'], browseStateAbbrev: 'CA', hasContext: true },
+      // Santa Cruz (ev-accounts CC_0404 structure + CC_0405 roster, both applied).
+      // SEVEN seats, and the Mayor is one of them — unlike Santa Clarita or Corte Madera,
+      // where "Mayor" is a title the council hands round each year. Measure E (2022)
+      // rewrote the charter into six by-district Councilmembers plus a Mayor elected
+      // at large, all seven voting members of the Council.
+      // 🔴 The council-district layer publishes SEVEN polygons for SIX districts: District
+      // 6 is a main body plus a detached parcel at the Coastal Science Campus. The loader
+      // dissolves on the District attribute — read row-for-row it invents a 7th district.
+      // 🔑 Vintage proved against the COUNTY's ballot layer, which carries the city's
+      // council district as an attribute (SCCC): 97 of 97 city precincts agree, zero
+      // disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
+      // hasContext is TRUE, re-measured against production 2026-11-13: 6 of the 7 hold a
+      // compass answer with reasoning, up from 0 of 7 on 2026-11-11. Both grading questions
+      // were answered separately. DEPTH: 6 of 7 seated members, far above the one-of-N bar.
+      // SOUNDNESS: 10 rows, every cited URL fetched and verified, zero failed; the chair
+      // gate finds an instrument named in all 10.
+      // 🔑 But COUNT INSTRUMENTS, NOT ROWS: the 10 rows rest on just TWO instruments —
+      //   Resolution NS-30,438 (California Values Act, 2025-02-11, all six) and Ordinance
+      //   2024-16 (AB 1482 just-cause extension, 2024-09-24, four of the six). One roll call
+      //   seats many members at once, so the row count overstates the evidence behind it.
+      //   Comparable to Redmond WA, which went purple on two instruments plus a platform.
+      // ⚠ The 7th seat is Mayor Fred Keeley, deliberately NOT researched: he loses the seat
+      //   at the December certification meeting, and a deep seed does not publish a stance
+      //   for an officeholder on the way out. So this chip will stay at 6 of 7 by design,
+      //   and 7 of 7 is NOT the thing to chase.
+      { label: 'Santa Cruz', browseGovernmentList: ['0669112'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Santa Fe Springs', browseGovernmentList: ['0669154'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Santa Monica', browseGovernmentList: ['0670000'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Sierra Madre', browseGovernmentList: ['0671806'], browseStateAbbrev: 'CA', hasContext: false },
@@ -490,6 +525,13 @@ export const COVERAGE_STATES = [
       { label: 'Henderson', browseGovernmentList: ['3231900'], browseStateAbbrev: 'NV', hasContext: true },
       { label: 'North Las Vegas', browseGovernmentList: ['3251800'], browseStateAbbrev: 'NV', hasContext: true },
       { label: 'Boulder City', browseGovernmentList: ['3206500'], browseStateAbbrev: 'NV', hasContext: true },
+      // Reno (ev-accounts CC_0385 structure + CC_0387 roster, both applied). Northern
+      // Nevada's first local tier — every entry above is Clark County. 13 seats: Mayor,
+      // six ward councilmembers, an elected City Attorney and four municipal court
+      // departments, the court deliberately unseated while its bench is in dispute.
+      // hasContext is FALSE and DB-honest: no Reno official holds a row in
+      // inform.politician_answers yet.
+      { label: 'Reno', browseGovernmentList: ['3260600'], browseStateAbbrev: 'NV', hasContext: false },
     ],
   },
   {
@@ -760,6 +802,35 @@ export const COVERAGE_STATES = [
       // these stay grey on DEPTH. Same call as Beverly Hills. Do not re-grey them citing "zero
       // rows" — that is no longer true and a wrong reason sends the next reader somewhere wrong.
       { label: 'Bradenton',   browseGovernmentList: ['1207950'], browseStateAbbrev: 'FL', hasContext: false },
+      // Fort Lauderdale (ev-accounts CC_0420 structure + roster, #1450; boundaries #1455 —
+      // 13 polygons, which is why this one is reachable from an address and not only from
+      // the chip). FIVE seats: a Mayor elected at large plus Districts 1–4, all five voting
+      // members of the City Commission, all five on the SAME four-year cycle (2024→2028),
+      // three-term limit.
+      // ⚠ FOUR of the five are seated TODAY, not five. District 1 has been VACANT since
+      //   2026-11-02, when John Herbst resigned two years into the term. Heather Moraitis won
+      //   the 2026-11-03 special election for the remainder (49.04% — this is a plurality
+      //   city under charter §7.07, so no runoff) and her row starts 2026-12-01.
+      // 🔴 THE CITY'S OWN WEBSITE WOULD HAVE DATED HER TWO WEEKS EARLY. fortlauderdale.gov
+      //   says she "will be sworn in at the Nov. 17, 2026, City Commission meeting"; that is
+      //   the ceremony. Charter §7.10 puts the legal date in the calling resolution, and
+      //   Resolution 26-88 §3 says the term begins 12:00 a.m. Tuesday 2026-12-01. The seed
+      //   follows the resolution, so this chip goes 4 of 5 → 5 of 5 by itself on 12-01.
+      // 🔑 District 3 (Pamela Beasley-Pittman) appears on no 2024 ballot and that is correct,
+      //   not a gap: §7.07 has the clerk certify a sole qualifier and the commission declare
+      //   them elected, so no election was held for that seat.
+      // ⚠ The chip's cross-tier rows show ONE Broward commissioner, District 4. The city
+      //   actually spans four county districts — measured against the loaded polygons, D4
+      //   covers 45.2% of the city, D8 43.7%, D6 10.9% and D9 0.14% — and the browse returns
+      //   the largest. That is the browse's behaviour, not something this seed sets.
+      // hasContext is FALSE and DB-honest, measured 2026-11-13 TWO WAYS: 0 of the 4 seated
+      // officials hold a compass answer, and 0 of the 6 people ever linked to these offices
+      // through office_terms hold one either (the check that rules out a stale-roster
+      // artifact). The control matters — the obvious join through inform.politicians returns
+      // zero for EVERY city, Santa Clarita included, so it proves nothing; joining
+      // politician_answers on the essentials politician id gives Santa Clarita 5 of 5 and
+      // Santa Cruz 6 of 7, and Fort Lauderdale 0 of 4. Stances are a separate pass.
+      { label: 'Fort Lauderdale', browseGovernmentList: ['1224000'], browseStateAbbrev: 'FL', hasContext: false },
       { label: 'Miami',       browseGovernmentList: ['1245000'], browseStateAbbrev: 'FL', hasContext: false },
       { label: 'Tallahassee', browseGovernmentList: ['1270600'], browseStateAbbrev: 'FL', hasContext: false },
     ],
@@ -1168,6 +1239,11 @@ export const COVERAGE_COUNTIES = [
   { label: 'Washington County', browseGovernmentList: ['49053'], browseStateAbbrev: 'UT' },
   { label: 'Weber County', browseGovernmentList: ['49057'], browseStateAbbrev: 'UT' },
   { label: 'Clark County', browseGovernmentList: ['32003'], browseStateAbbrev: 'NV', hasContext: true },
+  // Washoe County (ev-accounts CC_0386 structure + CC_0387 roster, both applied). Five
+  // commissioners, seeded BY DISTRICT (X0087) — unlike Clark above, which hangs all seven
+  // of its commissioners on the countywide polygon, so a Clark address cannot tell you
+  // which commissioner is yours. hasContext is DB-honest: no answers yet.
+  { label: 'Washoe County', browseGovernmentList: ['32031'], browseStateAbbrev: 'NV', hasContext: false },
   // Racine County (2026-07-28 WI cluster): county executive + 21-member County
   // Board + row officers + 10 Circuit Court judges. hasContext per the WI-muni
   // convention (>=1 official with evidence rows): supervisors Renee Kelly +
@@ -1182,6 +1258,41 @@ export const COVERAGE_COUNTIES = [
   { label: 'Dane County', browseGovernmentList: ['55025'], browseStateAbbrev: 'WI', hasContext: true },
   { label: 'Pima County', browseGovernmentList: ['04019'], browseStateAbbrev: 'AZ', hasContext: true },
   { label: 'Riverside County', browseGovernmentList: ['06065'], browseStateAbbrev: 'CA', hasContext: true },
+  // Marin County (ev-accounts CC_0392 structure + CC_0393 roster, both applied). Eight
+  // offices, all eight filled: the five-member Board of Supervisors seeded BY DISTRICT
+  // (X0088, polygons from the county's own open data), plus the three countywide officers
+  // — Assessor-Recorder-County Clerk, District Attorney, Sheriff-Coroner — which migration
+  // 1666 seated back in 2026-08-10 and which had never been listed here at all.
+  // 🔑 The district layer's vintage is proved against the county's OWN ballot layer: the
+  // leading digit of a Marin SubPrecinct id is its supervisorial district, and every one of
+  // 738 subprecincts (170,099 registered voters) sits in the district its own number claims,
+  // with zero disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
+  // hasContext is FALSE and DB-honest: measured 2026-11-11, 0 of the 8 hold a compass answer.
+  // ⚠ District 5 has a successor arriving January 2027 (the June primary settled it; the
+  //   sitting supervisor stood for the Assembly instead). Not seated anywhere — the certified
+  //   Statement of Votes Cast is unreachable, assets.marincounty.gov answers 403.
+  { label: 'Marin County', browseGovernmentList: ['06041'], browseStateAbbrev: 'CA', hasContext: false },
+  // Santa Cruz County (ev-accounts CC_0404 structure + CC_0405 roster, both applied). TEN
+  // offices, all ten filled: the five-member Board of Supervisors seeded BY DISTRICT
+  // (X0090, polygons from the county's own open data, copyrightText "County of Santa
+  // Cruz"), plus the five countywide officers — Assessor-Recorder,
+  // Auditor-Controller-Treasurer-Tax Collector, County Clerk, District Attorney-Public
+  // Administrator, Sheriff-Coroner — which migration 1663 seated on 2026-08-10 and which
+  // had never been listed here at all. The same half-seeded shape Marin was in.
+  // 🔑 Vintage proved against the county's OWN ballot layer, by attribute rather than by
+  // the numbering trick Marin needed: its Precincts layer carries SUPDIST on every row,
+  // and all 692 precincts sit in the district their own ballot attribute names, zero
+  // disagreements. Registered in ev-accounts check-council-district-vintage.mjs.
+  // hasContext stays FALSE and DB-honest: re-measured 2026-11-13, still 0 of the 10 hold a
+  // compass answer. The city went purple that day and the county did NOT, which is correct:
+  // the Board's current record is published only through santacruzcountyca.primegov.com,
+  // whose robots.txt is a blanket disallow, so no supervisor has a citable roll call. All
+  // ten are blank with that reason stated per person, not merely unresearched.
+  // ⚠ District 4 has a successor arriving January 2027. The June primary settled it
+  //   OUTRIGHT — the challenger took 50.07%, six votes above the majority line, so no
+  //   November runoff was held and the sitting supervisor was defeated. He holds the seat
+  //   until January and is the one seated here.
+  { label: 'Santa Cruz County', browseGovernmentList: ['06087'], browseStateAbbrev: 'CA', hasContext: false },
   // First two TEXAS counties (2026-08-08, migs 1621/1622). Each is a Commissioners Court:
   // County Judge + 4 precinct Commissioners. No hasContext — roster-only seed, no stances.
   // ⚠ Both share ONE countywide district (the Clark County NV pattern) because no commissioner
@@ -1269,6 +1380,35 @@ export const COVERAGE_COUNTIES = [
   // county offices carry representing_city = NULL. Its city, Austin, is keyed off
   // representing_city='Austin' instead — do NOT add Austin here.
   { label: 'Travis County', browseGovernmentList: ['48453'], browseStateAbbrev: 'TX', hasContext: true },
+  // Broward County, FL (ev-accounts CC_0420, #1450; boundaries #1455). FOURTEEN seats, all
+  // filled: nine district County Commissioners plus five countywide constitutional officers
+  // — Clerk of the Circuit Court, Sheriff, Property Appraiser, Supervisor of Elections and
+  // Tax Collector, the last of which Broward elects under Amendment 10.
+  // 🔴🔴 THERE IS NO ELECTED MAYOR, AND COPYING MIAMI-DADE WOULD HAVE INVENTED ONE. Charter
+  //   §2.03.A has the Commission elect one of its own members Mayor "on an annual basis" at
+  //   the organizational meeting — a one-year internal rotation, not an office. Miami-Dade's
+  //   third chamber has no Broward counterpart. Broward's commission is also PARTISAN where
+  //   Miami-Dade's is not.
+  // 🔑 Terms here do NOT begin in January. Charter §2.01.B: "the Tuesday two (2) weeks
+  //   following the day of the general or special election" — 2026-11-17 this cycle, which
+  //   is when District 6 passed from Quentin "Beam" Furr (term-limited under §2.02, so
+  //   term_expired and never defeated) to Caryl Shuham. ⚠ Broward commission seats finish in
+  //   the AUGUST primary, as a Universal Primary Contest; the November general carried no
+  //   county commission contest at all.
+  // ⚠ The charter text is only reachable through browardcdn.org. broward.org/Charter's own
+  //   PDF is a 404 and the widely mirrored copy is the 2002 revision, which still names a
+  //   commissioner who left in 2010.
+  // hasContext is FALSE and DB-honest, measured 2026-11-13 the same two ways as Fort
+  // Lauderdale: 0 of the 14 seated, and 0 of the 15 ever linked through office_terms.
+  // ⚠ This entry does NOT carry the county banner, and it is worth being exact about that
+  //   because the obvious assumption is wrong. All 14 offices carry representing_city = ''
+  //   (verified on the live browse), so cities/broward-county.jpg resolves only through
+  //   browse_label — and that label comes from the BACKEND's location-search, not from here.
+  //   COVERAGE_COUNTIES has no importers, so Rollup drops this array from the bundle
+  //   entirely; grepping a built bundle for "Broward County" returns 0. The banner is wired
+  //   by the 'broward county' key in CURATED_LOCAL plus the '12011' key in CURATED_COUNTY.
+  //   This array is source documentation and county search works without it.
+  { label: 'Broward County', browseGovernmentList: ['12011'], browseStateAbbrev: 'FL', hasContext: false },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on

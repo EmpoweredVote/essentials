@@ -5,7 +5,7 @@ import path from "path";
 import fs from "fs";
 
 // Use local ev-ui build when it exists alongside this repo (dev only).
-const localEvUi = path.resolve(__dirname, "../ev-ui/dist");
+const localEvUi = path.resolve(import.meta.dirname, "../ev-ui/dist");
 const useLocalEvUi = fs.existsSync(localEvUi);
 
 // PostHog source-map upload. Inert unless POSTHOG_API_KEY and POSTHOG_PROJECT_ID
