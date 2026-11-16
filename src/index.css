@@ -443,7 +443,7 @@ html:not(.dark) .ev-soft {
   --soft-ink: #24272c;     /* 14.6:1 on card */
   --soft-body: #3d4249;    /* 10.2:1 */
   --soft-muted: #575d66;   /*  6.5:1 */
-  --soft-faint: #686e77;   /*  5.1:1 */
+  --soft-faint: #636972;   /*  5.4:1; 4.7:1 on --soft-inset-hover */
   background-color: var(--soft-page);
   color: var(--soft-ink);
 }
@@ -536,10 +536,11 @@ html:not(.dark) .ev-soft .ev-politician-profile p.ev-contact-label {
 }
 
 /* WCAG 1.4.11: form fields need a 3:1 boundary. The gray-200 field borders sat
-   at 1.3–1.4:1 on the card; #858b94 is 3.4:1. */
+   at 1.3–1.4:1 on the card; #7d838c is 3.7:1, and 3.3:1 on the hovered inset
+   (--soft-inset-hover), where #858b94 had slipped to 2.9:1. */
 /* [class] out-specifies the .border-gray-200 → --soft-line rule above. */
 html:not(.dark) .ev-soft :is(input, select, textarea)[class] {
-  border-color: #858b94 !important;
+  border-color: #7d838c !important;
 }
 /* Dark counterpart: dark is the default theme (index.html), so a light-only rule
    would leave the boundary failing for most readers. #757c87 is 4.1:1 on the dark
@@ -560,10 +561,8 @@ html:not(.dark) .ev-soft :focus-visible {
   outline-offset: 2px;
 }
 
-/* Radar spoke labels open their topic in the stance panel (CompassCard). */
-.compass-radar-host svg text {
-  cursor: pointer;
-}
+/* Radar spoke labels open their topic in the stance panel (CompassCard). ev-ui
+   already sets cursor: pointer inline on each label. */
 .compass-radar-host svg text:hover {
   text-decoration: underline;
 }
