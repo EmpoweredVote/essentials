@@ -162,6 +162,21 @@ describe('a radar-label pick opens its topic once and leaves it open', () => {
     expect(accordionTopicIdFor(undefined, { isDeepLinkGroup: false, initialExpandedTopicId: '9' })).toBeUndefined();
   });
 
+  it('keeps a deep-linked topic open when the group\'s topic count changes later', () => {
+    // Same defect on the deep-link path: the id stayed set for the life of the
+    // page, so research states arriving collapsed the topic the link opened.
+    const link = (spentFlag) => accordionTopicIdFor(undefined, {
+      isDeepLinkGroup: true, initialExpandedTopicId: '9', deepLinkSpent: spentFlag,
+    });
+    const renders = [
+      { id: link(false), length: 3 },
+      { id: link(true), length: 3 },
+      { id: link(true), length: 4 },
+    ];
+    expect(expandedAfter(renders)).toBe('9');
+    expect(SRC).toMatch(/deepLinkSpent: spentDeepLink === String\(initialExpandedTopicId\)/);
+  });
+
   it('drops a pick whose topic a lens change removed from the group', () => {
     // The group survives the lens change but topic 7 does not; a pick left in
     // place would have the accordion fetch context for a row it never renders.
@@ -188,7 +203,7 @@ describe('a radar-label pick opens its topic once and leaves it open', () => {
   it('marks each pick spent in an effect and prunes picks against the groups', () => {
     expect(SRC).toMatch(/\{ \.\.\.p, spent: true \}/);
     expect(SRC).toMatch(/setPicks\(\(prev\) => reconcilePicks\(prev, groups\)\)/);
-    expect(SRC).toMatch(/topics=\{pickedFirst\(group\.topics, pick\)\}/);
+    expect(SRC).toMatch(/topics=\{pickedFirst\(group\.topics, pinned\)\}/);
   });
 });
 
@@ -198,7 +213,8 @@ describe('source guards for defects that a build and a screenshot both pass', ()
     // does not render: a context fetch fires and the spinner never resolves
     // to a visible row.
     // A radar-label pick (focusTopic) is scoped the same way, per group via `picks`.
-    expect(SRC).toMatch(/initialExpandedTopicId=\{accordionTopicIdFor\(pick, \{\s*isDeepLinkGroup: group\.title === deepLinkTitle,/);
+    expect(SRC).toMatch(/const isDeepLinkGroup = group\.title === deepLinkTitle;/);
+    expect(SRC).toMatch(/initialExpandedTopicId=\{accordionTopicIdFor\(pick, \{\s*isDeepLinkGroup,/);
     expect(SRC).toMatch(/const pick = picks\[group\.title\];/);
     expect(SRC).not.toMatch(/initialExpandedTopicId=\{initialExpandedTopicId\}/);
   });

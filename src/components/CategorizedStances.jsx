@@ -201,10 +201,12 @@ export function reconcilePicks(picks, groups) {
  * re-fires whenever the group's topic count changes (research states arriving,
  * a lens change) and collapses the topic the reader is reading. Once the
  * accordion has opened it, the pick is marked `spent` and the id is withdrawn.
+ * A deep-linked topic is handled the same way: `deepLinkSpent` once its group's
+ * accordion has opened it.
  */
-export function accordionTopicIdFor(pick, { isDeepLinkGroup, initialExpandedTopicId }) {
+export function accordionTopicIdFor(pick, { isDeepLinkGroup, initialExpandedTopicId, deepLinkSpent = false }) {
   if (pick) return pick.spent ? undefined : pick.id;
-  return isDeepLinkGroup ? initialExpandedTopicId : undefined;
+  return isDeepLinkGroup && !deepLinkSpent ? initialExpandedTopicId : undefined;
 }
 
 /**
@@ -371,6 +373,15 @@ export default function CategorizedStances({
   // run child-first, so by the time this runs the remounted StanceAccordion
   // (keyed by the pick count) has already called handleToggle for it. See
   // accordionTopicIdFor for why the id must not stay set.
+  // The deep-linked topic, the same way: once its group has rendered open with
+  // the id (and no pick of its own overriding it), the accordion has opened the
+  // topic, so the id is withdrawn. Keyed by the id, so a new deep link is honoured.
+  const [spentDeepLink, setSpentDeepLink] = useState(null);
+  useEffect(() => {
+    if (!deepLinkTitle || picks[deepLinkTitle] || !openTitles.has(deepLinkTitle)) return;
+    const id = String(initialExpandedTopicId);
+    if (spentDeepLink !== id) setSpentDeepLink(id);
+  }, [deepLinkTitle, picks, openTitles, initialExpandedTopicId, spentDeepLink]);
   useEffect(() => {
     if (!Object.values(rawPicks).some((p) => !p.spent)) return;
     setPicks((prev) => Object.fromEntries(
@@ -494,6 +505,9 @@ export default function CategorizedStances({
         // when that id changes, so a remount is what re-opens a topic picked a
         // second time.
         const pick = picks[group.title];
+        const isDeepLinkGroup = group.title === deepLinkTitle;
+        // Held first while its id is withdrawn: the pick, else the deep link.
+        const pinned = pick ?? (isDeepLinkGroup ? { id: initialExpandedTopicId } : undefined);
         const { light, dark } = categoryStyle(group.title);
         return (
           <div
@@ -551,7 +565,7 @@ export default function CategorizedStances({
                     spinner that never resolves to a visible row. */}
                 <StanceAccordion
                   key={pick ? `pick-${pick.n}` : 'base'}
-                  topics={pickedFirst(group.topics, pick)}
+                  topics={pickedFirst(group.topics, pinned)}
                   polAnswers={polAnswers}
                   userAnswerMap={userAnswerMap}
                   politicianId={politicianId}
@@ -560,8 +574,9 @@ export default function CategorizedStances({
                   apiUrl={apiUrl}
                   verdictsByQuote={verdictsByQuote}
                   initialExpandedTopicId={accordionTopicIdFor(pick, {
-                    isDeepLinkGroup: group.title === deepLinkTitle,
+                    isDeepLinkGroup,
                     initialExpandedTopicId,
+                    deepLinkSpent: spentDeepLink === String(initialExpandedTopicId),
                   })}
                   polDotColor={darkMode ? dark : light}
                   quotes={quotes}

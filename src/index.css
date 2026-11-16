@@ -38,6 +38,8 @@
 }
 
 :root {
+  /* Light-mode page background on every page (html, body below), not only the
+     profile: changed from #f0f8fa on purpose in #241. */
   --ev-bg-light: #f5f8f9;
   --ev-teal: #00657c;
   --ev-teal-dark: #004d5c;
