@@ -85,7 +85,7 @@ function Profile() {
 
   return (
     <Layout>
-    <div className="min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
+    <div className="ev-soft min-h-screen bg-[var(--ev-bg-light)] dark:bg-ev-navy">
 
       <main className="w-full px-4 sm:px-8 lg:px-12 py-4 sm:py-8">
         {loadingProfile ? (

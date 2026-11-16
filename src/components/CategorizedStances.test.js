@@ -17,6 +17,9 @@ import {
   groupTitleForTopic,
   initialOpenTitle,
   quotesApiUrl,
+  reconcilePicks,
+  accordionTopicIdFor,
+  pickedFirst,
 } from './CategorizedStances.jsx';
 
 const SRC = readFileSync(new URL('./CategorizedStances.jsx', import.meta.url), 'utf8');
@@ -114,12 +117,105 @@ describe('initialOpenTitle — a group is always open', () => {
   });
 });
 
+/**
+ * A model of StanceAccordion's auto-open effect (ev-ui 0.16.0,
+ * StanceAccordion.jsx:320-326): keyed on [initialExpandedTopicId,
+ * topics.length], it calls handleToggle, which collapses a topic that is
+ * already expanded. Feed it the props one accordion instance sees over a run of
+ * renders and it returns the topic left expanded. There is no DOM test
+ * environment here, so this stands in for rendering the real component.
+ */
+function expandedAfter(renders) {
+  let prevDeps;
+  let expanded = null;
+  for (const { id, length } of renders) {
+    const deps = [id, length];
+    const changed = !prevDeps || deps.some((d, i) => !Object.is(d, prevDeps[i]));
+    if (changed && id && length > 0) expanded = expanded === String(id) ? null : String(id);
+    prevDeps = deps;
+  }
+  return expanded;
+}
+
+describe('a radar-label pick opens its topic once and leaves it open', () => {
+  const deepLink = { isDeepLinkGroup: false, initialExpandedTopicId: undefined };
+  const fresh = { id: '7', n: 1 };
+  const spent = { id: '7', n: 1, spent: true };
+
+  it('keeps the picked topic open when the group\'s topic count changes later', () => {
+    // The reader clicks a label: the group opens and topic 7 expands. Then
+    // research states resolve and the group gains a topic (3 → 4). Before the
+    // fix the id stayed set, the effect re-fired on the new length, and 7
+    // silently collapsed under the reader.
+    const renders = [
+      { id: accordionTopicIdFor(fresh, deepLink), length: 3 },
+      { id: accordionTopicIdFor(spent, deepLink), length: 3 },
+      { id: accordionTopicIdFor(spent, deepLink), length: 4 },
+    ];
+    expect(expandedAfter(renders)).toBe('7');
+  });
+
+  it('passes a fresh pick, withdraws a spent one, and leaves the deep link alone', () => {
+    expect(accordionTopicIdFor(fresh, deepLink)).toBe('7');
+    expect(accordionTopicIdFor(spent, deepLink)).toBeUndefined();
+    expect(accordionTopicIdFor(undefined, { isDeepLinkGroup: true, initialExpandedTopicId: '9' })).toBe('9');
+    expect(accordionTopicIdFor(undefined, { isDeepLinkGroup: false, initialExpandedTopicId: '9' })).toBeUndefined();
+  });
+
+  it('keeps a deep-linked topic open when the group\'s topic count changes later', () => {
+    // Same defect on the deep-link path: the id stayed set for the life of the
+    // page, so research states arriving collapsed the topic the link opened.
+    const link = (spentFlag) => accordionTopicIdFor(undefined, {
+      isDeepLinkGroup: true, initialExpandedTopicId: '9', deepLinkSpent: spentFlag,
+    });
+    const renders = [
+      { id: link(false), length: 3 },
+      { id: link(true), length: 3 },
+      { id: link(true), length: 4 },
+    ];
+    expect(expandedAfter(renders)).toBe('9');
+    expect(SRC).toMatch(/deepLinkSpent: spentDeepLink === String\(initialExpandedTopicId\)/);
+  });
+
+  it('drops a pick whose topic a lens change removed from the group', () => {
+    // The group survives the lens change but topic 7 does not; a pick left in
+    // place would have the accordion fetch context for a row it never renders.
+    const before = { 'Health Care': { id: '7', n: 1, spent: true }, Economy: { id: '2', n: 2 } };
+    const groups = [
+      { title: 'Health Care', topics: [topic(8, 'Health Care')] },
+      { title: 'Economy', topics: [topic(2, 'Economy')] },
+    ];
+    expect(reconcilePicks(before, groups)).toEqual({ Economy: { id: '2', n: 2 } });
+  });
+
+  it('returns the same picks object when nothing changes, so the prune is a no-op', () => {
+    const picks = { Economy: { id: '2', n: 1 } };
+    expect(reconcilePicks(picks, [{ title: 'Economy', topics: [topic(2, 'Economy')] }])).toBe(picks);
+  });
+
+  it('holds the picked topic first after its id is withdrawn', () => {
+    const topics = [topic(1), topic(2), topic(3)];
+    expect(pickedFirst(topics, { id: '3' }).map((t) => t.id)).toEqual([3, 1, 2]);
+    expect(pickedFirst(topics, undefined)).toBe(topics);
+    expect(pickedFirst(topics, { id: '1' })).toBe(topics);
+  });
+
+  it('marks each pick spent in an effect and prunes picks against the groups', () => {
+    expect(SRC).toMatch(/\{ \.\.\.p, spent: true \}/);
+    expect(SRC).toMatch(/setPicks\(\(prev\) => reconcilePicks\(prev, groups\)\)/);
+    expect(SRC).toMatch(/topics=\{pickedFirst\(group\.topics, pinned\)\}/);
+  });
+});
+
 describe('source guards for defects that a build and a screenshot both pass', () => {
   it('scopes initialExpandedTopicId to the group that owns the topic', () => {
     // Passed to every group, each accordion calls handleToggle for an id it
     // does not render: a context fetch fires and the spinner never resolves
     // to a visible row.
-    expect(SRC).toMatch(/initialExpandedTopicId=\{group\.title === deepLinkTitle \? initialExpandedTopicId : undefined\}/);
+    // A radar-label pick (focusTopic) is scoped the same way, per group via `picks`.
+    expect(SRC).toMatch(/const isDeepLinkGroup = group\.title === deepLinkTitle;/);
+    expect(SRC).toMatch(/initialExpandedTopicId=\{accordionTopicIdFor\(pick, \{\s*isDeepLinkGroup,/);
+    expect(SRC).toMatch(/const pick = picks\[group\.title\];/);
     expect(SRC).not.toMatch(/initialExpandedTopicId=\{initialExpandedTopicId\}/);
   });
 
@@ -133,7 +229,7 @@ describe('source guards for defects that a build and a screenshot both pass', ()
     // `background` is shorthand for background-color, and an inline
     // declaration beats the hover: classes — the hover state never rendered.
     const button = SRC.slice(SRC.indexOf('<button'), SRC.indexOf('</button>'));
-    expect(button).toMatch(/hover:bg-gray-50/);
+    expect(button).toMatch(/hover:bg-slate-100/);
     expect(button).not.toMatch(/background:/);
   });
 
