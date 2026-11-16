@@ -345,6 +345,11 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // renders labels as plain SVG <text> (wrapped into <tspan> lines) with no click
   // prop, so match the label's text back to a topic's short_title. Spoke lines
   // keep their own click (invert the spoke) — only the label text opens a topic.
+  //
+  // Pointer-only by design: the labels get no tabIndex, role or key handler. This
+  // is a shortcut to controls keyboard and screen-reader users already have — the
+  // stance panel's group headers are buttons, and so is each topic row inside —
+  // so a second set of tab stops on the chart would only duplicate them.
   const handleLabelClick = useCallback((e) => {
     const label = e.target.closest?.('text');
     if (!label) return;

@@ -176,6 +176,50 @@ export function groupTitleForTopic(groups, topicId) {
   return group ? group.title : null;
 }
 
+/**
+ * The picks ({ [groupTitle]: { id, n, spent } }) whose topic is still in their
+ * group. A lens change can narrow a group's topics while the group itself
+ * survives; a pick left pointing at a topic the group no longer renders would
+ * have StanceAccordion fetch context for a row that never appears. Returns the
+ * same object when nothing was dropped, so it is safe as a state updater.
+ */
+export function reconcilePicks(picks, groups) {
+  let dropped = false;
+  const next = {};
+  for (const [title, pick] of Object.entries(picks)) {
+    const group = groups.find((g) => g.title === title);
+    if (group && group.topics.some((t) => String(t.id) === String(pick.id))) next[title] = pick;
+    else dropped = true;
+  }
+  return dropped ? next : picks;
+}
+
+/**
+ * The initialExpandedTopicId a group's StanceAccordion gets. A pick passes its
+ * topic for one commit only: StanceAccordion's auto-open effect is keyed on
+ * [initialExpandedTopicId, topics.length] and toggles, so an id left in place
+ * re-fires whenever the group's topic count changes (research states arriving,
+ * a lens change) and collapses the topic the reader is reading. Once the
+ * accordion has opened it, the pick is marked `spent` and the id is withdrawn.
+ */
+export function accordionTopicIdFor(pick, { isDeepLinkGroup, initialExpandedTopicId }) {
+  if (pick) return pick.spent ? undefined : pick.id;
+  return isDeepLinkGroup ? initialExpandedTopicId : undefined;
+}
+
+/**
+ * The group's topics with the picked one first. StanceAccordion pins its
+ * initialExpandedTopicId to the top itself, but only while that id is set; the
+ * pick's id is withdrawn after one commit, so the order is held here instead and
+ * the opened topic does not jump back down the list.
+ */
+export function pickedFirst(topics, pick) {
+  if (!pick) return topics;
+  const i = topics.findIndex((t) => String(t.id) === String(pick.id));
+  if (i <= 0) return topics;
+  return [topics[i], ...topics.slice(0, i), ...topics.slice(i + 1)];
+}
+
 /** DOM id of a group's panel (the target of its header's aria-controls). */
 function panelIdFor(title) {
   return `stance-group-${title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`;
@@ -295,21 +339,44 @@ export default function CategorizedStances({
 
   // A topic picked from outside the panel (a radar label click in CompassCard)
   // toggles: a pick opens its group, counted as the reader's own choice, and
-  // brings it into view; picking it again while that group is still open, and
-  // still showing that topic, closes the group. Another topic in the same open
-  // group is shown rather than closing the group under it. Runs on every pick
-  // (`focusTopic.n`), unlike the one-shot deep link above.
+  // brings it into view; picking the same topic again while its group is still
+  // open closes the group. Another topic in the same open group is shown rather
+  // than closing the group under it. Runs on every pick (`focusTopic.n`),
+  // unlike the one-shot deep link above.
+  //
+  // StanceAccordion does not report which row is expanded, so "the same topic"
+  // means the last pick in that group, not the row on screen: if the reader has
+  // collapsed the picked topic by hand, picking it again closes the group, and a
+  // further pick re-opens both. A pick whose topic has left its group (a lens
+  // change) is dropped, so picking it again after that opens it afresh.
   const focusTitle = useMemo(
     () => groupTitleForTopic(groups, focusTopic?.id),
     [groups, focusTopic?.id]
   );
   const rootRef = useRef(null);
-  // The last pick in each group ({ id, n }), kept per group so a pick elsewhere
-  // does not collapse the question an earlier pick expanded. The refs mirror the
-  // latest state for the pick effect, which must not re-run when either changes.
-  const [picks, setPicks] = useState({});
+  // The last pick in each group ({ id, n, spent }), kept per group so a pick
+  // elsewhere does not collapse the question an earlier pick expanded. The refs
+  // mirror the latest state for the pick effect, which must not re-run when
+  // either changes. `picks` is read through reconcilePicks so a pick whose topic
+  // a lens change removed from its group is never rendered, even for the one
+  // render before the prune below lands.
+  const [rawPicks, setPicks] = useState({});
+  const picks = useMemo(() => reconcilePicks(rawPicks, groups), [rawPicks, groups]);
   const picksNow = useRef(picks);
   picksNow.current = picks;
+  useEffect(() => {
+    setPicks((prev) => reconcilePicks(prev, groups));
+  }, [groups]);
+  // Withdraw each new pick's id once its accordion has opened the topic. Effects
+  // run child-first, so by the time this runs the remounted StanceAccordion
+  // (keyed by the pick count) has already called handleToggle for it. See
+  // accordionTopicIdFor for why the id must not stay set.
+  useEffect(() => {
+    if (!Object.values(rawPicks).some((p) => !p.spent)) return;
+    setPicks((prev) => Object.fromEntries(
+      Object.entries(prev).map(([title, p]) => [title, p.spent ? p : { ...p, spent: true }])
+    ));
+  }, [rawPicks]);
   const openTitlesNow = useRef(openTitles);
   openTitlesNow.current = openTitles;
   useEffect(() => {
@@ -352,6 +419,11 @@ export default function CategorizedStances({
       Object.entries(picks).filter(([title]) => openTitles.has(title)).map(([, p]) => p.id)
     );
   }, [picks, openTitles, onPickedTopicsChange]);
+  // And clear them when the panel goes away (a lens change can unmount it), so
+  // a radar label is not left highlighted for a topic nothing is showing.
+  const onPickedNow = useRef(onPickedTopicsChange);
+  onPickedNow.current = onPickedTopicsChange;
+  useEffect(() => () => onPickedNow.current?.([]), []);
 
   // One quote fetch for the whole panel. Left to itself each StanceAccordion
   // keeps its own cache ref and re-requests the politician's full quote list
@@ -417,9 +489,10 @@ export default function CategorizedStances({
       {groups.map((group) => {
         const open = openTitles.has(group.title);
         const panelId = panelIdFor(group.title);
-        // A group with a pick passes that topic and is keyed by the pick count:
-        // StanceAccordion expands initialExpandedTopicId only when that id changes,
-        // so a remount is what re-opens a topic picked a second time.
+        // A group with a pick passes that topic for one commit and is keyed by
+        // the pick count: StanceAccordion expands initialExpandedTopicId only
+        // when that id changes, so a remount is what re-opens a topic picked a
+        // second time.
         const pick = picks[group.title];
         const { light, dark } = categoryStyle(group.title);
         return (
@@ -478,7 +551,7 @@ export default function CategorizedStances({
                     spinner that never resolves to a visible row. */}
                 <StanceAccordion
                   key={pick ? `pick-${pick.n}` : 'base'}
-                  topics={group.topics}
+                  topics={pickedFirst(group.topics, pick)}
                   polAnswers={polAnswers}
                   userAnswerMap={userAnswerMap}
                   politicianId={politicianId}
@@ -486,10 +559,10 @@ export default function CategorizedStances({
                   darkMode={darkMode}
                   apiUrl={apiUrl}
                   verdictsByQuote={verdictsByQuote}
-                  initialExpandedTopicId={
-                    pick ? pick.id
-                      : group.title === deepLinkTitle ? initialExpandedTopicId : undefined
-                  }
+                  initialExpandedTopicId={accordionTopicIdFor(pick, {
+                    isDeepLinkGroup: group.title === deepLinkTitle,
+                    initialExpandedTopicId,
+                  })}
                   polDotColor={darkMode ? dark : light}
                   quotes={quotes}
                   showHeading={false}
