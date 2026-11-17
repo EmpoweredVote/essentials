@@ -182,6 +182,22 @@ export const COVERAGE_STATES = [
       { label: 'West Hollywood', browseGovernmentList: ['0684410'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Westlake Village', browseGovernmentList: ['0684438'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Whittier', browseGovernmentList: ['0685292'], browseStateAbbrev: 'CA', hasContext: true },
+      // ⛔ RIVERSIDE (city, 0662000) AND TEMECULA (0678120) ARE DELIBERATELY ABSENT, and this
+      // comment exists so the question is not re-opened. Civic Spaces asked for both on
+      // 2026-11-17 because each has a curated, credited banner ('riverside' / 'temecula' in
+      // CURATED_LOCAL) that no geoid can reach. The banners are real; the coverage is not.
+      //
+      // Measured on the live browse API 2026-11-17, each against the same bogus-geoid control
+      // (0699999 -> 54 rows, state + federal tier only):
+      //   0662000 Riverside city -> 68 rows, of which ZERO are LOCAL. The 14 extra are 6
+      //                             Riverside County supervisors/officers, 6 state-district
+      //                             seats, 2 US House members — overlap, not a city roster.
+      //   0678120 Temecula       -> 64 rows, same shape, ZERO LOCAL.
+      // Neither geoid returns a city roster, so an entry here would publish a browse target
+      // whose "city" page holds no city officials. A banner is not a reason to claim coverage. Both banners already do their job on the ADDRESS path via
+      // representing_city, which is exactly what their buildingImages.js comment says they
+      // were curated for ("surface on address search via representingCity; no coverage chip").
+      // ▶ When ev-accounts seeds either council, add it here with a measured hasContext.
     ],
   },
   {
@@ -846,6 +862,26 @@ export const COVERAGE_STATES = [
       // labels to the government names — the banner keys in buildingImages.js
       // CURATED_LOCAL are 'columbus' (state-scoped GA, match:'exact') and 'macon',
       // and they resolve off these labels.
+      // [2026-11-17] ATLANTA — the largest gap this file has had since Nashville. The city has
+      // had a curated banner since 2026-10-17 (cities/atlanta.jpg, Marc Merlin, CC BY-SA 4.0)
+      // and a 72-row stance pass behind it, and it was still not listed here, so it was
+      // unreachable from the landing grid and absent from /coverage.json entirely. Found by
+      // Civic Spaces, who join banners to places on geoid and could not reach six of our
+      // assets; this is the biggest of the four that turned out to be real coverage.
+      //
+      // Verified against production through the live browse API 2026-11-17, with a control:
+      // geoid 1304000 returns 17 rows whose government_name is 'City of Atlanta, Georgia, US'
+      // (12 districts + 3 at-large Posts + Council President + Mayor), every seat held, while
+      // a bogus GA geoid (1399999) returns 50 — state + federal tier only. The control is what
+      // makes the count mean something; the state roster comes back on every request.
+      //
+      // hasContext TRUE, measured against the PUBLIC catalog rather than the DB
+      // (/api/compass/politicians/ids ∩ the 17 seated): 15 of 17 hold PUBLISHED answers, so
+      // this is what a signed-out voter actually sees, not what has merely been merged.
+      // The two without are Norwood (District 8) and Boone (District 10).
+      //
+      // ⚠ Label must stay 'Atlanta': the banner key is `atlanta`, match:'exact', state GA.
+      { label: 'Atlanta',       browseGovernmentList: ['1304000'], browseStateAbbrev: 'GA', hasContext: true },
       { label: 'Columbus',      browseGovernmentList: ['1319000'], browseStateAbbrev: 'GA', hasContext: false },
       { label: 'Macon',         browseGovernmentList: ['1349008'], browseStateAbbrev: 'GA', hasContext: false },
       { label: 'Milledgeville', browseGovernmentList: ['1351492'], browseStateAbbrev: 'GA', hasContext: false },
@@ -1064,6 +1100,23 @@ export const COVERAGE_STATES = [
       // Knight slice 16 — the last city of the programme to get a banner (certified
       // 2026-09-28) and the only MS city in it. 8 of 8 seated.
       { label: 'Biloxi', browseGovernmentList: ['2806220'], browseStateAbbrev: 'MS', hasContext: false },
+      // [2026-11-17] Jackson — the state capital, seeded and bannered (cities/jackson.jpg,
+      // Michael Barera, CC BY-SA 4.0, certified with the Biloxi wave) but never listed, so it
+      // resolved only from an address and never from the grid or /coverage.json.
+      //
+      // Verified on the live browse API 2026-11-17 against a bogus-geoid control (2899999 ->
+      // 42 rows): geoid 2836000 returns 84, including 8 rows whose government_name is 'City of
+      // Jackson, Mississippi, US' (7 wards + Mayor), all held.
+      // ⚠ It ALSO returns Hinds County's 8 offices, which carry district_type LOCAL rather
+      // than COUNTY and sit inside the city polygon. That is the overlap working as designed —
+      // it does not make this a county entry, and Hinds County is still not in
+      // COVERAGE_COUNTIES. Count by government_name, not by district_type, here.
+      //
+      // hasContext FALSE, measured against /api/compass/politicians/ids 2026-11-17: ZERO of
+      // the 8 hold a published answer. Not "thin" — none. The banner comment in
+      // buildingImages.js records the same split (city offices carry representing_city,
+      // Hinds County's 28 leave it NULL).
+      { label: 'Jackson', browseGovernmentList: ['2836000'], browseStateAbbrev: 'MS', hasContext: false },
     ],
   },
   {
@@ -1143,6 +1196,32 @@ export const COVERAGE_STATES = [
       // later stance pass; the 7 school board members are NOT, until the school-board badge
       // ships.
       { label: 'Anchorage', browseGovernmentList: ['0203000'], browseStateAbbrev: 'AK', hasContext: false },
+    ],
+  },
+  {
+    name: 'Idaho', abbrev: 'ID',
+    areas: [
+      // [2026-11-17] Idaho's first area of any kind. Boise was seeded and bannered
+      // (cities/boise.jpg, Roman Eugeniusz, CC BY-SA 3.0 — Boise City Hall, certified in the
+      // 6:1 band) and had no catalog row, so no consumer keying on geoid could reach it.
+      //
+      // Verified on the live browse API 2026-11-17 against a bogus-geoid control (1699999 ->
+      // 44 rows): geoid 1608830 returns 78, of which 7 are 'City of Boise, Idaho, US'
+      // (6 council districts + Mayor), every seat held. A complete council, not a fragment.
+      //
+      // 🔴 THE LABEL IS 'Boise' AND MUST NOT BE "CORRECTED" TO TIGER'S NAME. The gazetteer
+      // basename is "Boise City city" (the legal name is *City of Boise City*), and the
+      // buildingImages key is `boise`. Our own matching would survive "Boise City" — that key
+      // deliberately has NO match:'exact' so substring matching catches both forms — but
+      // consumers join coverage.label to the CURATED_LOCAL key exactly, and Civic Spaces
+      // flagged in advance that "Boise City" lands the geoid in the catalog while leaving the
+      // banner unresolved: a silent half-fix that looks done. 'Boise' is also the right thing
+      // to show a voter. `state: 'ID'` on the banner key is what keeps it off Boise City,
+      // OKLAHOMA, which is a real municipality.
+      //
+      // hasContext FALSE, measured against /api/compass/politicians/ids 2026-11-17: zero of
+      // the 7 hold a published answer. Eligible for a later stance pass.
+      { label: 'Boise', browseGovernmentList: ['1608830'], browseStateAbbrev: 'ID', hasContext: false },
     ],
   },
 ];
@@ -1409,6 +1488,30 @@ export const COVERAGE_COUNTIES = [
   //   by the 'broward county' key in CURATED_LOCAL plus the '12011' key in CURATED_COUNTY.
   //   This array is source documentation and county search works without it.
   { label: 'Broward County', browseGovernmentList: ['12011'], browseStateAbbrev: 'FL', hasContext: false },
+  // [2026-11-17] El Paso County, CO — Colorado's first county row here, and the fourth of the
+  // six banners Civic Spaces reported unreachable (the other two, Riverside city and Temecula,
+  // are refused in the California block above with the measurement that refuses them).
+  //
+  // ⚠ IT IS A COUNTY AND BELONGS IN THIS ARRAY, not in COVERAGE_STATES — its banner lives in
+  // CURATED_LOCAL under the space-form key 'el paso county' (the travis/king/dane pattern),
+  // which is a banner-wiring detail, not a tier. A consumer slicing counties would miss it
+  // from cities[]. The storage file carries a -co suffix because El Paso County, TEXAS exists.
+  //
+  // Verified on the live browse API 2026-11-17 against a bogus-geoid control (08999 -> 44
+  // rows): geoid 08041 returns 83, of which 11 are 'El Paso County, Colorado, US' — 5
+  // commissioners + Sheriff, Clerk and Recorder, Assessor, Treasurer, DA, Coroner — all held.
+  // ⚠ It also returns Colorado Springs' 10 city seats, because the city sits inside the
+  // county; the Springs keeps its own entry in COVERAGE_STATES and its own banner.
+  //
+  // hasContext TRUE, measured against /api/compass/politicians/ids 2026-11-17: 6 of 11 hold
+  // published answers — all five commissioners plus Sheriff Roybal. The five row officers
+  // (Clerk, Assessor, Treasurer, DA, Coroner) hold none.
+  //
+  // 🔑 No CURATED_COUNTY twin added, deliberately: travis/king/dane/pima/riverside/kitsap are
+  // all in the same position, so adding one here alone would be the inconsistency, not the
+  // fix. The address path inside unincorporated El Paso County therefore still renders the CO
+  // state shot — recorded, not repaired. See the #250 note on the two-key mechanism.
+  { label: 'El Paso County', browseGovernmentList: ['08041'], browseStateAbbrev: 'CO', hasContext: true },
 ];
 
 // Covered school districts (school-board deep-seeds). Search-only (not shown on
