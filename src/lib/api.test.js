@@ -1,6 +1,7 @@
 /**
  * Tests for src/lib/api.jsx — searchLocationsByName + lookupCoordinate
- * (SRCH-04 / SRCH-05). Mocks `./auth`'s publicFetch (per RESEARCH.md's
+ * (SRCH-04 / SRCH-05) + searchPoliticians (FL-7 county passthrough).
+ * Mocks `./auth`'s publicFetch and apiFetch (per RESEARCH.md's
  * standard Vitest convention — no existing local precedent for testing
  * api.jsx's network functions to copy mock mechanics from).
  */
@@ -12,13 +13,16 @@ vi.mock('./auth', () => ({
   publicFetch: vi.fn(),
 }));
 
-import { publicFetch } from './auth';
-import { searchLocationsByName, lookupCoordinate } from './api.jsx';
+import { publicFetch, apiFetch } from './auth';
+import { searchLocationsByName, lookupCoordinate, searchPoliticians } from './api.jsx';
 
-function mockResponse({ ok = true, status = 200, json } = {}) {
+function mockResponse({ ok = true, status = 200, json, headers = {} } = {}) {
   return {
     ok,
     status,
+    // searchPoliticians reads X-Data-Status / X-Formatted-Address off the
+    // response headers; the other helpers never touch them.
+    headers: { get: (name) => headers[String(name).toLowerCase()] ?? null },
     json: vi.fn().mockResolvedValue(json),
   };
 }
@@ -166,5 +170,70 @@ describe('lookupCoordinate (SRCH-05)', () => {
     publicFetch.mockResolvedValue(mockResponse({ json: { politicians: [], matchedAddress: '' } }));
     await lookupCoordinate(39.17, -86.52);
     expect(publicFetch).toHaveBeenCalled();
+  });
+});
+
+describe('searchPoliticians (FL-7: county passthrough)', () => {
+  const WRAPPED = {
+    politicians: [{ id: 1 }],
+    tribal_land: { on_reservation: false },
+    locality: { incorporated: true, place_name: 'Racine', county_name: 'Racine County' },
+    county: { geoid: '55101', name: 'Racine County' },
+  };
+
+  it('surfaces county from the wrapped address-search response', async () => {
+    apiFetch.mockResolvedValue(mockResponse({ json: WRAPPED }));
+
+    const result = await searchPoliticians('730 Washington Ave, Racine, WI 53403');
+
+    // The regression this guards: county was dropped here, so
+    // usePoliticianData's setCounty(result.county || null) could only ever set
+    // null and the county banner tier was unreachable in address mode.
+    expect(result.county).toEqual({ geoid: '55101', name: 'Racine County' });
+  });
+
+  it('surfaces county alongside locality, not instead of it', async () => {
+    apiFetch.mockResolvedValue(mockResponse({ json: WRAPPED }));
+
+    const result = await searchPoliticians('730 Washington Ave, Racine, WI 53403');
+
+    expect(result.locality).toEqual(WRAPPED.locality);
+    expect(result.tribal_land).toEqual(WRAPPED.tribal_land);
+    expect(result.data).toEqual(WRAPPED.politicians);
+  });
+
+  it('leaves county undefined on a legacy flat-array response', async () => {
+    apiFetch.mockResolvedValue(mockResponse({ json: [{ id: 1 }] }));
+
+    const result = await searchPoliticians('anywhere');
+
+    expect(result.county).toBeUndefined();
+    expect(result.data).toEqual([{ id: 1 }]);
+  });
+
+  it('carries a null county through unchanged (point with no county-tier officials)', async () => {
+    // Tucson: the API answers `county: null` because Pima County seats no
+    // officials in our data, while locality.county_name still names it.
+    apiFetch.mockResolvedValue(mockResponse({
+      json: {
+        politicians: [],
+        locality: { incorporated: true, place_name: 'Tucson', county_name: 'Pima County' },
+        county: null,
+      },
+    }));
+
+    const result = await searchPoliticians('100 N Stone Ave, Tucson, AZ 85701');
+
+    expect(result.county).toBeNull();
+    expect(result.locality.county_name).toBe('Pima County');
+  });
+
+  it('does not invent a county on an error response', async () => {
+    apiFetch.mockResolvedValue(mockResponse({ ok: false, status: 500, json: {} }));
+
+    const result = await searchPoliticians('anywhere');
+
+    expect(result.status).toBe('error');
+    expect(result.county).toBeUndefined();
   });
 });
