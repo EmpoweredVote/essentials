@@ -2427,6 +2427,67 @@ const CURATED_COUNTY = {
   // would change what Hialeah and Miami Beach see — has no analogue here, because there is
   // no Hialeah on Oahu.
   '15003': { state: 'HI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/honolulu.jpg' },
+
+  // ─── The seven address-path twins (2026-11-17) ──────────────────────────────────────
+  // Each entry below is the ADDRESS half of a county banner whose BROWSE half has sat in
+  // CURATED_LOCAL for months. Browsing "Travis County" showed Hamilton Pool; an address in
+  // Pflugerville showed the Texas state panorama. One place, two pictures, depending how you
+  // arrived — the same defect #250 closed for Marin and Santa Cruz from the other direction.
+  // El Paso County turned it up again on 2026-11-17 (#253), and these are the rest of them.
+  //
+  // ⚠ ALL SEVEN DEPART FROM THE RULE AT THE TOP OF THIS MAP, exactly as Marin, Santa Cruz
+  // and Broward do: every one has a city half. They pass Broward's test more cleanly than
+  // Broward itself did, and it was MEASURED rather than assumed — live browse API,
+  // 2026-11-17, every municipality with a seeded roster inside each county, then each of
+  // those resolved through getBuildingImages:
+  //
+  //   Travis TX     Austin                                             -> austin.jpg
+  //   Riverside CA  Palm Springs, Indio                                -> palm-springs, indio
+  //   El Paso CO    Colorado Springs                                   -> colorado-springs.jpg
+  //   King WA       Seattle, Redmond, Duvall                           -> seattle, redmond, duvall
+  //   Kitsap WA     Bainbridge Island                                  -> bainbridge-island.jpg
+  //   Dane WI       Madison                                            -> madison.jpg
+  //   Pima AZ       Tucson, South Tucson, Oro Valley, Marana, Sahuarita -> all five
+  //
+  // 🔑🔑 EVERY seeded municipality in all seven ALREADY HAS ITS OWN CITY BANNER, and
+  // resolution tries CURATED_LOCAL first, so NOT ONE of the fourteen changes. The
+  // Miami-Dade failure this rule guards against — a county photograph standing over a
+  // city's own officials — cannot occur in any of these seven. What changes is only the
+  // reader for whom the COUNTY is the local government this app shows them: Pflugerville,
+  // Federal Way, Middleton, Green Valley, Bremerton, Cathedral City, Fountain. Today they
+  // get the state panorama.
+  // 🔴 The day one of those municipalities gets a seeded roster and NO banner of its own,
+  // revisit the county it sits in. Reverting is one line, the same as Broward.
+  //
+  // 🔑 THE KEY FORM WAS VERIFIED LIVE, NOT INFERRED. `countyGeoId` reaches
+  // getBuildingImages as `county?.geoid ?? zipInfo?.county?.geoid`, so the test is the
+  // address/ZIP response itself: GET /api/essentials/candidates/<zip> for one UNBANNERED
+  // town per county returned county.geoid exactly as keyed below — 48453 Pflugerville,
+  // 53033 Federal Way, 55025 Middleton, 04019 Green Valley, 53035 Bremerton, 06065
+  // Cathedral City, 08041 Fountain. Leading zeros included, which is why these stay strings.
+  //
+  // ⚠ NO `focus` ON ANY OF THE SEVEN — checked, not assumed. getBuildingImages returns the
+  // focus of WHICHEVER entry matched, so a twin that drops one renders the two paths at
+  // different crops; that was the #250 trap and Santa Cruz County's '50% 30%' is the reason
+  // it exists. None of these seven CURATED_LOCAL entries carries a focus override, so none
+  // is copied here. Re-check this if one ever gains one.
+  // 🔑 No credit comments on these keys: banners.json joins on BUCKET PATH and the credits
+  // live with the CURATED_LOCAL entries, so the export regenerates byte-identical.
+  '04019': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pima-county.jpg' },
+  // ⚠ Riverside city and Temecula each keep their OWN banner from an address (fox theater /
+  // old town), which is what they were curated for — they are not coverage areas and were
+  // refused as such in #253. This entry is for the rest of the county, Cathedral City and
+  // the other Coachella Valley municipalities among them.
+  '06065': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/riverside-county.jpg' },
+  '08041': { state: 'CO', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/el-paso-county-co.jpg' },
+  '48453': { state: 'TX', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/travis-county.jpg' },
+  '53033': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/king-county.jpg' },
+  // ⚠ The asset is the Manette Bridge from the BREMERTON waterfront, chosen because "one
+  // small waterfront town cannot stand in for a county that is mostly Bremerton, Silverdale
+  // and Port Orchard" — so this twin puts that picture in front of exactly the readers it
+  // was composed for. A Bainbridge Island address still shows the ferry; its key wins first.
+  '53035': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/kitsap-county.jpg' },
+  '55025': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/dane-county.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
