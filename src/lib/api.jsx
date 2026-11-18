@@ -114,12 +114,24 @@ export async function searchPoliticians(query) {
     let politicians = data;
     let tribal_land;
     let locality;
+    // FL-7: `county` ({ geoid, name }) is what keys the county banner tier.
+    // POST /essentials/candidates/search has returned it all along
+    // (routes/essentialsCandidates.ts: `county: result.county ?? null`, under
+    // optionalAuth, so signed-out callers get it too) — this helper was simply
+    // not passing it on, so usePoliticianData's `setCounty(result.county || null)`
+    // could only ever set null and Results.jsx's
+    // `county?.geoid ?? zipInfo?.county?.geoid` fell through to the ZIP half on
+    // every address search. The hook and Results.jsx were already wired; only
+    // this line was missing. Unwrapped with the others, so a legacy flat-array
+    // response leaves it undefined exactly like tribal_land and locality.
+    let county;
     if (data && !Array.isArray(data) && Array.isArray(data.politicians)) {
       politicians = data.politicians;
       tribal_land = data.tribal_land;
       locality = data.locality;
+      county = data.county;
     }
-    return { status: status || "fresh", data: politicians, formattedAddress, tribal_land, locality };
+    return { status: status || "fresh", data: politicians, formattedAddress, tribal_land, locality, county };
   } catch (error) {
     console.error("Search error:", error);
     return { status: "error", data: [], error: error.message, formattedAddress: "" };
