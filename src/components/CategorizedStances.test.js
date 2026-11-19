@@ -269,3 +269,33 @@ describe('quotesApiUrl', () => {
     expect(quotesApiUrl('https://api.test')).toBe('https://api.test');
   });
 });
+
+describe('fetchPoliticianQuotes', () => {
+  // CompassCard starts this read alongside the answers; the panel, which mounts later, must
+  // reuse that request rather than start a second one behind it.
+  it('shares one request per politician and retries after a failure', async () => {
+    const { fetchPoliticianQuotes } = await import('./CategorizedStances.jsx');
+    const calls = [];
+    const realFetch = globalThis.fetch;
+    let fail = true;
+    globalThis.fetch = async (url) => {
+      calls.push(String(url));
+      if (fail) return { ok: false, status: 503 };
+      return { ok: true, json: async () => ({ quotes: [{ id: 'q' }] }) };
+    };
+    try {
+      expect(await fetchPoliticianQuotes('p-retry', 'https://api.test')).toEqual([]);
+      fail = false;
+      const a = fetchPoliticianQuotes('p-retry', 'https://api.test');
+      const b = fetchPoliticianQuotes('p-retry', 'https://api.test');
+      expect(a).toBe(b);
+      expect(await a).toEqual([{ id: 'q' }]);
+      expect(calls).toEqual([
+        'https://api.test/api/essentials/quotes?politician_id=p-retry',
+        'https://api.test/api/essentials/quotes?politician_id=p-retry',
+      ]);
+    } finally {
+      globalThis.fetch = realFetch;
+    }
+  });
+});

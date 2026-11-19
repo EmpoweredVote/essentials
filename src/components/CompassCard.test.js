@@ -48,11 +48,26 @@ describe('CompassCard calibrate invitation', () => {
   });
 
   it('does not flash it at a logged-in user whose answers are still loading', () => {
-    // Same reason the zone below shows a spinner instead of the CTA: compassLoading clears
-    // before loadCompassData() finishes, so hasUserCompass is briefly false for someone who
-    // does have a compass.
+    // Same reason the zone below shows a spinner instead of the CTA: the card shows once the
+    // stances index arrives, before sign-in is known and before loadCompassData() finishes,
+    // so hasUserCompass is briefly false for someone who does have a compass.
     const branch = SRC.split('{researchOnly ? (')[1].split(') : hasUserCompass ? (')[0];
-    expect(branch).toMatch(/!\(isLoggedIn && !compassDataLoaded\)/);
+    expect(branch).toMatch(/!userCompassPending/);
+    expect(SRC).toMatch(/userCompassPending = !authChecked \|\| \(isLoggedIn && !compassDataLoaded\)/);
+  });
+
+  it('starts the quote list alongside the answers, not after them', () => {
+    // The stances panel mounts only once the answers arrive; its quote read used to start
+    // then, adding a round trip to every profile load.
+    const effect = SRC.split('fetchPoliticianAnswers(politicianId)')[0].split('useEffect(() => {').pop();
+    expect(effect).toMatch(/fetchPoliticianQuotes\(politicianId/);
+  });
+
+  it('waits on the stances index, not the sign-in and location chain', () => {
+    // compassLoading also covers the visitor's own account and representatives lookups,
+    // which held a signed-in visitor's view of every profile behind their address lookup.
+    expect(SRC).toMatch(/compassCardMode\(\{ compassLoading: stancesIndexLoading/);
+    expect(SRC).toMatch(/if \(stancesIndexLoading \|\| !politicianIdsWithStances\.has/);
   });
 
   it('does not re-introduce the comparison pitch alongside it', () => {

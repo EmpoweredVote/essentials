@@ -166,6 +166,35 @@ export function quotesApiUrl(apiUrl) {
   return apiUrl || API_ORIGIN;
 }
 
+// Quote lists by request URL, kept as promises so a request already in flight is shared.
+// CompassCard starts the read at the same time as the politician's answers; this panel
+// mounts only after the answers arrive, and picks up the same request instead of starting
+// a second one after it. Bounded so a long session does not hold every list it has seen.
+const quotesCache = new Map();
+const QUOTES_CACHE_MAX = 20;
+
+/**
+ * The politician's full quote list ([] on any failure). One request per politician
+ * and host; a failed read is not cached, so the next caller tries again.
+ */
+export function fetchPoliticianQuotes(politicianId, apiUrl) {
+  const url = `${quotesApiUrl(apiUrl)}/api/essentials/quotes?politician_id=${politicianId}`;
+  if (quotesCache.has(url)) return quotesCache.get(url);
+  const request = (async () => {
+    try {
+      const res = await fetch(url, { credentials: 'include' });
+      if (!res.ok) throw new Error(String(res.status));
+      return (await res.json()).quotes || [];
+    } catch {
+      quotesCache.delete(url);
+      return [];
+    }
+  })();
+  if (quotesCache.size >= QUOTES_CACHE_MAX) quotesCache.delete(quotesCache.keys().next().value);
+  quotesCache.set(url, request);
+  return request;
+}
+
 /**
  * The title of the group holding `topicId`, or null. Ids are compared as
  * strings because the deep link carries them as text.
@@ -446,19 +475,9 @@ export default function CategorizedStances({
   useEffect(() => {
     if (!politicianId) return undefined;
     let cancelled = false;
-    (async () => {
-      let list = [];
-      try {
-        const res = await fetch(
-          `${quotesApiUrl(apiUrl)}/api/essentials/quotes?politician_id=${politicianId}`,
-          { credentials: 'include' }
-        );
-        if (res.ok) list = (await res.json()).quotes || [];
-      } catch {
-        list = [];
-      }
+    fetchPoliticianQuotes(politicianId, apiUrl).then((list) => {
       if (!cancelled) setQuotes(list);
-    })();
+    });
     return () => { cancelled = true; };
   }, [politicianId, apiUrl]);
 

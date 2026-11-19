@@ -63,7 +63,7 @@ function EmptyNotchRow() {
 }
 
 export default function JudicialCompassSection({ officeTitle, politicianId: _politicianId }) {
-  const { allTopics, compassLoading } = useCompass();
+  const { allTopics, stancesIndexLoading } = useCompass();
 
   const judicialSubRole = useMemo(() => deriveJudicialSubRole(officeTitle), [officeTitle]);
 
@@ -73,7 +73,7 @@ export default function JudicialCompassSection({ officeTitle, politicianId: _pol
     return filterJudicialTopics(judicialTopics, judicialSubRole);
   }, [allTopics, judicialSubRole]);
 
-  if (compassLoading) return null;
+  if (stancesIndexLoading) return null;
   if (displayTopics.length === 0) return null;
 
   return (

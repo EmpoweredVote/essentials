@@ -67,6 +67,15 @@ export function CompassProvider({ children }) {
   // (they run concurrently). CompassCard reads compassDataLoaded to avoid prematurely showing
   // the "Calibrate your compass" prompt while the API fetch is still in flight.
   const [compassDataLoaded, setCompassDataLoaded] = useState(false);
+  // True until the topic list and the "who has stances" id list arrive. Both reads are public,
+  // so they start on mount instead of waiting behind the sign-in, ev-context and
+  // my-representatives reads that hold compassLoading. The profile's CompassCard waits on this
+  // flag, not on compassLoading, so a signed-in visitor no longer waits for their own address
+  // lookup before a politician's stances can load.
+  const [stancesIndexLoading, setStancesIndexLoading] = useState(true);
+  // True once we know whether the visitor is signed in (before the slower ev-context and
+  // my-representatives reads finish). CompassCard holds its calibrate prompt until then.
+  const [authChecked, setAuthChecked] = useState(false);
 
   // Refs so compass load can access auth state without stale closures
   const authedUserRef = useRef(null);
@@ -442,6 +451,7 @@ export function CompassProvider({ children }) {
               identify(authedUser.id);
             }
             setUserJurisdiction(authedUser.jurisdiction ?? null);
+            setAuthChecked(true);
           }
 
           // Address-only slice from ev-context (non-compass)
@@ -490,24 +500,34 @@ export function CompassProvider({ children }) {
           // so profile pages show the radar chart without requiring the user to visit
           // the Results page and toggle compass mode first.
           loadCompassData();
+          if (!cancelled) setAuthChecked(true);
         }
-      // Always fetch topics + politician stances — needed to render CompassCard on profile
-      // pages regardless of whether the user ever enables compass mode on the Results page.
       // Must be awaited so compassLoading=false only fires after politicianIdsWithStances is set.
-      await Promise.all([fetchTopics(), fetchPoliticiansWithStances()]).then(([topics, ids]) => {
-        if (!cancelled) {
-          setAllTopics(topics);
-          setPoliticianIdsWithStances(new Set(ids));
-        }
-      }).catch(() => {});
+      await stancesIndex;
     } catch (err) {
       console.error("CompassContext auth load error:", err);
     } finally {
         if (!cancelled) {
+          setAuthChecked(true);
           setCompassLoading(false);
         }
       }
     }
+
+    // Always fetch topics + politician stances — needed to render CompassCard on profile
+    // pages regardless of whether the user ever enables compass mode on the Results page.
+    // Started here, in parallel with the auth chain, rather than at its end.
+    const stancesIndex = Promise.all([fetchTopics(), fetchPoliticiansWithStances()])
+      .then(([topics, ids]) => {
+        if (!cancelled) {
+          setAllTopics(topics);
+          setPoliticianIdsWithStances(new Set(ids));
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setStancesIndexLoading(false);
+      });
 
     loadAuth();
     return () => { cancelled = true; };
@@ -632,6 +652,8 @@ export function CompassProvider({ children }) {
       politicianIdsWithStances,
       compassLoading,
       compassDataLoaded,
+      stancesIndexLoading,
+      authChecked,
       myRepresentatives,
       myRepresentativesAddress,
       myLocationNotSet,
@@ -671,6 +693,8 @@ export function CompassProvider({ children }) {
       politicianIdsWithStances,
       compassLoading,
       compassDataLoaded,
+      stancesIndexLoading,
+      authChecked,
       myRepresentatives,
       myRepresentativesAddress,
       myLocationNotSet,
