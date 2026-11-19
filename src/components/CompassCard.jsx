@@ -7,7 +7,7 @@ import { fetchPoliticianAnswers, fetchResearchStates, researchedTopics, compassC
 import { useCompass } from '../contexts/CompassContext';
 import { useTheme } from '../hooks/useTheme';
 import LensChipRow from './LensChipRow';
-import CategorizedStances from './CategorizedStances';
+import CategorizedStances, { fetchPoliticianQuotes } from './CategorizedStances';
 import CompassIntro from './CompassIntro';
 import { API_ORIGIN } from '../lib/apiOrigin';
 
@@ -63,7 +63,8 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
     batchInvertSpokes,
     verdicts,
     initialTopicId,
-    compassLoading,
+    stancesIndexLoading,
+    authChecked,
     compassDataLoaded,
     lenses,
     activeLensKey,
@@ -194,7 +195,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   const containerRef = useRef(null);
 
   const hasStances = politicianIdsWithStances.has(politicianId);
-  const mode = compassCardMode({ compassLoading, hasStances, scopedTopics, researchStates });
+  const mode = compassCardMode({ compassLoading: stancesIndexLoading, hasStances, scopedTopics, researchStates });
   // Someone researched with no answers has nothing to fetch: the breakdown is their research rows alone.
   const researchOnly = mode === 'research-only';
   const polAnswers = researchOnly ? [] : fetchedAnswers;
@@ -203,12 +204,15 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
   // Fetch politician answers (hook must be called unconditionally)
   useEffect(() => {
     // Skip fetch if gated out
-    if (compassLoading || !politicianIdsWithStances.has(politicianId)) {
+    if (stancesIndexLoading || !politicianIdsWithStances.has(politicianId)) {
       return;
     }
 
     let cancelled = false;
     setPolLoading(true);
+    // Start the quote list now, alongside the answers. The stances panel that shows the
+    // quotes mounts only once the answers arrive, and reuses this same request.
+    fetchPoliticianQuotes(politicianId, API_ORIGIN);
 
     fetchPoliticianAnswers(politicianId)
       .then((answers) => {
@@ -225,11 +229,15 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
       });
 
     return () => { cancelled = true; };
-  }, [politicianId, compassLoading, politicianIdsWithStances]);
+  }, [politicianId, stancesIndexLoading, politicianIdsWithStances]);
 
   // Compute chart data — must happen before early returns so hooks below are
   // always called in the same order (Rules of Hooks).
   const hasUserCompass = userAnswers && userAnswers.length > 0;
+  // Whether the visitor has a compass is unknown until the sign-in check returns, and for a
+  // signed-in visitor until their own answers arrive. The calibrate prompt waits for both, so
+  // it never flashes at someone who already has a compass.
+  const userCompassPending = !authChecked || (isLoggedIn && !compassDataLoaded);
   const returnUrl = window.location.origin + location.pathname + location.search;
   const ctaHref = `${COMPASS_URL}?return=${encodeURIComponent(returnUrl)}`;
 
@@ -500,7 +508,7 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
                 the people we do hold positions for, which is what calibrating actually buys here.
                 Same guard as the zone below: never offer it to a logged-in user whose answers are
                 still in flight, or it flashes at someone who already has a compass. */}
-            {!hasUserCompass && !(isLoggedIn && !compassDataLoaded) && (
+            {!hasUserCompass && !userCompassPending && (
               <div
                 className="mt-6 pt-5 border-t"
                 style={{ borderColor: isDark ? 'rgba(255,255,255,0.08)' : '#e5e7eb' }}
@@ -761,11 +769,11 @@ export default function CompassCard({ politicianId, politicianName, politicianTi
             </p>
           )}
           </>
-        ) : isLoggedIn && !compassDataLoaded ? (
-          /* Logged-in user: answers are still being fetched from the API.
-             compassLoading (auth+stances) cleared before loadCompassData() finishes
-             because they run concurrently. Show a spinner so the user never sees the
-             "Calibrate your compass" CTA while their data is still in flight. */
+        ) : userCompassPending ? (
+          /* Sign-in still being checked, or a logged-in user's answers still being fetched.
+             The card itself shows as soon as the stances index arrives, which can be before
+             either. Show a spinner so the user never sees the "Calibrate your compass" CTA
+             while their data is still in flight. */
           <div
             style={{
               display: 'flex',
