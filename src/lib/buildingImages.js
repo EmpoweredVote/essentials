@@ -266,6 +266,38 @@ const CURATED_LOCAL = {
   //   town-of-norway     - Town of Norway Municipal Building | Wikideas1 | CC0
   //   town-of-waterford  - Town of Waterford Municipal Building | Wikideas1 | CC0
   racine: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/racine.jpg' },
+  // Racine COUNTY (2026-11-17, operator-certified). Same collision as 'los angeles county'
+  // above and found in the same sweep: browsing "Racine County" matched 'racine' by
+  // substring and served the CITY's Monument Square. Key length is the fix — 'racine
+  // county' (13) is tested before 'racine' (6).
+  //
+  // Subject: the La Follette inscription carved into the Racine County Courthouse plinth,
+  // GREATER THAN ALL IS THE SOVEREIGN POWER OF THE PEOPLE, with downtown behind it. The
+  // seat of COUNTY government, which is the Marin precedent (the FLW Civic Center).
+  // Carved lettering in frame is established here — Gardena ships a monument sign.
+  //
+  // 🔴🔴 THE THREE REFUSALS ARE ARITHMETIC, NOT TASTE, AND THE REASON TRANSFERS TO EVERY
+  // COURTHOUSE. The desktop band shows SOURCE WIDTH / 6 rows of the original, so Barera's
+  // 6000x4000 frame gives the band 1000 of 4000 rows and a twelve-storey Art Deco tower
+  // does not fit in 1000: lantern and cornice cut off, no ground, decapitated and floating
+  // at once. Kiser's south-east elevation fails worse (1.33:1 source, 58% of its height
+  // discarded before the band takes its slice), and his grounds frame puts lawn, clipped
+  // shrubs and the staff car park in the band with no courthouse in it at all. The plinth
+  // works precisely because it is HORIZONTAL — a 6:1 band wants a subject no taller than
+  // about a sixth of the frame's width.
+  //
+  // ⚠ COMMONS HOLDS NOTHING ELSE FOR THIS COUNTY, checked 2026-11-17 so the next person
+  // does not repeat the sweep: Cliffside and Quarry Lake county parks, the Root River,
+  // Tichigan, Wind Lake and the county's farmland return no licensed file over 1700px
+  // wide. Category:Racine County, Wisconsin holds TWELVE files, and its three usable ones
+  // are already the Dover, Norway and Yorkville town banners. If this frame is ever
+  // replaced the next pool is Unsplash, not another Commons sweep.
+  // ⚠ Two things to know about the frame: a shadow crosses the inscription at centre-right,
+  // accepted at review; and the storefronts behind are the same downtown as cities/racine.jpg
+  // a block away — the Kitsap call, where the county's own seat is what the county looks like.
+  //   racine county - "Greater than all is the sovereign power of the people" (Robert M. La
+  //                   Follette), inscription at the Racine County Courthouse | Tim Kiser | CC BY-SA 4.0
+  'racine county': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/racine-county.jpg' },
   burlington: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/burlington-wi.jpg' },
   caledonia: { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/caledonia.jpg' },
   'mount pleasant': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/mount-pleasant.jpg' },
@@ -1106,6 +1138,38 @@ const CURATED_LOCAL = {
   // 🔑 And note the licences differ per file -- CC BY-SA 4.0 twice, CC BY 2.5 once. There is
   //    no batch-level licence here any more than there was in UT Wave 2.
   'los angeles': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0644000-skyline.jpg' },
+  // Los Angeles COUNTY (2026-11-17, operator-certified). 🔴 THIS KEY EXISTS TO END A
+  // COLLISION, NOT TO FILL A GAP. Until today, browsing "Los Angeles County" matched the
+  // 'los angeles' key by SUBSTRING and served the CITY skyline above — the county wearing
+  // its principal city's photograph, which is the thing match:'exact' exists to prevent and
+  // exactly what 'dane county' (Driftless, not the Capitol), 'travis county' (Hamilton
+  // Pool, not the skyline) and 'king county' (Snoqualmie Falls, not Seattle) were curated
+  // to avoid. Found by sweeping every COVERAGE_COUNTIES label through getBuildingImages
+  // after #254; Racine County below was the other one.
+  //
+  // ⚠ The fix is the KEY LENGTH, and it is load-bearing: resolution sorts CURATED_LOCAL by
+  // key length descending, so 'los angeles county' (18) is tested before 'los angeles' (11)
+  // and wins the county label. Shortening this key to 'la county' would silently restore
+  // the collision. No match:'exact' is needed or wanted — substring is what catches
+  // "Los Angeles County, CA" and any label the resolver hands us.
+  //
+  // Subject: Vasquez Rocks Natural Area at sunset — a LOS ANGELES COUNTY park, the whole
+  // basin with the tilted slabs at right and the Sierra Pelona behind. The county-park
+  // class is the established one for a county with a city half: Travis ships Hamilton Pool
+  // and El Paso CO ships the Calhan Paint Mines, both county-owned ground.
+  // ⚠ Certified in the 6:1 band, and the sky is ~45% of it. That is accepted rather than
+  // fixed: the source is 3.36:1, WIDER than the 3.148:1 asset, so the ratio crop takes
+  // WIDTH (15416 of 16447 px) and the vertical anchor has nothing to move. Only --crop-width
+  // could trim that sky, and narrowing a 16447px source to chase it would shrink the band's
+  // own window (width/6) for no gain. 16447x4897 source at 0.11x: every pixel is real.
+  // ⚠ Adjacency checked against the three LA-area frames that could have clashed: Lancaster
+  // ships the Antelope Valley poppy reserve, Palmdale a lake vista, Santa Clarita the Magic
+  // Mountain hills. A sandstone formation at sunset is none of those.
+  // 🔴 REFUSED, and the reason is the point of this entry: 'Los Angeles with Mount Baldy'
+  // (Alek Leckszas, CC BY-SA 4.0) — the city skyline with the range behind it, which is the
+  // picture this key exists to stop serving.
+  //   los angeles county - Sunset at Vasquez Rocks Natural Area | Jeff Turner | CC BY 2.0
+  'los angeles county': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/los-angeles-county.jpg' },
   'long beach': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/long-beach.jpg' },
   glendale: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/glendale.jpg' },
   pomona: { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/la_county/building_photos/0658072.jpg' },
@@ -2474,6 +2538,17 @@ const CURATED_COUNTY = {
   // 🔑 No credit comments on these keys: banners.json joins on BUCKET PATH and the credits
   // live with the CURATED_LOCAL entries, so the export regenerates byte-identical.
   '04019': { state: 'AZ', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/pima-county.jpg' },
+  // Los Angeles County and Racine County (2026-11-17). These two were NOT part of the seven
+  // above, because until today neither had a county asset to twin — each resolved on browse
+  // by substring collision with its city key. Now that both have their own photograph, they
+  // take the address half on the same terms as the seven, and for once the browse half is
+  // the new thing and the twin is the routine one.
+  // ⚠ LA County is the Miami-Dade shape the rule at the top of this map was written for —
+  // 88 municipalities, many large and distinct. It is still right, for Broward's reason: a
+  // city with its own banner keeps it (CURATED_LOCAL is tried first, and the LA basin is
+  // the best-bannered county in the registry), so this changes only the reader in an
+  // unbannered one, for whom the county IS the local government this app shows.
+  '06037': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/los-angeles-county.jpg' },
   // ⚠ Riverside city and Temecula each keep their OWN banner from an address (fox theater /
   // old town), which is what they were curated for — they are not coverage areas and were
   // refused as such in #253. This entry is for the rest of the county, Cathedral City and
@@ -2488,6 +2563,7 @@ const CURATED_COUNTY = {
   // was composed for. A Bainbridge Island address still shows the ferry; its key wins first.
   '53035': { state: 'WA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/kitsap-county.jpg' },
   '55025': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/dane-county.jpg' },
+  '55101': { state: 'WI', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/racine-county.jpg' },
 };
 
 // Curated wide panoramic state banners (skyline where iconic, natural landscape
