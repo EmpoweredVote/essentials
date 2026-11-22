@@ -192,9 +192,14 @@ export function buildGroupTransition(rows) {
     };
   }
 
+  // ⚠ "1 seats elected May 2" reached a rendered card before this was pluralised. The incomplete
+  // case is exactly where a body has FEWER winners than seats — Fort Worth District 3 is 11
+  // offices and one recorded winner — so a count of one is routine here, not an edge case.
+  const seatWord = people.length === 1 ? 'seat' : 'seats';
+
   return {
     case: CASES.RESULT_PARTIAL,
-    lines: [`${people.length} seats elected ${day}:`, ...people.map((p) => p.name)],
+    lines: [`${people.length} ${seatWord} elected ${day}:`, ...people.map((p) => p.name)],
     people,
   };
 }

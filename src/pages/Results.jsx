@@ -5,6 +5,8 @@ import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVert
 import { partitionByTab, applyTabTypeDefault, TAB_TYPE_DEFAULTS } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
+import SeatTransition from '../components/SeatTransition';
+import { buildSeatTransition, buildGroupTransition } from '../lib/seatTransition';
 import PortraitRestrictionNotice from '../components/PortraitRestrictionNotice';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -38,6 +40,35 @@ import { qualifyLocalTitle, GOV_FORM_PREFIX } from '../lib/localTitle';
 /** Stable key that identifies a specific seat (office + district). */
 function seatKey(pol) {
   return `${pol.office_title}||${pol.district_type}||${pol.district_id || ''}`;
+}
+
+/**
+ * Which transition block, if any, this seat's card shows.
+ *
+ * 🔴 ONE BODY, ONE STATEMENT. A multi-seat race attaches ALL its winners to ONE office row, so
+ * the body's result is a single fact about several seats. Each seat keeps its own card -- a
+ * voter still needs to see every officeholder -- but the group block is drawn on the FIRST
+ * sibling only, ordered by office_id so it is the same seat on every render. Drawing it on all
+ * three would tell the voter the same thing three times; drawing it on none would lose it.
+ *
+ * The sibling rows come from the subgroup the card is already being rendered inside, so no
+ * second pass over the response is needed. Backend de-duplication is untouched: this is a
+ * render-time grouping and nothing else.
+ */
+function buildTransitionModel(pol, siblings) {
+  const group = pol && pol.seat_group;
+  if (!group || group.offices <= 1) return buildSeatTransition(pol);
+
+  const inGroup = (siblings || []).filter(
+    (s) => s && s.seat_group && s.seat_group.group_id === group.group_id
+  );
+  if (inGroup.length === 0) return buildSeatTransition(pol);
+
+  const ordered = [...inGroup].sort((a, b) =>
+    String(a.office_id || '').localeCompare(String(b.office_id || ''))
+  );
+  if (ordered[0].office_id !== pol.office_id) return null;
+  return buildGroupTransition(ordered);
 }
 
 // Whether an office is a "local" office for Local Lens default purposes.
@@ -1544,7 +1575,8 @@ export default function Results() {
   };
 
   /** Render a politician or candidate card with election date below for candidates */
-  const renderPoliticianCard = (pol) => {
+  const renderPoliticianCard = (pol, siblings) => {
+    const transitionModel = buildTransitionModel(pol, siblings);
     const isCandidate = pol.is_candidate;
     const isVacant = pol.is_vacant;
 
@@ -1637,6 +1669,9 @@ export default function Results() {
             badge="Vacant"
             onClick={undefined}
             variant="horizontal"
+            // 🔴 AN EMPTY SEAT IS EXACTLY WHERE "who is arriving" MATTERS MOST. Without this a
+            // vacancy with a known successor reads as a dead end.
+            footer={<SeatTransition model={transitionModel} />}
           />
         </div>
       );
@@ -1724,7 +1759,12 @@ export default function Results() {
         // so a member who grants permission simply gets their photograph.
         portraitRestricted={!!pol.photo_restriction}
         restrictedLabel={pol.photo_restriction?.label}
-        footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
+        footer={
+          <>
+            <SeatTransition model={transitionModel} />
+            <IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />
+          </>
+        }
       />
     );
     return (
@@ -1808,10 +1848,10 @@ export default function Results() {
     );
   };
 
-  const renderSeatGroup = (pol) => {
+  const renderSeatGroup = (pol, siblings) => {
     return (
       <Fragment key={pol.id ?? `seat-${seatKey(pol)}`}>
-        {renderPoliticianCard(pol)}
+        {renderPoliticianCard(pol, siblings)}
       </Fragment>
     );
   };
@@ -2187,7 +2227,7 @@ export default function Results() {
                                         justifyContent="start"
                                       >
                                         {sg.pols.map((pol) =>
-                                          renderSeatGroup(pol)
+                                          renderSeatGroup(pol, sg.pols)
                                         )}
                                       </SubGroupSection>
                                     );

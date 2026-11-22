@@ -271,6 +271,26 @@ describe('buildGroupTransition — a multi-seat body', () => {
     expect(t.lines[0]).toBe('3 seats elected November 3:');
   });
 
+  // 🔴 FOUND IN THE PRODUCTION RENDER. Fort Worth City Council District 3 has 11 offices and
+  // ONE recorded winner, and the card read "1 seats elected May 2". The incomplete-group case is
+  // precisely where a body has FEWER winners than seats, so a single winner is routine here, not
+  // an edge case.
+  it('says "1 seat" and not "1 seats"', () => {
+    const rows = [
+      {
+        id: 'a',
+        seat_group: { group_id: 'g', offices: 11, winners: 1, seated: 11 },
+        pending_winner: {
+          election_date: '2026-05-02',
+          certainty: 'certified',
+          seats: 1,
+          winners: [{ id: 'x', name: 'Chris Jamieson' }],
+        },
+      },
+    ];
+    expect(buildGroupTransition(rows).lines[0]).toBe('1 seat elected May 2:');
+  });
+
   // Review Focus 5: a data defect must degrade, not throw.
   it('refuses the arrow and does not throw when winners exceed offices', () => {
     const rows = [
