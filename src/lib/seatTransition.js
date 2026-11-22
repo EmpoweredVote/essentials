@@ -137,14 +137,80 @@ export function buildSeatTransition(pol) {
     };
   }
 
-  if (!pol.pending_winner || winnersOf(pol).length === 0) return NOTHING;
+  const winners = winnersOf(pol);
+  if (!pol.pending_winner || winners.length === 0) return NOTHING;
 
-  // A single-seat body is unambiguous: this winner takes this seat. Anything else is a group
-  // question and belongs to buildGroupTransition, which can see the sibling rows.
-  const group = pol.seat_group;
-  if (!group || group.offices === 1) return singleSeatResult(pol);
+  // 🔴 THE TEST IS HOW MANY WINNERS ARE ON *THIS OFFICE'S* RACE, NOT HOW MANY SEATS THE BODY HAS.
+  //
+  // The group display exists for one reason: a multi-seat race attaches ALL its winners to ONE
+  // office row, so we know the group and not the mapping (spec §4). When this office carries its
+  // own race with exactly ONE winner, the mapping IS known — this person won THIS seat — and the
+  // group treatment would throw that away.
+  //
+  // Measured on prod 2026-11-21: 46 multi-seat groups, 92 offices, have one race per office with
+  // exactly one winner each. Keying on seat_group.offices described all 92 as a group: Washington
+  // LD 1's two re-elected members became one card reading "Declared winners ... Davina Duerr ·
+  // Shelley Kloba" under Kloba's photo, with an arrow — a false handover AND the self-pointing
+  // arrow the no-arrow rule exists to remove — while 23 genuine per-seat handovers elsewhere were
+  // buried in a list that claimed nothing about which seat each belonged to.
+  if (winners.length === 1) return singleSeatResult(pol);
 
+  // Several winners on one office row: only buildGroupTransition can see the sibling seats they
+  // have to be spread across.
   return NOTHING;
+}
+
+/**
+ * The transition block for one seat, choosing between a per-seat and a per-body statement.
+ *
+ * 🔴 `allRows` MUST BE THE WHOLE RESPONSE, NEVER THE SUBGROUP BEING RENDERED. The group key is
+ * (district_id, chamber_id), but the page splits one body into role subgroups — a Mayor in EXEC,
+ * their council in MEMBER, a clerk in ADMIN. Handed a subgroup, this function saw a body of one
+ * and described a re-elected mayor as "1 seat elected November 3: <their own name>", with a body
+ * count that was wrong as well. The counts always come from seat_group, which is computed across
+ * the whole body in SQL; `allRows` only decides which sibling draws the block and which winners
+ * are listed.
+ *
+ * @param {object} pol the seat being rendered
+ * @param {object[]} allRows every seat row in the response
+ */
+export function buildTransitionModel(pol, allRows) {
+  if (!pol) return NOTHING;
+
+  // A dated term, or this office's own single-winner race, is a statement about THIS seat and
+  // needs no siblings to make it.
+  const direct = buildSeatTransition(pol);
+  if (direct.case !== CASES.NONE) return direct;
+
+  const groupId = pol.seat_group && pol.seat_group.group_id;
+  if (!groupId) return NOTHING;
+
+  const siblings = (Array.isArray(allRows) ? allRows : []).filter(
+    (r) => r && r.seat_group && r.seat_group.group_id === groupId
+  );
+  if (siblings.length === 0) return NOTHING;
+
+  // Only a body where SOME office carries several winners needs the group display at all; every
+  // other multi-seat body has already been answered seat by seat above.
+  const needsGroup = siblings.some(
+    (r) => r.pending_winner && Array.isArray(r.pending_winner.winners) && r.pending_winner.winners.length > 1
+  );
+  if (!needsGroup) return NOTHING;
+
+  // 🔴 ONE BODY, ONE STATEMENT. Ordered by office_id so it is the same seat on every render.
+  const ordered = [...siblings].sort((a, b) =>
+    String(a.office_id || '').localeCompare(String(b.office_id || ''))
+  );
+  if (ordered[0].office_id !== pol.office_id) return NOTHING;
+
+  const model = buildGroupTransition(ordered);
+  if (model.case === CASES.NONE) return NOTHING;
+
+  // ⚠ THE BLOCK SITS UNDER ONE PERSON'S PHOTO AND IS ABOUT THE WHOLE BODY. Without a heading a
+  // voter reads it as a claim about the seat it is printed under. Spec §7.2(c) shows the body
+  // named above the card; this carries that name with the model so the renderer can.
+  const heading = ordered[0].chamber_name || ordered[0].office_title;
+  return heading ? { ...model, heading } : model;
 }
 
 /**
@@ -202,4 +268,24 @@ export function buildGroupTransition(rows) {
     lines: [`${people.length} ${seatWord} elected ${day}:`, ...people.map((p) => p.name)],
     people,
   };
+}
+
+/**
+ * The one sentence a person's OWN profile page shows when they are arriving into a seat.
+ *
+ * 🔴 THE OPPOSITE QUESTION TO EVERY OTHER FIELD ON THAT PAGE. The rest answer "what does this
+ * person hold now"; this answers "what are they about to hold". 136 people carry a future term
+ * and no current seat, so office_current_holder resolves nothing for them and the whole office
+ * block renders empty — and that is exactly the page a voter reaches by clicking the incoming
+ * name on an address result.
+ *
+ * ⚠ BOTH HALVES OR NEITHER. A seat with no date, or a date with no seat, is a half-statement;
+ * the page says nothing rather than something it cannot finish.
+ */
+export function arrivingNote(pol) {
+  if (!pol) return null;
+  const title = pol.arriving_office_title;
+  const when = formatTermStart(pol.arriving_on);
+  if (!title || !when) return null;
+  return `Takes office as ${title} on ${when}`;
 }

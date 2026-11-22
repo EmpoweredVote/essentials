@@ -15,6 +15,8 @@ import {
   formatTermStart,
   buildSeatTransition,
   buildGroupTransition,
+  buildTransitionModel,
+  arrivingNote,
 } from './seatTransition.js';
 
 describe('date formatting', () => {
@@ -200,6 +202,71 @@ describe('buildSeatTransition — a result only', () => {
   });
 });
 
+describe('a multi-seat body whose mapping we DO know', () => {
+  // 🔴 FOUND IN REVIEW. Spec §4's anti-goal says the group treatment exists BECAUSE "we know the
+  // group and not the mapping". 46 multi-seat groups — 92 offices — carry one race per office
+  // with exactly one winner each, so the mapping is fully known and the group display throws it
+  // away. Washington's 1st legislative district is the live shape: two offices, one chamber, one
+  // district, each with its own race.
+  //
+  // Keyed on THIS office's winner count, not on how many seats the body has. A single winner on
+  // this office's own race is an unambiguous statement about THIS seat.
+  const waPosition1 = {
+    id: 'duerr',
+    seat_group: { group_id: 'wa-ld1', offices: 2, winners: 2, seated: 2 },
+    pending_winner: {
+      election_date: '2026-11-03',
+      certainty: 'called',
+      seats: 1,
+      winners: [{ id: 'duerr', name: 'Davina Duerr' }],
+    },
+  };
+
+  it('is a per-seat re-election, never a group', () => {
+    const t = buildSeatTransition(waPosition1);
+    expect(t.case).toBe(CASES.RESULT_REELECTION);
+    expect(t.lines).toEqual([
+      'Declared re-elected November 3 — date of the new term not yet confirmed',
+    ]);
+  });
+
+  it('states a per-seat handover precisely, instead of burying it in a body list', () => {
+    // Spokane Position 2: Timm Ormsby is succeeded by Luc Jasmin III. The group card used to
+    // list that name beside a re-election and claim nothing about which seat it belonged to.
+    const t = buildSeatTransition({
+      id: 'ormsby',
+      seat_group: { group_id: 'wa-ld3', offices: 2, winners: 2, seated: 2 },
+      pending_winner: {
+        election_date: '2026-11-03',
+        certainty: 'called',
+        seats: 1,
+        winners: [{ id: 'jasmin', name: 'Luc Jasmin III' }],
+      },
+    });
+    expect(t.case).toBe(CASES.RESULT_HANDOVER);
+    expect(t.people).toEqual([{ id: 'jasmin', name: 'Luc Jasmin III' }]);
+  });
+
+  it('still uses the group when several winners DO attach to one office row', () => {
+    // Maryland District 13: three delegates, one race, three winners on a single office.
+    const t = buildSeatTransition({
+      id: 'a',
+      seat_group: { group_id: 'md13', offices: 3, winners: 3, seated: 3 },
+      pending_winner: {
+        election_date: '2026-11-03',
+        certainty: 'called',
+        seats: 3,
+        winners: [
+          { id: 'x', name: 'Moreno' },
+          { id: 'y', name: 'Guzzone' },
+          { id: 'z', name: 'Brooks' },
+        ],
+      },
+    });
+    expect(t.case).toBe(CASES.NONE); // deferred to buildGroupTransition, which can see siblings
+  });
+});
+
 describe('buildGroupTransition — a multi-seat body', () => {
   it('draws the group arrow only when offices, winners and seated all agree', () => {
     const rows = [
@@ -355,5 +422,131 @@ describe('buildGroupTransition — a multi-seat body', () => {
 
   it('returns NONE for an empty row list rather than throwing', () => {
     expect(buildGroupTransition([]).case).toBe(CASES.NONE);
+  });
+});
+
+describe('buildTransitionModel — choosing per-seat or per-body, from the whole response', () => {
+  // 🔴 FOUND IN REVIEW. This was previously an untested helper inside a 2,300-line page
+  // component, and it assembled the body from `sg.pols` — the SUBGROUP being rendered — while
+  // the group key is (district_id, chamber_id). getSubGroupKey splits one body by role, so a
+  // Mayor sits alone in the EXEC subgroup while their council sits in MEMBER. The Mayor's
+  // "body" was therefore one row, and a re-elected Texas mayor got
+  // "1 seat elected November 3: <their own name>" — the self-pointing card §7.2(b-ii) exists to
+  // remove, with a body count that was wrong as well. Measured: four such mayors, three of them
+  // re-elected.
+  const md13 = (officeId, pendingWinners) => ({
+    id: officeId,
+    office_id: officeId,
+    seat_group: { group_id: 'md13', offices: 3, winners: 3, seated: 3 },
+    pending_winner: pendingWinners
+      ? {
+          election_date: '2026-11-03',
+          certainty: 'called',
+          seats: 3,
+          winners: pendingWinners,
+        }
+      : null,
+  });
+
+  const threeWinners = [
+    { id: 'x', name: 'Moreno' },
+    { id: 'y', name: 'Guzzone' },
+    { id: 'z', name: 'Brooks' },
+  ];
+
+  it('draws the body block once, on the first sibling by office_id', () => {
+    const rows = [md13('b-office', threeWinners), md13('a-office', null), md13('c-office', null)];
+    const drawn = rows.filter((r) => buildTransitionModel(r, rows).case !== CASES.NONE);
+    expect(drawn).toHaveLength(1);
+    expect(drawn[0].office_id).toBe('a-office');
+    expect(buildTransitionModel(drawn[0], rows).case).toBe(CASES.RESULT_GROUP);
+  });
+
+  // 🔴 THE REGRESSION THIS FUNCTION EXISTS TO PREVENT. Given only the rows that happen to share
+  // a subgroup, a lone row of a larger body must NOT be described as that whole body.
+  it('says nothing for a lone row of a body whose siblings were not passed in', () => {
+    const lone = md13('a-office', threeWinners);
+    expect(buildTransitionModel(lone, [lone]).case).toBe(CASES.RESULT_GROUP);
+    // ...but the counts must come from seat_group, never from how many rows were handed over.
+    expect(buildTransitionModel(lone, [lone]).lines[0]).toBe(
+      'Declared winners, November 3 — count not yet certified'
+    );
+  });
+
+  it('a re-elected mayor alone in their subgroup is a per-seat re-election, not a body', () => {
+    const mayor = {
+      id: 'mayor',
+      office_id: 'mayor-office',
+      // The LOCAL body has 7 offices; the mayor is rendered in a subgroup of one.
+      seat_group: { group_id: 'tx-city', offices: 7, winners: 3, seated: 7 },
+      pending_winner: {
+        election_date: '2026-11-03',
+        certainty: 'called',
+        seats: 1,
+        winners: [{ id: 'mayor', name: 'Jane Mayor' }],
+      },
+    };
+    const t = buildTransitionModel(mayor, [mayor]);
+    expect(t.case).toBe(CASES.RESULT_REELECTION);
+    expect(t.lines).toEqual([
+      'Declared re-elected November 3 — date of the new term not yet confirmed',
+    ]);
+  });
+
+  it('a dated term still wins, even inside a multi-seat body', () => {
+    const rows = [
+      {
+        id: 'p',
+        office_id: 'a-office',
+        incoming_holder_id: 'q',
+        incoming_holder_name: 'Successor',
+        incoming_on: '2027-01-03',
+        seat_group: { group_id: 'md13', offices: 3, winners: 2, seated: 3 },
+      },
+      md13('b-office', [{ id: 'x', name: 'Moreno' }, { id: 'y', name: 'Guzzone' }]),
+    ];
+    expect(buildTransitionModel(rows[0], rows).case).toBe(CASES.DATED_HANDOVER);
+  });
+
+  it('carries a body heading so the block is not read as a claim about one seat', () => {
+    const rows = [md13('a-office', threeWinners), md13('b-office', null), md13('c-office', null)];
+    rows.forEach((r) => {
+      r.chamber_name = 'Maryland House of Delegates';
+    });
+    expect(buildTransitionModel(rows[0], rows).heading).toBe('Maryland House of Delegates');
+  });
+
+  it('gives a per-seat model no heading', () => {
+    const solo = {
+      id: 'a',
+      office_id: 'a',
+      chamber_name: 'State Senate',
+      seat_group: { group_id: 'g', offices: 1, winners: 1, seated: 1 },
+      pending_winner: {
+        election_date: '2026-11-03',
+        certainty: 'called',
+        seats: 1,
+        winners: [{ id: 'b', name: 'Sam Rivera' }],
+      },
+    };
+    expect(buildTransitionModel(solo, [solo]).heading).toBeUndefined();
+  });
+});
+
+describe('arrivingNote — the incoming person’s own profile page', () => {
+  // 🔴 136 people hold a future term and NO current seat, so office_current_holder resolves
+  // nothing for them and every office field on their profile is null. That is the page a voter
+  // lands on after clicking the incoming name on an address result, and it read as though the
+  // person were nobody. Spec §7.3 and §11 call 4 put this page explicitly in scope.
+  it('names the seat and the date', () => {
+    expect(
+      arrivingNote({ arriving_office_title: 'U.S. Representative', arriving_on: '2027-01-03' })
+    ).toBe('Takes office as U.S. Representative on January 3, 2027');
+  });
+
+  it('is silent when either half is missing, rather than half-stating it', () => {
+    expect(arrivingNote({ arriving_office_title: 'Mayor', arriving_on: null })).toBeNull();
+    expect(arrivingNote({ arriving_office_title: null, arriving_on: '2027-01-03' })).toBeNull();
+    expect(arrivingNote(null)).toBeNull();
   });
 });

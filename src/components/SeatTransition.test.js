@@ -85,6 +85,15 @@ describe('dark mode', () => {
   });
 });
 
+describe('a body-level block says so', () => {
+  // ⚠ A group block is printed under ONE person's photo and is about the whole body. Without the
+  // body named, a voter reads "Declared winners, November 3" under Vaughn Stewart's picture as a
+  // claim about Vaughn Stewart's seat.
+  it('renders the heading when the model carries one', () => {
+    expect(SRC).toMatch(/model\.heading/);
+  });
+});
+
 describe('the card does not reach past its own repo', () => {
   // 🔴 PoliticianCard is published in @empoweredvote/ev-ui and is NOT modified by this work.
   // The local src/components/PoliticianCard.jsx is dead code nothing imports. If this component

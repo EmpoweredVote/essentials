@@ -6,7 +6,7 @@ import { partitionByTab, applyTabTypeDefault, TAB_TYPE_DEFAULTS } from '../lib/c
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
 import SeatTransition from '../components/SeatTransition';
-import { buildSeatTransition, buildGroupTransition } from '../lib/seatTransition';
+import { buildTransitionModel } from '../lib/seatTransition';
 import PortraitRestrictionNotice from '../components/PortraitRestrictionNotice';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -42,34 +42,6 @@ function seatKey(pol) {
   return `${pol.office_title}||${pol.district_type}||${pol.district_id || ''}`;
 }
 
-/**
- * Which transition block, if any, this seat's card shows.
- *
- * 🔴 ONE BODY, ONE STATEMENT. A multi-seat race attaches ALL its winners to ONE office row, so
- * the body's result is a single fact about several seats. Each seat keeps its own card -- a
- * voter still needs to see every officeholder -- but the group block is drawn on the FIRST
- * sibling only, ordered by office_id so it is the same seat on every render. Drawing it on all
- * three would tell the voter the same thing three times; drawing it on none would lose it.
- *
- * The sibling rows come from the subgroup the card is already being rendered inside, so no
- * second pass over the response is needed. Backend de-duplication is untouched: this is a
- * render-time grouping and nothing else.
- */
-function buildTransitionModel(pol, siblings) {
-  const group = pol && pol.seat_group;
-  if (!group || group.offices <= 1) return buildSeatTransition(pol);
-
-  const inGroup = (siblings || []).filter(
-    (s) => s && s.seat_group && s.seat_group.group_id === group.group_id
-  );
-  if (inGroup.length === 0) return buildSeatTransition(pol);
-
-  const ordered = [...inGroup].sort((a, b) =>
-    String(a.office_id || '').localeCompare(String(b.office_id || ''))
-  );
-  if (ordered[0].office_id !== pol.office_id) return null;
-  return buildGroupTransition(ordered);
-}
 
 // Whether an office is a "local" office for Local Lens default purposes.
 // Mirrors the local-tier mapping in Profile.jsx's districtScope.
@@ -1575,8 +1547,11 @@ export default function Results() {
   };
 
   /** Render a politician or candidate card with election date below for candidates */
-  const renderPoliticianCard = (pol, siblings) => {
-    const transitionModel = buildTransitionModel(pol, siblings);
+  const renderPoliticianCard = (pol) => {
+    // 🔴 THE WHOLE RESPONSE, NEVER THE SUBGROUP. getSubGroupKey splits one body by role (a
+    // Mayor in EXEC, their council in MEMBER), and a body assembled from a subgroup described a
+    // re-elected mayor as "1 seat elected November 3: <their own name>".
+    const transitionModel = buildTransitionModel(pol, deduped);
     const isCandidate = pol.is_candidate;
     const isVacant = pol.is_vacant;
 
@@ -1848,10 +1823,10 @@ export default function Results() {
     );
   };
 
-  const renderSeatGroup = (pol, siblings) => {
+  const renderSeatGroup = (pol) => {
     return (
       <Fragment key={pol.id ?? `seat-${seatKey(pol)}`}>
-        {renderPoliticianCard(pol, siblings)}
+        {renderPoliticianCard(pol)}
       </Fragment>
     );
   };
@@ -2227,7 +2202,7 @@ export default function Results() {
                                         justifyContent="start"
                                       >
                                         {sg.pols.map((pol) =>
-                                          renderSeatGroup(pol, sg.pols)
+                                          renderSeatGroup(pol)
                                         )}
                                       </SubGroupSection>
                                     );

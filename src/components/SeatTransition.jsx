@@ -80,6 +80,14 @@ export default function SeatTransition({ model }) {
                  border-black/10 dark:border-white/15
                  text-slate-700 dark:text-gray-300"
     >
+      {/* A group block sits under ONE person's photo while describing the whole body. Named, it
+          reads as what it is; unnamed, a voter takes it for a claim about that one seat. */}
+      {model.heading && (
+        <span className="text-[11px] uppercase tracking-wide text-slate-500 dark:text-gray-400">
+          {model.heading}
+        </span>
+      )}
+
       {drawsArrow && (
         <span aria-hidden="true" className="text-sm leading-none text-slate-500 dark:text-gray-400">
           ↓

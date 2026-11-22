@@ -2,6 +2,7 @@ import { useParams, useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { fetchPolitician, fetchLegislativeSummary, fetchJudicialRecord } from '../lib/api';
 import { apiFetch } from '../lib/auth';
+import { arrivingNote } from '../lib/seatTransition';
 import { PoliticianProfile } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import CompassCard from '../components/CompassCard';
@@ -133,6 +134,28 @@ function Profile() {
               // rather than instead of it — this is a permanent fact about the seat, not a
               // seasonal one, and it must never lose a race with an election notice.
               const powers = pol.voting_powers || 'full';
+              // 🔴 CC_0458/CC_0460: the seat this person is ARRIVING into. 136 people hold a
+              // future term and no current seat, so every office field above is null for them
+              // and this page rendered as though they were nobody -- while being exactly the
+              // page a voter reaches by clicking the incoming name on an address result.
+              const arriving = arrivingNote(pol);
+              const arrivingNoteBlock = arriving ? (
+                <div
+                  style={{
+                    borderLeft: '4px solid #00657c',
+                    backgroundColor: isDark ? '#0a1f24' : '#f2fafb',
+                    borderRadius: '0 8px 8px 0',
+                    padding: '12px 16px',
+                    marginTop: '16px',
+                    fontFamily: "'Manrope', sans-serif",
+                  }}
+                >
+                  <p style={{ margin: 0, fontWeight: 700, fontSize: '15px', color: isDark ? '#59b0c4' : '#00657c' }}>
+                    {arriving}
+                  </p>
+                </div>
+              ) : null;
+
               const repNote = powers !== 'full' && pol.representation_note ? (
                 <div
                   style={{
@@ -209,7 +232,12 @@ function Profile() {
                 );
               }
 
-              return repNote;
+              return (
+                <>
+                  {arrivingNoteBlock}
+                  {repNote}
+                </>
+              );
             })()}
             legislativeSummary={legislativeSummary}
             judicialRecord={judicialRecord}
