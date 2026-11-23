@@ -5,6 +5,8 @@ import { GovernmentBodySection, SubGroupSection, PoliticianCard, CompassCardVert
 import { partitionByTab, applyTabTypeDefault, TAB_TYPE_DEFAULTS } from '../lib/classify';
 import { fetchPoliticianAnswers, computeStanceSpokes, saveLensPending, resolveTabLens, loadLensPending } from '../lib/compass';
 import IconOverlay from '../components/IconOverlay';
+import SeatTransition from '../components/SeatTransition';
+import { buildTransitionModel } from '../lib/seatTransition';
 import PortraitRestrictionNotice from '../components/PortraitRestrictionNotice';
 import { getBranch } from '../utils/branchType';
 import { Layout } from '../components/Layout';
@@ -39,6 +41,7 @@ import { qualifyLocalTitle, GOV_FORM_PREFIX } from '../lib/localTitle';
 function seatKey(pol) {
   return `${pol.office_title}||${pol.district_type}||${pol.district_id || ''}`;
 }
+
 
 // Whether an office is a "local" office for Local Lens default purposes.
 // Mirrors the local-tier mapping in Profile.jsx's districtScope.
@@ -1545,6 +1548,10 @@ export default function Results() {
 
   /** Render a politician or candidate card with election date below for candidates */
   const renderPoliticianCard = (pol) => {
+    // 🔴 THE WHOLE RESPONSE, NEVER THE SUBGROUP. getSubGroupKey splits one body by role (a
+    // Mayor in EXEC, their council in MEMBER), and a body assembled from a subgroup described a
+    // re-elected mayor as "1 seat elected November 3: <their own name>".
+    const transitionModel = buildTransitionModel(pol, deduped);
     const isCandidate = pol.is_candidate;
     const isVacant = pol.is_vacant;
 
@@ -1637,6 +1644,9 @@ export default function Results() {
             badge="Vacant"
             onClick={undefined}
             variant="horizontal"
+            // 🔴 AN EMPTY SEAT IS EXACTLY WHERE "who is arriving" MATTERS MOST. Without this a
+            // vacancy with a known successor reads as a dead end.
+            footer={<SeatTransition model={transitionModel} />}
           />
         </div>
       );
@@ -1724,7 +1734,12 @@ export default function Results() {
         // so a member who grants permission simply gets their photograph.
         portraitRestricted={!!pol.photo_restriction}
         restrictedLabel={pol.photo_restriction?.label}
-        footer={<IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />}
+        footer={
+          <>
+            <SeatTransition model={transitionModel} />
+            <IconOverlay ballot={ballot} hasStances={hasStances} branch={branch} />
+          </>
+        }
       />
     );
     return (
