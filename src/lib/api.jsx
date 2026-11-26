@@ -299,6 +299,27 @@ export async function fetchLegislativeVotes(id, { limit } = {}) {
   }
 }
 
+export async function fetchCouncilRecord(id, { limit, offset } = {}) {
+  const empty = { total: 0, items: [] };
+  const params = new URLSearchParams();
+  if (limit !== undefined) params.set('limit', limit);
+  if (offset !== undefined) params.set('offset', offset);
+  const qs = params.toString() ? `?${params}` : '';
+  const url = `/essentials/politicians/${id}/council-record${qs}`;
+  try {
+    const res = await apiFetch(url);
+    if (!res || !res.ok) {
+      console.error(`Council record request failed: ${url} (status ${res ? res.status : 'no response'})`);
+      return empty;
+    }
+    const data = await res.json();
+    return data && typeof data.total === 'number' && Array.isArray(data.items) ? data : empty;
+  } catch (error) {
+    console.error(`Council record request failed: ${url}`, error);
+    return empty;
+  }
+}
+
 export async function fetchJudicialRecord(id) {
   try {
     const res = await apiFetch(`/essentials/politicians/${id}/judicial-record`);

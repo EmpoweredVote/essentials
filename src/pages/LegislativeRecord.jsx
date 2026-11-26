@@ -6,10 +6,12 @@ import {
   fetchLegislativeLeadership,
   fetchLegislativeBills,
   fetchLegislativeVotes,
+  fetchCouncilRecord,
 } from '../lib/api';
-import { LegislativeRecord } from '@empoweredvote/ev-ui';
+import { LegislativeRecord, CouncilVoteRecord } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import LegiScanAttribution from '../components/LegiScanAttribution';
+import CouncilRecordAttribution from '../components/CouncilRecordAttribution';
 
 function LegislativeRecordPage() {
   const { id } = useParams();
@@ -20,6 +22,8 @@ function LegislativeRecordPage() {
   const [leadership, setLeadership] = useState([]);
   const [bills, setBills] = useState([]);
   const [votes, setVotes] = useState([]);
+  const [governmentName, setGovernmentName] = useState('');
+  const [council, setCouncil] = useState({ total: 0, items: [] });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,11 +35,14 @@ function LegislativeRecordPage() {
       fetchLegislativeLeadership(id),
       fetchLegislativeBills(id, { limit: 200 }),
       fetchLegislativeVotes(id, { limit: 200 }),
+      fetchCouncilRecord(id, { limit: 200 }),
     ])
-      .then(([pol, fetchedCommittees, fetchedLeadership, fetchedBills, fetchedVotes]) => {
+      .then(([pol, fetchedCommittees, fetchedLeadership, fetchedBills, fetchedVotes, fetchedCouncil]) => {
         if (pol && (pol.first_name || pol.last_name)) {
           setPolName(`${pol.first_name || ''} ${pol.last_name || ''}`.trim());
         }
+        setGovernmentName((pol && pol.government_name) || '');
+        setCouncil(fetchedCouncil || { total: 0, items: [] });
         setCommittees(fetchedCommittees || []);
         setLeadership(fetchedLeadership || []);
         setBills(fetchedBills || []);
@@ -61,17 +68,26 @@ function LegislativeRecordPage() {
           Legislative Record{polName ? ` \u2014 ${polName}` : ''}
         </h1>
 
-        <div className="ev-legislative-record-wrapper">
-          <LegislativeRecord
-            committees={committees}
-            leadership={leadership}
-            bills={bills}
-            votes={votes}
-            loading={loading}
-            politicianName={polName}
-          />
-        </div>
-        <LegiScanAttribution bills={bills} votes={votes} />
+        {council.total > 0 ? (
+          <>
+            <CouncilVoteRecord items={council.items} loading={loading} />
+            <CouncilRecordAttribution governmentName={governmentName} />
+          </>
+        ) : (
+          <>
+            <div className="ev-legislative-record-wrapper">
+              <LegislativeRecord
+                committees={committees}
+                leadership={leadership}
+                bills={bills}
+                votes={votes}
+                loading={loading}
+                politicianName={polName}
+              />
+            </div>
+            <LegiScanAttribution bills={bills} votes={votes} />
+          </>
+        )}
       </main>
     </div>
     </Layout>
