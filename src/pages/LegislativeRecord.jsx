@@ -71,7 +71,8 @@ function LegislativeRecordPage() {
           Legislative Record{polName ? ` \u2014 ${polName}` : ''}
         </h1>
 
-        {layout === 'pending' ? null : layout === 'council' ? (
+        {/* 'pending' renders the same loading placeholder as before the council work. */}
+        {layout === 'council' ? (
           <>
             <CouncilVoteRecord items={council.items} loading={loading} />
             <CouncilRecordAttribution governmentName={governmentName} />
