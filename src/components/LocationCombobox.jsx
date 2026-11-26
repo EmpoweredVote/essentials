@@ -105,7 +105,9 @@ export default function LocationCombobox({
     middleware: [
       offset(4),
       flip({ padding: 8 }),
-      // Match the floating listbox width to the input (SRCH-02 visual requirement).
+      // Match the floating listbox width to the FIELD (SRCH-02 visual requirement).
+      // The positioning reference is the bordered wrapper, not the bare <input> —
+      // see the setPositionReference note on that wrapper below.
       size({
         apply({ rects, elements }) {
           Object.assign(elements.floating.style, { width: `${rects.reference.width}px` });
@@ -246,7 +248,19 @@ export default function LocationCombobox({
 
   return (
     <div className="relative w-full">
-      <div className="flex min-h-[44px] items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 focus-within:ring-2 focus-within:ring-[var(--ev-teal)] dark:border-gray-700 dark:bg-[var(--color-ev-navy-card)]">
+      {/* The listbox is positioned and sized against THIS wrapper, not the
+          <input> inside it. Measuring the input alone subtracted the pin icon,
+          the gaps and the 44px Search button from the dropdown's width — on a
+          phone that left a 167px listbox hanging under the middle of a 279px
+          field, too narrow for an option row to render its place name at all
+          (reported 2026-11-25: "two large chips" and no readable options).
+          setPositionReference moves only the measuring/anchoring; the input
+          keeps refs.setReference, so floating-ui's interactions, dismissal and
+          aria wiring are untouched. */}
+      <div
+        ref={refs.setPositionReference}
+        className="flex min-h-[44px] items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 focus-within:ring-2 focus-within:ring-[var(--ev-teal)] dark:border-gray-700 dark:bg-[var(--color-ev-navy-card)]"
+      >
         <PinIcon />
         <input
           ref={refs.setReference}
@@ -311,12 +325,17 @@ export default function LocationCombobox({
                     type="button"
                     ref={(node) => { listRef.current[i] = node; }}
                     onMouseDown={(e) => e.preventDefault()}
-                    className={`flex min-h-[44px] w-full items-center justify-start gap-3 px-4 py-3 text-left transition-colors ${
+                    className={`flex min-h-[44px] w-full flex-col items-start justify-center gap-1 px-4 py-3 text-left transition-colors sm:flex-row sm:items-center sm:justify-start sm:gap-3 ${
                       i === activeIndex ? 'bg-[var(--ev-bg-light)] dark:bg-gray-800' : 'hover:bg-[var(--ev-bg-light)] dark:hover:bg-gray-800'
                     }`}
                     {...getItemProps({ onClick: () => handleSelectCandidate(candidate) })}
                   >
-                    <span className="flex w-36 shrink-0 items-center justify-end gap-2">
+                    {/* The 144px pill column is what lines the place names up on a
+                        wide dropdown — and what left no room for them on a narrow
+                        one. Below `sm` the row stacks instead: name first, pills
+                        under it at their natural width (and gone entirely when a
+                        row has none, so a city doesn't carry a blank line). */}
+                    <span className="order-2 flex shrink-0 items-center gap-2 empty:hidden sm:order-1 sm:w-36 sm:justify-end sm:empty:flex">
                       {kindTag !== 'city' && (
                         <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gray-500 dark:bg-gray-800 dark:text-gray-400">
                           {kindTag}
@@ -340,7 +359,7 @@ export default function LocationCombobox({
                         </span>
                       )}
                     </span>
-                    <span className="min-w-0 truncate">
+                    <span className="order-1 w-full min-w-0 truncate sm:order-2 sm:w-auto">
                       <span className="font-semibold text-[var(--ev-teal)] dark:text-[var(--color-ev-teal-light)]">
                         {displayLabel}
                       </span>
