@@ -73,6 +73,29 @@ test('Back from a profile returns to the same results', async ({ page }) => {
   await expectShownInTime(councilCard(page), 'The results list after going back');
 });
 
+test('Typing a place name offers matches that show their names @phone', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('combobox', { name: /Enter your street address/ }).fill('Alameda');
+
+  const options = page.getByRole('option');
+  await expectShownInTime(options.first(), 'The place suggestions');
+
+  const list = await page.getByRole('listbox').boundingBox();
+  const count = await options.count();
+  expect(count, 'Suggestions for "Alameda"').toBeGreaterThan(0);
+
+  for (let i = 0; i < count; i++) {
+    const name = options.nth(i).getByText(/, [A-Z]{2}$/);
+    const box = await name.boundingBox();
+    // How much of the name is actually painted inside the dropdown. A name can
+    // sit in the DOM, and count as "visible", while being clipped clean out of
+    // sight by a row with no room for it — which is what a phone showed until
+    // 2026-11-25: two rows of bare type pills and no place name anywhere.
+    const shown = Math.min(box.x + box.width, list.x + list.width) - Math.max(box.x, list.x);
+    expect(shown, `Suggestion ${i + 1} showed almost none of its place name`).toBeGreaterThan(40);
+  }
+});
+
 test('Browsing by place lists officials', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: /^California CA\b/ }).click();
