@@ -11,6 +11,7 @@ import {
 import { LegislativeRecord, CouncilVoteRecord } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import LegiScanAttribution from '../components/LegiScanAttribution';
+import { councilLayout } from '../lib/councilRecord';
 import CouncilRecordAttribution from '../components/CouncilRecordAttribution';
 
 function LegislativeRecordPage() {
@@ -25,6 +26,8 @@ function LegislativeRecordPage() {
   const [governmentName, setGovernmentName] = useState('');
   const [council, setCouncil] = useState({ total: 0, items: [] });
   const [loading, setLoading] = useState(true);
+
+  const layout = councilLayout({ loading, total: council.total });
 
   useEffect(() => {
     if (!id) return;
@@ -68,7 +71,7 @@ function LegislativeRecordPage() {
           Legislative Record{polName ? ` \u2014 ${polName}` : ''}
         </h1>
 
-        {council.total > 0 ? (
+        {layout === 'pending' ? null : layout === 'council' ? (
           <>
             <CouncilVoteRecord items={council.items} loading={loading} />
             <CouncilRecordAttribution governmentName={governmentName} />

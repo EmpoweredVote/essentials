@@ -25,6 +25,13 @@ describe('fetchCouncilRecord', () => {
     expect(logged).toContain('500');
   });
 
+  it('stays silent on a 404', async () => {
+    const err = vi.spyOn(console, 'error').mockImplementation(() => {});
+    apiFetch.mockResolvedValue({ ok: false, status: 404 });
+    expect(await fetchCouncilRecord('pol-1')).toEqual({ total: 0, items: [] });
+    expect(err).not.toHaveBeenCalled();
+  });
+
   it('treats a thrown error as total 0', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
     apiFetch.mockRejectedValue(new Error('network'));

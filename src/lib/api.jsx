@@ -308,6 +308,7 @@ export async function fetchCouncilRecord(id, { limit, offset } = {}) {
   const url = `/essentials/politicians/${id}/council-record${qs}`;
   try {
     const res = await apiFetch(url);
+    if (res && res.status === 404) return empty; // normal while the endpoint is not deployed
     if (!res || !res.ok) {
       console.error(`Council record request failed: ${url} (status ${res ? res.status : 'no response'})`);
       return empty;
