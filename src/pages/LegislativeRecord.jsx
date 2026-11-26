@@ -6,7 +6,7 @@ import {
   fetchLegislativeLeadership,
   fetchLegislativeBills,
   fetchLegislativeVotes,
-  fetchCouncilRecord,
+  fetchAllCouncilRecord,
 } from '../lib/api';
 import { LegislativeRecord, CouncilVoteRecord } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
@@ -38,7 +38,7 @@ function LegislativeRecordPage() {
       fetchLegislativeLeadership(id),
       fetchLegislativeBills(id, { limit: 200 }),
       fetchLegislativeVotes(id, { limit: 200 }),
-      fetchCouncilRecord(id, { limit: 200 }),
+      fetchAllCouncilRecord(id),
     ])
       .then(([pol, fetchedCommittees, fetchedLeadership, fetchedBills, fetchedVotes, fetchedCouncil]) => {
         if (pol && (pol.first_name || pol.last_name)) {

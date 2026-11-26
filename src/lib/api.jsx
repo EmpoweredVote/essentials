@@ -321,6 +321,30 @@ export async function fetchCouncilRecord(id, { limit, offset } = {}) {
   }
 }
 
+/**
+ * A member's whole council record. The API returns at most 200 items a page, and a member seated since 2020 can
+ * have more, so this reads page after page until `total` is reached. It stops early on an empty page (a failed
+ * request) and at `maxPages`, with a console warning, so a wrong `total` cannot loop forever.
+ */
+export async function fetchAllCouncilRecord(id, { pageSize = 200, maxPages = 20 } = {}) {
+  const first = await fetchCouncilRecord(id, { limit: pageSize, offset: 0 });
+  const items = [...first.items];
+  let pages = 1;
+  while (items.length < first.total) {
+    if (pages >= maxPages) {
+      console.warn(
+        `Council record for ${id}: stopped after ${maxPages} pages with ${items.length} of ${first.total} items`,
+      );
+      break;
+    }
+    const page = await fetchCouncilRecord(id, { limit: pageSize, offset: items.length });
+    pages += 1;
+    if (!page.items.length) break;
+    items.push(...page.items);
+  }
+  return { total: first.total, items };
+}
+
 export async function fetchJudicialRecord(id) {
   try {
     const res = await apiFetch(`/essentials/politicians/${id}/judicial-record`);
