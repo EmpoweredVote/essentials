@@ -36,6 +36,7 @@ row, with the same source document behind it.
 | D11 | Votes the minutes imply but do not print | **Allowed, under a strict rule.** The minutes print an attendance list and, per vote, only the smaller side's names (and who was out of the room). A majority vote is worked out from the minutes: attendance, minus anyone recorded leaving, arriving late or out of the room, minus the named members; the rest voted with the majority, and the count must equal the printed tally exactly. The vote is marked worked out. Any arrival or departure that cannot be placed relative to the item sends it to the exception list. |
 | D12 | First-load votes the inventory does not hold (mostly 2020–2025 amendments) | **Go live on the four checks, after a spot check.** Before the first load, about 30 such votes, drawn at random, are checked by hand or by a second reader against the minutes. One failure stops the load until the reader is fixed. |
 | D13 | Appointments | **Dropped from this build.** Nearly all are voice votes (33 of 34 in the last year) and the city's vote list does not carry them. Revisit if a city records them by name. |
+| D14 | Which document confirms a vote | **The clerk's action memorandum**, posted within days of the meeting, confirms votes (it is the text the inventory read as "minutes"). When the formal Minutes for that meeting are posted (often months later), the weekly job re-reads them and compares; any difference is an exception, and the Minutes govern. Decided 2026-11-26. |
 
 ## 3. Goals, non-goals, anti-goals
 
