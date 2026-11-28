@@ -10,6 +10,6 @@ describe('LegislativeRecord page layout choice', () => {
   });
   it('renders the usual loading placeholder while pending (no blank page)', () => {
     expect(SRC).not.toMatch(/layout === 'pending'\s*\?\s*null/);
-    expect(SRC).toMatch(/loading=\{loading\}\s*\n\s*politicianName/);
+    expect(SRC).toMatch(/\{loading \|\| !topicsSettled \? \(\s*<div className="rg-loading" role="status"/);
   });
 });
