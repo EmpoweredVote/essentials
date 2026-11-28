@@ -147,7 +147,7 @@ test("A city council member's record lists how they voted", async ({ page, reque
   const committeesRes = await request.get(`/api/essentials/politicians/${member.id}/committees`);
   expect(committeesRes.ok(), `GET committees returned ${committeesRes.status()}`).toBeTruthy();
   const committees = await committeesRes.json();
-  const committeesHeading = main.getByRole('heading', { name: 'Committees' });
+  const committeesHeading = main.getByRole('heading', { level: 2, name: 'Committees', exact: true });
   if (Array.isArray(committees) && committees.length > 0) {
     await expect(committeesHeading).toBeVisible();
     const committeesBox = await committeesHeading.boundingBox();
