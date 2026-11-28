@@ -106,6 +106,37 @@ test('Browsing by place lists officials', async ({ page }) => {
   await expectShownInTime(councilCard(page), 'The officials for Los Angeles');
 });
 
+// Bloomington, IN City Hall: the first city whose council votes come from the clerk's records.
+const COUNCIL_RECORD_ADDRESS = '401 N Morton St, Bloomington, IN 47404';
+
+test("A city council member's record lists how they voted", async ({ page, request }) => {
+  // Find a council member at the address whose council record is not empty.
+  const search = await (await request.post('/api/essentials/candidates/search', {
+    data: { query: COUNCIL_RECORD_ADDRESS },
+  })).json();
+  const members = search.politicians.filter((p) => /council/i.test(p.office_title || ''));
+  let member = null;
+  for (const p of members) {
+    const res = await request.get(`/api/essentials/politicians/${p.id}/council-record?limit=1`);
+    if (res.ok() && (await res.json()).total > 0) { member = p; break; }
+  }
+  expect(member, `A council member at ${COUNCIL_RECORD_ADDRESS} has a council record`).toBeTruthy();
+
+  // Arrive the way a user does: from the profile's record link.
+  await page.goto(`/politician/${member.id}`);
+  const recordLink = page.getByRole('main').getByRole('button', { name: 'View Full Legislative Record' });
+  await expectShownInTime(recordLink, 'The record link on the profile');
+  await recordLink.click();
+  await expect(page).toHaveURL(new RegExp(`/politician/${member.id}/record$`));
+
+  const main = page.getByRole('main');
+  await expectShownInTime(main.getByRole('heading', { level: 2, name: 'Council votes' }), 'The council record');
+  await expect(main.getByRole('heading', { level: 1 })).toContainText(member.last_name);
+  // Each item links to the city's own legislation page, and the source is named.
+  await expect(main.getByRole('link', { name: /^Legislation page for / }).first()).toBeVisible();
+  await expect(main.getByText("From the clerk's records of the Bloomington Common Council.")).toBeVisible();
+});
+
 test('A profile opened from Compass shows the comparison', async ({ page, request }) => {
   // Find the pinned address's council member and the topics they answered,
   // then build the link Compass builds (CompassV2 serializeCompassFragment):
