@@ -1,0 +1,377 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-28T00:00:00Z",
+  "title": "Design System: Empowered Essentials, The Voter Guide",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(25% 0.0 0)",
+          "oklch(35% 0.0 0)",
+          "oklch(47% 0.0 0)",
+          "oklch(60% 0.0 0)",
+          "oklch(72% 0.0 0)",
+          "oklch(84% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#0d1117",
+        "tonalRamp": [
+          "oklch(15% 0.007 255)",
+          "oklch(25% 0.01 255)",
+          "oklch(35% 0.013 255)",
+          "oklch(47% 0.017 255)",
+          "oklch(60% 0.018 255)",
+          "oklch(72% 0.014 255)",
+          "oklch(84% 0.01 255)",
+          "oklch(95% 0.007 255)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#3d4852",
+        "tonalRamp": [
+          "oklch(15% 0.008 245)",
+          "oklch(25% 0.013 245)",
+          "oklch(35% 0.017 245)",
+          "oklch(47% 0.022 245)",
+          "oklch(60% 0.023 245)",
+          "oklch(72% 0.018 245)",
+          "oklch(84% 0.013 245)",
+          "oklch(95% 0.008 245)"
+        ]
+      },
+      "rule-soft": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#cdd5da",
+        "tonalRamp": [
+          "oklch(15% 0.004 230)",
+          "oklch(25% 0.006 230)",
+          "oklch(35% 0.008 230)",
+          "oklch(47% 0.01 230)",
+          "oklch(60% 0.011 230)",
+          "oklch(72% 0.009 230)",
+          "oklch(84% 0.006 230)",
+          "oklch(95% 0.004 230)"
+        ]
+      },
+      "wash": {
+        "role": "neutral",
+        "displayName": "Wash",
+        "canonical": "#f2f6f7",
+        "tonalRamp": [
+          "oklch(15% 0.003 210)",
+          "oklch(25% 0.004 210)",
+          "oklch(35% 0.005 210)",
+          "oklch(47% 0.007 210)",
+          "oklch(60% 0.007 210)",
+          "oklch(72% 0.006 210)",
+          "oklch(84% 0.004 210)",
+          "oklch(95% 0.003 210)"
+        ]
+      },
+      "teal": {
+        "role": "primary",
+        "displayName": "Record Teal",
+        "canonical": "#00657c",
+        "tonalRamp": [
+          "oklch(15% 0.037 215)",
+          "oklch(25% 0.055 215)",
+          "oklch(35% 0.073 215)",
+          "oklch(47% 0.095 215)",
+          "oklch(60% 0.101 215)",
+          "oklch(72% 0.079 215)",
+          "oklch(84% 0.057 215)",
+          "oklch(95% 0.037 215)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Tab Yellow",
+        "canonical": "#fed12e",
+        "tonalRamp": [
+          "oklch(15% 0.057 92)",
+          "oklch(25% 0.085 92)",
+          "oklch(35% 0.113 92)",
+          "oklch(47% 0.147 92)",
+          "oklch(60% 0.156 92)",
+          "oklch(72% 0.122 92)",
+          "oklch(84% 0.088 92)",
+          "oklch(95% 0.057 92)"
+        ]
+      },
+      "coral": {
+        "role": "tertiary",
+        "displayName": "Did-Not-Pass Coral",
+        "canonical": "#ff5740",
+        "tonalRamp": [
+          "oklch(15% 0.07 33)",
+          "oklch(25% 0.105 33)",
+          "oklch(35% 0.14 33)",
+          "oklch(47% 0.182 33)",
+          "oklch(60% 0.192 33)",
+          "oklch(72% 0.15 33)",
+          "oklch(84% 0.108 33)",
+          "oklch(95% 0.07 33)"
+        ]
+      },
+      "paper-dark": {
+        "role": "neutral",
+        "displayName": "Paper (dark mode)",
+        "canonical": "#0d1117"
+      },
+      "ink-dark": {
+        "role": "neutral",
+        "displayName": "Ink (dark mode)",
+        "canonical": "#e6edf3"
+      },
+      "ink-soft-dark": {
+        "role": "neutral",
+        "displayName": "Soft Ink (dark mode)",
+        "canonical": "#a8b3bd"
+      },
+      "rule-soft-dark": {
+        "role": "neutral",
+        "displayName": "Hairline (dark mode)",
+        "canonical": "#30363d"
+      },
+      "wash-dark": {
+        "role": "neutral",
+        "displayName": "Wash (dark mode)",
+        "canonical": "#161b22"
+      },
+      "teal-dark": {
+        "role": "primary",
+        "displayName": "Bright Teal (dark mode)",
+        "canonical": "#00c8d7",
+        "tonalRamp": [
+          "oklch(15% 0.043 205)",
+          "oklch(25% 0.065 205)",
+          "oklch(35% 0.087 205)",
+          "oklch(47% 0.113 205)",
+          "oklch(60% 0.119 205)",
+          "oklch(72% 0.093 205)",
+          "oklch(84% 0.067 205)",
+          "oklch(95% 0.043 205)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The person's name, once per page."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Numbered section titles."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Teal section numbers and At a glance figures."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Bill numbers, contents line, pocket header."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase: masthead running head, At a glance tab, section subheads only."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "The one line under the name."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Bill titles and the plain summary."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Dates, sources, counts, tags."
+      }
+    },
+    "shadows": [],
+    "rules": [
+      {
+        "name": "masthead-rule",
+        "value": "8px solid ink"
+      },
+      {
+        "name": "section-rule",
+        "value": "3px solid ink"
+      },
+      {
+        "name": "box-rule",
+        "value": "2px solid ink"
+      },
+      {
+        "name": "row-rule",
+        "value": "1px solid rule-soft"
+      }
+    ],
+    "focus": {
+      "value": "outline: 3px solid #fed12e; outline-offset: 2px; border-radius: 2px",
+      "purpose": "Keyboard focus on every control."
+    },
+    "motion": [
+      {
+        "name": "ease-chip",
+        "value": "160ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Chip fill and text color change; off under reduced motion."
+      },
+      {
+        "name": "loading-pulse",
+        "value": "1.4s ease-in-out infinite, opacity to 0.45",
+        "purpose": "Loading placeholders; off under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "640px"
+      }
+    ],
+    "darkMode": {
+      "selector": ".dark .rg",
+      "note": "Paper, ink, soft ink, hairline, wash and teal switch; yellow and coral stay the same; text on yellow stays #0d1117."
+    },
+    "scope": "Tokens are defined on the .rg wrapper and ship only on the legislative record page (src/pages/LegislativeRecord.jsx)."
+  },
+  "components": [
+    {
+      "name": "Ballot marks",
+      "kind": "custom",
+      "refersTo": "ballot-mark-yes",
+      "description": "How a person voted: filled box for Yes, empty box for No, dashed box for anything else.",
+      "html": "<div class=\"ds-marks\"><span class=\"ds-mark\" data-kind=\"yes\">Yes</span><span class=\"ds-mark\" data-kind=\"no\">No</span><span class=\"ds-mark\" data-kind=\"other\">Absent</span></div>",
+      "css": ".ds-marks{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;display:flex;gap:12px}.ds-mark{display:inline-flex;align-items:center;justify-content:center;min-width:46px;padding:3px 8px;font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:800;font-size:13px;line-height:1.2;letter-spacing:.04em;text-transform:uppercase;border:2px solid var(--rg-ink)}.ds-mark[data-kind=yes]{background:var(--rg-ink);color:var(--rg-paper)}.ds-mark[data-kind=no]{background:var(--rg-paper);color:var(--rg-ink)}.ds-mark[data-kind=other]{border-style:dashed;color:var(--rg-ink-2);text-transform:none;letter-spacing:0;font-weight:700}"
+    },
+    {
+      "name": "At a glance box",
+      "kind": "card",
+      "refersTo": "glance-tab",
+      "description": "Yellow tab on a 3px ink box: plain summary, then teal figures.",
+      "html": "<section class=\"ds-glance\"><h2 class=\"ds-tab\">At a glance</h2><div class=\"ds-box\"><p class=\"ds-sum\">A plain one-paragraph summary of the record.</p><dl class=\"ds-stats\"><div class=\"ds-stat\"><dd>0</dd><dt>Bills sponsored</dt></div><div class=\"ds-stat\"><dd>0</dd><dt>Votes cast</dt></div></dl></div></section>",
+      "css": ".ds-glance{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;color:var(--rg-ink);font-family:Inter,sans-serif}.ds-tab{display:inline-block;margin:0;background:var(--rg-yellow);color:#0d1117;border:3px solid var(--rg-ink);border-bottom:0;padding:7px 18px 6px;font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:800;font-size:14px;letter-spacing:.08em;text-transform:uppercase}.ds-box{border:3px solid var(--rg-ink)}.ds-sum{margin:0;padding:16px 20px;font-size:16px;line-height:1.6;border-bottom:1px solid var(--rg-ink)}.ds-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:0}.ds-stat{display:flex;flex-direction:column;gap:6px;padding:14px 20px 16px;border-right:1px solid var(--rg-ink)}.ds-stat dd{margin:0;order:1;font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--rg-teal);font-variant-numeric:tabular-nums}.ds-stat dt{order:2;font-size:14px;color:var(--rg-ink-2)}"
+    },
+    {
+      "name": "Topic chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Square topic filter; solid ink when selected.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">All <span>0</span></button><button class=\"ds-chip\" aria-pressed=\"false\">Topic <span>0</span></button></div>",
+      "css": ".ds-chips{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;display:flex;gap:8px}.ds-chip{display:inline-flex;align-items:baseline;gap:8px;min-height:36px;padding:7px 14px;border:2px solid var(--rg-ink);border-radius:0;background:var(--rg-paper);color:var(--rg-ink);font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:background-color 160ms cubic-bezier(.16,1,.3,1),color 160ms cubic-bezier(.16,1,.3,1)}.ds-chip span{font:600 12px/1 Inter,sans-serif;opacity:.75}.ds-chip:hover{background:var(--rg-wash)}.ds-chip[aria-pressed=true]{background:var(--rg-ink);color:var(--rg-paper)}.ds-chip:focus-visible{outline:3px solid var(--rg-yellow);outline-offset:2px}"
+    },
+    {
+      "name": "Numbered section head",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "3px rule, teal number column, Manrope headline, soft intro.",
+      "html": "<section class=\"ds-sec\"><div class=\"ds-num\">2</div><div><h2>Bills</h2><p>A short intro in plain words.</p></div></section>",
+      "css": ".ds-sec{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;display:grid;grid-template-columns:64px minmax(0,1fr);border-top:3px solid var(--rg-ink);padding-top:14px;color:var(--rg-ink)}.ds-num{font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:800;font-size:40px;line-height:1;color:var(--rg-teal);font-variant-numeric:tabular-nums}.ds-sec h2{margin:2px 0 0;font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:800;font-size:26px;line-height:1.2;letter-spacing:-.01em}.ds-sec p{margin:6px 0 0;font:15px/1.5 Inter,sans-serif;color:var(--rg-ink-2)}"
+    },
+    {
+      "name": "Tags",
+      "kind": "chip",
+      "refersTo": "tag-compass",
+      "description": "Compass topic tag (teal, clickable) and a plain topic tag (dashed).",
+      "html": "<div class=\"ds-tags\"><button class=\"ds-tag\" data-compass=\"true\">Compass topic</button><span class=\"ds-tag\" data-compass=\"false\">Other topic</span></div>",
+      "css": ".ds-tags{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;display:flex;gap:6px}.ds-tag{font:600 12px/1.2 Inter,sans-serif;padding:3px 8px;border:1px solid var(--rg-rule-soft);border-radius:0;color:var(--rg-ink-2);background:none}.ds-tag[data-compass=true]{border-color:var(--rg-teal);color:var(--rg-teal);background:var(--rg-paper);cursor:pointer}.ds-tag[data-compass=true]:hover{background:var(--rg-teal);color:var(--rg-paper)}.ds-tag[data-compass=true]:focus-visible{outline:3px solid var(--rg-yellow);outline-offset:2px}.ds-tag[data-compass=false]{border-style:dashed}"
+    },
+    {
+      "name": "Status word",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Outcome word; coral outline only for Failed or Vetoed.",
+      "html": "<div class=\"ds-st\"><span class=\"ds-status\">Passed</span><span class=\"ds-status\" data-negative=\"true\">Failed</span></div>",
+      "css": ".ds-st{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;display:flex;gap:16px;align-items:baseline;color:var(--rg-ink)}.ds-status{font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:13px;line-height:1.2}.ds-status[data-negative=true]{border:2px solid var(--rg-coral);padding:2px 7px}"
+    },
+    {
+      "name": "Ceremonial pocket",
+      "kind": "custom",
+      "refersTo": "pocket-summary",
+      "description": "Collapsible ruled box that holds ceremonial resolutions.",
+      "html": "<details class=\"ds-pocket\"><summary><span>0 ceremonial resolutions: recognitions, honors and memorials</span><span class=\"ds-act\">Show</span></summary><p>Rows go here.</p></details>",
+      "css": ".ds-pocket{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;border:2px solid var(--rg-ink);color:var(--rg-ink)}.ds-pocket>summary{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;cursor:pointer;list-style:none;font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:15px;background:var(--rg-wash)}.ds-pocket>summary::-webkit-details-marker{display:none}.ds-pocket>summary:focus-visible{outline:3px solid var(--rg-yellow);outline-offset:2px}.ds-act{color:var(--rg-teal)}.ds-pocket[open]>summary{border-bottom:2px solid var(--rg-ink)}.ds-pocket p{margin:0;padding:12px 16px;font:14px Inter,sans-serif}"
+    },
+    {
+      "name": "Show all button",
+      "kind": "button",
+      "refersTo": "button-more",
+      "description": "Square ruled button under a long list.",
+      "html": "<button class=\"ds-more\">Show all</button>",
+      "css": ".ds-more{--rg-paper:#fff;--rg-ink:#0d1117;--rg-ink-2:#3d4852;--rg-rule-soft:#cdd5da;--rg-wash:#f2f6f7;--rg-teal:#00657c;--rg-yellow:#fed12e;--rg-coral:#ff5740;padding:9px 18px;border:2px solid var(--rg-ink);border-radius:0;background:var(--rg-paper);color:var(--rg-ink);font-family:Manrope,ui-sans-serif,system-ui,sans-serif;font-weight:700;font-size:14px;cursor:pointer}.ds-more:hover{background:var(--rg-wash)}.ds-more:focus-visible{outline:3px solid var(--rg-yellow);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Voter Guide",
+    "overview": "**Creative North Star: \"The Voter Guide\"**\n\nThe record is set like the official voter information pamphlet a voter gets in the mail: a plain white sheet, heavy black rules, numbered sections, and a source for every item. It should feel like a public document that a voter already trusts, not like an app screen. There are no cards, no shadows, no rounded corners and no dashboard tiles. Structure comes from ink rules of three weights and from big teal numbers.\n\n**Where this applies today.** This look ships on one page only: a person's legislative record (`src/pages/LegislativeRecord.jsx`, styled by `src/components/RecordGuide/recordGuide.css`). Every token lives inside the `.rg` wrapper, so nothing leaks to other pages. The rest of Essentials still uses the older `@empoweredvote/ev-ui` look. The record page may set the new direction for Essentials, but nothing outside it follows this file yet.\n\nThe page is calm and dense in the way a printed guide is dense. Reading text is Inter. Headings, numbers, labels and marks are Manrope at weight 800. Color is spent sparingly, and each color has one job.",
+    "keyCharacteristics": [
+      "White sheet in light mode, navy-black sheet in dark mode.",
+      "Black rules in three weights: 8px under the masthead, 3px over each section and around the At a glance box, 1px between rows.",
+      "Teal for section numbers, large figures and links.",
+      "One yellow tab on the page, on the At a glance box. Yellow is also the focus ring and text selection.",
+      "Coral only marks a bill that Failed or was Vetoed.",
+      "Yes and No are set as ballot marks: a filled box and an empty box.",
+      "Square corners everywhere. No shadows."
+    ],
+    "rules": [
+      {
+        "name": "The One Job Rule",
+        "body": "Each accent does one thing. Teal points (numbers and links). Yellow labels the one tab and shows focus. Coral flags a bill that did not pass. Do not use an accent for decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Coral Is Not a No Rule",
+        "body": "Coral marks an outcome (Failed, Vetoed), never a person's No vote. A No vote is an empty ballot box in ink. Color must not read as a judgment of the person.",
+        "section": "colors"
+      },
+      {
+        "name": "The Fixed Ink On Yellow Rule",
+        "body": "Text set on yellow is always `#0d1117`, in light and dark mode, because yellow does not change between modes.",
+        "section": "colors"
+      },
+      {
+        "name": "The Heavy Voice Rule",
+        "body": "Manrope always appears at 700 or 800. Inter carries reading text. Do not set long reading text in Manrope.",
+        "section": "typography"
+      },
+      {
+        "name": "The Three Labels Rule",
+        "body": "Uppercase tracked text is used only for the masthead running head, the At a glance tab, and section subheads. Do not add small uppercase labels above headings.",
+        "section": "typography"
+      },
+      {
+        "name": "The Rules Not Shadows Rule",
+        "body": "Group things with a ruled line or a ruled box, never with a shadow, a card or a tinted panel.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** scope every token to the `.rg` wrapper until the look is adopted by other pages.",
+      "**Do** separate things with ink rules: 8px for the masthead, 3px for sections and the At a glance box, 2px for small boxes, 1px between rows.",
+      "**Do** set section numbers and big figures in teal Manrope 800 with tabular numbers.",
+      "**Do** show Yes as a filled ink box and No as an empty ink box; use a dashed box for anything else.",
+      "**Do** keep coral as a 2px outline on Failed or Vetoed only.",
+      "**Do** put a source link on every item.",
+      "**Do** keep text on yellow at `#0d1117` in both light and dark mode."
+    ],
+    "donts": [
+      "**Don't** use shadows, cards, rounded corners or dashboard stat tiles.",
+      "**Don't** use coral for a No vote, for text, or as a fill.",
+      "**Don't** add a second yellow tab or use yellow as decoration.",
+      "**Don't** add small uppercase labels above headings; uppercase is for the running head, the tab and section subheads only.",
+      "**Don't** show party affiliation anywhere.",
+      "**Don't** fill an empty state with sample or invented records."
+    ]
+  }
+}
