@@ -1636,8 +1636,31 @@ const CURATED_LOCAL = {
   'temecula': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/temecula.jpg' },
   //   palm springs  - Palm Springs Palm Canyon Dr | R. Haupt (Renhau) | CC BY-SA 3.0
   'palm springs': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/palm-springs.jpg' },
+  // Coachella Valley, second pass (2026-11-28): Indio re-cut, plus Coachella, La Quinta,
+  // Palm Desert and Indian Wells. Each was cropped by the operator in the banner-picker
+  // artifact with the 6:1 desktop band and the 13:4 phone cut shown live, and saved there
+  // as a crop (fractions of the source) plus a band position. The band position IS the
+  // `focus` below -- copy it with the src or the band re-centres.
+  //   Pure crop to 1700x540 from the Commons file (3840px rendition; Indio from the 2894px
+  //   original), downscaled only -- no crop was enlarged. No colour or contrast changes.
+  //   Each asset verified byte-identical (sha256) off the plain and a cache-busted URL.
+  //   Crop record: ev-accounts backend/data/_banners/coachella-valley-2026-11-28.json.
+  //
+  // Indio: SAME photograph as before, re-cut. The old cities/indio.jpg was a tight cut that
+  // was mostly sky and cropped off the lower row of club emblems; this one takes the full
+  // width, keeps the whole sign, and holds the band at the top ('50% 0%') so desktop keeps
+  // the "Indio" lettering. NEW FILENAME (-v2) on purpose: overwriting in place leaves the
+  // CDN serving the old bytes (see bend-v2). cities/indio.jpg is left in the bucket.
   //   indio         - "Welcome to Indio" sign on the palm-lined city boulevard | Northwalker | CC0
-  'indio': { state: 'CA', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/indio.jpg' },
+  'indio': { state: 'CA', focus: '50% 0%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/indio-v2.jpg' },
+  //   coachella     - Coachella City Hall | Visitor7 | CC BY-SA 3.0
+  'coachella': { state: 'CA', focus: '50% 17%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/coachella.jpg' },
+  //   la quinta     - Andalusia Country Club, La Quinta | John D. from Pasadena, USA | CC BY 2.0
+  'la quinta': { state: 'CA', focus: '50% 58%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/la-quinta.jpg' },
+  //   palm desert   - El Paseo, Palm Desert | Visitor7 | CC BY-SA 3.0
+  'palm desert': { state: 'CA', focus: '50% 74%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/palm-desert.jpg' },
+  //   indian wells  - Indian Wells Tennis Garden grounds in the evening | IvanAndreevich | CC BY 3.0
+  'indian wells': { state: 'CA', focus: '50% 49%', src: 'https://kxsdzaojfaibhuzmclfq.storage.supabase.co/storage/v1/object/public/politician_photos/cities/indian-wells.jpg' },
   // Arizona CITY banner (Phase 194; banner image refreshed post-UAT). The historic
   // Hotel Congress corner on Congress Street in downtown Tucson (rooftop "HOTEL
   // CONGRESS 100" sign, Mission-Revival brick facade, streetcar wires) — a real,
