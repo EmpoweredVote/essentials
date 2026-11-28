@@ -67,6 +67,13 @@ export const COVERAGE_STATES = [
       { label: 'Carson', browseGovernmentList: ['0611530'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Cerritos', browseGovernmentList: ['0612552'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Claremont', browseGovernmentList: ['0613756'], browseStateAbbrev: 'CA', hasContext: false },
+      // [2026-11-28] Four Coachella Valley cities added: Coachella, Indian Wells, La Quinta,
+      // Palm Desert (Indio and Palm Springs were already here). Each was deep-seeded in
+      // ev-accounts on 2026-11-28 (CC_0527-CC_0535) and verified through the live browse API:
+      // each geo_id returns its own council and no other city's (Coachella 7, the others 5).
+      // hasContext is FALSE on all four, measured with check-coverage-honesty's own query:
+      // 0 covered of 7/5/5/5 seated. Each also has a curated banner (#267).
+      { label: 'Coachella', browseGovernmentList: ['0614260'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Commerce', browseGovernmentList: ['0614974'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Compton', browseGovernmentList: ['0615044'], browseStateAbbrev: 'CA', hasContext: true },
       // Corte Madera (ev-accounts CC_0392 structure + CC_0393 roster, both applied).
@@ -95,6 +102,7 @@ export const COVERAGE_STATES = [
       { label: 'Hermosa Beach', browseGovernmentList: ['0633364'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Hidden Hills', browseGovernmentList: ['0633518'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Huntington Beach', browseGovernmentList: ['0636000'], browseStateAbbrev: 'CA', hasContext: false },
+      { label: 'Indian Wells', browseGovernmentList: ['0636434'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Indio', browseGovernmentList: ['0636448'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Industry', browseGovernmentList: ['0636490'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Inglewood', browseGovernmentList: ['0636546'], browseStateAbbrev: 'CA', hasContext: true },
@@ -104,6 +112,7 @@ export const COVERAGE_STATES = [
       { label: 'La Mirada', browseGovernmentList: ['0640032'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'La Palma', browseGovernmentList: ['0640256'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'La Puente', browseGovernmentList: ['0640340'], browseStateAbbrev: 'CA', hasContext: false },
+      { label: 'La Quinta', browseGovernmentList: ['0640354'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'La Verne', browseGovernmentList: ['0640830'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Lakewood', browseGovernmentList: ['0639892'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Lancaster', browseGovernmentList: ['0640130'], browseStateAbbrev: 'CA', hasContext: true },
@@ -120,6 +129,7 @@ export const COVERAGE_STATES = [
       { label: 'Montebello', browseGovernmentList: ['0648816'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Monterey Park', browseGovernmentList: ['0648914'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Norwalk', browseGovernmentList: ['0652526'], browseStateAbbrev: 'CA', hasContext: true },
+      { label: 'Palm Desert', browseGovernmentList: ['0655184'], browseStateAbbrev: 'CA', hasContext: false },
       { label: 'Palm Springs', browseGovernmentList: ['0655254'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Palmdale', browseGovernmentList: ['0655156'], browseStateAbbrev: 'CA', hasContext: true },
       { label: 'Palos Verdes Estates', browseGovernmentList: ['0655380'], browseStateAbbrev: 'CA', hasContext: false },
