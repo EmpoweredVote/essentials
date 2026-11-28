@@ -135,6 +135,38 @@ test("A city council member's record lists how they voted", async ({ page, reque
   // Each item links to the city's own legislation page, and the source is named.
   await expect(main.getByRole('link', { name: /^Legislation page for / }).first()).toBeVisible();
   await expect(main.getByText("From the clerk's records of the Bloomington Common Council.")).toBeVisible();
+
+  // Sections run Committees (when there are any), then Authored and co-sponsored, then Council votes.
+  const sponsorsHeading = main.getByRole('heading', { level: 2, name: 'Authored and co-sponsored' });
+  const votesHeading = main.getByRole('heading', { level: 2, name: 'Council votes' });
+  await expect(sponsorsHeading).toBeVisible();
+  const sponsorsBox = await sponsorsHeading.boundingBox();
+  const votesBox = await votesHeading.boundingBox();
+  expect(sponsorsBox.y, 'Authored and co-sponsored is above Council votes').toBeLessThan(votesBox.y);
+
+  const committeesRes = await request.get(`/api/essentials/politicians/${member.id}/committees`);
+  expect(committeesRes.ok(), `GET committees returned ${committeesRes.status()}`).toBeTruthy();
+  const committees = await committeesRes.json();
+  const committeesHeading = main.getByRole('heading', { level: 2, name: 'Committees', exact: true });
+  if (Array.isArray(committees) && committees.length > 0) {
+    await expect(committeesHeading).toBeVisible();
+    const committeesBox = await committeesHeading.boundingBox();
+    expect(committeesBox.y, 'Committees is above Authored and co-sponsored').toBeLessThan(sponsorsBox.y);
+  } else {
+    await expect(committeesHeading).toHaveCount(0);
+  }
+
+  const sponsorshipsRes = await request.get(`/api/essentials/politicians/${member.id}/council-sponsorships?limit=1`);
+  expect(sponsorshipsRes.ok(), `GET council-sponsorships returned ${sponsorshipsRes.status()}`).toBeTruthy();
+  if ((await sponsorshipsRes.json()).total > 0) {
+    await expect(main.getByRole('link', { name: /^City document for / }).first()).toBeVisible();
+  } else {
+    await expect(main.getByText(/do not name/)).toBeVisible();
+  }
+
+  // Antipartisan: no party shown anywhere on the record.
+  const text = await main.innerText();
+  expect(text).not.toMatch(/Democrat|Republican|\(D\)|\(R\)/);
 });
 
 test('A profile opened from Compass shows the comparison', async ({ page, request }) => {

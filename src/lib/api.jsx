@@ -322,27 +322,76 @@ export async function fetchCouncilRecord(id, { limit, offset } = {}) {
 }
 
 /**
- * A member's whole council record. The API returns at most 200 items a page, and a member seated since 2020 can
- * have more, so this reads page after page until `total` is reached. It stops early on an empty page (a failed
- * request) and at `maxPages`, with a console warning, so a wrong `total` cannot loop forever.
+ * Reads a paged list until `total` is reached. `fetchPage(limit, offset)` returns `{ total, items, failed? }`.
+ * It stops early on an empty page (a failed request) and at `maxPages`, with a console warning, so a wrong
+ * `total` cannot loop forever. `failed` is true if any page reported a failure.
  */
-export async function fetchAllCouncilRecord(id, { pageSize = 200, maxPages = 20 } = {}) {
-  const first = await fetchCouncilRecord(id, { limit: pageSize, offset: 0 });
+async function readAllPages(fetchPage, label, { pageSize = 200, maxPages = 20 } = {}) {
+  const first = await fetchPage(pageSize, 0);
   const items = [...first.items];
+  let failed = Boolean(first.failed);
   let pages = 1;
   while (items.length < first.total) {
     if (pages >= maxPages) {
-      console.warn(
-        `Council record for ${id}: stopped after ${maxPages} pages with ${items.length} of ${first.total} items`,
-      );
+      console.warn(`${label}: stopped after ${maxPages} pages with ${items.length} of ${first.total} items`);
       break;
     }
-    const page = await fetchCouncilRecord(id, { limit: pageSize, offset: items.length });
+    const page = await fetchPage(pageSize, items.length);
     pages += 1;
+    if (page.failed) failed = true;
     if (!page.items.length) break;
     items.push(...page.items);
   }
-  return { total: first.total, items };
+  return { total: first.total, items, failed };
+}
+
+/**
+ * A member's whole council record. The API returns at most 200 items a page, and a member seated since 2020 can
+ * have more, so this reads page after page until `total` is reached.
+ */
+export async function fetchAllCouncilRecord(id, opts = {}) {
+  const { total, items } = await readAllPages(
+    (limit, offset) => fetchCouncilRecord(id, { limit, offset }),
+    `Council record for ${id}`,
+    opts,
+  );
+  return { total, items };
+}
+
+/** One page of the bills a council member authored or co-sponsored, newest first. `failed` marks a real error (not a 404). */
+export async function fetchCouncilSponsorships(id, { limit, offset } = {}) {
+  const params = new URLSearchParams();
+  if (limit !== undefined) params.set('limit', limit);
+  if (offset !== undefined) params.set('offset', offset);
+  const qs = params.toString() ? `?${params}` : '';
+  const url = `/essentials/politicians/${id}/council-sponsorships${qs}`;
+  const empty = { total: 0, items: [], failed: false };
+  try {
+    const res = await apiFetch(url);
+    if (res && res.status === 404) return empty;
+    if (!res || !res.ok) {
+      console.error(`Council sponsorships request failed: ${url} (status ${res ? res.status : 'no response'})`);
+      return { ...empty, failed: true };
+    }
+    const data = await res.json();
+    if (data && typeof data.total === 'number' && Array.isArray(data.items)) {
+      return { total: data.total, items: data.items, failed: false };
+    }
+    console.error(`Council sponsorships request returned an unexpected shape: ${url}`);
+    return { ...empty, failed: true };
+  } catch (error) {
+    console.error(`Council sponsorships request failed: ${url}`, error);
+    return { ...empty, failed: true };
+  }
+}
+
+/** A member's whole sponsorship list, read page by page. `failed` is true if any page failed. */
+export async function fetchAllCouncilSponsorships(id, opts = {}) {
+  return readAllPages(
+    (limit, offset) => fetchCouncilSponsorships(id, { limit, offset }),
+    `Council sponsorships for ${id}`,
+    opts,
+  );
 }
 
 export async function fetchJudicialRecord(id) {
