@@ -7,8 +7,9 @@ import {
   fetchLegislativeBills,
   fetchLegislativeVotes,
   fetchAllCouncilRecord,
+  fetchAllCouncilSponsorships,
 } from '../lib/api';
-import { LegislativeRecord, CouncilVoteRecord } from '@empoweredvote/ev-ui';
+import { LegislativeRecord, CouncilVoteRecord, CommitteeList, CouncilSponsorships } from '@empoweredvote/ev-ui';
 import { Layout } from '../components/Layout';
 import LegiScanAttribution from '../components/LegiScanAttribution';
 import { councilLayout } from '../lib/councilRecord';
@@ -25,6 +26,7 @@ function LegislativeRecordPage() {
   const [votes, setVotes] = useState([]);
   const [governmentName, setGovernmentName] = useState('');
   const [council, setCouncil] = useState({ total: 0, items: [] });
+  const [sponsorships, setSponsorships] = useState({ items: [], failed: false });
   const [loading, setLoading] = useState(true);
 
   const layout = councilLayout({ loading, total: council.total });
@@ -39,13 +41,18 @@ function LegislativeRecordPage() {
       fetchLegislativeBills(id, { limit: 200 }),
       fetchLegislativeVotes(id, { limit: 200 }),
       fetchAllCouncilRecord(id),
+      fetchAllCouncilSponsorships(id),
     ])
-      .then(([pol, fetchedCommittees, fetchedLeadership, fetchedBills, fetchedVotes, fetchedCouncil]) => {
+      .then(([pol, fetchedCommittees, fetchedLeadership, fetchedBills, fetchedVotes, fetchedCouncil, fetchedSponsorships]) => {
         if (pol && (pol.first_name || pol.last_name)) {
           setPolName(`${pol.first_name || ''} ${pol.last_name || ''}`.trim());
         }
         setGovernmentName((pol && pol.government_name) || '');
         setCouncil(fetchedCouncil || { total: 0, items: [] });
+        setSponsorships({
+          items: (fetchedSponsorships && fetchedSponsorships.items) || [],
+          failed: Boolean(fetchedSponsorships && fetchedSponsorships.failed),
+        });
         setCommittees(fetchedCommittees || []);
         setLeadership(fetchedLeadership || []);
         setBills(fetchedBills || []);
@@ -74,6 +81,13 @@ function LegislativeRecordPage() {
         {/* 'pending' renders the same loading placeholder as before the council work. */}
         {layout === 'council' ? (
           <>
+            <CommitteeList committees={committees} title="Committees" emptyMessage={null} />
+            <CouncilSponsorships
+              items={sponsorships.items}
+              failed={sponsorships.failed}
+              loading={loading}
+              memberName={polName}
+            />
             <CouncilVoteRecord items={council.items} loading={loading} />
             <CouncilRecordAttribution governmentName={governmentName} />
           </>
